@@ -110,6 +110,28 @@
 			<mode></mode>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<status>pending</status>
+			<type>delivered</type>
+			<date></date>
+			<amount>300</amount>
+			<acc_name>sup1</acc_name>
+			<due_date>1413471200000</due_date>
+			<transaction_id>7</transaction_id>
+			<mode></mode>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<status>closed</status>
+			<type>delivered</type>
+			<date>1423471200000</date>
+			<amount>200</amount>
+			<acc_name>cust2</acc_name>
+			<due_date>1423471200000</due_date>
+			<transaction_id>8</transaction_id>
+			<mode>cash</mode>
+			<last_updated>1</last_updated>
+		</row>
 	</payments>
 	<task_instances>
 		<row>

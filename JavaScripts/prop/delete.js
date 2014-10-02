@@ -10,7 +10,7 @@ function form1_delete_item(button)
 		var form=document.getElementById(form_id);
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var expiry=form.elements[2].value;
+		var expiry=get_raw_time(form.elements[2].value);
 		var price=form.elements[3].value;
 		var quantity=form.elements[4].value;
 		var data_id=form.elements[5].value;
@@ -64,7 +64,6 @@ function form2_delete_item(button)
 {
 	if(is_delete_access('form2'))
 	{
-	
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
@@ -171,7 +170,7 @@ function form5_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var date_inc=form.elements[1].value;
+		var date_inc=get_raw_time(form.elements[1].value);
 		var owner=form.elements[2].value;
 		var type=form.elements[3].value;
 		var value=form.elements[4].value;
@@ -225,7 +224,7 @@ function form8_delete_item(button)
 		
 		var name=form.elements[0].value;
 		var skills=form.elements[1].value;
-		var joining_date=form.elements[2].value;
+		var joining_date=get_raw_time(form.elements[2].value);
 		var variable_comp_rate=form.elements[3].value;
 		var fixed_comp=form.elements[4].value;
 		var status=form.elements[5].value;
@@ -278,7 +277,7 @@ function form9_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var trans_type=form.elements[0].value;
-		var trans_date=form.elements[1].value;
+		var trans_date=get_raw_time(form.elements[1].value);
 		var amount=form.elements[2].value;
 		var debit_acc=form.elements[3].value;
 		var credit_acc=form.elements[4].value;
@@ -387,7 +386,7 @@ function form10_delete_form(button)
 		var form=document.getElementById("form10_master");
 		
 		var customer=form.elements[1].value;
-		var bill_date=form.elements[2].value;
+		var bill_date=get_raw_time(form.elements[2].value);
 		var amount=form.elements[3].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
@@ -443,9 +442,9 @@ function form11_delete_item(button)
 		var trans_id=form.elements[0].value;
 		var acc_name=form.elements[1].value;
 		var amount=form.elements[2].value;
-		var due_date=form.elements[3].value;
+		var due_date=get_raw_time(form.elements[3].value);
 		var status=form.elements[4].value;
-		var date=form.elements[5].value;
+		var date=get_raw_time(form.elements[5].value);
 		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var table='payments';
@@ -547,7 +546,7 @@ function form12_delete_form(button)
 		var form=document.getElementById("form10_master");
 		
 		var customer=form.elements[1].value;
-		var bill_date=form.elements[2].value;
+		var bill_date=get_raw_time(form.elements[2].value);
 		var amount=form.elements[3].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
@@ -604,9 +603,9 @@ function form14_delete_item(button)
 		var name=form.elements[0].value;
 		var description=form.elements[1].value;
 		var assignee=form.elements[2].value;
-		var t_due=form.elements[3].value;
+		var t_due=get_raw_time(form.elements[3].value);
 		var status=form.elements[4].value;
-		var t_executed=form.elements[5].value;
+		var t_executed=get_raw_time(form.elements[5].value);
 		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var table='task_instances';
@@ -766,7 +765,7 @@ function form21_delete_item(button)
 		
 		var product_name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var expiry=form.elements[2].value;
+		var expiry=get_raw_time(form.elements[2].value);
 		var cost_price=form.elements[3].value;
 		var quantity=form.elements[4].value;
 		var data_id=form.elements[5].value;
@@ -817,8 +816,8 @@ function form21_delete_form(button)
 		var form=document.getElementById("form21_master");
 		
 		var supplier=form.elements[1].value;
-		var bill_date=form.elements[2].value;
-		var entry_date=form.elements[3].value;
+		var bill_date=get_raw_time(form.elements[2].value);
+		var entry_date=get_raw_time(form.elements[3].value);
 		var amount=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
@@ -876,7 +875,7 @@ function form22_delete_item(button)
 		var batch=form.elements[1].value;
 		var method=form.elements[2].value;
 		var quantity=form.elements[3].value;
-		var date=form.elements[4].value;
+		var date=get_raw_time(form.elements[4].value);
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var table='disposals';
@@ -971,9 +970,9 @@ function form24_delete_form(button)
 	{
 		var form=document.getElementById("form24_master");
 		
-		var supplier=ford.elements[1].value;
-		var order_date=ford.elements[2].value;
-		var amount=ford.elements[3].value;
+		var supplier=form.elements[1].value;
+		var order_date=get_raw_time(form.elements[2].value);
+		var amount=form.elements[3].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var table='purchase_orders';
@@ -1080,7 +1079,7 @@ function form35_delete_item(button)
 		
 		var offer_name=form.elements[0].value;
 		var offer_type=form.elements[1].value;
-		var end_date=form.elements[2].value;
+		var end_date=get_raw_time(form.elements[2].value);
 		var offer_detail=form.elements[3].value;
 		var status=form.elements[5].value;
 		var data_id=form.elements[6].value;
@@ -1297,7 +1296,7 @@ function form42_delete_item(button)
 		
 		var data_id=form.elements[0].value;
 		var customer_name=form.elements[1].value;
-		var date_created=form.elements[2].value;
+		var date_created=get_raw_time(form.elements[2].value);
 		var amount=form.elements[3].value;
 		var last_updated=get_my_time();
 		var table='bills';
@@ -1351,7 +1350,7 @@ function form43_delete_item(button)
 		
 		var data_id=form.elements[0].value;
 		var supplier=form.elements[1].value;
-		var order_date=form.elements[2].value;
+		var order_date=get_raw_time(form.elements[2].value);
 		var est_amount=form.elements[3].value;
 		var last_updated=get_my_time();
 		var table='purchase_orders';
@@ -1457,7 +1456,7 @@ function form45_delete_item(button)
 		
 		var data_id=form.elements[0].value;
 		var customer_name=form.elements[1].value;
-		var date_created=form.elements[2].value;
+		var date_created=get_raw_time(form.elements[2].value);
 		var amount=form.elements[3].value;
 		var last_updated=get_my_time();
 		var table='bills';
@@ -1562,8 +1561,8 @@ function form53_delete_item(button)
 		
 		var data_id=form.elements[0].value;
 		var supplier_name=form.elements[1].value;
-		var bill_date=form.elements[2].value;
-		var entry_date=form.elements[3].value;
+		var bill_date=get_raw_time(form.elements[2].value);
+		var entry_date=get_raw_time(form.elements[3].value);
 		var amount=form.elements[4].value;
 		var last_updated=get_my_time();
 		var table='supplier_bills';
@@ -1616,7 +1615,7 @@ function form56_delete_item(button)
 	{
 		var form=document.getElementById(form_id);
 		
-		var expense_date=form.elements[0].value;
+		var expense_date=get_raw_time(form.elements[0].value);
 		var to_account=form.elements[1].value;
 		var description=form.elements[2].value;
 		var amount=form.elements[3].value;

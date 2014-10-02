@@ -6,6 +6,7 @@
 		<li><a id="report4_link" href="#report4" onclick="report4_header_ini(); report4_ini()">Modes of payment</a></li>
 		<li><a id="report6_link" href="#report6" onclick="report6_header_ini(); report6_ini()">Payments due from customers</a></li>
 		<li><a id="report14_link" href="#report14" onclick="report14_header_ini(); report14_ini()">Expenses by period</a></li>
+		<li><a id="report15_link" href="#report15" onclick="report15_ini()">Financial Summary</a></li>
 	</ul>
 
 	<div id='form5' class='function_detail'>
@@ -25,6 +26,9 @@
 	</div>
 	<div id='report14' class='function_detail'>
 		<?php include "reports/report14.php" ?>
+	</div>
+	<div id='report15' class='function_detail'>
+		<?php include "reports/report15.php" ?>
 	</div>
 	
 	<script>

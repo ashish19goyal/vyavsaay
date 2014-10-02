@@ -1,3 +1,26 @@
+/**
+ * @reportNo 1
+ * @report Signage changes
+ */
+function report1_header_ini()
+{	
+	var form=document.getElementById('report1_header');
+	var date_since=form.elements[1];
+	var product_filter=form.elements[2];
+	
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	set_my_value_list(product_data,product_filter);
+	
+	$(date_since).datepicker();
+	$(date_since).val(get_my_date());
+}
+
+/**
+ * @reportNo 4
+ * @report Modes of payment
+ */
 function report4_header_ini()
 {	
 	var form=document.getElementById('report4_header');
@@ -48,6 +71,64 @@ function report14_header_ini()
 	$(end_date).datepicker();
 	$(start_date).val(get_my_date());
 	$(end_date).val(get_my_date());
+}
+
+/**
+ * @reportNo 26
+ * @report Sales by customers
+ */
+function report26_header_ini()
+{	
+	var form=document.getElementById('report26_header');
+	var start_date=form.elements[1];
+	var end_date=form.elements[2];
+	var customer_filter=form.elements[3];
+
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_filter(customer_data,customer_filter);
+	
+	$(start_date).datepicker();
+	$(end_date).datepicker();
+	$(start_date).val(get_my_date());
+	$(end_date).val(get_my_date());
+}
+
+/**
+ * @reportNo 27
+ * @report Expiring Inventory
+ */
+function report27_header_ini()
+{	
+	var form=document.getElementById('report27_header');
+	var expiry_date=form.elements[1];
+	var product_filter=form.elements[2];
+
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	set_my_filter(product_data,product_filter);
+	
+	$(expiry_date).datepicker();
+	$(expiry_date).val(get_my_date());
+}
+
+/**
+ * @reportNo 28
+ * @report Short Inventory
+ */
+function report28_header_ini()
+{	
+	var form=document.getElementById('report28_header');
+	var nun_days=form.elements[1];
+	var product_filter=form.elements[2];
+
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	set_my_filter(product_data,product_filter);
+	
 }
 
 
@@ -148,4 +229,65 @@ function report37_header_ini()
 	
 	$(due_date).datepicker();
 	$(due_date).val(get_my_date());
+}
+
+/**
+ * @reportNo 38
+ * @report Sales by products
+ */
+function report38_header_ini()
+{	
+	var form=document.getElementById('report38_header');
+	var start_date=form.elements[1];
+	var end_date=form.elements[2];
+	var product_filter=form.elements[3];
+
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	set_my_filter(product_data,product_filter);
+	
+	$(start_date).datepicker();
+	$(end_date).datepicker();
+	$(start_date).val(get_my_date());
+	$(end_date).val(get_my_date());
+}
+
+/**
+ * @reportNo 39
+ * @report Sales by services
+ */
+function report39_header_ini()
+{	
+	var form=document.getElementById('report39_header');
+	var start_date=form.elements[1];
+	var end_date=form.elements[2];
+	var service_filter=form.elements[3];
+
+	var service_data="<services>" +
+			"<name></name>" +
+			"</services>";
+	set_my_filter(service_data,service_filter);
+	
+	$(start_date).datepicker();
+	$(end_date).datepicker();
+	$(start_date).val(get_my_date());
+	$(end_date).val(get_my_date());
+}
+
+/**
+ * @reportNo 40
+ * @report Surplus Inventory
+ */
+function report40_header_ini()
+{	
+	var form=document.getElementById('report40_header');
+	var nun_days=form.elements[1];
+	var product_filter=form.elements[2];
+
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	set_my_filter(product_data,product_filter);
+	
 }

@@ -2296,7 +2296,7 @@ function form56_save_item(button)
 	{
 		var form=document.getElementById(form_id);
 		
-		var expense_date=form.elements[0].value;
+		var expense_date=get_raw_time(form.elements[0].value);
 		var to_account=form.elements[1].value;
 		var description=form.elements[2].value;
 		var amount=form.elements[3].value;

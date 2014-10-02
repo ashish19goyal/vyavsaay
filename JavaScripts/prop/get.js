@@ -99,8 +99,6 @@ function get_new_key()
 }
 
 
-
-
 function count_oppor()
 {
 	var oppor_data="<opportunities>" +

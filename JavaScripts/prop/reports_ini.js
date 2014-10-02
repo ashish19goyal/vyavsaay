@@ -1,4 +1,21 @@
 /**
+ * @reportNo 1
+ * @report Signage Changes
+ */
+function report1_ini()
+{
+	var form=document.getElementById('report1_header');
+	var date_since=form.elements[1];
+	var product_filter=form.elements[2];
+
+	fetch_requested_data('report1',modes_data,function(modes)
+	{
+
+	});
+};
+
+
+/**
  * @reportNo 4
  * @report Modes of payment
  */
@@ -48,7 +65,7 @@ function report6_ini()
 	fetch_requested_data('report6',payments_data,function(payments)
 	{
 		console.log(payments);
-		var result=transform_to_bar_sum(payments,'amount','acc_name');
+		var result=transform_to_bar_sum(payments,'Amount','amount','acc_name');
 		console.log(result);
 		var mybarchart = new Chart(ctx).Bar(result,{});
 	});
@@ -75,7 +92,7 @@ function report14_ini()
 
 	fetch_requested_data('report14',expenses_data,function(expenses)
 	{
-		var result=transform_to_bar_sum(expenses,'amount','to_acc');
+		var result=transform_to_bar_sum(expenses,'Amount','amount','to_acc');
 		var mybarchart = new Chart(ctx).Bar(result,{});
 	});
 };
@@ -83,7 +100,7 @@ function report14_ini()
 
 /**
  * @reportNo 15
- * @report Finances summary
+ * @report Financial summary
  */
 function report15_ini()
 {
@@ -118,37 +135,144 @@ function report15_ini()
 		result.labels=new Array();
 		
 		var credit_debit=transform_to_sum(payments,'amount','type');
-		result.labels.push('Credits');
-		result.labels.push('Debits');
-		if(credit_debit[0].label=='delivered')	
+		for(var i=0;i<credit_debit.length;i++)
 		{
-			result.datasets[0].data.push(credit_debit[1].value);
-			result.datasets[0].data.push(credit_debit[0].value);
-		}
-		else
-		{
-			result.datasets[0].data.push(credit_debit[0].value);
-			result.datasets[0].data.push(credit_debit[1].value);
+			if(credit_debit[i].label=='delivered')	
+			{
+				result.labels.push('Debits');
+				result.datasets[0].data.push(credit_debit[i].value);
+			}
+			else if(credit_debit[i].label=='received')	
+			{
+				result.labels.push('Credits');
+				result.datasets[0].data.push(credit_debit[i].value);
+			}
 		}
 		
 		fetch_requested_data('report15',capital_data,function(capital)
 		{
 			var cap=transform_to_sum(capital,'amount','type');
-			result.labels.push('Working Capital');
-			if(cap[0].label=='delivered')
-				result.datasets[0].data.push(cap[1].value-cap[0].value);
-			else
-				result.datasets[0].data.push(cap[0].value-cap[1].value);
+			var working_capital=0;
+			for(var j=0;j<cap.length;j++)
+			{
+				if(cap[j].label=='delivered')
+					working_capital-=cap[j].value;
+				else if(cap[j].label=='received')
+					working_capital+=cap[j].value;
+			}
+			if(cap.length>0)
+			{
+				result.labels.push('Working Capital');
+				result.datasets[0].data.push(working_capital);
+			}
 			
 			fetch_requested_data('report15',tax_data,function(taxes)
 			{
 				var tax=transform_to_sum(taxes,'amount','status');
-				result.labels.push('Tax');
-				result.datasets[0].data.push(tax[0].value);
-				
+				if(tax.length>0)
+				{
+					result.labels.push('Tax');
+					result.datasets[0].data.push(tax[0].value);
+				}	
 				var mybarchart = new Chart(ctx).Bar(result,{});
 			});
 		});
+	});
+};
+
+/**
+ * @reportNo 26
+ * @report Sales by customers
+ */
+function report26_ini()
+{
+	var form=document.getElementById('report26_header');
+	var start_date=form.elements[1].value;
+	var end_date=form.elements[2].value;
+	var customer=form.elements[3].value;
+	
+	var ctx = document.getElementById("report26_canvas").getContext("2d");
+	var sales_data="<bills>" +
+			"<amount></amount>" +
+			"<customer_name>"+customer+"</customer_name>" +
+			"<date_created compare='more than'>"+get_raw_time(start_date)+"</date_created>" +
+			"<date_created compare='less than'>"+get_raw_time(end_date)+"</date_created>" +
+			"</bills>";
+
+	fetch_requested_data('report26',sales_data,function(sales)
+	{
+		var result=transform_to_bar_sum(sales,'Amount','amount','customer_name');
+		var mybarchart = new Chart(ctx).Bar(result,{});
+	});
+};
+
+/**
+ * @reportNo 27
+ * @report expiring inventory
+ */
+function report27_ini()
+{
+	var form=document.getElementById('report27_header');
+	var expiry_date=form.elements[1].value;
+	var product=form.elements[2].value;
+	
+	var ctx = document.getElementById("report27_canvas").getContext("2d");
+	var product_data="<product_instances>" +
+			"<quantity></quantity>" +
+			"<product_name>"+product+"</product_name>" +
+			"<expiry compare='less than'>"+get_raw_time(expiry_date)+"</expiry>" +
+			"</product_instances>";
+
+	fetch_requested_data('report27',product_data,function(products)
+	{
+		var result=transform_to_bar_sum(products,'Quantity','quantity','product_name');
+		var mybarchart = new Chart(ctx).Bar(result,{});
+	});
+};
+
+/**
+ * @reportNo 28
+ * @report Short Inventory
+ */
+function report28_ini()
+{
+	var form=document.getElementById('report28_header');
+	var num_days=form.elements[1].value;
+	var product=form.elements[2].value;
+	var raw_time=get_my_time()-parseInt(num_days)*86400000;
+	
+	var ctx = document.getElementById("report28_canvas").getContext("2d");
+	var product_data="<product_instances>" +
+			"<quantity></quantity>" +
+			"<product_name>"+product+"</product_name>" +
+			"</product_instances>";
+
+	fetch_requested_data('report28',product_data,function(products_array)
+	{
+		var bills_data="<bills>" +
+				"<id></id>" +
+				"<date_created compare='more than'>"+raw_time+"</date_created>" +
+				"<type>product</type>" +
+				"</bills>";
+				
+		get_single_column_data(function(bill_ids)
+		{
+			var bill_id_array="";
+			for(var y in bill_ids)
+			{
+				bill_id_array+=bill_ids[y]+"--";
+			}
+			var sales_data="<bills_items>" +
+					"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
+					"<quantity></quantity>" +
+					"<product_name>"+product+"</product_name>" +
+					"</bill_items>";
+			fetch_requested_data('report28',sales_data,function(sales_array)
+			{
+				var result=transform_to_multi_bar_sum(product_array,sales_array,'Current Inventory','Sold Quantity','quantity','product_name');
+				var mybarchart = new Chart(ctx).Bar(result,{});
+			});
+		},bills_data);
 	});
 };
 
@@ -579,7 +703,131 @@ function report37_ini()
 
 	fetch_requested_data('report37',payments_data,function(payments)
 	{
-		var result=transform_to_bar_sum(payments,'amount','acc_name');
+		var result=transform_to_bar_sum(payments,'Amount','amount','acc_name');
 		var mybarchart = new Chart(ctx).Bar(result,{});
+	});
+};
+
+/**
+ * @reportNo 38
+ * @report Sales by products
+ */
+function report38_ini()
+{
+	var form=document.getElementById('report38_header');
+	var start_date=form.elements[1].value;
+	var end_date=form.elements[2].value;
+	var products=form.elements[3].value;
+	
+	var ctx = document.getElementById("report38_canvas").getContext("2d");
+	var bills_data="<bills>" +
+			"<id></id>" +
+			"<date_created compare='more than'>"+get_raw_time(start_date)+"</date_created>" +
+			"<date_created compare='less than'>"+get_raw_time(end_date)+"</date_created>" +
+			"<type>product</type>" +
+			"</bills>";
+
+	get_single_column_data(function(bill_ids)
+	{
+		var bill_id_array="";
+		for(var y in bill_ids)
+		{
+			bill_id_array+=bill_ids[y]+"--";
+		}
+		var products_data="<bills_items>" +
+				"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
+				"<quantity></quantity>" +
+				"<product_name></product_name>" +
+				"</bill_items>";
+		fetch_requested_data('report38',products_data,function(product_array)
+		{
+			var result=transform_to_bar_sum(product_array,'Quantity','quantity','product_name');
+			var mybarchart = new Chart(ctx).Bar(result,{});
+		});
+	},bills_data);
+};
+
+/**
+ * @reportNo 39
+ * @report Sales by services
+ */
+function report39_ini()
+{
+	var form=document.getElementById('report39_header');
+	var start_date=form.elements[1].value;
+	var end_date=form.elements[2].value;
+	var services=form.elements[3].value;
+	
+	var ctx = document.getElementById("report39_canvas").getContext("2d");
+	var bills_data="<bills>" +
+			"<id></id>" +
+			"<date_created compare='more than'>"+get_raw_time(start_date)+"</date_created>" +
+			"<date_created compare='less than'>"+get_raw_time(end_date)+"</date_created>" +
+			"<type>service</type>" +
+			"</bills>";
+
+	get_single_column_data(function(bill_ids)
+	{
+		var bill_id_array="";
+		for(var y in bill_ids)
+		{
+			bill_id_array+=bill_ids[y]+"--";
+		}
+		var services_data="<service_instances>" +
+				"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
+				"<actual_cost></actual_cost>" +
+				"<service_name></service_name>" +
+				"</service_instances>";
+		fetch_requested_data('report39',services_data,function(service_array)
+		{
+			var result=transform_to_bar_sum(service_array,'Amount','actual_cost','service_name');
+			var mybarchart = new Chart(ctx).Bar(result,{});
+		});
+	},services_data);
+};
+
+/**
+ * @reportNo 40
+ * @report Surplus Inventory
+ */
+function report40_ini()
+{
+	var form=document.getElementById('report40_header');
+	var num_days=form.elements[1].value;
+	var product=form.elements[2].value;
+	var raw_time=get_my_time()-parseInt(num_days)*86400000;
+	
+	var ctx = document.getElementById("report40_canvas").getContext("2d");
+	var product_data="<product_instances>" +
+			"<quantity></quantity>" +
+			"<product_name>"+product+"</product_name>" +
+			"</product_instances>";
+
+	fetch_requested_data('report40',product_data,function(products_array)
+	{
+		var bills_data="<bills>" +
+				"<id></id>" +
+				"<date_created compare='more than'>"+raw_time+"</date_created>" +
+				"<type>product</type>" +
+				"</bills>";
+				
+		get_single_column_data(function(bill_ids)
+		{
+			var bill_id_array="";
+			for(var y in bill_ids)
+			{
+				bill_id_array+=bill_ids[y]+"--";
+			}
+			var sales_data="<bills_items>" +
+					"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
+					"<quantity></quantity>" +
+					"<product_name>"+product+"</product_name>" +
+					"</bill_items>";
+			fetch_requested_data('report40',sales_data,function(sales_array)
+			{
+				var result=transform_to_multi_bar_sum(sales_array,product_array,'Sold Quantity','Current Inventory','quantity','product_name');
+				var mybarchart = new Chart(ctx).Bar(result,{});
+			});
+		},bills_data);
 	});
 };
