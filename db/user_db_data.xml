@@ -1,0 +1,1645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<re_xml>
+	<user_preferences>
+		<row>
+			<name>theme</name>
+			<display_name>Theme</display_name>
+			<status>active</status>
+			<value>theme1</value>
+			<type>other</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>offline</name>
+			<display_name>Mode of operation</display_name>
+			<status>active</status>
+			<value>online</value>
+			<type>other</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>locale</name>
+			<display_name>Language</display_name>
+			<status>active</status>
+			<value>en_US.utf8</value>
+			<type>other</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>sale_bill</name>
+			<display_name>Sale bill print template</display_name>
+			<status>active</status>
+			<value>default_sale_bill</value>
+			<type>template</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>purchase_order</name>
+			<display_name>Purchase order print template</display_name>
+			<status>active</status>
+			<value>default_purchase_order</value>
+			<type>template</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>payment_receipt</name>
+			<display_name>Payment receipt print template</display_name>
+			<status>active</status>
+			<value>default_payment_receipt</value>
+			<type>template</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>credit_note</name>
+			<display_name>Credit note print template</display_name>
+			<status>active</status>
+			<value>default_credit_note</value>
+			<type>template</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>pamphlet</name>
+			<display_name>Pamphlet print template</display_name>
+			<status>active</status>
+			<value>default_pamphlet</value>
+			<type>template</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>service_receipt</name>
+			<display_name>Service Receipt print template</display_name>
+			<status>active</status>
+			<value>default_service_receipt</value>
+			<type>template</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>return_receipt</name>
+			<display_name>Return receipt print template</display_name>
+			<status>active</status>
+			<value>default_return_receipt</value>
+			<type>template</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report1</name>
+			<display_name>Signage changes</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report4</name>
+			<display_name>Modes of income</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report5</name>
+			<display_name>Defaulters</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report6</name>
+			<display_name>Scheduled Payments</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report8</name>
+			<display_name>Inventory predictions by products</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report9</name>
+			<display_name>Customers by product cateogries</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report11</name>
+			<display_name>Inventory by product category(lowest)</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report12</name>
+			<display_name>Inventory by product category(highest)</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report14</name>
+			<display_name>Expenses by period</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report15</name>
+			<display_name>Finances summary</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report16</name>
+			<display_name>Credit per customer</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report17</name>
+			<display_name>Staff performance</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report26</name>
+			<display_name>Sales by period</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report27</name>
+			<display_name>Expiring inventory</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report28</name>
+			<display_name>Required inventory</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report29</name>
+			<display_name>Tasks assigned by product</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report30</name>
+			<display_name>Staff information</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report31</name>
+			<display_name>Customer maps by credit</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report32</name>
+			<display_name>Staff maps</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report33</name>
+			<display_name>Supplier maps by debit</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report34</name>
+			<display_name>Profit calculator</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report35</name>
+			<display_name>Customer maps by products</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report36</name>
+			<display_name>Supplier maps by products</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form1</name>
+			<display_name>Update Inventory</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form2</name>
+			<display_name>Create Pamphlets</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form5</name>
+			<display_name>Manage Assets</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form7</name>
+			<display_name>Attendance</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form8</name>
+			<display_name>Manage Staff</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form9</name>
+			<display_name>Cash register</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form10</name>
+			<display_name>Create service receipt</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form11</name>
+			<display_name>Schedule payments</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form12</name>
+			<display_name>New Bill</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form14</name>
+			<display_name>Manage Tasks</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form15</name>
+			<display_name>Accept Returns</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form19</name>
+			<display_name>Manage Returns</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form21</name>
+			<display_name>Enter Goods Received</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form22</name>
+			<display_name>Dispose Items</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form24</name>
+			<display_name>Create Purchase Orders</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form30</name>
+			<display_name>Manage Customers</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form35</name>
+			<display_name>Manage Offers</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form38</name>
+			<display_name>Store Placement</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form39</name>
+			<display_name>Manage Products</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form40</name>
+			<display_name>Manage Vendors</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form41</name>
+			<display_name>Verify Addresses</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form42</name>
+			<display_name>Manage Bills</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form43</name>
+			<display_name>Manage Purchase Orders</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form44</name>
+			<display_name>Manage Pamphlets</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form45</name>
+			<display_name>Manage Service Receipts</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form46</name>
+			<display_name>Set Defaults</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form47</name>
+			<display_name>Change Password</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form48</name>
+			<display_name>Select Reports</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form49</name>
+			<display_name>Select Forms</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form50</name>
+			<display_name>Select Accounting principles</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form51</name>
+			<display_name>Access Control</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form52</name>
+			<display_name>Set Shortcut keys</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form53</name>
+			<display_name>Manage Supplier Bills</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form54</name>
+			<display_name>Select print templates</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form55</name>
+			<display_name>Virtual Store</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form56</name>
+			<display_name>Expense Register</display_name>
+			<status>active</status>
+			<value>yes</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+	</user_preferences>
+	<access_control>
+		<row>
+			<username>master</username>
+			<element_id>sync</element_id>
+			<element_name>Sync data</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>sync_mode</element_id>
+			<element_name>Change mode of operation</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report1</element_id>
+			<element_name>Signage changes</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report4</element_id>
+			<element_name>Modes of income</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report5</element_id>
+			<element_name>Defaulters</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report6</element_id>
+			<element_name>Scheduled Payments</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report8</element_id>
+			<element_name>Inventory predictions by products</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report9</element_id>
+			<element_name>Customers by product cateogries</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report11</element_id>
+			<element_name>Inventory by product category(lowest)</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report12</element_id>
+			<element_name>Inventory by product category(highest)</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report14</element_id>
+			<element_name>Expenses by period</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report15</element_id>
+			<element_name>Finances summary</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report16</element_id>
+			<element_name>Credit per customer</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report17</element_id>
+			<element_name>Staff performance</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report26</element_id>
+			<element_name>Sales by period</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report27</element_id>
+			<element_name>Expiring inventory</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report28</element_id>
+			<element_name>Required inventory</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report29</element_id>
+			<element_name>Tasks assigned by product</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report30</element_id>
+			<element_name>Staff information</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report31</element_id>
+			<element_name>Customer maps by credit</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report32</element_id>
+			<element_name>Staff maps</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report33</element_id>
+			<element_name>Supplier maps by debit</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report34</element_id>
+			<element_name>Profit calculator</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report35</element_id>
+			<element_name>Customer maps by products</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report36</element_id>
+			<element_name>Supplier maps by products</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form1</element_id>
+			<element_name>Update Inventory</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form2</element_id>
+			<element_name>Create Pamphlets</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form5</element_id>
+			<element_name>Manage Assets</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form7</element_id>
+			<element_name>Attendance</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form8</element_id>
+			<element_name>Manage Staff</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form9</element_id>
+			<element_name>Cash register</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form10</element_id>
+			<element_name>Create service receipt</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form11</element_id>
+			<element_name>Schedule payments</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form12</element_id>
+			<element_name>New Bill</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form14</element_id>
+			<element_name>Manage Tasks</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form15</element_id>
+			<element_name>Accept Returns</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form19</element_id>
+			<element_name>Manage Returns</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form21</element_id>
+			<element_name>Enter Goods Received</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form22</element_id>
+			<element_name>Dispose Items</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form24</element_id>
+			<element_name>Create Purchase Orders</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form30</element_id>
+			<element_name>Manage Customers</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form35</element_id>
+			<element_name>Manage Offers</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form38</element_id>
+			<element_name>Store Placement</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form39</element_id>
+			<element_name>Manage Products</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form40</element_id>
+			<element_name>Manage Vendors</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form41</element_id>
+			<element_name>Verify Addresses</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form42</element_id>
+			<element_name>Manage Bills</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form43</element_id>
+			<element_name>Manage Purchase Orders</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form44</element_id>
+			<element_name>Manage Pamphlets</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form45</element_id>
+			<element_name>Manage Service Receipts</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form46</element_id>
+			<element_name>Set Defaults</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form47</element_id>
+			<element_name>Change Password</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form48</element_id>
+			<element_name>Select Reports</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form49</element_id>
+			<element_name>Select Forms</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form50</element_id>
+			<element_name>Select Accounting principles</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form51</element_id>
+			<element_name>Access Control</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form52</element_id>
+			<element_name>Set Shortcut keys</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form53</element_id>
+			<element_name>Manage Supplier Bills</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form54</element_id>
+			<element_name>Select print templates</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form55</element_id>
+			<element_name>Virtual Store</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form56</element_id>
+			<element_name>Expense Register</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+	</access_control>
+	<shortcuts>
+		<row>
+			<element_id>report1</element_id>
+			<element_name>Signage changes</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report4</element_id>
+			<element_name>Modes of income</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report5</element_id>
+			<element_name>Defaulters</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report6</element_id>
+			<element_name>Scheduled Payments</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report8</element_id>
+			<element_name>Inventory predictions by products</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report9</element_id>
+			<element_name>Customers by product cateogries</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report11</element_id>
+			<element_name>Inventory by product category(lowest)</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report12</element_id>
+			<element_name>Inventory by product category(highest)</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report14</element_id>
+			<element_name>Expenses by period</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report15</element_id>
+			<element_name>Finances summary</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report16</element_id>
+			<element_name>Credit per customer</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report17</element_id>
+			<element_name>Staff performance</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report26</element_id>
+			<element_name>Sales by period</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report27</element_id>
+			<element_name>Expiring inventory</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report28</element_id>
+			<element_name>Required inventory</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report29</element_id>
+			<element_name>Tasks assigned by product</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report30</element_id>
+			<element_name>Staff information</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report31</element_id>
+			<element_name>Customer maps by credit</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report32</element_id>
+			<element_name>Staff maps</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report33</element_id>
+			<element_name>Supplier maps by debit</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report34</element_id>
+			<element_name>Profit calculator</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report35</element_id>
+			<element_name>Customer maps by products</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report36</element_id>
+			<element_name>Supplier maps by products</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form1</element_id>
+			<element_name>Update Inventory</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form2</element_id>
+			<element_name>Create Pamphlets</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form5</element_id>
+			<element_name>Manage Assets</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form7</element_id>
+			<element_name>Attendance</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form8</element_id>
+			<element_name>Manage Staff</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form9</element_id>
+			<element_name>Cash register</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form10</element_id>
+			<element_name>Create service receipt</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form11</element_id>
+			<element_name>Schedule payments</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form12</element_id>
+			<element_name>New Bill</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form14</element_id>
+			<element_name>Manage Tasks</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form15</element_id>
+			<element_name>Accept Returns</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form19</element_id>
+			<element_name>Manage Returns</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form21</element_id>
+			<element_name>Enter Goods Received</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form22</element_id>
+			<element_name>Dispose Items</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form24</element_id>
+			<element_name>Create Purchase Orders</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form30</element_id>
+			<element_name>Manage Customers</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form35</element_id>
+			<element_name>Manage Offers</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form38</element_id>
+			<element_name>Store Placement</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form39</element_id>
+			<element_name>Manage Products</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form40</element_id>
+			<element_name>Manage Vendors</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form41</element_id>
+			<element_name>Verify Addresses</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form42</element_id>
+			<element_name>Manage Bills</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form43</element_id>
+			<element_name>Manage Purchase Orders</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form44</element_id>
+			<element_name>Manage Pamphlets</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form45</element_id>
+			<element_name>Manage Service Receipts</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form46</element_id>
+			<element_name>Set Defaults</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form47</element_id>
+			<element_name>Change Password</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form48</element_id>
+			<element_name>Select Reports</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form49</element_id>
+			<element_name>Select Forms</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form50</element_id>
+			<element_name>Select Accounting principles</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form51</element_id>
+			<element_name>Access Control</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form52</element_id>
+			<element_name>Set Shortcut keys</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form53</element_id>
+			<element_name>Manage Supplier Bills</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form54</element_id>
+			<element_name>Select print templates</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form55</element_id>
+			<element_name>Virtual Store</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form56</element_id>
+			<element_name>Expense Register</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+	</shortcuts>
+</re_xml>

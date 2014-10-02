@@ -1,0 +1,72 @@
+CACHE MANIFEST
+
+#An application's cache is only updated when its manifest file changes.
+#Updating the date and version in a comment line is one way to make the browser re-cache files.
+#Modify the manifest file itself to inform the browser to refresh cached files.
+#Avoid using a continually-updating timestamp or random string to force updates every time. 
+#The manifest is checked twice during an update,
+#once at the start and once after all cached files have been updated.
+
+#these files will be cached
+CACHE:
+index.php
+main.php
+privacy_policy.php
+images/add.jpeg
+images/delete.jpeg
+images/edit.jpeg
+images/filter.jpeg
+images/home.jpeg
+images/loader.gif
+images/logout.jpeg
+images/menu.jpeg
+images/notification.jpeg
+images/offline.jpeg
+images/online.jpeg
+images/opportunity.jpeg
+images/print.jpeg
+images/reports.jpeg
+images/save.jpeg
+images/search.jpeg
+images/settings.jpeg
+images/spacer.gif
+images/sync.jpeg
+CSS/theme1.css
+JavaScripts/add_items.js
+JavaScripts/ajax.js
+JavaScripts/bcrypt.js
+JavaScripts/chart.js
+JavaScripts/delete.js
+JavaScripts/event_handler.js
+JavaScripts/fetch.js
+JavaScripts/form_display.js
+JavaScripts/forms_header_ini.js
+JavaScripts/forms_ini.js
+JavaScripts/get.js
+JavaScripts/indexeddb.js
+JavaScripts/jquery.i18n.js
+JavaScripts/jQuery.print.js
+JavaScripts/jquery-1.11.1.min.js
+JavaScripts/jquery-ui.min.js
+JavaScripts/leaflet.js
+JavaScripts/local_db_handling.js
+JavaScripts/login_helper.js
+JavaScripts/my_shortcuts.js
+JavaScripts/quickselect.js
+JavaScripts/quicksilver.js
+JavaScripts/reports_ini.js
+JavaScripts/save.js
+JavaScripts/sessions.js
+JavaScripts/shortcuts.min.js
+JavaScripts/sync.js
+JavaScripts/virtual_store.js
+
+
+#Files listed under this header require a connection to the server, and will never be cached 
+NETWROK:
+register.php
+*
+
+#optional section specifying fallback pages if a resource is inaccessible. 
+FALLBACK:
+/ offline.html

@@ -1,0 +1,27 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: RE_hindi\n"
+"POT-Creation-Date: 2014-07-12 14:34+0530\n"
+"PO-Revision-Date: 2014-07-23 12:07+0530\n"
+"Last-Translator: ashish <ashish.19goyal@gmail.com>\n"
+"Language-Team: RE <ashish.19goyal@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: ../../../\n"
+"Language: hi_IN.utf-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Hello"
+msgstr "नमस्तॆ!"
+
+msgid "Retailing Essentials"
+msgstr "व्यवसाय की जरुरत"
+
+msgid "Working Online"
+msgstr "ााप नॆत सॆ जुदॆ हॆ"
+
+msgid "Working Offline"
+msgstr "ााप नॆत सॆ नही जुदॆ हॆ"

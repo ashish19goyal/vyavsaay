@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<re_xml>
+	<customers>
+			<id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
+			<name index='yes' type='VARCHAR(90)'></name>
+			<acc_name index='yes' type='VARCHAR(100)'></acc_name>
+			<email index='yes' type="VARCHAR(100)"></email>
+			<phone index='yes' type="VARCHAR(15)"></phone>
+			<status index='yes' type='VARCHAR(45)'></status><!--active/archived/overcredit-->
+			<notes index='no' type='TEXT'></notes>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</customers>
+	<address>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<address index='yes' type="VARCHAR(100)"></address>
+			<street index='no' type="VARCHAR(100)"></street>
+			<city index='no' type="VARCHAR(45)"></city>
+			<state index='no' type="VARCHAR(45)"></state>
+			<country index='no' type="VARCHAR(45)"></country>
+			<status index='yes' type="VARCHAR(45)"></status><!-- pending analysis/unconfirmed/confirmed/incorrect -->
+			<lat index='no' type="DECIMAL(14,10)"></lat>
+			<lng index='no' type="DECIMAL(14,10)"></lng>
+			<shipping index='yes' type="BOOL"></shipping>
+			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
+			<acc_type index='no' type="VARCHAR(45)"></acc_type><!-- customer/staff/supplier  -->
+			<last_updated index='no' type="BIGINT"></last_updated> 
+	</address>
+	<documents>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<url index='no' type="TEXT"></url>
+			<doc_type index='yes' type="VARCHAR(50)"></doc_type><!-- service/service instance/staff/product/product instance/asset -->
+			<target_id index='yes' type="INT"></target_id>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</documents>
+	<staff>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(90)"></name>
+			<salary index='no' type="DECIMAL(10,2)"></salary>
+			<joining_date index='no' type="BIGINT"></joining_date>
+			<status index='yes' type="VARCHAR(45)"></status><!-- active/retired/suspended -->
+			<skills index='no' type="TEXT"></skills>
+			<fixed_comp index='no' type="DECIMAL(10,2)"></fixed_comp>
+			<variable_comp_rate index='no' type="DECIMAL(10,2)"></variable_comp_rate>
+			<acc_name index='yes' type='VARCHAR(100)'></acc_name>
+			<email index='yes' type="VARCHAR(100)"></email>
+			<phone index='yes' type="VARCHAR(15)"></phone>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</staff>
+	<attendance>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
+			<date index='yes' type="BIGINT"></date>
+			<presence index='yes' type="VARCHAR(10)"></presence><!-- present/absent/not known -->
+			<hours_worked index='no' type="INT"></hours_worked>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</attendance>
+	<task_instances>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(45)"></name>
+			<description index='no' type="TEXT"></description>
+			<t_initiated index='no' type="BIGINT"></t_initiated>
+			<t_due index='yes' type="BIGINT"></t_due>
+			<t_executed index='no' type="BIGINT"></t_executed>
+			<status index='yes' type="VARCHAR(45)"></status><!-- pending/completed/assigned -->
+			<assignee index='yes' type="VARCHAR(100)"></assignee>
+			<bill_id index='yes' type="BIGINT"></bill_id>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</task_instances>
+	<task_type>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(45)"></name>
+			<description index='no' type="TEXT"></description>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</task_type>
+	<suppliers>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(90)"></name>
+			<acc_name index='yes' type='VARCHAR(100)'></acc_name>
+			<email index='yes' type="VARCHAR(100)"></email>
+			<phone index='yes' type="VARCHAR(15)"></phone>
+			<notes index='no' type="TEXT"></notes>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</suppliers>
+	<purchase_orders>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<order_date index='yes' type="BIGINT"></order_date>
+			<supplier index='yes' type="VARCHAR(100)"></supplier>
+			<est_amount index='no' type="DECIMAL(10,2)"></est_amount>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</purchase_orders>
+	<purchase_items>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<quantity index='no' type="INT"></quantity>
+			<purchase_order index='yes' type="INT"></purchase_order>
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</purchase_items>
+	<supplier_bills>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<supplier_name index='yes' type="VARCHAR(100)"></supplier_name>
+			<amount index='no' type="DECIMAL(10,2)"></amount>
+			<bill_date index='no' type="BIGINT"></bill_date>
+			<entry_date index='no' type="BIGINT"></entry_date>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</supplier_bills>
+	<goods_received>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<quantity index='no' type="INT"></quantity>
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<batch index='yes' type="VARCHAR(50)"></batch>
+			<expiry index='yes' type="BIGINT"></expiry>
+			<sup_bill_id index='yes' type="INT"></sup_bill_id>
+			<cost_price index='no' type="DECIMAL(10,2)"></cost_price>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</goods_received>
+	<supplier_returns>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<quantity index='no' type="INT"></quantity>
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<supplier index='yes' type="VARCHAR(100)"></supplier>
+			<batch index='yes' type="VARCHAR(50)"></batch>
+			<sup_bill_id index='yes' type="INT"></sup_bill_id>
+			<reason index='yes' type="VARCHAR(20)"></reason><!-- expired/damaged/poor quality/unsold/callback -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</supplier_returns>
+	<transactions>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<trans_type index='yes' type="VARCHAR(10)"></trans_type><!-- credit/debit -->
+			<trans_date index='yes' type="BIGINT"></trans_date>
+			<amount index='no' type="DECIMAL(10,2)"></amount>
+			<d_acc index='yes' type="VARCHAR(100)"></d_acc>
+			<system_generated index='yes' type='VARCHAR(20)'></system_generated><!-- Manual/System generated -->
+			<c_acc index='yes' type="VARCHAR(100)"></c_acc>
+			<taxable index='yes' type="BOOL"></taxable>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</transactions>
+	<expenses>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<expense_date index='yes' type="BIGINT"></expense_date>
+			<amount index='no' type="DECIMAL(10,2)"></amount>
+			<to_acc index='yes' type="VARCHAR(100)"></to_acc>
+			<description index='no' type="TEXT"></description>
+			<taxable index='no' type="BOOL"></taxable>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</expenses>
+	<accounts>
+			<id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
+			<acc_name index='yes' type='VARCHAR(100)'></acc_name>
+			<balance index='no' type='DECIMAL(12,2)'></balance>
+			<description index='no' type='TEXT'></description>
+			<type index='yes' type='VARCHAR(20)'></type><!-- customer/staff/supplier/financial -->
+			<last_updated index='no' type='BIGINT'></last_updated>
+	</accounts>
+	<payments>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<status index='yes' type="VARCHAR(10)"></status><!-- pending/closed/cancelled -->
+			<type index='yes' type="VARCHAR(10)"></type><!-- received/delivered -->
+			<date index='yes' type="BIGINT"></date>
+			<amount index='no' type="DECIMAL(10,2)"></amount>
+			<acc_name index='yes' type="VARCHAR(90)"></acc_name>
+			<due_date index='yes' type="BIGINT"></due_date>
+			<transaction_id index='yes' type="INT"></transaction_id>
+			<mode index='yes' type="VARCHAR(15)"></mode><!-- cash/cheque/draft/credit card/debit card/online banking/coupons -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</payments>
+	<tax>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<transaction_id index='yes' type="INT"></transaction_id>
+			<fin_year index='yes' type="VARCHAR(10)"></fin_year>
+			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
+			<status index='no' type="VARCHAR(15)"></status><!-- current/past -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</tax>
+	<offers>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<offer_name index='no' type='VARCHAR(30)'></offer_name>
+			<offer_type index='yes' type='VARCHAR(10)'></offer_type><!-- bill/product/service -->
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<batch index='yes' type="VARCHAR(50)"></batch>
+			<service index='yes' type="VARCHAR(45)"></service>
+			<multiplicity index='no' type="VARCHAR(3)"></multiplicity><!-- yes/no -->
+			<criteria_type index='no' type="VARCHAR(25)"></criteria_type><!-- Min Amount Crossed/Min Quantity Crossed-->
+			<criteria_amount index='no' type="DECIMAL(12,0)"></criteria_amount>
+			<criteria_quantity index='no' type="DECIMAL(12,0)"></criteria_quantity>
+			<result_type index='no' type="VARCHAR(25)"></result_type><!-- Discount/Quantity Addition/Product Free -->
+			<discount_percent index='no' type="DECIMAL(4,2)"></discount_percent>
+			<discount_amount index='no' type="DECIMAL(12,2)"></discount_amount>
+			<quantity_add_percent index='no' type="DECIMAL(4,2)"></quantity_add_percent>
+			<quantity_add_amount index='no' type="DECIMAL(12,2)"></quantity_add_amount>
+			<free_product_name index='no' type="VARCHAR(90)"></free_product_name>
+			<free_product_quantity index='no' type="DECIMAL(12,2)"></free_product_quantity>
+			<end_date index='yes' type="BIGINT"></end_date>
+			<offer_detail index='no' type="TEXT"></offer_detail>
+			<status index='yes' type="VARCHAR(10)"></status><!-- active/expired/closed/extended -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</offers>
+	<stock_request>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<req_quantity index='no' type="INT"></req_quantity>
+			<request_date index='no' type="BIGINT"></request_date>
+			<status index='yes' type="VARCHAR(20)"></status><!-- suggested/verified/completed/discarded -->
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</stock_request>
+	<predicted_orders>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<quantity index='no' type="INT"></quantity>
+			<pred_date index='no' type="BIGINT"></pred_date>
+			<status index='yes' type="VARCHAR(20)"></status><!-- suggested/discarded/pursuing/completed -->
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<service_name index='yes' type="VARCHAR(45)"></service_name>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</predicted_orders>
+	<enqueued_mails>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<receiver index='yes' type="VARCHAR(100)"></receiver>
+			<subject index='no' type="VARCHAR(100)"></subject>
+			<content index='no' type="TEXT"></content>
+			<delivery_time index='yes' type="BIGINT"></delivery_time>
+			<enqueue_time index='yes' type="BIGINT"></enqueue_time>
+			<status index='yes' type="VARCHAR(45)"></status><!-- pending/discarded/completed -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</enqueued_mails>
+	<bills>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<customer_name index='yes' type="VARCHAR(100)"></customer_name>
+			<date_created index='yes' type="BIGINT"></date_created>
+			<amount index='no' type="DECIMAL(10,2)"></amount>
+			<type index="yes" type="VARCHAR(10)"></type><!-- service/product -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</bills>
+	<bill_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<quantity index='no' type="INT"></quantity>
+			<price index='no' type="DECIMAL(10,2)"></price>
+			<bill_id index='yes' type="INT"></bill_id>
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<batch index='yes' type="VARCHAR(50)"></batch>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</bill_items>
+	<returns>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<bill_id index='yes' type="INT"></bill_id>
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<batch index='yes' type="VARCHAR(50)"></batch>
+			<amount index='no' type="DECIMAL(10,2)"></amount>
+			<quantity index='no' type="INT"></quantity>
+			<customer index="yes" type="VARCHAR(100)"></customer>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</returns>
+	<service_instances>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<bill_id index='yes' type="INT"></bill_id>
+			<next_due_date index='yes' type="BIGINT"></next_due_date>
+			<estimated_cost index='no' type="DECIMAL(10,2)"></estimated_cost>
+			<actual_cost index='no' type="DECIMAL(10,2)"></actual_cost>
+			<service_name index='yes' type="VARCHAR(45)"></service_name>
+			<instructions index='no' type="TEXT"></instructions>
+			<staff index='yes' type="VARCHAR(100)"></staff>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</service_instances>
+	<services>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(45)"></name>
+			<description index='no' type="TEXT"></description>
+			<estimated_cost index='no' type="DECIMAL(10,2)"></estimated_cost>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</services>
+	<product_instances>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<batch index='yes' type="VARCHAR(45)"></batch>
+			<bar_code index='yes' type="VARCHAR(45)"></bar_code>
+			<quantity index='no' type="INT"></quantity>
+			<expiry index='yes' type="BIGINT"></expiry>
+			<price index='no' type="DECIMAL(10,2)"></price>
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</product_instances>
+	<product_master>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(90)"></name>
+			<description index='no' type="TEXT"></description>
+			<make index='yes' type="VARCHAR(45)"></make>
+			<product_type index='yes' type="VARCHAR(90)"></product_type>
+			<est_price index="no" type="DECIMAL(10,2)"></est_price>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</product_master>
+	<area_utilization>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(25)"></name>
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<batch index='yes' type="VARCHAR(50)"></batch>
+			<quantity index='no' type="INT"></quantity>
+			<service_name index='yes' type="VARCHAR(45)"></service_name>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</area_utilization>
+	<store_areas>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(25)"></name>
+			<area_type index='yes' type="VARCHAR(10)"></area_type><!-- storey/block/door/storage -->
+			<height index='no' type="INT"></height>
+			<width index='no' type="INT"></width>
+			<length index='no' type="INT"></length>
+			<locx index='no' type="INT"></locx>
+			<locy index='no' type="INT"></locy>
+			<locz index='no' type="INT"></locz>
+			<storey index='yes' type="VARCHAR(25)"></storey>
+			<color index='no' type='VARCHAR(10)'></color>
+			<radius index='no' type="INT"></radius>
+			<loc_type index='yes' type="VARCHAR(10)"></loc_type><!-- internal/external -->
+			<faceEast index='no' type="VARCHAR(3)"></faceEast><!-- yes/no -->
+			<faceWest index='no' type="VARCHAR(3)"></faceWest><!-- yes/no -->
+			<faceNorth index='no' type="VARCHAR(3)"></faceNorth><!-- yes/no -->
+			<faceSouth index='no' type="VARCHAR(3)"></faceSouth><!-- yes/no -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</store_areas>
+	<assets>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<date_inc index='no' type="BIGINT"></date_inc>
+			<expected_life index='no' type="INT"></expected_life>
+			<type index='yes' type="VARCHAR(25)"></type><!-- information/intellectual property/machine/facility/computer system/PDA/others -->
+			<name index='yes' type="VARCHAR(45)"></name>
+			<value index='no' type="DECIMAL(10,2)"></value>
+			<owner index='yes' type="VARCHAR(100)"></owner>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</assets>
+	<asset_valuations>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<date_valuated index='no' type="BIGINT"></date_valuated>
+			<value index='no' type="DECIMAL(10,2)"></value>
+			<asset_name index='yes' type="VARCHAR(45)"></asset_name>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</asset_valuations>
+	<asset_maintenance>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<date_maintained index='no' type="BIGINT"></date_maintained>
+			<activity index='no' type="TEXT"></activity>
+			<asset_name index='yes' type="VARCHAR(45)"></asset_name>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</asset_maintenance>
+	<pamphlets>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(50)"></name>
+			<count_items index='no' type="INT"></count_items>
+			<template index='yes' type="VARCHAR(45)"></template>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</pamphlets>
+	<pamphlet_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<pamphlet_id index='yes' type="INT"></pamphlet_id>
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<price index='no' type="DECIMAL(10,2)"></price>
+			<offer_id index='yes' type="INT"></offer_id>
+			<offer index='no' type="TEXT"></offer>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</pamphlet_items>
+	<disposals>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<product_name index='yes' type="VARCHAR(100)"></product_name>
+			<batch index='yes' type="VARCHAR(50)"></batch>
+			<quantity index='no' type="INT"></quantity>
+			<method index='yes' type="TEXT"></method><!-- Destroyed/Sold/Recycled -->
+			<date index='no' type="BIGINT"></date>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</disposals>
+	<activities>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<title index='yes' type="VARCHAR(300)"></title>
+			<notes index='no' type="TEXT"></notes>
+			<link_to index='no' type="VARCHAR(300)"></link_to>
+			<tablename index='yes' type="VARCHAR(30)"></tablename>
+			<type index='yes' type="VARCHAR(10)"></type><!-- create/delete/update -->
+			<data_id index='no' type="BIGINT"></data_id>
+			<data_xml index='no' type="TEXT"></data_xml>
+			<user_display index='yes' type="VARCHAR(3)"></user_display><!-- yes/no -->
+			<status index='yes' type="VARCHAR(20)"></status><!-- synced/unsynced -->
+			<updated_by index='yes' type='VARCHAR(100)'></updated_by>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</activities>
+	<notifications>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<t_generated index='yes' type="BIGINT"></t_generated>
+			<data_id index='no' type="BIGINT"></data_id>
+			<title index='yes' type="VARCHAR(300)"></title>
+			<notes index='no' type="TEXT"></notes>
+			<link_to index='no' type="VARCHAR(300)"></link_to>
+			<status index='yes' type="VARCHAR(20)"></status><!-- pending/reviewed/closed -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</notifications>
+	<opportunities>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<t_occured index='yes' type="BIGINT"></t_occured>
+			<data_id index='no' type="BIGINT"></data_id>
+			<title index='yes' type="VARCHAR(300)"></title>
+			<notes index='no' type="TEXT"></notes>
+			<link_to index='no' type="VARCHAR(300)"></link_to>
+			<status index='yes' type="VARCHAR(20)"></status><!-- pending/reviewed/closed -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</opportunities>
+	<user_preferences>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(30)"></name>
+			<display_name index="no" type="VARCHAR(50)"></display_name>
+			<value index='no' type="VARCHAR(30)"></value>
+			<type index='yes' type="VARCHAR(20)"></type><!-- function/report/form/accounting/other/template -->
+			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</user_preferences>
+	<user_profiles>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<username index='yes' type="VARCHAR(50)"></username>
+			<password index='no' type="VARCHAR(200)"></password>
+			<name index='no' type="VARCHAR(90)"></name>
+			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</user_profiles>
+	<access_control>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<element_id index='yes' type="VARCHAR(10)"></element_id>
+			<element_name index='yes' type="VARCHAR(100)"></element_name>
+			<username index='yes' type="VARCHAR(50)"></username>
+			<re index="no" type="VARCHAR(10)"></re><!-- checked/unchecked -->
+			<cr index="no" type="VARCHAR(10)"></cr><!-- checked/unchecked -->
+			<up index="no" type="VARCHAR(10)"></up><!-- checked/unchecked -->
+			<del index="no" type="VARCHAR(10)"></del><!-- checked/unchecked -->
+			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</access_control>
+	<shortcuts>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<element_id index='yes' type="VARCHAR(10)"></element_id>
+			<element_name index='yes' type="VARCHAR(100)"></element_name>
+			<shortcut index='yes' type="VARCHAR(10)"></shortcut>
+			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</shortcuts>
+	<templates>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(100)"></name>
+			<type index='yes' type="VARCHAR(20)"></type><!-- sale bill/purchase order/payment receipt/credit note/pamphlet/service receipt/return receipt -->
+			<header index="no" type="TEXT"></header>
+			<footer index="no" type="TEXT"></footer>
+			<row index="no" type="TEXT"></row>
+			<header_fields index="no" type="INT"></header_fields>
+			<footer_fields index="no" type="INT"></footer_fields>
+			<row_fields index="no" type="INT"></row_fields>
+			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</templates>
+	<values_list>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<tablename index='yes' type="VARCHAR(30)"></tablename>
+			<listname index='yes' type="VARCHAR(30)"></listname>
+			<name index='no' type="VARCHAR(30)"></name>
+			<value index='no' type="VARCHAR(30)"></value>
+			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</values_list>
+</re_xml>

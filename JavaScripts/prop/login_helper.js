@@ -1,0 +1,433 @@
+/**
+ * This function executes the login opertation
+ */
+function login_action()
+{
+	//document.getElementById("failed_auth").innerHTML="Verifying credentials!";
+	show_loader();
+	//console.log("1. inside login_action()");
+	//var login_status="failed_auth";
+	var l_id=document.getElementById("l_id").value;
+	var index=l_id.indexOf("@");
+	var domain="";
+	var username="";
+	if(index===-1)
+	{
+		domain=l_id;
+		username="master";
+	}
+	else
+	{
+		domain=l_id.substr(index+1);
+		username=l_id.substr(0,index);
+	}
+	//console.log(domain);
+	var pass=document.getElementById("l_pass").value;
+	try_local_db_login(username,domain,function(result)
+	{
+		//console.log("4. inside onsucess function of verification inside login action");
+		var password="p";
+		
+		//console.log("4. data returned for password: "+data);
+		if(result) { password=result.password;}
+		
+		//console.log("4. password hash returned from local db : "+password);
+		//hashing password for verification
+		var salt='$2a$10$'+domain+'1234567891234567891234';
+		var salt_22=salt.substring(0, 29);
+		//console.log("salt: "+salt_22);
+		
+		var bcrypt = new bCrypt();
+		bcrypt.hashpw(pass, salt_22, function(newhash)
+		{
+			//console.log("user provided: "+newhash);
+			//console.log("system provided: "+password);
+			if(newhash.substring(3)==password.substring(3))
+			{
+				//console.log("----------logging offline--------");
+				set_session_variables(domain,username,pass);
+			}
+			else
+			{
+				//console.log("-----------logging online----------");
+				login_online(username,domain,pass);
+			}
+			
+			//console.log("4. exiting onsucess function of verification inside login_action");
+			
+		}, function() {});
+		
+	},function()
+	{
+		//console.log("-----------logging online----------");
+		login_online(username,domain,pass);
+		//console.log("5. exiting onerror function of verification inside login_action");
+	});
+
+	console.log("1.1 login_action() exited");
+}
+
+
+function login_online(username,domain,pass)
+{
+	ajax_with_custom_func("./ajax/login.php","domain="+domain+"&user="+username+"&pass="+pass,function(e)
+	{
+		login_status=e.responseText;
+		var session_xml=e.responseXML;
+		//console.log(login_status);
+		//console.log("this is session variable"+session_xml);
+		if(login_status=="failed_auth")
+		{
+			document.getElementById("failed_auth").innerHTML="Login failed, try again!";
+			hide_loader();
+		}
+		else
+		{
+			var session_var=session_xml.getElementsByTagName('session');
+			var session_vars=new Object();
+			var num_svar=session_var[0].childElementCount;
+			//console.log(num_svar);
+			for(var z=0;z<num_svar;z++)
+			{
+				session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].innerHTML;
+				//console.log();
+			}
+			
+			ini_session(domain,username);
+			set_session(session_vars);
+		}
+	});
+
+}
+
+
+/**
+ * This function sets the session variables from offline after the login is successful
+ * @param domain
+ * @param username
+ */
+function set_session_variables(domain,username,pass)
+{
+	//console.log("2. inside set_session_variables()");
+	var db_name="re_local_"+domain;
+	
+	
+	sklad.open(db_name,{
+		version:2
+	},function (err,database)
+	{
+		if(err)
+		{
+			console.log(err);
+		}
+		//console.log("reading session variables from database");		
+		database.get('user_preferences', {},function(err,records)
+		{
+			//console.log("inside user_preferences table");
+			if(err)
+			{
+				console.log(err);
+			}
+			var data=new Object();
+			for(var row in records)
+			{
+				var row_data=records[row];
+				//console.log(row_data);
+				data[row_data['name']]=row_data['value'];
+			};
+			data.session='yes';
+			data.domain=domain;
+			data.username=username;
+			if(data.offline==='online')
+			{
+				login_online(username,domain,pass);
+			}
+			else
+			{
+				database.get('user_profiles',{
+					index:'username',
+					range: IDBKeyRange.only(username)
+					},function(err,records2)
+				{
+						for(var row in records2)
+						{
+							data.name=records2[row].name;
+						}
+	
+						database.get('access_control',{
+							},function(err,records3)
+						{
+								var re='';
+								var cr='';
+								var up='';
+								var del='';
+								for(var r in records3)
+								{
+									var r_data=records3[r];
+									if(r_data.status==='active' && r_data.username===username)
+									{
+										if(r_data.re==='checked')
+										{	
+											console.log("re element "+r_data.element_id);
+											re+=r_data.element_id+"-";
+										}
+										if(r_data.cr==='checked')
+										{	
+											console.log("cr element "+r_data.element_id);
+											cr+=r_data.element_id+"-";
+										}
+										if(r_data.up==='checked')
+										{
+											console.log("up element "+r_data.element_id);
+											up+=r_data.element_id+"-";
+										}
+										if(r_data.del==='checked')
+										{
+											console.log("del element "+r_data.element_id);
+											del+=r_data.element_id+"-";
+										}
+									}
+								}
+								data.re=re;
+								data.cr=cr;
+								data.up=up;
+								data.del=del;
+								//console.log("these are session variables: "+data);
+								set_session(data);
+						});
+				});
+			}
+		});
+	
+		console.log("2.1 set_session_variables() exited");
+	});
+};
+
+/**
+ * This function tries to check if local db exists and contains the right password
+ * @param domain domain to look for the specific database
+ * @param func_success function to be executed if the login is successful
+ * @param func_failure fucntion to be executed if login fails
+ */
+function try_local_db_login(username,domain,func_success,func_failure)
+{
+	////////////checking if indexed db is supported/////////////////
+	if("indexedDB" in window)
+	{
+		console.log("3. inside try_local_db()");
+		var db_name="re_local_" + domain;
+		var request = indexedDB.open(db_name);
+		
+		request.onsuccess=function(e)
+		{
+			console.log("3. inside onsucess function of db access inside try_local_db_login");
+			db=e.target.result;
+			if(!db.objectStoreNames.contains("user_profiles"))
+			{
+				console.log("3.1 inside the if section of onsuccess function of try_local_db_login");
+				var deleterequest=indexedDB.deleteDatabase(db_name);
+				deleterequest.onsuccess=func_failure();
+			}
+			else
+			{
+				console.log("3.2 inside the else section of onsuccess function of try_local_db_login");
+				var tran=db.transaction("user_profiles","readonly");
+				var table = tran.objectStore("user_profiles");
+				
+				var index=table.index("username");
+				var records=index.get(username);
+				
+				records.onsuccess=function(e)
+				{
+					var result;
+					    // IE 9 implementation
+						if(e.result){
+							result = e.result;
+							}
+						// IE 10, Chrome and Firefox implementation
+						else if (records.result){
+							result = records.result;
+							}
+						console.log("3.3 successfully retrieved local password");
+						
+						func_success(result);
+						
+				};
+				records.onerror=function(e)
+				{
+					console.log("could not retrieve password");
+					func_failure();
+				};
+			}
+
+			console.log("3. exiting onsucess function of db access inside try_local_db_login");
+			db.close();
+		};
+		
+		request.onerror = function(e)
+		{
+			console.log("db could not be opened, so login online");
+			db=e.target.result;
+			db.close();
+			func_failure();
+		};
+	}
+	else
+	{
+		func_failure();
+	}
+	
+};
+
+/**
+ * This fucntion validates that the passwords match during registration process
+ */
+function match_password()
+{
+	var pass1=document.getElementById("r_pass1").value;
+	var pass2=document.getElementById("r_pass2").value;
+	if(pass1==pass2 && pass1!="")
+	{
+		document.getElementById("password_match_validation").innerHTML="Match!!";
+		document.getElementById("password_match_validation").value="correct";
+	}	
+	else
+	{
+		document.getElementById("password_match_validation").innerHTML="Passwords do not match!";
+		document.getElementById("password_match_validation").value="incorrect";
+	}
+	
+}
+
+
+/**
+ * This function is run to set the preferences during registration process
+ */
+function register_click()
+{
+	var email=document.getElementById("r_email").value;
+	var name=document.getElementById("r_name").value;
+	var pass=document.getElementById("r_pass1").value;
+	var phone=document.getElementById("r_phone").value;
+	var userid=document.getElementById("r_id").value;
+	var e0=document.getElementById("r_industry");
+	var industry=e0.options[e0.selectedIndex].value;
+	var userid_valid=document.getElementById("userid_validation").value;
+	var emailid_valid=document.getElementById("emailid_validation").value;
+	var pass_valid=document.getElementById("password_match_validation").value;
+	
+	if(userid=="" || email=="" || name=="" || pass=="" || industry=="" || phone=="")
+	{	
+		document.getElementById("failed_register").innerHTML="Please fill in all the details to proceed!";
+	}
+	else if(userid_valid=="incorrect" || emailid_valid=="incorrect" || pass_valid=="incorrect")
+	{
+		console.log(userid_valid+emailid_valid+pass_valid);
+		document.getElementById("failed_register").innerHTML="Please update the incorrect fields to proceed!";
+	}
+	else	
+	{
+		show_loader();
+		var post_data="userid="+userid+
+						"&email="+email+
+						"&name="+name+
+						"&pass="+pass+
+						"&industry="+industry+
+						"&phone="+phone;
+
+		console.log("about to execute ajax call");
+		
+		ajax_with_custom_func("./ajax/user_db_creation.php","userid="+userid,function(e2)
+		{
+			if(e2.responseText=="")
+			{
+				ajax_with_custom_func("./ajax/register.php",post_data,function(e)
+				{
+					if(e.responseText=="successful")
+					{
+						$("#r_register").slideUp();
+						document.getElementById("r_complete").innerHTML="Registration complete, <a href='index.php'>click here</a> to login";
+					}
+					else
+					{
+						document.getElementById("failed_register").innerHTML="An error occured, please try again.";
+						console.log(e.responseText);
+					}
+					hide_loader();
+				});
+			}
+			else
+			{
+				document.getElementById("failed_register").innerHTML="An error occured, please try again.";
+				hide_loader();
+				console.log(e2.responseText);
+			}	
+		});
+	}
+}
+
+/**
+ * This function checks if the desired user id has already been taken
+ */
+function userid_validation()
+{
+	var userid=document.getElementById("r_id").value;
+	
+	if(userid!="")
+	{
+		var match=userid.match(/[a-z0-9]*/i);
+		//console.log(match);
+		if(match[0].length!=userid.length)
+		{
+			document.getElementById("userid_validation").innerHTML="The UserId is invalid, it can only contain alpha-numeric characters";
+			document.getElementById("userid_validation").value="incorrect";
+		}
+		else
+		{
+			ajax_with_custom_func("./ajax/verify_id.php","userid="+userid,function(e)
+			{
+				status=e.responseText;
+				console.log(status);
+				if(status=="match")
+				{
+					document.getElementById("userid_validation").innerHTML="This ID already exists, choose a different ID.";
+					document.getElementById("userid_validation").value="incorrect";
+				}
+				else
+				{
+					document.getElementById("userid_validation").innerHTML="User ID is available.";
+					document.getElementById("userid_validation").value="correct";
+				}
+	
+			});
+		}
+	}
+}
+
+/**
+ * This function checks if the email id is already registered for an account
+ */
+function emailid_validation()
+{
+	var emailid=document.getElementById("r_email").value;
+	
+	if(emailid!="")
+	{
+		ajax_with_custom_func("./ajax/verify_id.php","&email="+emailid,function(e)
+		{
+			status=e.responseText;
+			console.log(status);
+			if(status=="match")
+			{
+				document.getElementById("emailid_validation").innerHTML="This email ID is already registered, choose a different ID.";
+				document.getElementById("emailid_validation").value="incorrect";
+			}
+			else
+			{
+				document.getElementById("emailid_validation").innerHTML="";
+				document.getElementById("emailid_validation").value="correct";
+			}
+
+		});
+	}
+}

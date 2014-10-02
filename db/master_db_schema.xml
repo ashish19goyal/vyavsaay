@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<re_xml>
+	<user_profile>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<username index='no' type="VARCHAR(100) NOT NULL"></username>
+			<phone index='no' type="VARCHAR(15) NOT NULL"></phone>
+			<name index='no' type="VARCHAR(90)"></name>
+			<status index='no' type="VARCHAR(45)"></status><!-- active/suspended/archived -->
+			<dbname index='no' type="VARCHAR(100)"></dbname>
+			<email index='no' type="VARCHAR(100)"></email>
+	</user_profile>		
+	<feed_item>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<t_generated index='no' type="BIGINT"></t_generated>
+			<heading index='no' type="TEXT"></heading>
+			<detail index='no' type="TEXT"></detail>
+			<industry index='no' type="VARCHAR(45)"></industry>
+			<status index='no' type="VARCHAR(10)"></status><!-- active/archived -->
+	</feed_item>
+	<templates>
+			<id index='no' type="INT NOT NULL AUTO_INCREMENT"></id>
+			<name index='no' type="VARCHAR(100)"></name>
+			<header index='no' type="TEXT"></header>
+			<footer index='no' type="TEXT"></footer>
+			<row index='no' type="TEXT"></row>
+			<header_fields index='no' type="INT"></header_fields>
+			<footer_fields index='no' type="INT"></footer_fields>
+			<row_fields index='no' type="INT"></row_fields>
+			<type index='no' type="VARCHAR(20)"></type><!-- bill/purchase order/payment receipt/credit note/pamphlet/service receipt/return receipt -->
+			<status index='no' type="VARCHAR(10)"></status><!-- active/inactive -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</templates>
+	<values_list>
+			<id index='no' type="INT NOT NULL AUTO_INCREMENT"></id>
+			<tablename index='no' type="VARCHAR(30)"></tablename>
+			<listname index='no' type="VARCHAR(30)"></listname>
+			<name index='no' type="VARCHAR(30)"></name>
+			<value index='no' type="VARCHAR(30)"></value>
+			<status index='no' type="VARCHAR(10)"></status><!-- active/inactive -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</values_list>
+</re_xml>
