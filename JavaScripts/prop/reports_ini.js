@@ -5,12 +5,135 @@
 function report1_ini()
 {
 	var form=document.getElementById('report1_header');
-	var date_since=form.elements[1];
-	var product_filter=form.elements[2];
+	var date_since=form.elements[1].value;
+	var product_filter=form.elements[2].value;
 
-	fetch_requested_data('report1',modes_data,function(modes)
+	$('#form1_body').html('');
+
+	/////appending new arrivals details
+	var product_data="<goods_received>" +
+			"<product_name>"+product_filter+"</product_name>" +
+			"<sup_bill_id></sup_bill_id>" +
+			"<last_updated compare='more than'>"+get_raw_time(date_since)+"</last_updated>" +
+			"</goods_received>";
+	
+	get_single_column_data(function(products)
 	{
-
+		var rowsHTML="";
+		
+		for(var k in products)
+		{
+			var bill_id_data="<goods_received>" +
+					"<product_name>"+products[k]+"</product_name>" +
+					"<sup_bill_id></sup_bill_id>" +
+					"<batch></batch>" +
+					"</goods_received>";
+			
+			fetch_requested_data('report1',bill_id_data,function(bill_ids)
+			{
+				var sup_bill_id_array="";
+				for(var j in bill_ids)
+				{
+					sup_bill_id_array+=bill_ids[j].sup_bill_id+"--";
+				}
+				
+				var sup_bill_data="<supplier_bills>" +
+						"<id array='yes'>"+sup_bill_id_array+"</id>" +
+						"<entry_date compare='less than'>"+get_raw_time(date_since)+"</entry_date>" +
+						"</supplier_bills>";
+			
+				fetch_requested_data('report1',sup_bill_data,function(bill_entries)
+				{
+					if(bill_entries.length==0)
+					{
+						var store_data="<area_utilization>" +
+						"<name></name>" +
+						"<product_name>"+offers[i].product_name+"</product_name>" +
+						"<batch>"+offers[i].batch+"</batch>" +
+						"</area_utilization>";
+				
+						fetch_requested_data('report1',store_data,function(areas)
+						{
+							var areas_string="";
+							for(var x in areas)
+							{
+								areas_string+=areas[x].name+", ";
+							}
+							areas_string=rtrim(areas_string,", ");
+							rowsHTML+="<tr>";
+								rowsHTML+="<td>";
+									rowsHTML+=bill_ids[j].product_name;
+								rowsHTML+="</td>";
+								rowsHTML+="<td>";
+									rowsHTML+=bill_ids[j].batch;
+								rowsHTML+="</td>";
+								rowsHTML+="<td>";
+									rowsHTML+=areas_string;
+								rowsHTML+="</td>";
+								rowsHTML+="<td>";
+									rowsHTML+="New Arrival";
+								rowsHTML+="</td>";
+								rowsHTML+="<td>";
+									rowsHTML+="New product";
+								rowsHTML+="</td>";
+							rowsHTML+="</tr>";						
+						});
+					}
+				});
+			}
+		}
+		$('#form1_body').append(rowsHTML);
+	},product_data);
+	
+/////appending offer details
+	var offer_data="<offers>" +
+			"<product_name>"+product_filter+"</product_name>" +
+			"<batch></batch>" +
+			"<offer_detail></offer_detail>" +
+			"<status></status>" +
+			"<last_updated compare='more than'>"+get_raw_time(date_since)+"</last_updated>" +
+			"</offers>";
+	
+	fetch_requested_data('report1',offer_data,function(offers)
+	{
+		var rowsHTML="";
+		for(var i in offers)
+		{
+			var store_data="<area_utilization>" +
+					"<name></name>" +
+					"<product_name>"+offers[i].product_name+"</product_name>" +
+					"<batch>"+offers[i].batch+"</batch>" +
+					"</area_utilization>";
+			
+			fetch_requested_data('report1',store_data,function(areas)
+			{
+				var areas_string="";
+				for(var x in areas)
+				{
+					areas_string+=areas[x].name+", ";
+				}
+				areas_string=rtrim(areas_string,", ");
+				rowsHTML+="<tr>";
+					rowsHTML+="<td>";
+						rowsHTML+=offers[i].product_name;
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+=offers[i].batch;
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+=areas_string;
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+=offers[i].status;
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+=offers[i].offer_detail;
+					rowsHTML+="</td>";
+				rowsHTML+="</tr>";
+			
+			});
+		}
+		$('#form1_body').append(rowsHTML);
 	});
 };
 

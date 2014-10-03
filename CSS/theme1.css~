@@ -15,7 +15,7 @@ input{
 	width: auto; 
 }
 
-input[type="text"]:focus,input[type="password"]:focus{
+input[type="text"]:focus{
 	background-color: yellow;
 	outline: none;
 	-webkit-transform: scale(1.5,3) translate(20%,20%);
