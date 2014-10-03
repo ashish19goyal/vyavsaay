@@ -993,3 +993,19 @@ function form56_header_ini()
 	$(date_filter).datepicker();
 	$(date_filter).val(get_my_date());
 };
+
+/**
+ * @form Manage services
+ * @formNo 57
+ */
+function form57_header_ini()
+{
+	var filter_fields=document.getElementById('form57_header');
+	var service_filter=filter_fields.elements[0];
+	
+	var service_data="<services>" +
+			"<name></name>" +
+			"</services>";
+	
+	set_my_filter(service_data,service_filter);
+};

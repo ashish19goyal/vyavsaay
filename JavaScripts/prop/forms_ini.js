@@ -1750,7 +1750,6 @@ function form55_ini(fid)
 	});
 }
 
-
 /**
  * @form Expense Register
  * @formNo 56
@@ -1803,6 +1802,51 @@ function form56_ini(fid)
 	});
 };
 
+/**
+ * @form manage services
+ * @formNo 57
+ */
+function form57_ini(fid)
+{
+	var filter_fields=document.getElementById('form57_header');
+	
+	var fservices=filter_fields.elements[0].value;
+	
+	var columns="<services>" +
+			"<id>"+fid+"</id>" +
+			"<name>"+fservices+"</name>" +
+			"<description></description>" +
+			"<estimated_cost></estimated_cost>" +
+			"</services>";
+
+	fetch_requested_data('form57',columns,function(results)
+	{
+		var rowsHTML="";
+	
+		for(var i in results)
+		{
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form57_"+results[i].id+"'></form>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form57_"+results[i].id+"' value='"+results[i].name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form57_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].description+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form57_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].estimated_cost+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='hidden' form='form57_"+results[i].id+"' value='"+results[i].id+"'>";
+						rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form57_"+results[i].id+"' value='Save' onclick='form57_save_item($(this));'>";
+						rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form57_"+results[i].id+"' value='Delete' onclick='form57_delete_item($(this));'>";	
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+		}
+		//console.log(rowsHTML);
+		$('#form57_body').html(rowsHTML);	
+	});
+};
 
 function notifications_ini()
 {

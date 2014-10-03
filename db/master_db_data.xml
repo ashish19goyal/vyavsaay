@@ -88,6 +88,62 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>pre_requisites</tablename>
+			<listname>requisite_type</listname>
+			<name>service</name>
+			<value>Service</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>pre_requisites</tablename>
+			<listname>requisite_type</listname>
+			<name>product</name>
+			<value>Product</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>pre_requisites</tablename>
+			<listname>requisite_type</listname>
+			<name>task</name>
+			<value>Task</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>pre_requisites</tablename>
+			<listname>type</listname>
+			<name>service</name>
+			<value>Service</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>pre_requisites</tablename>
+			<listname>type</listname>
+			<name>product</name>
+			<value>Product</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>product_master</tablename>
+			<listname>manufacture</listname>
+			<name>yes</name>
+			<value>Yes</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>product_master</tablename>
+			<listname>manufacture</listname>
+			<name>no</name>
+			<value>No</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>tax</tablename>
 			<listname>status</listname>
 			<name>current</name>

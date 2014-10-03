@@ -33,6 +33,22 @@ function report4_header_ini()
 }
 
 /**
+* @reportNo 5
+* @report Customers account balances
+*/
+function report5_header_ini()
+{	
+	var form=document.getElementById('report5_header');
+	var balance=form.elements[1];
+	var customer_filter=form.elements[2];
+	
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_value_list(customer_data,customer_filter);
+}
+
+/**
  * @reportNo 6
  * @report Payments due from customers
  */
@@ -49,6 +65,41 @@ function report6_header_ini()
 	
 	$(due_date).datepicker();
 	$(due_date).val(get_my_date());
+}
+
+/**
+ * @reportNo 9
+ * @report Product sales report
+ */
+function report9_header_ini()
+{	
+	var form=document.getElementById('report9_header');
+	var name_filter=form.elements[1];
+	var make_filter=form.elements[2];
+	var type_filter=form.elements[3];
+	var customer_filter=form.elements[4];
+	var date_filter=form.elements[5];
+	
+	var name_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var make_data="<product_master>" +
+			"<make></make>" +
+			"</product_master>";
+	var type_data="<product_master>" +
+			"<product_type></product_type>" +
+			"</product_master>";
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	set_my_value_list(name_data,name_filter);
+	set_my_value_list(make_data,make_filter);
+	set_my_value_list(type_data,type_filter);
+	set_my_value_list(customer_data,customer_filter);
+	
+	$(date_filter).datepicker();
+	$(date_filter).val(get_my_date());
 }
 
 /**
@@ -71,6 +122,29 @@ function report14_header_ini()
 	$(end_date).datepicker();
 	$(start_date).val(get_my_date());
 	$(end_date).val(get_my_date());
+}
+
+/**
+ * @reportNo 17
+ * @report Staff performance
+ */
+function report17_header_ini()
+{	
+	var form=document.getElementById('report17_header');
+	var from_filter=form.elements[1];
+	var to_filter=form.elements[2];
+	var staff_filter=form.elements[3];
+	
+	var staff_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	
+	set_my_value_list(staff_data,staff_filter);
+	
+	$(from_filter).datepicker();
+	$(from_filter).val(get_my_date());
+	$(to_filter).datepicker();
+	$(to_filter).val(get_my_date());
 }
 
 /**
@@ -129,6 +203,23 @@ function report28_header_ini()
 			"</product_master>";
 	set_my_filter(product_data,product_filter);
 	
+}
+
+/**
+ * @reportNo 29
+ * @report Pre-requisites for products
+ */
+function report29_header_ini()
+{	
+	var form=document.getElementById('report29_header');
+	var product_filter=form.elements[1];
+	
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"<manufacture>yes</manufacture>" +
+			"</product_master>";
+	
+	set_my_value_list(product_data,product_filter);
 }
 
 
@@ -191,6 +282,27 @@ function report33_header_ini()
 		}});
 	$(amount).val("Rs. "+$("#form33_slider").slider("values",0)+" - Rs. "+$("#form33_slider").slider("values",1));
 }
+
+/**
+ * @reportNo 34
+ * @report Profit calculator
+ */
+function report34_header_ini()
+{	
+	var form=document.getElementById('report34_header');
+	var amount=form.elements[1];
+
+	$("#form34_slider").slider({
+		range: 'min',
+		min: 0,
+		max: 50000000,
+		value: 10000000,
+		slide: function(event,ui){
+			$(amount).val("Rs. "+ui.value);
+		}});
+	$(amount).val("Rs. "+$("#form34_slider").slider("value"));
+}
+
 
 function report35_header_ini()
 {	
@@ -290,4 +402,20 @@ function report40_header_ini()
 			"</product_master>";
 	set_my_filter(product_data,product_filter);
 	
+}
+
+/**
+ * @reportNo 41
+ * @report Pre-requisites for services
+ */
+function report41_header_ini()
+{	
+	var form=document.getElementById('report41_header');
+	var service_filter=form.elements[1];
+	
+	var service_data="<services>" +
+			"<name></name>" +
+			"</services>";
+	
+	set_my_value_list(service_data,service_filter);
 }

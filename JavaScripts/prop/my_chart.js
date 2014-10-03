@@ -185,3 +185,26 @@ function transform_to_multi_bar_sum(data_array0,data_array1,label_display0,label
 	}
 	return result;
 }
+
+function transform_to_sum_2columns(data_array,sum_column,filter_column1,filter_column2)
+{
+	var result=new Array();
+	for(var i=0; i<data_array.length;i++)
+	{
+		var new_obj=new Object();
+		new_obj[filter_column1]=data_array[i][filter_column1];
+		new_obj[filter_column2]=data_array[i][filter_column2];
+		new_obj[sum_column]=parseInt(data_array[i][sum_column]);
+		for(var j=i+1;j<data_array.length;j++)
+		{
+			if(data_array[j][filter_column1]==new_obj[filter_column1] && data_array[j][filter_column2]==new_obj[filter_column2])
+			{
+				new_obj[sum_column]+=parseInt(data_array[j][sum_column]);
+				data_array.splice(j,1);
+				j-=1;
+			}
+		}
+		result.push(new_obj);
+	}
+	return result;
+}

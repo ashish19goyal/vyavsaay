@@ -64,12 +64,14 @@
 			<status index='yes' type="VARCHAR(45)"></status><!-- pending/completed/assigned -->
 			<assignee index='yes' type="VARCHAR(100)"></assignee>
 			<bill_id index='yes' type="BIGINT"></bill_id>
+			<task_hours index='no' type="DECIMAL(5,2)"></task_hours>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</task_instances>
 	<task_type>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(45)"></name>
 			<description index='no' type="TEXT"></description>
+			<est_hours index='no' type="DECIMAL(5,2)"></est_hours>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</task_type>
 	<suppliers>  
@@ -284,8 +286,20 @@
 			<make index='yes' type="VARCHAR(45)"></make>
 			<product_type index='yes' type="VARCHAR(90)"></product_type>
 			<est_price index="no" type="DECIMAL(10,2)"></est_price>
+			<manufacture index='no' type="VARCHAR(3)"></manufacture><!-- yes/no -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</product_master>
+	<pre_requisites>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(90)"></name>
+			<type index='no' type="VARCHAR(10)"></type><!-- service/product -->
+			<requisite_type index='no' type="VARCHAR(10)"></requisite_type><!-- service/product/task -->
+			<product_name index='no' type="VARCHAR(90)"></product_name>
+			<service_name index='no' type="VARCHAR(45)"></service_name>
+			<task_name index='no' type="VARCHAR(45)"></task_name>
+			<quantity index="no" type="DECIMAL(10,2)"></quantity>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</pre_requisites>
 	<area_utilization>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(25)"></name>

@@ -1297,3 +1297,44 @@ function form56_add_item()
 		$("#modal_access_denied").dialog("open");
 	}
 }
+
+
+/**
+ * @form Manage services
+ * @formNo 57
+ */
+function form57_add_item()
+{
+	if(is_create_access('form57'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form57_"+id+"'></form>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form57_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form57_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form57_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='hidden' form='form57_"+id+"' value='"+id+"'>";
+				rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form57_"+id+"' value='Save' onclick='form57_save_item($(this));'>";
+				rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form57_"+id+"' value='Delete' onclick='form57_delete_item($(this));'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form57_body').prepend(rowsHTML);
+		var fields=document.getElementById("form57_"+id);
+		var service_filter=fields.elements[0];
+		
+		$(service_filter).focus();
+	}
+	else
+	{
+		$("#modal_access_denied").dialog("open");
+	}
+}

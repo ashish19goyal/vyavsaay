@@ -1653,3 +1653,51 @@ function form56_delete_item(button)
 		$("#modal_access_denied").dialog("open");
 	}
 }
+
+/**
+ * formNo 57
+ * form Manage Services
+ * @param button
+ */
+function form57_delete_item(button)
+{
+	if(is_delete_access('form57'))
+	{
+		var form=document.getElementById(form_id);
+		
+		var service=form.elements[0].value;
+		var description=form.elements[1].value;
+		var estimated_cost=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var table='services';
+		var data_xml="<"+table+">" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+service+"</name>" +
+					"<description>"+description+"</description>" +
+					"<estimated_cost>"+estimated_cost+"</estimated_cost>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</"+table+">";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>"+table+"</tablename>" +
+					"<link_to>form57</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Deleted service "+service+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal_access_denied").dialog("open");
+	}
+}

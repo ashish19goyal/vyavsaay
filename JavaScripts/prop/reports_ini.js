@@ -80,7 +80,7 @@ function report1_ini()
 						});
 					}
 				});
-			}
+			});
 		}
 		$('#form1_body').append(rowsHTML);
 	},product_data);
@@ -166,6 +166,58 @@ function report4_ini()
 };
 
 /**
+ * @reportNo 5
+ * @report Customers account balance
+ */
+function report5_ini()
+{
+	var form=document.getElementById('report5_header');
+	var balance=form.elements[1].value;
+	var customer=form.elements[2].value;
+	
+	var account_data="<accounts>" +
+		"<acc_name>"+customer+"</acc_name>" +
+		"<balance compare='more than'>"+balance+"</balance>" +
+		"</accounts>";
+	
+	fetch_requested_data('report5',account_data,function(accounts)
+	{
+		var rowsHTML="";
+		for(var i in accounts)
+		{
+			var bills_data="<bills>" +
+				"<id></id>" +
+				"<customer_name>"+accounts[i].acc_name+"</customer_name>" +
+				"<amount></amount>" +
+				"</bills>";
+		
+			fetch_requested_data('report5',bills_data,function(bill_ids)
+			{
+				var bill_ids_string="";
+				for(var x in bills_ids)
+				{
+					bill_ids_string+="<u title='Amount Rs:"+bill_ids[x].amount+"'>"+bill_ids[x].id+"</u>"+", ";
+				}
+				bill_ids_string=rtrim(bill_ids_string,", ");
+				rowsHTML+="<tr>";
+					rowsHTML+="<td>";
+						rowsHTML+=accounts[i].acc_name;
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+=accounts[i].balance;
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+=bill_ids_string;
+					rowsHTML+="</td>";
+				rowsHTML+="</tr>";
+			});
+		}
+		$('#form5_body').html(rowsHTML);
+	});
+};
+
+
+/**
  * @reportNo 6
  * @report Payments Due from customers 
  */
@@ -191,6 +243,78 @@ function report6_ini()
 		var result=transform_to_bar_sum(payments,'Amount','amount','acc_name');
 		console.log(result);
 		var mybarchart = new Chart(ctx).Bar(result,{});
+	});
+};
+
+/**
+ * @reportNo 9
+ * @report Product sales report
+ */
+function report9_ini()
+{
+	var form=document.getElementById('report9_header');
+	var name=form.elements[1].value;
+	var make=form.elements[2].value;
+	var type=form.elements[3].value;
+	var customer=form.elements[4].value;
+	var date=form.elements[5].value;
+	
+	var products_data="<product_master>" +
+			"<name>"+name+"</name>" +
+			"<make>"+make+"</make>" +
+			"<product_type>"+type+"</product_type>" +
+			"</product_master>";
+	
+	fetch_requested_data('report9',account_data,function(products)
+	{
+		var rowsHTML="";
+		for(var i in products)
+		{
+			var bill_items_data="<bill_items>" +
+					"<bill_id></bill_id>" +
+					"<product_name>"+products[i].name+"</product_name>" +
+					"</bill_items>";
+			fetch_requested_data(bill_items_data,function(bill_ids)
+			{
+				var bill_ids_string="";
+				var quantity=0;
+				for(var x in bills_ids)
+				{
+					bill_ids_string+=bill_ids[x].id+"--";
+					quantity+=parseInt(bill_ids[x].quantity);
+				}
+				var bills_data="<bills>" +
+						"<id array='yes'>"+bill_ids_string+"</id>" +
+						"<customer_name>"+customer+"</customer_name>" +
+						"<date_created compare='more than'>"+get_raw_time(date)+"</date_created>" +
+						"</bills>";
+			
+				fetch_requested_data('report9',bills_data,function(bills)
+				{
+					for(var j in bills)
+					{
+						rowsHTML+="<tr>";
+							rowsHTML+="<td>";
+								rowsHTML+=products[i].name;
+							rowsHTML+="</td>";
+							rowsHTML+="<td>";
+								rowsHTML+=products[i].make;
+							rowsHTML+="</td>";
+							rowsHTML+="<td>";
+								rowsHTML+=products[i].product_type;
+							rowsHTML+="</td>";
+							rowsHTML+="<td>";
+								rowsHTML+=bills[j].customer_name;
+							rowsHTML+="</td>";
+							rowsHTML+="<td>";
+								rowsHTML+=quantity;
+							rowsHTML+="</td>";
+						rowsHTML+="</tr>";
+					}
+				});
+			});
+		}
+		$('#form9_body').html(rowsHTML);
 	});
 };
 
@@ -304,6 +428,86 @@ function report15_ini()
 };
 
 /**
+ * @reportNo 17
+ * @report Staff performance
+ */
+function report17_ini()
+{
+	var form=document.getElementById('report17_header');
+	var from_date=form.elements[1].value;
+	var to_date=form.elements[2].value;
+	var staff=form.elements[3].value;
+	
+	var staff_data="<staff>" +
+			"<acc_name>"+staff+"</acc_name>" +
+			"<status>active</status>" +
+			"</staff>";
+	get_single_column_data(function(employees)
+	{	
+		var rowsHTML="";
+		for(var k in employees)
+		{
+			var attendance_data="<attendance>" +
+					"<acc_name>"+employees[k].acc_name+"</acc_name>" +
+					"<presence></presence>" +
+					"<hours_worked></hours_worked>" +
+					"<date compare='more than'>"+get_raw_time(from_date)+"</date>" +
+					"<date compare='less than'>"+get_raw_time(to_date)+"</date>" +
+					"</attendance>";
+			
+			fetch_requested_data('report17',attendance_data,function(attendances)
+			{
+				var absents=0;
+				var hours=0;
+				for(var i in attendances)
+				{
+					if(attendances[i].presence=='absent')
+						absents+=1;
+					hours+=parseInt(attendances[i].hours_worked);
+				}
+				var task_instances_data="<task_instances>" +
+						"<assignee>"+attendances[0].acc_name+"</assignee>" +
+						"<t_executed compare='more than'>"+get_raw_time(from_date)+"</t_executed>" +
+						"<t_executed compare='less than'>"+get_raw_time(to_date)+"</t_executed>" +
+						"<task_hours></task_hours>" +
+						"<status>completed</status>" +
+						"</task_instances>";
+				fetch_requested_data('report17',task_instances_data,function(tasks)
+				{
+					var num_tasks=0;
+					var task_hours=0;
+					for(var x in tasks)
+					{
+						task_hours+=parseInt(tasks[x].task_hours);
+						num_tasks+=1;
+					}
+				
+					rowsHTML+="<tr>";
+						rowsHTML+="<td>";
+							rowsHTML+=tasks[0].assignee;
+						rowsHTML+="</td>";
+						rowsHTML+="<td>";
+							rowsHTML+=num_tasks;
+						rowsHTML+="</td>";
+						rowsHTML+="<td>";
+							rowsHTML+=task_hours;
+						rowsHTML+="</td>";
+						rowsHTML+="<td>";
+							rowsHTML+=absents;
+						rowsHTML+="</td>";
+						rowsHTML+="<td>";
+							rowsHTML+=hours;
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+				});
+			});	
+		}
+		$('#form17_body').html(rowsHTML);
+	},staff_data);
+	
+};
+
+/**
  * @reportNo 26
  * @report Sales by customers
  */
@@ -397,6 +601,72 @@ function report28_ini()
 			});
 		},bills_data);
 	});
+};
+
+/**
+ * @reportNo 29
+ * @report Pre requisites by products
+ */
+function report29_ini()
+{
+	var form=document.getElementById('report29_header');
+	var product=form.elements[1].value;
+	
+	var product_data="<product_master>" +
+			"<name>"+product+"</name>" +
+			"<manufacture>yes</yes>" +
+			"</product_master>";
+	get_single_column_data(function(products)
+	{	
+		var rowsHTML="";
+		for(var k in products)
+		{
+			var requisites_data="<pre_requisites>" +
+					"<name>"+products[k].name+"</name>" +
+					"<type>product</product>" +
+					"<requisite_type></requisite_type>" +
+					"<product_name></product_name>" +
+					"<service_name></service_name>" +
+					"<task_name></task_name>" +
+					"<quantity></quantity>" +
+					"</pre_requisites>";
+			
+			fetch_requested_data('report29',requisites_data,function(requisites)
+			{
+				var product_string='';
+				var service_string='';
+				var task_string='';
+				for(var i in requisites)
+				{
+					if(requisites[i].requisite_type=='product')
+						product_string+="<u title='"+requisites[i].quantity+"'>"+requisites[i].product_name+"</u>, ";
+					else if(requisites[i].requisite_type=='service')
+						service_string+="<u title='"+requisites[i].quantity+"'>"+requisites[i].service_name+"</u>, ";
+					if(requisites[i].requisite_type=='task')
+						task_string+="<u title='"+requisites[i].quantity+"'>"+requisites[i].task_name+"</u>, ";
+				}
+				product_string=rtrim(product_string,", ");
+				service_string=rtrim(service_string,", ");
+				task_string=rtrim(task_string,", ");
+				
+				rowsHTML+="<tr>";
+					rowsHTML+="<td>";
+						rowsHTML+=requisites[0].name;
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+=product_string;
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+=service_string;
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+=task_string;
+					rowsHTML+="</td>";
+				rowsHTML+="</tr>";				
+			});	
+		}
+		$('#form29_body').html(rowsHTML);
+	},product_data);
 };
 
 
@@ -637,6 +907,183 @@ function report33_ini()
 		},account_data);
 	});
 }
+
+/**
+ * @reportNo 34
+ * @report Profit calculator
+ */
+function report34_ini()
+{
+	var form=document.getElementById('report34_header');
+	var sales_estimate=form.elements[1].value;
+	var three_months=get_my_time()-90*86400000;
+	
+	var ctx = document.getElementById("report34_canvas").getContext("2d");
+	
+	var bills_data="<bills>" +
+			"<id></id>" +
+			"<amount></amount>" +
+			"<date_created compare='more than'>"+three_months+"</date_created>" +
+			"<date_created compare='less than'>"+get_my_time()+"</date_created>" +
+			"</bills>";
+
+	fetch_requested_data('report34',bills_data,function(bills)
+	{
+		var sale_amount=0;
+		var bill_ids_array="";
+		for(var i in bills)
+		{
+			sale_amount+=bills[i].amount;
+			bill_ids_array+=bills[i].id+"--";
+		}
+		
+		var bill_item_data="<bill_items>" +
+				"<product_name></product_name>" +
+				"<batch></batch>" +
+				"<quantity></quantity>" +
+				"<bill_id array='yes'>"+bill_ids_array+"</bill_id>" +
+				"</bill_items>";
+		
+		fetch_requested_data('report34',bill_item_data,function(bill_items)
+		{
+			var bi_transformed=transform_to_sum_2columns(bill_items,'quantity','product_name','batch');
+			var product_names_string="";
+			var batches_string="";
+			for(var j in bi_transformed)
+			{
+				product_names_string+=bi_transformed[j].product_name;
+				batches_string+=bi_transformed[j].batch;
+			}
+		
+			var goods_received_data="<goods_received>" +
+					"<product_name array='yes'>"+product_names_string+"</product_name>" +
+					"<batch array='yes'>"+batches_string+"</batch>" +
+					"<cost_price></cost_price>" +
+					"</goods_received>";
+			fetch_requested_data('report34',goods_received_data,function(goods_received)
+			{
+				var gr_transformed=jQuery.unique(goods_received);
+				var cost_amount=0;
+				for (var k in gr_transformed)
+				{
+					for(var l in bi_transformed)
+					{
+						if(gr_transformed[k].product_name==bi_transformed[l].product_name && gr_transformed[k].batch==bi_transformed[l].batch)
+						{
+							cost_amount+=parseInt(gr_transformed[k].cost_price)*parseInt(bi_transformed[l].quantity);
+							bi_transformed.splice(l,1);
+							break;
+						}
+					}
+				}
+					
+				var disposal_data="<disposals>" +
+						"<product_name></product_name>" +
+						"<batch></batch>" +
+						"<quantity></quantity>" +
+						"<date compare='more than'>"+three_months+"</date>" +
+						"<date compare='less than'>"+get_my_time()+"</date>" +
+						"</disposals>";
+				fetch_requested_data('report34',disposal_data,function(disposals)
+				{
+					var di_transformed=transform_to_sum_2columns(disposals,'quantity','product_name','batch');
+					var disposal_amount=0;
+					for (var m in gr_transformed)
+					{
+						for(var n in di_transformed)
+						{
+							if(gr_transformed[m].product_name==di_transformed[n].product_name && gr_transformed[m].batch==di_transformed[n].batch)
+							{
+								disposal_amount+=parseInt(gr_transformed[m].cost_price)*parseInt(di_transformed[n].quantity);
+								di_transformed.splice(n,1);
+								break;
+							}
+						}
+					}
+					
+					var expense_data="<expenses>" +
+							"<expense_date comapre='more than'>"+three_months+"</expense_date>" +
+							"<expense_date comapre='less than'>"+get_my_time()+"</expense_date>" +
+							"<amount></amount>" +
+							"</expenses>";
+					fetch_requested_data('report34',expense_data,function(expenses)
+					{
+						var expense_amount=0;
+						for (var o in expenses)
+						{
+							expense_amount+=parseInt(expenses[o].amount);
+						}
+						
+						var transaction_data="<transactions>" +
+								"<id></id>" +
+								"<trans_date compare='more than'>"+three_months+"</trans_date>" +
+								"<trans_date compare='less than'>"+get_my_time()+"</trans_date>" +
+								"</transactions>";
+						
+						fetch_requested_data('report34',transaction_data,function(transactions)
+						{
+							var trans_string="";
+							for (var p in transactions)
+							{
+								trans_string+=transactions[p].id+"--";
+							}
+							
+							var tax_data="<tax>" +
+									"<transaction_id array='yes'>"+trans_string+"</transaction_id>" +
+									"<amount></amount>" +
+									"</tax>";
+							
+							fetch_requested_data('report34',tax_data,function(taxes)
+							{
+								var tax_amount=0;
+								for (var q in taxes)
+								{
+									tax_amount+=parseInt(taxes[q].amount);
+								}
+								
+								var result=new Object();
+								result.datasets=new Array();
+								result.datasets[0]=new Object();
+								result.datasets[0].label="Amount";
+								result.datasets[0].fillColor=getRandomColor();
+								result.datasets[0].strokeColor=result.datasets[0].fillColor;
+								result.datasets[0].highlightFill=getLighterColor(result.datasets[0].fillColor);
+								result.datasets[0].highlightStroke=getLighterColor(result.datasets[0].fillColor);
+								result.datasets[0].data=new Array();
+								result.labels=new Array();
+								
+								result.labels.push('Current average monthly sale');
+								result.datasets[0].data.push(Math.floor(sale_amount/3));
+								result.labels.push('Estimated cost price');
+								result.datasets[0].data.push(Math.floor(cost_amount/3));
+
+								result.labels.push('Current average monthly expenses');
+								result.datasets[0].data.push(Math.floor(expense_amount/3));
+								result.labels.push('Current average monthly wastage');
+								result.datasets[0].data.push(Math.floor(disposal_amount/3));
+								result.labels.push('Current average monthly taxes');
+								result.datasets[0].data.push(Math.floor(tax_amount/3));
+
+								result.labels.push('Current average monthly profit');
+								result.datasets[0].data.push(Math.floor((sale_amount-cost_amount-expense_amount-disposal_amount-tax_amount)/3));
+								
+								result.labels.push('Projected monthly sale');
+								result.datasets[0].data.push(sales_estimate);
+								
+								var project_profit=Math.floor(((sale_amount-cost_amount-disposal_amount-tax_amount)/sale_amount*sales_estimate)-(expense_amount/3));
+								result.labels.push('Projected monthly profit');
+								result.datasets[0].data.push(project_profit);
+
+								
+								var mybarchart = new Chart(ctx).Bar(result,{});
+							});
+						});
+					});
+				});
+			});
+		});
+	});
+};
 
 
 /**
@@ -953,4 +1400,69 @@ function report40_ini()
 			});
 		},bills_data);
 	});
+};
+
+/**
+ * @reportNo 41
+ * @report Pre requisites by services
+ */
+function report41_ini()
+{
+	var form=document.getElementById('report41_header');
+	var service=form.elements[1].value;
+	
+	var service_data="<services>" +
+			"<name>"+product+"</name>" +
+			"</services>";
+	get_single_column_data(function(services)
+	{	
+		var rowsHTML="";
+		for(var k in services)
+		{
+			var requisites_data="<pre_requisites>" +
+					"<name>"+services[k].name+"</name>" +
+					"<type>service</product>" +
+					"<requisite_type></requisite_type>" +
+					"<product_name></product_name>" +
+					"<service_name></service_name>" +
+					"<task_name></task_name>" +
+					"<quantity></quantity>" +
+					"</pre_requisites>";
+			
+			fetch_requested_data('report41',requisites_data,function(requisites)
+			{
+				var product_string='';
+				var service_string='';
+				var task_string='';
+				for(var i in requisites)
+				{
+					if(requisites[i].requisite_type=='product')
+						product_string+="<u title='"+requisites[i].quantity+"'>"+requisites[i].product_name+"</u>, ";
+					else if(requisites[i].requisite_type=='service')
+						service_string+="<u title='"+requisites[i].quantity+"'>"+requisites[i].service_name+"</u>, ";
+					if(requisites[i].requisite_type=='task')
+						task_string+="<u title='"+requisites[i].quantity+"'>"+requisites[i].task_name+"</u>, ";
+				}
+				product_string=rtrim(product_string,", ");
+				service_string=rtrim(service_string,", ");
+				task_string=rtrim(task_string,", ");
+				
+				rowsHTML+="<tr>";
+					rowsHTML+="<td>";
+						rowsHTML+=requisites[0].name;
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+=product_string;
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+=service_string;
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+=task_string;
+					rowsHTML+="</td>";
+				rowsHTML+="</tr>";				
+			});	
+		}
+		$('#form41_body').html(rowsHTML);
+	},service_data);
 };
