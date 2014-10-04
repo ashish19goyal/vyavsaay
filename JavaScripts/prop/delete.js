@@ -52,7 +52,7 @@ function form1_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -104,7 +104,7 @@ function form2_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -154,7 +154,7 @@ function form2_delete_form()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}	
 }
 
@@ -205,7 +205,7 @@ function form5_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -261,7 +261,7 @@ function form8_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -315,7 +315,7 @@ function form9_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -370,7 +370,7 @@ function form10_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -424,7 +424,7 @@ function form10_delete_form(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -478,7 +478,7 @@ function form11_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -531,7 +531,7 @@ function form12_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -584,7 +584,7 @@ function form12_delete_form(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -639,7 +639,7 @@ function form14_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -693,7 +693,7 @@ function form15_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -746,7 +746,7 @@ function form19_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -801,7 +801,7 @@ function form21_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -856,7 +856,7 @@ function form21_delete_form(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -908,7 +908,7 @@ function form22_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -956,7 +956,7 @@ function form24_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1009,7 +1009,7 @@ function form24_delete_form(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}	
 }
 
@@ -1022,14 +1022,14 @@ function form30_delete_item(button)
 {
 	if(is_delete_access('form30'))
 	{
+		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
 		var phone=form.elements[1].value;
 		var email=form.elements[2].value;
-		var address=form.elements[3].value;
-		var status=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var table='customers';
 		var data_xml="<"+table+">" +
@@ -1037,7 +1037,6 @@ function form30_delete_item(button)
 					"<name>"+name+"</name>" +
 					"<phone>"+phone+"</phone>" +
 					"<email>"+email+"</email>" +
-					"<address>"+address+"</address>" +
 					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -1062,7 +1061,7 @@ function form30_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1081,8 +1080,8 @@ function form35_delete_item(button)
 		var offer_type=form.elements[1].value;
 		var end_date=get_raw_time(form.elements[2].value);
 		var offer_detail=form.elements[3].value;
-		var status=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var table='offers';
 		var data_xml="<"+table+">" +
@@ -1114,7 +1113,7 @@ function form35_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1163,7 +1162,7 @@ function form38_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1227,7 +1226,7 @@ function form39_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1279,7 +1278,7 @@ function form40_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1332,7 +1331,7 @@ function form42_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1386,7 +1385,7 @@ function form43_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1439,7 +1438,7 @@ function form44_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1492,7 +1491,7 @@ function form45_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1543,7 +1542,7 @@ function form51_delete_form()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1599,7 +1598,7 @@ function form53_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1650,7 +1649,7 @@ function form56_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1698,6 +1697,6 @@ function form57_delete_item(button)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }

@@ -365,7 +365,7 @@ function update_last_sync_time(func)
 		{
 			var time=get_my_time();
 			
-			var row_data={id:'700',name:'last_sync_time',value:time};
+			var row_data={id:'700',name:'last_sync_time',value:time,type:'other',display_name:'Last sync time',status:'active'};
 			//{value:row_data,key:row_data.id}
 			database.upsert('user_preferences',row_data,function(err,insertedkey)
 			{

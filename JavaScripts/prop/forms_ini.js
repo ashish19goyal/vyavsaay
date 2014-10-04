@@ -700,16 +700,15 @@ function form35_ini(fid)
 	
 	//populating form 
 	var fname=filter_fields.elements[0].value;
-	var fbatch=filter_fields.elements[1].value;
+	var ftype=filter_fields.elements[1].value;
 	var fdate=filter_fields.elements[2].value;
 	var fstatus=filter_fields.elements[3].value;
 	
 	console.log("populating form");
 	var columns="<offers>" +
 			"<id>"+fid+"</id>" +
-			"<batch>"+fbatch+"</batch>" +
-			"<product_name>"+fname+"</product_name>" +
-			"<price></price>" +
+			"<offer_name>"+fname+"</offer_name>" +
+			"<offer_type>"+ftype+"</offer_type>" +
 			"<end_date>"+fdate+"</end_date>" +
 			"<offer_detail></offer_detail>" +
 			"<status>"+fstatus+"</status>" +
@@ -734,7 +733,7 @@ function form35_ini(fid)
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].offer_detail+"'>";
-						rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form35_"+results[i].id+"' onclick='form35_edit_offer($(this));'>";
+						rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form35_"+results[i].id+"' onclick='modal8_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].status+"'>";
@@ -1557,8 +1556,9 @@ function form51_ini(fuser)
  */
 function form52_ini(fid)
 {
+	//var filter_fields=$('#form52_header');
 	var filter_fields=document.getElementById('form52_header');
-	
+	console.log(filter_fields);
 	//populating form
 	var felement=filter_fields.elements[0].value;
 	var fkey=filter_fields.elements[1].value;

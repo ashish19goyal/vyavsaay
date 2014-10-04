@@ -30,11 +30,11 @@ function ajax_with_custom_func(url,kvp,func)
 //				console.log("3. checking if session is set");
 				var user=get_username();
 				var domain=get_domain();
-				$("#modal_re_password").dialog({
+				$("#modal1").dialog({
 					close:function(e,ui)
 					{
 						show_loader();
-						var pass=document.getElementById("modal_re_veri_pass").value;
+						var pass=document.getElementById("modal1_pass").value;
 						console.log(pass+user);
 						xmlhttp2.open("POST","./ajax/login.php",true);
 						xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -60,7 +60,7 @@ function ajax_with_custom_func(url,kvp,func)
 						};
 					}
 				});	
-				$("#modal_re_password").dialog("open");
+				$("#modal1").dialog("open");
 				//var pass=prompt("Please enter the password again","");
 			}
 			else
@@ -114,11 +114,11 @@ function ajax_with_refresh(url,kvp)
 				console.log("3. checking if session is set");
 				var user=get_username();
 				var domain=get_domain();
-				$("#modal_re_password").dialog({
+				$("#modal1").dialog({
 					close:function(e,ui)
 					{
 						show_loader();
-						var pass=document.getElementById("modal_re_veri_pass").value;
+						var pass=document.getElementById("modal1_pass").value;
 						console.log(pass+user);
 						xmlhttp2.open("POST","./ajax/login.php",true);
 						xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -144,7 +144,7 @@ function ajax_with_refresh(url,kvp)
 						};
 					}
 				});	
-				$("#modal_re_password").dialog("open");
+				$("#modal1").dialog("open");
 			}
 			else
 			{

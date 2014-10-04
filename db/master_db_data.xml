@@ -561,6 +561,38 @@
 		</row>
 		<row>
 			<tablename>offers</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>offers</tablename>
+			<listname>status</listname>
+			<name>closed</name>
+			<value>Closed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>offers</tablename>
+			<listname>status</listname>
+			<name>expired</name>
+			<value>Expired</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>offers</tablename>
+			<listname>status</listname>
+			<name>extended</name>
+			<value>Extended</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>offers</tablename>
 			<listname>offer_type</listname>
 			<name>bill</name>
 			<value>Bill</value>

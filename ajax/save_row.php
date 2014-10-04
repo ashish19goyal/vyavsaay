@@ -50,10 +50,9 @@
 			$stmt1->execute(array($id));
 			$count=$stmt1->fetchAll(PDO::FETCH_NUM)[0][0];			
 			$query2="";
-			
 			$act_type="";
 			
-			if($count===0)
+			if($count===0 || $count=="0")
 			{
 				$query2.="insert into $table(";
 				

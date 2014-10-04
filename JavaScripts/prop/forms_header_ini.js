@@ -412,12 +412,12 @@ function form30_header_ini()
 	var name_data="<customers>" +
 			"<name></name>" +
 			"</customers>";
-	var contact_data="<contacts>" +
-			"<mobile_no></mobile_no>" +
-			"</contacts>";
-	var email_data="<contacts>" +
-			"<email_id></email_id>" +
-			"</contacts>";
+	var contact_data="<customers>" +
+			"<phone></phone>" +
+			"</customers>";
+	var email_data="<customers>" +
+			"<email></email>" +
+			"</customers>";
 	
 	set_my_filter(name_data,name_filter);
 	set_my_filter(contact_data,contact_filter);

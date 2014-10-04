@@ -20,8 +20,7 @@ function default_load()
 		activities_ini();
 		date_formating();
 		load_tooltips();
-		modal_access_denied();
-		modal_verify_password();
+		modal_forms_ini();
 		count_notif();
 		count_oppor();
 		print_setup();
@@ -29,6 +28,35 @@ function default_load()
 		default_hide();
 	}
 	hide_loader();
+}
+
+function modal_forms_ini()
+{
+	for(var i=1;i<5;i++)
+	{
+		var dialog=$("#modal"+i).dialog({
+	   		autoOpen: false,
+	   		modal: true,
+	   		show: "bounce",
+	   		closeOnEscape: true,
+	       	buttons:{ OK:function(){$(this).dialog("close");}}
+		});
+		dialog.find("form").on("submit", function(event)
+		{
+			event.preventDefault();
+			$(this).parent().dialog("close");
+		});
+	}
+	for(var i=5;i<15;i++)
+	{
+		var dialog=$("#modal"+i).dialog({
+	   		autoOpen: false,
+	   		modal: true,
+	   		show: "bounce",
+	   		closeOnEscape: true,
+		});
+	}
+
 }
 
 function print_setup()

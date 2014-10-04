@@ -53,7 +53,7 @@ function form1_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -131,7 +131,7 @@ function form2_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}		
 }
 
@@ -193,7 +193,7 @@ function form5_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -245,7 +245,7 @@ function form8_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}	
 }
 
@@ -312,7 +312,7 @@ function form9_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}	
 }
 
@@ -372,7 +372,7 @@ function form10_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}	
 }
 
@@ -448,7 +448,7 @@ function form11_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -517,7 +517,7 @@ function form12_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -597,7 +597,7 @@ function form14_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -698,7 +698,7 @@ function form15_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 };
 
@@ -788,7 +788,7 @@ function form19_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -846,7 +846,7 @@ function form21_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -910,7 +910,7 @@ function form22_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}	
 }
 
@@ -953,7 +953,7 @@ function form24_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1004,7 +1004,7 @@ function form30_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1030,8 +1030,8 @@ function form35_add_item()
 				rowsHTML+="<input type='text' form='form35_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form35_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form35_"+id+"' onclick='form35_edit_offer($(this))'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form35_"+id+"' value=''>";
+				rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form35_"+id+"' onclick='modal8_action($(this))'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form35_"+id+"' value=''>";
@@ -1047,16 +1047,19 @@ function form35_add_item()
 		
 		var fields=document.getElementById("form35_"+id);
 		var name_filter=fields.elements[0];
+		var type_filter=fields.elements[1];
 		var date_filter=fields.elements[2];
-		var status_filter=fields.elements[5];
+		var status_filter=fields.elements[4];
 		
 		$(name_filter).focus();
 		$(date_filter).datepicker();
 		set_static_value_list('offers','status',status_filter);
+		set_static_value_list('offers','offer_type',type_filter);
+		status_filter.value='active';
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1123,7 +1126,7 @@ function form38_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1196,7 +1199,7 @@ function form39_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}	
 }
 
@@ -1242,7 +1245,7 @@ function form40_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1294,7 +1297,7 @@ function form56_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -1335,6 +1338,6 @@ function form57_add_item()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }

@@ -65,7 +65,7 @@ function create_local_db(domain,func)
  */
 function local_read_single_column(columns,callback,results)
 {
-	console.log(columns);
+	//console.log(columns);
 	var parser=new DOMParser();
 	var data=parser.parseFromString(columns,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -94,6 +94,7 @@ function local_read_single_column(columns,callback,results)
 				fil.type='';
 			}
 			filter.push(fil);
+			//console.log(filter);
 		}
 	}
 	//console.log(filter);
@@ -120,6 +121,8 @@ function local_read_single_column(columns,callback,results)
 					var match=true;
 					for(var i in filter)
 					{
+						//console.log(filter[i].name);
+						//console.log(records[row]);
 						var string=records[row][filter[i].name].toLowerCase();
 						var search=filter[i].value.toLowerCase();
 						var found=0;
