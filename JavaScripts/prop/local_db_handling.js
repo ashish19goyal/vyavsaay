@@ -196,6 +196,7 @@ function local_read_single_column(columns,callback,results)
  */
 function local_write_row(data_xml,activity_xml)
 {
+	show_loader();
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -227,11 +228,14 @@ function local_write_row(data_xml,activity_xml)
 				else
 				{
 					var type='create';
+					var data_row=new Object();
+					
 					for(var i in records)
 					{
 						type='update';
+						data_row=records[i];
 					}
-					var data_row=new Object();
+					
 					for(var j in cols)
 					{
 						data_row[cols[j].nodeName]=cols[j].innerHTML;
@@ -254,16 +258,17 @@ function local_write_row(data_xml,activity_xml)
 							{
 								act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
 							}
-							console.log("activities length="+activity_data.length);
+							//console.log("activities length="+activity_data.length);
 							if(activity_data.length!=0)
 							{
-								console.log("activities data------"+act_row);
+								//console.log("activities data------"+act_row);
 								database.upsert('activities',act_row,function(err,insertedkey)
 								{
 									if(err)
 									{
 										console.log(err);
 									}
+									hide_loader();
 								});
 							}
 						}
@@ -405,8 +410,7 @@ function local_read_multi_column(columns,callback,results)
  */
 function local_delete_row(data_xml,activity_xml)
 {
-	console.log("deleting row1");
-	
+	show_loader();
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -460,6 +464,7 @@ function local_delete_row(data_xml,activity_xml)
 									if(err)
 									{
 										console.log(err);
+										hide_loader();
 									}
 								});
 							}
@@ -477,7 +482,7 @@ function local_delete_row(data_xml,activity_xml)
  */
 function local_delete_simple(data_xml)
 {
-	
+	show_loader();
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -556,6 +561,7 @@ function local_delete_simple(data_xml)
 										{
 											console.log(err);
 										}
+										hide_loader();
 									});
 								}
 							});

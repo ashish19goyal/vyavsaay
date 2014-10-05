@@ -188,6 +188,8 @@ function modal8_action(button)
 					offer_detail_value+=+criteria_quantity_value+" times or more";
 			}
 			
+			father_form.elements[3].value=offer_detail_value;
+			
 			var table='offers';
 			var data_xml="<"+table+">" +
 						"<id>"+data_id+"</id>" +
@@ -228,9 +230,9 @@ function modal8_action(button)
 			{
 				local_write_row(data_xml,activity_xml);
 			}	
-			for(var i=0;i<7;i++)
+			for(var i=0;i<5;i++)
 			{
-				$(form.elements[i]).attr('readonly','readonly');
+				$(father_form.elements[i]).attr('readonly','readonly');
 			}
 		}
 		else
@@ -260,6 +262,109 @@ function modal8_action(button)
 	$(free_product_name).parent().hide();
 	$(free_quantity).parent().hide();
 	$(offer_type).blur();
-	
-	
 }
+
+/**
+ * @modalNo 14
+ * @modal Add new product
+ * @param button
+ */
+function modal14_action()
+{
+	var form=document.getElementById('modal14_form');
+	
+	var ftype=form.elements[1];
+	var fmake=form.elements[2];
+	var fname=form.elements[3];
+	var fpictureinfo=form.elements[4];
+	var fpicture=form.elements[5];
+	var fprice=form.elements[6];
+	var fdescription=form.elements[7];
+	var fdata_id=get_new_key();
+	var save_button=form.elements[9];
+	
+	var type_data="<product_master>" +
+		"<product_type></product_type>" +
+		"</product_master>";
+	var make_data="<product_master>" +
+		"<make></make>" +
+		"</product_master>";
+	
+	set_my_value_list(type_data,ftype);
+	set_my_value_list(make_data,fmake);
+	
+	fpicture.addEventListener('change',function(evt)
+	{
+		select_picture(evt,fpictureinfo,function(dataURL)
+		{
+			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
+		});
+	},false);
+	
+	$(save_button).on("click",function(event)
+	{
+		if(is_create_access('form35') || is_update_access('form35'))
+		{
+			var product_type=ftype.value;
+			var make=fmake.value;
+			var name=fname.value;
+			var data_id=fdata_id.value;
+			var pic_id=get_new_key();
+			var url=$(fpictureinfo).find('div').find('img').attr('src');
+			var est_price=fprice.value;
+			var description=fdescription.value;
+			var last_updated=get_my_time();
+			var table='product_master';
+			var data_xml="<"+table+">" +
+						"<id>"+data_id+"</id>" +
+						"<product_type>"+product_type+"</product_type>" +
+						"<make>"+make+"</make>" +
+						"<name>"+name+"</name>" +
+						"<est_price>"+est_price+"</est_price>" +
+						"<description>"+description+"</description>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</"+table+">";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>"+table+"</tablename>" +
+						"<link_to>form39</link_to>" +
+						"<title>Saved</title>" +
+						"<notes>Added product "+name+" to inventory</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var pic_xml="<documents>" +
+						"<id>"+pic_id+"</id>" +
+						"<url>"+url+"</url>" +
+						"<doc_type>product_master</doc_type>" +
+						"<target_id>"+data_id+"</target_id>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</documents>";
+			var pic_activity_xml="<activity>" +
+						"<data_id>"+pic_id+"</data_id>" +
+						"<tablename>documents</tablename>" +
+						"<link_to>form39</link_to>" +
+						"<title>Saved</title>" +
+						"<notes>Updated picture for product "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_write_row(data_xml,activity_xml);
+				server_write_row(pic_xml,pic_activity_xml);
+			}
+			else
+			{
+				local_write_row(data_xml,activity_xml);
+				local_write_row(pic_xml,pic_activity_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal14").dialog("close");
+	});
+	
+	$("#modal14").dialog("open");
+}
+

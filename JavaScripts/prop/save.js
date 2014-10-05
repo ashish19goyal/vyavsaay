@@ -147,6 +147,7 @@ function form2_save_form()
 		}
 	
 		$("[id^='save_form2']").click();
+		$("#modal3").dialog("open");
 	}
 	else
 	{
@@ -473,6 +474,7 @@ function form10_save_form(button)
 		}
 	
 		$("[id^='save_form10']").click();
+		$("#modal3").dialog("open");
 	}
 	else
 	{
@@ -634,6 +636,7 @@ function form12_save_form(button)
 		}
 	
 		$("[id^='save_form12']").click();
+		$("#modal3").dialog("open");
 	}
 	else
 	{
@@ -913,6 +916,7 @@ function form21_save_form(button)
 		}
 	
 		$("[id^='save_form21']").click();
+		$("#modal3").dialog("open");
 	}
 	else
 	{
@@ -1066,7 +1070,8 @@ function form24_save_form(button)
 			local_write_row(data_xml,activity_xml);
 		}
 	
-		$("[id^='save_form24']").click();	
+		$("[id^='save_form24']").click();
+		$("#modal3").dialog("open");
 	}
 	else
 	{
@@ -1681,6 +1686,7 @@ function form46_save_form()
 	if(is_create_access('form46') || is_update_access('form46'))
 	{
 		$("[id^='save_form46']").click();
+		$("#modal3").dialog("open");
 	}
 	else
 	{
@@ -1749,6 +1755,7 @@ function form47_save_form()
 								local_write_row(data_xml,activity_xml);
 							}
 							$(form).find('.form47_verify').html('Password updated.');
+							$("#modal3").dialog("open");
 						}, function() {});
 					}
 					else
@@ -1822,6 +1829,7 @@ function form48_save_form()
 	if(is_create_access('form48') || is_update_access('form48'))
 	{
 		$("[id^='save_form48']").click();
+		$("#modal3").dialog("open");
 	}
 	else
 	{
@@ -1883,6 +1891,7 @@ function form49_save_form()
 	if(is_create_access('form49') || is_update_access('form49'))
 	{
 		$("[id^='save_form49']").click();
+		$("#modal3").dialog("open");
 	}
 	else
 	{
@@ -1944,6 +1953,7 @@ function form50_save_form()
 	if(is_create_access('form50') || is_update_access('form50'))
 	{
 		$("[id^='save_form50']").click();
+		$("#modal3").dialog("open");
 	}
 	else
 	{
@@ -2064,6 +2074,7 @@ function form51_save_form()
 			}
 			
 			$("[id^='save_form51']").click();
+			$("#modal3").dialog("open");
 		}
 		else
 		{
@@ -2163,6 +2174,7 @@ function form52_save_form(button)
 	if(is_create_access('form52') || is_update_access('form52'))
 	{
 		$("[id^='save_form52']").click();
+		$("#modal3").dialog("open");
 	}
 	else
 	{
@@ -2278,6 +2290,7 @@ function form54_save_form(button)
 	if(is_create_access('form54') || is_update_access('form54'))
 	{
 		$("[id^='save_form54']").click();
+		$("#modal3").dialog("open");
 	}
 	else
 	{

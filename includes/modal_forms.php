@@ -41,3 +41,19 @@
 		</fieldset>
 	</form>
 </div>
+
+<div id="modal14" title="add new product">
+	<form id='modal14_form'>
+		<fieldset>
+			<label>Type <input type='text'></label><br/>
+			<label>Make <input type="text"></label><br/>
+			<label>Name <input type="text"></label><br/>
+			<label>Picture <output></output>
+							<input type="file"></label><br/>
+			<label>Estimated Price <input type="number"></label><br/>
+			<label>Description <input type="textarea"></label><br/>
+			<input type='hidden'>			
+			<input type="button" value='Save'>
+		</fieldset>
+	</form>
+</div>

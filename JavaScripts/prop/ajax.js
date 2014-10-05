@@ -55,7 +55,6 @@ function ajax_with_custom_func(url,kvp,func)
 								{
 									ajax_with_custom_func(url,kvp,func);
 								}
-								hide_loader();
 							}
 						};
 					}
@@ -139,7 +138,7 @@ function ajax_with_refresh(url,kvp)
 								{	
 									ajax_with_refresh(url,kvp);		
 								}
-								hide_loader();
+								
 							}
 						};
 					}
@@ -232,12 +231,14 @@ function server_read_multiple_column(columns,callback,results)
  */
 function server_delete_row(data_xml,activity_xml)
 {
+	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var del_access=get_session_var('del');
 	ajax_with_custom_func("./ajax/delete_row.php","domain="+domain+"&username="+username+"&del="+del_access+"&data_xml="+data_xml+"&activity_xml="+activity_xml,function(e)
 	{
-		console.log(e.responseText);	
+		console.log(e.responseText);
+		hide_loader();
 	});
 }
 
@@ -250,12 +251,14 @@ function server_delete_row(data_xml,activity_xml)
  */
 function server_delete_simple(data_xml)
 {
+	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var del_access=get_session_var('del');
 	ajax_with_custom_func("./ajax/delete_row.php","domain="+domain+"&username="+username+"&del="+del_access+"&data_xml="+data_xml,function(e)
 	{
-		console.log(e.responseText);	
+		console.log(e.responseText);
+		hide_loader();
 	});
 }
 
@@ -267,15 +270,16 @@ function server_delete_simple(data_xml)
  */
 function server_write_row(data_xml,activity_xml)
 {
+	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
 	var up_access=get_session_var('up');
 	ajax_with_custom_func("./ajax/save_row.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&up="+up_access+"&data_xml="+data_xml+"&activity_xml="+activity_xml,function(e)
 	{
-		console.log(e.responseText);	
+		console.log(e.responseText);
+		hide_loader();
 	});
-
 }
 
 

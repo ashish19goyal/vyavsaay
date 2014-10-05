@@ -12,6 +12,7 @@ function form1_add_item()
 		rowsHTML+="<form id='form1_"+id+"'></form>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form1_"+id+"' value=''>";
+				rowsHTML+="<img class='filter_icon' src='./images/add.jpeg' value='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form1_"+id+"' value=''>";
@@ -41,14 +42,17 @@ function form1_add_item()
 		var price_filter=fields.elements[3];
 		var quantity_filter=fields.elements[4];
 	
-		$(names_filter).focus();
-		
-		var products_data="<product_master>" +
+		$(names_filter).on('focus',function(event)
+		{
+			var products_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
 	
-		set_my_value_list(products_data,names_filter);
-				
+			set_my_value_list(products_data,names_filter);
+		});
+		
+		$(names_filter).focus();
+		
 		$(expiry_filter).datepicker();
 	}
 	else
@@ -1140,7 +1144,7 @@ function form39_add_item()
 	if(is_create_access('form39'))
 	{
 		var rowsHTML="";
-		var id=23123;
+		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form39_"+id+"'></form>";
 			rowsHTML+="<td>";

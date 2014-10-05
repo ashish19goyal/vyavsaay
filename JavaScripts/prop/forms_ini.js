@@ -822,7 +822,6 @@ function form39_ini(fid)
 	var fmakes=filter_fields.elements[1].value;
 	var fname=filter_fields.elements[2].value;
 	
-	console.log("populating form");
 	var columns="<product_master>" +
 			"<id>"+fid+"</id>" +
 			"<product_type>"+ftypes+"</product_type>" +
@@ -846,10 +845,12 @@ function form39_ini(fid)
 					"</documents>";
 			fetch_requested_data('form39',picture_column,function(pic_results)
 			{
+				console.log(pic_results);
+				console.log(pic_results['0']);
 				if(pic_results.length===0)
 				{
 					pic_results[0]=new Object();
-					pic_results[0].id="";
+					pic_results[0].id=get_new_key();
 					pic_results[0].url="";
 				}
 				//console.log("this is the pic data returned form server");
