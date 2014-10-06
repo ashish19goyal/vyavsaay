@@ -1327,10 +1327,10 @@ function form40_save_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var address=form.elements[1].value;
-		var phone=form.elements[2].value;
-		var notes=form.elements[3].value;
-		var email=form.elements[4].value;
+		var phone=form.elements[1].value;
+		var email=form.elements[2].value;
+		var address=form.elements[3].value;
+		var notes=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var table='suppliers';

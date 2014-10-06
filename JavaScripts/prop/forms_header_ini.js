@@ -517,18 +517,18 @@ function form40_header_ini()
 {
 	var filter_fields=document.getElementById('form40_header');
 	var name_filter=filter_fields.elements[0];
-	var contact_filter=filter_fields.elements[1];
+	var phone_filter=filter_fields.elements[1];
 	var email_filter=filter_fields.elements[2];
 	
 	var name_data="<suppliers>" +
 			"<name></name>" +
 			"</suppliers>";
-	var contact_data="<contacts>" +
-			"<mobile_no></mobile_no>" +
-			"</contacts>";
-	var email_data="<contacts>" +
-			"<email_id></email_id>" +
-			"</contacts>";
+	var contact_data="<suppliers>" +
+			"<phone></phone>" +
+			"</suppliers>";
+	var email_data="<suppliers>" +
+			"<email></email>" +
+			"</suppliers>";
 
 	set_my_filter(name_data,name_filter);
 	set_my_filter(contact_data,contact_filter);

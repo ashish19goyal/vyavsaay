@@ -1241,10 +1241,10 @@ function form40_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var address=form.elements[1].value;
-		var phone=form.elements[2].value;
-		var notes=form.elements[3].value;
-		var email=form.elements[4].value;
+		var phone=form.elements[1].value;
+		var email=form.elements[2].value;
+		var address=form.elements[3].value;
+		var notes=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var table='suppliers';
@@ -1685,13 +1685,19 @@ function form57_delete_item(button)
 					"<notes>Deleted service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var other_delete="<pre_requisites>" +
+					"<name>"+service+"</name>" +
+					"<type>service</type>" +
+					"</pre_requisites>";
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
+			local_delete_simple(other_delete);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(other_delete);
 		}	
 		$(button).parent().parent().remove();
 	}

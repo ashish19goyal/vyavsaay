@@ -18,6 +18,14 @@
 	Deleted successfully!
 </div>
 
+<div id="modal5" title="Duplicate Entry">
+	This operation will result in a duplicate entry. Operation aborted.
+	Please validate whether the required record already exists or try again with different parameters (e.g. different name).
+</div>
+<div id="modal6" title="Required fields missing">
+	One or more required fields are missing. Operation aborted.
+</div>
+
 
 <div id="modal8" title="Specify offer details">
 	<form id='modal8_form'>
@@ -42,7 +50,68 @@
 	</form>
 </div>
 
-<div id="modal14" title="add new product">
+<div id="modal9" title="Add pre-requisites for service">
+	<form id='modal11_form'>
+		<fieldset>
+			<label>Name <input type='text'></label><br/>
+			<label>Type <input type="text"></label><br/>
+			<label>Address <input type="text"></label><br/>
+			<label>Street <input type="text"></label><br/>
+			<label>City <input type="text"></label><br/>
+			<label>State <input type="text"></label><br/>
+			<label>Country <input type="text"></label><br/>
+			<label>Notes <input type="textarea"></label><br/>
+			<input type="button" value='Save'>
+		</fieldset>
+	</form>
+</div>
+
+<div id="modal11" title="Add new customer">
+	<form id='modal11_form'>
+		<fieldset>
+			<label>Name <input type='text'></label><br/>
+			<label>Phone <input type="text"></label><br/>
+			<label>Email <input type="text"></label><br/>
+			<label>Address <input type="text"></label><br/>
+			<label>Street <input type="text"></label><br/>
+			<label>City <input type="text"></label><br/>
+			<label>State <input type="text"></label><br/>
+			<label>Country <input type="text"></label><br/>
+			<label>Notes <input type="textarea"></label><br/>
+			<input type="button" value='Save'>
+		</fieldset>
+	</form>
+</div>
+
+<div id="modal12" title="Add new account">
+	<form id='modal12_form'>
+		<fieldset>
+			<label>Name <input type='text'></label><br/>
+			<label>Type <input type="text"></label><br/>
+			<label>Description <input type="text"></label><br/>
+			<input type="button" value='Save'>
+		</fieldset>
+	</form>
+</div>
+
+<div id="modal13" title="Add new supplier">
+	<form id='modal13_form'>
+		<fieldset>
+			<label>Name <input type='text'></label><br/>
+			<label>Phone <input type="text"></label><br/>
+			<label>Email <input type="text"></label><br/>
+			<label>Address <input type="text"></label><br/>
+			<label>Street <input type="text"></label><br/>
+			<label>City <input type="text"></label><br/>
+			<label>State <input type="text"></label><br/>
+			<label>Country <input type="text"></label><br/>
+			<label>Notes <input type="textarea"></label><br/>
+			<input type="button" value='Save'>
+		</fieldset>
+	</form>
+</div>
+
+<div id="modal14" title="Add new product">
 	<form id='modal14_form'>
 		<fieldset>
 			<label>Type <input type='text'></label><br/>
@@ -52,7 +121,19 @@
 							<input type="file"></label><br/>
 			<label>Estimated Price <input type="number"></label><br/>
 			<label>Description <input type="textarea"></label><br/>
-			<input type='hidden'>			
+			<input type="button" value='Save'>
+		</fieldset>
+	</form>
+</div>
+
+<div id="modal15" title="Provide feedback">
+	<form id='modal15_form'>
+		<fieldset>
+			<label>Feedback provider <input type='text'></label><br/>
+			<label>Detail <input type="text"></label><br/>
+			<label>Type <input type="text"></label><br/>
+			<label>Rating <input type="text"></label><br/>
+			<label>Date <input type="text"></label><br/>
 			<input type="button" value='Save'>
 		</fieldset>
 	</form>

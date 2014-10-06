@@ -29,7 +29,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<url index='no' type="TEXT"></url>
 			<doc_type index='yes' type="VARCHAR(50)"></doc_type><!-- service/service instance/staff/product/product instance/asset -->
-			<target_id index='yes' type="INT"></target_id>
+			<target_id index='yes' type="BIGINT"></target_id>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</documents>
 	<staff>
@@ -471,4 +471,13 @@
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</values_list>
+	<feedback>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<provider index='yes' type="VARCHAR(100)"></provider>
+			<type index='yes' type="VARCHAR(15)"></type><!-- positive/negative -->
+			<detail index='no' type="TEXT"></detail>
+			<rating index='no' type="VARCHAR(10)"></rating><!-- low/medium/high -->
+			<date index='no' type="BIGINT"></date>
+			<last_updated index='no' type="BIGINT"></last_updated>		
+	</feedback>
 </re_xml>

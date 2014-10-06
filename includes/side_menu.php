@@ -26,8 +26,8 @@
 		<img title='Working online, click to switch to offline' src='./images/online.jpeg' class='icon' onclick='switch_to_offline();' >
 	</div>
 
-	<div id='print_icon' class='menu_icon'>
-		<img title='Print' src='./images/print.jpeg' class="icon">
+	<div id='feedback_icon' class='menu_icon'>
+		<img title='Feedback' src='./images/feedback.jpeg' class="icon" onclick='modal15_action();'>
 	</div>
 	
 	<div id='settings_icon' class='menu_icon'>

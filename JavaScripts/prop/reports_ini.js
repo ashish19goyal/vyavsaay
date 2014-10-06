@@ -21,10 +21,10 @@ function report1_ini()
 	{
 		var rowsHTML="";
 		
-		for(var k in products)
+		products.forEach(function(product)
 		{
 			var bill_id_data="<goods_received>" +
-					"<product_name>"+products[k]+"</product_name>" +
+					"<product_name>"+product+"</product_name>" +
 					"<sup_bill_id></sup_bill_id>" +
 					"<batch></batch>" +
 					"</goods_received>";
@@ -47,11 +47,11 @@ function report1_ini()
 					if(bill_entries.length==0)
 					{
 						var store_data="<area_utilization>" +
-						"<name></name>" +
-						"<product_name>"+offers[i].product_name+"</product_name>" +
-						"<batch>"+offers[i].batch+"</batch>" +
-						"</area_utilization>";
-				
+								"<name></name>" +
+								"<product_name>"+product+"</product_name>" +
+								"<batch></batch>" +
+								"</area_utilization>";
+						
 						fetch_requested_data('report1',store_data,function(areas)
 						{
 							var areas_string="";
@@ -81,7 +81,7 @@ function report1_ini()
 					}
 				});
 			});
-		}
+		});
 		$('#form1_body').append(rowsHTML);
 	},product_data);
 	
@@ -97,12 +97,12 @@ function report1_ini()
 	fetch_requested_data('report1',offer_data,function(offers)
 	{
 		var rowsHTML="";
-		for(var i in offers)
+		offers.forEach(function(offer)
 		{
 			var store_data="<area_utilization>" +
 					"<name></name>" +
-					"<product_name>"+offers[i].product_name+"</product_name>" +
-					"<batch>"+offers[i].batch+"</batch>" +
+					"<product_name>"+offer.product_name+"</product_name>" +
+					"<batch>"+offer.batch+"</batch>" +
 					"</area_utilization>";
 			
 			fetch_requested_data('report1',store_data,function(areas)
@@ -115,24 +115,24 @@ function report1_ini()
 				areas_string=rtrim(areas_string,", ");
 				rowsHTML+="<tr>";
 					rowsHTML+="<td>";
-						rowsHTML+=offers[i].product_name;
+						rowsHTML+=offer.product_name;
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+=offers[i].batch;
+						rowsHTML+=offer.batch;
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+=areas_string;
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+=offers[i].status;
+						rowsHTML+=offer.status;
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+=offers[i].offer_detail;
+						rowsHTML+=offer.offer_detail;
 					rowsHTML+="</td>";
 				rowsHTML+="</tr>";
 			
 			});
-		}
+		});
 		$('#form1_body').append(rowsHTML);
 	});
 };
@@ -183,11 +183,11 @@ function report5_ini()
 	fetch_requested_data('report5',account_data,function(accounts)
 	{
 		var rowsHTML="";
-		for(var i in accounts)
+		accounts.forEach(function(account)
 		{
 			var bills_data="<bills>" +
 				"<id></id>" +
-				"<customer_name>"+accounts[i].acc_name+"</customer_name>" +
+				"<customer_name>"+account.acc_name+"</customer_name>" +
 				"<amount></amount>" +
 				"</bills>";
 		
@@ -201,17 +201,17 @@ function report5_ini()
 				bill_ids_string=rtrim(bill_ids_string,", ");
 				rowsHTML+="<tr>";
 					rowsHTML+="<td>";
-						rowsHTML+=accounts[i].acc_name;
+						rowsHTML+=account.acc_name;
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+=accounts[i].balance;
+						rowsHTML+=account.balance;
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+=bill_ids_string;
 					rowsHTML+="</td>";
 				rowsHTML+="</tr>";
 			});
-		}
+		});
 		$('#form5_body').html(rowsHTML);
 	});
 };
@@ -268,11 +268,11 @@ function report9_ini()
 	fetch_requested_data('report9',account_data,function(products)
 	{
 		var rowsHTML="";
-		for(var i in products)
+		products.forEach(function(product)
 		{
 			var bill_items_data="<bill_items>" +
 					"<bill_id></bill_id>" +
-					"<product_name>"+products[i].name+"</product_name>" +
+					"<product_name>"+product.name+"</product_name>" +
 					"</bill_items>";
 			fetch_requested_data(bill_items_data,function(bill_ids)
 			{
@@ -295,13 +295,13 @@ function report9_ini()
 					{
 						rowsHTML+="<tr>";
 							rowsHTML+="<td>";
-								rowsHTML+=products[i].name;
+								rowsHTML+=product.name;
 							rowsHTML+="</td>";
 							rowsHTML+="<td>";
-								rowsHTML+=products[i].make;
+								rowsHTML+=product.make;
 							rowsHTML+="</td>";
 							rowsHTML+="<td>";
-								rowsHTML+=products[i].product_type;
+								rowsHTML+=product.product_type;
 							rowsHTML+="</td>";
 							rowsHTML+="<td>";
 								rowsHTML+=bills[j].customer_name;
@@ -313,7 +313,7 @@ function report9_ini()
 					}
 				});
 			});
-		}
+		});
 		$('#form9_body').html(rowsHTML);
 	});
 };
@@ -445,10 +445,10 @@ function report17_ini()
 	get_single_column_data(function(employees)
 	{	
 		var rowsHTML="";
-		for(var k in employees)
+		employees.forEach(function(employee)
 		{
 			var attendance_data="<attendance>" +
-					"<acc_name>"+employees[k].acc_name+"</acc_name>" +
+					"<acc_name>"+employee.acc_name+"</acc_name>" +
 					"<presence></presence>" +
 					"<hours_worked></hours_worked>" +
 					"<date compare='more than'>"+get_raw_time(from_date)+"</date>" +
@@ -459,14 +459,16 @@ function report17_ini()
 			{
 				var absents=0;
 				var hours=0;
+				var acc_name="";
 				for(var i in attendances)
 				{
 					if(attendances[i].presence=='absent')
 						absents+=1;
 					hours+=parseInt(attendances[i].hours_worked);
+					acc_name=attendances[i].acc_name;
 				}
 				var task_instances_data="<task_instances>" +
-						"<assignee>"+attendances[0].acc_name+"</assignee>" +
+						"<assignee>"+acc_name+"</assignee>" +
 						"<t_executed compare='more than'>"+get_raw_time(from_date)+"</t_executed>" +
 						"<t_executed compare='less than'>"+get_raw_time(to_date)+"</t_executed>" +
 						"<task_hours></task_hours>" +
@@ -476,15 +478,17 @@ function report17_ini()
 				{
 					var num_tasks=0;
 					var task_hours=0;
+					var assignee="";
 					for(var x in tasks)
 					{
 						task_hours+=parseInt(tasks[x].task_hours);
 						num_tasks+=1;
+						assignee=tasks[x].assignee;
 					}
 				
 					rowsHTML+="<tr>";
 						rowsHTML+="<td>";
-							rowsHTML+=tasks[0].assignee;
+							rowsHTML+=assignee;
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
 							rowsHTML+=num_tasks;
@@ -501,7 +505,7 @@ function report17_ini()
 					rowsHTML+="</tr>";
 				});
 			});	
-		}
+		});
 		$('#form17_body').html(rowsHTML);
 	},staff_data);
 	
@@ -574,8 +578,13 @@ function report28_ini()
 			"<product_name>"+product+"</product_name>" +
 			"</product_instances>";
 
-	fetch_requested_data('report28',product_data,function(products_array)
+	fetch_requested_data('report28',product_data,function(products)
 	{
+		var product_array="";
+		for(var k in products)
+		{
+			product_array+=products[k]+"--";
+		}
 		var bills_data="<bills>" +
 				"<id></id>" +
 				"<date_created compare='more than'>"+raw_time+"</date_created>" +
@@ -592,7 +601,7 @@ function report28_ini()
 			var sales_data="<bills_items>" +
 					"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
 					"<quantity></quantity>" +
-					"<product_name>"+product+"</product_name>" +
+					"<product_name array='yes'>"+product_array+"</product_name>" +
 					"</bill_items>";
 			fetch_requested_data('report28',sales_data,function(sales_array)
 			{
@@ -610,19 +619,19 @@ function report28_ini()
 function report29_ini()
 {
 	var form=document.getElementById('report29_header');
-	var product=form.elements[1].value;
+	var name=form.elements[1].value;
 	
 	var product_data="<product_master>" +
-			"<name>"+product+"</name>" +
+			"<name>"+name+"</name>" +
 			"<manufacture>yes</yes>" +
 			"</product_master>";
 	get_single_column_data(function(products)
 	{	
 		var rowsHTML="";
-		for(var k in products)
+		products.forEach(function(product)
 		{
 			var requisites_data="<pre_requisites>" +
-					"<name>"+products[k].name+"</name>" +
+					"<name>"+product.name+"</name>" +
 					"<type>product</product>" +
 					"<requisite_type></requisite_type>" +
 					"<product_name></product_name>" +
@@ -636,14 +645,16 @@ function report29_ini()
 				var product_string='';
 				var service_string='';
 				var task_string='';
+				var requisite_name="";
 				for(var i in requisites)
 				{
 					if(requisites[i].requisite_type=='product')
 						product_string+="<u title='"+requisites[i].quantity+"'>"+requisites[i].product_name+"</u>, ";
 					else if(requisites[i].requisite_type=='service')
 						service_string+="<u title='"+requisites[i].quantity+"'>"+requisites[i].service_name+"</u>, ";
-					if(requisites[i].requisite_type=='task')
+					else if(requisites[i].requisite_type=='task')
 						task_string+="<u title='"+requisites[i].quantity+"'>"+requisites[i].task_name+"</u>, ";
+					requisite_name=requisites[i].name;
 				}
 				product_string=rtrim(product_string,", ");
 				service_string=rtrim(service_string,", ");
@@ -651,7 +662,7 @@ function report29_ini()
 				
 				rowsHTML+="<tr>";
 					rowsHTML+="<td>";
-						rowsHTML+=requisites[0].name;
+						rowsHTML+=requisite_name;
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+=product_string;
@@ -664,7 +675,7 @@ function report29_ini()
 					rowsHTML+="</td>";
 				rowsHTML+="</tr>";				
 			});	
-		}
+		});
 		$('#form29_body').html(rowsHTML);
 	},product_data);
 };
@@ -707,11 +718,9 @@ function report31_ini()
 	var min_amount=$("#form31_slider").slider("values",0);
 	var max_amount=$("#form31_slider").slider("values",1);
 	
-	console.log("amounts-"+min_amount+"- "+max_amount);
+	//console.log("amounts-"+min_amount+"- "+max_amount);
 	
-	if(typeof map31 != 'undefined')
-		map31.remove();
-
+	
 	var coordinates_data="<address>" +
 			"<acc_type>master</acc_type>" +
 			"<lat></lat>" +
@@ -719,54 +728,61 @@ function report31_ini()
 			"</address>";
 	fetch_requested_data('report31',coordinates_data,function(coords)
 	{
-		map31 = L.map('report31_map',{
-			center: [coords[0].lat,coords[0].lng], 
-			zoom: 10
-		});
-
-		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
-	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	        subdomains:'1234'
-	      }).addTo(map31);
-		
-		var accounts_data="<accounts>" +
-				"<acc_name></acc_name>" +
-				"<balance compare='less than'>"+max_amount+"</balance>" +
-				"<balance compare='more than'>"+min_amount+"</balance>" +
-				"<type>customer</type>" +
-				"</accounts>";
-		
-		get_single_column_data(function(customers)
+		for (var z in coords)
 		{
-			var customers_array="";
-			for(var x in customers)
+			if(typeof map31 != 'undefined')
+				map31.remove();
+	
+			map31 = L.map('report31_map',{
+				center: [coords[z].lat,coords[z].lng], 
+				zoom: 10
+			});
+		
+			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+		        subdomains:'1234'
+		      }).addTo(map31);
+			
+			var accounts_data="<accounts>" +
+					"<acc_name></acc_name>" +
+					"<balance compare='less than'>"+max_amount+"</balance>" +
+					"<balance compare='more than'>"+min_amount+"</balance>" +
+					"<type>customer</type>" +
+					"</accounts>";
+			
+			get_single_column_data(function(customers)
 			{
-				customers_array+=customers[x]+"--";
-			}
-			if(customers_array!="")
-			{
-				console.log("customers "+customers_array);
-				var address_data="<address>" +
-						"<id></id>" +
-						"<acc_type>customer</acc_type>" +
-						"<lat></lat>" +
-						"<lng></lng>" +
-						"<acc_name array='yes'>"+customers_array+"</acc_name>" +
-						"<status></status>" +
-						"<address></address>" +
-						"</address>";
-				fetch_requested_data('report31',address_data,function(addresses)
+				var customers_array="";
+				for(var x in customers)
 				{
-					console.log("addresses "+addresses);
-					for(var i in addresses)
+					customers_array+=customers[x]+"--";
+				}
+				if(customers_array!="")
+				{
+					//console.log("customers "+customers_array);
+					var address_data="<address>" +
+							"<id></id>" +
+							"<acc_type>customer</acc_type>" +
+							"<lat></lat>" +
+							"<lng></lng>" +
+							"<acc_name array='yes'>"+customers_array+"</acc_name>" +
+							"<status></status>" +
+							"<address></address>" +
+							"</address>";
+					fetch_requested_data('report31',address_data,function(addresses)
 					{
-						var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
-						//console.log("adding marker at-"+latlng+"--"+addresses[i].acc_name+customers[x].acc_name);
-						var marker=L.marker(latlng).addTo(map31).bindPopup("Name: "+addresses[i].acc_name);	
-					}
-				});
-			}
-		},accounts_data);
+						console.log("addresses "+addresses);
+						for(var i in addresses)
+						{
+							var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
+							//console.log("adding marker at-"+latlng+"--"+addresses[i].acc_name+customers[x].acc_name);
+							var marker=L.marker(latlng).addTo(map31).bindPopup("Name: "+addresses[i].acc_name);	
+						}
+					});
+				}
+			},accounts_data);
+			break;
+		}
 	});
 }
 
@@ -780,9 +796,7 @@ function report32_ini()
 	var min_amount=$("#form32_slider").slider("values",0);
 	var max_amount=$("#form32_slider").slider("values",1);
 	
-	if(typeof map32 != 'undefined')
-		map32.remove();
-
+	
 	var coordinates_data="<address>" +
 			"<acc_type>master</acc_type>" +
 			"<lat></lat>" +
@@ -790,51 +804,58 @@ function report32_ini()
 			"</address>";
 	fetch_requested_data('report32',coordinates_data,function(coords)
 	{
-		map32 = L.map('report32_map',{
-			center: [coords[0].lat,coords[0].lng], 
-			zoom: 10
-		});
-
-		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
-	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	        subdomains:'1234'
-	      }).addTo(map32);
-		
-		var salary_data="<staff>" +
-				"<acc_name></acc_name>" +
-				"<fixed_comp compare='less than'>"+max_amount+"</fixed_comp>" +
-				"<fixed_comp compare='more than'>"+min_amount+"</fixed_comp>" +
-				"<status>active</status>" +
-				"</staff>";
-		
-		get_single_column_data(function(staff)
+		for (var z in coords)
 		{
-			var staff_array="";
-			for(var x in staff)
+			if(typeof map32 != 'undefined')
+				map32.remove();
+	
+			map32 = L.map('report32_map',{
+				center: [coords[z].lat,coords[z].lng], 
+				zoom: 10
+			});
+	
+			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+		        subdomains:'1234'
+		      }).addTo(map32);
+			
+			var salary_data="<staff>" +
+					"<acc_name></acc_name>" +
+					"<fixed_comp compare='less than'>"+max_amount+"</fixed_comp>" +
+					"<fixed_comp compare='more than'>"+min_amount+"</fixed_comp>" +
+					"<status>active</status>" +
+					"</staff>";
+			
+			get_single_column_data(function(staff)
 			{
-				staff_array+=staff[x]+"--";
-			}
-			if(staff_array!="")
-			{
-				var address_data="<address>" +
-						"<acc_type>staff</acc_type>" +
-						"<lat></lat>" +
-						"<lng></lng>" +
-						"<acc_name array='yes'>"+staff_array+"</acc_name>" +
-						"<status></status>" +
-						"<address></address>" +
-						"</address>";
-				fetch_requested_data('report32',address_data,function(addresses)
+				var staff_array="";
+				for(var x in staff)
 				{
-					for(var i in addresses)
+					staff_array+=staff[x]+"--";
+				}
+				if(staff_array!="")
+				{
+					var address_data="<address>" +
+							"<acc_type>staff</acc_type>" +
+							"<lat></lat>" +
+							"<lng></lng>" +
+							"<acc_name array='yes'>"+staff_array+"</acc_name>" +
+							"<status></status>" +
+							"<address></address>" +
+							"</address>";
+					fetch_requested_data('report32',address_data,function(addresses)
 					{
-						var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
-						//console.log("adding marker at-"+latlng+"--"+addresses[i].acc_name+customers[x].acc_name);
-						var marker=L.marker(latlng).addTo(map32).bindPopup("Name: "+addresses[i].acc_name);	
-					}
-				});
-			}
-		},salary_data);
+						for(var i in addresses)
+						{
+							var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
+							//console.log("adding marker at-"+latlng+"--"+addresses[i].acc_name+customers[x].acc_name);
+							var marker=L.marker(latlng).addTo(map32).bindPopup("Name: "+addresses[i].acc_name);	
+						}
+					});
+				}
+			},salary_data);
+			break;
+		}
 	});
 }
 
@@ -849,8 +870,6 @@ function report33_ini()
 	var min_amount=$("#form33_slider").slider("values",0);
 	var max_amount=$("#form33_slider").slider("values",1);
 	
-	if(typeof map33 != 'undefined')
-		map33.remove();
 
 	var coordinates_data="<address>" +
 			"<acc_type>master</acc_type>" +
@@ -859,52 +878,59 @@ function report33_ini()
 			"</address>";
 	fetch_requested_data('report33',coordinates_data,function(coords)
 	{
-		map33 = L.map('report33_map',{
-			center: [coords[0].lat,coords[0].lng], 
-			zoom: 10
-		});
-
-		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
-	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	        subdomains:'1234'
-	      }).addTo(map33);
-		
-		var account_data="<accounts>" +
-				"<acc_name></acc_name>" +
-				"<balance compare='less than'>"+max_amount+"</balance>" +
-				"<balance compare='more than'>"+min_amount+"</balance>" +
-				"<type>supplier</type>" +
-				"</accounts>";
-		
-		get_single_column_data(function(suppliers)
+		for (var z in coords)
 		{
-			var suppliers_array="";
-			for(var x in suppliers)
+			if(typeof map33 != 'undefined')
+				map33.remove();
+	
+			map33 = L.map('report33_map',{
+				center: [coords[z].lat,coords[z].lng], 
+				zoom: 10
+			});
+	
+			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+		        subdomains:'1234'
+		      }).addTo(map33);
+			
+			var account_data="<accounts>" +
+					"<acc_name></acc_name>" +
+					"<balance compare='less than'>"+max_amount+"</balance>" +
+					"<balance compare='more than'>"+min_amount+"</balance>" +
+					"<type>supplier</type>" +
+					"</accounts>";
+			
+			get_single_column_data(function(suppliers)
 			{
-				suppliers_array+=suppliers[x]+"--";
-			}
-			if(suppliers_array!="")
-			{
-				var address_data="<address>" +
-						"<id></id>" +
-						"<acc_type>supplier</acc_type>" +
-						"<lat></lat>" +
-						"<lng></lng>" +
-						"<acc_name array='yes'>"+suppliers_array+"</acc_name>" +
-						"<status></status>" +
-						"<address></address>" +
-						"</address>";
-				fetch_requested_data('report33',address_data,function(addresses)
+				var suppliers_array="";
+				for(var x in suppliers)
 				{
-					for(var i in addresses)
+					suppliers_array+=suppliers[x]+"--";
+				}
+				if(suppliers_array!="")
+				{
+					var address_data="<address>" +
+							"<id></id>" +
+							"<acc_type>supplier</acc_type>" +
+							"<lat></lat>" +
+							"<lng></lng>" +
+							"<acc_name array='yes'>"+suppliers_array+"</acc_name>" +
+							"<status></status>" +
+							"<address></address>" +
+							"</address>";
+					fetch_requested_data('report33',address_data,function(addresses)
 					{
-						var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
-						//console.log("adding marker at-"+latlng+"--"+addresses[i].acc_name+customers[x].acc_name);
-						var marker=L.marker(latlng).addTo(map33).bindPopup("Name: "+addresses[i].acc_name);	
-					}
-				});
-			}
-		},account_data);
+						for(var i in addresses)
+						{
+							var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
+							//console.log("adding marker at-"+latlng+"--"+addresses[i].acc_name+customers[x].acc_name);
+							var marker=L.marker(latlng).addTo(map33).bindPopup("Name: "+addresses[i].acc_name);	
+						}
+					});
+				}
+			},account_data);
+			break;
+		}
 	});
 }
 
@@ -1095,9 +1121,6 @@ function report35_ini()
 	var form=document.getElementById('report35_header');
 	var product_name=form.elements[1].value;
 	
-	if(typeof map35 != 'undefined')
-		map35.remove();
-
 	var coordinates_data="<address>" +
 			"<acc_type>master</acc_type>" +
 			"<lat></lat>" +
@@ -1105,66 +1128,72 @@ function report35_ini()
 			"</address>";
 	fetch_requested_data('report35',coordinates_data,function(coords)
 	{
-		map35 = L.map('report35_map',{
-			center: [coords[0].lat,coords[0].lng], 
-			zoom: 10
-		});
-
-		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
-	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	        subdomains:'1234'
-	      }).addTo(map35);
-		
-		var product_data="<bill_items>" +
-				"<bill_id></bill_id>" +
-				"<product_name>"+product_name+"</product_name>" +
-				"</bill_items>";
-		
-		get_single_column_data(function(bill_ids)
+		for(var z in coords)
 		{
-			var bill_id_array="";
-			for(var y in bill_ids)
+			if(typeof map35 != 'undefined')
+				map35.remove();
+			map35 = L.map('report35_map',{
+				center: [coords[z].lat,coords[z].lng], 
+				zoom: 10
+			});
+	
+			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+		        subdomains:'1234'
+		      }).addTo(map35);
+			
+			var product_data="<bill_items>" +
+					"<bill_id></bill_id>" +
+					"<product_name>"+product_name+"</product_name>" +
+					"</bill_items>";
+			
+			get_single_column_data(function(bill_ids)
 			{
-				bill_id_array+=bill_ids[y]+"--";
-			}
-			if(bill_id_array!="")
-			{
-				var customer_data="<bills>" +
-						"<customer_name></customer_name>" +
-						"<id array='yes'>"+bill_id_array+"</id>" +
-						"</bills>";
-				
-				get_single_column_data(function(customers)
+				var bill_id_array="";
+				for(var y in bill_ids)
 				{
-					var customers_array="";
-					for(var x in customers)
+					bill_id_array+=bill_ids[y]+"--";
+				}
+				if(bill_id_array!="")
+				{
+					var customer_data="<bills>" +
+							"<customer_name></customer_name>" +
+							"<id array='yes'>"+bill_id_array+"</id>" +
+							"</bills>";
+					
+					get_single_column_data(function(customers)
 					{
-						customers_array+=customers[x]+"--";
-					}	
-					if(customers_array!="")
-					{
-						var address_data="<address>" +
-								"<id></id>" +
-								"<acc_type>customer</acc_type>" +
-								"<lat></lat>" +
-								"<lng></lng>" +
-								"<acc_name array='yes'>"+customers_array+"</acc_name>" +
-								"<status></status>" +
-								"<address></address>" +
-								"</address>";
-						fetch_requested_data('report35',address_data,function(addresses)
+						var customers_array="";
+						for(var x in customers)
 						{
-							for(var i in addresses)
+							customers_array+=customers[x]+"--";
+						}	
+						if(customers_array!="")
+						{
+							var address_data="<address>" +
+									"<id></id>" +
+									"<acc_type>customer</acc_type>" +
+									"<lat></lat>" +
+									"<lng></lng>" +
+									"<acc_name array='yes'>"+customers_array+"</acc_name>" +
+									"<status></status>" +
+									"<address></address>" +
+									"</address>";
+							fetch_requested_data('report35',address_data,function(addresses)
 							{
-								var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
-								//console.log("adding marker at-"+latlng+"--"+addresses[i].acc_name+customers[x].acc_name);
-								var marker=L.marker(latlng).addTo(map35).bindPopup("Name: "+addresses[i].acc_name);	
-							}
-						});
-					}
-				},customer_data);
-			}
-		},product_data);
+								for(var i in addresses)
+								{
+									var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
+									//console.log("adding marker at-"+latlng+"--"+addresses[i].acc_name+customers[x].acc_name);
+									var marker=L.marker(latlng).addTo(map35).bindPopup("Name: "+addresses[i].acc_name);	
+								}
+							});
+						}
+					},customer_data);
+				}
+			},product_data);
+			break;
+		}
 	});
 }
 
@@ -1178,8 +1207,6 @@ function report36_ini()
 	var form=document.getElementById('report36_header');
 	var product_name=form.elements[1].value;
 	
-	if(typeof map36 != 'undefined')
-		map36.remove();
 
 	var coordinates_data="<address>" +
 			"<acc_type>master</acc_type>" +
@@ -1188,66 +1215,73 @@ function report36_ini()
 			"</address>";
 	fetch_requested_data('report36',coordinates_data,function(coords)
 	{
-		map36 = L.map('report36_map',{
-			center: [coords[0].lat,coords[0].lng], 
-			zoom: 10
-		});
-
-		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
-	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	        subdomains:'1234'
-	      }).addTo(map36);
-		
-		var product_data="<goods_received>" +
-				"<sup_bill_id></sup_bill_id>" +
-				"<product_name>"+product_name+"</product_name>" +
-				"</goods_received>";
-		
-		get_single_column_data(function(bill_ids)
+		for(var z in coords)
 		{
-			var bill_id_array="";
-			for(var y in bill_ids)
+			if(typeof map36 != 'undefined')
+				map36.remove();
+	
+			map36 = L.map('report36_map',{
+				center: [coords[z].lat,coords[z].lng], 
+				zoom: 10
+			});
+	
+			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+		        subdomains:'1234'
+		      }).addTo(map36);
+			
+			var product_data="<goods_received>" +
+					"<sup_bill_id></sup_bill_id>" +
+					"<product_name>"+product_name+"</product_name>" +
+					"</goods_received>";
+			
+			get_single_column_data(function(bill_ids)
 			{
-				bill_id_array+=bill_ids[y]+"--";
-			}
-			if(bill_id_array!="")
-			{
-				var supplier_data="<supplier_bills>" +
-						"<supplier_name></supplier_name>" +
-						"<id array='yes'>"+bill_id_array+"</id>" +
-						"</supplier_bills>";
-				
-				get_single_column_data(function(suppliers)
+				var bill_id_array="";
+				for(var y in bill_ids)
 				{
-					var suppliers_array="";
-					for(var x in suppliers)
+					bill_id_array+=bill_ids[y]+"--";
+				}
+				if(bill_id_array!="")
+				{
+					var supplier_data="<supplier_bills>" +
+							"<supplier_name></supplier_name>" +
+							"<id array='yes'>"+bill_id_array+"</id>" +
+							"</supplier_bills>";
+					
+					get_single_column_data(function(suppliers)
 					{
-						suppliers_array+=suppliers[x]+"--";
-					}	
-					if(suppliers_array!="")
-					{
-						var address_data="<address>" +
-								"<id></id>" +
-								"<acc_type>supplier</acc_type>" +
-								"<lat></lat>" +
-								"<lng></lng>" +
-								"<acc_name array='yes'>"+suppliers_array+"</acc_name>" +
-								"<status></status>" +
-								"<address></address>" +
-								"</address>";
-						fetch_requested_data('report36',address_data,function(addresses)
+						var suppliers_array="";
+						for(var x in suppliers)
 						{
-							for(var i in addresses)
+							suppliers_array+=suppliers[x]+"--";
+						}	
+						if(suppliers_array!="")
+						{
+							var address_data="<address>" +
+									"<id></id>" +
+									"<acc_type>supplier</acc_type>" +
+									"<lat></lat>" +
+									"<lng></lng>" +
+									"<acc_name array='yes'>"+suppliers_array+"</acc_name>" +
+									"<status></status>" +
+									"<address></address>" +
+									"</address>";
+							fetch_requested_data('report36',address_data,function(addresses)
 							{
-								var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
-								//console.log("adding marker at-"+latlng+"--"+addresses[i].acc_name+customers[x].acc_name);
-								var marker=L.marker(latlng).addTo(map36).bindPopup("Name: "+addresses[i].acc_name);	
-							}
-						});
-					}
-				},supplier_data);
-			}
-		},product_data);
+								for(var i in addresses)
+								{
+									var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
+									//console.log("adding marker at-"+latlng+"--"+addresses[i].acc_name+customers[x].acc_name);
+									var marker=L.marker(latlng).addTo(map36).bindPopup("Name: "+addresses[i].acc_name);	
+								}
+							});
+						}
+					},supplier_data);
+				}
+			},product_data);
+			break;
+		}
 	});
 }
 
@@ -1373,8 +1407,13 @@ function report40_ini()
 			"<product_name>"+product+"</product_name>" +
 			"</product_instances>";
 
-	fetch_requested_data('report40',product_data,function(products_array)
+	fetch_requested_data('report40',product_data,function(products)
 	{
+		var products_array="";
+		for(var k in products)
+		{
+			products_array+=products[k]+"--";
+		}
 		var bills_data="<bills>" +
 				"<id></id>" +
 				"<date_created compare='more than'>"+raw_time+"</date_created>" +
@@ -1391,7 +1430,7 @@ function report40_ini()
 			var sales_data="<bills_items>" +
 					"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
 					"<quantity></quantity>" +
-					"<product_name>"+product+"</product_name>" +
+					"<product_name array='yes'>"+products_array+"</product_name>" +
 					"</bill_items>";
 			fetch_requested_data('report40',sales_data,function(sales_array)
 			{
@@ -1409,18 +1448,18 @@ function report40_ini()
 function report41_ini()
 {
 	var form=document.getElementById('report41_header');
-	var service=form.elements[1].value;
+	var name=form.elements[1].value;
 	
 	var service_data="<services>" +
-			"<name>"+product+"</name>" +
+			"<name>"+name+"</name>" +
 			"</services>";
 	get_single_column_data(function(services)
 	{	
 		var rowsHTML="";
-		for(var k in services)
+		services.forEach(function(service)
 		{
 			var requisites_data="<pre_requisites>" +
-					"<name>"+services[k].name+"</name>" +
+					"<name>"+service.name+"</name>" +
 					"<type>service</product>" +
 					"<requisite_type></requisite_type>" +
 					"<product_name></product_name>" +
@@ -1434,14 +1473,17 @@ function report41_ini()
 				var product_string='';
 				var service_string='';
 				var task_string='';
+				var requisite_name='';
 				for(var i in requisites)
 				{
 					if(requisites[i].requisite_type=='product')
 						product_string+="<u title='"+requisites[i].quantity+"'>"+requisites[i].product_name+"</u>, ";
 					else if(requisites[i].requisite_type=='service')
 						service_string+="<u title='"+requisites[i].quantity+"'>"+requisites[i].service_name+"</u>, ";
-					if(requisites[i].requisite_type=='task')
+					else if(requisites[i].requisite_type=='task')
 						task_string+="<u title='"+requisites[i].quantity+"'>"+requisites[i].task_name+"</u>, ";
+					
+					requisite_name=requisites[i].name;
 				}
 				product_string=rtrim(product_string,", ");
 				service_string=rtrim(service_string,", ");
@@ -1449,7 +1491,7 @@ function report41_ini()
 				
 				rowsHTML+="<tr>";
 					rowsHTML+="<td>";
-						rowsHTML+=requisites[0].name;
+						rowsHTML+=requisite_name;
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+=product_string;
@@ -1462,7 +1504,7 @@ function report41_ini()
 					rowsHTML+="</td>";
 				rowsHTML+="</tr>";				
 			});	
-		}
+		});
 		$('#form41_body').html(rowsHTML);
 	},service_data);
 };

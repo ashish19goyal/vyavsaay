@@ -88,6 +88,46 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>feedback</tablename>
+			<listname>type</listname>
+			<name>positive</name>
+			<value>Positive</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feedback</tablename>
+			<listname>type</listname>
+			<name>negative</name>
+			<value>Negative</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feedback</tablename>
+			<listname>rating</listname>
+			<name>high</name>
+			<value>High</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feedback</tablename>
+			<listname>rating</listname>
+			<name>medium</name>
+			<value>Medium</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feedback</tablename>
+			<listname>rating</listname>
+			<name>low</name>
+			<value>Low</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>pre_requisites</tablename>
 			<listname>requisite_type</listname>
 			<name>service</name>

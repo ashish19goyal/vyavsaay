@@ -68,7 +68,6 @@ function form5_ini(fid)
 	var fowner=filter_fields.elements[1].value;
 	var ftype=filter_fields.elements[2].value;
 	
-	console.log("populating form");
 	var columns="<assets>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fasset+"</name>" +
@@ -129,7 +128,6 @@ function form7_ini(fid)
 	var fattendance=filter_fields.elements[1].value;
 	var fdate=filter_fields.elements[2].value;
 	
-	console.log("populating form");
 	var columns="<attendance>" +
 			"<id>"+fid+"</id>" +
 			"<date>"+fdate+"</date>" +
@@ -178,7 +176,6 @@ function form8_ini(fid)
 	var filter_fields=document.getElementById('form8_header');
 	var fname=filter_fields.elements[0].value;
 	
-	console.log("populating form");
 	var columns="<staff>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
@@ -242,7 +239,6 @@ function form9_ini(fid)
 	var fto=filter_fields.elements[3].value;
 	var fsystem=filter_fields.elements[4].value;
 	
-	console.log("populating form");
 	var columns="<transactions>" +
 			"<id>"+fid+"</id>" +
 			"<trans_type>"+ftype+"</trans_type>" +
@@ -306,7 +302,6 @@ function form11_ini(fid)
 	var fdate=filter_fields.elements[3].value;
 	var fstatus=filter_fields.elements[4].value;
 	
-	console.log("populating form");
 	var columns="<payments>" +
 			"<id>"+fid+"</id>" +
 			"<type>debit</type>" +
@@ -373,7 +368,6 @@ function form14_ini(fid)
 	var fexecuted=filter_fields.elements[3].value;
 	var fstatus=filter_fields.elements[4].value;
 	
-	console.log("populating form");
 	var columns="<task_instances>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+ftype+"</name>" +
@@ -438,7 +432,6 @@ function form15_ini(fid)
 	var fbatch=filter_fields.elements[2].value;
 	var fcustomer=filter_fields.elements[3].value;
 	
-	console.log("populating form");
 	var columns="<returns>" +
 			"<id>"+fid+"</id>" +
 			"<bill_id>"+fbill+"</bill_id>" +
@@ -481,7 +474,6 @@ function form15_ini(fid)
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 		}
-		//console.log(rowsHTML);
 		$('#form15_body').html(rowsHTML);
 	});
 };
@@ -496,14 +488,12 @@ function form19_ini(fid)
 {
 	var filter_fields=document.getElementById('form19_header');
 
-	//populating form 
 	var fproduct=filter_fields.elements[0].value;
 	var fbatch=filter_fields.elements[1].value;
 	var fbill=filter_fields.elements[2].value;
 	var freason=filter_fields.elements[3].value;
 	var fsupplier=filter_fields.elements[4].value;
 	
-	console.log("populating form");
 	var columns="<supplier_returns>" +
 			"<id>"+fid+"</id>" +
 			"<batch>"+fbatch+"</batch>" +
@@ -547,7 +537,6 @@ function form19_ini(fid)
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 		}
-		//console.log(rowsHTML);
 		$('#form19_body').html(rowsHTML);
 	});
 };
@@ -562,12 +551,10 @@ function form22_ini(fid)
 {
 	var filter_fields=document.getElementById('form22_header');
 	
-	//populating form 
 	var fproduct=filter_fields.elements[0].value;
 	var fbatch=filter_fields.elements[1].value;
 	var fmethod=filter_fields.elements[2].value;
 	
-	console.log("populating form");
 	var columns="<disposals>" +
 			"<id>"+fid+"</id>" +
 			"<batch>"+fbatch+"</batch>" +
@@ -622,7 +609,6 @@ function form30_ini(fid)
 {
 	var filter_fields=document.getElementById('form30_header');
 	
-	//populating form
 	if(fid==="")
 		fid=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
@@ -630,7 +616,6 @@ function form30_ini(fid)
 	var femail=filter_fields.elements[3].value;
 	var fstatus=filter_fields.elements[4].value;
 	
-	console.log("populating form");
 	var columns="<customers>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
@@ -644,10 +629,10 @@ function form30_ini(fid)
 	{
 		var rowsHTML="";
 	
-		for(var i in results)
+		results.forEach(function(result)
 		{
 			var address_data="<address>" +
-					"<acc_name>"+results[i].acc_name+"</acc_name>" +
+					"<acc_name>"+result.acc_name+"</acc_name>" +
 					"<address></address>" +
 					"<street></street>" +
 					"<city></city>" +
@@ -657,32 +642,41 @@ function form30_ini(fid)
 					"</address>";
 			fetch_requested_data('form30',address_data,function(add_results)
 			{		
+				var res_address,res_street,res_city,res_state,res_country;
+				for (var j in add_results)
+				{
+					res_address=add_results[j].address;
+					res_street=add_results[j].street;
+					res_city=add_results[j].city;
+					res_state=add_results[j].state;
+					res_country=add_results[j].country;
+				}
 				rowsHTML+="<tr>";
-					rowsHTML+="<form id='form30_"+results[i].id+"'></form>";
+					rowsHTML+="<form id='form30_"+result.id+"'></form>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form30_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].name+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.name+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form30_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].phone+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.phone+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form30_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].email+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.email+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form30_"+results[i].id+"' value='"+add_results[0].address+", "+add_results[0].street+", "+add_results[0].city+", "+add_results[0].state+", "+add_results[0].country+"'>";
-							rowsHTML+="<img class='filter_icon' form='form30_"+results[i].id+"' src='./images/edit.jpeg' onclick='form30_edit_address($(this));'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' value='"+res_address+", "+res_street+", "+res_city+", "+res_state+", "+res_country+"'>";
+							rowsHTML+="<img class='filter_icon' form='form30_"+result.id+"' src='./images/edit.jpeg' onclick='form30_edit_address($(this));'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form30_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].status+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.status+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='hidden' form='form30_"+results[i].id+"' value='"+results[i].id+"'>";
-							rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form30_"+results[i].id+"' value='Save' onclick='form30_save_item($(this));'>";
-							rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form30_"+results[i].id+"' value='Delete' onclick='form30_delete_item($(this));'>";	
+							rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.id+"'>";
+							rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form30_"+result.id+"' value='Save' onclick='form30_save_item($(this));'>";
+							rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form30_"+result.id+"' value='Delete' onclick='form30_delete_item($(this));'>";	
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 			});
-		}
+		});
 		//console.log(rowsHTML);
 		$('#form30_body').html(rowsHTML);
 	});
@@ -698,13 +692,11 @@ function form35_ini(fid)
 {
 	var filter_fields=document.getElementById('form35_header');
 	
-	//populating form 
 	var fname=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var fdate=filter_fields.elements[2].value;
 	var fstatus=filter_fields.elements[3].value;
 	
-	console.log("populating form");
 	var columns="<offers>" +
 			"<id>"+fid+"</id>" +
 			"<offer_name>"+fname+"</offer_name>" +
@@ -760,13 +752,10 @@ function form38_ini(fid)
 {
 	var filter_fields=document.getElementById('form38_header');
 	
-	//populating form 
 	var fname=filter_fields.elements[0].value;
 	var fbatch=filter_fields.elements[1].value;
 	var farea=filter_fields.elements[2].value;
 	
-	
-	console.log("populating form");
 	var columns="<area_utilization>" +
 			"<id>"+fid+"</id>" +
 			"<batch>"+fbatch+"</batch>" +
@@ -817,7 +806,6 @@ function form39_ini(fid)
 {
 	var filter_fields=document.getElementById('form39_header');
 	
-	//populating form 
 	var ftypes=filter_fields.elements[0].value;
 	var fmakes=filter_fields.elements[1].value;
 	var fname=filter_fields.elements[2].value;
@@ -834,75 +822,74 @@ function form39_ini(fid)
 	fetch_requested_data('form39',columns,function(results)
 	{
 		$('#form39_body').html("");
-		for(var i in results)
+		results.forEach(function(result)
 		{
-			var rowsHTML="";
 			var picture_column="<documents>" +
 					"<id></id>" +
 					"<url></url>" +
 					"<doc_type>product_master</doc_type>" +
-					"<target_id>"+results[i].id+"</target_id>" +
+					"<target_id>"+result.id+"</target_id>" +
 					"</documents>";
 			fetch_requested_data('form39',picture_column,function(pic_results)
 			{
-				console.log(pic_results);
-				console.log(pic_results['0']);
+				var rowsHTML="";
+				var pic_results_url="";
+				var pic_results_id="";
+				for (var j in pic_results)
+				{
+					pic_results_id=pic_results[j].id;
+					pic_results_url=pic_results[j].url;
+				}
 				if(pic_results.length===0)
 				{
-					pic_results[0]=new Object();
-					pic_results[0].id=get_new_key();
-					pic_results[0].url="";
+					pic_results_id=get_new_key();
+					pic_results_url="";
 				}
-				//console.log("this is the pic data returned form server");
-				//console.log(pic_results[0].url);
-				//console.log(pic_results[0].id);
 				
+				updated_url=pic_results_url.replace(/ /g,"+");
 				rowsHTML+="<tr>";
-					rowsHTML+="<form id='form39_"+results[i].id+"'></form>";
+					rowsHTML+="<form id='form39_"+result.id+"'></form>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+results[i].id+"' value='"+results[i].product_type+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' value='"+result.product_type+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].make+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.make+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].name+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.name+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<output form='form39_"+results[i].id+"'><div class='figure' name='"+pic_results[0].id+"'><img id='img_form39_"+results[i].id+"' src='"+pic_results[0].url+"'/></div></output>";
-							rowsHTML+="<input type='file' form='form39_"+results[i].id+"'>";
+							rowsHTML+="<output form='form39_"+result.id+"'><div class='figure' name='"+pic_results_id+"'><img id='img_form39_"+result.id+"' src='"+updated_url+"'></div></output>";
+							rowsHTML+="<input type='file' form='form39_"+result.id+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].est_price+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.est_price+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].description+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.description+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='hidden' form='form39_"+results[i].id+"' value='"+results[i].id+"'>";
-							rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form39_"+results[i].id+"' value='Save' onclick='form39_save_item($(this));'>";
-							rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form39_"+results[i].id+"' value='Delete' onclick='form39_delete_item($(this));'>";	
+							rowsHTML+="<input type='hidden' form='form39_"+result.id+"' value='"+result.id+"'>";
+							rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form39_"+result.id+"' value='Save' onclick='form39_save_item($(this));'>";
+							rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form39_"+result.id+"' value='Delete' onclick='form39_delete_item($(this));'>";	
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 			
-				//console.log(rowsHTML);
 				$('#form39_body').append(rowsHTML);
 	
-				var fields=document.getElementById("form39_"+results[i].id);
+				var fields=document.getElementById("form39_"+result.id);
 				var picture=fields.elements[4];
 				var pictureinfo=fields.elements[3];
-				
+								
 				picture.addEventListener('change',function(evt)
 				{
 					select_picture(evt,pictureinfo,function(dataURL)
 					{
-						console.log(dataURL);
-						pictureinfo.innerHTML="<div class='figure' name='"+pic_results[0].id+"'><img id='img_form39_"+results[i].id+"' src='"+dataURL+"'/></div>";			
+						pictureinfo.innerHTML="<div class='figure' name='"+pic_results_id+"'><img id='img_form39_"+result.id+"' src='"+dataURL+"'></div>";			
 					});
 				},false);
-				
 			});
-		}
+		});
 	});	
 };
 
@@ -916,12 +903,10 @@ function form40_ini(fid)
 {
 	var filter_fields=document.getElementById('form40_header');
 
-	//populating form 
 	var fname=filter_fields.elements[0].value;
 	var fcontact=filter_fields.elements[1].value;
 	var femail=filter_fields.elements[2].value;
 	
-	console.log("populating form");
 	var columns="<suppliers>" +
 			"<id>"+fid+"</id>" +
 			"<notes></notes>" +
@@ -935,10 +920,10 @@ function form40_ini(fid)
 	{
 		var rowsHTML="";
 	
-		for(var i in results)
+		results.forEach(function(result)
 		{
 			var address_data="<address>" +
-					"<acc_name>"+results[i].acc_name+"</acc_name>" +
+					"<acc_name>"+result.acc_name+"</acc_name>" +
 					"<address></address>" +
 					"<street></street>" +
 					"<city></city>" +
@@ -946,34 +931,44 @@ function form40_ini(fid)
 					"<country></country>" +
 					"<acc_type>supplier</acc_type>" +
 					"</address>";
+			
 			fetch_requested_data('form40',address_data,function(add_results)
 			{
+				var res_address,res_street,res_city,res_state,res_country;
+				for (var j in add_results)
+				{
+					res_address=add_results[j].address;
+					res_street=add_results[j].street;
+					res_city=add_results[j].city;
+					res_state=add_results[j].state;
+					res_country=add_results[j].country;
+				}
 				rowsHTML+="<tr>";
-					rowsHTML+="<form id='form40_"+results[i].id+"'></form>";
+					rowsHTML+="<form id='form40_"+result.id+"'></form>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form40_"+results[i].id+"' value='"+results[i].name+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form40_"+result.id+"' value='"+result.name+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form40_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+add_results[0].address+", "+add_results[0].street+", "+add_results[0].city+", "+add_results[0].state+", "+add_results[0].country+"'>";
-							rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form40_"+results[i].id+"' onclick='form40_edit_address($(this));'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form40_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.phone+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form40_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].phone+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form40_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.email+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form40_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].notes+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form40_"+result.id+"' ondblclick='set_editable($(this));' value='"+res_address+", "+res_street+", "+res_city+", "+res_state+", "+res_country+"'>";
+							rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form40_"+result.id+"' onclick='form40_edit_address($(this));'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form40_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].email+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form40_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.notes+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='hidden' form='form40_"+results[i].id+"' value='"+results[i].id+"'>";
-							rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form40_"+results[i].id+"' value='Save' onclick='form40_save_item($(this));'>";
-							rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form40_"+results[i].id+"' value='Delete' onclick='form40_delete_item($(this));'>";	
+							rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.id+"'>";
+							rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form40_"+result.id+"' value='Save' onclick='form40_save_item($(this));'>";
+							rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form40_"+result.id+"' value='Delete' onclick='form40_delete_item($(this));'>";	
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 			});
-		}
+		});
 		//console.log(rowsHTML);
 		$('#form40_body').html(rowsHTML);
 	});
@@ -983,9 +978,7 @@ function form40_ini(fid)
 function form41_ini(fid)
 {
 		//console.log(typeof map41+" in ini");
-	if(typeof map41 != 'undefined')
-		map41.remove();
-
+	
 	var coordinates_data="<address>" +
 			"<acc_type>master</acc_type>" +
 			"<lat></lat>" +
@@ -993,78 +986,85 @@ function form41_ini(fid)
 			"</address>";	
 	fetch_requested_data('form41',coordinates_data,function(coords)
 	{
-		map41 = L.map('form41_map',{
-			center: [coords[0].lat,coords[0].lng], 
-			zoom: 10
-		});
-		
-		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
-	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	        subdomains:'1234'
-	      }).addTo(map41);
-		
-		
-		var customers_data="<address>" +
-				"<id></id>" +
-				"<acc_type>customer</acc_type>" +
-				"<lat></lat>" +
-				"<lng></lng>" +
-				"<acc_name></acc_name>" +
-				"<status>unconfirmed</status>" +
-				"<address></address>" +
-				"</address>";
-		fetch_requested_data('form41',customers_data,function(customers)
+		for(var z in coords)
 		{
-			var rowsHTML="";
-			for(var x in customers)
-			{
-				var latlng=L.latLng(customers[x].lat,customers[x].lng);
-				var marker=L.marker(latlng,{draggable:true}).addTo(map41).bindPopup("Name: "+customers[x].acc_name);
-				marker.on('dragend',function(event){
-					var m=event.target;
-					var latlng=m.getLatLng();
-					var form=document.getElementById('form41_'+customers[x].id);
-					form.elements[1].value=latlng.lat;
-					form.elements[2].value=latlng.lng;
-					var save_button=form.elements[7];
-					$(save_button).show();
-				});
-				
-				rowsHTML+="<div class='customers_content_item' onclick=''>" +
-						"<form id='form41_"+customers[x].id+"'>" +
-						"Name: <input type='text' size='25' readonly='readonly' value='"+customers[x].acc_name+"'>" +
-						"Latitude: <input type='text' size='10' readonly='readonly' value='"+customers[x].lat+"'>" +
-						"Longitude: <input type='text' size='10' readonly='readonly' value='"+customers[x].lng+"'>" +
-						"<input type='hidden' value='"+customers[x].id+"'>" +
-						"<input type='hidden' value='"+customers[x].status+"'>" +
-						"<input type='hidden' value='"+customers[x].address+"'>" +
-						"<input type='hidden' value='"+customers[x].acc_type+"'>" +
-						"<input type='button' value='Confirm' form='form41_"+customers[x].id+"' onclick='form41_save_item($(this))'>" +
-						"</form>" +
-						"</div>";
-			}
-			//console.log(rowsHTML);
-			$('#form41_header').html(rowsHTML);
-			//$('#form41_header').find('input:button').hide();
-		
-			var scrollPane=$(".customers_pane");
-			var scrollContent=$(".customers_content");
-			scrollContent.css('width',Math.round(200*customers.length)+"px");
-			$(".customers_bar").slider({
-				slide: function(event,ui) {
-					if (scrollContent.width()>scrollPane.width()){
-						scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
-					} 
-					else{
-						scrollContent.css("margin-left",0);
-					}
-				}
-			});
+			if(typeof map41 != 'undefined')
+				map41.remove();
 
-			scrollPane.css("overflow","hidden");			
-		});
-	});
+			map41 = L.map('form41_map',{
+				center: [coords[z].lat,coords[z].lng], 
+				zoom: 10
+			});
+			
+		
+			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+		        subdomains:'1234'
+		    }).addTo(map41);
+			
+			
+			var customers_data="<address>" +
+					"<id></id>" +
+					"<acc_type>customer</acc_type>" +
+					"<lat></lat>" +
+					"<lng></lng>" +
+					"<acc_name></acc_name>" +
+					"<status>unconfirmed</status>" +
+					"<address></address>" +
+					"</address>";
+			fetch_requested_data('form41',customers_data,function(customers)
+			{
+				var rowsHTML="";
+				for(var x in customers)
+				{
+					var latlng=L.latLng(customers[x].lat,customers[x].lng);
+					var marker=L.marker(latlng,{draggable:true}).addTo(map41).bindPopup("Name: "+customers[x].acc_name);
+					marker.on('dragend',function(event){
+						var m=event.target;
+						var latlng=m.getLatLng();
+						var form=document.getElementById('form41_'+customers[x].id);
+						form.elements[1].value=latlng.lat;
+						form.elements[2].value=latlng.lng;
+						var save_button=form.elements[7];
+						$(save_button).show();
+					});
+					
+					rowsHTML+="<div class='customers_content_item' onclick=''>" +
+							"<form id='form41_"+customers[x].id+"'>" +
+							"Name: <input type='text' size='25' readonly='readonly' value='"+customers[x].acc_name+"'>" +
+							"Latitude: <input type='text' size='10' readonly='readonly' value='"+customers[x].lat+"'>" +
+							"Longitude: <input type='text' size='10' readonly='readonly' value='"+customers[x].lng+"'>" +
+							"<input type='hidden' value='"+customers[x].id+"'>" +
+							"<input type='hidden' value='"+customers[x].status+"'>" +
+							"<input type='hidden' value='"+customers[x].address+"'>" +
+							"<input type='hidden' value='"+customers[x].acc_type+"'>" +
+							"<input type='button' value='Confirm' form='form41_"+customers[x].id+"' onclick='form41_save_item($(this))'>" +
+							"</form>" +
+							"</div>";
+				}
+				//console.log(rowsHTML);
+				$('#form41_header').html(rowsHTML);
+				//$('#form41_header').find('input:button').hide();
+			
+				var scrollPane=$(".customers_pane");
+				var scrollContent=$(".customers_content");
+				scrollContent.css('width',Math.round(200*customers.length)+"px");
+				$(".customers_bar").slider({
+					slide: function(event,ui) {
+						if (scrollContent.width()>scrollPane.width()){
+							scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
+						} 
+						else{
+							scrollContent.css("margin-left",0);
+						}
+					}
+				});
 	
+				scrollPane.css("overflow","hidden");			
+			});
+			break;
+		}
+	});
 }
 
 
@@ -1083,7 +1083,6 @@ function form42_ini(fid)
 	var fname=filter_fields.elements[1].value;
 	var fdate=filter_fields.elements[2].value;
 	
-	console.log("populating form");
 	var columns="<bills>" +
 			"<id>"+fid+"</id>" +
 			"<customer_name>"+fname+"</customer_name>" +
@@ -1140,7 +1139,6 @@ function form43_ini(fid)
 	var fname=filter_fields.elements[1].value;
 	var fdate=filter_fields.elements[2].value;
 	
-	console.log("populating form");
 	var columns="<purchase_orders>" +
 			"<id>"+fid+"</id>" +
 			"<order_date>"+fdate+"</order_date>" +
@@ -1195,7 +1193,6 @@ function form44_ini(fid)
 	var fname=filter_fields.elements[1].value;
 	var ftemplate=filter_fields.elements[2].value;
 	
-	console.log("populating form");
 	var columns="<pamphlets>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
@@ -1244,13 +1241,11 @@ function form45_ini(fid)
 {
 	var filter_fields=document.getElementById('form45_header');
 	
-	//populating form 
 	if(fid==="")
 		fid=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	var fdate=filter_fields.elements[2].value;
 	
-	console.log("populating form");
 	var columns="<bills>" +
 			"<id>"+fid+"</id>" +
 			"<customer_name>"+fname+"</customer_name>" +
@@ -1301,10 +1296,8 @@ function form46_ini(fid)
 {
 	var filter_fields=document.getElementById('form46_header');
 	
-	//populating form
 	var fname=filter_fields.elements[0].value;
 	
-	console.log("populating form");
 	var columns="<user_preferences>" +
 			"<id>"+fid+"</id>" +
 			"<name></name>" +
@@ -1349,10 +1342,8 @@ function form48_ini(fid)
 {
 	var filter_fields=document.getElementById('form48_header');
 	
-	//populating form
 	var fname=filter_fields.elements[0].value;
 	
-	console.log("populating form");
 	var columns="<user_preferences>" +
 			"<id>"+fid+"</id>" +
 			"<name></name>" +
@@ -1399,7 +1390,6 @@ function form49_ini(fid)
 	//populating form
 	var fname=filter_fields.elements[0].value;
 	
-	console.log("populating form");
 	var columns="<user_preferences>" +
 			"<id>"+fid+"</id>" +
 			"<name></name>" +
@@ -1448,7 +1438,6 @@ function form50_ini(fid)
 	//populating form
 	var fname=filter_fields.elements[0].value;
 	
-	console.log("populating form");
 	var columns="<user_preferences>" +
 		"<id>"+fid+"</id>" +
 		"<name></name>" +
@@ -1492,12 +1481,10 @@ function form51_ini(fuser)
 {
 	var header_fields=document.getElementById('form51_master');
 	
-	//populating form
 	if(fuser==="")
 		fuser=header_fields.elements[3].value;
 	if(fuser!="")
 	{
-		console.log("populating form");
 		var columns="<access_control>" +
 			"<id></id>" +
 			"<username>"+fuser+"</username>" +
@@ -1557,14 +1544,10 @@ function form51_ini(fuser)
  */
 function form52_ini(fid)
 {
-	//var filter_fields=$('#form52_header');
 	var filter_fields=document.getElementById('form52_header');
-	console.log(filter_fields);
-	//populating form
 	var felement=filter_fields.elements[0].value;
 	var fkey=filter_fields.elements[1].value;
 	
-	console.log("populating form");
 	var columns="<shortcuts>" +
 		"<id>"+fid+"</id>" +
 		"<element_id></element_id>" +
@@ -1607,7 +1590,6 @@ function form53_ini(fid)
 {
 	var filter_fields=document.getElementById('form53_header');
 	
-	//populating form 
 	if(fid==="")
 		fid=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
@@ -1665,10 +1647,8 @@ function form54_ini(fid)
 {
 	var filter_fields=document.getElementById('form54_header');
 	
-	//populating form
 	var fname=filter_fields.elements[0].value;
 	
-	console.log("populating form");
 	var columns="<user_preferences>" +
 			"<id>"+fid+"</id>" +
 			"<display_name>"+fname+"</display_name>" +
@@ -1712,7 +1692,6 @@ function form55_ini(fid)
 	var fname=filter_fields.elements[0].value;
 	var fbatch=filter_fields.elements[1].value;
 	
-	console.log("populating form");
 	var utilization="<area_utilization>" +
 			"<id>"+fid+"</id>" +
 			"<product_name>"+fname+"</product_name>" +
@@ -1726,10 +1705,10 @@ function form55_ini(fid)
 		var canvas = document.getElementById('virtual_store');
 		var ctx = canvas.getContext('2d');
 
-		for(var i in results)
+		results.forEach(function(result)
 		{
 			var storages_data="<store_areas>" +
-				"<name>"+results[i].name+"</name>" +
+				"<name>"+result.name+"</name>" +
 				"<area_type>storage</area_type>" +
 				"<height></height>" +
 				"<width></width>" +
@@ -1742,12 +1721,12 @@ function form55_ini(fid)
 			
 			fetch_requested_data('form55',storages_data,function(area_results)
 			{
-					for(var i in area_results)
-					{
-						draw_star(ctx,area_results[i].locx,area_results[i].locy,10,"#ff0000");
-					}
+				for(var i in area_results)
+				{
+					draw_star(ctx,area_results[i].locx,area_results[i].locy,10,"#ff0000");
+				}
 			});
-		}
+		});
 	});
 }
 
@@ -1759,7 +1738,6 @@ function form56_ini(fid)
 {
 	var filter_fields=document.getElementById('form56_header');
 	
-	//populating form 
 	var fdate=filter_fields.elements[0].value;
 	var faccount=filter_fields.elements[1].value;
 	
@@ -1824,26 +1802,27 @@ function form57_ini(fid)
 	{
 		var rowsHTML="";
 	
-		for(var i in results)
+		results.forEach(function(result)
 		{
 			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form57_"+results[i].id+"'></form>";
+				rowsHTML+="<form id='form57_"+result.id+"'></form>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form57_"+results[i].id+"' value='"+results[i].name+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form57_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form57_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].description+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form57_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.description+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form57_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].estimated_cost+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form57_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.estimated_cost+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='hidden' form='form57_"+results[i].id+"' value='"+results[i].id+"'>";
-						rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form57_"+results[i].id+"' value='Save' onclick='form57_save_item($(this));'>";
-						rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form57_"+results[i].id+"' value='Delete' onclick='form57_delete_item($(this));'>";	
+						rowsHTML+="<input type='hidden' form='form57_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form57_"+result.id+"' value='Save' onclick='form57_save_item($(this));'>";
+						rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form57_"+result.id+"' value='Delete' onclick='form57_delete_item($(this));'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
-		}
+			
+		});
 		//console.log(rowsHTML);
 		$('#form57_body').html(rowsHTML);	
 	});
@@ -1880,7 +1859,6 @@ function notifications_ini()
 					"<input type='button' value='Close' onclick='notifications_update_item()'>" +
 					"</div>" +
 					"</div>";
-			
 		}
 		
 		var columns2="<notifications>" +
@@ -2001,11 +1979,9 @@ function activities_ini()
 	
 	fetch_requested_data('',columns,function(activities)
 	{
-		//console.log(search_res);
 		var result_html="";
 		for(var i in activities)
 		{
-			//result_html+="<div><a href='main.php#"+activities[i].link_to+"'>"+activities[i].title+"</div>";
 			result_html+="<div class='activity_detail'>" +
 						activities[i].title +
 						"</br><a onclick=\"" +

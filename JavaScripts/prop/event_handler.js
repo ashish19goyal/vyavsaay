@@ -32,7 +32,7 @@ function default_load()
 
 function modal_forms_ini()
 {
-	for(var i=1;i<5;i++)
+	for(var i=1;i<7;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -47,7 +47,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=5;i<15;i++)
+	for(var i=7;i<17;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -146,10 +146,7 @@ function hide_menu_items()
 		$('#online_icon').hide();
 		$('#offline_icon').show();
 		$('#sync_icon').show();
-
 	}
-	$("#hide_reports_icon").hide();
-	$("#display_reports_icon").show();
 }
 
 /**
