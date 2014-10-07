@@ -271,8 +271,117 @@ function modal8_action(button)
  */
 function modal9_action(button)
 {
+	var form=document.getElementById('modal9_form');
+	var form_id=$(button).attr('form');
+	var father_form=document.getElementById(form_id);
+	var fname=father_form.elements[0];
+	var father_value=father_form.elements[4];
+	var fdate=form.elements[1];
+	var fvalue=form.elements[2];
+	var save_button=form.elements[3];
 	
+	$(fdate).datepicker();
+	fdate.value=get_my_date();
+	
+	$(save_button).on("click",function(event)
+	{
+		var name=fname.value;
+		var date=get_raw_time(fdate.value);
+		var value=fvalue.value;
+		var data_id=get_new_key();
+		var last_updated=get_my_time();
+		
+		father_value.value=value;
+		
+		var table='asset_valuations';
+		var data_xml="<"+table+">" +
+					"<id>"+data_id+"</id>" +
+					"<asset_name>"+name+"</asset_name>" +
+					"<date_valuated>"+date+"</date_valuated>" +
+					"<value>"+value+"</value>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</"+table+">";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>"+table+"</tablename>" +
+					"<link_to>form5</link_to>" +
+					"<title>Saved</title>" +
+					"<notes>Update value of asset "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_write_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_write_row(data_xml,activity_xml);
+		}	
+		$("#modal9").dialog("close");
+	});
+	
+	$("#modal9").dialog("open");
 }
+
+/**
+ * @modalNo 10
+ * @modal Update asset maintenace
+ * @param button
+ */
+function modal10_action(button)
+{
+	var form=document.getElementById('modal10_form');
+	var form_id=$(button).attr('form');
+	var father_form=document.getElementById(form_id);
+	var fname=father_form.elements[0];
+	var father_activity=father_form.elements[5];
+	var fdate=form.elements[1];
+	var fmaintenance=form.elements[2];
+	var save_button=form.elements[3];
+	
+	$(fdate).datepicker();
+	fdate.value=get_my_date();
+	
+	$(save_button).on("click",function(event)
+	{
+		var name=fname.value;
+		var date=get_raw_time(fdate.value);
+		var maintenance=fmaintenance.value;
+		var data_id=get_new_key();
+		var last_updated=get_my_time();
+		
+		father_activity.value=maintenance;
+		
+		var table='asset_maintenance';
+		var data_xml="<"+table+">" +
+					"<id>"+data_id+"</id>" +
+					"<asset_name>"+name+"</asset_name>" +
+					"<date_maintained>"+date+"</date_maintained>" +
+					"<activity>"+maintenace+"</activity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</"+table+">";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>"+table+"</tablename>" +
+					"<link_to>form5</link_to>" +
+					"<title>Saved</title>" +
+					"<notes>Update maintenance activity for asset "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_write_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_write_row(data_xml,activity_xml);
+		}	
+		$("#modal10").dialog("close");
+	});
+	
+	$("#modal10").dialog("open");
+}
+
 
 /**
  * @modalNo 11
@@ -292,7 +401,6 @@ function modal11_action()
 	var fstate=form.elements[7];
 	var fcountry=form.elements[8];
 	var fnotes=form.elements[9];
-	var fdata_id=get_new_key();
 	var save_button=form.elements[10];
 		
 	$(save_button).on("click",function(event)
@@ -788,11 +896,13 @@ function modal17_action(button)
 	var fhours=form.elements[6];
 	var fpto=form.elements[7];
 	var save_button=form.elements[8];
-		
+	
+	$(fdate).datepicker();
+	
 	$(save_button).on("click",function(event)
 	{
 		var data_id=fdata_id.value;
-		var date=fdate.value;
+		var date=get_raw_time(fdate.value);
 		var qual=fqual.value;
 		var skill=fskill.value;
 		var comp=fcomp.value;
@@ -800,7 +910,7 @@ function modal17_action(button)
 		var hours=fhours.value;
 		var pto=fpto.value;
 		
-		var detail="";
+		var detail="Joined on "+date+", Qualification: "+qual+", Skills: "+skill+", Salary: Rs."+comp+"+ Rs."+rate+"/hour. Allowed "+pto+" per month.";
 		fdetail.value=detail;
 		var last_updated=get_my_time();
 		var data_xml="<staff>" +

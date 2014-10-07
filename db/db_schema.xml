@@ -332,10 +332,10 @@
 	<assets>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<date_inc index='no' type="BIGINT"></date_inc>
-			<expected_life index='no' type="INT"></expected_life>
 			<type index='yes' type="VARCHAR(25)"></type><!-- information/intellectual property/machine/facility/computer system/PDA/others -->
 			<name index='yes' type="VARCHAR(45)"></name>
 			<value index='no' type="DECIMAL(10,2)"></value>
+			<activity index='no' type="TEXT"></activity>
 			<owner index='yes' type="VARCHAR(100)"></owner>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</assets>

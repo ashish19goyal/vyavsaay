@@ -164,8 +164,12 @@ function form5_add_item()
 				rowsHTML+="<input type='text' form='form5_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form5_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' src='./images/add.jpeg' form='form5_"+id+"' value='Save' onclick='form5_add_maintenance($(this));'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form5_"+id+"' value=''>";
+				rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form5_"+id+"' value='Save' onclick='modal9_action($(this));'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='textarea' readonly='readonly' form='form5_"+id+"' value=''>";
+				rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form5_"+id+"' value='Save' onclick='modal10_action($(this));'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='hidden' form='form5_"+id+"' value='"+id+"'>";

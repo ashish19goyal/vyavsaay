@@ -284,8 +284,11 @@ function try_local_db_login(username,domain,func_success,func_failure)
  */
 function match_password()
 {
-	var pass1=document.getElementById("r_pass1").value;
-	var pass2=document.getElementById("r_pass2").value;
+	var form=document.getElementById('registeration');
+
+	var pass1=form.elements[5].value;
+	var pass2=form.elements[6].value;
+	
 	if(pass1==pass2 && pass1!="")
 	{
 		document.getElementById("password_match_validation").innerHTML="Match!!";
@@ -303,24 +306,24 @@ function match_password()
 /**
  * This function is run to set the preferences during registration process
  */
-function register_click()
+function register_click(ev)
 {
-	var email=document.getElementById("r_email").value;
-	var name=document.getElementById("r_name").value;
-	var pass=document.getElementById("r_pass1").value;
-	var phone=document.getElementById("r_phone").value;
-	var userid=document.getElementById("r_id").value;
-	var e0=document.getElementById("r_industry");
+	var form=document.getElementById('registeration');
+
+	var userid=form.elements[1].value;
+	var email=form.elements[2].value;
+	var name=form.elements[3].value;
+	var phone=form.elements[4].value;
+	var pass=form.elements[5].value;
+	var repass=form.elements[6].value;
+	var e0=form.elements[7];
 	var industry=e0.options[e0.selectedIndex].value;
 	var userid_valid=document.getElementById("userid_validation").value;
 	var emailid_valid=document.getElementById("emailid_validation").value;
 	var pass_valid=document.getElementById("password_match_validation").value;
 	
-	if(userid=="" || email=="" || name=="" || pass=="" || industry=="" || phone=="")
-	{	
-		document.getElementById("failed_register").innerHTML="Please fill in all the details to proceed!";
-	}
-	else if(userid_valid=="incorrect" || emailid_valid=="incorrect" || pass_valid=="incorrect")
+	
+	if(userid_valid=="incorrect" || emailid_valid=="incorrect" || pass_valid=="incorrect")
 	{
 		console.log(userid_valid+emailid_valid+pass_valid);
 		document.getElementById("failed_register").innerHTML="Please update the incorrect fields to proceed!";
@@ -335,7 +338,7 @@ function register_click()
 						"&industry="+industry+
 						"&phone="+phone;
 
-		console.log("about to execute ajax call");
+		//console.log("about to execute ajax call");
 		
 		ajax_with_custom_func("./ajax/user_db_creation.php","userid="+userid,function(e2)
 		{
@@ -371,7 +374,9 @@ function register_click()
  */
 function userid_validation()
 {
-	var userid=document.getElementById("r_id").value;
+	var form=document.getElementById('registeration');
+
+	var userid=form.elements[1].value;
 	
 	if(userid!="")
 	{
@@ -409,7 +414,9 @@ function userid_validation()
  */
 function emailid_validation()
 {
-	var emailid=document.getElementById("r_email").value;
+	var form=document.getElementById('registeration');
+
+	var emailid=form.elements[2].value;
 	
 	if(emailid!="")
 	{

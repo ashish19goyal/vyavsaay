@@ -73,6 +73,7 @@ function form5_ini(fid)
 			"<name>"+fasset+"</name>" +
 			"<date_inc></date_inc>" +
 			"<owner>"+fowner+"</owner>" +
+			"<activity></activity>" +
 			"<value></value>" +
 			"<type>"+ftype+"</type>" +
 			"</assets>";
@@ -97,8 +98,12 @@ function form5_ini(fid)
 						rowsHTML+="<input type='text' readonly='readonly' form='form5_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form5_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].value+"'>";
-						rowsHTML+="<img class='filter_icon' src='./images/add.jpeg' form='form5_"+results[i].id+"' value='Save' onclick='form5_add_maintenance($(this));'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form5_"+results[i].id+"' value='"+results[i].value+"'>";
+						rowsHTML+="<img class='filter_icon' src='./images/add.jpeg' form='form5_"+results[i].id+"' value='Save' onclick='modal9_action($(this));'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form5_"+results[i].id+"' value='"+results[i].activity+"'>";
+						rowsHTML+="<img class='filter_icon' src='./images/add.jpeg' form='form5_"+results[i].id+"' value='Save' onclick='modal10_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form5_"+results[i].id+"' value='"+results[i].id+"'>";
@@ -186,6 +191,12 @@ function form8_ini(fid)
 			"<phone>"+fcontact+"</phone>" +
 			"<email>"+femail+"</email>" +
 			"<status>"+fstatus+"</status>" +
+			"<joining_date></joining_date>" +
+			"<qualification></qualification>" +
+			"<skills></skills>" +
+			"<fixed_comp></fixed_comp>" +
+			"<variable_comp_rate></variable_comp_rate>" +
+			"<allowed_pto></allowed_pto>" +
 			"<acc_name></acc_name>" +
 			"</staff>";
 
@@ -205,7 +216,8 @@ function form8_ini(fid)
 					"<country></country>" +
 					"<acc_type>staff</acc_type>" +
 					"</address>";
-			var detail_string="";
+			var detail_string="Joined on "+result.joining_date+", Qualification: "+result.qualification+", Skills: "+result.skills+", Salary: Rs."+result.fixed_comp+"+ Rs."+result.variable_comp_rate+"/hour. Allowed "+result.allowed_pto+"/month.";
+
 			fetch_requested_data('form8',address_data,function(add_results)
 			{		
 				var res_address,res_street,res_city,res_state,res_country,res_id;

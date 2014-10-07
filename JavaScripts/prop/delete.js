@@ -174,6 +174,7 @@ function form5_delete_item(button)
 		var owner=form.elements[2].value;
 		var type=form.elements[3].value;
 		var value=form.elements[4].value;
+		var maintenance=form.elements[5].value;
 		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var table='assets';
@@ -183,6 +184,8 @@ function form5_delete_item(button)
 					"<date_inc>"+date_inc+"</date_inc>" +
 					"<owner>"+owner+"</owner>" +
 					"<type>"+type+"</type>" +
+					"<activity>"+maintenance+"</activity>" +
+					"<value>"+value+"</value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
@@ -193,13 +196,23 @@ function form5_delete_item(button)
 					"<notes>Deleted asset "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var other_delete1="<asset_valuations>" +
+					"<asset_name>"+name+"</asset_name>" +
+					"</asset_valuations>";
+		var other_delete2="<asset_maintenance>" +
+					"<asset_name>"+name+"</asset_name>" +
+					"</asset_maintenance>";
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(other_delete1);
+			server_delete_simple(other_delete2);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(other_delete1);
+			local_delete_simple(other_delete2);
 		}	
 		$(button).parent().parent().remove();	
 	}

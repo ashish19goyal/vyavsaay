@@ -50,17 +50,20 @@
 	</form>
 </div>
 
-<div id="modal9" title="Add pre-requisites for service">
-	<form id='modal11_form'>
+<div id="modal9" title="Update asset valuation">
+	<form id='modal9_form'>
 		<fieldset>
-			<label>Name <input type='text'></label><br/>
-			<label>Type <input type="text"></label><br/>
-			<label>Address <input type="text"></label><br/>
-			<label>Street <input type="text"></label><br/>
-			<label>City <input type="text"></label><br/>
-			<label>State <input type="text"></label><br/>
-			<label>Country <input type="text"></label><br/>
-			<label>Notes <input type="textarea"></label><br/>
+			<label>Date <input type='text'></label><br/>
+			<label>Updated Value (in Rs.)<input type="number"></label><br/>
+			<input type="button" value='Save'>
+		</fieldset>
+	</form>
+</div>
+<div id="modal10" title="Update asset maintenance">
+	<form id='modal10_form'>
+		<fieldset>
+			<label>Date <input type='text'></label><br/>
+			<label>Maintenance Activity<input type="textarea"></label><br/>
 			<input type="button" value='Save'>
 		</fieldset>
 	</form>

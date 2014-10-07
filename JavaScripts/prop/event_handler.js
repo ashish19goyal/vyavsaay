@@ -47,7 +47,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=7;i<17;i++)
+	for(var i=7;i<18;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -56,7 +56,6 @@ function modal_forms_ini()
 	   		closeOnEscape: true,
 		});
 	}
-
 }
 
 function print_setup()

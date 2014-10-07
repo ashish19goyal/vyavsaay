@@ -171,6 +171,7 @@ function form5_save_item(button)
 		var owner=form.elements[2].value;
 		var type=form.elements[3].value;
 		var value=form.elements[4].value;
+		var maintenance=form.elements[5].value;
 		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var table='assets';
@@ -180,8 +181,10 @@ function form5_save_item(button)
 					"<date_inc>"+date_inc+"</date_inc>" +
 					"<owner>"+owner+"</owner>" +
 					"<type>"+type+"</type>" +
+					"<activity>"+maintenance+"</activity>" +
+					"<value>"+value+"</value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</"+table+">";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>"+table+"</tablename>" +
