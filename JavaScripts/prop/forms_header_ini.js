@@ -98,13 +98,25 @@ function form7_header_ini()
 function form8_header_ini()
 {
 	var filter_fields=document.getElementById('form8_header');
-	var staff_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[0];
+	var phone_filter=filter_fields.elements[1];
+	var email_filter=filter_fields.elements[2];
+	var status_filter=filter_fields.elements[3];
 	
-	var staff_data="<staff>" +
-		"<acc_name></acc_name>" +
+	var name_data="<staff>" +
+		"<name></name>" +
+		"</staff>";
+	var phone_data="<staff>" +
+		"<phone></phone>" +
+		"</staff>";
+	var email_data="<staff>" +
+		"<email></email>" +
 		"</staff>";
 
-	set_my_filter(staff_data,staff_filter);	
+	set_my_filter(name_data,name_filter);	
+	set_my_filter(phone_data,phone_filter);	
+	set_my_filter(email_data,email_filter);
+	set_static_filter('staff','status',status_filter);
 };
 
 
@@ -1008,4 +1020,51 @@ function form57_header_ini()
 			"</services>";
 	
 	set_my_filter(service_data,service_filter);
+};
+
+/**
+ * @form Manage Service Pre-requisites
+ * @formNo 58
+ */
+function form58_header_ini()
+{
+	var filter_fields=document.getElementById('form58_header');
+	var service_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var requisite_filter=filter_fields.elements[2];
+	
+	var service_data="<services>" +
+			"<name></name>" +
+			"</services>";
+	var requisite_data="<pre_requisites>" +
+			"<requisite_name></requisite_name>" +
+			"</pre_requisites>";
+	
+	set_my_filter(service_data,service_filter);
+	set_static_filter('pre_requisites','requisite_type',type_filter);
+	set_my_filter(requisite_data,requisite_filter);
+	
+};
+
+/**
+ * @form Manage product pre-requisites
+ * @formNo 59
+ */
+function form59_header_ini()
+{
+	var filter_fields=document.getElementById('form59_header');
+	var product_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var requisite_filter=filter_fields.elements[2];
+	
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var requisite_data="<pre_requisites>" +
+			"<requisite_name></requisite_name>" +
+			"</pre_requisites>";
+	
+	set_my_filter(product_data,product_filter);
+	set_static_filter('pre_requisites','requisite_type',type_filter);
+	set_my_filter(requisite_data,requisite_filter);
 };

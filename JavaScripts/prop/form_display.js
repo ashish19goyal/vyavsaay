@@ -236,3 +236,31 @@ function form55_display(fid)
 	$("#form55_link").trigger("click");
 	form55_ini(fid);
 }
+
+function form56_display(fid)
+{
+	stocks_grid_click();
+	$("#form56_link").trigger("click");
+	form56_ini(fid);
+}
+
+function form57_display(fid)
+{
+	stocks_grid_click();
+	$("#form57_link").trigger("click");
+	form57_ini(fid);
+}
+
+function form58_display(fid)
+{
+	stocks_grid_click();
+	$("#form58_link").trigger("click");
+	form58_ini(fid);
+}
+
+function form59_display(fid)
+{
+	stocks_grid_click();
+	$("#form59_link").trigger("click");
+	form59_ini(fid);
+}

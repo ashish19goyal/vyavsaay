@@ -266,7 +266,7 @@ function modal8_action(button)
 
 /**
  * @modalNo 9
- * @modal Add pre-requisites for a service
+ * @modal Add asset valuations
  * @param button
  */
 function modal9_action(button)
@@ -694,4 +694,145 @@ function modal15_action()
 	});
 	
 	$("#modal15").dialog("open");
+}
+
+/**
+ * @modalNo 16
+ * @modal Edit address
+ * @param button
+ */
+function modal16_action(button,acc_type,address_id)
+{
+	var form=document.getElementById('modal16_form');
+	
+	var form_id=$(button).attr('form');
+	var father_form=document.getElementById(form_id);
+	var fname=father_form.elements[0];
+	var fphone=father_form.elements[1];
+	var faddress_detail=father_form.elements[3];
+	
+	var faddress=form.elements[1];
+	var fstreet=form.elements[2];
+	var fcity=form.elements[3];
+	var fstate=form.elements[4];
+	var fcountry=form.elements[5];
+	var save_button=form.elements[6];
+		
+	$(save_button).on("click",function(event)
+	{
+		var name=fname.value;
+		var phone=fphone.value;
+		var address=faddress.value;
+		var street=fstreet.value;
+		var city=fcity.value;
+		var state=fstate.value;
+		var country=fcountry.value;
+		
+		var address_detail=address+", "+street+", "+city+", "+state+", "+country;
+		faddress_detail.value=address_detail;
+		var last_updated=get_my_time();
+		var data_xml="<address>" +
+					"<id>"+address_id+"</id>" +
+					"<address>"+address+"</address>" +
+					"<street>"+street+"</street>" +
+					"<city>"+city+"</city>" +
+					"<state>"+state+"</state>" +
+					"<country>"+country+"</country>" +
+					"<status>pending analysis</status>" +
+					"<acc_type>"+acc_type+"</acc_type>" +
+					"<acc_name>"+name+" ("+phone+")</acc_name>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</address>";
+		var activity_xml="<activity>" +
+					"<data_id>"+address_id+"</data_id>" +
+					"<tablename>address</tablename>" +
+					"<link_to></link_to>" +
+					"<title>Saved</title>" +
+					"<notes>Saved address for "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_write_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_write_row(data_xml,activity_xml);
+		}
+	
+		$("#modal16").dialog("close");
+	});
+	
+	$("#modal16").dialog("open");
+}
+
+/**
+ * @modalNo 17
+ * @modal Add staff details
+ * @param button
+ */
+function modal17_action(button)
+{
+	var form=document.getElementById('modal17_form');
+	
+	var form_id=$(button).attr('form');
+	var father_form=document.getElementById(form_id);
+	var fdetail=father_form.elements[4];
+	var fdata_id=father_form.elements[6];
+	
+	var fdate=form.elements[1];
+	var fqual=form.elements[2];
+	var fskill=form.elements[3];
+	var fcomp=form.elements[4];
+	var frate=form.elements[5];
+	var fhours=form.elements[6];
+	var fpto=form.elements[7];
+	var save_button=form.elements[8];
+		
+	$(save_button).on("click",function(event)
+	{
+		var data_id=fdata_id.value;
+		var date=fdate.value;
+		var qual=fqual.value;
+		var skill=fskill.value;
+		var comp=fcomp.value;
+		var rate=frate.value;
+		var hours=fhours.value;
+		var pto=fpto.value;
+		
+		var detail="";
+		fdetail.value=detail;
+		var last_updated=get_my_time();
+		var data_xml="<staff>" +
+					"<id>"+data_id+"</id>" +
+					"<joining_date>"+date+"</joining_date>" +
+					"<qualification>"+qual+"</qualification>" +
+					"<skills>"+skill+"</skills>" +
+					"<fixed_comp>"+comp+"</fixed_comp>" +
+					"<variable_comp_rate>"+rate+"</variable_comp_rate>" +
+					"<allowed_pto>"+pto+"</allowed_pto>" +
+					"<monthly_hours>"+hours+"</monthly_hours>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</staff>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>staff</tablename>" +
+					"<link_to>form8</link_to>" +
+					"<title>Saved</title>" +
+					"<notes>Saved details for staff "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_write_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_write_row(data_xml,activity_xml);
+		}
+	
+		$("#modal17").dialog("close");
+	});
+	
+	$("#modal17").dialog("open");
 }

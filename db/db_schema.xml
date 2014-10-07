@@ -35,12 +35,14 @@
 	<staff>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(90)"></name>
-			<salary index='no' type="DECIMAL(10,2)"></salary>
 			<joining_date index='no' type="BIGINT"></joining_date>
 			<status index='yes' type="VARCHAR(45)"></status><!-- active/retired/suspended -->
 			<skills index='no' type="TEXT"></skills>
+			<qualification index='no' type="TEXT"></qualification>
 			<fixed_comp index='no' type="DECIMAL(10,2)"></fixed_comp>
 			<variable_comp_rate index='no' type="DECIMAL(10,2)"></variable_comp_rate>
+			<monthly_hours index='no' type="DECIMAL(5,2)"></monthly_hours>
+			<allowed_pto index='no' type="DECIMAL(3,2)"></allowed_pto>
 			<acc_name index='yes' type='VARCHAR(100)'></acc_name>
 			<email index='yes' type="VARCHAR(100)"></email>
 			<phone index='yes' type="VARCHAR(15)"></phone>
@@ -294,9 +296,7 @@
 			<name index='yes' type="VARCHAR(90)"></name>
 			<type index='no' type="VARCHAR(10)"></type><!-- service/product -->
 			<requisite_type index='no' type="VARCHAR(10)"></requisite_type><!-- service/product/task -->
-			<product_name index='no' type="VARCHAR(90)"></product_name>
-			<service_name index='no' type="VARCHAR(45)"></service_name>
-			<task_name index='no' type="VARCHAR(45)"></task_name>
+			<requisite_name index='no' type="VARCHAR(90)"></requisite_name>
 			<quantity index="no" type="DECIMAL(10,2)"></quantity>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</pre_requisites>

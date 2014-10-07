@@ -138,3 +138,31 @@
 		</fieldset>
 	</form>
 </div>
+
+<div id="modal16" title="Update Address">
+	<form id='modal16_form'>
+		<fieldset>
+			<label>Address <input type="text"></label><br/>
+			<label>Street <input type="text"></label><br/>
+			<label>City <input type="text"></label><br/>
+			<label>State <input type="text"></label><br/>
+			<label>Country <input type="text"></label><br/>
+			<input type="button" value='Save'>
+		</fieldset>
+	</form>
+</div>
+
+<div id="modal17" title="Add staff details">
+	<form id='modal17_form'>
+		<fieldset>
+			<label>Joining Date <input type="text"></label><br/>
+			<label>Qualification <input type="text"></label><br/>
+			<label>Skills <input type="text"></label><br/>
+			<label>Fixed Compensation (Rs./month)<input type="number"></label><br/>
+			<label>Variable Compensation Rate (Rs./hour)<input type="number"></label><br/>
+			<label>Monthly work hours <input type="number"></label><br/>
+			<label>PTOs Allowed <input type="text"></label><br/>
+			<input type="button" value='Save'>
+		</fieldset>
+	</form>
+</div>

@@ -271,10 +271,8 @@ function form8_save_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var skills=form.elements[1].value;
-		var joining_date=get_raw_time(form.elements[2].value);
-		var variable_comp_rate=form.elements[3].value;
-		var fixed_comp=form.elements[4].value;
+		var phone=form.elements[1].value;
+		var email=form.elements[2].value;
 		var status=form.elements[5].value;
 		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
@@ -282,12 +280,10 @@ function form8_save_item(button)
 		var data_xml="<"+table+">" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
-					"<skills>"+skills+"</skills>" +
-					"<joining_date>"+joining_date+"</joining_date>" +
-					"<variable_comp_rate>"+variable_comp_rate+"</variable_comp_rate>" +
-					"<fixed_comp>"+fixed_comp+"</fixed_comp>" +
+					"<phone>"+phone+"</phone>" +
+					"<email>"+email+"</email>" +
 					"<status>"+status+"</status>" +
-					"<acc_name>"+name+" (phone here)</acc_name>" +
+					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
@@ -1095,7 +1091,6 @@ function form30_save_item(button)
 		var phone=form.elements[1].value;
 		var email=form.elements[2].value;
 		var status=form.elements[4].value;
-		console.log("status is "+status);
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var table='customers';
@@ -2392,6 +2387,114 @@ function form57_save_item(button)
 			local_write_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 58
+ * form Manage Service pre-requisites
+ * @param button
+ */
+function form58_save_item(button)
+{
+	if(is_create_access('form58') || is_update_access('form58'))
+	{
+		var form=document.getElementById(form_id);
+		
+		var service=form.elements[0].value;
+		var type=form.elements[1].value;
+		var requisite=form.elements[2].value;
+		var quantity=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var table='pre_requisites';
+		var data_xml="<"+table+">" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+service+"</name>" +
+					"<type>service</type>" +
+					"<requisite_type>"+type+"</requisite_type>" +
+					"<requisite_name>"+requisite+"</requisite_name>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</"+table+">";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>"+table+"</tablename>" +
+					"<link_to>form58</link_to>" +
+					"<title>Saved</title>" +
+					"<notes>Added pre-requisite for service "+service+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_write_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_write_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 59
+ * form Manage product pre-requisites
+ * @param button
+ */
+function form59_save_item(button)
+{
+	if(is_create_access('form59') || is_update_access('form59'))
+	{
+		var form=document.getElementById(form_id);
+		
+		var product=form.elements[0].value;
+		var type=form.elements[1].value;
+		var requisite=form.elements[2].value;
+		var quantity=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var table='pre_requisites';
+		var data_xml="<"+table+">" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+product+"</name>" +
+					"<type>product</type>" +
+					"<requisite_type>"+type+"</requisite_type>" +
+					"<requisite_name>"+requisite+"</requisite_name>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</"+table+">";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>"+table+"</tablename>" +
+					"<link_to>form59</link_to>" +
+					"<title>Saved</title>" +
+					"<notes>Added pre-requisite for product "+product+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_write_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_write_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

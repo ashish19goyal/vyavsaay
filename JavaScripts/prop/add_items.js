@@ -224,9 +224,11 @@ function form8_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form8_"+id+"' value=''>";
+				rowsHTML+="<img class='filter_icon' form='form8_"+id+"' src='./images/edit.jpeg' onclick=\"modal16_action($(this),'staff',"+get_new_key()+");\">";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form8_"+id+"' value=''>";
+				rowsHTML+="<img class='filter_icon' form='form8_"+id+"' src='./images/edit.jpeg' onclick='modal17_action($(this);'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form8_"+id+"' value=''>";
@@ -242,10 +244,11 @@ function form8_add_item()
 		
 		var fields=document.getElementById("form8_"+id);
 		var name_filter=fields.elements[0];
-		var staff_filter=fields.elements[5];
+		var status_filter=fields.elements[5];
 		
 		$(name_filter).focus();
-		set_static_value_list('staff','status',staff_filter);
+		set_static_value_list('staff','status',status_filter);
+		status_filter.value="active";
 	}
 	else
 	{
@@ -985,7 +988,7 @@ function form30_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form30_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' form='form30_"+id+"' src='./images/edit.jpeg' onclick='form30_edit_address($(this))'>";
+				rowsHTML+="<img class='filter_icon' form='form30_"+id+"' src='./images/edit.jpeg' onclick=\"modal16_action($(this),'customer','"+get_new_key()+"')\">";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form30_"+id+"' value=''>";
@@ -1001,7 +1004,7 @@ function form30_add_item()
 		
 		var fields=document.getElementById("form30_"+id);
 		var name_filter=fields.elements[0];
-		var status_filter=fields.elements[5];
+		var status_filter=fields.elements[4];
 		$(name_filter).focus();
 	
 		set_static_value_list('customers','status',status_filter);
@@ -1230,7 +1233,7 @@ function form40_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form40_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form40_"+id+"' onclick='form40_edit_address($(this));'>";
+				rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form40_"+id+"' onclick=\"modal16_action($(this),'supplier','"+get_new_key()+"');\">";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form40_"+id+"' value=''>";
@@ -1339,6 +1342,151 @@ function form57_add_item()
 		var service_filter=fields.elements[0];
 		
 		$(service_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage service pre-requisites
+ * @formNo 58
+ */
+function form58_add_item()
+{
+	if(is_create_access('form58'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form58_"+id+"'></form>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form58_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form58_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form58_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form58_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='hidden' form='form58_"+id+"' value='"+id+"'>";
+				rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form58_"+id+"' value='Save' onclick='form58_save_item($(this));'>";
+				rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form58_"+id+"' value='Delete' onclick='form58_delete_item($(this));'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form58_body').prepend(rowsHTML);
+		var fields=document.getElementById("form58_"+id);
+		var service_filter=fields.elements[0];
+		var type_filter=fields.elements[1];
+		var requisite_filter=fields.elements[2];
+		
+		var service_data="<services>" +
+				"<name></name>" +
+				"</services>";
+		set_my_value_list(service_data,service_filter);
+		set_static_value_list('pre_requisites','requisite_type',type_filter);
+		
+		$(type_filter).on('blur',function(event)
+		{
+			var requisite_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		
+			if(type_filter.value=='service')
+			{
+				var requisite_data="<services>" +
+					"<name></name>" +
+					"</services>";
+			}
+			else if(type_filter.value=='task')
+			{
+				var requisite_data="<task_type>" +
+					"<name></name>" +
+					"</task_type>";
+			}
+			set_my_value_list(requisite_data,requisite_filter);
+		});
+		
+		$(service_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Manage product pre-requisites
+ * @formNo 59
+ */
+function form59_add_item()
+{
+	if(is_create_access('form59'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form59_"+id+"'></form>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='hidden' form='form59_"+id+"' value='"+id+"'>";
+				rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form59_"+id+"' value='Save' onclick='form59_save_item($(this));'>";
+				rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form59_"+id+"' value='Delete' onclick='form59_delete_item($(this));'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form59_body').prepend(rowsHTML);
+		var fields=document.getElementById("form59_"+id);
+		var product_filter=fields.elements[0];
+		var type_filter=fields.elements[1];
+		var requisite_filter=fields.elements[2];
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,product_filter);
+		set_static_value_list('pre_requisites','requisite_type',type_filter);
+		
+		$(type_filter).on('blur',function(event)
+		{
+			var requisite_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		
+			if(type_filter.value=='service')
+			{
+				var requisite_data="<services>" +
+					"<name></name>" +
+					"</services>";
+			}
+			else if(type_filter.value=='task')
+			{
+				var requisite_data="<task_type>" +
+					"<name></name>" +
+					"</task_type>";
+			}
+			set_my_value_list(requisite_data,requisite_filter);
+		});
+		
+		$(product_filter).focus();
 	}
 	else
 	{
