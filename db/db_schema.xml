@@ -3,7 +3,7 @@
 	<customers>
 			<id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
 			<name index='yes' type='VARCHAR(90)'></name>
-			<acc_name index='yes' type='VARCHAR(100)'></acc_name>
+			<acc_name index='yes' type='VARCHAR(100)' unique='yes' required='yes'></acc_name>
 			<email index='yes' type="VARCHAR(100)"></email>
 			<phone index='yes' type="VARCHAR(15)"></phone>
 			<status index='yes' type='VARCHAR(45)'></status><!--active/archived/overcredit-->
@@ -21,7 +21,7 @@
 			<lat index='no' type="DECIMAL(14,10)"></lat>
 			<lng index='no' type="DECIMAL(14,10)"></lng>
 			<shipping index='yes' type="BOOL"></shipping>
-			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
+			<acc_name index='yes' type="VARCHAR(100)" unique='yes'></acc_name>
 			<acc_type index='no' type="VARCHAR(45)"></acc_type><!-- customer/staff/supplier  -->
 			<last_updated index='no' type="BIGINT"></last_updated> 
 	</address>
@@ -43,7 +43,7 @@
 			<variable_comp_rate index='no' type="DECIMAL(10,2)"></variable_comp_rate>
 			<monthly_hours index='no' type="DECIMAL(5,2)"></monthly_hours>
 			<allowed_pto index='no' type="DECIMAL(3,2)"></allowed_pto>
-			<acc_name index='yes' type='VARCHAR(100)'></acc_name>
+			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
 			<email index='yes' type="VARCHAR(100)"></email>
 			<phone index='yes' type="VARCHAR(15)"></phone>
 			<last_updated index='no' type="BIGINT"></last_updated>
@@ -71,7 +71,7 @@
 	</task_instances>
 	<task_type>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="VARCHAR(45)"></name>
+			<name index='yes' type="VARCHAR(45)" unique='yes'></name>
 			<description index='no' type="TEXT"></description>
 			<est_hours index='no' type="DECIMAL(5,2)"></est_hours>
 			<last_updated index='no' type="BIGINT"></last_updated>
@@ -79,7 +79,7 @@
 	<suppliers>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(90)"></name>
-			<acc_name index='yes' type='VARCHAR(100)'></acc_name>
+			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
 			<email index='yes' type="VARCHAR(100)"></email>
 			<phone index='yes' type="VARCHAR(15)"></phone>
 			<notes index='no' type="TEXT"></notes>
@@ -101,6 +101,7 @@
 	</purchase_items>
 	<supplier_bills>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<bill_id index='no' type="VARCHAR(50)" unique='yes'></bill_id>
 			<supplier_name index='yes' type="VARCHAR(100)"></supplier_name>
 			<amount index='no' type="DECIMAL(10,2)"></amount>
 			<bill_date index='no' type="BIGINT"></bill_date>
@@ -113,7 +114,7 @@
 			<product_name index='yes' type="VARCHAR(90)"></product_name>
 			<batch index='yes' type="VARCHAR(50)"></batch>
 			<expiry index='yes' type="BIGINT"></expiry>
-			<sup_bill_id index='yes' type="INT"></sup_bill_id>
+			<sup_bill_id index='yes' type="VARCHAR(50)"></sup_bill_id>
 			<cost_price index='no' type="DECIMAL(10,2)"></cost_price>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</goods_received>
@@ -123,7 +124,7 @@
 			<product_name index='yes' type="VARCHAR(90)"></product_name>
 			<supplier index='yes' type="VARCHAR(100)"></supplier>
 			<batch index='yes' type="VARCHAR(50)"></batch>
-			<sup_bill_id index='yes' type="INT"></sup_bill_id>
+			<sup_bill_id index='yes' type="VARCHAR(50)"></sup_bill_id>
 			<reason index='yes' type="VARCHAR(20)"></reason><!-- expired/damaged/poor quality/unsold/callback -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</supplier_returns>
@@ -149,7 +150,7 @@
 	</expenses>
 	<accounts>
 			<id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
-			<acc_name index='yes' type='VARCHAR(100)'></acc_name>
+			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
 			<balance index='no' type='DECIMAL(12,2)'></balance>
 			<description index='no' type='TEXT'></description>
 			<type index='yes' type='VARCHAR(20)'></type><!-- customer/staff/supplier/financial -->
@@ -178,7 +179,7 @@
 	</tax>
 	<offers>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<offer_name index='no' type='VARCHAR(30)'></offer_name>
+			<offer_name index='no' type='VARCHAR(30)' unique='yes'></offer_name>
 			<offer_type index='yes' type='VARCHAR(10)'></offer_type><!-- bill/product/service -->
 			<product_name index='yes' type="VARCHAR(90)"></product_name>
 			<batch index='yes' type="VARCHAR(50)"></batch>
@@ -266,7 +267,7 @@
 	</service_instances>
 	<services>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="VARCHAR(45)"></name>
+			<name index='yes' type="VARCHAR(45)" unique='yes'></name>
 			<description index='no' type="TEXT"></description>
 			<estimated_cost index='no' type="DECIMAL(10,2)"></estimated_cost>
 			<last_updated index='no' type="BIGINT"></last_updated>
@@ -283,7 +284,7 @@
 	</product_instances>
 	<product_master>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="VARCHAR(90)"></name>
+			<name index='yes' type="VARCHAR(90)" unique='yes'></name>
 			<description index='no' type="TEXT"></description>
 			<make index='yes' type="VARCHAR(45)"></make>
 			<product_type index='yes' type="VARCHAR(90)"></product_type>
@@ -311,7 +312,7 @@
 	</area_utilization>
 	<store_areas>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="VARCHAR(25)"></name>
+			<name index='yes' type="VARCHAR(25)" unique='yes'></name>
 			<area_type index='yes' type="VARCHAR(10)"></area_type><!-- storey/block/door/storage -->
 			<height index='no' type="INT"></height>
 			<width index='no' type="INT"></width>
@@ -333,7 +334,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<date_inc index='no' type="BIGINT"></date_inc>
 			<type index='yes' type="VARCHAR(25)"></type><!-- information/intellectual property/machine/facility/computer system/PDA/others -->
-			<name index='yes' type="VARCHAR(45)"></name>
+			<name index='yes' type="VARCHAR(45)" unique='yes'></name>
 			<value index='no' type="DECIMAL(10,2)"></value>
 			<activity index='no' type="TEXT"></activity>
 			<owner index='yes' type="VARCHAR(100)"></owner>
@@ -355,17 +356,15 @@
 	</asset_maintenance>
 	<pamphlets>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="VARCHAR(50)"></name>
+			<name index='yes' type="VARCHAR(50)" unique='yes'></name>
 			<count_items index='no' type="INT"></count_items>
-			<template index='yes' type="VARCHAR(45)"></template>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</pamphlets>
 	<pamphlet_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<pamphlet_id index='yes' type="INT"></pamphlet_id>
+			<pamphlet_name index='yes' type="VARCHAR(50)"></pamphlet_name>
 			<product_name index='yes' type="VARCHAR(90)"></product_name>
-			<price index='no' type="DECIMAL(10,2)"></price>
-			<offer_id index='yes' type="INT"></offer_id>
+			<offer_name index='no' type='VARCHAR(30)'></offer_name>
 			<offer index='no' type="TEXT"></offer>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</pamphlet_items>
@@ -414,8 +413,8 @@
 	</opportunities>
 	<user_preferences>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="VARCHAR(30)"></name>
-			<display_name index="no" type="VARCHAR(50)"></display_name>
+			<name index='yes' type="VARCHAR(30)" unique='yes'></name>
+			<display_name index="no" type="VARCHAR(50)" unique='yes'></display_name>
 			<value index='no' type="VARCHAR(30)"></value>
 			<type index='yes' type="VARCHAR(20)"></type><!-- function/report/form/accounting/other/template -->
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
@@ -423,7 +422,7 @@
 	</user_preferences>
 	<user_profiles>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<username index='yes' type="VARCHAR(50)"></username>
+			<username index='yes' type="VARCHAR(50)" unique='yes'></username>
 			<password index='no' type="VARCHAR(200)"></password>
 			<name index='no' type="VARCHAR(90)"></name>
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
@@ -443,15 +442,15 @@
 	</access_control>
 	<shortcuts>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<element_id index='yes' type="VARCHAR(10)"></element_id>
+			<element_id index='yes' type="VARCHAR(10)" unique='yes'></element_id>
 			<element_name index='yes' type="VARCHAR(100)"></element_name>
-			<shortcut index='yes' type="VARCHAR(10)"></shortcut>
+			<shortcut index='yes' type="VARCHAR(10)" unique='yes'></shortcut>
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</shortcuts>
 	<templates>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="VARCHAR(100)"></name>
+			<name index='yes' type="VARCHAR(100)" unique='yes'></name>
 			<type index='yes' type="VARCHAR(20)"></type><!-- sale bill/purchase order/payment receipt/credit note/pamphlet/service receipt/return receipt -->
 			<header index="no" type="TEXT"></header>
 			<footer index="no" type="TEXT"></footer>

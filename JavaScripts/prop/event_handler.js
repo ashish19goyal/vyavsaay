@@ -25,9 +25,16 @@ function default_load()
 		count_oppor();
 		print_setup();
 		Chart.defaults.global.responsive = true;
-		default_hide();
+		hide_all();
 	}
 	hide_loader();
+}
+
+function show_function(function_id)
+{
+	hide_all();
+	$('#home_grid').hide();
+	$(function_id).show();
 }
 
 function modal_forms_ini()
@@ -60,31 +67,37 @@ function modal_forms_ini()
 
 function print_setup()
 {
-	sale_bill_print_setup();
+//	print_template_setup('sale_bill');
+	print_css_setup('pamphlet');
+	print_css_setup('credit_note');
+	print_css_setup('payment_receipt');
+	print_css_setup('purchase_order');
+	print_css_setup('return_receipt');
+	print_css_setup('sale_bill');
+	print_css_setup('service_receipt');
+}
+
+function print_css_setup(name)
+{
+	var template_name=sessionStorage.getItem(name);
+	var link = document.createElement('link');
+		link.setAttribute("rel", "stylesheet");
+		link.setAttribute("type", "text/css");
+		link.setAttribute("href", "./templates/"+name+"/"+template_name+".css");
+	document.head.appendChild(link);
 }
 
 function home_display()
 {
 	count_notif();
 	count_oppor();
-	default_hide();
+	hide_all();
 }
 
 function set_menu_username()
 {
 	var name=sessionStorage.getItem('name');
 	$('#menu_username').html("Hello "+name);
-}
-
-/**
- * hides and shows default sections in the content box on page load 
- */
-function default_hide()
-{
-	hide_all();
-	show_report_grid();
-	hide_menu_items();
-	hide_loader();
 }
 
 function setup_elements_display()
@@ -108,27 +121,6 @@ function setup_elements_display()
 	},forms_data);
 }
 
-/**
- * this function shows the reports grid based on the selected user preferences
- */
-function show_report_grid()
-{
-	$("#report_grid").show();
-	if(!is_set_bills())
-		$('#bills_grid').hide();
-	
-	if(!is_set_accounts())
-		$('#accounts_grid').hide();
-	
-	if(!is_set_tasks())
-		$('#tasks_grid').hide();
-	
-	if(!is_set_stocks())
-		$('#stocks_grid').hide();
-	
-	if(!is_set_customers())
-		$('#people_grid').hide();
-}
 
 function hide_menu_items()
 {
@@ -153,63 +145,30 @@ function hide_menu_items()
  */
 function hide_all()
 {
-	$("#accounts_main").hide();
-	$("#bills_main").hide();
-	$("#stocks_main").hide();
-	$("#tasks_main").hide();
-	$("#people_main").hide();
 	$("#settings_main").hide();
 	$("#r_preferences").hide();
 	$("#search_results_box").hide();
 	$("#notifications_box").hide();
 	$("#opportunities_box").hide();
-	$("#report_grid").hide();
+	//hide all functions
+	$("#sale_bills_main").hide();
+	$("#products_main").hide();
+	$("#purchase_main").hide();
+	$("#services_main").hide();
+	$("#inventory_main").hide();
+	$("#finances_main").hide();
+	$("#customers_main").hide();
+	$("#suppliers_main").hide();
+	$("#staff_main").hide();
+	$("#store_main").hide();
+	$("#offers_main").hide();
+	$("#sale_reports_main").hide();
+	$("#maps_main").hide();
+	hide_menu_items();
+	
+	$("#home_grid").show();
+	hide_loader();
 	//$(".forms").show();
-}
-
-/**
- * sets the accounts main page to be displayed
- */
-function accounts_grid_click()
-{
-	hide_all();
-	$("#accounts_main").show();
-}
-
-/**
- * sets the bills main page to be displayed
- */
-function bills_grid_click()
-{
-	hide_all();
-	$("#bills_main").show();
-}
-
-/**
- * sets the stocks main page to be displayed
- */
-function stocks_grid_click()
-{
-	hide_all();
-	$("#stocks_main").show();
-}
-
-/**
- * sets the tasks main page to be displayed
- */
-function tasks_grid_click()
-{
-	hide_all();
-	$("#tasks_main").show();
-}
-
-/**
- * sets the customers main page to be displayed
- */
-function people_grid_click()
-{
-	hide_all();
-	$("#people_main").show();
 }
 
 /**

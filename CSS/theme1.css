@@ -15,19 +15,6 @@ input{
 	width: auto; 
 }
 
-/*
-input[type="text"]:focus,input[type="password"]:focus{
-	background-color: yellow;
-	outline: none;
-	-webkit-transform: scale(1.5,3) translate(20%,20%);
-	-moz-transform: scale(1.5,3) translate(20%,20%); 
-	-ms-transform: scale(1.5,3) translate(20%,20%); 
-	transform: scale(1.5,3) translate(20%,20%);
-	-webkit-box-shadow: 0 3px 10px #666; -moz-box-shadow: 0 3px 10px #666;
-	z-index: 9999;
-}
-*/
-
 input[type="text"]:focus,input[type="password"]:focus{
 	background-color: yellow;
 	outline: none;
@@ -140,9 +127,8 @@ footer{
 	margin: 2px 2px 2px 2px;
 }
 
-div#content_box{
+#content_box{
 	width: 77%;
-	min-height: 85%;
 	float: left;
 	border-style: solid;
 	border-width: 2px;
@@ -152,35 +138,47 @@ div#content_box{
 	position: fixed;
 	top: 8%;
 	left: 6%;
+	min-height: 85%;
 	overflow-y: scroll;
 	overflow-x: scroll;
 }
 
-#report_grid{
+#home_grid>ul{
 	list-style-type: none;
-	margin: 0; 
-	padding: 0; 
+	margin: 1%; 
+	padding: 0;
+	background: #DCDDD3;
 }
 
-#report_grid .ui-selected { 
-	background: #DC9583; 
-	color: white; 
-}
-
-#report_grid>li {
-	margin: 3px;
+#home_grid>ul>li {
+	margin: 1%; 	
 	padding: 0;
 	float: left;
 	width: 30%;
-	height: 150px;
-	text-align: left;
+	height: 100px;
 	border-style: solid;
 	border-width: 2px;
 	border-radius: 5px;
 	border-color: #E66051;
+	background: #DCDDD3;
 }
 
-.grid_header{
+#home_grid>ul>li>ul{
+	list-style-type: none;	
+	margin: 1%;
+	padding: 1%;
+	float: left;
+	text-align: left;
+	font-size: 11px;
+}
+
+
+#home_grid>ul>li>a{
+	width: 100%;	
+}
+
+#home_grid>ul>li>a>div{
+	margin: 0;	
 	padding: 1%;
 	background-color:#E66051;
 	color: #EDEDE4;
@@ -188,7 +186,7 @@ div#content_box{
 
 .function_detail{
 	width: 95%;
-	height: 100%;
+	height: 90%;
 	align-content: center;
 	text-align: center;
 	border-radius: 5px;

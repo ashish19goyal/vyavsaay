@@ -67,21 +67,19 @@ function form2_delete_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var pamphlet_id=document.getElementById('form2_master').elements[2].value;
+		var pamphlet_name=document.getElementById('form2_master').elements[1].value;
 		var name=form.elements[0].value;
-		var offer_id=form.elements[1].value;
+		var offer_name=form.elements[1].value;
 		var offer_detail=form.elements[2].value;
-		var price=form.elements[3].value;
-		var data_id=form.elements[4].value;
+		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
 		var table='pamphlet_items';
 		var data_xml="<"+table+">" +
 					"<id>"+data_id+"</id>" +
 					"<product_name>"+name+"</product_name>" +
-					"<offer_id>"+offer_id+"</offer_id>" +
+					"<offer_name>"+offer_name+"</offer_name>" +
 					"<offer>"+offer_detail+"</offer>" +
-					"<price>"+price+"</price>" +
-					"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
+					"<pamphlet_name>"+pamphlet_name+"</pamphlet_name>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
@@ -89,7 +87,7 @@ function form2_delete_item(button)
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form2</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted product "+name+" from pamphlet "+pamphlet_id+"</notes>" +
+					"<notes>Deleted product "+name+" from pamphlet "+pamphlet_name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -125,7 +123,6 @@ function form2_delete_form()
 		var data_xml="<"+table+">" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+p_name+"</name>" +
-					"<template>"+get_pamphlet_template()+"</template>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";
 		var activity_xml="<activity>" +
@@ -463,7 +460,7 @@ function form11_delete_item(button)
 					"<acc_name>"+acc_name+"</acc_name>" +
 					"<amount>"+amount+"</amount>" +
 					"<due_date>"+due_date+"</due_date>" +
-					"<status>"+pamphlet_id+"</pamphlet_id>" +
+					"<status>"+status+"</status>" +
 					"<date>"+date+"</date>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
@@ -613,8 +610,8 @@ function form14_delete_item(button)
 		var description=form.elements[1].value;
 		var assignee=form.elements[2].value;
 		var t_due=get_raw_time(form.elements[3].value);
-		var status=form.elements[4].value;
-		var t_executed=get_raw_time(form.elements[5].value);
+		var t_executed=get_raw_time(form.elements[4].value);
+		var status=form.elements[5].value;
 		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var table='task_instances';
@@ -767,7 +764,7 @@ function form21_delete_item(button)
 {
 	if(is_delete_access('form21'))
 	{
-		var bill_id=document.getElementById("form21_master").elements[5].value;
+		var bill_id=document.getElementById("form21_master").elements[2].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
@@ -1409,16 +1406,14 @@ function form44_delete_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var data_id=form.elements[0].value;
-		var name=form.elements[1].value;
-		var template=form.elements[2].value;
-		var count_items=form.elements[3].value;
+		var name=form.elements[0].value;
+		var count_items=form.elements[1].value;
+		var data_id=form.elements[2].value;
 		var last_updated=get_my_time();
 		var table='pamphlets';
 		var data_xml="<"+table+">" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
-					"<template>"+template+"</template>" +
 					"<count_items>"+count_items+"</count_items>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
@@ -1431,7 +1426,7 @@ function form44_delete_item(button)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var other_delete="<pamphlet_items>" +
-				"<pamphlet_id>"+data_id+"</pamphlet_id>" +
+				"<pamphlet_name>"+name+"</pamphlet_name>" +
 				"</pamphlet_items>";
 		if(is_online())
 		{
@@ -1567,15 +1562,17 @@ function form53_delete_item(button)
 	{
 		var form=document.getElementById(form_id);
 		
-		var data_id=form.elements[0].value;
+		var bill_id=form.elements[0].value;
 		var supplier_name=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
 		var entry_date=get_raw_time(form.elements[3].value);
 		var amount=form.elements[4].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var table='supplier_bills';
 		var data_xml="<"+table+">" +
 					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
 					"<supplier_name>"+supplier_name+"</supplier_name>" +
 					"<bill_date>"+bill_date+"</bill_date>" +
 					"<entry_date>"+entry_date+"</entry_date>" +
@@ -1587,11 +1584,11 @@ function form53_delete_item(button)
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form53</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted supplier bill no "+data_id+" from supplier "+supplier_name+"</notes>" +
+					"<notes>Deleted supplier bill no "+bill_id+" for supplier "+supplier_name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var other_delete="<goods_received>" +
-				"<sup_bill_id>"+data_id+"</sup_bill_id>" +
+				"<sup_bill_id>"+bill_id+"</sup_bill_id>" +
 				"</goods_received>";
 		if(is_online())
 		{

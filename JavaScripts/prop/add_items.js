@@ -83,9 +83,6 @@ function form2_add_item()
 				rowsHTML+="<input type='text' readonly='readonly' form='form2_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' readonly='readonly' form='form2_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
 				rowsHTML+="<input type='hidden' form='form2_"+id+"' value='"+id+"'>";
 				rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form2_"+id+"' id='delete_form2_"+id+"' value='Delete' onclick='form2_delete_item($(this));'>";	
 			rowsHTML+="</td>";			
@@ -97,7 +94,6 @@ function form2_add_item()
 		var names_filter=fields.elements[0];
 		var offer_filter=fields.elements[1];
 		var offer_details=fields.elements[2];
-		var price_filter=fields.elements[3];
 		
 		$(names_filter).focus();
 		
@@ -110,11 +106,11 @@ function form2_add_item()
 		$(names_filter).on('blur',function(event)
 		{
 			var offer_data="<offers>" +
-			"<id></id>" +
-			"<product_name>"+names_filter.value+"</product_name>" +
-			"<status>active</status>" +
-			"</offers>";
-			
+				"<offer_name></offer_name>" +
+				"<product_name>"+names_filter.value+"</product_name>" +
+				"<status>active</status>" +
+				"</offers>";
+				
 			set_my_value_list(offer_data,offer_filter);
 		});
 		
@@ -122,15 +118,10 @@ function form2_add_item()
 		{
 			var offer_detail_data="<offers>" +
 				"<offer_detail></offer_detail>" +
-				"<id>"+offer_filter.value+"</id>" +
+				"<offer_name>"+offer_filter.value+"</offer_name>" +
 				"</offers>";
-			var price_data="<offers>" +
-				"<offer_detail></offer_detail>" +
-				"<id>"+offer_filter.value+"</id>" +
-				"</offers>";
-	
+			
 			set_my_value(offer_detail_data,offer_details);
-			set_my_value(price_data,price_filter);
 		});
 	}
 	else
@@ -549,7 +540,7 @@ function form14_add_item()
 				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' readonly='readonly' form='form14_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
@@ -577,8 +568,8 @@ function form14_add_item()
 		var desc_filter=fields.elements[1];
 		var assignee_filter=fields.elements[2];
 		var due_filter=fields.elements[3];
-		var status_filter=fields.elements[3];
-		var exec_filter=fields.elements[3];
+		var status_filter=fields.elements[5];
+		var exec_filter=fields.elements[4];
 		
 		$(name_filter).focus();
 	
@@ -790,7 +781,7 @@ function form19_add_item()
 		{
 			var supplier_data="<supplier_bills>" +
 				"<supplier_name></supplier_name>" +
-				"<sup_bill_id>"+bill_filter.value+"</sup_bill_id>" +
+				"<bill_id>"+bill_filter.value+"</bill_id>" +
 				"</supplier_bills>";
 			set_my_value_list(supplier_data,supplier_filter);
 		});

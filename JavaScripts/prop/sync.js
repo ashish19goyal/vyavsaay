@@ -107,7 +107,7 @@ function sync_server_to_local(func)
 						tableName=tables[i].nodeName;
 						if(tableName!="" && tableName!="#text")
 						{	
-							console.log("sync download: syncing " + tableName);
+							//console.log("sync download: syncing " + tableName);
 							
 							var num_rows=tables[i].childElementCount;
 							for(var k=0;k<num_rows;k++)
@@ -236,7 +236,7 @@ function get_data_from_log_table(func)
 					log_data+="</row>";
 				}
 				log_data+="</activities>";
-				console.log("this is the data in table :"+log_data);
+				//console.log("this is the data in table :"+log_data);
 				//upload_documents(database,log_data);
 				func(log_data);
 			});	
@@ -499,8 +499,8 @@ function set_session_online()
 			"<user_display>yes</user_display>" +
 			"<updated_by>"+get_name()+"</updated_by>" +
 			"</activity>";
-		console.log(data_xml);
-		console.log(activity_xml);
+		//console.log(data_xml);
+		//console.log(activity_xml);
 		
 		server_write_row(data_xml,activity_xml);
 		local_write_row(data_xml,"<activity></activity>");
@@ -538,8 +538,8 @@ function set_session_offline()
 			"<user_display>yes</user_display>" +
 			"<updated_by>"+get_name()+"</updated_by>" +
 			"</activity>";
-		console.log(data_xml);
-		console.log(activity_xml);
+		//console.log(data_xml);
+		//console.log(activity_xml);
 		server_write_row(data_xml,"<activity></activity>");
 		local_write_row(data_xml,activity_xml);
 		hide_menu_items();

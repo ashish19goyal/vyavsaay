@@ -13,12 +13,21 @@
 		include "functions/search.php";
 		include "functions/notifications.php";
 		include "functions/opportunities.php";
-		//central display for individual functions
-		include "functions/accounts.php";
-		include "functions/bills.php";
-		include "functions/people.php";
-		include "functions/stocks.php";
-		include "functions/tasks.php";
+		
+		//display for each of the grids
+		include "functions/sale_bills.php";
+		include "functions/products.php";
+		include "functions/services.php";
+		include "functions/purchase.php";
+		include "functions/store.php";
+		include "functions/inventory.php";
+		include "functions/customers.php";
+		include "functions/staff.php";
+		include "functions/suppliers.php";
+		include "functions/offers.php";
+		include "functions/finances.php";
+		include "functions/sale_reports.php";
+		include "functions/maps.php";
 		//display for settings
 		include "functions/settings.php";
  	echo "</div>";

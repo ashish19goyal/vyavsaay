@@ -3,11 +3,10 @@
  */
 function login_action()
 {
-	//document.getElementById("failed_auth").innerHTML="Verifying credentials!";
 	show_loader();
-	//console.log("1. inside login_action()");
-	//var login_status="failed_auth";
-	var l_id=document.getElementById("l_id").value;
+	var form=document.getElementById('login');
+
+	var l_id=form.elements[1].value;
 	var index=l_id.indexOf("@");
 	var domain="";
 	var username="";
@@ -21,50 +20,32 @@ function login_action()
 		domain=l_id.substr(index+1);
 		username=l_id.substr(0,index);
 	}
-	//console.log(domain);
-	var pass=document.getElementById("l_pass").value;
+	var pass=form.elements[2].value;
 	try_local_db_login(username,domain,function(result)
 	{
-		//console.log("4. inside onsucess function of verification inside login action");
 		var password="p";
-		
-		//console.log("4. data returned for password: "+data);
 		if(result) { password=result.password;}
-		
-		//console.log("4. password hash returned from local db : "+password);
-		//hashing password for verification
 		var salt='$2a$10$'+domain+'1234567891234567891234';
 		var salt_22=salt.substring(0, 29);
-		//console.log("salt: "+salt_22);
 		
 		var bcrypt = new bCrypt();
 		bcrypt.hashpw(pass, salt_22, function(newhash)
 		{
-			//console.log("user provided: "+newhash);
-			//console.log("system provided: "+password);
 			if(newhash.substring(3)==password.substring(3))
 			{
-				//console.log("----------logging offline--------");
 				set_session_variables(domain,username,pass);
 			}
 			else
 			{
-				//console.log("-----------logging online----------");
 				login_online(username,domain,pass);
 			}
-			
-			//console.log("4. exiting onsucess function of verification inside login_action");
 			
 		}, function() {});
 		
 	},function()
 	{
-		//console.log("-----------logging online----------");
 		login_online(username,domain,pass);
-		//console.log("5. exiting onerror function of verification inside login_action");
 	});
-
-	console.log("1.1 login_action() exited");
 }
 
 

@@ -1,56 +1,161 @@
-function form12_print_form()
+/**
+ * @form Create pamphlets
+ */
+function form2_print_form()
 {	
-	var form=document.getElementById("form12_master");
+	var form=document.getElementById("form2_master");
+	var pamphlet_name=form.elements[1].value;
 	
-	var customer=form.elements[1].value;
-	var bill_date=form.elements[2].value;
-	var amount=form.elements[3].value;
-	var data_id=form.elements[4].value;
+	var container=document.getElementById('print_container');
 	
-	var content=document.querySelector('#print_sale_bill');
-	var logo=content.querySelector(".logo");
-	var title=content.querySelector(".title");
-	var seller_name=content.querySelector(".seller_name");
-	var seller_phone=content.querySelector(".seller_phone");
-	var seller_address=content.querySelector(".seller_address");
-	var invoice_date=content.querySelector(".invoice_date");
-	var invoice_num=content.querySelector(".invoice_num");
-	var customer_name=content.querySelector(".customer_name");
-	var customer_phone=content.querySelector(".customer_phone");
-	var customer_address=content.querySelector(".customer_address");
-	var invoice_total=content.querySelector(".invoice_total");
-	var invoice_discount=content.querySelector(".invoice_discount");
-	var invoice_taxes=content.querySelector(".invoice_taxes");
-	var invoice_net=content.querySelector(".invoice_net");
-	var invoice_details=content.querySelector(".invoice_details");
+	var print_pamphlet=document.createElement('div');
+		print_pamphlet.setAttribute('class','print_pamphlet');
+	var header=document.createElement('div');
+		header.setAttribute('class','header');
+	var logo=document.createElement('div');
+		logo.setAttribute('class','logo');
+		logo.innerHTML="<img src='./images/feedback.jpeg'>";
+	var title=document.createElement('div');
+		title.setAttribute('class','title');
+		title.textContent='Vyavsaay.com';
+	var seller_info=document.createElement('div');
+		seller_info.setAttribute('class','seller_info');
+	var seller_phone=document.createElement('div');
+		seller_phone.setAttribute('class','seller_phone');
+		seller_phone.textContent='Contact No: 9818005232';
+	var seller_address=document.createElement('div');
+		seller_address.setAttribute('class','seller_address');
+		seller_address.textContent="Office: R.S.D. colony, Sirsa";
+	var content=document.createElement('div');
+		content.setAttribute('class','content');
+	var pamphlet_header=document.createElement('div');
+		pamphlet_header.setAttribute('class','pamphlet_header');
+	var pamphlet_time=document.createElement('div');
+		pamphlet_time.setAttribute('class','pamphlate_time');
+		pamphlet_time.textContent='hurry up! Offers limited';
+	var offers=document.createElement('div');
+		offers.setAttribute('class','offers');
+	
+		container.appendChild(print_pamphlet);
+		print_pamphlet.appendChild(header);
+		print_pamphlet.appendChild(content);
+		header.appendChild(logo);
+		header.appendChild(title);
+		header.appendChild(seller_info);
+		seller_info.appendChild(seller_phone);
+		seller_info.appendChild(seller_address);
+		content.appendChild(pamphlet_header);
+		pamphlet_header.appendChild(pamphlet_time);
+		content.appendChild(offers);
+	
+	var pamphlet_items_data="<pamphlet_items>" +
+			"<product_name></product_name>" +
+			"<offer></offer>" +
+			"</pamphlet_items>";
+	
+	fetch_requested_data('form44',pamphlet_items_data,function(results)
+	{
+		for(var i in results)
+		{
+			var offer_item=document.createElement('div');
+				offer_item.setAttribute('class','offer_item');
+			var product_name=document.createElement('div');
+				product_name.setAttribute('class','product_name');
+				product_name.textContent=results[i].product_name;
+			var offer_detail=document.createElement('div');
+				offer_detail.setAttribute('class','offer_detail');
+				offer_detail.textContent=results[i].offer;
+				
+				offers.appendChild(offer_item);
+				offer_item.appendChild(product_name);
+				offer_item.appendChild(offer_detail);
+		}	
+		
+		//console.log(container);
+		$.print(container);
+		container.removeChild(print_pamphlet);
 
-	//logo.appendChild(document.createElement('img')).src=logo_src;
-	customer_name.textContent=customer;
-	invoice_date.textContent=bill_date;
-	invoice_total.textContent=amount;
-	invoice_num.textContent=data_id;
-	
-	//printing the content using jquery.print library
-	$(content).show();
-	$.print(content);
-	$(content).hide();
+
+	});		
+	//$(content).hide();
 }
 
-function sale_bill_print_setup()
-{
-	var template_name=sessionStorage.getItem('sale_bill');
-	var link = document.createElement('link');
-	link.rel = 'import';
-	link.href = "./templates/sale_bill/"+template_name+".html";
-	link.onload = function(e){
-		var content=link.import.querySelector(".print_sale_bill");
-		var print_template=document.querySelector('#print_sale_bill');
-		console.log(content);
-		print_template.appendChild(content);
-		$(print_template).hide();
-	};
-	link.onerror = function(e){
+
+function form44_print_item(button)
+{	
+	var form_id=$(button).attr('form');
+	var form=document.getElementById(form_id);
+	var pamphlet_name=form.elements[1].value;
+	
+	var container=document.getElementById('print_container');
+	
+	var print_pamphlet = document.createElement('div');
+		print_pamphlet.setAttribute('class','print_pamphlet');
+	var header=document.createElement('div');
+		header.setAttribute('class','header');
+	var logo=document.createElement('div');
+		logo.setAttribute('class','logo');
+		logo.innerHTML="<img src='./images/feedback.jpeg'>";
+	var title=document.createElement('div');
+		title.setAttribute('class','title');
+		title.textContent='Vyavsaay.com';
+	var seller_info=document.createElement('div');
+		seller_info.setAttribute('class','seller_info');
+	var seller_phone=document.createElement('div');
+		seller_phone.setAttribute('class','seller_phone');
+		seller_phone.textContent='Contact No: 9818005232';
+	var seller_address=document.createElement('div');
+		seller_address.setAttribute('class','seller_address');
+		seller_address.textContent="Office: R.S.D. colony, Sirsa";
+	var content=document.createElement('div');
+		content.setAttribute('class','content');
+	var pamphlet_header=document.createElement('div');
+		pamphlet_header.setAttribute('class','pamphlet_header');
+	var pamphlet_time=document.createElement('div');
+		pamphlet_time.setAttribute('class','pamphlet_time');
+		pamphlet_time.textContent='hurry up! Offers limited';
+	var offers=document.createElement('div');
+		offers.setAttribute('class','offers');
+	
+		container.appendChild(print_pamphlet);
+		print_pamphlet.appendChild(header);
+		print_pamphlet.appendChild(content);
+		header.appendChild(logo);
+		header.appendChild(title);
+		header.appendChild(seller_info);
+		seller_info.appendChild(seller_phone);
+		seller_info.appendChild(seller_address);
+		content.appendChild(pamphlet_header);
+		pamphlet_header.appendChild(pamphlet_time);
+		content.appendChild(offers);
+	
+	var pamphlet_items_data="<pamphlet_items>" +
+			"<product_name></product_name>" +
+			"<offer></offer>" +
+			"</pamphlet_items>";
+	
+	fetch_requested_data('form44',pamphlet_items_data,function(results)
+	{
+		for(var i in results)
+		{
+			var offer_item=document.createElement('div');
+				offer_item.setAttribute('class','offer_item');
+			var product_name=document.createElement('div');
+				product_name.setAttribute('class','product_name');
+				product_name.textContent=results[i].product_name;
+			var offer_detail=document.createElement('div');
+				offer_detail.setAttribute('class','offer_detail');
+				offer_detail.textContent=results[i].offer;
+				
+				offers.appendChild(offer_item);
+				offer_item.appendChild(product_name);
+				offer_item.appendChild(offer_detail);
+		}	
 		
-	};
-	document.head.appendChild(link);
+		//console.log(container);
+		$.print(container);
+		container.removeChild(print_pamphlet);
+
+	});		
+	//$(content).hide();
 }

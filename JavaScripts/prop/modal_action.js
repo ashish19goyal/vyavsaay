@@ -193,7 +193,7 @@ function modal8_action(button)
 			var table='offers';
 			var data_xml="<"+table+">" +
 						"<id>"+data_id+"</id>" +
-						"<offer_name>"+offer_name+"</offer_name>" +
+						"<offer_name unique='yes'>"+offer_name+"</offer_name>" +
 						"<offer_type>"+type_value+"</offer_type>" +
 						"<product_name>"+product_value+"</product_name>" +
 						"<batch>"+batch_value+"</batch>" +
@@ -426,7 +426,7 @@ function modal11_action()
 						"<phone>"+phone+"</phone>" +
 						"<email>"+email+"</email>" +
 						"<notes>"+notes+"</notes>" +
-						"<acc_name>"+name+" ("+phone+")</acc_name>" +
+						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<status>active</status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</"+table+">";
@@ -447,7 +447,7 @@ function modal11_action()
 						"<country>"+country+"</country>" +
 						"<status>pending analysis</status>" +
 						"<acc_type>customer</acc_type>" +
-						"<acc_name>"+name+" ("+phone+")</acc_name>" +
+						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</address>";
 			var add_activity_xml="<activity>" +
@@ -505,7 +505,7 @@ function modal12_action()
 		var table='accounts';
 		var data_xml="<"+table+">" +
 					"<id>"+data_id+"</id>" +
-					"<acc_name>"+name+"</acc_name>" +
+					"<acc_name unique='yes'>"+name+"</acc_name>" +
 					"<type>"+type+"</type>" +
 					"<description>"+description+"</description>" +
 					"<balance>0</balance>" +
@@ -577,7 +577,7 @@ function modal13_action()
 						"<phone>"+phone+"</phone>" +
 						"<email>"+email+"</email>" +
 						"<notes>"+notes+"</notes>" +
-						"<acc_name>"+name+" ("+phone+")</acc_name>" +
+						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</"+table+">";
 			var activity_xml="<activity>" +
@@ -597,7 +597,7 @@ function modal13_action()
 						"<country>"+country+"</country>" +
 						"<status>pending analysis</status>" +
 						"<acc_type>supplier</acc_type>" +
-						"<acc_name>"+name+" ("+phone+")</acc_name>" +
+						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</address>";
 			var add_activity_xml="<activity>" +
@@ -685,7 +685,7 @@ function modal14_action()
 						"<id>"+data_id+"</id>" +
 						"<product_type>"+product_type+"</product_type>" +
 						"<make>"+make+"</make>" +
-						"<name>"+name+"</name>" +
+						"<name unique='yes'>"+name+"</name>" +
 						"<est_price>"+est_price+"</est_price>" +
 						"<description>"+description+"</description>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
@@ -848,7 +848,7 @@ function modal16_action(button,acc_type,address_id)
 					"<country>"+country+"</country>" +
 					"<status>pending analysis</status>" +
 					"<acc_type>"+acc_type+"</acc_type>" +
-					"<acc_name>"+name+" ("+phone+")</acc_name>" +
+					"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</address>";
 		var activity_xml="<activity>" +

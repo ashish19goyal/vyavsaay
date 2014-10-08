@@ -311,7 +311,7 @@ function form19_header_ini()
 			"<batch></batch>" +
 			"</product_instances>";
 	var bill_data="<supplier_bills>" +
-			"<id></id>" +
+			"<bill_id></bill_id>" +
 			"</supplier_bills>";
 	var supplier_data="<suppliers>" +
 			"<acc_name></acc_name>" +
@@ -336,10 +336,10 @@ function form21_header_ini()
 	var fields=document.getElementById('form21_master');
 	
 	var supplier_filter=fields.elements[1];
-	var bill_date=fields.elements[2];
-	var entry_date=fields.elements[3];
-	fields.elements[4].value=0;
-	fields.elements[5].value=get_new_key();
+	var bill_date=fields.elements[3];
+	var entry_date=fields.elements[4];
+	fields.elements[5].value=0;
+	fields.elements[6].value=get_new_key();
 		
 	var suppliers_data="<suppliers>" +
 		"<acc_name></acc_name>" +
@@ -609,20 +609,13 @@ function form43_header_ini()
 function form44_header_ini()
 {
 	var filter_fields=document.getElementById('form44_header');
-	var id_filter=filter_fields.elements[0];
-	var name_filter=filter_fields.elements[1];
-	var template_filter=filter_fields.elements[2];
+	var name_filter=filter_fields.elements[0];
 	
-	var id_data="<pamphlets>" +
-			"<id></id>" +
-			"</pamphlets>";
 	var name_data="<pamphlets>" +
 			"<name></name>" +
 			"</pamphlets>";
 	
-	set_my_filter(id_data,id_filter);
 	set_my_filter(name_data,name_filter);
-	set_static_filter('pamphlets','template',template_filter);
 };
 
 /**
@@ -858,7 +851,7 @@ function form53_header_ini()
 	var entry_date_filter=filter_fields.elements[3];
 	
 	var bill_data="<supplier_bills>" +
-			"<id></id>" +
+			"<bill_id></bill_id>" +
 			"</supplier_bills>";
 	var sup_data="<suppliers>" +
 			"<acc_name></acc_name>" +

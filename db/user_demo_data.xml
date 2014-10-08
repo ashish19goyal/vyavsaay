@@ -168,4 +168,46 @@
 			<last_updated>1</last_updated>
 		</row>
 	</task_instances>
+	<pamphlets>
+		<row>
+			<name>Trial1</name>
+			<count_items>3</count_items>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>Trial2</name>
+			<count_items>1</count_items>
+			<last_updated>1</last_updated>
+		</row>
+	</pamphlets>
+	<pamphlet_items>
+		<row>
+			<pamphlet_name>Trial1</pamphlet_name>
+			<product_name>Product1</product_name>
+			<offer_name>Offer1</offer_name>
+			<offer>Get a discount of 10% on purchase of Rs 1000 or more</offer>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<pamphlet_name>Trial1</pamphlet_name>
+			<product_name>Product2</product_name>
+			<offer_name>Offer2</offer_name>
+			<offer>Get a discount of Rs 10 on purchase of 1 piece of product2</offer>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<pamphlet_name>Trial1</pamphlet_name>
+			<product_name>Product3</product_name>
+			<offer_name>Offer3</offer_name>
+			<offer>Get a discount of 5% on purchase of 10 piece of product3</offer>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<pamphlet_name>Trial2</pamphlet_name>
+			<product_name>Product4</product_name>
+			<offer_name>Offer4</offer_name>
+			<offer>Get a discount of 15% on purchase of product3</offer>
+			<last_updated>1</last_updated>
+		</row>
+	</pamphlet_items>
 </re_xml>

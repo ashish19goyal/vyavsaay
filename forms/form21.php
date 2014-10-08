@@ -2,6 +2,7 @@
 	<form id='form21_master'>
 		<fieldset>
 			Supplier<input type='text'>
+			Bill Number<input type='text'>
 			Bill Date<input type='text'>
 			Entry Date<input type='text'>
 			Total Amount<input type='text' >

@@ -441,10 +441,10 @@ function form14_ini(fid)
 						rowsHTML+="<input type='text' readonly='readonly' form='form14_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+get_my_past_date(results[i].t_due)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form14_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].status+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form14_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+get_my_past_date(results[i].t_executed)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form14_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+get_my_past_date(results[i].t_executed)+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form14_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' readonly='readonly' form='form14_"+results[i].id+"' value='"+results[i].id+"'>";
@@ -1232,15 +1232,11 @@ function form44_ini(fid)
 	var filter_fields=document.getElementById('form44_header');
 	
 	//populating form 
-	if(fid==="")
-		fid=filter_fields.elements[0].value;
-	var fname=filter_fields.elements[1].value;
-	var ftemplate=filter_fields.elements[2].value;
+	var fname=filter_fields.elements[0].value;
 	
 	var columns="<pamphlets>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
-			"<template>"+ftemplate+"</template>" +
 			"<count_items></count_items>" +
 			"</pamphlets>";
 
@@ -1253,21 +1249,17 @@ function form44_ini(fid)
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form44_"+results[i].id+"'></form>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form44_"+results[i].id+"' value='"+results[i].id+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form44_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form44_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].template+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form44_"+results[i].id+"' value='"+results[i].count_items+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
+						rowsHTML+="<input type='hidden' readonly='readonly' form='form44_"+results[i].id+"' value='"+results[i].id+"'>";
 						rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form44_"+results[i].id+"' value='Edit' onclick='form44_edit_item($(this));'>";
 						rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form44_"+results[i].id+"' value='Save' onclick='form44_save_item($(this));'>";
-						rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form44_"+results[i].id+"' value='Delete' onclick='form44_delete_item($(this));'>";	
+						rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form44_"+results[i].id+"' value='Delete' onclick='form44_delete_item($(this));'>";
+						rowsHTML+="<img class='filter_icon' src='./images/print.jpeg' form='form44_"+results[i].id+"' value='Print' onclick='form44_print_item($(this));'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 		}
@@ -1634,14 +1626,14 @@ function form53_ini(fid)
 {
 	var filter_fields=document.getElementById('form53_header');
 	
-	if(fid==="")
-		fid=filter_fields.elements[0].value;
+	var fbill_id=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	var fbill_date=filter_fields.elements[2].value;
 	var fentry_date=filter_fields.elements[3].value;
 	
 	var columns="<supplier_bills>" +
 			"<id>"+fid+"</id>" +
+			"<bill_id>"+fbill_id+"</bill_id>" +
 			"<supplier_name>"+fname+"</supplier_name>" +
 			"<bill_date>"+fbill_date+"</bill_date>" +
 			"<entry_date>"+fentry_date+"</entry_date>" +
@@ -1657,7 +1649,7 @@ function form53_ini(fid)
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form53_"+results[i].id+"'></form>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form53_"+results[i].id+"' value='"+results[i].id+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form53_"+results[i].id+"' value='"+results[i].bill_id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form53_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].supplier_name+"'>";
@@ -1672,6 +1664,7 @@ function form53_ini(fid)
 						rowsHTML+="<input type='text' readonly='readonly' form='form53_"+results[i].id+"' value='"+results[i].amount+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form53_"+results[i].id+"' value='"+results[i].id+"'>";
 						rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form53_"+results[i].id+"' value='Edit' onclick='form53_edit_item($(this));'>";
 						rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form53_"+results[i].id+"' value='Save' onclick='form53_save_item($(this));'>";
 						rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form53_"+results[i].id+"' value='Delete' onclick='form53_delete_item($(this));'>";	

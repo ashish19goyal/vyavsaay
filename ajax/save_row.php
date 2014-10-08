@@ -52,8 +52,28 @@
 			$query2="";
 			$act_type="";
 			
-			if($count===0 || $count=="0")
+			$unique=0;
+			$unique_column_value=array();
+			$query4="select count(*) from $table where ";
+			foreach($data_input->childNodes as $data)
 			{
+				if($data->hasAttribute('unique'))
+				{	
+					$query4.=$data->nodeName."= ? and ";
+					$unique_column_value[]=$data->nodeValue;
+				}
+			}
+			$query4=rtrim($query4,"and ");
+			if(count($unique_column_value)>0)
+			{
+				$stmt4=$conn->conn->prepare($query4);
+				$stmt4->execute($unique_column_value);
+				$unique=$stmt4->fetchAll(PDO::FETCH_NUM)[0][0];	
+			}
+				
+			if(($count===0 || $count=="0") && ($unique===0 || $unique=="0"))
+			{
+								
 				$query2.="insert into $table(";
 				
 				foreach($data_input->childNodes as $data)
@@ -73,9 +93,23 @@
 				$query2=rtrim($query2,",");
 				$query2.=");";
 				$act_type='create';
-					
+				$stmt2=$conn->conn->prepare($query2);
+				$stmt2->execute($data_array);
+				
+				if($activity_input->hasChildNodes())
+				{
+					$link_to=$activity_input->getElementsByTagName('link_to')->item(0)->nodeValue;
+					$title=$activity_input->getElementsByTagName('title')->item(0)->nodeValue;
+					$notes=$activity_input->getElementsByTagName('notes')->item(0)->nodeValue;
+					$by=$activity_input->getElementsByTagName('updated_by')->item(0)->nodeValue;
+					$act_data=array(1000*time()+rand(0,999),$title,$notes,'yes',$table,$id,$data_xml,'online',$link_to,$by,1000*time(),$act_type);
+					$query3="insert into activities (id,title,notes,user_display,tablename,data_id,data_xml,status,link_to,updated_by,last_updated,type) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+					$stmt3=$conn->conn->prepare($query3);
+					$stmt3->execute($act_data);
+				}
+				echo "data saved";
 			}
-			else
+			else if(($count!=0 && $count!="0"))
 			{
 				$query2.="update $table set ";
 				
@@ -88,24 +122,28 @@
 				$query2=rtrim($query2,",");
 				$query2.=" where id=?;";
 				$data_array[]=$id;
-				$act_type='update';		
+				$act_type='update';
+
+				$stmt2=$conn->conn->prepare($query2);
+				$stmt2->execute($data_array);
+				
+				if($activity_input->hasChildNodes())
+				{
+					$link_to=$activity_input->getElementsByTagName('link_to')->item(0)->nodeValue;
+					$title=$activity_input->getElementsByTagName('title')->item(0)->nodeValue;
+					$notes=$activity_input->getElementsByTagName('notes')->item(0)->nodeValue;
+					$by=$activity_input->getElementsByTagName('updated_by')->item(0)->nodeValue;
+					$act_data=array(1000*time()+rand(0,999),$title,$notes,'yes',$table,$id,$data_xml,'online',$link_to,$by,1000*time(),$act_type);
+					$query3="insert into activities (id,title,notes,user_display,tablename,data_id,data_xml,status,link_to,updated_by,last_updated,type) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+					$stmt3=$conn->conn->prepare($query3);
+					$stmt3->execute($act_data);
+				}
+				echo "data saved";
 			}
-			
-			$stmt2=$conn->conn->prepare($query2);
-			$stmt2->execute($data_array);
-			
-			if($activity_input->hasChildNodes())
+			else
 			{
-				$link_to=$activity_input->getElementsByTagName('link_to')->item(0)->nodeValue;
-				$title=$activity_input->getElementsByTagName('title')->item(0)->nodeValue;
-				$notes=$activity_input->getElementsByTagName('notes')->item(0)->nodeValue;
-				$by=$activity_input->getElementsByTagName('updated_by')->item(0)->nodeValue;
-				$act_data=array(1000*time()+rand(0,999),$title,$notes,'yes',$table,$id,$data_xml,'online',$link_to,$by,1000*time(),$act_type);				
-				$query3="insert into activities (id,title,notes,user_display,tablename,data_id,data_xml,status,link_to,updated_by,last_updated,type) values(?,?,?,?,?,?,?,?,?,?,?,?)";
-				$stmt3=$conn->conn->prepare($query3);
-				$stmt3->execute($act_data);
+				echo "duplicate record";
 			}
-			echo "data saved";
 		}
 		else
 		{

@@ -279,7 +279,9 @@ function server_write_row(data_xml,activity_xml)
 	{
 		console.log(e.responseText);
 		hide_loader();
+		if(e.responseText=='duplicate record')
+		{
+			$("#modal5").dialog("open");
+		}
 	});
 }
-
-

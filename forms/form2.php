@@ -5,6 +5,7 @@
 			<input type='hidden' name='pamphlet_id' form='form2_master' value=''>
 			<input type='button' value='Save Pamphlet' onclick='form2_save_form($(this));'>
 			<input type='button' value='Discard Pamphlet' onclick='form2_delete_form($(this));'>
+			<input type='button' value='Print Bill' onclick='form2_print_form($(this));'>
 		</fieldset>
 	</form>
 	<table>
@@ -12,9 +13,8 @@
 			<tr>
 				<form id='form2_header'></form>
 					<th>Product Name</th>
-					<th>Offer ID</th>
+					<th>Offer Name</th>
 					<th>Offer Details</th>
-					<th>Price</th>
 					<th><input type='button' form='form2_header' value='Add item' onclick='form2_add_item();'></th>
 			</tr>
 		</thead>

@@ -38,7 +38,7 @@ function report1_ini()
 				}
 				
 				var sup_bill_data="<supplier_bills>" +
-						"<id array='yes'>"+sup_bill_id_array+"</id>" +
+						"<bill_id array='yes'>"+sup_bill_id_array+"</bill_id>" +
 						"<entry_date compare='less than'>"+get_raw_time(date_since)+"</entry_date>" +
 						"</supplier_bills>";
 			
@@ -1246,7 +1246,7 @@ function report36_ini()
 				{
 					var supplier_data="<supplier_bills>" +
 							"<supplier_name></supplier_name>" +
-							"<id array='yes'>"+bill_id_array+"</id>" +
+							"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
 							"</supplier_bills>";
 					
 					get_single_column_data(function(suppliers)

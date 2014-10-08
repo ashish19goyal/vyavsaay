@@ -203,6 +203,22 @@ function local_write_row(data_xml,activity_xml)
 	var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
 	var cols=data.childNodes[0].childNodes;
 
+	var unique=new Array();
+	for(var j in cols)
+	{
+		if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+		{
+			if(cols[j].hasAttribute('unique'))
+			{
+				var fil=new Object();
+				fil.name=cols[j].nodeName;
+				fil.value=cols[j].innerHTML;
+				unique.push(fil);
+			}
+		}
+	}
+	//console.log("this is the unique array--"+unique);
+	
 	var activity=parser.parseFromString(activity_xml,"text/xml");
 	var activity_data=activity.childNodes[0].childNodes;
 	
@@ -218,66 +234,156 @@ function local_write_row(data_xml,activity_xml)
 				console.log(err);
 			}
 			//console.log(tables);
-			
-			database.get(table,{range: IDBKeyRange.only(data_id)},function(err,records)
+			if(unique.length===0)
 			{
-				if(err)
+				//console.log("unique length is zero");
+				database.get(table,{range: IDBKeyRange.only(data_id)},function(err,records)
 				{
-					console.log(err);
-				}
-				else
-				{
-					var type='create';
-					var data_row=new Object();
-					
-					for(var i in records)
+					if(err)
 					{
-						type='update';
-						data_row=records[i];
+						console.log(err);
 					}
-					
-					for(var j in cols)
+					else
 					{
-						data_row[cols[j].nodeName]=cols[j].innerHTML;
-					}
-					database.upsert(table,data_row,function(err,insertedkey)
-					{
-						if(err)
+						var type='create';
+						var data_row=new Object();
+						
+						for(var i in records)
 						{
-							console.log(err);
+							type='update';
+							data_row=records[i];
+						}
+						
+							
+						for(var j in cols)
+						{
+							data_row[cols[j].nodeName]=cols[j].innerHTML;
+						}
+						database.upsert(table,data_row,function(err,insertedkey)
+						{
+							if(err)
+							{
+								console.log(err);
+							}
+							else
+							{
+								var act_row={id:get_new_key(),
+										type:type,
+										status:'unsynced',
+										data_xml:data_xml,
+										user_display:'yes',
+										last_updated:get_my_time()};
+								for(var k in activity_data)
+								{
+									act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+								}
+								//console.log("activities length="+activity_data.length);
+								if(activity_data.length!=0)
+								{
+									//console.log("activities data------"+act_row);
+									database.upsert('activities',act_row,function(err,insertedkey)
+									{
+										if(err)
+										{
+											console.log(err);
+										}
+										hide_loader();
+									});
+								}
+							}
+						});
+					}
+				});
+			}
+			else
+			{
+				//console.log("unique length is non-zero");
+				database.get(table,{},function(err,records)
+				{
+					if(err)
+					{
+						console.log(err);
+					}
+					else
+					{
+						var unique_rec=true;
+						var type='create';
+						var data_row=new Object();
+						
+						for(var i in records)
+						{
+							if(records[i].id==data_id)
+							{
+								type='update';
+								data_row=records[i];
+								unique_rec=true;
+								break;
+							}
+							else 
+							{	
+								for(var k in unique)
+								{
+									if(records[i][unique[k].name]==unique[k].value)
+									{
+										unique_rec=false;
+									}
+								}
+							}
+							
+						}
+						
+						console.log(unique_rec);
+						if(unique_rec===true)
+						{
+							console.log("didnt find any duplicate records");
+
+							for(var j in cols)
+							{
+								data_row[cols[j].nodeName]=cols[j].innerHTML;
+							}
+							database.upsert(table,data_row,function(err,insertedkey)
+							{
+								if(err)
+								{
+									console.log(err);
+								}
+								else
+								{
+									var act_row={id:get_new_key(),
+											type:type,
+											status:'unsynced',
+											data_xml:data_xml,
+											user_display:'yes',
+											last_updated:get_my_time()};
+									for(var k in activity_data)
+									{
+										act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+									}
+									//console.log("activities length="+activity_data.length);
+									if(activity_data.length!=0)
+									{
+										//console.log("activities data------"+act_row);
+										database.upsert('activities',act_row,function(err,insertedkey)
+										{
+											if(err)
+											{
+												console.log(err);
+											}
+											hide_loader();
+										});
+									}
+								}
+							});
 						}
 						else
 						{
-							var act_row={id:get_new_key(),
-									type:type,
-									status:'unsynced',
-									data_xml:data_xml,
-									user_display:'yes',
-									last_updated:get_my_time()};
-							for(var k in activity_data)
-							{
-								act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
-							}
-							//console.log("activities length="+activity_data.length);
-							if(activity_data.length!=0)
-							{
-								//console.log("activities data------"+act_row);
-								database.upsert('activities',act_row,function(err,insertedkey)
-								{
-									if(err)
-									{
-										console.log(err);
-									}
-									hide_loader();
-								});
-							}
+							console.log("found duplicate records");
+							hide_loader();
+							$("#modal5").dialog("open");
 						}
-					});	
-				
-				}
-
-			});
-
+					}
+				});
+			}
 		});
 }
 
@@ -464,8 +570,9 @@ function local_delete_row(data_xml,activity_xml)
 									if(err)
 									{
 										console.log(err);
-										hide_loader();
+										
 									}
+									hide_loader();
 								});
 							}
 						});
