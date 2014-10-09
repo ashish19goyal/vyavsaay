@@ -269,7 +269,13 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(45)" unique='yes'></name>
 			<description index='no' type="TEXT"></description>
-			<estimated_cost index='no' type="DECIMAL(10,2)"></estimated_cost>
+			<price index='no' type="DECIMAL(12,2)"></price>
+			<tags index='no' type="TEXT"></tags>
+			<taxable index='no' type='VARCHAR(3)'></taxable><!-- yes/no -->
+			<tax index='no' type="INT"></tax>
+			<rating index='no' type="DECIMAL(4,2)"></rating>
+			<duration index='no' type="DECIMAL(12,2)"></duration><!-- in minutes -->
+			<warranty index='no' type="TEXT"></warranty>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</services>
 	<product_instances>
@@ -286,17 +292,49 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(90)" unique='yes'></name>
 			<description index='no' type="TEXT"></description>
-			<make index='yes' type="VARCHAR(45)"></make>
-			<product_type index='yes' type="VARCHAR(90)"></product_type>
+			<make index='no' type="VARCHAR(45)"></make>
 			<est_price index="no" type="DECIMAL(10,2)"></est_price>
-			<manufacture index='no' type="VARCHAR(3)"></manufacture><!-- yes/no -->
+			<manufactured index='no' type="VARCHAR(3)"></manufactured><!-- yes/no -->
+			<taxable index='no' type='VARCHAR(3)'></taxable><!-- yes/no -->
+			<tax index='no' type="INT"></tax>
+			<unit index='no' type='VARCHAR(20)'></unit><!-- piece/kg/litre/box/strips -->
+			<weight index='no' type='DECIMAL(12,2)'></weight><!-- in kg -->
+			<height index='no' type='DECIMAL(12,2)'></height><!-- in meters -->	
+			<length index='no' type='DECIMAL(12,2)'></length><!-- in meters -->	
+			<width index='no' type='DECIMAL(12,2)'></width><!-- in meters -->
+			<rating index='no' type="DECIMAL(4,2)"></rating>
+			<tags index='no' type="TEXT"></tags>	
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</product_master>
+	<categories>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(90)"></name>
+			<type index='no' type="VARCHAR(10)"></type><!-- service/product -->
+			<category index='no' type="VARCHAR(30)"></category>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</categories>
+	<cross_sells>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(90)" unique='yes'></name>
+			<type index='no' type="VARCHAR(10)"></type><!-- service/product -->
+			<cross_type index='no' type="VARCHAR(10)"></cross_type><!-- service/product -->
+			<cross_name index='no' type="VARCHAR(90)"></cross_name>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</cross_sells>
+	<reviews>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(90)" unique='yes'></name>
+			<type index='no' type="VARCHAR(10)"></type><!-- service/product -->
+			<reviewer index='no' type="VARCHAR(100)"></reviewer>
+			<detail index='no' type="TEXT"></detail>
+			<rating index='no' type='DECIMAL(4,2)'></rating>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</reviews>
 	<pre_requisites>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(90)"></name>
 			<type index='no' type="VARCHAR(10)"></type><!-- service/product -->
-			<requisite_type index='no' type="VARCHAR(10)"></requisite_type><!-- service/product/task -->
+			<requisite_type index='no' type="VARCHAR(10)"></requisite_type><!-- service/product/task/asset -->
 			<requisite_name index='no' type="VARCHAR(90)"></requisite_name>
 			<quantity index="no" type="DECIMAL(10,2)"></quantity>
 			<last_updated index='no' type="BIGINT"></last_updated>

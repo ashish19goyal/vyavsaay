@@ -117,13 +117,29 @@
 <div id="modal14" title="Add new product">
 	<form id='modal14_form'>
 		<fieldset>
-			<label>Type <input type='text'></label><br/>
-			<label>Make <input type="text"></label><br/>
 			<label>Name <input type="text"></label><br/>
+			<label>Make <input type="text"></label><br/>
+			<label>Tags <input type="text"></label><br/>
+			<label>Categories <output></output><input type="text"></label><br/>
 			<label>Picture <output></output>
 							<input type="file"></label><br/>
-			<label>Estimated Price <input type="number"></label><br/>
+			<label>Taxable <input type="text"></label><br/>
+			<label>Tax (%) <input type="number"></label><br/>
+			<label>Estimated Price <input type="text"></label><br/>
+			<label>Unit <input type="text"></label><br/>
+			<label>Weight (in g) <input type="number"></label><br/>
+			<label>Length (in cm) <input type="number"></label><br/>
+			<label>Width (in cm) <input type="number"></label><br/>
+			<label>Height (in cm) <input type="number"></label><br/>
 			<label>Description <input type="textarea"></label><br/>
+			<label>Manufactured <input type="text"></label><br/>
+			Pre-requisites</br>
+			<label>Products <output></output><input type="text"></label><br/>
+			<label>Services <output></output><input type="text"></label><br/>
+			<label>Tasks <output></output><input type="text"></label><br/>
+			Cross-sells</br>
+			<label>Products <output></output><input type="text"></label><br/>
+			<label>Services <output></output><input type="text"></label><br/>
 			<input type="button" value='Save'>
 		</fieldset>
 	</form>
@@ -165,6 +181,90 @@
 			<label>Variable Compensation Rate (Rs./hour)<input type="number"></label><br/>
 			<label>Monthly work hours <input type="number"></label><br/>
 			<label>PTOs Allowed <input type="text"></label><br/>
+			<input type="button" value='Save'>
+		</fieldset>
+	</form>
+</div>
+
+<div id="modal18" title="Add task type">
+</div>
+
+<div id="modal19" title="Copy product">
+	<form id='modal19_form'>
+		<fieldset>
+			<label>Name <input type="text"></label><br/>
+			<label>Make <input type="text"></label><br/>
+			<label>Tags <input type="text"></label><br/>
+			<label>Categories <output></output><input type="text"></label><br/>
+			<label>Picture <output></output>
+							<input type="file"></label><br/>
+			<label>Taxable <input type="text"></label><br/>
+			<label>Tax (%) <input type="number"></label><br/>
+			<label>Estimated Price <input type="text"></label><br/>
+			<label>Unit <input type="text"></label><br/>
+			<label>Weight (in g) <input type="number"></label><br/>
+			<label>Length (in cm) <input type="number"></label><br/>
+			<label>Width (in cm) <input type="number"></label><br/>
+			<label>Height (in cm) <input type="number"></label><br/>
+			<label>Description <input type="textarea"></label><br/>
+			<label>Manufactured <input type="text"></label><br/>
+			Pre-requisites</br>
+			<label>Products <output></output><input type="text"></label><br/>
+			<label>Services <output></output><input type="text"></label><br/>
+			<label>Tasks <output></output><input type="text"></label><br/>
+			Cross-sells</br>
+			<label>Products <output></output><input type="text"></label><br/>
+			<label>Services <output></output><input type="text"></label><br/>
+			<input type="button" value='Save'>
+		</fieldset>
+	</form>
+</div>
+
+<div id="modal20" title="Add new service">
+	<form id='modal20_form'>
+		<fieldset>
+			<label>Name <input type="text"></label><br/>
+			<label>Description <input type="textarea"></label><br/>
+			<label>Warranty <input type="textarea"></label><br/>
+			<label>Tags <input type="text"></label><br/>
+			<label>Categories <output></output><input type="text"></label><br/>
+			<label>Taxable <input type="text"></label><br/>
+			<label>Tax (%) <input type="number"></label><br/>
+			<label>Price <input type="text"></label><br/>
+			<label>Duration (in min) <input type="number"></label><br/>
+			<b>Pre-requisites</b></br>
+			<label>Products <output></output><input type="text"></label><br/>
+			<label>Services <output></output><input type="text"></label><br/>
+			<label>Tasks <output></output><input type="text"></label><br/>
+			<label>Assets <output></output><input type="text"></label><br/>
+			<b>Cross-sells</b></br>
+			<label>Products <output></output><input type="text"></label><br/>
+			<label>Services <output></output><input type="text"></label><br/>
+			<input type="button" value='Save'>
+		</fieldset>
+	</form>
+</div>
+
+<div id="modal21" title="Copy service">
+	<form id='modal21_form'>
+		<fieldset>
+			<label>Name <input type="text"></label><br/>
+			<label>Description <input type="textarea"></label><br/>
+			<label>Warranty <input type="textarea"></label><br/>
+			<label>Tags <input type="text"></label><br/>
+			<label>Categories <output></output><input type="text"></label><br/>
+			<label>Taxable <input type="text"></label><br/>
+			<label>Tax (%) <input type="number"></label><br/>
+			<label>Price <input type="text"></label><br/>
+			<label>Duration (in min) <input type="number"></label><br/>
+			<b>Pre-requisites</b></br>
+			<label>Products <output></output><input type="text"></label><br/>
+			<label>Services <output></output><input type="text"></label><br/>
+			<label>Tasks <output></output><input type="text"></label><br/>
+			<label>Assets <output></output><input type="text"></label><br/>
+			<b>Cross-sells</b></br>
+			<label>Products <output></output><input type="text"></label><br/>
+			<label>Services <output></output><input type="text"></label><br/>
 			<input type="button" value='Save'>
 		</fieldset>
 	</form>

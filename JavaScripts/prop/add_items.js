@@ -1134,78 +1134,6 @@ function form38_add_item()
 
 
 /**
- * @form Manage Products
- * @formNo 39
- */
-function form39_add_item()
-{
-	if(is_create_access('form39'))
-	{
-		var rowsHTML="";
-		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form39_"+id+"'></form>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form39_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form39_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form39_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<output form='form39_"+id+"'></output>";
-				rowsHTML+="<input type='file' form='form39_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form39_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form39_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='hidden' form='form39_"+id+"' value='"+id+"'>";
-				rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form39_"+id+"' value='Save' onclick='form39_save_item($(this));'>";
-				rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form39_"+id+"' value='Delete' onclick='form39_delete_item($(this));'>";	
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form39_body').prepend(rowsHTML);
-		
-		var fields=document.getElementById("form39_"+id);
-		var type_filter=fields.elements[0];
-		var make_filter=fields.elements[1];
-		var pictureinfo=fields.elements[3];
-		var picture=fields.elements[4];
-	
-		$(type_filter).focus();
-	
-		var type_data="<product_master>" +
-				"<product_type></product_type>" +
-				"</product_master>";
-		var make_data="<product_master>" +
-				"<make></make>" +
-				"</product_master>";
-		
-		set_my_value_list(type_data,type_filter);
-		set_my_value_list(make_data,make_filter);
-		
-		picture.addEventListener('change',function(evt)
-		{
-			select_picture(evt,pictureinfo,function(dataURL)
-			{
-				pictureinfo.innerHTML="<div class='figure' name='"+get_new_key()+"'><img id='img_form39_"+id+"' src='"+dataURL+"'/></div>";			
-			});
-		},false);
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}	
-}
-
-/**
  * @form Manage Vendors
  * @formNo 40
  */
@@ -1305,47 +1233,7 @@ function form56_add_item()
 
 
 /**
- * @form Manage services
- * @formNo 57
- */
-function form57_add_item()
-{
-	if(is_create_access('form57'))
-	{
-		var rowsHTML="";
-		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form57_"+id+"'></form>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form57_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form57_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form57_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='hidden' form='form57_"+id+"' value='"+id+"'>";
-				rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form57_"+id+"' value='Save' onclick='form57_save_item($(this));'>";
-				rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form57_"+id+"' value='Delete' onclick='form57_delete_item($(this));'>";	
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form57_body').prepend(rowsHTML);
-		var fields=document.getElementById("form57_"+id);
-		var service_filter=fields.elements[0];
-		
-		$(service_filter).focus();
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-/**
- * @form Manage service pre-requisites
+ * @form Service pre-requisites
  * @formNo 58
  */
 function form58_add_item()
@@ -1366,7 +1254,7 @@ function form58_add_item()
 				rowsHTML+="<input type='text' form='form58_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form58_"+id+"' value=''>";
+				rowsHTML+="<input type='number' form='form58_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='hidden' form='form58_"+id+"' value='"+id+"'>";
@@ -1404,6 +1292,12 @@ function form58_add_item()
 				var requisite_data="<task_type>" +
 					"<name></name>" +
 					"</task_type>";
+			}
+			else if(type_filter.value=='asset')
+			{
+				var requisite_data="<assets>" +
+					"<name></name>" +
+					"</assets>";
 			}
 			set_my_value_list(requisite_data,requisite_filter);
 		});
@@ -1479,6 +1373,340 @@ function form59_add_item()
 					"</task_type>";
 			}
 			set_my_value_list(requisite_data,requisite_filter);
+		});
+		
+		$(product_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Product Categories
+ * @formNo 60
+ */
+function form60_add_item()
+{
+	if(is_create_access('form60'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form60_"+id+"'></form>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form60_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form60_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='hidden' form='form60_"+id+"' value='"+id+"'>";
+				rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form60_"+id+"' value='Save' onclick='form60_save_item($(this));'>";
+				rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form60_"+id+"' value='Delete' onclick='form60_delete_item($(this));'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form60_body').prepend(rowsHTML);
+		var fields=document.getElementById("form60_"+id);
+		var product_filter=fields.elements[0];
+		var category_filter=fields.elements[1];
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,product_filter);
+		
+		var category_data="<categories>" +
+				"<category></category>" +
+				"</categories>";
+		set_my_filter(category_data,category_filter);
+
+		$(product_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service Categories
+ * @formNo 61
+ */
+function form61_add_item()
+{
+	if(is_create_access('form61'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form61_"+id+"'></form>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form61_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form61_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='hidden' form='form61_"+id+"' value='"+id+"'>";
+				rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form61_"+id+"' value='Save' onclick='form61_save_item($(this));'>";
+				rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form61_"+id+"' value='Delete' onclick='form61_delete_item($(this));'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form61_body').prepend(rowsHTML);
+		var fields=document.getElementById("form61_"+id);
+		var service_filter=fields.elements[0];
+		var category_filter=fields.elements[1];
+		
+		var service_data="<services>" +
+				"<name></name>" +
+				"</services>";
+		set_my_value_list(service_data,service_filter);
+		
+		var category_data="<categories>" +
+				"<category></category>" +
+				"</categories>";
+		set_my_filter(category_data,category_filter);
+
+		$(service_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Product reviews
+ * @formNo 62
+ */
+function form62_add_item()
+{
+	if(is_create_access('form62'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form62_"+id+"'></form>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form62_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form62_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form62_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='number' form='form62_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='hidden' form='form62_"+id+"' value='"+id+"'>";
+				rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form62_"+id+"' value='Save' onclick='form62_save_item($(this));'>";
+				rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form62_"+id+"' value='Delete' onclick='form62_delete_item($(this));'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form62_body').prepend(rowsHTML);
+		var fields=document.getElementById("form62_"+id);
+		var product_filter=fields.elements[0];
+		var reviewer_filter=fields.elements[1];
+		var rating_filter=fields.elements[1];
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,product_filter);
+		
+		var reviewer_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";
+		set_my_filter(reviewer_data,reviewer_filter);
+		
+		$(product_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service reviews
+ * @formNo 63
+ */
+function form63_add_item()
+{
+	if(is_create_access('form63'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form63_"+id+"'></form>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form63_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form63_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form63_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='number' form='form63_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='hidden' form='form63_"+id+"' value='"+id+"'>";
+				rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form63_"+id+"' value='Save' onclick='form63_save_item($(this));'>";
+				rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form63_"+id+"' value='Delete' onclick='form63_delete_item($(this));'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form63_body').prepend(rowsHTML);
+		var fields=document.getElementById("form63_"+id);
+		var service_filter=fields.elements[0];
+		var reviewer_filter=fields.elements[1];
+		var rating_filter=fields.elements[1];
+		
+		var service_data="<services>" +
+				"<name></name>" +
+				"</services>";
+		set_my_value_list(service_data,service_filter);
+		
+		var reviewer_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";
+		set_my_filter(reviewer_data,reviewer_filter);
+		
+		$(service_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Service Cross sells
+ * @formNo 64
+ */
+function form64_add_item()
+{
+	if(is_create_access('form64'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form64_"+id+"'></form>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form64_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form64_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form64_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='hidden' form='form64_"+id+"' value='"+id+"'>";
+				rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form64_"+id+"' value='Save' onclick='form64_save_item($(this));'>";
+				rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form64_"+id+"' value='Delete' onclick='form64_delete_item($(this));'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form64_body').prepend(rowsHTML);
+		var fields=document.getElementById("form64_"+id);
+		var service_filter=fields.elements[0];
+		var type_filter=fields.elements[1];
+		var cross_filter=fields.elements[2];
+		
+		var service_data="<services>" +
+				"<name></name>" +
+				"</services>";
+		set_my_value_list(service_data,service_filter);
+		set_static_value_list('cross_sells','type',type_filter);
+		
+		$(type_filter).on('blur',function(event)
+		{
+			var cross_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		
+			if(type_filter.value=='service')
+			{
+				var cross_data="<services>" +
+					"<name></name>" +
+					"</services>";
+			}
+			set_my_value_list(cross_data,cross_filter);
+		});
+		
+		$(service_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Cross sells
+ * @formNo 66
+ */
+function form66_add_item()
+{
+	if(is_create_access('form66'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form66_"+id+"'></form>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form66_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form66_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form66_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='hidden' form='form66_"+id+"' value='"+id+"'>";
+				rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' form='form66_"+id+"' value='Save' onclick='form66_save_item($(this));'>";
+				rowsHTML+="<img class='filter_icon' src='./images/delete.jpeg' form='form66_"+id+"' value='Delete' onclick='form66_delete_item($(this));'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form66_body').prepend(rowsHTML);
+		var fields=document.getElementById("form66_"+id);
+		var product_filter=fields.elements[0];
+		var type_filter=fields.elements[1];
+		var cross_filter=fields.elements[2];
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,product_filter);
+		set_static_value_list('cross_sells','type',type_filter);
+		
+		$(type_filter).on('blur',function(event)
+		{
+			var cross_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		
+			if(type_filter.value=='service')
+			{
+				var cross_data="<services>" +
+					"<name></name>" +
+					"</services>";
+			}
+			set_my_value_list(cross_data,cross_filter);
 		});
 		
 		$(product_filter).focus();

@@ -1183,21 +1183,23 @@ function form39_delete_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var product_type=form.elements[0].value;
+		var name=form.elements[0].value;
 		var make=form.elements[1].value;
-		var name=form.elements[2].value;
-		var est_price=form.elements[5].value;
-		var description=form.elements[6].value;
-		var data_id=form.elements[7].value;
+		var description=form.elements[2].value;
+		var manufactured=form.elements[5].value;
+		var unit=form.elements[6].value;
+		var tags=form.elements[7].value;
+		var data_id=form.elements[8].value;
 		var last_updated=get_my_time();
 		var table='product_master';
 		var data_xml="<"+table+">" +
 					"<id>"+data_id+"</id>" +
-					"<product_type>"+product_type+"</product_type>" +
 					"<make>"+make+"</make>" +
 					"<name>"+name+"</name>" +
-					"<est_price>"+est_price+"</est_price>" +
 					"<description>"+description+"</description>" +
+					"<manufactured>"+manufactured+"</manufactured>" +
+					"<unit>"+unit+"</unit>" +
+					"<tags>"+tags+"</tags>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
@@ -1215,18 +1217,43 @@ function form39_delete_item(button)
 				"<doc_type>product</doc_type>" +
 				"<target_id>"+data_id+"</target_id>" +
 				"</documents>";
-	
+		var other_delete3="<pre_requisites>" +
+				"<name>"+name+"</name>" +
+				"<type>product</type>" +
+				"</pre_requisites>";
+		var other_delete4="<categories>" +
+				"<name>"+name+"</name>" +
+				"<type>product</type>" +
+				"</categories>";
+		var other_delete5="<cross_sells>" +
+				"<name>"+name+"</name>" +
+				"<type>product</type>" +
+				"</cross_sells>";
+		var other_delete6="<reviews>" +
+				"<name>"+name+"</name>" +
+				"<type>product</type>" +
+				"</reviews>";
+
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
 			server_delete_simple(other_delete);
 			server_delete_simple(other_delete2);
+			server_delete_simple(other_delete3);
+			server_delete_simple(other_delete4);
+			server_delete_simple(other_delete5);
+			server_delete_simple(other_delete6);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
 			local_delete_simple(other_delete);
 			local_delete_simple(other_delete2);
+			local_delete_simple(other_delete3);
+			local_delete_simple(other_delete4);
+			local_delete_simple(other_delete5);
+			local_delete_simple(other_delete6);
+
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -1672,15 +1699,21 @@ function form57_delete_item(button)
 		
 		var service=form.elements[0].value;
 		var description=form.elements[1].value;
-		var estimated_cost=form.elements[2].value;
-		var data_id=form.elements[3].value;
+		var warranty=form.elements[2].value;
+		var tags=form.elements[3].value;
+		var price=form.elements[4].value;
+		var duration=form.elements[5].value;
+		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var table='services';
 		var data_xml="<"+table+">" +
 					"<id>"+data_id+"</id>" +
-					"<name>"+service+"</name>" +
+					"<name unique='yes'>"+service+"</name>" +
 					"<description>"+description+"</description>" +
-					"<estimated_cost>"+estimated_cost+"</estimated_cost>" +
+					"<price>"+price+"</price>" +
+					"<warranty>"+warranty+"</warranty>" +
+					"<tags>"+tags+"</tags>" +
+					"<duration>"+duration+"</duration>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
@@ -1691,19 +1724,37 @@ function form57_delete_item(button)
 					"<notes>Deleted service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var other_delete="<pre_requisites>" +
-					"<name>"+service+"</name>" +
-					"<type>service</type>" +
-					"</pre_requisites>";
+		var other_delete3="<pre_requisites>" +
+				"<name>"+service+"</name>" +
+				"<type>service</type>" +
+				"</pre_requisites>";
+		var other_delete4="<categories>" +
+				"<name>"+service+"</name>" +
+				"<type>service</type>" +
+				"</categories>";
+		var other_delete5="<cross_sells>" +
+				"<name>"+service+"</name>" +
+				"<type>service</type>" +
+				"</cross_sells>";
+		var other_delete6="<reviews>" +
+				"<name>"+service+"</name>" +
+				"<type>service</type>" +
+				"</reviews>";
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
-			local_delete_simple(other_delete);
+			local_delete_simple(other_delete3);
+			local_delete_simple(other_delete4);
+			local_delete_simple(other_delete5);
+			local_delete_simple(other_delete6);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
-			local_delete_simple(other_delete);
+			local_delete_simple(other_delete3);
+			local_delete_simple(other_delete4);
+			local_delete_simple(other_delete5);
+			local_delete_simple(other_delete6);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -1797,6 +1848,303 @@ function form59_delete_item(button)
 					"<link_to>form59</link_to>" +
 					"<title>Deleted</title>" +
 					"<notes>Deleted pre-requisite for product "+product+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * formNo 60
+ * form Product Categories
+ * @param button
+ */
+function form60_delete_item(button)
+{
+	if(is_delete_access('form60'))
+	{
+		var form=document.getElementById(form_id);
+		
+		var product=form.elements[0].value;
+		var category=form.elements[1].value;
+		var data_id=form.elements[2].value;
+		var last_updated=get_my_time();
+		var table='categories';
+		var data_xml="<"+table+">" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+product+"</name>" +
+					"<type>product</type>" +
+					"<category>"+category+"</category>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</"+table+">";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>"+table+"</tablename>" +
+					"<link_to>form60</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Deleted category "+catgory+" for product "+product+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 61
+ * form Service Categories
+ * @param button
+ */
+function form61_delete_item(button)
+{
+	if(is_delete_access('form61'))
+	{
+		var form=document.getElementById(form_id);
+		
+		var service=form.elements[0].value;
+		var category=form.elements[1].value;
+		var data_id=form.elements[2].value;
+		var last_updated=get_my_time();
+		var table='categories';
+		var data_xml="<"+table+">" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+service+"</name>" +
+					"<type>service</type>" +
+					"<category>"+category+"</category>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</"+table+">";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>"+table+"</tablename>" +
+					"<link_to>form61</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Deleted category "+catgory+" for service "+service+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * formNo 62
+ * form Product reviews
+ * @param button
+ */
+function form62_delete_item(button)
+{
+	if(is_delete_access('form62'))
+	{
+		var form=document.getElementById(form_id);
+		
+		var product=form.elements[0].value;
+		var reviewer=form.elements[1].value;
+		var detail=form.elements[2].value;
+		var rating=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var table='reviews';
+		var data_xml="<"+table+">" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+product+"</name>" +
+					"<type>product</type>" +
+					"<reviewer>"+reviewer+"</reviewer>" +
+					"<detail>"+detail+"</detail>" +
+					"<rating>"+rating+"</rating>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</"+table+">";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>"+table+"</tablename>" +
+					"<link_to>form62</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Deleted review for product "+product+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 63
+ * form service reviews
+ * @param button
+ */
+function form63_delete_item(button)
+{
+	if(is_delete_access('form62'))
+	{
+		var form=document.getElementById(form_id);
+		
+		var service=form.elements[0].value;
+		var reviewer=form.elements[1].value;
+		var detail=form.elements[2].value;
+		var rating=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var table='reviews';
+		var data_xml="<"+table+">" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+service+"</name>" +
+					"<type>service</type>" +
+					"<reviewer>"+reviewer+"</reviewer>" +
+					"<detail>"+detail+"</detail>" +
+					"<rating>"+rating+"</rating>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</"+table+">";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>"+table+"</tablename>" +
+					"<link_to>form63</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Deleted review for service "+service+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 64
+ * form Service Cross sells
+ * @param button
+ */
+function form64_delete_item(button)
+{
+	if(is_delete_access('form64'))
+	{
+		var form=document.getElementById(form_id);
+		
+		var service=form.elements[0].value;
+		var cross_type=form.elements[1].value;
+		var cross_name=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var table='cross_sells';
+		var data_xml="<"+table+">" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+service+"</name>" +
+					"<type>service</type>" +
+					"<cross_type>"+cross_type+"</cross_type>" +
+					"<cross_name>"+cross_name+"</cross_name>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</"+table+">";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>"+table+"</tablename>" +
+					"<link_to>form64</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Deleted cross selling of "+cross_name+" for service "+service+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * formNo 66
+ * form Cross sells
+ * @param button
+ */
+function form66_delete_item(button)
+{
+	if(is_delete_access('form66'))
+	{
+		var form=document.getElementById(form_id);
+		
+		var product=form.elements[0].value;
+		var cross_type=form.elements[1].value;
+		var cross_name=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var table='cross_sells';
+		var data_xml="<"+table+">" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+product+"</name>" +
+					"<type>product</type>" +
+					"<cross_type>"+cross_type+"</cross_type>" +
+					"<cross_name>"+cross_name+"</cross_name>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</"+table+">";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>"+table+"</tablename>" +
+					"<link_to>form66</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Deleted cross selling of "+cross_name+" for product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())

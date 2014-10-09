@@ -210,4 +210,24 @@
 			<last_updated>1</last_updated>
 		</row>
 	</pamphlet_items>
+	<categories>
+		<row>
+			<name>Prod1</name>
+			<type>product</type>
+			<category>Cat1</category>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>Prod2</name>
+			<type>product</type>
+			<category>Cat2</category>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>Service1</name>
+			<type>service</type>
+			<category>Cat3</category>
+			<last_updated>1</last_updated>
+		</row>
+	</categories>
 </re_xml>

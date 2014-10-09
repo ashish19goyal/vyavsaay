@@ -44,6 +44,7 @@ function modal_forms_ini()
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
 	   		modal: true,
+	   		width: 300,
 	   		show: "bounce",
 	   		closeOnEscape: true,
 	       	buttons:{ OK:function(){$(this).dialog("close");}}
@@ -54,10 +55,11 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=7;i<18;i++)
+	for(var i=7;i<20;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
+	   		width: 300,
 	   		modal: true,
 	   		show: "bounce",
 	   		closeOnEscape: true,

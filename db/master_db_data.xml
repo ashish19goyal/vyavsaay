@@ -128,6 +128,70 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<tablename>cross_sells</tablename>
+			<listname>type</listname>
+			<name>service</name>
+			<value>Service</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>cross_sells</tablename>
+			<listname>type</listname>
+			<name>product</name>
+			<value>Product</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>cross_sells</tablename>
+			<listname>cross_type</listname>
+			<name>service</name>
+			<value>Service</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>cross_sells</tablename>
+			<listname>cross_type</listname>
+			<name>product</name>
+			<value>Product</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>		
+		<row>
+			<tablename>reviews</tablename>
+			<listname>type</listname>
+			<name>service</name>
+			<value>Service</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>reviews</tablename>
+			<listname>type</listname>
+			<name>product</name>
+			<value>Product</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>categories</tablename>
+			<listname>type</listname>
+			<name>service</name>
+			<value>Service</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>categories</tablename>
+			<listname>type</listname>
+			<name>product</name>
+			<value>Product</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>pre_requisites</tablename>
 			<listname>requisite_type</listname>
 			<name>service</name>
@@ -153,6 +217,14 @@
 		</row>
 		<row>
 			<tablename>pre_requisites</tablename>
+			<listname>requisite_type</listname>
+			<name>asset</name>
+			<value>Asset</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>pre_requisites</tablename>
 			<listname>type</listname>
 			<name>service</name>
 			<value>Service</value>
@@ -168,8 +240,24 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<tablename>services</tablename>
+			<listname>taxable</listname>
+			<name>yes</name>
+			<value>Yes</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>services</tablename>
+			<listname>taxable</listname>
+			<name>no</name>
+			<value>No</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>product_master</tablename>
-			<listname>manufacture</listname>
+			<listname>manufactured</listname>
 			<name>yes</name>
 			<value>Yes</value>
 			<status>active</status>
@@ -177,9 +265,65 @@
 		</row>
 		<row>
 			<tablename>product_master</tablename>
-			<listname>manufacture</listname>
+			<listname>manufactured</listname>
 			<name>no</name>
 			<value>No</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>product_master</tablename>
+			<listname>taxable</listname>
+			<name>yes</name>
+			<value>Yes</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>product_master</tablename>
+			<listname>taxable</listname>
+			<name>no</name>
+			<value>No</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>product_master</tablename>
+			<listname>unit</listname>
+			<name>pieces</name>
+			<value>Pieces</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>product_master</tablename>
+			<listname>unit</listname>
+			<name>kgs</name>
+			<value>Kgs</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>product_master</tablename>
+			<listname>unit</listname>
+			<name>litres</name>
+			<value>Litres</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>product_master</tablename>
+			<listname>unit</listname>
+			<name>boxes</name>
+			<value>Boxes</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>product_master</tablename>
+			<listname>unit</listname>
+			<name>strips</name>
+			<value>Strips</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

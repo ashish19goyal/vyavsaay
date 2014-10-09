@@ -200,6 +200,70 @@ function set_my_value_list(filter_data,filter_element)
 	},filter_data);
 }
 
+function set_my_multiple_filter(filter_data,filter_element,output_element)
+{	
+	get_single_column_data(function(data)
+	{
+		data=jQuery.unique(data);
+
+		$(filter_element).autocomplete({
+			source:data
+		});
+	},filter_data);
+	$(filter_element).on('select',function(event)
+	{
+		var value=output_element.value;
+		var found=value.search(filter_element.value);
+		if(found===-1)
+		{
+			value+=filter_element.value+",";
+			output_element.value=value;
+		}	
+	});
+	$(filter_element).on('blur',function(event)
+	{
+		var value=output_element.value;
+		var found=value.search(filter_element.value);
+		if(found===-1)
+		{
+			value+=filter_element.value+",";
+			output_element.value=value;
+		}	
+	});
+}
+
+function set_my_multiple_list(filter_data,filter_element,output_element)
+{	
+	get_single_column_data(function(data)
+	{
+		data=jQuery.unique(data);
+		$(filter_element).quickselect({
+			data:data,
+			autoSelectFirst:true,
+			matchContains:true,
+			match:'quicksilver'
+		});
+		$(filter_element).bind("change",function(event)
+		{
+			var found = $.inArray($(this).val(), data) > -1;
+			if(!found)
+			{
+	            $(this).val('');
+	        }
+		});
+	},filter_data);
+	$(filter_element).on('select',function(event)
+	{
+		var value=output_element.value;
+		var found=value.search(filter_element.value);
+		if(found===-1)
+		{
+			value+=filter_element.value+",";
+			output_element.value=value;
+		}	
+	});
+}
+
 function set_my_value(filter_data,filter_element)
 {
 	get_single_column_data(function(data)

@@ -499,13 +499,10 @@ function form38_header_ini()
 function form39_header_ini()
 {
 	var filter_fields=document.getElementById('form39_header');
-	var type_filter=filter_fields.elements[0];
-	var make_filter=filter_fields.elements[1];
-	var name_filter=filter_fields.elements[2];
+	var name_filter=filter_fields.elements[0].value;
+	var make_filter=filter_fields.elements[1].value;
+	var manufactured_filter=filter_fields.elements[2].value;
 	
-	var type_data="<product_master>" +
-			"<product_type></product_type>" +
-			"</product_master>";
 	var make_data="<product_master>" +
 			"<make></make>" +
 			"</product_master>";
@@ -513,10 +510,9 @@ function form39_header_ini()
 			"<name></name>" +
 			"</product_master>";
 
-	set_my_filter(type_data,type_filter);
 	set_my_filter(make_data,make_filter);
 	set_my_filter(products_data,name_filter);
-
+	set_static_filter('product_master','manufactured',manufactured_filter);
 };
 
 
@@ -1016,7 +1012,7 @@ function form57_header_ini()
 };
 
 /**
- * @form Manage Service Pre-requisites
+ * @form Service Pre-requisites
  * @formNo 58
  */
 function form58_header_ini()
@@ -1031,6 +1027,7 @@ function form58_header_ini()
 			"</services>";
 	var requisite_data="<pre_requisites>" +
 			"<requisite_name></requisite_name>" +
+			"<type>service</type>" +
 			"</pre_requisites>";
 	
 	set_my_filter(service_data,service_filter);
@@ -1040,7 +1037,7 @@ function form58_header_ini()
 };
 
 /**
- * @form Manage product pre-requisites
+ * @form product pre-requisites
  * @formNo 59
  */
 function form59_header_ini()
@@ -1055,9 +1052,199 @@ function form59_header_ini()
 			"</product_master>";
 	var requisite_data="<pre_requisites>" +
 			"<requisite_name></requisite_name>" +
+			"<type>product</type>" +
 			"</pre_requisites>";
 	
 	set_my_filter(product_data,product_filter);
 	set_static_filter('pre_requisites','requisite_type',type_filter);
 	set_my_filter(requisite_data,requisite_filter);
 };
+
+/**
+ * @form Product Categories
+ * @formNo 60
+ */
+function form60_header_ini()
+{
+	var filter_fields=document.getElementById('form60_header');
+	var product_filter=filter_fields.elements[0];
+	var category_filter=filter_fields.elements[1];
+	
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var category_data="<categories>" +
+			"<category></category>" +
+			"</categories>";
+	
+	set_my_filter(product_data,product_filter);
+	set_my_filter(category_data,category_filter);
+};
+
+/**
+ * @form Service Categories
+ * @formNo 61
+ */
+function form61_header_ini()
+{
+	var filter_fields=document.getElementById('form61_header');
+	var service_filter=filter_fields.elements[0];
+	var category_filter=filter_fields.elements[1];
+	
+	var service_data="<services>" +
+			"<name></name>" +
+			"</services>";
+	var category_data="<categories>" +
+			"<category></category>" +
+			"</categories>";
+	
+	set_my_filter(service_data,service_filter);
+	set_my_filter(category_data,category_filter);
+};
+
+
+/**
+ * @form Product reviews
+ * @formNo 62
+ */
+function form62_header_ini()
+{
+	var filter_fields=document.getElementById('form62_header');
+	var product_filter=filter_fields.elements[0];
+	var reviewer_filter=filter_fields.elements[1];
+	var rating_filter=filter_fields.elements[2];
+	
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var reviewer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	set_my_filter(product_data,product_filter);
+	set_static_filter('reviews','rating',rating_filter);
+	set_my_filter(reviewer_data,reviewer_filter);
+};
+
+/**
+ * @form service reviews
+ * @formNo 63
+ */
+function form63_header_ini()
+{
+	var filter_fields=document.getElementById('form63_header');
+	var service_filter=filter_fields.elements[0];
+	var reviewer_filter=filter_fields.elements[1];
+	var rating_filter=filter_fields.elements[2];
+	
+	var service_data="<services>" +
+			"<name></name>" +
+			"</services>";
+	var reviewer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	set_my_filter(service_data,service_filter);
+	set_static_filter('reviews','rating',rating_filter);
+	set_my_filter(reviewer_data,reviewer_filter);
+};
+
+/**
+ * @form Service Cross sells
+ * @formNo 64
+ */
+function form64_header_ini()
+{
+	var filter_fields=document.getElementById('form64_header');
+	var service_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var cross_filter=filter_fields.elements[2];
+	
+	var service_data="<services>" +
+			"<name></name>" +
+			"</services>";
+	var cross_data="<cross_sells>" +
+			"<cross_name></cross_name>" +
+			"</cross_sells>";
+	
+	set_my_filter(service_data,service_filter);
+	set_static_filter('cross_sells','type',type_filter);
+	set_my_filter(cross_data,cross_filter);
+};
+
+/**
+ * @form Service taxes
+ * @formNo 65
+ */
+function form65_header_ini()
+{
+	var filter_fields=document.getElementById('form65_header');
+	var service_filter=filter_fields.elements[0];
+	var taxable_filter=filter_fields.elements[1];
+	
+	var service_data="<services>" +
+			"<name></name>" +
+			"</services>";
+	
+	set_my_filter(service_data,service_filter);
+	set_static_filter('services','taxable',taxable_filter);
+};
+
+
+/**
+ * @form Product Cross sells
+ * @formNo 66
+ */
+function form66_header_ini()
+{
+	var filter_fields=document.getElementById('form66_header');
+	var product_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var cross_filter=filter_fields.elements[2];
+	
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var cross_data="<cross_sells>" +
+			"<cross_name></cross_name>" +
+			"</cross_sells>";
+	
+	set_my_filter(product_data,product_filter);
+	set_static_filter('cross_sells','type',type_filter);
+	set_my_filter(cross_data,cross_filter);
+};
+
+/**
+ * @form Product dimensions
+ * @formNo 67
+ */
+function form67_header_ini()
+{
+	var filter_fields=document.getElementById('form67_header');
+	var product_filter=filter_fields.elements[0];
+	
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(product_data,product_filter);
+};
+
+/**
+ * @form Product taxes
+ * @formNo 68
+ */
+function form68_header_ini()
+{
+	var filter_fields=document.getElementById('form68_header');
+	var product_filter=filter_fields.elements[0];
+	var taxable_filter=filter_fields.elements[1];
+	
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(product_data,product_filter);
+	set_static_filter('product_master','taxable',taxable_filter);
+};
+
