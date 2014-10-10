@@ -806,14 +806,13 @@ function modal14_action()
 									"<category>"+category+"</category>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</categories>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -829,14 +828,13 @@ function modal14_action()
 										"<requisite_name>"+req_product+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -852,14 +850,13 @@ function modal14_action()
 										"<requisite_name>"+req_service+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -875,14 +872,13 @@ function modal14_action()
 										"<requisite_name>"+req_task+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -898,14 +894,13 @@ function modal14_action()
 										"<cross_name>"+cross_product+"</cross_type>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</cross_sells>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -921,14 +916,13 @@ function modal14_action()
 										"<cross_name>"+cross_service+"</cross_type>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</cross_sells>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1469,14 +1463,13 @@ function modal19_action(button)
 									"<category>"+category+"</category>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</categories>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1492,14 +1485,13 @@ function modal19_action(button)
 										"<requisite_name>"+req_product+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1515,14 +1507,13 @@ function modal19_action(button)
 										"<requisite_name>"+req_service+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1538,14 +1529,13 @@ function modal19_action(button)
 										"<requisite_name>"+req_task+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1561,14 +1551,13 @@ function modal19_action(button)
 										"<cross_name>"+cross_product+"</cross_type>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</cross_sells>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1584,14 +1573,13 @@ function modal19_action(button)
 										"<cross_name>"+cross_service+"</cross_type>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</cross_sells>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1742,14 +1730,13 @@ function modal20_action()
 									"<category>"+category+"</category>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</categories>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1765,14 +1752,13 @@ function modal20_action()
 										"<requisite_name>"+req_product+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1788,14 +1774,13 @@ function modal20_action()
 										"<requisite_name>"+req_service+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1811,14 +1796,13 @@ function modal20_action()
 										"<requisite_name>"+req_task+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1834,14 +1818,13 @@ function modal20_action()
 										"<requisite_name>"+req_asset+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1857,14 +1840,13 @@ function modal20_action()
 										"<cross_name>"+cross_product+"</cross_type>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</cross_sells>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -1880,14 +1862,13 @@ function modal20_action()
 										"<cross_name>"+cross_service+"</cross_type>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</cross_sells>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -2138,14 +2119,13 @@ function modal21_action()
 									"<category>"+category+"</category>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</categories>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -2161,14 +2141,13 @@ function modal21_action()
 										"<requisite_name>"+req_product+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -2184,14 +2163,13 @@ function modal21_action()
 										"<requisite_name>"+req_service+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -2207,14 +2185,13 @@ function modal21_action()
 										"<requisite_name>"+req_task+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -2230,14 +2207,13 @@ function modal21_action()
 										"<requisite_name>"+req_asset+"</requisite_name>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</pre_requisites>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -2253,14 +2229,13 @@ function modal21_action()
 										"<cross_name>"+cross_product+"</cross_type>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</cross_sells>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});
@@ -2276,14 +2251,13 @@ function modal21_action()
 										"<cross_name>"+cross_service+"</cross_type>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
 										"</cross_sells>";
-							var activity_xml="<activity></activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_write_simple(data_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_write_simple(data_xml);
 							}
 						}
 					});

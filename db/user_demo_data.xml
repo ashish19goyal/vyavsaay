@@ -230,4 +230,129 @@
 			<last_updated>1</last_updated>
 		</row>
 	</categories>
+	<offers>
+		<row>
+			 <offer_name>Discount on tata tea</offer_name>
+             <offer_type>product</offer_type>
+             <product_name>Tata tea</product_name>
+             <batch>abc123</batch>
+             <service></service>
+             <multiplicity>yes</multiplicity>
+             <criteria_type>min amount crossed</criteria_type>
+             <criteria_amount>500</criteria_amount>
+             <criteria_quantity></criteria_quantity>
+             <result_type>discount</result_type>
+             <discount_percent>5</discount_percent>
+             <discount_amount></discount_amount>
+             <quantity_add_percent></quantity_add_percent>
+             <quantity_add_amount></quantity_add_amount>
+             <free_product_name></free_product_name>
+             <free_product_quantity></free_product_quantity>
+             <end_date></end_date>
+             <offer_detail>Get 5% discount on Rs 500 or more worth of Tata tea</offer_detail>
+             <status>active</status>
+             <last_updated>1</last_updated>
+		</row>
+		<row>
+			 <offer_name>Choclate free with Kurkure</offer_name>
+             <offer_type>product</offer_type>
+             <product_name>Kurkure</product_name>
+             <batch>abc456</batch>
+             <service></service>
+             <multiplicity>yes</multiplicity>
+             <criteria_type>min quantity crossed</criteria_type>
+             <criteria_amount></criteria_amount>
+             <criteria_quantity>2</criteria_quantity>
+             <result_type>product free</result_type>
+             <discount_percent></discount_percent>
+             <discount_amount></discount_amount>
+             <quantity_add_percent></quantity_add_percent>
+             <quantity_add_amount></quantity_add_amount>
+             <free_product_name>Cadbury Choclate</free_product_name>
+             <free_product_quantity>1</free_product_quantity>
+             <end_date></end_date>
+             <offer_detail>Get 1 cadbury choclate free on purchase of 2 or more Kurkure</offer_detail>
+             <status>active</status>
+             <last_updated>1</last_updated>
+		</row>
+	</offers>
+	<product_master>
+		<row>
+			<name>Tata tea</name>
+            <description>Tea leaves</description>
+            <make>Tata</make>
+            <est_price>100</est_price>
+            <manufactured>no</manufactured>
+            <taxable>yes</taxable>
+            <tax>10</tax>
+            <unit>kg</unit>
+            <weight>1</weight>
+            <height>10</height>
+            <length>5</length>
+            <width>5</width>
+            <rating></rating>
+            <tags>tea,beverage,tata</tags>
+            <last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>Kurkure</name>
+            <description>tea time snacks</description>
+            <make>Lays</make>
+            <est_price>10</est_price>
+            <manufactured>no</manufactured>
+            <taxable>yes</taxable>
+            <tax>10</tax>
+            <unit>kg</unit>
+            <weight>100</weight>
+            <height>10</height>
+            <length>5</length>
+            <width>5</width>
+            <rating></rating>
+            <tags>snacks,food,lays</tags>
+            <last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>Cadbury Choclate</name>
+            <description>choclate</description>
+            <make>Cadbury</make>
+            <est_price>75</est_price>
+            <manufactured>no</manufactured>
+            <taxable>yes</taxable>
+            <tax>10</tax>
+            <unit>kg</unit>
+            <weight>100</weight>
+            <height>10</height>
+            <length>5</length>
+            <width>5</width>
+            <rating></rating>
+            <tags>choclate,cadbury</tags>
+            <last_updated>1</last_updated>
+		</row>
+	</product_master>
+	<product_instances>
+		<row>
+			<product_name>Tata tea</product_name>
+            <price>100</price>
+             <batch>abc123</batch>
+             <quantity>50</quantity>
+             <expiry>1410739200000</expiry>
+            <last_updated>1</last_updated>
+		</row>
+		<row>
+			<product_name>Kurkure</product_name>
+            <price>9</price>
+             <batch>abc456</batch>
+             <quantity>50</quantity>
+             <expiry>1410739200000</expiry>
+            <last_updated>1</last_updated>
+		</row>
+		<row>
+			<product_name>Cadbury Choclate</product_name>
+            <price>70</price>
+             <batch>abc543</batch>
+             <quantity>50</quantity>
+             <expiry>1410739200000</expiry>
+            <last_updated>1</last_updated>
+		</row>
+	</product_instances>
 </re_xml>

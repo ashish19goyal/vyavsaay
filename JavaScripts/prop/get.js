@@ -154,7 +154,6 @@ function set_my_filter(filter_data,filter_element)
 	get_single_column_data(function(data)
 	{
 		data=jQuery.unique(data);
-
 		$(filter_element).autocomplete({
 			source:data
 		});
@@ -182,6 +181,14 @@ function set_my_value_list(filter_data,filter_element)
 {	
 	get_single_column_data(function(data)
 	{
+		//$(filter_element).data().uiAutocomplete.term = null;
+/*		var newobj=filter_element;
+		var selectParentNode = newobj.parentNode;
+		var newSelectObj = newobj.cloneNode(false); // Make a shallow copy
+		selectParentNode.replaceChild(newSelectObj, newobj);		
+		filter_element=newSelectObj;
+*/		
+//		$(filter_element).find('option').remove();
 		data=jQuery.unique(data);
 		$(filter_element).quickselect({
 			data:data,
@@ -189,6 +196,7 @@ function set_my_value_list(filter_data,filter_element)
 			matchContains:true,
 			match:'quicksilver'
 		});
+		//console.log(filter_element);
 		$(filter_element).bind("change",function(event)
 		{
 			var found = $.inArray($(this).val(), data) > -1;
@@ -269,14 +277,15 @@ function set_my_value(filter_data,filter_element)
 	get_single_column_data(function(data)
 	{
 		filter_element.value=data[0];
-		$(filter_element).bind("change",function(event)
-		{
-			var found = $.inArray($(this).val(), data) > -1;
-			if(!found)
-			{
-	            $(this).val('');
-	        }
-		});
+	},filter_data);
+}
+
+function set_my_max_value(filter_data,filter_element)
+{
+	get_single_column_data(function(data)
+	{
+		$(filter_element).attr('max',data[0]);
+		$(filter_element).attr('min',"0");
 	},filter_data);
 }
 

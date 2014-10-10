@@ -505,34 +505,141 @@ function form12_delete_item(button)
 		var batch=form.elements[1].value;
 		var price=form.elements[2].value;
 		var quantity=form.elements[3].value;
-		var data_id=form.elements[4].value;
+		var total=form.elements[4].value;
+		var amount=form.elements[5].value;
+		var discount=form.elements[6].value;
+		var tax=form.elements[7].value;
+		var offer=form.elements[8].value;
+		var data_id=form.elements[9].value;
 		var last_updated=get_my_time();
 		var table='bill_items';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
+		
+		var quantity_data="<product_instances>" +
+					"<id></id>" +
 					"<product_name>"+name+"</product_name>" +
 					"<batch>"+batch+"</batch>" +
-					"<price>"+price+"</price>" +
-					"<quantity>"+quantity+"</quantity>" +
+					"<quantity></quantity>" +
+					"</product_instances>";
+		if(form.elements[11].value=='saved')
+		{
+			fetch_requested_data('',quantity_data,function(quantities)
+			{
+				for(var i in quantities)
+				{
+					var q=parseFloat(quantities[i].quantity)+parseFloat(quantity);
+					
+					var data_xml="<"+table+">" +
+								"<id>"+data_id+"</id>" +
+								"<product_name>"+name+"</product_name>" +
+								"<batch>"+batch+"</batch>" +
+								"<unit_price>"+price+"</unit_price>" +
+								"<quantity>"+quantity+"</quantity>" +
+								"<amount>"+amount+"</amount>" +
+								"<total>"+total+"</total>" +
+								"<discount>"+discount+"</discount>" +
+								"<offer>"+offer+"</offer>" +
+								"<type>bought</type>" +
+								"<tax>"+tax+"</tax>" +
+								"<bill_id>"+bill_id+"</bill_id>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</"+table+">";	
+					var activity_xml="<activity>" +
+								"<data_id>"+data_id+"</data_id>" +
+								"<tablename>"+table+"</tablename>" +
+								"<link_to>form12</link_to>" +
+								"<title>Deleted</title>" +
+								"<notes>Deleted product "+name+" from bill no. "+bill_id+"</notes>" +
+								"<updated_by>"+get_name()+"</updated_by>" +
+								"</activity>";
+					var quantity_xml="<product_instances>" +
+								"<id>"+quantities[i].id+"</id>" +
+								"<quantity>"+q+"</quantity>" +
+								"</product_instances>";
+					if(is_online())
+					{
+						server_delete_row(data_xml,activity_xml);
+						server_write_simple(quantity_xml);
+					}
+					else
+					{
+						local_delete_row(data_xml,activity_xml);
+						local_write_simple(quantity_xml);
+
+					}
+					break;
+				});
+			});
+			
+			var free_data="<bill_items>" +
+					"<id></id>" +
+					"<free_with>"+name+"</free_with>" +
 					"<bill_id>"+bill_id+"</bill_id>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form12</link_to>" +
-					"<title>Deleted</title>" +
-					"<notes>Deleted product "+name+" from bill no. "+bill_id+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_delete_row(data_xml,activity_xml);
+					"</bill_items>";
+			fetch_requested_data('',free_data,function(free_products)
+			{
+				for(var j in free_products)
+				{
+					var free_quantity_data="<product_instances>" +
+							"<id></id>" +
+							"<product_name>"+free_products[j].product_name+"</product_name>" +
+							"<batch>"+free_products[j].batch+"</batch>" +
+							"<quantity></quantity>" +
+							"</product_instances>";
+		
+					fetch_requested_data('',free_quantity_data,function(free_quantities)
+					{
+						for(var k in free_quantities)
+						{
+							var q=parseFloat(free_quantities[k].quantity)+parseFloat(free_products[j].quantity);
+							
+							var free_data_xml="<"+table+">" +
+										"<id>"+data_id+"</id>" +
+										"<product_name>"+free_products[j].product_name+"</product_name>" +
+										"<batch>"+free_products[j].batch+"</batch>" +
+										"<unit_price>0</unit_price>" +
+										"<quantity>free_products[j].quantity</quantity>" +
+										"<amount>0</amount>" +
+										"<total>0</total>" +
+										"<discount>0</discount>" +
+										"<offer>0</offer>" +
+										"<type>free</type>" +
+										"<tax>0</tax>" +
+										"<bill_id>"+bill_id+"</bill_id>" +
+										"<free_with>"+name+"</free_with>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</"+table+">";	
+							var free_activity_xml="<activity>" +
+										"<data_id>"+data_id+"</data_id>" +
+										"<tablename>"+table+"</tablename>" +
+										"<link_to>form12</link_to>" +
+										"<title>Deleted</title>" +
+										"<notes>Deleted free product "+free_products[j].product_name+" from bill no. "+bill_id+"</notes>" +
+										"<updated_by>"+get_name()+"</updated_by>" +
+										"</activity>";
+							var free_quantity_xml="<product_instances>" +
+										"<id>"+free_quantities[k].id+"</id>" +
+										"<quantity>"+q+"</quantity>" +
+										"</product_instances>";
+							if(is_online())
+							{
+								server_delete_row(free_data_xml,free_activity_xml);
+								server_write_simple(free_quantity_xml);
+							}
+							else
+							{
+								local_delete_row(free_data_xml,free_activity_xml);
+								local_write_simple(free_quantity_xml);
+		
+							}
+							break;
+						}
+					});
+					break;
+				}
+			});
+			
 		}
-		else
-		{
-			local_delete_row(data_xml,activity_xml);
-		}	
+			
 		$(button).parent().parent().remove();
 	}
 	else
@@ -545,11 +652,11 @@ function form12_delete_item(button)
  * @form New Bill
  * @param button
  */
-function form12_delete_form(button)
+function form12_delete_form()
 {
 	if(is_delete_access('form12'))
 	{
-		var form=document.getElementById("form10_master");
+		var form=document.getElementById("form12_master");
 		
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);

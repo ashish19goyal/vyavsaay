@@ -187,11 +187,8 @@ function local_read_single_column(columns,callback,results)
 
 /**
  * this function save a row of record to local db
- * @param table
- * @param data
  * @param data_xml
- * @param id
- * @param formname
+ * @param activity_xml
  * @returns
  */
 function local_write_row(data_xml,activity_xml)
@@ -278,18 +275,14 @@ function local_write_row(data_xml,activity_xml)
 									act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
 								}
 								//console.log("activities length="+activity_data.length);
-								if(activity_data.length!=0)
+								database.upsert('activities',act_row,function(err,insertedkey)
 								{
-									//console.log("activities data------"+act_row);
-									database.upsert('activities',act_row,function(err,insertedkey)
+									if(err)
 									{
-										if(err)
-										{
-											console.log(err);
-										}
-										hide_loader();
-									});
-								}
+										console.log(err);
+									}
+									hide_loader();
+								});	
 							}
 						});
 					}
@@ -360,18 +353,15 @@ function local_write_row(data_xml,activity_xml)
 										act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
 									}
 									//console.log("activities length="+activity_data.length);
-									if(activity_data.length!=0)
+									database.upsert('activities',act_row,function(err,insertedkey)
 									{
-										//console.log("activities data------"+act_row);
-										database.upsert('activities',act_row,function(err,insertedkey)
+										if(err)
 										{
-											if(err)
-											{
-												console.log(err);
-											}
-											hide_loader();
-										});
-									}
+											console.log(err);
+										}
+										hide_loader();
+									});
+								
 								}
 							});
 						}
@@ -386,6 +376,190 @@ function local_write_row(data_xml,activity_xml)
 			}
 		});
 }
+
+
+
+/**
+ * this function save a row of record to local db
+ * @param data_xml
+ * @param activity_xml
+ * @returns
+ */
+function local_write_simple(data_xml)
+{
+	show_loader();
+	var parser=new DOMParser();
+	var data=parser.parseFromString(data_xml,"text/xml");
+	var table=data.childNodes[0].nodeName;
+	var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
+	var cols=data.childNodes[0].childNodes;
+
+	var unique=new Array();
+	for(var j in cols)
+	{
+		if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+		{
+			if(cols[j].hasAttribute('unique'))
+			{
+				var fil=new Object();
+				fil.name=cols[j].nodeName;
+				fil.value=cols[j].innerHTML;
+				unique.push(fil);
+			}
+		}
+	}
+	
+	var domain=get_domain();
+	var db_name="re_local_"+domain;
+	
+	sklad.open(db_name,{
+		version:2},
+		function(err,database)
+		{
+			if(err)
+			{
+				console.log(err);
+			}
+			//console.log(tables);
+			if(unique.length===0)
+			{
+				//console.log("unique length is zero");
+				database.get(table,{range: IDBKeyRange.only(data_id)},function(err,records)
+				{
+					if(err)
+					{
+						console.log(err);
+					}
+					else
+					{
+						var type='create';
+						var data_row=new Object();
+						
+						for(var i in records)
+						{
+							type='update';
+							data_row=records[i];
+						}
+						
+							
+						for(var j in cols)
+						{
+							data_row[cols[j].nodeName]=cols[j].innerHTML;
+						}
+						database.upsert(table,data_row,function(err,insertedkey)
+						{
+							if(err)
+							{
+								console.log(err);
+							}
+							else
+							{
+								var act_row={id:get_new_key(),
+										type:type,
+										status:'unsynced',
+										data_xml:data_xml,
+										user_display:'no',
+										last_updated:get_my_time()};
+									
+								database.upsert('activities',act_row,function(err,insertedkey)
+								{
+									if(err)
+									{
+										console.log(err);
+									}
+									hide_loader();
+								});
+							
+							}
+						});
+					}
+				});
+			}
+			else
+			{
+				//console.log("unique length is non-zero");
+				database.get(table,{},function(err,records)
+				{
+					if(err)
+					{
+						console.log(err);
+					}
+					else
+					{
+						var unique_rec=true;
+						var type='create';
+						var data_row=new Object();
+						
+						for(var i in records)
+						{
+							if(records[i].id==data_id)
+							{
+								type='update';
+								data_row=records[i];
+								unique_rec=true;
+								break;
+							}
+							else 
+							{	
+								for(var k in unique)
+								{
+									if(records[i][unique[k].name]==unique[k].value)
+									{
+										unique_rec=false;
+									}
+								}
+							}
+							
+						}
+						
+						console.log(unique_rec);
+						if(unique_rec===true)
+						{
+							console.log("didnt find any duplicate records");
+
+							for(var j in cols)
+							{
+								data_row[cols[j].nodeName]=cols[j].innerHTML;
+							}
+							database.upsert(table,data_row,function(err,insertedkey)
+							{
+								if(err)
+								{
+									console.log(err);
+								}
+								else
+								{
+									var act_row={id:get_new_key(),
+											type:type,
+											status:'unsynced',
+											data_xml:data_xml,
+											user_display:'no',
+											last_updated:get_my_time()};
+									
+									//console.log("activities data------"+act_row);
+									database.upsert('activities',act_row,function(err,insertedkey)
+									{
+										if(err)
+										{
+											console.log(err);
+										}
+										hide_loader();
+									});
+								}
+							});
+						}
+						else
+						{
+							console.log("found duplicate records");
+							hide_loader();
+							$("#modal5").dialog("open");
+						}
+					}
+				});
+			}
+		});
+}
+
 
 	
 function local_read_multi_column(columns,callback,results)

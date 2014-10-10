@@ -211,7 +211,11 @@ function form12_header_ini()
 	var customers_filter=fields.elements[1];
 	var bill_date=fields.elements[2];
 	fields.elements[3].value=0;
-	fields.elements[4].value=get_new_key();
+	fields.elements[4].value=0;
+	fields.elements[5].value=0;
+	fields.elements[6].value=0;
+	fields.elements[7].value=get_new_key();
+	fields.elements[8].value="";
 		
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +

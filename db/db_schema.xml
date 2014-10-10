@@ -230,18 +230,29 @@
 	<bills>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer_name index='yes' type="VARCHAR(100)"></customer_name>
-			<date_created index='yes' type="BIGINT"></date_created>
-			<amount index='no' type="DECIMAL(10,2)"></amount>
+			<bill_date index='yes' type="BIGINT"></bill_date>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<total index='no' type="DECIMAL(12,2)"></total>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product -->
+			<offer index='no' type="TEXT"></offer>
+			<discount index='no' type="DECIMAL(12,2)"></discount>
+			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</bills>
 	<bill_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<quantity index='no' type="INT"></quantity>
-			<price index='no' type="DECIMAL(10,2)"></price>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<total index='no' type="DECIMAL(12,2)"></total>
+			<discount index='no' type="DECIMAL(12,2)"></discount>
+			<offer index='no' type="TEXT"></offer>
+			<type index='no' type="VARCHAR(10)"></type><!-- free/bought -->	
 			<bill_id index='yes' type="INT"></bill_id>
 			<product_name index='yes' type="VARCHAR(90)"></product_name>
 			<batch index='yes' type="VARCHAR(50)"></batch>
+			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<free_with index="no" type="VARCHAR(90)"></free_with>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</bill_items>
 	<returns>

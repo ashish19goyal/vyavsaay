@@ -312,8 +312,20 @@ tfoot>tr>td{
 }
 
 .filter_icon{
-	height:15px;
-	width: 15px;
+	height:16px;
+	width: 16px;
+}
+
+.save_icon{
+	height:16px;
+	width: 16px;
+	background-url:("./images/save.jpeg");
+}
+
+.delete_icon{
+	height:16px;
+	width: 16px;
+	background-url:("./images/delete.jpeg");
 }
 
 .customers_pane{
