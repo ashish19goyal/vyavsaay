@@ -393,7 +393,6 @@ function form11_ini(fid)
 	});
 };
 
-
 /**
  * this function prepares the table for manage tasks form
  * @form Manage Tasks
@@ -1136,8 +1135,8 @@ function form42_ini(fid)
 	var columns="<bills>" +
 			"<id>"+fid+"</id>" +
 			"<customer_name>"+fname+"</customer_name>" +
-			"<date_created>"+fdate+"</date_created>" +
-			"<amount></amount>" +
+			"<bill_date>"+fdate+"</bill_date>" +
+			"<total></total>" +
 			"<type>product</type>" +
 			"</bills>";
 
@@ -1156,13 +1155,13 @@ function form42_ini(fid)
 						rowsHTML+="<input type='text' readonly='readonly' form='form42_"+results[i].id+"' ondblclick='set_editable($(this));' value='"+results[i].customer_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form42_"+results[i].id+"' value='"+get_my_past_date(results[i].date_created)+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form42_"+results[i].id+"' value='"+get_my_past_date(results[i].bill_date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form42_"+results[i].id+"' value='"+results[i].amount+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form42_"+results[i].id+"' value='"+results[i].total+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form42_"+results[i].id+"' value='saved' onclick='form42_edit_item($(this));'>";
+						rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form42_"+results[i].id+"' value='saved' onclick=\"form12_display('"+results[i].id+"');\">";
 						rowsHTML+="<input type='submit' class='save_icon' form='form42_"+results[i].id+"' value='saved' onclick='form42_save_item($(this));'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form42_"+results[i].id+"' value='saved' onclick='form42_delete_item($(this));'>";	
 					rowsHTML+="</td>";			
@@ -1173,6 +1172,280 @@ function form42_ini(fid)
 	});
 };
 
+
+/**
+ * this function opens form12 window with the bill info populated
+ */
+function form12_ini(fid)
+{
+	$('#form12_body').find('tr').remove();
+	var bill_id=fid;
+	var bill_columns="<bills>" +
+			"<id>"+bill_id+"</id>" +
+			"<customer_name></customer_name>" +
+			"<total></total>" +
+			"<bill_date></bill_date>" +
+			"<amount></amount>" +
+			"<discount></discount>" +
+			"<tax></tax>" +
+			"<offer></offer>" +
+			"<type>product</type>" +
+			"</bills>";
+	var bill_items_column="<bill_items>" +
+			"<id></id>" +
+			"<product_name></product_name>" +
+			"<batch></batch>" +
+			"<unit_price></unit_price>" +
+			"<quantity></quantity>" +
+			"<amount></amount>" +
+			"<total></total>" +
+			"<discount></discount>" +
+			"<offer></offer>" +
+			"<type></type>" +
+			"<bill_id>"+bill_id+"</bill_id>" +
+			"<tax></tax>" +
+			"<free_with></free_with>" +
+			"</bill_items>";
+
+	////separate fetch function to get bill details like customer name, total etc.
+	fetch_requested_data('form42',bill_columns,function(bill_results)
+	{
+		for(var z in bill_results)
+		{
+			var filter_fields=document.getElementById('form12_master');
+			filter_fields.elements[1].value=bill_results[z].customer_name;
+			filter_fields.elements[2].value=get_my_past_date(bill_results[z].bill_date);
+			filter_fields.elements[3].value=bill_results[z].amount;
+			filter_fields.elements[4].value=bill_results[z].discount;
+			filter_fields.elements[5].value=bill_results[z].tax;
+			filter_fields.elements[6].value=bill_results[z].total;
+			filter_fields.elements[7].value=bill_id;
+			filter_fields.elements[8].value=bill_results[z].offer;
+			
+			break;
+		}
+	});
+	/////////////////////////////////////////////////////////////////////////
+	
+	fetch_requested_data('form42',bill_items_column,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			var id=result.id;
+			rowsHTML+="<tr>";
+			rowsHTML+="<form id='form12_"+id+"'></form>";
+				rowsHTML+="<td>";
+					rowsHTML+="<input type='text' form='form12_"+id+"' value='"+result.product_name+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td>";
+					rowsHTML+="<input type='text' form='form12_"+id+"' value='"+result.batch+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td>";
+					rowsHTML+="<input type='text' form='form12_"+id+"' value='"+result.unit_price+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td>";
+					rowsHTML+="<input type='number' form='form12_"+id+"' value='"+result.quantity+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td>";
+					rowsHTML+="<input type='text' form='form12_"+id+"' value='"+result.total+"'>";
+					rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form12_"+id+"' value='Details' onclick='modal7_action($(this));'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td>";
+					rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.amount+"'>";
+					rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.discount+"'>";
+					rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.tax+"'>";
+					rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.offer+"'>";
+					rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+id+"'>";
+					rowsHTML+="<input type='submit' class='save_icon' form='form12_"+id+"' id='save_form12_"+id+"' value='new'>";
+					rowsHTML+="<input type='button' class='delete_icon' form='form12_"+id+"' id='delete_form12_"+id+"' value='new' onclick='form12_delete_item($(this));'>";
+					rowsHTML+="<input type='hidden' form='form12_"+id+"' value=''>";
+					rowsHTML+="<input type='hidden' form='form12_"+id+"' value=''>";
+				rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+		
+			$('#form12_body').prepend(rowsHTML);
+			
+			var fields=document.getElementById("form12_"+id);
+			var name_filter=fields.elements[0];
+			var batch_filter=fields.elements[1];
+			var price_filter=fields.elements[2];
+			var quantity_filter=fields.elements[3];
+			var total_filter=fields.elements[4];
+			var amount_filter=fields.elements[5];
+			var discount_filter=fields.elements[6];
+			var tax_filter=fields.elements[7];
+			var offer_filter=fields.elements[8];
+			var id_filter=fields.elements[9];
+			var save_button=fields.elements[10];
+			var free_product_filter=fields.elements[12];
+			var free_product_quantity=fields.elements[13];
+			
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				console.log("form submit action");
+				form12_save_item(fields);
+			});
+			
+			
+			var product_data="<product_master>" +
+					"<name></name>" +
+					"</product_master>";
+			
+			set_my_value_list(product_data,name_filter);
+			
+			//$(name_filter).focus();
+			
+			$(name_filter).on('blur',function(event){
+				var batch_data="<product_instances>" +
+						"<batch></batch>" +
+						"<product_name>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+				batch_filter.value="";
+				quantity_filter.value=0;
+				price_filter.value=0;
+				total_filter.value=0;
+				amount_filter.value=0;
+				discount_filter.value=0;
+				tax_filter.value=0;
+				offer_filter.value="";
+			});
+			
+			$(batch_filter).on('blur',function(event){
+				var price_data="<product_instances>" +
+						"<price></price>" +
+						"<batch>"+batch_filter.value+"</batch>" +
+						"<product_name>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+				set_my_value(price_data,price_filter);
+				
+				var max_data="<product_instances>" +
+						"<quantity></quantity>" +
+						"<batch>"+batch_filter.value+"</batch>" +
+						"<product_name>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+						
+				set_my_max_value(max_data,quantity_filter);
+				
+				quantity_filter.value=0;
+				total_filter.value=0;
+				amount_filter.value=0;
+				discount_filter.value=0;
+				tax_filter.value=0;
+				offer_filter.value="";
+			});
+			
+			$(quantity_filter).on('blur',function(event)
+			{
+				var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+				amount_filter.value=amount;
+				var offer_data="<offers>" +
+						"<offer_type>product</offer_type>" +
+						"<product_name>"+name_filter.value+"</product_name>" +
+						"<batch>"+batch_filter.value+"</batch>" +
+						"<criteria_type></criteria_type>" +
+						"<criteria_amount></criteria_amount>" +
+						"<criteria_quantity></criteria_quantity>" +
+						"<result_type></result_type>" +
+						"<discount_percent></discount_percent>" +
+						"<discount_amount></discount_amount>" +
+						"<quantity_add_percent></quantity_add_percent>" +
+						"<quantity_add_amount></quantity_add_amount>" +
+						"<free_product_name></free_product_name>" +
+						"<free_product_quantity></free_product_quantity>" +
+						"<offer_detail></offer_detail>" +
+						"<status array='yes'>active--extended</status>" +
+						"</offers>";
+				fetch_requested_data('',offer_data,function(offers)
+				{
+					offers.forEach(function(offer)
+					{
+						offer_filter.value=offer.offer_detail;
+						if(offer.criteria_type=='min quantity crossed' && parseFloat(offer.criteria_quantity)<=parseFloat(quantity_filter.value))
+						{
+							if(offer.result_type=='discount')
+							{
+								if(offer.discount_percent!="" && offer.discount_percent!=0 && offer.discount_percent!="0")
+								{
+									discount_filter.value=parseFloat((amount*parseInt(offer.discount_percent))/100);
+								}
+								else 
+								{
+									discount_filter.value=parseFloat(offer.discount_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offer.criteria_quantity)));
+								}
+							}
+							else if(offer.result_type=='quantity addition')
+							{
+								if(offer.quantity_add_percent!="" && offer.quantity_add_percent!=0 && offer.quantity_add_percent!="0")
+								{
+									quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offer.discount_percent)/100));
+								}
+								else 
+								{
+									quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offer.quantity_add_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offer.criteria_quantity))));
+								}
+							}
+							else if(offer.result_type=='product free')
+							{
+								free_product_filter.value=offer.free_product_name;
+								free_product_quantity.value=parseFloat(offer.free_product_quantity)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offer.criteria_quantity)));
+							}
+						}
+						else if(offer.criteria_type=='min amount crossed' && offer.criteria_amount<=amount)
+						{
+							if(offer.result_type=='discount')
+							{
+								if(offer.discount_percent!="" && offer.discount_percent!=0 && offer.discount_percent!="0")
+								{
+									discount_filter.value=parseFloat((amount*parseInt(offer.discount_percent))/100);
+								}
+								else 
+								{
+									discount_filter.value=parseFloat(offer.discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offer.criteria_amount)));
+								}
+							}
+							else if(offer.result_type=='quantity addition')
+							{
+								if(offer.quantity_add_percent!="" && offer.quantity_add_percent!=0 && offer.quantity_add_percent!="0")
+								{
+									quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offer.discount_percent)/100));
+								}
+								else 
+								{
+									quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offer.quantity_add_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offer.criteria_amount))));
+								}
+							}
+							else if(offer.result_type=='product free')
+							{
+								free_product_filter.value=offer.free_product_name;
+								free_product_quantity.value=parseFloat(offer.free_product_quantity)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offer.criteria_amount)));
+							}
+						}
+					});
+					
+					var tax_data="<product_master>" +
+							"<name>"+name_filter.value+"</name>" +
+							"<taxable>yes</taxable>" +
+							"<tax></tax>" +
+							"</product_master>";
+					fetch_requested_data('',tax_data,function(taxes)
+					{
+						taxes.forEach(function(tax)
+						{
+							tax_filter.value=parseFloat((parseFloat(tax.tax)*(amount-parseFloat(discount_filter.value)))/100);
+						});
+						
+						total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
+					});
+					
+				});
+			});
+
+		});
+	});
+}
 
 /**
  * this function prepares the table for manage purchase orders form

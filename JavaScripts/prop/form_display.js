@@ -56,6 +56,7 @@ function form12_display(fid)
 {
 	show_function("#sale_bills_main");
 	$("#form12_link").trigger("click");
+	form12_ini(fid);
 }
 
 function form14_display(fid)

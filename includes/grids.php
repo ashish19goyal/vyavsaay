@@ -9,19 +9,30 @@
 		</li>
 		
 		<li>
-			<a id="products_link" onclick="show_function('#products_main');"><div>Products >>></div></a>		
-			<ul>
-				<li>Products offered : <a class='grid_item' id='products_offered'>TBD</a></li>
-				<li>Best selling product : <a class='grid_item' id='best_seller_product'>TBD</a></li>
-			</ul>
-		</li>
-		<li>
 			<a id="purchase_link" onclick="show_function('#purchase_main');"><div>Purchase >>></div></a>		
 			<ul>
 				<li>Last bill No. : <a class='grid_item' id='last_sup_bill'>TBD</a></li>
 				<li>No. of bills entered today : <a class='grid_item' id='num_bills_entered'>TBD</a></li>
 			</ul>
 		</li>
+		
+		<li>
+			<a id="finances_link" onclick="show_function('#finances_main');"><div>Finances >>></div></a>		
+			<ul>
+				<li>Payment due today : <a class='grid_item' id='payment_due'>TBD</a></li>
+				<li>Payment collected today : <a class='grid_item' id='payment_collected'>TBD</a></li>
+				<li>Today's expenses : <a class='grid_item' id='expenses_today'>TBD</a></li>
+			</ul>
+		</li>
+		
+		<li>
+			<a id="products_link" onclick="show_function('#products_main');"><div>Products >>></div></a>		
+			<ul>
+				<li>Products offered : <a class='grid_item' id='products_offered'>TBD</a></li>
+				<li>Best selling product : <a class='grid_item' id='best_seller_product'>TBD</a></li>
+			</ul>
+		</li>
+		
 		<li>
 			<a id="services_link" onclick="show_function('#services_main');"><div>Services >>></div></a>		
 			<ul>
@@ -34,15 +45,6 @@
 			<ul>
 				<li>Inventory worth: <a class='grid_item' id='inventory_worth'>TBD</a></li>
 				<li>Number of out-of-stock items: <a class='grid_item' id='out_of_stock'>TBD</a></li>
-			</ul>
-		</li>
-		<li>
-			<a id="finances_link" onclick="show_function('#finances_main');"><div>Finances >>></div></a>		
-			<ul>
-				<li>Payment due today : <a class='grid_item' id='payment_due'>TBD</a></li>
-				<li>Payment collected today : <a class='grid_item' id='payment_collected'>TBD</a></li>
-				<li>Today's expenses : <a class='grid_item' id='expenses_today'>TBD</a></li>
-				<li>Today's sales : <a class='grid_item' id='sales_today'>TBD</a></li>
 			</ul>
 		</li>
 		<li>

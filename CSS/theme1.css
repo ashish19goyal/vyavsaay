@@ -317,15 +317,23 @@ tfoot>tr>td{
 }
 
 .save_icon{
-	height:16px;
-	width: 16px;
-	background-url:("./images/save.jpeg");
+	height: 25px;
+	width: 25px;
+	background:url('/images/save.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
 }
 
 .delete_icon{
-	height:16px;
-	width: 16px;
-	background-url:("./images/delete.jpeg");
+	height:25px;
+	width: 25px;
+	background:url('/images/delete.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
 }
 
 .customers_pane{

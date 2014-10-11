@@ -14,7 +14,7 @@
 			<acc_type>customer</acc_type>
 			<lat>29.5375555</lat>
 			<lng>75.0508930</lng>
-			<acc_name>cust1</acc_name>
+			<acc_name>ashish goyal (9818005232)</acc_name>
 			<status>unconfirmed</status>
 			<address>R.S.D. colony, sirsa</address>
 			<last_updated>1</last_updated>	
@@ -23,7 +23,7 @@
 			<acc_type>customer</acc_type>
 			<lat>29.5375552</lat>
 			<lng>75.05089301</lng>
-			<acc_name>cust2</acc_name>
+			<acc_name>anish goyal (9818005232)</acc_name>
 			<status>unconfirmed</status>
 			<address>R.S.D. colony, sirsa</address>
 			<last_updated>1</last_updated>	
@@ -31,25 +31,45 @@
 	</address>
 	<accounts>
 		<row>
-			<acc_name>cust1</acc_name>
+			<acc_name>ashish goyal (9818005232)</acc_name>
 			<type>customer</type>
 			<balance>10000</balance>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<acc_name>cust2</acc_name>
+			<acc_name>anish goyal (9818005232)</acc_name>
 			<type>customer</type>
 			<balance>15000</balance>
 			<last_updated>1</last_updated>
 		</row>
 	</accounts>
+	<customers>
+		<row>
+			<name>ashish goyal</name>
+			<acc_name>ashish goyal (9818005232)</acc_name>
+			<email>ashish.19goyal@gmail.com</email>
+			<phone>9818005232</phone>
+			<status>active</status>
+			<notes></notes>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>anish goyal</name>
+			<acc_name>anish goyal (9818005232)</acc_name>
+			<email>anishgoy@gmail.com</email>
+			<phone>9818005232</phone>
+			<status>active</status>
+			<notes></notes>
+			<last_updated>1</last_updated>
+		</row>
+	</customers>
 	<payments>
 		<row>
 			<status>closed</status>
 			<type>received</type>
 			<date>1410220800000</date>
 			<amount>100</amount>
-			<acc_name>cust1</acc_name>
+			<acc_name>ashish goyal (9818005232)</acc_name>
 			<due_date>1410220800000</due_date>
 			<transaction_id>1</transaction_id>
 			<mode>cash</mode>
@@ -60,7 +80,7 @@
 			<type>received</type>
 			<date>1410739200000</date>
 			<amount>200</amount>
-			<acc_name>cust2</acc_name>
+			<acc_name>anish goyal (9818005232)</acc_name>
 			<due_date>1410739200000</due_date>
 			<transaction_id>2</transaction_id>
 			<mode>cash</mode>
@@ -71,7 +91,7 @@
 			<type>received</type>
 			<date>1411171200000</date>
 			<amount>500</amount>
-			<acc_name>cust1</acc_name>
+			<acc_name>ashish goyal (9818005232)</acc_name>
 			<due_date>1411171200000</due_date>
 			<transaction_id>3</transaction_id>
 			<mode>credit card</mode>
@@ -82,7 +102,7 @@
 			<type>received</type>
 			<date></date>
 			<amount>300</amount>
-			<acc_name>cust1</acc_name>
+			<acc_name>ashish goyal (9818005232)</acc_name>
 			<due_date>1411171200000</due_date>
 			<transaction_id>4</transaction_id>
 			<mode></mode>
@@ -93,7 +113,7 @@
 			<type>received</type>
 			<date></date>
 			<amount>100</amount>
-			<acc_name>cust1</acc_name>
+			<acc_name>ashish goyal (9818005232)</acc_name>
 			<due_date>1413471200000</due_date>
 			<transaction_id>5</transaction_id>
 			<mode></mode>
@@ -104,7 +124,7 @@
 			<type>received</type>
 			<date></date>
 			<amount>500</amount>
-			<acc_name>cust2</acc_name>
+			<acc_name>anish goyal (9818005232)</acc_name>
 			<due_date>1423471200000</due_date>
 			<transaction_id>6</transaction_id>
 			<mode></mode>
@@ -126,7 +146,7 @@
 			<type>delivered</type>
 			<date>1423471200000</date>
 			<amount>200</amount>
-			<acc_name>cust2</acc_name>
+			<acc_name>anish goyal (9818005232)</acc_name>
 			<due_date>1423471200000</due_date>
 			<transaction_id>8</transaction_id>
 			<mode>cash</mode>

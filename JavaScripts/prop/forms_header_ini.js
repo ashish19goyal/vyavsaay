@@ -216,7 +216,12 @@ function form12_header_ini()
 	fields.elements[6].value=0;
 	fields.elements[7].value=get_new_key();
 	fields.elements[8].value="";
-		
+	
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form12_save_form();
+	});
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
@@ -226,6 +231,14 @@ function form12_header_ini()
 	$(bill_date).val(get_my_date());
 }
 
+/**
+ * This function clears the form12 for new bill
+ */
+function form12_new_form()
+{
+	form12_header_ini();
+	$("#form12_body").find("tr").remove();
+}
 
 /**
  * this function prepares the table for manage tasks form

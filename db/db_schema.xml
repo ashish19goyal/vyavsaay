@@ -248,7 +248,7 @@
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<offer index='no' type="TEXT"></offer>
 			<type index='no' type="VARCHAR(10)"></type><!-- free/bought -->	
-			<bill_id index='yes' type="INT"></bill_id>
+			<bill_id index='yes' type="BIGINT"></bill_id>
 			<product_name index='yes' type="VARCHAR(90)"></product_name>
 			<batch index='yes' type="VARCHAR(50)"></batch>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
