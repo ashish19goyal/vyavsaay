@@ -1,4 +1,4 @@
-<div class='forms'><b>Manage Services</b>
+<div id='form57' class='function_detail'><b>Manage Services</b>
 	<table>
 		<thead>
 			<tr>

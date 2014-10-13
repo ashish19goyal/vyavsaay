@@ -1,4 +1,4 @@
-<div class='forms'><b>Update store placement of products</b>
+<div id='form38' class='function_detail'><b>Update store placement of products</b>
 	<table>
 		<thead>
 			<tr>

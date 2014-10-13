@@ -1,4 +1,4 @@
-<div class='forms'><b>Add and manage cash transaction</b>
+<div id='form9' class='function_detail'><b>Add and manage cash transaction</b>
 	<table>
 		<thead>
 			<tr>

@@ -1,4 +1,4 @@
-<div class='forms'><b>Change Password</b>
+<div id='form47' class='function_detail'><b>Change Password</b>
 	<form id='form47_master'>
 		<fieldset>
 				Current Password: <input type="password" form='form47_master'/></br>

@@ -1,4 +1,4 @@
-<div class='reports'>
+<div id='report32' class='function_detail'>
 		<form id='report32_header' style="width: 30%;float:left">
 			<fieldset>
 				<legend>Locate staff by:</legend>

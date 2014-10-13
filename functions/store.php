@@ -6,18 +6,12 @@
 		<li><a id="report1_link" href="#report1" onclick="report1_header_ini(); report1_ini('');">Signage changes</a></li>			
 	</ul>
 
-	<div id='form5' class='function_detail'>
-		<?php include "forms/form5.php" ?>
-	</div>
-	<div id='form38' class='function_detail'>
-		<?php include "forms/form38.php" ?>
-	</div>
-	<div id='form55' class='function_detail'>
-		<?php include "forms/form55.php" ?>
-	</div>
-	<div id='report1' class='function_detail'>
-		<?php include "reports/report1.php" ?>
-	</div>
+	<?php 
+		include "forms/form5.php";
+		include "forms/form38.php";
+		include "forms/form55.php";
+		include "reports/report1.php";
+	?>
 	
 	<script>
 	!function(){

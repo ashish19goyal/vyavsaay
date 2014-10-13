@@ -5,15 +5,11 @@
 		<li><a id="report37_link" href="#report37" onclick="report37_header_ini(); report37_ini('');">Payments due</a></li>
 	</ul>
 
-	<div id='form40' class='function_detail'>
-		<?php include "forms/form40.php" ?>
-	</div>
-	<div id='form19' class='function_detail'>
-		<?php include "forms/form19.php" ?>
-	</div>
-	<div id='report37' class='function_detail'>
-		<?php include "reports/report37.php" ?>
-	</div>
+	<?php 
+		include "forms/form40.php";
+		include "forms/form19.php";
+		include "reports/report37.php";
+	?>
 	
 	<script>
 	!function(){

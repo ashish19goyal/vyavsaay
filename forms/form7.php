@@ -1,4 +1,4 @@
-<div class='forms'><b>Update staff attendance</b>
+<div id='form7' class='function_detail'><b>Update staff attendance</b>
 	<table>
 		<thead>
 			<tr>

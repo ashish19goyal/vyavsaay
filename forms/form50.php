@@ -1,4 +1,4 @@
-<div class='forms'><b>Select Accounting Principles</b>
+<div id='form50' class='function_detail'><b>Select Accounting Principles</b>
 	<table>
 		<thead>
 			<tr>

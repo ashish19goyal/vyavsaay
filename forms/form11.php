@@ -1,4 +1,4 @@
-<div class='forms'><b>Manage and schedule payments</b>
+<div id='form11' class='function_detail'><b>Manage and schedule payments</b>
 	<table>
 		<thead>
 			<tr>

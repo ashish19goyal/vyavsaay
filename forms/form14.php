@@ -1,4 +1,4 @@
-<div class='forms'><b>Manage and assign tasks</b>
+<div id='form14' class='function_detail'><b>Manage and assign tasks</b>
 	<table>
 		<thead>
 			<tr>

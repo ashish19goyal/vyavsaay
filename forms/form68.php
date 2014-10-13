@@ -1,4 +1,4 @@
-<div class='forms'><b>Product Taxes</b>
+<div id='form68' class='function_detail'><b>Product Taxes</b>
 	<table>
 		<thead>
 			<tr>

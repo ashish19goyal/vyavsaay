@@ -42,13 +42,42 @@ use RetailingEssentials\db_connect;
 				
 				$session_var="<session>";
 				
-				$stmt=$conn->conn->query("select name,value from user_preferences");
+				$stmt=$conn->conn->prepare("select name,value from user_preferences where type in (?,?) and status=?");
+				$stmt->execute(array('template','other','active'));
 				while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
 				{
 					$session_var.="<".$row['name'].">";
 					$session_var.=$row['value'];
 					$session_var.="</".$row['name'].">";
 				}
+				
+				/////setting forms and reports session variables for selective display
+				$forms="";
+				$stmt1=$conn->conn->prepare("select name from user_preferences where type=? and value=? and status=?");
+				$stmt1->execute(array('form','yes','active'));
+				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
+				{
+					$forms.=$row['name']."-";
+				}
+				$session_var.="<forms>";
+				$session_var.=$forms;
+				$session_var.="</forms>";
+				
+				$reports="";
+				$stmt1=$conn->conn->prepare("select name from user_preferences where type=? and value=? and status=?");
+				$stmt1->execute(array('report','yes','active'));
+				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
+				{
+					$reports.=$row['name']."-";
+				}
+				$session_var.="<reports>";
+				$session_var.=$reports;
+				$session_var.="</reports>";
+				
+				$_SESSION['forms']=$forms;
+				$_SESSION['reports']=$reports;
+				
+				//////////////////////////////////////////////////////
 				
 				/////////setting access control session variables
 				$read_access="";

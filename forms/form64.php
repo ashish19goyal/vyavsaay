@@ -1,4 +1,4 @@
-<div class='forms'><b>Cross Sells</b>
+<div id='form64' class='function_detail'><b>Cross Sells</b>
 	<table>
 		<thead>
 			<tr>

@@ -502,8 +502,8 @@ function set_session_online()
 				"</activity>";
 			//console.log(data_xml);
 			//console.log(activity_xml);
-			server_write_row(data_xml,activity_xml);
-			local_write_simple(data_xml);
+			server_update_row(data_xml,activity_xml);
+			local_update_simple(data_xml);
 			hide_menu_items();
 			hide_loader();
 		});
@@ -542,8 +542,8 @@ function set_session_offline()
 				"</activity>";
 			//console.log(data_xml);
 			//console.log(activity_xml);
-			server_write_simple(data_xml);
-			local_write_row(data_xml,activity_xml);
+			server_update_simple(data_xml);
+			local_update_row(data_xml,activity_xml);
 			hide_menu_items();
 			hide_loader();
 		});

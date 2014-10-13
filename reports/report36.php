@@ -1,4 +1,4 @@
-<div class='reports'>
+<div id='report36' class='function_detail'>
 		<form id='report36_header' style="width: 30%;float:left">
 			<fieldset>
 				<legend>Select suppliers by:</legend>

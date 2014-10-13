@@ -1,4 +1,4 @@
-<div class='forms'><b>Manage and create offers</b>
+<div id='form35' class='function_detail'><b>Manage and create offers</b>
 	<table>
 		<thead>
 			<tr>

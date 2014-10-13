@@ -51,11 +51,12 @@ function login_action()
 
 function login_online(username,domain,pass)
 {
+	//console.log("funny---still loging online");
 	ajax_with_custom_func("./ajax/login.php","domain="+domain+"&user="+username+"&pass="+pass,function(e)
 	{
 		login_status=e.responseText;
 		var session_xml=e.responseXML;
-		//console.log(login_status);
+		console.log(login_status);
 		//console.log("this is session variable"+session_xml);
 		if(login_status=="failed_auth")
 		{
@@ -113,8 +114,10 @@ function set_session_variables(domain,username,pass)
 			for(var row in records)
 			{
 				var row_data=records[row];
-				//console.log(row_data);
-				data[row_data['name']]=row_data['value'];
+				if(row_data['type']=='template' || row_data['type']=='other')
+				{
+					data[row_data['name']]=row_data['value'];
+				}
 			};
 			data.session='yes';
 			data.domain=domain;

@@ -1,4 +1,4 @@
-<div class='forms'><b>Set Shortcut keys</b>
+<div id='form52' class='function_detail'><b>Set Shortcut keys</b>
 	<table>
 		<thead>
 			<tr>

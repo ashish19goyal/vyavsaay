@@ -1,4 +1,4 @@
-<div class='forms'><b>Manage and add vendors</b>
+<div id='form40' class='function_detail'><b>Manage and add vendors</b>
 	<table>
 		<thead>
 			<tr>

@@ -154,20 +154,31 @@ function set_my_filter(filter_data,filter_element)
 	get_single_column_data(function(data)
 	{
 		data=jQuery.unique(data);
-		console.log(data);
-		
-		$(filter_element).typeahead('destroy');
-		$(filter_element).typeahead({
-			  highlight: true
-		},
+		var form=filter_element.form;
+		var datalist=document.createElement('datalist');
+		data.forEach(function(d)
 		{
-			  source: data,
-			  displayKey: 'value'
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			datalist.appendChild(option);
 		});
-/*		$(filter_element).autocomplete({
-			source:data
-		});
-*/	},filter_data);		
+		
+		var list_id=filter_element.getAttribute('list');
+		if(list_id=='' || list_id==null)
+		{
+			list_id="list_"+get_new_key();
+			filter_element.setAttribute('list',list_id);
+		}
+		else
+		{
+			var oldlist=document.getElementById(list_id);
+			form.removeChild(oldlist);
+		}
+		
+		form.appendChild(datalist);
+		datalist.setAttribute('id',list_id);
+		
+	},filter_data);		
 }
 
 function set_static_filter(table,list,filter_element)
@@ -180,16 +191,30 @@ function set_static_filter(table,list,filter_element)
 			"</values_list>";
 	get_single_column_data(function(data)
 	{
-		console.log(data);
-		
-		$(filter_element).typeahead('destroy');
-		$(filter_element).typeahead({
-			  highlight: true
-		},
+		var form=filter_element.form;
+		var datalist=document.createElement('datalist');
+		data.forEach(function(d)
 		{
-			  source: data,
-			  displayKey: 'value'
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			datalist.appendChild(option);
 		});
+		
+		var list_id=filter_element.getAttribute('list');
+		if(list_id=='' || list_id==null)
+		{
+			list_id="list_"+get_new_key();
+			filter_element.setAttribute("list",list_id);
+		}
+		else
+		{
+			var oldlist=document.getElementById(list_id);
+			form.removeChild(oldlist);
+		}
+		
+		form.appendChild(datalist);
+		datalist.setAttribute('id',list_id);
+		
 	},list_data);		
 }
 
@@ -198,16 +223,32 @@ function set_my_value_list(filter_data,filter_element)
 	get_single_column_data(function(data)
 	{
 		data=jQuery.unique(data);
-		$(filter_element).typeahead('destroy');
-		$(filter_element).typeahead({
-			  highlight: true
-		},
+		
+		var form=filter_element.form;
+		var datalist=document.createElement('datalist');
+		data.forEach(function(d)
 		{
-			  source: data,
-			  displayKey: 'value'
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			datalist.appendChild(option);
 		});
-		//console.log(filter_element);
-		$(filter_element).bind("change",function(event)
+		
+		var list_id=filter_element.getAttribute('list');
+		if(list_id=='' || list_id==null)
+		{
+			list_id="list_"+get_new_key();
+			filter_element.setAttribute("list",list_id);
+		}
+		else
+		{
+			var oldlist=document.getElementById(list_id);
+			form.removeChild(oldlist);
+		}
+		
+		form.appendChild(datalist);
+		datalist.setAttribute('id',list_id);
+		
+		$(filter_element).on("change",function(event)
 		{
 			var found = $.inArray($(this).val(), data) > -1;
 			if(!found)
@@ -224,9 +265,30 @@ function set_my_multiple_filter(filter_data,filter_element,output_element)
 	{
 		data=jQuery.unique(data);
 
-		$(filter_element).autocomplete({
-			source:data
+		var form=filter_element.form;
+		var datalist=document.createElement('datalist');
+		data.forEach(function(d)
+		{
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			datalist.appendChild(option);
 		});
+		
+		var list_id=filter_element.getAttribute('list');
+		if(list_id=='' || list_id==null)
+		{
+			list_id="list_"+get_new_key();
+			filter_element.setAttribute("list",list_id);
+		}
+		else
+		{
+			var oldlist=document.getElementById(list_id);
+			form.removeChild(oldlist);
+		}
+		
+		form.appendChild(datalist);
+		datalist.setAttribute('id',list_id);
+		
 	},filter_data);
 	$(filter_element).on('select',function(event)
 	{
@@ -255,15 +317,31 @@ function set_my_multiple_list(filter_data,filter_element,output_element)
 	get_single_column_data(function(data)
 	{
 		data=jQuery.unique(data);
-		$(filter_element).typeahead('destroy');
-		$(filter_element).typeahead({
-			  highlight: true
-		},
+		var form=filter_element.form;
+		var datalist=document.createElement('datalist');
+		data.forEach(function(d)
 		{
-			  source: data,
-			  displayKey: 'value'
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			datalist.appendChild(option);
 		});
-		$(filter_element).bind("change",function(event)
+		
+		var list_id=filter_element.getAttribute('list');
+		if(list_id=='' || list_id==null)
+		{
+			list_id="list_"+get_new_key();
+			filter_element.setAttribute("list",list_id);
+		}
+		else
+		{
+			var oldlist=document.getElementById(list_id);
+			form.removeChild(oldlist);
+		}
+		
+		form.appendChild(datalist);
+		datalist.setAttribute('id',list_id);
+		
+		$(filter_element).on("change",function(event)
 		{
 			var found = $.inArray($(this).val(), data) > -1;
 			if(!found)
@@ -312,15 +390,30 @@ function set_static_value_list(table,list,filter_element)
 	get_single_column_data(function(data)
 	{
 		data=jQuery.unique(data);
-		$(filter_element).typeahead('destroy');
-		$(filter_element).typeahead({
-			  highlight: true
-		},
+		var form=filter_element.form;
+		var datalist=document.createElement('datalist');
+		data.forEach(function(d)
 		{
-			  source: data,
-			  displayKey: 'value'
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			datalist.appendChild(option);
 		});
-		$(filter_element).bind("change",function(event)
+		
+		var list_id=filter_element.getAttribute('list');
+		if(list_id=='' || list_id==null)
+		{
+			list_id="list_"+get_new_key();
+			filter_element.setAttribute("list",list_id);
+		}
+		else
+		{
+			var oldlist=document.getElementById(list_id);
+			form.removeChild(oldlist);
+		}
+		
+		form.appendChild(datalist);
+		datalist.setAttribute('id',list_id);
+		$(filter_element).on("change",function(event)
 		{
 			var found = $.inArray($(this).val(), data) > -1;
 			if(!found)

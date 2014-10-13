@@ -6,18 +6,12 @@
 		<li><a id="form42_link" href="#form42" onclick="form42_header_ini(); form42_ini('');">Manage Bills</a></li>
 	</ul>
 
-	<div id='form10' class='function_detail'>
-		<?php include "forms/form10.php" ?>
-	</div>
-	<div id='form45' class='function_detail'>
-		<?php include "forms/form45.php" ?>
-	</div>
-	<div id='form12' class='function_detail'>
-		<?php include "forms/form12.php" ?>
-	</div>
-	<div id='form42' class='function_detail'>
-		<?php include "forms/form42.php" ?>
-	</div>
+	<?php 
+		include "forms/form10.php";
+		include "forms/form45.php";
+		include "forms/form12.php";
+		include "forms/form42.php";
+	?>
 	
 	<script>
 	!function(){

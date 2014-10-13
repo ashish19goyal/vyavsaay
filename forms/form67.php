@@ -1,4 +1,4 @@
-<div class='forms'><b>Dimensions</b>
+<div id='form67' class='function_detail'><b>Dimensions</b>
 	<table>
 		<thead>
 			<tr>

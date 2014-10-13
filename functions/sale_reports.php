@@ -6,18 +6,12 @@
 		<li><a id="report9_link" href="#report9" onclick="report9_header_ini(); report9_ini('');">Product Sales report</a></li>
 	</ul>
 
-	<div id='report26' class='function_detail'>
-		<?php include "reports/report26.php" ?>
-	</div>
-	<div id='report38' class='function_detail'>
-		<?php include "reports/report38.php" ?>
-	</div>
-	<div id='report39' class='function_detail'>
-		<?php include "reports/report39.php" ?>
-	</div>
-	<div id='report9' class='function_detail'>
-		<?php include "reports/report9.php" ?>
-	</div>
+	<?php 
+		include "reports/report26.php";
+		include "reports/report38.php";
+		include "reports/report39.php";
+		include "reports/report9.php";
+	?>
 	
 	<script>
 	!function(){

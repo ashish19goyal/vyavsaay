@@ -1,4 +1,4 @@
-<div class='reports'>
+<div id='report34' class='function_detail'>
 	<form id='report34_header' style="width: 35%;float:left">
 		<fieldset>
 			<legend>Set sales estimate</legend>

@@ -19,7 +19,6 @@ function form1_header_ini()
 			"<batch></batch>" +
 			"</product_instances>";
 
-	
 	set_my_filter(products_data,names_filter);
 	set_my_filter(batch_data,batches_filter);
 	$(expiry).datepicker();
@@ -544,9 +543,9 @@ function form38_header_ini()
 function form39_header_ini()
 {
 	var filter_fields=document.getElementById('form39_header');
-	var name_filter=filter_fields.elements[0].value;
-	var make_filter=filter_fields.elements[1].value;
-	var manufactured_filter=filter_fields.elements[2].value;
+	var name_filter=filter_fields.elements[0];
+	var make_filter=filter_fields.elements[1];
+	var manufactured_filter=filter_fields.elements[2];
 	
 	var make_data="<product_master>" +
 			"<make></make>" +
@@ -554,7 +553,7 @@ function form39_header_ini()
 	var products_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
-
+	
 	set_my_filter(make_data,make_filter);
 	set_my_filter(products_data,name_filter);
 	set_static_filter('product_master','manufactured',manufactured_filter);

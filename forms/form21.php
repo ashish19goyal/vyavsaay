@@ -1,4 +1,4 @@
-<div class='forms'><b>Enter goods received</b>
+<div id='form21' class='function_detail'><b>Enter goods received</b>
 	<form id='form21_master'>
 		<fieldset>
 			Supplier<input type='text'>

@@ -1,4 +1,4 @@
-<div class='forms'><b>Manage prices of products</b>
+<div id='form1' class='function_detail'><b>Manage prices of products</b>
 	<table>
 		<thead>
 			<tr>

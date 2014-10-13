@@ -1,4 +1,4 @@
-<div class='forms'><b>Add items returned by customer</b>
+<div id='form15' class='function_detail'><b>Add items returned by customer</b>
 	<table>
 		<thead>
 			<tr>

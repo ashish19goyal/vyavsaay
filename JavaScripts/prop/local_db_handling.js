@@ -333,6 +333,9 @@ function local_update_simple(data_xml)
 									status:'unsynced',
 									data_xml:data_xml,
 									user_display:'no',
+									data_id:data_row.id,
+									tablename:table,
+									link_to:'',
 									last_updated:get_my_time()};
 								
 							database.upsert('activities',act_row,function(err,insertedkey)
@@ -582,6 +585,9 @@ function local_create_simple(data_xml)
 								status:'unsynced',
 								data_xml:data_xml,
 								user_display:'no',
+								data_id:data_row.id,
+								tablename:table,
+								link_to:'',
 								last_updated:get_my_time()};
 							
 						database.upsert('activities',act_row,function(err,insertedkey)
@@ -958,6 +964,7 @@ function local_delete_simple(data_xml)
 											tablename:table,
 											status:'unsynced',
 											user_display:'no',
+											link_to:'',
 											last_updated:get_my_time()};
 									database.upsert('activities',act_row,function(err,insertedkey)
 									{

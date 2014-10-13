@@ -1,4 +1,4 @@
-<div class='forms'><b>Expense Register</b>
+<div id='form56' class='function_detail'><b>Expense Register</b>
 	<table>
 		<thead>
 			<tr>

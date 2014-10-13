@@ -1,4 +1,4 @@
-<div class='forms'><b>Product Pre-requisites</b>
+<div id='form59' class='function_detail'><b>Product Pre-requisites</b>
 	<table>
 		<thead>
 			<tr>

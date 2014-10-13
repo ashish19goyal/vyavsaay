@@ -1,4 +1,4 @@
-<div class='reports'>
+<div id='report4' class='function_detail'>
 	<form id='report4_header' style="width: 35%;float:left">
 		<fieldset>
 			<legend>Select Period</legend>

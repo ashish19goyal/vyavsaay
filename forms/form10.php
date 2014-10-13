@@ -1,4 +1,4 @@
-<div class='forms'><b>Generate service receipt</b>
+<div id='form10' class='function_detail'><b>Generate service receipt</b>
 	<form id='form10_master'>
 		<fieldset>
 			Customer <input type='text' required>

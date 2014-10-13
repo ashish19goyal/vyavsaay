@@ -1,4 +1,4 @@
-<div class='forms'><b>Manage Access Control</b>
+<div id='form51' class='function_detail'><b>Manage Access Control</b>
 	<form id='form51_master'>
 		<fieldset>
 			<input type='button' value='Add User' onclick='form51_add_form();'>

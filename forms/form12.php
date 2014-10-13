@@ -1,4 +1,4 @@
-<div class='forms'><b>Create bills</b>
+<div id='form12' class='function_detail'><b>Create bills</b>
 	<form id='form12_master'>
 		<fieldset>
 			Customer<input type='text' required>

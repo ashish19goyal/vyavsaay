@@ -1,4 +1,4 @@
-<div class='forms'><b>Product Reviews</b>
+<div id='form62' class='function_detail'><b>Product Reviews</b>
 	<table>
 		<thead>
 			<tr>

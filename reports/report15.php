@@ -1,4 +1,4 @@
-<div class='reports'>
+<div id='report15' class='function_detail'>
 	<form id='report15_header' style="width: 35%;float:left">
 		<fieldset>
 			<input type='button' value='Refresh' onclick='report15_ini();'>

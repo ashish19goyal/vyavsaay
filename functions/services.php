@@ -5,15 +5,11 @@
 		<li><a id="report41_link" href="#report41" onclick="report41_header_ini(); report41_ini('');">Pre-requisites report</a></li>
 	</ul>
 
-	<div id='form57' class='function_detail'>
-		<?php include "forms/form57.php" ?>
-	</div>
-	<div id='form58' class='function_detail'>
-		<?php include "forms/form58.php" ?>
-	</div>
-	<div id='report41' class='function_detail'>
-		<?php include "reports/report41.php" ?>
-	</div>
+	<?php 
+		include "forms/form57.php";
+		include "forms/form58.php";
+		include "reports/report41.php"; 
+	?>
 	
 	<script>
 	!function(){

@@ -1,4 +1,4 @@
-<div class='forms'><b>Create pamphlets</b>
+<div id='form2' class='function_detail'><b>Create pamphlets</b>
 	<form id='form2_master'>
 		<fieldset>
 			Pamphlet Name<input type='text' required>

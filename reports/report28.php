@@ -1,4 +1,4 @@
-<div class='reports'>
+<div id='report28' class='function_detail'>
 	<form id='report28_header' style="width: 35%;float:left">
 		<fieldset>
 			<legend>Select filter</legend>

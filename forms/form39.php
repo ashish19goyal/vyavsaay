@@ -1,4 +1,4 @@
-<div class='forms'><b>Manage and add products</b>
+<div id='form39' class='function_detail'><b>Manage and add products</b>
 	<table>
 		<thead>
 			<tr>

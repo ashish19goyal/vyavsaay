@@ -7,21 +7,13 @@
 		<li><a id="report30_link" href="#report30" onclick="report30_header_ini(); report30_ini();">Tasks performed</a></li>
 	</ul>
 
-	<div id='form8' class='function_detail'>
-		<?php include "forms/form8.php" ?>
-	</div>
-	<div id='form7' class='function_detail'>
-		<?php include "forms/form7.php" ?>
-	</div>
-	<div id='form14' class='function_detail'>
-		<?php include "forms/form14.php" ?>
-	</div>
-	<div id='report17' class='function_detail'>
-		<?php include "reports/report17.php" ?>
-	</div>
-	<div id='report30' class='function_detail'>
-		<?php include "reports/report30.php" ?>
-	</div>
+	<?php 
+		include "forms/form8.php";
+		include "forms/form7.php";
+		include "forms/form14.php";
+		include "reports/report17.php";
+		include "reports/report30.php";
+	?>
 	
 	<script>
 	!function(){

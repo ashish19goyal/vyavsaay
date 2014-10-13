@@ -1,4 +1,4 @@
-<div class='forms'><b>Create purchase orders</b>
+<div id='form24' class='function_detail'><b>Create purchase orders</b>
 	<form id='form24_master'>
 		<fieldset>
 			Supplier: <input type='text'>

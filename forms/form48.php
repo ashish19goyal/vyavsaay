@@ -1,4 +1,4 @@
-<div class='forms'><b>Select Reports</b>
+<div id='form48' class='function_detail'><b>Select Reports</b>
 	<table>
 		<thead>
 			<tr>

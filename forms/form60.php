@@ -1,4 +1,4 @@
-<div class='forms'><b>Product Categories</b>
+<div id='form60' class='function_detail'><b>Product Categories</b>
 	<table>
 		<thead>
 			<tr>

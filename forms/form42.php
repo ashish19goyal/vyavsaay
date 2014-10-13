@@ -1,4 +1,4 @@
-<div class='forms'><b>Manage Bills</b>
+<div id='form42' class='function_detail'><b>Manage Bills</b>
 	<table>
 		<thead>
 			<tr>

@@ -1,4 +1,4 @@
-<div class='forms'><b>Service Taxes</b>
+<div id='form65' class='function_detail'><b>Service Taxes</b>
 	<table>
 		<thead>
 			<tr>

@@ -1,4 +1,4 @@
-<div class='forms'><b>Manage returns to suppliers</b>
+<div id='form19' class='function_detail'><b>Manage returns to suppliers</b>
 	<table>
 		<thead>
 			<tr>
