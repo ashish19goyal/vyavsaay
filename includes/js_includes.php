@@ -6,11 +6,10 @@
 <script src='./JavaScripts/open/jquery.i18n.js'></script>
 <script src='./JavaScripts/open/jQuery.print.js'></script>
 <script src='./JavaScripts/open/leaflet.js'></script>
-<script src='./JavaScripts/open/quickselect.js'></script>
-<script src='./JavaScripts/open/quicksilver.js'></script>
 <script src='./JavaScripts/open/shortcuts.min.js'></script>
 <script src='./JavaScripts/prop/add_items.js'></script>
 <script src='./JavaScripts/prop/ajax.js'></script>
+<script src='./JavaScripts/prop/create.js'></script>
 <script src='./JavaScripts/prop/delete.js'></script>
 <script src='./JavaScripts/prop/event_handler.js'></script>
 <script src='./JavaScripts/prop/form_display.js'></script>
@@ -24,9 +23,9 @@
 <script src='./JavaScripts/prop/print.js'></script>
 <script src='./JavaScripts/prop/reports_ini.js'></script>
 <script src='./JavaScripts/prop/reports_header_ini.js'></script>
-<script src='./JavaScripts/prop/save.js'></script>
 <script src='./JavaScripts/prop/sessions.js'></script>
 <script src='./JavaScripts/prop/my_shortcuts.js'></script>
 <script src='./JavaScripts/prop/sync.js'></script>
+<script src='./JavaScripts/prop/update.js'></script>
 <script src='./JavaScripts/prop/time.js'></script>
 <script src='./JavaScripts/prop/virtual_store.js'></script>

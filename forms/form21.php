@@ -7,7 +7,7 @@
 			Entry Date<input type='text'>
 			Total Amount<input type='text' >
 			<input type='hidden' value=''>
-			<input type='button' value='Save Bill' onclick='form12_save_form();'>
+			<input type='submit' value='Save Bill'>
 			<input type='button' value='Discard Bill' onclick='form12_delete_form();'>
 		</fieldset>
 	</form>

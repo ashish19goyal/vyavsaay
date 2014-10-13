@@ -1,11 +1,11 @@
 <div class='forms'><b>Generate service receipt</b>
 	<form id='form10_master'>
 		<fieldset>
-			Customer <input type='text'>
-			Bill Date <input type='text'>
-			Total Amount<input type='text'>
+			Customer <input type='text' required>
+			Bill Date <input type='text' required>
+			Total Amount<input type='text' required>
 			<input type='hidden' value=''>
-			<input type='button' value='Save receipt' onclick='form10_save_form();'>
+			<input type='submit' value='Save receipt'>
 			<input type='button' value='Discard receipt' onclick='form10_delete_form();'>
 		</fieldset>
 	</form>

@@ -5,7 +5,7 @@
 			Order Date: <input type='text'>
 			Estimated Amount: <input type='text'>
 			<input type='hidden' value=''>
-			<input type='button' value='Save Order' onclick='form24_save_form();'>
+			<input type='submit' value='Save Order'>
 			<input type='button' value='Discard Order' onclick='form24_delete_form();'>
 		</fieldset>
 	</form>

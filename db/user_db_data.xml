@@ -2,6 +2,38 @@
 <re_xml>
 	<user_preferences>
 		<row>
+			<name>address</name>
+			<display_name>Official address</display_name>
+			<status>active</status>
+			<value>Business Complex, Sirsa</value>
+			<type>other</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>phone</name>
+			<display_name>Phone No.</display_name>
+			<status>active</status>
+			<value>9818005232</value>
+			<type>other</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>logo</name>
+			<display_name>Logo</display_name>
+			<status>active</status>
+			<value>logo.jpeg</value>
+			<type>other</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>title</name>
+			<display_name>Business Title</display_name>
+			<status>active</status>
+			<value>Vyavsaay.com</value>
+			<type>other</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>theme</name>
 			<display_name>Theme</display_name>
 			<status>active</status>

@@ -154,10 +154,20 @@ function set_my_filter(filter_data,filter_element)
 	get_single_column_data(function(data)
 	{
 		data=jQuery.unique(data);
-		$(filter_element).autocomplete({
+		console.log(data);
+		
+		$(filter_element).typeahead('destroy');
+		$(filter_element).typeahead({
+			  highlight: true
+		},
+		{
+			  source: data,
+			  displayKey: 'value'
+		});
+/*		$(filter_element).autocomplete({
 			source:data
 		});
-	},filter_data);		
+*/	},filter_data);		
 }
 
 function set_static_filter(table,list,filter_element)
@@ -170,9 +180,15 @@ function set_static_filter(table,list,filter_element)
 			"</values_list>";
 	get_single_column_data(function(data)
 	{
-		data=jQuery.unique(data);
-		$(filter_element).autocomplete({
-			source:data
+		console.log(data);
+		
+		$(filter_element).typeahead('destroy');
+		$(filter_element).typeahead({
+			  highlight: true
+		},
+		{
+			  source: data,
+			  displayKey: 'value'
 		});
 	},list_data);		
 }
@@ -181,20 +197,14 @@ function set_my_value_list(filter_data,filter_element)
 {	
 	get_single_column_data(function(data)
 	{
-		//$(filter_element).data().uiAutocomplete.term = null;
-/*		var newobj=filter_element;
-		var selectParentNode = newobj.parentNode;
-		var newSelectObj = newobj.cloneNode(false); // Make a shallow copy
-		selectParentNode.replaceChild(newSelectObj, newobj);		
-		filter_element=newSelectObj;
-*/		
-//		$(filter_element).find('option').remove();
 		data=jQuery.unique(data);
-		$(filter_element).quickselect({
-			data:data,
-			autoSelectFirst:true,
-			matchContains:true,
-			match:'quicksilver'
+		$(filter_element).typeahead('destroy');
+		$(filter_element).typeahead({
+			  highlight: true
+		},
+		{
+			  source: data,
+			  displayKey: 'value'
 		});
 		//console.log(filter_element);
 		$(filter_element).bind("change",function(event)
@@ -245,11 +255,13 @@ function set_my_multiple_list(filter_data,filter_element,output_element)
 	get_single_column_data(function(data)
 	{
 		data=jQuery.unique(data);
-		$(filter_element).quickselect({
-			data:data,
-			autoSelectFirst:true,
-			matchContains:true,
-			match:'quicksilver'
+		$(filter_element).typeahead('destroy');
+		$(filter_element).typeahead({
+			  highlight: true
+		},
+		{
+			  source: data,
+			  displayKey: 'value'
 		});
 		$(filter_element).bind("change",function(event)
 		{
@@ -300,11 +312,13 @@ function set_static_value_list(table,list,filter_element)
 	get_single_column_data(function(data)
 	{
 		data=jQuery.unique(data);
-		$(filter_element).quickselect({
-			data:data,
-			autoSelectFirst:true,
-			matchContains:true,
-			match:'quicksilver'
+		$(filter_element).typeahead('destroy');
+		$(filter_element).typeahead({
+			  highlight: true
+		},
+		{
+			  source: data,
+			  displayKey: 'value'
 		});
 		$(filter_element).bind("change",function(event)
 		{

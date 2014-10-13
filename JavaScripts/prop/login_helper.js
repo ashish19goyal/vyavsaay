@@ -73,9 +73,9 @@ function login_online(username,domain,pass)
 				session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].innerHTML;
 				//console.log();
 			}
-			
 			ini_session(domain,username);
 			set_session(session_vars);
+			set_session_online();
 		}
 	});
 

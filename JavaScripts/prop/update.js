@@ -2,12 +2,10 @@
  * @form Update Inventory
  * @param button
  */
-function form1_save_item(button)
+function form1_update_item(form)
 {
-	if(is_create_access('form1') || is_update_access('form1'))
+	if(is_update_access('form1'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
 		var expiry=get_raw_time(form.elements[2].value);
@@ -35,11 +33,11 @@ function form1_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}
 		for(var i=0;i<6;i++)
 		{
@@ -57,13 +55,10 @@ function form1_save_item(button)
  * @form Create Pamphlets
  * @param button
  */
-function form2_save_item(button)
+function form2_update_item(form)
 {
-	if(is_create_access('form2') || is_update_access('form2'))
+	if(is_update_access('form2'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var pamphlet_name=document.getElementById('form2_master').elements[1].value;
 		var name=form.elements[0].value;
 		var offer_id=form.elements[1].value;
@@ -89,11 +84,11 @@ function form2_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<5;i++)
 		{
@@ -111,9 +106,9 @@ function form2_save_item(button)
  * @form Create Pamphlets
  * @param button
  */
-function form2_save_form()
+function form2_update_form()
 {
-	if(is_create_access('form2') || is_update_access('form2'))
+	if(is_update_access('form2'))
 	{
 		var form=document.getElementById("form2_master");
 
@@ -136,11 +131,11 @@ function form2_save_form()
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}
 	
 		$("[id^='save_form2']").click();
@@ -156,13 +151,10 @@ function form2_save_form()
  * @form Manage Assets
  * @param button
  */
-function form5_save_item(button)
+function form5_update_item(form)
 {
-	if(is_create_access('form5') || is_update_access('form5'))
+	if(is_update_access('form5'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
 		var date_inc=get_raw_time(form.elements[1].value);
 		var owner=form.elements[2].value;
@@ -192,11 +184,11 @@ function form5_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<7;i++)
 		{
@@ -215,13 +207,10 @@ function form5_save_item(button)
  * @form Attendance
  * @param button
  */
-function form7_save_item(button)
+function form7_update_item(form)
 {
-	if(is_create_access('form7') || is_update_access('form7'))
+	if(is_update_access('form7'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var date=get_raw_time(document.getElementById('form7_header').elements[2].value);
 		var name=form.elements[0].value;
 		var presence=form.elements[1].value;
@@ -247,11 +236,11 @@ function form7_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -268,13 +257,10 @@ function form7_save_item(button)
  * @form Manage Staff
  * @param button
  */
-function form8_save_item(button)
+function form8_update_item(form)
 {
-	if(is_create_access('form8') || is_update_access('form8'))
+	if(is_update_access('form8'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
 		var phone=form.elements[1].value;
 		var email=form.elements[2].value;
@@ -301,11 +287,11 @@ function form8_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<7;i++)
 		{
@@ -322,13 +308,10 @@ function form8_save_item(button)
  * @form Cash Register
  * @param button
  */
-function form9_save_item(button)
+function form9_update_item(form)
 {
-	if(is_create_access('form9') || is_update_access('form9'))
+	if(is_update_access('form9'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var trans_type=form.elements[0].value;
 		var trans_date=get_raw_time(form.elements[1].value);
 		var amount=form.elements[2].value;
@@ -358,11 +341,11 @@ function form9_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<7;i++)
 		{
@@ -379,14 +362,11 @@ function form9_save_item(button)
  * @form Service Reciept
  * @param button
  */
-function form10_save_item(button)
+function form10_update_item(form)
 {
-	if(is_create_access('form10') || is_update_access('form10'))
+	if(is_update_access('form10'))
 	{
 		var bill_id=document.getElementById("form10_master").elements[4].value;
-		
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
 		
 		var service=form.elements[0].value;
 		var estimated_cost=form.elements[1].value;
@@ -416,11 +396,11 @@ function form10_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<6;i++)
 		{
@@ -438,9 +418,9 @@ function form10_save_item(button)
  * @form Service Reciept
  * @param button
  */
-function form10_save_form(button)
+function form10_update_form()
 {
-	if(is_create_access('form10') || is_update_access('form10'))
+	if(is_update_access('form10'))
 	{
 		var form=document.getElementById("form10_master");
 		
@@ -467,11 +447,11 @@ function form10_save_form(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}
 	
 		$("[id^='save_form10']").click();
@@ -487,13 +467,10 @@ function form10_save_form(button)
  * @form Schedule Payments
  * @param button
  */
-function form11_save_item(button)
+function form11_update_item(form)
 {
-	if(is_create_access('form11') || is_update_access('form11'))
+	if(is_update_access('form11'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var trans_id=form.elements[0].value;
 		var acc_name=form.elements[1].value;
 		var amount=form.elements[2].value;
@@ -523,11 +500,11 @@ function form11_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<7;i++)
 		{
@@ -544,10 +521,9 @@ function form11_save_item(button)
  * @form New Bill
  * @param button
  */
-function form12_save_item(form)
+function form12_update_item(form)
 {
-	console.log("inside form save function");
-	if(is_create_access('form12') || is_update_access('form12'))
+	if(is_update_access('form12'))
 	{
 		var bill_id=document.getElementById("form12_master").elements[7].value;
 		
@@ -691,9 +667,9 @@ function form12_save_item(form)
  * @form New Bill
  * @param button
  */
-function form12_save_form()
+function form12_update_form()
 {
-	if(is_create_access('form12') || is_update_access('form12'))
+	if(is_update_access('form12'))
 	{
 		var form=document.getElementById("form12_master");
 		
@@ -859,11 +835,11 @@ function form12_save_form()
 						"</activity>";
 			if(is_online())
 			{
-				server_write_row(data_xml,activity_xml);
+				server_update_row(data_xml,activity_xml);
 			}
 			else
 			{
-				local_write_row(data_xml,activity_xml);
+				local_update_row(data_xml,activity_xml);
 			}
 		});
 		$("[id^='save_form12']").click();
@@ -880,13 +856,10 @@ function form12_save_form()
  * @form Manage Tasks
  * @param button
  */
-function form14_save_item(button)
+function form14_update_item(form)
 {
-	if(is_create_access('form14') || is_update_access('form14'))
+	if(is_update_access('form14'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
 		var description=form.elements[1].value;
 		var assignee=form.elements[2].value;
@@ -916,11 +889,11 @@ function form14_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<7;i++)
 		{
@@ -937,13 +910,10 @@ function form14_save_item(button)
  * @form Accept Returns
  * @param button
  */
-function form15_save_item(button)
+function form15_update_item(form)
 {
-	if(is_create_access('form15') || is_update_access('form15'))
+	if(is_update_access('form15'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var customer=form.elements[0].value;
 		var bill_id=form.elements[1].value;
 		var product_name=form.elements[2].value;
@@ -973,11 +943,11 @@ function form15_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<7;i++)
 		{
@@ -994,12 +964,10 @@ function form15_save_item(button)
  * @form Manage Returns
  * @param button
  */
-function form19_save_item(button)
+function form19_update_item(form)
 {
-	if(is_create_access('form19') || is_update_access('form19'))
+	if(is_update_access('form19'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var product_name=form.elements[0].value;
 		var batch=form.elements[1].value;
 		var sup_bill_id=form.elements[2].value;
@@ -1029,11 +997,11 @@ function form19_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<7;i++)
 		{
@@ -1050,14 +1018,11 @@ function form19_save_item(button)
  * @form Goods Received
  * @param button
  */
-function form21_save_item(button)
+function form21_update_item(form)
 {
-	if(is_create_access('form21') || is_update_access('form21'))
+	if(is_update_access('form21'))
 	{
 		var bill_id=document.getElementById("form21_master").elements[2].value;
-		
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
 		
 		var product_name=form.elements[0].value;
 		var batch=form.elements[1].value;
@@ -1087,11 +1052,11 @@ function form21_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<6;i++)
 		{
@@ -1108,9 +1073,9 @@ function form21_save_item(button)
  * @form Goods Received
  * @param button
  */
-function form21_save_form(button)
+function form21_update_form()
 {
-	if(is_create_access('form21') || is_update_access('form21'))
+	if(is_update_access('form21'))
 	{
 		var form=document.getElementById("form21_master");
 		
@@ -1141,11 +1106,11 @@ function form21_save_form(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}
 	
 		$("[id^='save_form21']").click();
@@ -1161,13 +1126,10 @@ function form21_save_form(button)
  * @form Dispose Items
  * @param button
  */
-function form22_save_item(button)
+function form22_update_item(form)
 {
-	if(is_create_access('form22') || is_update_access('form22'))
+	if(is_update_access('form22'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var product_name=form.elements[0].value;
 		var batch=form.elements[1].value;
 		var method=form.elements[2].value;
@@ -1195,11 +1157,11 @@ function form22_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}
 		for(var i=0;i<6;i++)
 		{
@@ -1216,13 +1178,11 @@ function form22_save_item(button)
  * @form Purchase Orders
  * @param button
  */
-function form24_save_item(button)
+function form24_update_item(form)
 {
-	if(is_create_access('form24') || is_update_access('form24'))
+	if(is_update_access('form24'))
 	{
 		var order_id=document.getElementById('form24_master').elements[4].value;
-		
-		var form=document.getElementById(form_id);
 		
 		var product_name=form.elements[0].value;
 		var quantity=form.elements[1].value;
@@ -1246,11 +1206,11 @@ function form24_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}
 		for(var i=0;i<3;i++)
 		{
@@ -1269,7 +1229,7 @@ function form24_save_item(button)
  */
 function form24_save_form(button)
 {
-	if(is_create_access('form24') || is_update_access('form24'))
+	if(is_update_access('form24'))
 	{
 		var form=document.getElementById("form24_master");
 		
@@ -1296,11 +1256,11 @@ function form24_save_form(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}
 	
 		$("[id^='save_form24']").click();
@@ -1317,13 +1277,10 @@ function form24_save_form(button)
  * @form Manage Customers
  * @param button
  */
-function form30_save_item(button)
+function form30_update_item(form)
 {
-	if(is_create_access('form30') || is_update_access('form30'))
+	if(is_update_access('form30'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
 		var phone=form.elements[1].value;
 		var email=form.elements[2].value;
@@ -1350,11 +1307,11 @@ function form30_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}
 		for(var i=0;i<6;i++)
 		{
@@ -1371,13 +1328,10 @@ function form30_save_item(button)
  * @form Manage Offers
  * @param button
  */
-function form35_save_item(button)
+function form35_update_item(form)
 {
-	if(is_create_access('form35') || is_update_access('form35'))
+	if(is_update_access('form35'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var offer_name=form.elements[0].value;
 		var offer_type=form.elements[1].value;
 		var end_date=get_raw_time(form.elements[2].value);
@@ -1405,11 +1359,11 @@ function form35_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<6;i++)
 		{
@@ -1426,12 +1380,10 @@ function form35_save_item(button)
  * @form Store Placement
  * @param button
  */
-function form38_save_item(button)
+function form38_update_item(form)
 {
-	if(is_create_access('form38') || is_update_access('form38'))
+	if(is_update_access('form38'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var product_name=form.elements[0].value;
 		var batch=form.elements[1].value;
 		var name=form.elements[2].value;
@@ -1457,11 +1409,11 @@ function form38_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<5;i++)
 		{
@@ -1478,13 +1430,10 @@ function form38_save_item(button)
  * @form Manage Products
  * @param button
  */
-function form39_save_item(button)
+function form39_update_item(form)
 {
-	if(is_create_access('form39') || is_update_access('form39'))
+	if(is_update_access('form39'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
 		var make=form.elements[1].value;
 		var description=form.elements[2].value;
@@ -1531,13 +1480,13 @@ function form39_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
-			server_write_row(pic_xml,pic_activity_xml);
+			server_update_row(data_xml,activity_xml);
+			server_update_row(pic_xml,pic_activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
-			local_write_row(pic_xml,pic_activity_xml);
+			local_update_row(data_xml,activity_xml);
+			local_update_row(pic_xml,pic_activity_xml);
 		}	
 		for(var i=0;i<9;i++)
 		{
@@ -1554,12 +1503,10 @@ function form39_save_item(button)
  * @form Manage Vendors
  * @param button
  */
-function form40_save_item(button)
+function form40_update_item(form)
 {
-	if(is_create_access('form40') || is_update_access('form40'))
+	if(is_update_access('form40'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
 		var phone=form.elements[1].value;
 		var email=form.elements[2].value;
@@ -1588,11 +1535,11 @@ function form40_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<6;i++)
 		{
@@ -1609,14 +1556,10 @@ function form40_save_item(button)
  * @form Verify addresses
  * @param button
  */
-function form41_save_item(button)
+function form41_update_item(form)
 {
-	if(is_create_access('form41') || is_update_access('form41'))
+	if(is_update_access('form41'))
 	{
-		$(button).hide();
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var acc_name=form.elements[0].value;
 		var lat=form.elements[1].value;
 		var lng=form.elements[2].value;
@@ -1624,6 +1567,9 @@ function form41_save_item(button)
 		var status=form.elements[4].value;
 		var address=form.elements[5].value;
 		var acc_type=form.elements[6].value;
+		var button=form.elements[7].value;
+		$(button).hide();		
+
 		var last_updated=get_my_time();
 		var table='address';
 		var data_xml="<"+table+">" +
@@ -1646,11 +1592,11 @@ function form41_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -1667,13 +1613,10 @@ function form41_save_item(button)
  * @form Manage Bills
  * @param button
  */
-function form42_save_item(button)
+function form42_update_item(form)
 {
-	if(is_create_access('form42') || is_update_access('form42'))
+	if(is_update_access('form42'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var data_id=form.elements[0].value;
 		var customer_name=form.elements[1].value;
 		var date_created=get_raw_time(form.elements[2].value);
@@ -1697,11 +1640,11 @@ function form42_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -1720,12 +1663,10 @@ function form42_save_item(button)
  * @form Manage Purchase Orders
  * @param button
  */
-function form43_save_item(button)
+function form43_update_item(form)
 {
-	if(is_create_access('form43') || is_update_access('form43'))
+	if(is_update_access('form43'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var data_id=form.elements[0].value;
 		var supplier=form.elements[1].value;
 		var order_date=get_raw_time(form.elements[2].value);
@@ -1749,11 +1690,11 @@ function form43_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -1770,13 +1711,10 @@ function form43_save_item(button)
  * @form Manage Pamphlets
  * @param button
  */
-function form44_save_item(button)
+function form44_update_item(form)
 {
-	if(is_create_access('form44') || is_update_access('form44'))
+	if(is_update_access('form44'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
 		var count_items=form.elements[1].value;
 		var data_id=form.elements[2].value;
@@ -1798,11 +1736,11 @@ function form44_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -1819,13 +1757,10 @@ function form44_save_item(button)
  * @form Manage Service Receipts
  * @param button
  */
-function form45_save_item(button)
+function form45_update_item(form)
 {
-	if(is_create_access('form45') || is_update_access('form45'))
+	if(is_update_access('form45'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var data_id=form.elements[0].value;
 		var customer_name=form.elements[1].value;
 		var date_created=get_raw_time(form.elements[2].value);
@@ -1849,11 +1784,11 @@ function form45_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -1870,13 +1805,10 @@ function form45_save_item(button)
  * @form set defaults
  * @param button
  */
-function form46_save_item(button)
+function form46_update_item(form)
 {
-	if(is_create_access('form46') || is_update_access('form46'))
+	if(is_update_access('form46'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
 		var value=form.elements[1].value;
 		var data_id=form.elements[2].value;
@@ -1902,11 +1834,11 @@ function form46_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -1922,9 +1854,9 @@ function form46_save_item(button)
 /**
  * @form set defaults
  */
-function form46_save_form()
+function form46_update_form()
 {	
-	if(is_create_access('form46') || is_update_access('form46'))
+	if(is_update_access('form46'))
 	{
 		$("[id^='save_form46']").click();
 		//$("#modal3").dialog("open");
@@ -1938,9 +1870,9 @@ function form46_save_form()
 /**
  * @form Change Password
  */
-function form47_save_form()
+function form47_update_form()
 {
-	if(is_create_access('form47') || is_update_access('form47'))
+	if(is_update_access('form47'))
 	{
 		var form=document.getElementById('form47_master');
 		var domain=get_domain();
@@ -1991,11 +1923,11 @@ function form47_save_form()
 										"</activity>";
 							if(is_online())
 							{
-								server_write_row(data_xml,activity_xml);
+								server_update_row(data_xml,activity_xml);
 							}
 							else
 							{
-								local_write_row(data_xml,activity_xml);
+								local_update_row(data_xml,activity_xml);
 							}
 							$(form).find('.form47_verify').html('Password updated.');
 							//$("#modal3").dialog("open");
@@ -2022,13 +1954,10 @@ function form47_save_form()
  * @form Select Reports
  * @param button
  */
-function form48_save_item(button)
+function form48_update_item(form)
 {
-	if(is_create_access('form48') || is_update_access('form48'))
+	if(is_update_access('form48'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
 		var value=form.elements[1].value;
 		var data_id=form.elements[2].value;
@@ -2054,11 +1983,11 @@ function form48_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		elsea
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -2074,9 +2003,9 @@ function form48_save_item(button)
 /**
  * @form Select Reports
  */
-function form48_save_form()
+function form48_update_form()
 {	
-	if(is_create_access('form48') || is_update_access('form48'))
+	if(is_update_access('form48'))
 	{
 		$("[id^='save_form48']").click();
 		//$("#modal3").dialog("open");
@@ -2091,13 +2020,10 @@ function form48_save_form()
  * @form Select Forms
  * @param button
  */
-function form49_save_item(button)
+function form49_update_item(form)
 {
-	if(is_create_access('form49') || is_update_access('form49'))
+	if(is_update_access('form49'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
 		var value=form.elements[1].value;
 		var data_id=form.elements[2].value;
@@ -2123,11 +2049,11 @@ function form49_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
-		elsea
+		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -2143,9 +2069,9 @@ function form49_save_item(button)
 /**
  * @form Select Forms
  */
-function form49_save_form()
+function form49_update_form()
 {	
-	if(is_create_access('form49') || is_update_access('form49'))
+	if(is_update_access('form49'))
 	{
 		$("[id^='save_form49']").click();
 		//$("#modal3").dialog("open");
@@ -2160,13 +2086,10 @@ function form49_save_form()
  * @form Select Accounting principles
  * @param button
  */
-function form50_save_item(button)
+function form50_update_item(form)
 {
-	if(is_create_access('form50') || is_update_access('form50'))
+	if(is_update_access('form50'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
 		var value=form.elements[1].value;
 		var data_id=form.elements[2].value;
@@ -2192,11 +2115,11 @@ function form50_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		elsea
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -2212,9 +2135,9 @@ function form50_save_item(button)
 /**
  * @form Select Accounting Principles
  */
-function form50_save_form()
+function form50_update_form()
 {
-	if(is_create_access('form50') || is_update_access('form50'))
+	if(is_update_access('form50'))
 	{
 		$("[id^='save_form50']").click();
 		//$("#modal3").dialog("open");
@@ -2229,17 +2152,14 @@ function form50_save_form()
  * @form Access Control
  * @param button
  */
-function form51_save_item(button)
+function form51_update_item(form)
 {
-	if(is_create_access('form51') || is_update_access('form51'))
+	if(is_update_access('form51'))
 	{
 		var master_form=document.getElementById('form51_master');
 		var username=master_form.elements[3].value;
 		var name=master_form.elements[4].value;
 			
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var element_name=form.elements[0].value;
 		var re='unchecked';
 		if(form.elements[1].checked)
@@ -2279,11 +2199,11 @@ function form51_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<7;i++)
 		{
@@ -2301,9 +2221,9 @@ function form51_save_item(button)
  * form Access Control
  * @param button
  */
-function form51_save_form()
+function form51_update_form()
 {
-	if(is_create_access('form51') || is_update_access('form51'))
+	if(is_update_access('form51'))
 	{
 		var form=document.getElementById("form51_master");
 		
@@ -2334,11 +2254,11 @@ function form51_save_form()
 						"</activity>";
 			if(is_online())
 			{
-				server_write_row(data_xml,activity_xml);
+				server_update_row(data_xml,activity_xml);
 			}
 			else
 			{
-				local_write_row(data_xml,activity_xml);
+				local_update_row(data_xml,activity_xml);
 			}
 			
 			$("[id^='save_form51']").click();
@@ -2371,11 +2291,11 @@ function form51_save_form()
 							"</activity>";
 				if(is_online())
 				{
-					server_write_row(data_xml,activity_xml);
+					server_update_row(data_xml,activity_xml);
 				}
 				else
 				{
-					local_write_row(data_xml,activity_xml);
+					local_update_row(data_xml,activity_xml);
 				}
 				
 				$("[id^='save_form51']").click();
@@ -2392,13 +2312,10 @@ function form51_save_form()
  * @form Set shortcut keys
  * @param button
  */
-function form52_save_item(button)
+function form52_update_item(form)
 {
-	if(is_create_access('form52') || is_update_access('form52'))
+	if(is_update_access('form52'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var element_name=form.elements[0].value;
 		var shortcut=form.elements[1].value;
 		var data_id=form.elements[2].value;
@@ -2423,11 +2340,11 @@ function form52_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -2444,9 +2361,9 @@ function form52_save_item(button)
  * @form Set Shortcut keys
  * @param button
  */
-function form52_save_form(button)
+function form52_update_form(button)
 {
-	if(is_create_access('form52') || is_update_access('form52'))
+	if(is_update_access('form52'))
 	{
 		$("[id^='save_form52']").click();
 		//$("#modal3").dialog("open");
@@ -2463,12 +2380,10 @@ function form52_save_form(button)
  * form Manage Supplier Bills
  * @param button
  */
-function form53_save_item(button)
+function form53_update_item(form)
 {
-	if(is_create_access('form53') || is_update_access('form53'))
+	if(is_update_access('form53'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var bill_id=form.elements[0].value;
 		var supplier_name=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
@@ -2496,11 +2411,11 @@ function form53_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<6;i++)
 		{
@@ -2517,13 +2432,10 @@ function form53_save_item(button)
  * @form Select print templates
  * @param button
  */
-function form54_save_item(button)
+function form54_update_item(form)
 {
-	if(is_create_access('form54') || is_update_access('form54'))
+	if(is_update_access('form54'))
 	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
 		var value=form.elements[1].value;
 		var data_id=form.elements[2].value;
@@ -2549,11 +2461,11 @@ function form54_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		elsea
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -2570,9 +2482,9 @@ function form54_save_item(button)
  * @form Select Print templates
  * @param button
  */
-function form54_save_form(button)
+function form54_update_form(button)
 {
-	if(is_create_access('form54') || is_update_access('form54'))
+	if(is_update_access('form54'))
 	{
 		$("[id^='save_form54']").click();
 		//$("#modal3").dialog("open");
@@ -2588,12 +2500,10 @@ function form54_save_form(button)
  * form Expense Register
  * @param button
  */
-function form56_save_item(button)
+function form56_update_item(form)
 {
-	if(is_create_access('form56') || is_update_access('form56'))
+	if(is_update_access('form56'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var expense_date=get_raw_time(form.elements[0].value);
 		var to_account=form.elements[1].value;
 		var description=form.elements[2].value;
@@ -2619,11 +2529,11 @@ function form56_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<5;i++)
 		{
@@ -2641,12 +2551,10 @@ function form56_save_item(button)
  * form Manage Services
  * @param button
  */
-function form57_save_item(button)
+function form57_update_item(form)
 {
-	if(is_create_access('form57') || is_update_access('form57'))
+	if(is_update_access('form57'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var service=form.elements[0].value;
 		var description=form.elements[1].value;
 		var warranty=form.elements[2].value;
@@ -2676,11 +2584,11 @@ function form57_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<7;i++)
 		{
@@ -2698,12 +2606,10 @@ function form57_save_item(button)
  * form Manage Service pre-requisites
  * @param button
  */
-function form58_save_item(button)
+function form58_update_item(form)
 {
-	if(is_create_access('form58') || is_update_access('form58'))
+	if(is_update_access('form58'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var service=form.elements[0].value;
 		var type=form.elements[1].value;
 		var requisite=form.elements[2].value;
@@ -2730,11 +2636,11 @@ function form58_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<5;i++)
 		{
@@ -2752,12 +2658,10 @@ function form58_save_item(button)
  * form Manage product pre-requisites
  * @param button
  */
-function form59_save_item(button)
+function form59_update_item(form)
 {
-	if(is_create_access('form59') || is_update_access('form59'))
+	if(is_update_access('form59'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var product=form.elements[0].value;
 		var type=form.elements[1].value;
 		var requisite=form.elements[2].value;
@@ -2784,11 +2688,11 @@ function form59_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<5;i++)
 		{
@@ -2806,12 +2710,10 @@ function form59_save_item(button)
  * form Product Categories
  * @param button
  */
-function form60_save_item(button)
+function form60_update_item(form)
 {
-	if(is_create_access('form60') || is_update_access('form60'))
+	if(is_update_access('form60'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var product=form.elements[0].value;
 		var category=form.elements[1].value;
 		var data_id=form.elements[2].value;
@@ -2834,11 +2736,11 @@ function form60_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<3;i++)
 		{
@@ -2856,12 +2758,10 @@ function form60_save_item(button)
  * form service Categories
  * @param button
  */
-function form61_save_item(button)
+function form61_update_item(form)
 {
-	if(is_create_access('form61') || is_update_access('form61'))
+	if(is_update_access('form61'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var service=form.elements[0].value;
 		var category=form.elements[1].value;
 		var data_id=form.elements[2].value;
@@ -2884,11 +2784,11 @@ function form61_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<3;i++)
 		{
@@ -2906,12 +2806,10 @@ function form61_save_item(button)
  * form Product reviews
  * @param button
  */
-function form62_save_item(button)
+function form62_update_item(form)
 {
-	if(is_create_access('form62') || is_update_access('form62'))
+	if(is_update_access('form62'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var product=form.elements[0].value;
 		var reviewer=form.elements[1].value;
 		var detail=form.elements[2].value;
@@ -2938,11 +2836,11 @@ function form62_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<5;i++)
 		{
@@ -2960,12 +2858,10 @@ function form62_save_item(button)
  * form service reviews
  * @param button
  */
-function form63_save_item(button)
+function form63_update_item(form)
 {
-	if(is_create_access('form63') || is_update_access('form63'))
+	if(is_update_access('form63'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var service=form.elements[0].value;
 		var reviewer=form.elements[1].value;
 		var detail=form.elements[2].value;
@@ -2992,11 +2888,11 @@ function form63_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<5;i++)
 		{
@@ -3014,12 +2910,10 @@ function form63_save_item(button)
  * form Service Cross sells
  * @param button
  */
-function form64_save_item(button)
+function form64_update_item(form)
 {
-	if(is_create_access('form64') || is_update_access('form64'))
+	if(is_update_access('form64'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var service=form.elements[0].value;
 		var cross_type=form.elements[1].value;
 		var cross_name=form.elements[2].value;
@@ -3044,11 +2938,11 @@ function form64_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -3066,12 +2960,10 @@ function form64_save_item(button)
  * form Service Taxes
  * @param button
  */
-function form65_save_item(button)
+function form65_update_item(form)
 {
-	if(is_create_access('form65') || is_update_access('form65'))
+	if(is_update_access('form65'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var service=form.elements[0].value;
 		var taxable=form.elements[1].value;
 		var tax=form.elements[2].value;
@@ -3095,11 +2987,11 @@ function form65_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -3117,12 +3009,10 @@ function form65_save_item(button)
  * form Cross sells
  * @param button
  */
-function form66_save_item(button)
+function form66_update_item(form)
 {
-	if(is_create_access('form66') || is_update_access('form66'))
+	if(is_update_access('form66'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var product=form.elements[0].value;
 		var cross_type=form.elements[1].value;
 		var cross_name=form.elements[2].value;
@@ -3147,11 +3037,11 @@ function form66_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -3170,12 +3060,10 @@ function form66_save_item(button)
  * form Product Dimensions
  * @param button
  */
-function form67_save_item(button)
+function form67_update_item(form)
 {
-	if(is_create_access('form67') || is_update_access('form67'))
+	if(is_update_access('form67'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var product=form.elements[0].value;
 		var weight=form.elements[1].value;
 		var length=form.elements[2].value;
@@ -3203,11 +3091,11 @@ function form67_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<6;i++)
 		{
@@ -3225,12 +3113,10 @@ function form67_save_item(button)
  * form Product Taxes
  * @param button
  */
-function form68_save_item(button)
+function form68_update_item(form)
 {
-	if(is_create_access('form68') || is_update_access('form68'))
+	if(is_update_access('form68'))
 	{
-		var form=document.getElementById(form_id);
-		
 		var product=form.elements[0].value;
 		var taxable=form.elements[1].value;
 		var tax=form.elements[2].value;
@@ -3254,11 +3140,11 @@ function form68_save_item(button)
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{

@@ -35,6 +35,12 @@ function form2_header_ini()
 	var fields=document.getElementById('form2_master');
 	fields.elements[1].value="";
 	fields.elements[2].value=get_new_key();
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form2_create_form();
+	});
 }
 
 
@@ -160,6 +166,13 @@ function form10_header_ini()
 	fields.elements[3].value=0;
 	fields.elements[4].value=get_new_key();
 		
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form10_create_form();
+	});
+	
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
@@ -217,10 +230,11 @@ function form12_header_ini()
 	fields.elements[7].value=get_new_key();
 	fields.elements[8].value="";
 	
+	$(fields).off('submit');
 	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
-		form12_save_form();
+		form12_create_form();
 	});
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
@@ -358,6 +372,13 @@ function form21_header_ini()
 	fields.elements[5].value=0;
 	fields.elements[6].value=get_new_key();
 		
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form21_create_form();
+	});
+	
 	var suppliers_data="<suppliers>" +
 		"<acc_name></acc_name>" +
 		"</suppliers>";
@@ -413,6 +434,13 @@ function form24_header_ini()
 	fields.elements[3].value=0;
 	fields.elements[4].value=get_new_key();
 		
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form24_create_form();
+	});
+
 	var suppliers_data="<suppliers>" +
 		"<acc_name></acc_name>" +
 		"</suppliers>";
@@ -667,6 +695,13 @@ function form46_header_ini()
 	var filter_fields=document.getElementById('form46_header');
 	var other_element=filter_fields.elements[0];
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form46_update_form();
+	});
+	
 	var other_data="<user_preferences>" +
 			"<value></value>" +
 			"<type>other</other>" +
@@ -685,6 +720,13 @@ function form48_header_ini()
 {
 	var filter_fields=document.getElementById('form48_header');
 	var report_filter=filter_fields.elements[0];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form48_update_form();
+	});
 	
 	var reports_data="<user_preferences>" +
 			"<display_name></display_name>" +
@@ -706,6 +748,13 @@ function form49_header_ini()
 	var filter_fields=document.getElementById('form49_header');
 	var form_filter=filter_fields.elements[0];
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form49_update_form();
+	});
+	
 	var forms_data="<user_preferences>" +
 			"<display_name></display_name>" +
 			"<type>form</type>" +
@@ -725,6 +774,12 @@ function form50_header_ini()
 	var filter_fields=document.getElementById('form50_header');
 	var accounts_filter=filter_fields.elements[0];
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form50_update_form();
+	});
 	var accounts_data="<user_preferences>" +
 			"<display_name></display_name>" +
 			"<type>accounting</type>" +
@@ -747,7 +802,13 @@ function form51_header_ini()
 			"</user_profiles>";
 	
 	set_my_filter(username_data,users_filter);
-
+	
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form51_update_form();
+	});
 };
 
 /**

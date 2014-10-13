@@ -27,7 +27,6 @@ function modal8_action(button)
 	var quantity_amount=form.elements[13];
 	var free_product_name=form.elements[14];
 	var free_quantity=form.elements[15];
-	var save_button=form.elements[16];
 	
 	set_static_value_list('offers','offer_type',offer_type);
 	
@@ -121,7 +120,7 @@ function modal8_action(button)
 		}
 	});
 	
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		if(is_create_access('form35') || is_update_access('form35'))
 		{
@@ -278,12 +277,11 @@ function modal9_action(button)
 	var father_value=father_form.elements[4];
 	var fdate=form.elements[1];
 	var fvalue=form.elements[2];
-	var save_button=form.elements[3];
 	
 	$(fdate).datepicker();
 	fdate.value=get_my_date();
 	
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		var name=fname.value;
 		var date=get_raw_time(fdate.value);
@@ -337,12 +335,11 @@ function modal10_action(button)
 	var father_activity=father_form.elements[5];
 	var fdate=form.elements[1];
 	var fmaintenance=form.elements[2];
-	var save_button=form.elements[3];
 	
 	$(fdate).datepicker();
 	fdate.value=get_my_date();
 	
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		var name=fname.value;
 		var date=get_raw_time(fdate.value);
@@ -401,9 +398,8 @@ function modal11_action()
 	var fstate=form.elements[7];
 	var fcountry=form.elements[8];
 	var fnotes=form.elements[9];
-	var save_button=form.elements[10];
 		
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		if(is_create_access('form30'))
 		{
@@ -493,9 +489,8 @@ function modal12_action()
 	var ftype=form.elements[2];
 	var fdescription=form.elements[3];
 	var fdata_id=get_new_key();
-	var save_button=form.elements[4];
 		
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		var name=fname.value;
 		var type=ftype.value;
@@ -552,9 +547,8 @@ function modal13_action()
 	var fcountry=form.elements[8];
 	var fnotes=form.elements[9];
 	var fdata_id=get_new_key();
-	var save_button=form.elements[10];
 		
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		if(is_create_access('form40'))
 		{
@@ -659,7 +653,6 @@ function modal14_action()
 	var fcross_product=form.elements[25];
 	var fcross_service_out=form.elements[26];
 	var fcross_service=form.elements[27];
-	var save_button=form.elements[28];
 	
 	var make_data="<product_master>" +
 		"<make></make>" +
@@ -700,7 +693,7 @@ function modal14_action()
 			"</task_type>";
 	set_my_multiple_list(task_data,freq_task,freq_task_out);
 	
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		if(is_create_access('form39') || is_update_access('form39'))
 		{
@@ -960,7 +953,6 @@ function modal15_action()
 	var frating=form.elements[4];
 	var fdate=form.elements[5];
 	var fdata_id=get_new_key();
-	var save_button=form.elements[6];
 	
 	var accounts_data="<accounts>" +
 		"<acc_name></acc_name>" +
@@ -972,7 +964,7 @@ function modal15_action()
 	$(fdate).datepicker();
 	$(fdate).val(get_my_date());
 		
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		var provider=fprovider.value;
 		var detail=fdetail.value;
@@ -1034,9 +1026,8 @@ function modal16_action(button,acc_type,address_id)
 	var fcity=form.elements[3];
 	var fstate=form.elements[4];
 	var fcountry=form.elements[5];
-	var save_button=form.elements[6];
 		
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		var name=fname.value;
 		var phone=fphone.value;
@@ -1105,11 +1096,10 @@ function modal17_action(button)
 	var frate=form.elements[5];
 	var fhours=form.elements[6];
 	var fpto=form.elements[7];
-	var save_button=form.elements[8];
 	
 	$(fdate).datepicker();
 	
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		var data_id=fdata_id.value;
 		var date=get_raw_time(fdate.value);
@@ -1188,7 +1178,6 @@ function modal19_action(button)
 	var fcross_product=form.elements[25];
 	var fcross_service_out=form.elements[26];
 	var fcross_service=form.elements[27];
-	var save_button=form.elements[28];
 	
 		
 	/////---------initializing all the values-------///////////
@@ -1212,12 +1201,11 @@ function modal19_action(button)
 			"<width></width>" +
 			"<tags></tags>" +
 			"</product_master>";
-	console.log(copy_name);
 	fetch_requested_data('form39',copy_master_data,function(results)
 	{
 		results.forEach(function(result)
 		{
-			console.log(result);
+			//console.log(result);
 			form.elements[2].value=result.make;
 			form.elements[3].value=result.tags;
 			form.elements[8].value=result.taxable;
@@ -1357,7 +1345,7 @@ function modal19_action(button)
 ///////-------------set editable finished-------/////////////
 
 	
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		if(is_create_access('form39') || is_update_access('form39'))
 		{
@@ -1629,7 +1617,6 @@ function modal20_action()
 	var fcross_product=form.elements[20];
 	var fcross_service_out=form.elements[21];
 	var fcross_service=form.elements[22];
-	var save_button=form.elements[23];
 	
 	var categories_data="<categories>" +
 			"<category></category>" +
@@ -1660,7 +1647,7 @@ function modal20_action()
 		"</assets>";
 	set_my_multiple_list(asset_data,freq_asset,freq_asset_out);
 
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		if(is_create_access('form57') || is_update_access('form57'))
 		{
@@ -1919,7 +1906,6 @@ function modal21_action()
 	var fcross_product=form.elements[20];
 	var fcross_service_out=form.elements[21];
 	var fcross_service=form.elements[22];
-	var save_button=form.elements[23];
 	
 	//////////----initializing form----------////////////
 	
@@ -2049,7 +2035,7 @@ function modal21_action()
 		"</assets>";
 	set_my_multiple_list(asset_data,freq_asset,freq_asset_out);
 
-	$(save_button).on("click",function(event)
+	$(form).on("submit",function(event)
 	{
 		if(is_create_access('form57') || is_update_access('form57'))
 		{
@@ -2061,7 +2047,6 @@ function modal21_action()
 			{
 				if(unique_product.length===0)
 				{
-					
 					var description=form.elements[2].value;
 					var warranty=form.elements[3].value;
 					var tags=form.elements[4].value;

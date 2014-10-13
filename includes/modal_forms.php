@@ -45,7 +45,7 @@
 			<label>Quantity <input type="number"></label><br/>
 			<label>Free product name <input type="text"></label><br/>
 			<label>Free product quantity <input type="number"></label><br/>			
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>
@@ -55,7 +55,7 @@
 		<fieldset>
 			<label>Date <input type='text'></label><br/>
 			<label>Updated Value (in Rs.)<input type="number"></label><br/>
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>
@@ -64,7 +64,7 @@
 		<fieldset>
 			<label>Date <input type='text'></label><br/>
 			<label>Maintenance Activity<input type="textarea"></label><br/>
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>
@@ -81,7 +81,7 @@
 			<label>State <input type="text"></label><br/>
 			<label>Country <input type="text"></label><br/>
 			<label>Notes <input type="textarea"></label><br/>
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>
@@ -92,7 +92,7 @@
 			<label>Name <input type='text'></label><br/>
 			<label>Type <input type="text"></label><br/>
 			<label>Description <input type="text"></label><br/>
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>
@@ -109,7 +109,7 @@
 			<label>State <input type="text"></label><br/>
 			<label>Country <input type="text"></label><br/>
 			<label>Notes <input type="textarea"></label><br/>
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>
@@ -140,7 +140,7 @@
 			Cross-sells</br>
 			<label>Products <output></output><input type="text"></label><br/>
 			<label>Services <output></output><input type="text"></label><br/>
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>
@@ -153,7 +153,7 @@
 			<label>Type <input type="text"></label><br/>
 			<label>Rating <input type="text"></label><br/>
 			<label>Date <input type="text"></label><br/>
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>
@@ -166,7 +166,7 @@
 			<label>City <input type="text"></label><br/>
 			<label>State <input type="text"></label><br/>
 			<label>Country <input type="text"></label><br/>
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>
@@ -181,7 +181,7 @@
 			<label>Variable Compensation Rate (Rs./hour)<input type="number"></label><br/>
 			<label>Monthly work hours <input type="number"></label><br/>
 			<label>PTOs Allowed <input type="text"></label><br/>
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>
@@ -215,7 +215,7 @@
 			Cross-sells</br>
 			<label>Products <output></output><input type="text"></label><br/>
 			<label>Services <output></output><input type="text"></label><br/>
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>
@@ -240,7 +240,7 @@
 			<b>Cross-sells</b></br>
 			<label>Products <output></output><input type="text"></label><br/>
 			<label>Services <output></output><input type="text"></label><br/>
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>
@@ -265,7 +265,7 @@
 			<b>Cross-sells</b></br>
 			<label>Products <output></output><input type="text"></label><br/>
 			<label>Services <output></output><input type="text"></label><br/>
-			<input type="button" value='Save'>
+			<input type="submit" value='Save'>
 		</fieldset>
 	</form>
 </div>

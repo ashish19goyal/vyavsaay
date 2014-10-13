@@ -1,9 +1,9 @@
 <div class='forms'><b>Create pamphlets</b>
 	<form id='form2_master'>
 		<fieldset>
-			Pamphlet Name<input type='text'>
+			Pamphlet Name<input type='text' required>
 			<input type='hidden' name='pamphlet_id' form='form2_master' value=''>
-			<input type='button' value='Save Pamphlet' onclick='form2_save_form($(this));'>
+			<input type='submit' value='Save Pamphlet'>
 			<input type='button' value='Discard Pamphlet' onclick='form2_delete_form($(this));'>
 			<input type='button' value='Print Bill' onclick='form2_print_form($(this));'>
 		</fieldset>

@@ -266,7 +266,7 @@ footer{
 	height: 5%;
 	text-align: left;
 }
-
+/*
 .filter{
 	visibility: hidden;
 	opacity: 0;
@@ -277,7 +277,7 @@ footer{
 	color: #545453;
 	width: inherit;
 }
-
+*/
 
 table{
 	table-layout: fixed;
@@ -335,6 +335,37 @@ tfoot>tr>td{
 	background-size: 25px 25px;
 	color:transparent;
 }
+
+.copy_icon{
+	height:25px;
+	width: 25px;
+	background:url('/images/copy.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+}
+
+.edit_icon{
+	height:25px;
+	width: 25px;
+	background:url('/images/edit.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+}
+
+.add_icon{
+	height:25px;
+	width: 25px;
+	background:url('/images/add.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+}
+
 
 .customers_pane{
 	overflow: auto;

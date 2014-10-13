@@ -12,7 +12,7 @@ function form1_add_item()
 		rowsHTML+="<form id='form1_"+id+"'></form>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form1_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' src='./images/add.jpeg' value='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img class='add_icon' value='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form1_"+id+"' value=''>";
@@ -171,11 +171,11 @@ function form5_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' readonly='readonly' form='form5_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form5_"+id+"' value='new' onclick='modal9_action($(this));'>";
+				rowsHTML+="<img class='edit_icon' form='form5_"+id+"' value='new' onclick='modal9_action($(this));'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='textarea' readonly='readonly' form='form5_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form5_"+id+"' value='new' onclick='modal10_action($(this));'>";
+				rowsHTML+="<img class='edit_icon' form='form5_"+id+"' value='new' onclick='modal10_action($(this));'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='hidden' form='form5_"+id+"' value='"+id+"'>";
@@ -241,11 +241,11 @@ function form8_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form8_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' form='form8_"+id+"' src='./images/edit.jpeg' onclick=\"modal16_action($(this),'staff',"+get_new_key()+");\">";
+				rowsHTML+="<img class='edit_icon' form='form8_"+id+"' onclick=\"modal16_action($(this),'staff',"+get_new_key()+");\">";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form8_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' form='form8_"+id+"' src='./images/edit.jpeg' onclick='modal17_action($(this);'>";
+				rowsHTML+="<img class='edit_icon' form='form8_"+id+"' onclick='modal17_action($(this);'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form8_"+id+"' value=''>";
@@ -1231,7 +1231,7 @@ function form30_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form30_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' form='form30_"+id+"' src='./images/edit.jpeg' onclick=\"modal16_action($(this),'customer','"+get_new_key()+"')\">";
+				rowsHTML+="<img class='edit_icon' form='form30_"+id+"' onclick=\"modal16_action($(this),'customer','"+get_new_key()+"')\">";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form30_"+id+"' value=''>";
@@ -1288,7 +1288,7 @@ function form35_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' readonly='readonly' form='form35_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form35_"+id+"' onclick='modal8_action($(this))'>";
+				rowsHTML+="<img class='edit_icon' form='form35_"+id+"' onclick='modal8_action($(this))'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form35_"+id+"' value=''>";
@@ -1423,7 +1423,7 @@ function form40_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form40_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' src='./images/edit.jpeg' form='form40_"+id+"' onclick=\"modal16_action($(this),'supplier','"+get_new_key()+"');\">";
+				rowsHTML+="<img class='edit_icon' form='form40_"+id+"' onclick=\"modal16_action($(this),'supplier','"+get_new_key()+"');\">";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form40_"+id+"' value=''>";

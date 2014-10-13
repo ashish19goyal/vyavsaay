@@ -12,5 +12,4 @@
 	}();
 </script>
 <link rel="stylesheet" type="text/css" href="./CSS/jquery-ui.css"/>
-<link rel="stylesheet" type="text/css" href="./CSS/quickselect.css"/>
 <link rel="stylesheet" type="text/css" href="./CSS/leaflet.css"/>

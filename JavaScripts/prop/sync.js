@@ -479,33 +479,34 @@ function set_session_online()
 
 	get_single_column_data(function(data_ids)
 	{
-		console.log("this is the id of offline-------"+data_ids[0]);
-		sessionStorage.setItem('offline','online');
-		var data_xml="<user_preferences>" +
-			"<id>"+data_ids[0]+"</id>" +
-			"<name>offline</name>" +
-			"<display_name>Mode of operation</display_name>" +
-			"<value>online</value>" +
-			"<type>other</type>" +
-			"<status>active</status>" +
-			"<last_updated>"+get_my_time()+"</last_updated>" +
-			"</user_preferences>";	
-		var activity_xml="<activity>" +
-			"<data_id>"+data_ids[0]+"</data_id>" +
-			"<tablename>user_preferences</tablename>" +
-			"<link_to>home</link_to>" +
-			"<title>Changed</title>" +
-			"<notes>Set mode of operation to Online</notes>" +
-			"<user_display>yes</user_display>" +
-			"<updated_by>"+get_name()+"</updated_by>" +
-			"</activity>";
-		//console.log(data_xml);
-		//console.log(activity_xml);
-		
-		server_write_row(data_xml,activity_xml);
-		local_write_row(data_xml,"<activity></activity>");
-		hide_menu_items();
-		hide_loader();
+		data_ids.forEach(function(data_id)
+		{
+			sessionStorage.setItem('offline','online');
+			var data_xml="<user_preferences>" +
+				"<id>"+data_id+"</id>" +
+				"<name>offline</name>" +
+				"<display_name>Mode of operation</display_name>" +
+				"<value>online</value>" +
+				"<type>other</type>" +
+				"<status>active</status>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</user_preferences>";	
+			var activity_xml="<activity>" +
+				"<data_id>"+data_id+"</data_id>" +
+				"<tablename>user_preferences</tablename>" +
+				"<link_to>home</link_to>" +
+				"<title>Changed</title>" +
+				"<notes>Set mode of operation to Online</notes>" +
+				"<user_display>yes</user_display>" +
+				"<updated_by>"+get_name()+"</updated_by>" +
+				"</activity>";
+			//console.log(data_xml);
+			//console.log(activity_xml);
+			server_write_row(data_xml,activity_xml);
+			local_write_simple(data_xml);
+			hide_menu_items();
+			hide_loader();
+		});
 	},offline_data);
 }
 
@@ -518,31 +519,33 @@ function set_session_offline()
 
 	get_single_column_data(function(data_ids)
 	{
-		console.log("this is the id of offline-------"+data_ids[0]);
-		sessionStorage.setItem('offline','offline');
-		var data_xml="<user_preferences>" +
-			"<id>"+data_ids[0]+"</id>" +
-			"<name>offline</name>" +
-			"<display_name>Mode of operation</display_name>" +
-			"<value>offline</value>" +
-			"<type>other</type>" +
-			"<status>active</status>" +
-			"<last_updated>"+get_my_time()+"</last_updated>" +
-			"</user_preferences>";	
-		var activity_xml="<activity>" +
-			"<data_id>"+data_ids[0]+"</data_id>" +
-			"<tablename>user_preferences</tablename>" +
-			"<link_to>home</link_to>" +
-			"<title>Changed</title>" +
-			"<notes>Set mode of operation to Offline</notes>" +
-			"<user_display>yes</user_display>" +
-			"<updated_by>"+get_name()+"</updated_by>" +
-			"</activity>";
-		//console.log(data_xml);
-		//console.log(activity_xml);
-		server_write_row(data_xml,"<activity></activity>");
-		local_write_row(data_xml,activity_xml);
-		hide_menu_items();
-		hide_loader();
+		data_ids.forEach(function(data_id)
+		{
+			sessionStorage.setItem('offline','offline');
+			var data_xml="<user_preferences>" +
+				"<id>"+data_id+"</id>" +
+				"<name>offline</name>" +
+				"<display_name>Mode of operation</display_name>" +
+				"<value>offline</value>" +
+				"<type>other</type>" +
+				"<status>active</status>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</user_preferences>";	
+			var activity_xml="<activity>" +
+				"<data_id>"+data_id+"</data_id>" +
+				"<tablename>user_preferences</tablename>" +
+				"<link_to>home</link_to>" +
+				"<title>Changed</title>" +
+				"<notes>Set mode of operation to Offline</notes>" +
+				"<user_display>yes</user_display>" +
+				"<updated_by>"+get_name()+"</updated_by>" +
+				"</activity>";
+			//console.log(data_xml);
+			//console.log(activity_xml);
+			server_write_simple(data_xml);
+			local_write_row(data_xml,activity_xml);
+			hide_menu_items();
+			hide_loader();
+		});
 	},offline_data);
 }

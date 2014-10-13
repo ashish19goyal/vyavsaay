@@ -8,7 +8,7 @@
 			Password<input type='password'>
 			<input type='hidden' name='user_id'>
 			<input type='hidden' name='pass_hash'>
-			<input type='button' value='Save Access' onclick='form51_save_form();'>
+			<input type='submit' value='Save Access'>
 			<input type='button' value='Delete User' onclick='form51_delete_form();'>
 		</fieldset>
 	<table>
