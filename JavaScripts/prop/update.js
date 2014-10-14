@@ -521,152 +521,6 @@ function form11_update_item(form)
  * @form New Bill
  * @param button
  */
-function form12_update_item(form)
-{
-	if(is_update_access('form12'))
-	{
-		var bill_id=document.getElementById("form12_master").elements[7].value;
-		
-		var name=form.elements[0].value;
-		var batch=form.elements[1].value;
-		var price=form.elements[2].value;
-		var quantity=form.elements[3].value;
-		var total=form.elements[4].value;
-		var amount=form.elements[5].value;
-		var discount=form.elements[6].value;
-		var tax=form.elements[7].value;
-		var offer=form.elements[8].value;
-		var data_id=form.elements[9].value;
-		var free_product_name=form.elements[12].value;
-		var free_product_quantity=form.elements[13].value;
-		
-		var last_updated=get_my_time();
-		var table='bill_items';
-		var quantity_data="<product_instances>" +
-					"<id></id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<quantity></quantity>" +
-					"</product_instances>";
-		
-		//////updating product quantity in inventory
-		fetch_requested_data('',quantity_data,function(quantities)
-		{
-			for (var i in quantities)
-			{
-				var q=parseFloat(quantities[i].quantity)-parseFloat(quantity);
-				var quantity_xml="<product_instances>" +
-						"<id>"+quantities[i].id+"</id>" +
-						"<quantity>"+q+"</quantity>" +
-						"</product_instances>";
-				var data_xml="<"+table+">" +
-						"<id>"+data_id+"</id>" +
-						"<product_name>"+name+"</product_name>" +
-						"<batch>"+batch+"</batch>" +
-						"<unit_price>"+price+"</unit_price>" +
-						"<quantity>"+quantity+"</quantity>" +
-						"<amount>"+amount+"</amount>" +
-						"<total>"+total+"</total>" +
-						"<discount>"+discount+"</discount>" +
-						"<offer>"+offer+"</offer>" +
-						"<type>bought</type>" +
-						"<tax>"+tax+"</tax>" +
-						"<bill_id>"+bill_id+"</bill_id>" +
-						"<free_with></free_with>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</"+table+">";	
-			
-				if(is_online())
-				{
-					server_write_simple(data_xml);
-					server_write_simple(quantity_xml);
-				}
-				else
-				{
-					local_write_simple(data_xml);
-					local_write_simple(quantity_xml);
-				}
-				break;
-			}
-		});
-		
-		//////adding free product to the bill if applicable
-		if(free_product_name!="")
-		{
-			var free_quantity_data="<product_instances>" +
-						"<id></id>" +
-						"<product_name>"+free_product_name+"</product_name>" +
-						"<batch></batch>" +
-						"<quantity></quantity>" +
-						"</product_instances>";	
-			
-			//////updating product quantity in inventory
-			fetch_requested_data('',free_quantity_data,function(free_quantities)
-			{
-				var offer_invalid=true;
-				for (var j in free_quantities)
-				{
-					var q=parseFloat(free_quantities[j].quantity)-parseFloat(free_product_quantity);
-					var free_quantity_xml="<product_instances>" +
-							"<id>"+free_quantities[j].id+"</id>" +
-							"<quantity>"+q+"</quantity>" +
-							"</product_instances>";
-					if(q>0)
-					{
-						var free_xml="<bill_items>" +
-									"<id>"+get_new_key()+"</id>" +
-									"<product_name>"+free_product_name+"</product_name>" +
-									"<batch>"+free_quantities[j].batch+"</batch>" +
-									"<unit_price>0</unit_price>" +
-									"<quantity>"+free_product_quantity+"</quantity>" +
-									"<amount>0</amount>" +
-									"<total>0</total>" +
-									"<discount>0</discount>" +
-									"<offer></offer>" +
-									"<type>free</type>" +
-									"<tax>0</tax>" +
-									"<bill_id>"+bill_id+"</bill_id>" +
-									"<free_with>"+name+"</free_with>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</bill_items>";	
-						
-						if(is_online())
-						{
-							server_write_simple(free_xml);
-							server_write_simple(free_quantity_xml);
-						}
-						else
-						{
-							local_write_simple(free_xml);
-							local_write_simple(free_quantity_xml);
-						}
-						offer_invalid=false;
-						break;
-					}
-				}
-				if(offer_invalid)
-				{
-					$("#modal7").dialog("open");
-				}
-			});
-		}
-		for(var i=0;i<10;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		form.elements[10].value="saved";
-		form.elements[11].value="saved";
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-/**
- * @form New Bill
- * @param button
- */
 function form12_update_form()
 {
 	if(is_update_access('form12'))
@@ -701,6 +555,65 @@ function form12_update_form()
 		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		var offer_detail="";
+		
+		/////deleting existing free products
+		var items_data="<bill_items>" +
+				"<id></id>" +
+				"<product_name></product_name>" +
+				"<batch></batch>" +
+				"<quantity></quantity>" +
+				"<bill_id>"+data_id+"</bill_id>" +
+				"<free_with>bill</free_with>" +
+				"<last_update compare='less than'>"+last_updated+"</last_updated>" +
+				"</bill_items>";
+		fetch_requested_data('',items_data,function(bill_items)
+		{
+			bill_items.forEach(function(bill_item)
+			{
+				var quantity_data="<product_instances>" +
+						"<id></id>" +
+						"<product_name>"+bill_item.product_name+"</product_name>" +
+						"<batch>"+bill_item.batch+"</batch>" +
+						"<quantity></quantity>" +
+						"</product_instances>";	
+			
+				//////updating product quantity in inventory
+				fetch_requested_data('',quantity_data,function(quantities)
+				{
+					for (var j in quantities)
+					{
+						var q=parseFloat(quantities[j].quantity)+parseFloat(bill_item.quantity);
+						var quantity_xml="<product_instances>" +
+								"<id>"+quantities[j].id+"</id>" +
+								"<quantity>"+q+"</quantity>" +
+								"</product_instances>";
+						
+						if(is_online())
+						{
+							server_update_simple(quantity_xml);
+						}
+						else
+						{
+							local_update_simple(quantity_xml);
+						}
+						break;
+					}
+					
+				});
+				
+			});
+
+			if(is_online())
+			{
+				server_delete_simple(items_data);
+			}
+			else
+			{
+				local_delete_simple(items_data);
+			}
+		});
+		///////////////////////////////////
+		
 		
 		var offer_data="<offers>" +
 				"<offer_type>bill</offer_type>" +

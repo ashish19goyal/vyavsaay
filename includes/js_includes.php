@@ -12,7 +12,6 @@
 <script src='./JavaScripts/prop/create.js'></script>
 <script src='./JavaScripts/prop/delete.js'></script>
 <script src='./JavaScripts/prop/event_handler.js'></script>
-<script src='./JavaScripts/prop/form_display.js'></script>
 <script src='./JavaScripts/prop/forms_header_ini.js'></script>
 <script src='./JavaScripts/prop/forms_ini.js'></script>
 <script src='./JavaScripts/prop/get.js'></script>

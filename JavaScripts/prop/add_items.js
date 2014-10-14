@@ -563,14 +563,11 @@ function form12_add_item()
 		var free_product_filter=fields.elements[12];
 		var free_product_quantity=fields.elements[13];
 			
-		
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
-			console.log("form submit action");
-			form12_save_item(fields);
+			form12_create_item(fields);
 		});
-		
 		
 		var product_data="<product_master>" +
 				"<name></name>" +

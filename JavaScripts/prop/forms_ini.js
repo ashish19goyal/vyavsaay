@@ -3,8 +3,12 @@
  * @form Update Inventory
  * @formNo 1
  */
-function form1_ini(fid)
+function form1_ini()
 {
+	var fid=$("#form1_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form1_header');
 	
 	var fname=filter_fields.elements[0].value;
@@ -19,6 +23,8 @@ function form1_ini(fid)
 		"<expiry>"+fexpiry+"</expiry>" +
 		"<quantity></quantity>" +
 		"</product_instances>";
+	
+	$('#form1_body').html("");
 	
 	fetch_requested_data('form1',columns,function(results)
 	{
@@ -67,8 +73,12 @@ function form1_ini(fid)
  * @form Manage Assets
  * @formNo 5
  */
-function form5_ini(fid)
+function form5_ini()
 {
+	var fid=$("#form5_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form5_header');
 		
 	var fasset=filter_fields.elements[0].value;
@@ -85,6 +95,8 @@ function form5_ini(fid)
 			"<type>"+ftype+"</type>" +
 			"</assets>";
 	
+	$('#form5_body').html("");
+
 	fetch_requested_data('form5',columns,function(results)
 	{	
 		for(var i in results)
@@ -138,8 +150,12 @@ function form5_ini(fid)
  * @form Attendance
  * @formNo 7
  */
-function form7_ini(fid)
+function form7_ini()
 {
+	var fid=$("#form7_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form7_header');
 	
 	//populating form 
@@ -154,6 +170,8 @@ function form7_ini(fid)
 			"<presence>"+fattendance+"</presence>" +
 			"<hours_worked></hours_worked>" +
 			"</attendance>";
+
+	$('#form7_body').html("");
 
 	fetch_requested_data('form7',columns,function(results)
 	{
@@ -196,8 +214,12 @@ function form7_ini(fid)
  * @form Manage Staff
  * @formNo 8
  */
-function form8_ini(fid)
+function form8_ini()
 {
+	var fid=$("#form8_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form8_header');
 	
 	var fname=filter_fields.elements[0].value;
@@ -219,6 +241,8 @@ function form8_ini(fid)
 			"<allowed_pto></allowed_pto>" +
 			"<acc_name></acc_name>" +
 			"</staff>";
+
+	$('#form8_body').html("");
 
 	fetch_requested_data('form8',columns,function(results)
 	{
@@ -298,8 +322,12 @@ function form8_ini(fid)
  * @form Cash Register
  * @formNo 9
  */
-function form9_ini(fid)
+function form9_ini()
 {
+	var fid=$("#form9_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form9_header');
 	
 	var ftype=filter_fields.elements[0].value;
@@ -317,6 +345,8 @@ function form9_ini(fid)
 			"<credit_acc>"+fto+"</credit_acc>" +
 			"<system_generated>"+fsystem+"</system_generated>" +
 			"</transactions>";
+
+	$('#form9_body').html("");
 
 	fetch_requested_data('form9',columns,function(results)
 	{
@@ -369,8 +399,12 @@ function form9_ini(fid)
  * @form Schedule Payments
  * @formNo 11
  */
-function form11_ini(fid)
+function form11_ini()
 {
+	var fid=$("#form11_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form11_header');
 	
 	var ftrans=filter_fields.elements[0].value;
@@ -389,6 +423,8 @@ function form11_ini(fid)
 			"<status>"+fstatus+"</status>" +
 			"<date>"+fdate+"</date>" +
 			"</payments>";
+
+	$('#form11_body').html("");
 
 	fetch_requested_data('form11',columns,function(results)
 	{	
@@ -438,10 +474,12 @@ function form11_ini(fid)
 /**
  * this function opens form12 window with the bill info populated
  */
-function form12_ini(fid)
+function form12_ini()
 {
-	$('#form12_body').find('tr').remove();
-	var bill_id=fid;
+	var bill_id=$("#form12_link").attr('data_id');
+	if(bill_id==null)
+		bill_id="";	$('#form12_body').html("");
+
 	var bill_columns="<bills>" +
 			"<id>"+bill_id+"</id>" +
 			"<customer_name></customer_name>" +
@@ -484,6 +522,13 @@ function form12_ini(fid)
 			filter_fields.elements[7].value=bill_id;
 			filter_fields.elements[8].value=bill_results[z].offer;
 			
+			$(filter_fields).off('submit');
+			$(filter_fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form12_update_form();
+			});
+			
 			break;
 		}
 	});
@@ -498,19 +543,19 @@ function form12_ini(fid)
 			rowsHTML+="<tr>";
 			rowsHTML+="<form id='form12_"+id+"'></form>";
 				rowsHTML+="<td>";
-					rowsHTML+="<input type='text' form='form12_"+id+"' value='"+result.product_name+"'>";
+					rowsHTML+="<input type='text' readonly='readonly' form='form12_"+id+"' value='"+result.product_name+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td>";
-					rowsHTML+="<input type='text' form='form12_"+id+"' value='"+result.batch+"'>";
+					rowsHTML+="<input type='text' readonly='readonly' form='form12_"+id+"' value='"+result.batch+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td>";
-					rowsHTML+="<input type='text' form='form12_"+id+"' value='"+result.unit_price+"'>";
+					rowsHTML+="<input type='text' readonly='readonly' form='form12_"+id+"' value='"+result.unit_price+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td>";
-					rowsHTML+="<input type='number' form='form12_"+id+"' value='"+result.quantity+"'>";
+					rowsHTML+="<input type='number' readonly='readonly' form='form12_"+id+"' value='"+result.quantity+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td>";
-					rowsHTML+="<input type='text' form='form12_"+id+"' value='"+result.total+"'>";
+					rowsHTML+="<input type='text' readonly='readonly' form='form12_"+id+"' value='"+result.total+"'>";
 					rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form12_"+id+"' value='Details' onclick='modal7_action($(this));'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td>";
@@ -546,18 +591,13 @@ function form12_ini(fid)
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
-				//console.log("form submit action");
-				form12_save_item(fields);
 			});
-			
 			
 			var product_data="<product_master>" +
 					"<name></name>" +
 					"</product_master>";
 			
 			set_my_value_list(product_data,name_filter);
-			
-			//$(name_filter).focus();
 			
 			$(name_filter).on('blur',function(event){
 				var batch_data="<product_instances>" +
@@ -715,8 +755,12 @@ function form12_ini(fid)
  * @form Manage Tasks
  * @formNo 14
  */
-function form14_ini(fid)
+function form14_ini()
 {
+	var fid=$("#form14_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form14_header');
 	
 	//populating form 
@@ -735,6 +779,8 @@ function form14_ini(fid)
 			"<t_executed>"+fexecuted+"</t_executed>" +
 			"<status>"+fstatus+"</status>" +
 			"</task_instances>";
+
+	$('#form14_body').html("");
 
 	fetch_requested_data('form14',columns,function(results)
 	{
@@ -785,8 +831,12 @@ function form14_ini(fid)
  * @form Accept returns
  * @formNo 15
  */
-function form15_ini(fid)
+function form15_ini()
 {
+	var fid=$("#form15_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form15_header');
 	
 	//populating form 
@@ -804,6 +854,8 @@ function form15_ini(fid)
 			"<amount></amount>" +
 			"<quantity></quantity>" +
 			"</returns>";
+
+	$('#form15_body').html("");
 
 	fetch_requested_data('form15',columns,function(results)
 	{
@@ -854,8 +906,12 @@ function form15_ini(fid)
  * @form Manage returns
  * @formNo 19
  */
-function form19_ini(fid)
+function form19_ini()
 {
+	var fid=$("#form19_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form19_header');
 
 	var fproduct=filter_fields.elements[0].value;
@@ -873,6 +929,8 @@ function form19_ini(fid)
 			"<quantity></quantity>" +
 			"<supplier>"+fsupplier+"</supplier>" +
 			"</supplier_returns>";
+
+	$('#form19_body').html("");
 
 	fetch_requested_data('form19',columns,function(results)
 	{
@@ -923,8 +981,12 @@ function form19_ini(fid)
  * @form Dispose Items
  * @formNo 22
  */
-function form22_ini(fid)
+function form22_ini()
 {
+	var fid=$("#form22_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form22_header');
 	
 	var fproduct=filter_fields.elements[0].value;
@@ -939,6 +1001,8 @@ function form22_ini(fid)
 			"<method>"+fmethod+"</method>" +
 			"<quantity></quantity>" +
 			"</disposals>";
+
+	$('#form22_body').html("");
 
 	fetch_requested_data('form22',columns,function(results)
 	{
@@ -986,8 +1050,12 @@ function form22_ini(fid)
  * @form Manage Customers
  * @formNo 30
  */
-function form30_ini(fid)
+function form30_ini()
 {
+	var fid=$("#form30_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+		
 	var filter_fields=document.getElementById('form30_header');
 	
 	var fname=filter_fields.elements[0].value;
@@ -1003,6 +1071,8 @@ function form30_ini(fid)
 			"<status>"+fstatus+"</status>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
+
+	$('#form30_body').html("");
 
 	fetch_requested_data('form30',columns,function(results)
 	{
@@ -1075,8 +1145,12 @@ function form30_ini(fid)
  * @form Manage Offers
  * @formNo 35
  */
-function form35_ini(fid)
+function form35_ini()
 {
+	var fid=$("#form35_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form35_header');
 	
 	var fname=filter_fields.elements[0].value;
@@ -1092,6 +1166,8 @@ function form35_ini(fid)
 			"<offer_detail></offer_detail>" +
 			"<status>"+fstatus+"</status>" +
 			"</offers>";
+
+	$('#form35_body').html("");
 
 	fetch_requested_data('form35',columns,function(results)
 	{
@@ -1140,8 +1216,12 @@ function form35_ini(fid)
  * @form Store Placement
  * @formNo 38
  */
-function form38_ini(fid)
+function form38_ini()
 {
+	var fid=$("#form38_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form38_header');
 	
 	var fname=filter_fields.elements[0].value;
@@ -1155,6 +1235,8 @@ function form38_ini(fid)
 			"<name>"+farea+"</name>" +
 			"<quantity></quantity>" +
 			"</area_utilization>";
+
+	$('#form38_body').html("");
 
 	fetch_requested_data('form38',columns,function(results)
 	{	
@@ -1199,8 +1281,12 @@ function form38_ini(fid)
  * @form Manage Products
  * @formNo 39
  */
-function form39_ini(fid)
+function form39_ini()
 {
+	var fid=$("#form39_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form39_header');
 	
 	var fname=filter_fields.elements[0].value;
@@ -1217,6 +1303,8 @@ function form39_ini(fid)
 			"<unit></unit>" +
 			"<tags>"+ftags+"</tags>" +
 			"</product_master>";
+
+	$('#form39_body').html("");
 
 	fetch_requested_data('form39',columns,function(results)
 	{
@@ -1308,8 +1396,12 @@ function form39_ini(fid)
  * @form Manage Vendors
  * @formNo 40
  */
-function form40_ini(fid)
+function form40_ini()
 {
+	var fid=$("#form40_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form40_header');
 
 	var fname=filter_fields.elements[0].value;
@@ -1324,6 +1416,8 @@ function form40_ini(fid)
 			"<email>"+femail+"</email>" +
 			"<acc_name></acc_name>" +
 			"</suppliers>";
+
+	$('#form40_body').html("");
 
 	fetch_requested_data('form40',columns,function(results)
 	{	
@@ -1393,7 +1487,7 @@ function form40_ini(fid)
 };
 
 
-function form41_ini(fid)
+function form41_ini()
 {
 	var coordinates_data="<address>" +
 			"<acc_type>master</acc_type>" +
@@ -1430,6 +1524,8 @@ function form41_ini(fid)
 					"</address>";
 			fetch_requested_data('form41',customers_data,function(customers)
 			{
+				$('#form41_header').html("");
+
 				for(var x in customers)
 				{
 					var latlng=L.latLng(customers[x].lat,customers[x].lng);
@@ -1494,8 +1590,12 @@ function form41_ini(fid)
  * @form Manage Bills
  * @formNo 42
  */
-function form42_ini(fid)
+function form42_ini()
 {
+	var fid=$("#form42_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form42_header');
 	
 	//populating form 
@@ -1511,6 +1611,8 @@ function form42_ini(fid)
 			"<total></total>" +
 			"<type>product</type>" +
 			"</bills>";
+
+	$('#form42_body').html("");
 
 	fetch_requested_data('form42',columns,function(results)
 	{	
@@ -1556,8 +1658,12 @@ function form42_ini(fid)
  * @form Manage Purchase Orders
  * @formNo 43
  */
-function form43_ini(fid)
+function form43_ini()
 {
+	var fid=$("#form43_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form43_header');
 	
 	//populating form 
@@ -1572,6 +1678,8 @@ function form43_ini(fid)
 			"<supplier>"+fname+"</supplier>" +
 			"<est_amount></est_amount>" +
 			"</purchase_orders>";
+
+	$('#form43_body').html("");
 
 	fetch_requested_data('form43',columns,function(results)
 	{
@@ -1615,8 +1723,12 @@ function form43_ini(fid)
  * @form Manage Pamphlets
  * @formNo 44
  */
-function form44_ini(fid)
+function form44_ini()
 {
+	var fid=$("#form44_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form44_header');
 	
 	//populating form 
@@ -1627,6 +1739,8 @@ function form44_ini(fid)
 			"<name>"+fname+"</name>" +
 			"<count_items></count_items>" +
 			"</pamphlets>";
+
+	$('#form44_body').html("");
 
 	fetch_requested_data('form44',columns,function(results)
 	{
@@ -1666,8 +1780,12 @@ function form44_ini(fid)
  * @form Manage Service Receipts
  * @formNo 45
  */
-function form45_ini(fid)
+function form45_ini()
 {
+	var fid=$("#form45_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form45_header');
 	
 	if(fid==="")
@@ -1682,6 +1800,8 @@ function form45_ini(fid)
 			"<amount></amount>" +
 			"<type>service</type>" +
 			"</bills>";
+
+	$('#form45_body').html("");
 
 	fetch_requested_data('form45',columns,function(results)
 	{
@@ -1725,8 +1845,12 @@ function form45_ini(fid)
  * @form Set Defaults
  * @formNo 46
  */
-function form46_ini(fid)
+function form46_ini()
 {
+	var fid=$("#form46_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form46_header');
 	
 	var fname=filter_fields.elements[0].value;
@@ -1739,6 +1863,8 @@ function form46_ini(fid)
 			"<status>active</status>" +
 			"<type>other</type>" +
 			"</user_preferences>";
+
+	$('#form46_body').html("");
 
 	fetch_requested_data('form46',columns,function(results)
 	{
@@ -1777,8 +1903,12 @@ function form46_ini(fid)
  * @form Select Reports
  * @formNo 48
  */
-function form48_ini(fid)
+function form48_ini()
 {
+	var fid=$("#form48_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form48_header');
 	
 	var fname=filter_fields.elements[0].value;
@@ -1791,6 +1921,8 @@ function form48_ini(fid)
 			"<status>active</status>" +
 			"<type>report</type>" +
 			"</user_preferences>";
+
+	$('#form48_body').html("");
 
 	fetch_requested_data('form48',columns,function(results)
 	{
@@ -1828,8 +1960,12 @@ function form48_ini(fid)
  * @form Select Forms
  * @formNo 49
  */
-function form49_ini(fid)
+function form49_ini()
 {
+	var fid=$("#form49_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form49_header');
 	
 	//populating form
@@ -1843,6 +1979,8 @@ function form49_ini(fid)
 			"<status>active</status>" +
 			"<type>form</type>" +
 			"</user_preferences>";
+
+	$('#form49_body').html("");
 
 	fetch_requested_data('form49',columns,function(results)
 	{
@@ -1881,8 +2019,12 @@ function form49_ini(fid)
  * @form Select Accounting Principles
  * @formNo 50
  */
-function form50_ini(fid)
+function form50_ini()
 {
+	var fid=$("#form50_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form50_header');
 	
 	//populating form
@@ -1896,6 +2038,8 @@ function form50_ini(fid)
 		"<status>active</status>" +
 		"<type>accounting</type>" +
 		"</user_preferences>";
+
+	$('#form50_body').html("");
 
 	fetch_requested_data('form50',columns,function(results)
 	{
@@ -1935,7 +2079,9 @@ function form50_ini(fid)
 function form51_ini(fuser)
 {
 	var header_fields=document.getElementById('form51_master');
-	
+
+	$('#form51_body').html("");
+
 	if(fuser==="")
 		fuser=header_fields.elements[3].value;
 	if(fuser!="")
@@ -2002,8 +2148,12 @@ function form51_ini(fuser)
  * @form Set shortcut keys
  * @formNo 52
  */
-function form52_ini(fid)
+function form52_ini()
 {
+	var fid=$("#form52_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form52_header');
 	var felement=filter_fields.elements[0].value;
 	var fkey=filter_fields.elements[1].value;
@@ -2015,6 +2165,8 @@ function form52_ini(fid)
 		"<status>active</status>" +
 		"<shortcut>"+fkey+"</shortcut>" +
 		"</shortcuts>";
+
+	$('#form52_body').html("");
 
 	fetch_requested_data('form52',columns,function(results)
 	{
@@ -2052,8 +2204,12 @@ function form52_ini(fid)
  * @form Manage Supplier Bills
  * @formNo 53
  */
-function form53_ini(fid)
+function form53_ini()
 {
+	var fid=$("#form53_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form53_header');
 	
 	var fbill_id=filter_fields.elements[0].value;
@@ -2069,6 +2225,8 @@ function form53_ini(fid)
 			"<entry_date>"+fentry_date+"</entry_date>" +
 			"<amount></amount>" +
 			"</supplier_bills>";
+
+	$('#form53_body').html("");
 
 	fetch_requested_data('form53',columns,function(results)
 	{
@@ -2115,8 +2273,12 @@ function form53_ini(fid)
  * @form Select Templates
  * @formNo 54
  */
-function form54_ini(fid)
+function form54_ini()
 {
+	var fid=$("#form54_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form54_header');
 	
 	var fname=filter_fields.elements[0].value;
@@ -2128,6 +2290,8 @@ function form54_ini(fid)
 			"<status>active</status>" +
 			"<type>template</type>" +
 			"</user_preferences>";
+
+	$('#form54_body').html("");
 
 	fetch_requested_data('form54',columns,function(results)
 	{
@@ -2165,8 +2329,12 @@ function form54_ini(fid)
  * @form Virtual Store
  * @formNo 55
  */
-function form55_ini(fid)
+function form55_ini()
 {
+	var fid=$("#form55_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form55_header');
 	
 	var fname=filter_fields.elements[0].value;
@@ -2179,6 +2347,8 @@ function form55_ini(fid)
 			"<batch>"+fbatch+"</batch>" +
 			"<quantity></quantity>" +
 			"</area_utilization>";
+
+	$('#form55_body').html("");
 
 	fetch_requested_data('form55',utilization,function(results)
 	{
@@ -2214,8 +2384,11 @@ function form55_ini(fid)
  * @form Expense Register
  * @formNo 56
  */
-function form56_ini(fid)
+function form56_ini()
 {
+	var fid=$("#form56_link").attr('data_id');
+	if(fid==null)
+		fid="";	
 	var filter_fields=document.getElementById('form56_header');
 	
 	var fdate=filter_fields.elements[0].value;
@@ -2228,6 +2401,8 @@ function form56_ini(fid)
 			"<description></description>" +
 			"<amount></amount>" +
 			"</expenses>";
+
+	$('#form56_body').html("");
 
 	fetch_requested_data('form56',columns,function(results)
 	{
@@ -2270,8 +2445,12 @@ function form56_ini(fid)
  * @form manage services
  * @formNo 57
  */
-function form57_ini(fid)
+function form57_ini()
 {
+	var fid=$("#form57_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form57_header');
 	
 	var fservices=filter_fields.elements[0].value;
@@ -2286,6 +2465,8 @@ function form57_ini(fid)
 			"<tags></tags>" +
 			"<duration></duration>" +
 			"</services>";
+
+	$('#form57_body').html("");
 
 	fetch_requested_data('form57',columns,function(results)
 	{
@@ -2335,8 +2516,11 @@ function form57_ini(fid)
  * @form Service pre-requisites
  * @formNo 58
  */
-function form58_ini(fid)
+function form58_ini()
 {
+	var fid=$("#form58_link").attr('data_id');
+	if(fid==null)
+		fid="";	
 	var filter_fields=document.getElementById('form58_header');
 	
 	var fservice=filter_fields.elements[0].value;
@@ -2351,6 +2535,8 @@ function form58_ini(fid)
 			"<requisite_name>"+frequisite+"</requisite_name>" +
 			"<quantity></quantity>" +
 			"</pre_requisites>";
+
+	$('#form58_body').html("");
 
 	fetch_requested_data('form58',columns,function(results)
 	{
@@ -2393,8 +2579,12 @@ function form58_ini(fid)
  * @form product pre-requisites
  * @formNo 59
  */
-function form59_ini(fid)
+function form59_ini()
 {
+	var fid=$("#form59_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form59_header');
 	
 	var fproduct=filter_fields.elements[0].value;
@@ -2409,6 +2599,8 @@ function form59_ini(fid)
 			"<requisite_name>"+frequisite+"</requisite_name>" +
 			"<quantity></quantity>" +
 			"</pre_requisites>";
+
+	$('#form59_body').html("");
 
 	fetch_requested_data('form59',columns,function(results)
 	{
@@ -2452,8 +2644,12 @@ function form59_ini(fid)
  * @form Product Categories
  * @formNo 60
  */
-function form60_ini(fid)
+function form60_ini()
 {
+	var fid=$("#form60_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form60_header');
 	
 	var fproduct=filter_fields.elements[0].value;
@@ -2465,6 +2661,8 @@ function form60_ini(fid)
 			"<type>product</type>" +
 			"<category>"+fcategory+"</category>" +
 			"</categories>";
+
+	$('#form60_body').html("");
 
 	fetch_requested_data('form60',columns,function(results)
 	{
@@ -2504,8 +2702,12 @@ function form60_ini(fid)
  * @form Service Categories
  * @formNo 61
  */
-function form61_ini(fid)
+function form61_ini()
 {
+	var fid=$("#form61_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form61_header');
 	
 	var fservice=filter_fields.elements[0].value;
@@ -2517,6 +2719,8 @@ function form61_ini(fid)
 			"<type>service</type>" +
 			"<category>"+fcategory+"</category>" +
 			"</categories>";
+
+	$('#form61_body').html("");
 
 	fetch_requested_data('form61',columns,function(results)
 	{
@@ -2556,8 +2760,12 @@ function form61_ini(fid)
  * @form Product reviews
  * @formNo 62
  */
-function form62_ini(fid)
+function form62_ini()
 {
+	var fid=$("#form62_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form62_header');
 	
 	var fproduct=filter_fields.elements[0].value;
@@ -2572,6 +2780,8 @@ function form62_ini(fid)
 			"<detail></detail>" +
 			"<rating>"+frating+"</rating>" +
 			"</reviews>";
+
+	$('#form62_body').html("");
 
 	fetch_requested_data('form62',columns,function(results)
 	{
@@ -2614,8 +2824,12 @@ function form62_ini(fid)
  * @form Service reviews
  * @formNo 63
  */
-function form63_ini(fid)
+function form63_ini()
 {
+	var fid=$("#form63_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form63_header');
 	
 	var fservice=filter_fields.elements[0].value;
@@ -2630,6 +2844,8 @@ function form63_ini(fid)
 			"<detail></detail>" +
 			"<rating>"+frating+"</rating>" +
 			"</reviews>";
+
+	$('#form63_body').html("");
 
 	fetch_requested_data('form63',columns,function(results)
 	{
@@ -2672,8 +2888,12 @@ function form63_ini(fid)
  * @form Service Cross sells
  * @formNo 64
  */
-function form64_ini(fid)
+function form64_ini()
 {
+	var fid=$("#form64_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form64_header');
 	
 	var fservice=filter_fields.elements[0].value;
@@ -2687,6 +2907,8 @@ function form64_ini(fid)
 			"<cross_type>"+ftype+"</cross_type>" +
 			"<cross_name>"+fcross+"</cross_name>" +
 			"</cross_sells>";
+
+	$('#form64_body').html("");
 
 	fetch_requested_data('form64',columns,function(results)
 	{
@@ -2726,8 +2948,12 @@ function form64_ini(fid)
  * @form Service Taxes
  * @formNo 65
  */
-function form65_ini(fid)
+function form65_ini()
 {
+	var fid=$("#form65_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form65_header');
 	
 	var fservice=filter_fields.elements[0].value;
@@ -2739,6 +2965,8 @@ function form65_ini(fid)
 			"<taxable>"+ftaxable+"</taxable>" +
 			"<tax></tax>" +
 			"</services>";
+
+	$('#form65_body').html("");
 
 	fetch_requested_data('form65',columns,function(results)
 	{
@@ -2778,8 +3006,12 @@ function form65_ini(fid)
  * @form Cross sells
  * @formNo 66
  */
-function form66_ini(fid)
+function form66_ini()
 {
+	var fid=$("#form66_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form66_header');
 	
 	var fproduct=filter_fields.elements[0].value;
@@ -2793,6 +3025,8 @@ function form66_ini(fid)
 			"<cross_type>"+ftype+"</cross_type>" +
 			"<cross_name>"+fcross+"</cross_name>" +
 			"</cross_sells>";
+
+	$('#form66_body').html("");
 
 	fetch_requested_data('form66',columns,function(results)
 	{
@@ -2833,8 +3067,12 @@ function form66_ini(fid)
  * @form Product dimensions
  * @formNo 67
  */
-function form67_ini(fid)
+function form67_ini()
 {
+	var fid=$("#form67_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form67_header');
 	
 	var fproduct=filter_fields.elements[0].value;
@@ -2847,6 +3085,8 @@ function form67_ini(fid)
 			"<width></width>" +
 			"<height></height>" +
 			"</product_master>";
+
+	$('#form67_body').html("");
 
 	fetch_requested_data('form67',columns,function(results)
 	{
@@ -2891,8 +3131,12 @@ function form67_ini(fid)
  * @form Product Taxes
  * @formNo 68
  */
-function form68_ini(fid)
+function form68_ini()
 {
+	var fid=$("#form68_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var filter_fields=document.getElementById('form68_header');
 	
 	var fproduct=filter_fields.elements[0].value;
@@ -2904,6 +3148,8 @@ function form68_ini(fid)
 			"<taxable>"+ftaxable+"</taxable>" +
 			"<tax></tax>" +
 			"</product_master>";
+
+	$('#form68_body').html("");
 
 	fetch_requested_data('form68',columns,function(results)
 	{
@@ -2941,6 +3187,7 @@ function form68_ini(fid)
 
 
 
+
 function notifications_ini()
 {
 	var columns="<notifications>" +
@@ -2960,9 +3207,8 @@ function notifications_ini()
 			result_html+="<div class='notification_detail'>" +
 					notifs[i].title +
 					"</br><a onclick=\"" +
-					notifs[i].link_to +
-					"_display('"+notifs[i].data_id +
-					"');\">"+notifs[i].notes+"</a>" +
+					"element_display('"+notifs[i].data_id +
+					"','"+notifs[i].link_to+"');\">"+notifs[i].notes+"</a>" +
 					"<div class='notification_status'>" +
 					" Generated @ " +
 					get_formatted_time(notifs[i].t_generated) +
@@ -2990,9 +3236,8 @@ function notifications_ini()
 				result_html+="<div class='notification_detail'>" +
 						notifs2[j].title +
 						"</br><a onclick=\"" +
-						notifs2[j].link_to +
-						"_display('"+notifs2[j].data_id +
-						"');\">"+notifs2[j].notes+"</a>" +
+						"element_display('"+notifs2[j].data_id +
+						"','"+notifs2[j].link_to+"');\">"+notifs2[j].notes+"</a>" +
 						"<div class='notification_status'>" +
 						" Generated @ " +
 						get_formatted_time(notifs2[j].t_generated) +
@@ -3007,6 +3252,7 @@ function notifications_ini()
 		});
 	});
 }
+
 
 
 
@@ -3030,8 +3276,8 @@ function opportunities_ini()
 			result_html+="<div class='opportunity_detail'>" +
 					oppors[i].title +
 					"</br><a onclick=\"" +
-					oppors[i].link_to +
-					"_display('"+oppors[i].data_id +
+					"element_display('"+oppors[i].data_id +
+					"','"+oppors[i].link_to+
 					"');\">"+oppors[i].notes+"</a>" +
 					"<div class='opportunity_status'>" +
 					" Generated @ " +
@@ -3059,8 +3305,8 @@ function opportunities_ini()
 				result_html+="<div class='opportunity_detail'>" +
 						oppors2[j].title +
 						"</br><a onclick=\"" +
-						oppors2[j].link_to +
-						"_display('"+oppors2[j].data_id +
+						"element_display('"+oppors2[j].data_id +
+						"','"+oppors2[j].link_to+
 						"');\">"+oppors2[j].notes+"</a>" +
 						"<div class='opportunity_status'>" +
 						" Generated @ " +
@@ -3100,8 +3346,8 @@ function activities_ini()
 			result_html+="<div class='activity_detail'>" +
 						activities[i].title +
 						"</br><a onclick=\"" +
-						activities[i].link_to +
-						"_display('"+activities[i].data_id +
+						"element_display('"+activities[i].data_id +
+						"','"+activities[i].link_to+
 						"');\">"+activities[i].notes+"</a>" +
 						"<div class='activity_log'>By:" +
 						activities[i].updated_by +
@@ -3122,38 +3368,194 @@ function search_ini()
 {
 	var searchStr=document.getElementById("search_box").value;	
 	
-	var columns="<activities>" +
-			"<title></title>" +
-			"<link_to></link_to>" +
-			"<data_id></data_id>" +
-			"<notes></notes>" +
-			"<updated_by></updated_by>" +
-			"<last_updated></last_updated>" +
-			"</activities>";
-
-	fetch_requested_data('',columns,function(search_res)
+	$("#search_results").html("");
+	
+	var length=searchStr.length;
+	
+	if(length>=3)
 	{
-		var num_res=0;
-		var result_html="";
-		for(var i in search_res)
+		///////////////////////from products//////////////
+		var product_columns="<product_master>" +
+				"<id></id>" +
+				"<name>"+searchStr+"</name>" +
+				"<description></description>" +
+				"</product_master>";
+	
+		fetch_requested_data('',product_columns,function(product_results)
 		{
-			result_html+="<div class='activity_detail'>" +
-					activities[i].title +
-					"</br><a onclick=\"" +
-					activities[i].link_to +
-					"_display('"+activities[i].data_id +
-					"');\">"+activities[i].notes+"</a>" +
-					"<div class='activity_log'>By:" +
-					activities[i].updated_by +
-					" @ " +
-					get_formatted_time(activities[i].last_updated) +
-					"</div>" +
-					"</div>";
-			num_res=num_res+1;
-		}
-		$('#search_header').html(num_res+" results found");
-		$("#search_results").html(result_html);
-
-	});
-
+			var num_res=0;
+			var result_html="";
+			product_results.forEach(function(product)
+			{
+				result_html+="<div class='activity_detail'>" +
+						"Product: "+product.name+
+						"</br><a onclick=\"" +
+						"form_display('"+product.id +
+						"','form39');\">"+product.description+"</a>" +
+						"</div>";
+				num_res=num_res+1;
+			});
+			$("#search_results").append(result_html);
+		});
+	
+		///////////////////////from services//////////////
+		var service_columns="<services>" +
+				"<id></id>" +
+				"<name>"+searchStr+"</name>" +
+				"<description></description>" +
+				"</services>";
+	
+		fetch_requested_data('',service_columns,function(service_results)
+		{
+			var num_res=0;
+			var result_html="";
+			service_results.forEach(function(service)
+			{
+				result_html+="<div class='activity_detail'>" +
+						"Service: "+service.name+
+						"</br><a onclick=\"" +
+						"element_display('"+service.id +
+						"','form57');\">"+service.description+"</a>" +
+						"</div>";
+				num_res=num_res+1;
+			});
+			$("#search_results").append(result_html);
+		});
+	
+		///////////////////////from customer//////////////
+		var customer_columns="<customers>" +
+				"<id></id>" +
+				"<name></name>" +
+				"<acc_name>"+searchStr+"</acc_name>" +
+				"<email></email>" +
+				"<phone></phone>" +
+				"</customers>";
+	
+		fetch_requested_data('',customer_columns,function(customer_results)
+		{
+			var num_res=0;
+			var result_html="";
+			customer_results.forEach(function(customer)
+			{
+				result_html+="<div class='activity_detail'>" +
+						"Customer: "+customer.name+
+						"</br><a onclick=\"" +
+						"element_display('"+customer.id +
+						"','form30');\">Email:"+customer.email+" Phone:"+customer.phone+"</a>" +
+						"</div>";
+				num_res=num_res+1;
+			});
+			$("#search_results").append(result_html);
+		});
+	
+		///////////////////////from supplier//////////////
+		var supplier_columns="<suppliers>" +
+				"<id></id>" +
+				"<name></name>" +
+				"<acc_name>"+searchStr+"</acc_name>" +
+				"<email></email>" +
+				"<phone></phone>" +
+				"</suppliers>";
+	
+		fetch_requested_data('',supplier_columns,function(supplier_results)
+		{
+			var num_res=0;
+			var result_html="";
+			supplier_results.forEach(function(supplier)
+			{
+				result_html+="<div class='activity_detail'>" +
+						"Supplier: "+supplier.name+
+						"</br><a onclick=\"" +
+						"element_display('"+supplier.id +
+						"','form40');\">Email:"+supplier.email+" Phone:"+supplier.phone+"</a>" +
+						"</div>";
+				num_res=num_res+1;
+			});
+			$("#search_results").append(result_html);
+		});
+	
+		///////////////////////from staff//////////////
+		var staff_columns="<staff>" +
+				"<id></id>" +
+				"<name></name>" +
+				"<acc_name>"+searchStr+"</acc_name>" +
+				"<email></email>" +
+				"<phone></phone>" +
+				"</staff>";
+	
+		fetch_requested_data('',staff_columns,function(staff_results)
+		{
+			var num_res=0;
+			var result_html="";
+			staff_results.forEach(function(staff)
+			{
+				result_html+="<div class='activity_detail'>" +
+						"Employee: "+staff.name+
+						"</br><a onclick=\"" +
+						"element_display('"+staff.id +
+						"','form8');\">Email:"+staff.email+" Phone:"+staff.phone+"</a>" +
+						"</div>";
+				num_res=num_res+1;
+			});
+			$("#search_results").append(result_html);
+		});
+	
+		///////////////////////from assets//////////////
+		var assets_columns="<assets>" +
+				"<id></id>" +
+				"<name>"+searchStr+"</name>" +
+				"<type></type>" +
+				"<owner></owner>" +
+				"</assets>";
+	
+		fetch_requested_data('',assets_columns,function(asset_results)
+		{
+			var num_res=0;
+			var result_html="";
+			asset_results.forEach(function(asset)
+			{
+				result_html+="<div class='activity_detail'>" +
+						"Asset: "+asset.name+
+						"</br><a onclick=\"" +
+						"element_display('"+asset.id +
+						"','form5');\">Type: "+asset.type+" Owner: "+asset.owner+"</a>" +
+						"</div>";
+				num_res=num_res+1;
+			});
+			$("#search_results").append(result_html);
+		});
+	
+		/////////////////////from activities///////////
+		var columns="<activities>" +
+				"<title></title>" +
+				"<link_to></link_to>" +
+				"<data_id></data_id>" +
+				"<notes></notes>" +
+				"<updated_by></updated_by>" +
+				"<data_xml>"+searchStr+"</data_xml>" +
+				"<last_updated></last_updated>" +
+				"</activities>";
+	
+		fetch_requested_data('',columns,function(activity_results)
+		{
+			var num_res=0;
+			var result_html="";
+			activity_results.forEach(function(activity)
+			{
+				result_html+="<div class='activity_detail'>" +
+						"Activity: "+activity.title +
+						"</br><a onclick=\"" +
+						"element_display('"+activity.data_id +
+						"','"+activity.link_to +
+						"');\">"+activity.notes+"</a>" +
+						"</div>";
+				num_res=num_res+1;
+			});
+			$("#search_results").append(result_html);
+		});
+	}
+	else
+	{
+		$("#search_results").html("Type atleast 3 letters to find any results");
+	}
 }

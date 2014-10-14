@@ -700,27 +700,24 @@ function form12_delete_form()
 						
 						if(is_online())
 						{
-							server_write_simple(quantity_xml);
+							server_update_simple(quantity_xml);
 						}
 						else
 						{
-							local_write_simple(quantity_xml);
+							local_update_simple(quantity_xml);
 						}
 						break;
 					}
 					
 				});
 				
-				var other_delete="<bill_items>" +
-						"<bill_id>"+data_id+"</bill_id>" +
-						"</bill_items>";
 				if(is_online())
 				{
-					server_delete_simple(other_delete);
+					server_delete_simple(items_data);
 				}
 				else
 				{
-					local_delete_simple(other_delete);
+					local_delete_simple(items_data);
 				}
 
 			});

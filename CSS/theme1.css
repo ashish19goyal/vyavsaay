@@ -70,7 +70,7 @@ div.search_bar{
 	border-width: 2px;
 	border-radius: 5px;
 	border-color: #2A2A2A;
-	margin: 2px 2px 2px 2px;	
+	padding: auto;
 }
 
 
@@ -78,7 +78,7 @@ div.header_person{
 	float: left;
 	width: 35%;
 	text-align: left;
-	margin: 0.5% 0% 0.5% 1%;
+	margin: 0.5% 1% .5% 1%;
 }
 
 
@@ -86,8 +86,7 @@ div.searchBlock{
 	float: right;
 	text-align: left;
 	width: 60%;
-	margin: .25% 1% .25% 0%;
-	vertical-align: middle;
+	padding: auto;
 }
 
 
@@ -103,13 +102,17 @@ input#search_box{
 	background-color: #ffffff;
 }
 
-input#searchicon{
-	width: 4%;
+.search_icon{
+	height: 25px;
+	width: 25px;
+	background:url('/images/search.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
 	float: right;		
-	margin: 1px 1px 1px 1px;
-	vertical-align: middle;
+	margin: 0.5% 1% .5% 0%;
 }
-
 
 footer{
 	width:98%;
@@ -314,6 +317,7 @@ tfoot>tr>td{
 	height:16px;
 	width: 16px;
 }
+
 
 .save_icon{
 	height: 25px;

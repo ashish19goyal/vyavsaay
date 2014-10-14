@@ -1,19 +1,22 @@
 <div id='offers_main'>
-	<ul>
-		<li><a id="form2_link" href="#form2" onclick="form2_header_ini();">Create pamphlets</a></li>
-		<li><a id="form35_link" href="#form35" onclick="form35_header_ini(); form35_ini('');">Manage Offers</a></li>
-		<li><a id="form44_link" href="#form44" onclick="form44_header_ini(); form44_ini('');">Manage Pamphlets</a></li>			
-	</ul>
+	<?php 
+	
+		echo "<ul>";
+			if(strpos($_SESSION['forms'],'form2')!==false)
+				echo "<li><a id='form2_link' href='#form2' onclick='form2_header_ini();'>Create pamphlets</a></li>";
+			if(strpos($_SESSION['forms'],'form35')!==false)
+				echo "<li><a id='form35_link' href='#form35' onclick='form35_header_ini(); form35_ini();'>Manage Offers</a></li>";
+			if(strpos($_SESSION['forms'],'form44')!==false)
+				echo "<li><a id='form44_link' href='#form44' onclick='form44_header_ini(); form44_ini();'>Manage Pamphlets</a></li>";			
+		echo "</ul>";
 
-	<div id='form2' class='function_detail'>
-		<?php include "forms/form2.php" ?>
-	</div>
-	<div id='form35' class='function_detail'>
-		<?php include "forms/form35.php" ?>
-	</div>
-	<div id='form44' class='function_detail'>
-		<?php include "forms/form44.php" ?>
-	</div>
+		if(strpos($_SESSION['forms'],'form2')!==false)
+			include "forms/form2.php";
+		if(strpos($_SESSION['forms'],'form35')!==false)
+			include "forms/form35.php";
+		if(strpos($_SESSION['forms'],'form44')!==false)
+			include "forms/form44.php";
+	?>
 	
 	<script>
 	!function(){

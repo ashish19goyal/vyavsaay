@@ -1,11 +1,7 @@
 <div class="search_bar">
-	<div class="header_person" id='menu_username'>
-	</div>
+	<div class="header_person" id='menu_username'></div>
 	<div class="searchBlock">
-			
-				<input type="image" src='./images/search.jpeg' alt='Search' name="search" id='searchicon' onclick="show_search_results();"/>
-				<input type="text" name="search_box" id='search_box' placeholder='search..'/>
-			
+		<input type="button" class='search_icon' onclick="show_search_results();">
+		<input type="text" id='search_box' placeholder='search..' onkeydown="if(event.keyCode==13){show_search_results();return false;}">
 	</div>
-	<div class="clear"></div>
 </div>

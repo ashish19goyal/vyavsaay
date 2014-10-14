@@ -582,7 +582,7 @@ function form11_create_item(form)
  * @form New Bill
  * @param button
  */
-function form12_save_item(form)
+function form12_create_item(form)
 {
 	if(is_create_access('form12'))
 	{
@@ -716,10 +716,9 @@ function form12_save_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		$(form).off('submit');
-		$(form).on('submit',function(event)
+		$(form).on("submit", function(event)
 		{
 			event.preventDefault();
-			form12_update_item(form);
 		});
 	}
 	else
@@ -732,7 +731,7 @@ function form12_save_item(form)
  * @form New Bill
  * @param button
  */
-function form12_save_form()
+function form12_create_form()
 {
 	if(is_create_access('form12') || is_update_access('form12'))
 	{
@@ -856,12 +855,12 @@ function form12_save_form()
 									if(is_online())
 									{
 										server_create_simple(free_xml);
-										server_create_simple(free_quantity_xml);
+										server_update_simple(free_quantity_xml);
 									}
 									else
 									{
 										local_create_simple(free_xml);
-										local_create_simple(free_quantity_xml);
+										local_update_simple(free_quantity_xml);
 									}
 									offer_invalid=false;
 									break;
@@ -915,7 +914,6 @@ function form12_save_form()
 			form12_update_form();
 		});
 		$("[id^='save_form12']").click();
-		//$("#modal3").dialog("open");
 	}
 	else
 	{

@@ -21,11 +21,9 @@ function default_load()
 		date_formating();
 		load_tooltips();
 		modal_forms_ini();
-		count_notif();
-		count_oppor();
 		print_setup();
 		Chart.defaults.global.responsive = true;
-		hide_all();
+		home_display();
 	}
 	hide_loader();
 }
@@ -33,7 +31,6 @@ function default_load()
 function show_function(function_id)
 {
 	hide_all();
-	$('#home_grid').hide();
 	$(function_id).show();
 }
 
@@ -94,6 +91,7 @@ function home_display()
 	count_notif();
 	count_oppor();
 	hide_all();
+	$('#home_grid').show();
 }
 
 function set_menu_username()
@@ -168,7 +166,7 @@ function hide_all()
 	$("#maps_main").hide();
 	hide_menu_items();
 	
-	$("#home_grid").show();
+	$("#home_grid").hide();
 	hide_loader();
 	//$(".forms").show();
 }
@@ -203,9 +201,18 @@ function show_search_results()
 {
 	hide_all();
 	$("#search_results_box").show();
-	search_ini();	
+	search_ini();
 }
 
+function element_display(fid,element_name)
+{
+	var element_link="#"+element_name+"_link";
+	var function_link=$(element_link).parent().parent().parent().attr('id');
+	show_function("#"+function_link);
+	$(element_link).attr('data_id',fid);
+	$(element_link).click();
+	$(element_link).attr('data_id','');
+}
 
 /**
  * this function displays the notifications in the main content box
