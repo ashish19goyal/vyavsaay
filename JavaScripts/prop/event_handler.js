@@ -14,8 +14,8 @@ function default_load()
 	}
 	if(is_set_session())
 	{
+		i18n_setup();
 		set_menu_shortcuts();
-		set_menu_username();
 		setup_elements_display();
 		activities_ini();
 		date_formating();
@@ -23,7 +23,7 @@ function default_load()
 		modal_forms_ini();
 		print_setup();
 		Chart.defaults.global.responsive = true;
-		i18n_setup();
+		//set_menu_username();
 		home_display();
 	}
 	hide_loader();
@@ -98,7 +98,8 @@ function home_display()
 function set_menu_username()
 {
 	var name=sessionStorage.getItem('name');
-	$('#menu_username').html("Hello "+name);
+	var hello=i18n.t("general.hello");
+	$('#menu_username').html(hello+" "+name);
 }
 
 function setup_elements_display()
@@ -138,12 +139,13 @@ function i18n_setup()
 	    }
 	},function(t)
 	{
-		  // translate nav
 		$('title').i18n();
-		$(".content_box").i18n();
-		$("#search_results_box").i18n();
-		$(".modal_forms").i18n();
-		$(".side_menu").i18n();
+		$("#content_box").find('div').i18n();
+		$("#content_box").find('a').i18n();
+		$(".side_lane").find('div').i18n();
+		//$(".modal_forms").i18n();
+		//$(".side_menu").i18n();
+		set_menu_username();
 	});
 }
 

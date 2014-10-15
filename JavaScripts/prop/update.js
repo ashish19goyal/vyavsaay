@@ -1723,6 +1723,7 @@ function form46_update_item(form)
 	if(is_update_access('form46'))
 	{
 		var name=form.elements[0].value;
+		name=name.substr(name.indexOf('.')+1);
 		var value=form.elements[1].value;
 		var data_id=form.elements[2].value;
 		var element_id=form.elements[3].value;
@@ -1747,11 +1748,11 @@ function form46_update_item(form)
 					"</activity>";
 		if(is_online())
 		{
-			server_update_row(data_xml,activity_xml);
+			//server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_update_row(data_xml,activity_xml);
+			//local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -1872,6 +1873,7 @@ function form48_update_item(form)
 	if(is_update_access('form48'))
 	{
 		var name=form.elements[0].value;
+		name=name.substr(name.indexOf('.')+1);
 		var value=form.elements[1].value;
 		var data_id=form.elements[2].value;
 		var element_id=form.elements[3].value;
@@ -1938,6 +1940,7 @@ function form49_update_item(form)
 	if(is_update_access('form49'))
 	{
 		var name=form.elements[0].value;
+		name=name.substr(name.indexOf('.')+1);
 		var value=form.elements[1].value;
 		var data_id=form.elements[2].value;
 		var element_id=form.elements[3].value;
@@ -2004,6 +2007,7 @@ function form50_update_item(form)
 	if(is_update_access('form50'))
 	{
 		var name=form.elements[0].value;
+		name=name.substr(name.indexOf('.')+1);
 		var value=form.elements[1].value;
 		var data_id=form.elements[2].value;
 		var element_id=form.elements[3].value;
@@ -2074,6 +2078,7 @@ function form51_update_item(form)
 		var name=master_form.elements[4].value;
 			
 		var element_name=form.elements[0].value;
+		element_name=element_name.substr(element_name.indexOf('.')+1);
 		var re='unchecked';
 		if(form.elements[1].checked)
 			var re='checked';
@@ -2230,6 +2235,7 @@ function form52_update_item(form)
 	if(is_update_access('form52'))
 	{
 		var element_name=form.elements[0].value;
+		element_name=element_name.substr(element_name.indexOf('.')+1);
 		var shortcut=form.elements[1].value;
 		var data_id=form.elements[2].value;
 		var element_id=form.elements[3].value;

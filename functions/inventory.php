@@ -3,17 +3,17 @@
 
 		echo "<ul>";
 			if(strpos($_SESSION['forms'],'form1')!==false)
-				echo "<li><a id='form1_link' href='#form1' onclick='form1_header_ini(); form1_ini();'>Update Inventory</a></li>";
+				echo "<li><a id='form1_link' href='#form1' onclick='form1_header_ini(); form1_ini();' data-i18n='form.update_inventory'></a></li>";
 			if(strpos($_SESSION['forms'],'form22')!==false)
-				echo "<li><a id='form22_link' href='#form22' onclick='form22_header_ini(); form22_ini();'>Dispose items</a></li>";
+				echo "<li><a id='form22_link' href='#form22' onclick='form22_header_ini(); form22_ini();' data-i18n='form.dispose_items'></a></li>";
 			if(strpos($_SESSION['reports'],'report8')!==false)
-				echo "<li><a id='report8_link' href='#report8' onclick='report8_header_ini(); report8_ini();'>Inventory predictions</a></li>";
+				echo "<li><a id='report8_link' href='#report8' onclick='report8_header_ini(); report8_ini();' data-i18n='form.inventory_predictions'></a></li>";
 			if(strpos($_SESSION['reports'],'report28')!==false)
-				echo "<li><a id='report28_link' href='#report28' onclick='report28_header_ini(); report28_ini();'>Short Inventory</a></li>";
+				echo "<li><a id='report28_link' href='#report28' onclick='report28_header_ini(); report28_ini();' data-i18n='form.short_inventory'></a></li>";
 			if(strpos($_SESSION['reports'],'report40')!==false)
-				echo "<li><a id='report40_link' href='#report40' onclick='report40_header_ini(); report40_ini();'>Surplus Inventory</a></li>";
+				echo "<li><a id='report40_link' href='#report40' onclick='report40_header_ini(); report40_ini();' data-i18n='form.surplus_inventory'></a></li>";
 			if(strpos($_SESSION['reports'],'rpeort27')!==false)
-				echo "<li><a id='report27_link' href='#report27' onclick='report27_header_ini(); report27_ini();'>Expiring Inventory</a></li>";
+				echo "<li><a id='report27_link' href='#report27' onclick='report27_header_ini(); report27_ini();' data-i18n='form.expiring_inventory'></a></li>";
 		echo "</ul>";
 	
 		if(strpos($_SESSION['forms'],'form1')!==false)
