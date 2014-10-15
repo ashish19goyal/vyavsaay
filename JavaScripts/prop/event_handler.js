@@ -23,6 +23,7 @@ function default_load()
 		modal_forms_ini();
 		print_setup();
 		Chart.defaults.global.responsive = true;
+		i18n_setup();
 		home_display();
 	}
 	hide_loader();
@@ -121,6 +122,30 @@ function setup_elements_display()
 	},forms_data);
 }
 
+function i18n_setup()
+{
+	var language=get_session_var('locale');
+	var lan=language.substring(0,2);
+	i18n.init({
+		lng:lan,
+		debug: true,
+	    fallbackLng: false,
+	    load:'unspecific',
+	    resGetPath: "locales/__ns__-__lng__.json",
+	    ns: {
+	        namespaces: ['translation'],
+	        defaultNs: 'translation'
+	    }
+	},function(t)
+	{
+		  // translate nav
+		$('title').i18n();
+		$(".content_box").i18n();
+		$("#search_results_box").i18n();
+		$(".modal_forms").i18n();
+		$(".side_menu").i18n();
+	});
+}
 
 function hide_menu_items()
 {

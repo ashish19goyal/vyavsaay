@@ -703,7 +703,7 @@ function form46_header_ini()
 	
 	var other_data="<user_preferences>" +
 			"<value></value>" +
-			"<type>other</other>" +
+			"<type>other</type>" +
 			"</user_preferences>";
 	
 	set_my_filter(other_data,other_element);
@@ -794,7 +794,8 @@ function form50_header_ini()
  */
 function form51_header_ini()
 {
-	var users_filter=document.getElementById('form51_master').elements[3];
+	var fields=document.getElementById('form51_master');
+	var users_filter=fields.elements[3];
 		
 	var username_data="<user_profiles>" +
 			"<username></username>" +
@@ -894,9 +895,10 @@ function form51_modify_form(button)
  */
 function form52_header_ini()
 {
-	var filter_fields=document.getElementById('form50_header');
-	var report_filter=filter_fields.elements[0];
-	var key_filter=filter_fields.elements[1];
+	var form=document.getElementById('form52_header');
+	console.log(form);
+	var report_filter=form.elements[0];
+	var key_filter=form.elements[1];
 	
 	var element_data="<shortcuts>" +
 			"<element_name></element_name>" +
@@ -907,7 +909,6 @@ function form52_header_ini()
 
 	set_my_filter(element_data,report_filter);
 	set_my_filter(key_data,key_filter);
-
 };
 
 /**

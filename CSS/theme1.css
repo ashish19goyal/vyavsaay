@@ -439,10 +439,28 @@ tfoot>tr>td{
 	font-size: 10px;
 }
 
+.search_detail{
+	background-color: #AB7D44;
+	border: 2px solid #DCDDD3;
+	color:#F5F3EE;
+	padding: 1% 1% 1% 1%;
+	text-align:left;
+	width: 100%;
+}
+
+.search_detail>a{
+	font-size: 10px;
+}
+
+
 .activity_log{
 	font-size: 7px;
 }
 
 canvas{ 
 	border: 1px solid black;
+}
+
+.modal_forms{
+	display:none;
 }

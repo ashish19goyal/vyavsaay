@@ -1868,32 +1868,34 @@ function form46_ini()
 
 	fetch_requested_data('form46',columns,function(results)
 	{
-		for(var i in results)
+		results.forEach(function(result)
 		{
 			var rowsHTML="";
 			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form46_"+results[i].id+"'></form>";
+				rowsHTML+="<form id='form46_"+result.id+"'></form>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form46_"+results[i].id+"' value='"+results[i].name+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form46_"+result.id+"' value='"+result.display_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' form='form46_"+results[i].id+"' value='"+results[i].value+"'>";
+						rowsHTML+="<input type='text' ondblclick='set_editable($(this));' form='form46_"+result.id+"' value='"+result.value+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='hidden' form='form46_"+results[i].id+"' value='"+results[i].id+"'>";
-						rowsHTML+="<input type='hidden' form='form46_"+results[i].id+"' value='"+results[i].name+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' id='save_form46_"+results[i].id+"' form='form46_"+results[i].id+"' value='saved'>";	
+						rowsHTML+="<input type='hidden' form='form46_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='hidden' form='form46_"+result.id+"' value='"+result.name+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' id='save_form46_"+result.id+"' form='form46_"+result.id+"' value='saved'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form46_body').prepend(rowsHTML);
-			var fields=document.getElementById("form46_"+results[i].id);
-			$(fields).on("submit", function(event)
+			$('#form46_body').append(rowsHTML);
+			
+			var fields=document.getElementById("form46_"+result.id);
+			//console.log(fields);
+			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
 				form46_update_item(fields);
 			});
-		}
+		});
 	});
 };
 
@@ -1993,7 +1995,7 @@ function form49_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form49_"+results[i].id+"' value='"+results[i].display_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='checkbox' readonly='readonly' form='form49_"+results[i].id+"' checked='"+results[i].value+"'>";
+						rowsHTML+="<input type='checkbox' form='form49_"+results[i].id+"' checked='"+results[i].value+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form49_"+results[i].id+"' value='"+results[i].id+"'>";
@@ -2230,6 +2232,7 @@ function form53_ini()
 
 	fetch_requested_data('form53',columns,function(results)
 	{
+		//console.log(results);
 		for(var i in results)
 		{
 			var rowsHTML="";
@@ -2275,6 +2278,7 @@ function form53_ini()
  */
 function form54_ini()
 {
+	
 	var fid=$("#form54_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -2312,7 +2316,7 @@ function form54_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form54_body').prepend(rowsHTML);
+			$('#form54_body').append(rowsHTML);
 			var fields=document.getElementById("form54_"+results[i].id);
 			$(fields).on("submit", function(event)
 			{
@@ -2320,8 +2324,6 @@ function form54_ini()
 				form54_update_item(fields);
 			});
 		}
-		//console.log(rowsHTML);
-		$('#form54_body').html(rowsHTML);
 	});
 };
 
@@ -3387,7 +3389,7 @@ function search_ini()
 			var result_html="";
 			product_results.forEach(function(product)
 			{
-				result_html+="<div class='activity_detail'>" +
+				result_html+="<div class='search_detail'>" +
 						"Product: "+product.name+
 						"</br><a onclick=\"" +
 						"form_display('"+product.id +
@@ -3411,7 +3413,7 @@ function search_ini()
 			var result_html="";
 			service_results.forEach(function(service)
 			{
-				result_html+="<div class='activity_detail'>" +
+				result_html+="<div class='search_detail'>" +
 						"Service: "+service.name+
 						"</br><a onclick=\"" +
 						"element_display('"+service.id +
@@ -3437,7 +3439,7 @@ function search_ini()
 			var result_html="";
 			customer_results.forEach(function(customer)
 			{
-				result_html+="<div class='activity_detail'>" +
+				result_html+="<div class='search_detail'>" +
 						"Customer: "+customer.name+
 						"</br><a onclick=\"" +
 						"element_display('"+customer.id +
@@ -3463,7 +3465,7 @@ function search_ini()
 			var result_html="";
 			supplier_results.forEach(function(supplier)
 			{
-				result_html+="<div class='activity_detail'>" +
+				result_html+="<div class='search_detail'>" +
 						"Supplier: "+supplier.name+
 						"</br><a onclick=\"" +
 						"element_display('"+supplier.id +
@@ -3489,7 +3491,7 @@ function search_ini()
 			var result_html="";
 			staff_results.forEach(function(staff)
 			{
-				result_html+="<div class='activity_detail'>" +
+				result_html+="<div class='search_detail'>" +
 						"Employee: "+staff.name+
 						"</br><a onclick=\"" +
 						"element_display('"+staff.id +
@@ -3514,7 +3516,7 @@ function search_ini()
 			var result_html="";
 			asset_results.forEach(function(asset)
 			{
-				result_html+="<div class='activity_detail'>" +
+				result_html+="<div class='search_detail'>" +
 						"Asset: "+asset.name+
 						"</br><a onclick=\"" +
 						"element_display('"+asset.id +
@@ -3542,7 +3544,7 @@ function search_ini()
 			var result_html="";
 			activity_results.forEach(function(activity)
 			{
-				result_html+="<div class='activity_detail'>" +
+				result_html+="<div class='search_detail'>" +
 						"Activity: "+activity.title +
 						"</br><a onclick=\"" +
 						"element_display('"+activity.data_id +

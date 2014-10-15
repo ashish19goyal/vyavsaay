@@ -3,7 +3,7 @@
 <script src='./JavaScripts/open/indexeddb.js'></script>
 <script src='./JavaScripts/open/jquery-1.11.1.min.js'></script>
 <script src='./JavaScripts/open/jquery-ui.min.js'></script>
-<script src='./JavaScripts/open/jquery.i18n.js'></script>
+<script src='./JavaScripts/open/i18next-1.7.4.js'></script>
 <script src='./JavaScripts/open/jQuery.print.js'></script>
 <script src='./JavaScripts/open/leaflet.js'></script>
 <script src='./JavaScripts/open/shortcuts.min.js'></script>
