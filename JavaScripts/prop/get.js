@@ -425,6 +425,78 @@ function set_static_value_list(table,list,filter_element)
 
 }
 
+/**
+ * Converts a two dimensional array to csv file
+ * @param data_array
+ */
+function my_write_to_csv(data_array)
+{
+	var csvRows = [];
+
+	data_array.forEach(function(data_row)
+	{
+	    csvRows.push(data_row.join(','));
+	});
+
+	var csvString = csvRows.join("%0A");
+	var a = document.createElement('a');
+	a.href = 'data:attachment/csv,' + csvString;
+	//a.href = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
+	a.target = '_blank';
+	a.download = 'import_template.csv';
+
+	document.body.appendChild(a);
+	a.click();
+}
+
+
+/**
+ * Converts an array of objects into a csv file
+ */
+function my_obj_array_to_csv(data_array,file_name)
+{
+	var csvRows = [];
+
+	///for header row
+	for(var i in data_array)
+	{
+		var header_string="";
+		for(var p in data_array[i])
+		{
+			if(data_array[i].hasOwnProperty(p))
+			{
+				header_string+=p+",";
+			}
+		}
+	    csvRows.push(header_string);
+		break;	   
+	}
+	
+	/////for data rows
+	data_array.forEach(function(data_row)
+	{
+		var data_string="";
+		for(var p in data_row)
+		{
+			if(data_row.hasOwnProperty(p))
+			{
+				data_string +=data_row[p]+",";
+			}
+		}
+	    csvRows.push(data_string);
+	});
+
+	var csvString = csvRows.join("%0A");
+	var a = document.createElement('a');
+	a.href = 'data:attachment/csv,' + csvString;
+	//a.href = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
+	a.target = '_blank';
+	a.download = file_name+'.csv';
+
+	document.body.appendChild(a);
+	a.click();
+}
+
 
 function get_key_from_object(tablename,column,value)
 {

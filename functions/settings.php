@@ -7,7 +7,7 @@
 			if(strpos($_SESSION['forms'],'form47')!==false)
 				echo "<li><a id='form47_link' href='#form47' data-i18n='form.change_password'></a></li>";
 			if(strpos($_SESSION['forms'],'form48')!==false)
-				echo "<li><a id='form48_link' href='#form48' onclick='form48_header_ini(); form48_ini();' data-i18n='form.select reports'></a></li>";
+				echo "<li><a id='form48_link' href='#form48' onclick='form48_header_ini(); form48_ini();' data-i18n='form.select_reports'></a></li>";
 			if(strpos($_SESSION['forms'],'form49')!==false)
 				echo "<li><a id='form49_link' href='#form49' onclick='form49_header_ini(); form49_ini();' data-i18n='form.select_forms'></a></li>";
 			if(strpos($_SESSION['forms'],'form50')!==false)

@@ -43,6 +43,14 @@ function form1_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		
+		var del_button=form.elements[7];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form1_delete_item(del_button);
+		});
+		
 		$(form).off('submit');
 		$(form).on('submit',function(event)
 		{
@@ -100,7 +108,14 @@ function form2_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[5];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form2_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -213,7 +228,14 @@ function form5_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[8];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form5_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -271,6 +293,7 @@ function form7_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		
 		$(form).off('submit');
 		$(form).on('submit',function(event)
 		{
@@ -328,7 +351,14 @@ function form8_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[8];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form8_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -388,7 +418,14 @@ function form9_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[8];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form9_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -449,7 +486,14 @@ function form10_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[7];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form10_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -504,6 +548,7 @@ function form10_create_form()
 		}
 	
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -565,7 +610,14 @@ function form11_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[8];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form11_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -715,7 +767,14 @@ function form12_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[11];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form12_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on("submit", function(event)
 		{
 			event.preventDefault();
@@ -908,6 +967,7 @@ function form12_create_form()
 		});
 		
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -969,7 +1029,14 @@ function form14_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[8];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form14_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1029,7 +1096,14 @@ function form15_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[8];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form15_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1089,7 +1163,14 @@ function form19_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[8];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form19_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1150,7 +1231,14 @@ function form21_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[7];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form21_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1206,6 +1294,7 @@ function form21_create_form()
 		{
 			local_create_row(data_xml,activity_xml);
 		}
+		
 		$(form).off('submit');
 		$(form).on('submit',function(event)
 		{
@@ -1266,7 +1355,14 @@ function form22_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[6];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form22_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1321,7 +1417,14 @@ function form24_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[4];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form24_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1433,7 +1536,14 @@ function form30_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[7];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form30_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1491,7 +1601,14 @@ function form35_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[7];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form35_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1547,7 +1664,14 @@ function form38_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[6];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form38_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1560,84 +1684,6 @@ function form38_create_item(form)
 	}
 }
 
-/**
- * @form Manage Products
- * @param button
- */
-function form39_create_item(form)
-{
-	if(is_create_access('form39'))
-	{		
-		var name=form.elements[0].value;
-		var make=form.elements[1].value;
-		var description=form.elements[2].value;
-		var data_id=form.elements[8].value;
-		var pic_id=$("#img_form39_"+data_id).parent().attr('name');
-		var url=$("#img_form39_"+data_id).attr('src');
-		var manufactured=form.elements[5].value;
-		var unit=form.elements[6].value;
-		var tags=form.elements[7].value;
-		var last_updated=get_my_time();
-		var table='product_master';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<make>"+make+"</make>" +
-					"<name>"+name+"</name>" +
-					"<description>"+description+"</description>" +
-					"<manufactured>"+manufactured+"</manufactured>" +
-					"<unit>"+unit+"</unit>" +
-					"<tags>"+tags+"</tags>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form39</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added product "+name+" to inventory</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var pic_xml="<documents>" +
-					"<id>"+pic_id+"</id>" +
-					"<url>"+url+"</url>" +
-					"<doc_type>product_master</doc_type>" +
-					"<target_id>"+data_id+"</target_id>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</documents>";
-		var pic_activity_xml="<activity>" +
-					"<data_id>"+pic_id+"</data_id>" +
-					"<tablename>documents</tablename>" +
-					"<link_to>form39</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Updated picture for product "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-			server_create_row(pic_xml,pic_activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-			local_create_row(pic_xml,pic_activity_xml);
-		}	
-		for(var i=0;i<9;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-			form39_update_item(form);
-		});
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
 
 /**
  * @form Manage Vendors
@@ -1685,7 +1731,14 @@ function form40_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[7];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form40_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1743,7 +1796,14 @@ function form56_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[6];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form56_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1802,7 +1862,14 @@ function form58_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[6];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form58_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1860,7 +1927,14 @@ function form59_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[6];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form59_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1914,7 +1988,14 @@ function form60_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[4];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form60_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -1968,7 +2049,14 @@ function form61_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[4];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form61_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -2026,7 +2114,14 @@ function form62_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[6];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form62_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -2084,7 +2179,14 @@ function form63_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[6];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form63_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -2140,7 +2242,14 @@ function form64_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[5];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form64_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -2197,7 +2306,14 @@ function form66_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		var del_button=form.elements[5];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form66_delete_item(del_button);
+		});
 		$(form).off('submit');
+
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();

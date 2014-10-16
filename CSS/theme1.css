@@ -318,6 +318,25 @@ tfoot>tr>td{
 	width: 16px;
 }
 
+.export_icon{
+	height: 25px;
+	width: 25px;
+	background:url('/images/export.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+}
+
+.import_icon{
+	height: 25px;
+	width: 25px;
+	background:url('/images/import.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+}
 
 .save_icon{
 	height: 25px;

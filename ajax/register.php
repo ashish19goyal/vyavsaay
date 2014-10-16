@@ -43,7 +43,7 @@
 function set_user_preferences($conn2,$industry)
 {
 	$stmt1=$conn2->conn->prepare("insert into user_preferences (name,display_name,status,value,type,last_updated) values(?,?,?,?,?,?)");
-	$stmt1->execute(array('industry','Industry','active',$industry,'other',1000*time()));
+	$stmt1->execute(array('industry','industry','active',$industry,'other',1000*time()));
 }
 
 function set_user_profiles($conn2,$pass_hash,$name)

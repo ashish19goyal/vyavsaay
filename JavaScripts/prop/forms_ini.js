@@ -64,6 +64,13 @@ function form1_ini()
 				form1_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'inventory');
+		});
+
 	});
 };
 
@@ -139,6 +146,12 @@ function form5_ini()
 				event.preventDefault();
 				form5_update_item(fields);
 			});
+		});
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'assets');
 		});
 	});
 };
@@ -313,6 +326,12 @@ function form8_ini()
 				});
 			});
 		});
+		var export_button=filter_fields.elements[5];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'staff');
+		});
 	});
 };
 
@@ -350,7 +369,6 @@ function form9_ini()
 
 	fetch_requested_data('form9',columns,function(results)
 	{
-		
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -390,6 +408,12 @@ function form9_ini()
 				form9_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[6];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'cash_register');
+		});
 	});
 };
 
@@ -428,7 +452,6 @@ function form11_ini()
 
 	fetch_requested_data('form11',columns,function(results)
 	{	
-		
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -468,6 +491,13 @@ function form11_ini()
 				form11_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[6];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'payments');
+		});
+
 	});
 };
 
@@ -822,6 +852,13 @@ function form14_ini()
 				form14_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[6];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'tasks');
+		});
+
 	});
 };
 
@@ -896,6 +933,12 @@ function form15_ini()
 				event.preventDefault();
 				form15_update_item(fields);
 			});
+		});
+		var export_button=filter_fields.elements[5];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'customer_returns');
 		});
 	});
 };
@@ -972,6 +1015,12 @@ function form19_ini()
 				form19_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[6];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'supplier_returns');
+		});
 	});
 };
 
@@ -1040,6 +1089,12 @@ function form22_ini()
 				event.preventDefault();
 				form22_update_item(fields);
 			});
+		});
+		var export_button=filter_fields.elements[5];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'disposals');
 		});
 	});
 };
@@ -1136,6 +1191,12 @@ function form30_ini()
 				});
 			});
 		});
+		var export_button=filter_fields.elements[5];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'customers');
+		});
 	});
 };
 
@@ -1207,6 +1268,12 @@ function form35_ini()
 				form35_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[5];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'offers');
+		});
 	});
 };
 
@@ -1271,6 +1338,12 @@ function form38_ini()
 				event.preventDefault();
 				form38_update_item(fields);
 			});
+		});
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'store');
 		});
 	});
 };
@@ -1387,6 +1460,12 @@ function form39_ini()
 				},false);
 			});
 		});
+		var export_button=filter_fields.elements[5];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'products');
+		});
 	});	
 };
 
@@ -1482,6 +1561,12 @@ function form40_ini()
 					form40_update_item(fields);
 				});
 			});
+		});
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'suppliers');
 		});
 	});
 };
@@ -1648,6 +1733,12 @@ function form42_ini()
 				form42_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'bills');
+		});
 	});
 };
 
@@ -1715,6 +1806,12 @@ function form43_ini()
 				form43_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'purchase_orders');
+		});
 	});
 };
 
@@ -1771,6 +1868,12 @@ function form44_ini()
 				event.preventDefault();
 				form44_update_item(fields);
 			});
+		});
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'pamphlets');
 		});
 	});
 };
@@ -1837,6 +1940,12 @@ function form45_ini()
 				form45_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'service_receipts');
+		});
 	});
 };
 
@@ -1896,7 +2005,15 @@ function form46_ini()
 				form46_update_item(fields);
 			});
 		});
+		
 		$('#form46_body').find('input').i18n();
+		
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'system_defaults');
+		});
 	});
 };
 
@@ -1938,7 +2055,7 @@ function form48_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form48_"+result.id+"' data-i18n='[value]form."+result.display_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='checkbox' form='form48_"+result.id+"' checked='"+result.value+"'>";
+						rowsHTML+="<input type='checkbox' form='form48_"+result.id+"' "+result.value+">";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form48_"+result.id+"' value='"+result.id+"'>";
@@ -1955,7 +2072,16 @@ function form48_ini()
 				form48_update_item(fields);
 			});
 		});
+		
 		$('#form48_body').find('input').i18n();
+		
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'reports');
+		});
+
 	});
 };
 
@@ -1997,7 +2123,7 @@ function form49_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form49_"+result.id+"' data-i18n='[value]form."+result.display_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='checkbox' form='form49_"+result.id+"' checked='"+result.value+"'>";
+						rowsHTML+="<input type='checkbox' form='form49_"+result.id+"' "+result.value+">";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form49_"+result.id+"' value='"+result.id+"'>";
@@ -2014,7 +2140,16 @@ function form49_ini()
 				form49_update_item(fields);
 			});
 		});
+		
 		$('#form49_body').find('input').i18n();
+		
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'forms');
+		});
+
 	});
 };
 
@@ -2057,7 +2192,7 @@ function form50_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form50_"+result.id+"' data-i18n='[value]form."+result.display_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='checkbox' readonly='readonly' form='form50_"+result.id+"' checked='"+result.value+"'>";
+						rowsHTML+="<input type='checkbox' readonly='readonly' form='form50_"+result.id+"' "+result.value+">";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form50_"+result.id+"' value='"+result.id+"'>";
@@ -2074,7 +2209,16 @@ function form50_ini()
 				form50_update_item(fields);
 			});
 		});
+		
 		$('#form50_body').find('input').i18n();
+		
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'accounting');
+		});
+
 	});
 };
 
@@ -2203,7 +2347,16 @@ function form52_ini()
 				form52_update_item(fields);
 			});
 		});
+		
 		$('#form52_body').find('input').i18n();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'shortcuts');
+		});
+
 	});
 };
 
@@ -2275,6 +2428,13 @@ function form53_ini()
 				form53_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[5];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'supplier_bills');
+		});
+
 	});
 };
 
@@ -2311,7 +2471,7 @@ function form54_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form54"+result.id+"'></form>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form54_"+result.id+"' value='"+result.display_name+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form54_"+result.id+"' data-i18n='[value]form."+result.display_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' form='form54_"+result.id+"' value='"+result.value+"'>";
@@ -2330,6 +2490,16 @@ function form54_ini()
 				form54_update_item(fields);
 			});
 		});
+		
+		$('#form54_body').find('input').i18n();
+
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'printing_templates');
+		});
+
 	});
 };
 
@@ -2446,6 +2616,14 @@ function form56_ini()
 				form56_update_item(fields);
 			});
 		});
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'expenses');
+		});
+
 	});
 };
 
@@ -2517,6 +2695,14 @@ function form57_ini()
 				form57_update_item(fields);
 			});			
 		});
+
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'services');
+		});
+
 	});
 };
 
@@ -2580,6 +2766,14 @@ function form58_ini()
 				form58_update_item(fields);
 			});
 		});
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'service_pre_requisites');
+		});
+
 	});
 };
 
@@ -2644,6 +2838,14 @@ function form59_ini()
 				form59_update_item(fields);
 			});
 		});
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'product_pre_requisites');
+		});
+
 	});
 };
 
@@ -2703,6 +2905,14 @@ function form60_ini()
 				form60_update_item(fields);
 			});
 		});
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'product_categories');
+		});
+
 	});
 };
 
@@ -2761,6 +2971,14 @@ function form61_ini()
 				form61_update_item(fields);
 			});
 		});
+
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'service_categories');
+		});
+
 	});
 };
 
@@ -2825,6 +3043,13 @@ function form62_ini()
 				form62_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'product_reviews');
+		});
+
 	});
 };
 
@@ -2889,6 +3114,13 @@ function form63_ini()
 				form63_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'service_reviews');
+		});
+
 	});
 };
 
@@ -2949,6 +3181,13 @@ function form64_ini()
 				form64_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'service_cross_sells');
+		});
+
 	});
 };
 
@@ -3006,6 +3245,13 @@ function form65_ini()
 				form65_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'service_taxes');
+		});
+
 	});
 };
 
@@ -3067,6 +3313,13 @@ function form66_ini()
 				form66_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'product_cross_sells');
+		});
+
 	});
 };
 
@@ -3132,6 +3385,13 @@ function form67_ini()
 				form67_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[1];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'product_dimensions');
+		});
+
 	});
 };
 
@@ -3190,6 +3450,13 @@ function form68_ini()
 				form68_update_item(fields);
 			});
 		});
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'product_taxes');
+		});
+
 	});
 };
 

@@ -10,8 +10,10 @@
 					<th>Manufactured <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form39_header' onblur="form39_ini('');"></th>
 					<th>Unit</th>
 					<th>Tags <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form39_header' onblur="form39_ini('');"></th>
-					<th><input type='button' form='form39_header' value='Add new product' onclick='modal14_action();'></th>
-			</tr>
+					<th><input type='button' form='form39_header' value='Add new product' class='add_icon' onclick='modal14_action();'>
+						<input type='button' form='form39_header' value='Export' class='export_icon'>
+						<input type='button' form='form39_header' value='Import' class='import_icon'></th>
+					</tr>
 		</thead>
 		<tbody id='form39_body'>
 		</tbody>

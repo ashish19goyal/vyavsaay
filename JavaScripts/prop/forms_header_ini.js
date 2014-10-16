@@ -479,6 +479,14 @@ function form30_header_ini()
 	set_my_filter(contact_data,contact_filter);
 	set_my_filter(email_data,email_filter);
 	set_static_filter('customers','status',status_filter);
+	
+	var import_button=filter_fields.elements[6];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form30_import_template,form30_import);
+	});
+	
 };
 
 

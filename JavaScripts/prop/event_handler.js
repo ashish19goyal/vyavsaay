@@ -37,7 +37,7 @@ function show_function(function_id)
 
 function modal_forms_ini()
 {
-	for(var i=1;i<7;i++)
+	for(var i=1;i<8;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -53,7 +53,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=7;i<22;i++)
+	for(var i=8;i<24;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,

@@ -5,8 +5,10 @@
 				<form id='form44_header'></form>
 					<th>Pamphlet Name <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form44_header' onblur="form44_ini('');"></th>
 					<th>Number of items</th>
-					<th><input type="button" value='Add new Pamphlet' form='form44_header' onclick="form2_display('');"></th>
-			</tr>
+					<th><input type="button" value='Add new Pamphlet' class='add_icon' form='form44_header' onclick="form2_display('');">
+						<input type='button' form='form44_header' value='Export' class='export_icon'>
+						<input type='button' form='form44_header' value='Import' class='import_icon'></th>
+					</tr>
 		</thead>
 		<tbody id='form44_body'>
 		</tbody>

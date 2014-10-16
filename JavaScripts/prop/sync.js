@@ -365,7 +365,7 @@ function update_last_sync_time(func)
 		{
 			var time=get_my_time();
 			
-			var row_data={id:'700',name:'last_sync_time',value:time,type:'other',display_name:'Last sync time',status:'active'};
+			var row_data={id:'700',name:'last_sync_time',value:time,type:'other',display_name:'last_sync_time',status:'active'};
 			//{value:row_data,key:row_data.id}
 			database.upsert('user_preferences',row_data,function(err,insertedkey)
 			{
@@ -485,9 +485,7 @@ function set_session_online()
 			var data_xml="<user_preferences>" +
 				"<id>"+data_id+"</id>" +
 				"<name>offline</name>" +
-				"<display_name>Mode of operation</display_name>" +
 				"<value>online</value>" +
-				"<type>other</type>" +
 				"<status>active</status>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</user_preferences>";	
@@ -500,8 +498,6 @@ function set_session_online()
 				"<user_display>yes</user_display>" +
 				"<updated_by>"+get_name()+"</updated_by>" +
 				"</activity>";
-			//console.log(data_xml);
-			//console.log(activity_xml);
 			server_update_row(data_xml,activity_xml);
 			local_update_simple(data_xml);
 			hide_menu_items();
@@ -525,9 +521,7 @@ function set_session_offline()
 			var data_xml="<user_preferences>" +
 				"<id>"+data_id+"</id>" +
 				"<name>offline</name>" +
-				"<display_name>Mode of operation</display_name>" +
 				"<value>offline</value>" +
-				"<type>other</type>" +
 				"<status>active</status>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</user_preferences>";	
@@ -540,8 +534,6 @@ function set_session_offline()
 				"<user_display>yes</user_display>" +
 				"<updated_by>"+get_name()+"</updated_by>" +
 				"</activity>";
-			//console.log(data_xml);
-			//console.log(activity_xml);
 			server_update_simple(data_xml);
 			local_update_row(data_xml,activity_xml);
 			hide_menu_items();

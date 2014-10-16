@@ -1722,7 +1722,7 @@ function form46_update_item(form)
 {
 	if(is_update_access('form46'))
 	{
-		var name=form.elements[0].value;
+		var name=form.elements[0].getAttribute('data-i18n');
 		name=name.substr(name.indexOf('.')+1);
 		var value=form.elements[1].value;
 		var data_id=form.elements[2].value;
@@ -1872,9 +1872,13 @@ function form48_update_item(form)
 {
 	if(is_update_access('form48'))
 	{
-		var name=form.elements[0].value;
+		var name=form.elements[0].getAttribute('data-i18n');
+		console.log(name);
 		name=name.substr(name.indexOf('.')+1);
-		var value=form.elements[1].value;
+		console.log(name);
+		var value='unchecked';
+		if(form.elements[1].checked)
+			value='checked';
 		var data_id=form.elements[2].value;
 		var element_id=form.elements[3].value;
 		var last_updated=get_my_time();
@@ -1900,7 +1904,7 @@ function form48_update_item(form)
 		{
 			server_update_row(data_xml,activity_xml);
 		}
-		elsea
+		else
 		{
 			local_update_row(data_xml,activity_xml);
 		}	
@@ -1939,9 +1943,11 @@ function form49_update_item(form)
 {
 	if(is_update_access('form49'))
 	{
-		var name=form.elements[0].value;
+		var name=form.elements[0].getAttribute('data-i18n');
 		name=name.substr(name.indexOf('.')+1);
-		var value=form.elements[1].value;
+		var value='unchecked';
+		if(form.elements[1].checked)
+			value='checked';
 		var data_id=form.elements[2].value;
 		var element_id=form.elements[3].value;
 		var last_updated=get_my_time();
@@ -2006,9 +2012,11 @@ function form50_update_item(form)
 {
 	if(is_update_access('form50'))
 	{
-		var name=form.elements[0].value;
+		var name=form.elements[0].getAttribute('data-i18n');
 		name=name.substr(name.indexOf('.')+1);
-		var value=form.elements[1].value;
+		var value='unchecked';
+		if(form.elements[1].checked)
+			value='checked';
 		var data_id=form.elements[2].value;
 		var element_id=form.elements[3].value;
 		var last_updated=get_my_time();
@@ -2077,20 +2085,20 @@ function form51_update_item(form)
 		var username=master_form.elements[3].value;
 		var name=master_form.elements[4].value;
 			
-		var element_name=form.elements[0].value;
+		var element_name=form.elements[0].getAttribute('data-i18n');
 		element_name=element_name.substr(element_name.indexOf('.')+1);
 		var re='unchecked';
 		if(form.elements[1].checked)
-			var re='checked';
+			re='checked';
 		var cr='unchecked';
 		if(form.elements[2].checked)
-			var cr='checked';
+			cr='checked';
 		var up='unchecked';
 		if(form.elements[3].checked)
-			var up='checked';
+			up='checked';
 		var del='unchecked';
 		if(form.elements[4].checked)
-			var del='checked';
+			del='checked';
 		var data_id=form.elements[5].value;
 		var element_id=form.elements[6].value;
 		var last_updated=get_my_time();
@@ -2234,7 +2242,7 @@ function form52_update_item(form)
 {
 	if(is_update_access('form52'))
 	{
-		var element_name=form.elements[0].value;
+		var element_name=form.elements[0].getAttribute('data-i18n');
 		element_name=element_name.substr(element_name.indexOf('.')+1);
 		var shortcut=form.elements[1].value;
 		var data_id=form.elements[2].value;
@@ -2355,7 +2363,8 @@ function form54_update_item(form)
 {
 	if(is_update_access('form54'))
 	{
-		var name=form.elements[0].value;
+		var name=form.elements[0].getAttribute('data-i18n');
+		name=name.substr(name.indexOf('.')+1);
 		var value=form.elements[1].value;
 		var data_id=form.elements[2].value;
 		var element_id=form.elements[3].value;

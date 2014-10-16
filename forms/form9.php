@@ -9,8 +9,10 @@
 					<th>To Account <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form9_header' onblur="form9_ini('');"></th>
 					<th>Amount</th>
 					<th>System Generated <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form9_header' onblur="form9_ini('');"></th>
-					<th><input type='button' form='form9_header' value='Add entry' onclick='form9_add_item();'></th>
-			</tr>
+					<th><input type='button' form='form9_header' value='Add entry' class='add_icon' onclick='form9_add_item();'>
+						<input type='button' form='form9_header' value='Export' class='export_icon'>
+						<input type='button' form='form9_header' value='Import' class='import_icon'></th>
+					</tr>
 		</thead>
 		<tbody id='form9_body'>
 		</tbody>

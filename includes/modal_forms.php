@@ -27,6 +27,9 @@
 		One or more required fields are missing. Operation aborted.
 	</div>
 	
+	<div id="modal7" title="Offer finished">
+		Offer will not be applicable on this purchase as the offered product is out of stock.
+	</div>
 	
 	<div id="modal8" title="Specify offer details">
 		<form id='modal8_form'>
@@ -270,4 +273,25 @@
 			</fieldset>
 		</form>
 	</div>
+	
+	<div id="modal22" title="Disable offer">
+		<form id='modal22_form'>
+			<fieldset>
+				<label><input type="button" value='Disable all applicable offers'></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div id="modal23" title="Data Import">
+		<form id='modal23_form'>
+			<fieldset>
+				<label><input type="button" value='Download import template'></label><br/>
+				<label>Import pre-filled template <input type="file"></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+	
+	
 </div>

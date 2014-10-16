@@ -2263,3 +2263,30 @@ function modal21_action()
 	
 	$("#modal21").dialog("open");
 }
+
+/**
+ * @modal Data import
+ * @param t_func function to generate import template
+ * @param i_func function to import the generated data_array
+ */
+function modal23_action(t_func,i_func)
+{
+	var form=document.getElementById('modal23_form');
+	
+	var template_button=form.elements[1];
+	var input_file=form.elements[2];
+	var import_button=form.elements[3];
+	
+	$(template_button).on("click",function(event)
+	{
+		t_func();
+	});
+	
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		i_func(import_data_array);
+	});
+	
+	$("#modal23").dialog("open");
+}

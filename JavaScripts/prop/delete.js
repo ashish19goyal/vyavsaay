@@ -520,126 +520,122 @@ function form12_delete_item(button)
 					"<batch>"+batch+"</batch>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
-		if(form.elements[11].value=='saved')
+		fetch_requested_data('',quantity_data,function(quantities)
 		{
-			fetch_requested_data('',quantity_data,function(quantities)
+			for(var i in quantities)
 			{
-				for(var i in quantities)
-				{
-					var q=parseFloat(quantities[i].quantity)+parseFloat(quantity);
-					
-					var data_xml="<"+table+">" +
-								"<id>"+data_id+"</id>" +
-								"<product_name>"+name+"</product_name>" +
-								"<batch>"+batch+"</batch>" +
-								"<unit_price>"+price+"</unit_price>" +
-								"<quantity>"+quantity+"</quantity>" +
-								"<amount>"+amount+"</amount>" +
-								"<total>"+total+"</total>" +
-								"<discount>"+discount+"</discount>" +
-								"<offer>"+offer+"</offer>" +
-								"<type>bought</type>" +
-								"<tax>"+tax+"</tax>" +
-								"<bill_id>"+bill_id+"</bill_id>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</"+table+">";	
-					var activity_xml="<activity>" +
-								"<data_id>"+data_id+"</data_id>" +
-								"<tablename>"+table+"</tablename>" +
-								"<link_to>form12</link_to>" +
-								"<title>Deleted</title>" +
-								"<notes>Deleted product "+name+" from bill no. "+bill_id+"</notes>" +
-								"<updated_by>"+get_name()+"</updated_by>" +
-								"</activity>";
-					var quantity_xml="<product_instances>" +
-								"<id>"+quantities[i].id+"</id>" +
-								"<quantity>"+q+"</quantity>" +
-								"</product_instances>";
-					if(is_online())
-					{
-						server_delete_row(data_xml,activity_xml);
-						server_write_simple(quantity_xml);
-					}
-					else
-					{
-						local_delete_row(data_xml,activity_xml);
-						local_write_simple(quantity_xml);
-
-					}
-					break;
-				}
-			});
-			
-			var free_data="<bill_items>" +
-					"<id></id>" +
-					"<free_with>"+name+"</free_with>" +
-					"<bill_id>"+bill_id+"</bill_id>" +
-					"</bill_items>";
-			fetch_requested_data('',free_data,function(free_products)
-			{
-				for(var j in free_products)
-				{
-					var free_quantity_data="<product_instances>" +
-							"<id></id>" +
-							"<product_name>"+free_products[j].product_name+"</product_name>" +
-							"<batch>"+free_products[j].batch+"</batch>" +
-							"<quantity></quantity>" +
+				var q=parseFloat(quantities[i].quantity)+parseFloat(quantity);
+				
+				var data_xml="<"+table+">" +
+							"<id>"+data_id+"</id>" +
+							"<product_name>"+name+"</product_name>" +
+							"<batch>"+batch+"</batch>" +
+							"<unit_price>"+price+"</unit_price>" +
+							"<quantity>"+quantity+"</quantity>" +
+							"<amount>"+amount+"</amount>" +
+							"<total>"+total+"</total>" +
+							"<discount>"+discount+"</discount>" +
+							"<offer>"+offer+"</offer>" +
+							"<type>bought</type>" +
+							"<tax>"+tax+"</tax>" +
+							"<bill_id>"+bill_id+"</bill_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</"+table+">";	
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>"+table+"</tablename>" +
+							"<link_to>form12</link_to>" +
+							"<title>Deleted</title>" +
+							"<notes>Deleted product "+name+" from bill no. "+bill_id+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				var quantity_xml="<product_instances>" +
+							"<id>"+quantities[i].id+"</id>" +
+							"<quantity>"+q+"</quantity>" +
 							"</product_instances>";
-		
-					fetch_requested_data('',free_quantity_data,function(free_quantities)
-					{
-						for(var k in free_quantities)
-						{
-							var q=parseFloat(free_quantities[k].quantity)+parseFloat(free_products[j].quantity);
-							
-							var free_data_xml="<"+table+">" +
-										"<id>"+data_id+"</id>" +
-										"<product_name>"+free_products[j].product_name+"</product_name>" +
-										"<batch>"+free_products[j].batch+"</batch>" +
-										"<unit_price>0</unit_price>" +
-										"<quantity>free_products[j].quantity</quantity>" +
-										"<amount>0</amount>" +
-										"<total>0</total>" +
-										"<discount>0</discount>" +
-										"<offer>0</offer>" +
-										"<type>free</type>" +
-										"<tax>0</tax>" +
-										"<bill_id>"+bill_id+"</bill_id>" +
-										"<free_with>"+name+"</free_with>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</"+table+">";	
-							var free_activity_xml="<activity>" +
-										"<data_id>"+data_id+"</data_id>" +
-										"<tablename>"+table+"</tablename>" +
-										"<link_to>form12</link_to>" +
-										"<title>Deleted</title>" +
-										"<notes>Deleted free product "+free_products[j].product_name+" from bill no. "+bill_id+"</notes>" +
-										"<updated_by>"+get_name()+"</updated_by>" +
-										"</activity>";
-							var free_quantity_xml="<product_instances>" +
-										"<id>"+free_quantities[k].id+"</id>" +
-										"<quantity>"+q+"</quantity>" +
-										"</product_instances>";
-							if(is_online())
-							{
-								server_delete_row(free_data_xml,free_activity_xml);
-								server_write_simple(free_quantity_xml);
-							}
-							else
-							{
-								local_delete_row(free_data_xml,free_activity_xml);
-								local_write_simple(free_quantity_xml);
-		
-							}
-							break;
-						}
-					});
-					break;
+				if(is_online())
+				{
+					server_delete_row(data_xml,activity_xml);
+					server_write_simple(quantity_xml);
 				}
-			});
-			
-		}
-			
+				else
+				{
+					local_delete_row(data_xml,activity_xml);
+					local_write_simple(quantity_xml);
+
+				}
+				break;
+			}
+		});
+		
+		var free_data="<bill_items>" +
+				"<id></id>" +
+				"<free_with>"+name+"</free_with>" +
+				"<bill_id>"+bill_id+"</bill_id>" +
+				"</bill_items>";
+		fetch_requested_data('',free_data,function(free_products)
+		{
+			for(var j in free_products)
+			{
+				var free_quantity_data="<product_instances>" +
+						"<id></id>" +
+						"<product_name>"+free_products[j].product_name+"</product_name>" +
+						"<batch>"+free_products[j].batch+"</batch>" +
+						"<quantity></quantity>" +
+						"</product_instances>";
+	
+				fetch_requested_data('',free_quantity_data,function(free_quantities)
+				{
+					for(var k in free_quantities)
+					{
+						var q=parseFloat(free_quantities[k].quantity)+parseFloat(free_products[j].quantity);
+						
+						var free_data_xml="<"+table+">" +
+									"<id>"+data_id+"</id>" +
+									"<product_name>"+free_products[j].product_name+"</product_name>" +
+									"<batch>"+free_products[j].batch+"</batch>" +
+									"<unit_price>0</unit_price>" +
+									"<quantity>free_products[j].quantity</quantity>" +
+									"<amount>0</amount>" +
+									"<total>0</total>" +
+									"<discount>0</discount>" +
+									"<offer>0</offer>" +
+									"<type>free</type>" +
+									"<tax>0</tax>" +
+									"<bill_id>"+bill_id+"</bill_id>" +
+									"<free_with>"+name+"</free_with>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</"+table+">";	
+						var free_activity_xml="<activity>" +
+									"<data_id>"+data_id+"</data_id>" +
+									"<tablename>"+table+"</tablename>" +
+									"<link_to>form12</link_to>" +
+									"<title>Deleted</title>" +
+									"<notes>Deleted free product "+free_products[j].product_name+" from bill no. "+bill_id+"</notes>" +
+									"<updated_by>"+get_name()+"</updated_by>" +
+									"</activity>";
+						var free_quantity_xml="<product_instances>" +
+									"<id>"+free_quantities[k].id+"</id>" +
+									"<quantity>"+q+"</quantity>" +
+									"</product_instances>";
+						if(is_online())
+						{
+							server_delete_row(free_data_xml,free_activity_xml);
+							server_write_simple(free_quantity_xml);
+						}
+						else
+						{
+							local_delete_row(free_data_xml,free_activity_xml);
+							local_write_simple(free_quantity_xml);
+	
+						}
+						break;
+					}
+				});
+				break;
+			}
+		});
+		
 		$(button).parent().parent().remove();
 	}
 	else

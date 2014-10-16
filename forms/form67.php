@@ -8,7 +8,10 @@
 					<th>Length </th>
 					<th>Width</th>
 					<th>Height</th>
-					<th></th>
+					<th><input type='button' form='form67_header' value='Export' class='export_icon'>
+						<input type='button' form='form67_header' value='Import' class='import_icon'>
+					</th>
+					
 			</tr>
 		</thead>
 		<tbody id='form67_body'>

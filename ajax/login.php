@@ -54,7 +54,7 @@ use RetailingEssentials\db_connect;
 				/////setting forms and reports session variables for selective display
 				$forms="";
 				$stmt1=$conn->conn->prepare("select name from user_preferences where type=? and value=? and status=?");
-				$stmt1->execute(array('form','yes','active'));
+				$stmt1->execute(array('form','checked','active'));
 				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 				{
 					$forms.=$row['name']."-";
@@ -65,7 +65,7 @@ use RetailingEssentials\db_connect;
 				
 				$reports="";
 				$stmt1=$conn->conn->prepare("select name from user_preferences where type=? and value=? and status=?");
-				$stmt1->execute(array('report','yes','active'));
+				$stmt1->execute(array('report','checked','active'));
 				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 				{
 					$reports.=$row['name']."-";

@@ -9,8 +9,10 @@
 					<th>Address </th>
 					<th>Details </th>
 					<th>Status <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form8_header' onblur="form8_ini('');"></th>
-					<th><input type='button' form='form8_header' value='Add new staff' onclick='form8_add_item();'></th>
-			</tr>
+					<th><input type='button' form='form8_header' value='Add new staff' class='add_icon' onclick='form8_add_item();'>
+						<input type='button' form='form8_header' value='Export' class='export_icon'>
+						<input type='button' form='form8_header' value='Import' class='import_icon'></th>
+					</tr>
 		</thead>
 		<tbody id='form8_body'>
 		</tbody>

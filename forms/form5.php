@@ -9,7 +9,11 @@
 					<th>Type <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form5_header' onblur="form5_ini('');"></th>
 					<th>Value</th>
 					<th>Maintenance</th>
-					<th><input type='button' form='form5_header' value='Add item' onclick='form5_add_item();'></th>
+					<th><input type='button' form='form5_header' value='Add item' class='add_icon' onclick='form5_add_item();'>
+						<input type='button' form='form5_header' value='Export' class='export_icon'>
+						<input type='button' form='form5_header' value='Import' class='import_icon'>
+					</th>
+					
 			</tr>
 		</thead>
 		<tbody id='form5_body'>

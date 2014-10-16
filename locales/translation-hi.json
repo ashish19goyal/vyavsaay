@@ -3,7 +3,7 @@
     "enterprise resource planning": "उद्यम संसाधन प्रबंधन",
     "vyavsaay": "व्यवसाय",
     "activities_log": "गतिविधियां",
-     "search_results": "खोज के परिणाम"
+    "search_results": "खोज के परिणाम"
   },
   "function": {
     "sale_bills": "विक्रय",
@@ -54,6 +54,7 @@
   	"financial_summary":"वित्तीय सारांश",
   	"profit_projector":"लाभ प्रक्षेपण",
   	"payments_due":"अदायगी देय",
+  	"payments_due_from_customers":"ग्राहकों सॆ अदायगी देय",
   	"update_inventory":"वस्तुसूची ताज़ा करे",
   	"dispose_items":"उत्पाद नष्ट करें",
   	"inventory_predictions":"वस्तुसूची प्रक्षेपण",
@@ -75,7 +76,7 @@
   	"manage_services":"सेवा प्रबंधन",
   	"set_defaults":"पतिस्थिति बदलें",
   	"change_password":"पारण शब्द बदलें",
-  	"select reports":"विवरण चयन",
+  	"select_reports":"विवरण चयन",
   	"select_forms":"प्रक्रिया चयन",
   	"select_accounting_principles":"लेखांकन सिद्धांत चयन",
   	"set_access_control":"प्रवेश नियंत्रण",
@@ -86,7 +87,24 @@
   	"virtual_store":"आभासी गोदाम / दुकान",
   	"signage_changes":"चिह्न बदलें",
   	"manage_suppliers":"प्रबंधन प्रदायक",
-  	"send_returns": "माल वापस भेजें"
+  	"send_returns": "माल वापस भेजें",
+  	"pre_requisites_for_products":"Pre Requisites for Products",
+  	"pre_requisites_for_services":"Pre Requisites for Services",
+  	"sale_bill_print_template":"Sale bill print template",
+  	"purchase_order_print_template":"Purchase Order print template",
+  	"payment_receipt_print_template": "Payment receipt print template",
+  	"credit_note_print_template": "Credit note print template",
+  	"pamphlet_print_template": "Pamphlet print template",
+  	"service_receipt_print_template": "Service receipt print template",
+  	"return_receipt_print_template": "Return receipt print template",
+  	"sync_data": "Sync data",
+  	"official_address": "Official Address",
+  	"phone_no": "Phone No",
+  	"logo": "Logo",
+  	"business_title": "Business Title",
+  	"theme": "Theme",
+  	"mode_of_operation": "Mode of Operation",
+  	"language": "Language",
+  	"industry": "Industry"
   }
 }
-
