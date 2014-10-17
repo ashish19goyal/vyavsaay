@@ -51,8 +51,8 @@
 			$stmt2->execute($data_array);
 			
 			
-			$act_data=array(1000*time()+rand(0,999),'no',$table,$id,$data_xml,'online',1000*time(),$act_type);
-			$query3="insert into activities (id,user_display,tablename,data_id,data_xml,status,last_updated,type) values(?,?,?,?,?,?,?,?)";
+			$act_data=array('no',$table,$id,$data_xml,'online',1000*time(),$act_type);
+			$query3="insert into activities (user_display,tablename,data_id,data_xml,status,last_updated,type) values(?,?,?,?,?,?,?)";
 			$stmt3=$conn->conn->prepare($query3);
 			$stmt3->execute($act_data);
 			

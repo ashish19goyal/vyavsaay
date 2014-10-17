@@ -12,6 +12,9 @@ function default_load()
 	{
 		window.location.assign("index.php");
 	}
+	
+	number_active_ajax=0;
+	
 	if(is_set_session())
 	{
 		i18n_setup();

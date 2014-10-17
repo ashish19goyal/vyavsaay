@@ -286,9 +286,13 @@
 	<div id="modal23" title="Data Import">
 		<form id='modal23_form'>
 			<fieldset>
-				<label><input type="button" value='Download import template'></label><br/>
-				<label>Import pre-filled template <input type="file"></label><br/>
-				<input type="submit" value='Save'>
+				<input type="button" value='Download import template'><br/>
+				<b>Import pre-filled template</b></br>
+				<label><input type="radio" name='upload_option' value='new'>Create New Records</label></br>
+				<label><input type="radio" name='upload_option' value='existing' checked>Update existing Records</label></br>
+				<input type="file" value='Select file'></br>
+				<output name='selected_file'></output></br>
+				<input type="submit" value='Import'>
 			</fieldset>
 		</form>
 	</div>

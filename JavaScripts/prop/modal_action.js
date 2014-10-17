@@ -2274,8 +2274,11 @@ function modal23_action(t_func,i_func)
 	var form=document.getElementById('modal23_form');
 	
 	var template_button=form.elements[1];
-	var input_file=form.elements[2];
-	var import_button=form.elements[3];
+	var new_records=form.elements[2];
+	var update_records=form.elements[3];
+	var select_file=form.elements[4];
+	var selected_file=form.elements[5];
+	var import_button=form.elements[6];
 	
 	$(template_button).on("click",function(event)
 	{
@@ -2285,7 +2288,40 @@ function modal23_action(t_func,i_func)
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		i_func(import_data_array);
+		var file=select_file.files[0];
+        var fileType = /csv/;
+
+        if(file.type.match(fileType)!=null)
+        {
+            selected_file.value = "Uploading!! Please don't refresh";
+        	var reader = new FileReader();
+            reader.onload = function(e)
+            {
+               var content=reader.result;
+               var data_array=csv_string_to_obj_array(content);
+
+               if(new_records.checked)
+            	   i_func(data_array,'create_new');
+               else if(update_records.checked)
+            	   i_func(data_array,'update_records');
+               
+               var ajax_complete=setInterval(function(){
+            	   console.log(number_active_ajax);
+            	   if(number_active_ajax===0)
+            	   {
+            		   selected_file.value = "Upload complete";
+            		   $(select_file).val('');
+            		   $("#modal23").dialog("close");
+            		   clearInterval(ajax_complete);
+            	   }
+               },10000);
+            }
+            reader.readAsText(file);    
+        }
+        else
+        {
+            selected_file.value = "File not supported!";
+        }
 	});
 	
 	$("#modal23").dialog("open");

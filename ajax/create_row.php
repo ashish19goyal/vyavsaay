@@ -96,8 +96,8 @@
 					$title=$activity_input->getElementsByTagName('title')->item(0)->nodeValue;
 					$notes=$activity_input->getElementsByTagName('notes')->item(0)->nodeValue;
 					$by=$activity_input->getElementsByTagName('updated_by')->item(0)->nodeValue;
-					$act_data=array(1000*time()+rand(0,999),$title,$notes,'yes',$table,$id,$data_xml,'online',$link_to,$by,1000*time(),$act_type);
-					$query3="insert into activities (id,title,notes,user_display,tablename,data_id,data_xml,status,link_to,updated_by,last_updated,type) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+					$act_data=array($title,$notes,'yes',$table,$id,$data_xml,'online',$link_to,$by,1000*time(),$act_type);
+					$query3="insert into activities (title,notes,user_display,tablename,data_id,data_xml,status,link_to,updated_by,last_updated,type) values(?,?,?,?,?,?,?,?,?,?,?)";
 					$stmt3=$conn->conn->prepare($query3);
 					$stmt3->execute($act_data);
 				}

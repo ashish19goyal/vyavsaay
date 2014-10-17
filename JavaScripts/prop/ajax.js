@@ -6,6 +6,8 @@
  */
 function ajax_with_custom_func(url,kvp,func)
 {
+	number_active_ajax+=1;
+	
 	var xmlhttp,xmlhttp2;
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -18,55 +20,55 @@ function ajax_with_custom_func(url,kvp,func)
 		xmlhttp2= new ActiveXObject("Microsoft.XMLHTTP");
 	}
 	
-	//console.log("ajax with custom function call is being made");
 	xmlhttp.onreadystatechange=function()
 	{
-		if(xmlhttp.readyState===4 && xmlhttp.status===200)
+		if(xmlhttp.readyState===4)
 		{
-			//console.log("ajax call executed successfully");
-			if(xmlhttp.responseText=="Invalid session")
+			if(xmlhttp.status===200)
 			{
-				hide_loader();
-//				console.log("3. checking if session is set");
-				var user=get_username();
-				var domain=get_domain();
-				$("#modal1").dialog({
-					close:function(e,ui)
-					{
-						show_loader();
-						var pass=document.getElementById("modal1_pass").value;
-						console.log(pass+user);
-						xmlhttp2.open("POST","./ajax/login.php",true);
-						xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-						xmlhttp2.send("user="+user+"&pass="+pass+"&domain="+domain);
-						
-						xmlhttp2.onreadystatechange=function()
+				if(xmlhttp.responseText=="Invalid session")
+				{
+					hide_loader();
+					var user=get_username();
+					var domain=get_domain();
+					$("#modal1").dialog({
+						close:function(e,ui)
 						{
-							console.log(xmlhttp2.responseText);
-							if(xmlhttp2.readyState===4 && xmlhttp2.status===200)
+							show_loader();
+							var pass=document.getElementById("modal1_pass").value;
+							//console.log(pass+user);
+							xmlhttp2.open("POST","./ajax/login.php",true);
+							xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+							xmlhttp2.send("user="+user+"&pass="+pass+"&domain="+domain);
+							
+							xmlhttp2.onreadystatechange=function()
 							{
-								if(xmlhttp2.responseText=="failed_auth")
+								//console.log(xmlhttp2.responseText);
+								if(xmlhttp2.readyState===4 && xmlhttp2.status===200)
 								{
-									alert("Password is incorrect. Aborting opertion. Please try agian.");
-									delete_session();
-									hide_loader();
+									if(xmlhttp2.responseText=="failed_auth")
+									{
+										alert("Password is incorrect. Aborting opertion. Please try agian.");
+										delete_session();
+										hide_loader();
+									}
+									else
+									{
+										ajax_with_custom_func(url,kvp,func);
+									}
 								}
-								else
-								{
-									ajax_with_custom_func(url,kvp,func);
-								}
-							}
-						};
-					}
-				});	
-				$("#modal1").dialog("open");
-				//var pass=prompt("Please enter the password again","");
+							};
+						}
+					});	
+					$("#modal1").dialog("open");
+				}
+				else
+				{
+					func(xmlhttp);
+				}
 			}
-			else
-			{
-				func(xmlhttp);
-			}
-		}			
+			number_active_ajax-=1;
+		}
 	};
 	
 	xmlhttp.open("POST",url,true);
@@ -77,94 +79,10 @@ function ajax_with_custom_func(url,kvp,func)
 		xmlhttp.send(kvp);
 	}catch(e)
 	{
-		console.log("Network connection is not working. Please check your net connection and try again.");
+		//console.log("Network connection is not working. Please check your net connection and try again.");
 		hide_loader();
 	}			
 };
-
-
-/**
- * This function refreshes the current page after the ajax call
- * @param url url of the php file to be called
- * @param kvp parameters passed to php file as key value pairs string
- */
-function ajax_with_refresh(url,kvp)
-{
-	var xmlhttp,xmlhttp2;
-	if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-		xmlhttp2=new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-		xmlhttp= new ActiveXObject("Microsoft.XMLHTTP");
-		xmlhttp2= new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	
-	console.log("ajax with refresh call is being made");
-	xmlhttp.onreadystatechange=function()
-	{
-		if(xmlhttp.readyState===4 && xmlhttp.status===200)
-		{
-			if(xmlhttp.responseText=="Invalid session")
-			{
-				hide_loader();
-				console.log("3. checking if session is set");
-				var user=get_username();
-				var domain=get_domain();
-				$("#modal1").dialog({
-					close:function(e,ui)
-					{
-						show_loader();
-						var pass=document.getElementById("modal1_pass").value;
-						console.log(pass+user);
-						xmlhttp2.open("POST","./ajax/login.php",true);
-						xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-						xmlhttp2.send("user="+user+"&pass="+pass+"&domain="+domain);
-						
-						xmlhttp2.onreadystatechange=function()
-						{
-							if(xmlhttp2.readyState===4 && xmlhttp2.status===200)
-							{
-								console.log(xmlhttp2.responseText);
-								if(xmlhttp2.responseText=="failed_auth")
-								{
-									alert("Password is incorrect. Aborting opertion. Please try agian.");
-									delete_session();
-									hide_loader();
-								}
-								else
-								{	
-									ajax_with_refresh(url,kvp);		
-								}
-								
-							}
-						};
-					}
-				});	
-				$("#modal1").dialog("open");
-			}
-			else
-			{
-				location.reload(true);
-				hide_loader();			
-			}
-		}
-	};
-	xmlhttp.open("POST",url,true);	
-	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	
-	try
-	{
-		xmlhttp.send(kvp);
-	}catch(e)
-	{
-		console.log("Network connection is not working. Please check your net connection and try again.");
-		hide_loader();
-	}				
-};
-
 
 /**
  * This function executes a simple read access on server database

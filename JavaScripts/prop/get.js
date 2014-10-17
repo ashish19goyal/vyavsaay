@@ -429,16 +429,9 @@ function set_static_value_list(table,list,filter_element)
  * Converts a two dimensional array to csv file
  * @param data_array
  */
-function my_write_to_csv(data_array)
+function my_array_to_csv(data_array)
 {
-	var csvRows = [];
-
-	data_array.forEach(function(data_row)
-	{
-	    csvRows.push(data_row.join(','));
-	});
-
-	var csvString = csvRows.join("%0A");
+	var csvString = data_array.join();
 	var a = document.createElement('a');
 	a.href = 'data:attachment/csv,' + csvString;
 	//a.href = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
@@ -480,13 +473,13 @@ function my_obj_array_to_csv(data_array,file_name)
 		{
 			if(data_row.hasOwnProperty(p))
 			{
-				data_string +=data_row[p]+",";
+				data_string+=data_row[p]+",";
 			}
 		}
 	    csvRows.push(data_string);
 	});
 
-	var csvString = csvRows.join("%0A");
+	var csvString = csvRows.join("%0D%0A");
 	var a = document.createElement('a');
 	a.href = 'data:attachment/csv,' + csvString;
 	//a.href = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
@@ -497,6 +490,48 @@ function my_obj_array_to_csv(data_array,file_name)
 	a.click();
 }
 
+/**
+ * This function converts a csv string into array of named objects
+ * @param csvString CSV String to be converted 
+ * @returns {Array} Array of objects
+ */
+function csv_string_to_obj_array(csvString)
+{
+	var rows=csvString.split("\n");	
+	var results=[];
+	var header_cols=rows[0].split(',');
+	
+	for(var i=1;i<rows.length;i++)
+	{
+		if(rows[i]!="")
+		{
+			var columns=rows[i].split(',');
+		
+			var col_result=new Object();
+			
+			for(var j=0;j<columns.length;j++)
+			{
+				var dquotes=columns[j].match(/"/g);
+				if(dquotes!=null && dquotes.length===1)
+				{
+					for(var k=j+1;k<columns.length;k++)
+					{
+						columns[j]+=","+columns[k];
+						var second_dquotes=columns[k].match(/"/g);
+						columns.splice(k,1);
+						if(second_dquotes!=null && second_dquotes.length===1)
+						{
+							break;
+						}
+					}
+				}
+				col_result[header_cols[j]]=columns[j];
+			}
+			results.push(col_result);
+		}
+	}
+	return results;
+}
 
 function get_key_from_object(tablename,column,value)
 {
