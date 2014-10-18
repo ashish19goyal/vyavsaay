@@ -5,37 +5,30 @@
 	include_once "../Classes/db.php";
 	use RetailingEssentials\db_connect;
 
-	//username required to identify the database
 	$domain=$_POST['domain'];
 	$re_access=$_POST['re'];
 	$username=$_POST['username'];
 	$last_sync_time=$_POST['last_sync_time'];
 	
-	//$username='ashish';
-	
 	if(isset($_SESSION['session']))
 	{
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['re']==$re_access)
 		{
-			//connecting to the correct database
 			$conn=new db_connect("re_user_".$domain);
 			
-			//names of the tables to be rendered
 			$db_schema_xml=new DOMDocument();
 			$db_schema_xml->load("../db/db_schema.xml");
 			$db_schema=$db_schema_xml->documentElement;
-			//setting up the response xml string
+			
 			$xmlresponse="<re_xml>";
 		
-			//action to be performed on each table
 			foreach($db_schema->childNodes as $table)
 			{
 				$table_name=$table->nodeName;
 				if($table_name!="#text")
 				{
 					$xmlresponse.="<$table_name>";
-					//echo $table_name;
-					try{	
+					try{
 						$struct=$conn->conn->prepare("select distinct column_name from information_schema.columns where table_name=? order by ordinal_position;");
 						$struct->execute(array($table_name));
 						$struct_res=$struct->fetchAll(PDO::FETCH_NUM);	
@@ -65,7 +58,6 @@
 					$xmlresponse.="</$table_name>";
 				}
 			}
-			
 				
 			$xmlresponse.="</re_xml>";
 			header("Content-Type:text/xml");

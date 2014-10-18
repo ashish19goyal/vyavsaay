@@ -9,7 +9,6 @@
 					<th>Total Amount</th>
 					<th><input type="button" value='Add new Service Receipt' class='add_icon' form='form45_header' onclick="form10_display('');">
 						<input type='button' form='form45_header' value='Export' class='export_icon'>
-						<input type='button' form='form45_header' value='Export' class='import_icon'>
 					</tr>
 		</thead>
 		<tbody id='form45_body'>

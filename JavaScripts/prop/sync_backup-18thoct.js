@@ -100,9 +100,12 @@ function sync_server_to_local(func)
 					var tables=response.childNodes[0].childNodes;
 					for(var i=0;i<tables.length; i++)
 					{
+						//console.log(tables[i]);
 						tableName=tables[i].nodeName;
 						if(tableName!="" && tableName!="#text")
 						{	
+							//console.log("sync download: syncing " + tableName);
+							
 							var num_rows=tables[i].childElementCount;
 							for(var k=0;k<num_rows;k++)
 							{
@@ -113,8 +116,15 @@ function sync_server_to_local(func)
 									var nname=tables[i].childNodes[k].childNodes[j].nodeName;
 									row[nname]=tables[i].childNodes[k].childNodes[j].innerHTML;
 								}
+								//row.sync="synced";
+								//console.log(row);{value:row,key:row.id}
 								database.upsert(tableName,row,function(err,insertedkey)
 								{
+									//console.log("inserted row in database"+i+k);
+									if(err)
+									{
+										console.log(err+"----"+tableName);
+									}
 								});
 								
 								if(tableName==='activities')
@@ -166,28 +176,17 @@ function sync_local_to_server(func)
 	{
 		get_last_sync_time(function(last_sync_time)
 		{
-			console.log(log_data);
-			var log_data_array=log_data.split("<separator></separator>");
-			log_data_array.forEach(function(log_data_chunk)
+			ajax_with_custom_func("./ajax/sync_upload.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&up="+up_access+"&del="+del_access+"&data="+log_data+"&last_sync="+last_sync_time,function(e)
 			{
-				log_data_chunk="<activities>"+log_data_chunk+"</activities>";
-				console.log(log_data_chunk);
-				ajax_with_custom_func("./ajax/sync_upload.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&up="+up_access+"&del="+del_access+"&data="+log_data_chunk+"&last_sync="+last_sync_time,function(e)
+				var response=e.responseXML;
+				console.log(e.responseText);
+				set_activities_to_synced(response,function()
 				{
-					var response=e.responseXML;
-					console.log(e.responseText);
-					set_activities_to_synced(response);
+					console.log("sync upload: data for table saved on the server");
+					func();
 				});
+				
 			});
-			var sync_complete=setInterval(function(){
-         	   console.log(number_active_ajax);
-         	   if(number_active_ajax===0)
-         	   {
-         		   clearInterval(sync_complete);
-         		   func();
-         	   }
-            },1000);
-			
 			
 		});
 	});
@@ -219,15 +218,9 @@ function get_data_from_log_table(func)
 				{
 					console.log(err);
 				}				
-				var log_data="";
-				var counter=0;
+				var log_data="<activities>";
 				for(var row in records)
 				{
-					if(counter===100)
-					{
-						log_data+="<separator></separator>";
-						counter=0;
-					}
 					var row_data=records[row];
 					log_data+="<row>";
 					for(var field in row_data)
@@ -237,10 +230,10 @@ function get_data_from_log_table(func)
 						log_data+="</"+field+">";
 					}
 					log_data+="</row>";
-					
-					counter+=1;
 				}
-				console.log(log_data);
+				log_data+="</activities>";
+				//console.log("this is the data in table :"+log_data);
+				//upload_documents(database,log_data);
 				func(log_data);
 			});	
 		}
@@ -253,7 +246,7 @@ function get_data_from_log_table(func)
  * @param response Ids of the synced logs
  * @param func Function to be executed on successful update
  */
-function set_activities_to_synced(response)
+function set_activities_to_synced(response,func)
 {
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
@@ -266,12 +259,15 @@ function set_activities_to_synced(response)
 		}
 		else
 		{
-			//console.log(response.childNodes[0]);
+			//console.log(response);
+			console.log(response.childNodes[0]);
 			var table='activities';
+			//console.log(response.childNodes[0].childNodes);
+			//var ids=response.childNodes[0].childNodes;
 			var ids=response.childNodes[0].getElementsByTagName('id');
 			for(var id=0; id<ids.length; id++)
 			{
-				//console.log(ids[id].innerHTML);
+				console.log(ids[id].innerHTML);
 				database.get(table,{
 					range:IDBKeyRange.only(ids[id].innerHTML)
 				},function(err,records)
@@ -280,21 +276,25 @@ function set_activities_to_synced(response)
 					{
 						console.log(err);
 					}
+					
 					for(var row in records)
 					{
 						var row_data=records[row];
 						row_data['status']='synced';
-						row_data['data_xml']='';
+						//{value:row_data,key:id.nodeValue}
 						database.upsert(table,row_data,function(err,insertedkey)
 						{
+							//console.log("inserted row in database"+i+k);
 							if(err)
 							{
 								console.log(err);
 							}
 						});
 					}
-				});				
+				});
+				
 			}
+			func();
 		}
 	});
 }

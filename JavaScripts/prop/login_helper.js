@@ -322,8 +322,6 @@ function register_click(ev)
 						"&industry="+industry+
 						"&phone="+phone;
 
-		//console.log("about to execute ajax call");
-		
 		ajax_with_custom_func("./ajax/user_db_creation.php","userid="+userid,function(e2)
 		{
 			if(e2.responseText=="")

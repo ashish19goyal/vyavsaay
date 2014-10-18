@@ -11,8 +11,8 @@
 					<th>Quantity</th>
 					<th><input type='button' form='form19_header' value='Add item' class='add_icon' onclick='form19_add_item();'>
 						<input type='button' form='form19_header' value='Export' class='export_icon'>
-						<input type='button' form='form19_header' value='Import' class='import_icon'></th>
-					</tr>
+					</th>
+			</tr>
 		</thead>
 		<tbody id='form19_body'>
 		</tbody>

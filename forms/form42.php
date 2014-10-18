@@ -9,7 +9,6 @@
 					<th>Bill Amount</th>
 					<th><input type="button" value='Create new bill' class='add_icon' form='form42_header' onclick="form12_display(''); form12_new_form();">
 						<input type='button' form='form42_header' value='Export' class='export_icon'>
-						<input type='button' form='form42_header' value='Import' class='import_icon'></th>
 					</tr>
 		</thead>
 		<tbody id='form42_body'>

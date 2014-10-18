@@ -133,8 +133,8 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<trans_date index='yes' type="BIGINT"></trans_date>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
-			<d_acc index='yes' type="VARCHAR(100)"></d_acc>
-			<c_acc index='yes' type="VARCHAR(100)"></c_acc>
+			<receiver index='yes' type="VARCHAR(100)"></receiver>
+			<giver index='yes' type="VARCHAR(100)"></giver>
 			<taxable index='yes' type="BOOL"></taxable>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</transactions>
@@ -144,7 +144,6 @@
 			<amount index='no' type="DECIMAL(10,2)"></amount>
 			<to_acc index='yes' type="VARCHAR(100)"></to_acc>
 			<description index='no' type="TEXT"></description>
-			<taxable index='no' type="BOOL"></taxable>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</expenses>
 	<accounts>
@@ -157,13 +156,13 @@
 	</accounts>
 	<payments>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<status index='yes' type="VARCHAR(10)"></status><!-- pending/closed/cancelled -->
+			<status index='yes' type="VARCHAR(10)"></status><!-- pending/closed/cancelled/partial -->
 			<type index='yes' type="VARCHAR(10)"></type><!-- received/delivered -->
 			<date index='yes' type="BIGINT"></date>
-			<amount index='no' type="DECIMAL(10,2)"></amount>
+			<total_amount index='no' type="DECIMAL(10,2)"></total_amount>
+			<paid_amount index='no' type="DECIMAL(10,2)"></paid_amount>
 			<acc_name index='yes' type="VARCHAR(90)"></acc_name>
 			<due_date index='yes' type="BIGINT"></due_date>
-			<transaction_id index='no' type="BIGINT"></transaction_id>
 			<mode index='yes' type="VARCHAR(15)"></mode><!-- cash/cheque/draft/credit card/debit card/online banking/coupons -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</payments>
@@ -312,7 +311,6 @@
 			<name index='yes' type="VARCHAR(90)" unique='yes'></name>
 			<description index='no' type="TEXT"></description>
 			<make index='no' type="VARCHAR(45)"></make>
-			<est_price index="no" type="DECIMAL(10,2)"></est_price>
 			<manufactured index='no' type="VARCHAR(3)"></manufactured><!-- yes/no -->
 			<taxable index='no' type='VARCHAR(3)'></taxable><!-- yes/no -->
 			<tax index='no' type="DECIMAL(12,2)"></tax>

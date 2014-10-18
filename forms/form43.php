@@ -9,7 +9,6 @@
 					<th>Estimated Amount</th>
 					<th><input type="button" value='Add new Purchase Order' class='add_icon' form='form43_header' onclick="form24_display('');">
 						<input type='button' form='form43_header' value='Export' class='export_icon'>
-						<input type='button' form='form43_header' value='Import' class='import_icon'></th>
 					</tr>
 		</thead>
 		<tbody id='form43_body'>

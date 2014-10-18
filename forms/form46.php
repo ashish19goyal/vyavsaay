@@ -7,7 +7,6 @@
 					<th>Value</th>
 					<th><input type="submit" value='Save All' form='form46_header'>
 						<input type='button' form='form46_header' value='Export' class='export_icon'>
-						<input type='button' form='form46_header' value='Import' class='import_icon'></th>
 					</tr>
 		</thead>
 		<tbody id='form46_body'>

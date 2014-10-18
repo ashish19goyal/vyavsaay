@@ -2306,7 +2306,6 @@ function modal23_action(t_func,i_func)
             	   i_func(data_array,'update_records');
                
                var ajax_complete=setInterval(function(){
-            	   console.log(number_active_ajax);
             	   if(number_active_ajax===0)
             	   {
             		   selected_file.value = "Upload complete";

@@ -7,7 +7,6 @@
 					<th>Selected Template</th>
 					<th><input type="button" value="Save All" onclick="form54_update_form();" form='form54_header'>
 						<input type='button' form='form54_header' value='Export' class='export_icon'>
-						<input type='button' form='form54_header' value='Import' class='import_icon'>
 					</th>
 			</tr>
 		</thead>

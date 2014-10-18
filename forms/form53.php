@@ -10,7 +10,6 @@
 					<th>Bill Amount</th>
 					<th><input type="button" value='Enter new bill' form='form53_header' class='add_icon' onclick="form21_display('');">
 						<input type='button' form='form53_header' value='Export' class='export_icon'>
-						<input type='button' form='form53_header' value='Import' class='import_icon'>
 					</th>
 			</tr>
 		</thead>

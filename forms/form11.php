@@ -3,8 +3,8 @@
 		<thead>
 			<tr>
 				<form id='form11_header'></form>
-					<th>Transaction Id <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form11_header' onblur="form11_ini('');"></th>
-					<th>From <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form11_header' onblur="form11_ini('');"></th>
+					<th>Type <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form11_header' onblur="form11_ini('');"></th>
+					<th>Account <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form11_header' onblur="form11_ini('');"></th>
 					<th>Amount</th>
 					<th>Due Date <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form11_header' onblur="form11_ini('');"></th>
 					<th>Date Closed <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form11_header' onblur="form11_ini('');"></th>

@@ -22,6 +22,13 @@ function form1_header_ini()
 	set_my_filter(products_data,names_filter);
 	set_my_filter(batch_data,batches_filter);
 	$(expiry).datepicker();
+	
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form1_import_template,form1_import);
+	});
 };
 
 
@@ -66,6 +73,12 @@ function form5_header_ini()
 	set_my_filter(owner_data,owner_filter);
 	set_static_filter('assets','type',type_filter);
 	
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form5_import_template,form5_import);
+	});
 };
 
 
@@ -122,35 +135,15 @@ function form8_header_ini()
 	set_my_filter(phone_data,phone_filter);	
 	set_my_filter(email_data,email_filter);
 	set_static_filter('staff','status',status_filter);
+	
+	var import_button=filter_fields.elements[6];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form8_import_template,form8_import);
+	});
 };
 
-
-/**
- * @form Cash Register
- * @formNo 9
- */
-function form9_header_ini()
-{
-	var filter_fields=document.getElementById('form9_header');
-	var type_filter=filter_fields.elements[0];
-	var date_filter=filter_fields.elements[1];
-	var from_filter=filter_fields.elements[2];
-	var to_filter=filter_fields.elements[3];
-	var system_filter=filter_fields.elements[5];
-	
-	var accounts_data="<accounts>" +
-		"<acc_name></acc_name>" +
-		"</accounts>";
-
-	set_static_filter('transactions','trans_type',type_filter);
-	set_static_filter('transactions','system_generated',system_filter);
-	
-	$(date_filter).datepicker();
-	
-	set_my_filter(accounts_data,from_filter);
-	set_my_filter(accounts_data,to_filter);
-			
-};
 
 /**
  * @form Create Service Receipt
@@ -209,7 +202,13 @@ function form11_header_ini()
 	$(closed_filter).datepicker();
 	
 	set_static_filter('payments','status',status_filter);
-			
+	
+	var import_button=filter_fields.elements[7];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form11_import_template,form11_import);
+	});
 };
 
 /**
@@ -282,6 +281,12 @@ function form14_header_ini()
 	
 	set_static_filter('task_instances','status',status_filter);
 	
+	var import_button=filter_fields.elements[7];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form14_import_template,form14_import);
+	});
 };
 
 
@@ -316,13 +321,12 @@ function form15_header_ini()
 	set_my_filter(product_data,name_filter);
 	set_my_filter(batch_data,batch_filter);
 	set_my_filter(customer_data,customer_filter);
-			
 };
 
 
 /**
  * this function prepares the table for Manage returns form
- * @form Manage returns
+ * @form Send returns
  * @formNo 19
  */
 function form19_header_ini()
@@ -358,7 +362,7 @@ function form19_header_ini()
 
 
 /**
- * @form Enter Goods Received
+ * @form Goods Received
  * @formNo 21
  */
 function form21_header_ini()
@@ -417,6 +421,7 @@ function form22_header_ini()
 	set_static_filter('disposals','method',method_filter);
 
 	$(date_filter).datepicker();
+	
 };
 
 
@@ -511,6 +516,13 @@ function form35_header_ini()
 	set_static_filter('offers','offer_type',type_filter);
 	$(date_filter).datepicker();
 	set_static_filter('offers','status',status_filter);
+	
+	var import_button=filter_fields.elements[6];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form35_import_template,form35_import);
+	});
 };
 
 
@@ -539,7 +551,13 @@ function form38_header_ini()
 	set_my_filter(products_data,name_filter);
 	set_my_filter(batch_data,batch_filter);
 	set_my_filter(area_data,area_filter);
-				
+	
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form38_import_template,form38_import);
+	});
 };
 
 
@@ -565,12 +583,19 @@ function form39_header_ini()
 	set_my_filter(make_data,make_filter);
 	set_my_filter(products_data,name_filter);
 	set_static_filter('product_master','manufactured',manufactured_filter);
+	
+	var import_button=filter_fields.elements[6];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form39_import_template,form39_import);
+	});
 };
 
 
 /**
  * this function prepares the table for manage vendors form
- * @form Manage Vendors
+ * @form Manage Suppliers
  * @formNo 40
  */
 function form40_header_ini()
@@ -593,6 +618,13 @@ function form40_header_ini()
 	set_my_filter(name_data,name_filter);
 	set_my_filter(contact_data,contact_filter);
 	set_my_filter(email_data,email_filter);
+	
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form40_import_template,form40_import);
+	});
 
 };
 
@@ -694,7 +726,7 @@ function form45_header_ini()
 
 /**
  * this function sets the current theme for the change theme form
- * @form Change Theme
+ * @form Set system defaults
  * @formNo 46
  */
 function form46_header_ini()
@@ -715,7 +747,7 @@ function form46_header_ini()
 			"</user_preferences>";
 	
 	set_my_filter(other_data,other_element);
-
+	
 };
 
 /**
@@ -1079,6 +1111,13 @@ function form56_header_ini()
 	
 	$(date_filter).datepicker();
 	$(date_filter).val(get_my_date());
+	
+	var import_button=filter_fields.elements[4];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form56_import_template,form56_import);
+	});
 };
 
 /**
@@ -1095,6 +1134,13 @@ function form57_header_ini()
 			"</services>";
 	
 	set_my_filter(service_data,service_filter);
+	
+	var import_button=filter_fields.elements[4];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form57_import_template,form57_import);
+	});
 };
 
 /**
@@ -1120,6 +1166,12 @@ function form58_header_ini()
 	set_static_filter('pre_requisites','requisite_type',type_filter);
 	set_my_filter(requisite_data,requisite_filter);
 	
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form58_import_template,form58_import);
+	});
 };
 
 /**
@@ -1144,6 +1196,13 @@ function form59_header_ini()
 	set_my_filter(product_data,product_filter);
 	set_static_filter('pre_requisites','requisite_type',type_filter);
 	set_my_filter(requisite_data,requisite_filter);
+	
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form59_import_template,form59_import);
+	});
 };
 
 /**
@@ -1165,6 +1224,13 @@ function form60_header_ini()
 	
 	set_my_filter(product_data,product_filter);
 	set_my_filter(category_data,category_filter);
+	
+	var import_button=filter_fields.elements[4];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form60_import_template,form60_import);
+	});
 };
 
 /**
@@ -1186,6 +1252,13 @@ function form61_header_ini()
 	
 	set_my_filter(service_data,service_filter);
 	set_my_filter(category_data,category_filter);
+	
+	var import_button=filter_fields.elements[4];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form61_import_template,form61_import);
+	});
 };
 
 
@@ -1210,6 +1283,13 @@ function form62_header_ini()
 	set_my_filter(product_data,product_filter);
 	set_static_filter('reviews','rating',rating_filter);
 	set_my_filter(reviewer_data,reviewer_filter);
+	
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form62_import_template,form62_import);
+	});
 };
 
 /**
@@ -1233,6 +1313,13 @@ function form63_header_ini()
 	set_my_filter(service_data,service_filter);
 	set_static_filter('reviews','rating',rating_filter);
 	set_my_filter(reviewer_data,reviewer_filter);
+	
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form63_import_template,form63_import);
+	});
 };
 
 /**
@@ -1256,6 +1343,13 @@ function form64_header_ini()
 	set_my_filter(service_data,service_filter);
 	set_static_filter('cross_sells','type',type_filter);
 	set_my_filter(cross_data,cross_filter);
+	
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form64_import_template,form64_import);
+	});
 };
 
 /**
@@ -1274,6 +1368,13 @@ function form65_header_ini()
 	
 	set_my_filter(service_data,service_filter);
 	set_static_filter('services','taxable',taxable_filter);
+	
+	var import_button=filter_fields.elements[3];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form65_import_template,form65_import);
+	});
 };
 
 
@@ -1298,6 +1399,13 @@ function form66_header_ini()
 	set_my_filter(product_data,product_filter);
 	set_static_filter('cross_sells','type',type_filter);
 	set_my_filter(cross_data,cross_filter);
+	
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form66_import_template,form66_import);
+	});
 };
 
 /**
@@ -1314,6 +1422,13 @@ function form67_header_ini()
 			"</product_master>";
 	
 	set_my_filter(product_data,product_filter);
+	
+	var import_button=filter_fields.elements[2];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form67_import_template,form67_import);
+	});
 };
 
 /**
@@ -1332,5 +1447,12 @@ function form68_header_ini()
 	
 	set_my_filter(product_data,product_filter);
 	set_static_filter('product_master','taxable',taxable_filter);
+	
+	var import_button=filter_fields.elements[3];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form68_import_template,form68_import);
+	});
 };
 

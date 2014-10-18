@@ -249,6 +249,7 @@ function form8_ini()
 			"<joining_date></joining_date>" +
 			"<qualification></qualification>" +
 			"<skills></skills>" +
+			"<monthly_hours></monthly_hours>" +
 			"<fixed_comp></fixed_comp>" +
 			"<variable_comp_rate></variable_comp_rate>" +
 			"<allowed_pto></allowed_pto>" +
@@ -337,90 +338,8 @@ function form8_ini()
 
 
 /**
- * this function prepares the table for cash register form
- * @form Cash Register
- * @formNo 9
- */
-function form9_ini()
-{
-	var fid=$("#form9_link").attr('data_id');
-	if(fid==null)
-		fid="";	
-	
-	var filter_fields=document.getElementById('form9_header');
-	
-	var ftype=filter_fields.elements[0].value;
-	var fdate=filter_fields.elements[1].value;
-	var ffrom=filter_fields.elements[2].value;
-	var fto=filter_fields.elements[3].value;
-	var fsystem=filter_fields.elements[4].value;
-	
-	var columns="<transactions>" +
-			"<id>"+fid+"</id>" +
-			"<trans_type>"+ftype+"</trans_type>" +
-			"<trans_date>"+fdate+"</trans_date>" +
-			"<amount></amount>" +
-			"<debit_acc>"+ffrom+"</debit_acc>" +
-			"<credit_acc>"+fto+"</credit_acc>" +
-			"<system_generated>"+fsystem+"</system_generated>" +
-			"</transactions>";
-
-	$('#form9_body').html("");
-
-	fetch_requested_data('form9',columns,function(results)
-	{
-		results.forEach(function(result)
-		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form9_"+result.id+"'></form>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form9_"+result.id+"' value='"+result.trans_type+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form9_"+result.id+"' value='"+get_my_past_date(result.trans_date)+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form9_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.amount+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form9_"+result.id+"' value='"+result.debit_acc+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form9_"+result.id+"' value='"+result.credit_acc+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form9_"+result.id+"' value='"+result.system_generated+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='hidden' form='form9_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form9_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form9_"+result.id+"' value='saved' onclick='form9_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-			
-			$('#form9_body').prepend(rowsHTML);
-			
-			var fields=document.getElementById("form9_"+result.id);
-			$(fields).on("submit", function(event)
-			{
-				event.preventDefault();
-				form9_update_item(fields);
-			});
-		});
-		var export_button=filter_fields.elements[6];
-		$(export_button).off("click");
-		$(export_button).on("click", function(event)
-		{
-			my_obj_array_to_csv(results,'cash_register');
-		});
-	});
-};
-
-
-/**
  * this function prepares the table for schedule payments form
- * @form Schedule Payments
+ * @form Manage Payments
  * @formNo 11
  */
 function form11_ini()
@@ -431,7 +350,7 @@ function form11_ini()
 	
 	var filter_fields=document.getElementById('form11_header');
 	
-	var ftrans=filter_fields.elements[0].value;
+	var ftype=filter_fields.elements[0].value;
 	var faccount=filter_fields.elements[1].value;
 	var fdue=filter_fields.elements[2].value;
 	var fdate=filter_fields.elements[3].value;
@@ -439,9 +358,9 @@ function form11_ini()
 	
 	var columns="<payments>" +
 			"<id>"+fid+"</id>" +
-			"<type>debit</type>" +
-			"<transaction_id>"+ftrans+"</transaction_id>" +
-			"<amount></amount>" +
+			"<type>"+ftype+"</type>" +
+			"<total_amount></total_amount>" +
+			"<paid_amount></paid_amount>" +
 			"<acc_name>"+faccount+"</acc_name>" +
 			"<due_date>"+fdue+"</due_date>" +
 			"<status>"+fstatus+"</status>" +
@@ -458,13 +377,13 @@ function form11_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form11_"+result.id+"'></form>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' value='"+result.transaction_id+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' value='"+result.type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' value='"+result.acc_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.amount+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.paid_amount+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' ondblclick='set_editable($(this));' value='"+get_my_past_date(result.due_date)+"'>";
@@ -807,6 +726,8 @@ function form14_ini()
 			"<assignee>"+fassignee+"</assignee>" +
 			"<t_due>"+fdue+"</t_due>" +
 			"<t_executed>"+fexecuted+"</t_executed>" +
+			"<t_initiated></t_initiated>" +
+			"<tasks_hours></task_hours>" +
 			"<status>"+fstatus+"</status>" +
 			"</task_instances>";
 
@@ -1125,6 +1046,7 @@ function form30_ini()
 			"<email>"+femail+"</email>" +
 			"<status>"+fstatus+"</status>" +
 			"<acc_name></acc_name>" +
+			"<notes></notes>" +
 			"</customers>";
 
 	$('#form30_body').html("");
@@ -1226,6 +1148,19 @@ function form35_ini()
 			"<end_date>"+fdate+"</end_date>" +
 			"<offer_detail></offer_detail>" +
 			"<status>"+fstatus+"</status>" +
+			"<product_name></product_name>" +
+			"<batch></batch>" +
+			"<service></service>" +
+			"<criteria_type></criteria_type>" +
+			"<criteria_amount></criteria_amount>" +
+			"<criteria_quantity></criteria_quantity>" +
+			"<result_type></result_type>" +
+			"<discount_percent></discount_percent>" +
+			"<discount_amount></discount_amount>" +
+			"<quantity_add_percent></quantity_add_percent>" +
+			"<quantity_add_amount></quantity_add_amount>" +
+			"<free_product_name></free_product_name>" +
+			"<free_product_quantity></free_product_quantity>" +
 			"</offers>";
 
 	$('#form35_body').html("");
@@ -1375,6 +1310,12 @@ function form39_ini()
 			"<manufactured>"+fmanufactured+"</manufactured>" +
 			"<unit></unit>" +
 			"<tags>"+ftags+"</tags>" +
+			"<taxable></taxable>" +
+			"<tax></tax>" +
+			"<weight></weight>" +
+			"<height></height>" +
+			"<length></length>" +
+			"<width></width>" +
 			"</product_master>";
 
 	$('#form39_body').html("");
@@ -2650,6 +2591,8 @@ function form57_ini()
 			"<warranty></warranty>" +
 			"<tags></tags>" +
 			"<duration></duration>" +
+			"<taxable></taxable>" +
+			"<tax></tax>" +
 			"</services>";
 
 	$('#form57_body').html("");
