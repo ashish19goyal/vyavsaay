@@ -225,7 +225,7 @@ function local_update_row(data_xml,activity_xml)
 				else
 				{
 					var data_row=new Object();
-					
+					var type="";
 					for(var i in records)
 					{
 						type='update';
@@ -308,7 +308,7 @@ function local_update_simple(data_xml)
 				else
 				{
 					var data_row=new Object();
-					
+					var type="";
 					for(var i in records)
 					{
 						type='update';
