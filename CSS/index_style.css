@@ -1,38 +1,13 @@
-/*--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
---*/
-html, body{
-  	font-family: 'Open Sans', sans-serif;
-    font-size: 100%;
-  	 background: #FFf;
-}
-body a{
-	transition:0.5s all;
-	-webkit-transition:0.5s all;
-	-moz-transition:0.5s all;
-	-o-transition:0.5s all;
-	-ms-transition:0.5s all;
-}
 /*-----start-header----*/
 .header{
 	background: #2ABF5E;
 }
+
 .logo{
 	float: left;
-	margin-top:1em;
+	margin:auto;
 }
-.logo h1 {
-	color: #fff;
-	font-size: 2.5em;
-	font-weight:400;
-	font-family: 'Open Sans', sans-serif;
-}
-.logo320{
-	display:none;
-}
+
 /*----navbar-nav----*/
 .top-header{
 	padding: 0.5em 0em;
@@ -41,31 +16,13 @@ body a{
 	width: 77%;
 	margin: 0 auto;
 }
-.top-nav ul li a{
-	color: #fff;
-	padding: 0.23em 0.8em;
-	font-size: 1.1em;
-	text-align: center;
-	text-transform: uppercase;
-	position: relative;
-	font-weight: 700;
-	font-family: 'Open Sans', sans-serif;
+
+a.top-nav {
+	color: #2C3E50;
 }
-.top-nav ul li.active a,
-.top-nav ul li a:hover{
-	color:#2F727A;
-}
+
 .logo a{
 	display:block;
-}
-/* top-nav */
-.top-nav:before,
-.top-nav:after {
-    content: " ";
-    display: table;
-}
-.top-nav:after {
-    clear: both;
 }
 nav {
 	position: relative;
@@ -83,15 +40,12 @@ nav li {
 	margin-left: 12px;
 }
 nav a {
-	color: #fff;
 	display: inline-block;
 	text-align: center;
-	text-decoration: none;
 	line-height: 40px;
 }
 nav a:hover{
 	text-decoration:none;
-	color:#00A2C1;
 }
 nav a#pull {
 	display: none;
@@ -187,7 +141,7 @@ nav a#pull {
 }
 .banner h1{
 	font-family: 'Open Sans', sans-serif;
-	color:#FFF;
+	color:#2ABF5E;
 	font-size:3em;
 	line-height: 1.5em;
 	font-weight:400;
@@ -195,7 +149,7 @@ nav a#pull {
 }
 .banner p{
 	font-family: 'Open Sans', sans-serif;
-	color:#FFF;
+	color:#2ABF5E;
 	font-size:1.9em;
 	line-height: 1.7em;
 	font-weight:100;
@@ -219,7 +173,6 @@ text-align: right;
 /*--about--*/
 .about{
 	padding:7em 0;
-	background:#fff;
 }
 .gallery-head h3 {
 	color: #2ABF5E;
@@ -398,25 +351,6 @@ margin-top: 4em;
 	border:2px solid #F2685C;
 	color:#fff;
 	}
-/*--- Slider Part Starts Here ----*/
-/*------------------ Slider Part starts Here----------*/
-div#screenhot{
-	background:#2ABF5E;
-	background-size: cover;
-	-webkit-background-size: cover;
-	-o-background-size: cover;
-	-ms-background-size: cover;
-	-moz-background-size: cover;
-	padding:4em 0 6em 0;
-}
-.slider h3 {
-	text-align: center;
-	font-size: 3em;
-	text-transform: uppercase;
-	color: #fff;
-	font-weight: 600;
-	margin-bottom:1.2em;
-}
 div#demo {
 	padding: 4em 0 4em 0;
 }
@@ -499,20 +433,16 @@ text-align: left;
 .picture {
 	position: relative;
 }
-.Downloads{
-		background:url(../images/dow-app.png) no-repeat 0px 0px;
-		background-position: center;
-		min-height: 980px;
-}
+
 .download_left {
 	float: left;
 	margin-top:4%;
 	width:40%;
 }
 .download_right {
-float:right;
-	margin-top:37%;
-	width:40%;
+	float:right;
+	margin-top:25%;
+	width:30%;
 }
 .download_left h3,.download_right h3 {
 	color: #2ABF5E;
@@ -564,13 +494,13 @@ float:right;
 /*--contact--*/
 .contact{
 	padding: 3.3em 0 4em 0;
-	background: #2ABF5E;
+	background: #DCDDD3;
 }
 .contact h3{
 	text-align: center;
 	font-size: 3.1em;
 	text-transform: uppercase;
-	color: #fff;
+	color: #2ABF5E;
 	font-weight: 700;
 	margin-bottom: 1em;
 }
@@ -585,7 +515,7 @@ p.comment-form-author {
 .contact-form label{
 	display: block;
 	font-size: 1.6em;
-	color: #fff;
+	color: #2ABF5E;
 	text-transform: uppercase;
 	font-weight: 100;
 	text-align: left;
