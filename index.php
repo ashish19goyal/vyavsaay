@@ -4,25 +4,38 @@
 		<!----- start-header---->
 			<div id="home" class="header">
 				<div class="top-header">
-						<div class="logo">
-							  <a href="#"><img src="images/logo.png" alt=""></a>
-						</div>
-						<!----start-top-nav---->
-						 <nav class="top-nav">
-							<ul class="top-nav">
-								<li><a href="#home" class="top-nav">Home </a></li>
-								<li><a href="#about" class="top-nav">About</a></li>
-								<li><a href="#reviews" class="top-nav">Reviews</a></li>
-								<li><a href="#demo" class="top-nav">Demo</a></li>
-								<li><a href="#d_register" class="top-nav">Register</a></li>
-								<li><a href="#d_register" class="top-nav">Login</a></li>
-								<li><a href="#contact" class="top-nav">Contact</a></li>
-							</ul>
-							<a href="#" id="pull"><img src="images/menu-icon.png" title="menu" /></a>
-						</nav>
-						<div class="clearfix"> </div>
+					<div class="logo">
+						  <a href="#"><img src="images/logo.png" alt=""></a>
 					</div>
+					<a href="#" id='login_pull'>Login</a>
+					
+					<!----start-top-nav---->
+					 <nav class="top-nav">
+					 	<ul class="top-nav">
+							<li><a href="#home" class="top-nav scroll">Home</a></li>
+							<li><a href="#about" class="top-nav scroll">About</a></li>
+							<li><a href="#reviews" class="top-nav scroll">Reviews</a></li>
+							<li><a href="#demo" class="top-nav scroll">Demo</a></li>
+							<li><a href="#d_register" class="top-nav scroll">Register</a></li>
+							<li><a href="#contact" class="top-nav scroll">Contact</a></li>
+						</ul>
+						<a href="#" id="pull"><img src="images/menu-icon.png" title="menu" /></a>
+					</nav>
+					<div class="clearfix"> </div>
 				</div>
+			</div>
+				
+				<div class='login_box'>
+       				<div id="failed_auth"></div>
+					<form id='login'>
+						<fieldset>
+							Login ID: <input type="text" autocomplete="on" autofocus="autofocus" required></br>
+							Password: <input type="password" required></br>
+							<a href="pass_reset.php">Forgot password?</a></br>
+							<input type="submit" value='Login'>
+						</fieldset>
+					</form>
+       			</div>
 		<!----- //End-header---->
 		<!----- banner ---->
 			<div class="banner">
@@ -46,7 +59,7 @@
 	       		   <div class="gallery-head text-center">
 					  <h3>ABOUT</h3>
 					  <p>Vyavsaay is best suited for small and medium enterprises that don't want to spend a lot of money in setting up and managing IT infrastructure. And you also don't need an active internet connection to use it.</p>
-					 <p>Vyavsaay takes care of managing your business information and automation of business processes, so that you can focus on developing client relationships and optimizing business processes for the growth of your business.</p>
+					 <p>Vyavsaay takes care of managing your business processes and information, so that you can focus on developing client relationships and optimizing business processes for the growth of your business.</p>
 				    </div>
 	       			<div class="row text-center">
 	       				<div class="col-md-4 about_grid">
@@ -128,20 +141,6 @@
        					<a class="Down-btn" href="register.php">Register</a>
        				</div>
        				
-       				<div class="download_right">
-       					<h3>Login</h3>
-	       					</br>
-	       					<div id="failed_auth"></div>
-							<form id='login'>
-								<fieldset>
-									Login ID: <input type="text" autocomplete="on" autofocus="autofocus" required></br>
-									Password: <input type="password" required></br>
-									<a href="pass_reset.php">Forgot password?</a></br>
-									<input type="submit" value='Login' class="Down-btn">
-								</fieldset>
-							</form>
-       				</div>
-       				
        				<div class="clearfix"> </div>
        			</div>		
 			</div>
@@ -172,7 +171,8 @@
 	<a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
 
 
-
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		
 <script>
 		$(document).ready(function() {										
 			$().UItoTop({ easingType: 'easeOutQuart' });
@@ -183,4 +183,41 @@
 			event.preventDefault();
 			login_action();
 		});
+
+		 		
+		jQuery(document).ready(function($) {
+			$(".scroll").click(function(event){		
+				event.preventDefault();
+				$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+			});
+		});
+
+		$(function() {
+			var pull = $('#pull');
+			var	menu = $('nav ul');
+			var	menuHeight	= menu.height();
+			$(pull).on('click', function(e) {
+				e.preventDefault();
+				menu.slideToggle();
+			});
+			$(window).resize(function(){
+        		var w = $(window).width();
+        		if(w > 320 && menu.is(':hidden')) {
+        			menu.removeAttr('style');
+        		}
+    		});
+
+			var login_pull = $('#login_pull');
+			var	login_box = $('.login_box');
+			$(login_pull).on('click', function(e) {
+				e.preventDefault();
+				login_box.slideToggle();
+				$(login_box).css("display","inline");
+				var user=document.getElementById('login').elements[1];
+				$(user).focus();
+			});
+
+		});
+		
+		
 </script>
