@@ -13,7 +13,7 @@
 				echo "<li><a id='report33_link' href='#report33' onclick='report33_header_ini(); report33_ini();' data-i18n='form.supplier_map_by_debit'></a></li>";
 			if(strpos($_SESSION['reports'],'report36')!==false)
 				echo "<li><a id='report36_link' href='#report36' onclick='report36_header_ini(); report36_ini();' data-i18n='form.supplier_map_by_products'></a></li>";
-		echo "/ul>";
+		echo "</ul>";
 
 		if(strpos($_SESSION['forms'],'form41')!==false)
 			include "forms/form41.php";

@@ -68,10 +68,9 @@
 			<status>closed</status>
 			<type>received</type>
 			<date>1410220800000</date>
-			<amount>100</amount>
+			<total_amount>100</total_amount>
 			<acc_name>ashish goyal (9818005232)</acc_name>
 			<due_date>1410220800000</due_date>
-			<transaction_id>1</transaction_id>
 			<mode>cash</mode>
 			<last_updated>1</last_updated>
 		</row>
@@ -79,10 +78,9 @@
 			<status>closed</status>
 			<type>received</type>
 			<date>1410739200000</date>
-			<amount>200</amount>
+			<total_amount>200</total_amount>
 			<acc_name>anish goyal (9818005232)</acc_name>
 			<due_date>1410739200000</due_date>
-			<transaction_id>2</transaction_id>
 			<mode>cash</mode>
 			<last_updated>1</last_updated>
 		</row>
@@ -90,10 +88,9 @@
 			<status>closed</status>
 			<type>received</type>
 			<date>1411171200000</date>
-			<amount>500</amount>
+			<total_amount>500</total_amount>
 			<acc_name>ashish goyal (9818005232)</acc_name>
 			<due_date>1411171200000</due_date>
-			<transaction_id>3</transaction_id>
 			<mode>credit card</mode>
 			<last_updated>1</last_updated>
 		</row>
@@ -101,10 +98,9 @@
 			<status>pending</status>
 			<type>received</type>
 			<date></date>
-			<amount>300</amount>
+			<total_amount>300</total_amount>
 			<acc_name>ashish goyal (9818005232)</acc_name>
 			<due_date>1411171200000</due_date>
-			<transaction_id>4</transaction_id>
 			<mode></mode>
 			<last_updated>1</last_updated>
 		</row>
@@ -112,10 +108,9 @@
 			<status>pending</status>
 			<type>received</type>
 			<date></date>
-			<amount>100</amount>
+			<total_amount>100</total_amount>
 			<acc_name>ashish goyal (9818005232)</acc_name>
 			<due_date>1413471200000</due_date>
-			<transaction_id>5</transaction_id>
 			<mode></mode>
 			<last_updated>1</last_updated>
 		</row>
@@ -123,10 +118,9 @@
 			<status>pending</status>
 			<type>received</type>
 			<date></date>
-			<amount>500</amount>
+			<total_amount>500</total_amount>
 			<acc_name>anish goyal (9818005232)</acc_name>
 			<due_date>1423471200000</due_date>
-			<transaction_id>6</transaction_id>
 			<mode></mode>
 			<last_updated>1</last_updated>
 		</row>
@@ -134,10 +128,9 @@
 			<status>pending</status>
 			<type>delivered</type>
 			<date></date>
-			<amount>300</amount>
+			<total_amount>300</total_amount>
 			<acc_name>sup1</acc_name>
 			<due_date>1413471200000</due_date>
-			<transaction_id>7</transaction_id>
 			<mode></mode>
 			<last_updated>1</last_updated>
 		</row>
@@ -145,10 +138,9 @@
 			<status>closed</status>
 			<type>delivered</type>
 			<date>1423471200000</date>
-			<amount>200</amount>
+			<total_amount>200</total_amount>
 			<acc_name>anish goyal (9818005232)</acc_name>
 			<due_date>1423471200000</due_date>
-			<transaction_id>8</transaction_id>
 			<mode>cash</mode>
 			<last_updated>1</last_updated>
 		</row>
@@ -301,7 +293,6 @@
 			<name>Tata tea</name>
             <description>Tea leaves</description>
             <make>Tata</make>
-            <est_price>100</est_price>
             <manufactured>no</manufactured>
             <taxable>yes</taxable>
             <tax>10</tax>
@@ -318,7 +309,6 @@
 			<name>Kurkure</name>
             <description>tea time snacks</description>
             <make>Lays</make>
-            <est_price>10</est_price>
             <manufactured>no</manufactured>
             <taxable>yes</taxable>
             <tax>10</tax>
@@ -335,7 +325,6 @@
 			<name>Cadbury Choclate</name>
             <description>choclate</description>
             <make>Cadbury</make>
-            <est_price>75</est_price>
             <manufactured>no</manufactured>
             <taxable>yes</taxable>
             <tax>10</tax>

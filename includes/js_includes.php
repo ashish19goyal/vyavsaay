@@ -1,11 +1,15 @@
+<script src='./JavaScripts/open/jquery-1.11.1.min.js'></script>
 <script src='./JavaScripts/open/bcrypt.js'></script>
 <script src='./JavaScripts/open/chart.js'></script>
 <script src='./JavaScripts/open/indexeddb.js'></script>
-<script src='./JavaScripts/open/jquery-1.11.1.min.js'></script>
 <script src='./JavaScripts/open/jquery-ui.min.js'></script>
 <script src='./JavaScripts/open/i18next-1.7.4.js'></script>
 <script src='./JavaScripts/open/jQuery.print.js'></script>
 <script src='./JavaScripts/open/leaflet.js'></script>
+
+<script src='./JavaScripts/open/jquery.easing.min.js'></script>
+<script src='./JavaScripts/open/move-top.js'></script>
+
 <script src='./JavaScripts/open/shortcuts.min.js'></script>
 <script src='./JavaScripts/prop/add_items.js'></script>
 <script src='./JavaScripts/prop/ajax.js'></script>

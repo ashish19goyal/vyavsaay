@@ -13,3 +13,6 @@
 </script>
 <link rel="stylesheet" type="text/css" href="./CSS/jquery-ui.css"/>
 <link rel="stylesheet" type="text/css" href="./CSS/leaflet.css"/>
+
+<link rel="stylesheet" type="text/css" href="./CSS/index_style.css"/>
+<link rel="stylesheet" type="text/css" href="./CSS/bootstrap.css"/>

@@ -17,7 +17,6 @@ function default_load()
 	
 	if(is_set_session())
 	{
-		i18n_setup();
 		set_menu_shortcuts();
 		setup_elements_display();
 		activities_ini();
@@ -27,6 +26,7 @@ function default_load()
 		print_setup();
 		Chart.defaults.global.responsive = true;
 		//set_menu_username();
+		i18n_setup();
 		home_display();
 	}
 	hide_loader();
