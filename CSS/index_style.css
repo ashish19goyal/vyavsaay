@@ -657,7 +657,6 @@ p.comment-form-author {
 	margin-top: 1.2em;
 	}
 	.banner {
-	background: url(../images/bg.jpg) no-repeat 0px 0px;
 	background-size: cover;
 	min-height: 594px;
 	}
@@ -678,6 +677,7 @@ p.comment-form-author {
 	}
 	
 }
+
 @media(max-width:1024px){
 	.top-nav ul li a {
 	padding: 0.23em 0.2em;
@@ -760,7 +760,9 @@ p.comment-form-author {
 	font-size: 3.2em;
 	}
 }
-@media(max-width:768px){
+
+
+@media(max-width:1000px){
 	.top-header {
 	padding: 0.9em 0em;
 	}
