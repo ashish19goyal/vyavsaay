@@ -48,7 +48,7 @@
 							<h1>Vyavsaay</h1>
 							<p>Vyavsaay provides a cloud based, cross platform solution to manage all business processes and information.</p>
 						</div>
-						<div class="clearfix"> </div>
+					<!-- 	<div class="clearfix"> </div> -->
 					</div>
 			</div>
 		</div>
