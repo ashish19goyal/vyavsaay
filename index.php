@@ -132,18 +132,57 @@
 	  <!----- /strat-Download---->
 		<div id="d_register" class="download">
        		<div class="container">
-       			<div class="Downloads">
-       				<div class="download_left">
-       					<h3>Register</h3>
+       			<div class="demo-head text-center">
+				  <h3>Register</h3>
+			    </div>
        					<div class="Demo-text">
-       						<p>Click the following link to register for a new account. The subscription is free for first 3 months.</p>
+       						<p>Fill in the following form to register for a new account. The subscription is free for first 3 months.</p>
        					</div>
-       					<a class="Down-btn" href="register.php">Register</a>
-       				</div>
-       				
-       				<div class="clearfix"> </div>
-       			</div>		
-			</div>
+       					
+       					<div id="r_register" class="contact-form">
+							<div id="failed_register"></div>
+							<form id="registeration">
+								<fieldset>
+									 <p class="comment-form-author">
+									<label>User ID</label><input class='textbox' type="text" placeholder='user id...' onblur="userid_validation()" required><label id="userid_validation"></label>
+									</p></br>
+									 <p class="comment-form-author">
+									<label>Email</label><input class='textbox' type="email" placeholder='email id...' onblur="emailid_validation()" required><label id="emailid_validation"></label>
+									</p></br>
+									 <p class="comment-form-author">
+									 <label>Full Name</label><input class='textbox' type="text" placeholder='full name...' required>
+									  <p class="comment-form-author"></br>
+									 <p class="comment-form-author">
+									 <label>Contact No</label><input class='textbox' type="tel" required placeholder='contact no...'>
+									  </p></br>
+									 <p class="comment-form-author">
+									 <label>Password</label><input class='textbox' type="password" required placeholder='*********'>
+									  </p></br>
+									 <p class="comment-form-author">
+									 <label>Retype Password</label><input class='textbox' type="password" onkeyup="match_password()" required placeholder='*********'><label id="password_match_validation"></label>
+									 </p></br>
+									 <p class="comment-form-author">
+									 <label>Select your industry</label><select class='textbox' id="r_industry" required>
+															<option value="general" selected="selected">General Store</option>
+															<option value="clothing">Clothing & Apparels</option>
+															<option value="pharmacy">Pharmacy (medicine store)</option>
+															<option value="clinic">Nursing Home & clinics</option>
+															<option value="food">Bakery & food joints</option>
+															<option value="restaurant">Restaurant</option>
+															<option value="hotel">Hotel & Guest house</option>
+															<option value="opticals">Opticals</option>
+															<option value="lawyer">Lawyer or law firm</option>
+															<option value="ca">CA or CA firm</option>
+															<option value="events">Event Management (Marriages,Parties,Performances)</option>
+														</select>
+									</p></br>
+									<input type="submit" value='Submit'>
+								</fieldset>
+							</form>
+							</div>
+							<div class="Demo-text"><p id="r_complete"></p></div>			
+       					
+       		</div>       				
 		</div>
 	  <!---//End-Download----->
 	    <!---/start-contact----->
@@ -217,6 +256,12 @@
 				$(user).focus();
 			});
 
+		});
+
+		$('#registeration').on('submit',function(event)
+		{
+			event.preventDefault();
+			register_click();
 		});
 		
 		

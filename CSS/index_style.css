@@ -538,7 +538,8 @@ p.comment-form-author {
 	font-weight: 100;
 	text-align: left;
 }
-.contact-form input[type="text"] {
+.contact-form input[type="text"], .contact-form input[type="number"], .contact-form input[type="email"], 
+.contact-form input[type="tel"], .contact-form input[type="password"],.contact-form select {
 	padding:15px;
 	width:95%;
 	color:#999;
