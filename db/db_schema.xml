@@ -8,30 +8,35 @@
 			<phone index='yes' type="VARCHAR(15)"></phone>
 			<status index='yes' type='VARCHAR(45)'></status><!--active/archived/overcredit-->
 			<notes index='no' type='TEXT'></notes>
-			<last_updated index='no' type="BIGINT"></last_updated>
-	</customers>
-	<address>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<address index='yes' type="VARCHAR(100)"></address>
 			<street index='no' type="VARCHAR(100)"></street>
 			<city index='no' type="VARCHAR(45)"></city>
 			<state index='no' type="VARCHAR(45)"></state>
 			<country index='no' type="VARCHAR(45)"></country>
-			<status index='yes' type="VARCHAR(45)"></status><!-- pending analysis/unconfirmed/confirmed/incorrect -->
+			<address_status index='yes' type="VARCHAR(45)"></address_status><!-- pending analysis/unconfirmed/confirmed/incorrect -->
 			<lat index='no' type="DECIMAL(14,10)"></lat>
 			<lng index='no' type="DECIMAL(14,10)"></lng>
 			<shipping index='yes' type="BOOL"></shipping>
-			<acc_name index='yes' type="VARCHAR(100)" unique='yes'></acc_name>
-			<acc_type index='no' type="VARCHAR(45)"></acc_type><!-- customer/staff/supplier  -->
-			<last_updated index='no' type="BIGINT"></last_updated> 
-	</address>
-	<documents>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<url index='no' type="TEXT"></url>
-			<doc_type index='yes' type="VARCHAR(50)"></doc_type><!-- service/service instance/staff/product/product instance/asset -->
-			<target_id index='yes' type="BIGINT"></target_id>
 			<last_updated index='no' type="BIGINT"></last_updated>
-	</documents>
+	</customers>
+	<suppliers>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(90)"></name>
+			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
+			<email index='yes' type="VARCHAR(100)"></email>
+			<phone index='yes' type="VARCHAR(15)"></phone>
+			<notes index='no' type="TEXT"></notes>
+			<address index='yes' type="VARCHAR(100)"></address>
+			<street index='no' type="VARCHAR(100)"></street>
+			<city index='no' type="VARCHAR(45)"></city>
+			<state index='no' type="VARCHAR(45)"></state>
+			<country index='no' type="VARCHAR(45)"></country>
+			<address_status index='yes' type="VARCHAR(45)"></address_status><!-- pending analysis/unconfirmed/confirmed/incorrect -->
+			<lat index='no' type="DECIMAL(14,10)"></lat>
+			<lng index='no' type="DECIMAL(14,10)"></lng>
+			<shipping index='yes' type="BOOL"></shipping>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</suppliers>
 	<staff>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(90)"></name>
@@ -46,8 +51,31 @@
 			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
 			<email index='yes' type="VARCHAR(100)"></email>
 			<phone index='yes' type="VARCHAR(15)"></phone>
+			<address index='yes' type="VARCHAR(100)"></address>
+			<street index='no' type="VARCHAR(100)"></street>
+			<city index='no' type="VARCHAR(45)"></city>
+			<state index='no' type="VARCHAR(45)"></state>
+			<country index='no' type="VARCHAR(45)"></country>
+			<address_status index='yes' type="VARCHAR(45)"></address_status><!-- pending analysis/unconfirmed/confirmed/incorrect -->
+			<lat index='no' type="DECIMAL(14,10)"></lat>
+			<lng index='no' type="DECIMAL(14,10)"></lng>
+			<shipping index='yes' type="BOOL"></shipping>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</staff>
+	<accounts>
+			<id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
+			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
+			<description index='no' type='TEXT'></description>
+			<type index='yes' type='VARCHAR(20)'></type><!-- customer/staff/supplier/financial -->
+			<last_updated index='no' type='BIGINT'></last_updated>
+	</accounts>
+	<documents>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<url index='no' type="TEXT"></url>
+			<doc_type index='yes' type="VARCHAR(50)"></doc_type><!-- service/service instance/staff/product/product instance/asset -->
+			<target_id index='yes' type="BIGINT"></target_id>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</documents>
 	<attendance>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
@@ -76,15 +104,6 @@
 			<est_hours index='no' type="DECIMAL(5,2)"></est_hours>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</task_type>
-	<suppliers>  
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="VARCHAR(90)"></name>
-			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
-			<email index='yes' type="VARCHAR(100)"></email>
-			<phone index='yes' type="VARCHAR(15)"></phone>
-			<notes index='no' type="TEXT"></notes>
-			<last_updated index='no' type="BIGINT"></last_updated>
-	</suppliers>
 	<purchase_orders>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<order_date index='yes' type="BIGINT"></order_date>
@@ -146,14 +165,6 @@
 			<description index='no' type="TEXT"></description>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</expenses>
-	<accounts>
-			<id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
-			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
-			<balance index='no' type='DECIMAL(12,2)'></balance>
-			<description index='no' type='TEXT'></description>
-			<type index='yes' type='VARCHAR(20)'></type><!-- customer/staff/supplier/financial -->
-			<last_updated index='no' type='BIGINT'></last_updated>
-	</accounts>
 	<payments>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<status index='yes' type="VARCHAR(10)"></status><!-- pending/closed/cancelled/partial -->

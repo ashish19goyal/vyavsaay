@@ -131,39 +131,32 @@ function form8_import(data_array,import_type)
 				"<allowed_pto>"+row.allowed_pto+"</allowed_pto>" +
 				"<status>"+row.status+"</status>" +
 				"<notes>"+row.notes+"</notes>" +
+				"<address>"+row.address+"</address>" +
+				"<street>"+row.street+"</street>" +
+				"<city>"+row.city+"</city>" +
+				"<state>"+row.state+"</state>" +
+				"<country>"+row.country+"</country>" +
+				"<address_status>"+row.address_status+"</address_status>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</staff>";
 		var account_xml="<accounts>" +
 				"<id>"+row.id+"</id>" +
 				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"<balance>0</balance>" +
 				"<description></description>" +
 				"<type>staff</type>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</accounts>";
-		var address_xml="<address>" +
-				"<id>"+row.id+"</id>" +
-				"<address>"+row.address+"</address>" +
-				"<street>"+row.street+"</street>" +
-				"<state>"+row.state+"</state>" +
-				"<country>"+row.country+"</country>" +
-				"<status>pending analysis</status>" +
-				"<acc_type>staff</acc_type>" +
-				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"</address>";
 		if(import_type=='create_new')
 		{
 			if(is_online())
 			{
 				server_create_simple(data_xml);
 				server_create_simple(account_xml);
-				server_create_simple(address_xml);
 			}
 			else
 			{
 				local_create_simple(data_xml);
 				local_create_simple(account_xml);
-				local_create_simple(address_xml);
 			}
 		}
 		else
@@ -172,13 +165,11 @@ function form8_import(data_array,import_type)
 			{	
 				server_update_simple(data_xml);
 				server_update_simple(account_xml);
-				server_update_simple(address_xml);
 			}
 			else
 			{
 				local_update_simple(data_xml);
 				local_update_simple(account_xml);
-				local_update_simple(address_xml);
 			}
 		}		
 	});
@@ -312,39 +303,32 @@ function form30_import(data_array,import_type)
 				"<acc_name unique='yes'>"+row.acc_name+"</acc_name>" +
 				"<status>"+row.status+"</status>" +
 				"<notes>"+row.notes+"</notes>" +
+				"<address>"+row.address+"</address>" +
+				"<street>"+row.street+"</street>" +
+				"<city>"+row.city+"</city>" +
+				"<state>"+row.state+"</state>" +
+				"<country>"+row.country+"</country>" +
+				"<address_status>"+row.address_status+"</address_status>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</customers>";
 		var account_xml="<accounts>" +
 				"<id>"+row.id+"</id>" +
 				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"<balance>0</balance>" +
-				"<description></description>" +
+				"<description>"+row.notes+"</description>" +
 				"<type>customer</type>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</accounts>";
-		var address_xml="<address>" +
-				"<id>"+row.id+"</id>" +
-				"<address>"+row.address+"</address>" +
-				"<street>"+row.street+"</street>" +
-				"<state>"+row.state+"</state>" +
-				"<country>"+row.country+"</country>" +
-				"<status>pending analysis</status>" +
-				"<acc_type>customer</acc_type>" +
-				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"</address>";
 		if(import_type=='create_new')
 		{
 			if(is_online())
 			{
 				server_create_simple(data_xml);
 				server_create_simple(account_xml);
-				server_create_simple(address_xml);
 			}
 			else
 			{
 				local_create_simple(data_xml);
 				local_create_simple(account_xml);
-				local_create_simple(address_xml);
 			}
 		}
 		else
@@ -353,13 +337,11 @@ function form30_import(data_array,import_type)
 			{	
 				server_update_simple(data_xml);
 				server_update_simple(account_xml);
-				server_update_simple(address_xml);
 			}
 			else
 			{
 				local_update_simple(data_xml);
 				local_update_simple(account_xml);
-				local_update_simple(address_xml);
 			}
 		}
 	});
@@ -527,39 +509,32 @@ function form40_import(data_array,import_type)
 				"<email>"+row.email+"</email>" +
 				"<acc_name unique='yes'>"+row.acc_name+"</acc_name>" +
 				"<notes>"+row.notes+"</notes>" +
+				"<address>"+row.address+"</address>" +
+				"<street>"+row.street+"</street>" +
+				"<city>"+row.city+"</city>" +
+				"<state>"+row.state+"</state>" +
+				"<country>"+row.country+"</country>" +
+				"<address_status>"+row.address_status+"</address_status>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</suppliers>";
 		var account_xml="<accounts>" +
 				"<id>"+row.id+"</id>" +
 				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"<balance>0</balance>" +
-				"<description></description>" +
-				"<type>customer</type>" +
+				"<description>"+row.notes+"</description>" +
+				"<type>supplier</type>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</accounts>";
-		var address_xml="<address>" +
-				"<id>"+row.id+"</id>" +
-				"<address>"+row.address+"</address>" +
-				"<street>"+row.street+"</street>" +
-				"<state>"+row.state+"</state>" +
-				"<country>"+row.country+"</country>" +
-				"<status>pending analysis</status>" +
-				"<acc_type>customer</acc_type>" +
-				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"</address>";
 		if(import_type=='create_new')
 		{
 			if(is_online())
 			{
 				server_create_simple(data_xml);
 				server_create_simple(account_xml);
-				server_create_simple(address_xml);
 			}
 			else
 			{
 				local_create_simple(data_xml);
 				local_create_simple(account_xml);
-				local_create_simple(address_xml);
 			}
 		}
 		else
@@ -568,13 +543,11 @@ function form40_import(data_array,import_type)
 			{	
 				server_update_simple(data_xml);
 				server_update_simple(account_xml);
-				server_update_simple(address_xml);
 			}
 			else
 			{
 				local_update_simple(data_xml);
 				local_update_simple(account_xml);
-				local_update_simple(address_xml);
 			}
 		}
 	});

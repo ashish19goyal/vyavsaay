@@ -401,6 +401,7 @@ function modal11_action()
 		
 	$(form).on("submit",function(event)
 	{
+		event.preventDefault();
 		if(is_create_access('form30'))
 		{
 			var name=fname.value;
@@ -415,8 +416,7 @@ function modal11_action()
 			var data_id=get_new_key();
 			var address_id=get_new_key();
 			var last_updated=get_my_time();
-			var table='customers';
-			var data_xml="<"+table+">" +
+			var data_xml="<customers>" +
 						"<id>"+data_id+"</id>" +
 						"<name>"+name+"</name>" +
 						"<phone>"+phone+"</phone>" +
@@ -424,45 +424,38 @@ function modal11_action()
 						"<notes>"+notes+"</notes>" +
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<status>active</status>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</"+table+">";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>"+table+"</tablename>" +
-						"<link_to>form30</link_to>" +
-						"<title>Saved</title>" +
-						"<notes>Added customer "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var address_xml="<address>" +
-						"<id>"+address_id+"</id>" +
 						"<address>"+address+"</address>" +
 						"<street>"+street+"</street>" +
 						"<city>"+city+"</city>" +
 						"<state>"+state+"</state>" +
 						"<country>"+country+"</country>" +
-						"<status>pending analysis</status>" +
-						"<acc_type>customer</acc_type>" +
-						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
+						"<address_status>pending analysis</address_status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</address>";
-			var add_activity_xml="<activity>" +
-						"<data_id>"+address_id+"</data_id>" +
-						"<tablename>address</tablename>" +
+						"</customers>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>customers</tablename>" +
 						"<link_to>form30</link_to>" +
-						"<title>Saved</title>" +
-						"<notes>Saved address for customer "+name+"</notes>" +
+						"<title>Added</title>" +
+						"<notes>New customer "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
+			var account_xml="<accounts>" +
+						"<id>"+data_id+"</id>" +
+						"<description>"+notes+"</description>" +
+						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
+						"<type>customer</type>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</accounts>";
 			if(is_online())
 			{
-				server_write_row(data_xml,activity_xml);
-				server_write_row(address_xml,add_activity_xml);
+				server_create_row(data_xml,activity_xml);
+				server_create_simple(account_xml);
 			}
 			else
 			{
-				local_write_row(data_xml,activity_xml);
-				local_write_row(address_xml,add_activity_xml);
+				local_create_row(data_xml,activity_xml);
+				local_create_simple(account_xml);
 			}	
 		}
 		else
@@ -492,6 +485,7 @@ function modal12_action()
 		
 	$(form).on("submit",function(event)
 	{
+		event.preventDefault();
 		var name=fname.value;
 		var type=ftype.value;
 		var description=fdescription.value;
@@ -550,6 +544,7 @@ function modal13_action()
 		
 	$(form).on("submit",function(event)
 	{
+		event.preventDefault();
 		if(is_create_access('form40'))
 		{
 			var name=fname.value;
@@ -564,53 +559,45 @@ function modal13_action()
 			var data_id=get_new_key();
 			var address_id=get_new_key();
 			var last_updated=get_my_time();
-			var table='suppliers';
-			var data_xml="<"+table+">" +
+			var data_xml="<suppliers>" +
 						"<id>"+data_id+"</id>" +
 						"<name>"+name+"</name>" +
 						"<phone>"+phone+"</phone>" +
 						"<email>"+email+"</email>" +
 						"<notes>"+notes+"</notes>" +
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</"+table+">";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>"+table+"</tablename>" +
-						"<link_to>form40</link_to>" +
-						"<title>Saved</title>" +
-						"<notes>Added supplier "+name+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var address_xml="<address>" +
-						"<id>"+address_id+"</id>" +
 						"<address>"+address+"</address>" +
 						"<street>"+street+"</street>" +
 						"<city>"+city+"</city>" +
 						"<state>"+state+"</state>" +
 						"<country>"+country+"</country>" +
-						"<status>pending analysis</status>" +
-						"<acc_type>supplier</acc_type>" +
-						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
+						"<address_status>pending analysis</address_status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</address>";
-			var add_activity_xml="<activity>" +
-						"<data_id>"+address_id+"</data_id>" +
-						"<tablename>address</tablename>" +
+						"</suppliers>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>"+table+"</tablename>" +
 						"<link_to>form40</link_to>" +
-						"<title>Saved</title>" +
-						"<notes>Saved address for supplier "+name+"</notes>" +
+						"<title>Added</title>" +
+						"<notes>Supplier "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
+			var account_xml="<accounts>" +
+						"<id>"+data_id+"</id>" +
+						"<description>"+notes+"</description>" +
+						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
+						"<type>supplier</type>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</accounts>";
 			if(is_online())
 			{
-				server_write_row(data_xml,activity_xml);
-				server_write_row(address_xml,add_activity_xml);
+				server_create_row(data_xml,activity_xml);
+				server_create_simple(account_xml);
 			}
 			else
 			{
-				local_write_row(data_xml,activity_xml);
-				local_write_row(address_xml,add_activity_xml);
+				local_create_row(data_xml,activity_xml);
+				local_create_simple(account_xml);
 			}	
 		}
 		else
@@ -966,6 +953,7 @@ function modal15_action()
 		
 	$(form).on("submit",function(event)
 	{
+		event.preventDefault();
 		var provider=fprovider.value;
 		var detail=fdetail.value;
 		var type=ftype.value;
@@ -993,11 +981,11 @@ function modal15_action()
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_create_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_create_row(data_xml,activity_xml);
 		}	
 		
 		$("#modal15").dialog("close");
@@ -1006,74 +994,117 @@ function modal15_action()
 	$("#modal15").dialog("open");
 }
 
+
 /**
  * @modalNo 16
- * @modal Edit address
+ * @modal Add new staff
  * @param button
  */
-function modal16_action(button,acc_type,address_id)
+function modal16_action()
 {
 	var form=document.getElementById('modal16_form');
 	
-	var form_id=$(button).attr('form');
-	var father_form=document.getElementById(form_id);
-	var fname=father_form.elements[0];
-	var fphone=father_form.elements[1];
-	var faddress_detail=father_form.elements[3];
-	
-	var faddress=form.elements[1];
-	var fstreet=form.elements[2];
-	var fcity=form.elements[3];
-	var fstate=form.elements[4];
-	var fcountry=form.elements[5];
+	var fname=form.elements[1];
+	var fphone=form.elements[2];
+	var femail=form.elements[3];
+	var faddress=form.elements[4];
+	var fstreet=form.elements[5];
+	var fcity=form.elements[6];
+	var fstate=form.elements[7];
+	var fcountry=form.elements[8];
+	var fjoining=form.elements[9];
+	var fqual=form.elements[10];
+	var fskills=form.elements[11];
+	var ffixed_comp=form.elements[12];
+	var fvar_comp=form.elements[13];
+	var fhours=form.elements[14];
+	var fpto=form.elements[15];
+	var fdata_id=get_new_key();
 		
+	$(fjoining).datepicker();
+	$(fjoining).val(get_my_date());
+	
 	$(form).on("submit",function(event)
 	{
-		var name=fname.value;
-		var phone=fphone.value;
-		var address=faddress.value;
-		var street=fstreet.value;
-		var city=fcity.value;
-		var state=fstate.value;
-		var country=fcountry.value;
-		
-		var address_detail=address+", "+street+", "+city+", "+state+", "+country;
-		faddress_detail.value=address_detail;
-		var last_updated=get_my_time();
-		var data_xml="<address>" +
-					"<id>"+address_id+"</id>" +
-					"<address>"+address+"</address>" +
-					"<street>"+street+"</street>" +
-					"<city>"+city+"</city>" +
-					"<state>"+state+"</state>" +
-					"<country>"+country+"</country>" +
-					"<status>pending analysis</status>" +
-					"<acc_type>"+acc_type+"</acc_type>" +
-					"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</address>";
-		var activity_xml="<activity>" +
-					"<data_id>"+address_id+"</data_id>" +
-					"<tablename>address</tablename>" +
-					"<link_to></link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Saved address for "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
+		event.preventDefault();
+		if(is_create_access('form8'))
 		{
-			server_write_row(data_xml,activity_xml);
+			var name=fname.value;
+			var phone=fphone.value;
+			var email=femail.value;
+			var address=faddress.value;
+			var street=fstreet.value;
+			var city=fcity.value;
+			var state=fstate.value;
+			var country=fcountry.value;
+			var joining=get_raw_time(fjoining.value);
+			var qual=fqual.value;
+			var skills=fskills.value;
+			var fixed_comp=ffixed_comp.value;
+			var var_comp=fvar_comp.value;
+			var hours=fhours.value;
+			var pto=fpto.value;
+			var data_id=get_new_key();
+			var address_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<staff>" +
+						"<id>"+data_id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<phone>"+phone+"</phone>" +
+						"<email>"+email+"</email>" +
+						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
+						"<address>"+address+"</address>" +
+						"<street>"+street+"</street>" +
+						"<city>"+city+"</city>" +
+						"<state>"+state+"</state>" +
+						"<country>"+country+"</country>" +
+						"<address_status>pending analysis</address_status>" +
+						"<joining_date>"+joining+"</joining_date>" +
+						"<qualification>"+qual+"</qualification>" +
+						"<skills>"+skills+"</skills>" +
+						"<fixed_comp>"+fixed_comp+"</fixed_comp>" +
+						"<variable_comp_rate>"+var_comp+"</variable_comp_rate>" +
+						"<monthly_hours>"+hours+"</monthly_hours>" +
+						"<allowed_pto>"+pto+"</allowed_pto>" +
+						"<status>active</status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</staff>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>"+table+"</tablename>" +
+						"<link_to>form8</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Staff "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var account_xml="<accounts>" +
+						"<id>"+data_id+"</id>" +
+						"<description>"+skills+"</description>" +
+						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
+						"<type>staff</type>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</accounts>";
+			if(is_online())
+			{
+				server_create_row(data_xml,activity_xml);
+				server_create_simple(account_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+				local_create_simple(account_xml);
+			}	
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			$("#modal2").dialog("open");
 		}
-	
 		$("#modal16").dialog("close");
 	});
 	
 	$("#modal16").dialog("open");
 }
+
 
 /**
  * @modalNo 17
@@ -1089,58 +1120,56 @@ function modal17_action(button)
 	var fdetail=father_form.elements[4];
 	var fdata_id=father_form.elements[6];
 	
-	var fdate=form.elements[1];
-	var fqual=form.elements[2];
-	var fskill=form.elements[3];
-	var fcomp=form.elements[4];
-	var frate=form.elements[5];
-	var fhours=form.elements[6];
-	var fpto=form.elements[7];
+	var faddress_detail=father_form.elements[3];
+	var fstaff_detail=father_form.elements[4];
 	
-	$(fdate).datepicker();
+	var faddress=father_form.elements[9];
+	var fstreet=father_form.elements[10];
+	var fcity=father_form.elements[11];
+	var fstate=father_form.elements[12];
+	var fcountry=father_form.elements[13];
+	var faddress_status=father_form.elements[14];
+	var fjoining=father_form.elements[15];
+	var fqual=father_form.elements[16];
+	var fskills=father_form.elements[17];
+	var ffixed_comp=father_form.elements[18];
+	var fvar_comp=father_form.elements[19];
+	var fpto=father_form.elements[20];	
+	var fhours=father_form.elements[21];
+	
+	$(fjoining).datepicker();
 	
 	$(form).on("submit",function(event)
 	{
-		var data_id=fdata_id.value;
-		var date=get_raw_time(fdate.value);
-		var qual=fqual.value;
-		var skill=fskill.value;
-		var comp=fcomp.value;
-		var rate=frate.value;
-		var hours=fhours.value;
-		var pto=fpto.value;
+		var address=form.elements[1].value;
+		var street=form.elements[2].value;
+		var city=form.elements[3].value;
+		var state=form.elements[4].value;
+		var country=form.elements[5].value;
+		var date=form.elements[6].value;
+		var qual=form.elements[7].value;
+		var skill=form.elements[8].value;
+		var comp=form.elements[9].value;
+		var rate=form.elements[10].value;
+		var hours=form.elements[11].value;
+		var pto=form.elements[12].value;
 		
-		var detail="Joined on "+date+", Qualification: "+qual+", Skills: "+skill+", Salary: Rs."+comp+"+ Rs."+rate+"/hour. Allowed "+pto+" per month.";
-		fdetail.value=detail;
-		var last_updated=get_my_time();
-		var data_xml="<staff>" +
-					"<id>"+data_id+"</id>" +
-					"<joining_date>"+date+"</joining_date>" +
-					"<qualification>"+qual+"</qualification>" +
-					"<skills>"+skill+"</skills>" +
-					"<fixed_comp>"+comp+"</fixed_comp>" +
-					"<variable_comp_rate>"+rate+"</variable_comp_rate>" +
-					"<allowed_pto>"+pto+"</allowed_pto>" +
-					"<monthly_hours>"+hours+"</monthly_hours>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</staff>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>staff</tablename>" +
-					"<link_to>form8</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Saved details for staff "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_write_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_write_row(data_xml,activity_xml);
-		}
-	
+		faddress_detail.value=address+", "+street+", "+city+", "+state+", "+country;
+		fstaff_detail.value="Joined on "+date+", Qualification: "+qual+", Skills: "+skill+", Salary: Rs."+comp+"+ Rs."+rate+"/hour. Allowed "+pto+" per month.";
+		faddress.value=address;
+		fstreet.value=street;
+		fcity.value=city;
+		fstate.value=state;
+		fcountry.value=country;
+		faddress_status.value=address_status;
+		fjoining.value=date;
+		fqual.value=qual;
+		fskills.value=skill;
+		ffixed_comp.value=comp;
+		fvar_comp.value=rate;
+		fpto.value=pto;	
+		fhours.value=work_hours;	
+		
 		$("#modal17").dialog("close");
 	});
 	
@@ -2325,3 +2354,89 @@ function modal23_action(t_func,i_func)
 	
 	$("#modal23").dialog("open");
 }
+
+/**
+ * @modal Update customer address
+ * @param button
+ */
+function modal24_action(button)
+{
+	var form=document.getElementById('modal24_form');
+	
+	var form_id=$(button).attr('form');
+	var father_form=document.getElementById(form_id);
+	var faddress_detail=father_form.elements[3];
+	var faddress=father_form.elements[8];
+	var fstreet=father_form.elements[9];
+	var fcity=father_form.elements[10];
+	var fstate=father_form.elements[11];
+	var fcountry=father_form.elements[12];
+	var faddress_status=father_form.elements[13];
+		
+	$(form).on("submit",function(event)
+	{
+		var address=form.elements[1].value;
+		var street=form.elements[2].value;
+		var city=form.elements[3].value;
+		var state=form.elements[4].value;
+		var country=form.elements[5].value;
+		
+		var address_detail=address+", "+street+", "+city+", "+state+", "+country;
+		faddress_detail.value=address_detail;
+		faddress.value=address;
+		fstreet.value=street;
+		fcity.value=city;
+		fstate.value=state;
+		fcountry.value=country;
+		faddress_status.value="pending analysis";
+		
+	
+		$("#modal24").dialog("close");
+	});
+	
+	$("#modal24").dialog("open");
+}
+
+
+/**
+ * @modal Update supplier address
+ * @param button
+ */
+function modal25_action(button)
+{
+	var form=document.getElementById('modal25_form');
+	
+	var form_id=$(button).attr('form');
+	var father_form=document.getElementById(form_id);
+	var faddress_detail=father_form.elements[3];
+	var faddress=father_form.elements[8];
+	var fstreet=father_form.elements[9];
+	var fcity=father_form.elements[10];
+	var fstate=father_form.elements[11];
+	var fcountry=father_form.elements[12];
+	var faddress_status=father_form.elements[13];
+		
+	$(form).on("submit",function(event)
+	{
+		var address=form.elements[1].value;
+		var street=form.elements[2].value;
+		var city=form.elements[3].value;
+		var state=form.elements[4].value;
+		var country=form.elements[5].value;
+		
+		var address_detail=address+", "+street+", "+city+", "+state+", "+country;
+		faddress_detail.value=address_detail;
+		faddress.value=address;
+		fstreet.value=street;
+		fcity.value=city;
+		fstate.value=state;
+		fcountry.value=country;
+		faddress_status.value="pending analysis";
+		
+	
+		$("#modal25").dialog("close");
+	});
+	
+	$("#modal25").dialog("open");
+}
+

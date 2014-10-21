@@ -236,32 +236,65 @@ function form8_delete_item(button)
 		var email=form.elements[2].value;
 		var status=form.elements[5].value;
 		var data_id=form.elements[6].value;
+		var address=form.elements[9].value;
+		var street=form.elements[10].value;
+		var city=form.elements[11].value;
+		var state=form.elements[12].value;
+		var country=form.elements[13].value;
+		var add_status=form.elements[14].value;
+		var joining_date=form.elements[15].value;
+		var qual=form.elements[16].value;
+		var skills=form.elements[17].value;
+		var fixed_comp=form.elements[18].value;
+		var var_comp=form.elements[19].value;
+		var pto=form.elements[20].value;
+		var hours=form.elements[21].value;
 		var last_updated=get_my_time();
-		var table='staff';
-		var data_xml="<"+table+">" +
+		var data_xml="<staff>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
 					"<phone>"+phone+"</phone>" +
 					"<email>"+email+"</email>" +
 					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<status>"+status+"</status>" +
+					"<joining_date>"+joining_date+"</joining_date>" +
+					"<qualification>"+qual+"</qualification>" +
+					"<skills>"+skills+"</skills>" +
+					"<monthly_hours>"+hours+"</monthly_hours>" +
+					"<fixed_comp>"+fixed_comp+"</fixed_comp>" +
+					"<variable_comp_rate>"+var_comp+"</variable_comp_rate>" +
+					"<allowed_pto>"+pto+"</allowed_pto>" +
+					"<address>"+address+"</address>" +
+					"<street>"+street+"</street>" +
+					"<city>"+city+"</city>" +
+					"<state>"+state+"</state>" +
+					"<country>"+country+"</country>" +
+					"<address_status>"+add_status+"</address_status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</staff>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form8</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted staff record of "+name+"</notes>" +
+					"<notes>Staff profile of "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var account_xml="<accounts>" +
+					"<id>"+data_id+"</id>" +
+					"<acc_name>"+name+" ("+phone+")</acc_name>" +
+					"<type>staff</type>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</accounts>";
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
+			server_delete_simpe(account_xml);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
+			local_delete_simpe(account_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -1144,32 +1177,51 @@ function form30_delete_item(button)
 		var email=form.elements[2].value;
 		var status=form.elements[4].value;
 		var data_id=form.elements[5].value;
+		var address=form.elements[8].value;
+		var street=form.elements[9].value;
+		var city=form.elements[10].value;
+		var state=form.elements[11].value;
+		var country=form.elements[12].value;
+		var address_status=form.elements[13].value;
 		var last_updated=get_my_time();
-		var table='customers';
-		var data_xml="<"+table+">" +
+		var data_xml="<customers>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
 					"<phone>"+phone+"</phone>" +
 					"<email>"+email+"</email>" +
 					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<status>"+status+"</status>" +
+					"<address>"+address+"</address>" +
+					"<street>"+street+"</street>" +
+					"<city>"+city+"</city>" +
+					"<state>"+state+"</state>" +
+					"<country>"+country+"</country>" +
+					"<address_status>"+address_status+"</address_status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</customers>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>customers</tablename>" +
 					"<link_to>form30</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted record of customer "+name+"</notes>" +
+					"<notes>Customer profile "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var account_xml="<accounts>" +
+					"<id>"+data_id+"</id>" +
+					"<acc_name>"+name+" ("+phone+")</acc_name>" +
+					"<type>customer</type>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</accounts>";
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(account_xml);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(account_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -1387,9 +1439,14 @@ function form40_delete_item(button)
 		var address=form.elements[3].value;
 		var notes=form.elements[4].value;
 		var data_id=form.elements[5].value;
+		var address=form.elements[8].value;
+		var street=form.elements[9].value;
+		var city=form.elements[10].value;
+		var state=form.elements[11].value;
+		var country=form.elements[12].value;
+		var address_status=form.elements[13].value;
 		var last_updated=get_my_time();
-		var table='suppliers';
-		var data_xml="<"+table+">" +
+		var data_xml="<suppliers>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
 					"<address>"+address+"</address>" +
@@ -1397,23 +1454,37 @@ function form40_delete_item(button)
 					"<notes>"+notes+"</notes>" +
 					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<email>"+email+"</email>" +
+					"<address>"+address+"</address>" +
+					"<street>"+street+"</street>" +
+					"<city>"+city+"</city>" +
+					"<state>"+state+"</state>" +
+					"<country>"+country+"</country>" +
+					"<address_status>"+address_status+"</address_status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</suppliers>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>suppliers</tablename>" +
 					"<link_to>form40</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted record for supplier "+name+"</notes>" +
+					"<notes>Supplier profile "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var account_xml="<accounts>" +
+					"<id>"+data_id+"</id>" +
+					"<acc_name>"+name+" ("+phone+")</acc_name>" +
+					"<type>supplier</type>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</accounts>";
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(account_xml);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(account_xml);
 		}	
 		$(button).parent().parent().remove();
 	}

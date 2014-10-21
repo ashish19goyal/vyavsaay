@@ -608,7 +608,7 @@ function form40_header_ini()
 	var name_data="<suppliers>" +
 			"<name></name>" +
 			"</suppliers>";
-	var contact_data="<suppliers>" +
+	var phone_data="<suppliers>" +
 			"<phone></phone>" +
 			"</suppliers>";
 	var email_data="<suppliers>" +
@@ -616,7 +616,7 @@ function form40_header_ini()
 			"</suppliers>";
 
 	set_my_filter(name_data,name_filter);
-	set_my_filter(contact_data,contact_filter);
+	set_my_filter(phone_data,phone_filter);
 	set_my_filter(email_data,email_filter);
 	
 	var import_button=filter_fields.elements[5];

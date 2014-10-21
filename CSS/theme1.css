@@ -136,19 +136,19 @@ footer{
 }
 
 #content_box{
-	width: 77%;
+	width: auto;
 	float: left;
 	border-style: solid;
 	border-width: 2px;
 	border-radius: 5px;
 	border-color: #2A2A2A;
 	margin: 2px 2px 2px 2px;
-	position: fixed;
 	top: 8%;
-	left: 6%;
-	min-height: 85%;
+	left: 55px;
+	height: auto;
 	overflow-y: scroll;
 	overflow-x: scroll;
+	margin: 50px 150px 50px 60px;
 }
 
 #home_grid>ul{
@@ -162,7 +162,7 @@ footer{
 	margin: 1%; 	
 	padding: 0;
 	float: left;
-	width: 30%;
+	width: 220px;
 	height: 100px;
 	border-style: solid;
 	border-width: 2px;
@@ -193,16 +193,16 @@ footer{
 }
 
 .function_detail{
-	width: 95%;
+/*	width: 95%;
 	height: 90%;
-	align-content: center;
+*/	align-content: center;
 	text-align: center;
 	border-radius: 5px;
 	min-height: inherit;
 }
 
 .side_lane{
-	width: 15%;
+	width: 150px;
 	height: 75%;
 	min-height: 25%;
 	text-align: left;
@@ -240,8 +240,8 @@ footer{
 
 #side_menu{
 	background-color: #2A2A2A;	
-	width:5%;
-	height: 60%;
+	width: 50px;
+	height: 350px;
 	position: fixed;
 	top: 10%;
 	left:0%;
@@ -254,8 +254,8 @@ footer{
 }
 	
 .menu_icon{
-	width:70%;
-	height: 10%;
+	width: 35px;
+	height: 35px;
 	margin: 15% 15% 15% 15%;
 }
 

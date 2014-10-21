@@ -11,27 +11,29 @@
 /*----login box----*/
 
 #login_pull {
-		display: block;
-		position: absolute;
-		color: #F26D7D;
-		text-align: right;
-		top: 5px;
-		right: 0px;
-		float: right;
-		font-size: 1.2em;
-		font-weight: bold;
-		z-index: 999;
-	}
+	display: block;
+	position: absolute;
+	color: #F26D7D;
+	text-align: right;
+	top: 5px;
+	right: 0px;
+	float: right;
+	font-size: 1.2em;
+	font-weight: bold;
+	z-index: 999;
+}
 
 		
 .login_box{
-		display: none;
-		height: auto;
-		margin: 1.3em 0;
-		border: 5px solid #E8E8E9;
-		padding: 1% 1% 1% 1%;
-		float: right;
-		background-color: #fff;
+	display: none;
+	height: auto;
+	margin: 1.3em 0;
+	border: 5px solid #E8E8E9;
+	padding: 1% 1% 1% 1%;
+	float: right;
+	background-color: #fff;
+	z-index: 999;
+	position: relative;
 }
 
 /*----navbar-nav----*/
@@ -445,37 +447,8 @@ text-align: left;
 	margin-bottom: 1em;
 }
 /*******************/
-.Downloads{
-	margin:3% 0;
-}
 .picture {
 	position: relative;
-}
-
-.download_left {
-	float: left;
-	margin-top:4%;
-	width:40%;
-}
-.download_right {
-	float:right;
-	margin-top:25%;
-	width:30%;
-}
-.download_left h3,.download_right h3 {
-	color: #2ABF5E;
-	font-weight: 700;
-	font-size: 2.6em;
-	margin: 0;
-	text-transform: uppercase;
-	font-family: 'Open Sans', sans-serif;
-}
-.download_left p,.download_right p {
-	color: #888;
-	font-weight: 100;
-	font-size: 1.8em;
-	margin: 11% 0;
-	font-family: 'Open Sans', sans-serif;
 }
 
 .Down-btn {
@@ -504,10 +477,6 @@ text-align: left;
 	text-decoration: none;
 	border:2px solid #F2685C;
 	color:#fff;
-}
-.download_grid3 {
-	margin-top: 36%;
-	text-align: left;
 }
 /*--contact--*/
 .contact{
@@ -773,9 +742,6 @@ p.comment-form-author {
 	.demo-text h4 {
 	font-size: 1.4em;
 	}
-	.download_right {
-	margin-top: 44%;
-	}
 	.contact h3 {
 	font-size: 3.2em;
 	}
@@ -913,43 +879,10 @@ p.comment-form-author {
 	text-align: center;
 	font-size: 2.8em;
 	}
-	.download_left p {
-	color: #888;
-	font-weight: 100;
-	font-size: 1.3em;
-	margin: 2% auto;
-	font-family: 'Open Sans', sans-serif;
-	width: 90%;
-	line-height: 1.7em;
-	}
-	.download_right p {
-	color: #888;
-	font-weight: 100;
-	font-size: 1.3em;
-	margin: 2% auto;
-	font-family: 'Open Sans', sans-serif;
-	width: 90%;
-	line-height: 1.7em;
-	}
-	.download_left {
-	float: none;
-	margin-top:0;
-	width: 100%;
-	}
 	.Down-btn {
 	font-size: 1.2em;
 	font-weight: 700;
 	width:26%;
-	}
-	.download_left h3, .download_right h3 {
-	font-size: 2.3em;
-	margin: 0;
-	}
-	.download_right {
-	margin-top: 44%;
-	width: 100%;
-	float: none;
-	text-align: right;
 	}
 	.contact {
 	padding: 2.5em 0 3em 0;
@@ -976,21 +909,11 @@ p.comment-form-author {
 	padding: 0.8em 2em;
 	font-size: 1em;
 	}
-	.Downloads {
-	background: none;
-	text-align: center;
-	min-height: 0;
-	padding-bottom: 2em;
-	}
 	.Demo-text p {
 	font-size: 1.3em;
 	}
 	.demo-btn {
 	width: 36%;
-	}
-	.download_right {
-	margin-top: 4%;
-	text-align: center;
 	}
 }
 @media(max-width:640px){
@@ -1124,15 +1047,6 @@ p.comment-form-author {
 	height: 90px;
 	margin-bottom: 2%;
 	}
-	.Downloads {
-	text-align: center;
-	}
-	.download_right {
-	margin-top: 6%;
-	width: 100%;
-	float: none;
-	text-align: center;
-	}
 	.gallery-head p {
 	margin: 0.9em auto;
 	font-size: 17px;
@@ -1192,10 +1106,6 @@ p.comment-form-author {
 	font-size: 1em;
 	width: 40%;
 	}
-	.download_left h3, .download_right h3 {
-	font-size: 1.3em;
-	margin: 0;
-	}
 	.demo-text h4 {
 	font-size: 1.2em;
 	}
@@ -1204,12 +1114,6 @@ p.comment-form-author {
 	}
 	.review-text span {
 	font-size: 1.1em;
-	}
-	.download_left p, .download_right p {
-	color: #888;
-	font-weight: 100;
-	font-size: 1em;
-	line-height: 1.7em;
 	}
 	.contact {
 	padding: 1em 0 3em 0;
@@ -1348,9 +1252,6 @@ p.comment-form-author {
 	font-weight: 700;
 	width: 59%;
 	padding: 0.7em 2em;
-	}
-	.download_right p {
-	font-size: 15px;
 	}
 	.contact-form input[type="text"] {
 	padding: 9px;

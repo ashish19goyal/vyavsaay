@@ -218,66 +218,6 @@ function form5_add_item()
 	}
 }
 
-/**
- * @form Manage Staff
- * @formNo 8
- */
-function form8_add_item()
-{
-	if(is_create_access('form8'))
-	{
-		var rowsHTML="";
-		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form8_"+id+"'></form>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form8_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form8_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form8_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form8_"+id+"' value=''>";
-				rowsHTML+="<img class='edit_icon' form='form8_"+id+"' onclick=\"modal16_action($(this),'staff',"+get_new_key()+");\">";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form8_"+id+"' value=''>";
-				rowsHTML+="<img class='edit_icon' form='form8_"+id+"' onclick='modal17_action($(this);'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form8_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='hidden' form='form8_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form8_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form8_"+id+"' onclick='$(this).parent().parent().remove();'>";	
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form8_body').prepend(rowsHTML);
-		
-		var fields=document.getElementById("form8_"+id);
-		var name_filter=fields.elements[0];
-		var status_filter=fields.elements[5];
-		
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form8_create_item(fields);
-		});
-		
-		$(name_filter).focus();
-		set_static_value_list('staff','status',status_filter);
-		status_filter.value="active";
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}	
-}
 
 /**
  * @form Cash Register
@@ -1206,63 +1146,6 @@ function form24_add_item()
 
 
 /**
- * @form Manage Customers
- * @formNo 30
- */
-function form30_add_item()
-{
-	if(is_create_access('form30'))
-	{
-		var rowsHTML="";
-		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form30_"+id+"'></form>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form30_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form30_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form30_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form30_"+id+"' value=''>";
-				rowsHTML+="<img class='edit_icon' form='form30_"+id+"' onclick=\"modal16_action($(this),'customer','"+get_new_key()+"')\">";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form30_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='hidden' form='form30_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form30_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form30_"+id+"' onclick='$(this).parent().parent().remove();'>";	
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form30_body').prepend(rowsHTML);
-		
-		var fields=document.getElementById("form30_"+id);
-		var name_filter=fields.elements[0];
-		var status_filter=fields.elements[4];
-		
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form30_create_item(fields);
-		});
-				
-		$(name_filter).focus();
-	
-		set_static_value_list('customers','status',status_filter);
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-/**
  * @form Manage Offers
  * @formNo 35
  */
@@ -1389,59 +1272,6 @@ function form38_add_item()
 				"</store_areas>";
 		
 		set_my_value_list(area_data,area_filter);
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-
-/**
- * @form Manage Vendors
- * @formNo 40
- */
-function form40_add_item()
-{
-	if(is_create_access('form40'))
-	{
-		var rowsHTML="";
-		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form40_"+id+"'></form>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form40_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form40_"+id+"' value=''>";		
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form40_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form40_"+id+"' value=''>";
-				rowsHTML+="<img class='edit_icon' form='form40_"+id+"' onclick=\"modal16_action($(this),'supplier','"+get_new_key()+"');\">";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form40_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='hidden' form='form40_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form40_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form40_"+id+"' onclick='$(this).parent().parent().remove();'>";	
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form40_body').prepend(rowsHTML);
-		var fields=document.getElementById("form40_"+id);
-		var name_filter=fields.elements[0];
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form40_create_item(fields);
-		});
-				
-		$(name_filter).focus();
 	}
 	else
 	{

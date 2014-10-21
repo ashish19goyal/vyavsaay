@@ -16,7 +16,7 @@
 							<li><a href="#about" class="top-nav scroll">About</a></li>
 							<li><a href="#reviews" class="top-nav scroll">Reviews</a></li>
 							<li><a href="#demo" class="top-nav scroll">Demo</a></li>
-							<li><a href="#d_register" class="top-nav scroll">Register</a></li>
+							<li><a href="#register" class="top-nav scroll">Register</a></li>
 							<li><a href="#contact" class="top-nav scroll">Contact</a></li>
 						</ul>
 						<a href="#" id="pull"><img src="images/menu-icon.png" title="menu" /></a>
@@ -39,7 +39,7 @@
 		<!----- //End-header---->
 		<!----- banner ---->
 			<div class="banner">
-				<div class="container">
+			<!-- 	<div class="container"> -->
 					<div class="banner-info">
 						<div class="col-md-6 appp">
 							 <img src="images/mbl-app.png" alt="">
@@ -50,7 +50,7 @@
 						</div>
 					<!-- 	<div class="clearfix"> </div> -->
 					</div>
-			</div>
+		<!-- 	</div> -->
 		</div>
 			<!----- banner ---->
 			<!----- /start-About---->
@@ -130,7 +130,7 @@
 		</div>
 	  <!---//End-Reviews----->
 	  <!----- /strat-Download---->
-		<div id="d_register" class="download">
+		<div id="register" class="contact">
        		<div class="container">
        			<div class="demo-head text-center">
 				  <h3>Register</h3>
