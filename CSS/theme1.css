@@ -148,9 +148,9 @@ footer{
 	top: 45px;
 	left: 55px;
 	height: auto;
-	overflow-y: scroll;
+/*	overflow-y: scroll;
 	overflow-x: scroll;
-	margin: 50px 150px 50px 60px;
+*/	margin: 50px 150px 50px 60px;
 }
 
 #home_grid>ul{
@@ -378,7 +378,6 @@ tfoot>tr>td{
 .edit_icon{
 	height:25px;
 	width: 25px;
-	background:url('/images/edit.jpeg') no-repeat left top;
 	border: 0;
 	cursor: pointer;
 	background-size: 25px 25px;

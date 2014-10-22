@@ -274,7 +274,7 @@ function form8_delete_item(button)
 					"</staff>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>staff</tablename>" +
 					"<link_to>form8</link_to>" +
 					"<title>Deleted</title>" +
 					"<notes>Staff profile of "+name+"</notes>" +
@@ -289,12 +289,12 @@ function form8_delete_item(button)
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
-			server_delete_simpe(account_xml);
+			server_delete_simple(account_xml);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
-			local_delete_simpe(account_xml);
+			local_delete_simple(account_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -1431,6 +1431,7 @@ function form40_delete_item(button)
 {
 	if(is_delete_access('form40'))
 	{
+		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;

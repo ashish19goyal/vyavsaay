@@ -576,7 +576,7 @@ function modal13_action()
 						"</suppliers>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>"+table+"</tablename>" +
+						"<tablename>suppliers</tablename>" +
 						"<link_to>form40</link_to>" +
 						"<title>Added</title>" +
 						"<notes>Supplier "+name+"</notes>" +
@@ -975,8 +975,8 @@ function modal15_action()
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>report42</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added feedback from "+provider+"</notes>" +
+					"<title>Added</title>" +
+					"<notes>Feedback from "+provider+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1071,7 +1071,7 @@ function modal16_action()
 						"</staff>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>"+table+"</tablename>" +
+						"<tablename>staff</tablename>" +
 						"<link_to>form8</link_to>" +
 						"<title>Added</title>" +
 						"<notes>Staff "+name+"</notes>" +
@@ -1137,10 +1137,24 @@ function modal17_action(button)
 	var fpto=father_form.elements[20];	
 	var fhours=father_form.elements[21];
 	
-	$(fjoining).datepicker();
+	var joining_date=form.elements[6];
+	$(joining_date).datepicker();
+	form.elements[1].value=faddress.value;
+	form.elements[2].value=fstreet.value;
+	form.elements[3].value=fcity.value;
+	form.elements[4].value=fstate.value;
+	form.elements[5].value=fcountry.value;
+	form.elements[6].value=fjoining.value;
+	form.elements[7].value=fqual.value;
+	form.elements[8].value=fskills.value;
+	form.elements[9].value=ffixed_comp.value;
+	form.elements[10].value=fvar_comp.value;
+	form.elements[11].value=fhours.value;
+	form.elements[12].value=fpto.value;
 	
 	$(form).on("submit",function(event)
 	{
+		event.preventDefault();
 		var address=form.elements[1].value;
 		var street=form.elements[2].value;
 		var city=form.elements[3].value;
@@ -1161,21 +1175,20 @@ function modal17_action(button)
 		fcity.value=city;
 		fstate.value=state;
 		fcountry.value=country;
-		faddress_status.value=address_status;
+		faddress_status.value='pending analysis';
 		fjoining.value=date;
 		fqual.value=qual;
 		fskills.value=skill;
 		ffixed_comp.value=comp;
 		fvar_comp.value=rate;
 		fpto.value=pto;	
-		fhours.value=work_hours;	
+		fhours.value=hours;	
 		
 		$("#modal17").dialog("close");
 	});
 	
 	$("#modal17").dialog("open");
 }
-
 
 
 /**
@@ -1376,6 +1389,7 @@ function modal19_action(button)
 	
 	$(form).on("submit",function(event)
 	{
+		event.preventDefault();
 		if(is_create_access('form39') || is_update_access('form39'))
 		{
 			var name=form.elements[1].value;
@@ -1678,6 +1692,7 @@ function modal20_action()
 
 	$(form).on("submit",function(event)
 	{
+		event.preventDefault();
 		if(is_create_access('form57') || is_update_access('form57'))
 		{
 			var name=form.elements[1].value;
@@ -2066,6 +2081,7 @@ function modal21_action()
 
 	$(form).on("submit",function(event)
 	{
+		event.preventDefault();
 		if(is_create_access('form57') || is_update_access('form57'))
 		{
 			var name=form.elements[1].value;
@@ -2373,8 +2389,15 @@ function modal24_action(button)
 	var fcountry=father_form.elements[12];
 	var faddress_status=father_form.elements[13];
 		
+	form.elements[1].value=faddress.value;
+	form.elements[2].value=fstreet.value;
+	form.elements[3].value=fcity.value;
+	form.elements[4].value=fstate.value;
+	form.elements[5].value=fcountry.value;
+	
 	$(form).on("submit",function(event)
 	{
+		event.preventDefault();
 		var address=form.elements[1].value;
 		var street=form.elements[2].value;
 		var city=form.elements[3].value;
@@ -2415,9 +2438,16 @@ function modal25_action(button)
 	var fstate=father_form.elements[11];
 	var fcountry=father_form.elements[12];
 	var faddress_status=father_form.elements[13];
-		
+	
+	form.elements[1].value=faddress.value;
+	form.elements[2].value=fstreet.value;
+	form.elements[3].value=fcity.value;
+	form.elements[4].value=fstate.value;
+	form.elements[5].value=fcountry.value;
+	
 	$(form).on("submit",function(event)
 	{
+		event.preventDefault();
 		var address=form.elements[1].value;
 		var street=form.elements[2].value;
 		var city=form.elements[3].value;

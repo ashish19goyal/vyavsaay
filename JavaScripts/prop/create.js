@@ -61,8 +61,7 @@ function form1_create_item(form)
 	else
 	{
 		$("#modal2").dialog("open");
-	}
-	
+	}	
 }
 
 /**
@@ -249,51 +248,42 @@ function form5_create_item(form)
 
 }
 
+
 /**
- * @formNo 7
  * @form Attendance
  * @param button
  */
 function form7_create_item(form)
 {
-	if(is_create_access('form7'))
+	if(is_create_access('form1'))
 	{
-		var date=get_raw_time(document.getElementById('form7_header').elements[2].value);
 		var name=form.elements[0].value;
 		var presence=form.elements[1].value;
-		var hours_worked=form.elements[2].value;
+		var hours=form.elements[2].value;
 		var data_id=form.elements[3].value;
+		var date=form.elements[5].value;
 		var last_updated=get_my_time();
-		var table='attendance';
-		var data_xml="<"+table+">" +
+		var data_xml="<attendance>" +
 					"<id>"+data_id+"</id>" +
-					"<name>"+name+"</name>" +
+					"<acc_name>"+name+"</acc_name>" +
 					"<presence>"+presence+"</presence>" +
-					"<hours_worked>"+hours_worked+"</hours_worked>" +
 					"<date>"+date+"</date>" +
+					"<hours_worked>"+hours+"</hours_worked>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form5</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Updated attendance for "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
+					"</attendance>";
 		if(is_online())
 		{
-			server_create_row(data_xml,activity_xml);
+			server_create_simple(data_xml);
 		}
 		else
 		{
-			local_create_row(data_xml,activity_xml);
-		}	
+			local_create_simple(data_xml);
+		}
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		
+				
 		$(form).off('submit');
 		$(form).on('submit',function(event)
 		{
@@ -305,6 +295,7 @@ function form7_create_item(form)
 	{
 		$("#modal2").dialog("open");
 	}
+	
 }
 
 

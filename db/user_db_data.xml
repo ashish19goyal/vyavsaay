@@ -53,7 +53,7 @@
 			<name>locale</name>
 			<display_name>language</display_name>
 			<status>active</status>
-			<value>en_us.utf8</value>
+			<value>english</value>
 			<type>other</type>
 			<last_updated>1</last_updated>
 		</row>

@@ -1,45 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <re_xml>
-	<address>
-		<row>
-			<acc_type>master</acc_type>
-			<lat>29.5375558</lat>
-			<lng>75.050893099999</lng>
-			<acc_name>master</acc_name>
-			<status>unconfirmed</status>
-			<address>R.S.D. colony, sirsa</address>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<acc_type>customer</acc_type>
-			<lat>29.5375555</lat>
-			<lng>75.0508930</lng>
-			<acc_name>ashish goyal (9818005232)</acc_name>
-			<status>unconfirmed</status>
-			<address>R.S.D. colony, sirsa</address>
-			<last_updated>1</last_updated>	
-		</row>
-		<row>
-			<acc_type>customer</acc_type>
-			<lat>29.5375552</lat>
-			<lng>75.05089301</lng>
-			<acc_name>anish goyal (9818005232)</acc_name>
-			<status>unconfirmed</status>
-			<address>R.S.D. colony, sirsa</address>
-			<last_updated>1</last_updated>	
-		</row>
-	</address>
 	<accounts>
 		<row>
 			<acc_name>ashish goyal (9818005232)</acc_name>
 			<type>customer</type>
-			<balance>10000</balance>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<acc_name>anish goyal (9818005232)</acc_name>
 			<type>customer</type>
-			<balance>15000</balance>
 			<last_updated>1</last_updated>
 		</row>
 	</accounts>

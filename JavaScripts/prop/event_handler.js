@@ -25,7 +25,7 @@ function default_load()
 		modal_forms_ini();
 		print_setup();
 		Chart.defaults.global.responsive = true;
-		//set_menu_username();
+		$('textarea').autosize();
 		i18n_setup();
 		home_display();
 	}
@@ -56,7 +56,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=8;i<24;i++)
+	for(var i=8;i<26;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,

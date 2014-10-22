@@ -79,12 +79,12 @@
 				<label>Name <input type='text' required></label><br/>
 				<label>Phone <input type="tel"></label><br/>
 				<label>Email <input type="email"></label><br/>
-				<label>Address <input type="textarea"></label><br/>
+				<label>Address <textarea></textarea></label><br/>
 				<label>Street <input type="text"></label><br/>
 				<label>City <input type="text"></label><br/>
 				<label>State <input type="text"></label><br/>
 				<label>Country <input type="text"></label><br/>
-				<label>Notes <input type="textarea"></label><br/>
+				<label>Notes <textarea></textarea></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -107,12 +107,12 @@
 				<label>Name <input type='text' required></label><br/>
 				<label>Phone <input type="text"></label><br/>
 				<label>Email <input type="text"></label><br/>
-				<label>Address <input type="text"></label><br/>
+				<label>Address <textarea></textarea></label><br/>
 				<label>Street <input type="text"></label><br/>
 				<label>City <input type="text"></label><br/>
 				<label>State <input type="text"></label><br/>
 				<label>Country <input type="text"></label><br/>
-				<label>Notes <input type="textarea"></label><br/>
+				<label>Notes <textarea></textarea></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -168,14 +168,14 @@
 				<label>Name <input type='text' required></label><br/>
 				<label>Phone <input type="text"></label><br/>
 				<label>Email <input type="text"></label><br/>
-				<label>Address <input type="text"></label><br/>
+				<label>Address <textarea></textarea></label><br/>
 				<label>Street <input type="text"></label><br/>
 				<label>City <input type="text"></label><br/>
 				<label>State <input type="text"></label><br/>
 				<label>Country <input type="text"></label><br/>
 				<label>Joining Date <input type="text" required></label><br/>
-				<label>Qualification <input type="text"></label><br/>
-				<label>Skills <input type="text"></label><br/>
+				<label>Qualification <textarea></textarea></label><br/>
+				<label>Skills <textarea></textarea></label><br/>
 				<label>Fixed Compensation (Rs./month)<input type="number" value='10000' required></label><br/>
 				<label>Variable Compensation Rate (Rs./hour)<input type="number" value='50' required></label><br/>
 				<label>Monthly work hours <input type="number" required value='180'></label><br/>
@@ -194,8 +194,8 @@
 				<label>State <input type="text"></label><br/>
 				<label>Country <input type="text"></label><br/>
 				<label>Joining Date <input type="text"></label><br/>
-				<label>Qualification <input type="text"></label><br/>
-				<label>Skills <input type="text"></label><br/>
+				<label>Qualification <textarea></textarea></label><br/>
+				<label>Skills <textarea></textarea></label><br/>
 				<label>Fixed Compensation (Rs./month)<input type="number"></label><br/>
 				<label>Variable Compensation Rate (Rs./hour)<input type="number"></label><br/>
 				<label>Monthly work hours <input type="number"></label><br/>
@@ -315,7 +315,7 @@
 	<div id="modal24" title="Update Customer Address">
 		<form id='modal24_form'>
 			<fieldset>
-				<label>Address <input type="text" required></label><br/>
+				<label>Address <textarea></textarea></label><br/>
 				<label>Street <input type="text"></label><br/>
 				<label>City <input type="text" required></label><br/>
 				<label>State <input type="text"></label><br/>
@@ -328,7 +328,7 @@
 	<div id="modal25" title="Update Supplier Address">
 		<form id='modal25_form'>
 			<fieldset>
-				<label>Address <input type="text" required></label><br/>
+				<label>Address <textarea></textarea></label><br/>
 				<label>Street <input type="text"></label><br/>
 				<label>City <input type="text" required></label><br/>
 				<label>State <input type="text"></label><br/>

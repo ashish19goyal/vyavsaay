@@ -211,27 +211,26 @@ function form7_update_item(form)
 {
 	if(is_update_access('form7'))
 	{
-		var date=get_raw_time(document.getElementById('form7_header').elements[2].value);
 		var name=form.elements[0].value;
 		var presence=form.elements[1].value;
-		var hours_worked=form.elements[2].value;
+		var hours=form.elements[2].value;
 		var data_id=form.elements[3].value;
+		var date=form.elements[5].value;
 		var last_updated=get_my_time();
-		var table='attendance';
-		var data_xml="<"+table+">" +
+		var data_xml="<attendance>" +
 					"<id>"+data_id+"</id>" +
-					"<name>"+name+"</name>" +
+					"<acc_name>"+name+"</acc_name>" +
 					"<presence>"+presence+"</presence>" +
-					"<hours_worked>"+hours_worked+"</hours_worked>" +
 					"<date>"+date+"</date>" +
+					"<hours_worked>"+hours_worked+"</hours_worked>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</attendance>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form5</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Updated attendance for "+name+"</notes>" +
+					"<tablename>attendance</tablename>" +
+					"<link_to>form7</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Attendance for "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -246,6 +245,18 @@ function form7_update_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+function form7_update_form()
+{
+	if(is_update_access('form7'))
+	{
+		$("[id^='save_form7']").click();
 	}
 	else
 	{
@@ -304,7 +315,7 @@ function form8_update_item(form)
 					"</staff>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>staff</tablename>" +
 					"<link_to>form8</link_to>" +
 					"<title>Updated</title>" +
 					"<notes>Staff profile of "+name+"</notes>" +
@@ -319,12 +330,12 @@ function form8_update_item(form)
 		if(is_online())
 		{
 			server_update_row(data_xml,activity_xml);
-			server_update_simple(accounts_xml);
+			server_update_simple(account_xml);
 		}
 		else
 		{
 			local_update_row(data_xml,activity_xml);
-			server_update_simple(accounts_xml);
+			server_update_simple(account_xml);
 		}	
 		for(var i=0;i<7;i++)
 		{
@@ -1412,7 +1423,7 @@ function form39_update_item(form)
 }
 
 /**
- * @form Manage Vendors
+ * @form Manage Suppliers
  * @param button
  */
 function form40_update_item(form)
@@ -1746,8 +1757,7 @@ function form46_update_item(form)
 		var data_id=form.elements[2].value;
 		var element_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='user_preferences';
-		var data_xml="<"+table+">" +
+		var data_xml="<user_preferences>" +
 					"<id>"+data_id+"</id>" +
 					"<name unique='yes'>"+element_id+"</name>" +
 					"<display_name>"+name+"</display_name>" +
@@ -1755,10 +1765,10 @@ function form46_update_item(form)
 					"<type>other</type>" +
 					"<status>active</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</user_preferences>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>user_preferences</tablename>" +
 					"<link_to>form46</link_to>" +
 					"<title>Updated</title>" +
 					"<notes>Updated "+name+" setting</notes>" +
@@ -1766,11 +1776,11 @@ function form46_update_item(form)
 					"</activity>";
 		if(is_online())
 		{
-			//server_update_row(data_xml,activity_xml);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			//local_update_row(data_xml,activity_xml);
+			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{

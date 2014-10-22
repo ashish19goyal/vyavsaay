@@ -159,7 +159,6 @@ function form5_ini()
 
 
 /**
- * this function prepares the table for attendance form
  * @form Attendance
  * @formNo 7
  */
@@ -169,16 +168,16 @@ function form7_ini()
 	if(fid==null)
 		fid="";	
 	
-	var filter_fields=document.getElementById('form7_header');
+	var master_fields=document.getElementById('form7_master');
+	var fdate=master_fields.elements[1].value;
 	
-	//populating form 
+	var filter_fields=document.getElementById('form7_header');
 	var fstaff=filter_fields.elements[0].value;
 	var fattendance=filter_fields.elements[1].value;
-	var fdate=filter_fields.elements[2].value;
 	
 	var columns="<attendance>" +
 			"<id>"+fid+"</id>" +
-			"<date>"+fdate+"</date>" +
+			"<date>"+get_raw_time(fdate)+"</date>" +
 			"<acc_name>"+fstaff+"</acc_name>" +
 			"<presence>"+fattendance+"</presence>" +
 			"<hours_worked></hours_worked>" +
@@ -188,35 +187,80 @@ function form7_ini()
 
 	fetch_requested_data('form7',columns,function(results)
 	{
-		results.forEach(function(result)
+		if(results.length===0)
 		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form7_"+result.id+"'></form>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form7_"+result.id+"' value='"+result.acc_name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form7_"+result.id+"' value='"+result.presence+"' ondblclick='set_editable($(this));'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form7_"+result.id+"' value='"+result.hours_worked+"' ondblclick='set_editable($(this));'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='hidden' form='form7_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form7_"+result.id+"' value='saved'>";
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-			
-			$('#form7_body').prepend(rowsHTML);
-			
-			var fields=document.getElementById("form7_"+result.id);
-			$(fields).on("submit", function(event)
+			var staff_columns="<staff>" +
+					"<acc_name></acc_name>" +
+					"<status>active</status>" +
+					"</staff>";
+			fetch_requested_data('form7',staff_columns,function(staff_names)
 			{
-				event.preventDefault();
-				form7_update_item(fields);
+				staff_names.forEach(function(staff_name)
+				{
+					var rowsHTML="";
+					var data_id=get_new_key();
+					rowsHTML+="<tr>";
+						rowsHTML+="<form id='form7_"+data_id+"'></form>";
+							rowsHTML+="<td>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form7_"+data_id+"' value='"+staff_name.acc_name+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td>";
+								rowsHTML+="<input type='text' form='form7_"+data_id+"' value='present' ondblclick='set_editable($(this));'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td>";
+								rowsHTML+="<input type='number' form='form7_"+data_id+"' value='8' ondblclick='set_editable($(this));'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td>";
+								rowsHTML+="<input type='hidden' form='form7_"+data_id+"' value='"+data_id+"'>";
+								rowsHTML+="<input type='submit' class='save_icon' id='save_form7_"+data_id+"' form='form7_"+data_id+"' value='saved'>";
+								rowsHTML+="<input type='hidden' form='form7_"+data_id+"' value='"+get_raw_time(fdate)+"'>";
+							rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+					
+					$('#form7_body').prepend(rowsHTML);
+					
+					var fields=document.getElementById("form7_"+data_id);
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form7_create_item(fields);
+					});
+				});
 			});
-		});
+		}
+		else
+		{
+			results.forEach(function(result)
+			{
+				var rowsHTML="";
+				rowsHTML+="<tr>";
+					rowsHTML+="<form id='form7_"+result.id+"'></form>";
+						rowsHTML+="<td>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form7_"+result.id+"' value='"+result.acc_name+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form7_"+result.id+"' value='"+result.presence+"' ondblclick='set_editable($(this));'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td>";
+							rowsHTML+="<input type='number' readonly='readonly' form='form7_"+result.id+"' value='"+result.hours_worked+"' ondblclick='set_editable($(this));'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td>";
+							rowsHTML+="<input type='hidden' form='form7_"+result.id+"' value='"+result.id+"'>";
+							rowsHTML+="<input type='submit' class='save_icon' id='save_form7_"+result.id+"' form='form7_"+result.id+"' value='saved'>";
+							rowsHTML+="<input type='hidden' form='form7_"+result.id+"' value='"+result.date+"'>";
+						rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+				
+				$('#form7_body').prepend(rowsHTML);
+				
+				var fields=document.getElementById("form7_"+result.id);
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form7_update_item(fields);
+				});
+			});
+		}
 	});
 };
 
@@ -268,27 +312,27 @@ function form8_ini()
 	{
 		results.forEach(function(result)
 		{
-			var detail_string="Joined on "+result.joining_date+", Qualification: "+result.qualification+", Skills: "+result.skills+", Salary: Rs."+result.fixed_comp+"+ Rs."+result.variable_comp_rate+"/hour. Allowed "+result.allowed_pto+"/month.";
+			var detail_string="Joined on "+get_my_past_date(result.joining_date)+", Qualification: "+result.qualification+", Skills: "+result.skills+", Salary: Rs."+result.fixed_comp+"+ Rs."+result.variable_comp_rate+"/hour. Allowed "+result.allowed_pto+"/month.";
 
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form8_"+result.id+"'></form>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.name+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.phone+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' value='"+result.phone+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.email+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' value='"+result.address+", "+result.street+", "+result.city+", "+result.state+", "+result.country+"'>";
-						rowsHTML+="<img class='edit_icon' form='form8_"+result.id+"' onclick='modal17_action($(this));'>";
+						rowsHTML+="<textarea wrap='soft' readonly='readonly' form='form8_"+result.id+"'>"+result.address+", "+result.street+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
+						rowsHTML+="<img class='edit_icon' wrap='virtual' src='images/edit.jpeg' form='form8_"+result.id+"' onclick='modal17_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' value='"+detail_string+"'>";
-						rowsHTML+="<img class='edit_icon' form='form8_"+result.id+"' onclick='modal17_action($(this));'>";
+						rowsHTML+="<textarea wrap='soft' readonly='readonly' form='form8_"+result.id+"'>"+detail_string+"</textarea>";
+						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form8_"+result.id+"' onclick='modal17_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.status+"'>";
@@ -303,7 +347,7 @@ function form8_ini()
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.state+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.country+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.address_status+"'>";
-						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.joining_date+"'>";
+						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+get_my_past_date(result.joining_date)+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.qualification+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.skills+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.fixed_comp+"'>";
@@ -316,6 +360,10 @@ function form8_ini()
 			$('#form8_body').prepend(rowsHTML);
 			
 			var fields=document.getElementById("form8_"+result.id);
+			var fstatus=fields.elements[5];
+			
+			set_static_value_list('staff','status',fstatus);
+			
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -1069,8 +1117,8 @@ function form30_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.email+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' value='"+result.address+", "+result.street+", "+result.city+", "+result.state+", "+result.country+"'>";
-						rowsHTML+="<img class='edit_icon' form='form30_"+result.id+"' onclick='modal24_action($(this));'>";
+						rowsHTML+="<textarea readonly='readonly' form='form30_"+result.id+"'>"+result.address+", "+result.street+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
+						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form30_"+result.id+"' onclick='modal24_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.status+"'>";
@@ -1090,6 +1138,10 @@ function form30_ini()
 			
 			$('#form30_body').prepend(rowsHTML);
 			var fields=document.getElementById("form30_"+result.id);
+			var fstatus=fields.elements[4];
+			
+			set_static_value_list('customers','status',fstatus);
+			
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -1122,7 +1174,7 @@ function form35_ini()
 	
 	var fname=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
-	var fdate=filter_fields.elements[2].value;
+	var fdate=get_raw_time(filter_fields.elements[2].value);
 	var fstatus=filter_fields.elements[3].value;
 	
 	var columns="<offers>" +
@@ -1167,7 +1219,7 @@ function form35_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.offer_detail+"'>";
-						rowsHTML+="<img class='edit_icon' form='form35_"+result.id+"' onclick='modal8_action($(this));'>";
+						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form35_"+result.id+"' onclick='modal8_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.status+"'>";
@@ -1446,11 +1498,11 @@ function form40_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form40_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.email+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form40_"+result.id+"' value='"+result.address+", "+result.street+", "+result.city+", "+result.state+", "+result.country+"'>";
-						rowsHTML+="<img class='edit_icon' form='form40_"+result.id+"' onclick='modal25_action($(this));'>";
+						rowsHTML+="<textarea readonly='readonly' form='form40_"+result.id+"'>"+result.address+", "+result.street+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
+						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form40_"+result.id+"' onclick='modal25_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form40_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.notes+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form40_"+result.id+"' ondblclick='set_editable($(this));'>"+result.notes+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.id+"'>";

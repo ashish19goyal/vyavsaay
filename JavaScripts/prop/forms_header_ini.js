@@ -90,11 +90,18 @@ function form5_header_ini()
  */
 function form7_header_ini()
 {
-	console.log("setting form7 header");
+	var fields=document.getElementById('form7_master');
+	var date_filter=fields.elements[1];
+	
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form7_update_form();
+	});
+	
 	var filter_fields=document.getElementById('form7_header');
 	var staff_filter=filter_fields.elements[0];
 	var attendance_filter=filter_fields.elements[1];
-	var date_filter=filter_fields.elements[2];
 	
 	var staff_data="<staff>" +
 			"<acc_name></acc_name>" +

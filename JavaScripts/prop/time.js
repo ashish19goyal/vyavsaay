@@ -76,7 +76,7 @@ function get_my_past_date(raw_time)
 {
 	var d= new Date(parseInt(raw_time));
 	var year = d.getFullYear();
-	var month =d.getMonth();
+	var month =d.getMonth()+1;
 	if (month < 10) {
 	    month = "0" + month;
 	}

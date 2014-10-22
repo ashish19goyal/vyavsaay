@@ -5,6 +5,7 @@
 <script src='./JavaScripts/open/jquery-ui.min.js'></script>
 <script src='./JavaScripts/open/i18next-1.7.4.js'></script>
 <script src='./JavaScripts/open/jQuery.print.js'></script>
+<script src='./JavaScripts/open/jquery.autosize.min.js'></script>
 <script src='./JavaScripts/open/leaflet.js'></script>
 
 <script src='./JavaScripts/open/jquery.easing.min.js'></script>

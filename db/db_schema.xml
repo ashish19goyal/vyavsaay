@@ -69,13 +69,6 @@
 			<type index='yes' type='VARCHAR(20)'></type><!-- customer/staff/supplier/financial -->
 			<last_updated index='no' type='BIGINT'></last_updated>
 	</accounts>
-	<documents>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<url index='no' type="TEXT"></url>
-			<doc_type index='yes' type="VARCHAR(50)"></doc_type><!-- service/service instance/staff/product/product instance/asset -->
-			<target_id index='yes' type="BIGINT"></target_id>
-			<last_updated index='no' type="BIGINT"></last_updated>
-	</documents>
 	<attendance>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
@@ -84,6 +77,13 @@
 			<hours_worked index='no' type="DECIMAL(12,2)"></hours_worked>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</attendance>
+	<documents>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<url index='no' type="TEXT"></url>
+			<doc_type index='yes' type="VARCHAR(50)"></doc_type><!-- service/service instance/staff/product/product instance/asset -->
+			<target_id index='yes' type="BIGINT"></target_id>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</documents>
 	<task_instances>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(45)"></name>
