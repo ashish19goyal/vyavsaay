@@ -55,6 +55,7 @@ body {
 	align-items: center;
 /*	overflow-y: hidden;*/
 	margin: 0;
+	font-size: 12px;
 }
 
 img {
@@ -70,7 +71,7 @@ div.search_bar{
 	top: 1%;
 	left: 1%;	
 	background: #2A2A2A;
-	height: 5%;
+	height: 35px;
 	border-style: solid;
 	border-width: 2px;
 	border-radius: 5px;
@@ -120,13 +121,14 @@ input#search_box{
 }
 
 footer{
-	width:98%;
+	width:100%;
 	position: fixed;
-	top: 94%;
+/*	top: 94%;
 	left: 1%;	
+*/	bottom:0px;
 	text-align: center;
 	background: #2A2A2A;
-	height: 5%;
+	height: 35px;
 	color: #EDEDE4;
 	border-style: solid;
 	border-width: 2px;
@@ -143,7 +145,7 @@ footer{
 	border-radius: 5px;
 	border-color: #2A2A2A;
 	margin: 2px 2px 2px 2px;
-	top: 8%;
+	top: 45px;
 	left: 55px;
 	height: auto;
 	overflow-y: scroll;
@@ -204,7 +206,7 @@ footer{
 .side_lane{
 	width: 150px;
 	height: 75%;
-	min-height: 25%;
+	min-height: 50%;
 	text-align: left;
 	float: right;
 	border-style: solid;
@@ -213,7 +215,7 @@ footer{
 	border-color: #2A2A2A;
 	margin: 1% 0% 1% 1%;
 	position: fixed;
-	top:8%;
+	top:45px;
 	right:0%;
 	overflow-y: scroll;
 }
