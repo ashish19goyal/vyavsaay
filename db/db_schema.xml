@@ -398,12 +398,19 @@
 	</store_areas>
 	<assets>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<date_inc index='no' type="BIGINT"></date_inc>
 			<type index='yes' type="VARCHAR(25)"></type><!-- information/intellectual property/machine/facility/computer system/PDA/others -->
 			<name index='yes' type="VARCHAR(45)" unique='yes'></name>
-			<value index='no' type="DECIMAL(10,2)"></value>
-			<activity index='no' type="TEXT"></activity>
-			<owner index='yes' type="VARCHAR(100)"></owner>
+			<description index='no' type="TEXT"></description>
+			<date_inc index='no' type="BIGINT"></date_inc>
+			<ownership_type index='yes' type='VARCHAR(25)'></ownership_type><!-- purchased/leased/rented/licensed -->
+			<ownership_contract index='no' type='TEXT'></ownership_contract>
+			<make index='no' type='VARCHAR(100)'></make>
+			<maintained_by index='yes' type='VARCHAR(25)'></maintained_by><!-- self/contractor/manufacturer -->
+			<maintenance_contract index='no' type='VARCHAR(100)'></maintenance_contract>
+			<maintenance_activities index='no' type="TEXT"></maintenance_activities>
+			<initial_value index='no' type="DECIMAL(10,2)"></initial_value>
+			<current_value index='no' type="DECIMAL(10,2)"></current_value>
+			<asset_location index='no' type="TEXT"></asset_location>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</assets>
 	<asset_valuations>  

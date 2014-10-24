@@ -89,17 +89,23 @@ function form5_ini()
 	var filter_fields=document.getElementById('form5_header');
 		
 	var fasset=filter_fields.elements[0].value;
-	var fowner=filter_fields.elements[1].value;
-	var ftype=filter_fields.elements[2].value;
+	var ftype=filter_fields.elements[1].value;
 	
 	var columns="<assets>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fasset+"</name>" +
-			"<date_inc></date_inc>" +
-			"<owner>"+fowner+"</owner>" +
-			"<activity></activity>" +
-			"<value></value>" +
 			"<type>"+ftype+"</type>" +
+			"<description></description>" +
+			"<date_inc></date_inc>" +
+			"<ownership_type></ownership_type>" +
+			"<ownership_contract></ownership_contract>" +
+			"<make></make>" +
+			"<maintained_by></maintained_by>" +
+			"<maintenance_contract></maintenance_contract>" +
+			"<maintenance_activities></maintenance_activities>" +
+			"<initial_value></initial_value>" +
+			"<current_value></current_value>" +
+			"<asset_location></asset_location>" +
 			"</assets>";
 	
 	$('#form5_body').html("");
@@ -115,26 +121,26 @@ function form5_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form5_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form5_"+result.id+"' value='"+get_my_past_date(result.date_inc)+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form5_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.owner+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form5_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form5_"+result.id+"' value='"+result.value+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form5_"+result.id+"'>"+result.description+"</textarea>";
 						rowsHTML+="<img class='add_icon' form='form5_"+result.id+"' value='saved' onclick='modal9_action($(this));'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form5_"+result.id+"' value='"+result.activity+"'>";
-						rowsHTML+="<img class='add_icon' form='form5_"+result.id+"' value='saved' onclick='modal10_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form5_"+result.id+"' value='saved'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form5_"+result.id+"' value='saved' onclick='form5_delete_item($(this));'>";	
+						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.date_inc+"'>";
+						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.ownership_type+"'>";
+						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.ownership_contract+"'>";
+						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.make+"'>";
+						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.maintained_by+"'>";
+						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.maintenance_contract+"'>";
+						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.maintenance_activities+"'>";
+						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.initial_value+"'>";
+						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.current_value+"'>";
+						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.asset_location+"'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -147,7 +153,7 @@ function form5_ini()
 				form5_update_item(fields);
 			});
 		});
-		var export_button=filter_fields.elements[4];
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -1174,14 +1180,14 @@ function form35_ini()
 	
 	var fname=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
-	var fdate=get_raw_time(filter_fields.elements[2].value);
+	//var fdate=get_raw_time(filter_fields.elements[2].value);
 	var fstatus=filter_fields.elements[3].value;
 	
 	var columns="<offers>" +
 			"<id>"+fid+"</id>" +
 			"<offer_name>"+fname+"</offer_name>" +
 			"<offer_type>"+ftype+"</offer_type>" +
-			"<end_date>"+fdate+"</end_date>" +
+			"<end_date></end_date>" +
 			"<offer_detail></offer_detail>" +
 			"<status>"+fstatus+"</status>" +
 			"<product_name></product_name>" +
@@ -1209,17 +1215,16 @@ function form35_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form35_"+result.id+"'></form>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.offer_name+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+result.id+"' value='"+result.offer_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.offer_type+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+result.id+"' value='"+result.offer_type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+result.id+"' ondblclick='set_editable($(this));' value='"+get_my_past_date(result.end_date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.offer_detail+"'>";
-						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form35_"+result.id+"' onclick='modal8_action($(this));'>";
+						rowsHTML+="<textarea readonly='readonly' form='form35_"+result.id+"'>"+result.offer_detail+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.status+"'>";
@@ -3426,6 +3431,65 @@ function form68_ini()
 };
 
 
+/**
+ * @form Manage Financial Accounts
+ * @formNo 71
+ */
+function form71_ini()
+{
+	var fid=$("#form71_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form71_header');
+
+	var fname=filter_fields.elements[0].value;
+	
+	var columns="<accounts>" +
+			"<id>"+fid+"</id>" +
+			"<acc_name>"+fname+"</acc_name>" +
+			"<description></description>" +
+			"<type>financial</type>" +
+			"</accounts>";
+
+	$('#form71_body').html("");
+
+	fetch_requested_data('form71',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{		
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form71_"+result.id+"'></form>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' required form='form71_"+result.id+"' value='"+result.name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form71_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.phone+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='hidden' form='form71_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form71_"+result.id+"' value='saved'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form71_"+result.id+"' value='saved' onclick='form71_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form71_body').prepend(rowsHTML);
+			var fields=document.getElementById("form71_"+result.id);
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form71_update_item(fields);
+			});
+		});
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'accounts');
+		});
+	});
+};
 
 
 function notifications_ini()

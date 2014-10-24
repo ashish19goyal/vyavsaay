@@ -31,10 +31,12 @@
 		Offer will not be applicable on this purchase as the offered product is out of stock.
 	</div>
 	
-	<div id="modal8" title="Specify offer details">
+	<div id="modal8" title="Add new Offer">
 		<form id='modal8_form'>
 			<fieldset>
-				<label>Offer Applicability <input type='text'></label><br/>
+				<label>Name<input type='text'></label><br/>
+				<label>End Date<input type='text'></label><br/>
+				<label>Type<input type='text'></label><br/>
 				<label>Product name <input type="text"></label><br/>
 				<label>Batch <input type="text"></label><br/>
 				<label>Service <input type="text"></label><br/>
@@ -55,15 +57,9 @@
 	</div>
 	
 	<div id="modal9" title="Update asset valuation">
-		<form id='modal9_form'>
-			<fieldset>
-				<label>Date <input type='text'></label><br/>
-				<label>Updated Value (in Rs.)<input type="number"></label><br/>
-				<input type="submit" value='Save'>
-			</fieldset>
-		</form>
 	</div>
-	<div id="modal10" title="Update asset maintenance">
+	
+	<div id="modal10" title="Add new asset">
 		<form id='modal10_form'>
 			<fieldset>
 				<label>Date <input type='text'></label><br/>
@@ -94,7 +90,6 @@
 		<form id='modal12_form'>
 			<fieldset>
 				<label>Name <input type='text'></label><br/>
-				<label>Type <input type="text"></label><br/>
 				<label>Description <input type="text"></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>

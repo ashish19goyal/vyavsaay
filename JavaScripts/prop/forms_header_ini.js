@@ -59,21 +59,16 @@ function form5_header_ini()
 {
 	var filter_fields=document.getElementById('form5_header');
 	var asset_filter=filter_fields.elements[0];
-	var owner_filter=filter_fields.elements[1];
-	var type_filter=filter_fields.elements[2];
+	var type_filter=filter_fields.elements[1];
 	
 	var assets_data="<assets>" +
 		"<name></name>" +
 		"</assets>";
-	var owner_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
 	
 	set_my_filter(assets_data,asset_filter);
-	set_my_filter(owner_data,owner_filter);
 	set_static_filter('assets','type',type_filter);
 	
-	var import_button=filter_fields.elements[5];
+	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
 	{
@@ -1463,3 +1458,26 @@ function form68_header_ini()
 	});
 };
 
+/**
+ * @form Manage Financial Accounts
+ * @formNo 71
+ */
+function form71_header_ini()
+{
+	var filter_fields=document.getElementById('form71_header');
+	var name_filter=filter_fields.elements[0];
+	
+	var name_data="<accounts>" +
+			"<acc_name></acc_name>" +
+			"</accounts>";
+
+	set_my_filter(name_data,name_filter);
+	
+	var import_button=filter_fields.elements[3];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form71_import_template,form71_import);
+	});
+
+};

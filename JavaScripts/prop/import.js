@@ -52,41 +52,30 @@ function form5_import(data_array,import_type)
 	{
 		var data_xml="<assets>" +
 				"<id>"+row.id+"</id>" +
-				"<name unique='yes'>"+row.name+"</name>" +
+				"<name>"+row.name+"</name>" +
 				"<date_inc>"+row.date_inc+"</date_inc>" +
-				"<owner>"+row.owner+"</owner>" +
-				"<activity>"+row.activity+"</activity>" +
-				"<value>"+row.value+"</value>" +
 				"<type>"+row.type+"</type>" +
+				"<description>"+row.description+"</description>" +
+				"<ownership_type>"+row.ownership_type+"</ownership_type>" +
+				"<ownership_contract>"+row.ownership_contract+"</ownership_contract>" +
+				"<make>"+row.make+"</make>" +
+				"<maintained_by>"+row.maintained_by+"</maintained_by>" +
+				"<maintenance_contract>"+row.maintenance_contract+"</maintenance_contract>" +
+				"<maintenance_activities>"+row.maintenance_activities+"</maintenance_activities>" +
+				"<initial_value>"+row.initial_value+"</initial_value>" +
+				"<current_value>"+row.current_value+"</current_value>" +
+				"<asset_location>"+row.asset_location+"</asset_location>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</assets>";
-		var value_xml="<asset_valuations>" +
-				"<id>"+get_new_key()+"</id>" +
-				"<date_valuated>"+get_my_date()+"</date_valuated>" +
-				"<value>"+row.value+"</value>" +
-				"<asset_name>"+row.name+"</asset_name>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</asset_valuations>";
-		var maintenance_xml="<asset_maintenance>" +
-				"<id>"+get_new_key()+"</id>" +
-				"<date_maintained>"+get_my_date()+"</date_maintained>" +
-				"<activity>"+row.activity+"</activity>" +
-				"<asset_name>"+row.name+"</asset_name>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</asset_maintenance>";
 		if(import_type=='create_new')
 		{
 			if(is_online())
 			{
 				server_create_simple(data_xml);
-				server_create_simple(value_xml);
-				server_create_simple(maintenance_xml);
 			}
 			else
 			{
 				local_create_simple(data_xml);
-				local_create_simple(value_xml);
-				local_create_simple(maintenance_xml);
 			}
 		}
 		else
@@ -94,14 +83,10 @@ function form5_import(data_array,import_type)
 			if(is_online())
 			{	
 				server_update_simple(data_xml);
-				server_update_simple(value_xml);
-				server_update_simple(maintenance_xml);
 			}
 			else
 			{
 				local_update_simple(data_xml);
-				local_update_simple(value_xml);
-				local_update_simple(maintenance_xml);
 			}
 		}
 	});
@@ -1086,6 +1071,46 @@ function form68_import(data_array,import_type)
 				"<tax>"+row.tax+"</tax>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</product_master>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Manage financial accounts
+* @formNo 71
+*/
+function form71_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<accounts>" +
+				"<id>"+row.id+"</id>" +
+				"<acc_name>"+row.acc_name+"</acc_name>" +
+				"<description>"+row.description+"</description>" +
+				"<type>"+row.type+"</type>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</accounts>";
 		if(import_type=='create_new')
 		{
 			if(is_online())

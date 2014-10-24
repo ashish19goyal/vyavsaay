@@ -3,13 +3,10 @@
 		<thead>
 			<tr>
 				<form id='form5_header'></form>
-					<th>Asset Name <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form5_header' onblur="form5_ini('');"></th>
-					<th>Date Incorporated</th>
-					<th>Owner <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form5_header' onblur="form5_ini('');"></th>
+					<th>Name <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form5_header' onblur="form5_ini('');"></th>
 					<th>Type <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form5_header' onblur="form5_ini('');"></th>
-					<th>Value</th>
-					<th>Maintenance</th>
-					<th><input type='button' form='form5_header' value='Add item' class='add_icon' onclick='form5_add_item();'>
+					<th>Details</th>
+					<th><input type='button' form='form5_header' value='Add item' class='add_icon' onclick='modal10_action();'>
 						<input type='button' form='form5_header' value='Export' class='export_icon'>
 						<input type='button' form='form5_header' value='Import' class='import_icon'>
 					</th>

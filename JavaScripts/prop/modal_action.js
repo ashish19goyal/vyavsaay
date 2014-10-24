@@ -3,32 +3,30 @@
  * @modal Offer details
  * @param button
  */
-function modal8_action(button)
+function modal8_action()
 {
 	var form=document.getElementById('modal8_form');
-	
-	var form_id=$(button).attr('form');
-	var father_form=document.getElementById(form_id);
-	
-	var offer_type=form.elements[1];
-	offer_type.value=father_form.elements[1].value;
-
-	var product_name=form.elements[2];
-	var batch=form.elements[3];
-	var service=form.elements[4];
-	var multiplicity=form.elements[5];
-	var criteria_type=form.elements[6];
-	var criteria_amount=form.elements[7];
-	var criteria_quantity=form.elements[8];
-	var result_type=form.elements[9];
-	var discount_percent=form.elements[10];
-	var discount_amount=form.elements[11];
-	var quantity_percent=form.elements[12];
-	var quantity_amount=form.elements[13];
-	var free_product_name=form.elements[14];
-	var free_quantity=form.elements[15];
+		
+	var offer_name=form.elements[1];
+	var end_date=form.elements[2];
+	var offer_type=form.elements[3];
+	var product_name=form.elements[4];
+	var batch=form.elements[5];
+	var service=form.elements[6];
+	var multiplicity=form.elements[7];
+	var criteria_type=form.elements[8];
+	var criteria_amount=form.elements[9];
+	var criteria_quantity=form.elements[10];
+	var result_type=form.elements[11];
+	var discount_percent=form.elements[12];
+	var discount_amount=form.elements[13];
+	var quantity_percent=form.elements[14];
+	var quantity_amount=form.elements[15];
+	var free_product_name=form.elements[16];
+	var free_quantity=form.elements[17];
 	
 	set_static_value_list('offers','offer_type',offer_type);
+	$(end_date).datepicker();
 	
 	$(offer_type).on('blur',function(event)
 	{
@@ -49,9 +47,10 @@ function modal8_action(button)
 			
 			$(product_name).on('blur',function(event)
 			{
-				var batch_data="<product_master>" +
+				var batch_data="<product_instances>" +
 						"<batch></batch>" +
-						"</product_master>";
+						"<product_name>"+product_name.value+"</product_name>" +
+						"</product_instances>";
 				set_my_value_list(batch_data,batch);
 			});
 			
@@ -122,9 +121,11 @@ function modal8_action(button)
 	
 	$(form).on("submit",function(event)
 	{
-		if(is_create_access('form35') || is_update_access('form35'))
+		event.preventDefault();
+		if(is_create_access('form35'))
 		{
-			var offer_name=father_form.elements[0].value;
+			var offer_name_value=offer_name.value;
+			var end_date_value=get_raw_time(end_date.value);
 			var type_value=offer_type.value;
 			var product_value=product_name.value;
 			var batch_value=batch.value;
@@ -140,9 +141,8 @@ function modal8_action(button)
 			var quantity_amount_value=quantity_amount.value;
 			var free_product_name_value=free_product_name.value;
 			var free_quantity_value=free_quantity.value;
-			var end_date_value=get_raw_time(father_form.elements[2].value);	
-			var status_value=father_form.elements[4].value;
-			var data_id=father_form.elements[5].value;
+			var status_value='active';
+			var data_id=get_new_key();
 			var last_updated=get_my_time();
 			
 			var offer_detail_value="Get ";
@@ -187,12 +187,9 @@ function modal8_action(button)
 					offer_detail_value+=+criteria_quantity_value+" times or more";
 			}
 			
-			father_form.elements[3].value=offer_detail_value;
-			
-			var table='offers';
-			var data_xml="<"+table+">" +
+			var data_xml="<offers>" +
 						"<id>"+data_id+"</id>" +
-						"<offer_name unique='yes'>"+offer_name+"</offer_name>" +
+						"<offer_name unique='yes'>"+offer_name_value+"</offer_name>" +
 						"<offer_type>"+type_value+"</offer_type>" +
 						"<product_name>"+product_value+"</product_name>" +
 						"<batch>"+batch_value+"</batch>" +
@@ -212,27 +209,23 @@ function modal8_action(button)
 						"<offer_detail>"+offer_detail_value+"</offer_detail>" +
 						"<status>"+status_value+"</status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</"+table+">";	
+						"</offers>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>"+table+"</tablename>" +
+						"<tablename>offers</tablename>" +
 						"<link_to>form35</link_to>" +
 						"<title>Saved</title>" +
-						"<notes>Saved offer "+offer_name+"</notes>" +
+						"<notes>Offer "+offer_name_value+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			if(is_online())
 			{
-				server_write_row(data_xml,activity_xml);
+				server_create_row(data_xml,activity_xml);
 			}
 			else
 			{
-				local_write_row(data_xml,activity_xml);
+				local_create_row(data_xml,activity_xml);
 			}	
-			for(var i=0;i<5;i++)
-			{
-				$(father_form.elements[i]).attr('readonly','readonly');
-			}
 		}
 		else
 		{
@@ -479,42 +472,39 @@ function modal12_action()
 	var form=document.getElementById('modal12_form');
 	
 	var fname=form.elements[1];
-	var ftype=form.elements[2];
-	var fdescription=form.elements[3];
+	var fdescription=form.elements[2];
 	var fdata_id=get_new_key();
 		
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
 		var name=fname.value;
-		var type=ftype.value;
+		var type='financial';
 		var description=fdescription.value;
 		var data_id=get_new_key();
 		var last_updated=get_my_time();
-		var table='accounts';
-		var data_xml="<"+table+">" +
+		var data_xml="<accounts>" +
 					"<id>"+data_id+"</id>" +
 					"<acc_name unique='yes'>"+name+"</acc_name>" +
 					"<type>"+type+"</type>" +
 					"<description>"+description+"</description>" +
-					"<balance>0</balance>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";
+					"</accounts>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>accounts</tablename>" +
 					"<link_to></link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added new account "+name+"</notes>" +
+					"<title>Added</title>" +
+					"<notes>New account "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_create_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_create_row(data_xml,activity_xml);
 		}	
 		$("#modal12").dialog("close");
 	});

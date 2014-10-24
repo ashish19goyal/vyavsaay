@@ -156,30 +156,43 @@ function form5_update_item(form)
 	if(is_update_access('form5'))
 	{
 		var name=form.elements[0].value;
-		var date_inc=get_raw_time(form.elements[1].value);
-		var owner=form.elements[2].value;
-		var type=form.elements[3].value;
-		var value=form.elements[4].value;
-		var maintenance=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var type=form.elements[1].value;
+		var description=form.elements[2].value;
+		var date_inc=form.elements[6].value;
+		var ownership_type=form.elements[7].value;
+		var ownership_contract=form.elements[8].value;
+		var make=form.elements[9].value;
+		var maintained_by=form.elements[10].value;
+		var maintenance_contract=form.elements[11].value;
+		var maintenance_activities=form.elements[12].value;
+		var initial_value=form.elements[13].value;
+		var current_value=form.elements[14].value;
+		var asset_location=form.elements[15].value;
+		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='assets';
-		var data_xml="<"+table+">" +
+		var data_xml="<assets>" +
 					"<id>"+data_id+"</id>" +
-					"<name unique='yes'>"+name+"</name>" +
+					"<name>"+name+"</name>" +
 					"<date_inc>"+date_inc+"</date_inc>" +
-					"<owner>"+owner+"</owner>" +
 					"<type>"+type+"</type>" +
-					"<activity>"+maintenance+"</activity>" +
-					"<value>"+value+"</value>" +
+					"<description>"+description+"</description>" +
+					"<ownership_type>"+ownership_type+"</ownership_type>" +
+					"<ownership_contract>"+ownership_contract+"</ownership_contract>" +
+					"<make>"+make+"</make>" +
+					"<maintained_by>"+maintained_by+"</maintained_by>" +
+					"<maintenance_contract>"+maintenance_contract+"</maintenance_contract>" +
+					"<maintenance_activities>"+maintenance_activities+"</maintenance_activities>" +
+					"<initial_value>"+initial_value+"</initial_value>" +
+					"<current_value>"+current_value+"</current_value>" +
+					"<asset_location>"+asset_location+"</asset_location>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";
+					"</assets>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>assets</tablename>" +
 					"<link_to>form5</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Saved asset "+name+"</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Asset "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1262,22 +1275,21 @@ function form35_update_item(form)
 		var status=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
-		var table='offers';
-		var data_xml="<"+table+">" +
+		var data_xml="<offers>" +
 					"<id>"+data_id+"</id>" +
-					"<offer_name unique='yes'>"+offer_name+"</offer_name>" +
+					"<offer_name>"+offer_name+"</offer_name>" +
 					"<offer_type>"+offer_type+"</offer_type>" +
 					"<end_date>"+end_date+"</end_date>" +
 					"<offer_detail>"+offer_detail+"</offer_detail>" +
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</offers>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>offers</tablename>" +
 					"<link_to>form35</link_to>" +
 					"<title>Saved</title>" +
-					"<notes>Saved offer "+offer_name+"</notes>" +
+					"<notes>Offer "+offer_name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -3103,6 +3115,53 @@ function form68_update_item(form)
 			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Manage financial accounts
+ * @param button
+ */
+function form71_update_item(form)
+{
+	if(is_update_access('form71'))
+	{
+		var name=form.elements[0].value;
+		var description=form.elements[1].value;
+		var data_id=form.elements[2].value;
+		var last_updated=get_my_time();
+		var data_xml="<accounts>" +
+					"<id>"+data_id+"</id>" +
+					"<acc_name>"+name+"</acc_name>" +
+					"<description>"+description+"</description>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"<type>financial</type>" +
+					"</accounts>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>accounts</tablename>" +
+					"<link_to>form71</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Account "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<3;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

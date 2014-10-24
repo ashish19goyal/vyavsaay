@@ -15,7 +15,8 @@ function form1_import_template()
 */
 function form5_import_template()
 {
-	var data_array=['id','name','date_inc','owner','activity','value','type'];
+	var data_array=['id','name','type','description','date_inc','ownership_type','ownership_contract','make','maintained_by',
+	                'maintenance_contract','maintenance_activities','initial_value','current_value','asset_location'];
 	my_array_to_csv(data_array);
 };
 
@@ -245,5 +246,15 @@ function form67_import_template()
 function form68_import_template()
 {
 	var data_array=['id','name','taxable','tax'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage financial accounts
+* @formNo 71
+*/
+function form71_import_template()
+{
+	var data_array=['id','acc_name','description','type'];
 	my_array_to_csv(data_array);
 };
