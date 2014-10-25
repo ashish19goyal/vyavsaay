@@ -1,73 +1,4 @@
 /**
- * @form Update Inventory
- * @formNo 1
- */
-function form1_add_item()
-{
-	if(is_create_access('form1'))
-	{
-		var rowsHTML="";
-		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form1_"+id+"'></form>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form1_"+id+"' value=''>";
-				rowsHTML+="<img class='add_icon' value='Add new product' onclick='modal14_action();'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form1_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form1_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form1_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form1_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='hidden' form='form1_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form1_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form1_"+id+"' onclick='$(this).parent().parent().remove();'>";	
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form1_body').prepend(rowsHTML);
-		
-		var fields=document.getElementById("form1_"+id);
-		var names_filter=fields.elements[0];
-		var batches_filter=fields.elements[1];
-		var expiry_filter=fields.elements[2];
-		var price_filter=fields.elements[3];
-		var quantity_filter=fields.elements[4];
-		
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form1_create_item(fields);
-		});
-				
-		$(names_filter).on('focus',function(event)
-		{
-			var products_data="<product_master>" +
-				"<name></name>" +
-				"</product_master>";
-	
-			set_my_value_list(products_data,names_filter);
-		});
-		
-		$(names_filter).focus();
-		
-		$(expiry_filter).datepicker();
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-/**
  * @form Create Pamphlets
  * @formNo 2
  */
@@ -685,7 +616,6 @@ function form14_add_item()
 
 
 /**
- * this function adds a new row to the accept returns form
  * @form Accept Returns
  * @formNo 15
  */
@@ -1368,7 +1298,7 @@ function form59_add_item()
 }
 
 /**
- * @form Product Categories
+ * @form Product Attributes
  * @formNo 60
  */
 function form60_add_item()
@@ -1386,6 +1316,9 @@ function form60_add_item()
 				rowsHTML+="<input type='text' form='form60_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form60_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
 				rowsHTML+="<input type='hidden' form='form60_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form60_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form60_"+id+"' onclick='$(this).parent().parent().remove();'>";	
@@ -1395,7 +1328,7 @@ function form60_add_item()
 		$('#form60_body').prepend(rowsHTML);
 		var fields=document.getElementById("form60_"+id);
 		var product_filter=fields.elements[0];
-		var category_filter=fields.elements[1];
+		var attribute_filter=fields.elements[1];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -1408,10 +1341,11 @@ function form60_add_item()
 				"</product_master>";
 		set_my_value_list(product_data,product_filter);
 		
-		var category_data="<categories>" +
-				"<category></category>" +
-				"</categories>";
-		set_my_filter(category_data,category_filter);
+		var attribute_data="<attributes>" +
+				"<attribute></attribute>" +
+				"<type>product</type>" +
+				"</attributes>";
+		set_my_filter(attribute_data,attribute_filter);
 
 		$(product_filter).focus();
 	}
@@ -1422,7 +1356,7 @@ function form60_add_item()
 }
 
 /**
- * @form Service Categories
+ * @form Service Attributes
  * @formNo 61
  */
 function form61_add_item()
@@ -1440,6 +1374,9 @@ function form61_add_item()
 				rowsHTML+="<input type='text' form='form61_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form61_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
 				rowsHTML+="<input type='hidden' form='form61_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form61_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form61_"+id+"' onclick='$(this).parent().parent().remove();'>";	
@@ -1449,7 +1386,7 @@ function form61_add_item()
 		$('#form61_body').prepend(rowsHTML);
 		var fields=document.getElementById("form61_"+id);
 		var service_filter=fields.elements[0];
-		var category_filter=fields.elements[1];
+		var attribute_filter=fields.elements[1];
 
 		$(fields).on("submit", function(event)
 		{
@@ -1462,9 +1399,10 @@ function form61_add_item()
 				"</services>";
 		set_my_value_list(service_data,service_filter);
 		
-		var category_data="<categories>" +
-				"<category></category>" +
-				"</categories>";
+		var category_data="<attributes>" +
+				"<attribute></attribute>" +
+				"<type>service</type>" +
+				"</attributes>";
 		set_my_filter(category_data,category_filter);
 
 		$(service_filter).focus();

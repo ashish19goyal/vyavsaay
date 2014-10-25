@@ -10,27 +10,28 @@ function form1_delete_item(button)
 		var form=document.getElementById(form_id);
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var expiry=get_raw_time(form.elements[2].value);
-		var price=form.elements[3].value;
-		var quantity=form.elements[4].value;
-		var data_id=form.elements[5].value;
+		var cost_price=form.elements[2].value;
+		var sale_price=form.elements[3].value;
+		var expiry=get_raw_time(form.elements[4].value);
+		var quantity=form.elements[5].value;
+		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
-		var table='product_instances';
-		var data_xml="<"+table+">" +
+		var data_xml="<product_instances>" +
 					"<id>"+data_id+"</id>" +
 					"<product_name>"+name+"</product_name>" +
 					"<batch>"+batch+"</batch>" +
 					"<expiry>"+expiry+"</expiry>" +
 					"<quantity>"+quantity+"</quantity>" +
-					"<price>"+price+"</price>" +
+					"<cost_price>"+cost_price+"</cost_price>" +
+					"<sale_price>"+sale_price+"</sale_price>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</product_instances>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>product_instances</tablename>" +
 					"<link_to>form1</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted inventory for batch number "+batch+" of "+name+"</notes>" +
+					"<notes>Batch number "+batch+" of product "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var other_delete="<area_utilization>" +
@@ -1350,28 +1351,23 @@ function form39_delete_item(button)
 		var name=form.elements[0].value;
 		var make=form.elements[1].value;
 		var description=form.elements[2].value;
-		var manufactured=form.elements[5].value;
-		var unit=form.elements[6].value;
-		var tags=form.elements[7].value;
-		var data_id=form.elements[8].value;
+		var tax=form.elements[5].value;
+		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
-		var table='product_master';
-		var data_xml="<"+table+">" +
+		var data_xml="<product_master>" +
 					"<id>"+data_id+"</id>" +
 					"<make>"+make+"</make>" +
 					"<name>"+name+"</name>" +
 					"<description>"+description+"</description>" +
-					"<manufactured>"+manufactured+"</manufactured>" +
-					"<unit>"+unit+"</unit>" +
-					"<tags>"+tags+"</tags>" +
+					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</product_master>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>product_master</tablename>" +
 					"<link_to>form39</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted product "+name+" from inventory</notes>" +
+					"<notes>Product "+name+" from inventory</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var other_delete="<product_instances>" +
@@ -1385,10 +1381,10 @@ function form39_delete_item(button)
 				"<name>"+name+"</name>" +
 				"<type>product</type>" +
 				"</pre_requisites>";
-		var other_delete4="<categories>" +
+		var other_delete4="<attributes>" +
 				"<name>"+name+"</name>" +
 				"<type>product</type>" +
-				"</categories>";
+				"</attributes>";
 		var other_delete5="<cross_sells>" +
 				"<name>"+name+"</name>" +
 				"<type>product</type>" +
@@ -1883,39 +1879,36 @@ function form57_delete_item(button)
 		
 		var service=form.elements[0].value;
 		var description=form.elements[1].value;
-		var warranty=form.elements[2].value;
-		var tags=form.elements[3].value;
-		var price=form.elements[4].value;
-		var duration=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var price=form.elements[2].value;
+		var duration=form.elements[3].value;
+		var tax=form.elements[4].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
-		var table='services';
-		var data_xml="<"+table+">" +
+		var data_xml="<services>" +
 					"<id>"+data_id+"</id>" +
 					"<name unique='yes'>"+service+"</name>" +
 					"<description>"+description+"</description>" +
 					"<price>"+price+"</price>" +
-					"<warranty>"+warranty+"</warranty>" +
-					"<tags>"+tags+"</tags>" +
 					"<duration>"+duration+"</duration>" +
+					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</services>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>services</tablename>" +
 					"<link_to>form57</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted service "+service+"</notes>" +
+					"<notes>Service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var other_delete3="<pre_requisites>" +
 				"<name>"+service+"</name>" +
 				"<type>service</type>" +
 				"</pre_requisites>";
-		var other_delete4="<categories>" +
+		var other_delete4="<attributes>" +
 				"<name>"+service+"</name>" +
 				"<type>service</type>" +
-				"</categories>";
+				"</attributes>";
 		var other_delete5="<cross_sells>" +
 				"<name>"+service+"</name>" +
 				"<type>service</type>" +
@@ -1965,8 +1958,7 @@ function form58_delete_item(button)
 		var quantity=form.elements[3].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
-		var table='pre_requisites';
-		var data_xml="<"+table+">" +
+		var data_xml="<pre_requisites>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+service+"</name>" +
 					"<type>service</type>" +
@@ -1974,13 +1966,13 @@ function form58_delete_item(button)
 					"<requisite_name>"+requisite+"</requisite_name>" +
 					"<quantity>"+quantity+"</quantity>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</pre_requisites>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>pre_requisites</tablename>" +
 					"<link_to>form58</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted pre-requisite for service "+service+"</notes>" +
+					"<notes>Pre-requisite for service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2031,7 +2023,7 @@ function form59_delete_item(button)
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form59</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted pre-requisite for product "+product+"</notes>" +
+					"<notes>Pre-requisite for product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2053,7 +2045,7 @@ function form59_delete_item(button)
 
 /**
  * formNo 60
- * form Product Categories
+ * form Product Attributes
  * @param button
  */
 function form60_delete_item(button)
@@ -2063,23 +2055,24 @@ function form60_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var product=form.elements[0].value;
-		var category=form.elements[1].value;
-		var data_id=form.elements[2].value;
+		var attribute=form.elements[1].value;
+		var value=form.elements[2].value;
+		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='categories';
-		var data_xml="<"+table+">" +
+		var data_xml="<attributes>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+product+"</name>" +
 					"<type>product</type>" +
-					"<category>"+category+"</category>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</attributes>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>attributes</tablename>" +
 					"<link_to>form60</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted category "+catgory+" for product "+product+"</notes>" +
+					"<notes>Attribute "+attribute+" for product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2100,7 +2093,7 @@ function form60_delete_item(button)
 
 /**
  * formNo 61
- * form Service Categories
+ * form Service Attributes
  * @param button
  */
 function form61_delete_item(button)
@@ -2110,23 +2103,24 @@ function form61_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var service=form.elements[0].value;
-		var category=form.elements[1].value;
-		var data_id=form.elements[2].value;
+		var attribute=form.elements[1].value;
+		var value=form.elements[2].value;
+		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='categories';
-		var data_xml="<"+table+">" +
+		var data_xml="<attributes>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+service+"</name>" +
 					"<type>service</type>" +
-					"<category>"+category+"</category>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</attributes>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>attributes</tablename>" +
 					"<link_to>form61</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted category "+catgory+" for service "+service+"</notes>" +
+					"<notes>Attribute "+attribute+" for service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2178,7 +2172,7 @@ function form62_delete_item(button)
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form62</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted review for product "+product+"</notes>" +
+					"<notes>Review for product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2214,8 +2208,7 @@ function form63_delete_item(button)
 		var rating=form.elements[3].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
-		var table='reviews';
-		var data_xml="<"+table+">" +
+		var data_xml="<reviews>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+service+"</name>" +
 					"<type>service</type>" +
@@ -2223,13 +2216,13 @@ function form63_delete_item(button)
 					"<detail>"+detail+"</detail>" +
 					"<rating>"+rating+"</rating>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</reviews>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>reviews</tablename>" +
 					"<link_to>form63</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted review for service "+service+"</notes>" +
+					"<notes>Review for service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2264,21 +2257,20 @@ function form64_delete_item(button)
 		var cross_name=form.elements[2].value;
 		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='cross_sells';
-		var data_xml="<"+table+">" +
+		var data_xml="<cross_sells>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+service+"</name>" +
 					"<type>service</type>" +
 					"<cross_type>"+cross_type+"</cross_type>" +
 					"<cross_name>"+cross_name+"</cross_name>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</cross_sells>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>cross_sells</tablename>" +
 					"<link_to>form64</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted cross selling of "+cross_name+" for service "+service+"</notes>" +
+					"<notes>Cross selling of "+cross_name+" with service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2328,7 +2320,7 @@ function form66_delete_item(button)
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form66</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted cross selling of "+cross_name+" for product "+product+"</notes>" +
+					"<notes>Cross selling of "+cross_name+" for product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())

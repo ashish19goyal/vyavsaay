@@ -1,70 +1,4 @@
 /**
- * @form Update Inventory
- * @param button
- */
-function form1_create_item(form)
-{
-	if(is_create_access('form1'))
-	{
-		var name=form.elements[0].value;
-		var batch=form.elements[1].value;
-		var expiry=get_raw_time(form.elements[2].value);
-		var price=form.elements[3].value;
-		var quantity=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var last_updated=get_my_time();
-		var table='product_instances';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<expiry>"+expiry+"</expiry>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<price>"+price+"</price>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form1</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Updated inventory for batch number "+batch+" of "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}
-		for(var i=0;i<6;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		
-		var del_button=form.elements[7];
-		$(del_button).off('click');
-		$(del_button).on('click',function(event)
-		{
-			form1_delete_item(del_button);
-		});
-		
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-			form1_update_item(form);
-		});
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}	
-}
-
-/**
  * @form Create Pamphlets
  * @param button
  */
@@ -1429,8 +1363,7 @@ function form58_create_item(form)
 		var quantity=form.elements[3].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
-		var table='pre_requisites';
-		var data_xml="<"+table+">" +
+		var data_xml="<pre_requisites>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+service+"</name>" +
 					"<type>service</type>" +
@@ -1438,13 +1371,13 @@ function form58_create_item(form)
 					"<requisite_name>"+requisite+"</requisite_name>" +
 					"<quantity>"+quantity+"</quantity>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</pre_requisites>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>pre_requisites</tablename>" +
 					"<link_to>form58</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added pre-requisite for service "+service+"</notes>" +
+					"<title>Added</title>" +
+					"<notes>Pre-requisite for service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1508,8 +1441,8 @@ function form59_create_item(form)
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form59</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added pre-requisite for product "+product+"</notes>" +
+					"<title>Added</title>" +
+					"<notes>Pre-requisite for product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1546,7 +1479,7 @@ function form59_create_item(form)
 
 /**
  * formNo 60
- * form Product Categories
+ * form Product Attributes
  * @param button
  */
 function form60_create_item(form)
@@ -1554,23 +1487,24 @@ function form60_create_item(form)
 	if(is_create_access('form60'))
 	{
 		var product=form.elements[0].value;
-		var category=form.elements[1].value;
-		var data_id=form.elements[2].value;
+		var attribute=form.elements[1].value;
+		var value=form.elements[2].value;
+		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='categories';
-		var data_xml="<"+table+">" +
+		var data_xml="<attribute>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+product+"</name>" +
 					"<type>product</type>" +
-					"<category>"+category+"</category>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</attribute>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>attributes</tablename>" +
 					"<link_to>form60</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added category "+category+" for product "+product+"</notes>" +
+					"<title>Added</title>" +
+					"<notes>Attribute "+attribute+" for product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1585,7 +1519,7 @@ function form60_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[4];
+		var del_button=form.elements[5];
 		$(del_button).off('click');
 		$(del_button).on('click',function(event)
 		{
@@ -1607,7 +1541,7 @@ function form60_create_item(form)
 
 /**
  * formNo 61
- * form service Categories
+ * form service Attributes
  * @param button
  */
 function form61_create_item(form)
@@ -1615,23 +1549,24 @@ function form61_create_item(form)
 	if(is_create_access('form61'))
 	{
 		var service=form.elements[0].value;
-		var category=form.elements[1].value;
-		var data_id=form.elements[2].value;
+		var attribute=form.elements[1].value;
+		var value=form.elements[2].value;
+		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='categories';
-		var data_xml="<"+table+">" +
+		var data_xml="<attributes>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+service+"</name>" +
 					"<type>service</type>" +
-					"<category>"+category+"</category>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</attributes>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>attributes</tablename>" +
 					"<link_to>form61</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added category "+category+" for service "+service+"</notes>" +
+					"<title>Added</title>" +
+					"<notes>Attribute "+category+" for service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1646,7 +1581,7 @@ function form61_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[4];
+		var del_button=form.elements[5];
 		$(del_button).off('click');
 		$(del_button).on('click',function(event)
 		{
@@ -1695,8 +1630,8 @@ function form62_create_item(form)
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form62</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added review for product "+product+"</notes>" +
+					"<title>Added</title>" +
+					"<notes>Review for product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1747,7 +1682,7 @@ function form63_create_item(form)
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var table='reviews';
-		var data_xml="<"+table+">" +
+		var data_xml="<reviews>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+service+"</name>" +
 					"<type>service</type>" +
@@ -1755,13 +1690,13 @@ function form63_create_item(form)
 					"<detail>"+detail+"</detail>" +
 					"<rating>"+rating+"</rating>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</reviews>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>reviews</tablename>" +
 					"<link_to>form63</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added review for service "+service+"</notes>" +
+					"<title>Added</title>" +
+					"<notes>Review for service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1810,21 +1745,20 @@ function form64_create_item(form)
 		var cross_name=form.elements[2].value;
 		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='cross_sells';
-		var data_xml="<"+table+">" +
+		var data_xml="<cross_sells>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+service+"</name>" +
 					"<type>service</type>" +
 					"<cross_type>"+cross_type+"</cross_type>" +
 					"<cross_name>"+cross_name+"</cross_name>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</cross_sells>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>cross_sells</tablename>" +
 					"<link_to>form64</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added cross selling of "+cross_name+" to service "+service+"</notes>" +
+					"<title>Added</title>" +
+					"<notes>Cross selling of "+cross_name+" to service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1887,8 +1821,8 @@ function form66_create_item(form)
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form66</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added cross selling of "+cross_name+" to product "+product+"</notes>" +
+					"<title>Added</title>" +
+					"<notes>Cross selling of "+cross_name+" to product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())

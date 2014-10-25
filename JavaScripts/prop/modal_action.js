@@ -354,6 +354,7 @@ function modal10_action()
 	
 	$(form).on("submit",function(event)
 	{
+		event.preventDefault();
 		var name=fname.value;
 		var type=ftype.value;
 		var description=fdescription.value;
@@ -372,7 +373,7 @@ function modal10_action()
 		var last_updated=get_my_time();
 		var data_xml="<assets>" +
 					"<id>"+data_id+"</id>" +
-					"<name>"+name+"</name>" +
+					"<name unique='yes'>"+name+"</name>" +
 					"<date_inc>"+date_inc+"</date_inc>" +
 					"<type>"+type+"</type>" +
 					"<description>"+description+"</description>" +
@@ -650,34 +651,24 @@ function modal14_action()
 	
 	var fname=form.elements[1];
 	var fmake=form.elements[2];
-	var ftags=form.elements[3];
-	var fcategories_out=form.elements[4];
-	var fcategories=form.elements[5];
-	var fpictureinfo=form.elements[6];
-	var fpicture=form.elements[7];
-	var ftaxable=form.elements[8];
-	var funit=form.elements[11];
-	var fmanufactured=form.elements[17];
-	var freq_product_out=form.elements[18];
-	var freq_product=form.elements[19];
-	var freq_service_out=form.elements[20];
-	var freq_service=form.elements[21];
-	var freq_task_out=form.elements[22];
-	var freq_task=form.elements[23];
-	var fcross_product_out=form.elements[24];
-	var fcross_product=form.elements[25];
-	var fcross_service_out=form.elements[26];
-	var fcross_service=form.elements[27];
+	var fdescription=form.elements[3];
+	var fpictureinfo=form.elements[4];
+	var fpicture=form.elements[5];
+	var freq_product_out=form.elements[7];
+	var freq_product=form.elements[8];
+	var freq_service_out=form.elements[9];
+	var freq_service=form.elements[10];
+	var freq_task_out=form.elements[11];
+	var freq_task=form.elements[12];
+	var fcross_product_out=form.elements[13];
+	var fcross_product=form.elements[14];
+	var fcross_service_out=form.elements[15];
+	var fcross_service=form.elements[16];
 	
 	var make_data="<product_master>" +
 		"<make></make>" +
 		"</product_master>";
 	set_my_filter(make_data,fmake);
-	
-	var categories_data="<categories>" +
-			"<category></category>" +
-			"</categories>";
-	set_my_multiple_filter(categories_data,fcategories,fcategories_out);
 	
 	fpicture.addEventListener('change',function(evt)
 	{
@@ -686,10 +677,6 @@ function modal14_action()
 			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
 		});
 	},false);
-	
-	set_static_value_list('product_master','taxable',ftaxable);
-	set_static_value_list('product_master','unit',funit);
-	set_static_value_list('product_master','manufactured',fmanufactured);
 	
 	var product_data="<product_master>" +
 			"<name></name>" +
@@ -710,237 +697,174 @@ function modal14_action()
 	
 	$(form).on("submit",function(event)
 	{
-		if(is_create_access('form39') || is_update_access('form39'))
+		if(is_create_access('form39'))
 		{
 			var name=form.elements[1].value;
-			var name_data="<product_master>" +
-					"<name>"+name+"</name>" +
-					"</product_master>";
-			get_single_column_data(function(unique_product)
+			var make=form.elements[2].value;
+			var description=form.elements[3].value;
+			var tax=form.elements[6].value;
+			var req_products=form.elements[7].value.split(",");
+			var req_services=form.elements[9].value.split(",");
+			var req_tasks=form.elements[11].value.split(",");
+			var cross_products=form.elements[13].value.split(",");
+			var cross_services=form.elements[15].value.split(",");
+			var data_id=get_new_key();
+			var pic_id=get_new_key();
+			var url=$(fpictureinfo).find('div').find('img').attr('src');
+			var last_updated=get_my_time();
+			var data_xml="<product_master>" +
+						"<id>"+data_id+"</id>" +
+						"<make>"+make+"</make>" +
+						"<name>"+name+"</name>" +
+						"<description>"+description+"</description>" +
+						"<tax>"+tax+"</tax>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</product_master>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>product_master</tablename>" +
+						"<link_to>form39</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Product "+name+" to inventory</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
 			{
-				if(unique_product.length===0)
+				server_create_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+			}	
+
+			if(url!="")
+			{
+				var pic_xml="<documents>" +
+							"<id>"+pic_id+"</id>" +
+							"<url>"+url+"</url>" +
+							"<doc_type>product_master</doc_type>" +
+							"<target_id>"+data_id+"</target_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</documents>";
+				if(is_online())
 				{
-					var make=form.elements[2].value;
-					var tags=form.elements[3].value;
-					var categories=form.elements[4].value.split(",");
-					var taxable=form.elements[8].value;
-					var tax=form.elements[9].value;
-					var price=form.elements[10].value;
-					var unit=form.elements[11].value;
-					var weight=form.elements[12].value;
-					var length=form.elements[13].value;
-					var width=form.elements[14].value;
-					var height=form.elements[15].value;
-					var description=form.elements[16].value;
-					var manufactured=form.elements[17].value;
-					var req_products=form.elements[18].value.split(",");
-					var req_services=form.elements[20].value.split(",");
-					var req_tasks=form.elements[22].value.split(",");
-					var cross_products=form.elements[24].value.split(",");
-					var cross_services=form.elements[26].value.split(",");
-					var data_id=get_new_key();
-					var pic_id=get_new_key();
-					var url=$(fpictureinfo).find('div').find('img').attr('src');
-					var last_updated=get_my_time();
-					var table='product_master';
-					var data_xml="<"+table+">" +
-								"<id>"+data_id+"</id>" +
-								"<make>"+make+"</make>" +
-								"<name>"+name+"</name>" +
-								"<est_price>"+price+"</est_price>" +
-								"<description>"+description+"</description>" +
-								"<taxable>"+taxable+"</taxable>" +
-								"<unit>"+unit+"</unit>" +
-								"<tax>"+tax+"</tax>" +
-								"<weight>"+weight+"</weight>" +
-								"<length>"+length+"</length>" +
-								"<width>"+width+"</width>" +
-								"<height>"+height+"</height>" +
-								"<manufactured>"+manufactured+"</manufactured>" +
-								"<tags>"+tags+"</tags>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</"+table+">";	
-					var activity_xml="<activity>" +
-								"<data_id>"+data_id+"</data_id>" +
-								"<tablename>"+table+"</tablename>" +
-								"<link_to>form39</link_to>" +
-								"<title>Saved</title>" +
-								"<notes>Added product "+name+" to inventory</notes>" +
-								"<updated_by>"+get_name()+"</updated_by>" +
-								"</activity>";
-					if(is_online())
-					{
-						server_write_row(data_xml,activity_xml);
-					}
-					else
-					{
-						local_write_row(data_xml,activity_xml);
-					}	
-
-					if(url!="")
-					{
-						var pic_xml="<documents>" +
-									"<id>"+pic_id+"</id>" +
-									"<url>"+url+"</url>" +
-									"<doc_type>product_master</doc_type>" +
-									"<target_id>"+data_id+"</target_id>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</documents>";
-						var pic_activity_xml="<activity>" +
-									"<data_id>"+pic_id+"</data_id>" +
-									"<tablename>documents</tablename>" +
-									"<link_to>form39</link_to>" +
-									"<title>Saved</title>" +
-									"<notes>Updated picture for product "+name+"</notes>" +
-									"<updated_by>"+get_name()+"</updated_by>" +
-									"</activity>";
-						if(is_online())
-						{
-							server_write_row(pic_xml,pic_activity_xml);
-						}
-						else
-						{
-							local_write_row(pic_xml,pic_activity_xml);
-						}	
-					}
-					categories.forEach(function(category)
-					{
-						if(category!="")
-						{
-							var data_xml="<categories>" +
-									"<id>"+get_new_key()+"</id>" +
-									"<name>"+name+"</name>" +
-									"<type>product</type>" +
-									"<category>"+category+"</category>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</categories>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_products.forEach(function(req_product)
-					{
-						if(req_product!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>product</type>" +
-										"<requisite_type>product</requisite_type>" +
-										"<requisite_name>"+req_product+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_services.forEach(function(req_service)
-					{
-						if(req_service!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>product</type>" +
-										"<requisite_type>service</requisite_type>" +
-										"<requisite_name>"+req_service+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_tasks.forEach(function(req_task)
-					{
-						if(req_task!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>product</type>" +
-										"<requisite_type>task</requisite_type>" +
-										"<requisite_name>"+req_task+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					cross_products.forEach(function(cross_product)
-					{
-						if(cross_product!="")
-						{
-							var data_xml="<cross_sells>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>product</type>" +
-										"<cross_type>product</cross_type>" +
-										"<cross_name>"+cross_product+"</cross_type>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</cross_sells>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					cross_services.forEach(function(cross_service)
-					{
-						if(cross_service!="")
-						{
-							var data_xml="<cross_sells>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>product</type>" +
-										"<cross_type>service</cross_type>" +
-										"<cross_name>"+cross_service+"</cross_type>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</cross_sells>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-
+					server_create_simple(pic_xml);
 				}
 				else
 				{
-					$("#modal5").dialog("open");
+					local_create_simple(pic_xml);
+				}	
+			}
+			req_products.forEach(function(req_product)
+			{
+				if(req_product!="")
+				{
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>product</type>" +
+								"<requisite_type>product</requisite_type>" +
+								"<requisite_name>"+req_product+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
 				}
-			},name_data);
+			});
+			req_services.forEach(function(req_service)
+			{
+				if(req_service!="")
+				{
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>product</type>" +
+								"<requisite_type>service</requisite_type>" +
+								"<requisite_name>"+req_service+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
+			req_tasks.forEach(function(req_task)
+			{
+				if(req_task!="")
+				{
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>product</type>" +
+								"<requisite_type>task</requisite_type>" +
+								"<requisite_name>"+req_task+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
+			cross_products.forEach(function(cross_product)
+			{
+				if(cross_product!="")
+				{
+					var data_xml="<cross_sells>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>product</type>" +
+								"<cross_type>product</cross_type>" +
+								"<cross_name>"+cross_product+"</cross_type>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</cross_sells>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
+			cross_services.forEach(function(cross_service)
+			{
+				if(cross_service!="")
+				{
+					var data_xml="<cross_sells>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>product</type>" +
+								"<cross_type>service</cross_type>" +
+								"<cross_name>"+cross_service+"</cross_type>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</cross_sells>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
 		}
 		else
 		{
@@ -1136,7 +1060,7 @@ function modal16_action()
 
 /**
  * @modalNo 17
- * @modal Add staff details
+ * @modal Update staff details
  * @param button
  */
 function modal17_action(button)
@@ -1230,25 +1154,20 @@ function modal19_action(button)
 	
 	var fname=form.elements[1];
 	var fmake=form.elements[2];
-	var ftags=form.elements[3];
-	var fcategories_out=form.elements[4];
-	var fcategories=form.elements[5];
-	var fpictureinfo=form.elements[6];
-	var fpicture=form.elements[7];
-	var ftaxable=form.elements[8];
-	var funit=form.elements[11];
-	var fmanufactured=form.elements[17];
-	var freq_product_out=form.elements[18];
-	var freq_product=form.elements[19];
-	var freq_service_out=form.elements[20];
-	var freq_service=form.elements[21];
-	var freq_task_out=form.elements[22];
-	var freq_task=form.elements[23];
-	var fcross_product_out=form.elements[24];
-	var fcross_product=form.elements[25];
-	var fcross_service_out=form.elements[26];
-	var fcross_service=form.elements[27];
-	
+	var fdescription=form.elements[3];
+	var fpictureinfo=form.elements[4];
+	var fpicture=form.elements[5];
+	var ftax=form.elements[6];
+	var freq_product_out=form.elements[7];
+	var freq_product=form.elements[8];
+	var freq_service_out=form.elements[9];
+	var freq_service=form.elements[10];
+	var freq_task_out=form.elements[11];
+	var freq_task=form.elements[12];
+	var fcross_product_out=form.elements[13];
+	var fcross_product=form.elements[14];
+	var fcross_service_out=form.elements[15];
+	var fcross_service=form.elements[16];
 		
 	/////---------initializing all the values-------///////////
 	var form_id=$(button).attr('form');
@@ -1260,34 +1179,16 @@ function modal19_action(button)
 			"<name>"+copy_name+"</name>" +
 			"<description></description>" +
 			"<make></make>" +
-			"<est_price></est_price>" +
-			"<manufactured></manufactured>" +
-			"<taxable></taxable>" +
 			"<tax></tax>" +
-			"<unit></unit>" +
-			"<weight></weight>" +
-			"<height></height>" +
-			"<length></length>" +
-			"<width></width>" +
-			"<tags></tags>" +
 			"</product_master>";
+	
 	fetch_requested_data('form39',copy_master_data,function(results)
 	{
 		results.forEach(function(result)
 		{
-			//console.log(result);
-			form.elements[2].value=result.make;
-			form.elements[3].value=result.tags;
-			form.elements[8].value=result.taxable;
-			form.elements[9].value=result.tax;
-			form.elements[10].value=result.est_price;
-			form.elements[11].value=result.unit;
-			form.elements[12].value=result.weight;
-			form.elements[13].value=result.length;
-			form.elements[14].value=result.width;
-			form.elements[15].value=result.height;
-			form.elements[16].value=result.description;
-			form.elements[17].value=result.manufactured;
+			fmake.value=result.make;
+			ftax.value=result.tax;
+			fdescription.value=result.description;
 			
 			var picture_column="<documents>" +
 					"<id></id>" +
@@ -1308,21 +1209,6 @@ function modal19_action(button)
 		});
 	});
 	
-	var copy_categories_data="<categories>" +
-			"<name>"+copy_name+"</name>" +
-			"<type>product</type>" +
-			"<category></category>" +
-			"</categories>";
-	fetch_requested_data('form39',copy_categories_data,function(results)
-	{
-		var value="";
-		results.forEach(function(result)
-		{
-			value+=result.category+",";
-		});
-		form.elements[4].value=value;
-	});
-
 	var copy_requisite_data="<pre_requisites>" +
 			"<name>"+copy_name+"</name>" +
 			"<type>product</type>" +
@@ -1343,9 +1229,9 @@ function modal19_action(button)
 			else if(result.requisite_type=="task")
 				tvalue+=result.requisite_name+",";
 		});
-		form.elements[18].value=pvalue;
-		form.elements[20].value=svalue;
-		form.elements[22].value=tvalue;
+		form.elements[7].value=pvalue;
+		form.elements[9].value=svalue;
+		form.elements[11].value=tvalue;
 	});
 
 	var copy_cross_data="<cross_sells>" +
@@ -1365,8 +1251,8 @@ function modal19_action(button)
 			else if(result.cross_type=="service")
 				svalue+=result.cross_name+",";
 		});
-		form.elements[24].value=pvalue;
-		form.elements[26].value=svalue;
+		form.elements[13].value=pvalue;
+		form.elements[15].value=svalue;
 	});
 
 	////---------initialization complete------///////////////
@@ -1378,11 +1264,6 @@ function modal19_action(button)
 		"</product_master>";
 	set_my_filter(make_data,fmake);
 	
-	var categories_data="<categories>" +
-			"<category></category>" +
-			"</categories>";
-	set_my_multiple_filter(categories_data,fcategories,fcategories_out);
-	
 	fpicture.addEventListener('change',function(evt)
 	{
 		select_picture(evt,fpictureinfo,function(dataURL)
@@ -1390,10 +1271,6 @@ function modal19_action(button)
 			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
 		});
 	},false);
-	
-	set_static_value_list('product_master','taxable',ftaxable);
-	set_static_value_list('product_master','unit',funit);
-	set_static_value_list('product_master','manufactured',fmanufactured);
 	
 	var product_data="<product_master>" +
 			"<name></name>" +
@@ -1418,237 +1295,207 @@ function modal19_action(button)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form39') || is_update_access('form39'))
+		if(is_create_access('form39'))
 		{
 			var name=form.elements[1].value;
-			var name_data="<product_master>" +
-					"<name>"+name+"</name>" +
-					"</product_master>";
-			get_single_column_data(function(unique_product)
+			var make=form.elements[2].value;
+			var description=form.elements[3].value;
+			var tax=form.elements[6].value;
+			var req_products=form.elements[7].value.split(",");
+			var req_services=form.elements[9].value.split(",");
+			var req_tasks=form.elements[11].value.split(",");
+			var cross_products=form.elements[13].value.split(",");
+			var cross_services=form.elements[15].value.split(",");
+			var data_id=get_new_key();
+			var pic_id=get_new_key();
+			var url=$(fpictureinfo).find('div').find('img').attr('src');
+			var last_updated=get_my_time();
+			var data_xml="<product_master>" +
+						"<id>"+data_id+"</id>" +
+						"<make>"+make+"</make>" +
+						"<name>"+name+"</name>" +
+						"<description>"+description+"</description>" +
+						"<tax>"+tax+"</tax>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</product_master>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>product_master</tablename>" +
+						"<link_to>form39</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Product "+name+" to inventory</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
 			{
-				if(unique_product.length===0)
+				server_create_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+			}	
+
+			if(url!="")
+			{
+				var pic_xml="<documents>" +
+							"<id>"+pic_id+"</id>" +
+							"<url>"+url+"</url>" +
+							"<doc_type>product_master</doc_type>" +
+							"<target_id>"+data_id+"</target_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</documents>";
+				if(is_online())
 				{
-					var make=form.elements[2].value;
-					var tags=form.elements[3].value;
-					var categories=form.elements[4].value.split(",");
-					var taxable=form.elements[8].value;
-					var tax=form.elements[9].value;
-					var price=form.elements[10].value;
-					var unit=form.elements[11].value;
-					var weight=form.elements[12].value;
-					var length=form.elements[13].value;
-					var width=form.elements[14].value;
-					var height=form.elements[15].value;
-					var description=form.elements[16].value;
-					var manufactured=form.elements[17].value;
-					var req_products=form.elements[18].value.split(",");
-					var req_services=form.elements[20].value.split(",");
-					var req_tasks=form.elements[22].value.split(",");
-					var cross_products=form.elements[24].value.split(",");
-					var cross_services=form.elements[26].value.split(",");
-					var data_id=get_new_key();
-					var pic_id=get_new_key();
-					var url=$(fpictureinfo).find('div').find('img').attr('src');
-					var last_updated=get_my_time();
-					var table='product_master';
-					var data_xml="<"+table+">" +
-								"<id>"+data_id+"</id>" +
-								"<make>"+make+"</make>" +
-								"<name>"+name+"</name>" +
-								"<est_price>"+price+"</est_price>" +
-								"<description>"+description+"</description>" +
-								"<taxable>"+taxable+"</taxable>" +
-								"<unit>"+unit+"</unit>" +
-								"<tax>"+tax+"</tax>" +
-								"<weight>"+weight+"</weight>" +
-								"<length>"+length+"</length>" +
-								"<width>"+width+"</width>" +
-								"<height>"+height+"</height>" +
-								"<manufactured>"+manufactured+"</manufactured>" +
-								"<tags>"+tags+"</tags>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</"+table+">";	
-					var activity_xml="<activity>" +
-								"<data_id>"+data_id+"</data_id>" +
-								"<tablename>"+table+"</tablename>" +
-								"<link_to>form39</link_to>" +
-								"<title>Saved</title>" +
-								"<notes>Added product "+name+" to inventory</notes>" +
-								"<updated_by>"+get_name()+"</updated_by>" +
-								"</activity>";
-					if(is_online())
-					{
-						server_write_row(data_xml,activity_xml);
-					}
-					else
-					{
-						local_write_row(data_xml,activity_xml);
-					}	
-
-					if(url!="")
-					{
-						var pic_xml="<documents>" +
-									"<id>"+pic_id+"</id>" +
-									"<url>"+url+"</url>" +
-									"<doc_type>product_master</doc_type>" +
-									"<target_id>"+data_id+"</target_id>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</documents>";
-						var pic_activity_xml="<activity>" +
-									"<data_id>"+pic_id+"</data_id>" +
-									"<tablename>documents</tablename>" +
-									"<link_to>form39</link_to>" +
-									"<title>Saved</title>" +
-									"<notes>Updated picture for product "+name+"</notes>" +
-									"<updated_by>"+get_name()+"</updated_by>" +
-									"</activity>";
-						if(is_online())
-						{
-							server_write_row(pic_xml,pic_activity_xml);
-						}
-						else
-						{
-							local_write_row(pic_xml,pic_activity_xml);
-						}	
-					}
-					categories.forEach(function(category)
-					{
-						if(category!="")
-						{
-							var data_xml="<categories>" +
-									"<id>"+get_new_key()+"</id>" +
-									"<name>"+name+"</name>" +
-									"<type>product</type>" +
-									"<category>"+category+"</category>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</categories>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_products.forEach(function(req_product)
-					{
-						if(req_product!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>product</type>" +
-										"<requisite_type>product</requisite_type>" +
-										"<requisite_name>"+req_product+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_services.forEach(function(req_service)
-					{
-						if(req_service!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>product</type>" +
-										"<requisite_type>service</requisite_type>" +
-										"<requisite_name>"+req_service+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_tasks.forEach(function(req_task)
-					{
-						if(req_task!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>product</type>" +
-										"<requisite_type>task</requisite_type>" +
-										"<requisite_name>"+req_task+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					cross_products.forEach(function(cross_product)
-					{
-						if(cross_product!="")
-						{
-							var data_xml="<cross_sells>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>product</type>" +
-										"<cross_type>product</cross_type>" +
-										"<cross_name>"+cross_product+"</cross_type>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</cross_sells>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					cross_services.forEach(function(cross_service)
-					{
-						if(cross_service!="")
-						{
-							var data_xml="<cross_sells>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>product</type>" +
-										"<cross_type>service</cross_type>" +
-										"<cross_name>"+cross_service+"</cross_type>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</cross_sells>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-
+					server_create_simple(pic_xml,pic_activity_xml);
 				}
 				else
 				{
-					$("#modal5").dialog("open");
+					local_create_simple(pic_xml,pic_activity_xml);
+				}	
+			}
+
+			var copy_attributes_data="<attributes>" +
+					"<name>"+copy_name+"</name>" +
+					"<type>product</type>" +
+					"<attribute></attribute>" +
+					"<value></value>" +
+					"</attributes>";
+			fetch_requested_data('form39',copy_attributes_data,function(attributes)
+			{
+				attributes.forEach(function(attribute)
+				{
+					if(attribute!="")
+					{
+						var data_xml="<attributes>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>product</type>" +
+								"<attribute>"+attribute.attribute+"</attribute>" +
+								"<value>"+attribute.value+"</value>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</attributes>";
+						if(is_online())
+						{
+							server_create_simple(data_xml);
+						}
+						else
+						{
+							local_create_simple(data_xml);
+						}
+					}
+				});
+			});
+			
+			req_products.forEach(function(req_product)
+			{
+				if(req_product!="")
+				{
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>product</type>" +
+								"<requisite_type>product</requisite_type>" +
+								"<requisite_name>"+req_product+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
 				}
-			},name_data);
+			});
+			req_services.forEach(function(req_service)
+			{
+				if(req_service!="")
+				{
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>product</type>" +
+								"<requisite_type>service</requisite_type>" +
+								"<requisite_name>"+req_service+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
+			req_tasks.forEach(function(req_task)
+			{
+				if(req_task!="")
+				{
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>product</type>" +
+								"<requisite_type>task</requisite_type>" +
+								"<requisite_name>"+req_task+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
+			cross_products.forEach(function(cross_product)
+			{
+				if(cross_product!="")
+				{
+					var data_xml="<cross_sells>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>product</type>" +
+								"<cross_type>product</cross_type>" +
+								"<cross_name>"+cross_product+"</cross_type>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</cross_sells>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
+			cross_services.forEach(function(cross_service)
+			{
+				if(cross_service!="")
+				{
+					var data_xml="<cross_sells>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>product</type>" +
+								"<cross_type>service</cross_type>" +
+								"<cross_name>"+cross_service+"</cross_type>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</cross_sells>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
 		}
 		else
 		{
@@ -1671,29 +1518,19 @@ function modal20_action()
 	
 	var fname=form.elements[1];
 	var fdescription=form.elements[2];
-	var fwarranty=form.elements[3];
-	var ftags=form.elements[4];
-	var fcategories_out=form.elements[5];
-	var fcategories=form.elements[6];
-	var ftaxable=form.elements[7];
-	var freq_product_out=form.elements[11];
-	var freq_product=form.elements[12];
-	var freq_service_out=form.elements[13];
-	var freq_service=form.elements[14];
-	var freq_task_out=form.elements[15];
-	var freq_task=form.elements[16];
-	var freq_asset_out=form.elements[17];
-	var freq_asset=form.elements[18];
-	var fcross_product_out=form.elements[19];
-	var fcross_product=form.elements[20];
-	var fcross_service_out=form.elements[21];
-	var fcross_service=form.elements[22];
-	
-	var categories_data="<categories>" +
-			"<category></category>" +
-			"</categories>";
-	set_my_multiple_filter(categories_data,fcategories,fcategories_out);
-	
+	var freq_product_out=form.elements[6];
+	var freq_product=form.elements[7];
+	var freq_service_out=form.elements[8];
+	var freq_service=form.elements[9];
+	var freq_task_out=form.elements[10];
+	var freq_task=form.elements[11];
+	var freq_asset_out=form.elements[12];
+	var freq_asset=form.elements[13];
+	var fcross_product_out=form.elements[14];
+	var fcross_product=form.elements[15];
+	var fcross_service_out=form.elements[16];
+	var fcross_service=form.elements[17];
+		
 	set_static_value_list('services','taxable',ftaxable);
 	
 	var product_data="<product_master>" +
@@ -1723,221 +1560,178 @@ function modal20_action()
 		event.preventDefault();
 		if(is_create_access('form57') || is_update_access('form57'))
 		{
-			var name=form.elements[1].value;
-			var name_data="<services>" +
-					"<name>"+name+"</name>" +
-					"</services>";
-			get_single_column_data(function(unique_product)
+			var name=form.elements[1].value;					
+			var description=form.elements[2].value;
+			var tax=form.elements[3].value;
+			var price=form.elements[4].value;
+			var duration=form.elements[5].value;
+			var req_products=form.elements[6].value.split(",");
+			var req_services=form.elements[8].value.split(",");
+			var req_tasks=form.elements[10].value.split(",");
+			var req_assets=form.elements[12].value.split(",");
+			var cross_products=form.elements[14].value.split(",");
+			var cross_services=form.elements[16].value.split(",");
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<services>" +
+						"<id>"+data_id+"</id>" +
+						"<name unique='yes'>"+name+"</name>" +
+						"<price>"+price+"</price>" +
+						"<description>"+description+"</description>" +
+						"<taxable>"+taxable+"</taxable>" +
+						"<tax>"+tax+"</tax>" +
+						"<duration>"+duration+"</duration>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</services>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>services</tablename>" +
+						"<link_to>form57</link_to>" +
+						"<title>Added</title>" +
+						"<notes>New service "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
 			{
-				if(unique_product.length===0)
+				server_create_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+			}	
+
+			req_products.forEach(function(req_product)
+			{
+				if(req_product!="")
 				{
-					
-					var description=form.elements[2].value;
-					var warranty=form.elements[3].value;
-					var tags=form.elements[4].value;
-					var categories=form.elements[5].value.split(",");
-					var taxable=form.elements[7].value;
-					var tax=form.elements[8].value;
-					var price=form.elements[9].value;
-					var duration=form.elements[10].value;
-					var req_products=form.elements[11].value.split(",");
-					var req_services=form.elements[13].value.split(",");
-					var req_tasks=form.elements[15].value.split(",");
-					var req_assets=form.elements[17].value.split(",");
-					var cross_products=form.elements[19].value.split(",");
-					var cross_services=form.elements[21].value.split(",");
-					var data_id=get_new_key();
-					var last_updated=get_my_time();
-					var table='services';
-					var data_xml="<"+table+">" +
-								"<id>"+data_id+"</id>" +
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
 								"<name>"+name+"</name>" +
-								"<price>"+price+"</price>" +
-								"<description>"+description+"</description>" +
-								"<taxable>"+taxable+"</taxable>" +
-								"<tax>"+tax+"</tax>" +
-								"<tags>"+tags+"</tags>" +
-								"<duration>"+duration+"</duration>" +
-								"<warranty>"+warranty+"</warranty>" +
+								"<type>service</type>" +
+								"<requisite_type>product</requisite_type>" +
+								"<requisite_name>"+req_product+"</requisite_name>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
-								"</"+table+">";	
-					var activity_xml="<activity>" +
-								"<data_id>"+data_id+"</data_id>" +
-								"<tablename>"+table+"</tablename>" +
-								"<link_to>form57</link_to>" +
-								"<title>Saved</title>" +
-								"<notes>Added new service "+name+"</notes>" +
-								"<updated_by>"+get_name()+"</updated_by>" +
-								"</activity>";
+								"</pre_requisites>";
 					if(is_online())
 					{
-						server_write_row(data_xml,activity_xml);
+						server_create_simple(data_xml);
 					}
 					else
 					{
-						local_write_row(data_xml,activity_xml);
-					}	
-
-					categories.forEach(function(category)
-					{
-						if(category!="")
-						{
-							var data_xml="<categories>" +
-									"<id>"+get_new_key()+"</id>" +
-									"<name>"+name+"</name>" +
-									"<type>service</type>" +
-									"<category>"+category+"</category>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</categories>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_products.forEach(function(req_product)
-					{
-						if(req_product!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>service</type>" +
-										"<requisite_type>product</requisite_type>" +
-										"<requisite_name>"+req_product+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_services.forEach(function(req_service)
-					{
-						if(req_service!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>service</type>" +
-										"<requisite_type>service</requisite_type>" +
-										"<requisite_name>"+req_service+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_tasks.forEach(function(req_task)
-					{
-						if(req_task!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>service</type>" +
-										"<requisite_type>task</requisite_type>" +
-										"<requisite_name>"+req_task+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_assets.forEach(function(req_asset)
-					{
-						if(req_asset!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>service</type>" +
-										"<requisite_type>asset</requisite_type>" +
-										"<requisite_name>"+req_asset+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					cross_products.forEach(function(cross_product)
-					{
-						if(cross_product!="")
-						{
-							var data_xml="<cross_sells>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>service</type>" +
-										"<cross_type>product</cross_type>" +
-										"<cross_name>"+cross_product+"</cross_type>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</cross_sells>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					cross_services.forEach(function(cross_service)
-					{
-						if(cross_service!="")
-						{
-							var data_xml="<cross_sells>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>service</type>" +
-										"<cross_type>service</cross_type>" +
-										"<cross_name>"+cross_service+"</cross_type>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</cross_sells>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-
+						local_create_simple(data_xml);
+					}
 				}
-				else
+			});
+			req_services.forEach(function(req_service)
+			{
+				if(req_service!="")
 				{
-					$("#modal5").dialog("open");
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>service</type>" +
+								"<requisite_type>service</requisite_type>" +
+								"<requisite_name>"+req_service+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
 				}
-			},name_data);
+			});
+			req_tasks.forEach(function(req_task)
+			{
+				if(req_task!="")
+				{
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>service</type>" +
+								"<requisite_type>task</requisite_type>" +
+								"<requisite_name>"+req_task+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
+			req_assets.forEach(function(req_asset)
+			{
+				if(req_asset!="")
+				{
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>service</type>" +
+								"<requisite_type>asset</requisite_type>" +
+								"<requisite_name>"+req_asset+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
+			cross_products.forEach(function(cross_product)
+			{
+				if(cross_product!="")
+				{
+					var data_xml="<cross_sells>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>service</type>" +
+								"<cross_type>product</cross_type>" +
+								"<cross_name>"+cross_product+"</cross_type>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</cross_sells>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
+			cross_services.forEach(function(cross_service)
+			{
+				if(cross_service!="")
+				{
+					var data_xml="<cross_sells>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>service</type>" +
+								"<cross_type>service</cross_type>" +
+								"<cross_name>"+cross_service+"</cross_type>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</cross_sells>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
 		}
 		else
 		{
@@ -1961,23 +1755,18 @@ function modal21_action()
 	
 	var fname=form.elements[1];
 	var fdescription=form.elements[2];
-	var fwarranty=form.elements[3];
-	var ftags=form.elements[4];
-	var fcategories_out=form.elements[5];
-	var fcategories=form.elements[6];
-	var ftaxable=form.elements[7];
-	var freq_product_out=form.elements[11];
-	var freq_product=form.elements[12];
-	var freq_service_out=form.elements[13];
-	var freq_service=form.elements[14];
-	var freq_task_out=form.elements[15];
-	var freq_task=form.elements[16];
-	var freq_asset_out=form.elements[17];
-	var freq_asset=form.elements[18];
-	var fcross_product_out=form.elements[19];
-	var fcross_product=form.elements[20];
-	var fcross_service_out=form.elements[21];
-	var fcross_service=form.elements[22];
+	var freq_product_out=form.elements[6];
+	var freq_product=form.elements[7];
+	var freq_service_out=form.elements[8];
+	var freq_service=form.elements[9];
+	var freq_task_out=form.elements[10];
+	var freq_task=form.elements[11];
+	var freq_asset_out=form.elements[12];
+	var freq_asset=form.elements[13];
+	var fcross_product_out=form.elements[14];
+	var fcross_product=form.elements[15];
+	var fcross_service_out=form.elements[16];
+	var fcross_service=form.elements[17];
 	
 	//////////----initializing form----------////////////
 	
@@ -1992,37 +1781,27 @@ function modal21_action()
 			"<price></price>" +
 			"<taxable></taxable>" +
 			"<tax></tax>" +
-			"<tags></tags>" +
 			"<duration></duration>" +
-			"<warranty></warranty>" +
 			"</services>";
 	fetch_requested_data('form57',copy_master_data,function(results)
 	{
 		results.forEach(function(result)
 		{
 			form.elements[2].value=result.description;
-			form.elements[3].value=result.warranty;
-			form.elements[4].value=result.tags;
-			form.elements[7].value=result.taxable;
-			form.elements[8].value=result.tax;
-			form.elements[9].value=result.price;
-			form.elements[10].value=result.duration;
+			form.elements[3].value=result.tax;
+			form.elements[4].value=result.price;
+			form.elements[5].value=result.duration;
 		});
 	});
 	
-	var copy_categories_data="<categories>" +
+	var copy_attributes_data="<attributes>" +
 			"<name>"+copy_name+"</name>" +
 			"<type>service</type>" +
-			"<category></category>" +
-			"</categories>";
-	fetch_requested_data('form57',copy_categories_data,function(results)
+			"<attribute></attribute>" +
+			"<value></value>" +
+			"</attributes>";
+	fetch_requested_data('form57',copy_attributes_data,function(results)
 	{
-		var value="";
-		results.forEach(function(result)
-		{
-			value+=result.category+",";
-		});
-		form.elements[5].value=value;
 	});
 
 	var copy_requisite_data="<pre_requisites>" +
@@ -2049,10 +1828,10 @@ function modal21_action()
 			else if(result.requisite_type=="asset")
 				avalue+=result.requisite_name+",";
 		});
-		form.elements[11].value=pvalue;
-		form.elements[13].value=svalue;
-		form.elements[15].value=tvalue;
-		form.elements[17].value=avalue;
+		form.elements[6].value=pvalue;
+		form.elements[8].value=svalue;
+		form.elements[10].value=tvalue;
+		form.elements[12].value=avalue;
 	});
 
 	var copy_cross_data="<cross_sells>" +
@@ -2072,16 +1851,11 @@ function modal21_action()
 			else if(result.cross_type=="service")
 				svalue+=result.cross_name+",";
 		});
-		form.elements[19].value=pvalue;
-		form.elements[21].value=svalue;
+		form.elements[14].value=pvalue;
+		form.elements[16].value=svalue;
 	});
 
 	////////------end of initialization-----------///////////
-	
-	var categories_data="<categories>" +
-			"<category></category>" +
-			"</categories>";
-	set_my_multiple_filter(categories_data,fcategories,fcategories_out);
 	
 	set_static_value_list('services','taxable',ftaxable);
 	
@@ -2113,219 +1887,209 @@ function modal21_action()
 		if(is_create_access('form57') || is_update_access('form57'))
 		{
 			var name=form.elements[1].value;
-			var name_data="<services>" +
-					"<name>"+name+"</name>" +
-					"</services>";
-			get_single_column_data(function(unique_product)
+			var description=form.elements[2].value;
+			var tax=form.elements[3].value;
+			var price=form.elements[4].value;
+			var duration=form.elements[5].value;
+			var req_products=form.elements[6].value.split(",");
+			var req_services=form.elements[8].value.split(",");
+			var req_tasks=form.elements[10].value.split(",");
+			var req_assets=form.elements[12].value.split(",");
+			var cross_products=form.elements[14].value.split(",");
+			var cross_services=form.elements[16].value.split(",");
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<services>" +
+						"<id>"+data_id+"</id>" +
+						"<name unique='yes'>"+name+"</name>" +
+						"<price>"+price+"</price>" +
+						"<description>"+description+"</description>" +
+						"<taxable>"+taxable+"</taxable>" +
+						"<tax>"+tax+"</tax>" +
+						"<duration>"+duration+"</duration>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</services>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>services</tablename>" +
+						"<link_to>form57</link_to>" +
+						"<title>Added</title>" +
+						"<notes>New service "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
 			{
-				if(unique_product.length===0)
+				server_create_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+			}	
+
+			var copy_attributes_data="<attributes>" +
+					"<name>"+copy_name+"</name>" +
+					"<type>service</type>" +
+					"<attribute></attribute>" +
+					"<value></value>" +
+					"</attributes>";
+			fetch_requested_data('form57',copy_attributes_data,function(attributes)
+			{
+				attributes.forEach(function(attribute)
 				{
-					var description=form.elements[2].value;
-					var warranty=form.elements[3].value;
-					var tags=form.elements[4].value;
-					var categories=form.elements[5].value.split(",");
-					var taxable=form.elements[7].value;
-					var tax=form.elements[8].value;
-					var price=form.elements[9].value;
-					var duration=form.elements[10].value;
-					var req_products=form.elements[11].value.split(",");
-					var req_services=form.elements[13].value.split(",");
-					var req_tasks=form.elements[15].value.split(",");
-					var req_assets=form.elements[17].value.split(",");
-					var cross_products=form.elements[19].value.split(",");
-					var cross_services=form.elements[21].value.split(",");
-					var data_id=get_new_key();
-					var last_updated=get_my_time();
-					var table='services';
-					var data_xml="<"+table+">" +
-								"<id>"+data_id+"</id>" +
+					if(attribute!="")
+					{
+						var data_xml="<attributes>" +
+								"<id>"+get_new_key()+"</id>" +
 								"<name>"+name+"</name>" +
-								"<price>"+price+"</price>" +
-								"<description>"+description+"</description>" +
-								"<taxable>"+taxable+"</taxable>" +
-								"<tax>"+tax+"</tax>" +
-								"<tags>"+tags+"</tags>" +
-								"<duration>"+duration+"</duration>" +
-								"<warranty>"+warranty+"</warranty>" +
+								"<type>service</type>" +
+								"<attribute>"+attribute.attribute+"</attribute>" +
+								"<value>"+attribute.value+"</value>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
-								"</"+table+">";	
-					var activity_xml="<activity>" +
-								"<data_id>"+data_id+"</data_id>" +
-								"<tablename>"+table+"</tablename>" +
-								"<link_to>form57</link_to>" +
-								"<title>Saved</title>" +
-								"<notes>Added new service "+name+"</notes>" +
-								"<updated_by>"+get_name()+"</updated_by>" +
-								"</activity>";
+								"</attributes>";
+						if(is_online())
+						{
+							server_create_simple(data_xml);
+						}
+						else
+						{
+							local_create_simple(data_xml);
+						}
+					}
+				});
+			});
+					
+			req_products.forEach(function(req_product)
+			{
+				if(req_product!="")
+				{
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>service</type>" +
+								"<requisite_type>product</requisite_type>" +
+								"<requisite_name>"+req_product+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
 					if(is_online())
 					{
-						server_write_row(data_xml,activity_xml);
+						server_create_simple(data_xml);
 					}
 					else
 					{
-						local_write_row(data_xml,activity_xml);
-					}	
-
-					categories.forEach(function(category)
-					{
-						if(category!="")
-						{
-							var data_xml="<categories>" +
-									"<id>"+get_new_key()+"</id>" +
-									"<name>"+name+"</name>" +
-									"<type>service</type>" +
-									"<category>"+category+"</category>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</categories>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_products.forEach(function(req_product)
-					{
-						if(req_product!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>service</type>" +
-										"<requisite_type>product</requisite_type>" +
-										"<requisite_name>"+req_product+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_services.forEach(function(req_service)
-					{
-						if(req_service!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>service</type>" +
-										"<requisite_type>service</requisite_type>" +
-										"<requisite_name>"+req_service+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_tasks.forEach(function(req_task)
-					{
-						if(req_task!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>service</type>" +
-										"<requisite_type>task</requisite_type>" +
-										"<requisite_name>"+req_task+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					req_assets.forEach(function(req_asset)
-					{
-						if(req_asset!="")
-						{
-							var data_xml="<pre_requisites>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>service</type>" +
-										"<requisite_type>asset</requisite_type>" +
-										"<requisite_name>"+req_asset+"</requisite_name>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</pre_requisites>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					cross_products.forEach(function(cross_product)
-					{
-						if(cross_product!="")
-						{
-							var data_xml="<cross_sells>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>service</type>" +
-										"<cross_type>product</cross_type>" +
-										"<cross_name>"+cross_product+"</cross_type>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</cross_sells>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-					cross_services.forEach(function(cross_service)
-					{
-						if(cross_service!="")
-						{
-							var data_xml="<cross_sells>" +
-										"<id>"+get_new_key()+"</id>" +
-										"<name>"+name+"</name>" +
-										"<type>service</type>" +
-										"<cross_type>service</cross_type>" +
-										"<cross_name>"+cross_service+"</cross_type>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</cross_sells>";
-							if(is_online())
-							{
-								server_write_simple(data_xml);
-							}
-							else
-							{
-								local_write_simple(data_xml);
-							}
-						}
-					});
-
+						local_create_simple(data_xml);
+					}
 				}
-				else
+			});
+			req_services.forEach(function(req_service)
+			{
+				if(req_service!="")
 				{
-					$("#modal5").dialog("open");
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>service</type>" +
+								"<requisite_type>service</requisite_type>" +
+								"<requisite_name>"+req_service+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
 				}
-			},name_data);
+			});
+			req_tasks.forEach(function(req_task)
+			{
+				if(req_task!="")
+				{
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>service</type>" +
+								"<requisite_type>task</requisite_type>" +
+								"<requisite_name>"+req_task+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
+			req_assets.forEach(function(req_asset)
+			{
+				if(req_asset!="")
+				{
+					var data_xml="<pre_requisites>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>service</type>" +
+								"<requisite_type>asset</requisite_type>" +
+								"<requisite_name>"+req_asset+"</requisite_name>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</pre_requisites>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
+			cross_products.forEach(function(cross_product)
+			{
+				if(cross_product!="")
+				{
+					var data_xml="<cross_sells>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>service</type>" +
+								"<cross_type>product</cross_type>" +
+								"<cross_name>"+cross_product+"</cross_type>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</cross_sells>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
+			cross_services.forEach(function(cross_service)
+			{
+				if(cross_service!="")
+				{
+					var data_xml="<cross_sells>" +
+								"<id>"+get_new_key()+"</id>" +
+								"<name>"+name+"</name>" +
+								"<type>service</type>" +
+								"<cross_type>service</cross_type>" +
+								"<cross_name>"+cross_service+"</cross_type>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</cross_sells>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				}
+			});
 		}
 		else
 		{
@@ -2336,6 +2100,98 @@ function modal21_action()
 	
 	$("#modal21").dialog("open");
 }
+
+/**
+ * @modalNo 22
+ * @modal Add new batch
+ */
+function modal22_action()
+{
+	var form=document.getElementById('modal22_form');
+	
+	var fname=form.elements[1];
+	var fbatch=form.elements[2];
+	var fcost=form.elements[3];
+	var fsale_price=form.elements[4];
+	var fexpiry=form.elements[5];
+	
+	$(fexpiry).datepicker();
+	
+	var name_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	set_my_value_list(name_data,fname);
+	
+	$(fname).on('blur',function(event)
+	{
+		var batch_data="<product_instances>" +
+				"<batch></batch>" +
+				"<product_name>"+fname.value+"</product_name>" +
+				"</product_instances>";
+		get_single_column_data(function(batches)
+		{
+			$(fbatch).off('blur');
+			$(fbatch).on('blur',function(event)
+			{
+				var found = $.inArray($(this).val(), batches) > -1;
+				if(found)
+				{
+		            $(this).val('');
+		        }
+			});
+		},batch_data);
+	});		
+	
+	
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form1'))
+		{
+			var name=fname.value;
+			var batch=fbatch.value;
+			var cost=fcost.value;
+			var sale_price=fsale_price.value;
+			var expiry=get_raw_time(fexpiry.value);
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<product_instances>" +
+						"<id>"+data_id+"</id>" +
+						"<product_name>"+name+"</product_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<cost_price>"+cost+"</cost_price>" +
+						"<sale_price>"+sale_price+"</sale_price>" +
+						"<expiry>"+expiry+"</expiry>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</product_instances>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>product_instances</tablename>" +
+						"<link_to>form1</link_to>" +
+						"<title>Added</title>" +
+						"<notes>New batch "+batch+" for product "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			
+			if(is_online())
+			{
+				server_create_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal22").dialog("close");
+	});
+	
+	$("#modal22").dialog("open");
+}
+
 
 /**
  * @modal Data import
@@ -2362,10 +2218,10 @@ function modal23_action(t_func,i_func)
 	{
 		event.preventDefault();
 		var file=select_file.files[0];
-        var fileType = /csv/;
+        var fileType = /csv/gi;
 
-        if(file.type.match(fileType)!=null)
-        {
+        //if(file.type.match(fileType)!=null)
+        //{
             selected_file.value = "Uploading!! Please don't refresh";
         	var reader = new FileReader();
             reader.onload = function(e)
@@ -2389,12 +2245,13 @@ function modal23_action(t_func,i_func)
                },10000);
             }
             reader.readAsText(file);    
-        }
+ /*       }
         else
         {
             selected_file.value = "File not supported!";
         }
-	});
+*/	
+    });
 	
 	$("#modal23").dialog("open");
 }

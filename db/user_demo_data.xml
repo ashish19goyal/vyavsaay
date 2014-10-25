@@ -191,26 +191,6 @@
 			<last_updated>1</last_updated>
 		</row>
 	</pamphlet_items>
-	<categories>
-		<row>
-			<name>Prod1</name>
-			<type>product</type>
-			<category>Cat1</category>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>Prod2</name>
-			<type>product</type>
-			<category>Cat2</category>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>Service1</name>
-			<type>service</type>
-			<category>Cat3</category>
-			<last_updated>1</last_updated>
-		</row>
-	</categories>
 	<offers>
 		<row>
 			 <offer_name>Discount on tata tea</offer_name>
@@ -262,74 +242,50 @@
 			<name>Tata tea</name>
             <description>Tea leaves</description>
             <make>Tata</make>
-            <manufactured>no</manufactured>
-            <taxable>yes</taxable>
             <tax>10</tax>
-            <unit>kg</unit>
-            <weight>1</weight>
-            <height>10</height>
-            <length>5</length>
-            <width>5</width>
-            <rating></rating>
-            <tags>tea,beverage,tata</tags>
             <last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>Kurkure</name>
             <description>tea time snacks</description>
             <make>Lays</make>
-            <manufactured>no</manufactured>
-            <taxable>yes</taxable>
             <tax>10</tax>
-            <unit>kg</unit>
-            <weight>100</weight>
-            <height>10</height>
-            <length>5</length>
-            <width>5</width>
-            <rating></rating>
-            <tags>snacks,food,lays</tags>
             <last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>Cadbury Choclate</name>
             <description>choclate</description>
             <make>Cadbury</make>
-            <manufactured>no</manufactured>
-            <taxable>yes</taxable>
             <tax>10</tax>
-            <unit>kg</unit>
-            <weight>100</weight>
-            <height>10</height>
-            <length>5</length>
-            <width>5</width>
-            <rating></rating>
-            <tags>choclate,cadbury</tags>
             <last_updated>1</last_updated>
 		</row>
 	</product_master>
 	<product_instances>
 		<row>
 			<product_name>Tata tea</product_name>
-            <price>100</price>
-             <batch>abc123</batch>
-             <quantity>50</quantity>
-             <expiry>1410739200000</expiry>
+            <cost_price>90</cost_price>
+            <sale_price>100</sale_price>
+            <batch>abc123</batch>
+            <quantity>50</quantity>
+            <expiry>1410739200000</expiry>
             <last_updated>1</last_updated>
 		</row>
 		<row>
 			<product_name>Kurkure</product_name>
-            <price>9</price>
-             <batch>abc456</batch>
-             <quantity>50</quantity>
-             <expiry>1410739200000</expiry>
+            <cost_price>8</cost_price>
+            <sale_price>10</sale_price>
+            <batch>abc456</batch>
+            <quantity>50</quantity>
+            <expiry>1410739200000</expiry>
             <last_updated>1</last_updated>
 		</row>
 		<row>
 			<product_name>Cadbury Choclate</product_name>
-            <price>70</price>
-             <batch>abc543</batch>
-             <quantity>50</quantity>
-             <expiry>1410739200000</expiry>
+            <cost_price>40</cost_price>
+            <sale_price>50</sale_price>
+            <batch>abc543</batch>
+            <quantity>50</quantity>
+            <expiry>1410739200000</expiry>
             <last_updated>1</last_updated>
 		</row>
 	</product_instances>

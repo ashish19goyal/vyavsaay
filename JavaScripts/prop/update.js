@@ -8,27 +8,28 @@ function form1_update_item(form)
 	{
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var expiry=get_raw_time(form.elements[2].value);
-		var price=form.elements[3].value;
-		var quantity=form.elements[4].value;
-		var data_id=form.elements[5].value;
+		var cost_price=form.elements[2].value;
+		var sale_price=form.elements[3].value;
+		var expiry=get_raw_time(form.elements[4].value);
+		var quantity=form.elements[5].value;
+		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
-		var table='product_instances';
-		var data_xml="<"+table+">" +
+		var data_xml="<product_instances>" +
 					"<id>"+data_id+"</id>" +
 					"<product_name>"+name+"</product_name>" +
 					"<batch>"+batch+"</batch>" +
 					"<expiry>"+expiry+"</expiry>" +
 					"<quantity>"+quantity+"</quantity>" +
-					"<price>"+price+"</price>" +
+					"<cost_price>"+cost_price+"</cost_price>" +
+					"<sale_price>"+sale_price+"</sale_price>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";
+					"</product_instances>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>product_instances</tablename>" +
 					"<link_to>form1</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Updated inventory for batch number "+batch+" of "+name+"</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Inventory for batch number "+batch+" of "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1374,30 +1375,26 @@ function form39_update_item(form)
 		var name=form.elements[0].value;
 		var make=form.elements[1].value;
 		var description=form.elements[2].value;
-		var data_id=form.elements[8].value;
+		var tax=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
 		var pic_id=$("#img_form39_"+data_id).parent().attr('name');
 		var url=$("#img_form39_"+data_id).attr('src');
-		var manufactured=form.elements[5].value;
-		var unit=form.elements[6].value;
-		var tags=form.elements[7].value;
-		var last_updated=get_my_time();
-		var table='product_master';
-		var data_xml="<"+table+">" +
+		
+		var data_xml="<product_master>" +
 					"<id>"+data_id+"</id>" +
 					"<make>"+make+"</make>" +
 					"<name>"+name+"</name>" +
 					"<description>"+description+"</description>" +
-					"<manufactured>"+manufactured+"</manufactured>" +
-					"<unit>"+unit+"</unit>" +
-					"<tags>"+tags+"</tags>" +
+					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</product_master>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>product_master</tablename>" +
 					"<link_to>form39</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added product "+name+" to inventory</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Product "+name+" from inventory</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var pic_xml="<documents>" +
@@ -1407,25 +1404,17 @@ function form39_update_item(form)
 					"<target_id>"+data_id+"</target_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</documents>";
-		var pic_activity_xml="<activity>" +
-					"<data_id>"+pic_id+"</data_id>" +
-					"<tablename>documents</tablename>" +
-					"<link_to>form39</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Updated picture for product "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
 		if(is_online())
 		{
 			server_update_row(data_xml,activity_xml);
-			server_update_row(pic_xml,pic_activity_xml);
+			server_update_simple(pic_xml);
 		}
 		else
 		{
 			local_update_row(data_xml,activity_xml);
-			local_update_row(pic_xml,pic_activity_xml);
+			local_update_simple(pic_xml);
 		}	
-		for(var i=0;i<9;i++)
+		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -2527,29 +2516,26 @@ function form57_update_item(form)
 	{
 		var service=form.elements[0].value;
 		var description=form.elements[1].value;
-		var warranty=form.elements[2].value;
-		var tags=form.elements[3].value;
-		var price=form.elements[4].value;
-		var duration=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var price=form.elements[2].value;
+		var duration=form.elements[3].value;
+		var tax=form.elements[4].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
-		var table='services';
-		var data_xml="<"+table+">" +
+		var data_xml="<services>" +
 					"<id>"+data_id+"</id>" +
 					"<name unique='yes'>"+service+"</name>" +
 					"<description>"+description+"</description>" +
 					"<price>"+price+"</price>" +
-					"<warranty>"+warranty+"</warranty>" +
-					"<tags>"+tags+"</tags>" +
 					"<duration>"+duration+"</duration>" +
+					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</services>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>services</tablename>" +
 					"<link_to>form57</link_to>" +
 					"<title>Updated</title>" +
-					"<notes>Updated service "+service+"</notes>" +
+					"<notes>Service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2560,7 +2546,7 @@ function form57_update_item(form)
 		{
 			local_update_row(data_xml,activity_xml);
 		}	
-		for(var i=0;i<7;i++)
+		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -2587,7 +2573,7 @@ function form58_update_item(form)
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var table='pre_requisites';
-		var data_xml="<"+table+">" +
+		var data_xml="<pre_requisites>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+service+"</name>" +
 					"<type>service</type>" +
@@ -2595,13 +2581,13 @@ function form58_update_item(form)
 					"<requisite_name>"+requisite+"</requisite_name>" +
 					"<quantity>"+quantity+"</quantity>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</pre_requisites>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>pre_requisites</tablename>" +
 					"<link_to>form58</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added pre-requisite for service "+service+"</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Pre-requisite for service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2652,8 +2638,8 @@ function form59_update_item(form)
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form59</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added pre-requisite for product "+product+"</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Pre-requisite for product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2677,7 +2663,7 @@ function form59_update_item(form)
 
 /**
  * formNo 60
- * form Product Categories
+ * form Product Attributes
  * @param button
  */
 function form60_update_item(form)
@@ -2685,23 +2671,24 @@ function form60_update_item(form)
 	if(is_update_access('form60'))
 	{
 		var product=form.elements[0].value;
-		var category=form.elements[1].value;
-		var data_id=form.elements[2].value;
+		var attribute=form.elements[1].value;
+		var value=form.elements[2].value;
+		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='categories';
-		var data_xml="<"+table+">" +
+		var data_xml="<attribute>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+product+"</name>" +
 					"<type>product</type>" +
-					"<category>"+category+"</category>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</attribute>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form60</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added category "+category+" for product "+product+"</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Attribute "+attribute+" for product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2725,7 +2712,7 @@ function form60_update_item(form)
 
 /**
  * formNo 61
- * form service Categories
+ * form Service Attributes
  * @param button
  */
 function form61_update_item(form)
@@ -2733,23 +2720,24 @@ function form61_update_item(form)
 	if(is_update_access('form61'))
 	{
 		var service=form.elements[0].value;
-		var category=form.elements[1].value;
-		var data_id=form.elements[2].value;
+		var attribute=form.elements[1].value;
+		var value=form.elements[2].value;
+		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='categories';
-		var data_xml="<"+table+">" +
+		var data_xml="<attribute>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+service+"</name>" +
 					"<type>service</type>" +
-					"<category>"+category+"</category>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>attributes</tablename>" +
 					"<link_to>form61</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added category "+category+" for service "+service+"</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Attribute "+attribute+" for service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2800,8 +2788,8 @@ function form62_update_item(form)
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form62</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added review for product "+product+"</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Review for product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2838,8 +2826,7 @@ function form63_update_item(form)
 		var rating=form.elements[3].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
-		var table='reviews';
-		var data_xml="<"+table+">" +
+		var data_xml="<reviews>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+service+"</name>" +
 					"<type>service</type>" +
@@ -2847,13 +2834,13 @@ function form63_update_item(form)
 					"<detail>"+detail+"</detail>" +
 					"<rating>"+rating+"</rating>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</reviews>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>reviews</tablename>" +
 					"<link_to>form63</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added review for service "+service+"</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Review for service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2890,69 +2877,20 @@ function form64_update_item(form)
 		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
 		var table='cross_sells';
-		var data_xml="<"+table+">" +
+		var data_xml="<cross_sells>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+service+"</name>" +
 					"<type>service</type>" +
 					"<cross_type>"+cross_type+"</cross_type>" +
 					"<cross_name>"+cross_name+"</cross_name>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</cross_sells>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>cross_sells</tablename>" +
 					"<link_to>form64</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added cross selling of "+cross_name+" to service "+service+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-/**
- * formNo 65
- * form Service Taxes
- * @param button
- */
-function form65_update_item(form)
-{
-	if(is_update_access('form65'))
-	{
-		var service=form.elements[0].value;
-		var taxable=form.elements[1].value;
-		var tax=form.elements[2].value;
-		var data_id=form.elements[3].value;
-		var last_updated=get_my_time();
-		var table='services';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<name>"+service+"</name>" +
-					"<taxable>"+taxable+"</taxable>" +
-					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form65</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Updated tax applicable on service "+service+"</notes>" +
+					"<title>updated</title>" +
+					"<notes>Cross selling of "+cross_name+" with service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -3001,111 +2939,8 @@ function form66_update_item(form)
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>"+table+"</tablename>" +
 					"<link_to>form66</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added cross selling of "+cross_name+" to product "+product+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-
-/**
- * formNo 67
- * form Product Dimensions
- * @param button
- */
-function form67_update_item(form)
-{
-	if(is_update_access('form67'))
-	{
-		var product=form.elements[0].value;
-		var weight=form.elements[1].value;
-		var length=form.elements[2].value;
-		var width=form.elements[3].value;
-		var height=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var last_updated=get_my_time();
-		var table='product_master';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<name>"+product+"</name>" +
-					"<weight>"+weight+"</weight>" +
-					"<length>"+length+"</length>" +
-					"<width>"+width+"</width>" +
-					"<height>"+height+"</height>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form67</link_to>" +
 					"<title>Updated</title>" +
-					"<notes>Updated dimensions of product "+product+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<6;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-/**
- * formNo 68
- * form Product Taxes
- * @param button
- */
-function form68_update_item(form)
-{
-	if(is_update_access('form68'))
-	{
-		var product=form.elements[0].value;
-		var taxable=form.elements[1].value;
-		var tax=form.elements[2].value;
-		var data_id=form.elements[3].value;
-		var last_updated=get_my_time();
-		var table='product_master';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<name>"+product+"</name>" +
-					"<taxable>"+taxable+"</taxable>" +
-					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form68</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Updated tax applicable on product "+product+"</notes>" +
+					"<notes>Cross selling of "+cross_name+" to product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())

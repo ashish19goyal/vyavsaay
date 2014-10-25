@@ -11,7 +11,8 @@ function form1_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
 				"<batch>"+row.batch+"</batch>" +
-				"<price>"+row.price+"</price>" +
+				"<cost_price>"+row.cost_price+"</cost_price>" +
+				"<sale_price>"+row.sale_price+"</sale_price>" +
 				"<expiry>"+row.expiry+"</expiry>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
@@ -443,15 +444,7 @@ function form39_import(data_array,import_type)
 				"<name unique='yes'>"+row.name+"</name>" +
 				"<make>"+row.make+"</make>" +
 				"<description>"+row.description+"</description>" +
-				"<manufactured>"+row.manufactured+"</manufactured>" +
-				"<unit>"+row.unit+"</unit>" +
-				"<tags>"+row.tags+"</tags>" +
-				"<taxable>"+row.taxable+"</taxable>" +
 				"<tax>"+row.tax+"</tax>" +
-				"<weight>"+row.weight+"</weight>" +
-				"<height>"+row.height+"</height>" +
-				"<length>"+row.length+"</length>" +
-				"<width>"+row.width+"</width>" +
 				"</product_master>";
 		if(import_type=='create_new')
 		{
@@ -608,11 +601,8 @@ function form57_import(data_array,import_type)
 				"<name>"+row.name+"</name>" +
 				"<description>"+row.description+"</description>" +
 				"<price>"+row.price+"</price>" +
-				"<tags>"+row.tags+"</tags>" +
-				"<taxable>"+row.taxable+"</taxable>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<duration>"+row.duration+"</duration>" +
-				"<warranty>"+row.warranty+"</warranty>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</services>";
 		if(import_type=='create_new')
@@ -726,20 +716,21 @@ function form59_import(data_array,import_type)
 
 
 /**
-* @form Product Categories
+* @form Product Attributes
 * @formNo 60
 */
 function form60_import(data_array,import_type)
 {
 	data_array.forEach(function(row)
 	{
-		var data_xml="<categories>" +
+		var data_xml="<attributes>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
-				"<category>"+row.category+"</category>" +
 				"<type>"+row.type+"</type>" +
+				"<attribute>"+row.attribute+"</attribute>" +
+				"<value>"+row.value+"</value>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</categories>";
+				"</attributes>";
 		if(import_type=='create_new')
 		{
 			if(is_online())
@@ -766,20 +757,22 @@ function form60_import(data_array,import_type)
 };
 
 /**
-* @form Service Categories
+* @form Service Attributes
 * @formNo 61
 */
 function form61_import(data_array,import_type)
 {
 	data_array.forEach(function(row)
 	{
-		var data_xml="<categories>" +
+		var data_xml="<attributes>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
-				"<category>"+row.category+"</category>" +
 				"<type>"+row.type+"</type>" +
+				"<attribute>"+row.attribute+"</attribute>" +
+				"<value>"+row.value+"</value>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</categories>";
+				"</attributes>";
+		
 		if(import_type=='create_new')
 		{
 			if(is_online())
@@ -930,46 +923,6 @@ function form64_import(data_array,import_type)
 	});
 };
 
-/**
-* @form Service Taxes
-* @formNo 65
-*/
-function form65_import(data_array,import_type)
-{
-	data_array.forEach(function(row)
-	{
-		var data_xml="<services>" +
-				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
-				"<taxable>"+row.taxable+"</taxable>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</services>";
-		if(import_type=='create_new')
-		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-			}
-		}
-		else
-		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
-		}
-	});
-};
-
 
 /**
 * @form Product Cross sells
@@ -1012,89 +965,6 @@ function form66_import(data_array,import_type)
 	});
 };
 
-
-/**
-* @form Product dimensions
-* @formNo 67
-*/
-function form67_import(data_array,import_type)
-{
-	var data_array=['id','name','weight','length','width','height'];
-	data_array.forEach(function(row)
-	{
-		var data_xml="<product_master>" +
-				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
-				"<weight>"+row.weight+"</weight>" +
-				"<length>"+row.length+"</length>" +
-				"<width>"+row.width+"</width>" +
-				"<height>"+row.height+"</height>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</product_master>";
-		if(import_type=='create_new')
-		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-			}
-		}
-		else
-		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
-		}
-	});
-};
-
-/**
-* @form Product Taxes
-* @formNo 68
-*/
-function form68_import(data_array,import_type)
-{
-	data_array.forEach(function(row)
-	{
-		var data_xml="<product_master>" +
-				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
-				"<taxable>"+row.taxable+"</taxable>" +
-				"<tax>"+row.tax+"</tax>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</product_master>";
-		if(import_type=='create_new')
-		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-			}
-		}
-		else
-		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
-		}
-	});
-};
 
 /**
 * @form Manage financial accounts

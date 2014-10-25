@@ -13,14 +13,14 @@ function form1_ini()
 	
 	var fname=filter_fields.elements[0].value;
 	var fbatch=filter_fields.elements[1].value;
-	var fexpiry=filter_fields.elements[2].value;
 	
 	var columns="<product_instances>" +
 		"<id>"+fid+"</id>" +
 		"<batch>"+fbatch+"</batch>" +
 		"<product_name>"+fname+"</product_name>" +
-		"<price></price>" +
-		"<expiry>"+fexpiry+"</expiry>" +
+		"<cost_price></cost_price>" +
+		"<sale_price></sale_price>" +
+		"<expiry></expiry>" +
 		"<quantity></quantity>" +
 		"</product_instances>";
 	
@@ -40,10 +40,13 @@ function form1_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.batch+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+get_my_past_date(result.expiry)+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.cost_price+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.price+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.sale_price+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+get_my_past_date(result.expiry)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.quantity+"'>";
@@ -51,7 +54,7 @@ function form1_ini()
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form1_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form1_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form1_"+result.id+"' value='saved' onclick='form1_delete_item($(this));'>";	
+						rowsHTML+="<input type='button' class='delete_icon' form='form1_"+result.id+"' value='saved' onclick='form1_delete_item($(this));'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -1342,23 +1345,13 @@ function form39_ini()
 	
 	var fname=filter_fields.elements[0].value;
 	var fmakes=filter_fields.elements[1].value;
-	var fmanufactured=filter_fields.elements[2].value;
-	var ftags=filter_fields.elements[3].value;
 	
 	var columns="<product_master>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<make>"+fmakes+"</make>" +
 			"<description></description>" +
-			"<manufactured>"+fmanufactured+"</manufactured>" +
-			"<unit></unit>" +
-			"<tags>"+ftags+"</tags>" +
-			"<taxable></taxable>" +
 			"<tax></tax>" +
-			"<weight></weight>" +
-			"<height></height>" +
-			"<length></length>" +
-			"<width></width>" +
 			"</product_master>";
 
 	$('#form39_body').html("");
@@ -1407,13 +1400,7 @@ function form39_ini()
 							rowsHTML+="<input type='file' form='form39_"+result.id+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.manufactured+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.unit+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.tags+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.tax+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td>";
 							rowsHTML+="<input type='hidden' form='form39_"+result.id+"' value='"+result.id+"'>";
@@ -1444,7 +1431,7 @@ function form39_ini()
 				},false);
 			});
 		});
-		var export_button=filter_fields.elements[5];
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -2610,17 +2597,13 @@ function form57_ini()
 	var filter_fields=document.getElementById('form57_header');
 	
 	var fservices=filter_fields.elements[0].value;
-	var ftags=filter_fields.elements[1].value;
 	
 	var columns="<services>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservices+"</name>" +
 			"<description></description>" +
 			"<price></price>" +
-			"<warranty></warranty>" +
-			"<tags></tags>" +
 			"<duration></duration>" +
-			"<taxable></taxable>" +
 			"<tax></tax>" +
 			"</services>";
 
@@ -2640,16 +2623,13 @@ function form57_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form57_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.description+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form57_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.warranty+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form57_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.tags+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
 						rowsHTML+="<input type='number' readonly='readonly' form='form57_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.price+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='number' readonly='readonly' form='form57_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.duration+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form57_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.tax+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form57_"+result.id+"' value='"+result.id+"'>";
@@ -2668,7 +2648,7 @@ function form57_ini()
 			});			
 		});
 
-		var export_button=filter_fields.elements[3];
+		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -2823,7 +2803,7 @@ function form59_ini()
 
 
 /**
- * @form Product Categories
+ * @form Product Attributes
  * @formNo 60
  */
 function form60_ini()
@@ -2835,14 +2815,15 @@ function form60_ini()
 	var filter_fields=document.getElementById('form60_header');
 	
 	var fproduct=filter_fields.elements[0].value;
-	var fcategory=filter_fields.elements[1].value;
+	var fattribute=filter_fields.elements[1].value;
 	
-	var columns="<categories>" +
+	var columns="<attributes>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fproduct+"</name>" +
 			"<type>product</type>" +
-			"<category>"+fcategory+"</category>" +
-			"</categories>";
+			"<attribute>"+fattribute+"</attribute>" +
+			"<value></value>" +
+			"</attributes>";
 
 	$('#form60_body').html("");
 
@@ -2857,10 +2838,10 @@ function form60_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form60_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form60_"+result.id+"' value='"+result.type+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form60_"+result.id+"' value='"+result.attribute+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form60_"+result.id+"' value='"+result.category+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form60_"+result.id+"' value='"+result.value+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form60_"+result.id+"' value='"+result.id+"'>";
@@ -2882,14 +2863,14 @@ function form60_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'product_categories');
+			my_obj_array_to_csv(results,'product_attributes');
 		});
 
 	});
 };
 
 /**
- * @form Service Categories
+ * @form Service Attributes
  * @formNo 61
  */
 function form61_ini()
@@ -2901,14 +2882,15 @@ function form61_ini()
 	var filter_fields=document.getElementById('form61_header');
 	
 	var fservice=filter_fields.elements[0].value;
-	var fcategory=filter_fields.elements[1].value;
+	var fattribute=filter_fields.elements[1].value;
 	
-	var columns="<categories>" +
+	var columns="<attributes>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservice+"</name>" +
 			"<type>service</type>" +
-			"<category>"+fcategory+"</category>" +
-			"</categories>";
+			"<attribute>"+fattribute+"</attribute>" +
+			"<value></value>" +
+			"</attributes>";
 
 	$('#form61_body').html("");
 
@@ -2923,10 +2905,10 @@ function form61_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form61_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form61_"+result.id+"' value='"+result.type+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form61_"+result.id+"' value='"+result.attribute+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form61_"+result.id+"' value='"+result.category+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form61_"+result.id+"' value='"+result.value+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form61_"+result.id+"' value='"+result.id+"'>";
@@ -2948,7 +2930,7 @@ function form61_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'service_categories');
+			my_obj_array_to_csv(results,'service_attributes');
 		});
 
 	});
@@ -3163,70 +3145,6 @@ function form64_ini()
 	});
 };
 
-/**
- * @form Service Taxes
- * @formNo 65
- */
-function form65_ini()
-{
-	var fid=$("#form65_link").attr('data_id');
-	if(fid==null)
-		fid="";	
-	
-	var filter_fields=document.getElementById('form65_header');
-	
-	var fservice=filter_fields.elements[0].value;
-	var ftaxable=filter_fields.elements[1].value;
-	
-	var columns="<services>" +
-			"<id>"+fid+"</id>" +
-			"<name>"+fservice+"</name>" +
-			"<taxable>"+ftaxable+"</taxable>" +
-			"<tax></tax>" +
-			"</services>";
-
-	$('#form65_body').html("");
-
-	fetch_requested_data('form65',columns,function(results)
-	{
-		results.forEach(function(result)
-		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form65_"+result.id+"'></form>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form65_"+result.id+"' value='"+result.name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' ondblclick='set_editable($(this));' form='form65_"+result.id+"' value='"+result.taxable+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' ondblclick='set_editable($(this));' form='form65_"+result.id+"' value='"+result.tax+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='hidden' form='form68_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form65_"+result.id+"' value='saved'>";	
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-			
-			$('#form65_body').prepend(rowsHTML);
-			var fields=document.getElementById("form65_"+result.id);
-			$(fields).on("submit", function(event)
-			{
-				event.preventDefault();
-				form65_update_item(fields);
-			});
-		});
-		var export_button=filter_fields.elements[2];
-		$(export_button).off("click");
-		$(export_button).on("click", function(event)
-		{
-			my_obj_array_to_csv(results,'service_taxes');
-		});
-
-	});
-};
-
 
 /**
  * @form Cross sells
@@ -3295,142 +3213,6 @@ function form66_ini()
 	});
 };
 
-
-/**
- * @form Product dimensions
- * @formNo 67
- */
-function form67_ini()
-{
-	var fid=$("#form67_link").attr('data_id');
-	if(fid==null)
-		fid="";	
-	
-	var filter_fields=document.getElementById('form67_header');
-	
-	var fproduct=filter_fields.elements[0].value;
-	
-	var columns="<product_master>" +
-			"<id>"+fid+"</id>" +
-			"<name>"+fproduct+"</name>" +
-			"<weight></weight>" +
-			"<length></length>" +
-			"<width></width>" +
-			"<height></height>" +
-			"</product_master>";
-
-	$('#form67_body').html("");
-
-	fetch_requested_data('form67',columns,function(results)
-	{
-		results.forEach(function(result)
-		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form67_"+result.id+"'></form>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form67_"+result.id+"' value='"+result.name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' ondblclick='set_editable($(this));' form='form67_"+result.id+"' value='"+result.weight+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' ondblclick='set_editable($(this));' form='form67_"+result.id+"' value='"+result.length+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' ondblclick='set_editable($(this));' form='form67_"+result.id+"' value='"+result.width+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' ondblclick='set_editable($(this));' form='form67_"+result.id+"' value='"+result.height+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='hidden' form='form67_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form67_"+result.id+"' value='saved'>";
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-			
-			$('#form67_body').prepend(rowsHTML);
-			var fields=document.getElementById("form67_"+result.id);
-			$(fields).on("submit", function(event)
-			{
-				event.preventDefault();
-				form67_update_item(fields);
-			});
-		});
-		var export_button=filter_fields.elements[1];
-		$(export_button).off("click");
-		$(export_button).on("click", function(event)
-		{
-			my_obj_array_to_csv(results,'product_dimensions');
-		});
-
-	});
-};
-
-/**
- * @form Product Taxes
- * @formNo 68
- */
-function form68_ini()
-{
-	var fid=$("#form68_link").attr('data_id');
-	if(fid==null)
-		fid="";	
-	
-	var filter_fields=document.getElementById('form68_header');
-	
-	var fproduct=filter_fields.elements[0].value;
-	var ftaxable=filter_fields.elements[1].value;
-	
-	var columns="<product_master>" +
-			"<id>"+fid+"</id>" +
-			"<name>"+fproduct+"</name>" +
-			"<taxable>"+ftaxable+"</taxable>" +
-			"<tax></tax>" +
-			"</product_master>";
-
-	$('#form68_body').html("");
-
-	fetch_requested_data('form68',columns,function(results)
-	{
-		
-		results.forEach(function(result)
-		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form68_"+result.id+"'></form>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form68_"+result.id+"' value='"+result.name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' ondblclick='set_editable($(this));' form='form68_"+result.id+"' value='"+result.taxable+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' ondblclick='set_editable($(this));' form='form68_"+result.id+"' value='"+result.tax+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='hidden' form='form68_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form68_"+result.id+"' value='saved'>";	
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-			
-			$('#form68_body').prepend(rowsHTML);
-			var fields=document.getElementById("form68_"+result.id);
-			$(fields).on("submit", function(event)
-			{
-				event.preventDefault();
-				form68_update_item(fields);
-			});
-		});
-		var export_button=filter_fields.elements[2];
-		$(export_button).off("click");
-		$(export_button).on("click", function(event)
-		{
-			my_obj_array_to_csv(results,'product_taxes');
-		});
-
-	});
-};
 
 
 /**

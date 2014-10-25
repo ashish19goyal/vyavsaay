@@ -8,8 +8,7 @@ function form1_header_ini()
 	var filter_fields=document.getElementById('form1_header');	
 	var names_filter=filter_fields.elements[0];
 	var batches_filter=filter_fields.elements[1];
-	var expiry=filter_fields.elements[2];
-
+	
 	//setting autocompletes 
 	var products_data="<product_master>" +
 			"<name></name>" +
@@ -21,7 +20,6 @@ function form1_header_ini()
 
 	set_my_filter(products_data,names_filter);
 	set_my_filter(batch_data,batches_filter);
-	$(expiry).datepicker();
 	
 	var import_button=filter_fields.elements[5];
 	$(import_button).off("click");
@@ -564,7 +562,6 @@ function form38_header_ini()
 
 
 /**
- * this function prepares the table for manage products form
  * @form Manage Products
  * @formNo 39
  */
@@ -573,7 +570,6 @@ function form39_header_ini()
 	var filter_fields=document.getElementById('form39_header');
 	var name_filter=filter_fields.elements[0];
 	var make_filter=filter_fields.elements[1];
-	var manufactured_filter=filter_fields.elements[2];
 	
 	var make_data="<product_master>" +
 			"<make></make>" +
@@ -584,9 +580,8 @@ function form39_header_ini()
 	
 	set_my_filter(make_data,make_filter);
 	set_my_filter(products_data,name_filter);
-	set_static_filter('product_master','manufactured',manufactured_filter);
 	
-	var import_button=filter_fields.elements[6];
+	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
 	{
@@ -1137,7 +1132,7 @@ function form57_header_ini()
 	
 	set_my_filter(service_data,service_filter);
 	
-	var import_button=filter_fields.elements[4];
+	var import_button=filter_fields.elements[3];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
 	{
@@ -1208,24 +1203,24 @@ function form59_header_ini()
 };
 
 /**
- * @form Product Categories
+ * @form Product Attributes
  * @formNo 60
  */
 function form60_header_ini()
 {
 	var filter_fields=document.getElementById('form60_header');
 	var product_filter=filter_fields.elements[0];
-	var category_filter=filter_fields.elements[1];
+	var attribute_filter=filter_fields.elements[1];
 	
 	var product_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
-	var category_data="<categories>" +
-			"<category></category>" +
-			"</categories>";
+	var attribute_data="<attributes>" +
+			"<attribute></attribute>" +
+			"</attributes>";
 	
 	set_my_filter(product_data,product_filter);
-	set_my_filter(category_data,category_filter);
+	set_my_filter(attribute_data,attribute_filter);
 	
 	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
@@ -1236,24 +1231,24 @@ function form60_header_ini()
 };
 
 /**
- * @form Service Categories
+ * @form Service Attributes
  * @formNo 61
  */
 function form61_header_ini()
 {
 	var filter_fields=document.getElementById('form61_header');
 	var service_filter=filter_fields.elements[0];
-	var category_filter=filter_fields.elements[1];
+	var attribute_filter=filter_fields.elements[1];
 	
 	var service_data="<services>" +
 			"<name></name>" +
 			"</services>";
-	var category_data="<categories>" +
-			"<category></category>" +
-			"</categories>";
+	var attribute_data="<attributes>" +
+			"<attribute></attribute>" +
+			"</attributes>";
 	
 	set_my_filter(service_data,service_filter);
-	set_my_filter(category_data,category_filter);
+	set_my_filter(attribute_data,attribute_filter);
 	
 	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
@@ -1355,32 +1350,6 @@ function form64_header_ini()
 };
 
 /**
- * @form Service taxes
- * @formNo 65
- */
-function form65_header_ini()
-{
-	var filter_fields=document.getElementById('form65_header');
-	var service_filter=filter_fields.elements[0];
-	var taxable_filter=filter_fields.elements[1];
-	
-	var service_data="<services>" +
-			"<name></name>" +
-			"</services>";
-	
-	set_my_filter(service_data,service_filter);
-	set_static_filter('services','taxable',taxable_filter);
-	
-	var import_button=filter_fields.elements[3];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form65_import_template,form65_import);
-	});
-};
-
-
-/**
  * @form Product Cross sells
  * @formNo 66
  */
@@ -1407,54 +1376,6 @@ function form66_header_ini()
 	$(import_button).on("click", function(event)
 	{
 		modal23_action(form66_import_template,form66_import);
-	});
-};
-
-/**
- * @form Product dimensions
- * @formNo 67
- */
-function form67_header_ini()
-{
-	var filter_fields=document.getElementById('form67_header');
-	var product_filter=filter_fields.elements[0];
-	
-	var product_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-	
-	set_my_filter(product_data,product_filter);
-	
-	var import_button=filter_fields.elements[2];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form67_import_template,form67_import);
-	});
-};
-
-/**
- * @form Product taxes
- * @formNo 68
- */
-function form68_header_ini()
-{
-	var filter_fields=document.getElementById('form68_header');
-	var product_filter=filter_fields.elements[0];
-	var taxable_filter=filter_fields.elements[1];
-	
-	var product_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-	
-	set_my_filter(product_data,product_filter);
-	set_static_filter('product_master','taxable',taxable_filter);
-	
-	var import_button=filter_fields.elements[3];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form68_import_template,form68_import);
 	});
 };
 

@@ -4,7 +4,7 @@
 */
 function form1_import_template()
 {
-	var data_array=['id','product_name','batch','price','expiry','quantity'];
+	var data_array=['id','product_name','batch','cost_price','sale_price','expiry','quantity'];
 	my_array_to_csv(data_array);
 };
 
@@ -98,8 +98,7 @@ function form38_import_template()
 */
 function form39_import_template()
 {
-	var data_array=['id','name','make','description','manufactured','unit','tags','taxable','tax',
-	                'weight','height','length','width'];
+	var data_array=['id','name','make','description','tax'];
 	my_array_to_csv(data_array);
 };
 
@@ -132,7 +131,7 @@ function form56_import_template()
 */
 function form57_import_template()
 {
-	var data_array=['id','name','description','price','warranty','tags','duration','taxable','tax'];
+	var data_array=['id','name','description','price','duration','tax'];
 	my_array_to_csv(data_array);
 };
 
@@ -158,22 +157,22 @@ function form59_import_template()
 
 
 /**
-* @form Product Categories
+* @form Product Attributes
 * @formNo 60
 */
 function form60_import_template()
 {
-	var data_array=['id','name','category','type'];
+	var data_array=['id','name','type','attribute','value'];
 	my_array_to_csv(data_array);
 };
 
 /**
-* @form Service Categories
+* @form Service Attributes
 * @formNo 61
 */
 function form61_import_template()
 {
-	var data_array=['id','name','category','type'];
+	var data_array=['id','name','type','attribute','value'];
 	my_array_to_csv(data_array);
 };
 
@@ -208,17 +207,6 @@ function form64_import_template()
 };
 
 /**
-* @form Service Taxes
-* @formNo 65
-*/
-function form65_import_template()
-{
-	var data_array=['id','name','taxable','tax'];
-	my_array_to_csv(data_array);
-};
-
-
-/**
 * @form Product Cross sells
 * @formNo 66
 */
@@ -229,25 +217,6 @@ function form66_import_template()
 };
 
 
-/**
-* @form Product dimensions
-* @formNo 67
-*/
-function form67_import_template()
-{
-	var data_array=['id','name','weight','length','width','height'];
-	my_array_to_csv(data_array);
-};
-
-/**
-* @form Product Taxes
-* @formNo 68
-*/
-function form68_import_template()
-{
-	var data_array=['id','name','taxable','tax'];
-	my_array_to_csv(data_array);
-};
 
 /**
 * @form Manage financial accounts

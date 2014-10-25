@@ -57,7 +57,7 @@
 	</div>
 	
 	<div id="modal9" title="Update asset details">
-		<form id='modal10_form'>
+		<form id='modal9_form'>
 			<fieldset>
 				<label>Name <input type='text' required></label><br/>
 				<label>Type <input type='text' required></label><br/>
@@ -146,22 +146,12 @@
 	<div id="modal14" title="Add new product">
 		<form id='modal14_form'>
 			<fieldset>
-				<label>Name <input type="text"></label><br/>
+				<label>Name <input type="text" required></label><br/>
 				<label>Make <input type="text"></label><br/>
-				<label>Tags <input type="text"></label><br/>
-				<label>Categories <output></output><input type="text"></label><br/>
+				<label>Description <textarea></textarea></label><br/>
 				<label>Picture <output></output>
 								<input type="file"></label><br/>
-				<label>Taxable <input type="text"></label><br/>
 				<label>Tax (%) <input type="number"></label><br/>
-				<label>Estimated Price <input type="text"></label><br/>
-				<label>Unit <input type="text"></label><br/>
-				<label>Weight (in g) <input type="number"></label><br/>
-				<label>Length (in cm) <input type="number"></label><br/>
-				<label>Width (in cm) <input type="number"></label><br/>
-				<label>Height (in cm) <input type="number"></label><br/>
-				<label>Description <input type="textarea"></label><br/>
-				<label>Manufactured <input type="text"></label><br/>
 				Pre-requisites</br>
 				<label>Products <output></output><input type="text"></label><br/>
 				<label>Services <output></output><input type="text"></label><br/>
@@ -236,22 +226,12 @@
 	<div id="modal19" title="Copy product">
 		<form id='modal19_form'>
 			<fieldset>
-				<label>Name <input type="text"></label><br/>
+				<label>Name <input type="text" required></label><br/>
 				<label>Make <input type="text"></label><br/>
-				<label>Tags <input type="text"></label><br/>
-				<label>Categories <output></output><input type="text"></label><br/>
+				<label>Description <textarea></textarea></label><br/>
 				<label>Picture <output></output>
 								<input type="file"></label><br/>
-				<label>Taxable <input type="text"></label><br/>
 				<label>Tax (%) <input type="number"></label><br/>
-				<label>Estimated Price <input type="text"></label><br/>
-				<label>Unit <input type="text"></label><br/>
-				<label>Weight (in g) <input type="number"></label><br/>
-				<label>Length (in cm) <input type="number"></label><br/>
-				<label>Width (in cm) <input type="number"></label><br/>
-				<label>Height (in cm) <input type="number"></label><br/>
-				<label>Description <input type="textarea"></label><br/>
-				<label>Manufactured <input type="text"></label><br/>
 				Pre-requisites</br>
 				<label>Products <output></output><input type="text"></label><br/>
 				<label>Services <output></output><input type="text"></label><br/>
@@ -267,14 +247,10 @@
 	<div id="modal20" title="Add new service">
 		<form id='modal20_form'>
 			<fieldset>
-				<label>Name <input type="text"></label><br/>
-				<label>Description <input type="textarea"></label><br/>
-				<label>Warranty <input type="textarea"></label><br/>
-				<label>Tags <input type="text"></label><br/>
-				<label>Categories <output></output><input type="text"></label><br/>
-				<label>Taxable <input type="text"></label><br/>
+				<label>Name <input type="text" required></label><br/>
+				<label>Description <textarea></textarea></label><br/>
 				<label>Tax (%) <input type="number"></label><br/>
-				<label>Price <input type="text"></label><br/>
+				<label>Price <input type="number"></label><br/>
 				<label>Duration (in min) <input type="number"></label><br/>
 				<b>Pre-requisites</b></br>
 				<label>Products <output></output><input type="text"></label><br/>
@@ -293,13 +269,9 @@
 		<form id='modal21_form'>
 			<fieldset>
 				<label>Name <input type="text"></label><br/>
-				<label>Description <input type="textarea"></label><br/>
-				<label>Warranty <input type="textarea"></label><br/>
-				<label>Tags <input type="text"></label><br/>
-				<label>Categories <output></output><input type="text"></label><br/>
-				<label>Taxable <input type="text"></label><br/>
+				<label>Description <textarea></textarea></label><br/>
 				<label>Tax (%) <input type="number"></label><br/>
-				<label>Price <input type="text"></label><br/>
+				<label>Price <input type="number"></label><br/>
 				<label>Duration (in min) <input type="number"></label><br/>
 				<b>Pre-requisites</b></br>
 				<label>Products <output></output><input type="text"></label><br/>
@@ -314,10 +286,14 @@
 		</form>
 	</div>
 	
-	<div id="modal22" title="Disable offer">
+	<div id="modal22" title="Add new batch">
 		<form id='modal22_form'>
 			<fieldset>
-				<label><input type="button" value='Disable all applicable offers'></label><br/>
+				<label>Product Name <input type="text" required></label><br/>
+				<label>Batch <input type='text' required></label><br/>
+				<label>Cost price <input type="number" required></label><br/>
+				<label>Sale Price <input type="number" required></label><br/>
+				<label>Expiry Date <input type="text"></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -330,7 +306,7 @@
 				<b>Import pre-filled template</b></br>
 				<label><input type="radio" name='upload_option' value='new'>Create New Records</label></br>
 				<label><input type="radio" name='upload_option' value='existing' checked>Update existing Records</label></br>
-				<input type="file" value='Select file'></br>
+				<input type="file" value='Select file' accept=".csv|.txt"></br>
 				<output name='selected_file'></output></br>
 				<input type="submit" value='Import'>
 			</fieldset>
