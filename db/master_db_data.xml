@@ -1144,6 +1144,62 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<tablename>assets</tablename>
+			<listname>ownership_type</listname>
+			<name>purchased</name>
+			<value>Purchased</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>assets</tablename>
+			<listname>ownership_type</listname>
+			<name>licensed</name>
+			<value>Licensed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>assets</tablename>
+			<listname>ownership_type</listname>
+			<name>leased</name>
+			<value>Leased</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>assets</tablename>
+			<listname>ownership_type</listname>
+			<name>rented</name>
+			<value>Rented</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>assets</tablename>
+			<listname>maintained_by</listname>
+			<name>self</name>
+			<value>Self</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>assets</tablename>
+			<listname>maintained_by</listname>
+			<name>contractor</name>
+			<value>Contractor</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>assets</tablename>
+			<listname>maintained_by</listname>
+			<name>manufacturer</name>
+			<value>Manufacturer</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>disposals</tablename>
 			<listname>method</listname>
 			<name>destroyed</name>

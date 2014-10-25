@@ -56,14 +56,44 @@
 		</form>
 	</div>
 	
-	<div id="modal9" title="Update asset valuation">
+	<div id="modal9" title="Update asset details">
+		<form id='modal10_form'>
+			<fieldset>
+				<label>Name <input type='text' required></label><br/>
+				<label>Type <input type='text' required></label><br/>
+				<label>Description <textarea></textarea></label><br/>
+				<label>Date of incorporation <input type='text'></label><br/>
+				<label>Make <input type='text'></label><br/>
+				<label>Ownership Type <input type='text'></label><br/>
+				<label>Ownership Contract <textarea></textarea></label><br/>
+				<label>Maintained By <input type='text'></label><br/>
+				<label>Maintenance Contract <input type='text'></label><br/>
+				<label>Maintenance Activities <input type='text'></label><br/>
+				<label>Initial Value (in Rs.)<input type='number'></label><br/>
+				<label>Current Value (in Rs.)<input type='text'></label><br/>
+				<label>Asset Location <input type='text'></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
 	</div>
 	
 	<div id="modal10" title="Add new asset">
 		<form id='modal10_form'>
 			<fieldset>
-				<label>Date <input type='text'></label><br/>
-				<label>Maintenance Activity<input type="textarea"></label><br/>
+				<label>Name <input type='text' required></label><br/>
+				<label>Type <input type='text' required></label><br/>
+				<label>Description <textarea></textarea></label><br/>
+				<label>Date of incorporation <input type='text'></label><br/>
+				<label>Make <input type='text'></label><br/>
+				<label>Ownership Type <input type='text'></label><br/>
+				<label>Ownership Contract <textarea></textarea></label><br/>
+				<label>Maintained By <input type='text'></label><br/>
+				<label>Maintenance Contract <textarea></textarea></label><br/>
+				<label>Maintenance Contact <input type='text'></label><br/>
+				<label>Maintenance Activities <textarea></textarea></label><br/>
+				<label>Initial Value (in Rs.)<input type='number'></label><br/>
+				<label>Current Value (in Rs.)<input type='number'></label><br/>
+				<label>Asset Location <textarea></textarea></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

@@ -102,6 +102,7 @@ function form5_ini()
 			"<make></make>" +
 			"<maintained_by></maintained_by>" +
 			"<maintenance_contract></maintenance_contract>" +
+			"<maintenance_contact></maintenance_contact>" +
 			"<maintenance_activities></maintenance_activities>" +
 			"<initial_value></initial_value>" +
 			"<current_value></current_value>" +
@@ -137,6 +138,7 @@ function form5_ini()
 						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.make+"'>";
 						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.maintained_by+"'>";
 						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.maintenance_contract+"'>";
+						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.maintenance_contact+"'>";
 						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.maintenance_activities+"'>";
 						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.initial_value+"'>";
 						rowsHTML+="<input type='hidden' form='form5_"+result.id+"' value='"+result.current_value+"'>";
@@ -3462,10 +3464,10 @@ function form71_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form71_"+result.id+"'></form>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' required form='form71_"+result.id+"' value='"+result.name+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' required form='form71_"+result.id+"' value='"+result.acc_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form71_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.phone+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form71_"+result.id+"' ondblclick='set_editable($(this));'>"+result.description+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form71_"+result.id+"' value='"+result.id+"'>";

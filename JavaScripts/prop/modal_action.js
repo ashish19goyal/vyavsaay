@@ -264,50 +264,57 @@ function modal8_action()
 function modal9_action(button)
 {
 	var form=document.getElementById('modal9_form');
+	
 	var form_id=$(button).attr('form');
 	var father_form=document.getElementById(form_id);
 	var fname=father_form.elements[0];
-	var father_value=father_form.elements[4];
-	var fdate=form.elements[1];
-	var fvalue=form.elements[2];
+	var ftype=father_form.elements[1];
+	var fdescription=father_form.elements[2];
+	var fdate_inc=father_form.elements[6];
+	var fownership_type=father_form.elements[7];
+	var fownership_contract=father_form.elements[8];
+	var fmake=father_form.elements[9];
+	var fmaintained_by=father_form.elements[10];
+	var fmaintenance_contract=father_form.elements[11];
+	var fmaintenance_contact=father_form.elements[12];
+	var fmaintenance_activities=father_form.elements[13];
+	var finitial_value=father_form.elements[14];
+	var fcurrent_value=father_form.elements[15];
+	var fasset_location=father_form.elements[16];
 	
-	$(fdate).datepicker();
-	fdate.value=get_my_date();
+	form.elements[1].value=fname.value;
+	form.elements[2].value=ftype.value;
+	form.elements[3].value=fdescription.value;
+	form.elements[4].value=fdate_inc.value;
+	form.elements[5].value=fmake.value;
+	form.elements[6].value=fownership_type.value;
+	form.elements[7].value=fownership_contract.value;
+	form.elements[8].value=fmaintained_by.value;
+	form.elements[9].value=fmaintenance_contract.value;
+	form.elements[10].value=fmaintenance_contact.value;
+	form.elements[11].value=fmaintenance_activities.value;
+	form.elements[12].value=finitial_value.value;
+	form.elements[13].value=fcurrent_value.value;
+	form.elements[14].value=fasset_location.value;
 	
 	$(form).on("submit",function(event)
 	{
-		var name=fname.value;
-		var date=get_raw_time(fdate.value);
-		var value=fvalue.value;
-		var data_id=get_new_key();
-		var last_updated=get_my_time();
-		
-		father_value.value=value;
-		
-		var table='asset_valuations';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<asset_name>"+name+"</asset_name>" +
-					"<date_valuated>"+date+"</date_valuated>" +
-					"<value>"+value+"</value>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form5</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Update value of asset "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_write_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_write_row(data_xml,activity_xml);
-		}	
+		event.preventDefault();
+		fname.value=form.elements[1].value;
+		ftype.value=form.elements[2].value;
+		fdescription.value=form.elements[3].value;
+		fdate_inc.value=form.elements[4].value;
+		fmake.value=form.elements[5].value;
+		fownership_type.value=form.elements[6].value;
+		fownership_contract.value=form.elements[7].value;
+		fmaintained_by.value=form.elements[8].value;
+		fmaintenance_contract.value=form.elements[9].value;
+		fmaintenance_contact.value=form.elements[10].value;
+		fmaintenance_activities.value=form.elements[11].value;
+		finitial_value.value=form.elements[12].value;
+		fcurrent_value.value=form.elements[13].value;
+		fasset_location.value=form.elements[14].value;		
+	
 		$("#modal9").dialog("close");
 	});
 	
@@ -316,55 +323,86 @@ function modal9_action(button)
 
 /**
  * @modalNo 10
- * @modal Update asset maintenace
+ * @modal Add new asset
  * @param button
  */
-function modal10_action(button)
+function modal10_action()
 {
 	var form=document.getElementById('modal10_form');
-	var form_id=$(button).attr('form');
-	var father_form=document.getElementById(form_id);
-	var fname=father_form.elements[0];
-	var father_activity=father_form.elements[5];
-	var fdate=form.elements[1];
-	var fmaintenance=form.elements[2];
+	var fname=form.elements[1];
+	var ftype=form.elements[2];
+	var fdescription=form.elements[3];
+	var fdate=form.elements[4];
+	var fmake=form.elements[5];
+	var fown_type=form.elements[6];
+	var fown_contract=form.elements[7];
+	var fmaintained_by=form.elements[8];
+	var fmain_contract=form.elements[9];
+	var fmain_contact=form.elements[10];
+	var fmain_activities=form.elements[11];
+	var finitial_value=form.elements[12];
+	var fcurrent_value=form.elements[13];
+	var fasset_location=form.elements[14];
+	
+	set_static_value_list('assets','type',ftype);
 	
 	$(fdate).datepicker();
 	fdate.value=get_my_date();
 	
+	set_static_value_list('assets','ownership_type',fown_type);
+	set_static_value_list('assets','maintained_by',fmaintained_by);
+	
 	$(form).on("submit",function(event)
 	{
 		var name=fname.value;
-		var date=get_raw_time(fdate.value);
-		var maintenance=fmaintenance.value;
+		var type=ftype.value;
+		var description=fdescription.value;
 		var data_id=get_new_key();
+		var date_inc=get_raw_time(fdate.value);
+		var ownership_type=fown_type.value;
+		var ownership_contract=fown_contract.value;
+		var make=fmake.value;
+		var maintained_by=fmaintained_by.value;
+		var maintenance_contract=fmain_contract.value;
+		var maintenance_contact=fmain_contact.value;
+		var maintenance_activities=fmain_activities.value;
+		var initial_value=finitial_value.value;
+		var current_value=fcurrent_value.value;
+		var asset_location=fasset_location.value;
 		var last_updated=get_my_time();
-		
-		father_activity.value=maintenance;
-		
-		var table='asset_maintenance';
-		var data_xml="<"+table+">" +
+		var data_xml="<assets>" +
 					"<id>"+data_id+"</id>" +
-					"<asset_name>"+name+"</asset_name>" +
-					"<date_maintained>"+date+"</date_maintained>" +
-					"<activity>"+maintenace+"</activity>" +
+					"<name>"+name+"</name>" +
+					"<date_inc>"+date_inc+"</date_inc>" +
+					"<type>"+type+"</type>" +
+					"<description>"+description+"</description>" +
+					"<ownership_type>"+ownership_type+"</ownership_type>" +
+					"<ownership_contract>"+ownership_contract+"</ownership_contract>" +
+					"<make>"+make+"</make>" +
+					"<maintained_by>"+maintained_by+"</maintained_by>" +
+					"<maintenance_contract>"+maintenance_contract+"</maintenance_contract>" +
+					"<maintenance_contact>"+maintenance_contact+"</maintenance_contact>" +
+					"<maintenance_activities>"+maintenance_activities+"</maintenance_activities>" +
+					"<initial_value>"+initial_value+"</initial_value>" +
+					"<current_value>"+current_value+"</current_value>" +
+					"<asset_location>"+asset_location+"</asset_location>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";
+					"</assets>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>assets</tablename>" +
 					"<link_to>form5</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Update maintenance activity for asset "+name+"</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Asset "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
 		{
-			server_write_row(data_xml,activity_xml);
+			server_create_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_write_row(data_xml,activity_xml);
+			local_create_row(data_xml,activity_xml);
 		}	
 		$("#modal10").dialog("close");
 	});

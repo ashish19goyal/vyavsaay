@@ -169,17 +169,18 @@ function form5_delete_item(button)
 		var name=form.elements[0].value;
 		var type=form.elements[1].value;
 		var description=form.elements[2].value;
+		var data_id=form.elements[3].value;
 		var date_inc=form.elements[6].value;
 		var ownership_type=form.elements[7].value;
 		var ownership_contract=form.elements[8].value;
 		var make=form.elements[9].value;
 		var maintained_by=form.elements[10].value;
 		var maintenance_contract=form.elements[11].value;
-		var maintenance_activities=form.elements[12].value;
-		var initial_value=form.elements[13].value;
-		var current_value=form.elements[14].value;
-		var asset_location=form.elements[15].value;
-		var data_id=form.elements[3].value;
+		var maintenance_contact=form.elements[12].value;
+		var maintenance_activities=form.elements[13].value;
+		var initial_value=form.elements[14].value;
+		var current_value=form.elements[15].value;
+		var asset_location=form.elements[16].value;
 		var last_updated=get_my_time();
 		var data_xml="<assets>" +
 					"<id>"+data_id+"</id>" +
@@ -192,6 +193,7 @@ function form5_delete_item(button)
 					"<make>"+make+"</make>" +
 					"<maintained_by>"+maintained_by+"</maintained_by>" +
 					"<maintenance_contract>"+maintenance_contract+"</maintenance_contract>" +
+					"<maintenance_contact>"+maintenance_contact+"</maintenance_contact>" +
 					"<maintenance_activities>"+maintenance_activities+"</maintenance_activities>" +
 					"<initial_value>"+initial_value+"</initial_value>" +
 					"<current_value>"+current_value+"</current_value>" +
