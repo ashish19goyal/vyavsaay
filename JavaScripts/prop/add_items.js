@@ -1674,3 +1674,93 @@ function form66_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form New Sale Order
+ * @formNo 69
+ */
+function form69_add_item()
+{
+	if(is_create_access('form69'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form69_"+id+"'></form>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form69_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form69_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<textarea form='form69_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='hidden' form='form69_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form69_"+id+"' id='save_form69_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form69_"+id+"' id='delete_form69_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form69_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form69_"+id);
+		var name_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var notes_filter=fields.elements[2];
+		var id_filter=fields.elements[3];
+		
+		$(name_filter).focus();
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form69_create_item(fields);
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		
+		set_my_value_list(product_data,name_filter);
+				
+		$(name_filter).on('blur',function(event)
+		{
+			var max_data="<product_instances>" +
+						"<quantity></quantity>" +
+						"<product_name>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+			set_my_max_value(max_data,quantity_filter);
+			
+			var price_data="<product_instances>" +
+						"<sale_price></sale_price>" +
+						"<product_name>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+			get_single_column_data(function(prices)
+			{
+				var max_value=Math.max.apply(null,prices);
+				var min_value=Math.min.apply(null,prices);
+				notes_filter.value=notes_filter.value+"\n Minimum price: "+min_value+"\n Maximum price: "+max_value;
+			},price_data);
+			
+			var offer_data="<offers>" +
+					"<offer_detail></offer_detail>" +
+					"<offer_type>product</offer_type>" +
+					"<product_name>"+name_filter.value+"</product_name>" +
+					"<status array='yes'>active--extended</status>" +
+					"</offers>";
+			get_single_column_data(function(offers)
+			{
+				for(var j=0;j<offers.length;j++)
+				{
+					notes_filter.value=notes_filter.value+"\n Offer("+(j+1)+"): "+offers[j];
+				}
+			},offer_data);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

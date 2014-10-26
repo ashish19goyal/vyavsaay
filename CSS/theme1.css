@@ -325,6 +325,36 @@ tfoot>tr>td{
 	width: 16px;
 }
 
+.process_ok_icon{
+	height: 25px;
+	width: 25px;
+	background:url('/images/process_ok.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+}
+
+.process_warning_icon{
+	height: 25px;
+	width: 25px;
+	background:url('/images/process_warning.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+}
+
+.process_info_icon{
+	height: 25px;
+	width: 25px;
+	background:url('/images/process_info.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+}
+
 .export_icon{
 	height: 25px;
 	width: 25px;

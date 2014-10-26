@@ -1856,3 +1856,113 @@ function form66_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form New Sale Order
+ * @param button
+ */
+function form69_create_item(form)
+{
+	if(is_create_access('form69'))
+	{
+		var order_id=document.getElementById("form69_master").elements[3].value;
+		
+		var name=form.elements[0].value;
+		var quantity=form.elements[1].value;
+		var notes=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_order_items>" +
+				"<id>"+data_id+"</id>" +
+				"<item_name>"+name+"</item_name>" +
+				"<quantity>"+quantity+"</quantity>" +
+				"<order_id>"+order_id+"</order_id>" +
+				"<notes>"+notes+"</notes>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</sale_order_items>";	
+	
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}
+		
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		
+		var del_button=form.elements[5];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form69_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on("submit", function(event)
+		{
+			event.preventDefault();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form New Sale Order
+ * @param button
+ */
+function form69_create_form()
+{
+	if(is_create_access('form69'))
+	{
+		var form=document.getElementById("form69_master");
+		
+		var customer=form.elements[1].value;
+		var order_date=get_raw_time(form.elements[2].value);		
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();		
+		var data_xml="<sale_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<customer_name>"+customer+"</customer_name>" +
+					"<order_date>"+order_date+"</order_date>" +
+					"<type>product</type>" +
+					"<status>pending</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_orders</tablename>" +
+					"<link_to>form69</link_to>" +
+					"<title>Saved</title>" +
+					"<notes>Sale order no "+data_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}
+
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form69_update_form();
+		});
+		$("[id^='save_form69']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

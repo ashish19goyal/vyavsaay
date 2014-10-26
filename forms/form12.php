@@ -10,8 +10,8 @@
 			<input type='hidden' name='bill_id' value=''>
 			<input type='hidden' name='offer' value=''>
 			<input type='button' value='New Bill' onclick='form12_new_form();'>
-			<input type='submit' value='new'>
-			<input type='button' value='new' onclick='form12_delete_form();'>
+			<input type='submit' value='new' class='save_icon'>
+			<input type='button' value='new' class='delete_icon' onclick='form12_delete_form();'>
 			<input type='button' value='Print Bill' onclick='form12_print_form();'>
 		</fieldset>
 	</form>

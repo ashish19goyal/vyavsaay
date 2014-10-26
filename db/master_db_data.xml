@@ -88,6 +88,46 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>sale_orders</tablename>
+			<listname>type</listname>
+			<name>service</name>
+			<value>Service</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>sale_orders</tablename>
+			<listname>type</listname>
+			<name>product</name>
+			<value>Product</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>sale_orders</tablename>
+			<listname>status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>sale_orders</tablename>
+			<listname>status</listname>
+			<name>cancelled</name>
+			<value>Cancelled</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>sale_orders</tablename>
+			<listname>status</listname>
+			<name>billed</name>
+			<value>Billed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>feedback</tablename>
 			<listname>type</listname>
 			<name>positive</name>

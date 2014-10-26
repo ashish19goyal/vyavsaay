@@ -1379,6 +1379,58 @@ function form66_header_ini()
 	});
 };
 
+
+/**
+ * @form New Sale Order
+ * @formNo 69
+ */
+function form69_header_ini()
+{
+	var fields=document.getElementById('form69_master');
+	
+	var customers_filter=fields.elements[1];
+	var order_date=fields.elements[2];
+	fields.elements[3].value=get_new_key();
+	
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form69_create_form();
+	});
+	var customers_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	
+	set_my_filter(customers_data,customers_filter);
+	$(order_date).datepicker();
+	order_date.value=get_my_date();
+}
+
+/**
+ * @form Manage Sale Orders
+ * @formNo 70
+ */
+function form70_header_ini()
+{
+	var filter_fields=document.getElementById('form70_header');
+	var order_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var order_data="<sale_orders>" +
+			"<id></id>" +
+			"</sale_orders>";
+	var cust_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	set_my_filter(order_data,order_filter);
+	set_my_filter(cust_data,name_filter);
+	set_static_filter('sale_orders','status',status_filter);
+};
+
+
 /**
  * @form Manage Financial Accounts
  * @formNo 71

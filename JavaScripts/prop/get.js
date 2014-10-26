@@ -374,7 +374,12 @@ function set_my_max_value(filter_data,filter_element)
 {
 	get_single_column_data(function(data)
 	{
-		$(filter_element).attr('max',data[0]);
+		var value=0;
+		for(int i=0;i<data.length;i++)
+		{
+			value+=parseFloat(data[i]);
+		}
+		$(filter_element).attr('max',value);
 		$(filter_element).attr('min',"0");
 	},filter_data);
 }

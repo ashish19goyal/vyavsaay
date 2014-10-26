@@ -244,6 +244,22 @@
 			<status index='yes' type="VARCHAR(45)"></status><!-- pending/discarded/completed -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</enqueued_mails>
+	<sale_orders>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<customer_name index='yes' type="VARCHAR(100)"></customer_name>
+			<order_date index='yes' type="BIGINT"></order_date>
+			<type index="yes" type="VARCHAR(10)"></type><!-- service/product -->
+			<status index='no' type='VARCHAR(25)'></status><!-- billed/cancelled/pending -->
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</sale_orders>
+	<sale_order_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<order_id index='yes' type="BIGINT"></order_id>
+			<item_name index='yes' type="VARCHAR(90)"></item_name>
+			<notes index='no' type='TEXT'></notes>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</sale_order_items>
 	<bills>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer_name index='yes' type="VARCHAR(100)"></customer_name>
@@ -299,7 +315,6 @@
 			<name index='yes' type="VARCHAR(45)" unique='yes'></name>
 			<description index='no' type="TEXT"></description>
 			<price index='no' type="DECIMAL(12,2)"></price>
-			<taxable index='no' type='VARCHAR(3)'></taxable><!-- yes/no -->
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<duration index='no' type="DECIMAL(12,2)"></duration><!-- in minutes -->
 			<last_updated index='no' type="BIGINT"></last_updated>

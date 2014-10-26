@@ -63,13 +63,13 @@
 				    </div>
 	       			<div class="row text-center">
 	       				<div class="col-md-4 about_grid">
-	       					 <img src="images/Screen1.png" alt="">
+	       					 <img src="images/Screen1.jpeg" alt="">
 	       				</div>
 	       				<div class="col-md-4 about_grid">
-	       					<img src="images/Screen2.png" alt="">
+	       					<img src="images/Screen2.jpeg" alt="">
 	       				</div>
 	       				<div class="col-md-4 about_grid">
-	       					<img src="images/Screen3.png" alt="">
+	       					<img src="images/Screen3.jpeg" alt="">
 	       				</div>
 	       				<div class="clearfix"> </div>
 	       			</div>
