@@ -329,18 +329,18 @@ function form12_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' form='form12_"+id+"' value=''>";
-				rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form12_"+id+"' value='Details' onclick='modal7_action($(this));'>";
+				rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form12_"+id+"' value='Details' onclick='modal6_action($(this));'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='hidden' form='form12_"+id+"' value=''>";
-				rowsHTML+="<input type='hidden' form='form12_"+id+"' value=''>";
-				rowsHTML+="<input type='hidden' form='form12_"+id+"' value=''>";
-				rowsHTML+="<input type='hidden' form='form12_"+id+"' value=''>";
+				rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form12_"+id+"' id='save_form12_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form12_"+id+"' id='delete_form12_"+id+"' onclick='$(this).parent().parent().remove();'>";
-				rowsHTML+="<input type='hidden' form='form12_"+id+"' value=''>";
-				rowsHTML+="<input type='hidden' form='form12_"+id+"' value=''>";
+				rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -360,7 +360,9 @@ function form12_add_item()
 		var save_button=fields.elements[10];
 		var free_product_filter=fields.elements[12];
 		var free_product_quantity=fields.elements[13];
-			
+		
+		$(name_filter).focus();
+		
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
@@ -370,10 +372,8 @@ function form12_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		
 		set_my_value_list(product_data,name_filter);
 		
-		//$(name_filter).focus();
 		
 		$(name_filter).on('blur',function(event){
 			var batch_data="<product_instances>" +
@@ -389,6 +389,8 @@ function form12_add_item()
 			discount_filter.value=0;
 			tax_filter.value=0;
 			offer_filter.value="";
+			free_product_filter.value="";
+			free_product_quantity.value="";
 		});
 		
 		$(batch_filter).on('blur',function(event){
@@ -403,8 +405,7 @@ function form12_add_item()
 					"<quantity></quantity>" +
 					"<batch>"+batch_filter.value+"</batch>" +
 					"<product_name>"+name_filter.value+"</product_name>" +
-					"</product_instances>";
-					
+					"</product_instances>";		
 			set_my_max_value(max_data,quantity_filter);
 			
 			quantity_filter.value=0;
@@ -413,6 +414,8 @@ function form12_add_item()
 			discount_filter.value=0;
 			tax_filter.value=0;
 			offer_filter.value="";
+			free_product_filter.value="";
+			free_product_quantity.value="";
 		});
 		
 		$(quantity_filter).on('blur',function(event)
@@ -422,7 +425,7 @@ function form12_add_item()
 			var offer_data="<offers>" +
 					"<offer_type>product</offer_type>" +
 					"<product_name>"+name_filter.value+"</product_name>" +
-					"<batch>"+batch_filter.value+"</batch>" +
+					"<batch array='yes'>"+batch_filter.value+"--all</batch>" +
 					"<criteria_type></criteria_type>" +
 					"<criteria_amount></criteria_amount>" +
 					"<criteria_quantity></criteria_quantity>" +
@@ -438,74 +441,85 @@ function form12_add_item()
 					"</offers>";
 			fetch_requested_data('',offer_data,function(offers)
 			{
-				offers.forEach(function(offer)
+				////sorting offers based on criteria amount and criteria quantity
+				offers.sort(function(a,b)
 				{
-					offer_filter.value=offer.offer_detail;
-					if(offer.criteria_type=='min quantity crossed' && parseFloat(offer.criteria_quantity)<=parseFloat(quantity_filter.value))
-					{
-						if(offer.result_type=='discount')
-						{
-							if(offer.discount_percent!="" && offer.discount_percent!=0 && offer.discount_percent!="0")
-							{
-								discount_filter.value=parseFloat((amount*parseInt(offer.discount_percent))/100);
-							}
-							else 
-							{
-								discount_filter.value=parseFloat(offer.discount_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offer.criteria_quantity)));
-							}
-						}
-						else if(offer.result_type=='quantity addition')
-						{
-							if(offer.quantity_add_percent!="" && offer.quantity_add_percent!=0 && offer.quantity_add_percent!="0")
-							{
-								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offer.discount_percent)/100));
-							}
-							else 
-							{
-								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offer.quantity_add_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offer.criteria_quantity))));
-							}
-						}
-						else if(offer.result_type=='product free')
-						{
-							free_product_filter.value=offer.free_product_name;
-							free_product_quantity.value=parseFloat(offer.free_product_quantity)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offer.criteria_quantity)));
-						}
-					}
-					else if(offer.criteria_type=='min amount crossed' && offer.criteria_amount<=amount)
-					{
-						if(offer.result_type=='discount')
-						{
-							if(offer.discount_percent!="" && offer.discount_percent!=0 && offer.discount_percent!="0")
-							{
-								discount_filter.value=parseFloat((amount*parseInt(offer.discount_percent))/100);
-							}
-							else 
-							{
-								discount_filter.value=parseFloat(offer.discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offer.criteria_amount)));
-							}
-						}
-						else if(offer.result_type=='quantity addition')
-						{
-							if(offer.quantity_add_percent!="" && offer.quantity_add_percent!=0 && offer.quantity_add_percent!="0")
-							{
-								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offer.discount_percent)/100));
-							}
-							else 
-							{
-								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offer.quantity_add_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offer.criteria_amount))));
-							}
-						}
-						else if(offer.result_type=='product free')
-						{
-							free_product_filter.value=offer.free_product_name;
-							free_product_quantity.value=parseFloat(offer.free_product_quantity)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offer.criteria_amount)));
-						}
-					}
+					if(a.criteria_amount<b.criteria_amount)
+						return 1;
+					else if(a.criteria_quantity<b.criteria_quantity)
+						return 1;
+					else return -1;
 				});
+						
+				for(var i in offers)
+				{
+					offer_filter.value=offer[i].offer_detail;
+					if(offer[i].criteria_type=='min quantity crossed' && parseFloat(offer[i].criteria_quantity)<=parseFloat(quantity_filter.value))
+					{
+						if(offer[i].result_type=='discount')
+						{
+							if(offer[i].discount_percent!="" && offer[i].discount_percent!=0 && offer[i].discount_percent!="0")
+							{
+								discount_filter.value=parseFloat((amount*parseInt(offer[i].discount_percent))/100);
+							}
+							else 
+							{
+								discount_filter.value=parseFloat(offer[i].discount_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offer[i].criteria_quantity)));
+							}
+						}
+						else if(offer[i].result_type=='quantity addition')
+						{
+							if(offer[i].quantity_add_percent!="" && offer[i].quantity_add_percent!=0 && offer[i].quantity_add_percent!="0")
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offer[i].discount_percent)/100));
+							}
+							else 
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offer[i].quantity_add_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offer[i].criteria_quantity))));
+							}
+						}
+						else if(offer[i].result_type=='product free')
+						{
+							free_product_filter.value=offer[i].free_product_name;
+							free_product_quantity.value=parseFloat(offer[i].free_product_quantity)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offer[i].criteria_quantity)));
+						}
+						break;
+					}
+					else if(offer[i].criteria_type=='min amount crossed' && offer[i].criteria_amount<=amount)
+					{
+						if(offer[i].result_type=='discount')
+						{
+							if(offer[i].discount_percent!="" && offer[i].discount_percent!=0 && offer[i].discount_percent!="0")
+							{
+								discount_filter.value=parseFloat((amount*parseInt(offer[i].discount_percent))/100);
+							}
+							else 
+							{
+								discount_filter.value=parseFloat(offer[i].discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offer[i].criteria_amount)));
+							}
+						}
+						else if(offer[i].result_type=='quantity addition')
+						{
+							if(offer[i].quantity_add_percent!="" && offer[i].quantity_add_percent!=0 && offer[i].quantity_add_percent!="0")
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offer[i].discount_percent)/100));
+							}
+							else 
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offer[i].quantity_add_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offer[i].criteria_amount))));
+							}
+						}
+						else if(offer[i].result_type=='product free')
+						{
+							free_product_filter.value=offer[i].free_product_name;
+							free_product_quantity.value=parseFloat(offer[i].free_product_quantity)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offer[i].criteria_amount)));
+						}
+						break;
+					}
+				}
 				
 				var tax_data="<product_master>" +
 						"<name>"+name_filter.value+"</name>" +
-						"<taxable>yes</taxable>" +
 						"<tax></tax>" +
 						"</product_master>";
 				fetch_requested_data('',tax_data,function(taxes)
@@ -1727,11 +1741,19 @@ function form69_add_item()
 				
 		$(name_filter).on('blur',function(event)
 		{
-			var max_data="<product_instances>" +
+			var quantity_data="<product_instances>" +
 						"<quantity></quantity>" +
 						"<product_name>"+name_filter.value+"</product_name>" +
 						"</product_instances>";
-			set_my_max_value(max_data,quantity_filter);
+			get_single_column_data(function(quantities)
+			{
+				var total_quantity=0;
+				for(var k=0;k<quantities.length;k++)
+				{
+					total_quantity+=parseFloat(quantities[k]);
+				}
+				notes_filter.value=notes_filter.value+"\n Total availability: "+total_quantity;
+			},quantity_data);
 			
 			var price_data="<product_instances>" +
 						"<sale_price></sale_price>" +

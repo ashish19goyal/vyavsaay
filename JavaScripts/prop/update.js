@@ -1555,56 +1555,6 @@ function form41_update_item(form)
 }
 
 /**
- * @form Manage Bills
- * @param button
- */
-function form42_update_item(form)
-{
-	if(is_update_access('form42'))
-	{
-		var data_id=form.elements[0].value;
-		var customer_name=form.elements[1].value;
-		var date_created=get_raw_time(form.elements[2].value);
-		var amount=form.elements[3].value;
-		var last_updated=get_my_time();
-		var table='bills';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<customer_name>"+customer_name+"</customer_name>" +
-					"<date_created>"+date_created+"</date_created>" +
-					"<amount>"+amount+"</amount>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form42</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Updated bill no "+data_id+" for customer "+customer_name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-
-
-/**
  * @form Manage Purchase Orders
  * @param button
  */
@@ -2961,6 +2911,151 @@ function form66_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form New Sale orders
+ * @param button
+ */
+function form69_update_item(form)
+{
+	if(is_update_access('form69'))
+	{
+		var order_id=document.getElementById("form69_master").elements[4].value;
+		
+		var name=form.elements[0].value;
+		var quantity=form.elements[1].value;
+		var notes=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_order_items>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+name+"</item_name>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<notes>"+notes+"</notes>" +
+					"<order_id>"+order_id+"</order_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_order_items>";	
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form New Sale Order
+ * @param button
+ */
+function form69_update_form()
+{
+	if(is_update_access('form69'))
+	{
+		var form=document.getElementById("form69_master");
+		
+		var customer=form.elements[1].value;
+		var order_date=get_raw_time(form.elements[2].value);		
+		var status=get_raw_time(form.elements[2].value);		
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		
+		/////deleting existing free products
+		var items_data="<sale_order_items>" +
+				"<order_id>"+data_id+"</order_id>" +
+				"</sale_order_items>";
+		
+		var data_xml="<sale_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<customer_name>"+customer+"</customer_name>" +
+					"<order_date>"+order_date+"</order_date>" +
+					"<type>product</type>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_orders</tablename>" +
+					"<link_to>form70</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Bill no "+data_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			$("[id^='save_form69']").click();
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			$("[id^='save_form69']").click();
+			local_update_row(data_xml,activity_xml);
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Sale orders
+ * @param button
+ */
+function form70_update_item(form)
+{
+	if(is_update_access('form70'))
+	{
+		var data_id=form.elements[0].value;
+		var customer_name=form.elements[1].value;
+		var order_date=get_raw_time(form.elements[2].value);
+		var status=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<customer_name>"+customer_name+"</customer_name>" +
+					"<order_date>"+order_date+"</order_date>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_orders>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_orders</tablename>" +
+					"<link_to>form70</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Order no "+data_id+" for customer "+customer_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 
 /**

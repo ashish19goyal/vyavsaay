@@ -578,6 +578,22 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>form69</name>
+			<display_name>create sale order</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form70</name>
+			<display_name>manage sale orders</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form71</name>
 			<display_name>manage accounts</display_name>
 			<status>active</status>
@@ -1240,6 +1256,28 @@
 			<username>master</username>
 			<element_id>form56</element_id>
 			<element_name>expense_register</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form69</element_id>
+			<element_name>create sale order</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form70</element_id>
+			<element_name>manage sale orders</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

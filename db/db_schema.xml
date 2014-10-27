@@ -154,7 +154,7 @@
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<receiver index='yes' type="VARCHAR(100)"></receiver>
 			<giver index='yes' type="VARCHAR(100)"></giver>
-			<taxable index='yes' type="BOOL"></taxable>
+			<tax index='yes' type="DECIMAL(12,2)"></tax>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</transactions>
 	<expenses>
@@ -177,15 +177,6 @@
 			<mode index='yes' type="VARCHAR(15)"></mode><!-- cash/cheque/draft/credit card/debit card/online banking/coupons -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</payments>
-	<tax>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<amount index='no' type="DECIMAL(12,2)"></amount>
-			<transaction_id index='no' type="BIGINT"></transaction_id>
-			<fin_year index='yes' type="VARCHAR(10)"></fin_year>
-			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
-			<status index='no' type="VARCHAR(15)"></status><!-- current/past -->
-			<last_updated index='no' type="BIGINT"></last_updated>
-	</tax>
 	<credit_notes>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
@@ -266,7 +257,7 @@
 			<bill_date index='yes' type="BIGINT"></bill_date>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<total index='no' type="DECIMAL(12,2)"></total>
-			<type index="yes" type="VARCHAR(10)"></type><!-- service/product -->
+			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
 			<offer index='no' type="TEXT"></offer>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
@@ -283,8 +274,11 @@
 			<offer index='no' type="TEXT"></offer>
 			<type index='no' type="VARCHAR(10)"></type><!-- free/bought -->	
 			<bill_id index='yes' type="BIGINT"></bill_id>
-			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<item_name index='yes' type="VARCHAR(90)"></item_name>
 			<batch index='yes' type="VARCHAR(50)"></batch>
+			<next_due_date index='yes' type="BIGINT"></next_due_date>
+			<notes index='no' type="TEXT"></notes>
+			<staff index='yes' type="VARCHAR(100)"></staff>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<free_with index="no" type="VARCHAR(90)"></free_with>
 			<last_updated index='no' type="BIGINT"></last_updated>

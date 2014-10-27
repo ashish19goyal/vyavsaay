@@ -177,6 +177,23 @@ function server_delete_simple(data_xml)
 	});
 }
 
+/**
+ * @param data_xml
+ */
+function server_delete_simple_func(data_xml,func)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var del_access=get_session_var('del');
+	ajax_with_custom_func("./ajax/delete_simple.php","domain="+domain+"&username="+username+"&del="+del_access+"&data_xml="+data_xml,function(e)
+	{
+		console.log(e.responseText);
+		func();
+		hide_loader();
+	});
+}
+
 
 function server_create_row(data_xml,activity_xml)
 {

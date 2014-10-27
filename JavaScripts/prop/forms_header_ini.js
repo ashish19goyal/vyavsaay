@@ -241,6 +241,7 @@ function form12_header_ini()
 	set_my_filter(customers_data,customers_filter);
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
+	customers_filter.value='';
 }
 
 /**
@@ -637,7 +638,6 @@ function form42_header_ini()
 	var filter_fields=document.getElementById('form42_header');
 	var bill_filter=filter_fields.elements[0];
 	var name_filter=filter_fields.elements[1];
-	var date_filter=filter_fields.elements[2];
 	
 	var bill_data="<bills>" +
 			"<id></id>" +
@@ -648,8 +648,6 @@ function form42_header_ini()
 	
 	set_my_filter(bill_data,bill_filter);
 	set_my_filter(cust_data,name_filter);
-	$(date_filter).datepicker();
-
 };
 
 
@@ -1390,7 +1388,8 @@ function form69_header_ini()
 	
 	var customers_filter=fields.elements[1];
 	var order_date=fields.elements[2];
-	fields.elements[3].value=get_new_key();
+	var status_filter=fields.elements[3];
+	fields.elements[4].value=get_new_key();
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -1405,7 +1404,21 @@ function form69_header_ini()
 	set_my_filter(customers_data,customers_filter);
 	$(order_date).datepicker();
 	order_date.value=get_my_date();
+	set_static_value_list('sale_orders','status',status_filter);
+	status_filter.value='pending';
+	customers_filter.value='';
 }
+
+/**
+ * @form New Sale Order
+ * This function clears the form69 for new bill
+ */
+function form69_new_form()
+{
+	form69_header_ini();
+	$("#form69_body").find("tr").remove();
+}
+
 
 /**
  * @form Manage Sale Orders

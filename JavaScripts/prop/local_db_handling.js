@@ -886,7 +886,6 @@ function local_delete_row(data_xml,activity_xml)
 };
 
 /**
- * 
  * @param data_xml
  * @returns
  */
@@ -983,3 +982,101 @@ function local_delete_simple(data_xml)
 		});
 };
 
+
+/**
+ * @param data_xml
+ * @returns
+ */
+function local_delete_simple_func(data_xml,func)
+{
+	show_loader();
+	var parser=new DOMParser();
+	var data=parser.parseFromString(data_xml,"text/xml");
+	var table=data.childNodes[0].nodeName;
+
+	var cols=data.childNodes[0].childNodes;
+	var filter=new Array();
+	for(var j in cols)
+	{
+		if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+		{
+			fil=new Object();
+			fil.name=cols[j].nodeName;
+			fil.value=cols[j].innerHTML;
+			filter.push(fil);
+		}
+	}
+
+	var domain=get_domain();
+	var db_name="re_local_"+domain;
+	sklad.open(db_name,{
+		version:2},
+		function(err,database)
+		{
+			if(err)
+			{
+				console.log(err);
+			}
+			//console.log(tables);
+			
+			database.get(table,{
+				index: filter[0].name,
+				range: IDBKeyRange.only(filter[0].value)
+			},function(err,records)
+			{
+				if(err)
+				{
+					console.log(err);
+				}
+				else
+				{
+					records.forEach(function(record)
+					{
+						var match=true;
+						for(var i in filter)
+						{
+							var string=record[filter[i].name].toLowerCase();
+							var search=filter[i].value.toLowerCase();
+							var found=string.search(search);
+							if(found===-1)
+							{
+								match=false;
+								break;
+							}
+						}
+						if(match===true)
+						{
+							database.delete(table,record.id,function(err)
+							{
+								if(err)
+								{
+									console.log(err);
+								}
+								else
+								{
+									var act_row={id:get_new_key(),
+											type:'delete',
+											data_id:record.id,
+											data_xml:data_xml,
+											tablename:table,
+											status:'unsynced',
+											user_display:'no',
+											link_to:'',
+											last_updated:get_my_time()};
+									database.upsert('activities',act_row,function(err,insertedkey)
+									{
+										if(err)
+										{
+											console.log(err);
+										}
+										func();
+										hide_loader();
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+		});
+};

@@ -678,7 +678,7 @@ function form12_create_form()
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>"+table+"</tablename>" +
-						"<link_to>form12</link_to>" +
+						"<link_to>form42</link_to>" +
 						"<title>Saved</title>" +
 						"<notes>Saved Bill no "+data_id+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
@@ -1865,7 +1865,7 @@ function form69_create_item(form)
 {
 	if(is_create_access('form69'))
 	{
-		var order_id=document.getElementById("form69_master").elements[3].value;
+		var order_id=document.getElementById("form69_master").elements[4].value;
 		
 		var name=form.elements[0].value;
 		var quantity=form.elements[1].value;
@@ -1906,6 +1906,7 @@ function form69_create_item(form)
 		$(form).on("submit", function(event)
 		{
 			event.preventDefault();
+			form69_update_item(form);
 		});
 	}
 	else
@@ -1926,21 +1927,22 @@ function form69_create_form()
 		
 		var customer=form.elements[1].value;
 		var order_date=get_raw_time(form.elements[2].value);		
-		var data_id=form.elements[3].value;
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();		
 		var data_xml="<sale_orders>" +
 					"<id>"+data_id+"</id>" +
 					"<customer_name>"+customer+"</customer_name>" +
 					"<order_date>"+order_date+"</order_date>" +
 					"<type>product</type>" +
-					"<status>pending</status>" +
+					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_orders>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>sale_orders</tablename>" +
-					"<link_to>form69</link_to>" +
-					"<title>Saved</title>" +
+					"<link_to>form70</link_to>" +
+					"<title>Created</title>" +
 					"<notes>Sale order no "+data_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
@@ -1966,3 +1968,187 @@ function form69_create_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * @form Create bill from sale order
+ * @param button
+ */
+function create_bill_form_order(order_id)
+{
+	if(is_create_access('form12'))
+	{
+		var customer=form.elements[1].value;
+		var bill_date=get_raw_time(form.elements[2].value);		
+		var amount=0;
+		var discount=0;
+		var tax=0;
+		var total=0;
+		
+		form.elements[3].value=amount;
+		form.elements[4].value=discount;
+		form.elements[5].value=tax;
+		form.elements[6].value=total;
+		form.elements[10].value="saved";
+		form.elements[11].value="saved";
+		
+		var data_id=form.elements[7].value;
+		var last_updated=get_my_time();
+		var offer_detail="";
+		
+		var offer_data="<offers>" +
+				"<offer_type>bill</offer_type>" +
+				"<product_name></product_name>" +
+				"<batch></batch>" +
+				"<criteria_type></criteria_type>" +
+				"<criteria_amount></criteria_amount>" +
+				"<criteria_quantity></criteria_quantity>" +
+				"<result_type></result_type>" +
+				"<discount_percent></discount_percent>" +
+				"<discount_amount></discount_amount>" +
+				"<quantity_add_percent></quantity_add_percent>" +
+				"<quantity_add_amount></quantity_add_amount>" +
+				"<free_product_name></free_product_name>" +
+				"<free_product_quantity></free_product_quantity>" +
+				"<offer_detail></offer_detail>" +
+				"<status array='yes'>active--extended</status>" +
+				"</offers>";
+		fetch_requested_data('',offer_data,function(offers)
+		{
+			for(var i in offers)
+			{
+				if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=(amount-discount))
+				{
+					if(offers[i].result_type=='discount')
+					{
+						if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+						{
+							var dis=parseFloat(((amount-discount)*parseInt(offers[i].discount_percent))/100);
+							tax-=(tax*(dis/(amount-discount)));
+							discount+=dis;
+							total=amount-discount+tax;
+						}
+						else 
+						{
+							var dis=parseFloat(offers[i].discount_amount)*(Math.floor((amount-discount)/parseFloat(offers[i].criteria_amount)));
+							tax-=(tax*(dis/(amount-discount)));
+							discount+=dis;
+							total=amount-discount+tax;
+						}
+						form.elements[3].value=amount;
+						form.elements[4].value=discount;
+						form.elements[5].value=tax;
+						form.elements[6].value=total;
+					}
+					else if(offers[i].result_type=='product free')
+					{
+						var free_product_name=offers[i].free_product_name;
+						var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(amount-discount)/parseFloat(offers[i].criteria_amount)));
+						
+						var free_quantity_data="<product_instances>" +
+									"<id></id>" +
+									"<product_name>"+free_product_name+"</product_name>" +
+									"<batch></batch>" +
+									"<quantity></quantity>" +
+									"</product_instances>";	
+						
+						//////updating product quantity in inventory
+						fetch_requested_data('',free_quantity_data,function(free_quantities)
+						{
+							var offer_invalid=true;
+							for (var j in free_quantities)
+							{
+								var q=parseFloat(free_quantities[j].quantity)-parseFloat(free_product_quantity);
+								var free_quantity_xml="<product_instances>" +
+										"<id>"+free_quantities[j].id+"</id>" +
+										"<quantity>"+q+"</quantity>" +
+										"</product_instances>";
+								if(q>0)
+								{
+									var free_xml="<bill_items>" +
+												"<id>"+get_new_key()+"</id>" +
+												"<product_name>"+free_product_name+"</product_name>" +
+												"<batch>"+free_quantities[j].batch+"</batch>" +
+												"<unit_price>0</unit_price>" +
+												"<quantity>"+free_product_quantity+"</quantity>" +
+												"<amount>0</amount>" +
+												"<total>0</total>" +
+												"<discount>0</discount>" +
+												"<offer></offer>" +
+												"<type>free</type>" +
+												"<tax>0</tax>" +
+												"<bill_id>"+data_id+"</bill_id>" +
+												"<free_with>bill</free_with>" +
+												"<last_updated>"+last_updated+"</last_updated>" +
+												"</bill_items>";	
+									
+									if(is_online())
+									{
+										server_create_simple(free_xml);
+										server_update_simple(free_quantity_xml);
+									}
+									else
+									{
+										local_create_simple(free_xml);
+										local_update_simple(free_quantity_xml);
+									}
+									offer_invalid=false;
+									break;
+								}
+							}
+							if(offer_invalid)
+							{
+								$("#modal7").dialog("open");
+							}
+						});
+					}
+					offer_detail=offers[i].offer_detail;
+				}
+				break;
+			}
+			var table='bills';
+			var data_xml="<"+table+">" +
+						"<id>"+data_id+"</id>" +
+						"<customer_name>"+customer+"</customer_name>" +
+						"<bill_date>"+bill_date+"</bill_date>" +
+						"<amount>"+amount+"</amount>" +
+						"<total>"+total+"</total>" +
+						"<type>product</type>" +
+						"<offer>"+offer_detail+"</offer>" +
+						"<discount>"+discount+"</discount>" +
+						"<tax>"+tax+"</tax>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</"+table+">";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>"+table+"</tablename>" +
+						"<link_to>form12</link_to>" +
+						"<title>Saved</title>" +
+						"<notes>Saved Bill no "+data_id+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_create_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+			}
+		});
+		
+		$(form).off('submit');
+
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form12_update_form();
+		});
+		$("[id^='save_form12']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
