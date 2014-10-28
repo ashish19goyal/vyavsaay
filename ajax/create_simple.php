@@ -54,8 +54,7 @@
 			}
 				
 			if($unique===0 || $unique=="0")
-			{
-								
+			{		
 				$query2="insert into $table(";
 				
 				foreach($data_input->childNodes as $data)

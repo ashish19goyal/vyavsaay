@@ -146,7 +146,7 @@ function form8_header_ini()
 
 
 /**
- * @form Create Service Receipt
+ * @form Create Service Bills
  * @formNo 10
  */
 function form10_header_ini()
@@ -156,15 +156,19 @@ function form10_header_ini()
 	var customers_filter=fields.elements[1];
 	var bill_date=fields.elements[2];
 	fields.elements[3].value=0;
-	fields.elements[4].value=get_new_key();
-		
+	fields.elements[4].value=0;
+	fields.elements[5].value=0;
+	fields.elements[6].value=0;
+	fields.elements[7].value=get_new_key();
+	fields.elements[8].value="";
+	fields.elements[9].value=get_new_key();
+	
 	$(fields).off('submit');
-	$(fields).on('submit',function(event)
+	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
 		form10_create_form();
 	});
-	
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
@@ -172,6 +176,9 @@ function form10_header_ini()
 	set_my_filter(customers_data,customers_filter);
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
+	customers_filter.value='';
+	
+	$(customers_filter).focus();
 }
 
 /**
@@ -227,6 +234,7 @@ function form12_header_ini()
 	fields.elements[6].value=0;
 	fields.elements[7].value=get_new_key();
 	fields.elements[8].value="";
+	fields.elements[9].value=get_new_key();
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -242,6 +250,8 @@ function form12_header_ini()
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';
+	$(customers_filter).focus();
+
 }
 
 /**

@@ -230,6 +230,27 @@ function server_create_simple(data_xml)
 	});
 }
 
+function server_create_simple_func(data_xml,func)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var cr_access=get_session_var('cr');
+	ajax_with_custom_func("./ajax/create_simple.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&data_xml="+data_xml,function(e)
+	{
+		console.log(e.responseText);
+		hide_loader();
+		if(e.responseText=='duplicate record')
+		{
+			$("#modal5").dialog("open");
+		}
+		else
+		{
+			func();
+		}
+	});
+}
+
 
 function server_update_row(data_xml,activity_xml)
 {
@@ -254,6 +275,20 @@ function server_update_simple(data_xml)
 	ajax_with_custom_func("./ajax/update_simple.php","domain="+domain+"&username="+username+"&up="+up_access+"&data_xml="+data_xml,function(e)
 	{
 		console.log(e.responseText);
+		hide_loader();
+	});
+}
+
+function server_update_simple_func(data_xml,func)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var up_access=get_session_var('up');
+	ajax_with_custom_func("./ajax/update_simple.php","domain="+domain+"&username="+username+"&up="+up_access+"&data_xml="+data_xml,function(e)
+	{
+		console.log(e.responseText);
+		func();
 		hide_loader();
 	});
 }

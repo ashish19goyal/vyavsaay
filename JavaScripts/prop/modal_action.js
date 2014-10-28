@@ -1530,9 +1530,7 @@ function modal20_action()
 	var fcross_product=form.elements[15];
 	var fcross_service_out=form.elements[16];
 	var fcross_service=form.elements[17];
-		
-	set_static_value_list('services','taxable',ftaxable);
-	
+			
 	var product_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
@@ -1578,7 +1576,6 @@ function modal20_action()
 						"<name unique='yes'>"+name+"</name>" +
 						"<price>"+price+"</price>" +
 						"<description>"+description+"</description>" +
-						"<taxable>"+taxable+"</taxable>" +
 						"<tax>"+tax+"</tax>" +
 						"<duration>"+duration+"</duration>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
@@ -2355,3 +2352,102 @@ function modal25_action(button)
 	$("#modal25").dialog("open");
 }
 
+/**
+ * @modalNo 26
+ * @modal Payment Details
+ */
+function modal26_action(payment_id)
+{
+	var form=document.getElementById('modal26_form');
+	
+	var fcustomer=form.elements[1];
+	var ftotal=form.elements[2];
+	var fpaid=form.elements[3];
+	var fdue_date=form.elements[4];
+	var fmode=form.elements[5];
+	var fstatus=form.elements[6];
+	
+	$(fdue_date).datepicker();
+	
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_value_list(customer_data,fcustomer);
+	set_static_value_list('payments','status',fstatus);
+	set_static_value_list('payments','mode',fmode);
+	
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form1'))
+		{
+			var customer=fcustomer.value;
+			var total=ftotal.value;
+			var paid=fpaid.value;
+			var due_date=get_raw_time(fdue_date.value);
+			var mode=fmode.value;
+			var status=fstatus.value;
+			var last_updated=get_my_time();
+			var data_xml="<payments>" +
+						"<id>"+payment_id+"</id>" +
+						"<acc_name>"+customer+"</acc_name>" +
+						"<type>received</type>" +
+						"<total_amount>"+total+"</total_amount>" +
+						"<paid_amount>"+paid+"</paid_amount>" +
+						"<status>"+status+"</status>" +
+						"<date>"+get_my_time()+"</date>" +
+						"<due_date>"+due_date+"</due_date>" +
+						"<mode>"+mode+"</mode>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</payments>";
+			var activity_xml="<activity>" +
+						"<data_id>"+payment_id+"</data_id>" +
+						"<tablename>payments</tablename>" +
+						"<link_to>form11</link_to>" +
+						"<title>Updated</title>" +
+						"<notes>Payment of "+paid+" from "+customer+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			
+			if(is_online())
+			{
+				server_update_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_update_row(data_xml,activity_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal26").dialog("close");
+	});
+	
+	var payments_data="<payments>" +
+			"<id>"+payment_id+"</id>" +
+			"<acc_name></acc_name>" +
+			"<type>received</type>" +
+			"<total_amount></total_amount>" +
+			"<paid_amount></paid_amount>" +
+			"<status></status>" +
+			"<due_date></due_date>" +
+			"<mode></mode>" +
+			"</payments>";
+	fetch_requested_data('',payments_data,function(payments)
+	{
+		for(var k in payments)
+		{
+			fcustomer.value=payments[k].acc_name;
+			ftotal.value=payments[k].total_amount;
+			fpaid.value=payments[k].paid_amount;
+			fdue_date.value=get_my_past_date(payments[k].due_date);
+			fmode.value=payments[k].mode;
+			fstatus.value=payments[k].status;
+			break;
+		}
+		$("#modal26").dialog("open");
+	});		
+	
+}

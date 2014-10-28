@@ -339,4 +339,18 @@
 		</form>
 	</div>
 	
+	<div id="modal26" title="Payment Details">
+		<form id='modal26_form'>
+			<fieldset>
+				<label>Customer <input type='text' required readonly='readonly'></label><br/>
+				<label>Total Amount <input type="number" required readonly='readonly' step='any'></label><br/>
+				<label>Amount Paid<input type="number" required step='any'></label><br/>
+				<label>Due Date <input type="text"></label><br/>
+				<label>Mode of Payment <input type="text"></label><br/>
+				<label>Status<input type="text"></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+	
 </div>

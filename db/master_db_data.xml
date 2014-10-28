@@ -657,33 +657,33 @@
 		</row>
 		<row>
 			<tablename>transactions</tablename>
-			<listname>trans_type</listname>
-			<name>credit</name>
-			<value>Credit</value>
+			<listname>status</listname>
+			<name>pending</name>
+			<value>Pending</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<tablename>transactions</tablename>
-			<listname>trans_type</listname>
-			<name>debit</name>
-			<value>Debit</value>
+			<listname>status</listname>
+			<name>closed</name>
+			<value>Closed</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<tablename>transactions</tablename>
-			<listname>system_generated</listname>
-			<name>manual</name>
-			<value>Manual</value>
+			<listname>status</listname>
+			<name>cancelled</name>
+			<value>Cancelled</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<tablename>transactions</tablename>
-			<listname>system_generated</listname>
-			<name>system generated</name>
-			<value>System Generated</value>
+			<listname>status</listname>
+			<name>partial</name>
+			<value>Partial</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

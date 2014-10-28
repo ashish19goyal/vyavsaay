@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <re_xml>
+	<accounts>
+		<row>
+			<acc_name>master</acc_name>
+			<description>This accounts refers to the business</description>
+			<type>master</type>
+			<last_updated>1</last_updated>
+		</row>
+	</accounts>
 	<user_preferences>
 		<row>
 			<name>address</name>
@@ -572,6 +580,22 @@
 		<row>
 			<name>form56</name>
 			<display_name>expense_register</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form57</name>
+			<display_name>manage services</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form58</name>
+			<display_name>service pre-requisites</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -1256,6 +1280,28 @@
 			<username>master</username>
 			<element_id>form56</element_id>
 			<element_name>expense_register</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form57</element_id>
+			<element_name>manage services</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form58</element_id>
+			<element_name>service pre-requisites</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

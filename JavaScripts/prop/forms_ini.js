@@ -392,6 +392,117 @@ function form8_ini()
 
 
 /**
+ * @form New Service Bill
+ */
+function form10_ini()
+{
+	var bill_id=$("#form10_link").attr('data_id');
+	if(bill_id==null)
+		bill_id="";	
+	$('#form10_body').html("");
+
+	if(bill_id!="")
+	{
+		var bill_columns="<bills>" +
+				"<id>"+bill_id+"</id>" +
+				"<customer_name></customer_name>" +
+				"<total></total>" +
+				"<bill_date></bill_date>" +
+				"<amount></amount>" +
+				"<discount></discount>" +
+				"<tax></tax>" +
+				"<offer></offer>" +
+				"<type>service</type>" +
+				"<transaction_id></transaction_id>" +
+				"</bills>";
+		var bill_items_column="<bill_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<unit_price></unit_price>" +
+				"<staff></staff>" +
+				"<notes></notes>" +
+				"<amount></amount>" +
+				"<total></total>" +
+				"<discount></discount>" +
+				"<offer></offer>" +
+				"<type></type>" +
+				"<bill_id>"+bill_id+"</bill_id>" +
+				"<tax></tax>" +
+				"</bill_items>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',bill_columns,function(bill_results)
+		{
+			for (var i in bill_results)
+			{
+				var filter_fields=document.getElementById('form10_master');
+				filter_fields.elements[1].value=bill_results[i].customer_name;
+				filter_fields.elements[2].value=get_my_past_date(bill_results[i].bill_date);
+				filter_fields.elements[3].value=bill_results[i].amount;
+				filter_fields.elements[4].value=bill_results[i].discount;
+				filter_fields.elements[5].value=bill_results[i].tax;
+				filter_fields.elements[6].value=bill_results[i].total;
+				filter_fields.elements[7].value=bill_id;
+				filter_fields.elements[8].value=bill_results[i].offer;
+				filter_fields.elements[9].value=bill_results[i].transaction_id;
+				
+				$(filter_fields).off('submit');
+				$(filter_fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form10_update_form();
+				});
+				break;
+			}
+		});
+		/////////////////////////////////////////////////////////////////////////
+		
+		fetch_requested_data('',bill_items_column,function(results)
+		{
+			results.forEach(function(result)
+			{
+				var rowsHTML="";
+				var id=result.id;
+				rowsHTML+="<tr>";
+				rowsHTML+="<form id='form10_"+id+"'></form>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form10_"+id+"' value='"+result.item_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<textarea readonly='readonly' form='form10_"+id+"'>"+result.notes+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form10_"+id+"' value='"+result.staff+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form10_"+id+"' value='"+result.unit_price+"' step='any'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.total+"'>";
+						rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.amount+"'>";
+						rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.discount+"'>";
+						rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.tax+"'>";
+						rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.offer+"'>";
+						rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form10_"+id+"' id='save_form10_"+id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form10_"+id+"' id='delete_form10_"+id+"' onclick='form10_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+			
+				$('#form10_body').prepend(rowsHTML);
+				
+				var fields=document.getElementById("form10_"+id);
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+				});
+			});
+		});
+	}
+}
+
+
+/**
  * this function prepares the table for schedule payments form
  * @form Manage Payments
  * @formNo 11
@@ -481,7 +592,9 @@ function form12_ini()
 {
 	var bill_id=$("#form12_link").attr('data_id');
 	if(bill_id==null)
-		bill_id="";	$('#form12_body').html("");
+		bill_id="";	
+	
+	$('#form12_body').html("");
 
 	if(bill_id!="")
 	{
@@ -555,13 +668,13 @@ function form12_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form12_"+id+"' value='"+result.batch+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form12_"+id+"' value='"+result.unit_price+"'>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form12_"+id+"' value='"+result.unit_price+"' step='any'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='number' readonly='readonly' form='form12_"+id+"' value='"+result.quantity+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form12_"+id+"' value='"+result.total+"'>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form12_"+id+"' value='"+result.total+"'>";
 						rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form12_"+id+"' value='Details' onclick='modal6_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
@@ -1485,7 +1598,7 @@ function form42_ini()
 	var columns="<bills>" +
 			"<id>"+fid+"</id>" +
 			"<customer_name>"+fname+"</customer_name>" +
-			"<bill_date>"+fdate+"</bill_date>" +
+			"<bill_date></bill_date>" +
 			"<total></total>" +
 			"<type></type>" +
 			"<transaction_id></transaction_id>" +
@@ -1541,9 +1654,6 @@ function form42_ini()
 		});
 	});
 }
-
-
-
 
 /**
  * this function prepares the table for manage purchase orders form

@@ -66,7 +66,7 @@
 			<id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
 			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
 			<description index='no' type='TEXT'></description>
-			<type index='yes' type='VARCHAR(20)'></type><!-- customer/staff/supplier/financial -->
+			<type index='yes' type='VARCHAR(20)'></type><!-- customer/staff/supplier/financial/master -->
 			<last_updated index='no' type='BIGINT'></last_updated>
 	</accounts>
 	<attendance>
@@ -167,14 +167,16 @@
 	</expenses>
 	<payments>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<status index='yes' type="VARCHAR(10)"></status><!-- pending/closed/cancelled/partial -->
+			<acc_name index='yes' type="VARCHAR(90)"></acc_name>
 			<type index='yes' type="VARCHAR(10)"></type><!-- received/delivered -->
-			<date index='yes' type="BIGINT"></date>
 			<total_amount index='no' type="DECIMAL(10,2)"></total_amount>
 			<paid_amount index='no' type="DECIMAL(10,2)"></paid_amount>
-			<acc_name index='yes' type="VARCHAR(90)"></acc_name>
+			<status index='yes' type="VARCHAR(10)"></status><!-- pending/closed/cancelled/partial -->
+			<date index='yes' type="BIGINT"></date>
 			<due_date index='yes' type="BIGINT"></due_date>
 			<mode index='yes' type="VARCHAR(15)"></mode><!-- cash/cheque/draft/credit card/debit card/online banking/coupons -->
+			<transaction_id index='no' type="BIGINT"></transaction_id>
+			<bill_id index='yes' type="BIGINT"></bill_id>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</payments>
 	<credit_notes>

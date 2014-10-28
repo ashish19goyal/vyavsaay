@@ -24,7 +24,6 @@ function form1_delete_item(button)
 					"<quantity>"+quantity+"</quantity>" +
 					"<cost_price>"+cost_price+"</cost_price>" +
 					"<sale_price>"+sale_price+"</sale_price>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</product_instances>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -81,7 +80,6 @@ function form2_delete_item(button)
 					"<offer_name>"+offer_name+"</offer_name>" +
 					"<offer>"+offer_detail+"</offer>" +
 					"<pamphlet_name>"+pamphlet_name+"</pamphlet_name>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -124,7 +122,6 @@ function form2_delete_form()
 		var data_xml="<"+table+">" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+p_name+"</name>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -199,7 +196,6 @@ function form5_delete_item(button)
 					"<initial_value>"+initial_value+"</initial_value>" +
 					"<current_value>"+current_value+"</current_value>" +
 					"<asset_location>"+asset_location+"</asset_location>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</assets>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -276,7 +272,6 @@ function form8_delete_item(button)
 					"<state>"+state+"</state>" +
 					"<country>"+country+"</country>" +
 					"<address_status>"+add_status+"</address_status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</staff>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -290,7 +285,7 @@ function form8_delete_item(button)
 					"<id>"+data_id+"</id>" +
 					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<type>staff</type>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
+					
 					"</accounts>";
 		if(is_online())
 		{
@@ -312,113 +307,63 @@ function form8_delete_item(button)
 
 
 /**
- * @form Service Reciept
+ * @form Create Service Bill
  * @param button
  */
 function form10_delete_item(button)
 {
 	if(is_delete_access('form10'))
 	{
-		var bill_id=document.getElementById("form10_master").elements[4].value;
+		console.log('deleting form10_item');
+		var bill_id=document.getElementById("form10_master").elements[7].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var service=form.elements[0].value;
-		var estimated_cost=form.elements[1].value;
-		var actual_cost=form.elements[2].value;
-		var instructions=form.elements[3].value;
-		var staff=form.elements[4].value;
-		var data_id=form.elements[5].value;
+		var name=form.elements[0].value;
+		var notes=form.elements[1].value;
+		var staff=form.elements[2].value;
+		var price=form.elements[3].value;
+		var total=form.elements[4].value;
+		var amount=form.elements[5].value;
+		var discount=form.elements[6].value;
+		var tax=form.elements[7].value;
+		var offer=form.elements[8].value;
+		var data_id=form.elements[9].value;
 		var last_updated=get_my_time();
-		var table='service_instances';
-		var data_xml="<"+table+">" +
+		
+		var data_xml="<bill_items>" +
 					"<id>"+data_id+"</id>" +
-					"<service_name>"+service+"</service_name>" +
-					"<bill_id>"+bill_id+"</bill_id>" +
-					"<estimated_cost>"+estimated_cost+"</estimated_cost>" +
-					"<actual_cost>"+actual_cost+"</actual_cost>" +
-					"<instructions>"+instructions+"</instructions>" +
+					"<item_name>"+name+"</item_name>" +
+					"<notes>"+notes+"</notes>" +
+					"<unit_price>"+price+"</unit_price>" +
 					"<staff>"+staff+"</staff>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form10</link_to>" +
-					"<title>Deleted</title>" +
-					"<notes>Deleted service "+service+" from receipt no "+bill_id+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
+					"<amount>"+amount+"</amount>" +
+					"<total>"+total+"</total>" +
+					"<discount>"+discount+"</discount>" +
+					"<offer>"+offer+"</offer>" +
+					"<tax>"+tax+"</tax>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"</bill_items>";
+		console.log(data_xml);
 		if(is_online())
 		{
-			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(data_xml);
 		}
 		else
 		{
-			local_delete_row(data_xml,activity_xml);
-		}	
+			local_delete_simple(data_xml);
+		}
+		
 		$(button).parent().parent().remove();
 	}
 	else
 	{
 		$("#modal2").dialog("open");
 	}
+
 }
 
-
-/**
- * @form Service Reciept
- * @param button
- */
-function form10_delete_form(button)
-{
-	if(is_delete_access('form10'))
-	{
-		var form=document.getElementById("form10_master");
-		
-		var customer=form.elements[1].value;
-		var bill_date=get_raw_time(form.elements[2].value);
-		var amount=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
-		var table='bills';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<customer_name>"+customer+"</customer_name>" +
-					"<date_created>"+bill_date+"</date_created>" +
-					"<amount>"+amount+"</amount>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form10</link_to>" +
-					"<title>Discarded</title>" +
-					"<notes>Discarded Bill no "+data_id+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var other_delete="<service_instances>" +
-				"<bill_id>"+data_id+"</bill_id>" +
-				"</service_instances>";
-		if(is_online())
-		{
-			server_delete_row(data_xml,activity_xml);
-			server_delete_simple(other_delete);
-		}
-		else
-		{
-			local_delete_row(data_xml,activity_xml);
-			local_delete_simple(other_delete);
-		}
-	
-		$("[id^='delete_form10']").parent().parent().remove();
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
 
 /**
  * @form Schedule Payments
@@ -448,7 +393,6 @@ function form11_delete_item(button)
 					"<due_date>"+due_date+"</due_date>" +
 					"<status>"+status+"</status>" +
 					"<date>"+date+"</date>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -482,7 +426,7 @@ function form12_delete_item(button)
 {
 	if(is_delete_access('form12'))
 	{
-		var bill_id=document.getElementById("form12_master").elements[4].value;
+		var bill_id=document.getElementById("form12_master").elements[7].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
@@ -498,7 +442,6 @@ function form12_delete_item(button)
 		var offer=form.elements[8].value;
 		var data_id=form.elements[9].value;
 		var last_updated=get_my_time();
-		var table='bill_items';
 		
 		var quantity_data="<product_instances>" +
 					"<id></id>" +
@@ -512,9 +455,9 @@ function form12_delete_item(button)
 			{
 				var q=parseFloat(quantities[i].quantity)+parseFloat(quantity);
 				
-				var data_xml="<"+table+">" +
+				var data_xml="<bill_items>" +
 							"<id>"+data_id+"</id>" +
-							"<product_name>"+name+"</product_name>" +
+							"<item_name>"+name+"</item_name>" +
 							"<batch>"+batch+"</batch>" +
 							"<unit_price>"+price+"</unit_price>" +
 							"<quantity>"+quantity+"</quantity>" +
@@ -522,106 +465,27 @@ function form12_delete_item(button)
 							"<total>"+total+"</total>" +
 							"<discount>"+discount+"</discount>" +
 							"<offer>"+offer+"</offer>" +
-							"<type>bought</type>" +
 							"<tax>"+tax+"</tax>" +
 							"<bill_id>"+bill_id+"</bill_id>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</"+table+">";	
-				var activity_xml="<activity>" +
-							"<data_id>"+data_id+"</data_id>" +
-							"<tablename>"+table+"</tablename>" +
-							"<link_to>form12</link_to>" +
-							"<title>Deleted</title>" +
-							"<notes>Deleted product "+name+" from bill no. "+bill_id+"</notes>" +
-							"<updated_by>"+get_name()+"</updated_by>" +
-							"</activity>";
+							"</bill_items>";	
 				var quantity_xml="<product_instances>" +
 							"<id>"+quantities[i].id+"</id>" +
 							"<quantity>"+q+"</quantity>" +
 							"</product_instances>";
 				if(is_online())
 				{
-					server_delete_row(data_xml,activity_xml);
-					server_write_simple(quantity_xml);
+					server_delete_simple(data_xml);
+					server_update_simple(quantity_xml);
 				}
 				else
 				{
-					local_delete_row(data_xml,activity_xml);
-					local_write_simple(quantity_xml);
-
+					local_delete_simple(data_xml);
+					local_update_simple(quantity_xml);
 				}
 				break;
 			}
 		});
-		
-		var free_data="<bill_items>" +
-				"<id></id>" +
-				"<free_with>"+name+"</free_with>" +
-				"<bill_id>"+bill_id+"</bill_id>" +
-				"</bill_items>";
-		fetch_requested_data('',free_data,function(free_products)
-		{
-			for(var j in free_products)
-			{
-				var free_quantity_data="<product_instances>" +
-						"<id></id>" +
-						"<product_name>"+free_products[j].product_name+"</product_name>" +
-						"<batch>"+free_products[j].batch+"</batch>" +
-						"<quantity></quantity>" +
-						"</product_instances>";
-	
-				fetch_requested_data('',free_quantity_data,function(free_quantities)
-				{
-					for(var k in free_quantities)
-					{
-						var q=parseFloat(free_quantities[k].quantity)+parseFloat(free_products[j].quantity);
-						
-						var free_data_xml="<"+table+">" +
-									"<id>"+data_id+"</id>" +
-									"<product_name>"+free_products[j].product_name+"</product_name>" +
-									"<batch>"+free_products[j].batch+"</batch>" +
-									"<unit_price>0</unit_price>" +
-									"<quantity>free_products[j].quantity</quantity>" +
-									"<amount>0</amount>" +
-									"<total>0</total>" +
-									"<discount>0</discount>" +
-									"<offer>0</offer>" +
-									"<type>free</type>" +
-									"<tax>0</tax>" +
-									"<bill_id>"+bill_id+"</bill_id>" +
-									"<free_with>"+name+"</free_with>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</"+table+">";	
-						var free_activity_xml="<activity>" +
-									"<data_id>"+data_id+"</data_id>" +
-									"<tablename>"+table+"</tablename>" +
-									"<link_to>form12</link_to>" +
-									"<title>Deleted</title>" +
-									"<notes>Deleted free product "+free_products[j].product_name+" from bill no. "+bill_id+"</notes>" +
-									"<updated_by>"+get_name()+"</updated_by>" +
-									"</activity>";
-						var free_quantity_xml="<product_instances>" +
-									"<id>"+free_quantities[k].id+"</id>" +
-									"<quantity>"+q+"</quantity>" +
-									"</product_instances>";
-						if(is_online())
-						{
-							server_delete_row(free_data_xml,free_activity_xml);
-							server_write_simple(free_quantity_xml);
-						}
-						else
-						{
-							local_delete_row(free_data_xml,free_activity_xml);
-							local_write_simple(free_quantity_xml);
-	
-						}
-						break;
-					}
-				});
-				break;
-			}
-		});
-		
+				
 		$(button).parent().parent().remove();
 	}
 	else
@@ -658,7 +522,6 @@ function form14_delete_item(button)
 					"<t_due>"+t_due+"</t_due>" +
 					"<status>"+status+"</status>" +
 					"<t_executed>"+t_executed+"</t_executed>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -712,7 +575,6 @@ function form15_delete_item(button)
 					"<batch>"+batch+"</batch>" +
 					"<quantity>"+quantity+"</quantity>" +
 					"<amount>"+amount+"</amount>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -765,7 +627,6 @@ function form19_delete_item(button)
 					"<sub_bill_id>"+sub_bill_id+"</sub_bill_id>" +
 					"<reason>"+reason+"</reason>" +
 					"<supplier>"+supplier+"</supplier>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -820,7 +681,6 @@ function form21_delete_item(button)
 					"<cost_price>"+cost_price+"</cost_price>" +
 					"<quantity>"+quantity+"</quyantity>" +
 					"<sup_bill_id>"+bill_id+"</sup_bill_id>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -869,7 +729,6 @@ function form21_delete_form(button)
 					"<bill_date>"+bill_date+"</bill_date>" +
 					"<entry_date>"+entry_date+"</entry_date>" +
 					"<amount>"+amount+"</amount>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -927,7 +786,6 @@ function form22_delete_item(button)
 					"<quantity>"+quantity+"</quantity>" +
 					"<method>"+method+"</method>" +
 					"<date>"+date+"</date>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -975,7 +833,6 @@ function form24_delete_item(button)
 					"<product_name>"+name+"</product_name>" +
 					"<quantity>"+quantity+"</quantity>" +
 					"<purchase_order>"+order_id+"</purchase_order>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1022,7 +879,6 @@ function form24_delete_form(button)
 					"<supplier>"+supplier+"</supplier>" +
 					"<order_date>"+order_date+"</order_date>" +
 					"<est_amount>"+est_amount+"</est_amount>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1091,7 +947,6 @@ function form30_delete_item(button)
 					"<state>"+state+"</state>" +
 					"<country>"+country+"</country>" +
 					"<address_status>"+address_status+"</address_status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</customers>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1105,7 +960,6 @@ function form30_delete_item(button)
 					"<id>"+data_id+"</id>" +
 					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<type>customer</type>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</accounts>";
 		if(is_online())
 		{
@@ -1150,7 +1004,6 @@ function form35_delete_item(button)
 					"<end_date>"+end_date+"</end_date>" +
 					"<offer_detail>"+offer_detail+"</offer_detail>" +
 					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</offers>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1199,7 +1052,6 @@ function form38_delete_item(button)
 					"<batch>"+batch+"</batch>" +
 					"<name>"+name+"</name>" +
 					"<quantity>"+quantity+"</quantity>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1248,7 +1100,6 @@ function form39_delete_item(button)
 					"<name>"+name+"</name>" +
 					"<description>"+description+"</description>" +
 					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</product_master>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1349,7 +1200,6 @@ function form40_delete_item(button)
 					"<state>"+state+"</state>" +
 					"<country>"+country+"</country>" +
 					"<address_status>"+address_status+"</address_status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</suppliers>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1363,7 +1213,6 @@ function form40_delete_item(button)
 					"<id>"+data_id+"</id>" +
 					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<type>supplier</type>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</accounts>";
 		if(is_online())
 		{
@@ -1405,7 +1254,6 @@ function form42_delete_item(button)
 					"<customer_name>"+customer_name+"</customer_name>" +
 					"<bill_date>"+bill_date+"</bill_date>" +
 					"<amount>"+amount+"</amount>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bills>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1418,28 +1266,49 @@ function form42_delete_item(button)
 		var transaction_xml="<transactions>" +
 				"<id>"+transaction_id+"</id>" +
 				"</transactions>";
-		var payment_xml="<payments>" +
-				"<id>"+transaction_id+"</id>" +
-				"</payments>";
 
 		if(is_online())
 		{
 			server_delete_row(bill_xml,activity_xml);
 			server_delete_simple(transaction_xml);
-			server_delete_simple(payment_xml);
 		}
 		else
 		{
 			local_delete_row(bill_xml,activity_xml);
 			local_delete_simple(transaction_xml);
-			local_delete_simple(payment_xml);
 		}	
 		$(button).parent().parent().remove();
-		
+
+		var payment_xml="<payments>" +
+				"<id></id>" +
+				"<bill_id>"+data_id+"</bill_id>" +
+				"<status array='yes'>pending--cancelled</status>" +
+				"<transaction_id></transaction_id>" +
+				"</payments>";
+		fetch_requested_data('',payment_xml,function(payments)
+		{
+			for(var x in payments)
+			{
+				var pt_xml="<transactions>" +
+						"<id>"+payments[x].transaction_id+"</id>" +
+						"</transactions>";
+			
+				if(is_online())
+				{
+					server_delete_simple(payment_xml);
+				}
+				else
+				{
+					local_delete_simple(payment_xml);
+				}
+				break;
+			}
+		});
+
 		
 		var items_data="<bill_items>" +
 				"<id></id>" +
-				"<product_name></product_name>" +
+				"<item_name></item_name>" +
 				"<batch></batch>" +
 				"<quantity></quantity>" +
 				"<bill_id>"+data_id+"</bill_id>" +
@@ -1517,7 +1386,6 @@ function form43_delete_item(button)
 					"<supplier>"+supplier+"</supplier>" +
 					"<order_date>"+order_date+"</order_date>" +
 					"<est_amount>"+est_amount+"</est_amount>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1568,7 +1436,6 @@ function form44_delete_item(button)
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
 					"<count_items>"+count_items+"</count_items>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1621,7 +1488,6 @@ function form45_delete_item(button)
 					"<customer_name>"+customer_name+"</customer_name>" +
 					"<date_created>"+date_created+"</date_created>" +
 					"<amount>"+amount+"</amount>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1673,7 +1539,6 @@ function form51_delete_form()
 					"<id>"+data_id+"</id>" +
 					"<username>"+username+"</username>" +
 					"<name>"+name+"</name>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1730,7 +1595,6 @@ function form53_delete_item(button)
 					"<bill_date>"+bill_date+"</bill_date>" +
 					"<entry_date>"+entry_date+"</entry_date>" +
 					"<amount>"+amount+"</amount>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1786,7 +1650,6 @@ function form56_delete_item(button)
 					"<to_acc>"+to_account+"</to_acc>" +
 					"<description>"+description+"</description>" +
 					"<amount>"+amount+"</amount>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1837,7 +1700,6 @@ function form57_delete_item(button)
 					"<price>"+price+"</price>" +
 					"<duration>"+duration+"</duration>" +
 					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</services>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1911,7 +1773,6 @@ function form58_delete_item(button)
 					"<requisite_type>"+type+"</requisite_type>" +
 					"<requisite_name>"+requisite+"</requisite_name>" +
 					"<quantity>"+quantity+"</quantity>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</pre_requisites>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1962,7 +1823,6 @@ function form59_delete_item(button)
 					"<requisite_type>"+type+"</requisite_type>" +
 					"<requisite_name>"+requisite+"</requisite_name>" +
 					"<quantity>"+quantity+"</quantity>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -2011,7 +1871,6 @@ function form60_delete_item(button)
 					"<type>product</type>" +
 					"<attribute>"+attribute+"</attribute>" +
 					"<value>"+value+"</value>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</attributes>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -2059,7 +1918,6 @@ function form61_delete_item(button)
 					"<type>service</type>" +
 					"<attribute>"+attribute+"</attribute>" +
 					"<value>"+value+"</value>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</attributes>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -2111,7 +1969,6 @@ function form62_delete_item(button)
 					"<reviewer>"+reviewer+"</reviewer>" +
 					"<detail>"+detail+"</detail>" +
 					"<rating>"+rating+"</rating>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -2161,7 +2018,6 @@ function form63_delete_item(button)
 					"<reviewer>"+reviewer+"</reviewer>" +
 					"<detail>"+detail+"</detail>" +
 					"<rating>"+rating+"</rating>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</reviews>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -2209,7 +2065,6 @@ function form64_delete_item(button)
 					"<type>service</type>" +
 					"<cross_type>"+cross_type+"</cross_type>" +
 					"<cross_name>"+cross_name+"</cross_name>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</cross_sells>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -2259,7 +2114,6 @@ function form66_delete_item(button)
 					"<type>product</type>" +
 					"<cross_type>"+cross_type+"</cross_type>" +
 					"<cross_name>"+cross_name+"</cross_name>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -2310,7 +2164,6 @@ function form69_delete_item(button)
 					"<quantity>"+quantity+"</quantity>" +
 					"<notes>"+notes+"</notes>" +
 					"<order_id>"+order_id+"</order_id>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_order_items>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -2358,7 +2211,6 @@ function form70_delete_item(button)
 					"<customer_name>"+customer_name+"</customer_name>" +
 					"<order_date>"+order_date+"</order_date>" +
 					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_orders>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -2409,7 +2261,6 @@ function form71_delete_item(button)
 					"<id>"+data_id+"</id>" +
 					"<acc_name>"+name+"</acc_name>" +
 					"<description>"+description+"</description>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"<type>financial</type>" +
 					"</accounts>";	
 		var activity_xml="<activity>" +
