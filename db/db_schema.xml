@@ -194,17 +194,17 @@
 			<product_name index='yes' type="VARCHAR(90)"></product_name>
 			<batch index='yes' type="VARCHAR(50)"></batch>
 			<service index='yes' type="VARCHAR(45)"></service>
-			<multiplicity index='no' type="VARCHAR(3)"></multiplicity><!-- yes/no -->
 			<criteria_type index='no' type="VARCHAR(25)"></criteria_type><!-- Min Amount Crossed/Min Quantity Crossed-->
 			<criteria_amount index='no' type="DECIMAL(12,0)"></criteria_amount>
 			<criteria_quantity index='no' type="DECIMAL(12,0)"></criteria_quantity>
-			<result_type index='no' type="VARCHAR(25)"></result_type><!-- Discount/Quantity Addition/Product Free -->
+			<result_type index='no' type="VARCHAR(25)"></result_type><!-- Discount/Quantity Addition/Product Free/Service Free -->
 			<discount_percent index='no' type="DECIMAL(4,2)"></discount_percent>
 			<discount_amount index='no' type="DECIMAL(12,2)"></discount_amount>
 			<quantity_add_percent index='no' type="DECIMAL(4,2)"></quantity_add_percent>
 			<quantity_add_amount index='no' type="DECIMAL(12,2)"></quantity_add_amount>
 			<free_product_name index='no' type="VARCHAR(90)"></free_product_name>
 			<free_product_quantity index='no' type="DECIMAL(12,2)"></free_product_quantity>
+			<free_service_name index='no' type="VARCHAR(90)"></free_service_name>
 			<end_date index='yes' type="BIGINT"></end_date>
 			<offer_detail index='no' type="TEXT"></offer_detail>
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/expired/closed/extended -->
@@ -247,9 +247,9 @@
 	</sale_orders>
 	<sale_order_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<order_id index='yes' type="BIGINT"></order_id>
 			<item_name index='yes' type="VARCHAR(90)"></item_name>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<notes index='no' type='TEXT'></notes>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</sale_order_items>
@@ -268,6 +268,8 @@
 	</bills>
 	<bill_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<bill_id index='yes' type="BIGINT"></bill_id>
+			<item_name index='yes' type="VARCHAR(90)"></item_name>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
@@ -275,10 +277,7 @@
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<offer index='no' type="TEXT"></offer>
 			<type index='no' type="VARCHAR(10)"></type><!-- free/bought -->	
-			<bill_id index='yes' type="BIGINT"></bill_id>
-			<item_name index='yes' type="VARCHAR(90)"></item_name>
 			<batch index='yes' type="VARCHAR(50)"></batch>
-			<next_due_date index='yes' type="BIGINT"></next_due_date>
 			<notes index='no' type="TEXT"></notes>
 			<staff index='yes' type="VARCHAR(100)"></staff>
 			<tax index='no' type="DECIMAL(12,2)"></tax>

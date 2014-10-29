@@ -182,6 +182,16 @@ function form10_header_ini()
 }
 
 /**
+ * This function clears the form10 for new bill
+ */
+function form10_new_form()
+{
+	form10_header_ini();
+	$("#form10_body").find("tr").remove();
+}
+
+
+/**
  * @form Schedule Payments
  * @formNo 11
  */
@@ -702,32 +712,6 @@ function form44_header_ini()
 	
 	set_my_filter(name_data,name_filter);
 };
-
-/**
- * this function prepares the table for manage service receipts form
- * @form Manage Service Receipts
- * @formNo 45
- */
-function form45_header_ini()
-{
-	var filter_fields=document.getElementById('form45_header');
-	var receipt_filter=filter_fields.elements[0];
-	var name_filter=filter_fields.elements[1];
-	var date_filter=filter_fields.elements[2];
-	
-	var receipt_data="<bills>" +
-			"<id></id>" +
-			"</bills>";
-	var customer_data="<customers>" +
-			"<acc_name></acc_name>" +
-			"</customers>";
-	
-	set_my_filter(receipt_data,receipt_filter);
-	set_my_filter(customer_data,name_filter);
-	$(date_filter).datepicker();
-
-};
-
 
 /**
  * this function sets the current theme for the change theme form
@@ -1477,3 +1461,49 @@ function form71_header_ini()
 	});
 
 };
+
+
+/**
+ * @form Create Bills
+ * @formNo 72
+ */
+function form72_header_ini()
+{
+	var fields=document.getElementById('form72_master');
+	
+	var customers_filter=fields.elements[1];
+	var bill_date=fields.elements[2];
+	fields.elements[3].value=0;
+	fields.elements[4].value=0;
+	fields.elements[5].value=0;
+	fields.elements[6].value=0;
+	fields.elements[7].value=get_new_key();
+	fields.elements[8].value="";
+	fields.elements[9].value=get_new_key();
+	
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form72_create_form();
+	});
+	var customers_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	
+	set_my_filter(customers_data,customers_filter);
+	$(bill_date).datepicker();
+	$(bill_date).val(get_my_date());
+	customers_filter.value='';
+	
+	$(customers_filter).focus();
+}
+
+/**
+ * This function clears the form72 for new bill
+ */
+function form72_new_form()
+{
+	form72_header_ini();
+	$("#form72_body").find("tr").remove();
+}

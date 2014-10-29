@@ -21,8 +21,8 @@
 				<form id='form12_header'></form>
 					<th>Product Name</th>
 					<th>Batch</th>
-					<th>Unit Price</th>
 					<th>Quantity</th>
+					<th>Unit Price</th>
 					<th>Total</th>
 					<th><input type='button' form='form12_header' title='Add item' class='add_icon' onclick='form12_add_item();'></th>
 			</tr>

@@ -34,23 +34,24 @@
 	<div id="modal8" title="Add new Offer">
 		<form id='modal8_form'>
 			<fieldset>
-				<label>Name<input type='text'></label><br/>
+				<label>Name<input type='text' required></label><br/>
 				<label>End Date<input type='text'></label><br/>
-				<label>Type<input type='text'></label><br/>
+				<label>Type<input type='text' required></label><br/>
 				<label>Product name <input type="text"></label><br/>
-				<label>Batch <input type="text"></label><br/>
+				<label>Batch <input type="text"></label>
+				<label><input type='checkbox'>Select All batches</label><br/>
 				<label>Service <input type="text"></label><br/>
-				<label>Multiplicity <input type="text"></label><br/>
-				<label>Applicability Criteria <input type="text"></label><br/>
+				<label>Applicability Criteria <input type="text" required></label><br/>
 				<label>Criteria Amount <input type="number"></label><br/>
 				<label>Criteria Quantity <input type="number"></label><br/>
-				<label>Incentive <input type="text"></label><br/>
+				<label>Incentive <input type="text" required></label><br/>
 				<label>% <input type="number"></label>
 				<label>Rs: <input type="number"></label><br/>
 				<label>% <input type="number"></label>
 				<label>Quantity <input type="number"></label><br/>
 				<label>Free product name <input type="text"></label><br/>
 				<label>Free product quantity <input type="number"></label><br/>			
+				<label>Free service name <input type="text"></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -152,13 +153,6 @@
 				<label>Picture <output></output>
 								<input type="file"></label><br/>
 				<label>Tax (%) <input type="number"></label><br/>
-				Pre-requisites</br>
-				<label>Products <output></output><input type="text"></label><br/>
-				<label>Services <output></output><input type="text"></label><br/>
-				<label>Tasks <output></output><input type="text"></label><br/>
-				Cross-sells</br>
-				<label>Products <output></output><input type="text"></label><br/>
-				<label>Services <output></output><input type="text"></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -232,13 +226,6 @@
 				<label>Picture <output></output>
 								<input type="file"></label><br/>
 				<label>Tax (%) <input type="number"></label><br/>
-				Pre-requisites</br>
-				<label>Products <output></output><input type="text"></label><br/>
-				<label>Services <output></output><input type="text"></label><br/>
-				<label>Tasks <output></output><input type="text"></label><br/>
-				Cross-sells</br>
-				<label>Products <output></output><input type="text"></label><br/>
-				<label>Services <output></output><input type="text"></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -252,14 +239,6 @@
 				<label>Tax (%) <input type="number"></label><br/>
 				<label>Price <input type="number"></label><br/>
 				<label>Duration (in min) <input type="number"></label><br/>
-				<b>Pre-requisites</b></br>
-				<label>Products <output></output><input type="text"></label><br/>
-				<label>Services <output></output><input type="text"></label><br/>
-				<label>Tasks <output></output><input type="text"></label><br/>
-				<label>Assets <output></output><input type="text"></label><br/>
-				<b>Cross-sells</b></br>
-				<label>Products <output></output><input type="text"></label><br/>
-				<label>Services <output></output><input type="text"></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -273,14 +252,6 @@
 				<label>Tax (%) <input type="number"></label><br/>
 				<label>Price <input type="number"></label><br/>
 				<label>Duration (in min) <input type="number"></label><br/>
-				<b>Pre-requisites</b></br>
-				<label>Products <output></output><input type="text"></label><br/>
-				<label>Services <output></output><input type="text"></label><br/>
-				<label>Tasks <output></output><input type="text"></label><br/>
-				<label>Assets <output></output><input type="text"></label><br/>
-				<b>Cross-sells</b></br>
-				<label>Products <output></output><input type="text"></label><br/>
-				<label>Services <output></output><input type="text"></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

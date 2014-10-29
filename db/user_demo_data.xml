@@ -198,7 +198,6 @@
              <product_name>Tata tea</product_name>
              <batch>abc123</batch>
              <service></service>
-             <multiplicity>yes</multiplicity>
              <criteria_type>min amount crossed</criteria_type>
              <criteria_amount>500</criteria_amount>
              <criteria_quantity></criteria_quantity>
@@ -220,7 +219,6 @@
              <product_name>Kurkure</product_name>
              <batch>abc456</batch>
              <service></service>
-             <multiplicity>yes</multiplicity>
              <criteria_type>min quantity crossed</criteria_type>
              <criteria_amount></criteria_amount>
              <criteria_quantity>2</criteria_quantity>

@@ -857,22 +857,6 @@
 		</row>
 		<row>
 			<tablename>offers</tablename>
-			<listname>multiplicity</listname>
-			<name>yes</name>
-			<value>Yes</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>offers</tablename>
-			<listname>multiplicity</listname>
-			<name>no</name>
-			<value>No</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>offers</tablename>
 			<listname>criteria_type</listname>
 			<name>min amount crossed</name>
 			<value>Minimum amount is crossed</value>
@@ -908,6 +892,14 @@
 			<listname>result_type</listname>
 			<name>product free</name>
 			<value>Product Free</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>offers</tablename>
+			<listname>result_type</listname>
+			<name>service free</name>
+			<value>Service Free</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

@@ -56,7 +56,7 @@ function login_online(username,domain,pass)
 	{
 		login_status=e.responseText;
 		var session_xml=e.responseXML;
-		console.log(login_status);
+		//console.log(login_status);
 		//console.log("this is session variable"+session_xml);
 		if(login_status=="failed_auth")
 		{
@@ -183,7 +183,7 @@ function set_session_variables(domain,username,pass)
 			}
 		});
 	
-		console.log("2.1 set_session_variables() exited");
+		//console.log("2.1 set_session_variables() exited");
 	});
 };
 
@@ -290,7 +290,7 @@ function match_password()
 /**
  * This function is run to set the preferences during registration process
  */
-function register_click(ev)
+function register_click()
 {
 	var form=document.getElementById('registeration');
 
@@ -309,7 +309,6 @@ function register_click(ev)
 	
 	if(userid_valid=="incorrect" || emailid_valid=="incorrect" || pass_valid=="incorrect")
 	{
-		console.log(userid_valid+emailid_valid+pass_valid);
 		document.getElementById("failed_register").innerHTML="Please update the incorrect fields to proceed!";
 	}
 	else	
@@ -338,14 +337,15 @@ function register_click(ev)
 						document.getElementById("failed_register").innerHTML="An error occured, please try again.";
 						console.log(e.responseText);
 					}
+					window.location.assign("index.php#register");	
 					hide_loader();
 				});
 			}
 			else
 			{
 				document.getElementById("failed_register").innerHTML="An error occured, please try again.";
+				window.location.assign("index.php#register");	
 				hide_loader();
-				console.log(e2.responseText);
 			}	
 		});
 	}
@@ -374,7 +374,7 @@ function userid_validation()
 			ajax_with_custom_func("./ajax/verify_id.php","userid="+userid,function(e)
 			{
 				status=e.responseText;
-				console.log(status);
+				//console.log(status);
 				if(status=="match")
 				{
 					document.getElementById("userid_validation").innerHTML="This ID already exists, choose a different ID.";
@@ -405,7 +405,7 @@ function emailid_validation()
 		ajax_with_custom_func("./ajax/verify_id.php","&email="+emailid,function(e)
 		{
 			status=e.responseText;
-			console.log(status);
+			//console.log(status);
 			if(status=="match")
 			{
 				document.getElementById("emailid_validation").innerHTML="This email ID is already registered, choose a different ID.";

@@ -19,9 +19,9 @@
 		<thead>
 			<tr>
 				<form id='form10_header'></form>
-					<th>Service</th>
+					<th>Service Name</th>
+					<th>Person</th>
 					<th>Additional Notes</th>
-					<th>Service Person</th>
 					<th>Price</th>
 					<th><input type='button' form='form10_header' title='Add item' class='add_icon' onclick='form10_add_item();'></th>
 			</tr>

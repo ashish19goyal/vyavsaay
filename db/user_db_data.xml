@@ -625,6 +625,14 @@
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form72</name>
+			<display_name>create bill</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -1335,6 +1343,17 @@
 			<username>master</username>
 			<element_id>form71</element_id>
 			<element_name>manage accounts</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form72</element_id>
+			<element_name>create bill</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

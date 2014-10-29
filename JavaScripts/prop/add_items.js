@@ -168,10 +168,10 @@ function form10_add_item()
 				rowsHTML+="<input type='text' required form='form10_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<textarea required form='form10_"+id+"'></textarea>";
+				rowsHTML+="<input type='text' form='form10_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form10_"+id+"'>";
+				rowsHTML+="<textarea required form='form10_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='number' required form='form10_"+id+"' step='any'>";
@@ -185,6 +185,7 @@ function form10_add_item()
 				rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form10_"+id+"' id='save_form10_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form10_"+id+"' id='delete_form10_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form10_"+id+"'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -192,8 +193,8 @@ function form10_add_item()
 		
 		var fields=document.getElementById("form10_"+id);
 		var name_filter=fields.elements[0];
-		var notes_filter=fields.elements[1];
-		var staff_filter=fields.elements[2];
+		var staff_filter=fields.elements[1];
+		var notes_filter=fields.elements[2];
 		var price_filter=fields.elements[3];
 		var total_filter=fields.elements[4];
 		var amount_filter=fields.elements[5];
@@ -201,6 +202,7 @@ function form10_add_item()
 		var tax_filter=fields.elements[7];
 		var offer_filter=fields.elements[8];
 		var id_filter=fields.elements[9];
+		var free_service_filter=fields.elements[12];
 		
 		$(name_filter).focus();
 		
@@ -229,6 +231,7 @@ function form10_add_item()
 			discount_filter.value=0;
 			tax_filter.value=0;
 			offer_filter.value="";
+			free_service_filter.value="";
 			
 			var price_data="<services>" +
 					"<price></price>" +
@@ -248,10 +251,11 @@ function form10_add_item()
 							"<service>"+name_filter.value+"</service>" +
 							"<criteria_type>min amount crossed</criteria_type>" +
 							"<criteria_amount compare='less than'>"+amount+"</criteria_amount>" +
-							"<result_type>discount</result_type>" +
+							"<result_type></result_type>" +
 							"<discount_percent></discount_percent>" +
 							"<discount_amount></discount_amount>" +
 							"<offer_detail></offer_detail>" +
+							"<free_service_name></free_service_name>" +
 							"<status array='yes'>active--extended</status>" +
 							"</offers>";
 					fetch_requested_data('',offer_data,function(offers)
@@ -268,13 +272,20 @@ function form10_add_item()
 						for(var i in offers)
 						{
 							offer_filter.value=offers[i].offer_detail;	
-							if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+							if(offers[i].result_type=='discount')
 							{
-								discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+								if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+								{
+									discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+								}
+								else 
+								{
+									discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+								}
 							}
-							else 
+							else if(offers[i].result_type=='service free')
 							{
-								discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+								free_service_filter.value=offers[i].free_service_name;
 							}		
 							break;
 						}
@@ -423,8 +434,8 @@ function form12_add_item()
 		var fields=document.getElementById("form12_"+id);
 		var name_filter=fields.elements[0];
 		var batch_filter=fields.elements[1];
-		var price_filter=fields.elements[2];
-		var quantity_filter=fields.elements[3];
+		var quantity_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
 		var total_filter=fields.elements[4];
 		var amount_filter=fields.elements[5];
 		var discount_filter=fields.elements[6];
@@ -546,7 +557,7 @@ function form12_add_item()
 						{
 							if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
 							{
-								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].discount_percent)/100));
+								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
 							}
 							else 
 							{
@@ -577,7 +588,7 @@ function form12_add_item()
 						{
 							if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
 							{
-								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].discount_percent)/100));
+								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
 							}
 							else 
 							{
@@ -1861,3 +1872,424 @@ function form69_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form New Bill
+ * @formNo 72
+ */
+function form72_add_product()
+{
+	if(is_create_access('form72'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form72_"+id+"'></form>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
+				rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form72_"+id+"' value='Details' onclick='modal6_action($(this));'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form72_"+id+"' id='save_form72_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form72_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form72_"+id);
+		var name_filter=fields.elements[0];
+		var batch_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var total_filter=fields.elements[4];
+		var amount_filter=fields.elements[5];
+		var discount_filter=fields.elements[6];
+		var tax_filter=fields.elements[7];
+		var offer_filter=fields.elements[8];
+		var id_filter=fields.elements[9];
+		var free_product_filter=fields.elements[12];
+		var free_product_quantity=fields.elements[13];
+		var free_service_filter=fields.elements[14];
+		
+		$(name_filter).focus();
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form72_create_item(fields);
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,name_filter);
+		
+		$(name_filter).on('blur',function(event){
+			var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name>"+name_filter.value+"</product_name>" +
+					"<quantity compare='more than'>0</quantity>" +
+					"</product_instances>";
+			set_my_value_list(batch_data,batch_filter);
+			batch_filter.value="";
+			quantity_filter.value=0;
+			price_filter.value=0;
+			total_filter.value=0;
+			amount_filter.value=0;
+			discount_filter.value=0;
+			tax_filter.value=0;
+			offer_filter.value="";
+			free_product_filter.value="";
+			free_product_quantity.value="";
+			free_service_filter.value="";
+		});
+		
+		$(batch_filter).on('blur',function(event){
+			var price_data="<product_instances>" +
+					"<sale_price></sale_price>" +
+					"<batch>"+batch_filter.value+"</batch>" +
+					"<product_name>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+			set_my_value(price_data,price_filter);
+			
+			var max_data="<product_instances>" +
+					"<quantity></quantity>" +
+					"<batch>"+batch_filter.value+"</batch>" +
+					"<product_name>"+name_filter.value+"</product_name>" +
+					"</product_instances>";		
+			set_my_max_value(max_data,quantity_filter);
+			
+			quantity_filter.value=0;
+			total_filter.value=0;
+			amount_filter.value=0;
+			discount_filter.value=0;
+			tax_filter.value=0;
+			offer_filter.value="";
+			free_product_filter.value="";
+			free_product_quantity.value="";
+			free_service_filter.value="";
+		});
+		
+		$(quantity_filter).on('blur',function(event)
+		{
+			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			amount_filter.value=amount;
+			var offer_data="<offers>" +
+					"<offer_type>product</offer_type>" +
+					"<product_name>"+name_filter.value+"</product_name>" +
+					"<batch array='yes'>"+batch_filter.value+"--all</batch>" +
+					"<criteria_type></criteria_type>" +
+					"<criteria_amount></criteria_amount>" +
+					"<criteria_quantity></criteria_quantity>" +
+					"<result_type></result_type>" +
+					"<discount_percent></discount_percent>" +
+					"<discount_amount></discount_amount>" +
+					"<quantity_add_percent></quantity_add_percent>" +
+					"<quantity_add_amount></quantity_add_amount>" +
+					"<free_product_name></free_product_name>" +
+					"<free_product_quantity></free_product_quantity>" +
+					"<free_service_name></free_service_name>" +
+					"<offer_detail></offer_detail>" +
+					"<status array='yes'>active--extended</status>" +
+					"</offers>";
+			fetch_requested_data('',offer_data,function(offers)
+			{
+				////sorting offers based on criteria amount and criteria quantity
+				offers.sort(function(a,b)
+				{
+					if(a.criteria_amount<b.criteria_amount)
+					{	return 1;}
+					else if(a.criteria_quantity<b.criteria_quantity)
+					{	return 1;}
+					else 
+					{	return -1;}
+				});
+						
+				for(var i in offers)
+				{
+					offer_filter.value=offers[i].offer_detail;
+					if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=parseFloat(quantity_filter.value))
+					{
+						if(offers[i].result_type=='discount')
+						{
+							if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+							{
+								discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+							}
+							else 
+							{
+								discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
+							}
+						}
+						else if(offers[i].result_type=='quantity addition')
+						{
+							if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+							}
+							else 
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity))));
+							}
+						}
+						else if(offers[i].result_type=='product free')
+						{
+							free_product_filter.value=offers[i].free_product_name;
+							free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
+						}
+						else if(offers[i].result_type=='service free')
+						{
+							free_service_filter.value=offers[i].free_service_name;
+						}
+						break;
+					}
+					else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=amount)
+					{
+						if(offers[i].result_type=='discount')
+						{
+							if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+							{
+								discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+							}
+							else 
+							{
+								discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+							}
+						}
+						else if(offers[i].result_type=='quantity addition')
+						{
+							if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+							}
+							else 
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount))));
+							}
+						}
+						else if(offers[i].result_type=='product free')
+						{
+							free_product_filter.value=offers[i].free_product_name;
+							free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+						}
+						else if(offers[i].result_type=='service free')
+						{
+							free_service_filter.value=offers[i].free_service_name;
+						}
+
+						break;
+					}
+				}
+				
+				var tax_data="<product_master>" +
+						"<name>"+name_filter.value+"</name>" +
+						"<tax></tax>" +
+						"</product_master>";
+				fetch_requested_data('',tax_data,function(taxes)
+				{
+					taxes.forEach(function(tax)
+					{
+						tax_filter.value=parseFloat((parseFloat(tax.tax)*(amount-parseFloat(discount_filter.value)))/100);
+					});
+					
+					total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
+				});
+				
+			});
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Create Bill
+ * @formNo 72
+ */
+function form72_add_service()
+{
+	if(is_create_access('form72'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form72_"+id+"'></form>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form72_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<textarea form='form72_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form72_"+id+"' id='save_form72_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form72_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form72_"+id);
+		var name_filter=fields.elements[0];
+		var staff_filter=fields.elements[1];
+		var notes_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var total_filter=fields.elements[4];
+		var amount_filter=fields.elements[5];
+		var discount_filter=fields.elements[6];
+		var tax_filter=fields.elements[7];
+		var offer_filter=fields.elements[8];
+		var id_filter=fields.elements[9];
+		var free_product_filter=fields.elements[12];
+		var free_product_quantity=fields.elements[13];
+		var free_service_filter=fields.elements[14];
+		
+		$(name_filter).focus();
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form72_create_item(fields);
+		});
+		
+		var service_data="<services>" +
+				"<name></name>" +
+				"</services>";
+		set_my_value_list(service_data,name_filter);
+		
+		var staff_data="<staff>" +
+				"<acc_name></acc_name>" +
+				"<status>active</status>" +
+				"</staff>";
+		set_my_value_list(staff_data,staff_filter);
+		
+		$(name_filter).on('blur',function(event){
+			notes_filter.value="";
+			price_filter.value=0;
+			total_filter.value=0;
+			amount_filter.value=0;
+			discount_filter.value=0;
+			tax_filter.value=0;
+			offer_filter.value="";
+			free_product_filter.value="";
+			free_product_quantity.value="";
+			free_service_filter.value="";
+			
+			var price_data="<services>" +
+					"<price></price>" +
+					"<tax></tax>" +
+					"<name>"+name_filter.value+"</name>" +
+					"</services>";
+			
+			fetch_requested_data('',price_data,function(prices)
+			{
+				for(var a in prices)
+				{
+					price_filter.value=prices[a].price;
+					var amount=parseFloat(prices[a].price);
+					amount_filter.value=amount;
+					var offer_data="<offers>" +
+							"<offer_type>service</offer_type>" +
+							"<service>"+name_filter.value+"</service>" +
+							"<criteria_type>min amount crossed</criteria_type>" +
+							"<criteria_amount compare='less than'>"+amount+"</criteria_amount>" +
+							"<result_type></result_type>" +
+							"<discount_percent></discount_percent>" +
+							"<discount_amount></discount_amount>" +
+							"<offer_detail></offer_detail>" +
+							"<free_product_name></free_product_name>" +
+							"<free_product_quantity></free_product_quantity>" +
+							"<free_service_name></free_service_name>" +
+							"<status array='yes'>active--extended</status>" +
+							"</offers>";
+					fetch_requested_data('',offer_data,function(offers)
+					{
+						////sorting offers based on criteria amount and criteria quantity
+						offers.sort(function(a,b)
+						{
+							if(a.criteria_amount<b.criteria_amount)
+							{	return 1;}
+							else 
+							{	return -1;}
+						});
+								
+						for(var i in offers)
+						{
+							offer_filter.value=offers[i].offer_detail;	
+							if(offers[i].result_type=='discount')
+							{
+								if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+								{
+									discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+								}
+								else 
+								{
+									discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+								}
+							}
+							else if(offers[i].result_type=='product free')
+							{
+								free_product_filter.value=offers[i].free_product_name;
+								free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
+							}		
+							else if(offers[i].result_type=='service free')
+							{
+								free_service_filter.value=offers[i].free_service_name;
+							}		
+							break;
+						}
+					});
+
+					tax_filter.value=parseFloat((parseFloat(prices[a].tax)*(amount-parseFloat(discount_filter.value)))/100);
+					break;
+				}
+				total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
+			});					
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+

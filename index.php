@@ -117,7 +117,7 @@
        			<div class="row Demo text-center">
        				<div class="demo-grid">
 	       				<div class="col-md-5 demo-img1">
-	       					 <img src="images/ab-1.png" alt="">
+	       					<!--  <img src="images/ab-1.png" alt="">  -->
 	       				</div>
 	       				<div class="col-md-7 Demo-text">
 	       					<p>Here is a quick introduction video for vyavsaay</p>

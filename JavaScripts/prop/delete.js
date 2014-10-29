@@ -319,10 +319,9 @@ function form10_delete_item(button)
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
-		
 		var name=form.elements[0].value;
-		var notes=form.elements[1].value;
-		var staff=form.elements[2].value;
+		var staff=form.elements[1].value;
+		var notes=form.elements[2].value;
 		var price=form.elements[3].value;
 		var total=form.elements[4].value;
 		var amount=form.elements[5].value;
@@ -433,8 +432,8 @@ function form12_delete_item(button)
 		
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var price=form.elements[2].value;
-		var quantity=form.elements[3].value;
+		var quantity=form.elements[2].value;
+		var price=form.elements[3].value;
 		var total=form.elements[4].value;
 		var amount=form.elements[5].value;
 		var discount=form.elements[6].value;
@@ -1466,58 +1465,6 @@ function form44_delete_item(button)
 	}
 }
 
-/**
- * @form Manage Service Receipts
- * @param button
- */
-function form45_delete_item(button)
-{
-	if(is_delete_access('form45'))
-	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
-		var data_id=form.elements[0].value;
-		var customer_name=form.elements[1].value;
-		var date_created=get_raw_time(form.elements[2].value);
-		var amount=form.elements[3].value;
-		var last_updated=get_my_time();
-		var table='bills';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<customer_name>"+customer_name+"</customer_name>" +
-					"<date_created>"+date_created+"</date_created>" +
-					"<amount>"+amount+"</amount>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form45</link_to>" +
-					"<title>Deleted</title>" +
-					"<notes>Deleted bill no "+data_id+" for customer "+customer_name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var other_delete="<service_instances>" +
-				"<bill_id>"+data_id+"</bill_id>" +
-				"</service_instances>";
-		if(is_online())
-		{
-			server_delete_row(data_xml,activity_xml);
-			server_delete_simple(other_delete);
-		}
-		else
-		{
-			local_delete_row(data_xml,activity_xml);
-			local_delete_simple(other_delete);
-		}	
-		$(button).parent().parent().remove();
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
 
 /**
  * formNo 51
@@ -2286,3 +2233,120 @@ function form71_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form New Bill
+ * @param button
+ */
+function form72_delete_item(button)
+{
+	if(is_delete_access('form12'))
+	{
+		var bill_id=document.getElementById("form72_master").elements[7].value;
+		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		var name=form.elements[0].value;
+		var batch="";
+		var staff="";
+		var quantity="";
+		var notes="";
+		if(isNaN(form.elements[2].value))
+		{
+			staff=form.elements[1].value;
+			notes=form.elements[2].value;
+		}
+		else
+		{
+			batch=form.elements[1].value;
+			quantity=form.elements[2].value;
+		}
+		var price=form.elements[3].value;
+				var total=form.elements[4].value;
+		var amount=form.elements[5].value;
+		var discount=form.elements[6].value;
+		var tax=form.elements[7].value;
+		var offer=form.elements[8].value;
+		var data_id=form.elements[9].value;
+		var last_updated=get_my_time();
+		
+		if(isNaN(form.elements[2].value))
+		{
+			var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+name+"</item_name>" +
+					"<unit_price>"+price+"</unit_price>" +
+					"<notes>"+notes+"</notes>" +
+					"<staff>"+staff+"</staff>" +
+					"<amount>"+amount+"</amount>" +
+					"<total>"+total+"</total>" +
+					"<discount>"+discount+"</discount>" +
+					"<offer>"+offer+"</offer>" +
+					"<type>bought</type>" +
+					"<tax>"+tax+"</tax>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bill_items>";	
+			if(is_online())
+			{
+				server_delete_simple(data_xml);
+				
+			}
+			else
+			{
+				local_delete_simple(data_xml);
+			}
+		}
+		else
+		{
+			var quantity_data="<product_instances>" +
+						"<id></id>" +
+						"<product_name>"+name+"</product_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<quantity></quantity>" +
+						"</product_instances>";
+			fetch_requested_data('',quantity_data,function(quantities)
+			{
+				for(var i in quantities)
+				{
+					var q=parseFloat(quantities[i].quantity)+parseFloat(quantity);
+					
+					var data_xml="<bill_items>" +
+								"<id>"+data_id+"</id>" +
+								"<item_name>"+name+"</item_name>" +
+								"<batch>"+batch+"</batch>" +
+								"<unit_price>"+price+"</unit_price>" +
+								"<quantity>"+quantity+"</quantity>" +
+								"<amount>"+amount+"</amount>" +
+								"<total>"+total+"</total>" +
+								"<discount>"+discount+"</discount>" +
+								"<offer>"+offer+"</offer>" +
+								"<tax>"+tax+"</tax>" +
+								"<bill_id>"+bill_id+"</bill_id>" +
+								"</bill_items>";	
+					var quantity_xml="<product_instances>" +
+								"<id>"+quantities[i].id+"</id>" +
+								"<quantity>"+q+"</quantity>" +
+								"</product_instances>";
+					if(is_online())
+					{
+						server_delete_simple(data_xml);
+						server_update_simple(quantity_xml);
+					}
+					else
+					{
+						local_delete_simple(data_xml);
+						local_update_simple(quantity_xml);
+					}
+					break;
+				}
+			});
+		}					
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
