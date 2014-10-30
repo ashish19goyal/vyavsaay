@@ -190,19 +190,23 @@
 	      	<div class="container">
 	      		  <h3>CONTACT</h3>
       			  <div class="contact-form">
-		  	        <form>
-			    	    <p class="comment-form-author"><label for="author"> Name</label>
-			    	    	<input type="text" class="textbox" placeholder="Enter your name...">
+		  	        <form id='index_contact'>
+			    	    <p class="comment-form-author"><label>Name</label>
+			    	    	<input type="text" name='userName' required class="textbox" placeholder="Enter your name...">
 				    	</p>
-				        <p class="comment-form-author"><label for="author">Email</label>
-				     	   <input type="text" class="textbox" placeholder="Enter your email...">
+				        <p class="comment-form-author"><label>Email</label>
+				     	   <input type="email" name='userEmail' class="textbox" placeholder="Enter your email...">
 				        </p>
-				        <p class="comment-form-author"><label for="author">Message</label>
-				    	  <textarea placeholder='Enter your message...'></textarea>
+				        <p class="comment-form-author"><label>Phone</label>
+				     	   <input type="tel" name='userPhone' class="textbox" placeholder="Enter your email...">
 				        </p>
-				        <input name="submit" type="submit" id="submit" value="Submit">
+				        <p class="comment-form-author"><label>Message</label>
+				    	  <textarea name='userMsg' placeholder='Enter your message...'></textarea>
+				        </p>
+				        <input type="submit" value="Submit">
 			        </form>
 		          </div>
+		          <div class="Demo-text"><p id="contact_complete"></p></div>
 	      	</div>
 		</div>
 
@@ -263,6 +267,11 @@
 			event.preventDefault();
 			register_click();
 		});
-		
-		
+
+		$('#index_contact').on('submit',function(event)
+		{
+			event.preventDefault();
+			contact_click();
+		});
+				
 </script>

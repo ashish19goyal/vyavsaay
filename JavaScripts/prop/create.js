@@ -272,8 +272,6 @@ function form10_create_item(form)
 			{
 				local_create_simple(free_xml);
 			}
-			offer_invalid=false;
-			break;
 		}
 		///////////added free service///////////
 		
@@ -3085,9 +3083,12 @@ function create_bill_from_order(order_id)
 										
 								for(var i in offers)
 								{
+									console.log("found atleast one offer");
 									item_offer=offers[i].offer_detail;
 									if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=parseFloat(order_item.quantity))
 									{
+										console.log("offer criteria met");
+
 										if(offers[i].result_type=='discount')
 										{
 											if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
@@ -3112,8 +3113,10 @@ function create_bill_from_order(order_id)
 										}
 										else if(offers[i].result_type=='product free')
 										{
+											console.log("adding free product as per offer");
+
 											var free_product_name=offers[i].free_product_name;
-											var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(bill_amount-bill_discount)/parseFloat(offers[i].criteria_amount)));
+											var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(order_item.quantity)/parseFloat(offers[i].criteria_quantity)));
 											
 											var free_quantity_data="<product_instances>" +
 														"<id></id>" +
@@ -3135,7 +3138,7 @@ function create_bill_from_order(order_id)
 																	"<quantity>"+q+"</quantity>" +
 																	"</product_instances>";
 														var free_xml="<bill_items>" +
-																	"<id>"+id+"</id>" +
+																	"<id>"+get_new_key()+"</id>" +
 																	"<item_name>"+free_product_name+"</item_name>" +
 																	"<batch>"+free_quantities[j].batch+"</batch>" +
 																	"<unit_price>0</unit_price>" +
@@ -3148,7 +3151,7 @@ function create_bill_from_order(order_id)
 																	"<tax>0</tax>" +
 																	"<bill_id>"+order_id+"</bill_id>" +
 																	"<free_with>"+order_item.item_name+"</free_with>" +
-																	"<last_updated>"+last_updated+"</last_updated>" +
+																	"<last_updated>"+get_my_time()+"</last_updated>" +
 																	"</bill_items>";	
 														
 														if(is_online())
@@ -3168,7 +3171,7 @@ function create_bill_from_order(order_id)
 										}
 										break;
 									}
-									else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=amount)
+									else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=item_amount)
 									{
 										if(offers[i].result_type=='discount')
 										{
@@ -3435,7 +3438,11 @@ function create_bill_from_order(order_id)
 						
 						for(var z in sale_orders)
 						{
-							var data_xml="<bills>" +
+							var sale_order_xml="<sale_orders>" +
+										"<id>"+order_id+"</id>" +
+										"<status>billed</status>" +
+										"</sale_orders>";
+							var bill_xml="<bills>" +
 										"<id>"+order_id+"</id>" +
 										"<customer_name>"+sale_orders[z].customer_name+"</customer_name>" +
 										"<bill_date>"+get_my_time()+"</bill_date>" +
@@ -3491,14 +3498,16 @@ function create_bill_from_order(order_id)
 										"</transactions>";
 							if(is_online())
 							{
-								server_create_row(data_xml,activity_xml);
+								server_update_simple(sale_order_xml);
+								server_create_row(bill_xml,activity_xml);
 								server_create_simple(transaction_xml);
 								server_create_simple(pt_xml);
 								server_create_simple(payment_xml);
 							}
 							else
 							{
-								local_create_row(data_xml,activity_xml);
+								local_update_simple(sale_order_xml);
+								local_create_row(bill_xml,activity_xml);
 								local_create_simple(transaction_xml);
 								local_create_simple(pt_xml);
 								local_create_simple(payment_xml);

@@ -1291,14 +1291,21 @@ function form42_delete_item(button)
 				var pt_xml="<transactions>" +
 						"<id>"+payments[x].transaction_id+"</id>" +
 						"</transactions>";
-			
+				var pay_xml="<payments>" +
+						"<id>"+payments[x].id+"</id>" +
+						"<bill_id></bill_id>" +
+						"<transaction_id></transaction_id>" +
+						"</payments>";
+
 				if(is_online())
 				{
-					server_delete_simple(payment_xml);
+					server_delete_simple(pay_xml);
+					server_delete_simple(pt_xml);
 				}
 				else
 				{
-					local_delete_simple(payment_xml);
+					local_delete_simple(pay_xml);
+					local_delete_simple(pt_xml);
 				}
 				break;
 			}
