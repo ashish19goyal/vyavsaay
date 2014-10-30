@@ -337,14 +337,14 @@ function register_click()
 						document.getElementById("failed_register").innerHTML="An error occured, please try again.";
 						console.log(e.responseText);
 					}
-					window.location.assign("index.php#register");	
+					window.location.assign("#register");	
 					hide_loader();
 				});
 			}
 			else
 			{
 				document.getElementById("failed_register").innerHTML="An error occured, please try again.";
-				window.location.assign("index.php#register");	
+				window.location.assign("#register");	
 				hide_loader();
 			}	
 		});
@@ -444,7 +444,7 @@ function contact_click()
 	{
 		$("#index_contact").slideUp();
 		document.getElementById("contact_complete").innerHTML="Thanks for contacting Vyavsaay. We will reach out to you very soon.";
-		window.location.assign("index.php#contact");	
+		//window.location.assign("index.php#contact");	
 		hide_loader();
 	});
 }

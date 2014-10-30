@@ -108,16 +108,18 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<order_date index='yes' type="BIGINT"></order_date>
 			<supplier index='yes' type="VARCHAR(100)"></supplier>
-			<est_amount index='no' type="DECIMAL(10,2)"></est_amount>
+			<status index='no' type="VARCHAR(25)"></status><!-- cancelled/order placed/draft -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</purchase_orders>
-	<purchase_items>  
+	<purchase_order_items>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<quantity index='no' type="DECIMAL(12,2)"></quantity>
-			<purchase_order index='yes' type="BIGINT"></purchase_order>
+			<order_id index='yes' type="BIGINT"></order_id>
 			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<make index='no' type='VARCHAR(100)'></make>
+			<price index='no' type='DECIMAL(12,2)'></price>
 			<last_updated index='no' type="BIGINT"></last_updated>
-	</purchase_items>
+	</purchase_order_items>
 	<supplier_bills>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<bill_id index='no' type="VARCHAR(50)" unique='yes'></bill_id>

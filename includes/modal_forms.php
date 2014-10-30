@@ -324,4 +324,17 @@
 		</form>
 	</div>
 	
+	<div id="modal27" title="Order product">
+		<form id='modal27_form'>
+			<fieldset>
+				<label>Product Name <input type='text' required readonly='readonly'></label><br/>
+				<label>Make <input type="text" required readonly='readonly'></label><br/>
+				<label>Cost Price <input type="number" step='any' readonly='readonly'></label><br/>
+				<label>Quantity <input type="number" step='any' requried></label><br/>
+				<label>Supplier <input type="text" required></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+	
 </div>

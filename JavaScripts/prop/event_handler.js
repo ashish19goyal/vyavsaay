@@ -56,13 +56,13 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=8;i<27;i++)
+	for(var i=8;i<28;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
 	   		width: 300,
 	   		modal: true,
-	   		show: "bounce",
+	   		show: "slide",
 	   		closeOnEscape: true,
 		});
 	}

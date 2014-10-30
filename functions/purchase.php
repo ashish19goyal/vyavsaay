@@ -4,12 +4,13 @@
 		echo "<ul>";
 			if(strpos($_SESSION['forms'],'form21')!==false)
 				echo "<li><a id='form21_link' href='#form21' onclick='form21_header_ini(); form24_ini();' data-i18n='form.goods_received'></a></li>";
+			if(strpos($_SESSION['forms'],'form53')!==false)
+				echo "<li><a id='form53_link' href='#form53' onclick='form53_header_ini(); form53_ini();' data-i18n='form.manage_supplier_bills'></a></li>";
 			if(strpos($_SESSION['forms'],'form24')!==false)
 				echo "<li><a id='form24_link' href='#form24' onclick='form24_header_ini(); form24_ini();' data-i18n='form.create_purchase_order'></a></li>";
 			if(strpos($_SESSION['forms'],'form43')!==false)
 				echo "<li><a id='form43_link' href='#form43' onclick='form43_header_ini(); form43_ini();' data-i18n='form.manage_purchase_orders'></a></li>";
-			if(strpos($_SESSION['forms'],'form53')!==false)
-				echo "<li><a id='form53_link' href='#form53' onclick='form53_header_ini(); form53_ini();' data-i18n='form.manage_supplier_bills'></a></li>";
+			
 		echo "</ul>";
 
 		if(strpos($_SESSION['forms'],'form21')!==false)

@@ -537,11 +537,3 @@ function csv_string_to_obj_array(csvString)
 	}
 	return results;
 }
-
-function get_key_from_object(tablename,column,value)
-{
-}
-
-function get_object_from_key(tablename,column,key)
-{
-}

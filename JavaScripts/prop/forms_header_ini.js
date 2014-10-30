@@ -447,7 +447,7 @@ function form22_header_ini()
 
 
 /**
- * @form Create purchase order
+ * @form New Purchase Order
  * @formNo 24
  */
 function form24_header_ini()
@@ -456,26 +456,37 @@ function form24_header_ini()
 	
 	var supplier_filter=fields.elements[1];
 	var order_date=fields.elements[2];
-	fields.elements[3].value=0;
+	var status_filter=fields.elements[3];
 	fields.elements[4].value=get_new_key();
-		
+	
 	$(fields).off('submit');
-	$(fields).on('submit',function(event)
+	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
 		form24_create_form();
 	});
-
-	var suppliers_data="<suppliers>" +
+	var supplier_data="<suppliers>" +
 		"<acc_name></acc_name>" +
 		"</suppliers>";
 	
-	set_my_filter(suppliers_data,supplier_filter);
-	
+	set_my_filter(supplier_data,supplier_filter);
 	$(order_date).datepicker();
-	$(order_date).val(get_my_date());
-	
+	order_date.value=get_my_date();
+	set_static_value_list('purchase_orders','status',status_filter);
+	status_filter.value='draft';
+	supplier_filter.value='';
 }
+
+/**
+ * @form New Purchase Order
+ * This function clears the form24 for new order
+ */
+function form24_new_form()
+{
+	form24_header_ini();
+	$("#form24_body").find("tr").remove();
+}
+
 
 
 /**
@@ -672,7 +683,6 @@ function form42_header_ini()
 
 
 /**
- * this function prepares the table for manage purchase orders form
  * @form Manage Purchase Orders
  * @formNo 43
  */
@@ -681,20 +691,20 @@ function form43_header_ini()
 	var filter_fields=document.getElementById('form43_header');
 	var order_filter=filter_fields.elements[0];
 	var name_filter=filter_fields.elements[1];
-	var date_filter=filter_fields.elements[2];
+	var status_filter=filter_fields.elements[2];
 	
 	var order_data="<purchase_orders>" +
 			"<id></id>" +
 			"</purchase_orders>";
-	var supplier_data="<suppliers>" +
-			"<name></name>" +
+	var name_data="<suppliers>" +
+			"<acc_name></acc_name>" +
 			"</suppliers>";
 	
 	set_my_filter(order_data,order_filter);
-	set_my_filter(supplier_data,name_filter);
-	$(date_filter).datepicker();
-
+	set_my_filter(name_data,name_filter);
+	set_static_filter('purchase_orders','status',status_filter);
 };
+
 
 /**
  * this function prepares the table for manage pamphlets form

@@ -88,6 +88,30 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>purchase_orders</tablename>
+			<listname>status</listname>
+			<name>cancelled</name>
+			<value>Cancelled</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>purchase_orders</tablename>
+			<listname>status</listname>
+			<name>draft</name>
+			<value>Draft</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>purchase_orders</tablename>
+			<listname>status</listname>
+			<name>order placed</name>
+			<value>Order Placed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>sale_orders</tablename>
 			<listname>type</listname>
 			<name>service</name>

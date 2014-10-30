@@ -1052,7 +1052,7 @@ function form22_add_item()
 
 
 /**
- * @form Create Purchase Orders
+ * @form New Purchase Order
  * @formNo 24
  */
 function form24_add_item()
@@ -1064,15 +1064,21 @@ function form24_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form24_"+id+"'></form>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form24_"+id+"' value=''>";
+				rowsHTML+="<input type='text' required form='form24_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form24_"+id+"' value=''>";
+				rowsHTML+="<input type='number' required form='form24_"+id+"' value='' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='text' form='form24_"+id+"' value='' readonly='readonly'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td>";
+				rowsHTML+="<input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='hidden' form='form24_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form24_"+id+"' id='save_form24_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form24_"+id+"' id='delete_form24_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form24_"+id+"' id='delete_form24_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -1080,20 +1086,44 @@ function form24_add_item()
 		
 		var fields=document.getElementById("form24_"+id);
 		var name_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var make_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var id_filter=fields.elements[4];
+		
+		$(name_filter).focus();
 		
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
 			form24_create_item(fields);
 		});
-				
 		
-		$(name_filter).focus();
-	
-		var products_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-		set_my_value_list(products_data,name_filter);
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,name_filter);
+				
+		$(name_filter).on('blur',function(event)
+		{
+			var make_data="<product_master>" +
+					"<make></make>" +
+					"<name>"+name_filter.value+"</name>" +
+					"</product_master>";
+			set_my_value(make_data,make_fitler);
+			
+			var price_data="<product_instances>" +
+						"<cost_price></cost_price>" +
+						"<product_name>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+			get_single_column_data(function(prices)
+			{
+				var min_value=Math.min.apply(null,prices);
+				price_filter.value=min_value;
+			},price_data);
+			
+			quantity_filter.value="";
+		});
 	}
 	else
 	{
@@ -1788,10 +1818,10 @@ function form69_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form69_"+id+"'></form>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form69_"+id+"' value=''>";
+				rowsHTML+="<input type='text' required form='form69_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form69_"+id+"' value=''>";
+				rowsHTML+="<input type='number' required form='form69_"+id+"' value='' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<textarea form='form69_"+id+"'></textarea>";

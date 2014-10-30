@@ -53,8 +53,9 @@ function form1_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form1_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form1_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form1_"+result.id+"' value='saved' onclick='form1_delete_item($(this));'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form1_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form1_"+result.id+"' onclick='form1_delete_item($(this));'>";
+						rowsHTML+="<input type='button' class='process_ok_icon' form='form1_"+result.id+"' onclick=\"modal27_action('"+result.product_name+"');\">";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -1027,6 +1028,101 @@ function form22_ini()
 
 
 /**
+ * @form New Purchase order
+ * @formNo 24
+ */
+function form24_ini()
+{
+	var order_id=$("#form24_link").attr('data_id');
+	if(order_id==null)
+		order_id="";	
+	
+	$('#form24_body').html("");
+
+	if(order_id!="")
+	{
+		var order_columns="<purchase_orders>" +
+				"<id>"+order_id+"</id>" +
+				"<supplier></supplier>" +
+				"<order_date></order_date>" +
+				"<status></status>" +
+				"</purchase_orders>";
+		var order_items_column="<purchase_order_items>" +
+				"<id></id>" +
+				"<product_name></product_name>" +
+				"<quantity></quantity>" +
+				"<order_id>"+order_id+"</order_id>" +
+				"<make></make>" +
+				"<price></price>" +
+				"</purchase_order_items>";
+	
+		////separate fetch function to get order details like customer name, total etc.
+		fetch_requested_data('',order_columns,function(order_results)
+		{
+			for(var i in order_results)
+			{
+				var filter_fields=document.getElementById('form24_master');
+				filter_fields.elements[1].value=order_results[i].supplier_name;
+				filter_fields.elements[2].value=get_my_past_date(order_results[i].order_date);
+				filter_fields.elements[3].value=order_results[i].status;
+				filter_fields.elements[4].value=order_id;
+				
+				$(filter_fields).off('submit');
+				$(filter_fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form24_update_form();
+				});
+				break;
+			}
+		});
+		/////////////////////////////////////////////////////////////////////////
+		
+		fetch_requested_data('',order_items_column,function(results)
+		{
+			results.forEach(function(result)
+			{
+				var rowsHTML="";
+				var id=result.id;
+				rowsHTML+="<tr>";
+				rowsHTML+="<form id='form24_"+id+"'></form>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' required form='form24_"+id+"' value='"+result.product_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='number' ondblclick='set_editable($(this));' readonly='readonly' required form='form24_"+id+"' value='"+result.quantity+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' required form='form24_"+id+"' value='"+result.make+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='number'readonly='readonly' required form='form24_"+id+"' value='"+result.price+"' step='any'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='hidden' form='form24_"+id+"' value='"+id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form24_"+id+"' id='save_form24_"+id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form24_"+id+"' id='delete_form24_"+id+"' onclick='form24_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+			
+				$('#form24_body').prepend(rowsHTML);
+				
+				var fields=document.getElementById("form24_"+id);
+				var name_filter=fields.elements[0];
+				
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form24_update_item(fields);
+				});
+			});
+		});
+	}
+}
+
+
+
+/**
  * this function prepares the table for manage customers form
  * @form Manage Customers
  * @formNo 30
@@ -1656,9 +1752,10 @@ function form42_ini()
 	});
 }
 
+
+
 /**
- * this function prepares the table for manage purchase orders form
- * @form Manage Purchase Orders
+ * @form Manage Purchase orders
  * @formNo 43
  */
 function form43_ini()
@@ -1673,19 +1770,19 @@ function form43_ini()
 	if(fid==="")
 		fid=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
-	var fdate=filter_fields.elements[2].value;
+	var fstatus=filter_fields.elements[2].value;
 	
 	var columns="<purchase_orders>" +
 			"<id>"+fid+"</id>" +
-			"<order_date>"+fdate+"</order_date>" +
 			"<supplier>"+fname+"</supplier>" +
-			"<est_amount></est_amount>" +
+			"<order_date></order_date>" +
+			"<status>"+fstatus+"</status>" +
 			"</purchase_orders>";
 
 	$('#form43_body').html("");
 
 	fetch_requested_data('form43',columns,function(results)
-	{
+	{	
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -1695,28 +1792,33 @@ function form43_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.supplier+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.supplier+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+get_my_past_date(result.order_date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.est_amount+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' ondblclick='set_editable($(this));' form='form43_"+result.id+"' value='"+result.status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='button' class='edit_icon' form='form43_"+result.id+"' value='saved' onclick='form43_edit_item($(this));'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form43_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form43_"+result.id+"' value='saved' onclick='form43_delete_item($(this));'>";	
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='edit_icon' form='form43_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form24');\">";
+						rowsHTML+="<input type='submit' class='save_icon' form='form43_"+result.id+"' title='Save order'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form43_"+result.id+"' title='Delete order' onclick='form43_delete_item($(this));'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 			
 			$('#form43_body').prepend(rowsHTML);
 			var fields=document.getElementById("form43_"+result.id);
-			$(fields).on("submit", function(event)
+			var status_filter=fields.elements[3];
+			
+			set_static_value_list('purchase_orders','status',status_filter);
+			
+			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
 				form43_update_item(fields);
 			});
+			
 		});
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
@@ -1726,6 +1828,7 @@ function form43_ini()
 		});
 	});
 };
+
 
 /**
  * this function prepares the table for manage pamphlets form
