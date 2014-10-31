@@ -261,7 +261,6 @@ function form12_header_ini()
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';
 	$(customers_filter).focus();
-
 }
 
 /**
@@ -383,7 +382,7 @@ function form19_header_ini()
 
 
 /**
- * @form Goods Received
+ * @form Create Supplier bills
  * @formNo 21
  */
 function form21_header_ini()
@@ -391,11 +390,14 @@ function form21_header_ini()
 	var fields=document.getElementById('form21_master');
 	
 	var supplier_filter=fields.elements[1];
+	var bill_id_filter=fields.elements[2];
 	var bill_date=fields.elements[3];
 	var entry_date=fields.elements[4];
 	fields.elements[5].value=0;
-	fields.elements[6].value=get_new_key();
-		
+	fields.elements[6].value=0;
+	fields.elements[7].value=get_new_key();
+	fields.elements[8].value=get_new_key();
+	
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
 	{
@@ -414,6 +416,18 @@ function form21_header_ini()
 	
 	$(entry_date).datepicker();
 	$(entry_date).val(get_my_date());
+
+	supplier_filter.value='';
+	$(supplier_filter).focus();
+}
+
+/**
+ * This function clears the form21 for new bill
+ */
+function form21_new_form()
+{
+	form21_header_ini();
+	$("#form21_body").find("tr").remove();
 }
 
 
@@ -960,8 +974,6 @@ function form53_header_ini()
 	var filter_fields=document.getElementById('form53_header');
 	var bill_filter=filter_fields.elements[0];
 	var name_filter=filter_fields.elements[1];
-	var bill_date_filter=filter_fields.elements[2];
-	var entry_date_filter=filter_fields.elements[3];
 	
 	var bill_data="<supplier_bills>" +
 			"<bill_id></bill_id>" +
@@ -972,9 +984,6 @@ function form53_header_ini()
 	
 	set_my_filter(bill_data,bill_filter);
 	set_my_filter(sup_data,name_filter);
-	$(bill_date_filter).datepicker();
-	$(entry_date_filter).datepicker();
-
 };
 
 /**

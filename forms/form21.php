@@ -5,10 +5,13 @@
 			Bill Number<input type='text'>
 			Bill Date<input type='text'>
 			Entry Date<input type='text'>
-			Total Amount<input type='text' >
+			Discount <input readonly='readonly' type='number'>
+			Total Amount<input readonly='readonly' type='number'>
 			<input type='hidden' value=''>
-			<input type='submit' value='Save Bill'>
-			<input type='button' value='Discard Bill' onclick='form12_delete_form();'>
+			<input type='hidden' name='transaction'>
+			<input type='button' title='New Bill' class='add_icon' onclick='form21_new_form();'>
+			<input type='submit' title='Save Bill' class='save_icon'>
+			<input type='button' title='Print Bill' class='print_icon' onclick='form21_print_form();'>
 		</fieldset>
 	</form>
 	<table>

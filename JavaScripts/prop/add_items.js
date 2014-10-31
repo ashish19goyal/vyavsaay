@@ -917,7 +917,7 @@ function form19_add_item()
 }
 
 /**
- * @form Goods Received
+ * @form New Supplier Bill
  * @formNo 21
  */
 function form21_add_item()
@@ -929,50 +929,74 @@ function form21_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form21_"+id+"'></form>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form21_"+id+"' value=''>";
+				rowsHTML+="<input type='text' required form='form21_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form21_"+id+"' value=''>";
+				rowsHTML+="<input type='number' step='any' required form='form21_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form21_"+id+"' value=''>";
+				rowsHTML+="<input type='number' required form='form21_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form21_"+id+"' value=''>";
+				rowsHTML+="<input type='number' required form='form21_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form21_"+id+"' value=''>";
+				rowsHTML+="<input type='text' required form='form21_"+id+"'>";
+				rowsHTML+="<img class='add_icon' form='form21_"+id+"' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='hidden' form='form21_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form21_"+id+"' id='save_form21_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form21_"+id+"' id='delete_form21_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form21_"+id+"' id='delete_form21_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
 		$('#form21_body').prepend(rowsHTML);
 		
 		var fields=document.getElementById("form21_"+id);
-		var product_filter=fields.elements[0];
-		var batch_filter=fields.elements[1];
-		var expiry_filter=fields.elements[2];
-		var cost_filter=fields.elements[3];
-		var quantity_filter=fields.elements[4];
+		var name_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var amount_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var batch_filter=fields.elements[4];
+		var id_filter=fields.elements[5];
+		
+		$(name_filter).focus();
 		
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
 			form21_create_item(fields);
 		});
-				
-		$(product_filter).focus();
-	
-		var products_data="<product_master>" +
-				"<product_name></product_name>" +
-				"<product_master>";
-		set_my_value_list(products_data,product_filter);
 		
-		$(expiry_filter).datepicker();
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,name_filter);
+		
+		
+		$(name_filter).on('blur',function(event){
+			var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+			set_my_value_list(batch_data,batch_filter);
+			batch_filter.value="";
+			quantity_filter.value=0;
+			price_filter.value=0;
+			amount_filter.value=0;
+		});
+		
+		$(quantity_filter).on('blur',function(event)
+		{
+			var price=parseFloat(amount_filter.value)/parseFloat(quantity_filter.value);
+			price_filter.value=price;
+		});
+		$(amount_filter).on('blur',function(event)
+		{
+			var price=parseFloat(amount_filter.value)/parseFloat(quantity_filter.value);
+			price_filter.value=price;
+		});
 	}
 	else
 	{
@@ -1110,7 +1134,7 @@ function form24_add_item()
 					"<make></make>" +
 					"<name>"+name_filter.value+"</name>" +
 					"</product_master>";
-			set_my_value(make_data,make_fitler);
+			set_my_value(make_data,make_filter);
 			
 			var price_data="<product_instances>" +
 						"<cost_price></cost_price>" +

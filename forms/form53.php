@@ -4,11 +4,11 @@
 			<tr>
 				<form id='form53_header'></form>
 					<th>Bill Id <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form53_header' onblur="form53_ini();"></th>
-					<th>Supplier Name <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form53_header' onblur="form53_ini();"></th>
-					<th>Bill Date <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form53_header' onblur="form53_ini();"></th>
-					<th>Entry Date <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form53_header' onblur="form53_ini();"></th>
-					<th>Bill Amount</th>
-					<th><input type="button" value='Enter new bill' form='form53_header' class='add_icon' onclick="form21_display('');">
+					<th>Supplier <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form53_header' onblur="form53_ini();"></th>
+					<th>Bill Date </th>
+					<th>Entry Date </th>
+					<th>Total (in Rs.)</th>
+					<th><input type="button" titel='Enter new bill' form='form53_header' class='add_icon' onclick="element_display('','form21'); form21_new_form();">
 						<input type='button' form='form53_header' value='Export' class='export_icon'>
 					</th>
 			</tr>

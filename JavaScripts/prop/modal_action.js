@@ -1801,7 +1801,7 @@ function modal26_action(payment_id)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form1'))
+		if(is_create_access('form42'))
 		{
 			var customer=fcustomer.value;
 			var total=ftotal.value;
@@ -2095,4 +2095,104 @@ function modal27_action(product_name)
 	});
 	
 	$("#modal27").dialog("open");
+}
+
+/**
+ * @modalNo 28
+ * @modal Payment Details
+ */
+function modal28_action(payment_id)
+{
+	var form=document.getElementById('modal28_form');
+	
+	var fsupplier=form.elements[1];
+	var ftotal=form.elements[2];
+	var fpaid=form.elements[3];
+	var fdue_date=form.elements[4];
+	var fmode=form.elements[5];
+	var fstatus=form.elements[6];
+	
+	$(fdue_date).datepicker();
+	
+	var supplier_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+	set_my_value_list(supplier_data,fsupplier);
+	set_static_value_list('payments','status',fstatus);
+	set_static_value_list('payments','mode',fmode);
+	
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form53'))
+		{
+			var supplier=fsupplier.value;
+			var total=ftotal.value;
+			var paid=fpaid.value;
+			var due_date=get_raw_time(fdue_date.value);
+			var mode=fmode.value;
+			var status=fstatus.value;
+			var last_updated=get_my_time();
+			var data_xml="<payments>" +
+						"<id>"+payment_id+"</id>" +
+						"<acc_name>"+supplier+"</acc_name>" +
+						"<type>delivered</type>" +
+						"<total_amount>"+total+"</total_amount>" +
+						"<paid_amount>"+paid+"</paid_amount>" +
+						"<status>"+status+"</status>" +
+						"<date>"+get_my_time()+"</date>" +
+						"<due_date>"+due_date+"</due_date>" +
+						"<mode>"+mode+"</mode>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</payments>";
+			var activity_xml="<activity>" +
+						"<data_id>"+payment_id+"</data_id>" +
+						"<tablename>payments</tablename>" +
+						"<link_to>form11</link_to>" +
+						"<title>Updated</title>" +
+						"<notes>Payment of "+paid+" to "+supplier+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			
+			if(is_online())
+			{
+				server_update_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_update_row(data_xml,activity_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal28").dialog("close");
+	});
+	
+	var payments_data="<payments>" +
+			"<id>"+payment_id+"</id>" +
+			"<acc_name></acc_name>" +
+			"<type>delivered</type>" +
+			"<total_amount></total_amount>" +
+			"<paid_amount></paid_amount>" +
+			"<status></status>" +
+			"<due_date></due_date>" +
+			"<mode></mode>" +
+			"</payments>";
+	fetch_requested_data('',payments_data,function(payments)
+	{
+		for(var k in payments)
+		{
+			fsupplier.value=payments[k].acc_name;
+			ftotal.value=payments[k].total_amount;
+			fpaid.value=payments[k].paid_amount;
+			fdue_date.value=get_my_past_date(payments[k].due_date);
+			fmode.value=payments[k].mode;
+			fstatus.value=payments[k].status;
+			break;
+		}
+		$("#modal28").dialog("open");
+	});		
+	
 }
