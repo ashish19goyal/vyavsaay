@@ -88,3 +88,20 @@ function get_my_past_date(raw_time)
 	var time=date+"/"+month+"/"+year;
 	return time;
 }
+
+function get_iso_date(raw_time)
+{
+	var d= new Date(parseInt(raw_time));
+	var year = d.getFullYear();
+	var month =d.getMonth()+1;
+	if (month < 10) {
+	    month = "0" + month;
+	}
+	var date = d.getDate();
+	if (date < 10) {
+	    date = "0" + date;
+	}
+
+	var time=year+"-"+month+"-"+date;
+	return time;
+}

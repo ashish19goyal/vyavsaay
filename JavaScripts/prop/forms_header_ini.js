@@ -83,6 +83,92 @@ function form5_header_ini()
  */
 function form7_header_ini()
 {
+	///initializing calendar
+	
+	$('#attendance_calendar').fullCalendar({
+		header: {
+			left: 'prev,next today',
+			center: 'title'
+		//	right: 'month,agendaWeek,agendaDay'
+		},
+		height:400,
+		fixedWeekCount:false,
+		editable: true,
+		eventLimit: true, // allow "more" link when too many events
+		events: function(start, end, timezone, callback) {
+	        var start_time=parseFloat(start.unix())*1000;
+	        var end_time=parseFloat(end.unix())*1000;
+	        var attendance_data="<attendance>" +
+	        		"<presence></presence>" +
+	        		"<hours_worked></hours_worked>" +
+	        		"<date compare='more than'>"+start_time+"</date>" +
+	        		"<date compare='less than'>"+end_time+"</date>" +
+	        		"</attendance>";
+	        fetch_requested_data('form7',attendance_data,function(attendances)
+	        {
+	        	var events=[];
+	        	
+	        	attendances.sort(function(a,b)
+	        	{
+	        		if(a.date>b.date)
+	        			return 1;
+	        		else
+	        			return -1;
+	        	});
+	        	
+	        	var start_iterator=0;
+	        	var presents=0;
+	        	var hours_worked=0;
+	        	var absents=0;
+	        	attendances.forEach(function(attendance)
+	        	{
+	        		if(attendance.date===start_iterator)
+	        		{
+	        			hours_worked+=parseFloat(attendance.hours_worked);
+	        			if(attendance.presence=='present')
+	        				presents+=1;
+	        			else
+	        				absents+=1;
+	        		}
+	        		else
+	        		{
+	        			var color="green";
+	        			if(absents>presents)
+	        			{
+	        				color="red";
+	        			}
+		        		events.push({
+		        			title: "Total strength:"+presents+"\n Hours Worked:"+hours_worked,
+		        			start:get_iso_date(start_iterator),
+		        			allDay:true,
+		        			color: color
+		        		});
+
+	        			start_iterator=attendance.date;
+	        			hours_worked=parseFloat(attendance.hours_worked);
+	        			if(attendance.presence=='present')
+	        			{	
+	        				presents=1;
+	        				absents=0;
+	        			}
+	        			else
+	        			{
+	        				presents=0;
+	        				absents=1;
+	        			}
+	        		}
+	        	});
+	        	
+	        	callback(events);
+	        });
+	    },
+	    dayClick: function(date,jsEvent,view){
+	    	console.log(date.format());
+	    }
+	});
+	
+	///calendar set
+	
 	var fields=document.getElementById('form7_master');
 	var date_filter=fields.elements[1];
 	
@@ -105,6 +191,9 @@ function form7_header_ini()
 
 	$(date_filter).datepicker();
 	$(date_filter).val(get_my_date());
+//	$("#form7_master").hide();
+//	$("#form7_body").parent().hide();
+	
 };
 
 
@@ -419,6 +508,7 @@ function form21_header_ini()
 
 	supplier_filter.value='';
 	$(supplier_filter).focus();
+	bill_id_filter.value="";
 }
 
 /**

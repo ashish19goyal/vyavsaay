@@ -238,7 +238,7 @@ function form7_update_item(form)
 					"<acc_name>"+name+"</acc_name>" +
 					"<presence>"+presence+"</presence>" +
 					"<date>"+date+"</date>" +
-					"<hours_worked>"+hours_worked+"</hours_worked>" +
+					"<hours_worked>"+hours+"</hours_worked>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</attendance>";	
 		var activity_xml="<activity>" +

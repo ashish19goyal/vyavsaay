@@ -938,7 +938,7 @@ function form21_add_item()
 				rowsHTML+="<input type='number' required form='form21_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='number' required form='form21_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' readonly='readonly' required form='form21_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='text' required form='form21_"+id+"'>";

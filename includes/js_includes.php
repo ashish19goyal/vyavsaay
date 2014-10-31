@@ -7,6 +7,8 @@
 <script src='./JavaScripts/open/jQuery.print.js'></script>
 <script src='./JavaScripts/open/jquery.autosize.min.js'></script>
 <script src='./JavaScripts/open/leaflet.js'></script>
+<script src='./JavaScripts/open/moment.min.js'></script>
+<script src='./JavaScripts/open/fullcalendar.min.js'></script>
 
 <script src='./JavaScripts/open/jquery.easing.min.js'></script>
 <script src='./JavaScripts/open/move-top.js'></script>

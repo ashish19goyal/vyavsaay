@@ -232,6 +232,9 @@ function form7_ini()
 					$('#form7_body').prepend(rowsHTML);
 					
 					var fields=document.getElementById("form7_"+data_id);
+					var attendance_filter=fields.elements[1];
+					set_static_value_list('attendance','presence',attendance_filter);
+
 					$(fields).on("submit", function(event)
 					{
 						event.preventDefault();
@@ -266,6 +269,9 @@ function form7_ini()
 				$('#form7_body').prepend(rowsHTML);
 				
 				var fields=document.getElementById("form7_"+result.id);
+				var attendance_filter=fields.elements[1];
+				set_static_value_list('attendance','presence',attendance_filter);
+				
 				$(fields).on("submit", function(event)
 				{
 					event.preventDefault();
@@ -964,6 +970,7 @@ function form21_ini()
 
 	if(bill_id!="")
 	{
+		console.log(bill_id);
 		var bill_columns="<supplier_bills>" +
 				"<id>"+bill_id+"</id>" +
 				"<bill_id></bill_id>" +
@@ -997,59 +1004,59 @@ function form21_ini()
 					form21_update_form();
 				});
 				
-				var bill_items_column="<supplier_bill_items>" +
-						"<id></id>" +
-						"<product_name></product_name>" +
-						"<batch></batch>" +
-						"<unit_price></unit_price>" +
-						"<quantity></quantity>" +
-						"<amount></amount>" +
-						"<bill_id>"+bill_results[i].bill_id+"</bill_id>" +
-						"</supplier_bill_items>";
-				
-				fetch_requested_data('',bill_items_column,function(results)
-				{
-					results.forEach(function(result)
-					{
-						var rowsHTML="";
-						var id=result.id;
-						rowsHTML+="<tr>";
-						rowsHTML+="<form id='form21_"+id+"'></form>";
-							rowsHTML+="<td>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form21_"+id+"' value='"+result.product_name+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td>";
-								rowsHTML+="<input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.quantity+"' step='any'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td>";
-								rowsHTML+="<input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.amount+"' step='any'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td>";
-								rowsHTML+="<input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.unit_price+"' step='any'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form21_"+id+"' value='"+result.batch+"'>";
-								rowsHTML+="<img class='add_icon' form='form21_"+id+"' title='Add new batch' onclick='modal22_action();'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td>";
-								rowsHTML+="<input type='hidden' form='form21_"+id+"' value='"+id+"'>";
-								rowsHTML+="<input type='submit' class='save_icon' form='form21_"+id+"' id='save_form21_"+id+"'>";
-								rowsHTML+="<input type='button' class='delete_icon' form='form21_"+id+"' id='delete_form21_"+id+"' onclick='form21_delete_item($(this));'>";
-							rowsHTML+="</td>";			
-						rowsHTML+="</tr>";
-					
-						$('#form21_body').prepend(rowsHTML);
-						
-						var fields=document.getElementById("form21_"+id);
-						$(fields).on("submit", function(event)
-						{
-							event.preventDefault();
-						});
-					});
-				});
-				
 				break;
 			}
+		});
+		
+		var bill_items_column="<supplier_bill_items>" +
+				"<id></id>" +
+				"<product_name></product_name>" +
+				"<batch></batch>" +
+				"<unit_price></unit_price>" +
+				"<quantity></quantity>" +
+				"<amount></amount>" +
+				"<bill_id>"+bill_id+"</bill_id>" +
+				"</supplier_bill_items>";
+		
+		fetch_requested_data('',bill_items_column,function(results)
+		{
+			results.forEach(function(result)
+			{
+				var rowsHTML="";
+				var id=result.id;
+				rowsHTML+="<tr>";
+				rowsHTML+="<form id='form21_"+id+"'></form>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form21_"+id+"' value='"+result.product_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.quantity+"' step='any'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.amount+"' step='any'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.unit_price+"' step='any'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form21_"+id+"' value='"+result.batch+"'>";
+						rowsHTML+="<img class='add_icon' form='form21_"+id+"' title='Add new batch' onclick='modal22_action();'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='hidden' form='form21_"+id+"' value='"+id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form21_"+id+"' id='save_form21_"+id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form21_"+id+"' id='delete_form21_"+id+"' onclick='form21_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+			
+				$('#form21_body').prepend(rowsHTML);
+				
+				var fields=document.getElementById("form21_"+id);
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+				});
+			});
 		});
 	}
 }
