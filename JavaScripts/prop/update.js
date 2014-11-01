@@ -273,6 +273,7 @@ function form7_update_form()
 	if(is_update_access('form7'))
 	{
 		$("[id^='save_form7']").click();
+		form7_header_ini();
 	}
 	else
 	{

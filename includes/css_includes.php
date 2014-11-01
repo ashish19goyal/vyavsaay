@@ -16,5 +16,5 @@
 
 <link rel="stylesheet" type="text/css" href="./CSS/index_style.css"/>
 <link rel="stylesheet" type="text/css" href="./CSS/bootstrap.css"/>
-<link rel="stylesheet" type="text/css" href="./CSS/fullcalendar.css"/>
+<link rel="stylesheet" type="text/css" href="./CSS/fullcalendar.min.css"/>
 <link rel="stylesheet" type="text/css" href="./CSS/fullcalendar.print.css" media='print'/>

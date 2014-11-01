@@ -287,16 +287,29 @@
 			<free_with index="no" type="VARCHAR(90)"></free_with>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</bill_items>
-	<returns>
+	<customer_returns>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<bill_id index='yes' type="BIGINT"></bill_id>
-			<product_name index='yes' type="VARCHAR(90)"></product_name>
-			<batch index='yes' type="VARCHAR(50)"></batch>
-			<amount index='no' type="DECIMAL(10,2)"></amount>
-			<quantity index='no' type="DECIMAL(12,2)"></quantity>
-			<customer index="yes" type="VARCHAR(100)"></customer>
+			<customer index='yes' type="VARCHAR(100)"></customer>
+			<return_date index='yes' type="BIGINT"></return_date>
+			<total index='no' type="DECIMAL(12,2)"></total>
+			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
+			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<transaction_id index='no' type="BIGINT"></transaction_id>
 			<last_updated index='no' type="BIGINT"></last_updated>
-	</returns>
+	</customer_returns>
+	<customer_return_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<return_id index='yes' type='BIGINT'></return_id>
+			<item_name index='yes' type="VARCHAR(90)"></item_name>
+			<batch index='yes' type="VARCHAR(50)"></batch>
+			<notes index='yes' type="TEXT"></notes>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<type index='yes' type="VARCHAR(25)"></type><!--exchange/refund-->
+			<refund_amount index='no' type="DECIMAL(12,2)"></refund_amount>
+			<exchange_batch index='yes' type="VARCHAR(50)"></exchange_batch>
+			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</customer_return_items>
 	<service_instances>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<bill_id index='yes' type="BIGINT"></bill_id>

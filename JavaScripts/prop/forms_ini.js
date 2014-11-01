@@ -795,86 +795,196 @@ function form14_ini()
 	});
 };
 
-
 /**
- * this function prepares the table for accept returns form
- * @form Accept returns
- * @formNo 15
+ * @form Enter Customer Returns
  */
 function form15_ini()
 {
-	var fid=$("#form15_link").attr('data_id');
+	var data_id=$("#form15_link").attr('data_id');
+	if(data_id==null)
+		data_id="";	
+	
+	$('#form15_body').html("");
+
+	if(data_id!="")
+	{
+		var return_columns="<customer_returns>" +
+				"<id>"+data_id+"</id>" +
+				"<customer></customer>" +
+				"<total></total>" +
+				"<return_date></return_date>" +
+				"<tax></tax>" +
+				"<type>product</type>" +
+				"<transaction_id></transaction_id>" +
+				"</customer_returns>";
+		var return_items_column="<customer_return_items>" +
+				"<id></id>" +
+				"<return_id>"+data_id+"</return_id>" +
+				"<bill_id></bill_id>" +
+				"<item_name></item_name>" +
+				"<batch></batch>" +
+				"<notes></notes>" +
+				"<quantity></quantity>" +
+				"<type></type>" +
+				"<refund_amount></refund_amount>" +
+				"<exchange_batch></exchange_batch>" +
+				"<tax></tax>" +
+				"</customer_return_items>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',return_columns,function(return_results)
+		{
+			for (var i in return_results)
+			{
+				var filter_fields=document.getElementById('form15_master');
+				filter_fields.elements[1].value=return_results[i].customer;
+				filter_fields.elements[2].value=get_my_past_date(return_results[i].return_date);
+				filter_fields.elements[3].value=return_results[i].total;
+				filter_fields.elements[4].value=data_id;
+				filter_fields.elements[5].value=return_results[i].transaction_id;
+				filter_fields.elements[6].value=return_results[i].tax;
+				
+				$(filter_fields).off('submit');
+				$(filter_fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form15_update_form();
+				});
+				break;
+			}
+		});
+		/////////////////////////////////////////////////////////////////////////
+		
+		fetch_requested_data('',return_items_column,function(results)
+		{
+			results.forEach(function(result)
+			{
+				var rowsHTML="";
+				var id=result.id;
+				rowsHTML+="<tr>";
+				rowsHTML+="<form id='form15_"+id+"'></form>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.item_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.batch+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.notes+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form15_"+id+"' value='"+result.quantity+"' step='any'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.type+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						if(result.type=='refund')
+						{
+							rowsHTML+="<input type='number' readonly='readonly' step='any' form='form15_"+id+"' value='"+result.refund_amount+"'>";
+						}
+						else
+						{
+							rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.exhange_batch+"'>";
+						}
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='hidden' form='form15_"+id+"' value='"+result.tax+"'>";
+						rowsHTML+="<input type='hidden' form='form15_"+id+"' value='"+id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form15_"+id+"' id='save_form15_"+id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form15_"+id+"' id='delete_form15_"+id+"' onclick='form15_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+			
+				$('#form15_body').prepend(rowsHTML);
+				
+				var fields=document.getElementById("form15_"+id);
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+				});
+			});
+		});
+	}
+}
+
+
+
+/**
+ * @form Manage customer returns
+ * @formNo 16
+ */
+function form16_ini()
+{
+	var fid=$("#form16_link").attr('data_id');
 	if(fid==null)
 		fid="";	
 	
-	var filter_fields=document.getElementById('form15_header');
+	var filter_fields=document.getElementById('form16_header');
 	
 	//populating form 
-	var fbill=filter_fields.elements[0].value;
+	if(fid==="")
+		fid=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
-	var fbatch=filter_fields.elements[2].value;
-	var fcustomer=filter_fields.elements[3].value;
 	
-	var columns="<returns>" +
+	var columns="<customer_returns>" +
 			"<id>"+fid+"</id>" +
-			"<bill_id>"+fbill+"</bill_id>" +
-			"<product_name>"+fname+"</product_name>" +
-			"<batch>"+fbatch+"</batch>" +
-			"<customer>"+fcustomer+"</customer>" +
-			"<amount></amount>" +
-			"<quantity></quantity>" +
-			"</returns>";
+			"<customer>"+fname+"</customer>" +
+			"<return_date></return_date>" +
+			"<total></total>" +
+			"<type></type>" +
+			"<tax></tax>" +
+			"<transaction_id></transaction_id>" +
+			"</customer_returns>";
 
-	$('#form15_body').html("");
+	$('#form16_body').html("");
 
-	fetch_requested_data('form15',columns,function(results)
-	{
+	fetch_requested_data('form16',columns,function(results)
+	{	
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
 			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form15_"+result.id+"'></form>";
+				rowsHTML+="<form id='form16_"+result.id+"'></form>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+result.id+"' value='"+result.customer+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form16_"+result.id+"' value='"+result.id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+result.id+"' value='"+result.bill_id+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form16_"+result.id+"' value='"+result.customer+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+result.id+"' value='"+result.product_name+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form16_"+result.id+"' value='"+get_my_past_date(result.return_date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.batch+"'>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form16_"+result.id+"' value='"+result.total+"' step='any'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+result.id+"' value='"+result.amount+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.quantity+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='hidden' form='form15_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form15_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form15_"+result.id+"' value='saved' onclick='form15_delete_item($(this));'>";	
+						rowsHTML+="<input type='button' class='edit_icon' form='form16_"+result.id+"' title='Edit Return'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form16_"+result.id+"' title='Delete Return' onclick='form16_delete_item($(this));'>";
+						rowsHTML+="<input type='hidden' form='form16_"+result.id+"' value='"+result.transaction_id+"'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
-
-			$('#form15_body').prepend(rowsHTML);
-			var fields=document.getElementById("form15_"+result.id);
-			$(fields).on("submit", function(event)
+			
+			$('#form16_body').prepend(rowsHTML);
+			var fields=document.getElementById("form16_"+result.id);
+			var edit_button=fields.elements[4];
+			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();
-				form15_update_item(fields);
+				if(result.type=='product')
+					element_display(result.id,'form15');
 			});
 		});
-		var export_button=filter_fields.elements[5];
+		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
 			my_obj_array_to_csv(results,'customer_returns');
 		});
 	});
-};
+}
+
+
 
 
 /**

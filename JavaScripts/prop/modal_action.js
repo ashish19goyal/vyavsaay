@@ -2114,10 +2114,6 @@ function modal28_action(payment_id)
 	
 	$(fdue_date).datepicker();
 	
-	var supplier_data="<suppliers>" +
-			"<acc_name></acc_name>" +
-			"</suppliers>";
-	set_my_value_list(supplier_data,fsupplier);
 	set_static_value_list('payments','status',fstatus);
 	set_static_value_list('payments','mode',fmode);
 	

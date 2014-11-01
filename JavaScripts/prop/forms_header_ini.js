@@ -83,6 +83,31 @@ function form5_header_ini()
  */
 function form7_header_ini()
 {
+	var fields=document.getElementById('form7_master');
+	var date_filter=fields.elements[1];
+	
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form7_update_form();
+	});
+	
+	var filter_fields=document.getElementById('form7_header');
+	var staff_filter=filter_fields.elements[0];
+	var attendance_filter=filter_fields.elements[1];
+	
+	var staff_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	
+	set_my_filter(staff_data,staff_filter);
+	set_static_filter('attendance','presence',attendance_filter);
+
+	$(date_filter).datepicker();
+	date_filter.value=get_my_date();
+	$("#form7_master").hide();
+	$("#form7_body").parent().hide();
+	$("#attendance_calendar").show();
 	///initializing calendar
 	
 	$('#attendance_calendar').fullCalendar({
@@ -163,36 +188,17 @@ function form7_header_ini()
 	        });
 	    },
 	    dayClick: function(date,jsEvent,view){
-	    	console.log(date.format());
+	    	//console.log(date.format());
+	    	var my_date=get_my_date_from_iso(date.format());
+	    	date_filter.value=my_date;
+	    	form7_ini();
+	    	$("#form7_master").show();
+	    	$("#form7_body").parent().show();
+	    	$("#attendance_calendar").hide();
 	    }
 	});
 	
 	///calendar set
-	
-	var fields=document.getElementById('form7_master');
-	var date_filter=fields.elements[1];
-	
-	$(fields).on("submit", function(event)
-	{
-		event.preventDefault();
-		form7_update_form();
-	});
-	
-	var filter_fields=document.getElementById('form7_header');
-	var staff_filter=filter_fields.elements[0];
-	var attendance_filter=filter_fields.elements[1];
-	
-	var staff_data="<staff>" +
-			"<acc_name></acc_name>" +
-			"</staff>";
-	
-	set_my_filter(staff_data,staff_filter);
-	set_static_filter('attendance','presence',attendance_filter);
-
-	$(date_filter).datepicker();
-	$(date_filter).val(get_my_date());
-//	$("#form7_master").hide();
-//	$("#form7_body").parent().hide();
 	
 };
 
@@ -398,39 +404,69 @@ function form14_header_ini()
 	});
 };
 
-
 /**
- * this function prepares the table for accept returns form
- * @form Accept returns
+ * @form Enter Returns
  * @formNo 15
  */
 function form15_header_ini()
 {
-	var filter_fields=document.getElementById('form15_header');
-	var customer_filter=filter_fields.elements[0];
-	var bill_filter=filter_fields.elements[1];
-	var name_filter=filter_fields.elements[2];
-	var batch_filter=filter_fields.elements[3];
+	var fields=document.getElementById('form15_master');
 	
-	var bill_data="<bills>" +
+	var customers_filter=fields.elements[1];
+	var return_date=fields.elements[2];
+	fields.elements[3].value=0;
+	fields.elements[4].value=get_new_key();
+	fields.elements[5].value=get_new_key();
+	fields.elements[6].value=0;
+	
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form15_create_form();
+	});
+	var customers_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	
+	set_my_filter(customers_data,customers_filter);
+	$(return_date).datepicker();
+	return_date.valueget_my_date();
+	customers_filter.value='';
+	$(customers_filter).focus();
+}
+
+/**
+ * This function clears the form15 for new return
+ */
+function form15_new_form()
+{
+	form15_header_ini();
+	$("#form15_body").find("tr").remove();
+}
+
+
+/**
+ * @form Manage Customer Returns
+ * @formNo 16
+ */
+function form16_header_ini()
+{
+	var filter_fields=document.getElementById('form16_header');
+	var return_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	
+	var return_data="<customer_returns>" +
 			"<id></id>" +
-			"</bills>";
-	var product_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-	var batch_data="<product_instances>" +
-			"<batch></batch>" +
-			"</product_instances>";
-	var customer_data="<customers>" +
-			"<name></name>" +
+			"</customer_returns>";
+	var cust_data="<customers>" +
+			"<acc_name></acc_name>" +
 			"</customers>";
-	//setting autocompletes
 	
-	set_my_filter(bill_data,bill_filter);
-	set_my_filter(product_data,name_filter);
-	set_my_filter(batch_data,batch_filter);
-	set_my_filter(customer_data,customer_filter);
+	set_my_filter(cust_data,name_filter);
+	set_my_filter(return_data,return_filter);
 };
+
 
 
 /**

@@ -105,3 +105,19 @@ function get_iso_date(raw_time)
 	var time=year+"-"+month+"-"+date;
 	return time;
 }
+
+function get_my_date_from_iso(iso_date)
+{
+	if(iso_date=='')
+	{
+		return "01/01/1970";
+	}
+	else
+	{
+		var year=iso_date.substr(0,4);
+		var month=iso_date.substr(5,2);
+		var day=iso_date.substr(8,2);
+		var my_date=day+"/"+month+"/"+year;
+		return my_date;
+	}
+}
