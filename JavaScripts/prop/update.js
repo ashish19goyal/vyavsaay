@@ -1073,58 +1073,128 @@ function form14_update_item(form)
 }
 
 /**
- * @form Accept Returns
+ * @form manage customer returns
  * @param button
  */
-function form15_update_item(form)
+function form15_update_form()
 {
-	if(is_update_access('form15'))
+	if(is_create_access('form15'))
 	{
-		var customer=form.elements[0].value;
-		var bill_id=form.elements[1].value;
-		var product_name=form.elements[2].value;
-		var batch=form.elements[3].value;
-		var amount=form.elements[4].value;
-		var quantity=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var form=document.getElementById("form15_master");
+		
+		var customer=form.elements[1].value;
+		var return_date=get_raw_time(form.elements[2].value);
+		
+		var tax=0;
+		var total=0;
+		
+		$("[id^='save_form15']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			if(subform.elements[4].value=='refund')
+			{	
+				total+=parseFloat(subform.elements[5].value);
+			}
+			tax+=parseFloat(subform.elements[6].value);
+		});
+
+		form.elements[3].value=tax;
+		form.elements[6].value=tax;
+		
+		var data_id=form.elements[4].value;
+		var transaction_id=form.elements[5].value;
 		var last_updated=get_my_time();
-		var table='returns';
-		var data_xml="<"+table+">" +
+		
+		var data_xml="<customer_returns>" +
 					"<id>"+data_id+"</id>" +
-					"<bill_id>"+bill_id+"</bill_id>" +
 					"<customer>"+customer+"</customer>" +
-					"<product_name>"+product_name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<amount>"+amount+"</amount>" +
+					"<return_date>"+return_date+"</return_date>" +
+					"<total>"+total+"</total>" +
+					"<type>product</type>" +
+					"<tax>"+tax+"</tax>" +
+					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</customer_returns>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form15</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Saved returned item "+product_name+" from "+customer+"</notes>" +
+					"<tablename>customer_returns</tablename>" +
+					"<link_to>form16</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Returns from customer "+customer+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var transaction_xml="<transactions>" +
+					"<id>"+transaction_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>master</receiver>" +
+					"<giver>"+customer+"</giver>" +
+					"<tax>"+(-tax)+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
 		if(is_online())
 		{
 			server_update_row(data_xml,activity_xml);
+			server_update_simple(transaction_xml);
 		}
 		else
 		{
 			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<7;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
+			local_update_simple(transaction_xml);
 		}
+		var payment_data="<payments>" +
+				"<id></id>" +
+				"<bill_id>"+data_id+"</bill_id>" +
+				"</payments>";
+		get_single_column_data(function(payments)
+		{
+			for(var y in payments)
+			{
+				var payment_xml="<payments>" +
+							"<id>"+payments[y]+"</id>" +
+							"<type>delivered</type>" +
+							"<date>"+get_my_time()+"</date>" +
+							"<total_amount>"+total+"</total_amount>" +
+							"<acc_name>"+customer+"</acc_name>" +
+							"<transaction_id>"+payments[y]+"</transaction_id>" +
+							"<bill_id>"+data_id+"</bill_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</payments>";
+				var pt_xml="<transactions>" +
+							"<id>"+payments[y]+"</id>" +
+							"<trans_date>"+get_my_time()+"</trans_date>" +
+							"<amount>"+total+"</amount>" +
+							"<receiver>"+customer+"</receiver>" +
+							"<giver>master</giver>" +
+							"<tax>0</tax>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</transactions>";
+				if(is_online())
+				{
+					server_update_simple_func(payment_xml,function()
+					{
+						modal28_action(payments[y]);
+					});
+				}
+				else
+				{
+					local_update_simple_func(payment_xml,function()
+					{
+						modal28_action(payments[y]);
+					});
+				}
+				break;
+			}
+		},payment_data);
+		$("[id^='save_form15']").click();
 	}
 	else
 	{
 		$("#modal2").dialog("open");
 	}
 }
+
 
 /**
  * @form Manage Returns

@@ -1,4 +1,4 @@
-<div id='form16' class='function_detail'><b>Manage Returns</b>
+<div id='form16' class='function_detail'>
 	<table>
 		<thead>
 			<tr>

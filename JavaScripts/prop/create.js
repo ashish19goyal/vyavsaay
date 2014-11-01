@@ -1171,7 +1171,7 @@ function form15_create_item(form)
 		var quantity_data="<product_instances>" +
 					"<id></id>" +
 					"<product_name>"+name+"</product_name>" +
-					"<batch array='yes'>"+batch+"--"+total_batch"</batch>" +
+					"<batch array='yes'>"+batch+"--"+total_batch+"</batch>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
 		
@@ -1200,10 +1200,12 @@ function form15_create_item(form)
 			var returned_xml="<product_instances>" +
 					"<id>"+returned_id+"</id>" +
 					"<quantity>"+returned_quantity+"</quantity>" +
+					"<last_update>"+last_updated+"</last_updated>"+
 					"</product_instances>";
 			var exchanged_xml="<product_instances>" +
 					"<id>"+exchanged_id+"</id>" +
 					"<quantity>"+exchanged_quantity+"</quantity>" +
+					"<last_update>"+last_updated+"</last_updated>"+
 					"</product_instances>";
 			var data_xml="<customer_return_items>" +
 					"<id>"+data_id+"</id>" +
@@ -1385,7 +1387,6 @@ function form15_create_form()
 		$("#modal2").dialog("open");
 	}
 }
-
 
 
 /**

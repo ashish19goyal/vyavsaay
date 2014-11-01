@@ -3,9 +3,9 @@
 	
 		echo "<ul>";
 			if(strpos($_SESSION['forms'],'form10')!==false)
-				echo "<li><a id='form10_link' href='#form10' onclick='form10_header_ini(); form10_ini();' data-i18n='form.create_service_bill'></a></li>";
+				echo "<li><a id='form10_link' href='#form10' onclick='form10_header_ini(); form10_ini();' data-i18n='form.service_bill'></a></li>";
 			if(strpos($_SESSION['forms'],'form12')!==false)
-				echo "<li><a id='form12_link' href='#form12' onclick='form12_header_ini(); form12_ini();' data-i18n='form.create_product_bill'></a></li>";
+				echo "<li><a id='form12_link' href='#form12' onclick='form12_header_ini(); form12_ini();' data-i18n='form.product_bill'></a></li>";
 			if(strpos($_SESSION['forms'],'form72')!==false)
 				echo "<li><a id='form72_link' href='#form72' onclick='form72_header_ini(); form72_ini();' data-i18n='form.create_bill'></a></li>";
 			if(strpos($_SESSION['forms'],'form42')!==false)

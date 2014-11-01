@@ -1,4 +1,4 @@
-<div id='form1' class='function_detail'><b>Manage Inventory</b>
+<div id='form1' class='function_detail'>
 	<table>
 		<thead>
 			<tr>

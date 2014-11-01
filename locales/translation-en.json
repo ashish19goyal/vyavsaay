@@ -38,11 +38,6 @@
   	"sales_by_products": "Sales by products",
   	"sales_by_services": "Sales by services",
   	"product_sales_report": "Product Sales report",
-  	"create_service_receipt": "Create Service Receipt",
-  	"manage_service_receipt": "Manage Service Receipts",
-  	"create_bill": "Create Bill",
-  	"manage_bills": "Manage Bills",
-  	"goods_received": "Goods Received",
   	"create_purchase_order": "Create purchase order",
   	"manage_purchase_orders": "Manage purchase orders",
   	"manage_supplier_bills": "Manage Supplier Bills",
@@ -105,6 +100,15 @@
   	"theme": "Theme",
   	"mode_of_operation": "Mode of Operation",
   	"language": "Language",
- 	"industry": "Industry" 
+ 	"industry": "Industry",
+ 	"service_bill":"Create Service Bill",
+ 	"product_bill":"Create Product Bill",
+  	"create_bill":"Create Bill",
+  	"manage_bills":"Manage Bills",
+  	"create_order":"Create Order",
+  	"manage_order":"Manage Order",
+  	"enter_returns":"Enter Returns",
+  	"manage_returns":"Manage Returns",
+  	"enter_upplier_bill": "Enter Supplier Bill" 
   }
 }

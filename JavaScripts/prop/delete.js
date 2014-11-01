@@ -554,63 +554,89 @@ function form15_delete_item(button)
 {
 	if(is_delete_access('form15'))
 	{
-		var bill_id=document.getElementById("form15_master").elements[7].value;
+		var data_id=document.getElementById("form15_master").elements[4].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var quantity=form.elements[2].value;
-		var price=form.elements[3].value;
-		var total=form.elements[4].value;
-		var amount=form.elements[5].value;
-		var discount=form.elements[6].value;
-		var tax=form.elements[7].value;
-		var offer=form.elements[8].value;
-		var data_id=form.elements[9].value;
+		var notes=form.elements[2].value;
+		var quantity=form.elements[3].value;
+		var type=form.elements[4].value;
+		var total_batch=form.elements[5].value;
+		var tax=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		
 		var quantity_data="<product_instances>" +
 					"<id></id>" +
 					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
+					"<batch array='yes'>"+batch+"--"+total_batch+"</batch>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
 		fetch_requested_data('',quantity_data,function(quantities)
 		{
-			for(var i in quantities)
+			var returned_quantity=0;
+			var exchanged_quantity=0;
+			var returned_id=1;
+			var exchanged_id=1;
+
+			for (var i in quantities)
 			{
-				var q=parseFloat(quantities[i].quantity)+parseFloat(quantity);
-				
-				var data_xml="<bill_items>" +
-							"<id>"+data_id+"</id>" +
-							"<item_name>"+name+"</item_name>" +
-							"<batch>"+batch+"</batch>" +
-							"<unit_price>"+price+"</unit_price>" +
-							"<quantity>"+quantity+"</quantity>" +
-							"<amount>"+amount+"</amount>" +
-							"<total>"+total+"</total>" +
-							"<discount>"+discount+"</discount>" +
-							"<offer>"+offer+"</offer>" +
-							"<tax>"+tax+"</tax>" +
-							"<bill_id>"+bill_id+"</bill_id>" +
-							"</bill_items>";	
-				var quantity_xml="<product_instances>" +
-							"<id>"+quantities[i].id+"</id>" +
-							"<quantity>"+q+"</quantity>" +
-							"</product_instances>";
-				if(is_online())
+				if(quantities[i].batch==batch)
 				{
-					server_delete_simple(data_xml);
-					server_update_simple(quantity_xml);
+					returned_id=quantities[i].id;
+					returned_quantity=parseFloat(quantities[i].quantity)-parseFloat(quantity);
 				}
-				else
-				{
-					local_delete_simple(data_xml);
-					local_update_simple(quantity_xml);
+				else if(quantities[i].batch==total_batch)
+				{	
+					exchanged_id=quantities[i].id;
+					exchanged_quantity=parseFloat(quantities[i].quantity)+parseFloat(quantity);
 				}
-				break;
+			}
+			
+			var returned_xml="<product_instances>" +
+					"<id>"+returned_id+"</id>" +
+					"<quantity>"+returned_quantity+"</quantity>" +
+					"<last_update>"+last_updated+"</last_updated>"+
+					"</product_instances>";
+			var exchanged_xml="<product_instances>" +
+					"<id>"+exchanged_id+"</id>" +
+					"<quantity>"+exchanged_quantity+"</quantity>" +
+					"<last_update>"+last_updated+"</last_updated>"+
+					"</product_instances>";
+			var data_xml="<customer_return_items>" +
+					"<id>"+data_id+"</id>" +
+					"<return_id>"+return_id+"</return_id>" +
+					"<item_name>"+name+"</item_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<type>"+type+"</type>";
+			if(type=='refund')
+			{
+				data_xml+="<refund_amount>"+total_batch+"</refund_amount>";
+			}
+			else
+			{
+				data_xml+="<exchange_batch>"+total_batch+"</exchange_batch>";
+			}
+			data_xml+="<total>"+total+"</total>" +
+					"<tax>"+tax+"</tax>" +
+					"</customer_return_items>";	
+			if(is_online())
+			{
+				server_delete_simple(data_xml);
+				server_update_simple(quantity_xml);
+				if(type=='exchange')
+					server_update_simple(exchanged_xml);
+			}
+			else
+			{
+				local_delete_simple(data_xml);
+				local_update_simple(quantity_xml);
+				if(type=='exchange')
+					local_update_simple(exchanged_xml);
 			}
 		});
 				
@@ -621,6 +647,170 @@ function form15_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * @form Manage customer returns
+ * @param button
+ */
+function form16_delete_item(button)
+{
+	if(is_delete_access('form16'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[0].value;
+		var customer=form.elements[1].value;
+		var reutrn_date=get_raw_time(form.elements[2].value);
+		var total=form.elements[3].value;
+		var transaction_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var return_xml="<customer_returns>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<return_date>"+return_date+"</return_date>" +
+					"<total>"+total+"</total>" +
+					"</customer_returns>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>customer_returns</tablename>" +
+					"<link_to>form16</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Return no "+data_id+" for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var transaction_xml="<transactions>" +
+				"<id>"+transaction_id+"</id>" +
+				"</transactions>";
+
+		if(is_online())
+		{
+			server_delete_row(return_xml,activity_xml);
+			server_delete_simple(transaction_xml);
+		}
+		else
+		{
+			local_delete_row(return_xml,activity_xml);
+			local_delete_simple(transaction_xml);
+		}	
+		$(button).parent().parent().remove();
+
+		var payment_xml="<payments>" +
+				"<id></id>" +
+				"<bill_id>"+data_id+"</bill_id>" +
+				"<status array='yes'>pending--cancelled</status>" +
+				"<transaction_id></transaction_id>" +
+				"</payments>";
+		fetch_requested_data('',payment_xml,function(payments)
+		{
+			for(var x in payments)
+			{
+				var pt_xml="<transactions>" +
+						"<id>"+payments[x].transaction_id+"</id>" +
+						"</transactions>";
+				var pay_xml="<payments>" +
+						"<id>"+payments[x].id+"</id>" +
+						"<bill_id></bill_id>" +
+						"<transaction_id></transaction_id>" +
+						"</payments>";
+
+				if(is_online())
+				{
+					server_delete_simple(pay_xml);
+					server_delete_simple(pt_xml);
+				}
+				else
+				{
+					local_delete_simple(pay_xml);
+					local_delete_simple(pt_xml);
+				}
+				break;
+			}
+		});
+
+		
+		var items_data="<customer_return_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<batch></batch>" +
+				"<quantity></quantity>" +
+				"<bill_id>"+data_id+"</bill_id>" +
+				"<type></type>" +
+				"<exchange_batch></exchange_batch>" +
+				"</customer_return_items>";
+		fetch_requested_data('',items_data,function(return_items)
+		{
+			return_items.forEach(function(return_item)
+			{
+				var quantity_data="<product_instances>" +
+						"<id></id>" +
+						"<product_name>"+return_item.item_name+"</product_name>" +
+						"<batch array='yes'>"+return_item.batch+"--"+return_item.exchange_batch+"</batch>" +
+						"<quantity></quantity>" +
+						"</product_instances>";	
+			
+				//////updating product quantity in inventory
+				fetch_requested_data('',quantity_data,function(quantities)
+				{
+					for (var j in quantities)
+					{
+						if(quantities[j].batch==return_item.batch)
+						{
+							var q=parseFloat(quantities[j].quantity)-parseFloat(bill_item.quantity);
+							var quantity_xml="<product_instances>" +
+									"<id>"+quantities[j].id+"</id>" +
+									"<quantity>"+q+"</quantity>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</product_instances>";
+							
+							if(is_online())
+							{
+								server_update_simple(quantity_xml);
+							}
+							else
+							{
+								local_update_simple(quantity_xml);
+							}
+						}
+						else if(quantities[j].batch==return_item.exchange_batch)
+						{
+							var q=parseFloat(quantities[j].quantity)+parseFloat(bill_item.quantity);
+							var quantity_xml="<product_instances>" +
+									"<id>"+quantities[j].id+"</id>" +
+									"<quantity>"+q+"</quantity>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</product_instances>";
+							
+							if(is_online())
+							{
+								server_update_simple(quantity_xml);
+							}
+							else
+							{
+								local_update_simple(quantity_xml);
+							}
+						}
+					}					
+				});
+			});	
+			
+			if(is_online())
+			{
+				server_delete_simple(items_data);
+			}
+			else
+			{
+				local_delete_simple(items_data);
+			}
+		});		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 /**
  * @form Manage Returns

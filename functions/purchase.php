@@ -3,7 +3,7 @@
 	
 		echo "<ul>";
 			if(strpos($_SESSION['forms'],'form21')!==false)
-				echo "<li><a id='form21_link' href='#form21' onclick='form21_header_ini(); form21_ini();' data-i18n='Enter Supplier Bill'></a></li>";
+				echo "<li><a id='form21_link' href='#form21' onclick='form21_header_ini(); form21_ini();' data-i18n='form.enter_upplier_bill'></a></li>";
 			if(strpos($_SESSION['forms'],'form53')!==false)
 				echo "<li><a id='form53_link' href='#form53' onclick='form53_header_ini(); form53_ini();' data-i18n='form.manage_supplier_bills'></a></li>";
 			if(strpos($_SESSION['forms'],'form24')!==false)
