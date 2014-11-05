@@ -799,12 +799,13 @@ function form15_add_item()
 					"<id></id>" +
 					"<customer_name>"+customer_name+"</customer_name>" +
 					"</bills>";
-			get_single_column_data('',bill_data,function(bills)
+			get_single_column_data(function(bills)
 			{
+				console.log(bills);
 				var bill_string="";
 				bills.forEach(function(bill)
 				{
-					bill_string+=bill.id+"--";
+					bill_string+=bill+"--";
 				});
 				var bill_items_data="<bill_items>" +
 						"<id></id>" +
@@ -817,6 +818,7 @@ function form15_add_item()
 						"<offer></offer>" +
 						"<last_updated></last_updated>" +
 						"</bill_items>";
+				console.log(bill_items_data);
 				fetch_requested_data('',bill_items_data,function(bill_items)
 				{
 					var notes_value="";
@@ -828,9 +830,16 @@ function form15_add_item()
 									" for Rs."+bill_item.total+
 									"\n";
 					});
-					notes_filter.value=notes_value;
+					if(notes_value=="")
+					{
+						notes_filter.value="No purchase records found";
+					}
+					else
+					{
+						notes_filter.value=notes_value;
+					}
 				});
-			});
+			},bill_data);
 			
 			type_filter.value="";
 			quantity_filter.value=0;

@@ -431,7 +431,7 @@ function form15_header_ini()
 	
 	set_my_filter(customers_data,customers_filter);
 	$(return_date).datepicker();
-	return_date.valueget_my_date();
+	return_date.value=get_my_date();
 	customers_filter.value='';
 	$(customers_filter).focus();
 }

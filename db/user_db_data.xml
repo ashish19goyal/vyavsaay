@@ -379,7 +379,15 @@
 		</row>
 		<row>
 			<name>form15</name>
-			<display_name>accept_returns</display_name>
+			<display_name>accept_customer_returns</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form16</name>
+			<display_name>manage_customer_returns</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -1012,7 +1020,18 @@
 		<row>
 			<username>master</username>
 			<element_id>form15</element_id>
-			<element_name>accept_returns</element_name>
+			<element_name>accept_customer_returns</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form16</element_id>
+			<element_name>manage_customer_returns</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

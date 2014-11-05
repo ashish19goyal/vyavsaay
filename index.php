@@ -15,7 +15,7 @@
 							<li><a href="#home" class="top-nav scroll">Home</a></li>
 							<li><a href="#about" class="top-nav scroll">About</a></li>
 							<li><a href="#reviews" class="top-nav scroll">Reviews</a></li>
-							<li><a href="#demo" class="top-nav scroll">Demo</a></li>
+							<li><a href="#pricing" class="top-nav scroll">Pricing</a></li>
 							<li><a href="#register" class="top-nav scroll">Register</a></li>
 							<li><a href="#contact" class="top-nav scroll">Contact</a></li>
 						</ul>
@@ -46,7 +46,8 @@
 						</div>
 						<div class="col-md-6 banner-text">
 							<h1>Vyavsaay</h1>
-							<p>Vyavsaay provides a cloud based, cross platform solution to manage all business processes and information.</p>
+							<p>Vyavsaay provides a cloud based, cross platform solution to manage your business processes and information.</p>
+							<p>Email: info@vyavsaay.com <br> Phone: 9818005232</p>
 						</div>
 					<!-- 	<div class="clearfix"> </div> -->
 					</div>
@@ -58,17 +59,17 @@
 	       		<div class="container">
 	       		   <div class="gallery-head text-center">
 					  <h3>ABOUT</h3>
-					  <p>Vyavsaay is best suited for small and medium enterprises that don't want to spend a lot of money in setting up and managing IT infrastructure. And you also don't need an active internet connection to use it.</p>
+					  <p>Vyavsaay is best suited for small and medium enterprises that don't want to spend a lot of money in setting up and managing IT infrastructure and availing a speedy internet connection.</p>
 					 <p>Vyavsaay takes care of managing your business processes and information, so that you can focus on developing client relationships and optimizing business processes for the growth of your business.</p>
 				    </div>
 	       			<div class="row text-center">
-	       				<div class="col-md-4 about_grid">
+	       				<div class="col-md-4 about_grid screenshots">
 	       					 <img src="images/Screen1.jpeg" alt="">
 	       				</div>
-	       				<div class="col-md-4 about_grid">
+	       				<div class="col-md-4 about_grid screenshots">
 	       					<img src="images/Screen2.jpeg" alt="">
 	       				</div>
-	       				<div class="col-md-4 about_grid">
+	       				<div class="col-md-4 about_grid screenshots">
 	       					<img src="images/Screen3.jpeg" alt="">
 	       				</div>
 	       				<div class="clearfix"> </div>
@@ -89,7 +90,7 @@
 			       				</div>
 			       				<div class="col-md-8 review-text">
 			       					<p>"Vyavsaay is very user friendly. Anybody can use it with ease. It took us only a few hours to setup and get started with Vyavsaay."</p>
-			       					<span>Employee</span>
+			       					<span>Business Owner,<br>Professional Services Industry</span>
 			       				</div>
 			       				<div class="clearfix"> </div>
 			       			</div>
@@ -99,7 +100,7 @@
 			       				</div>
 			       				<div class="col-md-8 review-text">
 			       					<p>"Now we can manage all our process with just one platform. We don't need to use multiple desktop and mobile solutions and worry about moving data between them."</p>
-			       					<span>Business owner</span>
+			       					<span>Business owner,<br>HealthCare Industry</span>
 			       				</div>
 			       				<div class="clearfix"> </div>
 			       			</div>
@@ -109,23 +110,32 @@
 		       	</div>
 	  <!---//End-Reviews----->
 <!----- /start-demo---->
-		<div id="demo" class="demo">
+		<div id="pricing" class="demo">
        		<div class="container">
        		   <div class="demo-head text-center">
-				  <h3>Demo</h3>
+				  <h3>Pricing</h3>
 			    </div>
        			<div class="row Demo text-center">
        				<div class="demo-grid">
-	       				<div class="col-md-5 demo-img1">
-	       					<!--  <img src="images/ab-1.png" alt="">  -->
+	       				<div class="col-md-7 Demo-text pricing_grid">
+	       					<p style='text-align:center;'><b>Single User</b></p>
+	       					Ideal for small businesses with only one business owner. All the features of Vyavsaay are available under this package.
+	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Rs. 500/month</b></p>
 	       				</div>
-	       				<div class="col-md-7 Demo-text">
-	       					<p>Here is a quick introduction video for vyavsaay</p>
+	       				<div class="col-md-7 Demo-text pricing_grid">
+	       					<p style='text-align:center;'><b>Multi-User</b></p>
+	       					Suitable for diverse businesses with upto 10 business owners and users.
+	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Rs. 2000/month</b></p>
 	       				</div>
-	       				<div class="clearfix"> </div>
+	       				<div class="col-md-7 Demo-text pricing_grid">
+	       					<p style='text-align:center;'><b>Enterprise Level</b></p>
+	       					Customized solutions for medium sized enterprises with specific business requirements.       					
+	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Ask for a quote</b></p>
+	       				</div>
+	       				<div class="clearfix"></div>
 	       			</div>
        			</div>
-       			<div class="clearfix"> </div>
+       			<div class="clearfix"></div>
        		</div>
 		</div>
 	  <!---//End-Reviews----->
@@ -135,9 +145,9 @@
        			<div class="demo-head text-center">
 				  <h3>Register</h3>
 			    </div>
-       					<div class="Demo-text">
-       						<p>Fill in the following form to register for a new account. The subscription is free for first 3 months.</p>
-       					</div>
+       			<div class="gallery-head text-center">
+       				<p>Fill in the following form to register for a new account. The subscription is free for first 3 months.</p>
+       			</div>
        					
        					<div id="r_register" class="contact-form">
 							<div id="failed_register"></div>
@@ -189,6 +199,9 @@
 	    <div class="contact" id="contact">
 	      	<div class="container">
 	      		  <h3>CONTACT</h3>
+      			  <div class="gallery-head text-center">
+       			  </div>
+       			
       			  <div class="contact-form">
 		  	        <form id='index_contact'>
 			    	    <p class="comment-form-author"><label>Name</label>

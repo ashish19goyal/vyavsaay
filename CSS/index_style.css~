@@ -22,8 +22,8 @@
 div.pricing_grid{
 	width: 250px;
 	height: 300px;	
-	margin:3% 0;
-	margin-left: 100px;
+/*	margin:3% 0;
+*/	margin-left: 100px;
 	margin-right: auto;
 	text-align: center;
 	border:6px solid#2ABF5E;
