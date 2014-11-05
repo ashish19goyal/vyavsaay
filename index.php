@@ -120,16 +120,18 @@
 	       				<div class="col-md-7 Demo-text pricing_grid">
 	       					<p style='text-align:center;'><b>Single User</b></p>
 	       					Ideal for small businesses with only one business owner. All the features of Vyavsaay are available under this package.
+	       					<br>Free subscription for first four months.
 	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Rs. 500/month</b></p>
 	       				</div>
 	       				<div class="col-md-7 Demo-text pricing_grid">
 	       					<p style='text-align:center;'><b>Multi-User</b></p>
-	       					Suitable for diverse businesses with upto 10 business owners and users.
+	       					Suitable for diverse businesses with upto 10 business owners and users. All the features of Vyavsaay are available under this package.
+	       					<br>Free subscription for first three months.
 	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Rs. 2000/month</b></p>
 	       				</div>
 	       				<div class="col-md-7 Demo-text pricing_grid">
 	       					<p style='text-align:center;'><b>Enterprise Level</b></p>
-	       					Customized solutions for medium sized enterprises with specific business requirements.       					
+	       					Customized solutions for medium sized enterprises with specific business requirements. You can also pick and choose existing implementations.
 	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Ask for a quote</b></p>
 	       				</div>
 	       				<div class="clearfix"></div>
@@ -146,7 +148,7 @@
 				  <h3>Register</h3>
 			    </div>
        			<div class="gallery-head text-center">
-       				<p>Fill in the following form to register for a new account. The subscription is free for first 3 months.</p>
+       				<p>Fill in the following form to register for a new account.</p>
        			</div>
        					
        					<div id="r_register" class="contact-form">
