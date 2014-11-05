@@ -132,7 +132,7 @@
 	       				<div class="col-md-7 Demo-text pricing_grid">
 	       					<p style='text-align:center;'><b>Enterprise Level</b></p>
 	       					Customized solutions for medium sized enterprises with specific business requirements. You can also pick and choose existing implementations.
-	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Ask for a quote</b></p>
+	       					<p style='position:absolute;bottom:0;text-align:center;'><b><a href="#contact">Ask for a quote</a></b></p>
 	       				</div>
 	       				<div class="clearfix"></div>
 	       			</div>
