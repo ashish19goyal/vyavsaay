@@ -1508,3 +1508,25 @@ function report41_ini()
 		$('#form41_body').html(rowsHTML);
 	},service_data);
 };
+
+
+/**
+ * @reportNo 44
+ * @report compare products
+ */
+function report44_ini()
+{
+	var form=document.getElementById('report44_header');
+	var product_name=form.elements[1].value;
+	var site=form.elements[2].value;
+	var max_results=form.elements[3].value;
+		
+	var product_data="<product_instances>" +
+			"<product_name>"+product+"</product_name>" +
+			"" +
+			"</product_instances>";
+
+	fetch_requested_data('report44',product_data,function(products)
+	{
+	});
+};

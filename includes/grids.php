@@ -76,6 +76,14 @@
 			</ul>
 		</li>
 		<li>
+			<a id="ecommerce_link" onclick="show_function('#ecommerce_main');"><div data-i18n="function.ecommerce"> >>></div></a>		
+			<ul>
+				<li>Number of pending orders : <a class='grid_item' id='num_pending_orders'>TBD</a></li>
+				<li>Selling on : <a class='grid_item' id='selling_on'>TBD</a></li>
+			</ul>
+		</li>
+		
+		<li>
 			<a id="offers_link" onclick="show_function('#offers_main');"><div data-i18n="function.offers"> >>></div></a>		
 			<ul>
 				<li>Last offer name : <a class='grid_item' id='last_offer'>TBD</a></li>

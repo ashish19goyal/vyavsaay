@@ -13,6 +13,7 @@
 		include "functions/search.php";
 		include "functions/notifications.php";
 		include "functions/opportunities.php";
+		include "functions/all_activities.php";
 		
 		//display for each of the grids
 		include "functions/sale_bills.php";
@@ -26,6 +27,7 @@
 		include "functions/suppliers.php";
 		include "functions/offers.php";
 		include "functions/finances.php";
+		include "functions/ecommerce.php";
 		include "functions/sale_reports.php";
 		include "functions/maps.php";
 		//display for settings

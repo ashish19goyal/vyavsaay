@@ -467,43 +467,67 @@ function form16_header_ini()
 	set_my_filter(return_data,return_filter);
 };
 
+/**
+ * @form Manage supplier Returns
+ * @formNo 17
+ */
+function form17_header_ini()
+{
+	var filter_fields=document.getElementById('form17_header');
+	var return_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	
+	var return_data="<supplier_returns>" +
+			"<id></id>" +
+			"</supplier_returns>";
+	var sup_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+	
+	set_my_filter(sup_data,name_filter);
+	set_my_filter(return_data,return_filter);
+};
 
 
 /**
- * this function prepares the table for Manage returns form
- * @form Send returns
+ * @form Enter Supplier Returns
  * @formNo 19
  */
 function form19_header_ini()
 {
-	var filter_fields=document.getElementById('form19_header');
-	var product_filter=filter_fields.elements[0];
-	var batch_filter=filter_fields.elements[1];
-	var bill_filter=filter_fields.elements[2];
-	var supplier_filter=filter_fields.elements[3];
-	var reason_filter=filter_fields.elements[4];
+	var fields=document.getElementById('form19_master');
 	
-	var products_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-	var batch_data="<product_instances>" +
-			"<batch></batch>" +
-			"</product_instances>";
-	var bill_data="<supplier_bills>" +
-			"<bill_id></bill_id>" +
-			"</supplier_bills>";
-	var supplier_data="<suppliers>" +
-			"<acc_name></acc_name>" +
-			"</suppliers>";
-	//setting autocompletes 
+	var supplier_filter=fields.elements[1];
+	var return_date=fields.elements[2];
+	fields.elements[3].value=0;
+	fields.elements[4].value=get_new_key();
+	fields.elements[5].value=get_new_key();
 	
-	set_my_filter(products_data,product_filter);
-	set_my_filter(batch_data,batch_filter);
-	set_my_filter(bill_data,bill_filter);
-	set_my_filter(supplier_data,supplier_filter);
-	set_static_filter('supplier_returns','reason',reason_filter);
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form19_create_form();
+	});
+	var suppliers_data="<suppliers>" +
+		"<acc_name></acc_name>" +
+		"</suppliers>";
 	
-};
+	set_my_filter(suppliers_data,supplier_filter);
+	$(return_date).datepicker();
+	return_date.value=get_my_date();
+	supplier_filter.value='';
+	$(supplier_filter).focus();
+}
+
+/**
+ * This function clears the form19 for new return
+ */
+function form19_new_form()
+{
+	form19_header_ini();
+	$("#form19_body").find("tr").remove();
+}
 
 
 /**

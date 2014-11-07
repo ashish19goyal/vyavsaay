@@ -1295,7 +1295,7 @@ function form15_create_form()
 			tax+=parseFloat(subform.elements[6].value);
 		});
 
-		form.elements[3].value=tax;
+		form.elements[3].value=total;
 		form.elements[6].value=tax;
 		
 		var data_id=form.elements[4].value;
@@ -1388,66 +1388,86 @@ function form15_create_form()
 	}
 }
 
-
 /**
- * @form Manage Returns
+ * @form Enter supplier returns 
  * @param button
  */
 function form19_create_item(form)
 {
 	if(is_create_access('form19'))
-	{		
-		var product_name=form.elements[0].value;
+	{
+		var return_id=document.getElementById("form19_master").elements[4].value;
+		
+		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var sup_bill_id=form.elements[2].value;
-		var supplier=form.elements[3].value;
-		var reason=form.elements[4].value;
-		var quantity=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var notes=form.elements[2].value;
+		var quantity=form.elements[3].value;
+		var total=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		
 		var last_updated=get_my_time();
-		var table='supplier_returns';
-		var data_xml="<"+table+">" +
+		var quantity_data="<product_instances>" +
+					"<id></id>" +
+					"<product_name>"+name+"</product_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<quantity></quantity>" +
+					"</product_instances>";
+		
+		//////updating product quantity in inventory
+		fetch_requested_data('',quantity_data,function(quantities)
+		{
+			var returned_id="1";
+			var returned_quantity="0";
+			for (var i in quantities)
+			{
+				returned_id=quantities[i].id;
+				returned_quantity=parseFloat(quantities[i].quantity)-parseFloat(quantity);
+				break;
+			}
+			
+			var returned_xml="<product_instances>" +
+					"<id>"+returned_id+"</id>" +
+					"<quantity>"+returned_quantity+"</quantity>" +
+					"<last_update>"+last_updated+"</last_updated>"+
+					"</product_instances>";
+			var data_xml="<supplier_return_items>" +
 					"<id>"+data_id+"</id>" +
-					"<product_name>"+product_name+"</product_name>" +
-					"<batch>"+offer_id+"</offer_id>" +
+					"<return_id>"+return_id+"</return_id>" +
+					"<item_name>"+name+"</item_name>" +
+					"<batch>"+batch+"</batch>" +
 					"<quantity>"+quantity+"</quantity>" +
-					"<sub_bill_id>"+sub_bill_id+"</sub_bill_id>" +
-					"<reason>"+reason+"</reason>" +
-					"<supplier>"+supplier+"</supplier>" +
+					"<refund_amount>"+total+"</refund_amount>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form19</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Saved item "+product_name+" for return to supplier "+supplier+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<7;i++)
+					"</supplier_return_items>";	
+		
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+				server_update_simple(returned_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+				local_update_simple(returned_xml);
+			}
+		});
+		
+				
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[8];
+		var del_button=form.elements[7];
 		$(del_button).off('click');
 		$(del_button).on('click',function(event)
 		{
 			form19_delete_item(del_button);
 		});
-		$(form).off('submit');
 
-		$(form).on('submit',function(event)
+		$(form).off('submit');
+		$(form).on("submit", function(event)
 		{
 			event.preventDefault();
-			form19_update_item(form);
 		});
 	}
 	else
@@ -1455,6 +1475,122 @@ function form19_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * @form enter supplier returns
+ * @param button
+ */
+function form19_create_form()
+{
+	if(is_create_access('form19'))
+	{
+		var form=document.getElementById("form19_master");
+		
+		var supplier=form.elements[1].value;
+		var return_date=get_raw_time(form.elements[2].value);
+		
+		var total=0;
+		
+		$("[id^='save_form19']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);	
+			total+=parseFloat(subform.elements[4].value);
+		});
+
+		form.elements[3].value=total;
+		
+		var data_id=form.elements[4].value;
+		var transaction_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<supplier_returns>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<return_date>"+return_date+"</return_date>" +
+					"<total>"+total+"</total>" +
+					"<type>product</type>" +
+					"<transaction_id>"+transaction_id+"</transaction_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</supplier_returns>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>supplier_returns</tablename>" +
+					"<link_to>form17</link_to>" +
+					"<title>Saved</title>" +
+					"<notes>Returns to supplier "+supplier+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var transaction_xml="<transactions>" +
+					"<id>"+transaction_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>"+supplier+"</receiver>" +
+					"<giver>master</giver>" +
+					"<tax>0</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		var pt_tran_id=get_new_key();
+		var payment_xml="<payments>" +
+					"<id>"+pt_tran_id+"</id>" +
+					"<status>pending</status>" +
+					"<type>received</type>" +
+					"<date>"+get_my_time()+"</date>" +
+					"<total_amount>"+total+"</total_amount>" +
+					"<paid_amount>0</paid_amount>" +
+					"<acc_name>"+supplier+"</acc_name>" +
+					"<due_date>"+get_my_time()+"</due_date>" +
+					"<mode></mode>" +
+					"<transaction_id>"+pt_tran_id+"</transaction_id>" +
+					"<bill_id>"+data_id+"</bill_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</payments>";
+		var pt_xml="<transactions>" +
+					"<id>"+pt_tran_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>master</receiver>" +
+					"<giver>"+supplier+"</giver>" +
+					"<tax>0</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+			server_create_simple(transaction_xml);
+			server_create_simple(pt_xml);
+			server_create_simple_func(payment_xml,function()
+			{
+				modal26_action(pt_tran_id);
+			});
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+			local_create_simple(transaction_xml);
+			local_create_simple(pt_xml);
+			local_create_simple_func(payment_xml,function()
+			{
+				modal26_action(pt_tran_id);
+			});
+		}
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form19_update_form();
+		});
+		$("[id^='save_form19']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
 
 /**
  * @form New Purchase Bill

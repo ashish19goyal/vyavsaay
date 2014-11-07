@@ -715,7 +715,7 @@ function form14_add_item()
 }
 
 /**
- * @form New Bill
+ * @form Enter Customer return
  * @formNo 15
  */
 function form15_add_item()
@@ -801,7 +801,7 @@ function form15_add_item()
 					"</bills>";
 			get_single_column_data(function(bills)
 			{
-				console.log(bills);
+				//console.log(bills);
 				var bill_string="";
 				bills.forEach(function(bill)
 				{
@@ -818,7 +818,7 @@ function form15_add_item()
 						"<offer></offer>" +
 						"<last_updated></last_updated>" +
 						"</bill_items>";
-				console.log(bill_items_data);
+				//console.log(bill_items_data);
 				fetch_requested_data('',bill_items_data,function(bill_items)
 				{
 					var notes_value="";
@@ -890,9 +890,8 @@ function form15_add_item()
 	}
 }
 
-
 /**
- * @form Manage Returns
+ * @form Enter Supplier return
  * @formNo 19
  */
 function form19_add_item()
@@ -904,88 +903,128 @@ function form19_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form19_"+id+"'></form>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form19_"+id+"' value=''>";
+				rowsHTML+="<input type='text' required form='form19_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form19_"+id+"' value=''>";
+				rowsHTML+="<input type='text' required form='form19_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form19_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form19_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form19_"+id+"' value=''>";
+				rowsHTML+="<input type='number' required form='form19_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form19_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td>";
-				rowsHTML+="<input type='text' form='form19_"+id+"' value=''>";
+				rowsHTML+="<input type='number' required form='form19_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td>";
 				rowsHTML+="<input type='hidden' form='form19_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form19_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form19_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+				rowsHTML+="<input type='hidden' form='form19_"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form19_"+id+"' id='save_form19_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form19_"+id+"' id='delete_form19_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
 		$('#form19_body').prepend(rowsHTML);
 		
 		var fields=document.getElementById("form19_"+id);
-		var product_filter=fields.elements[0];
+		var name_filter=fields.elements[0];
 		var batch_filter=fields.elements[1];
-		var bill_filter=fields.elements[2];
-		var supplier_filter=fields.elements[3];
-		var reason_filter=fields.elements[4];
-		var quantity_filter=fields.elements[5];
+		var notes_filter=fields.elements[2];
+		var quantity_filter=fields.elements[3];
+		var total_filter=fields.elements[4];
+		var id_filter=fields.elements[5];
+		var price_filter=fields.elements[6];
+		
+		$(name_filter).focus();
 		
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
 			form19_create_item(fields);
 		});
-				
-		$(product_filter).focus();
-	
-		var products_data="<goods_received>" +
-			"<product_name></product_name>" +
-			"</goods_received>";
-		set_my_value_list(products_data,product_filter);
 		
-		$(product_filter).on('blur',function(event)
-		{
-			var batch_data="<goods_received>" +
-				"<batch></batch>" +
-				"<product_name>"+product_filter.value+"</product_name>" +
-				"</goods_received>";
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,name_filter);
+		
+		
+		$(name_filter).on('blur',function(event){
+			var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name>"+name_filter.value+"</product_name>" +
+					"<quantity></quantity>" +
+					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
+			batch_filter.value="";
+			notes_filter.value="";
+			quantity_filter.value=0;
+			total_filter.value=0;
+			price_filter.value=0;
 		});
 		
-		$(batch_filter).on('blur',function(event)
-		{
-			var bill_data="<goods_received>" +
-				"<sup_bill_id></sup_bill_id>" +
-				"<batch>"+batch_filter.value+"</batch>" +
-				"<product_name>"+product_filter.value+"</product_name>" +
-				"</goods_received>";
-			set_my_value_list(bill_data,bill_filter);
-		});
-		
-		$(bill_filter).on('blur',function(event)
-		{
-			var supplier_data="<supplier_bills>" +
-				"<supplier_name></supplier_name>" +
-				"<bill_id>"+bill_filter.value+"</bill_id>" +
-				"</supplier_bills>";
-			set_my_value_list(supplier_data,supplier_filter);
-		});
+		$(batch_filter).on('blur',function(event){
+			var supplier_name=document.getElementById("form19_master").elements[1].value;
+			var bill_data="<supplier_bills>" +
+					"<id></id>" +
+					"<supplier>"+supplier_name+"</supplier>" +
+					"</supplier_bills>";
+			get_single_column_data(function(bills)
+			{
+				var bill_string="";
+				bills.forEach(function(bill)
+				{
+					bill_string+=bill+"--";
+				});
+				var bill_items_data="<supplier_bill_items>" +
+						"<id></id>" +
+						"<bill_id array='yes'>"+bill_string+"</bill_id>" +
+						"<product_name>"+name_filter.value+"</product_name>" +
+						"<batch>"+batch_filter.value+"</batch>" +
+						"<quantity></quantity>" +
+						"<amount></amount>" +
+						"<unit_price></unit_price>" +
+						"<last_updated></last_updated>" +
+						"</supplier_bill_items>";
+				fetch_requested_data('',bill_items_data,function(bill_items)
+				{
+					var notes_value="";
+					bill_items.forEach(function(bill_item)
+					{
+						notes_value+=bill_item.quantity+
+									" quantity bought on "+
+									get_my_past_date(bill_item.last_updated)+
+									" for Rs."+bill_item.amount+
+									"\n";
+					});
+					if(notes_value=="")
+					{
+						notes_filter.value="No purchase records found";
+					}
+					else
+					{
+						notes_filter.value=notes_value;
+					}
+					price_filter.value=bill_item.unit_price;
+				});
+			},bill_data);
 			
-		set_static_value_list('supplier_returns','reason',reason_filter);
+			quantity_filter.value=0;
+			total_filter.value=0;
+		});
+						
+		$(quantity_filter).on('blur',function(event)
+		{		
+			total_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+		});
 	}
 	else
 	{
 		$("#modal2").dialog("open");
 	}
 }
+
 
 /**
  * @form New Supplier Bill

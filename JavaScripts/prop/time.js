@@ -15,6 +15,14 @@ function get_raw_time(date)
 	}
 }
 
+function get_raw_time_24h()
+{
+	var d=new Date();
+	var yesterday=parseFloat(d.getTime())-86400000;
+	return yesterday;
+}
+
+
 function get_formatted_time(my_time)
 {
 	var d=new Date(parseInt(my_time));

@@ -21,12 +21,12 @@ function default_load()
 		setup_elements_display();
 		activities_ini();
 		date_formating();
-		load_tooltips();
 		modal_forms_ini();
 		print_setup();
 		Chart.defaults.global.responsive = true;
 		$('textarea').autosize();
 		i18n_setup();
+		resize_input();
 		home_display();
 	}
 	hide_loader();
@@ -146,8 +146,6 @@ function i18n_setup()
 		$("#content_box").find('div').i18n();
 		$("#content_box").find('a').i18n();
 		$(".side_lane").find('div').i18n();
-		//$(".modal_forms").i18n();
-		//$(".side_menu").i18n();
 		set_menu_username();
 	});
 }
@@ -178,6 +176,7 @@ function hide_all()
 	$("#settings_main").hide();
 	$("#r_preferences").hide();
 	$("#search_results_box").hide();
+	$("#all_activities_box").hide();
 	$("#notifications_box").hide();
 	$("#opportunities_box").hide();
 	//hide all functions
@@ -187,6 +186,7 @@ function hide_all()
 	$("#services_main").hide();
 	$("#inventory_main").hide();
 	$("#finances_main").hide();
+	$("#ecommerce_main").hide();
 	$("#customers_main").hide();
 	$("#suppliers_main").hide();
 	$("#staff_main").hide();
@@ -219,6 +219,19 @@ function hide_loader()
 	$("#transparent_layer").hide();
 }
 
+function resize_input()
+{
+	$('input[type="text"]').keyup(function()
+	{  
+		$(this).attr({size: $(this).val().length});
+	});
+	$('input[type="number"]').keyup(function()
+	{  
+		//console.log($(this).val().length);
+		$(this).attr({size: $(this).val().length});
+	});
+}
+
 function load_tooltips()
 {
 	$(".icon").tooltip();
@@ -232,6 +245,13 @@ function show_search_results()
 	hide_all();
 	$("#search_results_box").show();
 	search_ini();
+}
+
+function show_all_activities() 
+{
+	hide_all();
+	$("#all_activities_box").show();
+	all_activities_ini();
 }
 
 function element_display(fid,element_name)

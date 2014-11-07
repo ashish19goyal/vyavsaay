@@ -18,7 +18,8 @@
     "store": "Store",
     "offers": "Offers",
     "maps": "Maps",
-    "sale_reports": "Sale Reports"
+    "sale_reports": "Sale Reports",
+    "ecommerce":"E-Commerce"
   },
   "general":{
   	"hello": "Hello"

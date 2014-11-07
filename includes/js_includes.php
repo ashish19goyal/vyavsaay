@@ -1,4 +1,5 @@
 <script src='./JavaScripts/open/jquery-1.11.1.min.js'></script>
+<!--<script src="./JavaScripts/open/jquery.mobile.custom.min.js"></script>-->
 <script src='./JavaScripts/open/bcrypt.js'></script>
 <script src='./JavaScripts/open/chart.js'></script>
 <script src='./JavaScripts/open/indexeddb.js'></script>

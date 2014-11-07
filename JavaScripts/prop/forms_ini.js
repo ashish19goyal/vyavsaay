@@ -40,16 +40,16 @@ function form1_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.batch+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.cost_price+"'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.cost_price+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.sale_price+"'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.sale_price+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+get_my_past_date(result.expiry)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.quantity+"'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form1_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.quantity+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
 						rowsHTML+="<input type='hidden' form='form1_"+result.id+"' value='"+result.id+"'>";
@@ -60,7 +60,6 @@ function form1_ini()
 			rowsHTML+="</tr>";
 			
 			$('#form1_body').prepend(rowsHTML);
-			
 			var fields=document.getElementById("form1_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -68,6 +67,7 @@ function form1_ini()
 				form1_update_item(fields);
 			});
 		});
+		resize_input();
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -984,88 +984,175 @@ function form16_ini()
 	});
 }
 
-
-
-
 /**
- * this function prepares the table for Manage returns form
- * @form Manage returns
- * @formNo 19
+ * @form Manage supplier returns
+ * @formNo 17
  */
-function form19_ini()
+function form17_ini()
 {
-	var fid=$("#form19_link").attr('data_id');
+	var fid=$("#form17_link").attr('data_id');
 	if(fid==null)
 		fid="";	
 	
-	var filter_fields=document.getElementById('form19_header');
-
-	var fproduct=filter_fields.elements[0].value;
-	var fbatch=filter_fields.elements[1].value;
-	var fbill=filter_fields.elements[2].value;
-	var freason=filter_fields.elements[3].value;
-	var fsupplier=filter_fields.elements[4].value;
+	var filter_fields=document.getElementById('form17_header');
+	
+	//populating form 
+	if(fid==="")
+		fid=filter_fields.elements[0].value;
+	var fname=filter_fields.elements[1].value;
 	
 	var columns="<supplier_returns>" +
 			"<id>"+fid+"</id>" +
-			"<batch>"+fbatch+"</batch>" +
-			"<product_name>"+fproduct+"</product_name>" +
-			"<sup_bill_id>"+fbill+"</sup_bill_id>" +
-			"<reason>"+freason+"</reason>" +
-			"<quantity></quantity>" +
-			"<supplier>"+fsupplier+"</supplier>" +
+			"<supplier>"+fname+"</supplier>" +
+			"<return_date></return_date>" +
+			"<total></total>" +
+			"<type></type>" +
+			"<transaction_id></transaction_id>" +
 			"</supplier_returns>";
 
-	$('#form19_body').html("");
+	$('#form17_body').html("");
 
-	fetch_requested_data('form19',columns,function(results)
-	{
+	fetch_requested_data('form17',columns,function(results)
+	{	
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
 			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form19_"+result.id+"'></form>";
+				rowsHTML+="<form id='form17_"+result.id+"'></form>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form19_"+result.id+"' value='"+result.product_name+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form17_"+result.id+"' value='"+result.id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form19_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.batch+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form17_"+result.id+"' value='"+result.supplier+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form19_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.sup_bill_id+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form17_"+result.id+"' value='"+get_my_past_date(result.return_date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form19_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.supplier+"'>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form17_"+result.id+"' value='"+result.total+"' step='any'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form19_"+result.id+"' ondblclick='set_editable($(this));' value='"+result.reason+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form19_"+result.id+"' value='"+result.quantity+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='hidden' form='form19_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form19_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form19_"+result.id+"' value='saved' onclick='form19_delete_item($(this));'>";	
+						rowsHTML+="<input type='button' class='edit_icon' form='form17_"+result.id+"' title='Edit Return'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form17_"+result.id+"' title='Delete Return' onclick='form17_delete_item($(this));'>";
+						rowsHTML+="<input type='hidden' form='form17_"+result.id+"' value='"+result.transaction_id+"'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form19_body').prepend(rowsHTML);
-			var fields=document.getElementById("form19_"+result.id);
-			$(fields).on("submit", function(event)
+			$('#form17_body').prepend(rowsHTML);
+			var fields=document.getElementById("form17_"+result.id);
+			var edit_button=fields.elements[4];
+			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();
-				form19_update_item(fields);
+				if(result.type=='product')
+					element_display(result.id,'form19');
 			});
 		});
-		var export_button=filter_fields.elements[6];
+		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
 			my_obj_array_to_csv(results,'supplier_returns');
 		});
 	});
-};
+}
+
+/**
+ * @form Enter Supplier Returns
+ */
+function form19_ini()
+{
+	var data_id=$("#form19_link").attr('data_id');
+	if(data_id==null)
+		data_id="";	
+	
+	$('#form19_body').html("");
+
+	if(data_id!="")
+	{
+		var return_columns="<supplier_returns>" +
+				"<id>"+data_id+"</id>" +
+				"<supplier></supplier>" +
+				"<total></total>" +
+				"<return_date></return_date>" +
+				"<type>product</type>" +
+				"<transaction_id></transaction_id>" +
+				"</supplier_returns>";
+		var return_items_column="<supplier_return_items>" +
+				"<id></id>" +
+				"<return_id>"+data_id+"</return_id>" +
+				"<item_name></item_name>" +
+				"<batch></batch>" +
+				"<notes></notes>" +
+				"<quantity></quantity>" +
+				"<refund_amount></refund_amount>" +
+				"</supplier_return_items>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',return_columns,function(return_results)
+		{
+			for (var i in return_results)
+			{
+				var filter_fields=document.getElementById('form19_master');
+				filter_fields.elements[1].value=return_results[i].supplier;
+				filter_fields.elements[2].value=get_my_past_date(return_results[i].return_date);
+				filter_fields.elements[3].value=return_results[i].total;
+				filter_fields.elements[4].value=data_id;
+				filter_fields.elements[5].value=return_results[i].transaction_id;
+				
+				$(filter_fields).off('submit');
+				$(filter_fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form19_update_form();
+				});
+				break;
+			}
+		});
+		/////////////////////////////////////////////////////////////////////////
+		
+		fetch_requested_data('',return_items_column,function(results)
+		{
+			results.forEach(function(result)
+			{
+				var rowsHTML="";
+				var id=result.id;
+				rowsHTML+="<tr>";
+				rowsHTML+="<form id='form19_"+id+"'></form>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form19_"+id+"' value='"+result.item_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form19_"+id+"' value='"+result.batch+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form19_"+id+"' value='"+result.notes+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form19_"+id+"' value='"+result.quantity+"' step='any'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='number' readonly='readonly' step='any' form='form19_"+id+"' value='"+result.refund_amount+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td>";
+						rowsHTML+="<input type='hidden' form='form19_"+id+"' value='"+id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form19_"+id+"' id='save_form19_"+id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form19_"+id+"' id='delete_form19_"+id+"' onclick='form19_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+			
+				$('#form19_body').prepend(rowsHTML);
+				
+				var fields=document.getElementById("form19_"+id);
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+				});
+			});
+		});
+	}
+}
+
 
 /**
  * @form New Supplier Bill
@@ -3949,7 +4036,6 @@ function opportunities_ini()
 }
 
 
-
 function activities_ini() 
 {
 	var columns="<activities>" +
@@ -3959,7 +4045,7 @@ function activities_ini()
 		"<notes></notes>" +
 		"<updated_by></updated_by>" +
 		"<user_display>yes</user_display>" +
-		"<last_updated></last_updated>" +
+		"<last_updated compare='more than'>"+get_raw_time_24h()+"</last_updated>" +
 		"</activities>";
 	
 	fetch_requested_data('',columns,function(activities)
@@ -3986,8 +4072,39 @@ function activities_ini()
 	setTimeout(activities_ini,100000);	
 }
 
-
-
+function all_activities_ini() 
+{
+	var columns="<activities>" +
+		"<title></title>" +
+		"<link_to></link_to>" +
+		"<data_id></data_id>" +
+		"<notes></notes>" +
+		"<updated_by></updated_by>" +
+		"<user_display>yes</user_display>" +
+		"<last_updated></last_updated>" +
+		"</activities>";
+	
+	fetch_requested_data('',columns,function(activities)
+	{
+		var result_html="";
+		for(var i in activities)
+		{
+			result_html+="<div class='all_activity_detail'>" +
+						activities[i].title +
+						"</br><a onclick=\"" +
+						"element_display('"+activities[i].data_id +
+						"','"+activities[i].link_to+
+						"');\">"+activities[i].notes+"</a>" +
+						"<div class='all_activity_log'>By:" +
+						activities[i].updated_by +
+						" @ " +
+						get_formatted_time(activities[i].last_updated) +
+						"</div>" +
+						"</div>";
+		}
+		$("#all_activity_lane").html(result_html);		
+	});
+}
 
 
 function search_ini()

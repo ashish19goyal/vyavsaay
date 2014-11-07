@@ -88,6 +88,46 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>ecommerce</tablename>
+			<listname>sites</listname>
+			<name>all</name>
+			<value>All</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ecommerce</tablename>
+			<listname>sites</listname>
+			<name>snapdeal</name>
+			<value>Snapdeal</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ecommerce</tablename>
+			<listname>site</listname>
+			<name>flipkart</name>
+			<value>Flipkart</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ecommerce</tablename>
+			<listname>site</listname>
+			<name>ebay</name>
+			<value>E-bay</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ecommerce</tablename>
+			<listname>site</listname>
+			<name>amazon</name>
+			<value>Amazon</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>purchase_orders</tablename>
 			<listname>status</listname>
 			<name>cancelled</name>

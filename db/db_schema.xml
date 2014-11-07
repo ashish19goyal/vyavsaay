@@ -143,14 +143,23 @@
 	</supplier_bill_items>
 	<supplier_returns>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<quantity index='no' type="DECIMAL(12,2)"></quantity>
-			<product_name index='yes' type="VARCHAR(90)"></product_name>
 			<supplier index='yes' type="VARCHAR(100)"></supplier>
-			<batch index='yes' type="VARCHAR(50)"></batch>
-			<sup_bill_id index='yes' type="VARCHAR(50)"></sup_bill_id>
-			<reason index='yes' type="VARCHAR(20)"></reason><!-- expired/damaged/poor quality/unsold/callback -->
+			<return_date index='yes' type="BIGINT"></return_date>
+			<total index='no' type="DECIMAL(12,2)"></total>
+			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
+			<transaction_id index='no' type="BIGINT"></transaction_id>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</supplier_returns>
+	<supplier_return_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<return_id index='yes' type='BIGINT'></return_id>
+			<item_name index='yes' type="VARCHAR(90)"></item_name>
+			<batch index='yes' type="VARCHAR(50)"></batch>
+			<notes index='yes' type="TEXT"></notes>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<refund_amount index='no' type="DECIMAL(12,2)"></refund_amount>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</supplier_return_items>
 	<transactions>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<trans_date index='yes' type="BIGINT"></trans_date>

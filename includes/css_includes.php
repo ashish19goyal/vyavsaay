@@ -13,7 +13,9 @@
 </script>
 <link rel="stylesheet" type="text/css" href="./CSS/jquery-ui.css"/>
 <link rel="stylesheet" type="text/css" href="./CSS/leaflet.css"/>
-
+<!-- <link rel="stylesheet" type="text/css" href="./CSS/jquery.mobile.custom.structure.min.css">
+<link rel="stylesheet" type="text/css" href="./CSS/jquery.mobile.custom.theme.min.css">
+ -->
 <link rel="stylesheet" type="text/css" href="./CSS/index_style.css"/>
 <link rel="stylesheet" type="text/css" href="./CSS/bootstrap.css"/>
 <link rel="stylesheet" type="text/css" href="./CSS/fullcalendar.min.css"/>

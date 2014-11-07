@@ -735,7 +735,7 @@ function form16_delete_item(button)
 				"<item_name></item_name>" +
 				"<batch></batch>" +
 				"<quantity></quantity>" +
-				"<bill_id>"+data_id+"</bill_id>" +
+				"<return_id>"+data_id+"</return_id>" +
 				"<type></type>" +
 				"<exchange_batch></exchange_batch>" +
 				"</customer_return_items>";
@@ -813,49 +813,210 @@ function form16_delete_item(button)
 
 
 /**
- * @form Manage Returns
+ * @form Manage Supplier returns
+ * @param button
+ */
+function form17_delete_item(button)
+{
+	if(is_delete_access('form17'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[0].value;
+		var supplier=form.elements[1].value;
+		var reutrn_date=get_raw_time(form.elements[2].value);
+		var total=form.elements[3].value;
+		var transaction_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var return_xml="<supplier_returns>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<return_date>"+return_date+"</return_date>" +
+					"<total>"+total+"</total>" +
+					"</supplier_returns>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>supplier_returns</tablename>" +
+					"<link_to>form17</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Return no "+data_id+" for supplier "+supplier+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var transaction_xml="<transactions>" +
+				"<id>"+transaction_id+"</id>" +
+				"</transactions>";
+
+		if(is_online())
+		{
+			server_delete_row(return_xml,activity_xml);
+			server_delete_simple(transaction_xml);
+		}
+		else
+		{
+			local_delete_row(return_xml,activity_xml);
+			local_delete_simple(transaction_xml);
+		}	
+		$(button).parent().parent().remove();
+
+		var payment_xml="<payments>" +
+				"<id></id>" +
+				"<bill_id>"+data_id+"</bill_id>" +
+				"<status array='yes'>pending--cancelled</status>" +
+				"<transaction_id></transaction_id>" +
+				"</payments>";
+		fetch_requested_data('',payment_xml,function(payments)
+		{
+			for(var x in payments)
+			{
+				var pt_xml="<transactions>" +
+						"<id>"+payments[x].transaction_id+"</id>" +
+						"</transactions>";
+				var pay_xml="<payments>" +
+						"<id>"+payments[x].id+"</id>" +
+						"<bill_id></bill_id>" +
+						"<transaction_id></transaction_id>" +
+						"</payments>";
+
+				if(is_online())
+				{
+					server_delete_simple(pay_xml);
+					server_delete_simple(pt_xml);
+				}
+				else
+				{
+					local_delete_simple(pay_xml);
+					local_delete_simple(pt_xml);
+				}
+				break;
+			}
+		});
+
+		
+		var items_data="<supplier_return_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<batch></batch>" +
+				"<quantity></quantity>" +
+				"<return_id>"+data_id+"</return_id>" +
+				"</supplier_return_items>";
+		fetch_requested_data('',items_data,function(return_items)
+		{
+			return_items.forEach(function(return_item)
+			{
+				var quantity_data="<product_instances>" +
+						"<id></id>" +
+						"<product_name>"+return_item.item_name+"</product_name>" +
+						"<batch>"+return_item.batch+"</batch>" +
+						"<quantity></quantity>" +
+						"</product_instances>";	
+			
+				//////updating product quantity in inventory
+				fetch_requested_data('',quantity_data,function(quantities)
+				{
+					for(var j in quantities)
+					{
+						var q=parseFloat(quantities[j].quantity)+parseFloat(bill_item.quantity);
+						var quantity_xml="<product_instances>" +
+								"<id>"+quantities[j].id+"</id>" +
+								"<quantity>"+q+"</quantity>" +
+								"<last_updated>"+get_my_time()+"</last_updated>" +
+								"</product_instances>";
+						
+						if(is_online())
+						{
+							server_update_simple(quantity_xml);
+						}
+						else
+						{
+							local_update_simple(quantity_xml);
+						}
+						break;
+					}					
+				});
+			});	
+			
+			if(is_online())
+			{
+				server_delete_simple(items_data);
+			}
+			else
+			{
+				local_delete_simple(items_data);
+			}
+		});		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Enter Supplier returns
  * @param button
  */
 function form19_delete_item(button)
 {
 	if(is_delete_access('form19'))
 	{
+		var data_id=document.getElementById("form19_master").elements[4].value;
+		
+		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var product_name=form.elements[0].value;
+		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var sup_bill_id=form.elements[2].value;
-		var supplier=form.elements[3].value;
-		var reason=form.elements[4].value;
-		var quantity=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var notes=form.elements[2].value;
+		var quantity=form.elements[3].value;
+		var total=form.elements[4].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
-		var table='supplier_returns';
-		var data_xml="<"+table+">" +
+		
+		var quantity_data="<product_instances>" +
+					"<id></id>" +
+					"<product_name>"+name+"</product_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<quantity></quantity>" +
+					"</product_instances>";
+		fetch_requested_data('',quantity_data,function(quantities)
+		{
+			var returned_quantity=0;
+			var returned_id=1;
+			
+			for (var i in quantities)
+			{
+				returned_id=quantities[i].id;
+				returned_quantity=parseFloat(quantities[i].quantity)+parseFloat(quantity);
+				break;
+			}
+			
+			var returned_xml="<product_instances>" +
+					"<id>"+returned_id+"</id>" +
+					"<quantity>"+returned_quantity+"</quantity>" +
+					"<last_update>"+last_updated+"</last_updated>"+
+					"</product_instances>";
+			var data_xml="<supplier_return_items>" +
 					"<id>"+data_id+"</id>" +
-					"<product_name>"+product_name+"</product_name>" +
-					"<batch>"+offer_id+"</offer_id>" +
+					"<return_id>"+return_id+"</return_id>" +
+					"<item_name>"+name+"</item_name>" +
+					"<batch>"+batch+"</batch>" +
 					"<quantity>"+quantity+"</quantity>" +
-					"<sub_bill_id>"+sub_bill_id+"</sub_bill_id>" +
-					"<reason>"+reason+"</reason>" +
-					"<supplier>"+supplier+"</supplier>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form19</link_to>" +
-					"<title>Deleted</title>" +
-					"<notes>Deleted item "+product_name+" from supplier returns of "+supplier+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_delete_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_delete_row(data_xml,activity_xml);
-		}	
+					"<total>"+total+"</total>" +
+					"</supplier_return_items>";	
+			if(is_online())
+			{
+				server_delete_simple(data_xml);
+				server_update_simple(quantity_xml);
+			}
+			else
+			{
+				local_delete_simple(data_xml);
+				local_update_simple(quantity_xml);
+			}
+		});
+				
 		$(button).parent().parent().remove();
 	}
 	else
@@ -863,6 +1024,7 @@ function form19_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
 
 /**
  * @form New Supplier Bill
