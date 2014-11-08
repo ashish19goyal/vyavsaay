@@ -3,6 +3,7 @@
 		<fieldset>
 			<legend>Select Filters</legend>
 			Product Name <input type='text' required>
+			Product Category <input type='text' required value='All'>
 			Sites to Search <input type='text' required value='All'>
 			Maximum results per site <input type='number' required value='5'>
 			<input type='button' value='Refresh' onclick='report44_ini();'>

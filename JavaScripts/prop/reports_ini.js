@@ -1518,12 +1518,13 @@ function report44_ini()
 {
 	var form=document.getElementById('report44_header');
 	var product_name=form.elements[1].value;
-	var site=form.elements[2].value;
-	var max_results=form.elements[3].value;
-		
+	var category=form.elements[2].value;
+	var site=form.elements[3].value;
+	var max_results=form.elements[4].value;
+
 	var product_data="<product_instances>" +
 			"<product_name>"+product+"</product_name>" +
-			"" +
+			"<sale_price></sale_price>" +
 			"</product_instances>";
 
 	fetch_requested_data('report44',product_data,function(products)

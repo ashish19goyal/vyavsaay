@@ -89,6 +89,38 @@
 	<values_list>
 		<row>
 			<tablename>ecommerce</tablename>
+			<listname>categories</listname>
+			<name>all</name>
+			<value>All</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ecommerce</tablename>
+			<listname>categories</listname>
+			<name>Electronics</name>
+			<value>Electronics</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ecommerce</tablename>
+			<listname>categories</listname>
+			<name>DVD</name>
+			<value>DVD</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ecommerce</tablename>
+			<listname>categories</listname>
+			<name>Books</name>
+			<value>Books</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>		
+		<row>
+			<tablename>ecommerce</tablename>
 			<listname>sites</listname>
 			<name>all</name>
 			<value>All</value>

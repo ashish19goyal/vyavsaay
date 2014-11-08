@@ -25,8 +25,11 @@
 	<script>
 	!function(){
 		$("#sale_reports_main").tabs({
-			heightStyle:"fill",
-			show:"slide"});
+			show:"slide"}).css(
+			{
+				'min-height': '500px',
+				'overflow': 'auto'
+			});
 		}();
 	</script>
 

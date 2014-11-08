@@ -37,13 +37,16 @@
 			include "reports/report6.php";
 		if(strpos($_SESSION['forms'],'form71')!==false)
 			include "forms/form71.php";
-		?>		
+	?>		
 	
 	<script>
 	!function(){
 		$("#finances_main").tabs({
-			heightStyle:"fill",
-			show:"slide"});
+			show:"slide"}).css(
+			{
+				'min-height': '500px',
+				'overflow': 'auto'
+			});
 		}();
 	</script>
 

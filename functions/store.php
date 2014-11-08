@@ -24,8 +24,11 @@
 	<script>
 	!function(){
 		$("#store_main").tabs({
-			heightStyle:"fill",
-			show:"slide"});
+			show:"slide"}).css(
+			{
+				'min-height': '500px',
+				'overflow': 'auto'
+			});
 		}();
 	</script>
 

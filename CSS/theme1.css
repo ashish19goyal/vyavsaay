@@ -183,7 +183,7 @@ input[type="text"]#search_box{
 	align-content: center;
 	text-align: center;
 	border-radius: 5px;
-	min-height: inherit;
+/*	min-height: inherit;*/
 }
 
 #loading_icon{
