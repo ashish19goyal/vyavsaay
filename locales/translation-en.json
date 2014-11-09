@@ -110,6 +110,10 @@
   	"manage_order":"Manage Order",
   	"enter_returns":"Enter Returns",
   	"manage_returns":"Manage Returns",
-  	"enter_upplier_bill": "Enter Supplier Bill" 
+  	"enter_upplier_bill": "Enter Supplier Bill",
+  	"compare_products":"Compare Products",
+  	"completed_sale_orders":"Completed Sale Orders",
+  	"pending_sale_orders":"Pending Sale Orders",
+  	"track_payments":"Track Payments" 
   }
 }

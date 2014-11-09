@@ -419,15 +419,3 @@ function report41_header_ini()
 	set_my_value_list(service_data,service_filter);
 }
 
-/**
- * @reportNo 44
- * @report Compare products
- */
-function report44_header_ini()
-{	
-	var form=document.getElementById('report44_header');
-	var category_filter=form.elements[2];
-	var site_filter=form.elements[3];
-	set_static_value_list('ecommerce','categories',category_filter);
-	set_static_value_list('ecommerce','site',site_filter);	
-}

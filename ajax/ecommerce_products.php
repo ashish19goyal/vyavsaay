@@ -1,92 +1,34 @@
 <?php
 	
-	//creating signature
-	function createSignature($string,$secretkey){
-		return base64_encode(hash_hmac("sha256",$string,$secretkey,true));
-	}
+	$keywords=$_POST['keywords'];
+	$keywords=str_replace(' ','+',$keywords);
 	
-	//printing search results
-	function printAmazonResults($parsed_xml,$SearchIndex)
+	$max_results=$_POST['max_results'];
+	$user_id="UA-fac8d2fc4c87ae024da0c4b744a2027f";
+	
+	$json = file_get_contents("http://api-v1-dotmic.in/?search=$keywords&start-index=0&max-results=$max_results&ua=$user_id",0,null,null);
+	$json_output = json_decode($json,true);
+	
+	$xmlresponse="<data>";
+	foreach($json_output as $data)
 	{
-		echo "<table>";
-		$numOfItems=$parsed_xml->Items->TotalResults;
-		if($numOfItems>0){
-			foreach($parsed_xml->Items->Item as $current)
-			{
-				echo "<tr><td>";
-				if (isset($current->ItemAttributes->Title)) {
-					echo "Title: ".$current->ItemAttributes->Title;
-					echo "</td><td>";
-				}
-				if(isset($current->ItemAttributes->Manufacturer)) {
-					echo "Make: ".$current->ItemAttributes->Manufacturer;
-					echo "</td><td>";
-				}
-				if(isset($current->MediumImage->URL)){
-					echo "<img src='".$current->MediumImage->URL."'>";
-					echo "</td><td>";
-				}
-				if(isset($current->OfferSummary->LowestNewPrice->FormattedPrice)){
-					echo "Best Price: ".$current->OfferSummary->LowestNewPrice->FormattedPrice;
-					echo "</td><td>";
-				}
-				if(isset($current->DetailPageURL)){
-					echo "<a href='".$current->DetailPageURL."' target='_blank'>See on Amazon</a>";
-					echo "</td>";
-				}
-				echo "</tr>";
-			}
-		}
-		echo "</table>";
-	}
-
-	function AmazonItemSearch($SearchIndex, $Keywords)
-	{	
-		///constant credential
-		$access_key = "AKIAIVQY7BSVNB65W7JQ";
-		$associateTag = "vyavsaaycom-21";
-		$secretkey = "/xulAezS79bm985wUf8jUpiIEno81VNbOiVjLFEl";
-		$operation = "AWSECommerceService";
+		$title=str_replace(array('\n','\r','\t','&','  '),array(' ',' ',' ','&amp;',' '),$data['title']);
+		$description=str_replace(array('\n','\r','\t','&','  '),array(' ',' ',' ','&amp;',' '),$data['description']);
+		$price=str_replace(array('\n','\r','\t','&','  '),array(' ',' ',' ','&amp;',' '),$data['price']);
+		$image=str_replace(array('\n','\r','\t','&','  '),array(' ',' ',' ','&amp;',' '),$data['image']);
+		$link=str_replace(array('\n','\r','\t','&','  '),array(' ',' ',' ','&amp;',' '),$data['link']);
+		$store=str_replace(array('\n','\r','\t','&','  '),array(' ',' ',' ','&amp;',' '),$data['store']);
 		
-		//Set the values for some of the parameters
-		$Operation = "ItemSearch";
-		$ResponseGroup = "Small,OfferSummary,Images";
-		$timestamp = gmdate("Y-m-d\TH:i:s\Z");
-		//$timestamp="2014-11-08T12:19:26.000Z";
-		
-		$APIcall=
-		"AWSAccessKeyId=$access_key&".
-		"AssociateTag=$associateTag&".
-		"Keywords=$Keywords&".
-		"Operation=ItemSearch&".
-		"ResponseGroup=$ResponseGroup&".
-		"SearchIndex=Books&".
-		"Service=AWSECommerceService&".
-		"Timestamp=$timestamp&".
-		"Version=2009-03-31";
-		
-		$APIcall=str_replace(array(' ', '+', ',', ':'), array('%20', '%20', urlencode(','), urlencode(':')), $APIcall);
-		//$APIcall=urlencode($APIcall);
-		
-		$string_signature="GET\necs.amazonaws.in\n/onca/xml\n".$APIcall;
-				
-		$signature=createSignature($string_signature,$secretkey);
-		$signature=urlencode($signature);
-		
-		$APIcall="http://ecs.amazonaws.in/onca/xml?".
-				$APIcall.
-				"&Signature=".$signature;
-		
-		$response=file_get_contents($APIcall);
-		$parsed_xml=simplexml_load_string($response);
-		printAmazonResults($parsed_xml,$SearchIndex);
-	}
-	
-	function flipkartItemSearch()
-	{
-		$apiToken="5e82f1a8d787481e9a67e55eacd1c681";
-	}
-	
-	//AmazonItemSearch("Books","harry+potter");
-	
+		$xmlresponse.="<row>";
+			$xmlresponse.="<title>".$title."</title>";
+			$xmlresponse.="<description>".$description."</description>";
+			$xmlresponse.="<image>".$image."</image>";
+			$xmlresponse.="<price>".$price."</price>";
+			$xmlresponse.="<link>".$link."</link>";
+			$xmlresponse.="<store>".$store."</store>";
+		$xmlresponse.="</row>";
+	}	
+	$xmlresponse.="</data>";
+	header("Content-Type:text/xml");
+	echo $xmlresponse;
 ?>

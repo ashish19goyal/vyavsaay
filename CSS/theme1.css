@@ -20,14 +20,14 @@ input[type="text"]:focus,input[type="password"]:focus{
 	outline: none;
 }
 
-input[type="text"]
+td>input[type="text"]
 {
 	max-width: 100px;
 	min-width: 50px;
 	transition: width 0.25s;
 }
 
-input[type="number"]
+td>input[type="number"]
 {
 	min-width:25px;
 	max-width:100px;

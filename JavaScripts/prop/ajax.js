@@ -48,7 +48,7 @@ function ajax_with_custom_func(url,kvp,func)
 								{
 									if(xmlhttp2.responseText=="failed_auth")
 									{
-										alert("Password is incorrect. Aborting opertion. Please try agian.");
+										alert("Password is incorrect. Aborting opertion. Please try again.");
 										delete_session();
 										hide_loader();
 									}
