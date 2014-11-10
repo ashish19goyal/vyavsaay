@@ -10,7 +10,7 @@
 			include "js_includes.php";
 			include "css_includes.php";
 		?>
-		<link rel="icon" href="./images/logo.png">
+		<link rel="icon" href="./images/favicon.png">
 	</head>
 	<body onload="default_load();">
 			<div id="loading_icon"><img src="./images/loader.gif"></div>
