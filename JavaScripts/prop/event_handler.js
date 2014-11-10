@@ -301,19 +301,16 @@ function longPressEditable(element)
 	$(element).mouseup(function()
 	{
 		clearTimeout(pressTimer);
-		return false;
 	}).mousedown(function()
 	{
 	  // Set timeout
 		pressTimer = window.setTimeout(function()
 		{
 			$(element).removeAttr('readonly');
-		},500);
-		return false; 
+		},500); 
 	}).mousemove(function()
 	{
 		clearTimeout(pressTimer);
-		return false;
 	});
 	$(element).dblclick(function()
 	{
