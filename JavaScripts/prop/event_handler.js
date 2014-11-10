@@ -297,24 +297,23 @@ function show_settings()
 function longPressEditable(element)
 {
 	var pressTimer;
-
-	$(element).mouseup(function()
+	$(element).each(function()
 	{
-		clearTimeout(pressTimer);
-	}).mousedown(function()
-	{
-	  // Set timeout
-		pressTimer = window.setTimeout(function()
+		$(this).on('touchend',function()
 		{
-			$(element).removeAttr('readonly');
-		},500); 
-	}).mousemove(function()
-	{
-		clearTimeout(pressTimer);
-	});
-	$(element).dblclick(function()
-	{
-		$(element).removeAttr('readonly');
+			clearTimeout(pressTimer);
+		}).on('touchstart',function()
+		{
+			pressTimer = window.setTimeout(function()
+			{
+				$(this).removeAttr('readonly');
+			},500); 
+		});
+		
+		$(this).dblclick(function()
+		{
+			$(this).removeAttr('readonly');
+		});
 	});
 }
 
