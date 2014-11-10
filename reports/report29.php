@@ -6,7 +6,7 @@
 			<input type='button' value='Refresh' onclick='report29_ini();'>
 		</fieldset>
 	</form>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<th>Product Name</th>

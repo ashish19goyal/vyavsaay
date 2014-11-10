@@ -61,19 +61,19 @@ function report1_ini()
 							}
 							areas_string=rtrim(areas_string,", ");
 							rowsHTML+="<tr>";
-								rowsHTML+="<td>";
+								rowsHTML+="<td data-th='Product'>";
 									rowsHTML+=bill_ids[j].product_name;
 								rowsHTML+="</td>";
-								rowsHTML+="<td>";
+								rowsHTML+="<td data-th='Batch'>";
 									rowsHTML+=bill_ids[j].batch;
 								rowsHTML+="</td>";
-								rowsHTML+="<td>";
+								rowsHTML+="<td data-th='Store Area'>";
 									rowsHTML+=areas_string;
 								rowsHTML+="</td>";
-								rowsHTML+="<td>";
+								rowsHTML+="<td data-th='Type'>";
 									rowsHTML+="New Arrival";
 								rowsHTML+="</td>";
-								rowsHTML+="<td>";
+								rowsHTML+="<td data-th='Detail'>";
 									rowsHTML+="New product";
 								rowsHTML+="</td>";
 							rowsHTML+="</tr>";						
@@ -114,19 +114,19 @@ function report1_ini()
 				}
 				areas_string=rtrim(areas_string,", ");
 				rowsHTML+="<tr>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Product'>";
 						rowsHTML+=offer.product_name;
 					rowsHTML+="</td>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Batch'>";
 						rowsHTML+=offer.batch;
 					rowsHTML+="</td>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Store Area'>";
 						rowsHTML+=areas_string;
 					rowsHTML+="</td>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Type'>";
 						rowsHTML+=offer.status;
 					rowsHTML+="</td>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Detail'>";
 						rowsHTML+=offer.offer_detail;
 					rowsHTML+="</td>";
 				rowsHTML+="</tr>";
@@ -200,13 +200,13 @@ function report5_ini()
 				}
 				bill_ids_string=rtrim(bill_ids_string,", ");
 				rowsHTML+="<tr>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Customer'>";
 						rowsHTML+=account.acc_name;
 					rowsHTML+="</td>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Account Balance'>";
 						rowsHTML+=account.balance;
 					rowsHTML+="</td>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Bill Ids'>";
 						rowsHTML+=bill_ids_string;
 					rowsHTML+="</td>";
 				rowsHTML+="</tr>";
@@ -294,19 +294,19 @@ function report9_ini()
 					for(var j in bills)
 					{
 						rowsHTML+="<tr>";
-							rowsHTML+="<td>";
+							rowsHTML+="<td data-th='Product Name'>";
 								rowsHTML+=product.name;
 							rowsHTML+="</td>";
-							rowsHTML+="<td>";
+							rowsHTML+="<td data-th='Make'>";
 								rowsHTML+=product.make;
 							rowsHTML+="</td>";
-							rowsHTML+="<td>";
+							rowsHTML+="<td data-th='Type'>";
 								rowsHTML+=product.product_type;
 							rowsHTML+="</td>";
-							rowsHTML+="<td>";
+							rowsHTML+="<td data-th='Customer'>";
 								rowsHTML+=bills[j].customer_name;
 							rowsHTML+="</td>";
-							rowsHTML+="<td>";
+							rowsHTML+="<td data-th='Amount'>";
 								rowsHTML+=quantity;
 							rowsHTML+="</td>";
 						rowsHTML+="</tr>";
@@ -487,19 +487,19 @@ function report17_ini()
 					}
 				
 					rowsHTML+="<tr>";
-						rowsHTML+="<td>";
+						rowsHTML+="<td data-th='Staff Name'>";
 							rowsHTML+=assignee;
 						rowsHTML+="</td>";
-						rowsHTML+="<td>";
+						rowsHTML+="<td data-th='Number of Tasks'>";
 							rowsHTML+=num_tasks;
 						rowsHTML+="</td>";
-						rowsHTML+="<td>";
+						rowsHTML+="<td data-th='Number of Task Hours'>";
 							rowsHTML+=task_hours;
 						rowsHTML+="</td>";
-						rowsHTML+="<td>";
+						rowsHTML+="<td data-th='Number of Absence'>";
 							rowsHTML+=absents;
 						rowsHTML+="</td>";
-						rowsHTML+="<td>";
+						rowsHTML+="<td data-th='Number of hours worked'>";
 							rowsHTML+=hours;
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
@@ -661,16 +661,16 @@ function report29_ini()
 				task_string=rtrim(task_string,", ");
 				
 				rowsHTML+="<tr>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Product Name'>";
 						rowsHTML+=requisite_name;
 					rowsHTML+="</td>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Required Sub products'>";
 						rowsHTML+=product_string;
 					rowsHTML+="</td>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Required Services'>";
 						rowsHTML+=service_string;
 					rowsHTML+="</td>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Required Tasks'>";
 						rowsHTML+=task_string;
 					rowsHTML+="</td>";
 				rowsHTML+="</tr>";				
@@ -1490,16 +1490,16 @@ function report41_ini()
 				task_string=rtrim(task_string,", ");
 				
 				rowsHTML+="<tr>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Service Name'>";
 						rowsHTML+=requisite_name;
 					rowsHTML+="</td>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Required Sub-products'>";
 						rowsHTML+=product_string;
 					rowsHTML+="</td>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Required Services'>";
 						rowsHTML+=service_string;
 					rowsHTML+="</td>";
-					rowsHTML+="<td>";
+					rowsHTML+="<td data-th='Required Tasks'>";
 						rowsHTML+=task_string;
 					rowsHTML+="</td>";
 				rowsHTML+="</tr>";				
@@ -1531,19 +1531,19 @@ function report44_ini()
 			{
 				var data=row[i].childNodes;
 				var rowsHTML="<tr>";
-						rowsHTML+="<td>";
+						rowsHTML+="<td data-th='Product Name'>";
 							rowsHTML+=data[0].innerHTML;
 						rowsHTML+="</td>";
-						rowsHTML+="<td>";
+						rowsHTML+="<td data-th='Description'>";
 							rowsHTML+=data[1].innerHTML;
 						rowsHTML+="</td>";
-						rowsHTML+="<td>";
+						rowsHTML+="<td data-th='Picture'>";
 							rowsHTML+="<img src='"+data[2].innerHTML+"'>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td>";
+						rowsHTML+="<td data-th='Price'>";
 							rowsHTML+="Rs. "+data[3].innerHTML;
 						rowsHTML+="</td>";
-						rowsHTML+="<td>";
+						rowsHTML+="<td data-th='Link'>";
 							rowsHTML+="<a href='"+data[4].innerHTML+"' target='_blank'>Go to <b>"+data[5].innerHTML+"</b></a>";
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";

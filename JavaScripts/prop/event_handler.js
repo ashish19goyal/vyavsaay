@@ -294,6 +294,32 @@ function show_settings()
 	$("#settings_main").show();
 }
 
+function longPressEditable(element)
+{
+	var pressTimer;
+
+	$(element).mouseup(function()
+	{
+		clearTimeout(pressTimer);
+		return false;
+	}).mousedown(function()
+	{
+	  // Set timeout
+		pressTimer = window.setTimeout(function()
+		{
+			$(element).removeAttr('readonly');
+		},500);
+		return false; 
+	}).mousemove(function()
+	{
+		clearTimeout(pressTimer);
+		return false;
+	});
+	$(element).dblclick(function()
+	{
+		$(element).removeAttr('readonly');
+	});
+}
 
 /**
  * set the text value to be editable

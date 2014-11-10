@@ -21,7 +21,7 @@
 					<th>Notes</th>
 					<th>Quantity</th>
 					<th>Exchange/Refund</th>
-					<th>Refund Amount/Exchanged Batch</th>
+					<th>Batch/Amount</th>
 					<th><input type='button' form='form15_header' title='Add item' class='add_icon' onclick='form15_add_item();'></th>
 			</tr>
 		</thead>

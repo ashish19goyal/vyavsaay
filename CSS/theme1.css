@@ -309,6 +309,7 @@ Table formatting for responsive functionality
 table{
 	border: 1px solid #98BF21;
 	border-collapse: collapse;
+	table-layout:fixed;
 	width:100%;
 }
 
