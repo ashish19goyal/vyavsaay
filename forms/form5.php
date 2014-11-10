@@ -1,5 +1,5 @@
 <div id='form5' class='function_detail'><b>Manage Assets</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form5_header'></form>

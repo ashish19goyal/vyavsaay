@@ -1,5 +1,5 @@
 <div id='form64' class='function_detail'><b>Cross Sells</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form64_header'></form>

@@ -15,7 +15,7 @@
 			<input type='button' title='Print Bill' class='print_icon' onclick='form10_print_form();'>
 		</fieldset>
 	</form>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form10_header'></form>

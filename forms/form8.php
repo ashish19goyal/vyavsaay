@@ -1,5 +1,5 @@
 <div id='form8' class='function_detail'><b>manage staff information</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form8_header'></form>

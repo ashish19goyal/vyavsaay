@@ -8,7 +8,7 @@
 			<input type='button' value='Print Bill' onclick='form2_print_form($(this));'>
 		</fieldset>
 	</form>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form2_header'></form>

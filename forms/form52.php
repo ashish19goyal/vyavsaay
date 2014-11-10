@@ -1,5 +1,5 @@
 <div id='form52' class='function_detail'><b>Set Shortcut keys</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form52_header'></form>

@@ -1,5 +1,5 @@
 <div id='form58' class='function_detail'><b>Service Pre-requisites</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form58_header'></form>

@@ -1,5 +1,5 @@
 <div id='form48' class='function_detail'><b>Select Reports</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form48_header'></form>

@@ -1,5 +1,5 @@
 <div id='form57' class='function_detail'><b>Manage Services</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form57_header'></form>

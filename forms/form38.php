@@ -1,5 +1,5 @@
 <div id='form38' class='function_detail'><b>Update store placement of products</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form38_header'></form>

@@ -1,5 +1,5 @@
 <div id='form63' class='function_detail'><b>Service Reviews</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form63_header'></form>

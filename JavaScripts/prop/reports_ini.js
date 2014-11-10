@@ -1513,65 +1513,6 @@ function report41_ini()
  * @report Compare products (ecommerce sites)
  * @reportNo 44
  */
-/*
-function report44_ini()
-{
-	var form=document.getElementById('report44_header');
-	var product_name=form.elements[1].value;
-	var max_results=form.elements[2].value;
-	var user_id="UA-fac8d2fc4c87ae024da0c4b744a2027f";
-	var keywords=product_name.replace(" ","+");
-	show_loader();
-	
-	var xmlhttp=new XMLHttpRequest();
-	var URL='http://api-v1-dotmic.in';
-	
-	xmlhttp.onreadystatechange = function()
-	{
-	    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-	    {
-	        var myArr=JSON.parse(xmlhttp.responseText);
-	        console.log(myArr);
-	        for(var i=0;i<myArr.length;i++)
-			{
-	        	var data=myArr[i];
-				var rowsHTML="<tr>";
-						rowsHTML+="<td>";
-							rowsHTML+=data.title;
-						rowsHTML+="</td>";
-						rowsHTML+="<td>";
-							rowsHTML+=data.description;
-						rowsHTML+="</td>";
-						rowsHTML+="<td>";
-							rowsHTML+=data.price;
-						rowsHTML+="</td>";
-						rowsHTML+="<td>";
-							rowsHTML+="<img src='"+data.image+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td>";
-							rowsHTML+="<a href='"+data.link+"' target='_blank'>"+data.store+"</a>";
-						rowsHTML+="</td>";			
-				rowsHTML+="</tr>";
-				
-				$('#report44_body').prepend(rowsHTML);			
-			}
-			hide_loader();
-	    }
-	};
-	xmlhttp.open("GET", URL, true);
-	xmlhttp.setRequestHeader("Access-Control-Allow-Origin", "http://api-v1-dotmic.in");
-	xmlhttp.send("search="+keywords+"&start-index=0&max-results="+max_results+"&ua="+user_id);
-	
-		
-	var product_data="<product_instances>" +
-			"<product_name>"+product_name+"</product_name>" +
-			"<sale_price></sale_price>" +
-			"</product_instances>";
-
-};
-
-*/
-
 function report44_ini()
 {
 	var form=document.getElementById('report44_header');

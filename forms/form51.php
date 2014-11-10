@@ -11,7 +11,7 @@
 			<input type='submit' value='Save Access'>
 			<input type='button' value='Delete User' onclick='form51_delete_form();'>
 		</fieldset>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 					<th>Report/Form Name </th>

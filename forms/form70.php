@@ -1,5 +1,5 @@
 <div id='form70' class='function_detail'><b>Manage Sale orders</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form70_header'></form>

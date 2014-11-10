@@ -1,5 +1,5 @@
 <div id='form50' class='function_detail'><b>Select Accounting Principles</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form50_header'></form>

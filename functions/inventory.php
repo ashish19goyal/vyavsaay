@@ -12,7 +12,7 @@
 				echo "<li><a id='report28_link' href='#report28' onclick='report28_header_ini(); report28_ini();' data-i18n='form.short_inventory'></a></li>";
 			if(strpos($_SESSION['reports'],'report40')!==false)
 				echo "<li><a id='report40_link' href='#report40' onclick='report40_header_ini(); report40_ini();' data-i18n='form.surplus_inventory'></a></li>";
-			if(strpos($_SESSION['reports'],'rpeort27')!==false)
+			if(strpos($_SESSION['reports'],'report27')!==false)
 				echo "<li><a id='report27_link' href='#report27' onclick='report27_header_ini(); report27_ini();' data-i18n='form.expiring_inventory'></a></li>";
 		echo "</ul>";
 	

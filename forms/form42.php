@@ -1,5 +1,5 @@
 <div id='form42' class='function_detail'><b>Manage Bills</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form42_header'></form>

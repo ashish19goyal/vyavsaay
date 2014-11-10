@@ -7,7 +7,7 @@
 				<input type='submit' value="Save All">
 			</fieldset>
 		</form>
-		<table>
+		<table class='rwd-table'>
 			<thead>
 				<tr>
 					<form id='form7_header'></form>

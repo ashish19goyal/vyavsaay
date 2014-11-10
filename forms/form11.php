@@ -1,5 +1,5 @@
 <div id='form11' class='function_detail'><b>Manage and schedule payments</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form11_header'></form>

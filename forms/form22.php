@@ -1,5 +1,5 @@
 <div id='form22' class='function_detail'><b>Manage disposal of items</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form22_header'></form>

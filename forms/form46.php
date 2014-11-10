@@ -1,5 +1,5 @@
 <div id='form46' class='function_detail'><b>Select Defaults</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form46_header'></form>

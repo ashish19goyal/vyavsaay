@@ -1,5 +1,5 @@
 <div id='form67' class='function_detail'><b>Dimensions</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form67_header'></form>

@@ -1,5 +1,5 @@
 <div id='form54' class='function_detail'><b>Select Templates</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form54_header'></form>

@@ -1,5 +1,5 @@
 <div id='form62' class='function_detail'><b>Product Reviews</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form62_header'></form>

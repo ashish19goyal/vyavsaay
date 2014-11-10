@@ -9,7 +9,7 @@
 			<input type='submit' title='Save order' class='save_icon'>
 		</fieldset>
 	</form>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form69_header'></form>

@@ -1,5 +1,5 @@
 <div id='form14' class='function_detail'><b>Manage and assign tasks</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form14_header'></form>

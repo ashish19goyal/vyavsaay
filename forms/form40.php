@@ -1,5 +1,5 @@
 <div id='form40' class='function_detail'><b>Manage and add Suppliers</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form40_header'></form>

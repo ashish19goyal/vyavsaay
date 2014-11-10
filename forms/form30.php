@@ -1,5 +1,5 @@
 <div id='form30' class='function_detail'><b>Manage and add customers</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form30_header'></form>

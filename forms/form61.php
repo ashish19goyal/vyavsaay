@@ -1,5 +1,5 @@
 <div id='form61' class='function_detail'><b>Service Categories</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form61_header'></form>

@@ -1,5 +1,5 @@
 <div id='form71' class='function_detail'><b>Manage Financial Accounts</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form71_header'></form>

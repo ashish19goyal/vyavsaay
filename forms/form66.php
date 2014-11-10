@@ -1,5 +1,5 @@
 <div id='form66' class='function_detail'><b>Cross Sells</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form66_header'></form>

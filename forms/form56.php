@@ -1,5 +1,5 @@
 <div id='form56' class='function_detail'><b>Expense Register</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form56_header'></form>

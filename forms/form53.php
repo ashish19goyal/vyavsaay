@@ -1,5 +1,5 @@
 <div id='form53' class='function_detail'><b>Manage Supplier Bills</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form53_header'></form>

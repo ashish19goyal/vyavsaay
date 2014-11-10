@@ -1,5 +1,5 @@
 <div id='form35' class='function_detail'><b>Manage and create offers</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form35_header'></form>

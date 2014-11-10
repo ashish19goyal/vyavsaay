@@ -1,5 +1,5 @@
 <div id='form59' class='function_detail'><b>Product Pre-requisites</b>
-	<table>
+	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form59_header'></form>
