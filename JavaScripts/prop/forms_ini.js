@@ -67,14 +67,16 @@ function form1_ini()
 				form1_update_item(fields);
 			});
 		});
+		
 		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
 			my_obj_array_to_csv(results,'inventory');
 		});
-		longPressEditable($('.dblclick_editable'));
 	});
 };
 
@@ -159,6 +161,9 @@ function form5_ini()
 				form5_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -241,6 +246,9 @@ function form7_ini()
 						form7_create_item(fields);
 					});
 				});
+				resize_input();
+				longPressEditable($('.dblclick_editable'));
+				
 			});
 		}
 		else
@@ -278,6 +286,8 @@ function form7_ini()
 					form7_update_item(fields);
 				});
 			});
+			resize_input();
+			longPressEditable($('.dblclick_editable'));
 		}
 	});
 };
@@ -388,6 +398,9 @@ function form8_ini()
 				form8_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -525,9 +538,7 @@ function form11_ini()
 	
 	var ftype=filter_fields.elements[0].value;
 	var faccount=filter_fields.elements[1].value;
-	var fdue=filter_fields.elements[2].value;
-	var fdate=filter_fields.elements[3].value;
-	var fstatus=filter_fields.elements[4].value;
+	var fstatus=filter_fields.elements[2].value;
 	
 	var columns="<payments>" +
 			"<id>"+fid+"</id>" +
@@ -535,9 +546,11 @@ function form11_ini()
 			"<total_amount></total_amount>" +
 			"<paid_amount></paid_amount>" +
 			"<acc_name>"+faccount+"</acc_name>" +
-			"<due_date>"+fdue+"</due_date>" +
+			"<due_date></due_date>" +
 			"<status>"+fstatus+"</status>" +
-			"<date>"+fdate+"</date>" +
+			"<date></date>" +
+			"<mode></mode>" +
+			"<bill_id></bill_id>" +
 			"</payments>";
 
 	$('#form11_body').html("");
@@ -546,6 +559,10 @@ function form11_ini()
 	{	
 		results.forEach(function(result)
 		{
+			var detail_string="Bill Id: " +result.bill_id+
+					"\nMode of payment: " +result.mode+
+					"\nDue Date: "+get_my_past_date(result.due_date)+
+					"\nDate closed: "+get_my_past_date(result.date);
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form11_"+result.id+"'></form>";
@@ -555,35 +572,45 @@ function form11_ini()
 					rowsHTML+="<td data-th='Account'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' value='"+result.acc_name+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Amount'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+result.paid_amount+"'>";
+					rowsHTML+="<td data-th='Total Amount'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form11_"+result.id+"' value='"+result.total_amount+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Due Date'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.due_date)+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Date closed'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+					rowsHTML+="<td data-th='Paid Amount'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+result.paid_amount+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.date)+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' value='"+detail_string+"'>";
+						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form11_"+result.id+"' onclick='modal29_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form11_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form11_"+result.id+"' value='saved' onclick='form11_delete_item($(this));'>";	
+						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.mode+"'>";
+						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.date+"'>";
+						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.due_date+"'>";
+						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.bill_id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form11_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form11_"+result.id+"' title='Delete' onclick='form11_delete_item($(this));'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form11_body').prepend(rowsHTML);
 			
 			var fields=document.getElementById("form11_"+result.id);
+			var status_filter=fields.elements[4];
+			set_static_value_list('payments','status',status_filter);
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
 				form11_update_item(fields);
 			});
 		});
-		var export_button=filter_fields.elements[6];
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -785,6 +812,9 @@ function form14_ini()
 				form14_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[6];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -975,6 +1005,9 @@ function form16_ini()
 					element_display(result.id,'form15');
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -1048,6 +1081,9 @@ function form17_ini()
 					element_display(result.id,'form19');
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -1325,6 +1361,9 @@ function form22_ini()
 				form22_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -1515,6 +1554,9 @@ function form30_ini()
 			});
 		});
 		
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -1604,6 +1646,9 @@ function form35_ini()
 				form35_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -1675,6 +1720,9 @@ function form38_ini()
 				form38_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -1786,6 +1834,9 @@ function form39_ini()
 				},false);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -1874,6 +1925,9 @@ function form40_ini()
 				form40_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2051,6 +2105,9 @@ function form42_ini()
 					element_display(result.id,'form72');
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2127,6 +2184,9 @@ function form43_ini()
 			});
 			
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2191,6 +2251,9 @@ function form44_ini()
 				form44_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2259,6 +2322,9 @@ function form46_ini()
 		
 		$('#form46_body').find('input').i18n();
 		
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2325,6 +2391,9 @@ function form48_ini()
 		});
 		
 		$('#form48_body').find('input').i18n();
+		
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
@@ -2394,6 +2463,9 @@ function form49_ini()
 		
 		$('#form49_body').find('input').i18n();
 		
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2462,6 +2534,9 @@ function form50_ini()
 		});
 		
 		$('#form50_body').find('input').i18n();
+		
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
@@ -2601,6 +2676,9 @@ function form52_ini()
 		
 		$('#form52_body').find('input').i18n();
 		
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2677,6 +2755,9 @@ function form53_ini()
 				element_display(result.id,'form21');
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2741,6 +2822,9 @@ function form54_ini()
 		
 		$('#form54_body').find('input').i18n();
 
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2865,6 +2949,9 @@ function form56_ini()
 			});
 		});
 		
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -2939,6 +3026,9 @@ function form57_ini()
 			});			
 		});
 
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3009,6 +3099,9 @@ function form58_ini()
 				form58_update_item(fields);
 			});
 		});
+		
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
@@ -3082,6 +3175,9 @@ function form59_ini()
 			});
 		});
 		
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3150,6 +3246,9 @@ function form60_ini()
 			});
 		});
 		
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3217,6 +3316,9 @@ function form61_ini()
 			});
 		});
 
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3288,6 +3390,9 @@ function form62_ini()
 				form62_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3359,6 +3464,9 @@ function form63_ini()
 				form63_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3426,6 +3534,9 @@ function form64_ini()
 				form64_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3494,6 +3605,9 @@ function form66_ini()
 				form66_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3696,6 +3810,9 @@ function form70_ini()
 			});
 			
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3757,6 +3874,9 @@ function form71_ini()
 				form71_update_item(fields);
 			});
 		});
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)

@@ -186,6 +186,10 @@ function form11_import(data_array,import_type)
 				"<due_date>"+row.due_date+"</due_date>" +
 				"<status>"+row.status+"</status>" +
 				"<date>"+row.date+"</date>" +
+				"<due_date>"+row.due_date+"</due_date>" +
+				"<mode>"+row.mode+"</mode>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<transaction_id>"+row.id+"</transaction_id>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</payments>";
 		var transaction_xml="<transactions>" +
@@ -194,7 +198,7 @@ function form11_import(data_array,import_type)
 				"<amount>"+row.total_amount+"</amount>" +
 				"<receiver>"+receiver+"</receiver>" +
 				"<giver>"+giver+"</giver>" +
-				"<taxable>false</taxable>" +
+				"<tax>0</tax>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</transactions>";
 		if(import_type=='create_new')

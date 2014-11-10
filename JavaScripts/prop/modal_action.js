@@ -2192,3 +2192,44 @@ function modal28_action(payment_id)
 	});		
 	
 }
+
+/**
+ * @modal Update secondary payment details
+ * @param button
+ */
+function modal29_action(button)
+{
+	var form=document.getElementById('modal29_form');
+	
+	var form_id=$(button).attr('form');
+	var father_form=document.getElementById(form_id);
+	var fdetail=father_form.elements[5];
+	var fmode=father_form.elements[7];
+	var fdate=father_form.elements[8];
+	var fdue_date=father_form.elements[9];
+	var fbill_id=father_form.elements[10];
+		
+	form.elements[1].value=fbill_id.value;
+	form.elements[2].value=get_my_past_date(fdate.value);
+	form.elements[3].value=fmode.value;
+	form.elements[4].value=get_my_past_date(fdue_date.value);
+	
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		var detail_string="Bill Id: " +form.elements[1]+
+				"\nMode of payment: " +form.elements[3]+
+				"\nDue Date: "+form.elements[4]+
+				"\nDate closed: "+form.elements[2];
+
+		var fdetail=detail_string;
+		var fmode=form.elements[3];
+		var fdate=get_raw_time(form.elements[2]);
+		var fdue_date=get_raw_time(form.elements[4]);
+		var fbill_id=form.elements[1];	
+	
+		$("#modal29").dialog("close");
+	});
+	
+	$("#modal29").dialog("open");
+}

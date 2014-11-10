@@ -365,59 +365,6 @@ function form10_delete_item(button)
 
 
 /**
- * @form Schedule Payments
- * @param button
- */
-function form11_delete_item(button)
-{
-	if(is_delete_access('form11'))
-	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
-		var trans_id=form.elements[0].value;
-		var acc_name=form.elements[1].value;
-		var amount=form.elements[2].value;
-		var due_date=get_raw_time(form.elements[3].value);
-		var status=form.elements[4].value;
-		var date=get_raw_time(form.elements[5].value);
-		var data_id=form.elements[6].value;
-		var last_updated=get_my_time();
-		var table='payments';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<transaction_id>"+trans_id+"</transaction_id>" +
-					"<acc_name>"+acc_name+"</acc_name>" +
-					"<amount>"+amount+"</amount>" +
-					"<due_date>"+due_date+"</due_date>" +
-					"<status>"+status+"</status>" +
-					"<date>"+date+"</date>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form11</link_to>" +
-					"<title>Deleted</title>" +
-					"<notes>Deleted payment record for transaction no "+trans_id+" of amount "+amount+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_delete_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_delete_row(data_xml,activity_xml);
-		}	
-		$(button).parent().parent().remove();
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-/**
  * @form New Bill
  * @param button
  */

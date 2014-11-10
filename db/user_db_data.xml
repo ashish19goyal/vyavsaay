@@ -402,14 +402,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>form9</name>
-			<display_name>cash_register</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>form</type>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>form10</name>
 			<display_name>create_service_receipt</display_name>
 			<status>active</status>
@@ -1139,17 +1131,6 @@
 			<username>master</username>
 			<element_id>form8</element_id>
 			<element_name>manage_staff</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form9</element_id>
-			<element_name>cash_register</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

@@ -56,7 +56,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=8;i<29;i++)
+	for(var i=8;i<30;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -296,13 +296,13 @@ function show_settings()
 
 function longPressEditable(element)
 {
-	var pressTimer;
 	$(element).each(function()
 	{
-		$(this).on('touchend',function()
+		var pressTimer;
+		$(this).mouseup(function()
 		{
 			clearTimeout(pressTimer);
-		}).on('touchstart',function()
+		}).mousedown(function()
 		{
 			pressTimer = window.setTimeout(function()
 			{

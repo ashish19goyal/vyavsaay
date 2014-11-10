@@ -235,7 +235,6 @@ Table formatting for responsive functionality
 .rwd-table {
   margin: 1em 0;
   min-width: 300px;
-  max-width: 800px;
 }
 .rwd-table tr {
   border-top: 1px solid #98BF21;
@@ -244,6 +243,10 @@ Table formatting for responsive functionality
 .rwd-table th {
   display: none;
   background-color:#2C8A50;
+}
+.rwd-table thead tr th:last-child{
+	display:block;
+	background-color:#2C8A50;
 }
 .rwd-table td {
   display: block;
@@ -269,22 +272,29 @@ Table formatting for responsive functionality
   text-align: left;
 }
 @media (min-width: 850px) {
-  .rwd-table th, .rwd-table td {
-    display: table-cell;
-    padding: .25em .5em;
-  }
-  .rwd-table th:first-child, .rwd-table td:first-child {
-    padding-left: 0;
-  }
-  .rwd-table th:last-child, .rwd-table td:last-child {
-    padding-right: 0;
-  }
+	.rwd-table th, .rwd-table td {
+	    display: table-cell;
+	    padding: .25em .5em;
+  	}
+	.rwd-table thead tr th:last-child{
+		display: table-cell;
+	    padding: .25em .5em;
+	}
+	.rwd-table th:first-child, .rwd-table td:first-child {
+    	padding-left: 0;
+  	}
+  	.rwd-table th:last-child, .rwd-table td:last-child {
+    	padding-right: 0;
+  	}
 }
 
 .rwd-table {
 	background: #EAF2D3;
 	border-radius: .4em;
 	overflow: hidden;
+}
+.rwd-table thead tr:first-child{
+	background: #2C8A50;
 }
 .rwd-table tr {
 	border-color: #98BF21;

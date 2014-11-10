@@ -351,4 +351,16 @@
 		</form>
 	</div>
 	
+	<div id="modal29" title="Payment Details">
+		<form id='modal29_form'>
+			<fieldset>
+				<label>Bill Id <input type='text' readonly='readonly'></label><br/>
+				<label>Date Closed<input type="text" readonly='readonly'></label><br/>
+				<label>Mode of Payment <input type="text"></label><br/>
+				<label>Due Date <input type="text"></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+	
 </div>

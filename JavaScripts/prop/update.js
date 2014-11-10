@@ -630,38 +630,44 @@ function form10_update_form()
 }
 
 /**
- * @form Schedule Payments
+ * @form Manage Payments
  * @param button
  */
 function form11_update_item(form)
 {
 	if(is_update_access('form11'))
 	{
-		var trans_id=form.elements[0].value;
+		var type=form.elements[0].value;
 		var acc_name=form.elements[1].value;
-		var amount=form.elements[2].value;
-		var due_date=get_raw_time(form.elements[3].value);
+		var total_amount=form.elements[2].value;
+		var paid_amount=form.elements[3].value;
 		var status=form.elements[4].value;
-		var date=get_raw_time(form.elements[5].value);
 		var data_id=form.elements[6].value;
+		var mode=form.elements[7].value;
+		var date=form.elements[8].value;
+		if(status=='closed' && date=="")
+		{
+			date=get_my_time();
+		}
+		var due_date=form.elements[9].value;
 		var last_updated=get_my_time();
-		var table='payments';
-		var data_xml="<"+table+">" +
+		var data_xml="<payments>" +
 					"<id>"+data_id+"</id>" +
-					"<transaction_id>"+trans_id+"</transaction_id>" +
 					"<acc_name>"+acc_name+"</acc_name>" +
-					"<amount>"+amount+"</amount>" +
+					"<total_amount>"+total_amount+"</total_amount>" +
+					"<paid_amount>"+paid_amount+"</paid_amount>" +
 					"<due_date>"+due_date+"</due_date>" +
-					"<status>"+pamphlet_id+"</pamphlet_id>" +
+					"<status>"+status+"</status>" +
 					"<date>"+date+"</date>" +
+					"<mode>"+mode+"</mode>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</payments>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>payments</tablename>" +
 					"<link_to>form11</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Saved payment record for transaction no "+trans_id+" of amount "+amount+"</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Payment of amount Rs. "+total_amount+" from/to "+acc_name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())

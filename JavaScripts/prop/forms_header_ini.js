@@ -293,29 +293,19 @@ function form10_new_form()
 function form11_header_ini()
 {
 	var filter_fields=document.getElementById('form11_header');
-	var trans_filter=filter_fields.elements[0];
-	var from_filter=filter_fields.elements[1];
-	var due_filter=filter_fields.elements[2];
-	var closed_filter=filter_fields.elements[3];
-	var status_filter=filter_fields.elements[4];
+	var type_filter=filter_fields.elements[0];
+	var account_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
 	
 	var accounts_data="<accounts>" +
 			"<acc_name></acc_name>" +
 			"</accounts>";
-
-	var trans_data="<transactions>" +
-			"<id></id>" +
-			"</transactions>";
 	
-	set_my_filter(trans_data,trans_filter);
-	set_my_filter(accounts_data,from_filter);
-	
-	$(due_filter).datepicker();
-	$(closed_filter).datepicker();
-	
+	set_my_filter(accounts_data,account_filter);
+	set_static_filter('payments','type',type_filter);
 	set_static_filter('payments','status',status_filter);
 	
-	var import_button=filter_fields.elements[7];
+	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
 	{
