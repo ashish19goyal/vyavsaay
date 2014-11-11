@@ -1,4 +1,4 @@
-<div id='form62' class='function_detail'><b>Product Reviews</b>
+<div id='form62' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

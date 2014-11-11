@@ -582,7 +582,7 @@ function form11_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Details'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' value='"+detail_string+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form11_"+result.id+"'>"+detail_string+"</textarea>";
 						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form11_"+result.id+"' onclick='modal29_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
@@ -591,8 +591,7 @@ function form11_ini()
 						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.date+"'>";
 						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.due_date+"'>";
 						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.bill_id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form11_"+result.id+"' title='Save'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form11_"+result.id+"' title='Delete' onclick='form11_delete_item($(this));'>";	
+						rowsHTML+="<input type='submit' class='save_icon' form='form11_"+result.id+"' title='Save'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -2275,7 +2274,6 @@ function form46_ini()
 		fid="";	
 	
 	var filter_fields=document.getElementById('form46_header');
-	
 	var fname=filter_fields.elements[0].value;
 	
 	var columns="<user_preferences>" +
@@ -2296,23 +2294,22 @@ function form46_ini()
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form46_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Setting Name'>";
+					rowsHTML+="<td data-th='Setting'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form46_"+result.id+"' data-i18n='[value]form."+result.display_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Value'>";
-						rowsHTML+="<input type='text' class='dblclick_editable' form='form46_"+result.id+"' value='"+result.value+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form46_"+result.id+"' value='"+result.value+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form46_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='hidden' form='form46_"+result.id+"' value='"+result.name+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' id='save_form46_"+result.id+"' form='form46_"+result.id+"' value='saved'>";	
+						rowsHTML+="<input type='submit' class='save_icon' id='save_form46_"+result.id+"' form='form46_"+result.id+"' title='Save'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form46_body').append(rowsHTML);
 			
 			var fields=document.getElementById("form46_"+result.id);
-			//console.log(fields);
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
@@ -2336,7 +2333,6 @@ function form46_ini()
 
 
 /**
- * this function prepares the table for Select Reports form
  * @form Select Reports
  * @formNo 48
  */
@@ -2368,8 +2364,8 @@ function form48_ini()
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form48_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Report Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form48_"+result.id+"' data-i18n='[value]form."+result.display_name+"'>";
+					rowsHTML+="<td data-th='Report'>";
+						rowsHTML+="<textarea readonly='readonly' form='form48_"+result.id+"' data-i18n='form."+result.display_name+"'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Selection'>";
 						rowsHTML+="<input type='checkbox' form='form48_"+result.id+"' "+result.value+">";
@@ -2390,7 +2386,7 @@ function form48_ini()
 			});
 		});
 		
-		$('#form48_body').find('input').i18n();
+		$('#form48_body').find('textarea').i18n();
 		
 		resize_input();
 		longPressEditable($('.dblclick_editable'));
@@ -2406,7 +2402,6 @@ function form48_ini()
 };
 
 /**
- * this function prepares the table for Select Forms form
  * @form Select Forms
  * @formNo 49
  */
@@ -2439,8 +2434,8 @@ function form49_ini()
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form49_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Form Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form49_"+result.id+"' data-i18n='[value]form."+result.display_name+"'>";
+					rowsHTML+="<td data-th='Form'>";
+						rowsHTML+="<textarea readonly='readonly' form='form49_"+result.id+"' data-i18n='form."+result.display_name+"'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Selection'>";
 						rowsHTML+="<input type='checkbox' form='form49_"+result.id+"' "+result.value+">";
@@ -2461,7 +2456,7 @@ function form49_ini()
 			});
 		});
 		
-		$('#form49_body').find('input').i18n();
+		$('#form49_body').find('textarea').i18n();
 		
 		resize_input();
 		longPressEditable($('.dblclick_editable'));
@@ -2478,8 +2473,7 @@ function form49_ini()
 
 
 /**
- * this function prepares the table for Select Accounting Principles form
- * @form Select Accounting Principles
+ * @form Set Accounting Defaults
  * @formNo 50
  */
 function form50_ini()
@@ -2512,15 +2506,15 @@ function form50_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form50_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form50_"+result.id+"' data-i18n='[value]form."+result.display_name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form50_"+result.id+"'>"+result.display_name+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Selection'>";
-						rowsHTML+="<input type='checkbox' readonly='readonly' form='form50_"+result.id+"' "+result.value+">";
+					rowsHTML+="<td data-th='Value'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form50_"+result.id+"' value='"+result.value+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form50_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='hidden' form='form50_"+result.id+"' value='"+result.name+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' id='save_form50_"+result.id+"' form='form50_"+results.id+"' value='saved'>";	
+						rowsHTML+="<input type='submit' class='save_icon' id='save_form50_"+result.id+"' form='form50_"+result.id+"'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -2533,7 +2527,7 @@ function form50_ini()
 			});
 		});
 		
-		$('#form50_body').find('input').i18n();
+		$('#form50_body').find('textarea').i18n();
 		
 		resize_input();
 		longPressEditable($('.dblclick_editable'));
@@ -2552,18 +2546,21 @@ function form50_ini()
  * @form Access Control
  * @formNo 51
  */
-function form51_ini(fuser)
+function form51_ini()
 {
+	var fid=$("#form51_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
 	var header_fields=document.getElementById('form51_master');
 
 	$('#form51_body').html("");
 
-	if(fuser==="")
-		fuser=header_fields.elements[3].value;
-	if(fuser!="")
+	var	fuser=header_fields.elements[1].value;
+	if(fuser!="" || fid!="")
 	{
 		var columns="<access_control>" +
-			"<id></id>" +
+			"<id>"+fid+"</id>" +
 			"<username>"+fuser+"</username>" +
 			"<element_id></element_id>" +
 			"<element_name></element_name>" +
@@ -2576,13 +2573,65 @@ function form51_ini(fuser)
 	
 		fetch_requested_data('form51',columns,function(results)
 		{
+			if(results.length==0)
+			{
+				var elements_name="<user_preferences>" +
+							"<id></id>" +
+							"<name></name>" +
+							"<display_name></display_name>" +
+							"<type array='yes'>report--form</type>" +
+							"<value>checked</value>" +
+							"</user_preferences>";
+				fetch_requested_data('form51',elements_name,function(elements)
+				{
+					elements.forEach(function(element)
+					{
+						var data_id=get_new_key();
+						var rowsHTML="";
+						rowsHTML+="<tr>";
+							rowsHTML+="<form id='form51_"+data_id+"'></form>";
+								rowsHTML+="<td data-th='Name'>";
+									rowsHTML+="<textarea readonly='readonly' form='form51_"+data_id+"' data-i18n='form."+element.display_name+"'></textarea>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Read'>";
+									rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+data_id+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Create'>";
+								rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+data_id+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Update'>";
+									rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+data_id+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Delete'>";
+									rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+data_id+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Action'>";
+									rowsHTML+="<input type='hidden' form='form51_"+data_id+"' value='"+data_id+"'>";
+									rowsHTML+="<input type='hidden' form='form51_"+data_id+"' value='"+element.name+"'>";
+									rowsHTML+="<input type='submit' class='save_icon' id='save_form51_"+data_id+"' form='form51_"+data_id+"'>";	
+								rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+						
+						$('#form51_body').prepend(rowsHTML);
+						var fields=document.getElementById("form51_"+data_id);
+						$(fields).on("submit", function(event)
+						{
+							event.preventDefault();
+							form51_create_item(fields);
+						});
+
+					});
+					$('#form51_body').find('textarea').i18n();
+				});
+			}
+			
 			results.forEach(function(result)
 			{
 				var rowsHTML="";
 				rowsHTML+="<tr>";
 					rowsHTML+="<form id='form51_"+result.id+"'></form>";
 						rowsHTML+="<td data-th='Name'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form51_"+result.id+"' data-i18n='[value]form."+result.element_name+"'>";
+							rowsHTML+="<textarea readonly='readonly' form='form51_"+result.id+"' data-i18n='form."+result.element_name+"'></textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Read'>";
 							rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+result.id+"' "+result.re+">";
@@ -2611,7 +2660,7 @@ function form51_ini(fuser)
 					form51_update_item(fields);
 				});
 			});
-			$('#form51_body').find('input').i18n();
+			$('#form51_body').find('textarea').i18n();
 		});
 	}
 	else
@@ -2891,7 +2940,7 @@ function form55_ini()
 }
 
 /**
- * @form Expense Register
+ * @form Cash Register
  * @formNo 56
  */
 function form56_ini()
@@ -2901,16 +2950,16 @@ function form56_ini()
 		fid="";	
 	var filter_fields=document.getElementById('form56_header');
 	
-	var fdate=filter_fields.elements[0].value;
+	var ftype=filter_fields.elements[0].value;
 	var faccount=filter_fields.elements[1].value;
 	
-	var columns="<expenses>" +
+	var columns="<cash_register>" +
 			"<id>"+fid+"</id>" +
-			"<expense_date>"+fdate+"</expense_date>" +
-			"<to_acc>"+faccount+"</to_acc>" +
-			"<description></description>" +
+			"<type>"+ftype+"</type>" +
+			"<acc_name>"+faccount+"</acc_name>" +
+			"<notes></notes>" +
 			"<amount></amount>" +
-			"</expenses>";
+			"</cash_register>";
 
 	$('#form56_body').html("");
 
@@ -2921,22 +2970,22 @@ function form56_ini()
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form56_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Expense Date'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form56_"+result.id+"' value='"+result.expense_date+"'>";
+					rowsHTML+="<td data-th='Type'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form56_"+result.id+"' value='"+result.type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Account'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form56_"+result.id+"' value='"+result.to_acc+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Description'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form56_"+result.id+"' class='dblclick_editable' value='"+result.description+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form56_"+result.id+"' value='"+result.acc_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Amount'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form56_"+result.id+"' class='dblclick_editable' value='"+result.amount+"'>";
+						rowsHTML+="<input type='number' readonly='readonly' step='any' form='form56_"+result.id+"' value='"+result.amount+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Notes'>";
+						rowsHTML+="<textarea readonly='readonly' form='form56_"+result.id+"' class='dblclick_editable'>"+result.notes+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form56_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form56_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form56_"+result.id+"' value='saved' onclick='form56_delete_item($(this));'>";	
+						rowsHTML+="<input type='submit' class='save_icon' form='form56_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form56_"+result.id+"' onclick='form56_delete_item($(this));'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -3824,7 +3873,7 @@ function form70_ini()
 
 
 /**
- * @form Manage Financial Accounts
+ * @form Manage Accounts
  * @formNo 71
  */
 function form71_ini()
@@ -3834,54 +3883,88 @@ function form71_ini()
 		fid="";	
 	
 	var filter_fields=document.getElementById('form71_header');
-
-	var fname=filter_fields.elements[0].value;
+	var ftype=filter_fields.elements[0].value;
+	var fname=filter_fields.elements[1].value;
 	
 	var columns="<accounts>" +
 			"<id>"+fid+"</id>" +
 			"<acc_name>"+fname+"</acc_name>" +
 			"<description></description>" +
-			"<type>financial</type>" +
+			"<type>"+ftype+"</type>" +
 			"</accounts>";
 
 	$('#form71_body').html("");
 
 	fetch_requested_data('form71',columns,function(results)
 	{	
-		results.forEach(function(result)
-		{		
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form71_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' required form='form71_"+result.id+"' value='"+result.acc_name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Description'>";
-						rowsHTML+="<textarea readonly='readonly' form='form71_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form71_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form71_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form71_"+result.id+"' value='saved' onclick='form71_delete_item($(this));'>";
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-			
-			$('#form71_body').prepend(rowsHTML);
-			var fields=document.getElementById("form71_"+result.id);
-			$(fields).on("submit", function(event)
-			{
-				event.preventDefault();
-				form71_update_item(fields);
-			});
-		});
-		resize_input();
-		longPressEditable($('.dblclick_editable'));
-		
-		var export_button=filter_fields.elements[2];
-		$(export_button).off("click");
-		$(export_button).on("click", function(event)
+		var payments_data="<payments>" +
+				"<id></id>" +
+				"<acc_name></acc_name>" +
+				"<type></type>" +
+				"<total_amount></total_amount>" +
+				"<paid_amount></paid_amount>" +
+				"<status>pending</status>" +
+				"</payments>";
+		fetch_requested_data('form71',payments_data,function(payments)
 		{
-			my_obj_array_to_csv(results,'accounts');
+			results.forEach(function(result)
+			{		
+				var balance_amount=0;
+				payments.forEach(function(payment)
+				{
+					if(payment.acc_name==result.acc_name)
+					{
+						if(payment.type=='received')
+						{
+							balance_amount+=parseFloat(payment.total_amount);
+							balance_amount-=parseFloat(payment.paid_amount);
+						}
+						else if(payment.type=='paid')
+						{
+							balance_amount-=parseFloat(payment.total_amount);
+							balance_amount+=parseFloat(payment.paid_amount);
+						}
+					}
+				});
+				var rowsHTML="";
+				rowsHTML+="<tr>";
+					rowsHTML+="<form id='form71_"+result.id+"'></form>";
+						rowsHTML+="<td data-th='Type'>";
+							rowsHTML+="<input type='text' readonly='readonly' required form='form71_"+result.id+"' value='"+result.type+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Name'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form71_"+result.id+"' value='"+result.acc_name+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Description'>";
+							rowsHTML+="<textarea readonly='readonly' form='form71_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Balance'>";
+							rowsHTML+="<input type='number' step='any' readonly='readonly' form='form71_"+result.id+"' value='"+balance_amount+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form71_"+result.id+"' value='"+result.id+"'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form71_"+result.id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form71_"+result.id+"' onclick='form71_delete_item($(this));'>";
+						rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+				
+				$('#form71_body').prepend(rowsHTML);
+				var fields=document.getElementById("form71_"+result.id);
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form71_update_item(fields);
+				});
+			});
+			resize_input();
+			longPressEditable($('.dblclick_editable'));
+			
+			var export_button=filter_fields.elements[3];
+			$(export_button).off("click");
+			$(export_button).on("click", function(event)
+			{
+				my_obj_array_to_csv(results,'accounts');
+			});
 		});
 	});
 };

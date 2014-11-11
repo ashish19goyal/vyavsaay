@@ -1,4 +1,4 @@
-<div id='form8' class='function_detail'><b>manage staff information</b>
+<div id='form8' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

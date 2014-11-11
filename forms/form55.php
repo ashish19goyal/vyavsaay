@@ -1,4 +1,4 @@
-<div id='form55' class='function_detail'><b>Virtual Store</b>
+<div id='form55' class='function_detail'>
 		<form id='form55_header'>
 			Select Product<input type="text" form='form55_header'/></br>
 			Select Batch<input type="text" form='form55_header'/></br>

@@ -1,4 +1,4 @@
-<div id='form66' class='function_detail'><b>Cross Sells</b>
+<div id='form66' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

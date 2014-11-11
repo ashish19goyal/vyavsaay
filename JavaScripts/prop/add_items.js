@@ -1183,7 +1183,7 @@ function form38_add_item()
 
 
 /**
- * @form Expense Register
+ * @form Cash Register
  * @formNo 56
  */
 function form56_add_item()
@@ -1194,17 +1194,17 @@ function form56_add_item()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form56_"+id+"'></form>";
-			rowsHTML+="<td data-th='Expense Date'>";
-				rowsHTML+="<input type='text' form='form56_"+id+"' value=''>";
+			rowsHTML+="<td data-th='Type'>";
+				rowsHTML+="<input type='text' required form='form56_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Account'>";
-				rowsHTML+="<input type='text' form='form56_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Description'>";
-				rowsHTML+="<input type='text' form='form56_"+id+"' value=''>";
+				rowsHTML+="<input type='text' required form='form56_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="<input type='text' form='form56_"+id+"' value=''>";
+				rowsHTML+="<input type='number' required step='any' form='form56_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Notes'>";
+				rowsHTML+="<textarea form='form56_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form56_"+id+"' value='"+id+"'>";
@@ -1215,7 +1215,7 @@ function form56_add_item()
 	
 		$('#form56_body').prepend(rowsHTML);
 		var fields=document.getElementById("form56_"+id);
-		var date_filter=fields.elements[0];
+		var type_filter=fields.elements[0];
 		var account_filter=fields.elements[1];
 		
 		$(fields).on("submit", function(event)
@@ -1227,11 +1227,9 @@ function form56_add_item()
 		var account_data="<accounts>" +
 				"<acc_name></acc_name>" +
 				"</accounts>";
-		set_my_value_list(type_data,account_filter);
-		
-		$(date_filter).datepicker();
-		$(date_filter).val(get_my_date());
-		$(date_filter).focus();
+		set_my_value_list(account_data,account_filter);
+		set_static_value_list('cash_register','type',type_filter);
+		$(type_filter).focus();
 	}
 	else
 	{

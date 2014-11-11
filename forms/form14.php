@@ -1,4 +1,4 @@
-<div id='form14' class='function_detail'><b>Manage and assign tasks</b>
+<div id='form14' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

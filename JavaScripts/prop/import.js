@@ -537,7 +537,7 @@ function form40_import(data_array,import_type)
 
 
 /**
-* @form Expense Register
+* @form Cash Register
 * @formNo 56
 */
 function form56_import(data_array,import_type)
@@ -546,34 +546,68 @@ function form56_import(data_array,import_type)
 	{
 		var receiver=row.acc_name;
 		var giver="master";
-		var data_xml="<expenses>" +
+		if(row.type=='received')
+		{
+			giver=row.acc_name;
+			receiver="master";
+		}
+		var data_xml="<cash_register>" +
 				"<id>"+row.id+"</id>" +
+				"<type>"+row.type+"</type>" +
+				"<acc_name>"+row.acc_name+"</acc_name>" +
 				"<amount>"+row.amount+"</amount>" +
-				"<expense_date>"+row.expense_date+"</expense_date>" +
-				"<to_acc>"+row.to_acc+"</to_acc>" +
-				"<description>"+row.description+"</description>" +
+				"<notes>"+row.notes+"</notes>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</expenses>";
+				"</cash_register>";
 		var transaction_xml="<transactions>" +
 				"<id>"+row.id+"</id>" +
-				"<trans_date>"+row.date+"</trans_date>" +
+				"<trans_date>"+get_my_time()+"</trans_date>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<receiver>"+giver+"</receiver>" +
+				"<giver>"+receiver+"</giver>" +
+				"<tax>0</tax>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</transactions>";
+		var payment_id=get_my_time();
+		var transaction2_xml="<transactions>" +
+				"<id>"+payment_id+"</id>" +
+				"<trans_date>"+get_my_time()+"</trans_date>" +
 				"<amount>"+row.amount+"</amount>" +
 				"<receiver>"+receiver+"</receiver>" +
 				"<giver>"+giver+"</giver>" +
-				"<taxable>false</taxable>" +
+				"<tax>0</tax>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</transactions>";
+		var payment_xml="<payments>" +
+				"<id>"+payment_id+"</id>" +
+				"<acc_name>"+row.acc_name+"</acc_name>" +
+				"<type>"+row.type+"</type>" +
+				"<total_amount>"+row.amount+"</total_amount>" +
+				"<paid_amount>"+row.amount+"</paid_amount>" +
+				"<status>closed</status>" +
+				"<date>"+get_my_time()+"</date>" +
+				"<due_date>"+get_my_time()+"</due_date>" +
+				"<mode>cash</mode>" +
+				"<transaction_id>"+payment_id+"</transaction_id>" +
+				"<bill_id>"+row.id+"</bill_id>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</payments>";
+
 		if(import_type=='create_new')
 		{
 			if(is_online())
 			{
 				server_create_simple(data_xml);
 				server_create_simple(transaction_xml);
+				server_create_simple(transaction2_xml);
+				server_create_simple(payment_xml);
 			}
 			else
 			{
 				local_create_simple(data_xml);
 				local_create_simple(transaction_xml);
+				local_create_simple(transaction2_xml);
+				local_create_simple(payment_xml);
 			}
 		}
 		else
@@ -582,11 +616,15 @@ function form56_import(data_array,import_type)
 			{	
 				server_update_simple(data_xml);
 				server_update_simple(transaction_xml);
+				server_update_simple(transaction2_xml);
+				server_update_simple(payment_xml);
 			}
 			else
 			{
 				local_update_simple(data_xml);
 				local_update_simple(transaction_xml);
+				local_update_simple(transaction2_xml);
+				local_update_simple(payment_xml);
 			}
 		}
 	});
@@ -971,7 +1009,7 @@ function form66_import(data_array,import_type)
 
 
 /**
-* @form Manage financial accounts
+* @form Manage accounts
 * @formNo 71
 */
 function form71_import(data_array,import_type)

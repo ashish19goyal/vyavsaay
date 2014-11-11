@@ -1,4 +1,4 @@
-<div id='form22' class='function_detail'><b>Manage disposal of items</b>
+<div id='form22' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

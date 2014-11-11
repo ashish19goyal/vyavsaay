@@ -268,7 +268,7 @@ function form10_header_ini()
 		"<acc_name></acc_name>" +
 		"</customers>";
 	
-	set_my_filter(customers_data,customers_filter);
+	set_my_value_list(customers_data,customers_filter);
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';
@@ -341,7 +341,7 @@ function form12_header_ini()
 		"<acc_name></acc_name>" +
 		"</customers>";
 	
-	set_my_filter(customers_data,customers_filter);
+	set_my_value_list(customers_data,customers_filter);
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';
@@ -419,7 +419,7 @@ function form15_header_ini()
 		"<acc_name></acc_name>" +
 		"</customers>";
 	
-	set_my_filter(customers_data,customers_filter);
+	set_my_value_list(customers_data,customers_filter);
 	$(return_date).datepicker();
 	return_date.value=get_my_date();
 	customers_filter.value='';
@@ -503,7 +503,7 @@ function form19_header_ini()
 		"<acc_name></acc_name>" +
 		"</suppliers>";
 	
-	set_my_filter(suppliers_data,supplier_filter);
+	set_my_value_list(suppliers_data,supplier_filter);
 	$(return_date).datepicker();
 	return_date.value=get_my_date();
 	supplier_filter.value='';
@@ -548,7 +548,7 @@ function form21_header_ini()
 		"<acc_name></acc_name>" +
 		"</suppliers>";
 	
-	set_my_filter(suppliers_data,supplier_filter);
+	set_my_value_list(suppliers_data,supplier_filter);
 	
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
@@ -623,10 +623,10 @@ function form24_header_ini()
 		"<acc_name></acc_name>" +
 		"</suppliers>";
 	
-	set_my_filter(supplier_data,supplier_filter);
+	set_my_value_list(supplier_data,supplier_filter);
 	$(order_date).datepicker();
 	order_date.value=get_my_date();
-	set_static_value_list('purchase_orders','status',status_filter);
+	set_static_filter('purchase_orders','status',status_filter);
 	status_filter.value='draft';
 	supplier_filter.value='';
 }
@@ -878,8 +878,7 @@ function form44_header_ini()
 };
 
 /**
- * this function sets the current theme for the change theme form
- * @form Set system defaults
+ * @form Set defaults
  * @formNo 46
  */
 function form46_header_ini()
@@ -895,7 +894,7 @@ function form46_header_ini()
 	});
 	
 	var other_data="<user_preferences>" +
-			"<value></value>" +
+			"<display_name></display_name>" +
 			"<type>other</type>" +
 			"</user_preferences>";
 	
@@ -904,7 +903,18 @@ function form46_header_ini()
 };
 
 /**
- * this function the header for Select Reprots form
+ * @form change password
+ * @formNo 47
+ */
+function form47_header_ini()
+{
+	var filter_fields=document.getElementById('form47_master');
+	filter_fields.elements[1].value="";
+	filter_fields.elements[2].value="";
+	filter_fields.elements[3].value="";
+}
+
+/**
  * @form Select Reports
  * @formNo 48
  */
@@ -931,7 +941,6 @@ function form48_header_ini()
 
 
 /**
- * this function the header for Select Forms form
  * @form Select Forms
  * @formNo 49
  */
@@ -957,8 +966,7 @@ function form49_header_ini()
 };
 
 /**
- * this function the header for Select Accounting Principles form
- * @form Select Accounting Principles
+ * @form Set Accounting Defaults
  * @formNo 50
  */
 function form50_header_ini()
@@ -988,13 +996,17 @@ function form50_header_ini()
 function form51_header_ini()
 {
 	var fields=document.getElementById('form51_master');
-	var users_filter=fields.elements[3];
+	var users_filter=fields.elements[1];
 		
 	var username_data="<user_profiles>" +
 			"<username></username>" +
 			"</user_profiles>";
+	$(users_filter).on('blur',function(event)
+	{
+		form51_ini();
+	});
 	
-	set_my_filter(username_data,users_filter);
+	set_my_value_list(username_data,users_filter);
 	
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
@@ -1004,82 +1016,6 @@ function form51_header_ini()
 	});
 };
 
-/**
- * @form Set Access Control
- * @formNo 51
- */
-function form51_add_form()
-{
-	var form=document.getElementById('form51_master');
-	var username=form.elements[3];
-	
-	$(username).on('blur',function(event){});
-	form.elements[3].value="";
-	form.elements[4].value="";
-	form.elements[5].value="";
-	form.elements[6].value=get_new_key();
-	
-	var columns="<access_control>" +
-		"<id></id>" +
-		"<username>master</username>" +
-		"<element_id></element_id>" +
-		"<element_name></element_name>" +
-		"<status>active</status>" +
-		"<re></re>" +
-		"<cr></cr>" +
-		"<up></up>" +
-		"<del></del>" +
-		"</access_control>";
-
-	fetch_requested_data(columns,function(results)
-	{
-		var rowsHTML="";
-	
-		for(var i in results)
-		{
-			var id=get_my_time()+Math.floor(Math.random()*1000);
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form51_"+id+"'></form>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form51_"+id+"' value='"+results[i].element_name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='checkbox' form='form51_"+id+"' "+results[i].re+">";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-					rowsHTML+="<input type='checkbox' form='form51_"+id+"' "+results[i].cr+">";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='checkbox' form='form51_"+id+"' "+results[i].up+">";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='checkbox' form='form51_"+id+"' "+results[i].del+">";
-					rowsHTML+="</td>";
-					rowsHTML+="<td>";
-						rowsHTML+="<input type='hidden' form='form51_"+id+"' value='"+id+"'>";
-						rowsHTML+="<input type='hidden' form='form51_"+id+"' value='"+results[i].element_id+"'>";
-						rowsHTML+="<img class='filter_icon' src='./images/save.jpeg' id='save_form51_"+id+"' form='form51_"+id+"' value='Save' onclick='form51_save_item($(this));'>";	
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-		}
-		//console.log(rowsHTML);
-		$('#form51_body').html(rowsHTML);
-	});
-	
-};
-
-
-function form51_modify_form(button)
-{
-	var form=document.getElementById('form51_master');
-	var username=form.elements[3];
-	
-	$(username).on('blur',function(event)
-	{
-		form51_ini('');
-	});
-	form51_ini('');
-}
 
 /**
  * this function sets the header for Set shortcuts form
@@ -1092,6 +1028,12 @@ function form52_header_ini()
 	console.log(form);
 	var report_filter=form.elements[0];
 	var key_filter=form.elements[1];
+	
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		form52_update_form();
+	});
 	
 	var element_data="<shortcuts>" +
 			"<element_name></element_name>" +
@@ -1141,6 +1083,11 @@ function form54_header_ini()
 			"</user_preferences>";
 
 	set_my_filter(templates_data,templates_filter);
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		form54_update_form();
+	});
 
 };
 
@@ -1242,13 +1189,13 @@ function form55_header_ini()
 
 
 /**
- * @form Expense register
+ * @form Cash register
  * @formNo 56
  */
 function form56_header_ini()
 {
 	var filter_fields=document.getElementById('form56_header');
-	var date_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[0];
 	var account_filter=filter_fields.elements[1];
 	
 	var account_data="<accounts>" +
@@ -1256,9 +1203,7 @@ function form56_header_ini()
 			"</accounts>";
 	
 	set_my_filter(account_data,account_filter);
-	
-	$(date_filter).datepicker();
-	$(date_filter).val(get_my_date());
+	set_static_filter('cash_register','type',type_filter);	
 	
 	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
@@ -1554,10 +1499,10 @@ function form69_header_ini()
 		"<acc_name></acc_name>" +
 		"</customers>";
 	
-	set_my_filter(customers_data,customers_filter);
+	set_my_value_list(customers_data,customers_filter);
 	$(order_date).datepicker();
 	order_date.value=get_my_date();
-	set_static_value_list('sale_orders','status',status_filter);
+	set_static_filter('sale_orders','status',status_filter);
 	status_filter.value='pending';
 	customers_filter.value='';
 }
@@ -1598,27 +1543,28 @@ function form70_header_ini()
 
 
 /**
- * @form Manage Financial Accounts
+ * @form Manage Accounts
  * @formNo 71
  */
 function form71_header_ini()
 {
 	var filter_fields=document.getElementById('form71_header');
-	var name_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
 	
 	var name_data="<accounts>" +
 			"<acc_name></acc_name>" +
 			"</accounts>";
 
 	set_my_filter(name_data,name_filter);
+	set_static_filter('accounts','type',type_filter);
 	
-	var import_button=filter_fields.elements[3];
+	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
 	{
 		modal23_action(form71_import_template,form71_import);
 	});
-
 };
 
 

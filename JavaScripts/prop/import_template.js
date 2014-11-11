@@ -116,12 +116,12 @@ function form40_import_template()
 
 
 /**
-* @form Expense Register
+* @form Cash Register
 * @formNo 56
 */
 function form56_import_template()
 {
-	var data_array=['id','expense_date','to_acc','description','amount'];
+	var data_array=['id','type','acc_name','amount','notes'];
 	my_array_to_csv(data_array);
 };
 
@@ -219,7 +219,7 @@ function form66_import_template()
 
 
 /**
-* @form Manage financial accounts
+* @form Manage accounts
 * @formNo 71
 */
 function form71_import_template()

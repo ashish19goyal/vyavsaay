@@ -1,11 +1,11 @@
-<div id='form50' class='function_detail'><b>Select Accounting Principles</b>
+<div id='form50' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form50_header'></form>
-					<th>Name <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type="text" class='filter' onblur="form50_ini('');" form='form50_header'/></th>
-					<th>Selection</th>
-					<th><input type="submit" value="Save All" form='form50_header'/>
+					<th>Name <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type="text" class='filter' onblur="form50_ini();" form='form50_header'/></th>
+					<th>Value</th>
+					<th><input type="submit" title="Save All" class='save_icon' form='form50_header'/>
 						<input type='button' form='form50_header' value='Export' class='export_icon'>
 					</th>
 			</tr>

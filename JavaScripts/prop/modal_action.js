@@ -2132,7 +2132,7 @@ function modal28_action(payment_id)
 			var data_xml="<payments>" +
 						"<id>"+payment_id+"</id>" +
 						"<acc_name>"+supplier+"</acc_name>" +
-						"<type>delivered</type>" +
+						"<type>paid</type>" +
 						"<total_amount>"+total+"</total_amount>" +
 						"<paid_amount>"+paid+"</paid_amount>" +
 						"<status>"+status+"</status>" +
@@ -2169,7 +2169,7 @@ function modal28_action(payment_id)
 	var payments_data="<payments>" +
 			"<id>"+payment_id+"</id>" +
 			"<acc_name></acc_name>" +
-			"<type>delivered</type>" +
+			"<type>paid</type>" +
 			"<total_amount></total_amount>" +
 			"<paid_amount></paid_amount>" +
 			"<status></status>" +
@@ -2217,19 +2217,64 @@ function modal29_action(button)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		var detail_string="Bill Id: " +form.elements[1]+
-				"\nMode of payment: " +form.elements[3]+
-				"\nDue Date: "+form.elements[4]+
-				"\nDate closed: "+form.elements[2];
+		var detail_string="Bill Id: " +form.elements[1].value+
+				"\nMode of payment: " +form.elements[3].value+
+				"\nDue Date: "+form.elements[4].value+
+				"\nDate closed: "+form.elements[2].value;
 
-		var fdetail=detail_string;
-		var fmode=form.elements[3];
-		var fdate=get_raw_time(form.elements[2]);
-		var fdue_date=get_raw_time(form.elements[4]);
-		var fbill_id=form.elements[1];	
+		fdetail.value=detail_string;
+		fmode.value=form.elements[3].value;
+		fdate.value=get_raw_time(form.elements[2].value);
+		fdue_date.value=get_raw_time(form.elements[4].value);
+		fbill_id.value=form.elements[1].value;	
 	
 		$("#modal29").dialog("close");
 	});
 	
 	$("#modal29").dialog("open");
+}
+
+
+function modal31_action()
+{
+	if(is_delete_access('form51'))
+	{
+		var form=document.getElementById("form51_master");
+		
+		var username=form.elements[1].value;
+		var name=form.elements[2].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var table='user_profiles';
+		var data_xml="<"+table+">" +
+					"<id>"+data_id+"</id>" +
+					"<username>"+username+"</username>" +
+					"<name>"+name+"</name>" +
+					"</"+table+">";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>"+table+"</tablename>" +
+					"<link_to>form51</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Deleted user account for "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var other_delete="<access_control>" +
+				"<username>"+username+"</username>" +
+				"</access_control>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(other_delete);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(other_delete);
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
 }

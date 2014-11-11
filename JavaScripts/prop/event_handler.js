@@ -221,6 +221,7 @@ function hide_loader()
 
 function resize_input()
 {
+/*
 	$('input[type="text"]').keyup(function()
 	{  
 		$(this).attr({size: $(this).val().length});
@@ -230,6 +231,7 @@ function resize_input()
 		//console.log($(this).val().length);
 		$(this).attr({size: $(this).val().length});
 	});
+*/	
 }
 
 function load_tooltips()

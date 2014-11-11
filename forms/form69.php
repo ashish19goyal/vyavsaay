@@ -1,4 +1,4 @@
-<div id='form69' class='function_detail'><b>Add sale order</b>
+<div id='form69' class='function_detail'>
 	<form id='form69_master'>
 		<fieldset>
 			Customer<input type='text' required>

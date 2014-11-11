@@ -1,4 +1,4 @@
-<div id='form60' class='function_detail'><b>Product Attributes</b>
+<div id='form60' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

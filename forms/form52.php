@@ -1,11 +1,11 @@
-<div id='form52' class='function_detail'><b>Set Shortcut keys</b>
+<div id='form52' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>
 				<form id='form52_header'></form>
-					<th>Report/Form Name <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form52_header' onblur="form52_ini();"></th>
+					<th>Report/Form <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form52_header' onblur="form52_ini();"></th>
 					<th>Key <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form52_header' onblur="form52_ini();"></th>
-					<th><input type="button" value="Save All" onclick="form52_update_form();" form='form52_header'>
+					<th><input type="submit" title="Save All" class='save_icon' form='form52_header'>
 						<input type='button' form='form52_header' value='Export' class='export_icon'>
 					</th>
 			</tr>

@@ -1704,56 +1704,6 @@ function form44_delete_item(button)
 
 
 /**
- * formNo 51
- * form Access Control
- * @param button
- */
-function form51_delete_form()
-{
-	if(is_delete_access('form51'))
-	{
-		var form=document.getElementById("form51_master");
-		
-		var username=form.elements[1].value;
-		var name=form.elements[2].value;
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
-		var table='user_profiles';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<username>"+username+"</username>" +
-					"<name>"+name+"</name>" +
-					"</"+table+">";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form51</link_to>" +
-					"<title>Deleted</title>" +
-					"<notes>Deleted user account for "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var other_delete="<access_control>" +
-				"<username>"+username+"</username>" +
-				"</access_control>";
-		if(is_online())
-		{
-			server_delete_row(data_xml,activity_xml);
-			server_delete_simple(other_delete);
-		}
-		else
-		{
-			local_delete_row(data_xml,activity_xml);
-			local_delete_simple(other_delete);
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-
-/**
  * @form Manage Supplier Bills
  * @param button
  */
@@ -1896,44 +1846,84 @@ function form53_delete_item(button)
 
 /**
  * formNo 56
- * form Expense Register
+ * form Cash Register
  * @param button
  */
 function form56_delete_item(button)
 {
+	console.log('deleting cash record');
 	if(is_delete_access('form56'))
 	{
+		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var expense_date=get_raw_time(form.elements[0].value);
-		var to_account=form.elements[1].value;
-		var description=form.elements[2].value;
-		var amount=form.elements[3].value;
+		var type=form.elements[0].value;
+		var account=form.elements[1].value;
+		var amount=form.elements[2].value;
+		var notes=form.elements[3].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
-		var table='expenses';
-		var data_xml="<"+table+">" +
+		var data_xml="<cash_register>" +
 					"<id>"+data_id+"</id>" +
-					"<expense_date>"+expense_date+"</expense_date>" +
-					"<to_acc>"+to_account+"</to_acc>" +
-					"<description>"+description+"</description>" +
+					"<type>"+type+"</type>" +
+					"<acc_name>"+account+"</acc_name>" +
 					"<amount>"+amount+"</amount>" +
-					"</"+table+">";	
+					"</cash_register>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>cash_register</tablename>" +
 					"<link_to>form56</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted expense item no "+data_id+" of amount "+amount+"</notes>" +
+					"<notes>Cash record of amount "+amount+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var transaction_xml="<transactions>" +
+					"<id>"+data_id+"</id>" +
+					"<amount>"+amount+"</amount>" +
+					"</transactions>";
+		var payment_data="<payments>" +
+					"<id></id>" +
+					"<acc_name>"+account+"</acc_name>" +
+					"<type>"+type+"</type>" +
+					"<bill_id>"+data_id+"</bill_id>" +
+					"<total_amount>"+amount+"</total_amount>" +
+					"</payments>";
+		fetch_requested_data('',payment_data,function(payments)
+		{
+			for(var i in payments)
+			{
+				var transaction2_xml="<transactions>" +
+							"<id>"+payments[i].id+"</id>" +
+							"<amount>"+amount+"</amount>" +
+							"</transactions>";
+				var payment_xml="<payments>" +
+							"<id>"+payments[i].id+"</id>" +
+							"<total_amount>"+amount+"</total_amount>" +
+							"</payments>";
+				if(is_online())
+				{
+					server_delete_simple(payment_xml);
+					server_delete_simple(transaction2_xml);
+				}
+				else
+				{
+					local_delete_simple(payment_xml);
+					local_delete_simple(transaction2_xml);
+				}	
+
+				break;
+			}
+
+		});
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(transaction_xml);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(transaction_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -2511,19 +2501,20 @@ function form70_delete_item(button)
 
 
 /**
- * @form Manage financial accounts
+ * @form Manage accounts
  * @param button
  */
 function form71_delete_item(button)
 {
-	if(is_delete_access('form71'))
-	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
-		var name=form.elements[0].value;
-		var description=form.elements[1].value;
-		var data_id=form.elements[2].value;
+	var form_id=$(button).attr('form');
+	var form=document.getElementById(form_id);
+	var type=form.elements[0].value;
+	
+	if(is_delete_access('form71') && type=='financial')
+	{		
+		var name=form.elements[1].value;
+		var description=form.elements[2].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<accounts>" +
 					"<id>"+data_id+"</id>" +

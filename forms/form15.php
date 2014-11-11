@@ -1,4 +1,4 @@
-<div id='form15' class='function_detail'><b>Enter Returns</b>
+<div id='form15' class='function_detail'>
 	<form id='form15_master'>
 		<fieldset>
 			Customer<input type='text' required>

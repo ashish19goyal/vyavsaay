@@ -1,4 +1,4 @@
-<div id='form58' class='function_detail'><b>Service Pre-requisites</b>
+<div id='form58' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

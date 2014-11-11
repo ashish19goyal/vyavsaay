@@ -1,4 +1,4 @@
-<div id='form44' class='function_detail'><b>Manage Pamphlets</b>
+<div id='form44' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

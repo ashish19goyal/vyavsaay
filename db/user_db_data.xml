@@ -10,6 +10,22 @@
 	</accounts>
 	<user_preferences>
 		<row>
+			<name>credit_period</name>
+			<display_name>Default Credit Period (days)</display_name>
+			<status>active</status>
+			<value>30</value>
+			<type>accounting</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>debit_period</name>
+			<display_name>Default Debit Period (days)</display_name>
+			<status>active</status>
+			<value>30</value>
+			<type>accounting</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>address</name>
 			<display_name>official_address</display_name>
 			<status>active</status>
@@ -227,7 +243,7 @@
 		</row>
 		<row>
 			<name>report29</name>
-			<display_name>pre_requisites_for_products</display_name>
+			<display_name>product_pre-requisites</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
@@ -243,7 +259,7 @@
 		</row>
 		<row>
 			<name>report41</name>
-			<display_name>pre_requisites_for_services</display_name>
+			<display_name>service_pre-requisites</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
@@ -355,7 +371,7 @@
 		</row>
 		<row>
 			<name>report44</name>
-			<display_name>Compare_products</display_name>
+			<display_name>compare_products</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
@@ -403,7 +419,7 @@
 		</row>
 		<row>
 			<name>form10</name>
-			<display_name>create_service_receipt</display_name>
+			<display_name>create_service_bills</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -467,7 +483,7 @@
 		</row>
 		<row>
 			<name>form21</name>
-			<display_name>goods_received</display_name>
+			<display_name>enter_supplier_bills</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -562,14 +578,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>form45</name>
-			<display_name>manage_service_receipt</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>form</type>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>form46</name>
 			<display_name>set_defaults</display_name>
 			<status>active</status>
@@ -603,7 +611,7 @@
 		</row>
 		<row>
 			<name>form50</name>
-			<display_name>select_accounting_principles</display_name>
+			<display_name>set_accounting_defaults</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -611,7 +619,7 @@
 		</row>
 		<row>
 			<name>form51</name>
-			<display_name>set_access_control</display_name>
+			<display_name>access_control</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -635,7 +643,7 @@
 		</row>
 		<row>
 			<name>form54</name>
-			<display_name>select_templates</display_name>
+			<display_name>select_print_templates</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -651,7 +659,7 @@
 		</row>
 		<row>
 			<name>form56</name>
-			<display_name>expense_register</display_name>
+			<display_name>cash_register</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -707,7 +715,7 @@
 		</row>
 		<row>
 			<name>form74</name>
-			<display_name>complete_sale_orders</display_name>
+			<display_name>completed_sale_orders</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -899,7 +907,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report29</element_id>
-			<element_name>pre_requisites_for_products</element_name>
+			<element_name>product_pre-requisites</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -910,7 +918,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report41</element_id>
-			<element_name>pre_requisites_for_services</element_name>
+			<element_name>service_pre-requisites</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1141,7 +1149,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form10</element_id>
-			<element_name>create_service_receipt</element_name>
+			<element_name>create_service_bills</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1229,7 +1237,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form21</element_id>
-			<element_name>goods_received</element_name>
+			<element_name>enter_supplier_bills</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1360,17 +1368,6 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>form45</element_id>
-			<element_name>manage_service_receipt</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
 			<element_id>form46</element_id>
 			<element_name>set_defaults</element_name>
 			<status>active</status>
@@ -1416,7 +1413,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form50</element_id>
-			<element_name>select_accounting_principles</element_name>
+			<element_name>set_accounting_defaults</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1427,7 +1424,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form51</element_id>
-			<element_name>set_access_control</element_name>
+			<element_name>access_control</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1460,7 +1457,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form54</element_id>
-			<element_name>select_templates</element_name>
+			<element_name>select_print_templates</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1482,7 +1479,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form56</element_id>
-			<element_name>expense_register</element_name>
+			<element_name>cash_register</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1559,7 +1556,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form74</element_id>
-			<element_name>complete_sale_orders</element_name>
+			<element_name>completed_sale_orders</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1684,14 +1681,14 @@
 		</row>
 		<row>
 			<element_id>report29</element_id>
-			<element_name>pre_requisites_for_products</element_name>
+			<element_name>product_pre-requisites</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<element_id>report41</element_id>
-			<element_name>pre_requisites_for_services</element_name>
+			<element_name>service_pre-requisites</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -1789,7 +1786,7 @@
 		</row>
 		<row>
 			<element_id>form10</element_id>
-			<element_name>create_service_receipt</element_name>
+			<element_name>create_service_bills</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -1831,7 +1828,7 @@
 		</row>
 		<row>
 			<element_id>form21</element_id>
-			<element_name>goods_received</element_name>
+			<element_name>enter_supplier_bills</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -1914,13 +1911,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<element_id>form45</element_id>
-			<element_name>manage_service_receipt</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<element_id>form46</element_id>
 			<element_name>set_defaults</element_name>
 			<status>active</status>
@@ -1957,7 +1947,7 @@
 		</row>
 		<row>
 			<element_id>form51</element_id>
-			<element_name>set_access_control</element_name>
+			<element_name>access_control</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -1992,7 +1982,7 @@
 		</row>
 		<row>
 			<element_id>form56</element_id>
-			<element_name>expense_register</element_name>
+			<element_name>cash_register</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>

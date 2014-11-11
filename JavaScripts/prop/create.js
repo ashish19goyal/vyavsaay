@@ -1267,7 +1267,7 @@ function form15_create_form()
 		var payment_xml="<payments>" +
 					"<id>"+pt_tran_id+"</id>" +
 					"<status>pending</status>" +
-					"<type>delivered</type>" +
+					"<type>paid</type>" +
 					"<date>"+get_my_time()+"</date>" +
 					"<total_amount>"+total+"</total_amount>" +
 					"<paid_amount>0</paid_amount>" +
@@ -1674,7 +1674,7 @@ function form21_create_form()
 		var payment_xml="<payments>" +
 					"<id>"+pt_tran_id+"</id>" +
 					"<status>pending</status>" +
-					"<type>delivered</type>" +
+					"<type>paid</type>" +
 					"<date>"+get_my_time()+"</date>" +
 					"<total_amount>"+total+"</total_amount>" +
 					"<paid_amount>0</paid_amount>" +
@@ -1974,47 +1974,158 @@ function form38_create_item(form)
 	}
 }
 
+/**
+ * @form Access Control
+ * @param button
+ */
+function form51_create_item(form)
+{
+	if(is_create_access('form51'))
+	{
+		var master_form=document.getElementById('form51_master');
+		var username=master_form.elements[1].value;
+		var name=master_form.elements[2].value;
+			
+		var element_name=form.elements[0].getAttribute('data-i18n');
+		element_name=element_name.substr(element_name.indexOf('.')+1);
+		var re='unchecked';
+		if(form.elements[1].checked)
+			re='checked';
+		var cr='unchecked';
+		if(form.elements[2].checked)
+			cr='checked';
+		var up='unchecked';
+		if(form.elements[3].checked)
+			up='checked';
+		var del='unchecked';
+		if(form.elements[4].checked)
+			del='checked';
+		var data_id=form.elements[5].value;
+		var element_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<access_control>" +
+					"<id>"+data_id+"</id>" +
+					"<username>"+username+"</username>" +
+					"<element_id>"+element_id+"</element_id>" +
+					"<element_name>"+element_name+"</element_name>" +
+					"<re>"+re+"</re>" +
+					"<cr>"+cr+"</cr>" +
+					"<up>"+up+"</up>" +
+					"<del>"+del+"</del>" +
+					"<status>active</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</access_control>";	
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form51_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 /**
  * formNo 56
- * form Expense Register
+ * form Cash Register
  * @param button
  */
 function form56_create_item(form)
 {
 	if(is_create_access('form56'))
 	{
-		var expense_date=get_raw_time(form.elements[0].value);
-		var to_account=form.elements[1].value;
-		var description=form.elements[2].value;
-		var amount=form.elements[3].value;
+		var type=form.elements[0].value;
+		var account=form.elements[1].value;
+		var amount=form.elements[2].value;
+		var notes=form.elements[3].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
-		var table='expenses';
-		var data_xml="<"+table+">" +
+		var receiver=account;
+		var giver="master";
+		if(type=='received')
+		{
+			giver=account;
+			receiver="master";
+		}
+		var data_xml="<cash_register>" +
 					"<id>"+data_id+"</id>" +
-					"<expense_date>"+expense_date+"</expense_date>" +
-					"<to_acc>"+to_account+"</to_acc>" +
-					"<description>"+description+"</description>" +
+					"<type>"+type+"</type>" +
+					"<acc_name>"+account+"</acc_name>" +
+					"<notes>"+notes+"</notes>" +
 					"<amount>"+amount+"</amount>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</cash_register>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>cash_register</tablename>" +
 					"<link_to>form56</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Saved expense item no "+data_id+" of amount "+amount+"</notes>" +
+					"<title>Added</title>" +
+					"<notes>Cash record of amount "+amount+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var transaction_xml="<transactions>" +
+					"<id>"+data_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+amount+"</amount>" +
+					"<receiver>"+giver+"</receiver>" +
+					"<giver>"+receiver+"</giver>" +
+					"<tax>0</tax>" +
+					"<last_updated>"+get_my_time()+"</last_updated>" +
+					"</transactions>";
+		var payment_id=get_my_time();
+		var transaction2_xml="<transactions>" +
+					"<id>"+payment_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+amount+"</amount>" +
+					"<receiver>"+receiver+"</receiver>" +
+					"<giver>"+giver+"</giver>" +
+					"<tax>0</tax>" +
+					"<last_updated>"+get_my_time()+"</last_updated>" +
+					"</transactions>";
+		var payment_xml="<payments>" +
+					"<id>"+payment_id+"</id>" +
+					"<acc_name>"+account+"</acc_name>" +
+					"<type>"+type+"</type>" +
+					"<total_amount>"+amount+"</total_amount>" +
+					"<paid_amount>"+amount+"</paid_amount>" +
+					"<status>closed</status>" +
+					"<date>"+get_my_time()+"</date>" +
+					"<due_date>"+get_my_time()+"</due_date>" +
+					"<mode>cash</mode>" +
+					"<transaction_id>"+payment_id+"</transaction_id>" +
+					"<bill_id>"+data_id+"</bill_id>" +
+					"<last_updated>"+get_my_time()+"</last_updated>" +
+					"</payments>";
 		if(is_online())
 		{
 			server_create_row(data_xml,activity_xml);
+			server_create_simple(transaction_xml);
+			server_create_simple(transaction2_xml);
+			server_create_simple(payment_xml);
 		}
 		else
 		{
 			local_create_row(data_xml,activity_xml);
-		}	
+			local_create_simple(transaction_xml);
+			local_create_simple(transaction2_xml);
+			local_create_simple(payment_xml);
+		}
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -2025,8 +2136,8 @@ function form56_create_item(form)
 		{
 			form56_delete_item(del_button);
 		});
+		
 		$(form).off('submit');
-
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();

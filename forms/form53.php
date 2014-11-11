@@ -1,4 +1,4 @@
-<div id='form53' class='function_detail'><b>Manage Supplier Bills</b>
+<div id='form53' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

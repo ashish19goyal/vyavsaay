@@ -1,4 +1,4 @@
-<div id='form11' class='function_detail'><b>Manage Payments</b>
+<div id='form11' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

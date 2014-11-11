@@ -1,4 +1,4 @@
-<div id='form5' class='function_detail'><b>Manage Assets</b>
+<div id='form5' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

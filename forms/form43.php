@@ -1,4 +1,4 @@
-<div id='form43' class='function_detail'><b>Manage Purchase orders</b>
+<div id='form43' class='function_detail'>
 	<table class='rwd-table'>
 		<thead>
 			<tr>

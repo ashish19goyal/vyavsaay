@@ -88,6 +88,22 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>cash_register</tablename>
+			<listname>type</listname>
+			<name>paid</name>
+			<value>Paid</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>cash_register</tablename>
+			<listname>type</listname>
+			<name>received</name>
+			<value>Received</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>ecommerce</tablename>
 			<listname>categories</listname>
 			<name>all</name>
@@ -800,7 +816,7 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<tablename>acccounts</tablename>
+			<tablename>accounts</tablename>
 			<listname>type</listname>
 			<name>supplier</name>
 			<value>Supplier</value>
@@ -808,10 +824,18 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<tablename>acccounts</tablename>
+			<tablename>accounts</tablename>
 			<listname>type</listname>
 			<name>financial</name>
 			<value>Financial</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>accounts</tablename>
+			<listname>type</listname>
+			<name>master</name>
+			<value>Master</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
