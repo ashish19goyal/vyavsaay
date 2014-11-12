@@ -6,38 +6,29 @@ function form2_create_item(form)
 {
 	if(is_create_access('form2'))
 	{
-		var pamphlet_name=document.getElementById('form2_master').elements[1].value;
+		var pamphlet_id=document.getElementById('form2_master').elements[2].value;
 		var name=form.elements[0].value;
-		var offer_id=form.elements[1].value;
+		var offer_name=form.elements[1].value;
 		var offer_detail=form.elements[2].value;
 		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='pamphlet_items';
-		var data_xml="<"+table+">" +
+		var data_xml="<pamphlet_items>" +
 					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<offer_name>"+offer_id+"</offer_name>" +
+					"<item_name>"+name+"</item_name>" +
+					"<offer_name>"+offer_name+"</offer_name>" +
 					"<offer>"+offer_detail+"</offer>" +
-					"<pamphlet_name>"+pamphlet_name+"</pamphlet_name>" +
+					"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form2</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added product "+name+" to pamphlet "+pamphlet_name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
+					"</pamphlet_items>";
 		if(is_online())
 		{
-			server_create_row(data_xml,activity_xml);
+			server_create_simple(data_xml);
 		}
 		else
 		{
-			local_create_row(data_xml,activity_xml);
+			local_create_simple(data_xml);
 		}	
-		for(var i=0;i<5;i++)
+		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -47,12 +38,11 @@ function form2_create_item(form)
 		{
 			form2_delete_item(del_button);
 		});
+		
 		$(form).off('submit');
-
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
-			form2_update_item(form);
 		});
 	}
 	else
@@ -75,18 +65,17 @@ function form2_create_form()
 		var p_name=form.elements[1].value;
 		var data_id=form.elements[2].value;
 		var last_updated=get_my_time();
-		var table='pamphlets';
-		var data_xml="<"+table+">" +
+		var data_xml="<pamphlets>" +
 					"<id>"+data_id+"</id>" +
 					"<name unique='yes'>"+p_name+"</name>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";
+					"</pamphlets>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>pamphlets</tablename>" +
 					"<link_to>form2</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Saved pamphlet "+p_name+"</notes>" +
+					"<title>Created</title>" +
+					"<notes>Pamphlet "+p_name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())

@@ -363,4 +363,24 @@
 		</form>
 	</div>
 	
+	<div id="modal30" title="Add user">
+		<form id='modal30_form'>
+			<fieldset>
+				<label>Login Id <input type='text' required></label><br/>
+				<label>Name <input type="text" required></label><br/>
+				<label>Password <input type="password" required></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div id="modal31" title="Delete user">
+		<form id='modal31_form'>
+			<fieldset>
+				<label>Login Id <input type='text' required></label><br/>
+				<input type="submit" value='Delete'>
+			</fieldset>
+		</form>
+	</div>
+		
 </div>

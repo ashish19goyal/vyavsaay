@@ -56,7 +56,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=8;i<30;i++)
+	for(var i=8;i<32;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -265,6 +265,34 @@ function element_display(fid,element_name)
 	$(element_link).click();
 	$(element_link).attr('data_id','');
 }
+
+function set_menu_shortcuts()
+{
+	var shortcuts_data="<shortcuts>" +
+			"<id></id>" +
+			"<element_id></element_id>" +
+			"<element_name></element_name>" +
+			"<shortcut></shortcut>" +
+			"<status>active</status>" +
+			"</shortcuts>";
+
+	fetch_requested_data('',shortcuts_data,function(results)
+	{
+		results.forEach(function(result)
+		{
+			if(result.shortcut!="")
+			{	
+				//var shortcut=result.shortcut.replace(" ","+");
+				Mousetrap.bind(result.shortcut, function(e)
+				{
+					console.log('shortcut used'+result.shortcut);
+			    	element_display('',result.element_id);
+				});
+			}
+		});
+	});
+}
+
 
 /**
  * this function displays the notifications in the main content box

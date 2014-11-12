@@ -14,10 +14,10 @@
 				echo "<li><a id='form50_link' href='#form50' onclick='form50_header_ini(); form50_ini();' data-i18n='form.set_accounting_defaults'></a></li>";
 			if(strpos($_SESSION['forms'],'form51-')!==false)
 				echo "<li><a id='form51_link' href='#form51' onclick='form51_header_ini();' data-i18n='form.access_control'></a></li>";
-			if(strpos($_SESSION['forms'],'form52-')!==false)
-				echo "<li><a id='form52_link' href='#form52' onclick='form52_header_ini(); form52_ini();' data-i18n='form.set_shortcuts'></a></li>";
+			if(strpos($_SESSION['forms'],'form77-')!==false)
+				echo "<li><a id='form77_link' href='#form77' onclick='form77_header_ini(); form77_ini();' data-i18n='form.set_shortcuts'></a></li>";
 			if(strpos($_SESSION['forms'],'form54-')!==false)
-				echo "<li><a id='form54_link' href='#form54' onclick='form54_header_ini(); form54_ini();' data-i18n='form.select_print_templates'></a></li>";
+				echo "<li><a id='form54_link' href='#form54' onclick='form54_header_ini(); form54_ini();' data-i18n='form.select_print_templates'></a></li>";		
 		echo "</ul>";
 
 		if(strpos($_SESSION['forms'],'form46-')!==false)
@@ -32,8 +32,8 @@
 			include "forms/form50.php";
 		if(strpos($_SESSION['forms'],'form51-')!==false)
 			include "forms/form51.php";
-		if(strpos($_SESSION['forms'],'form52-')!==false)
-			include "forms/form52.php";
+		if(strpos($_SESSION['forms'],'form77-')!==false)
+			include "forms/form77.php";
 		if(strpos($_SESSION['forms'],'form54-')!==false)
 			include "forms/form54.php";
 	?>

@@ -122,10 +122,18 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>service_receipt</name>
-			<display_name>service_receipt_print_template</display_name>
+			<name>service_bill</name>
+			<display_name>service_bill_print_template</display_name>
 			<status>active</status>
-			<value>default_service_receipt</value>
+			<value>default_service_sale_bill</value>
+			<type>template</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>product_bill</name>
+			<display_name>product_bill_print_template</display_name>
+			<status>active</status>
+			<value>default_product_sale_bill</value>
 			<type>template</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -134,6 +142,14 @@
 			<display_name>return_receipt_print_template</display_name>
 			<status>active</status>
 			<value>default_return_receipt</value>
+			<type>template</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>supplier_return</name>
+			<display_name>supplier_return_print_template</display_name>
+			<status>active</status>
+			<value>default_supplier_return</value>
 			<type>template</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -626,14 +642,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>form52</name>
-			<display_name>set_shortcuts</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>form</type>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>form53</name>
 			<display_name>manage_supplier_bills</display_name>
 			<status>active</status>
@@ -732,6 +740,22 @@
 		<row>
 			<name>form76</name>
 			<display_name>track_payments</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form77</name>
+			<display_name>set_shortcuts</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form78</name>
+			<display_name>promotion_emails</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -1434,17 +1458,6 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>form52</element_id>
-			<element_name>set_shortcuts</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
 			<element_id>form53</element_id>
 			<element_name>manage_supplier_bills</element_name>
 			<status>active</status>
@@ -1579,6 +1592,28 @@
 			<username>master</username>
 			<element_id>form76</element_id>
 			<element_name>track_payments</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form77</element_id>
+			<element_name>set_shortcuts</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form78</element_id>
+			<element_name>promotion_emails</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1953,13 +1988,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<element_id>form52</element_id>
-			<element_name>set_shortcuts</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<element_id>form53</element_id>
 			<element_name>manage_supplier_bills</element_name>
 			<status>active</status>
@@ -1983,6 +2011,20 @@
 		<row>
 			<element_id>form56</element_id>
 			<element_name>cash_register</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form77</element_id>
+			<element_name>set_shortcuts</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form78</element_id>
+			<element_name>promotion_emails</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>

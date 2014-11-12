@@ -1,10 +1,10 @@
 /**
-  * this function prepares the table for update inventory form
  * @form Update Inventory
  * @formNo 1
  */
 function form1_ini()
 {
+	show_loader();
 	var fid=$("#form1_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -77,8 +77,91 @@ function form1_ini()
 		{
 			my_obj_array_to_csv(results,'inventory');
 		});
+		hide_loader();
 	});
 };
+
+/**
+ * @form Create Pamphlet
+ */
+function form2_ini()
+{
+	var pamphlet_id=$("#form2_link").attr('data_id');
+	if(pamphlet_id==null)
+		pamphlet_id="";	
+	$('#form2_body').html("");
+	console.log(pamphlet_id);
+	if(pamphlet_id!="")
+	{
+		show_loader();
+		var pamphlet_columns="<pamphlets>" +
+				"<id>"+pamphlet_id+"</id>" +
+				"<name></name>" +
+				"</pamphlets>";
+		var pamphlet_item_columns="<pamphlet_items>" +
+				"<id></id>" +
+				"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
+				"<item_name></item_name>" +
+				"<offer_name></offer_name>" +
+				"<offer></offer>" +
+				"</pamphlet_items>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',pamphlet_columns,function(pamphlet_results)
+		{
+			for (var i in pamphlet_results)
+			{
+				var filter_fields=document.getElementById('form2_master');
+				filter_fields.elements[1].value=pamphlet_results[i].name;
+				filter_fields.elements[2].value=pamphlet_results[i].id;
+				
+				$(filter_fields).off('submit');
+				$(filter_fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form2_update_form();
+				});
+				break;
+			}
+		});
+		/////////////////////////////////////////////////////////////////////////
+		
+		fetch_requested_data('',pamphlet_item_columns,function(results)
+		{
+			results.forEach(function(result)
+			{
+				var rowsHTML="";
+				var id=result.id;
+				rowsHTML+="<tr>";
+				rowsHTML+="<form id='form2_"+id+"'></form>";
+					rowsHTML+="<td data-th='Item Name'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form2_"+id+"' value='"+result.item_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Offer Name'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form2_"+id+"' value='"+result.offer_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Offer Details'>";
+						rowsHTML+="<textarea readonly='readonly' form='form2_"+id+"'>"+result.offer+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form2_"+id+"' value='"+id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form2_"+id+"' id='save_form2_"+id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form2_"+id+"' id='delete_form2_"+id+"' onclick='form2_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+			
+				$('#form2_body').prepend(rowsHTML);
+				
+				var fields=document.getElementById("form2_"+id);
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+				});
+			});
+			hide_loader();
+		});
+	}
+}
 
 
 /**
@@ -88,6 +171,7 @@ function form1_ini()
  */
 function form5_ini()
 {
+	show_loader();
 	var fid=$("#form5_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -170,6 +254,7 @@ function form5_ini()
 		{
 			my_obj_array_to_csv(results,'assets');
 		});
+		hide_loader();
 	});
 };
 
@@ -181,6 +266,7 @@ function form5_ini()
  */
 function form7_ini()
 {
+	show_loader();
 	var fid=$("#form7_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -248,7 +334,7 @@ function form7_ini()
 				});
 				resize_input();
 				longPressEditable($('.dblclick_editable'));
-				
+				hide_loader();
 			});
 		}
 		else
@@ -288,6 +374,7 @@ function form7_ini()
 			});
 			resize_input();
 			longPressEditable($('.dblclick_editable'));
+			hide_loader();
 		}
 	});
 };
@@ -295,12 +382,12 @@ function form7_ini()
 
 
 /**
- * this function prepares the table for manage staff form
  * @form Manage Staff
  * @formNo 8
  */
 function form8_ini()
 {
+	show_loader();
 	var fid=$("#form8_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -407,6 +494,7 @@ function form8_ini()
 		{
 			my_obj_array_to_csv(results,'staff');
 		});
+		hide_loader();
 	});
 };
 
@@ -423,6 +511,7 @@ function form10_ini()
 
 	if(bill_id!="")
 	{
+		show_loader();
 		var bill_columns="<bills>" +
 				"<id>"+bill_id+"</id>" +
 				"<customer_name></customer_name>" +
@@ -518,6 +607,7 @@ function form10_ini()
 					event.preventDefault();
 				});
 			});
+			hide_loader();
 		});
 	}
 }
@@ -530,6 +620,7 @@ function form10_ini()
  */
 function form11_ini()
 {
+	show_loader();
 	var fid=$("#form11_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -615,7 +706,7 @@ function form11_ini()
 		{
 			my_obj_array_to_csv(results,'payments');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -632,6 +723,7 @@ function form12_ini()
 
 	if(bill_id!="")
 	{
+		show_loader();
 		var bill_columns="<bills>" +
 				"<id>"+bill_id+"</id>" +
 				"<customer_name></customer_name>" +
@@ -732,6 +824,7 @@ function form12_ini()
 					event.preventDefault();
 				});
 			});
+			hide_loader();
 		});
 	}
 }
@@ -744,6 +837,7 @@ function form12_ini()
  */
 function form14_ini()
 {
+	show_loader();
 	var fid=$("#form14_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -820,7 +914,7 @@ function form14_ini()
 		{
 			my_obj_array_to_csv(results,'tasks');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -837,6 +931,7 @@ function form15_ini()
 
 	if(data_id!="")
 	{
+		show_loader();
 		var return_columns="<customer_returns>" +
 				"<id>"+data_id+"</id>" +
 				"<customer></customer>" +
@@ -933,6 +1028,7 @@ function form15_ini()
 					event.preventDefault();
 				});
 			});
+			hide_loader();
 		});
 	}
 }
@@ -945,6 +1041,7 @@ function form15_ini()
  */
 function form16_ini()
 {
+	show_loader();
 	var fid=$("#form16_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -1013,6 +1110,7 @@ function form16_ini()
 		{
 			my_obj_array_to_csv(results,'customer_returns');
 		});
+		hide_loader();
 	});
 }
 
@@ -1022,6 +1120,7 @@ function form16_ini()
  */
 function form17_ini()
 {
+	show_loader();
 	var fid=$("#form17_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -1089,6 +1188,7 @@ function form17_ini()
 		{
 			my_obj_array_to_csv(results,'supplier_returns');
 		});
+		hide_loader();
 	});
 }
 
@@ -1105,6 +1205,7 @@ function form19_ini()
 
 	if(data_id!="")
 	{
+		show_loader();
 		var return_columns="<supplier_returns>" +
 				"<id>"+data_id+"</id>" +
 				"<supplier></supplier>" +
@@ -1184,6 +1285,7 @@ function form19_ini()
 					event.preventDefault();
 				});
 			});
+			hide_loader();
 		});
 	}
 }
@@ -1202,7 +1304,7 @@ function form21_ini()
 
 	if(bill_id!="")
 	{
-		console.log(bill_id);
+		show_loader();
 		var bill_columns="<supplier_bills>" +
 				"<id>"+bill_id+"</id>" +
 				"<bill_id></bill_id>" +
@@ -1289,6 +1391,7 @@ function form21_ini()
 					event.preventDefault();
 				});
 			});
+			hide_loader();
 		});
 	}
 }
@@ -1302,6 +1405,7 @@ function form21_ini()
  */
 function form22_ini()
 {
+	show_loader();
 	var fid=$("#form22_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -1369,6 +1473,7 @@ function form22_ini()
 		{
 			my_obj_array_to_csv(results,'disposals');
 		});
+		hide_loader();
 	});
 };
 
@@ -1387,6 +1492,7 @@ function form24_ini()
 
 	if(order_id!="")
 	{
+		show_loader();
 		var order_columns="<purchase_orders>" +
 				"<id>"+order_id+"</id>" +
 				"<supplier></supplier>" +
@@ -1462,6 +1568,7 @@ function form24_ini()
 					form24_update_item(fields);
 				});
 			});
+			hide_loader();
 		});
 	}
 }
@@ -1475,6 +1582,7 @@ function form24_ini()
  */
 function form30_ini()
 {
+	show_loader();
 	var fid=$("#form30_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -1562,6 +1670,7 @@ function form30_ini()
 		{
 			my_obj_array_to_csv(results,'customers');
 		});
+		hide_loader();
 	});
 };
 
@@ -1573,6 +1682,7 @@ function form30_ini()
  */
 function form35_ini()
 {
+	show_loader();
 	var fid=$("#form35_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -1654,6 +1764,7 @@ function form35_ini()
 		{
 			my_obj_array_to_csv(results,'offers');
 		});
+		hide_loader();
 	});
 };
 
@@ -1665,6 +1776,7 @@ function form35_ini()
  */
 function form38_ini()
 {
+	show_loader();
 	var fid=$("#form38_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -1728,6 +1840,7 @@ function form38_ini()
 		{
 			my_obj_array_to_csv(results,'store');
 		});
+		hide_loader();
 	});
 };
 
@@ -1739,6 +1852,7 @@ function form38_ini()
  */
 function form39_ini()
 {
+	show_loader();
 	var fid=$("#form39_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -1842,6 +1956,7 @@ function form39_ini()
 		{
 			my_obj_array_to_csv(results,'products');
 		});
+		hide_loader();
 	});	
 };
 
@@ -1853,6 +1968,7 @@ function form39_ini()
  */
 function form40_ini()
 {
+	show_loader();
 	var fid=$("#form40_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -1933,12 +2049,14 @@ function form40_ini()
 		{
 			my_obj_array_to_csv(results,'suppliers');
 		});
+		hide_loader();
 	});
 };
 
 
 function form41_ini()
 {
+	show_loader();
 	var coordinates_data="<address>" +
 			"<acc_type>master</acc_type>" +
 			"<lat></lat>" +
@@ -2031,6 +2149,7 @@ function form41_ini()
 			});
 			break;
 		}
+		hide_loader();
 	});
 }
 
@@ -2042,6 +2161,7 @@ function form41_ini()
  */
 function form42_ini()
 {
+	show_loader();
 	var fid=$("#form42_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -2113,6 +2233,7 @@ function form42_ini()
 		{
 			my_obj_array_to_csv(results,'bills');
 		});
+		hide_loader();
 	});
 }
 
@@ -2123,6 +2244,7 @@ function form42_ini()
  */
 function form43_ini()
 {
+	show_loader();
 	var fid=$("#form43_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -2192,6 +2314,7 @@ function form43_ini()
 		{
 			my_obj_array_to_csv(results,'purchase_orders');
 		});
+		hide_loader();
 	});
 };
 
@@ -2203,6 +2326,7 @@ function form43_ini()
  */
 function form44_ini()
 {
+	show_loader();
 	var fid=$("#form44_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -2235,20 +2359,13 @@ function form44_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' readonly='readonly' form='form44_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='button' class='edit_icon' form='form44_"+result.id+"' value='saved' onclick='form44_edit_item($(this));'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form44_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form44_"+result.id+"' value='saved' onclick='form44_delete_item($(this));'>";
-						rowsHTML+="<img class='filter_icon' src='./images/print.jpeg' form='form44_"+result.id+"' value='Print' onclick='form44_print_item($(this));'>";
+						rowsHTML+="<input type='button' class='edit_icon' form='form44_"+result.id+"' title='Edit' onclick=\"element_display('"+result.id+"','form2');\">";
+						rowsHTML+="<input type='button' class='delete_icon' form='form44_"+result.id+"' title='Delete' onclick='form44_delete_item($(this));'>";
+						rowsHTML+="<img class='filter_icon' src='./images/print.jpeg' form='form44_"+result.id+"' title='Print' onclick='form44_print_item($(this));'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form44_body').prepend(rowsHTML);
-			var fields=document.getElementById("form44_"+result.id);
-			$(fields).on("submit", function(event)
-			{
-				event.preventDefault();
-				form44_update_item(fields);
-			});
 		});
 		resize_input();
 		longPressEditable($('.dblclick_editable'));
@@ -2259,6 +2376,7 @@ function form44_ini()
 		{
 			my_obj_array_to_csv(results,'pamphlets');
 		});
+		hide_loader();
 	});
 };
 
@@ -2269,6 +2387,7 @@ function form44_ini()
  */
 function form46_ini()
 {
+	show_loader();
 	var fid=$("#form46_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -2328,6 +2447,7 @@ function form46_ini()
 		{
 			my_obj_array_to_csv(results,'system_defaults');
 		});
+		hide_loader();
 	});
 };
 
@@ -2338,6 +2458,7 @@ function form46_ini()
  */
 function form48_ini()
 {
+	show_loader();
 	var fid=$("#form48_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -2397,7 +2518,7 @@ function form48_ini()
 		{
 			my_obj_array_to_csv(results,'reports');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -2407,6 +2528,7 @@ function form48_ini()
  */
 function form49_ini()
 {
+	show_loader();
 	var fid=$("#form49_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -2467,7 +2589,7 @@ function form49_ini()
 		{
 			my_obj_array_to_csv(results,'forms');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -2478,6 +2600,7 @@ function form49_ini()
  */
 function form50_ini()
 {
+	show_loader();
 	var fid=$("#form50_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -2538,7 +2661,7 @@ function form50_ini()
 		{
 			my_obj_array_to_csv(results,'accounting');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -2548,33 +2671,49 @@ function form50_ini()
  */
 function form51_ini()
 {
-	var fid=$("#form51_link").attr('data_id');
-	if(fid==null)
-		fid="";	
-	
 	var header_fields=document.getElementById('form51_master');
-
+	header_fields.elements[2].value="";
+	header_fields.elements[3].value='';
+	header_fields.elements[4].value="";
+	
 	$('#form51_body').html("");
 
 	var	fuser=header_fields.elements[1].value;
-	if(fuser!="" || fid!="")
+	if(fuser!="")
 	{
+		show_loader();
+		var user_name_columns="<user_profiles>" +
+				"<id></id>" +
+				"<name></name>" +
+				"<username>"+fuser+"</username>" +
+				"</user_profiles>";
+		fetch_requested_data('form51',user_name_columns,function(user_results)
+		{
+			for(var i in user_results)
+			{
+				header_fields.elements[2].value=user_results[i].name;
+				header_fields.elements[3].value='';
+				header_fields.elements[4].value=user_results[i].id;
+				break;
+			}
+		});
 		var columns="<access_control>" +
-			"<id>"+fid+"</id>" +
-			"<username>"+fuser+"</username>" +
-			"<element_id></element_id>" +
-			"<element_name></element_name>" +
-			"<status>active</status>" +
-			"<re></re>" +
-			"<cr></cr>" +
-			"<up></up>" +
-			"<del></del>" +
-			"</access_control>";
-	
+				"<id></id>" +
+				"<username>"+fuser+"</username>" +
+				"<element_id></element_id>" +
+				"<element_name></element_name>" +
+				"<status>active</status>" +
+				"<re></re>" +
+				"<cr></cr>" +
+				"<up></up>" +
+				"<del></del>" +
+				"</access_control>";
+		
 		fetch_requested_data('form51',columns,function(results)
 		{
 			if(results.length==0)
 			{
+				//console.log('new user');
 				var elements_name="<user_preferences>" +
 							"<id></id>" +
 							"<name></name>" +
@@ -2584,9 +2723,10 @@ function form51_ini()
 							"</user_preferences>";
 				fetch_requested_data('form51',elements_name,function(elements)
 				{
+					//console.log('elements found for new user');
 					elements.forEach(function(element)
 					{
-						var data_id=get_new_key();
+						var data_id=get_new_key()+""+Math.random()*1000;
 						var rowsHTML="";
 						rowsHTML+="<tr>";
 							rowsHTML+="<form id='form51_"+data_id+"'></form>";
@@ -2594,16 +2734,16 @@ function form51_ini()
 									rowsHTML+="<textarea readonly='readonly' form='form51_"+data_id+"' data-i18n='form."+element.display_name+"'></textarea>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Read'>";
-									rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+data_id+"'>";
+									rowsHTML+="<input type='checkbox' form='form51_"+data_id+"'>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Create'>";
-								rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+data_id+"'>";
+								rowsHTML+="<input type='checkbox' form='form51_"+data_id+"'>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Update'>";
-									rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+data_id+"'>";
+									rowsHTML+="<input type='checkbox' form='form51_"+data_id+"'>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Delete'>";
-									rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+data_id+"'>";
+									rowsHTML+="<input type='checkbox' form='form51_"+data_id+"'>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Action'>";
 									rowsHTML+="<input type='hidden' form='form51_"+data_id+"' value='"+data_id+"'>";
@@ -2622,11 +2762,13 @@ function form51_ini()
 
 					});
 					$('#form51_body').find('textarea').i18n();
+					hide_loader();
 				});
 			}
 			
 			results.forEach(function(result)
 			{
+				//console.log('existing user');
 				var rowsHTML="";
 				rowsHTML+="<tr>";
 					rowsHTML+="<form id='form51_"+result.id+"'></form>";
@@ -2634,16 +2776,16 @@ function form51_ini()
 							rowsHTML+="<textarea readonly='readonly' form='form51_"+result.id+"' data-i18n='form."+result.element_name+"'></textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Read'>";
-							rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+result.id+"' "+result.re+">";
+							rowsHTML+="<input type='checkbox' form='form51_"+result.id+"' "+result.re+">";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Create'>";
-						rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+result.id+"' "+result.cr+">";
+						rowsHTML+="<input type='checkbox' form='form51_"+result.id+"' "+result.cr+">";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Update'>";
-							rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+result.id+"' "+result.up+">";
+							rowsHTML+="<input type='checkbox' form='form51_"+result.id+"' "+result.up+">";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Delete'>";
-							rowsHTML+="<input type='checkbox' readonly='readonly' form='form51_"+result.id+"' "+result.del+">";
+							rowsHTML+="<input type='checkbox' form='form51_"+result.id+"' "+result.del+">";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form51_"+result.id+"' value='"+result.id+"'>";
@@ -2659,6 +2801,7 @@ function form51_ini()
 					event.preventDefault();
 					form51_update_item(fields);
 				});
+				hide_loader();
 			});
 			$('#form51_body').find('textarea').i18n();
 		});
@@ -2670,73 +2813,8 @@ function form51_ini()
 };
 
 
-/**
- * @form Set shortcut keys
- * @formNo 52
- */
-function form52_ini()
-{
-	var fid=$("#form52_link").attr('data_id');
-	if(fid==null)
-		fid="";	
-	
-	var filter_fields=document.getElementById('form52_header');
-	var felement=filter_fields.elements[0].value;
-	var fkey=filter_fields.elements[1].value;
-	
-	var columns="<shortcuts>" +
-		"<id>"+fid+"</id>" +
-		"<element_id></element_id>" +
-		"<element_name>"+felement+"</element_name>" +
-		"<status>active</status>" +
-		"<shortcut>"+fkey+"</shortcut>" +
-		"</shortcuts>";
 
-	$('#form52_body').html("");
 
-	fetch_requested_data('form52',columns,function(results)
-	{
-		results.forEach(function(result)
-		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form52_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form52_"+result.id+"' data-i18n='[value]form."+result.element_name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Key'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form52_"+result.id+"' value='"+result.shortcut+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form52_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='hidden' form='form52_"+result.id+"' value='"+result.element_id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' id='save_form52_"+result.id+"' form='form52_"+result.id+"' value='saved'>";	
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-			
-			$('#form52_body').prepend(rowsHTML);
-			var fields=document.getElementById("form52_"+result.id);
-			$(fields).on("submit", function(event)
-			{
-				event.preventDefault();
-				form52_update_item(fields);
-			});
-		});
-		
-		$('#form52_body').find('input').i18n();
-		
-		resize_input();
-		longPressEditable($('.dblclick_editable'));
-		
-		var export_button=filter_fields.elements[3];
-		$(export_button).off("click");
-		$(export_button).on("click", function(event)
-		{
-			my_obj_array_to_csv(results,'shortcuts');
-		});
-
-	});
-};
 
 /**
  * @form Manage Supplier Bills
@@ -2744,6 +2822,7 @@ function form52_ini()
  */
 function form53_ini()
 {
+	show_loader();
 	var fid=$("#form53_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -2813,6 +2892,7 @@ function form53_ini()
 		{
 			my_obj_array_to_csv(results,'supplier_bills');
 		});
+		hide_loader();
 	});
 }
 
@@ -2822,7 +2902,7 @@ function form53_ini()
  */
 function form54_ini()
 {
-	
+	show_loader();
 	var fid=$("#form54_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -2833,6 +2913,7 @@ function form54_ini()
 	
 	var columns="<user_preferences>" +
 			"<id>"+fid+"</id>" +
+			"<name></name>" +
 			"<display_name>"+fname+"</display_name>" +
 			"<value></value>" +
 			"<status>active</status>" +
@@ -2847,21 +2928,24 @@ function form54_ini()
 		{
 			var rowsHTML="";
 			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form54"+result.id+"'></form>";
+				rowsHTML+="<form id='form54_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Template Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form54_"+result.id+"' data-i18n='[value]form."+result.display_name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form54_"+result.id+"' data-i18n='form."+result.display_name+"'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Selected Template'>";
 						rowsHTML+="<input type='text' form='form54_"+result.id+"' value='"+result.value+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form54_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' id='save_form54_"+result.id+"' form='form54_"+result.id+"' value='saved'>";	
+						rowsHTML+="<input type='submit' class='save_icon' id='save_form54_"+result.id+"' form='form54_"+result.id+"' title='Save'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form54_body').append(rowsHTML);
 			var fields=document.getElementById("form54_"+result.id);
+			var template_filter=fields.elements[1];
+			set_static_value_list('template',result.name,template_filter);
+			
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -2869,7 +2953,7 @@ function form54_ini()
 			});
 		});
 		
-		$('#form54_body').find('input').i18n();
+		$('#form54_body').find('textarea').i18n();
 
 		resize_input();
 		longPressEditable($('.dblclick_editable'));
@@ -2880,7 +2964,7 @@ function form54_ini()
 		{
 			my_obj_array_to_csv(results,'printing_templates');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -2890,6 +2974,7 @@ function form54_ini()
  */
 function form55_ini()
 {
+	show_loader();
 	var fid=$("#form55_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -2936,6 +3021,7 @@ function form55_ini()
 				}
 			});
 		});
+		hide_loader();
 	});
 }
 
@@ -2945,6 +3031,7 @@ function form55_ini()
  */
 function form56_ini()
 {
+	show_loader();
 	var fid=$("#form56_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -3007,7 +3094,7 @@ function form56_ini()
 		{
 			my_obj_array_to_csv(results,'expenses');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -3017,6 +3104,7 @@ function form56_ini()
  */
 function form57_ini()
 {
+	show_loader();
 	var fid=$("#form57_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -3084,7 +3172,7 @@ function form57_ini()
 		{
 			my_obj_array_to_csv(results,'services');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -3094,6 +3182,7 @@ function form57_ini()
  */
 function form58_ini()
 {
+	show_loader();
 	var fid=$("#form58_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -3158,7 +3247,7 @@ function form58_ini()
 		{
 			my_obj_array_to_csv(results,'service_pre_requisites');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -3168,6 +3257,7 @@ function form58_ini()
  */
 function form59_ini()
 {
+	show_loader();
 	var fid=$("#form59_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -3233,7 +3323,7 @@ function form59_ini()
 		{
 			my_obj_array_to_csv(results,'product_pre_requisites');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -3244,6 +3334,7 @@ function form59_ini()
  */
 function form60_ini()
 {
+	show_loader();
 	var fid=$("#form60_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -3304,7 +3395,7 @@ function form60_ini()
 		{
 			my_obj_array_to_csv(results,'product_attributes');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -3314,6 +3405,7 @@ function form60_ini()
  */
 function form61_ini()
 {
+	show_loader();
 	var fid=$("#form61_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -3374,7 +3466,7 @@ function form61_ini()
 		{
 			my_obj_array_to_csv(results,'service_attributes');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -3384,6 +3476,7 @@ function form61_ini()
  */
 function form62_ini()
 {
+	show_loader();
 	var fid=$("#form62_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -3448,7 +3541,7 @@ function form62_ini()
 		{
 			my_obj_array_to_csv(results,'product_reviews');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -3458,6 +3551,7 @@ function form62_ini()
  */
 function form63_ini()
 {
+	show_loader();
 	var fid=$("#form63_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -3522,7 +3616,7 @@ function form63_ini()
 		{
 			my_obj_array_to_csv(results,'service_reviews');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -3532,6 +3626,7 @@ function form63_ini()
  */
 function form64_ini()
 {
+	show_loader();
 	var fid=$("#form64_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -3592,7 +3687,7 @@ function form64_ini()
 		{
 			my_obj_array_to_csv(results,'service_cross_sells');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -3603,6 +3698,7 @@ function form64_ini()
  */
 function form66_ini()
 {
+	show_loader();
 	var fid=$("#form66_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -3663,7 +3759,7 @@ function form66_ini()
 		{
 			my_obj_array_to_csv(results,'product_cross_sells');
 		});
-
+		hide_loader();
 	});
 };
 
@@ -3682,6 +3778,7 @@ function form69_ini()
 
 	if(order_id!="")
 	{
+		show_loader();
 		var order_columns="<sale_orders>" +
 				"<id>"+order_id+"</id>" +
 				"<customer_name></customer_name>" +
@@ -3771,6 +3868,7 @@ function form69_ini()
 				});
 	
 			});
+			hide_loader();
 		});
 	}
 }
@@ -3782,6 +3880,7 @@ function form69_ini()
  */
 function form70_ini()
 {
+	show_loader();
 	var fid=$("#form70_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -3868,6 +3967,7 @@ function form70_ini()
 		{
 			my_obj_array_to_csv(results,'sale_orders');
 		});
+		hide_loader();
 	});
 };
 
@@ -3878,6 +3978,7 @@ function form70_ini()
  */
 function form71_ini()
 {
+	show_loader();
 	var fid=$("#form71_link").attr('data_id');
 	if(fid==null)
 		fid="";	
@@ -3965,6 +4066,7 @@ function form71_ini()
 			{
 				my_obj_array_to_csv(results,'accounts');
 			});
+			hide_loader();
 		});
 	});
 };
@@ -3982,6 +4084,7 @@ function form72_ini()
 
 	if(bill_id!="")
 	{
+		show_loader();
 		var bill_columns="<bills>" +
 				"<id>"+bill_id+"</id>" +
 				"<customer_name></customer_name>" +
@@ -4097,6 +4200,7 @@ function form72_ini()
 					event.preventDefault();
 				});
 			});
+			hide_loader();
 		});
 	}
 }
@@ -4105,6 +4209,7 @@ function form72_ini()
 
 function notifications_ini()
 {
+	show_loader();
 	var columns="<notifications>" +
 			"<title></title>" +
 			"<link_to></link_to>" +
@@ -4164,13 +4269,16 @@ function notifications_ini()
 						"</div>";
 			}
 			$("#notifications_detail").html(result_html);
+			hide_loader();
 		});
 	});
 }
 
 
+
 function opportunities_ini()
 {
+	show_loader();
 	var columns="<opportunities>" +
 			"<title></title>" +
 			"<link_to></link_to>" +
@@ -4233,10 +4341,11 @@ function opportunities_ini()
 			}
 		
 			$("#opportunities_detail").html(result_html);
+			hide_loader();
 		});
-		
 	});
 }
+
 
 
 function activities_ini() 
@@ -4275,8 +4384,10 @@ function activities_ini()
 	setTimeout(activities_ini,100000);	
 }
 
+
 function all_activities_ini() 
 {
+	show_loader();
 	var columns="<activities>" +
 		"<title></title>" +
 		"<link_to></link_to>" +
@@ -4305,9 +4416,11 @@ function all_activities_ini()
 						"</div>" +
 						"</div>";
 		}
-		$("#all_activity_lane").html(result_html);		
+		$("#all_activity_lane").html(result_html);
+		hide_loader();
 	});
 }
+
 
 
 function search_ini()
@@ -4503,5 +4616,185 @@ function search_ini()
 	else
 	{
 		$("#search_results").html("Type atleast 3 letters to find any results");
+	}
+};
+
+/**
+ * @form Set shortcut keys
+ * @formNo 77
+ */
+function form77_ini()
+{
+	show_loader();
+	var fid=$("#form77_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form77_header');
+	var felement=filter_fields.elements[0].value;
+	var fkey=filter_fields.elements[1].value;
+	
+	var columns="<shortcuts>" +
+		"<id>"+fid+"</id>" +
+		"<element_id></element_id>" +
+		"<element_name>"+felement+"</element_name>" +
+		"<status>active</status>" +
+		"<shortcut>"+fkey+"</shortcut>" +
+		"</shortcuts>";
+
+	$('#form77_body').html("");
+
+	fetch_requested_data('form77',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form77_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Report/Form'>";
+						rowsHTML+="<textarea readonly='readonly' form='form77_"+result.id+"' data-i18n='form."+result.element_name+"'></textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Key'>";
+						rowsHTML+="<input type='text' form='form77_"+result.id+"' class='dblclick_editable' value='"+result.shortcut+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form77_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='hidden' form='form77_"+result.id+"' value='"+result.element_id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' id='save_form77_"+result.id+"' form='form77_"+result.id+"'>";	
+					rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+			
+			$('#form77_body').prepend(rowsHTML);
+			var fields=document.getElementById("form77_"+result.id);
+			var key_filter=fields.elements[1];
+			
+			set_static_value_list('shortcuts','key',key_filter);
+			
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form77_update_item(fields);
+			});
+		});
+		
+		$('#form77_body').find('textarea').i18n();
+		
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'shortcuts');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Promotion Emails
+ * @formNo 78
+ */
+function form78_ini()
+{
+	var pamphlet_id=$("#form78_link").attr('data_id');
+	if(pamphlet_id==null)
+		pamphlet_id="";	
+
+	$('#form78_body').html("");
+	if(pamphlet_id!="")
+	{
+		show_loader();
+		var pamphlet_columns="<pamphlets>" +
+				"<id>"+pamphlet_id+"</id>" +
+				"<name></name>" +
+				"</pamphlets>";
+		var pamphlet_item_columns="<pamphlet_items>" +
+				"<id></id>" +
+				"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
+				"<item_name></item_name>" +
+				"<offer_name></offer_name>" +
+				"<offer></offer>" +
+				"</pamphlet_items>";
+	
+		////separate fetch function to get pamphlet details like name
+		fetch_requested_data('',pamphlet_columns,function(pamphlet_results)
+		{
+			for (var i in pamphlet_results)
+			{
+				var filter_fields=document.getElementById('form2_master');
+				filter_fields.elements[1].value=pamphlet_results[i].name;
+				filter_fields.elements[2].value=pamphlet_results[i].id;
+				break;
+			}
+		});
+		/////////////////////////////////////////////////////////////////////////
+		
+		fetch_requested_data('',pamphlet_item_columns,function(pamphlet_items)
+		{
+			var items_string="";
+			for(var j in pamphlet_items)
+			{
+				items_string+=pamphlet_items[j].item_name+"--";
+			}
+			
+			var bill_items_columns="<bill_items>" +
+					"<bill_id></bill_id>" +
+					"<item_name array='yes'>"+items_string+"</item_name>" +
+					"</bill_items>";
+			fetch_requested_data('',bill_items_columns,function(bill_items)
+			{
+				var bill_id_string="";
+				for(var k in bill_items)
+				{
+					bill_id_string+=bill_items[k].bill_id+"--";
+				}
+				
+				var bills_columns="<bills>" +
+						"<customer_name></customer_name>" +
+						"<id array='yes'>"+bill_id_string+"</id>" +
+						"</bills>";
+				fetch_requested_data('',bills_columns,function(bills)
+				{
+					var customer_string="";
+					for(var l in bills)
+					{
+						customer_string+=bills[l].customer_name+"--";
+					}
+					
+					var customer_columns="<customers>" +
+							"<id></id>" +
+							"<name></name>" +
+							"<email></email>" +
+							"<acc_name array='yes'>"+customer_string+"</acc_name>" +
+							"</customers>";
+					fetch_requested_data('',customer_columns,function(results)
+					{
+						results.forEach(function(result)
+						{
+							var rowsHTML="";
+							var id=result.id;
+							rowsHTML+="<tr>";
+							rowsHTML+="<form id='form78_"+id+"'></form>";
+								rowsHTML+="<td data-th='Customer Name'>";
+									rowsHTML+="<input type='text' readonly='readonly' form='form78_"+id+"' value='"+result.acc_name+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Email'>";
+									rowsHTML+="<input type='text' readonly='readonly' form='form78_"+id+"' value='"+result.email+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Select for mailing'>";
+									rowsHTML+="<input type='checkbox' form='form78_"+id+"' checked>";
+									rowsHTML+="<input type='hidden' form='form78_"+id+"' value='"+result.name+"'>";
+								rowsHTML+="</td>";
+							rowsHTML+="</tr>";
+						
+							$('#form78_body').prepend(rowsHTML);				
+						});
+						hide_loader();
+					});
+				});
+			});
+		});
 	}
 }

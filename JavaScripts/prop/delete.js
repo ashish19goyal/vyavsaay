@@ -67,35 +67,17 @@ function form2_delete_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var pamphlet_name=document.getElementById('form2_master').elements[1].value;
-		var name=form.elements[0].value;
-		var offer_name=form.elements[1].value;
-		var offer_detail=form.elements[2].value;
 		var data_id=form.elements[3].value;
-		var last_updated=get_my_time();
-		var table='pamphlet_items';
-		var data_xml="<"+table+">" +
+		var data_xml="<pamphlet_items>" +
 					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<offer_name>"+offer_name+"</offer_name>" +
-					"<offer>"+offer_detail+"</offer>" +
-					"<pamphlet_name>"+pamphlet_name+"</pamphlet_name>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form2</link_to>" +
-					"<title>Deleted</title>" +
-					"<notes>Deleted product "+name+" from pamphlet "+pamphlet_name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
+					"</pamphlet_items>";	
 		if(is_online())
 		{
-			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(data_xml);
 		}
 		else
 		{
-			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(data_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -103,54 +85,6 @@ function form2_delete_item(button)
 	{
 		$("#modal2").dialog("open");
 	}
-}
-
-/**
- * @form Create Pamphlets
- * @param button
- */
-function form2_delete_form()
-{
-	if(is_delete_access('form2'))
-	{
-		var form=document.getElementById("form2_master");
-		
-		var p_name=form.elements[1].value;
-		var data_id=form.elements[2].value;
-		var last_updated=get_my_time();
-		var table='pamphlets';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<name>"+p_name+"</name>" +
-					"</"+table+">";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form2</link_to>" +
-					"<title>Deleted</title>" +
-					"<notes>Deleted pamphlet "+p_name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var other_delete="<pamphlet_items>" +
-				"<pamphlet_id>"+data_id+"</pamphlet_id>" +
-				"</pamphlet_items>";
-		if(is_online())
-		{
-			server_delete_row(data_xml,activity_xml);
-			server_delete_simple(other_delete);
-		}
-		else
-		{
-			local_delete_row(data_xml,activity_xml);
-			local_delete_simple(other_delete);
-		}
-	
-		$("[id^='delete_form2']").parent().parent().remove();
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}	
 }
 
 /**
@@ -1667,22 +1601,21 @@ function form44_delete_item(button)
 		var count_items=form.elements[1].value;
 		var data_id=form.elements[2].value;
 		var last_updated=get_my_time();
-		var table='pamphlets';
-		var data_xml="<"+table+">" +
+		var data_xml="<pamphlets>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
 					"<count_items>"+count_items+"</count_items>" +
-					"</"+table+">";	
+					"</pamphlets>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>pamphlets</tablename>" +
 					"<link_to>form44</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted pamphlet "+name+"</notes>" +
+					"<notes>Pamphlet "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var other_delete="<pamphlet_items>" +
-				"<pamphlet_name>"+name+"</pamphlet_name>" +
+				"<pamphlet_id>"+data_id+"</pamphlet_id>" +
 				"</pamphlet_items>";
 		if(is_online())
 		{

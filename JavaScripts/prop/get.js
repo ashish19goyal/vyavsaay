@@ -248,6 +248,7 @@ function set_my_value_list(filter_data,filter_element)
 		form.appendChild(datalist);
 		datalist.setAttribute('id',list_id);
 		
+		$(filter_element).off("change");
 		$(filter_element).on("change",function(event)
 		{
 			var found = $.inArray($(this).val(), data) > -1;
@@ -300,6 +301,7 @@ function set_my_multiple_filter(filter_data,filter_element,output_element)
 			output_element.value=value;
 		}	
 	});
+	$(filter_element).off("blur");
 	$(filter_element).on('blur',function(event)
 	{
 		var value=output_element.value;
@@ -350,6 +352,7 @@ function set_my_multiple_list(filter_data,filter_element,output_element)
 	        }
 		});
 	},filter_data);
+	$(filter_element).off("select");
 	$(filter_element).on('select',function(event)
 	{
 		var value=output_element.value;
@@ -418,6 +421,7 @@ function set_static_value_list(table,list,filter_element)
 		
 		form.appendChild(datalist);
 		datalist.setAttribute('id',list_id);
+		$(filter_element).off("change");
 		$(filter_element).on("change",function(event)
 		{
 			var found = $.inArray($(this).val(), data) > -1;

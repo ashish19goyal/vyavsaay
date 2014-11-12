@@ -33,7 +33,6 @@
 <script src='./JavaScripts/prop/reports_ini.js'></script>
 <script src='./JavaScripts/prop/reports_header_ini.js'></script>
 <script src='./JavaScripts/prop/sessions.js'></script>
-<script src='./JavaScripts/prop/my_shortcuts.js'></script>
 <script src='./JavaScripts/prop/sync.js'></script>
 <script src='./JavaScripts/prop/update.js'></script>
 <script src='./JavaScripts/prop/time.js'></script>

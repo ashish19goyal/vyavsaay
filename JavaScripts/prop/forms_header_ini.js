@@ -861,7 +861,6 @@ function form43_header_ini()
 
 
 /**
- * this function prepares the table for manage pamphlets form
  * @form Manage Pamphlets
  * @formNo 44
  */
@@ -1001,49 +1000,19 @@ function form51_header_ini()
 	var username_data="<user_profiles>" +
 			"<username></username>" +
 			"</user_profiles>";
-	$(users_filter).on('blur',function(event)
+	set_my_value_list(username_data,users_filter);
+
+	$(users_filter).on('select',function(event)
 	{
 		form51_ini();
 	});
-	
-	set_my_value_list(username_data,users_filter);
-	
+		
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
 	{
 		event.preventDefault();
 		form51_update_form();
 	});
-};
-
-
-/**
- * this function sets the header for Set shortcuts form
- * @form Set shortcuts
- * @formNo 52
- */
-function form52_header_ini()
-{
-	var form=document.getElementById('form52_header');
-	console.log(form);
-	var report_filter=form.elements[0];
-	var key_filter=form.elements[1];
-	
-	$(form).on('submit',function(event)
-	{
-		event.preventDefault();
-		form52_update_form();
-	});
-	
-	var element_data="<shortcuts>" +
-			"<element_name></element_name>" +
-			"</shortcuts>";
-	var key_data="<shortcuts>" +
-			"<shortcut></shortcut>" +
-			"</shortcuts>";
-
-	set_my_filter(element_data,report_filter);
-	set_my_filter(key_data,key_filter);
 };
 
 /**
@@ -1083,7 +1052,7 @@ function form54_header_ini()
 			"</user_preferences>";
 
 	set_my_filter(templates_data,templates_filter);
-	$(form).on('submit',function(event)
+	$(filter_fields).on('submit',function(event)
 	{
 		event.preventDefault();
 		form54_update_form();
@@ -1611,4 +1580,52 @@ function form72_new_form()
 {
 	form72_header_ini();
 	$("#form72_body").find("tr").remove();
+}
+
+/**
+ * @form Set Shortcuts
+ * @formNo 77
+ */
+function form77_header_ini()
+{
+	var filter_fields=document.getElementById('form77_header');
+	var element_filter=filter_fields.elements[0];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form77_update_form();
+	});
+	
+	var element_data="<user_preferences>" +
+			"<display_name></display_name>" +
+			"</user_preferences>";
+
+	set_my_filter(element_data,element_filter);
+
+};
+
+/**
+ * @form Promotion Emails
+ * @formNo 78
+ */
+function form78_header_ini()
+{
+	var fields=document.getElementById('form78_master');
+	var name_filter=fields.elements[1];
+	name_filter.value="";
+	fields.elements[2].value="";
+	
+	var name_data="<pamphlets>" +
+			"<name></name>" +
+			"</pamphlets>";
+	set_my_value_list(name_data,name_filter);
+	
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		modal32_action();
+	});
 }

@@ -463,8 +463,8 @@
 	</pamphlets>
 	<pamphlet_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<pamphlet_name index='yes' type="VARCHAR(50)"></pamphlet_name>
-			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<pamphlet_id index='yes' type="BIGINT"></pamphlet_id>
+			<item_name index='yes' type="VARCHAR(90)"></item_name>
 			<offer_name index='no' type='VARCHAR(30)'></offer_name>
 			<offer index='no' type="TEXT"></offer>
 			<last_updated index='no' type="BIGINT"></last_updated>
@@ -545,7 +545,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<element_id index='yes' type="VARCHAR(10)" unique='yes'></element_id>
 			<element_name index='yes' type="VARCHAR(100)"></element_name>
-			<shortcut index='yes' type="VARCHAR(10)" unique='yes'></shortcut>
+			<shortcut index='yes' type="VARCHAR(25)" unique='yes'></shortcut>
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</shortcuts>

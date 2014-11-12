@@ -1716,9 +1716,9 @@ function modal24_action(button)
 		fstate.value=state;
 		fcountry.value=country;
 		faddress_status.value="pending analysis";
-		
 	
 		$("#modal24").dialog("close");
+		$(father_form).submit();
 	});
 	
 	$("#modal24").dialog("open");
@@ -1766,9 +1766,9 @@ function modal25_action(button)
 		fstate.value=state;
 		fcountry.value=country;
 		faddress_status.value="pending analysis";
-		
 	
 		$("#modal25").dialog("close");
+		$(father_form).submit();
 	});
 	
 	$("#modal25").dialog("open");
@@ -2229,52 +2229,119 @@ function modal29_action(button)
 		fbill_id.value=form.elements[1].value;	
 	
 		$("#modal29").dialog("close");
+		$(father_form).submit();
 	});
 	
 	$("#modal29").dialog("open");
 }
 
-
-function modal31_action()
+/**
+ * @modal Add user
+ * @modalNo 30
+ */
+function modal30_action()
 {
-	if(is_delete_access('form51'))
+	var form=document.getElementById("modal30_form");
+	
+	$(form).on('submit',function(event)
 	{
-		var form=document.getElementById("form51_master");
-		
-		var username=form.elements[1].value;
-		var name=form.elements[2].value;
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
-		var table='user_profiles';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<username>"+username+"</username>" +
-					"<name>"+name+"</name>" +
-					"</"+table+">";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form51</link_to>" +
-					"<title>Deleted</title>" +
-					"<notes>Deleted user account for "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var other_delete="<access_control>" +
-				"<username>"+username+"</username>" +
-				"</access_control>";
-		if(is_online())
-		{
-			server_delete_row(data_xml,activity_xml);
-			server_delete_simple(other_delete);
+		event.preventDefault();
+		if(is_delete_access('form51'))
+		{	
+			var login_id=form.elements[1].value;
+			var name=form.elements[2].value;
+			var password=form.elements[3].value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var salt='$2a$10$'+get_domain()+'1234567891234567891234';
+			var salt_22=salt.substring(0, 29);
+			
+			var bcrypt = new bCrypt();
+			bcrypt.hashpw(password, salt_22, function(newhash)
+			{
+				var data_xml="<user_profiles>" +
+							"<id>"+data_id+"</id>" +
+							"<username unique='yes'>"+login_id+"</username>" +
+							"<name>"+name+"</name>" +
+							"<password>"+newhash+"</password>" +
+							"<status>active</status>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</user_profiles>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>user_profiles</tablename>" +
+							"<link_to>form51</link_to>" +
+							"<title>Added</title>" +
+							"<notes>User account for "+login_id+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				if(is_online())
+				{
+					server_create_row(data_xml,activity_xml);
+				}
+				else
+				{
+					local_create_row(data_xml,activity_xml);
+				}
+				$("#modal30").dialog("close");
+				
+			}, function(){});
 		}
 		else
 		{
-			local_delete_row(data_xml,activity_xml);
-			local_delete_simple(other_delete);
+			$("#modal2").dialog("open");
 		}
-	}
-	else
+	});
+	
+	$("#modal30").dialog("open");
+}
+
+
+/**
+ * @modal Delete user
+ * @modalNo 31
+ */
+function modal31_action()
+{
+	var form=document.getElementById("modal31_form");
+	var flogin_id=form.elements[1];
+	
+	var login_data="<user_profiles>" +
+			"<username></username>" +
+			"</user_profiles>";
+	set_my_value_list(login_data,flogin_id);
+	
+	flogin_id.value="";
+	
+	$(form).on('submit',function(event)
 	{
-		$("#modal2").dialog("open");
-	}
+		event.preventDefault();
+		if(is_delete_access('form51'))
+		{	
+			var login_id=form.elements[1].value;
+			var last_updated=get_my_time();
+			var data_xml="<user_profiles>" +
+						"<username>"+login_id+"</username>" +
+						"</user_profiles>";
+			var other_delete="<access_control>" +
+						"<username>"+login_id+"</username>" +
+						"</access_control>";
+			if(is_online())
+			{
+				server_delete_simple(data_xml);
+				server_delete_simple(other_delete);
+			}
+			else
+			{
+				local_delete_simple(data_xml);
+				local_delete_simple(other_delete);
+			}
+			$("#modal31").dialog("close");
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+	});
+	$("#modal31").dialog("open");
 }

@@ -52,56 +52,6 @@ function form1_update_item(form)
 	
 }
 
-/**
- * @form Create Pamphlets
- * @param button
- */
-function form2_update_item(form)
-{
-	if(is_update_access('form2'))
-	{
-		var pamphlet_name=document.getElementById('form2_master').elements[1].value;
-		var name=form.elements[0].value;
-		var offer_id=form.elements[1].value;
-		var offer_detail=form.elements[2].value;
-		var data_id=form.elements[3].value;
-		var last_updated=get_my_time();
-		var table='pamphlet_items';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<offer_name>"+offer_id+"</offer_name>" +
-					"<offer>"+offer_detail+"</offer>" +
-					"<pamphlet_name>"+pamphlet_name+"</pamphlet_name>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form2</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Added product "+name+" to pamphlet "+pamphlet_name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
 
 /**
  * @form Create Pamphlets
@@ -116,18 +66,17 @@ function form2_update_form()
 		var p_name=form.elements[1].value;
 		var data_id=form.elements[2].value;
 		var last_updated=get_my_time();
-		var table='pamphlets';
-		var data_xml="<"+table+">" +
+		var data_xml="<pamphlets>" +
 					"<id>"+data_id+"</id>" +
 					"<name unique='yes'>"+p_name+"</name>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";
+					"</pamphlets>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>pamphlets</tablename>" +
 					"<link_to>form2</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Saved pamphlet "+p_name+"</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Pamphlet "+p_name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1994,51 +1943,6 @@ function form43_update_item(form)
 	}
 }
 
-/**
- * @form Manage Pamphlets
- * @param button
- */
-function form44_update_item(form)
-{
-	if(is_update_access('form44'))
-	{
-		var name=form.elements[0].value;
-		var count_items=form.elements[1].value;
-		var data_id=form.elements[2].value;
-		var last_updated=get_my_time();
-		var table='pamphlets';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<name unique='yes'>"+name+"</name>" +
-					"<count_items>"+count_items+"</count_items>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form44</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Saved pamphlet "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
 
 /**
  * @form set defaults
@@ -2402,7 +2306,6 @@ function form51_update_item(form)
 	{
 		var master_form=document.getElementById('form51_master');
 		var username=master_form.elements[1].value;
-		var name=master_form.elements[2].value;
 			
 		var element_name=form.elements[0].getAttribute('data-i18n');
 		element_name=element_name.substr(element_name.indexOf('.')+1);
@@ -2467,7 +2370,6 @@ function form51_update_form()
 		var name=form.elements[2].value;
 		var password=form.elements[3].value;
 		var data_id=form.elements[4].value;
-		var pass_hash=form.elements[5].value;
 		var last_updated=get_my_time();
 		if(password=="")
 		{
@@ -2540,73 +2442,6 @@ function form51_update_form()
 	}
 }
 
-/**
- * @form Set shortcut keys
- * @param button
- */
-function form52_update_item(form)
-{
-	if(is_update_access('form52'))
-	{
-		var element_name=form.elements[0].getAttribute('data-i18n');
-		element_name=element_name.substr(element_name.indexOf('.')+1);
-		var shortcut=form.elements[1].value;
-		var data_id=form.elements[2].value;
-		var element_id=form.elements[3].value;
-		var last_updated=get_my_time();
-		var table='shortcuts';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<element_name>"+element_name+"</element_name>" +
-					"<element_id>"+element_id+"</element_id>" +
-					"<shortcut unique='yes'>"+shortcut+"</shortcut>" +
-					"<status>active</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form45</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Updated shortcut for "+element_name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-/**
- * @form Set Shortcut keys
- * @param button
- */
-function form52_update_form(button)
-{
-	if(is_update_access('form52'))
-	{
-		$("[id^='save_form52']").click();
-		//$("#modal3").dialog("open");
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
 
 /**
  * @form Select print templates
@@ -2644,7 +2479,7 @@ function form54_update_item(form)
 		{
 			server_update_row(data_xml,activity_xml);
 		}
-		elsea
+		else
 		{
 			local_update_row(data_xml,activity_xml);
 		}	
@@ -3801,3 +3636,67 @@ function form72_update_form()
 	}
 }
 
+/**
+ * @form Set shortcut keys
+ * @param button
+ */
+function form77_update_item(form)
+{
+	if(is_update_access('form77'))
+	{
+		var element_name=form.elements[0].getAttribute('data-i18n');
+		element_name=element_name.substr(element_name.indexOf('.')+1);
+		var shortcut=form.elements[1].value;
+		var data_id=form.elements[2].value;
+		var element_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<shortcuts>" +
+					"<id>"+data_id+"</id>" +
+					"<element_name>"+element_name+"</element_name>" +
+					"<element_id>"+element_id+"</element_id>" +
+					"<shortcut unique='yes'>"+shortcut+"</shortcut>" +
+					"<status>active</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</shortcuts>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>shortcuts</tablename>" +
+					"<link_to>form77</link_to>" +
+					"<title>Saved</title>" +
+					"<notes>"+shortcut+" as shortcut for "+element_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Set Shortcut keys
+ * @param button
+ */
+function form77_update_form(button)
+{
+	if(is_update_access('form77'))
+	{
+		$("[id^='save_form77']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

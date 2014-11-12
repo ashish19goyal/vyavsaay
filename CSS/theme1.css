@@ -7,6 +7,14 @@ input[readonly="readonly"]{
 	width: auto;
 }
 
+textarea[readonly="readonly"]{
+	background-color: inherit;
+	color: inherit;
+	border-width: 0;
+	width: 100px;
+	resize:none;
+}
+
 input{
 	outline:  none !important;
 	background-color: #ffffff;
@@ -433,6 +441,7 @@ tbody tr:hover{
 .edit_icon{
 	height:25px;
 	width: 25px;
+	background:url('/images/edit.jpeg') no-repeat left top;
 	border: 0;
 	cursor: pointer;
 	background-size: 25px 25px;
@@ -443,6 +452,16 @@ tbody tr:hover{
 	height:25px;
 	width: 25px;
 	background:url('/images/add.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+}
+
+.print_icon{
+	height:25px;
+	width: 25px;
+	background:url('/images/print.jpeg') no-repeat left top;
 	border: 0;
 	cursor: pointer;
 	background-size: 25px 25px;

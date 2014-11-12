@@ -10,14 +10,14 @@ function form2_add_item()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form2_"+id+"'></form>";
-			rowsHTML+="<td data-th='Product Name'>";
-				rowsHTML+="<input type='text' form='form2_"+id+"' value=''>";
+			rowsHTML+="<td data-th='Item Name'>";
+				rowsHTML+="<input type='text' form='form2_"+id+"' required value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Offer Name'>";
-				rowsHTML+="<input type='text' form='form2_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form2_"+id+"' required value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Offer Details'>";
-				rowsHTML+="<input type='text' readonly='readonly' form='form2_"+id+"' value=''>";
+				rowsHTML+="<textarea readonly='readonly' form='form2_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form2_"+id+"' value='"+id+"'>";
@@ -40,7 +40,6 @@ function form2_add_item()
 			form2_create_item(fields);
 		});
 					
-		
 		$(names_filter).focus();
 		
 		var products_data="<product_master>" +
@@ -2295,5 +2294,61 @@ function form72_add_service()
 	{
 		$("#modal2").dialog("open");
 	}
+}
+
+
+/**
+ * @form Promotion Emails
+ * @formNo 78
+ */
+function form78_add_item()
+{
+	if(is_create_access('form78'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form78_"+id+"'></form>";
+			rowsHTML+="<td data-th='Customer Name'>";
+				rowsHTML+="<input type='text' form='form78_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Email'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form78_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Select for mailing'>";
+				rowsHTML+="<input type='checkbox' form='form78_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form78_"+id+"' value=''>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form78_body').prepend(rowsHTML);
+		var fields=document.getElementById("form78_"+id);
+		var acc_name_filter=fields.elements[0];
+		var email_filter=fields.elements[1];
+		var name_filter=fields.elements[3];
+		
+		var acc_name_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";
+		set_my_value_list(acc_name_data,acc_name_filter);
+		
+		$(acc_name_filter).on('blur',function(event)
+		{
+			var name_data="<customers>" +
+				"<name></name>" +
+				"<acc_name>"+acc_name_filter.value+"</acc_name>" +
+				"</customers>";
+			set_my_value(name_data,name_filter);
+			var email_data="<customers>" +
+				"<email></email>" +
+				"<acc_name>"+acc_name_filter.value+"</acc_name>" +
+				"</customers>";
+			set_my_value(email_data,email_filter);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
 }
 
