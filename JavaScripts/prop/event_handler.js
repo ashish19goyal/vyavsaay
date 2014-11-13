@@ -46,7 +46,7 @@ function modal_forms_ini()
 	   		autoOpen: false,
 	   		modal: true,
 	   		width: 300,
-	   		show: "bounce",
+	   		show: "slide",
 	   		closeOnEscape: true,
 	       	buttons:{ OK:function(){$(this).dialog("close");}}
 		});
@@ -56,7 +56,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=8;i<32;i++)
+	for(var i=8;i<34;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -64,6 +64,22 @@ function modal_forms_ini()
 	   		modal: true,
 	   		show: "slide",
 	   		closeOnEscape: true,
+		});
+	}
+	for(var i=50;i<51;i++)
+	{
+		var dialog=$("#modal"+i).dialog({
+	   		autoOpen: false,
+	   		modal: true,
+	   		width: 300,
+	   		show: "slide",
+	   		closeOnEscape: true,
+	       	buttons:{ OK:function(){$(this).dialog("close");}}
+		});
+		dialog.find("form").on("submit", function(event)
+		{
+			event.preventDefault();
+			$(this).parent().dialog("close");
 		});
 	}
 }

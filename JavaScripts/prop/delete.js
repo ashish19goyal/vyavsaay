@@ -386,29 +386,21 @@ function form14_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var description=form.elements[1].value;
-		var assignee=form.elements[2].value;
-		var t_due=get_raw_time(form.elements[3].value);
-		var t_executed=get_raw_time(form.elements[4].value);
-		var status=form.elements[5].value;
-		var data_id=form.elements[6].value;
-		var last_updated=get_my_time();
-		var table='task_instances';
-		var data_xml="<"+table+">" +
+		var assignee=form.elements[1].value;
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var data_xml="<task_instances>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
-					"<description>"+description+"</description>" +
 					"<assignee>"+assignee+"</assignee>" +
-					"<t_due>"+t_due+"</t_due>" +
 					"<status>"+status+"</status>" +
-					"<t_executed>"+t_executed+"</t_executed>" +
-					"</"+table+">";	
+					"</task_instances>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>task_instances</tablename>" +
 					"<link_to>form14</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted task "+name+" assigned to "+assignee+"</notes>" +
+					"<notes>Task "+name+" assigned to "+assignee+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -967,57 +959,6 @@ function form21_delete_item(button)
 			}
 		});
 				
-		$(button).parent().parent().remove();
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-/**
- * @form Dispose Items
- * @param button
- */
-function form22_delete_item(button)
-{
-	if(is_delete_access('form22'))
-	{
-		var form_id=$(button).attr('form');
-		var form=document.getElementById(form_id);
-		
-		var product_name=form.elements[0].value;
-		var batch=form.elements[1].value;
-		var method=form.elements[2].value;
-		var quantity=form.elements[3].value;
-		var date=get_raw_time(form.elements[4].value);
-		var data_id=form.elements[5].value;
-		var last_updated=get_my_time();
-		var table='disposals';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<method>"+method+"</method>" +
-					"<date>"+date+"</date>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form22</link_to>" +
-					"<title>Deleted</title>" +
-					"<notes>Deleted product "+name+" from disposed list</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_delete_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_delete_row(data_xml,activity_xml);
-		}	
 		$(button).parent().parent().remove();
 	}
 	else

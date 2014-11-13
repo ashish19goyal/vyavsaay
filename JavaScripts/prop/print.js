@@ -5,6 +5,7 @@ function form2_print_form()
 {	
 	var form=document.getElementById("form2_master");
 	var pamphlet_name=form.elements[1].value;
+	var pamphlet_id=form.elements[2].value;
 	
 	var container=document.getElementById('print_container');
 	
@@ -49,8 +50,9 @@ function form2_print_form()
 		content.appendChild(offers);
 	
 	var pamphlet_items_data="<pamphlet_items>" +
-			"<product_name></product_name>" +
+			"<item_name></item_name>" +
 			"<offer></offer>" +
+			"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
 			"</pamphlet_items>";
 	
 	fetch_requested_data('form44',pamphlet_items_data,function(results)
@@ -61,7 +63,7 @@ function form2_print_form()
 				offer_item.setAttribute('class','offer_item');
 			var product_name=document.createElement('div');
 				product_name.setAttribute('class','product_name');
-				product_name.textContent=results[i].product_name;
+				product_name.textContent=results[i].item_name;
 			var offer_detail=document.createElement('div');
 				offer_detail.setAttribute('class','offer_detail');
 				offer_detail.textContent=results[i].offer;
@@ -86,6 +88,7 @@ function form44_print_item(button)
 	var form_id=$(button).attr('form');
 	var form=document.getElementById(form_id);
 	var pamphlet_name=form.elements[1].value;
+	var pamphlet_id=form.elements[2].value;
 	
 	var container=document.getElementById('print_container');
 	
@@ -130,8 +133,9 @@ function form44_print_item(button)
 		content.appendChild(offers);
 	
 	var pamphlet_items_data="<pamphlet_items>" +
-			"<product_name></product_name>" +
+			"<item_name></item_name>" +
 			"<offer></offer>" +
+			"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
 			"</pamphlet_items>";
 	
 	fetch_requested_data('form44',pamphlet_items_data,function(results)
@@ -142,7 +146,7 @@ function form44_print_item(button)
 				offer_item.setAttribute('class','offer_item');
 			var product_name=document.createElement('div');
 				product_name.setAttribute('class','product_name');
-				product_name.textContent=results[i].product_name;
+				product_name.textContent=results[i].item_name;
 			var offer_detail=document.createElement('div');
 				offer_detail.setAttribute('class','offer_detail');
 				offer_detail.textContent=results[i].offer;

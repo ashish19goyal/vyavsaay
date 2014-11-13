@@ -245,9 +245,9 @@ function form14_import(data_array,import_type)
 				"<description>"+row.description+"</description>" +
 				"<assignee>"+row.assignee+"</assignee>" +
 				"<status>"+row.status+"</status>" +
-				"<t_due>"+row.t_due+"</t_due>" +
-				"<t_executed>"+row.t_executed+"</t_executed>" +
-				"<t_initiated>"+row.t_initiated+"</t_initiated>" +
+				"<t_due>"+get_raw_time(row.t_due)+"</t_due>" +
+				"<t_executed>"+get_raw_time(row.t_executed)+"</t_executed>" +
+				"<t_initiated>"+get_raw_time(row.t_initiated)+"</t_initiated>" +
 				"<tasks_hours>"+row.task_hours+"</task_hours>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</task_instances>";

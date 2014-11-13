@@ -1,10 +1,8 @@
 <div id='report44' class='function_detail'>
 	<form id='report44_header' style="width: 35%;float:left">
 		<fieldset>
-			<legend>Select Filters</legend>
-			Product Name <input type='text' required>
-			Maximum results<input type='number' required value='5'>
-			<input type='button' value='Refresh' onclick='report44_ini();'>
+			Keywords <input type='text' required title='specify more keywords for better match (limited to a max of 7 words)'>
+			<input type='button' value='Search' onclick='report44_ini();'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

@@ -4,7 +4,7 @@
 			Pamphlet Name <input type='text' required>
 			<input type='hidden' name='pamphlet_id' form='form78_master' value=''>
 			<input type='submit' title='Send Mails' value='Send Mails'>
-			<input type='button' title='Add another customer' class='add_icon'>
+			<input type='button' title='Add another customer' class='add_icon' onclick='form78_add_item();'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

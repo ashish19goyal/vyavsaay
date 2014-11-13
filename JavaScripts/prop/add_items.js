@@ -481,11 +481,8 @@ function form14_add_item()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form14_"+id+"'></form>";
-			rowsHTML+="<td data-th='Task Name'>";
-				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Description'>";
-				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
+			rowsHTML+="<td data-th='Task'>";
+				rowsHTML+="<input type='text' required form='form14_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Assignee'>";
 				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
@@ -493,16 +490,14 @@ function form14_add_item()
 			rowsHTML+="<td data-th='Due Time'>";
 				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Execution Time'>";
-				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
-			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
+				rowsHTML+="<input type='text' required form='form14_"+id+"' value='pending'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form14_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form14_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form14_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+				rowsHTML+="<input type='hidden' form='form14_"+id+"' value='"+id+"'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -510,11 +505,10 @@ function form14_add_item()
 		
 		var fields=document.getElementById("form14_"+id);
 		var name_filter=fields.elements[0];
-		var desc_filter=fields.elements[1];
-		var assignee_filter=fields.elements[2];
-		var due_filter=fields.elements[3];
-		var status_filter=fields.elements[5];
-		var exec_filter=fields.elements[4];
+		var assignee_filter=fields.elements[1];
+		var due_filter=fields.elements[2];
+		var status_filter=fields.elements[3];
+		var hours_filter=fields.elements[7];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -522,32 +516,29 @@ function form14_add_item()
 			form14_create_item(fields);
 		});
 				
-		
 		$(name_filter).focus();
-	
+
+		$(name_filter).on('blur',function(event)
+		{
+			var hours_data="<task_type>" +
+					"<est_hours></est_hours>" +
+					"<name>"+name_filter.value+"</name>" +
+					"</task_type>";
+			set_my_value(hours_data,hours_filter);
+		});
+		
 		var tasks_data="<task_type>" +
 				"<name></name>" +
 				"</task_type>";
 		set_my_value_list(tasks_data,name_filter);
-		
-		$(name_filter).on('blur',function(event)
-		{
-			var desc_data="<task_type>" +
-				"<description></description>" +
-				"<name>"+name_filter.value+"</name>" +
-				"</task_type>";
-			set_my_value_list(desc_data,desc_filter);
-		});
-		
+				
 		var staff_data="<staff>" +
 				"<acc_name></acc_name>" +
 				"</staff>";
 		set_my_value_list(staff_data,assignee_filter);
 		
 		set_static_value_list('task_instances','status',status_filter);
-		$(due_filter).datepicker();
-		$(due_filter).val(get_my_date());
-		$(exec_filter).datepicker();
+		$(due_filter).datetimepicker();
 	}
 	else
 	{
@@ -953,76 +944,6 @@ function form21_add_item()
 	{
 		$("#modal2").dialog("open");
 	}
-}
-
-
-/**
- * @form Dispose Items
- * @formNo 22
- */
-function form22_add_item()
-{
-	if(is_create_access('form22'))
-	{
-		var rowsHTML="";
-		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form22_"+id+"'></form>";
-			rowsHTML+="<td data-th='Product Name'>";
-				rowsHTML+="<input type='text' form='form22_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Batch'>";
-				rowsHTML+="<input type='text' form='form22_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Method'>";
-				rowsHTML+="<input type='text' form='form2_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="<input type='text' form='form22_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Date'>";
-				rowsHTML+="<input type='hidden' form='form15_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form22_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form22_"+id+"' onclick='$(this).parent().parent().remove();'>";	
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form22_body').prepend(rowsHTML);
-		
-		var fields=document.getElementById("form22_"+id);
-		var product_filter=fields.elements[0];
-		var batch_filter=fields.elements[1];
-		var method_filter=fields.elements[2];
-		var date_filter=fields.elements[4];
-		
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form22_create_item(fields);
-		});
-				
-		$(product_filter).focus();
-	
-		var products_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-		set_my_value_list(products_data,product_filter);
-		
-		$(product_filter).on('blur',function(event)
-		{
-			var batch_data="<product_instances>" +
-				"<batch></batch>" +
-				"<name>"+product_filter.value+"</name>" +
-				"</product_instances>";
-			set_my_value_list(batch_data,batch_filter);
-		});
-		
-		set_static_value_list('disposals','method',method_filter);
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}	
 }
 
 
@@ -2308,21 +2229,21 @@ function form78_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form78_"+id+"'></form>";
+		rowsHTML+="<form id='row_form78_"+id+"'></form>";
 			rowsHTML+="<td data-th='Customer Name'>";
-				rowsHTML+="<input type='text' form='form78_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='row_form78_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Email'>";
-				rowsHTML+="<input type='text' readonly='readonly' form='form78_"+id+"' value=''>";
+				rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Select for mailing'>";
-				rowsHTML+="<input type='checkbox' form='form78_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form78_"+id+"' value=''>";
+				rowsHTML+="<input type='checkbox' form='row_form78_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='row_form78_"+id+"' value=''>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 	
 		$('#form78_body').prepend(rowsHTML);
-		var fields=document.getElementById("form78_"+id);
+		var fields=document.getElementById("row_form78_"+id);
 		var acc_name_filter=fields.elements[0];
 		var email_filter=fields.elements[1];
 		var name_filter=fields.elements[3];
@@ -2332,7 +2253,7 @@ function form78_add_item()
 				"</customers>";
 		set_my_value_list(acc_name_data,acc_name_filter);
 		
-		$(acc_name_filter).on('blur',function(event)
+		$(acc_name_filter).on('input',function(event)
 		{
 			var name_data="<customers>" +
 				"<name></name>" +

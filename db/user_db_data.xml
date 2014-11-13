@@ -42,6 +42,14 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>email</name>
+			<display_name>Email</display_name>
+			<status>active</status>
+			<value>vyavsaayindia@gmail.com</value>
+			<type>other</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>logo</name>
 			<display_name>logo</display_name>
 			<status>active</status>

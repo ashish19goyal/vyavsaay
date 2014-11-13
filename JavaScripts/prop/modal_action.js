@@ -2246,7 +2246,7 @@ function modal30_action()
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		if(is_delete_access('form51'))
+		if(is_create_access('form51'))
 		{	
 			var login_id=form.elements[1].value;
 			var name=form.elements[2].value;
@@ -2344,4 +2344,263 @@ function modal31_action()
 		}
 	});
 	$("#modal31").dialog("open");
+}
+
+/**
+ * @modal Add Task
+ * @modalNo 32
+ */
+function modal32_action(date_initiated)
+{
+	var form=document.getElementById("modal32_form");
+	var task_filter=form.elements[1];
+	var staff_filter=form.elements[2];
+	var due_filter=form.elements[3];
+	var status_filter=form.elements[4];
+	var hours_filter=form.elements[5];
+	
+	var task_data="<task_type>" +
+			"<name></name>" +
+			"</task_type>";
+	set_my_value_list(task_data,task_filter);
+	var staff_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	set_my_value_list(staff_data,staff_filter);
+	$(due_filter).datetimepicker();
+	set_static_value_list('task_instances','status',status_filter);
+	
+	$(task_filter).on('blur',function(event)
+	{
+		var hours_data="<task_type>" +
+				"<est_hours></est_hours>" +
+				"<name>"+task_filter.value+"</name>" +
+				"</task_type>";
+		set_my_value(hours_data,hours_filter);
+	});
+	
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form14'))
+		{
+			var name=form.elements[1].value;
+			var assignee=form.elements[2].value;
+			var t_due=get_raw_time(form.elements[3].value);
+			var t_initiated=get_raw_time(date_initiated);
+			var status=form.elements[4].value;
+			var hours=form.elements[5].value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<task_instances>" +
+						"<id>"+data_id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<assignee>"+assignee+"</assignee>" +
+						"<t_initiated>"+t_initiated+"</t_initiated>" +
+						"<t_due>"+t_due+"</t_due>" +
+						"<status>"+status+"</status>" +
+						"<task_hours>"+hours+"</task_hours>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</task_instances>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>task_instances</tablename>" +
+						"<link_to>form14</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Task "+name+" assigned to "+assignee+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_create_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal32").dialog("close");
+	});
+	
+	$("#modal32").dialog("open");
+}
+
+/**
+ * @modal Update Task
+ * @modalNo 33
+ */
+function modal33_action(id)
+{
+	var form=document.getElementById("modal33_form");
+	var task_filter=form.elements[1];
+	var staff_filter=form.elements[2];
+	var due_filter=form.elements[3];
+	var status_filter=form.elements[4];
+	
+	var staff_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	set_my_value_list(staff_data,staff_filter);
+	$(due_filter).datetimepicker();
+	set_static_value_list('task_instances','status',status_filter);
+	
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form14'))
+		{
+			var name=form.elements[1].value;
+			var assignee=form.elements[2].value;
+			var t_due=get_raw_time(form.elements[3].value);
+			var status=form.elements[4].value;
+			var data_id=id;
+			var last_updated=get_my_time();
+			var data_xml="<task_instances>" +
+						"<id>"+data_id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<assignee>"+assignee+"</assignee>" +
+						"<t_due>"+t_due+"</t_due>" +
+						"<status>"+status+"</status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</task_instances>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>task_instances</tablename>" +
+						"<link_to>form14</link_to>" +
+						"<title>Updated</title>" +
+						"<notes>Task "+name+" assigned to "+assignee+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_update_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_update_row(data_xml,activity_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal33").dialog("close");		
+	});
+	
+	var tasks_data="<task_instances>" +
+			"<id>"+id+"</id>" +
+			"<name></name>" +
+			"<description></description>" +
+			"<assignee></assignee>" +
+			"<t_due></t_due>" +
+			"<t_initiated></t_initiated>" +
+			"<task_hours></task_hours>" +
+			"<status></status>" +
+			"</task_instances>";
+	fetch_requested_data('form14',tasks_data,function(results)
+	{
+		for(var i in results)
+		{
+			task_filter.value=results[i].name;
+			staff_filter.value=results[i].assignee;
+			due_filter.value=get_my_datetime(results[i].t_due);
+			status_filter.value=results[i].status;
+			
+			break;
+		}
+		$("#modal33").dialog("open");
+	});
+}
+
+
+/**
+ * @modal Sending Mails
+ * @modalNo 50
+ */
+function modal50_action()
+{
+	$("#modal50").dialog("open");
+	
+	var form=document.getElementById("form78_master");
+	var pamphlet_name=form.elements[1].value;
+	var pamphlet_id=form.elements[2].value;
+	//console.log(pamphlet_id);
+	var pamphlet_items_data="<pamphlet_items>" +
+				"<item_name></item_name>" +
+				"<offer></offer>" +
+				"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
+				"</pamphlet_items>";
+			
+	fetch_requested_data('',pamphlet_items_data,function(results)
+	{
+		var email_data_string="<data>";
+		email_data_string+="<items>";
+
+		for(var i in results)
+		{
+			email_data_string+="<row>"+
+					"<item>"+results[i].item_name+"</item>"+
+					"<offer>"+results[i].offer+"</offer>"+
+					"</row>";
+		}	
+		email_data_string+="</items>";		
+		email_data_string+="<emails>";
+		
+		$("[id^='row_form78_']").each(function(index)
+		{
+			var form_id=$(this).attr('id');
+			var form=document.getElementById(form_id);
+			
+			if(form.elements[2].checked)
+			{
+				email_data_string+="<row>"+
+					"<name>"+form.elements[3].value+"</name>"+
+					"<email>"+form.elements[1].value+"</email>"+
+					"</row>";
+			}
+		});
+		
+		email_data_string+="</emails>";
+		
+		email_data_string+="<sender>" +
+				"<sender_email>"+get_session_var('email')+"</sender_email>"+
+				"<mail_subject>"+pamphlet_name+"</mail_subject>"+
+				"<sender_title>"+get_session_var('title')+"</sender_title>"+
+				"<sender_address>"+get_session_var('address')+"</sender_address>" +
+				"</sender>";
+		
+		
+		email_data_string+="</data>";
+		//console.log(email_data_string);
+		
+		var domain=get_domain();
+		var username=get_username();
+		var re_access=get_session_var('re');
+		var post_data="email_data="+email_data_string+
+					"&domain="+domain+
+					"&username="+username+
+					"&re="+re_access;
+
+		ajax_with_custom_func("./ajax/customer_email.php",post_data,function(e)
+		{
+			if(e.responseText=='Invalid session')
+			{
+				document.getElementById("modal50").innerHTML="Mails not sent. You don't have appropriate permissions to perform this operation.";
+			}
+			else if(e.responseText=='mails sent')
+			{
+				//console.log(e.responseText);
+				document.getElementById("modal50").innerHTML="Hooorray!! Mails sent. You can close this window now.";
+			}
+			else
+			{
+				//console.log(e.responseText);
+				document.getElementById("modal50").innerHTML="An error occured. Not sure if the mails were sent out.";
+			}	
+		});
+	});		
 }

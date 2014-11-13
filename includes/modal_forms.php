@@ -7,7 +7,7 @@
 	</div>
 	
 	<div id="modal2" title="Access denied">
-		Your don't have permissions to perform this operation.
+		You don't have permissions to perform this operation.
 		To allow this operation, ask your administrator to update your access control.
 	</div>
 	
@@ -381,6 +381,36 @@
 				<input type="submit" value='Delete'>
 			</fieldset>
 		</form>
+	</div>
+
+	<div id="modal32" title="Add task">
+		<form id='modal32_form'>
+			<fieldset>
+				<label>Task <input type='text' required></label><br/>
+				<label>Assignee <input type="text"></label><br/>
+				<label>Due time <input type="text"></label><br/>
+				<label>Status <input type="text" required value='pending'></label><br/>
+				<input type='hidden'>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal33" title="Update task">
+		<form id='modal33_form'>
+			<fieldset>
+				<label>Task <input type='text' readonly="readonly" required></label><br/>
+				<label>Assignee <input type="text"></label><br/>
+				<label>Due time <input type="text"></label><br/>
+				<label>Status <input type="text" required value='pending'></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div id="modal50" title="Sending Mails">
+		Sending mails to customers. 
+		You can close this window at any time. The process will continue in the background.
 	</div>
 		
 </div>

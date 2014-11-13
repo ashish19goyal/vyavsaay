@@ -1517,12 +1517,11 @@ function report44_ini()
 {
 	var form=document.getElementById('report44_header');
 	var product_name=form.elements[1].value;
-	var max_results=form.elements[2].value;
 	
 	show_loader();
 	$('#report44_body').html("");
 	
-	ajax_with_custom_func("./ajax/ecommerce_products.php","keywords="+product_name+"&max_results="+max_results,function(e)
+	ajax_with_custom_func("./ajax/ecommerce_products.php","keywords="+product_name+"&max_results=10",function(e)
 	{
 		var row=e.responseXML.childNodes[0].childNodes;
 		for(var i=0; i<row.length; i++)
@@ -1553,10 +1552,4 @@ function report44_ini()
 		}
 		hide_loader();
 	});
-	
-	var product_data="<product_instances>" +
-			"<product_name>"+product_name+"</product_name>" +
-			"<sale_price></sale_price>" +
-			"</product_instances>";
-
 };

@@ -344,6 +344,11 @@ tbody tr:hover{
 .filter_icon{
 	height:16px;
 	width: 16px;
+	background:url('/images/filter.jpeg') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 16px 16px;
+	color:transparent;
 	border-radius: 1px;
 }
 

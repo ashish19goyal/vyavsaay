@@ -786,8 +786,8 @@
 		<row>
 			<tablename>task_instances</tablename>
 			<listname>status</listname>
-			<name>assigned</name>
-			<value>Assigned</value>
+			<name>cancelled</name>
+			<value>Cancelled</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

@@ -1,5 +1,4 @@
 <script src='./JavaScripts/open/jquery-1.11.1.min.js'></script>
-<!--<script src="./JavaScripts/open/jquery.mobile.custom.min.js"></script>-->
 <script src='./JavaScripts/open/bcrypt.js'></script>
 <script src='./JavaScripts/open/chart.js'></script>
 <script src='./JavaScripts/open/indexeddb.js'></script>
@@ -10,6 +9,7 @@
 <script src='./JavaScripts/open/leaflet.js'></script>
 <script src='./JavaScripts/open/moment.min.js'></script>
 <script src='./JavaScripts/open/fullcalendar.min.js'></script>
+<script src='./JavaScripts/open/jquery.datetimepicker.js'></script>
 
 <script src='./JavaScripts/open/jquery.easing.min.js'></script>
 <script src='./JavaScripts/open/move-top.js'></script>

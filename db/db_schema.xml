@@ -91,7 +91,7 @@
 			<t_initiated index='no' type="BIGINT"></t_initiated>
 			<t_due index='yes' type="BIGINT"></t_due>
 			<t_executed index='no' type="BIGINT"></t_executed>
-			<status index='yes' type="VARCHAR(45)"></status><!-- pending/completed/assigned -->
+			<status index='yes' type="VARCHAR(45)"></status><!-- pending/completed/cancelled -->
 			<assignee index='yes' type="VARCHAR(100)"></assignee>
 			<bill_id index='yes' type="BIGINT"></bill_id>
 			<task_hours index='no' type="DECIMAL(5,2)"></task_hours>
@@ -469,15 +469,6 @@
 			<offer index='no' type="TEXT"></offer>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</pamphlet_items>
-	<disposals>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<product_name index='yes' type="VARCHAR(100)"></product_name>
-			<batch index='yes' type="VARCHAR(50)"></batch>
-			<quantity index='no' type="DECIMAL(12,2)"></quantity>
-			<method index='yes' type="TEXT"></method><!-- Destroyed/Sold/Recycled -->
-			<date index='no' type="BIGINT"></date>
-			<last_updated index='no' type="BIGINT"></last_updated>
-	</disposals>
 	<activities>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<title index='yes' type="VARCHAR(300)"></title>

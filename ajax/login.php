@@ -37,8 +37,6 @@ use RetailingEssentials\db_connect;
 				$_SESSION['session']='yes';
 				$_SESSION['domain']=$domain;
 				$_SESSION['username']=$user;
-				//comment this line if errors with session
-				//session_write_close();
 				
 				$session_var="<session>";
 				

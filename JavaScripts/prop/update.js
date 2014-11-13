@@ -982,30 +982,25 @@ function form14_update_item(form)
 	if(is_update_access('form14'))
 	{
 		var name=form.elements[0].value;
-		var description=form.elements[1].value;
-		var assignee=form.elements[2].value;
-		var t_due=get_raw_time(form.elements[3].value);
-		var t_executed=get_raw_time(form.elements[4].value);
-		var status=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var assignee=form.elements[1].value;
+		var t_due=get_raw_time(form.elements[2].value);
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
-		var table='task_instances';
-		var data_xml="<"+table+">" +
+		var data_xml="<task_instances>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
-					"<description>"+description+"</description>" +
 					"<assignee>"+assignee+"</assignee>" +
 					"<t_due>"+t_due+"</t_due>" +
 					"<status>"+status+"</status>" +
-					"<t_executed>"+t_executed+"</t_executed>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</task_instances>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>task_instances</tablename>" +
 					"<link_to>form14</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Saved task "+name+" assigned to "+assignee+"</notes>" +
+					"<title>Updated</title>" +
+					"<notes>Task "+name+" assigned to "+assignee+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1016,7 +1011,7 @@ function form14_update_item(form)
 		{
 			local_update_row(data_xml,activity_xml);
 		}	
-		for(var i=0;i<7;i++)
+		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -1388,57 +1383,6 @@ function form21_update_form()
 	}
 }
 
-/**
- * @form Dispose Items
- * @param button
- */
-function form22_update_item(form)
-{
-	if(is_update_access('form22'))
-	{
-		var product_name=form.elements[0].value;
-		var batch=form.elements[1].value;
-		var method=form.elements[2].value;
-		var quantity=form.elements[3].value;
-		var date=get_raw_time(form.elements[4].value);
-		var data_id=form.elements[5].value;
-		var last_updated=get_my_time();
-		var table='disposals';
-		var data_xml="<"+table+">" +
-					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<method>"+method+"</method>" +
-					"<date>"+date+"</date>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
-					"<link_to>form22</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Selected product "+name+" for disposal</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
-		for(var i=0;i<6;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
 
 /**
  * @form New Purchase orders

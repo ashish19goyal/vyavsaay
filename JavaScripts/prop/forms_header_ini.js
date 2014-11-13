@@ -77,7 +77,6 @@ function form5_header_ini()
 
 
 /**
- * this function prepares the table for attendance form
  * @form Attendance
  * @formNo 7
  */
@@ -198,6 +197,7 @@ function form7_header_ini()
 	    }
 	});
 	
+	//$('#attendance_calendar').fullCalendar('today');
 	///calendar set
 	
 };
@@ -358,41 +358,144 @@ function form12_new_form()
 }
 
 /**
- * this function prepares the table for manage tasks form
  * @form Manage Tasks
  * @formNo 14
  */
 function form14_header_ini()
 {
-	var filter_fields=document.getElementById('form14_header');
-	var type_filter=filter_fields.elements[0];
-	var assignee_filter=filter_fields.elements[1];
-	var due_filter=filter_fields.elements[2];
-	var executed_filter=filter_fields.elements[3];
-	var status_filter=filter_fields.elements[4];
+	$("#form14_body").parent().hide();
+	$("#form14_calendar").show();
 	
-	var type_data="<task_type>" +
-			"<name></name>" +
-			"</task_type>";
-	var assignee_data="<staff>" +
+	
+	///initializing calendar
+	
+	$('#form14_calendar').fullCalendar({
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,agendaWeek,agendaDay'
+		},
+		height:400,
+		fixedWeekCount:false,
+		editable: true,
+		eventLimit: true, // allow "more" link when too many events
+		events: function(start, end, timezone, callback) {
+	        var start_time=parseFloat(start.unix())*1000;
+	        var end_time=parseFloat(end.unix())*1000;
+	        var tasks_data="<task_instances>" +
+	        		"<id></id>" +
+	        		"<name></name>" +
+	        		"<description></description>" +
+	        		"<t_initiated compare='more than'>"+start_time+"</t_initiated>" +
+	        		"<t_initiated compare='less than'>"+end_time+"</t_initiated>" +
+	        		"<t_due></t_due>" +
+	        		"<status></status>" +
+	        		"<assignee></assignee>" +
+	        		"<task_hours></task_hours>" +
+	        		"</task_instances>";
+	        
+	        fetch_requested_data('form14',tasks_data,function(tasks)
+	        {
+	        	var events=[];
+	        	
+	        	tasks.forEach(function(task)
+	        	{
+        			var color="yellow";
+        			if(task.status=='cancelled')
+        			{
+        				color="aaaaaa";
+        			}
+        			else if(task.status=='pending' && parseFloat(task.t_due)<get_my_time())
+        			{
+        				color='#ff0000';
+        			}
+        			else if(task.status=='completed')
+        			{
+        				color='#00ff00';
+        			}
+	        		events.push({
+	        			title: "\n"+task.name+"\nAssigned to: "+task.assignee+"\nDue time: "+get_formatted_time(task.t_due),
+	        			start:get_iso_time(task.t_initiated),
+	        			end:get_iso_time(parseFloat(task.t_initiated)+(parseFloat(task.task_hours)*3600000)),
+	        			color: color,
+	        			textColor:"#333",
+	        			id: task.id
+	        		});	        		
+	        	});
+	        	callback(events);
+	        });
+	    },
+	    dayClick: function(date,jsEvent,view){
+	    	modal32_action(get_my_date_from_iso(date.format()));
+	    },
+	    eventClick: function(calEvent,jsEvent,view){
+	    	modal33_action(calEvent.id);
+	    },
+	    eventDrop: function(event,delta,revertFunc){
+	    	var t_initiated=(parseFloat(event.start.unix())*1000);
+	    	var data_xml="<task_instances>" +
+						"<id>"+event.id+"</id>" +
+						"<t_initiated>"+t_initiated+"</t_initiated>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</task_instances>";
+			if(is_online())
+			{
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+	    },
+	    eventResize: function(event, delta, revertFunc){
+	    	var task_hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
+	    	var data_xml="<task_instances>" +
+						"<id>"+event.id+"</id>" +
+						"<task_hours>"+task_hours+"</task_hours>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</task_instances>";
+			if(is_online())
+			{
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+	
+	///calendar set
+	var filter_fields=document.getElementById('form14_header');
+	var task_filter=filter_fields.elements[0];
+	var assignee_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var staff_data="<staff>" +
 			"<acc_name></acc_name>" +
 			"</staff>";
+	var task_data="<task_type>" +
+			"<name></name>" +
+			"</task_type>";
 	
-	set_my_filter(type_data,type_filter);
-	set_my_filter(assignee_data,assignee_filter);
-	
-	$(due_filter).datepicker();
-	$(executed_filter).datepicker();
-	
+	set_my_filter(task_data,task_filter);	
+	set_my_filter(staff_data,assignee_filter);
 	set_static_filter('task_instances','status',status_filter);
 	
-	var import_button=filter_fields.elements[7];
+	var import_button=filter_fields.elements[5];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
 	{
 		modal23_action(form14_import_template,form14_import);
 	});
 };
+
+function form14_switch_view()
+{
+//	form14_ini();
+	$("#form14_body").parent().toggle();
+	$("#form14_calendar").toggle();
+}
 
 /**
  * @form Enter Returns
@@ -569,35 +672,6 @@ function form21_new_form()
 	form21_header_ini();
 	$("#form21_body").find("tr").remove();
 }
-
-
-/**
- * this function prepares the table for dispose items form
- * @form Dispose Items
- * @formNo 22
- */
-function form22_header_ini()
-{
-	var filter_fields=document.getElementById('form22_header');
-	var product_filter=filter_fields.elements[0];
-	var batch_filter=filter_fields.elements[1];
-	var method_filter=filter_fields.elements[2];
-	var date_filter=filter_fields.elements[3];
-	
-	var products_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-	var batch_data="<product_instances>" +
-			"<batch></batch>" +
-			"</product_instances>";
-	
-	set_my_filter(products_data,product_filter);
-	set_my_filter(batch_data,batch_filter);
-	set_static_filter('disposals','method',method_filter);
-
-	$(date_filter).datepicker();
-	
-};
 
 
 /**
@@ -1622,10 +1696,15 @@ function form78_header_ini()
 			"</pamphlets>";
 	set_my_value_list(name_data,name_filter);
 	
+	$(name_filter).on('blur',function(event)
+	{
+		form78_ini();
+	});
+	
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
 	{
 		event.preventDefault();
-		modal32_action();
+		modal50_action();
 	});
 }
