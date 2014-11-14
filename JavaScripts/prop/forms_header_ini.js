@@ -1708,3 +1708,12 @@ function form78_header_ini()
 		modal50_action();
 	});
 }
+
+/**
+ * @form Manage task types
+ * @formNo 79
+ */
+function form79_header_ini()
+{
+
+}

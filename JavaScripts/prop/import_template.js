@@ -51,7 +51,7 @@ function form11_import_template()
 */
 function form14_import_template()
 {
-	var data_array=['id','name','description','assignee','t_due','task_hours','t_executed','t_initiated','status'];
+	var data_array=['id','name','description','assignee','t_due','task_hours','t_initiated','status'];
 	my_array_to_csv(data_array);
 };
 
@@ -225,5 +225,15 @@ function form66_import_template()
 function form71_import_template()
 {
 	var data_array=['id','acc_name','description','type'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage task types
+* @formNo 79
+*/
+function form79_import_template()
+{
+	var data_array=['id','name','description','est_hours'];
 	my_array_to_csv(data_array);
 };

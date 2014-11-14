@@ -127,6 +127,7 @@
   	"enter_supplier_bills":"Enter Supplier Bills",
   	"create_sale_order":"Create Sale Order",
   	"manage_sale_orders":"Manage Sale Orders",
-  	"promotion_mails":"Promotion Mails"
+  	"promotion_mails":"Promotion Mails",
+  	"manage_task_types":"Manage Task Types"
   }
 }

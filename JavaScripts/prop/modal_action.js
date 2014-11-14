@@ -143,6 +143,7 @@ function modal8_action()
 		}
 	});
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -327,6 +328,7 @@ function modal9_action(button)
 	form.elements[13].value=fcurrent_value.value;
 	form.elements[14].value=fasset_location.value;
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -382,6 +384,7 @@ function modal10_action()
 	set_static_value_list('assets','ownership_type',fown_type);
 	set_static_value_list('assets','maintained_by',fmaintained_by);
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -461,6 +464,7 @@ function modal11_action()
 	var fcountry=form.elements[8];
 	var fnotes=form.elements[9];
 		
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -544,6 +548,7 @@ function modal12_action()
 	var fdescription=form.elements[2];
 	var fdata_id=get_new_key();
 		
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -600,6 +605,7 @@ function modal13_action()
 	var fcountry=form.elements[8];
 	var fnotes=form.elements[9];
 		
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -697,6 +703,7 @@ function modal14_action()
 		});
 	},false);
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		if(is_create_access('form39'))
@@ -790,6 +797,7 @@ function modal15_action()
 	$(fdate).datepicker();
 	$(fdate).val(get_my_date());
 		
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -863,6 +871,7 @@ function modal16_action()
 	$(fjoining).datepicker();
 	$(fjoining).val(get_my_date());
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -991,6 +1000,7 @@ function modal17_action(button)
 	form.elements[11].value=fhours.value;
 	form.elements[12].value=fpto.value;
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -1029,6 +1039,64 @@ function modal17_action(button)
 	$("#modal17").dialog("open");
 }
 
+/**
+ * @modalNo 18
+ * @modal Add new task type
+ * @param button
+ */
+function modal18_action()
+{
+	console.log('opening modal18');
+	var form=document.getElementById('modal18_form');
+	
+	var fname=form.elements[1];
+	var fdescription=form.elements[2];
+	var fest_hours=form.elements[3];
+	
+	fname.value='';
+	fdescription.value='';
+	fest_hours.value='';
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		console.log("submitting form");
+		event.preventDefault();
+		var name=form.elements[1].value;
+		var description=form.elements[2].value;
+		var est_hours=form.elements[3].value;
+		var data_id=get_new_key();
+		var last_updated=get_my_time();
+		var data_xml="<task_type>" +
+					"<id>"+data_id+"</id>" +
+					"<name unique='yes'>"+name+"</name>" +
+					"<description>"+description+"</description>" +
+					"<est_hours>"+est_hours+"</est_hours>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</task_type>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>task_type</tablename>" +
+					"<link_to>form79</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Task type "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}
+		
+		$("#modal18").dialog("close");
+		//$("#modal18").dialog("destroy");
+	});
+	
+	$("#modal18").dialog("open");
+}
 
 /**
  * @modalNo 19
@@ -1106,6 +1174,7 @@ function modal19_action(button)
 	///////-------------set editable finished-------/////////////
 
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -1284,6 +1353,7 @@ function modal20_action()
 	var fname=form.elements[1];
 	var fdescription=form.elements[2];
 			
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -1373,6 +1443,7 @@ function modal21_action()
 	
 	////////------end of initialization-----------///////////
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -1562,6 +1633,7 @@ function modal22_action()
 	});		
 	
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -1699,6 +1771,7 @@ function modal24_action(button)
 	form.elements[4].value=fstate.value;
 	form.elements[5].value=fcountry.value;
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -1749,6 +1822,7 @@ function modal25_action(button)
 	form.elements[4].value=fstate.value;
 	form.elements[5].value=fcountry.value;
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -1798,6 +1872,7 @@ function modal26_action(payment_id)
 	set_static_value_list('payments','status',fstatus);
 	set_static_value_list('payments','mode',fmode);
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -1936,6 +2011,7 @@ function modal27_action(product_name)
 						fprice.value=last_purchases[k].price;
 						fquantity.value=last_purchases[k].quantity;
 						
+						$(form).off("submit");
 						$(form).on("submit",function(event)
 						{
 							event.preventDefault();
@@ -1997,6 +2073,7 @@ function modal27_action(product_name)
 						set_my_value(price_data,fprice);
 						
 
+						$(form).off("submit");
 						$(form).on("submit",function(event)
 						{
 							event.preventDefault();
@@ -2117,6 +2194,7 @@ function modal28_action(payment_id)
 	set_static_value_list('payments','status',fstatus);
 	set_static_value_list('payments','mode',fmode);
 	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
@@ -2210,10 +2288,18 @@ function modal29_action(button)
 	var fbill_id=father_form.elements[10];
 		
 	form.elements[1].value=fbill_id.value;
-	form.elements[2].value=get_my_past_date(fdate.value);
-	form.elements[3].value=fmode.value;
-	form.elements[4].value=get_my_past_date(fdue_date.value);
+	var date=form.elements[2];
+	date.value=get_my_past_date(fdate.value);
+	var mode=form.elements[3];
+	mode.value=fmode.value;
+	var due_date=form.elements[4];
+	due_date.value=get_my_past_date(fdue_date.value);
 	
+	$(date).datepicker();
+	$(due_date).datepicker();
+	set_static_value_list('payments','mode',mode);
+	
+	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();

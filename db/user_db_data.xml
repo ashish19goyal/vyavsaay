@@ -769,6 +769,14 @@
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form79</name>
+			<display_name>manage_task_types</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -1629,6 +1637,17 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<username>master</username>
+			<element_id>form79</element_id>
+			<element_name>manage_task_types</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
 	</access_control>
 	<shortcuts>
 		<row>
@@ -2033,6 +2052,13 @@
 		<row>
 			<element_id>form78</element_id>
 			<element_name>promotion_emails</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form79</element_id>
+			<element_name>manage_task_types</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>

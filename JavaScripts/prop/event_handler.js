@@ -19,7 +19,6 @@ function default_load()
 	{
 		set_menu_shortcuts();
 		setup_elements_display();
-		activities_ini();
 		date_formating();
 		modal_forms_ini();
 		print_setup();
@@ -28,6 +27,14 @@ function default_load()
 		i18n_setup();
 		resize_input();
 		home_display();
+		setTimeout(function()
+		{
+			activities_lane_ini();
+		},10000);
+		setTimeout(function()
+		{
+			notifications_add();
+		},50000);
 	}
 	hide_loader();
 }
@@ -269,7 +276,7 @@ function show_all_activities()
 {
 	hide_all();
 	$("#all_activities_box").show();
-	all_activities_ini();
+	activities_ini();
 }
 
 function element_display(fid,element_name)

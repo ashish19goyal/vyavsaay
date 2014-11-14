@@ -454,31 +454,76 @@ function form10_update_form()
 
 	                $('#form10_body').prepend(rowsHTML);
 
-	                var free_xml="<bill_items>" +
-								"<id>"+id+"</id>" +
-								"<item_name>"+free_product_name+"</item_name>" +
-								"<staff></staff>" +
-								"<notes>free service</notes>" +
-								"<unit_price>0</unit_price>" +
-								"<amount>0</amount>" +
-								"<total>0</total>" +
-								"<discount>0</discount>" +
-								"<offer></offer>" +
-								"<type>free</type>" +
-								"<tax>0</tax>" +
-								"<bill_id>"+data_id+"</bill_id>" +
-								"<free_with>bill</free_with>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</bill_items>";	
+	                var free_pre_requisite_data="<pre_requisites>" +
+							"<name>"+free_service_name+"</name>" +
+							"<type>service</type>" +
+							"<requisite_type>task</requisite_type>" +
+							"<requisite_name></requisite_name>" +
+							"<quantity></quantity>" +
+							"</pre_requisites>";
+					fetch_requested_data('',free_pre_requisite_data,function(free_pre_requisites)
+					{
+		                var free_xml="<bill_items>" +
+									"<id>"+id+"</id>" +
+									"<item_name>"+free_service_name+"</item_name>" +
+									"<staff></staff>" +
+									"<notes>free service</notes>" +
+									"<unit_price>0</unit_price>" +
+									"<amount>0</amount>" +
+									"<total>0</total>" +
+									"<discount>0</discount>" +
+									"<offer></offer>" +
+									"<type>free</type>" +
+									"<tax>0</tax>" +
+									"<bill_id>"+data_id+"</bill_id>" +
+									"<free_with>bill</free_with>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</bill_items>";	
+						
+						if(is_online())
+						{
+							server_create_simple(free_xml);
+						}
+						else
+						{
+							local_create_simple(free_xml);
+						}
+						
+						free_pre_requisites.forEach(function(free_pre_requisite)
+						{
+							var task_id=get_new_key()+""+(Math.random()*1000);
+							var task_xml="<task_instances>" +
+									"<id>"+task_id+"</id>" +
+									"<name>"+free_pre_requisite.name+"</name>" +
+									"<assignee></assignee>" +
+									"<t_initiated>"+get_my_time()+"</t_initiated>" +
+									"<t_due></t_due>" +
+									"<status>pending</status>" +
+									"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
+									"<source>service</source>" +
+									"<source_id>"+id+"</source_id>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</task_instances>";
+							var activity_xml="<activity>" +
+									"<data_id>"+task_id+"</data_id>" +
+									"<tablename>task_instances</tablename>" +
+									"<link_to>form14</link_to>" +
+									"<title>Added</title>" +
+									"<notes>Task "+free_pre_requisite.name+"</notes>" +
+									"<updated_by>"+get_name()+"</updated_by>" +
+									"</activity>";
 					
-					if(is_online())
-					{
-						server_create_simple(free_xml);
-					}
-					else
-					{
-						local_create_simple(free_xml);
-					}
+							if(is_online())
+							{
+								server_create_row(task_xml,activity_xml);
+							}
+							else
+							{
+								local_create_row(task_xml,activity_xml);
+							}		
+						});
+				
+					});
 				}
 				offer_detail=offers[i].offer_detail;
 				break;
@@ -3455,31 +3500,76 @@ function form72_update_form()
 
 	                $('#form72_body').prepend(rowsHTML);
 
-	                var free_xml="<bill_items>" +
-								"<id>"+id+"</id>" +
-								"<item_name>"+free_product_name+"</item_name>" +
-								"<staff></staff>" +
-								"<notes>free service</notes>" +
-								"<unit_price>0</unit_price>" +
-								"<amount>0</amount>" +
-								"<total>0</total>" +
-								"<discount>0</discount>" +
-								"<offer></offer>" +
-								"<type>free</type>" +
-								"<tax>0</tax>" +
-								"<bill_id>"+data_id+"</bill_id>" +
-								"<free_with>bill</free_with>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</bill_items>";	
+	                var free_pre_requisite_data="<pre_requisites>" +
+							"<name>"+free_service_name+"</name>" +
+							"<type>service</type>" +
+							"<requisite_type>task</requisite_type>" +
+							"<requisite_name></requisite_name>" +
+							"<quantity></quantity>" +
+							"</pre_requisites>";
+					fetch_requested_data('',free_pre_requisite_data,function(free_pre_requisites)
+					{
+		                var free_xml="<bill_items>" +
+									"<id>"+id+"</id>" +
+									"<item_name>"+free_service_name+"</item_name>" +
+									"<staff></staff>" +
+									"<notes>free service</notes>" +
+									"<unit_price>0</unit_price>" +
+									"<amount>0</amount>" +
+									"<total>0</total>" +
+									"<discount>0</discount>" +
+									"<offer></offer>" +
+									"<type>free</type>" +
+									"<tax>0</tax>" +
+									"<bill_id>"+data_id+"</bill_id>" +
+									"<free_with>bill</free_with>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</bill_items>";	
+						
+						if(is_online())
+						{
+							server_create_simple(free_xml);
+						}
+						else
+						{
+							local_create_simple(free_xml);
+						}
+						
+						free_pre_requisites.forEach(function(free_pre_requisite)
+						{
+							var task_id=get_new_key()+""+(Math.random()*1000);
+							var task_xml="<task_instances>" +
+									"<id>"+task_id+"</id>" +
+									"<name>"+free_pre_requisite.name+"</name>" +
+									"<assignee></assignee>" +
+									"<t_initiated>"+get_my_time()+"</t_initiated>" +
+									"<t_due></t_due>" +
+									"<status>pending</status>" +
+									"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
+									"<source>service</source>" +
+									"<source_id>"+id+"</source_id>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</task_instances>";
+							var activity_xml="<activity>" +
+									"<data_id>"+task_id+"</data_id>" +
+									"<tablename>task_instances</tablename>" +
+									"<link_to>form14</link_to>" +
+									"<title>Added</title>" +
+									"<notes>Task "+free_pre_requisite.name+"</notes>" +
+									"<updated_by>"+get_name()+"</updated_by>" +
+									"</activity>";
 					
-					if(is_online())
-					{
-						server_create_simple(free_xml);
-					}
-					else
-					{
-						local_create_simple(free_xml);
-					}
+							if(is_online())
+							{
+								server_create_row(task_xml,activity_xml);
+							}
+							else
+							{
+								local_create_row(task_xml,activity_xml);
+							}		
+						});
+				
+					});
 				}
 
 				offer_detail=offers[i].offer_detail;
@@ -3638,6 +3728,83 @@ function form77_update_form(button)
 	if(is_update_access('form77'))
 	{
 		$("[id^='save_form77']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form manage task types
+ * @param button
+ */
+function form79_update_item(form)
+{
+	if(is_update_access('form79'))
+	{
+		var name=form.elements[0].value;
+		var desc=form.elements[1].value;
+		var est_hours=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<task_type>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<description>"+desc+"</description>" +
+					"<est_hours>"+est_hours+"</est_hours>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</task_type>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>task_type</tablename>" +
+					"<link_to>form79</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Task type "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Notifications
+ * @param data_id
+ * @param status
+ */
+function notifications_update(data_id,status)
+{
+	if(is_update_access('notifications'))
+	{
+		var last_updated=get_my_time();
+		var data_xml="<notifications>" +
+					"<id>"+data_id+"</id>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</task_type>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
 	}
 	else
 	{

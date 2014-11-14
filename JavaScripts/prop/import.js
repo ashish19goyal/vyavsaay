@@ -246,7 +246,6 @@ function form14_import(data_array,import_type)
 				"<assignee>"+row.assignee+"</assignee>" +
 				"<status>"+row.status+"</status>" +
 				"<t_due>"+get_raw_time(row.t_due)+"</t_due>" +
-				"<t_executed>"+get_raw_time(row.t_executed)+"</t_executed>" +
 				"<t_initiated>"+get_raw_time(row.t_initiated)+"</t_initiated>" +
 				"<tasks_hours>"+row.task_hours+"</task_hours>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
@@ -1023,6 +1022,46 @@ function form71_import(data_array,import_type)
 				"<type>"+row.type+"</type>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</accounts>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Manage Task Types
+* @formNo 79
+*/
+function form79_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<task_type>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<description>"+row.description+"</description>" +
+				"<est_hours>"+row.est_hours+"</est_hours>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</task_type>";
 		if(import_type=='create_new')
 		{
 			if(is_online())

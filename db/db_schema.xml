@@ -93,7 +93,8 @@
 			<t_executed index='no' type="BIGINT"></t_executed>
 			<status index='yes' type="VARCHAR(45)"></status><!-- pending/completed/cancelled -->
 			<assignee index='yes' type="VARCHAR(100)"></assignee>
-			<bill_id index='yes' type="BIGINT"></bill_id>
+			<source index='yes' type="VARCHAR(50)"></source>
+			<source_id index='yes' type="BIGINT"></source_id>
 			<task_hours index='no' type="DECIMAL(5,2)"></task_hours>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</task_instances>

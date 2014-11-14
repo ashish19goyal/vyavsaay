@@ -120,10 +120,8 @@
 			<description>Executed at 20th sep 2014</description>
 			<t_initiated>1411171200000</t_initiated>
 			<t_due>1411171200000</t_due>
-			<t_executed>1411171200000</t_executed>
 			<status>completed</status>
 			<assignee>staff1</assignee>
-			<bill_id>1</bill_id>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -131,10 +129,8 @@
 			<description>Executed at 21st sep 2014</description>
 			<t_initiated>1411257600000</t_initiated>
 			<t_due>1411257600000</t_due>
-			<t_executed>1411257600000</t_executed>
 			<status>completed</status>
 			<assignee>staff1</assignee>
-			<bill_id>2</bill_id>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -142,10 +138,8 @@
 			<description>Executed at 22nd sep 2014</description>
 			<t_initiated>1411344000000</t_initiated>
 			<t_due>1411344000000</t_due>
-			<t_executed>1411344000000</t_executed>
 			<status>completed</status>
 			<assignee>staff2</assignee>
-			<bill_id>3</bill_id>
 			<last_updated>1</last_updated>
 		</row>
 	</task_instances>

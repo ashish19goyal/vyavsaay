@@ -99,56 +99,6 @@ function get_new_key()
 }
 
 
-function count_oppor()
-{
-	var oppor_data="<opportunities>" +
-			"<id></id>" +
-			"<status>pending</status>" +
-			"</opportunities>";
-
-	get_single_column_data(function(oppors)
-	{
-		var num_res=oppors.length;
-	
-		if(num_res===0)
-		{	
-			$('#count_oppor').html("");
-		}
-		else
-		{	
-			$('#count_oppor').html(num_res);
-			$('#count_oppor').css('backgroundColor','#dddd00'); 
-		}
-	},oppor_data);
-	setTimeout(count_oppor,100000);
-}
-
-function count_notif()
-{
-	//var notifs=fetch_notifications();	
-	var notif_data="<notifications>" +
-			"<id></id>" +
-			"<status>pending</status>" +
-			"</notifications>";
-
-	get_single_column_data(function(notifs)
-	{
-		var num_res=notifs.length;
-		
-		if(num_res===0)
-		{	
-			$('#count_notif').html(""); 
-		}
-		else
-		{	
-			$('#count_notif').html(num_res);
-			$('#count_notif').css('backgroundColor','#dddd00'); 
-		}
-	},notif_data);
-	setTimeout(count_notif,100000);
-}
-
-
 function set_my_filter(filter_data,filter_element)
 {
 	get_single_column_data(function(data)

@@ -175,31 +175,76 @@ function form10_create_item(form)
 		var offer=form.elements[8].value;
 		var data_id=form.elements[9].value;
 		var last_updated=get_my_time();
+		var free_service_name=form.elements[12].value;
 		
-		var data_xml="<bill_items>" +
-				"<id>"+data_id+"</id>" +
-				"<item_name>"+name+"</item_name>" +
-				"<unit_price>"+price+"</unit_price>" +
-				"<notes>"+notes+"</notes>" +
-				"<staff>"+staff+"</staff>" +
-				"<amount>"+amount+"</amount>" +
-				"<total>"+total+"</total>" +
-				"<discount>"+discount+"</discount>" +
-				"<offer>"+offer+"</offer>" +
-				"<type>bought</type>" +
-				"<tax>"+tax+"</tax>" +
-				"<bill_id>"+bill_id+"</bill_id>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</bill_items>";	
-		if(is_online())
+		var pre_requisite_data="<pre_requisites>" +
+				"<name>"+name+"</name>" +
+				"<type>service</type>" +
+				"<requisite_type>task</requisite_type>" +
+				"<requisite_name></requisite_name>" +
+				"<quantity></quantity>" +
+				"</pre_requisites>";
+		fetch_requested_data('',pre_requisite_data,function(pre_requisites)
 		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}
+			var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+name+"</item_name>" +
+					"<unit_price>"+price+"</unit_price>" +
+					"<notes>"+notes+"</notes>" +
+					"<staff>"+staff+"</staff>" +
+					"<amount>"+amount+"</amount>" +
+					"<total>"+total+"</total>" +
+					"<discount>"+discount+"</discount>" +
+					"<offer>"+offer+"</offer>" +
+					"<type>bought</type>" +
+					"<tax>"+tax+"</tax>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bill_items>";	
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+
+			pre_requisites.forEach(function(pre_requisite)
+			{
+				var task_id=get_new_key()+""+(Math.random()*1000);
+				var task_xml="<task_instances>" +
+						"<id>"+task_id+"</id>" +
+						"<name>"+pre_requisite.name+"</name>" +
+						"<assignee>"+staff+"</assignee>" +
+						"<t_initiated>"+get_my_time()+"</t_initiated>" +
+						"<t_due></t_due>" +
+						"<status>pending</status>" +
+						"<task_hours>"+pre_requisite.quantity+"</task_hours>" +
+						"<source>service</source>" +
+						"<source_id>"+data_id+"</source_id>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</task_instances>";
+				var activity_xml="<activity>" +
+						"<data_id>"+task_id+"</data_id>" +
+						"<tablename>task_instances</tablename>" +
+						"<link_to>form14</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Task "+pre_requisite.name+" assigned to "+staff+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
 		
+				if(is_online())
+				{
+					server_create_row(task_xml,activity_xml);
+				}
+				else
+				{
+					local_create_row(task_xml,activity_xml);
+				}		
+			});
+		});
+
 		
 	//////adding free service to the bill if applicable
 		if(free_service_name!="" && free_service_name!=null)
@@ -237,30 +282,74 @@ function form10_create_item(form)
 
             $('#form10_body').prepend(rowsHTML);
 
-			var free_xml="<bill_items>" +
-						"<id>"+id+"</id>" +
-						"<item_name>"+free_service_name+"</item_name>" +
-						"<staff>"+staff+"</staff>" +
-						"<notes>free with "+name+"</notes>" +
-						"<unit_price>0</unit_price>" +
-						"<amount>0</amount>" +
-						"<total>0</total>" +
-						"<discount>0</discount>" +
-						"<offer></offer>" +
-						"<type>free</type>" +
-						"<tax>0</tax>" +
-						"<bill_id>"+bill_id+"</bill_id>" +
-						"<free_with>"+name+"</free_with>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</bill_items>";
-			if(is_online())
+    		var free_pre_requisite_data="<pre_requisites>" +
+					"<name>"+free_service_name+"</name>" +
+					"<type>service</type>" +
+					"<requisite_type>task</requisite_type>" +
+					"<requisite_name></requisite_name>" +
+					"<quantity></quantity>" +
+					"</pre_requisites>";
+			fetch_requested_data('',free_pre_requisite_data,function(free_pre_requisites)
 			{
-				server_create_simple(free_xml);
-			}
-			else
-			{
-				local_create_simple(free_xml);
-			}
+				var free_xml="<bill_items>" +
+							"<id>"+id+"</id>" +
+							"<item_name>"+free_service_name+"</item_name>" +
+							"<staff>"+staff+"</staff>" +
+							"<notes>free with "+name+"</notes>" +
+							"<unit_price>0</unit_price>" +
+							"<amount>0</amount>" +
+							"<total>0</total>" +
+							"<discount>0</discount>" +
+							"<offer></offer>" +
+							"<type>free</type>" +
+							"<tax>0</tax>" +
+							"<bill_id>"+bill_id+"</bill_id>" +
+							"<free_with>"+name+"</free_with>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</bill_items>";
+				if(is_online())
+				{
+					server_create_simple(free_xml);
+				}
+				else
+				{
+					local_create_simple(free_xml);
+				}
+				
+				free_pre_requisites.forEach(function(free_pre_requisite)
+				{
+					var task_id=get_new_key()+""+(Math.random()*1000);
+					var task_xml="<task_instances>" +
+							"<id>"+task_id+"</id>" +
+							"<name>"+free_pre_requisite.name+"</name>" +
+							"<assignee>"+staff+"</assignee>" +
+							"<t_initiated>"+get_my_time()+"</t_initiated>" +
+							"<t_due></t_due>" +
+							"<status>pending</status>" +
+							"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
+							"<source>service</source>" +
+							"<source_id>"+id+"</source_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</task_instances>";
+					var activity_xml="<activity>" +
+							"<data_id>"+task_id+"</data_id>" +
+							"<tablename>task_instances</tablename>" +
+							"<link_to>form14</link_to>" +
+							"<title>Added</title>" +
+							"<notes>Task "+free_pre_requisite.name+" assigned to "+staff+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+			
+					if(is_online())
+					{
+						server_create_row(task_xml,activity_xml);
+					}
+					else
+					{
+						local_create_row(task_xml,activity_xml);
+					}		
+				});
+			});
 		}
 		///////////added free service///////////
 		
@@ -408,31 +497,76 @@ function form10_create_form()
 
 	                $('#form10_body').prepend(rowsHTML);
 
-	                var free_xml="<bill_items>" +
-								"<id>"+id+"</id>" +
-								"<item_name>"+free_product_name+"</item_name>" +
-								"<staff></staff>" +
-								"<notes>free service</notes>" +
-								"<unit_price>0</unit_price>" +
-								"<amount>0</amount>" +
-								"<total>0</total>" +
-								"<discount>0</discount>" +
-								"<offer></offer>" +
-								"<type>free</type>" +
-								"<tax>0</tax>" +
-								"<bill_id>"+data_id+"</bill_id>" +
-								"<free_with>bill</free_with>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</bill_items>";	
+	        		var free_pre_requisite_data="<pre_requisites>" +
+							"<name>"+free_service_name+"</name>" +
+							"<type>service</type>" +
+							"<requisite_type>task</requisite_type>" +
+							"<requisite_name></requisite_name>" +
+							"<quantity></quantity>" +
+							"</pre_requisites>";
+					fetch_requested_data('',free_pre_requisite_data,function(free_pre_requisites)
+					{
+		                var free_xml="<bill_items>" +
+									"<id>"+id+"</id>" +
+									"<item_name>"+free_service_name+"</item_name>" +
+									"<staff></staff>" +
+									"<notes>free service</notes>" +
+									"<unit_price>0</unit_price>" +
+									"<amount>0</amount>" +
+									"<total>0</total>" +
+									"<discount>0</discount>" +
+									"<offer></offer>" +
+									"<type>free</type>" +
+									"<tax>0</tax>" +
+									"<bill_id>"+data_id+"</bill_id>" +
+									"<free_with>bill</free_with>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</bill_items>";	
+						
+						if(is_online())
+						{
+							server_create_simple(free_xml);
+						}
+						else
+						{
+							local_create_simple(free_xml);
+						}
+						
+						free_pre_requisites.forEach(function(free_pre_requisite)
+						{
+							var task_id=get_new_key()+""+(Math.random()*1000);
+							var task_xml="<task_instances>" +
+									"<id>"+task_id+"</id>" +
+									"<name>"+free_pre_requisite.name+"</name>" +
+									"<assignee></assignee>" +
+									"<t_initiated>"+get_my_time()+"</t_initiated>" +
+									"<t_due></t_due>" +
+									"<status>pending</status>" +
+									"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
+									"<source>service</source>" +
+									"<source_id>"+id+"</source_id>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</task_instances>";
+							var activity_xml="<activity>" +
+									"<data_id>"+task_id+"</data_id>" +
+									"<tablename>task_instances</tablename>" +
+									"<link_to>form14</link_to>" +
+									"<title>Added</title>" +
+									"<notes>Task "+free_pre_requisite.name+"</notes>" +
+									"<updated_by>"+get_name()+"</updated_by>" +
+									"</activity>";
 					
-					if(is_online())
-					{
-						server_create_simple(free_xml);
-					}
-					else
-					{
-						local_create_simple(free_xml);
-					}
+							if(is_online())
+							{
+								server_create_row(task_xml,activity_xml);
+							}
+							else
+							{
+								local_create_row(task_xml,activity_xml);
+							}		
+						});
+				
+					});
 				}
 				offer_detail=offers[i].offer_detail;
 				break;
@@ -2733,29 +2867,74 @@ function form72_create_item(form)
 		
 		if(isNaN(form.elements[2].value))
 		{
-			var data_xml="<bill_items>" +
-					"<id>"+data_id+"</id>" +
-					"<item_name>"+name+"</item_name>" +
-					"<unit_price>"+price+"</unit_price>" +
-					"<notes>"+notes+"</notes>" +
-					"<staff>"+staff+"</staff>" +
-					"<amount>"+amount+"</amount>" +
-					"<total>"+total+"</total>" +
-					"<discount>"+discount+"</discount>" +
-					"<offer>"+offer+"</offer>" +
-					"<type>bought</type>" +
-					"<tax>"+tax+"</tax>" +
-					"<bill_id>"+bill_id+"</bill_id>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</bill_items>";	
-			if(is_online())
+			var pre_requisite_data="<pre_requisites>" +
+					"<name>"+name+"</name>" +
+					"<type>service</type>" +
+					"<requisite_type>task</requisite_type>" +
+					"<requisite_name></requisite_name>" +
+					"<quantity></quantity>" +
+					"</pre_requisites>";
+			fetch_requested_data('',pre_requisite_data,function(pre_requisites)
 			{
-				server_create_simple(data_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-			}
+				var data_xml="<bill_items>" +
+						"<id>"+data_id+"</id>" +
+						"<item_name>"+name+"</item_name>" +
+						"<unit_price>"+price+"</unit_price>" +
+						"<notes>"+notes+"</notes>" +
+						"<staff>"+staff+"</staff>" +
+						"<amount>"+amount+"</amount>" +
+						"<total>"+total+"</total>" +
+						"<discount>"+discount+"</discount>" +
+						"<offer>"+offer+"</offer>" +
+						"<type>bought</type>" +
+						"<tax>"+tax+"</tax>" +
+						"<bill_id>"+bill_id+"</bill_id>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</bill_items>";		
+				if(is_online())
+				{
+					server_create_simple(data_xml);
+				}
+				else
+				{
+					local_create_simple(data_xml);
+				}
+		
+				pre_requisites.forEach(function(pre_requisite)
+				{
+					var task_id=get_new_key()+""+(Math.random()*1000);
+					var task_xml="<task_instances>" +
+							"<id>"+task_id+"</id>" +
+							"<name>"+pre_requisite.name+"</name>" +
+							"<assignee>"+staff+"</assignee>" +
+							"<t_initiated>"+get_my_time()+"</t_initiated>" +
+							"<t_due></t_due>" +
+							"<status>pending</status>" +
+							"<task_hours>"+pre_requisite.quantity+"</task_hours>" +
+							"<source>service</source>" +
+							"<source_id>"+data_id+"</source_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</task_instances>";
+					var activity_xml="<activity>" +
+							"<data_id>"+task_id+"</data_id>" +
+							"<tablename>task_instances</tablename>" +
+							"<link_to>form14</link_to>" +
+							"<title>Added</title>" +
+							"<notes>Task "+pre_requisite.name+" assigned to "+staff+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+			
+					if(is_online())
+					{
+						server_create_row(task_xml,activity_xml);
+					}
+					else
+					{
+						local_create_row(task_xml,activity_xml);
+					}		
+				});
+			});
+			
 		}
 		else
 		{
@@ -3221,31 +3400,76 @@ function form72_create_form()
 
 	                $('#form72_body').prepend(rowsHTML);
 
-	                var free_xml="<bill_items>" +
-								"<id>"+id+"</id>" +
-								"<item_name>"+free_product_name+"</item_name>" +
-								"<staff></staff>" +
-								"<notes>free service</notes>" +
-								"<unit_price>0</unit_price>" +
-								"<amount>0</amount>" +
-								"<total>0</total>" +
-								"<discount>0</discount>" +
-								"<offer></offer>" +
-								"<type>free</type>" +
-								"<tax>0</tax>" +
-								"<bill_id>"+data_id+"</bill_id>" +
-								"<free_with>bill</free_with>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</bill_items>";	
+	                var free_pre_requisite_data="<pre_requisites>" +
+							"<name>"+free_service_name+"</name>" +
+							"<type>service</type>" +
+							"<requisite_type>task</requisite_type>" +
+							"<requisite_name></requisite_name>" +
+							"<quantity></quantity>" +
+							"</pre_requisites>";
+					fetch_requested_data('',free_pre_requisite_data,function(free_pre_requisites)
+					{
+		                var free_xml="<bill_items>" +
+									"<id>"+id+"</id>" +
+									"<item_name>"+free_service_name+"</item_name>" +
+									"<staff></staff>" +
+									"<notes>free service</notes>" +
+									"<unit_price>0</unit_price>" +
+									"<amount>0</amount>" +
+									"<total>0</total>" +
+									"<discount>0</discount>" +
+									"<offer></offer>" +
+									"<type>free</type>" +
+									"<tax>0</tax>" +
+									"<bill_id>"+data_id+"</bill_id>" +
+									"<free_with>bill</free_with>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</bill_items>";	
+						
+						if(is_online())
+						{
+							server_create_simple(free_xml);
+						}
+						else
+						{
+							local_create_simple(free_xml);
+						}
+						
+						free_pre_requisites.forEach(function(free_pre_requisite)
+						{
+							var task_id=get_new_key()+""+(Math.random()*1000);
+							var task_xml="<task_instances>" +
+									"<id>"+task_id+"</id>" +
+									"<name>"+free_pre_requisite.name+"</name>" +
+									"<assignee></assignee>" +
+									"<t_initiated>"+get_my_time()+"</t_initiated>" +
+									"<t_due></t_due>" +
+									"<status>pending</status>" +
+									"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
+									"<source>service</source>" +
+									"<source_id>"+id+"</source_id>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</task_instances>";
+							var activity_xml="<activity>" +
+									"<data_id>"+task_id+"</data_id>" +
+									"<tablename>task_instances</tablename>" +
+									"<link_to>form14</link_to>" +
+									"<title>Added</title>" +
+									"<notes>Task "+free_pre_requisite.name+"</notes>" +
+									"<updated_by>"+get_name()+"</updated_by>" +
+									"</activity>";
 					
-					if(is_online())
-					{
-						server_create_simple(free_xml);
-					}
-					else
-					{
-						local_create_simple(free_xml);
-					}
+							if(is_online())
+							{
+								server_create_row(task_xml,activity_xml);
+							}
+							else
+							{
+								local_create_row(task_xml,activity_xml);
+							}		
+						});
+				
+					});
 				}
 
 				offer_detail=offers[i].offer_detail;

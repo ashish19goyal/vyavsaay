@@ -343,6 +343,7 @@ function register_click()
 			}
 			else
 			{
+				console.log(e2.responseText);
 				document.getElementById("failed_register").innerHTML="An error occured, please try again.";
 				window.location.assign("#register");	
 				hide_loader();

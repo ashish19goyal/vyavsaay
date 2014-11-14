@@ -215,6 +215,14 @@
 	</div>
 	
 	<div id="modal18" title="Add task type">
+		<form id='modal18_form'>
+			<fieldset>
+				<label>Name <input type="text" required></label><br/>
+				<label>Description <textarea></textarea></label><br/>
+				<label>Estimated Hours <input type="number" step='any' required></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
 	</div>
 	
 	<div id="modal19" title="Copy product">

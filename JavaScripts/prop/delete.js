@@ -248,7 +248,7 @@ function form10_delete_item(button)
 {
 	if(is_delete_access('form10'))
 	{
-		console.log('deleting form10_item');
+		//console.log('deleting form10_item');
 		var bill_id=document.getElementById("form10_master").elements[7].value;
 		
 		var form_id=$(button).attr('form');
@@ -278,14 +278,20 @@ function form10_delete_item(button)
 					"<tax>"+tax+"</tax>" +
 					"<bill_id>"+bill_id+"</bill_id>" +
 					"</bill_items>";
-		console.log(data_xml);
+		var task_xml="<task_instances>" +
+					"<source_id>"+data_id+"</source_id>" +
+					"<source>service</source>" +
+					"</task_instances>";
+
 		if(is_online())
 		{
 			server_delete_simple(data_xml);
+			server_delete_simple(task_xml);
 		}
 		else
 		{
 			local_delete_simple(data_xml);
+			local_delete_simple(task_xml);
 		}
 		
 		$(button).parent().parent().remove();
@@ -387,8 +393,8 @@ function form14_delete_item(button)
 		
 		var name=form.elements[0].value;
 		var assignee=form.elements[1].value;
-		var status=form.elements[4].value;
-		var data_id=form.elements[5].value;
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
 		var data_xml="<task_instances>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
@@ -1431,7 +1437,21 @@ function form42_delete_item(button)
 						"<batch>"+bill_item.batch+"</batch>" +
 						"<quantity></quantity>" +
 						"</product_instances>";	
-			
+				
+				var task_xml="<task_instances>" +
+						"<source_id>"+bill_item.id+"</source_id>" +
+						"<source>service</source>" +
+						"</task_instances>";
+
+				if(is_online())
+				{
+					server_update_simple(task_xml);
+				}
+				else
+				{
+					local_update_simple(task_xml);
+				}
+
 				//////updating product quantity in inventory
 				fetch_requested_data('',quantity_data,function(quantities)
 				{
@@ -2448,7 +2468,7 @@ function form72_delete_item(button)
 			quantity=form.elements[2].value;
 		}
 		var price=form.elements[3].value;
-				var total=form.elements[4].value;
+		var total=form.elements[4].value;
 		var amount=form.elements[5].value;
 		var discount=form.elements[6].value;
 		var tax=form.elements[7].value;
@@ -2473,14 +2493,19 @@ function form72_delete_item(button)
 					"<bill_id>"+bill_id+"</bill_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bill_items>";	
+			var task_xml="<task_instances>" +
+					"<source></source>" +
+					"<source_id>"+data_id+"</source_id>" +
+					"</task_instances>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
-				
+				server_delete_simple(task_xml);				
 			}
 			else
 			{
 				local_delete_simple(data_xml);
+				local_delete_simple(task_xml);
 			}
 		}
 		else
@@ -2536,3 +2561,43 @@ function form72_delete_item(button)
 	}
 }
 
+/**
+ * @form manage Task types
+ * @param button
+ */
+function form79_delete_item(button)
+{
+	if(is_delete_access('form79'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		var task=form.elements[0].value;
+		var data_id=form.elements[3].value;
+		var data_xml="<task_type>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+task+"</name>" +
+					"</task_type>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>task_type</tablename>" +
+					"<link_to>form79</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Task type "+task+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

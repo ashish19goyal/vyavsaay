@@ -3120,7 +3120,7 @@ function form58_ini()
 	
 	var columns="<pre_requisites>" +
 			"<id>"+fid+"</id>" +
-			"<name>"+fservices+"</name>" +
+			"<name>"+fservice+"</name>" +
 			"<type>service</type>" +
 			"<requisite_type>"+ftype+"</requisite_type>" +
 			"<requisite_name>"+frequisite+"</requisite_name>" +
@@ -4133,6 +4133,7 @@ function form72_ini()
 
 
 
+
 function notifications_ini()
 {
 	show_loader();
@@ -4160,8 +4161,8 @@ function notifications_ini()
 					get_formatted_time(notifs[i].t_generated) +
 					"</div>" +
 					"<div>" +
-					"<input type='button' value='Seen' onclick='notifications_update_item()'>" +
-					"<input type='button' value='Close' onclick='notifications_update_item()'>" +
+					"<input type='button' value='Seen' onclick=\"notifications_update('"+notifs[i].data_id+"','reviewed')\">" +
+					"<input type='button' value='Close' onclick=\"notifications_update('"+notifs[i].data_id+"','closed')\">" +
 					"</div>" +
 					"</div>";
 		}
@@ -4189,8 +4190,8 @@ function notifications_ini()
 						get_formatted_time(notifs2[j].t_generated) +
 						"</div>" +
 						"<div>" +
-						"<input type='button' value='Unseen' onclick='notifications_update_item()'>" +
-						"<input type='button' value='Close' onclick='notifications_update_item()'>" +
+						"<input type='button' value='Unseen' onclick=\"notifications_update('"+notifs2[j].data_id+"','pending')\">" +
+						"<input type='button' value='Close' onclick=\"notifications_update('"+notifs2[j].data_id+"','closed')\">" +
 						"</div>" +
 						"</div>";
 			}
@@ -4274,44 +4275,8 @@ function opportunities_ini()
 
 
 
+
 function activities_ini() 
-{
-	var columns="<activities>" +
-		"<title></title>" +
-		"<link_to></link_to>" +
-		"<data_id></data_id>" +
-		"<notes></notes>" +
-		"<updated_by></updated_by>" +
-		"<user_display>yes</user_display>" +
-		"<last_updated compare='more than'>"+get_raw_time_24h()+"</last_updated>" +
-		"</activities>";
-	
-	fetch_requested_data('',columns,function(activities)
-	{
-		var result_html="";
-		for(var i in activities)
-		{
-			result_html+="<div class='activity_detail'>" +
-						activities[i].title +
-						"</br><a onclick=\"" +
-						"element_display('"+activities[i].data_id +
-						"','"+activities[i].link_to+
-						"');\">"+activities[i].notes+"</a>" +
-						"<div class='activity_log'>By:" +
-						activities[i].updated_by +
-						" @ " +
-						get_formatted_time(activities[i].last_updated) +
-						"</div>" +
-						"</div>";
-		}
-		$("#activity_lane").html(result_html);
-		
-	});
-	setTimeout(activities_ini,100000);	
-}
-
-
-function all_activities_ini() 
 {
 	show_loader();
 	var columns="<activities>" +
@@ -4728,3 +4693,72 @@ function form78_ini()
 		});
 	}
 }
+
+/**
+ * @form Manage task types
+ * @formNo 79
+ */
+function form79_ini()
+{
+	show_loader();
+	var fid=$("#form79_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form79_header');
+	
+	var fname=filter_fields.elements[0].value;
+	
+	var columns="<task_type>" +
+		"<id>"+fid+"</id>" +
+		"<name>"+fname+"</name>" +
+		"<description></description>" +
+		"<est_hours></est_hours>" +
+		"</task_type>";
+	
+	$('#form79_body').html("");
+	
+	fetch_requested_data('form79',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form79_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Task'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form79_"+result.id+"' value='"+result.name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Description'>";
+						rowsHTML+="<textarea readonly='readonly' form='form79_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Estimated Hours'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form79_"+result.id+"' class='dblclick_editable' value='"+result.est_hours+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form79_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form79_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form79_"+result.id+"' onclick='form79_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form79_body').prepend(rowsHTML);
+			var fields=document.getElementById("form79_"+result.id);
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form79_update_item(fields);
+			});
+		});
+		
+		resize_input();
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'task_types');
+		});
+		hide_loader();
+	});
+};
