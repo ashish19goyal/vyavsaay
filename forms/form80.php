@@ -6,7 +6,8 @@
 			<input type='hidden' name='column'>
 			<input type='hidden' name='references'>
 			<input type='hidden' name='reference_ids'>
-			<input type='submit' title='Save All' class='save_icon'>
+			<input type='submit' title='Save all Mappings' class='save_icon'>
+			<input type='button' title='Start merging' class='process_ok_icon'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

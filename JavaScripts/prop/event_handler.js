@@ -72,7 +72,7 @@ function modal_forms_ini()
 	   		closeOnEscape: true,
 		});
 	}
-	for(var i=50;i<51;i++)
+	for(var i=50;i<52;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,

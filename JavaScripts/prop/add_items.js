@@ -2296,7 +2296,7 @@ function form80_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 			rowsHTML+="<input type='hidden' form='form80_"+id+"' value='"+id+"'>";
-			rowsHTML+="<input type='submit' class='save_icon' form='form80_"+id+"'>";
+			rowsHTML+="<input type='submit' class='save_icon' form='form80_"+id+"' id='save_form_"+id+"'>";
 			rowsHTML+="<input type='button' class='delete_icon' form='form80_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";

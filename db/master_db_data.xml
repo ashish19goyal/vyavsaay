@@ -88,6 +88,30 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>de_duplication</tablename>
+			<listname>status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>de_duplication</tablename>
+			<listname>status</listname>
+			<name>cancelled</name>
+			<value>Cancelled</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>de_duplication</tablename>
+			<listname>status</listname>
+			<name>closed</name>
+			<value>Clsoed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>template</tablename>
 			<listname>product_sale_bill</listname>
 			<name>default_product_sale_bill</name>
@@ -2000,4 +2024,22 @@
 			<last_updated>1</last_updated>
 		</row>
 	</values_list>
+	<de_duplication_ref>
+		<row>
+			<object>product</object>
+			<tablename>product_master</tablename>
+			<keycolumn>name</keycolumn>
+			<references_value>bill_items--item_name;product_instances--product_name</references_value>
+			<references_id></references_id>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<object>service</object>
+			<tablename>services</tablename>
+			<keycolumn>name</keycolumn>
+			<references_value>bill_items--item_name</references_value>
+			<references_id></references_id>
+			<last_updated>1</last_updated>
+		</row>
+	</de_duplication_ref>
 </re_xml>

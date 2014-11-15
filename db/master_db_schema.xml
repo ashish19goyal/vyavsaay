@@ -39,4 +39,13 @@
 			<status index='no' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</values_list>
+	<de_duplication_ref>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<object index='yes' type="VARCHAR(50)"></object>
+			<tablename index='yes' type="VARCHAR(50)"></tablename>
+			<keycolumn index='yes' type="VARCHAR(50)"></keycolumn>
+			<references_value index='no' type="TEXT"></references_value>
+			<references_id index='no' type="TEXT"></references_id>
+			<last_updated index='no' type="BIGINT"></last_updated>		
+	</de_duplication_ref>
 </re_xml>

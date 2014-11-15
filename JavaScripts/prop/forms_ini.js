@@ -1772,7 +1772,6 @@ function form38_ini()
 
 
 /**
- * this function prepares the table for manage products form
  * @form Manage Products
  * @formNo 39
  */
@@ -1800,7 +1799,6 @@ function form39_ini()
 
 	fetch_requested_data('form39',columns,function(results)
 	{
-		$('#form39_body').html("");
 		results.forEach(function(result)
 		{
 			var picture_column="<documents>" +

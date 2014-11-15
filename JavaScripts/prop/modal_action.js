@@ -706,6 +706,7 @@ function modal14_action()
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
+		event.preventDefault();
 		if(is_create_access('form39'))
 		{
 			var name=form.elements[1].value;
@@ -2689,4 +2690,146 @@ function modal50_action()
 			}	
 		});
 	});		
+}
+
+
+/**
+ * @modal Merge records
+ * @modalNo 51
+ */
+function modal51_action(object)
+{
+	if(is_create_access('form80'))
+	{
+		$("#modal51").dialog("open");
+		
+		var de_duplication_data="<de_duplication>" +
+					"<id></id>" +
+					"<object>"+object+"</object>"+
+					"<tablename></tablename>"+
+					"<keycolumn></keycolumn>"+
+					"<slave_id></slave_id>"+
+				    "<slave_value></slave_value>"+
+				    "<master_id></master_id>"+
+				    "<master_value></master_value>"+
+				    "<references_value></references_value>"+
+				    "<references_id></references_id>"+
+				    "<status>pending</status>"+
+				    "</de_duplication>";
+				
+		fetch_requested_data('',de_duplication_data,function(results)
+		{
+			results.forEach(function(result)
+			{
+				if(result.slave_id!==result.master_id)
+				{
+					//////deleting the slave record from master table
+					var slave_xml="<"+result.tablename+">" +
+							"<id>"+result.slave_id+"</id>" +
+							"</"+result.tablename+">";
+					
+					if(is_online())
+					{
+						server_delete_simple(slave_xml);
+					}
+					else
+					{
+						local_delete_simple(slave_xml);
+					}
+					
+					//////replacing slave values with master values
+					var refs_array=result.references_value.split(";");
+					refs_array.forEach(function(refs)
+					{
+						var refs_split=refs.split("--");
+						var tablename=refs_split[0];
+						var column=refs_split[1];
+						
+						if(tablename!=="" && tablename!==null)
+						{	
+							var refs_data="<"+tablename+">" +
+									"<id></id>" +
+									"<"+column+">"+result.slave_value+"</"+column+">" +
+									"</"+tablename+">";
+							fetch_requested_data('',refs_data,function(ref_results)
+							{
+								ref_results.forEach(function(ref_result)
+								{
+									var refs_xml="<"+tablename+">" +
+											"<id>"+ref_result.id+"</id>" +
+											"<"+column+">"+result.master_value+"</"+column+">" +
+											"<last_updated>"+get_my_time()+"</last_updated>" +
+											"</"+tablename+">";
+									if(is_online())
+									{
+										server_update_simple(refs_xml);
+									}
+									else
+									{
+										local_update_simple(refs_xml);
+									}
+								});
+							});
+						}
+					});
+					
+					////replacing slave ids with master ids
+					var ref_ids_array=result.references_id.split(";");
+					ref_ids_array.forEach(function(ref_ids)
+					{
+						var ref_ids_split=ref_ids.split("--");
+						var tablename=ref_ids_split[0];
+						var column=ref_ids_split[1];
+						
+						if(tablename!=="" && tablename!==null)
+						{
+							var ref_ids_data="<"+tablename+">" +
+									"<id></id>" +
+									"<"+column+">"+result.slave_id+"</"+column+">" +
+									"</"+tablename+">";
+							fetch_requested_data('',ref_ids_data,function(ref_id_results)
+							{
+								ref_id_results.forEach(function(ref_id_result)
+								{
+									var ref_ids_xml="<"+tablename+">" +
+											"<id>"+ref_id_result.id+"</id>" +
+											"<"+column+">"+result.master_id+"</"+column+">" +
+											"<last_updated>"+get_my_time()+"</last_updated>" +
+											"</"+tablename+">";
+									if(is_online())
+									{
+										server_update_simple(ref_ids_xml);
+									}
+									else
+									{
+										local_update_simple(ref_ids_xml);
+									}
+								});
+							});
+						}
+					});
+					
+				}
+				
+				/////marking the record as closed in de-duplication table
+				var de_duplication_xml="<de_duplication>" +
+						"<id>"+result.id+"</id>" +
+						"<status>closed</status>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</de_duplication>";
+				if(is_online())
+				{
+					server_update_simple(de_duplication_xml);
+				}
+				else
+				{
+					local_update_simple(de_duplication_xml);
+				}
+			});
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
 }

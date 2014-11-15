@@ -1731,6 +1731,8 @@ function form80_header_ini()
 	var column_filter=fields.elements[3];
 	var refs_filter=fields.elements[4];
 	var ref_ids_filter=fields.elements[5];
+	var merge_button=fields.elements[7];
+		
 	object_filter.value='';
 	table_filter.value='';
 	column_filter.value='';
@@ -1751,25 +1753,31 @@ function form80_header_ini()
 	
 	$(object_filter).on('blur',function(event)
 	{
+		$(merge_button).off('click');
+		$(merge_button).on('click',function(event)
+		{
+			modal51_action(object_filter.value);
+		});
+		
 		var table_data="<de_duplication_ref>" +
-				"<table></table>" +
+				"<tablename></tablename>" +
 				"<object>"+object_filter.value+"</object>" +
-				"</de_duplication>";
+				"</de_duplication_ref>";
 		set_my_value(table_data,table_filter);
 		var column_data="<de_duplication_ref>" +
-				"<column></column>" +
+				"<keycolumn></keycolumn>" +
 				"<object>"+object_filter.value+"</object>" +
-				"</de_duplication>";
+				"</de_duplication_ref>";
 		set_my_value(column_data,column_filter);
 		var refs_data="<de_duplication_ref>" +
 				"<references_value></references_value>" +
 				"<object>"+object_filter.value+"</object>" +
-				"</de_duplication>";
+				"</de_duplication_ref>";
 		set_my_value(refs_data,refs_filter);
 		var ref_ids_data="<de_duplication_ref>" +
 				"<references_id></references_id>" +
 				"<object>"+object_filter.value+"</object>" +
-				"</de_duplication>";
+				"</de_duplication_ref>";
 		set_my_value(ref_ids_data,ref_ids_filter);
 		
 		form80_ini();

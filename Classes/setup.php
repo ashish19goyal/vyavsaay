@@ -314,6 +314,7 @@ class master_setup
 							{
 								$q_string.="?,";
 								$data_array[]=$column->nodeValue;
+								
 							}
 						}
 						$q_string=rtrim($q_string,",");

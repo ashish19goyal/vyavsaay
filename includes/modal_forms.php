@@ -420,5 +420,10 @@
 		Sending mails to customers. 
 		You can close this window at any time. The process will continue in the background.
 	</div>
+	
+	<div id="modal51" title="Merging Records">
+		Merging records. 
+		You can close this window at any time. The process will continue in the background.
+	</div>
 		
 </div>
