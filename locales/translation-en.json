@@ -3,7 +3,9 @@
     "enterprise resource planning": "Enterprise Resource Planning",
     "vyavsaay": "Vyavsaay",
     "activities_log": "Activities Log",
-    "search_results": "Search Results"
+    "search_results": "Search Results",
+    "notifications":"Notifications",
+    "opportunities":"Opportunities"
   },
   "function": {
     "sale_bills": "Sale Bills",
@@ -128,6 +130,7 @@
   	"create_sale_order":"Create Sale Order",
   	"manage_sale_orders":"Manage Sale Orders",
   	"promotion_mails":"Promotion Mails",
-  	"manage_task_types":"Manage Task Types"
+  	"manage_task_types":"Manage Task Types",
+  	"de-duplication_mapping":"De-duplication Mapping"
   }
 }

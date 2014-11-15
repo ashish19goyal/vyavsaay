@@ -259,8 +259,6 @@ function notifications_add()
 	});
 	
 	///////////overdue tasks end//////////
-
-	
 	
 	setTimeout(notifications_add,300000);
 }

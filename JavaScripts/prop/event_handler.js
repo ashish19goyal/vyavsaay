@@ -25,7 +25,6 @@ function default_load()
 		Chart.defaults.global.responsive = true;
 		$('textarea').autosize();
 		i18n_setup();
-		resize_input();
 		home_display();
 		setTimeout(function()
 		{
@@ -352,14 +351,16 @@ function longPressEditable(element)
 	$(element).each(function()
 	{
 		var pressTimer;
-		$(this).mouseup(function()
+		$(this).on('touchend',function()
 		{
 			clearTimeout(pressTimer);
-		}).mousedown(function()
+		}).on('touchstart',function()
 		{
+			var input_box=this;
 			pressTimer = window.setTimeout(function()
 			{
-				$(this).removeAttr('readonly');
+				$(input_box).removeAttr('readonly');
+				$(input_box).focus();
 			},500); 
 		});
 		

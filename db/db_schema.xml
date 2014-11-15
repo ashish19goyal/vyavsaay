@@ -572,4 +572,27 @@
 			<date index='no' type="BIGINT"></date>
 			<last_updated index='no' type="BIGINT"></last_updated>		
 	</feedback>
+	<de_duplication>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<object index='yes' type="VARCHAR(50)"></object>
+			<table index='yes' type="VARCHAR(50)"></table>
+			<column index='yes' type="VARCHAR(50)"></column>
+			<slave_id index='yes' type="BIGINT"></slave_id>
+			<slave_value index='yes' type="VARCHAR(100)"></slave_ref>
+			<master_id index='yes' type="BIGINT"></master_id>
+			<master_value index='yes' type="VARCHAR(100)"></master_ref>
+			<references_value index='no' type="TEXT"></references_value>
+			<references_id index='no' type="TEXT"></references_id>
+			<status index='yes' type="VARCHAR(25)"></status><!-- pending/closed/cancelled -->
+			<last_updated index='no' type="BIGINT"></last_updated>		
+	</de_duplication>
+	<de_duplication_ref>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<object index='yes' type="VARCHAR(50)"></object>
+			<table index='yes' type="VARCHAR(50)"></table>
+			<column index='yes' type="VARCHAR(50)"></column>
+			<references_value index='no' type="TEXT"></references_value>
+			<references_id index='no' type="TEXT"></references_id>
+			<last_updated index='no' type="BIGINT"></last_updated>		
+	</de_duplication_ref>
 </re_xml>

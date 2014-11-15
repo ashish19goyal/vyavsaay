@@ -4,14 +4,14 @@
 			<img title='Home' src='./images/home.jpeg' class="icon" onclick='home_display();'>
 	</div>
 	
-	<div id='notification_icon' class='menu_icon' >
+	<div id='notification_icon' class='menu_icon' onclick='show_notifications();'>
 			<div id='count_notif'>5</div>
-			<img title='Notifications' src='./images/notification.jpeg' class="icon" onclick='show_notifications();'>
+			<img title='Notifications' src='./images/notification.jpeg' class="icon">
 	</div>
 	
-	<div id='opportunity_icon' class='menu_icon'>
+	<div id='opportunity_icon' class='menu_icon' onclick='show_opportunities();'>
 			<div id='count_oppor'>0</div>
-			<img title='Opportunities' src='./images/opportunity.jpeg' class="icon" onclick='show_opportunities();'>
+			<img title='Opportunities' src='./images/opportunity.jpeg' class="icon">
 	</div>
 	
 	<div id='offline_icon' class='menu_icon'>

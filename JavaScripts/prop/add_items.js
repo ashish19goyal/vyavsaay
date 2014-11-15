@@ -2253,7 +2253,7 @@ function form78_add_item()
 				"</customers>";
 		set_my_value_list(acc_name_data,acc_name_filter);
 		
-		$(acc_name_filter).on('input',function(event)
+		$(acc_name_filter).on('blur',function(event)
 		{
 			var name_data="<customers>" +
 				"<name></name>" +
@@ -2265,6 +2265,81 @@ function form78_add_item()
 				"<acc_name>"+acc_name_filter.value+"</acc_name>" +
 				"</customers>";
 			set_my_value(email_data,email_filter);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+
+/**
+ * @form De-duplication mapping
+ * @formNo 80
+ */
+function form80_add_item()
+{
+	if(is_create_access('form80'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form80_"+id+"'></form>";
+			rowsHTML+="<td data-th='Change'>";
+				rowsHTML+="<input type='text' form='form80_"+id+"' value=''>";
+				rowsHTML+="<input type='hidden' form='form80_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='To'>";
+				rowsHTML+="<input type='text' form='form80_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form80_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+			rowsHTML+="<input type='hidden' form='form80_"+id+"' value='"+id+"'>";
+			rowsHTML+="<input type='submit' class='save_icon' form='form80_"+id+"'>";
+			rowsHTML+="<input type='button' class='delete_icon' form='form80_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form80_body').prepend(rowsHTML);
+		var fields=document.getElementById("form80_"+id);
+		var slave_filter=fields.elements[0];
+		var slave_id_filter=fields.elements[1];
+		var master_filter=fields.elements[2];
+		var master_id_filter=fields.elements[3];
+		
+		var master_fields=document.getElementById('form80_master');
+		var table=master_fields.elements[2].value;
+		var column=master_fields.elements[3].value;
+		
+		var slave_data="<"+table+">" +
+				"<"+column+"></"+column+">" +
+				"</"+table+">";
+		set_my_value_list(slave_data,slave_filter);
+		set_my_value_list(slave_data,master_filter);
+		
+		$(slave_filter).on('blur',function(event)
+		{
+			var slave_id_data="<"+table+">" +
+				"<id></id>" +
+				"<"+column+">"+slave_filter.value+"</"+column+">" +
+				"</"+table+">";
+			set_my_value(slave_id_data,slave_id_filter);
+
+		});
+		$(master_filter).on('blur',function(event)
+		{
+			var master_id_data="<"+table+">" +
+				"<id></id>" +
+				"<"+column+">"+master_filter.value+"</"+column+">" +
+				"</"+table+">";
+			set_my_value(master_id_data,master_id_filter);
+		});
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form80_create_item(fields);
 		});
 	}
 	else

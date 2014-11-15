@@ -1,4 +1,4 @@
 <div id="opportunities_box">
-	<div id="opportunities_header"></div>
+	<div style='margin:auto;text-align:center;' data-i18n='master.opportunities'></div>
 	<div id="opportunities_detail"></div>
 </div>

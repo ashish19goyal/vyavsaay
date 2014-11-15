@@ -216,13 +216,14 @@ input[type="text"]#search_box{
 
 #count_notif, #count_oppor{
 	float: right;
-	position: absolute;
-	right: 25%;
-	border-radius: 5px;
-	font-size: .5em;
-	width:20%;
-	height: 5%;
+	position:absolute;
+	right: 10px;
+	border-radius: 2px;
+	font-size: .7em;
+	width:13px;
+	height: 15px;
 	text-align: left;
+	padding:0px 3px;
 }
 
 .filter{
@@ -547,44 +548,40 @@ tbody tr:hover{
 	font-size: .6em;
 }
 
-.all_activity_header{
-	background-color: #2A2A2A;
-	color: #EBE5DC;
-}
-
 .all_activity_detail{
 	background-color: #558C89;
 	border: 2px solid #DCDDD3;
 	color:#F5F3EE;
-	padding: 5% 5% 5% 5%;
-}
-
-.all_activity_detail>a{
-	font-size: 1em;
+	padding: 1% 5% 1% 5%;
+	float:left;
+	width:100%;
 }
 
 .all_activity_log{
-	font-size: 1em;
+	font-size: .9em;
 }
 
-#search_results_box{
+.notification_detail{
+	background-color: #9351A6;
+	border: 2px solid #DCDDD3;
+	color:#F5F3EE;
+	padding: 1% 5% 1% 5%;
+	float:left;
 	width:100%;
+}
+
+.notification_status{
+	font-size: .9em;
 }
 
 .search_detail{
 	background-color: #AB7D44;
 	border: 2px solid #DCDDD3;
 	color:#F5F3EE;
-	padding: 1% 1% 1% 1%;
-	text-align:left;
+	padding: 1% 5% 1% 5%;
+	float:left;
 	width: 100%;
 }
-
-.search_detail>a{
-	font-size: 1em;
-}
-
-
 
 canvas{ 
 	border: 1px solid black;
@@ -612,6 +609,7 @@ canvas{
 	}
 	
 	.menu_icon{
+		position:relative;
 		width: 35px;
 		height: 35px;
 		margin: 15% 15% 15% 15%;
@@ -687,6 +685,7 @@ canvas{
 		color: transparent;
 	}
 	.menu_icon{
+		position:relative;
 		float: left;
 		width: 35px;
 		height: 35px;

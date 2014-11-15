@@ -1717,3 +1717,63 @@ function form79_header_ini()
 {
 
 }
+
+/**
+ * @form De-duplication mapping
+ * @formNo 80
+ */
+function form80_header_ini()
+{
+	var fields=document.getElementById('form80_master');
+	
+	var object_filter=fields.elements[1];
+	var table_filter=fields.elements[2];
+	var column_filter=fields.elements[3];
+	var refs_filter=fields.elements[4];
+	var ref_ids_filter=fields.elements[5];
+	object_filter.value='';
+	table_filter.value='';
+	column_filter.value='';
+	refs_filter.value='';
+	ref_ids_filter.value='';
+	
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form80_update_form();
+	});
+	
+	var object_data="<de_duplication_ref>" +
+			"<object></object>" +
+			"</de_duplication_ref>";
+	set_my_value_list(object_data,object_filter);
+	
+	$(object_filter).on('blur',function(event)
+	{
+		var table_data="<de_duplication_ref>" +
+				"<table></table>" +
+				"<object>"+object_filter.value+"</object>" +
+				"</de_duplication>";
+		set_my_value(table_data,table_filter);
+		var column_data="<de_duplication_ref>" +
+				"<column></column>" +
+				"<object>"+object_filter.value+"</object>" +
+				"</de_duplication>";
+		set_my_value(column_data,column_filter);
+		var refs_data="<de_duplication_ref>" +
+				"<references_value></references_value>" +
+				"<object>"+object_filter.value+"</object>" +
+				"</de_duplication>";
+		set_my_value(refs_data,refs_filter);
+		var ref_ids_data="<de_duplication_ref>" +
+				"<references_id></references_id>" +
+				"<object>"+object_filter.value+"</object>" +
+				"</de_duplication>";
+		set_my_value(ref_ids_data,ref_ids_filter);
+		
+		form80_ini();
+	});
+	
+	$(object_filter).focus();
+}
