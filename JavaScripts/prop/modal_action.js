@@ -2603,6 +2603,30 @@ function modal33_action(id)
 	});
 }
 
+/**
+ * @modal Whatsapp contact
+ * @modalNo 34
+ */
+function modal34_action()
+{
+	var form=document.getElementById("modal34_form");
+	
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		var name=form.elements[1].value;
+		var contact=form.elements[2].value;
+		var post_data="name="+name+"&contact="+contact;
+		
+		ajax_with_custom_func("./ajax/whatsapp.php",post_data,function(e)
+		{
+			console.log(e.responseText);
+			$("#modal34").dialog("close");
+		});		
+	});
+	$("#modal34").dialog("open");
+}
+
 
 /**
  * @modal Sending Mails
@@ -2833,3 +2857,5 @@ function modal51_action(object)
 		$("#modal2").dialog("open");
 	}
 }
+
+

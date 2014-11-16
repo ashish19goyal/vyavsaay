@@ -2029,7 +2029,7 @@
 			<object>product</object>
 			<tablename>product_master</tablename>
 			<keycolumn>name</keycolumn>
-			<references_value>bill_items--item_name;product_instances--product_name</references_value>
+			<references_value>bill_items--item_name;product_instances--product_name;supplier_bill_items--product_name;purchase_order_items--product_name;supplier_return_items--item_name;offers--product_name;offers--free_product_name;sale_order_items--item_name;bill_items--item_name;bill_items--free_with;customer_return_items--item_name;attributes--item_name;cross_sells--name;cross_sells--cross_name;reviews--name;pre_requisites--name;pre_requisites--requisite_name;area_utilization--product_name;pamphlet_items--item_name</references_value>
 			<references_id></references_id>
 			<last_updated>1</last_updated>
 		</row>
@@ -2037,7 +2037,63 @@
 			<object>service</object>
 			<tablename>services</tablename>
 			<keycolumn>name</keycolumn>
-			<references_value>bill_items--item_name</references_value>
+			<references_value>bill_items--item_name;offers--service;offers--free_service_name;sale_order_items--item_name;bill_items--item_name;bill_items--free_with;service_instances--service_name;attributes--item_name;cross_sells--name;cross_sells--cross_name;reviews--name;pre_requisites--name;pre_requisites--requisite_name;area_utilization--service_name;pamphlet_items--item_name</references_value>
+			<references_id>task_instances--source_id</references_id>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<object>staff</object>
+			<tablename>staff</tablename>
+			<keycolumn>acc_name</keycolumn>
+			<references_value>accounts--acc_name;attendance--acc_name;task_instances--assignee;transactions--receiver;transactions--giver;cash_register--acc_name;payments--acc_name;bill_items--staff</references_value>
+			<references_id></references_id>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<object>customer</object>
+			<tablename>customers</tablename>
+			<keycolumn>acc_name</keycolumn>
+			<references_value>accounts--acc_name;transactions--receiver;transactions--giver;cash_register--acc_name;payments--acc_name;credit_notes--acc_name;sale_orders--customer_name;bills--customer_name;customer_returns--customer</references_value>
+			<references_id></references_id>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<object>supplier</object>
+			<tablename>suppliers</tablename>
+			<keycolumn>acc_name</keycolumn>
+			<references_value>accounts--acc_name;purchase_orders--supplier;supplier_bills--supplier;supplier_returns--supplier;transactions--receiver;transactions--giver;cash_register--acc_name;payments--acc_name</references_value>
+			<references_id></references_id>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<object>account</object>
+			<tablename>accounts</tablename>
+			<keycolumn>acc_name</keycolumn>
+			<references_value>transactions--receiver;transactions--giver;cash_register--acc_name;payments--acc_name</references_value>
+			<references_id></references_id>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<object>offer</object>
+			<tablename>offers</tablename>
+			<keycolumn>name</keycolumn>
+			<references_value>bills--offer;bill_items--offer;pamphlet_items--offer_name</references_value>
+			<references_id></references_id>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<object>asset</object>
+			<tablename>assets</tablename>
+			<keycolumn>name</keycolumn>
+			<references_value>pre_requisites--requisite_name;asset_valuations--asset_name;asset_maintenance--asset_name</references_value>
+			<references_id></references_id>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<object>task</object>
+			<tablename>task_type</tablename>
+			<keycolumn>name</keycolumn>
+			<references_value>task_instances--name;pre_requisites--requisite_name</references_value>
 			<references_id></references_id>
 			<last_updated>1</last_updated>
 		</row>

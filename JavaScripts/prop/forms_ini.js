@@ -4137,6 +4137,7 @@ function notifications_ini()
 {
 	show_loader();
 	var columns="<notifications>" +
+			"<id></id>" +
 			"<title></title>" +
 			"<link_to></link_to>" +
 			"<data_id></data_id>" +
@@ -4145,28 +4146,29 @@ function notifications_ini()
 			"<status>pending</status>" +
 			"</notifications>";
 
-	fetch_requested_data('',columns,function(notifs)
+	fetch_requested_data('notif',columns,function(notifs)
 	{	
 		var result_html="";
-		for(var i in notifs)
+		notifs.forEach(function(notif)
 		{
 			result_html+="<div class='notification_detail'><b>" +
-					notifs[i].title +
+					notif.title +
 					"</b></br><a onclick=\"" +
-					"element_display('"+notifs[i].data_id +
-					"','"+notifs[i].link_to+"');\">"+notifs[i].notes+"</a>" +
+					"element_display('"+notif.data_id +
+					"','"+notif.link_to+"');\">"+notif.notes+"</a>" +
 					"<div class='notification_status'>" +
 					" Generated @ " +
-					get_formatted_time(notifs[i].t_generated) +
+					get_formatted_time(notif.t_generated) +
 					"</div>" +
 					"<div>" +
-					"<input type='button' value='Seen' onclick=\"notifications_update('"+notifs[i].data_id+"','reviewed')\">" +
-					"<input type='button' value='Close' onclick=\"notifications_update('"+notifs[i].data_id+"','closed')\">" +
+					"<input type='button' value='Seen' onclick=\"notifications_update('"+notif.id+"','reviewed')\">" +
+					"<input type='button' value='Close' onclick=\"notifications_update('"+notif.id+"','closed')\">" +
 					"</div>" +
 					"</div>";
-		}
+		});
 		
 		var columns2="<notifications>" +
+				"<id></id>" +
 				"<title></title>" +
 				"<link_to></link_to>" +
 				"<data_id></data_id>" +
@@ -4175,25 +4177,25 @@ function notifications_ini()
 				"<status>reviewed</status>" +
 				"</notifications>";
 		
-		fetch_requested_data('',columns2,function(notifs2)
+		fetch_requested_data('notif',columns2,function(notifs2)
 		{	
-			for(var j in notifs2)
+			notifs2.forEach(function(notif2)
 			{
 				result_html+="<div class='notification_detail'><b>" +
-						notifs2[j].title +
+						notif2.title +
 						"</b></br><a onclick=\"" +
-						"element_display('"+notifs2[j].data_id +
-						"','"+notifs2[j].link_to+"');\">"+notifs2[j].notes+"</a>" +
+						"element_display('"+notif2.data_id +
+						"','"+notif2.link_to+"');\">"+notif2.notes+"</a>" +
 						"<div class='notification_status'>" +
 						" Generated @ " +
-						get_formatted_time(notifs2[j].t_generated) +
+						get_formatted_time(notif2.t_generated) +
 						"</div>" +
 						"<div>" +
-						"<input type='button' value='Unseen' onclick=\"notifications_update('"+notifs2[j].data_id+"','pending')\">" +
-						"<input type='button' value='Close' onclick=\"notifications_update('"+notifs2[j].data_id+"','closed')\">" +
+						"<input type='button' value='Unseen' onclick=\"notifications_update('"+notif2.id+"','pending')\">" +
+						"<input type='button' value='Close' onclick=\"notifications_update('"+notif2.id+"','closed')\">" +
 						"</div>" +
 						"</div>";
-			}
+			});
 			$("#notifications_detail").html(result_html);
 			hide_loader();
 		});
@@ -4214,7 +4216,7 @@ function opportunities_ini()
 			"<status>pending</status>" +
 			"</opportunities>";
 
-	fetch_requested_data('',columns,function(oppors)
+	fetch_requested_data('oppor',columns,function(oppors)
 	{	
 		var result_html="";
 		
@@ -4245,7 +4247,7 @@ function opportunities_ini()
 				"<status>reviewed</status>" +
 				"</opportunities>";
 		
-		fetch_requested_data('',columns2,function(oppors2)
+		fetch_requested_data('oppor',columns2,function(oppors2)
 		{	
 			for(var j in oppors2)
 			{

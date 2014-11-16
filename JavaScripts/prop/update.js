@@ -3806,21 +3806,24 @@ function form80_update_form(button)
  */
 function notifications_update(data_id,status)
 {
-	if(is_update_access('notifications'))
+	console.log(data_id);
+	console.log(status);
+	
+	if(is_update_access('notif'))
 	{
 		var last_updated=get_my_time();
 		var data_xml="<notifications>" +
 					"<id>"+data_id+"</id>" +
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</task_type>";
+					"</notifications>";
 		if(is_online())
 		{
-			server_update_row(data_xml,activity_xml);
+			server_update_simple(data_xml);
 		}
 		else
 		{
-			local_update_row(data_xml,activity_xml);
+			local_update_simple(data_xml);
 		}
 	}
 	else

@@ -1,7 +1,7 @@
 <div class='modal_forms'>
 	<div id="modal1" title="Please type your password again">
 		<form>
-			<input type="password" id="modal1_pass">
+			<input type="password" id="modal1_pass" required>
 			<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 		</form>
 	</div>
@@ -425,5 +425,6 @@
 		Merging records. 
 		You can close this window at any time. The process will continue in the background.
 	</div>
+	
 		
 </div>

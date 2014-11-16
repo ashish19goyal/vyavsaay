@@ -78,12 +78,13 @@ function count_notif()
 		
 		if(num_res===0)
 		{	
-			$('#count_notif').html(""); 
+			$('#count_notif').html("");
+			$('#count_notif').hide();
 		}
 		else
 		{	
 			$('#count_notif').html(num_res);
-			$('#count_notif').css('backgroundColor','#dddd00'); 
+			$('#count_notif').show(); 
 		}
 	},notif_data);
 	setTimeout(count_notif,100000);

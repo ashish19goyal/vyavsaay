@@ -37,7 +37,64 @@
 					</form>
        			</div>
 		<!----- //End-header---->
-		<!----- banner ---->
+		
+		
+		<div id="share_box" data-url="http://vyavsaay.com" data-text="Latest technology for your business" title='Share'>
+			<div class="box">
+				<div class="count">5</div>
+				<div class="share">share</div>
+			</div>
+			<div class="social_buttons">
+				<div class="button">
+					<a href='https://plus.google.com' target='_blank'>
+						<img src='./images/google.jpeg' title="+1">
+					</a>
+					<a href="https://plus.google.com/share?url=http%3A%2F%2Fvyavsaay.com" target='_blank'>Share</a>
+				</div>
+				<div class="button">
+					<a href="https://twitter.com/vyavsaaycom" target='_blank'><img src='./images/twitter.jpeg' title="Follow @vyavsaaycom"></a>
+					 <!-- <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://vyavsaay.com" data-text="Latest technology for your business" data-via="ashish_18goyal" data-count="horizontal">Tweet</a> -->
+					<a href="https://twitter.com/intent/tweet?text=Latest%20technology%20for%20your%20business&url=http%3A%2F%2Fvyavsaay.com&via=ashish_18goyal" target='_blank'>Tweet</a>
+				</div>
+				<div class="button">
+					<a href="https://www.facebook.com/ashish.18goyal" target='_blank'><img src='./images/fb.jpeg' title="Like"></a>
+					<!-- <div class="fb-share-button" data-href="http://vyavsaay.com" data-layout="button"></div> -->
+					<a href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvyavsaay.com&t=Latest%20technology%20for%20your%20business" target='_blank'>Share</a>
+				</div>
+				<div class="button">
+					<div onclick='modal34_action();'>
+						<img src='./images/whatsapp.jpeg' title="Connect">
+						<div>Connect</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal_forms">
+			<div id="modal34" title="Subscribe to Vyavsaay on whatsapp">
+				<form id='modal34_form'>
+					<fieldset>
+						<label>Name<input type="text"></label>
+						<label>Contact Number<input type="number" required></label>
+						<input type="submit" value="Subscribe">
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		
+ 		<script>
+			!function()
+			{
+				$("#modal34").dialog({
+			   		autoOpen: false,
+			   		width: 300,
+			   		modal: true,
+			   		show: "slide",
+			   		closeOnEscape: true,
+				});
+			}();	
+		</script>
+ 		<!----- banner ---->
 			<div class="banner">
 			<!-- 	<div class="container"> -->
 					<div class="banner-info">
@@ -46,7 +103,7 @@
 						</div>
 						<div class="col-md-6 banner-text">
 							<h1>Vyavsaay</h1>
-							<p>Vyavsaay provides a cloud based, cross platform solution to manage your business processes and information.</p>
+							<p>Vyavsaay provides lastest technology solutions for your business, on a cloud based platform.</p>
 							<p>Email: info@vyavsaay.com <br> Phone: 9818005232</p>
 						</div>
 					<!-- 	<div class="clearfix"> </div> -->
@@ -232,10 +289,21 @@
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 		
 <script>
-		$(document).ready(function() {										
+		$(document).ready(function(){										
 			$().UItoTop({ easingType: 'easeOutQuart' });
+				
 		});						
 
+		/////display social media buttons
+	    $('#share_box').on('click',function(event)
+	   	{
+		   	$(this).find('.social_buttons').show();
+		});
+	    $('#share_box').on('mouseleave',function(event)
+    	{
+    	   	$(this).find('.social_buttons').hide();
+    	});
+		
 		$('#login').on('submit',function(event)
 		{
 			event.preventDefault();

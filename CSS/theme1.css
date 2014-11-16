@@ -224,6 +224,8 @@ input[type="text"]#search_box{
 	height: 15px;
 	text-align: left;
 	padding:0px 3px;
+	display:none;
+	background-color:#dddd00;
 }
 
 .filter{
@@ -568,6 +570,10 @@ tbody tr:hover{
 	padding: 1% 5% 1% 5%;
 	float:left;
 	width:100%;
+}
+
+.notification_detail input{
+	color:#171B3A;
 }
 
 .notification_status{

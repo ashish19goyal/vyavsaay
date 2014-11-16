@@ -31,6 +31,67 @@ div.pricing_grid{
 	background-color: #F2BA13;
 }
 
+/*-------social media buttons-----------*/
+
+#share_box{
+	float:left;
+	position:absolute;
+	top:50%;
+	left:5px;
+	z-index:999;
+	display:block;
+}
+#share_box .count {
+	color:#444444;
+	display:block;
+	font-size:17px;
+	line-height:34px;
+	height:34px;
+	padding:4px 0;
+	position:relative;
+	text-align:center;
+	text-decoration:none;
+	width:50px;
+	background-color:#eee;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	border-radius:4px;
+}
+#share_box .share {
+	color:#FFFFFF;
+	display:block;
+	font-size:11px;
+	height:16px;
+	line-height:16px;
+	margin-top:3px;
+	padding:0;
+	text-align:center;
+	text-decoration:none;
+	width:50px;
+	background-color:#2ABF5E;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	border-radius:4px;
+}
+#share_box .social_buttons{
+	display:none;
+	position:absolute;
+	margin-left:50px;
+	top:50%;
+	z-index:10;
+	background-color:#fff;
+	width:210px;
+	height:75px;
+	padding: 5px;
+}
+#share_box .button {
+	float:left;
+	width:50px;
+	margin:5px auto;
+	height:65px;
+}
+/*-----end-------*/
+
 /*----login box----*/
 
 #login_pull {

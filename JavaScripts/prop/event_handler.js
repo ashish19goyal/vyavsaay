@@ -14,6 +14,7 @@ function default_load()
 	}
 	
 	number_active_ajax=0;
+	loaderTimer=0;
 	
 	if(is_set_session())
 	{
@@ -64,7 +65,7 @@ function modal_forms_ini()
 	}
 	for(var i=8;i<34;i++)
 	{
-		var dialog=$("#modal"+i).dialog({
+		$("#modal"+i).dialog({
 	   		autoOpen: false,
 	   		width: 300,
 	   		modal: true,
@@ -72,7 +73,7 @@ function modal_forms_ini()
 	   		closeOnEscape: true,
 		});
 	}
-	for(var i=50;i<52;i++)
+	for(var i=50;i<53;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -228,8 +229,12 @@ function hide_all()
  */
 function show_loader()
 {
-	$("#loading_icon").show();
-	$("#transparent_layer").show();
+	loaderTimer=window.setTimeout(function()
+	{
+		$("#loading_icon").show();
+		$("#transparent_layer").show();
+	},100);
+	
 }
 
 /**
@@ -237,6 +242,7 @@ function show_loader()
  */
 function hide_loader()
 {
+	clearTimeout(loaderTimer);
 	$("#loading_icon").hide();
 	$("#transparent_layer").hide();
 }

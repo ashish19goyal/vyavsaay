@@ -811,7 +811,7 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>notifications</element_id>
+			<element_id>notif</element_id>
 			<element_name>Notifications</element_name>
 			<status>active</status>
 			<re>checked</re>
@@ -822,7 +822,7 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>opportunities</element_id>
+			<element_id>oppor</element_id>
 			<element_name>Opportunities</element_name>
 			<status>active</status>
 			<re>checked</re>
