@@ -1785,3 +1785,32 @@ function form80_header_ini()
 	
 	$(object_filter).focus();
 }
+
+/**
+ * @form Whatsapp promotion
+ * @formNo 81
+ */
+function form81_header_ini()
+{
+	var fields=document.getElementById('form81_master');
+	var name_filter=fields.elements[1];
+	name_filter.value="";
+	fields.elements[2].value="";
+	
+	var name_data="<offers>" +
+			"<name></name>" +
+			"</offers>";
+	set_my_value_list(name_data,name_filter);
+	
+	$(name_filter).on('blur',function(event)
+	{
+		form81_ini();
+	});
+	
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		modal52_action();
+	});
+}

@@ -210,6 +210,7 @@ function hide_all()
 	$("#inventory_main").hide();
 	$("#finances_main").hide();
 	$("#ecommerce_main").hide();
+	$("#reach_out_main").hide();
 	$("#customers_main").hide();
 	$("#suppliers_main").hide();
 	$("#staff_main").hide();
@@ -229,11 +230,11 @@ function hide_all()
  */
 function show_loader()
 {
-	loaderTimer=window.setTimeout(function()
-	{
+//	loaderTimer=window.setTimeout(function()
+//	{
 		$("#loading_icon").show();
 		$("#transparent_layer").show();
-	},100);
+//	},100);
 	
 }
 
@@ -242,9 +243,9 @@ function show_loader()
  */
 function hide_loader()
 {
-	clearTimeout(loaderTimer);
 	$("#loading_icon").hide();
 	$("#transparent_layer").hide();
+//	window.clearTimeout(loaderTimer);
 }
 
 function resize_input()

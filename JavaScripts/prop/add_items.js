@@ -2348,3 +2348,58 @@ function form80_add_item()
 	}		
 }
 
+
+/**
+ * @form Whatsapp Promotion
+ * @formNo 81
+ */
+function form81_add_item()
+{
+	if(is_create_access('form81'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='row_form81_"+id+"'></form>";
+			rowsHTML+="<td data-th='Customer Name'>";
+				rowsHTML+="<input type='text' form='row_form81_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Contact'>";
+				rowsHTML+="<textarea readonly='readonly' form='row_form81_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Select for messaging'>";
+				rowsHTML+="<input type='checkbox' form='row_form81_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='row_form81_"+id+"' value=''>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form81_body').prepend(rowsHTML);
+		var fields=document.getElementById("row_form81_"+id);
+		var acc_name_filter=fields.elements[0];
+		var phone_filter=fields.elements[1];
+		var name_filter=fields.elements[3];
+		
+		var acc_name_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";
+		set_my_value_list(acc_name_data,acc_name_filter);
+		
+		$(acc_name_filter).on('blur',function(event)
+		{
+			var name_data="<customers>" +
+				"<name></name>" +
+				"<acc_name>"+acc_name_filter.value+"</acc_name>" +
+				"</customers>";
+			set_my_value(name_data,name_filter);
+			var phone_data="<customers>" +
+				"<phone></phone>" +
+				"<acc_name>"+acc_name_filter.value+"</acc_name>" +
+				"</customers>";
+			set_my_value(phone_data,phone_filter);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}

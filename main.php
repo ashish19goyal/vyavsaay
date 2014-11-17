@@ -28,6 +28,7 @@
 		include "functions/offers.php";
 		include "functions/finances.php";
 		include "functions/ecommerce.php";
+		include "functions/reach_out.php";
 		include "functions/sale_reports.php";
 		include "functions/maps.php";
 		//display for settings

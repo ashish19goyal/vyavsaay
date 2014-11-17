@@ -82,7 +82,13 @@
 				<li>Selling on : <a class='grid_item' id='selling_on'>TBD</a></li>
 			</ul>
 		</li>
-		
+		<li>
+			<a id="reach_out_link" onclick="show_function('#reach_out_main');"><div data-i18n="function.reach_out"> >>></div></a>		
+			<ul>
+				<li>Active Customers on whatsapp : <a class='grid_item' id='active_whatsapp'>TBD</a></li>
+				<li>Pending messages : <a class='grid_item' id='pending_messages'>TBD</a></li>
+			</ul>
+		</li>
 		<li>
 			<a id="offers_link" onclick="show_function('#offers_main');"><div data-i18n="function.offers"> >>></div></a>		
 			<ul>

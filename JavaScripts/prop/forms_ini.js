@@ -4826,3 +4826,230 @@ function form80_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Whatsapp promotion
+ * @formNo 81
+ */
+function form81_ini()
+{
+	var offer_id=$("#form81_link").attr('data_id');
+	if(offer_id==null)
+		offer_id="";	
+
+	var offer_name=document.getElementById('form81_master').elements[1].value;
+	
+	$('#form81_body').html("");
+	if(offer_id!="" || offer_name!="")
+	{
+		show_loader();
+		var offer_columns="<offers>" +
+				"<id>"+offer_id+"</id>" +
+				"<name>"+offer_name+"</name>" +
+				"<product_name></product_name>" +
+				"<service></service>" +
+				"</offers>";
+		
+		////separate fetch function to get pamphlet details like name
+		fetch_requested_data('',offer_columns,function(offer_results)
+		{
+			for(var i in offer_results)
+			{
+				offer_id=offer_results[i].id;
+				var filter_fields=document.getElementById('form81_master');
+				filter_fields.elements[1].value=offer_results[i].name;
+				filter_fields.elements[2].value=offer_results[i].id;
+				break;
+			}
+			/////////////////////////////////////////////////////////////////////////
+			
+			var items_string="--";
+			for(var j in offer_results)
+			{
+				items_string+=offer_results[j].product_name+"--"+offer_results[j].service+"--";
+			}
+			
+			var bill_items_columns="<bill_items>" +
+					"<bill_id></bill_id>" +
+					"<item_name array='yes'>"+items_string+"</item_name>" +
+					"</bill_items>";
+			fetch_requested_data('',bill_items_columns,function(bill_items)
+			{
+				var bill_id_string="--";
+				for(var k in bill_items)
+				{
+					bill_id_string+=bill_items[k].bill_id+"--";
+				}
+				
+				var bills_columns="<bills>" +
+						"<customer_name></customer_name>" +
+						"<id array='yes'>"+bill_id_string+"</id>" +
+						"</bills>";
+				fetch_requested_data('',bills_columns,function(bills)
+				{
+					var customer_string="--";
+					for(var l in bills)
+					{
+						customer_string+=bills[l].customer_name+"--";
+					}
+					
+					var customer_columns="<customers>" +
+							"<id></id>" +
+							"<name></name>" +
+							"<phone></phone>" +
+							"<acc_name array='yes'>"+customer_string+"</acc_name>" +
+							"</customers>";
+					fetch_requested_data('',customer_columns,function(results)
+					{
+						results.forEach(function(result)
+						{
+							var rowsHTML="";
+							var id=result.id;
+							rowsHTML+="<tr>";
+							rowsHTML+="<form id='row_form81_"+id+"'></form>";
+								rowsHTML+="<td data-th='Customer Name'>";
+									rowsHTML+="<textarea readonly='readonly' form='row_form81_"+id+"'>"+result.acc_name+"</textarea>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Contact'>";
+									rowsHTML+="<textarea readonly='readonly' form='row_form81_"+id+"'>"+result.phone+"</textarea>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Select for messaging'>";
+									rowsHTML+="<input type='checkbox' form='row_form81_"+id+"' checked>";
+									rowsHTML+="<input type='hidden' form='row_form81_"+id+"' value='"+result.name+"'>";
+								rowsHTML+="</td>";
+							rowsHTML+="</tr>";
+						
+							$('#form81_body').prepend(rowsHTML);				
+						});
+						hide_loader();
+					});
+				});
+			});
+			
+		});
+	}
+}
+
+/**
+ * @form Get messages
+ * @formNo 82
+ */
+function form82_ini()
+{
+	show_loader();
+	var fid=$("#form82_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form82_header');
+	
+	var fname=filter_fields.elements[0].value;
+	var fcontact=filter_fields.elements[1].value;
+	
+	var columns="<whatsapp_messages>" +
+		"<id>"+fid+"</id>" +
+		"<contact>"+fcontact+"</contact>" +
+		"<name>"+fname+"</name>" +
+		"<acc_name></acc_name>" +
+		"<message></message>" +
+		"<message_type>text</message_type>" +
+		"<status>pending</status>" +
+		"</whatsapp_messages>";
+	
+	$('#form82_body').html("");
+	
+	fetch_requested_data('form82',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form82_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form82_"+result.id+"' value='"+result.name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Contact'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form82_"+result.id+"' value='"+result.contact+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Message'>";
+						rowsHTML+="<textarea readonly='readonly' form='form82_"+result.id+"'>"+result.message+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form82_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='button' value='Seen' onclick=\"form82_update_item('"+result.id+"','seen');\">";
+						rowsHTML+="<input type='button' value='Closed' onclick=\"form82_update_item('"+result.id+"','closed');\">";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form82_body').prepend(rowsHTML);
+		});
+		
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'whatsapp_messages');
+		});
+		hide_loader();
+	});
+};
+
+
+/**
+ * @form Find Locations
+ * @formNo 83
+ */
+function form83_ini()
+{
+	show_loader();
+	var fid=$("#form83_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form83_header');
+	
+	var fname=filter_fields.elements[0].value;
+	var fcontact=filter_fields.elements[1].value;
+	
+	var columns="<whatsapp_messages>" +
+		"<id>"+fid+"</id>" +
+		"<contact>"+fcontact+"</contact>" +
+		"<name>"+fname+"</name>" +
+		"<acc_name></acc_name>" +
+		"<message></message>" +
+		"<message_type>location</message_type>" +
+		"<status></status>" +
+		"</whatsapp_messages>";
+	
+	$('#form83_body').html("");
+	
+	fetch_requested_data('form83',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='row_form83_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='row_form83_"+result.id+"' value='"+result.name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Contact'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='row_form83_"+result.id+"' value='"+result.contact+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Last location'>";
+						rowsHTML+="<textarea readonly='readonly' form='row_form83_"+result.id+"'>"+result.message+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Request Location'>";
+						rowsHTML+="<input type='checkbox' form='row_form83_"+id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='row_form83_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form83_body').prepend(rowsHTML);
+		});
+		
+		hide_loader();
+	});
+};

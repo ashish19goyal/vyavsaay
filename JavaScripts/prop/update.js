@@ -3806,9 +3806,6 @@ function form80_update_form(button)
  */
 function notifications_update(data_id,status)
 {
-	console.log(data_id);
-	console.log(status);
-	
 	if(is_update_access('notif'))
 	{
 		var last_updated=get_my_time();
@@ -3817,6 +3814,38 @@ function notifications_update(data_id,status)
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</notifications>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Get messages
+ * @formNo 82
+ * @param data_id
+ * @param status
+ */
+function form82_update_item(data_id,status)
+{
+	if(is_update_access('form82'))
+	{
+		var last_updated=get_my_time();
+		var data_xml="<whatsapp_messages>" +
+					"<id>"+data_id+"</id>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</whatsapp_messages>";
 		if(is_online())
 		{
 			server_update_simple(data_xml);

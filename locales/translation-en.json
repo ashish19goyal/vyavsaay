@@ -21,7 +21,8 @@
     "offers": "Offers",
     "maps": "Maps",
     "sale_reports": "Sale Reports",
-    "ecommerce":"E-Commerce"
+    "ecommerce":"E-Commerce",
+    "reach_out":"Reach Out"
   },
   "general":{
   	"hello": "Hello"
@@ -131,6 +132,11 @@
   	"manage_sale_orders":"Manage Sale Orders",
   	"promotion_mails":"Promotion Mails",
   	"manage_task_types":"Manage Task Types",
-  	"de-duplication_mapping":"De-duplication"
+  	"de-duplication_mapping":"De-duplication",
+  	"whatsapp_promotion":"Whatsapp Promotion",
+  	"get_messages":"Get Messages",
+  	"find_locations":"Find Locations",
+  	"place_orders":"Place Orders",
+  	"assign_tasks":"Assign Tasks" 
   }
 }

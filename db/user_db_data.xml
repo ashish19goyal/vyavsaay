@@ -785,6 +785,46 @@
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form81</name>
+			<display_name>whatsapp_promotion</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form82</name>
+			<display_name>get_messages</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form83</name>
+			<display_name>find_locations</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form84</name>
+			<display_name>place_orders</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form85</name>
+			<display_name>assign_tasks</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -1689,6 +1729,61 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<username>master</username>
+			<element_id>form81</element_id>
+			<element_name>whatsapp_promotion</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form82</element_id>
+			<element_name>get_messages</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form83</element_id>
+			<element_name>find_locations</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form84</element_id>
+			<element_name>place_orders</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form85</element_id>
+			<element_name>assign_tasks</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
 	</access_control>
 	<shortcuts>
 		<row>
@@ -2107,6 +2202,41 @@
 		<row>
 			<element_id>form80</element_id>
 			<element_name>de-duplication_mapping</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form81</element_id>
+			<element_name>whatsapp_promotion</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form82</element_id>
+			<element_name>get_messages</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form83</element_id>
+			<element_name>find_locations</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form84</element_id>
+			<element_name>place_orders</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form85</element_id>
+			<element_name>assign_tasks</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
