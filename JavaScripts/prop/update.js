@@ -327,6 +327,12 @@ function form10_update_form()
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
 		
+		var email=form.elements[13].value;
+		var phone=form.elements[14].value;
+		
+		var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var mail_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		
 		var amount=0;
 		var discount=0;
 		var tax=0;
@@ -334,18 +340,40 @@ function form10_update_form()
 		
 		$("[id^='save_form10']").each(function(index)
 		{
-			var form_id=$(this).attr('form');
-			var subform=document.getElementById(form_id);
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
 			total+=parseFloat(subform.elements[4].value);
 			amount+=parseFloat(subform.elements[5].value);
 			discount+=parseFloat(subform.elements[6].value);
 			tax+=parseFloat(subform.elements[7].value);
+			
+			message_string+="\nItem: "+subform.elements[0].value;
+			message_string+=" Price: "+subform.elements[3].value;
+			mail_string+="\nItem: "+subform.elements[0].value;
+			mail_string+=" Price: "+subform.elements[3].value;
 		});
 
 		form.elements[3].value=amount;
 		form.elements[4].value=discount;
 		form.elements[5].value=tax;
 		form.elements[6].value=total;
+		
+		message_string+="\nAmount: "+amount;
+		message_string+="\ndiscount: "+discount;
+		message_string+="\nTax: "+tax;
+		message_string+="\nTotal: "+total;
+		message_string=encodeURIComponent(message_string);
+		
+		mail_string+="\nAmount: "+amount;
+		mail_string+="\ndiscount: "+discount;
+		mail_string+="\nTax: "+tax;
+		mail_string+="\nTotal: "+total;
+		mail_string=encodeURIComponent(mail_string);
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		$('#form10_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+		$('#form10_whatsapp').show();
+		$('#form10_gmail').attr('href',mail_string);
+		$('#form10_gmail').show();
 		
 		var data_id=form.elements[7].value;
 		var transaction_id=form.elements[9].value;
@@ -660,9 +688,19 @@ function form11_update_item(form)
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>payments</tablename>" +
 					"<link_to>form11</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Payment of amount Rs. "+total_amount+" from/to "+acc_name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
+					"<title>Updated</title>";
+		var message_string="";
+		if(type=='paid')
+		{
+			activity_xml+="<notes>Payment of amount Rs. "+total_amount+" paid to "+acc_name+"</notes>" +
+			message_string="Payment of Rs: "+paid_amount+" paid on "+get_my_past_date(date)+".\n The status of this payment is "+status;
+		}
+		else
+		{
+			activity_xml+="<notes>Payment of amount Rs. "+total_amount+" received from "+acc_name+"</notes>" +
+			message_string="Payment of Rs: "+paid_amount+" received on "+get_my_past_date(date)+".\n The status of this payment is "+status;
+		}
+		activity_xml+="<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
 		{
@@ -671,7 +709,16 @@ function form11_update_item(form)
 		else
 		{
 			local_update_row(data_xml,activity_xml);
-		}	
+		}
+		
+		message_string=encodeURIComponent(message_string);
+		$("#form11_whatsapp_"+data_id).attr('href',"whatsapp://send?text="+message_string);
+		$("#form11_whatsapp_"+data_id).show();
+		
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Payment+Receipt+from+"+get_session_var('title')+"&to="+email+"&body="+message_string;
+		$('#form11_gmail').attr('href',mail_string);
+		$('#form11_gmail').show();
+
 		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -696,6 +743,12 @@ function form12_update_form()
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
 		
+		var email=form.elements[13].value;
+		var phone=form.elements[14].value;
+		
+		var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var mail_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		
 		var amount=0;
 		var discount=0;
 		var tax=0;
@@ -703,18 +756,42 @@ function form12_update_form()
 		
 		$("[id^='save_form12']").each(function(index)
 		{
-			var form_id=$(this).attr('form');
-			var subform=document.getElementById(form_id);
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
 			total+=parseFloat(subform.elements[4].value);
 			amount+=parseFloat(subform.elements[5].value);
 			discount+=parseFloat(subform.elements[6].value);
 			tax+=parseFloat(subform.elements[7].value);
+			
+			message_string+="\nItem: "+subform.elements[0].value;
+			message_string+=" Quantity: "+subform.elements[2].value;
+			message_string+=" Total: "+subform.elements[4].value;
+			mail_string+="\nItem: "+subform.elements[0].value;
+			mail_string+=" Quantity: "+subform.elements[2].value;
+			mail_string+=" Total: "+subform.elements[4].value;
 		});
 
 		form.elements[3].value=amount;
 		form.elements[4].value=discount;
 		form.elements[5].value=tax;
 		form.elements[6].value=total;
+		
+		message_string+="\nAmount: "+amount;
+		message_string+="\ndiscount: "+discount;
+		message_string+="\nTax: "+tax;
+		message_string+="\nTotal: "+total;
+		message_string=encodeURIComponent(message_string);
+		
+		mail_string+="\nAmount: "+amount;
+		mail_string+="\ndiscount: "+discount;
+		mail_string+="\nTax: "+tax;
+		mail_string+="\nTotal: "+total;
+		mail_string=encodeURIComponent(mail_string);
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		$('#form12_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+		$('#form12_whatsapp').show();
+		$('#form12_gmail').attr('href',mail_string);
+		$('#form12_gmail').show();
 		
 		var data_id=form.elements[7].value;
 		var transaction_id=form.elements[9].value;
@@ -1086,6 +1163,12 @@ function form15_update_form()
 		var customer=form.elements[1].value;
 		var return_date=get_raw_time(form.elements[2].value);
 		
+		var email=form.elements[13].value;
+		var phone=form.elements[14].value;
+		
+		var message_string="Returns Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var mail_string="Returns Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		
 		var tax=0;
 		var total=0;
 		
@@ -1093,16 +1176,43 @@ function form15_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
+			
+			message_string+="\nItem: "+subform.elements[0].value;
+			message_string+=" Quantity: "+subform.elements[3].value;
+			mail_string+="\nItem: "+subform.elements[0].value;
+			mail_string+=" Quanity: "+subform.elements[3].value;
+			
 			if(subform.elements[4].value=='refund')
 			{	
 				total+=parseFloat(subform.elements[5].value);
+				message_string+=" Refund Rs: "+subform.elements[5].value;
+				mail_string+=" Refund Rs: "+subform.elements[5].value;
+			}
+			else
+			{
+				message_string+=" Exchanged";
+				mail_string+=" Exchanged";
 			}
 			tax+=parseFloat(subform.elements[6].value);
+			
 		});
-
+		
 		form.elements[3].value=total;
 		form.elements[6].value=tax;
 		
+		message_string+="\nTax: "+tax;
+		message_string+="\nTotal: "+total;
+		message_string=encodeURIComponent(message_string);
+		
+		mail_string+="\nTax: "+tax;
+		mail_string+="\nTotal: "+total;
+		mail_string=encodeURIComponent(mail_string);
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Returns+Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		$('#form15_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+		$('#form15_whatsapp').show();
+		$('#form15_gmail').attr('href',mail_string);
+		$('#form15_gmail').show();
+
 		var data_id=form.elements[4].value;
 		var transaction_id=form.elements[5].value;
 		var last_updated=get_my_time();
@@ -1209,6 +1319,12 @@ function form19_update_form()
 		var supplier=form.elements[1].value;
 		var return_date=get_raw_time(form.elements[2].value);
 		
+		var email=form.elements[9].value;
+		var phone=form.elements[10].value;
+		
+		var message_string="Returns from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var mail_string="Return from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		
 		var total=0;
 		
 		$("[id^='save_form19']").each(function(index)
@@ -1216,9 +1332,25 @@ function form19_update_form()
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);	
 			total+=parseFloat(subform.elements[4].value);
+			message_string+="\nItem: "+subform.elements[0].value;
+			message_string+=" Quantity: "+subform.elements[3].value;
+			message_string+=" Amount: "+subform.elements[4].value;
+			mail_string+="\nItem: "+subform.elements[0].value;
+			mail_string+=" Quantity: "+subform.elements[3].value;
+			mail_string+=" Amount: "+subform.elements[4].value;
 		});
 
 		form.elements[3].value=total;
+		message_string+="\nTotal Refund Rs : "+total;
+		mail_string+="\nTotal Refund Rs: "+total;
+		
+		message_string=encodeURIComponent(message_string);
+		mail_string=encodeURIComponent(mail_string);
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Returns+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		$('#form19_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+		$('#form19_whatsapp').show();
+		$('#form19_gmail').attr('href',mail_string);
+		$('#form19_gmail').show();
 		
 		var data_id=form.elements[4].value;
 		var transaction_id=form.elements[5].value;
@@ -3243,6 +3375,12 @@ function form72_update_form()
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
 		
+		var email=form.elements[13].value;
+		var phone=form.elements[14].value;
+		
+		var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var mail_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		
 		var amount=0;
 		var discount=0;
 		var tax=0;
@@ -3256,12 +3394,36 @@ function form72_update_form()
 			amount+=parseFloat(subform.elements[5].value);
 			discount+=parseFloat(subform.elements[6].value);
 			tax+=parseFloat(subform.elements[7].value);
+			
+			message_string+="\nItem: "+subform.elements[0].value;
+			message_string+=" Price: "+subform.elements[3].value;
+			message_string+=" Total: "+subform.elements[4].value;
+			mail_string+="\nItem: "+subform.elements[0].value;
+			mail_string+=" Price: "+subform.elements[3].value;
+			mail_string+=" Total: "+subform.elements[4].value;
 		});
 
 		form.elements[3].value=amount;
 		form.elements[4].value=discount;
 		form.elements[5].value=tax;
 		form.elements[6].value=total;
+		
+		message_string+="\nAmount: "+amount;
+		message_string+="\ndiscount: "+discount;
+		message_string+="\nTax: "+tax;
+		message_string+="\nTotal: "+total;
+		message_string=encodeURIComponent(message_string);
+		
+		mail_string+="\nAmount: "+amount;
+		mail_string+="\ndiscount: "+discount;
+		mail_string+="\nTax: "+tax;
+		mail_string+="\nTotal: "+total;
+		mail_string=encodeURIComponent(mail_string);
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		$('#form72_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+		$('#form72_whatsapp').show();
+		$('#form72_gmail').attr('href',mail_string);
+		$('#form72_gmail').show();
 		
 		var data_id=form.elements[7].value;
 		var transaction_id=form.elements[9].value;

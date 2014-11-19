@@ -562,51 +562,90 @@ function form10_ini()
 				});
 				break;
 			}
-		});
-		/////////////////////////////////////////////////////////////////////////
 		
-		fetch_requested_data('',bill_items_column,function(results)
-		{
-			results.forEach(function(result)
+		/////////////////////////////////////////////////////////////////////////
+			var customer_data="<customers>" +
+					"<acc_name>"+filter_fields.elements[1].value+"</acc_name>" +
+					"<email></email>" +
+					"<phone></phone>" +
+					"</customers>";
+			/////////////////////////////////////////////////////////////////////////
+			fetch_requested_data('',customer_data,function(cust_results)
 			{
-				var rowsHTML="";
-				var id=result.id;
-				rowsHTML+="<tr>";
-				rowsHTML+="<form id='form10_"+id+"'></form>";
-					rowsHTML+="<td data-th='Service Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form10_"+id+"' value='"+result.item_name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Person'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form10_"+id+"' value='"+result.staff+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Additional Notes'>";
-						rowsHTML+="<textarea readonly='readonly' form='form10_"+id+"'>"+result.notes+"</textarea>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Price'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form10_"+id+"' value='"+result.unit_price+"' step='any'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.total+"'>";
-						rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.amount+"'>";
-						rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.discount+"'>";
-						rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.tax+"'>";
-						rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.offer+"'>";
-						rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form10_"+id+"' id='save_form10_"+id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form10_"+id+"' id='delete_form10_"+id+"' onclick='form10_delete_item($(this));'>";
-						rowsHTML+="<input type='hidden' form='form10_"+id+"'>";
-					rowsHTML+="</td>";			
-				rowsHTML+="</tr>";
-			
-				$('#form10_body').prepend(rowsHTML);
+				var email=cust_results[0].email;
+				var phone=cust_results[0].phone;
+				filter_fields.elements[13].value=email;
+				filter_fields.elements[14].value=phone;
 				
-				var fields=document.getElementById("form10_"+id);
-				$(fields).on("submit", function(event)
+				fetch_requested_data('',bill_items_column,function(results)
 				{
-					event.preventDefault();
+					var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+					var mail_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		
+					results.forEach(function(result)
+					{
+						message_string+="\nItem: "+result.item_name;
+						message_string+=" Price: "+result.unit_price;
+						mail_string+="\nItem: "+result.item_name;
+						mail_string+=" Price: "+result.unit_price;
+						
+						var rowsHTML="";
+						var id=result.id;
+						rowsHTML+="<tr>";
+						rowsHTML+="<form id='form10_"+id+"'></form>";
+							rowsHTML+="<td data-th='Service Name'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form10_"+id+"' value='"+result.item_name+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Person'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form10_"+id+"' value='"+result.staff+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Additional Notes'>";
+								rowsHTML+="<textarea readonly='readonly' form='form10_"+id+"'>"+result.notes+"</textarea>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Price'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form10_"+id+"' value='"+result.unit_price+"' step='any'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.total+"'>";
+								rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.amount+"'>";
+								rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.discount+"'>";
+								rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.tax+"'>";
+								rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.offer+"'>";
+								rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='submit' class='save_icon' form='form10_"+id+"' id='save_form10_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form10_"+id+"' id='delete_form10_"+id+"' onclick='form10_delete_item($(this));'>";
+								rowsHTML+="<input type='hidden' form='form10_"+id+"'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+					
+						$('#form10_body').prepend(rowsHTML);
+						
+						var fields=document.getElementById("form10_"+id);
+						$(fields).on("submit", function(event)
+						{
+							event.preventDefault();
+						});
+					});
+					mail_string+="\nAmount: "+amount;
+					mail_string+="\ndiscount: "+discount;
+					mail_string+="\nTax: "+tax;
+					mail_string+="\nTotal: "+total;
+					mail_string=encodeURIComponent(mail_string);
+					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+					$('#form10_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+					$('#form10_whatsapp').show();
+					$('#form10_gmail').attr('href',mail_string);
+					s
+					message_string+="\nAmount: "+amount;
+					message_string+="\ndiscount: "+discount;
+					message_string+="\nTax: "+tax;
+					message_string+="\nTotal: "+total;
+					message_string=encodeURIComponent(message_string);
+					
+					
+					hide_loader();
 				});
 			});
-			hide_loader();
 		});
 	}
 }
@@ -1440,9 +1479,10 @@ function form24_ini()
 		////separate fetch function to get order details like customer name, total etc.
 		fetch_requested_data('',order_columns,function(order_results)
 		{
+			var filter_fields=document.getElementById('form24_master');
+			
 			for(var i in order_results)
 			{
-				var filter_fields=document.getElementById('form24_master');
 				filter_fields.elements[1].value=order_results[i].supplier;
 				filter_fields.elements[2].value=get_my_past_date(order_results[i].order_date);
 				filter_fields.elements[3].value=order_results[i].status;
@@ -1467,7 +1507,9 @@ function form24_ini()
 			{
 				var email=sup_results[0].email;
 				var phone=sup_results[0].phone;
-			
+				filter_fields.elements[7].value=email;
+				filter_fields.elements[8].value=phone;
+				
 				fetch_requested_data('',order_items_column,function(results)
 				{
 					var message_string="Order from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
