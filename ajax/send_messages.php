@@ -58,13 +58,25 @@
 				$message_string.='<tr><td>'.$item->childNodes->item(0)->nodeValue.'</td></tr>';
 			}
 			$message_string.="</table><br/><div>Visit us at: ".$sender_address."</div></body></html>";
-			//echo "message: ".$message;
+			
+			$pipe_desc = array(
+					0 => array('pipe', 'r'), // 0 is STDIN for process
+					1 => array('pipe', 'w'), // 1 is STDOUT for process
+			);
+			$command="telegram-cli";
+			
 			foreach($contacts->childNodes as $row)
 			{
 				$to=$row->childNodes->item(1)->nodeValue;
-				$subject = $row->childNodes->item(0)->nodeValue;
-
-				exec('python yowsup-cli -c ../../yowsup-master/src/my.config -s 919818005232 hello_ashish');
+				$name = $row->childNodes->item(0)->nodeValue;
+				
+				$p=proc_open($command,$pipe_desc,$pipes);
+				fwrite($pipes[0],'msg '.$to.' '.$message_string);
+				fclose($pipes[0]);
+				$output=stream_get_contents($pipes[1]);
+				echo $output;
+				fclose($pipes[1]);
+				proc_close($p);
 				//$mail_status=mail($to, $subject, $message, $headers);
 			}
 			echo "messages sent";

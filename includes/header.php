@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title data-i18n="master.vyavsaay">Vyavsaay ERP</title>
+		<title data-i18n="master.vyavsaay">Vyavsaay</title>
 		<?php
 			session_start();			
 			include "js_includes.php";

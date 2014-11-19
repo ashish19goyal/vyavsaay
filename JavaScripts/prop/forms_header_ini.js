@@ -685,6 +685,9 @@ function form24_header_ini()
 	var supplier_filter=fields.elements[1];
 	var order_date=fields.elements[2];
 	var status_filter=fields.elements[3];
+	var email_filter=fields.elements[7];
+	var phone_filter=fields.elements[8];
+	
 	fields.elements[4].value=get_new_key();
 	
 	$(fields).off('submit');
@@ -696,6 +699,23 @@ function form24_header_ini()
 	var supplier_data="<suppliers>" +
 		"<acc_name></acc_name>" +
 		"</suppliers>";
+	
+	$(supplier_filter).off('blur');
+	$(supplier_filter).on('blur', function(event)
+	{
+		var email_data="<suppliers>" +
+				"<email></email>" +
+				"<acc_name>"+supplier_filter.value+"</acc_name>" +
+				"</suppliers>";
+		set_my_value(email_data,email_filter);
+		
+		var phone_data="<suppliers>" +
+				"<phone></phone>" +
+				"<acc_name>"+supplier_filter.value+"</acc_name>" +
+				"</suppliers>";
+		set_my_value(phone_data,phone_filter);
+	});
+	
 	
 	set_my_value_list(supplier_data,supplier_filter);
 	$(order_date).datepicker();
@@ -714,8 +734,6 @@ function form24_new_form()
 	form24_header_ini();
 	$("#form24_body").find("tr").remove();
 }
-
-
 
 /**
  * this function prepares the table for manage customers form

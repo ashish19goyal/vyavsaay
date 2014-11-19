@@ -595,14 +595,14 @@
 			<references_id index='no' type="TEXT"></references_id>
 			<last_updated index='no' type="BIGINT"></last_updated>		
 	</de_duplication_ref>
-	<whatsapp_messages>
+	<messages>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<contact index='yes' type="VARCHAR(20)"></contact>
 			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
 			<name index='yes' type="VARCHAR(100)"></name>
 			<message index='no' type="TEXT"></message>
-			<message_type index='no' type="VARCHAR(25)"></message_type><!--text/image/video/location-->
+			<message_type index='no' type="VARCHAR(25)"></message_type><!--text/image/video/location/file-->
 			<status index='no' type="VARCHAR(25)"></status><!--pending/seen/closed-->
 			<last_updated index='no' type="BIGINT"></last_updated>		
-	</whatsapp_messages>
+	</messages>
 </re_xml>

@@ -868,6 +868,8 @@ function form14_ini()
 			result.t_due=get_my_datetime(result.t_due);
 			result.t_executed=get_my_datetime(result.t_executed);
 			result.t_initiated=get_my_datetime(result.t_initiated);
+			var message_string="Due time: "+result.t_due+"\nTask: "+result.name+"\nAssignee:"+result.assignee;
+			message_string=encodeURIComponent(message_string);
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form14_"+result.id+"'></form>";
@@ -886,7 +888,8 @@ function form14_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' readonly='readonly' form='form14_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form14_"+result.id+"' title='Save'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form14_"+result.id+"' title='Save' onclick='form14_delete_item($(this));'>";	
+						rowsHTML+="<input type='button' class='delete_icon' form='form14_"+result.id+"' title='Delete' onclick='form14_delete_item($(this));'>";
+						rowsHTML+="<a id='form14_whatsapp_"+result.id+"' href='whatsapp://send?text="+message_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form14_"+result.id+"' title='Send details through WhatsApp'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -1415,7 +1418,7 @@ function form24_ini()
 		order_id="";	
 	
 	$('#form24_body').html("");
-
+	$('#form24_whatsapp').hide();
 	if(order_id!="")
 	{
 		show_loader();
@@ -1453,48 +1456,77 @@ function form24_ini()
 				});
 				break;
 			}
-		});
-		/////////////////////////////////////////////////////////////////////////
 		
-		fetch_requested_data('',order_items_column,function(results)
-		{
-			results.forEach(function(result)
+			var supplier_data="<suppliers>" +
+					"<acc_name>"+filter_fields.elements[1].value+"</acc_name>" +
+					"<email></email>" +
+					"<phone></phone>" +
+					"</suppliers>";
+			/////////////////////////////////////////////////////////////////////////
+			fetch_requested_data('',supplier_data,function(sup_results)
 			{
-				var rowsHTML="";
-				var id=result.id;
-				rowsHTML+="<tr>";
-				rowsHTML+="<form id='form24_"+id+"'></form>";
-					rowsHTML+="<td data-th='Product Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' required form='form24_"+id+"' value='"+result.product_name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Quantity'>";
-						rowsHTML+="<input type='number' class='dblclick_editable' readonly='readonly' required form='form24_"+id+"' value='"+result.quantity+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Make'>";
-						rowsHTML+="<input type='text' readonly='readonly' required form='form24_"+id+"' value='"+result.make+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Price'>";
-						rowsHTML+="<input type='number'readonly='readonly' required form='form24_"+id+"' value='"+result.price+"' step='any'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form24_"+id+"' value='"+id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form24_"+id+"' id='save_form24_"+id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form24_"+id+"' id='delete_form24_"+id+"' onclick='form24_delete_item($(this));'>";
-					rowsHTML+="</td>";			
-				rowsHTML+="</tr>";
+				var email=sup_results[0].email;
+				var phone=sup_results[0].phone;
 			
-				$('#form24_body').prepend(rowsHTML);
-				
-				var fields=document.getElementById("form24_"+id);
-				var name_filter=fields.elements[0];
-				
-				$(fields).on("submit", function(event)
+				fetch_requested_data('',order_items_column,function(results)
 				{
-					event.preventDefault();
-					form24_update_item(fields);
+					var message_string="Order from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+					var mail_string="Order from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		
+					results.forEach(function(result)
+					{
+						message_string+="\nProduct: "+result.product_name;
+						message_string+="Quantity: "+result.quantity;
+						mail_string+="\nProduct: "+result.product_name;
+						mail_string+="Quantity: "+result.quantity;
+						
+						var rowsHTML="";
+						var id=result.id;
+						rowsHTML+="<tr>";
+						rowsHTML+="<form id='form24_"+id+"'></form>";
+							rowsHTML+="<td data-th='Product Name'>";
+								rowsHTML+="<input type='text' readonly='readonly' required form='form24_"+id+"' value='"+result.product_name+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Quantity'>";
+								rowsHTML+="<input type='number' class='dblclick_editable' readonly='readonly' required form='form24_"+id+"' value='"+result.quantity+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Make'>";
+								rowsHTML+="<input type='text' readonly='readonly' required form='form24_"+id+"' value='"+result.make+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Price'>";
+								rowsHTML+="<input type='number'readonly='readonly' required form='form24_"+id+"' value='"+result.price+"' step='any'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form24_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='submit' class='save_icon' form='form24_"+id+"' id='save_form24_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form24_"+id+"' id='delete_form24_"+id+"' onclick='form24_delete_item($(this));'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+					
+						$('#form24_body').prepend(rowsHTML);
+						
+						var fields=document.getElementById("form24_"+id);
+						var name_filter=fields.elements[0];
+						
+						$(fields).on("submit", function(event)
+						{
+							event.preventDefault();
+							form24_update_item(fields);
+						});
+					});
+					
+					message_string=encodeURIComponent(message_string);
+					mail_string=encodeURIComponent(mail_string);
+					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Order+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+					
+					$('#form24_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+					$('#form24_whatsapp').show();
+					$('#form24_gmail').attr('href',mail_string);
+					$('#form24_gmail').show();
+					
+					hide_loader();
 				});
 			});
-			hide_loader();
 		});
 	}
 }
@@ -1648,6 +1680,9 @@ function form35_ini()
 	{
 		results.forEach(function(result)
 		{
+			var message_string="Exciting Offer\n"+result.offer_detail+"\nAvail at:"+get_session_var('title')+"\nVisit us at:"+get_session_var('address');
+			message_string=encodeURIComponent(message_string);
+			
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form35_"+result.id+"'></form>";
@@ -1669,7 +1704,8 @@ function form35_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form35_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form35_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form35_"+result.id+"' value='saved' onclick='form35_delete_item($(this));'>";	
+						rowsHTML+="<input type='button' class='delete_icon' form='form35_"+result.id+"' value='saved' onclick='form35_delete_item($(this));'>";
+						rowsHTML+="<a id='form35_whatsapp_"+result.id+"' href='whatsapp://send?text="+message_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form35_"+result.id+"' title='Send details through WhatsApp'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -2194,40 +2230,48 @@ function form43_ini()
 	{	
 		results.forEach(function(result)
 		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form43_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Order No.'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.id+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Supplier'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.supplier+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Order Date'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+get_my_past_date(result.order_date)+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form43_"+result.id+"' value='"+result.status+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='button' class='edit_icon' form='form43_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form24');\">";
-						rowsHTML+="<input type='submit' class='save_icon' form='form43_"+result.id+"' title='Save order'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form43_"+result.id+"' title='Delete order' onclick='form43_delete_item($(this));'>";
-					rowsHTML+="</td>";
-			rowsHTML+="</tr>";
-			
-			$('#form43_body').prepend(rowsHTML);
-			var fields=document.getElementById("form43_"+result.id);
-			var status_filter=fields.elements[3];
-			
-			set_static_value_list('purchase_orders','status',status_filter);
-			
-			$(fields).on("submit",function(event)
+			var order_items_data="<purchase_order_items>" +
+					"<id></id>" +
+					"<order_id>"+results.id+"</order_id>" +
+					"<product_name></product_name>" +
+					"<quantity></quantity>" +
+					"</purchase_order_items>";
+			fetch_requested_data('',order_items_data,function(item_results)
 			{
-				event.preventDefault();
-				form43_update_item(fields);
-			});
-			
+				var rowsHTML="";
+				rowsHTML+="<tr>";
+					rowsHTML+="<form id='form43_"+result.id+"'></form>";
+						rowsHTML+="<td data-th='Order No.'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Supplier'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.supplier+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Order Date'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+get_my_past_date(result.order_date)+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form43_"+result.id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='button' class='edit_icon' form='form43_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form24');\">";
+							rowsHTML+="<input type='submit' class='save_icon' form='form43_"+result.id+"' title='Save order'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form43_"+result.id+"' title='Delete order' onclick='form43_delete_item($(this));'>";
+						rowsHTML+="</td>";
+				rowsHTML+="</tr>";
+				
+				$('#form43_body').prepend(rowsHTML);
+				var fields=document.getElementById("form43_"+result.id);
+				var status_filter=fields.elements[3];
+				
+				set_static_value_list('purchase_orders','status',status_filter);
+				
+				$(fields).on("submit",function(event)
+				{
+					event.preventDefault();
+					form43_update_item(fields);
+				});
+			});			
 		});
 		
 		longPressEditable($('.dblclick_editable'));
@@ -2736,9 +2780,6 @@ function form51_ini()
 		$('#form51_body').html("");
 	}
 };
-
-
-
 
 
 /**
@@ -4822,233 +4863,6 @@ function form80_ini()
 			});
 		});
 		
-		
-		hide_loader();
-	});
-};
-
-/**
- * @form Whatsapp promotion
- * @formNo 81
- */
-function form81_ini()
-{
-	var offer_id=$("#form81_link").attr('data_id');
-	if(offer_id==null)
-		offer_id="";	
-
-	var offer_name=document.getElementById('form81_master').elements[1].value;
-	
-	$('#form81_body').html("");
-	if(offer_id!="" || offer_name!="")
-	{
-		show_loader();
-		var offer_columns="<offers>" +
-				"<id>"+offer_id+"</id>" +
-				"<name>"+offer_name+"</name>" +
-				"<product_name></product_name>" +
-				"<service></service>" +
-				"</offers>";
-		
-		////separate fetch function to get pamphlet details like name
-		fetch_requested_data('',offer_columns,function(offer_results)
-		{
-			for(var i in offer_results)
-			{
-				offer_id=offer_results[i].id;
-				var filter_fields=document.getElementById('form81_master');
-				filter_fields.elements[1].value=offer_results[i].name;
-				filter_fields.elements[2].value=offer_results[i].id;
-				break;
-			}
-			/////////////////////////////////////////////////////////////////////////
-			
-			var items_string="--";
-			for(var j in offer_results)
-			{
-				items_string+=offer_results[j].product_name+"--"+offer_results[j].service+"--";
-			}
-			
-			var bill_items_columns="<bill_items>" +
-					"<bill_id></bill_id>" +
-					"<item_name array='yes'>"+items_string+"</item_name>" +
-					"</bill_items>";
-			fetch_requested_data('',bill_items_columns,function(bill_items)
-			{
-				var bill_id_string="--";
-				for(var k in bill_items)
-				{
-					bill_id_string+=bill_items[k].bill_id+"--";
-				}
-				
-				var bills_columns="<bills>" +
-						"<customer_name></customer_name>" +
-						"<id array='yes'>"+bill_id_string+"</id>" +
-						"</bills>";
-				fetch_requested_data('',bills_columns,function(bills)
-				{
-					var customer_string="--";
-					for(var l in bills)
-					{
-						customer_string+=bills[l].customer_name+"--";
-					}
-					
-					var customer_columns="<customers>" +
-							"<id></id>" +
-							"<name></name>" +
-							"<phone></phone>" +
-							"<acc_name array='yes'>"+customer_string+"</acc_name>" +
-							"</customers>";
-					fetch_requested_data('',customer_columns,function(results)
-					{
-						results.forEach(function(result)
-						{
-							var rowsHTML="";
-							var id=result.id;
-							rowsHTML+="<tr>";
-							rowsHTML+="<form id='row_form81_"+id+"'></form>";
-								rowsHTML+="<td data-th='Customer Name'>";
-									rowsHTML+="<textarea readonly='readonly' form='row_form81_"+id+"'>"+result.acc_name+"</textarea>";
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Contact'>";
-									rowsHTML+="<textarea readonly='readonly' form='row_form81_"+id+"'>"+result.phone+"</textarea>";
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Select for messaging'>";
-									rowsHTML+="<input type='checkbox' form='row_form81_"+id+"' checked>";
-									rowsHTML+="<input type='hidden' form='row_form81_"+id+"' value='"+result.name+"'>";
-								rowsHTML+="</td>";
-							rowsHTML+="</tr>";
-						
-							$('#form81_body').prepend(rowsHTML);				
-						});
-						hide_loader();
-					});
-				});
-			});
-			
-		});
-	}
-}
-
-/**
- * @form Get messages
- * @formNo 82
- */
-function form82_ini()
-{
-	show_loader();
-	var fid=$("#form82_link").attr('data_id');
-	if(fid==null)
-		fid="";	
-	
-	var filter_fields=document.getElementById('form82_header');
-	
-	var fname=filter_fields.elements[0].value;
-	var fcontact=filter_fields.elements[1].value;
-	
-	var columns="<whatsapp_messages>" +
-		"<id>"+fid+"</id>" +
-		"<contact>"+fcontact+"</contact>" +
-		"<name>"+fname+"</name>" +
-		"<acc_name></acc_name>" +
-		"<message></message>" +
-		"<message_type>text</message_type>" +
-		"<status>pending</status>" +
-		"</whatsapp_messages>";
-	
-	$('#form82_body').html("");
-	
-	fetch_requested_data('form82',columns,function(results)
-	{
-		results.forEach(function(result)
-		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form82_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form82_"+result.id+"' value='"+result.name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Contact'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form82_"+result.id+"' value='"+result.contact+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Message'>";
-						rowsHTML+="<textarea readonly='readonly' form='form82_"+result.id+"'>"+result.message+"</textarea>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form82_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='button' value='Seen' onclick=\"form82_update_item('"+result.id+"','seen');\">";
-						rowsHTML+="<input type='button' value='Closed' onclick=\"form82_update_item('"+result.id+"','closed');\">";
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-			
-			$('#form82_body').prepend(rowsHTML);
-		});
-		
-		var export_button=filter_fields.elements[2];
-		$(export_button).off("click");
-		$(export_button).on("click", function(event)
-		{
-			my_obj_array_to_csv(results,'whatsapp_messages');
-		});
-		hide_loader();
-	});
-};
-
-
-/**
- * @form Find Locations
- * @formNo 83
- */
-function form83_ini()
-{
-	show_loader();
-	var fid=$("#form83_link").attr('data_id');
-	if(fid==null)
-		fid="";	
-	
-	var filter_fields=document.getElementById('form83_header');
-	
-	var fname=filter_fields.elements[0].value;
-	var fcontact=filter_fields.elements[1].value;
-	
-	var columns="<whatsapp_messages>" +
-		"<id>"+fid+"</id>" +
-		"<contact>"+fcontact+"</contact>" +
-		"<name>"+fname+"</name>" +
-		"<acc_name></acc_name>" +
-		"<message></message>" +
-		"<message_type>location</message_type>" +
-		"<status></status>" +
-		"</whatsapp_messages>";
-	
-	$('#form83_body').html("");
-	
-	fetch_requested_data('form83',columns,function(results)
-	{
-		results.forEach(function(result)
-		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='row_form83_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='row_form83_"+result.id+"' value='"+result.name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Contact'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='row_form83_"+result.id+"' value='"+result.contact+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Last location'>";
-						rowsHTML+="<textarea readonly='readonly' form='row_form83_"+result.id+"'>"+result.message+"</textarea>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Request Location'>";
-						rowsHTML+="<input type='checkbox' form='row_form83_"+id+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='row_form83_"+result.id+"' value='"+result.id+"'>";
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-			
-			$('#form83_body').prepend(rowsHTML);
-		});
 		
 		hide_loader();
 	});

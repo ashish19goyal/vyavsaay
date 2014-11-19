@@ -1055,7 +1055,13 @@ function form14_update_item(form)
 		else
 		{
 			local_update_row(data_xml,activity_xml);
-		}	
+		}
+		
+		var message_string="Due time: "+form.elements[2].value+"\nTask: "+name+"\nAssignee:"+assignee;
+		message_string=encodeURIComponent(message_string);
+		$("#form14_whatsapp_"+data_id).attr('href',"whatsapp://send?text="+message_string);
+		$("#form14_whatsapp_"+data_id).show();
+
 		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -1437,8 +1443,7 @@ function form24_update_item(form)
 {
 	if(is_update_access('form24'))
 	{
-		var order_id=document.getElementById("form24_master").elements[4].value;
-		
+		var order_id=document.getElementById("form24_master").elements[4].value;		
 		var name=form.elements[0].value;
 		var quantity=form.elements[1].value;
 		var make=form.elements[2].value;
@@ -1488,6 +1493,30 @@ function form24_update_form()
 		var order_date=get_raw_time(form.elements[2].value);		
 		var status=form.elements[3].value;		
 		var data_id=form.elements[4].value;
+		var email=form.elements[7].value;
+		var phone=form.elements[8].value;
+		
+		var message_string="Order from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var mail_string="Order from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+
+		$("[id^='save_form24']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			message_string+="\nProduct: "+subform.elements[0].value;
+			message_string+="Quantity: "+subform.elements[1].value;
+			mail_string+="\nProduct: "+subform.elements[0].value;
+			mail_string+="Quantity: "+subform.elements[1].value;
+		});
+		
+		message_string=encodeURIComponent(message_string);
+		mail_string=encodeURIComponent(mail_string);
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Order+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		$('#form24_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+		$('#form24_whatsapp').show();
+		$('#form24_gmail').attr('href',mail_string);
+		$('#form24_gmail').show();
+		
 		var last_updated=get_my_time();
 		
 		var data_xml="<purchase_orders>" +

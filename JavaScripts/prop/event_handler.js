@@ -210,7 +210,6 @@ function hide_all()
 	$("#inventory_main").hide();
 	$("#finances_main").hide();
 	$("#ecommerce_main").hide();
-	$("#reach_out_main").hide();
 	$("#customers_main").hide();
 	$("#suppliers_main").hide();
 	$("#staff_main").hide();
