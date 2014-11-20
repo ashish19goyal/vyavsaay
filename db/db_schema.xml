@@ -494,16 +494,14 @@
 			<status index='yes' type="VARCHAR(20)"></status><!-- pending/reviewed/closed -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</notifications>
-	<opportunities>  
+	<sale_leads>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<t_occured index='yes' type="BIGINT"></t_occured>
-			<data_id index='no' type="BIGINT"></data_id>
-			<title index='yes' type="VARCHAR(300)"></title>
-			<notes index='no' type="TEXT"></notes>
-			<link_to index='no' type="VARCHAR(300)"></link_to>
-			<status index='yes' type="VARCHAR(20)"></status><!-- pending/reviewed/closed -->
+			<customer index='yes' type="VARCHAR(100)"></customer>
+			<detail index='no' type="TEXT"></detail>
+			<due_date index='yes' type="BIGINT"></due_date>
+			<identified_by index='yes' type="VARCHAR(100)"></identified_by>
 			<last_updated index='no' type="BIGINT"></last_updated>
-	</opportunities>
+	</sale_leads>
 	<user_preferences>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(30)" unique='yes'></name>

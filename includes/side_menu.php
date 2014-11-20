@@ -8,12 +8,7 @@
 			<div id='count_notif'>5</div>
 			<img title='Notifications' src='./images/notification.jpeg' class="icon">
 	</div>
-	
-	<div id='opportunity_icon' class='menu_icon' onclick='show_opportunities();'>
-			<div id='count_oppor'>0</div>
-			<img title='Opportunities' src='./images/opportunity.jpeg' class="icon">
-	</div>
-	
+		
 	<div id='offline_icon' class='menu_icon'>
 		<img title='Working offline, click to switch to online' src='./images/offline.jpeg' class='icon' onclick='switch_to_online();' >
 	</div>

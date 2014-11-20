@@ -116,7 +116,6 @@ function print_css_setup(name)
 function home_display()
 {
 	count_notif();
-	count_oppor();
 	hide_all();
 	$('#home_grid').show();
 }
@@ -201,7 +200,6 @@ function hide_all()
 	$("#search_results_box").hide();
 	$("#all_activities_box").hide();
 	$("#notifications_box").hide();
-	$("#opportunities_box").hide();
 	//hide all functions
 	$("#sale_bills_main").hide();
 	$("#products_main").hide();
@@ -330,16 +328,6 @@ function show_notifications()
 	hide_all();
 	$("#notifications_box").show();
 	notifications_ini();
-}
-
-/**
- * this function displays the opportunities in the main content box
- */
-function show_opportunities()
-{
-	hide_all();	
-	$("#opportunities_box").show();
-	opportunities_ini();
 }
 
 

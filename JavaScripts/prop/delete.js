@@ -331,8 +331,8 @@ function form12_delete_item(button)
 		
 		var quantity_data="<product_instances>" +
 					"<id></id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
+					"<product_name exact='yes'>"+name+"</product_name>" +
+					"<batch exact='yes'>"+batch+"</batch>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
 		fetch_requested_data('',quantity_data,function(quantities)
@@ -450,7 +450,7 @@ function form15_delete_item(button)
 		
 		var quantity_data="<product_instances>" +
 					"<id></id>" +
-					"<product_name>"+name+"</product_name>" +
+					"<product_name exact='yes'>"+name+"</product_name>" +
 					"<batch array='yes'>"+batch+"--"+total_batch+"</batch>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
@@ -624,7 +624,7 @@ function form16_delete_item(button)
 			{
 				var quantity_data="<product_instances>" +
 						"<id></id>" +
-						"<product_name>"+return_item.item_name+"</product_name>" +
+						"<product_name exact='yes'>"+return_item.item_name+"</product_name>" +
 						"<batch array='yes'>"+return_item.batch+"--"+return_item.exchange_batch+"</batch>" +
 						"<quantity></quantity>" +
 						"</product_instances>";	
@@ -785,8 +785,8 @@ function form17_delete_item(button)
 			{
 				var quantity_data="<product_instances>" +
 						"<id></id>" +
-						"<product_name>"+return_item.item_name+"</product_name>" +
-						"<batch>"+return_item.batch+"</batch>" +
+						"<product_name exact='yes'>"+return_item.item_name+"</product_name>" +
+						"<batch exact='yes'>"+return_item.batch+"</batch>" +
 						"<quantity></quantity>" +
 						"</product_instances>";	
 			
@@ -855,8 +855,8 @@ function form19_delete_item(button)
 		
 		var quantity_data="<product_instances>" +
 					"<id></id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
+					"<product_name exact='yes'>"+name+"</product_name>" +
+					"<batch exact='yes'>"+batch+"</batch>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
 		fetch_requested_data('',quantity_data,function(quantities)
@@ -928,8 +928,8 @@ function form21_delete_item(button)
 		
 		var quantity_data="<product_instances>" +
 					"<id></id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
+					"<product_name exact='yes'>"+name+"</product_name>" +
+					"<batch exact='yes'>"+batch+"</batch>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
 		fetch_requested_data('',quantity_data,function(quantities)
@@ -1431,13 +1431,6 @@ function form42_delete_item(button)
 		{
 			bill_items.forEach(function(bill_item)
 			{
-				var quantity_data="<product_instances>" +
-						"<id></id>" +
-						"<product_name>"+bill_item.item_name+"</product_name>" +
-						"<batch>"+bill_item.batch+"</batch>" +
-						"<quantity></quantity>" +
-						"</product_instances>";	
-				
 				var task_xml="<task_instances>" +
 						"<source_id>"+bill_item.id+"</source_id>" +
 						"<source>service</source>" +
@@ -1452,7 +1445,13 @@ function form42_delete_item(button)
 					local_update_simple(task_xml);
 				}
 
-				//////updating product quantity in inventory
+				var quantity_data="<product_instances>" +
+						"<id></id>" +
+						"<product_name exact='yes'>"+bill_item.item_name+"</product_name>" +
+						"<batch exact='yes'>"+bill_item.batch+"</batch>" +
+						"<quantity></quantity>" +
+						"</product_instances>";	
+		
 				fetch_requested_data('',quantity_data,function(quantities)
 				{
 					for (var j in quantities)
@@ -1691,8 +1690,8 @@ function form53_delete_item(button)
 			{
 				var quantity_data="<product_instances>" +
 						"<id></id>" +
-						"<product_name>"+bill_item.item_name+"</product_name>" +
-						"<batch>"+bill_item.batch+"</batch>" +
+						"<product_name exact='yes'>"+bill_item.item_name+"</product_name>" +
+						"<batch exact='yes'>"+bill_item.batch+"</batch>" +
 						"<quantity></quantity>" +
 						"</product_instances>";	
 			
@@ -1777,7 +1776,7 @@ function form56_delete_item(button)
 					"</transactions>";
 		var payment_data="<payments>" +
 					"<id></id>" +
-					"<acc_name>"+account+"</acc_name>" +
+					"<acc_name exact='yes'>"+account+"</acc_name>" +
 					"<type>"+type+"</type>" +
 					"<bill_id>"+data_id+"</bill_id>" +
 					"<total_amount>"+amount+"</total_amount>" +
@@ -2512,8 +2511,8 @@ function form72_delete_item(button)
 		{
 			var quantity_data="<product_instances>" +
 						"<id></id>" +
-						"<product_name>"+name+"</product_name>" +
-						"<batch>"+batch+"</batch>" +
+						"<product_name exact='yes'>"+name+"</product_name>" +
+						"<batch exact='yes'>"+batch+"</batch>" +
 						"<quantity></quantity>" +
 						"</product_instances>";
 			fetch_requested_data('',quantity_data,function(quantities)
@@ -2627,6 +2626,44 @@ function form80_delete_item(button)
 		else
 		{
 			local_delete_simple(data_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Sale Leads
+ * @param button
+ */
+function form81_delete_item(button)
+{
+	if(is_delete_access('form81'))
+	{
+		var customer=form.elements[0].value;
+		var data_id=form.elements[4].value;
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form81</link_to>" +
+					"<title>Delete</title>" +
+					"<notes>Sale lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
 		}	
 		$(button).parent().parent().remove();
 	}

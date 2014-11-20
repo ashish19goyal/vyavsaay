@@ -24,7 +24,7 @@ function report1_ini()
 		products.forEach(function(product)
 		{
 			var bill_id_data="<goods_received>" +
-					"<product_name>"+product+"</product_name>" +
+					"<product_name exact='yes'>"+product+"</product_name>" +
 					"<sup_bill_id></sup_bill_id>" +
 					"<batch></batch>" +
 					"</goods_received>";
@@ -48,7 +48,7 @@ function report1_ini()
 					{
 						var store_data="<area_utilization>" +
 								"<name></name>" +
-								"<product_name>"+product+"</product_name>" +
+								"<product_name exact='yes'>"+product+"</product_name>" +
 								"<batch></batch>" +
 								"</area_utilization>";
 						
@@ -101,7 +101,7 @@ function report1_ini()
 		{
 			var store_data="<area_utilization>" +
 					"<name></name>" +
-					"<product_name>"+offer.product_name+"</product_name>" +
+					"<product_name exact='yes'>"+offer.product_name+"</product_name>" +
 					"<batch>"+offer.batch+"</batch>" +
 					"</area_utilization>";
 			
@@ -187,7 +187,7 @@ function report5_ini()
 		{
 			var bills_data="<bills>" +
 				"<id></id>" +
-				"<customer_name>"+account.acc_name+"</customer_name>" +
+				"<customer_name exact='yes'>"+account.acc_name+"</customer_name>" +
 				"<amount></amount>" +
 				"</bills>";
 		
@@ -272,7 +272,7 @@ function report9_ini()
 		{
 			var bill_items_data="<bill_items>" +
 					"<bill_id></bill_id>" +
-					"<product_name>"+product.name+"</product_name>" +
+					"<product_name exact='yes'>"+product.name+"</product_name>" +
 					"</bill_items>";
 			fetch_requested_data(bill_items_data,function(bill_ids)
 			{
@@ -285,7 +285,7 @@ function report9_ini()
 				}
 				var bills_data="<bills>" +
 						"<id array='yes'>"+bill_ids_string+"</id>" +
-						"<customer_name>"+customer+"</customer_name>" +
+						"<customer_name exact='yes'>"+customer+"</customer_name>" +
 						"<date_created compare='more than'>"+get_raw_time(date)+"</date_created>" +
 						"</bills>";
 			
@@ -448,7 +448,7 @@ function report17_ini()
 		employees.forEach(function(employee)
 		{
 			var attendance_data="<attendance>" +
-					"<acc_name>"+employee.acc_name+"</acc_name>" +
+					"<acc_name exact='yes'>"+employee.acc_name+"</acc_name>" +
 					"<presence></presence>" +
 					"<hours_worked></hours_worked>" +
 					"<date compare='more than'>"+get_raw_time(from_date)+"</date>" +
@@ -468,7 +468,7 @@ function report17_ini()
 					acc_name=attendances[i].acc_name;
 				}
 				var task_instances_data="<task_instances>" +
-						"<assignee>"+acc_name+"</assignee>" +
+						"<assignee exact='yes'>"+acc_name+"</assignee>" +
 						"<t_executed compare='more than'>"+get_raw_time(from_date)+"</t_executed>" +
 						"<t_executed compare='less than'>"+get_raw_time(to_date)+"</t_executed>" +
 						"<task_hours></task_hours>" +
@@ -525,7 +525,7 @@ function report26_ini()
 	var ctx = document.getElementById("report26_canvas").getContext("2d");
 	var sales_data="<bills>" +
 			"<amount></amount>" +
-			"<customer_name>"+customer+"</customer_name>" +
+			"<customer_name exact='yes'>"+customer+"</customer_name>" +
 			"<date_created compare='more than'>"+get_raw_time(start_date)+"</date_created>" +
 			"<date_created compare='less than'>"+get_raw_time(end_date)+"</date_created>" +
 			"</bills>";
@@ -631,7 +631,7 @@ function report29_ini()
 		products.forEach(function(product)
 		{
 			var requisites_data="<pre_requisites>" +
-					"<name>"+product.name+"</name>" +
+					"<name exact='yes'>"+product.name+"</name>" +
 					"<type>product</product>" +
 					"<requisite_type></requisite_type>" +
 					"<product_name></product_name>" +
@@ -771,7 +771,7 @@ function report31_ini()
 							"</address>";
 					fetch_requested_data('report31',address_data,function(addresses)
 					{
-						console.log("addresses "+addresses);
+						//console.log("addresses "+addresses);
 						for(var i in addresses)
 						{
 							var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
@@ -1144,7 +1144,7 @@ function report35_ini()
 			
 			var product_data="<bill_items>" +
 					"<bill_id></bill_id>" +
-					"<product_name>"+product_name+"</product_name>" +
+					"<product_name exact='yes'>"+product_name+"</product_name>" +
 					"</bill_items>";
 			
 			get_single_column_data(function(bill_ids)
@@ -1232,7 +1232,7 @@ function report36_ini()
 			
 			var product_data="<goods_received>" +
 					"<sup_bill_id></sup_bill_id>" +
-					"<product_name>"+product_name+"</product_name>" +
+					"<product_name exact='yes'>"+product_name+"</product_name>" +
 					"</goods_received>";
 			
 			get_single_column_data(function(bill_ids)
@@ -1459,7 +1459,7 @@ function report41_ini()
 		services.forEach(function(service)
 		{
 			var requisites_data="<pre_requisites>" +
-					"<name>"+service.name+"</name>" +
+					"<name exact='yes'>"+service.name+"</name>" +
 					"<type>service</product>" +
 					"<requisite_type></requisite_type>" +
 					"<product_name></product_name>" +

@@ -35,33 +35,6 @@ function activities_lane_ini()
 }
 
 /**
- * This function keeps counting the opportunities and shows the number on the icon
- */
-function count_oppor()
-{
-	var oppor_data="<opportunities>" +
-			"<id></id>" +
-			"<status>pending</status>" +
-			"</opportunities>";
-
-	get_single_column_data(function(oppors)
-	{
-		var num_res=oppors.length;
-	
-		if(num_res===0)
-		{	
-			$('#count_oppor').html("");
-		}
-		else
-		{	
-			$('#count_oppor').html(num_res);
-			$('#count_oppor').css('backgroundColor','#dddd00'); 
-		}
-	},oppor_data);
-	setTimeout(count_oppor,100000);
-}
-
-/**
  * This function keeps counting the generated notifications and shows the number on icon
  */
 function count_notif()
@@ -102,7 +75,7 @@ function notifications_add()
 			"<type></type>" +
 			"<total_amount></total_amount>" +
 			"<paid_amount></paid_amount>" +
-			"<status>pending</status>" +
+			"<status exact='yes'>pending</status>" +
 			"<due_date compare='less than'>"+get_my_time()+"</due_date>" +
 			"</payments>";
 	fetch_requested_data('',payments_data,function(payments)
@@ -145,7 +118,7 @@ function notifications_add()
 			"<id></id>" +
 			"<name></name>" +
 			"<t_due compare='less than'>"+task_due_time+"</t_due>" +
-			"<status>pending</status>" +
+			"<status exact='yes'>pending</status>" +
 			"<assignee></assignee>" +
 			"<task_hours></task_hours>" +
 			"</task_instances>";
@@ -183,6 +156,50 @@ function notifications_add()
 	
 	///////////overdue tasks end//////////
 
+	/////overdue sale leads//////////
+	var lead_due_time=parseFloat(get_my_time())+86400000;
+	var lead_past_time=parseFloat(get_my_time())-86400000;
+	
+	var leads_data="<sale_leads>" +
+			"<id></id>" +
+			"<customer></customer>" +
+			"<due_date compare='less than'>"+lead_due_time+"</due_date>" +
+			"<due_date compare='more than'>"+lead_past_time+"</due_date>" +
+			"<detail></detail>" +
+			"<identified_by></identified_by>" +
+			"</sale_leads>";
+	
+	fetch_requested_data('',leads_data,function(leads)
+	{
+		leads.forEach(function(lead)
+		{
+			var id=get_new_key()+""+(Math.random()*1000);
+			var notes="A sale opportunity with customer "+lead.customer+" is coming up."+
+					"The details are as follows.\n"+lead.detail;
+			var task_xml="<notifications>" +
+					"<id>"+id+"</id>" +
+					"<t_generated>"+get_my_time()+"</t_generated>" +
+					"<data_id unique='yes'>"+lead.id+"</data_id>" +
+					"<title>Sale Opportunity</title>" +
+					"<notes>"+notes+"</notes>" +
+					"<link_to>form81</link_to>" +
+					"<status>pending</status>" +
+					"</notifications>";
+			if(is_online())
+			{
+				server_create_simple_no_warning(task_xml);
+			}
+			else
+			{
+				local_create_simple_no_warning(task_xml);
+			}
+			
+		});
+	});
+	
+	///////////overdue sale leads end//////////
+
+	
 	/////sale orders //////////
 	
 	var sale_order_data="<sale_orders>" +

@@ -178,7 +178,7 @@ function form10_create_item(form)
 		var free_service_name=form.elements[12].value;
 		
 		var pre_requisite_data="<pre_requisites>" +
-				"<name>"+name+"</name>" +
+				"<name exact='yes'>"+name+"</name>" +
 				"<type>service</type>" +
 				"<requisite_type>task</requisite_type>" +
 				"<requisite_name></requisite_name>" +
@@ -283,7 +283,7 @@ function form10_create_item(form)
             $('#form10_body').prepend(rowsHTML);
 
     		var free_pre_requisite_data="<pre_requisites>" +
-					"<name>"+free_service_name+"</name>" +
+					"<name exact='yes'>"+free_service_name+"</name>" +
 					"<type>service</type>" +
 					"<requisite_type>task</requisite_type>" +
 					"<requisite_name></requisite_name>" +
@@ -392,8 +392,8 @@ function form10_create_form()
 		var email=form.elements[13].value;
 		var phone=form.elements[14].value;
 		
-		var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		var mail_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
 		var discount=0;
@@ -431,7 +431,7 @@ function form10_create_form()
 		mail_string+="\nTax: "+tax;
 		mail_string+="\nTotal: "+total;
 		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 		$('#form10_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 		$('#form10_whatsapp').show();
 		$('#form10_gmail').attr('href',mail_string);
@@ -525,7 +525,7 @@ function form10_create_form()
 	                $('#form10_body').prepend(rowsHTML);
 
 	        		var free_pre_requisite_data="<pre_requisites>" +
-							"<name>"+free_service_name+"</name>" +
+							"<name exact='yes'>"+free_service_name+"</name>" +
 							"<type>service</type>" +
 							"<requisite_type>task</requisite_type>" +
 							"<requisite_name></requisite_name>" +
@@ -717,8 +717,8 @@ function form12_create_item(form)
 		var last_updated=get_my_time();
 		var quantity_data="<product_instances>" +
 					"<id></id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
+					"<product_name exact='yes'>"+name+"</product_name>" +
+					"<batch exact='yes'>"+batch+"</batch>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
 		
@@ -768,7 +768,7 @@ function form12_create_item(form)
 		{
 			var free_quantity_data="<product_instances>" +
 						"<id></id>" +
-						"<product_name>"+free_product_name+"</product_name>" +
+						"<product_name exact='yes'>"+free_product_name+"</product_name>" +
 						"<batch></batch>" +
 						"<quantity></quantity>" +
 						"</product_instances>";	
@@ -904,8 +904,8 @@ function form12_create_form()
 		var email=form.elements[13].value;
 		var phone=form.elements[14].value;
 		
-		var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		var mail_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
 		var discount=0;
@@ -945,7 +945,7 @@ function form12_create_form()
 		mail_string+="\nTax: "+tax;
 		mail_string+="\nTotal: "+total;
 		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 		$('#form12_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 		$('#form12_whatsapp').show();
 		$('#form12_gmail').attr('href',mail_string);
@@ -1010,7 +1010,7 @@ function form12_create_form()
 					
 					var free_quantity_data="<product_instances>" +
 								"<id></id>" +
-								"<product_name>"+free_product_name+"</product_name>" +
+								"<product_name exact='yes'>"+free_product_name+"</product_name>" +
 								"<batch></batch>" +
 								"<quantity></quantity>" +
 								"</product_instances>";	
@@ -1287,7 +1287,7 @@ function form15_create_item(form)
 		var last_updated=get_my_time();
 		var quantity_data="<product_instances>" +
 					"<id></id>" +
-					"<product_name>"+name+"</product_name>" +
+					"<product_name exact='yes'>"+name+"</product_name>" +
 					"<batch array='yes'>"+batch+"--"+total_batch+"</batch>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
@@ -1398,11 +1398,11 @@ function form15_create_form()
 		var customer=form.elements[1].value;
 		var return_date=get_raw_time(form.elements[2].value);
 		
-		var email=form.elements[13].value;
-		var phone=form.elements[14].value;
+		var email=form.elements[10].value;
+		var phone=form.elements[11].value;
 		
-		var message_string="Returns Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		var mail_string="Returns Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var message_string="Returns Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Returns Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var tax=0;
 		var total=0;
@@ -1435,14 +1435,12 @@ function form15_create_form()
 		form.elements[3].value=total;
 		form.elements[6].value=tax;
 		
-		message_string+="\nTax: "+tax;
 		message_string+="\nTotal: "+total;
 		message_string=encodeURIComponent(message_string);
 		
-		mail_string+="\nTax: "+tax;
 		mail_string+="\nTotal: "+total;
 		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Returns+Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Returns+Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 		$('#form15_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 		$('#form15_whatsapp').show();
 		$('#form15_gmail').attr('href',mail_string);
@@ -1558,8 +1556,8 @@ function form19_create_item(form)
 		var last_updated=get_my_time();
 		var quantity_data="<product_instances>" +
 					"<id></id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
+					"<product_name exact='yes'>"+name+"</product_name>" +
+					"<batch exact='yes'>"+batch+"</batch>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
 		
@@ -1642,8 +1640,8 @@ function form19_create_form()
 		var email=form.elements[9].value;
 		var phone=form.elements[10].value;
 		
-		var message_string="Returns from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		var mail_string="Return from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var message_string="Returns from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Return from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var total=0;
 		
@@ -1666,7 +1664,7 @@ function form19_create_form()
 		
 		message_string=encodeURIComponent(message_string);
 		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Returns+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Returns+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 		$('#form19_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 		$('#form19_whatsapp').show();
 		$('#form19_gmail').attr('href',mail_string);
@@ -1783,8 +1781,8 @@ function form21_create_item(form)
 		var last_updated=get_my_time();
 		var quantity_data="<product_instances>" +
 					"<id></id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
+					"<product_name exact='yes'>"+name+"</product_name>" +
+					"<batch exact='yes'>"+batch+"</batch>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
 		
@@ -2043,8 +2041,8 @@ function form24_create_form()
 		var email=form.elements[7].value;
 		var phone=form.elements[8].value;
 		
-		var message_string="Order from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		var mail_string="Order from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var message_string="Order from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Order from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 
 		$("[id^='save_form24']").each(function(index)
 		{
@@ -2058,7 +2056,7 @@ function form24_create_form()
 		
 		message_string=encodeURIComponent(message_string);
 		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Order+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Order+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 		$('#form24_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 		$('#form24_whatsapp').show();
 		$('#form24_gmail').attr('href',mail_string);
@@ -3007,7 +3005,7 @@ function form72_create_item(form)
 		if(isNaN(form.elements[2].value))
 		{
 			var pre_requisite_data="<pre_requisites>" +
-					"<name>"+name+"</name>" +
+					"<name exact='yes'>"+name+"</name>" +
 					"<type>service</type>" +
 					"<requisite_type>task</requisite_type>" +
 					"<requisite_name></requisite_name>" +
@@ -3079,8 +3077,8 @@ function form72_create_item(form)
 		{
 			var quantity_data="<product_instances>" +
 						"<id></id>" +
-						"<product_name>"+name+"</product_name>" +
-						"<batch>"+batch+"</batch>" +
+						"<product_name exact='yes'>"+name+"</product_name>" +
+						"<batch exact='yes'>"+batch+"</batch>" +
 						"<quantity></quantity>" +
 						"</product_instances>";
 			
@@ -3196,7 +3194,7 @@ function form72_create_item(form)
 		{
 			var free_quantity_data="<product_instances>" +
 						"<id></id>" +
-						"<product_name>"+free_product_name+"</product_name>" +
+						"<product_name exact='yes'>"+free_product_name+"</product_name>" +
 						"<batch></batch>" +
 						"<quantity></quantity>" +
 						"</product_instances>";	
@@ -3334,8 +3332,8 @@ function form72_create_form()
 		var email=form.elements[13].value;
 		var phone=form.elements[14].value;
 		
-		var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		var mail_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
 		var discount=0;
@@ -3375,7 +3373,7 @@ function form72_create_form()
 		mail_string+="\nTax: "+tax;
 		mail_string+="\nTotal: "+total;
 		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 		$('#form72_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 		$('#form72_whatsapp').show();
 		$('#form72_gmail').attr('href',mail_string);
@@ -3441,7 +3439,7 @@ function form72_create_form()
 					
 					var free_quantity_data="<product_instances>" +
 								"<id></id>" +
-								"<product_name>"+free_product_name+"</product_name>" +
+								"<product_name exact='yes'>"+free_product_name+"</product_name>" +
 								"<batch></batch>" +
 								"<quantity></quantity>" +
 								"</product_instances>";	
@@ -3570,7 +3568,7 @@ function form72_create_form()
 	                $('#form72_body').prepend(rowsHTML);
 
 	                var free_pre_requisite_data="<pre_requisites>" +
-							"<name>"+free_service_name+"</name>" +
+							"<name exact='yes'>"+free_service_name+"</name>" +
 							"<type>service</type>" +
 							"<requisite_type>task</requisite_type>" +
 							"<requisite_name></requisite_name>" +
@@ -3774,7 +3772,7 @@ function create_bill_from_order(order_id)
 				
 				var quantity_data="<product_instances>" +
 							"<id></id>" +
-							"<product_name>"+order_item.item_name+"</product_name>" +
+							"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
 							"<batch></batch>" +
 							"<quantity></quantity>" +
 							"<sale_price></sale_price>" +
@@ -3798,7 +3796,7 @@ function create_bill_from_order(order_id)
 							item_amount=parseFloat(order_item.quantity)*parseFloat(quantities[l].sale_price);
 							var offer_data="<offers>" +
 									"<offer_type>product</offer_type>" +
-									"<product_name>"+order_item.item_name+"</product_name>" +
+									"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
 									"<batch array='yes'>"+quantities[l].batch+"--all</batch>" +
 									"<criteria_type></criteria_type>" +
 									"<criteria_amount></criteria_amount>" +
@@ -3828,7 +3826,7 @@ function create_bill_from_order(order_id)
 										
 								for(var i in offers)
 								{
-									console.log("found atleast one offer");
+									//console.log("found atleast one offer");
 									item_offer=offers[i].offer_detail;
 									if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=parseFloat(order_item.quantity))
 									{
@@ -3858,14 +3856,14 @@ function create_bill_from_order(order_id)
 										}
 										else if(offers[i].result_type=='product free')
 										{
-											console.log("adding free product as per offer");
+											//console.log("adding free product as per offer");
 
 											var free_product_name=offers[i].free_product_name;
 											var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(order_item.quantity)/parseFloat(offers[i].criteria_quantity)));
 											
 											var free_quantity_data="<product_instances>" +
 														"<id></id>" +
-														"<product_name>"+free_product_name+"</product_name>" +
+														"<product_name exact='yes'>"+free_product_name+"</product_name>" +
 														"<batch></batch>" +
 														"<quantity></quantity>" +
 														"</product_instances>";	
@@ -3947,7 +3945,7 @@ function create_bill_from_order(order_id)
 											
 											var free_quantity_data="<product_instances>" +
 														"<id></id>" +
-														"<product_name>"+free_product_name+"</product_name>" +
+														"<product_name exact='yes'>"+free_product_name+"</product_name>" +
 														"<batch></batch>" +
 														"<quantity></quantity>" +
 														"</product_instances>";	
@@ -4001,7 +3999,7 @@ function create_bill_from_order(order_id)
 								}
 								
 								var tax_data="<product_master>" +
-										"<name>"+order_item.item_name+"</name>" +
+										"<name exact='yes'>"+order_item.item_name+"</name>" +
 										"<tax></tax>" +
 										"</product_master>";
 								fetch_requested_data('',tax_data,function(taxes)
@@ -4128,7 +4126,7 @@ function create_bill_from_order(order_id)
 								
 								var free_quantity_data="<product_instances>" +
 											"<id></id>" +
-											"<product_name>"+free_product_name+"</product_name>" +
+											"<product_name exact='yes'>"+free_product_name+"</product_name>" +
 											"<batch></batch>" +
 											"<quantity></quantity>" +
 											"</product_instances>";	
@@ -4328,6 +4326,69 @@ function form80_create_item(form)
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Sale leads
+ * @param button
+ */
+function form81_create_item(form)
+{
+	if(is_create_access('form81'))
+	{
+		var customer=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var due_date=get_raw_time(form.elements[2].value);
+		var identified_by=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<detail>"+detail+"</detail>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<identified_by>"+identified_by+"</identified_by>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form81</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Sale lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		var del_button=form.elements[6];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form81_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form81_update_item(form);
 		});
 	}
 	else

@@ -137,6 +137,7 @@
   	"get_messages":"Get Messages",
   	"find_locations":"Find Locations",
   	"place_orders":"Place Orders",
-  	"assign_tasks":"Assign Tasks" 
+  	"assign_tasks":"Assign Tasks",
+  	"sale_leads":"Sale Leads"
   }
 }

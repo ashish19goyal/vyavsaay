@@ -1086,3 +1086,44 @@ function form79_import(data_array,import_type)
 		}
 	});
 };
+
+/**
+* @form Sale leads
+* @formNo 81
+*/
+function form81_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<sale_leads>" +
+				"<id>"+row.id+"</id>" +
+				"<customer>"+row.customer+"</customer>" +
+				"<detail>"+row.detail+"</detail>" +
+				"<due_date>"+row.due_date+"</due_date>" +
+				"<identified_by>"+row.identified_by+"</identified_by>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</sale_leads>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+}

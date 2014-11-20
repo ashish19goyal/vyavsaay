@@ -1,4 +1,13 @@
 /**
+ * xml attributes for read queries
+ * comapre: more than,less than, not equal, equal
+ * array: yes
+ * exact: yes
+ * 
+ */
+
+
+/**
  * This function executes a custom function on ajax call
  * @param url - url of the php file to be called
  * @param kvp - parameters passed to php file as key value pairs string
@@ -98,7 +107,6 @@ function server_read_single_column(column,callback,results)
 	var re_access=get_session_var('re');
 	ajax_with_custom_func("./ajax/get_rows.php","domain="+domain+"&username="+username+"&re="+re_access+"&columns="+column,function(e)
 	{
-		//console.log(column);
 		console.log(e.responseText);
 		var row=e.responseXML.childNodes[0].childNodes;
 		for(var i=0; i<row.length; i++)

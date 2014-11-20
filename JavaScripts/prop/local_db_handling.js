@@ -1,4 +1,12 @@
 /**
+ * xml attributes for read queries
+ * comapre: more than,less than, not equal, equal
+ * array: yes
+ * exact: yes
+ * 
+ */
+
+/**
  * This function creates a new table in the local database
  * @param db_name name of the local database
  * @param func function to be executed on success
@@ -88,6 +96,11 @@ function local_read_single_column(columns,callback,results)
 				fil.value=cols[j].innerHTML;
 				fil.type='array';
 			}
+			else if(cols[j].hasAttribute('exact'))
+			{
+				fil.value=cols[j].innerHTML;
+				fil.type='exact';
+			}
 			else
 			{
 				fil.value=cols[j].innerHTML;
@@ -131,9 +144,17 @@ function local_read_single_column(columns,callback,results)
 						{
 							found=string.search(search);
 						}
+						else if(filter[i].type=='exact')
+						{
+							if(search!==string)
+							{
+								match=false;
+								break;
+							}
+						}
 						else if(filter[i].type=='array')
 						{
-							found=search.search(string);
+							found=search.search("-"+string+"-");
 						}
 						if(filter[i].type=='less than') 
 						{
@@ -1070,6 +1091,11 @@ function local_read_multi_column(columns,callback,results)
 				fil.value=cols[j].innerHTML;
 				fil.type='array';
 			}
+			else if(cols[j].hasAttribute('exact'))
+			{
+				fil.value=cols[j].innerHTML;
+				fil.type='exact';
+			}
 			else
 			{
 				fil.value=cols[j].innerHTML;
@@ -1085,18 +1111,8 @@ function local_read_multi_column(columns,callback,results)
 		version:2},
 		function (err,database)
 		{
-			if(err)
-			{
-				console.log(err);
-			}
-			//console.log(tables);
-			
 			database.get(table,{direction:sklad.DESC}, function(err,records)
 			{
-				if(err)
-				{
-					console.log(err+"------"+table);
-				}
 				for(var row in records)
 				{
 					var match=true;
@@ -1110,9 +1126,17 @@ function local_read_multi_column(columns,callback,results)
 						{
 							found=string.search(search);
 						}
+						else if(filter[i].type=='exact')
+						{
+							if(search!==string)
+							{
+								match=false;
+								break;
+							}
+						}
 						else if(filter[i].type=='array')
 						{
-							found=search.search(string);
+							found=search.search("-"+string+"-");
 						}
 						if(filter[i].type=='less than') 
 						{
@@ -1124,7 +1148,7 @@ function local_read_multi_column(columns,callback,results)
 						}
 						else if(filter[i].type=='more than') 
 						{
-							if(parseInt(records[row][filter[i].name])<=filter[i].value)
+							if(parseFlaot(records[row][filter[i].name])<=parseFloat(filter[i].value))
 							{
 								match=false;
 								break;
@@ -1132,7 +1156,7 @@ function local_read_multi_column(columns,callback,results)
 						}
 						else if(filter[i].type=='equal') 
 						{
-							if(parseInt(records[row][filter[i].name])!=filter[i].value)
+							if(parseFloat(records[row][filter[i].name])!=parseFloat(filter[i].value))
 							{
 								match=false;
 								break;
@@ -1140,7 +1164,7 @@ function local_read_multi_column(columns,callback,results)
 						}
 						else if(filter[i].type=='not equal') 
 						{
-							if(parseInt(records[row][filter[i].name])==filter[i].value)
+							if(parseFloat(records[row][filter[i].name])==parseFlaot(filter[i].value))
 							{
 								match=false;
 								break;

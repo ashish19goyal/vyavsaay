@@ -274,13 +274,13 @@ function form10_header_ini()
 	{
 		var email_data="<customers>" +
 				"<email></email>" +
-				"<acc_name>"+customers_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
 				"</customers>";
 		set_my_value(email_data,email_filter);
 		
 		var phone_data="<customers>" +
 				"<phone></phone>" +
-				"<acc_name>"+customers_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
 				"</customers>";
 		set_my_value(phone_data,phone_filter);
 	});
@@ -363,13 +363,13 @@ function form12_header_ini()
 	{
 		var email_data="<customers>" +
 				"<email></email>" +
-				"<acc_name>"+customers_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
 				"</customers>";
 		set_my_value(email_data,email_filter);
 		
 		var phone_data="<customers>" +
 				"<phone></phone>" +
-				"<acc_name>"+customers_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
 				"</customers>";
 		set_my_value(phone_data,phone_filter);
 	});
@@ -560,13 +560,13 @@ function form15_header_ini()
 	{
 		var email_data="<customers>" +
 				"<email></email>" +
-				"<acc_name>"+customers_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
 				"</customers>";
 		set_my_value(email_data,email_filter);
 		
 		var phone_data="<customers>" +
 				"<phone></phone>" +
-				"<acc_name>"+customers_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
 				"</customers>";
 		set_my_value(phone_data,phone_filter);
 	});
@@ -660,13 +660,13 @@ function form19_header_ini()
 	{
 		var email_data="<suppliers>" +
 				"<email></email>" +
-				"<acc_name>"+supplier_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+supplier_filter.value+"</acc_name>" +
 				"</suppliers>";
 		set_my_value(email_data,email_filter);
 		
 		var phone_data="<suppliers>" +
 				"<phone></phone>" +
-				"<acc_name>"+supplier_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+supplier_filter.value+"</acc_name>" +
 				"</suppliers>";
 		set_my_value(phone_data,phone_filter);
 	});
@@ -769,13 +769,13 @@ function form24_header_ini()
 	{
 		var email_data="<suppliers>" +
 				"<email></email>" +
-				"<acc_name>"+supplier_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+supplier_filter.value+"</acc_name>" +
 				"</suppliers>";
 		set_my_value(email_data,email_filter);
 		
 		var phone_data="<suppliers>" +
 				"<phone></phone>" +
-				"<acc_name>"+supplier_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+supplier_filter.value+"</acc_name>" +
 				"</suppliers>";
 		set_my_value(phone_data,phone_filter);
 	});
@@ -1726,13 +1726,13 @@ function form72_header_ini()
 	{
 		var email_data="<customers>" +
 				"<email></email>" +
-				"<acc_name>"+customers_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
 				"</customers>";
 		set_my_value(email_data,email_filter);
 		
 		var phone_data="<customers>" +
 				"<phone></phone>" +
-				"<acc_name>"+customers_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
 				"</customers>";
 		set_my_value(phone_data,phone_filter);
 	});
@@ -1858,22 +1858,22 @@ function form80_header_ini()
 		
 		var table_data="<de_duplication_ref>" +
 				"<tablename></tablename>" +
-				"<object>"+object_filter.value+"</object>" +
+				"<object exact='yes'>"+object_filter.value+"</object>" +
 				"</de_duplication_ref>";
 		set_my_value(table_data,table_filter);
 		var column_data="<de_duplication_ref>" +
 				"<keycolumn></keycolumn>" +
-				"<object>"+object_filter.value+"</object>" +
+				"<object exact='yes'>"+object_filter.value+"</object>" +
 				"</de_duplication_ref>";
 		set_my_value(column_data,column_filter);
 		var refs_data="<de_duplication_ref>" +
 				"<references_value></references_value>" +
-				"<object>"+object_filter.value+"</object>" +
+				"<object exact='yes'>"+object_filter.value+"</object>" +
 				"</de_duplication_ref>";
 		set_my_value(refs_data,refs_filter);
 		var ref_ids_data="<de_duplication_ref>" +
 				"<references_id></references_id>" +
-				"<object>"+object_filter.value+"</object>" +
+				"<object exact='yes'>"+object_filter.value+"</object>" +
 				"</de_duplication_ref>";
 		set_my_value(ref_ids_data,ref_ids_filter);
 		
@@ -1884,30 +1884,25 @@ function form80_header_ini()
 }
 
 /**
- * @form Whatsapp promotion
+ * @form Sale leads
  * @formNo 81
  */
 function form81_header_ini()
 {
-	var fields=document.getElementById('form81_master');
-	var name_filter=fields.elements[1];
-	name_filter.value="";
-	fields.elements[2].value="";
+	var filter_fields=document.getElementById('form81_header');	
+	var names_filter=filter_fields.elements[0];
 	
-	var name_data="<offers>" +
-			"<name></name>" +
-			"</offers>";
-	set_my_value_list(name_data,name_filter);
+	//setting autocompletes 
+	var names_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+
+	set_my_filter(names_data,names_filter);
 	
-	$(name_filter).on('blur',function(event)
+	var import_button=filter_fields.elements[3];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
 	{
-		form81_ini();
-	});
-	
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
-	{
-		event.preventDefault();
-		modal52_action();
+		modal23_action(form81_import_template,form81_import);
 	});
 }

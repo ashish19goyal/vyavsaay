@@ -417,8 +417,7 @@
 	</div>
 	
 	<div id="modal50" title="Sending Mails">
-		Sending mails to customers. 
-		You can close this window at any time. The process will continue in the background.
+		<a href='' id='modal50_sendmail'>Send mails through Gmail</a>
 	</div>
 	
 	<div id="modal51" title="Merging Records">

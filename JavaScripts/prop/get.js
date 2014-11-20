@@ -36,7 +36,7 @@ function fetch_requested_data(element_id,columns,callback)
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -210,108 +210,63 @@ function set_my_value_list(filter_data,filter_element)
 	},filter_data);
 }
 
-function set_my_multiple_filter(filter_data,filter_element,output_element)
-{	
-	get_single_column_data(function(data)
-	{
-		data=jQuery.unique(data);
 
-		var form=filter_element.form;
-		var datalist=document.createElement('datalist');
-		data.forEach(function(d)
-		{
-			var option=document.createElement('option');
-			option.setAttribute('value',d);
-			datalist.appendChild(option);
-		});
-		
-		var list_id=filter_element.getAttribute('list');
-		if(list_id=='' || list_id==null)
-		{
-			list_id="list_"+get_new_key();
-			filter_element.setAttribute("list",list_id);
-		}
-		else
-		{
-			var oldlist=document.getElementById(list_id);
-			form.removeChild(oldlist);
-		}
-		
-		form.appendChild(datalist);
-		datalist.setAttribute('id',list_id);
-		
-	},filter_data);
-	$(filter_element).on('select',function(event)
-	{
-		var value=output_element.value;
-		var found=value.search(filter_element.value);
-		if(found===-1)
-		{
-			value+=filter_element.value+",";
-			output_element.value=value;
-		}	
-	});
-	$(filter_element).off("blur");
-	$(filter_element).on('blur',function(event)
-	{
-		var value=output_element.value;
-		var found=value.search(filter_element.value);
-		if(found===-1)
-		{
-			value+=filter_element.value+",";
-			output_element.value=value;
-		}	
-	});
-}
-
-function set_my_multiple_list(filter_data,filter_element,output_element)
+function set_multiple_value_list(filter_data_array,filter_element)
 {	
-	get_single_column_data(function(data)
+	var form=filter_element.form;
+	var datalist=document.createElement('datalist');
+	
+	var list_id=filter_element.getAttribute('list');
+	if(list_id=='' || list_id==null)
 	{
-		data=jQuery.unique(data);
-		var form=filter_element.form;
-		var datalist=document.createElement('datalist');
-		data.forEach(function(d)
-		{
-			var option=document.createElement('option');
-			option.setAttribute('value',d);
-			datalist.appendChild(option);
-		});
+		list_id="list_"+get_new_key();
+		filter_element.setAttribute("list",list_id);
+	}
+	else
+	{
+		var oldlist=document.getElementById(list_id);
+		form.removeChild(oldlist);
+	}
+	
+	form.appendChild(datalist);
+	datalist.setAttribute('id',list_id);
+
+	
+	$(filter_element).off("change");
+	$(filter_element).on("change",function(event)
+	{
+		var found = false;
+		var iski_list=this.list;
 		
-		var list_id=filter_element.getAttribute('list');
-		if(list_id=='' || list_id==null)
+		for(var j = 0; j < iski_list.options.length; j++)
 		{
-			list_id="list_"+get_new_key();
-			filter_element.setAttribute("list",list_id);
-		}
-		else
-		{
-			var oldlist=document.getElementById(list_id);
-			form.removeChild(oldlist);
-		}
-		
-		form.appendChild(datalist);
-		datalist.setAttribute('id',list_id);
-		
-		$(filter_element).on("change",function(event)
-		{
-			var found = $.inArray($(this).val(), data) > -1;
-			if(!found)
-			{
-	            $(this).val('');
+	        if(this.value==iski_list.options[j].value)
+	        {
+	           found=true;
+	            break;
 	        }
-		});
-	},filter_data);
-	$(filter_element).off("select");
-	$(filter_element).on('select',function(event)
-	{
-		var value=output_element.value;
-		var found=value.search(filter_element.value);
-		if(found===-1)
+	    }
+		
+		if(!found)
 		{
-			value+=filter_element.value+",";
-			output_element.value=value;
-		}	
+            $(this).val('');
+        }
+	});
+	
+	filter_data_array.forEach(function(filter_data)
+	{
+		get_single_column_data(function(data)
+		{
+			data=jQuery.unique(data);
+			
+			data.forEach(function(d)
+			{
+				var option=document.createElement('option');
+				option.setAttribute('value',d);
+				datalist.appendChild(option);
+			});
+
+		},filter_data);
 	});
 }
 
@@ -341,8 +296,8 @@ function set_static_value_list(table,list,filter_element)
 {
 	var list_data="<values_list>" +
 			"<name></name>" +
-			"<tablename>"+table+"</tablename>" +
-			"<listname>"+list+"</listname>" +
+			"<tablename exact='yes'>"+table+"</tablename>" +
+			"<listname exact='yes'>"+list+"</listname>" +
 			"<status>active</status>" +
 			"</values_list>";
 	get_single_column_data(function(data)

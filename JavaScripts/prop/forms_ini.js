@@ -541,9 +541,10 @@ function form10_ini()
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
+			var filter_fields=document.getElementById('form10_master');
+			
 			for (var i in bill_results)
 			{
-				var filter_fields=document.getElementById('form10_master');
 				filter_fields.elements[1].value=bill_results[i].customer_name;
 				filter_fields.elements[2].value=get_my_past_date(bill_results[i].bill_date);
 				filter_fields.elements[3].value=bill_results[i].amount;
@@ -565,11 +566,10 @@ function form10_ini()
 		
 		/////////////////////////////////////////////////////////////////////////
 			var customer_data="<customers>" +
-					"<acc_name>"+filter_fields.elements[1].value+"</acc_name>" +
+					"<acc_name exact='yes'>"+filter_fields.elements[1].value+"</acc_name>" +
 					"<email></email>" +
 					"<phone></phone>" +
 					"</customers>";
-			/////////////////////////////////////////////////////////////////////////
 			fetch_requested_data('',customer_data,function(cust_results)
 			{
 				var email=cust_results[0].email;
@@ -579,8 +579,8 @@ function form10_ini()
 				
 				fetch_requested_data('',bill_items_column,function(results)
 				{
-					var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-					var mail_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+					var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+					var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 					results.forEach(function(result)
 					{
@@ -626,22 +626,24 @@ function form10_ini()
 							event.preventDefault();
 						});
 					});
-					mail_string+="\nAmount: "+amount;
-					mail_string+="\ndiscount: "+discount;
-					mail_string+="\nTax: "+tax;
-					mail_string+="\nTotal: "+total;
+					
+					mail_string+="\nAmount: "+filter_fields.elements[3].value;
+					mail_string+="\ndiscount: "+filter_fields.elements[4].value;
+					mail_string+="\nTax: "+filter_fields.elements[5].value;
+					mail_string+="\nTotal: "+filter_fields.elements[6].value;
 					mail_string=encodeURIComponent(mail_string);
-					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+					
+					message_string+="\nAmount: "+filter_fields.elements[3].value;
+					message_string+="\ndiscount: "+filter_fields.elements[4].value;
+					message_string+="\nTax: "+filter_fields.elements[5].value;
+					message_string+="\nTotal: "+filter_fields.elements[6].value;
+					message_string=encodeURIComponent(message_string);
+					
+					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 					$('#form10_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 					$('#form10_whatsapp').show();
 					$('#form10_gmail').attr('href',mail_string);
-					s
-					message_string+="\nAmount: "+amount;
-					message_string+="\ndiscount: "+discount;
-					message_string+="\nTax: "+tax;
-					message_string+="\nTotal: "+total;
-					message_string=encodeURIComponent(message_string);
-					
+					$('#form10_gmail').show();
 					
 					hide_loader();
 				});
@@ -688,51 +690,85 @@ function form11_ini()
 	{	
 		results.forEach(function(result)
 		{
-			var detail_string="Bill Id: " +result.bill_id+
-					"\nMode of payment: " +result.mode+
-					"\nDue Date: "+get_my_past_date(result.due_date)+
-					"\nDate closed: "+get_my_past_date(result.date);
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form11_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Type'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' value='"+result.type+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Account'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' value='"+result.acc_name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Total Amount'>";
-						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form11_"+result.id+"' value='"+result.total_amount+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Paid Amount'>";
-						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+result.paid_amount+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Details'>";
-						rowsHTML+="<textarea readonly='readonly' form='form11_"+result.id+"'>"+detail_string+"</textarea>";
-						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form11_"+result.id+"' onclick='modal29_action($(this));'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.mode+"'>";
-						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.date+"'>";
-						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.due_date+"'>";
-						rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.bill_id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form11_"+result.id+"' title='Save'>";	
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-			
-			$('#form11_body').prepend(rowsHTML);
-			
-			var fields=document.getElementById("form11_"+result.id);
-			var status_filter=fields.elements[4];
-			set_static_value_list('payments','status',status_filter);
-			$(fields).on("submit", function(event)
+			var message_string="";
+			var email_data="";
+			if(result.type=='paid')
 			{
-				event.preventDefault();
-				form11_update_item(fields);
+				message_string="Payment of Rs: "+result.paid_amount+" paid on "+get_my_past_date(result.date)+".\n The status of this payment is "+result.status;
+				email_data="<suppliers>" +
+						"<email></email>" +
+						"<acc_name exact='yes'>"+result.acc_name+"</acc_name>" +
+						"</suppliers>";
+			}
+			else
+			{
+				message_string="Payment of Rs: "+result.paid_amount+" received on "+get_my_past_date(result.date)+".\n The status of this payment is "+result.status;
+				email_data="<customers>" +
+						"<email></email>" +
+						"<acc_name exact='yes'>"+result.acc_name+"</acc_name>" +
+						"</customers>";
+			}
+			message_string=encodeURIComponent(message_string);
+			
+			fetch_requested_data('form11',email_data,function(email_results)
+			{
+				var email="";
+				for (var y in email_results)
+				{
+					email=email_results[y].email;
+					break;
+				}
+				var mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Payment+Receipt+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+message_string;
+				
+				var detail_string="Bill Id: " +result.bill_id+
+						"\nMode of payment: " +result.mode+
+						"\nDue Date: "+get_my_past_date(result.due_date)+
+						"\nDate closed: "+get_my_past_date(result.date);
+				var rowsHTML="";
+				rowsHTML+="<tr>";
+					rowsHTML+="<form id='form11_"+result.id+"'></form>";
+						rowsHTML+="<td data-th='Type'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' value='"+result.type+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Account'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' value='"+result.acc_name+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Total Amount'>";
+							rowsHTML+="<input type='number' step='any' readonly='readonly' form='form11_"+result.id+"' value='"+result.total_amount+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Paid Amount'>";
+							rowsHTML+="<input type='number' step='any' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+result.paid_amount+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Details'>";
+							rowsHTML+="<textarea readonly='readonly' form='form11_"+result.id+"'>"+detail_string+"</textarea>";
+							rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form11_"+result.id+"' onclick='modal29_action($(this));'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.id+"'>";
+							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.mode+"'>";
+							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.date+"'>";
+							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.due_date+"'>";
+							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.bill_id+"'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form11_"+result.id+"' title='Save'>";
+							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+email+"'>";
+							rowsHTML+="<a id='form11_whatsapp_"+result.id+"' href='whatsapp://send?text="+message_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form11_"+result.id+"' title='Send details through WhatsApp'>";
+							rowsHTML+="<a id='form11_gmail_"+result.id+"' href='"+mail_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form11_"+result.id+"' title='Send details through WhatsApp'>";
+						rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+				
+				$('#form11_body').prepend(rowsHTML);
+				
+				var fields=document.getElementById("form11_"+result.id);
+				var status_filter=fields.elements[4];
+				set_static_value_list('payments','status',status_filter);
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form11_update_item(fields);
+				});
 			});
 		});
 		
@@ -793,9 +829,10 @@ function form12_ini()
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
+			var filter_fields=document.getElementById('form12_master');
+			
 			for (var i in bill_results)
 			{
-				var filter_fields=document.getElementById('form12_master');
 				filter_fields.elements[1].value=bill_results[i].customer_name;
 				filter_fields.elements[2].value=get_my_past_date(bill_results[i].bill_date);
 				filter_fields.elements[3].value=bill_results[i].amount;
@@ -814,55 +851,96 @@ function form12_ini()
 				});
 				break;
 			}
-		});
-		/////////////////////////////////////////////////////////////////////////
 		
-		fetch_requested_data('',bill_items_column,function(results)
-		{
-			results.forEach(function(result)
+			var customer_data="<customers>" +
+					"<acc_name exact='yes'>"+filter_fields.elements[1].value+"</acc_name>" +
+					"<email></email>" +
+					"<phone></phone>" +
+					"</customers>";
+			fetch_requested_data('',customer_data,function(cust_results)
 			{
-				var rowsHTML="";
-				var id=result.id;
-				rowsHTML+="<tr>";
-				rowsHTML+="<form id='form12_"+id+"'></form>";
-					rowsHTML+="<td data-th='Product Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form12_"+id+"' value='"+result.item_name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Batch'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form12_"+id+"' value='"+result.batch+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Quantity'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form12_"+id+"' value='"+result.quantity+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Unit Price'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form12_"+id+"' value='"+result.unit_price+"' step='any'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Total'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form12_"+id+"' value='"+result.total+"'>";
-						rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form12_"+id+"' value='Details' onclick='modal6_action($(this));'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.amount+"'>";
-						rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.discount+"'>";
-						rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.tax+"'>";
-						rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.offer+"'>";
-						rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form12_"+id+"' id='save_form12_"+id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form12_"+id+"' id='delete_form12_"+id+"' onclick='form12_delete_item($(this));'>";
-						rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
-						rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
-					rowsHTML+="</td>";			
-				rowsHTML+="</tr>";
-			
-				$('#form12_body').prepend(rowsHTML);
-				
-				var fields=document.getElementById("form12_"+id);
-				$(fields).on("submit", function(event)
+				var email=cust_results[0].email;
+				var phone=cust_results[0].phone;
+				filter_fields.elements[13].value=email;
+				filter_fields.elements[14].value=phone;
+		
+				fetch_requested_data('',bill_items_column,function(results)
 				{
-					event.preventDefault();
+					var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+					var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		
+					results.forEach(function(result)
+					{
+						message_string+="\nItem: "+result.item_name;
+						message_string+=" Quantity: "+result.quantity;
+						message_string+=" Total: "+result.total;
+						mail_string+="\nItem: "+result.item_name;
+						mail_string+=" Quantity: "+result.quantity;
+						mail_string+=" Total: "+result.total;
+						
+						var rowsHTML="";
+						var id=result.id;
+						rowsHTML+="<tr>";
+						rowsHTML+="<form id='form12_"+id+"'></form>";
+							rowsHTML+="<td data-th='Product Name'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form12_"+id+"' value='"+result.item_name+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Batch'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form12_"+id+"' value='"+result.batch+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Quantity'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form12_"+id+"' value='"+result.quantity+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Unit Price'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form12_"+id+"' value='"+result.unit_price+"' step='any'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Total'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form12_"+id+"' value='"+result.total+"'>";
+								rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form12_"+id+"' value='Details' onclick='modal6_action($(this));'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.amount+"'>";
+								rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.discount+"'>";
+								rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.tax+"'>";
+								rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.offer+"'>";
+								rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='submit' class='save_icon' form='form12_"+id+"' id='save_form12_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form12_"+id+"' id='delete_form12_"+id+"' onclick='form12_delete_item($(this));'>";
+								rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
+								rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+					
+						$('#form12_body').prepend(rowsHTML);
+						
+						var fields=document.getElementById("form12_"+id);
+						$(fields).on("submit", function(event)
+						{
+							event.preventDefault();
+						});
+					});
+					
+					mail_string+="\nAmount: "+filter_fields.elements[3].value;
+					mail_string+="\ndiscount: "+filter_fields.elements[4].value;
+					mail_string+="\nTax: "+filter_fields.elements[5].value;
+					mail_string+="\nTotal: "+filter_fields.elements[6].value;
+					mail_string=encodeURIComponent(mail_string);
+					
+					message_string+="\nAmount: "+filter_fields.elements[3].value;
+					message_string+="\ndiscount: "+filter_fields.elements[4].value;
+					message_string+="\nTax: "+filter_fields.elements[5].value;
+					message_string+="\nTotal: "+filter_fields.elements[6].value;
+					message_string=encodeURIComponent(message_string);
+					
+					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
+					$('#form12_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+					$('#form12_whatsapp').show();
+					$('#form12_gmail').attr('href',mail_string);
+					$('#form12_gmail').show();
+					
+					hide_loader();
 				});
 			});
-			hide_loader();
 		});
 	}
 }
@@ -1006,9 +1084,10 @@ function form15_ini()
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',return_columns,function(return_results)
 		{
+			var filter_fields=document.getElementById('form15_master');
+			
 			for (var i in return_results)
 			{
-				var filter_fields=document.getElementById('form15_master');
 				filter_fields.elements[1].value=return_results[i].customer;
 				filter_fields.elements[2].value=get_my_past_date(return_results[i].return_date);
 				filter_fields.elements[3].value=return_results[i].total;
@@ -1024,59 +1103,97 @@ function form15_ini()
 				});
 				break;
 			}
-		});
-		/////////////////////////////////////////////////////////////////////////
 		
-		fetch_requested_data('',return_items_column,function(results)
-		{
-			results.forEach(function(result)
+			var customer_data="<customers>" +
+					"<acc_name exact='yes'>"+filter_fields.elements[1].value+"</acc_name>" +
+					"<email></email>" +
+					"<phone></phone>" +
+					"</customers>";
+			fetch_requested_data('',customer_data,function(cust_results)
 			{
-				var rowsHTML="";
-				var id=result.id;
-				rowsHTML+="<tr>";
-				rowsHTML+="<form id='form15_"+id+"'></form>";
-					rowsHTML+="<td data-th='Product Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.item_name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Batch'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.batch+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Notes'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.notes+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Quantity'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form15_"+id+"' value='"+result.quantity+"' step='any'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Exchange/Refund'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.type+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Batch/Amount'>";
-						if(result.type=='refund')
-						{
-							rowsHTML+="<input type='number' readonly='readonly' step='any' form='form15_"+id+"' value='"+result.refund_amount+"'>";
-						}
-						else
-						{
-							rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.exhange_batch+"'>";
-						}
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form15_"+id+"' value='"+result.tax+"'>";
-						rowsHTML+="<input type='hidden' form='form15_"+id+"' value='"+id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form15_"+id+"' id='save_form15_"+id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form15_"+id+"' id='delete_form15_"+id+"' onclick='form15_delete_item($(this));'>";
-					rowsHTML+="</td>";			
-				rowsHTML+="</tr>";
-			
-				$('#form15_body').prepend(rowsHTML);
-				
-				var fields=document.getElementById("form15_"+id);
-				$(fields).on("submit", function(event)
+				var email=cust_results[0].email;
+				var phone=cust_results[0].phone;
+				filter_fields.elements[10].value=email;
+				filter_fields.elements[11].value=phone;
+
+				fetch_requested_data('',return_items_column,function(results)
 				{
-					event.preventDefault();
+					var message_string="Returns Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+					var mail_string="Returns Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		
+					results.forEach(function(result)
+					{
+						message_string+="\nItem: "+result.item_name;
+						message_string+=" Quantity: "+result.quantity;
+						mail_string+="\nItem: "+result.item_name;
+						mail_string+=" Quantity: "+result.quantity;
+						
+						var rowsHTML="";
+						var id=result.id;
+						rowsHTML+="<tr>";
+						rowsHTML+="<form id='form15_"+id+"'></form>";
+							rowsHTML+="<td data-th='Product Name'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.item_name+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Batch'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.batch+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Notes'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.notes+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Quantity'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form15_"+id+"' value='"+result.quantity+"' step='any'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Exchange/Refund'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.type+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Batch/Amount'>";
+								if(result.type=='refund')
+								{
+									rowsHTML+="<input type='number' readonly='readonly' step='any' form='form15_"+id+"' value='"+result.refund_amount+"'>";
+									message_string+=" Refund Rs: "+subform.elements[5].value;
+									mail_string+=" Refund Rs: "+subform.elements[5].value;
+
+								}
+								else
+								{
+									rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.exhange_batch+"'>";
+									message_string+=" Exchanged";
+									mail_string+=" Exchanged";
+								}
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form15_"+id+"' value='"+result.tax+"'>";
+								rowsHTML+="<input type='hidden' form='form15_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='submit' class='save_icon' form='form15_"+id+"' id='save_form15_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form15_"+id+"' id='delete_form15_"+id+"' onclick='form15_delete_item($(this));'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+					
+						$('#form15_body').prepend(rowsHTML);
+						
+						var fields=document.getElementById("form15_"+id);
+						$(fields).on("submit", function(event)
+						{
+							event.preventDefault();
+						});
+					});
+					
+					mail_string+="\nTotal: "+filter_fields.elements[3].value;
+					mail_string=encodeURIComponent(mail_string);
+					
+					message_string+="\nTotal: "+filter_fields.elements[3].value;
+					message_string=encodeURIComponent(message_string);
+					
+					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
+					$('#form15_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+					$('#form15_whatsapp').show();
+					$('#form15_gmail').attr('href',mail_string);
+					$('#form15_gmail').show();
+
+					hide_loader();
 				});
 			});
-			hide_loader();
 		});
 	}
 }
@@ -1292,48 +1409,83 @@ function form19_ini()
 				});
 				break;
 			}
-		});
-		/////////////////////////////////////////////////////////////////////////
-		
-		fetch_requested_data('',return_items_column,function(results)
-		{
-			results.forEach(function(result)
-			{
-				var rowsHTML="";
-				var id=result.id;
-				rowsHTML+="<tr>";
-				rowsHTML+="<form id='form19_"+id+"'></form>";
-					rowsHTML+="<td data-th='Product Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form19_"+id+"' value='"+result.item_name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Batch'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form19_"+id+"' value='"+result.batch+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Notes'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form19_"+id+"' value='"+result.notes+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Quantity'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form19_"+id+"' value='"+result.quantity+"' step='any'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Return Amount'>";
-						rowsHTML+="<input type='number' readonly='readonly' step='any' form='form19_"+id+"' value='"+result.refund_amount+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form19_"+id+"' value='"+id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form19_"+id+"' id='save_form19_"+id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form19_"+id+"' id='delete_form19_"+id+"' onclick='form19_delete_item($(this));'>";
-					rowsHTML+="</td>";			
-				rowsHTML+="</tr>";
 			
-				$('#form19_body').prepend(rowsHTML);
-				
-				var fields=document.getElementById("form19_"+id);
-				$(fields).on("submit", function(event)
+			var supplier_data="<suppliers>" +
+					"<acc_name exact='yes'>"+filter_fields.elements[1].value+"</acc_name>" +
+					"<email></email>" +
+					"<phone></phone>" +
+					"</suppliers>";
+			fetch_requested_data('',supplier_data,function(sup_results)
+			{
+				var email=sup_results[0].email;
+				var phone=sup_results[0].phone;
+				filter_fields.elements[9].value=email;
+				filter_fields.elements[10].value=phone;
+			
+				fetch_requested_data('',return_items_column,function(results)
 				{
-					event.preventDefault();
+					var message_string="Returns from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+					var mail_string="Returns from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		
+					results.forEach(function(result)
+					{
+						message_string+="\nItem: "+result.item_name;
+						message_string+=" Quantity: "+result.quantity;
+						message_string+=" Amount: "+result.refund_amount;
+						mail_string+="\nItem: "+result.item_name;
+						mail_string+=" Quantity: "+result.quantity;
+						mail_string+=" Amount: "+result.refund_amount;
+						
+						var rowsHTML="";
+						var id=result.id;
+						rowsHTML+="<tr>";
+						rowsHTML+="<form id='form19_"+id+"'></form>";
+							rowsHTML+="<td data-th='Product Name'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form19_"+id+"' value='"+result.item_name+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Batch'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form19_"+id+"' value='"+result.batch+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Notes'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form19_"+id+"' value='"+result.notes+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Quantity'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form19_"+id+"' value='"+result.quantity+"' step='any'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Return Amount'>";
+								rowsHTML+="<input type='number' readonly='readonly' step='any' form='form19_"+id+"' value='"+result.refund_amount+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form19_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='submit' class='save_icon' form='form19_"+id+"' id='save_form19_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form19_"+id+"' id='delete_form19_"+id+"' onclick='form19_delete_item($(this));'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+					
+						$('#form19_body').prepend(rowsHTML);
+						
+						var fields=document.getElementById("form19_"+id);
+						$(fields).on("submit", function(event)
+						{
+							event.preventDefault();
+						});
+					});
+
+					mail_string+="\nTotal Refund: "+filter_fields.elements[3].value;
+					mail_string=encodeURIComponent(mail_string);
+					
+					message_string+="\nTotal Refund: "+filter_fields.elements[3].value;
+					message_string=encodeURIComponent(message_string);
+					
+					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&to="+email+"&su=Returns+from+"+encodeURIComponent(get_session_var('title'))+"&body="+mail_string;
+					$('#form19_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+					$('#form19_whatsapp').show();
+					$('#form19_gmail').attr('href',mail_string);
+					$('#form19_gmail').show();
+
+					hide_loader();
 				});
 			});
-			hide_loader();
 		});
 	}
 }
@@ -1498,7 +1650,7 @@ function form24_ini()
 			}
 		
 			var supplier_data="<suppliers>" +
-					"<acc_name>"+filter_fields.elements[1].value+"</acc_name>" +
+					"<acc_name exact='yes'>"+filter_fields.elements[1].value+"</acc_name>" +
 					"<email></email>" +
 					"<phone></phone>" +
 					"</suppliers>";
@@ -1512,8 +1664,8 @@ function form24_ini()
 				
 				fetch_requested_data('',order_items_column,function(results)
 				{
-					var message_string="Order from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-					var mail_string="Order from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+					var message_string="Order from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+					var mail_string="Order from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 					results.forEach(function(result)
 					{
@@ -1559,7 +1711,7 @@ function form24_ini()
 					
 					message_string=encodeURIComponent(message_string);
 					mail_string=encodeURIComponent(mail_string);
-					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Order+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Order+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 					
 					$('#form24_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 					$('#form24_whatsapp').show();
@@ -1722,7 +1874,7 @@ function form35_ini()
 	{
 		results.forEach(function(result)
 		{
-			var message_string="Exciting Offer\n"+result.offer_detail+"\nAvail at:"+get_session_var('title')+"\nVisit us at:"+get_session_var('address');
+			var message_string="Exciting Offer\n"+result.offer_detail+"\nAvail at:"+encodeURIComponent(get_session_var('title'))+"\nVisit us at:"+get_session_var('address');
 			message_string=encodeURIComponent(message_string);
 			
 			var rowsHTML="";
@@ -2695,7 +2847,7 @@ function form51_ini()
 		var user_name_columns="<user_profiles>" +
 				"<id></id>" +
 				"<name></name>" +
-				"<username>"+fuser+"</username>" +
+				"<username exact='yes'>"+fuser+"</username>" +
 				"</user_profiles>";
 		fetch_requested_data('form51',user_name_columns,function(user_results)
 		{
@@ -2709,7 +2861,7 @@ function form51_ini()
 		});
 		var columns="<access_control>" +
 				"<id></id>" +
-				"<username>"+fuser+"</username>" +
+				"<username exact='yes'>"+fuser+"</username>" +
 				"<element_id></element_id>" +
 				"<element_name></element_name>" +
 				"<status>active</status>" +
@@ -2726,7 +2878,7 @@ function form51_ini()
 				//console.log('new user');
 				var elements_name="<access_control>" +
 							"<id></id>" +
-							"<username>master</username>"+
+							"<username exact='yes'>master</username>"+
 							"<element_id></element_id>"+
 							"<element_name></element_name>"+
 							"<status>active</status>"+
@@ -3010,7 +3162,7 @@ function form55_ini()
 		results.forEach(function(result)
 		{
 			var storages_data="<store_areas>" +
-				"<name>"+result.name+"</name>" +
+				"<name exact='yes'>"+result.name+"</name>" +
 				"<area_type>storage</area_type>" +
 				"<height></height>" +
 				"<width></width>" +
@@ -3870,7 +4022,7 @@ function form69_ini()
 				{
 					var max_data="<product_instances>" +
 								"<quantity></quantity>" +
-								"<product_name>"+name_filter.value+"</product_name>" +
+								"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 								"</product_instances>";
 					set_my_max_value(max_data,quantity_filter);
 				});
@@ -4126,9 +4278,10 @@ function form72_ini()
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
+			var filter_fields=document.getElementById('form72_master');
+			
 			for (var i in bill_results)
 			{
-				var filter_fields=document.getElementById('form72_master');
 				filter_fields.elements[1].value=bill_results[i].customer_name;
 				filter_fields.elements[2].value=get_my_past_date(bill_results[i].bill_date);
 				filter_fields.elements[3].value=bill_results[i].amount;
@@ -4147,75 +4300,116 @@ function form72_ini()
 				});
 				break;
 			}
-		});
-		/////////////////////////////////////////////////////////////////////////
-		
-		fetch_requested_data('',bill_items_column,function(results)
-		{
-			results.forEach(function(result)
-			{
-				var rowsHTML="";
-				var id=result.id;
-				rowsHTML+="<tr>";
-				rowsHTML+="<form id='form72_"+id+"'></form>";
-					rowsHTML+="<td data-th='Item Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form72_"+id+"' value='"+result.item_name+"'>";
-					rowsHTML+="</td>";
-					if(result.batch!=null && result.batch!="")
-					{
-						rowsHTML+="<td data-th='Batch'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form72_"+id+"' value='"+result.batch+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+="<input type='number' readonly='readonly' form='form72_"+id+"' value='"+result.quantity+"'>";
-						rowsHTML+="</td>";
-					}
-					else
-					{
-						rowsHTML+="<td data-th='Person'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form72_"+id+"' value='"+result.staff+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Notes'>";
-							rowsHTML+="<textarea readonly='readonly' form='form72_"+id+"'>"+result.notes+"</textarea>";
-						rowsHTML+="</td>";
-					}
-					rowsHTML+="<td data-th='Unit Price'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form72_"+id+"' value='"+result.unit_price+"' step='any'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Total'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form72_"+id+"' value='"+result.total+"'>";
-						rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form72_"+id+"' value='Details' onclick='modal6_action($(this));'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+result.amount+"'>";
-						rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+result.discount+"'>";
-						rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+result.tax+"'>";
-						rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+result.offer+"'>";
-						rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form72_"+id+"' id='save_form72_"+id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='form72_delete_item($(this));'>";
-						rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-						rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-						rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-					rowsHTML+="</td>";			
-				rowsHTML+="</tr>";
 			
-				$('#form72_body').prepend(rowsHTML);
-				
-				var fields=document.getElementById("form72_"+id);
-				$(fields).on("submit", function(event)
+			var customer_data="<customers>" +
+					"<acc_name exact='yes'>"+filter_fields.elements[1].value+"</acc_name>" +
+					"<email></email>" +
+					"<phone></phone>" +
+					"</customers>";
+			fetch_requested_data('',customer_data,function(cust_results)
+			{
+				var email=cust_results[0].email;
+				var phone=cust_results[0].phone;
+				filter_fields.elements[13].value=email;
+				filter_fields.elements[14].value=phone;
+		
+				fetch_requested_data('',bill_items_column,function(results)
 				{
-					event.preventDefault();
+					var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+					var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		
+					results.forEach(function(result)
+					{
+						message_string+="\nItem: "+result.item_name;
+						message_string+=" Price: "+result.unit_price;
+						message_string+=" Total: "+result.total;
+						mail_string+="\nItem: "+result.item_name;
+						mail_string+=" Price: "+result.unit_price;
+						mail_string+=" Total: "+result.total;
+						
+						var rowsHTML="";
+						var id=result.id;
+						rowsHTML+="<tr>";
+						rowsHTML+="<form id='form72_"+id+"'></form>";
+							rowsHTML+="<td data-th='Item Name'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form72_"+id+"' value='"+result.item_name+"'>";
+							rowsHTML+="</td>";
+							if(result.batch!=null && result.batch!="")
+							{
+								rowsHTML+="<td data-th='Batch'>";
+									rowsHTML+="<input type='text' readonly='readonly' form='form72_"+id+"' value='"+result.batch+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Quantity'>";
+									rowsHTML+="<input type='number' readonly='readonly' form='form72_"+id+"' value='"+result.quantity+"'>";
+								rowsHTML+="</td>";
+							}
+							else
+							{
+								rowsHTML+="<td data-th='Person'>";
+									rowsHTML+="<input type='text' readonly='readonly' form='form72_"+id+"' value='"+result.staff+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Notes'>";
+									rowsHTML+="<textarea readonly='readonly' form='form72_"+id+"'>"+result.notes+"</textarea>";
+								rowsHTML+="</td>";
+							}
+							rowsHTML+="<td data-th='Unit Price'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form72_"+id+"' value='"+result.unit_price+"' step='any'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Total'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form72_"+id+"' value='"+result.total+"'>";
+								rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form72_"+id+"' value='Details' onclick='modal6_action($(this));'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+result.amount+"'>";
+								rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+result.discount+"'>";
+								rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+result.tax+"'>";
+								rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+result.offer+"'>";
+								rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='submit' class='save_icon' form='form72_"+id+"' id='save_form72_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='form72_delete_item($(this));'>";
+								rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+								rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+								rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+					
+						$('#form72_body').prepend(rowsHTML);
+						
+						var fields=document.getElementById("form72_"+id);
+						$(fields).on("submit", function(event)
+						{
+							event.preventDefault();
+						});
+					});
+					
+					mail_string+="\nAmount: "+filter_fields.elements[3].value;
+					mail_string+="\ndiscount: "+filter_fields.elements[4].value;
+					mail_string+="\nTax: "+filter_fields.elements[5].value;
+					mail_string+="\nTotal: "+filter_fields.elements[6].value;
+					mail_string=encodeURIComponent(mail_string);
+					
+					message_string+="\nAmount: "+filter_fields.elements[3].value;
+					message_string+="\ndiscount: "+filter_fields.elements[4].value;
+					message_string+="\nTax: "+filter_fields.elements[5].value;
+					message_string+="\nTotal: "+filter_fields.elements[6].value;
+					message_string=encodeURIComponent(message_string);
+					
+					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
+					$('#form72_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+					$('#form72_whatsapp').show();
+					$('#form72_gmail').attr('href',mail_string);
+					$('#form72_gmail').show();
+					hide_loader();
 				});
 			});
-			hide_loader();
 		});
 	}
 }
 
 
-
-
+/**
+ * Notifications screen
+ */
 function notifications_ini()
 {
 	show_loader();
@@ -4284,79 +4478,6 @@ function notifications_ini()
 		});
 	});
 }
-
-
-
-function opportunities_ini()
-{
-	show_loader();
-	var columns="<opportunities>" +
-			"<title></title>" +
-			"<link_to></link_to>" +
-			"<data_id></data_id>" +
-			"<notes></notes>" +
-			"<t_generated></t_generated>" +
-			"<status>pending</status>" +
-			"</opportunities>";
-
-	fetch_requested_data('oppor',columns,function(oppors)
-	{	
-		var result_html="";
-		
-		for(var i in oppors)
-		{
-			result_html+="<div class='opportunity_detail'><b>" +
-					oppors[i].title +
-					"</b></br><a onclick=\"" +
-					"element_display('"+oppors[i].data_id +
-					"','"+oppors[i].link_to+
-					"');\">"+oppors[i].notes+"</a>" +
-					"<div class='opportunity_status'>" +
-					" Generated @ " +
-					get_formatted_time(oppors[i].t_generated) +
-					"</div>" +
-					"<div>" +
-					"<input type='button' value='Seen' onclick='opportunities_update_item()'>" +
-					"<input type='button' value='Close' onclick='opportunities_update_item()'>" +
-					"</div>" +
-					"</div>";	
-		}
-		var columns2="<opportunities>" +
-				"<title></title>" +
-				"<link_to></link_to>" +
-				"<data_id></data_id>" +
-				"<notes></notes>" +
-				"<t_generated></t_generated>" +
-				"<status>reviewed</status>" +
-				"</opportunities>";
-		
-		fetch_requested_data('oppor',columns2,function(oppors2)
-		{	
-			for(var j in oppors2)
-			{
-				result_html+="<div class='opportunity_detail'><b>" +
-						oppors2[j].title +
-						"</b></br><a onclick=\"" +
-						"element_display('"+oppors2[j].data_id +
-						"','"+oppors2[j].link_to+
-						"');\">"+oppors2[j].notes+"</a>" +
-						"<div class='opportunity_status'>" +
-						" Generated @ " +
-						get_formatted_time(oppors2[j].t_generated) +
-						"</div>" +
-						"<div>" +
-						"<input type='button' value='Unseen' onclick='opportunities_update_item()'>" +
-						"<input type='button' value='Close' onclick='opportunities_update_item()'>" +
-						"</div>" +
-						"</div>";	
-			}
-		
-			$("#opportunities_detail").html(result_html);
-			hide_loader();
-		});
-	});
-}
-
 
 
 
@@ -4906,6 +5027,79 @@ function form80_ini()
 		});
 		
 		
+		hide_loader();
+	});
+};
+
+
+/**
+ * @form Sale Leads
+ * @formNo 81
+ */
+function form81_ini()
+{
+	show_loader();
+	var fid=$("#form81_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form81_header');
+	
+	var fname=filter_fields.elements[0].value;
+	
+	var columns="<sale_leads>" +
+		"<id>"+fid+"</id>" +
+		"<customer>"+fname+"</customer>" +
+		"<detail></detail>" +
+		"<due_date></due_date>" +
+		"<identified_by></identified_by>" +
+		"</sale_leads>";
+	
+	$('#form81_body').html("");
+	
+	fetch_requested_data('form81',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form81_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form81_"+result.id+"' value='"+result.customer+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+="<textarea readonly='readonly' form='form81_"+result.id+"' class='dblclick_editable'>"+result.detail+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Due Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form81_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.due_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Indetified By'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form81_"+result.id+"' value='"+result.identified_by+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form81_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form81_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form81_"+result.id+"' onclick='form81_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form81_body').prepend(rowsHTML);
+			var fields=document.getElementById("form81_"+result.id);
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form81_update_item(fields);
+			});
+		});
+		
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'sale_leads');
+		});
 		hide_loader();
 	});
 };

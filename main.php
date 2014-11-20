@@ -1,5 +1,13 @@
 <?php 
 	include "includes/header.php";
+	
+	echo "<script type='text/javascript'>"
+			."history.pushState(null, null, 'main.php');"
+			."window.addEventListener('popstate', function(event) {"
+			."	history.pushState(null, null, 'main.php');"
+			."});"
+			."</script>";
+	
 	include "includes/searchbar.php";
 	include "includes/modal_forms.php";
 	include "includes/print_templates.php";
@@ -12,7 +20,6 @@
 		//display for search results, notifications and opportunities
 		include "functions/search.php";
 		include "functions/notifications.php";
-		include "functions/opportunities.php";
 		include "functions/all_activities.php";
 		
 		//display for each of the grids

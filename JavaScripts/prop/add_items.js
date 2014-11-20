@@ -52,7 +52,7 @@ function form2_add_item()
 		{
 			var offer_data="<offers>" +
 				"<offer_name></offer_name>" +
-				"<product_name>"+names_filter.value+"</product_name>" +
+				"<product_name exact='yes'>"+names_filter.value+"</product_name>" +
 				"<status>active</status>" +
 				"</offers>";
 				
@@ -63,7 +63,7 @@ function form2_add_item()
 		{
 			var offer_detail_data="<offers>" +
 				"<offer_detail></offer_detail>" +
-				"<offer_name>"+offer_filter.value+"</offer_name>" +
+				"<offer_name exact='yes'>"+offer_filter.value+"</offer_name>" +
 				"</offers>";
 			
 			set_my_value(offer_detail_data,offer_details);
@@ -143,7 +143,7 @@ function form10_add_item()
 		
 		var staff_data="<staff>" +
 				"<acc_name></acc_name>" +
-				"<status>active</status>" +
+				"<status exact='yes'>active</status>" +
 				"</staff>";
 		set_my_value_list(staff_data,staff_filter);
 		
@@ -160,7 +160,7 @@ function form10_add_item()
 			var price_data="<services>" +
 					"<price></price>" +
 					"<tax></tax>" +
-					"<name>"+name_filter.value+"</name>" +
+					"<name exact='yes'>"+name_filter.value+"</name>" +
 					"</services>";
 			
 			fetch_requested_data('',price_data,function(prices)
@@ -172,7 +172,7 @@ function form10_add_item()
 					amount_filter.value=amount;
 					var offer_data="<offers>" +
 							"<offer_type>service</offer_type>" +
-							"<service>"+name_filter.value+"</service>" +
+							"<service exact='yes'>"+name_filter.value+"</service>" +
 							"<criteria_type>min amount crossed</criteria_type>" +
 							"<criteria_amount compare='less than'>"+amount+"</criteria_amount>" +
 							"<result_type></result_type>" +
@@ -303,7 +303,7 @@ function form12_add_item()
 		$(name_filter).on('blur',function(event){
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"<quantity compare='more than'>0</quantity>" +
 					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
@@ -322,15 +322,15 @@ function form12_add_item()
 		$(batch_filter).on('blur',function(event){
 			var price_data="<product_instances>" +
 					"<sale_price></sale_price>" +
-					"<batch>"+batch_filter.value+"</batch>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"</product_instances>";
 			set_my_value(price_data,price_filter);
 			
 			var max_data="<product_instances>" +
 					"<quantity></quantity>" +
-					"<batch>"+batch_filter.value+"</batch>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"</product_instances>";		
 			set_my_max_value(max_data,quantity_filter);
 			
@@ -350,7 +350,7 @@ function form12_add_item()
 			amount_filter.value=amount;
 			var offer_data="<offers>" +
 					"<offer_type>product</offer_type>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"<batch array='yes'>"+batch_filter.value+"--all</batch>" +
 					"<criteria_type></criteria_type>" +
 					"<criteria_amount></criteria_amount>" +
@@ -446,7 +446,7 @@ function form12_add_item()
 				}
 				
 				var tax_data="<product_master>" +
-						"<name>"+name_filter.value+"</name>" +
+						"<name exact='yes'>"+name_filter.value+"</name>" +
 						"<tax></tax>" +
 						"</product_master>";
 				fetch_requested_data('',tax_data,function(taxes)
@@ -523,7 +523,7 @@ function form14_add_item()
 		{
 			var hours_data="<task_type>" +
 					"<est_hours></est_hours>" +
-					"<name>"+name_filter.value+"</name>" +
+					"<name exact='yes'>"+name_filter.value+"</name>" +
 					"</task_type>";
 			set_my_value(hours_data,hours_filter);
 		});
@@ -614,7 +614,7 @@ function form15_add_item()
 		$(name_filter).on('blur',function(event){
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
@@ -630,7 +630,7 @@ function form15_add_item()
 			var customer_name=document.getElementById("form15_master").elements[1].value;
 			var bill_data="<bills>" +
 					"<id></id>" +
-					"<customer_name>"+customer_name+"</customer_name>" +
+					"<customer_name exact='yes'>"+customer_name+"</customer_name>" +
 					"</bills>";
 			get_single_column_data(function(bills)
 			{
@@ -643,8 +643,8 @@ function form15_add_item()
 				var bill_items_data="<bill_items>" +
 						"<id></id>" +
 						"<bill_id array='yes'>"+bill_string+"</bill_id>" +
-						"<item_name>"+name_filter.value+"</item_name>" +
-						"<batch>"+batch_filter.value+"</batch>" +
+						"<item_name exact='yes'>"+name_filter.value+"</item_name>" +
+						"<batch exact='yes'>"+batch_filter.value+"</batch>" +
 						"<quantity></quantity>" +
 						"<total></total>" +
 						"<tax></tax>" +
@@ -692,7 +692,7 @@ function form15_add_item()
 			{
 				var batch_data="<product_instances>" +
 						"<batch></batch>" +
-						"<product_name>"+name_filter.value+"</product_name>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 						"<quantity compare='more than'>"+quantity_filter.value+"</quantity>" +
 						"</product_instances>";
 				set_my_value_list(batch_data,total_batch_filter);
@@ -708,7 +708,7 @@ function form15_add_item()
 			{
 				var tax_data="<product_master>" +
 						"<tax></tax>" +
-						"<name>"+name_filter.value+"</name>" +
+						"<name exact='yes'>"+name_filter.value+"</name>" +
 						"</product_master>";
 				get_single_column_data(function(taxes)
 				{
@@ -786,7 +786,7 @@ function form19_add_item()
 		$(name_filter).on('blur',function(event){
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"<quantity></quantity>" +
 					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
@@ -801,7 +801,7 @@ function form19_add_item()
 			var supplier_name=document.getElementById("form19_master").elements[1].value;
 			var bill_data="<supplier_bills>" +
 					"<id></id>" +
-					"<supplier>"+supplier_name+"</supplier>" +
+					"<supplier exact='yes'>"+supplier_name+"</supplier>" +
 					"</supplier_bills>";
 			get_single_column_data(function(bills)
 			{
@@ -813,8 +813,8 @@ function form19_add_item()
 				var bill_items_data="<supplier_bill_items>" +
 						"<id></id>" +
 						"<bill_id array='yes'>"+bill_string+"</bill_id>" +
-						"<product_name>"+name_filter.value+"</product_name>" +
-						"<batch>"+batch_filter.value+"</batch>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"<batch exact='yes'>"+batch_filter.value+"</batch>" +
 						"<quantity></quantity>" +
 						"<amount></amount>" +
 						"<unit_price></unit_price>" +
@@ -921,7 +921,7 @@ function form21_add_item()
 		$(name_filter).on('blur',function(event){
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
 			batch_filter.value="";
@@ -1005,13 +1005,13 @@ function form24_add_item()
 		{
 			var make_data="<product_master>" +
 					"<make></make>" +
-					"<name>"+name_filter.value+"</name>" +
+					"<name exact='yes'>"+name_filter.value+"</name>" +
 					"</product_master>";
 			set_my_value(make_data,make_filter);
 			
 			var price_data="<product_instances>" +
 						"<cost_price></cost_price>" +
-						"<product_name>"+name_filter.value+"</product_name>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 						"</product_instances>";
 			get_single_column_data(function(prices)
 			{
@@ -1084,14 +1084,14 @@ function form38_add_item()
 		$(product_filter).on('blur',function(event){
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
 		});
 		
 		var area_data="<store_areas>" +
 				"<name></name>" +
-				"<area_type>storage</area_type>" +
+				"<area_type exact='yes'>storage</area_type>" +
 				"</store_areas>";
 		
 		set_my_value_list(area_data,area_filter);
@@ -1754,7 +1754,7 @@ function form69_add_item()
 		{
 			var quantity_data="<product_instances>" +
 						"<quantity></quantity>" +
-						"<product_name>"+name_filter.value+"</product_name>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 						"</product_instances>";
 			get_single_column_data(function(quantities)
 			{
@@ -1768,7 +1768,7 @@ function form69_add_item()
 			
 			var price_data="<product_instances>" +
 						"<sale_price></sale_price>" +
-						"<product_name>"+name_filter.value+"</product_name>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 						"</product_instances>";
 			get_single_column_data(function(prices)
 			{
@@ -1780,7 +1780,7 @@ function form69_add_item()
 			var offer_data="<offers>" +
 					"<offer_detail></offer_detail>" +
 					"<offer_type>product</offer_type>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"<status array='yes'>active--extended</status>" +
 					"</offers>";
 			get_single_column_data(function(offers)
@@ -1873,7 +1873,7 @@ function form72_add_product()
 		$(name_filter).on('blur',function(event){
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"<quantity compare='more than'>0</quantity>" +
 					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
@@ -1893,15 +1893,15 @@ function form72_add_product()
 		$(batch_filter).on('blur',function(event){
 			var price_data="<product_instances>" +
 					"<sale_price></sale_price>" +
-					"<batch>"+batch_filter.value+"</batch>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"</product_instances>";
 			set_my_value(price_data,price_filter);
 			
 			var max_data="<product_instances>" +
 					"<quantity></quantity>" +
-					"<batch>"+batch_filter.value+"</batch>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"</product_instances>";		
 			set_my_max_value(max_data,quantity_filter);
 			
@@ -1922,7 +1922,7 @@ function form72_add_product()
 			amount_filter.value=amount;
 			var offer_data="<offers>" +
 					"<offer_type>product</offer_type>" +
-					"<product_name>"+name_filter.value+"</product_name>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"<batch array='yes'>"+batch_filter.value+"--all</batch>" +
 					"<criteria_type></criteria_type>" +
 					"<criteria_amount></criteria_amount>" +
@@ -2028,7 +2028,7 @@ function form72_add_product()
 				}
 				
 				var tax_data="<product_master>" +
-						"<name>"+name_filter.value+"</name>" +
+						"<name exact='yes'>"+name_filter.value+"</name>" +
 						"<tax></tax>" +
 						"</product_master>";
 				fetch_requested_data('',tax_data,function(taxes)
@@ -2143,7 +2143,7 @@ function form72_add_service()
 			var price_data="<services>" +
 					"<price></price>" +
 					"<tax></tax>" +
-					"<name>"+name_filter.value+"</name>" +
+					"<name exact='yes'>"+name_filter.value+"</name>" +
 					"</services>";
 			
 			fetch_requested_data('',price_data,function(prices)
@@ -2155,7 +2155,7 @@ function form72_add_service()
 					amount_filter.value=amount;
 					var offer_data="<offers>" +
 							"<offer_type>service</offer_type>" +
-							"<service>"+name_filter.value+"</service>" +
+							"<service exact='yes'>"+name_filter.value+"</service>" +
 							"<criteria_type>min amount crossed</criteria_type>" +
 							"<criteria_amount compare='less than'>"+amount+"</criteria_amount>" +
 							"<result_type></result_type>" +
@@ -2258,12 +2258,12 @@ function form78_add_item()
 		{
 			var name_data="<customers>" +
 				"<name></name>" +
-				"<acc_name>"+acc_name_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+acc_name_filter.value+"</acc_name>" +
 				"</customers>";
 			set_my_value(name_data,name_filter);
 			var email_data="<customers>" +
 				"<email></email>" +
-				"<acc_name>"+acc_name_filter.value+"</acc_name>" +
+				"<acc_name exact='yes'>"+acc_name_filter.value+"</acc_name>" +
 				"</customers>";
 			set_my_value(email_data,email_filter);
 		});
@@ -2314,7 +2314,7 @@ function form80_add_item()
 		var column=master_fields.elements[3].value;
 		
 		var slave_data="<"+table+">" +
-				"<"+column+"></"+column+">" +
+				"<"+column+" exact='yes'></"+column+">" +
 				"</"+table+">";
 		set_my_value_list(slave_data,slave_filter);
 		set_my_value_list(slave_data,master_filter);
@@ -2323,7 +2323,7 @@ function form80_add_item()
 		{
 			var slave_id_data="<"+table+">" +
 				"<id></id>" +
-				"<"+column+">"+slave_filter.value+"</"+column+">" +
+				"<"+column+" exact='yes'>"+slave_filter.value+"</"+column+">" +
 				"</"+table+">";
 			set_my_value(slave_id_data,slave_id_filter);
 
@@ -2332,7 +2332,7 @@ function form80_add_item()
 		{
 			var master_id_data="<"+table+">" +
 				"<id></id>" +
-				"<"+column+">"+master_filter.value+"</"+column+">" +
+				"<"+column+" exact='yes'>"+master_filter.value+"</"+column+">" +
 				"</"+table+">";
 			set_my_value(master_id_data,master_id_filter);
 		});
@@ -2349,3 +2349,69 @@ function form80_add_item()
 	}		
 }
 
+/**
+ * @form Sale Leads
+ * @formNo 81
+ */
+function form81_add_item()
+{
+	if(is_create_access('form81'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form81_"+id+"'></form>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' form='form81_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<textarea form='form81_"+id+"' class='dblclick_editable' required></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Due Date'>";
+				rowsHTML+="<input type='text' class='dblclick_editable' form='form81_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Identified By'>";
+				rowsHTML+="<input type='text' form='form81_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form81_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form81_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form81_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form81_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form81_"+id);
+		var customer_filter=fields.elements[0];
+		var detail_filter=fields.elements[1];
+		var due_filter=fields.elements[2];
+		var by_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form81_create_item(fields);
+		});
+					
+		$(customer_filter).focus();
+		
+		var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+		set_my_value_list(customer_data,customer_filter);
+		
+		$(due_filter).datepicker();
+		
+		var staff_data="<staff>" +
+				"<acc_name></acc_name>" +
+				"</staff>";
+		set_my_value_list(staff_data,by_filter);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}

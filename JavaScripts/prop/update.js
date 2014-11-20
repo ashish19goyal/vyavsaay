@@ -330,8 +330,8 @@ function form10_update_form()
 		var email=form.elements[13].value;
 		var phone=form.elements[14].value;
 		
-		var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		var mail_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
 		var discount=0;
@@ -369,7 +369,7 @@ function form10_update_form()
 		mail_string+="\nTax: "+tax;
 		mail_string+="\nTotal: "+total;
 		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 		$('#form10_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 		$('#form10_whatsapp').show();
 		$('#form10_gmail').attr('href',mail_string);
@@ -483,7 +483,7 @@ function form10_update_form()
 	                $('#form10_body').prepend(rowsHTML);
 
 	                var free_pre_requisite_data="<pre_requisites>" +
-							"<name>"+free_service_name+"</name>" +
+							"<name exact='yes'>"+free_service_name+"</name>" +
 							"<type>service</type>" +
 							"<requisite_type>task</requisite_type>" +
 							"<requisite_name></requisite_name>" +
@@ -672,6 +672,7 @@ function form11_update_item(form)
 			date=get_my_time();
 		}
 		var due_date=form.elements[9].value;
+		var email=form.elements[12].value;
 		var last_updated=get_my_time();
 		var data_xml="<payments>" +
 					"<id>"+data_id+"</id>" +
@@ -692,12 +693,12 @@ function form11_update_item(form)
 		var message_string="";
 		if(type=='paid')
 		{
-			activity_xml+="<notes>Payment of amount Rs. "+total_amount+" paid to "+acc_name+"</notes>" +
+			activity_xml+="<notes>Payment of amount Rs. "+total_amount+" paid to "+acc_name+"</notes>";
 			message_string="Payment of Rs: "+paid_amount+" paid on "+get_my_past_date(date)+".\n The status of this payment is "+status;
 		}
 		else
 		{
-			activity_xml+="<notes>Payment of amount Rs. "+total_amount+" received from "+acc_name+"</notes>" +
+			activity_xml+="<notes>Payment of amount Rs. "+total_amount+" received from "+acc_name+"</notes>";
 			message_string="Payment of Rs: "+paid_amount+" received on "+get_my_past_date(date)+".\n The status of this payment is "+status;
 		}
 		activity_xml+="<updated_by>"+get_name()+"</updated_by>" +
@@ -713,12 +714,10 @@ function form11_update_item(form)
 		
 		message_string=encodeURIComponent(message_string);
 		$("#form11_whatsapp_"+data_id).attr('href',"whatsapp://send?text="+message_string);
-		$("#form11_whatsapp_"+data_id).show();
 		
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Payment+Receipt+from+"+get_session_var('title')+"&to="+email+"&body="+message_string;
+		var mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Payment+Receipt+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+message_string;
 		$('#form11_gmail').attr('href',mail_string);
-		$('#form11_gmail').show();
-
+		
 		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -746,8 +745,8 @@ function form12_update_form()
 		var email=form.elements[13].value;
 		var phone=form.elements[14].value;
 		
-		var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		var mail_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
 		var discount=0;
@@ -787,7 +786,7 @@ function form12_update_form()
 		mail_string+="\nTax: "+tax;
 		mail_string+="\nTotal: "+total;
 		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 		$('#form12_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 		$('#form12_whatsapp').show();
 		$('#form12_gmail').attr('href',mail_string);
@@ -814,8 +813,8 @@ function form12_update_form()
 			{
 				var quantity_data="<product_instances>" +
 						"<id></id>" +
-						"<product_name>"+bill_item.product_name+"</product_name>" +
-						"<batch>"+bill_item.batch+"</batch>" +
+						"<product_name exact='yes'>"+bill_item.product_name+"</product_name>" +
+						"<batch exact='yes'>"+bill_item.batch+"</batch>" +
 						"<quantity></quantity>" +
 						"</product_instances>";	
 				//////updating product quantity in inventory
@@ -907,7 +906,7 @@ function form12_update_form()
 					
 					var free_quantity_data="<product_instances>" +
 								"<id></id>" +
-								"<product_name>"+free_product_name+"</product_name>" +
+								"<product_name exact='yes'>"+free_product_name+"</product_name>" +
 								"<batch></batch>" +
 								"<quantity></quantity>" +
 								"</product_instances>";	
@@ -1163,11 +1162,11 @@ function form15_update_form()
 		var customer=form.elements[1].value;
 		var return_date=get_raw_time(form.elements[2].value);
 		
-		var email=form.elements[13].value;
-		var phone=form.elements[14].value;
+		var email=form.elements[10].value;
+		var phone=form.elements[11].value;
 		
-		var message_string="Returns Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		var mail_string="Returns Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var message_string="Returns Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Returns Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var tax=0;
 		var total=0;
@@ -1200,14 +1199,12 @@ function form15_update_form()
 		form.elements[3].value=total;
 		form.elements[6].value=tax;
 		
-		message_string+="\nTax: "+tax;
 		message_string+="\nTotal: "+total;
 		message_string=encodeURIComponent(message_string);
 		
-		mail_string+="\nTax: "+tax;
 		mail_string+="\nTotal: "+total;
 		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Returns+Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Returns+Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 		$('#form15_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 		$('#form15_whatsapp').show();
 		$('#form15_gmail').attr('href',mail_string);
@@ -1322,8 +1319,8 @@ function form19_update_form()
 		var email=form.elements[9].value;
 		var phone=form.elements[10].value;
 		
-		var message_string="Returns from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		var mail_string="Return from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var message_string="Returns from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Return from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var total=0;
 		
@@ -1346,7 +1343,7 @@ function form19_update_form()
 		
 		message_string=encodeURIComponent(message_string);
 		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Returns+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Returns+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 		$('#form19_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 		$('#form19_whatsapp').show();
 		$('#form19_gmail').attr('href',mail_string);
@@ -1628,8 +1625,8 @@ function form24_update_form()
 		var email=form.elements[7].value;
 		var phone=form.elements[8].value;
 		
-		var message_string="Order from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		var mail_string="Order from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var message_string="Order from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Order from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 
 		$("[id^='save_form24']").each(function(index)
 		{
@@ -1643,7 +1640,7 @@ function form24_update_form()
 		
 		message_string=encodeURIComponent(message_string);
 		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Order+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Order+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 		$('#form24_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 		$('#form24_whatsapp').show();
 		$('#form24_gmail').attr('href',mail_string);
@@ -2175,7 +2172,7 @@ function form47_update_form()
 		
 		var user_data="<user_profiles>" +
 				"<id></id>" +
-				"<username>master</username>" +
+				"<username exact='yes'>master</username>" +
 				"<name></name>" +
 				"<password></password>" +
 				"</user_profiles>";
@@ -2251,9 +2248,7 @@ function form48_update_item(form)
 	if(is_update_access('form48'))
 	{
 		var name=form.elements[0].getAttribute('data-i18n');
-		console.log(name);
 		name=name.substr(name.indexOf('.')+1);
-		console.log(name);
 		var value='unchecked';
 		if(form.elements[1].checked)
 			value='checked';
@@ -3378,8 +3373,8 @@ function form72_update_form()
 		var email=form.elements[13].value;
 		var phone=form.elements[14].value;
 		
-		var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		var mail_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
+		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
 		var discount=0;
@@ -3419,7 +3414,7 @@ function form72_update_form()
 		mail_string+="\nTax: "+tax;
 		mail_string+="\nTotal: "+total;
 		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+get_session_var('title')+"&to="+email+"&body="+mail_string;
+		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
 		$('#form72_whatsapp').attr('href',"whatsapp://send?text="+message_string);
 		$('#form72_whatsapp').show();
 		$('#form72_gmail').attr('href',mail_string);
@@ -3467,8 +3462,8 @@ function form72_update_form()
 			{
 				var quantity_data="<product_instances>" +
 						"<id></id>" +
-						"<product_name>"+bill_item.product_name+"</product_name>" +
-						"<batch>"+bill_item.batch+"</batch>" +
+						"<product_name exact='yes'>"+bill_item.product_name+"</product_name>" +
+						"<batch exact='yes'>"+bill_item.batch+"</batch>" +
 						"<quantity></quantity>" +
 						"</product_instances>";	
 				//////updating product quantity in inventory
@@ -3563,7 +3558,7 @@ function form72_update_form()
 					
 					var free_quantity_data="<product_instances>" +
 								"<id></id>" +
-								"<product_name>"+free_product_name+"</product_name>" +
+								"<product_name exact='yes'>"+free_product_name+"</product_name>" +
 								"<batch></batch>" +
 								"<quantity></quantity>" +
 								"</product_instances>";	
@@ -3692,7 +3687,7 @@ function form72_update_form()
 	                $('#form72_body').prepend(rowsHTML);
 
 	                var free_pre_requisite_data="<pre_requisites>" +
-							"<name>"+free_service_name+"</name>" +
+							"<name exact='yes'>"+free_service_name+"</name>" +
 							"<type>service</type>" +
 							"<requisite_type>task</requisite_type>" +
 							"<requisite_name></requisite_name>" +
@@ -3768,89 +3763,89 @@ function form72_update_form()
 			}
 			
 			var data_xml="<bills>" +
-					"<id>"+data_id+"</id>" +
-					"<customer_name>"+customer+"</customer_name>" +
-					"<bill_date>"+bill_date+"</bill_date>" +
-					"<amount>"+amount+"</amount>" +
-					"<total>"+total+"</total>" +
-					"<type>product</type>" +
-					"<offer>"+offer_detail+"</offer>" +
-					"<discount>"+discount+"</discount>" +
-					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"<transaction_id>"+transaction_id+"</transaction_id>" +
-					"</bills>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>bills</tablename>" +
-					"<link_to>form42</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Bill no "+data_id+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var transaction_xml="<transactions>" +
-					"<id>"+transaction_id+"</id>" +
-					"<trans_date>"+get_my_time()+"</trans_date>" +
-					"<amount>"+total+"</amount>" +
-					"<receiver>"+customer+"</receiver>" +
-					"<giver>master</giver>" +
-					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</transactions>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-			server_update_simple(transaction_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-			local_update_simple(transaction_xml);
-		}
-		var payment_data="<payments>" +
-				"<id></id>" +
-				"<bill_id>"+data_id+"</bill_id>" +
-				"</payments>";
-		get_single_column_data(function(payments)
-		{
-			for(var y in payments)
+						"<id>"+data_id+"</id>" +
+						"<customer_name>"+customer+"</customer_name>" +
+						"<bill_date>"+bill_date+"</bill_date>" +
+						"<amount>"+amount+"</amount>" +
+						"<total>"+total+"</total>" +
+						"<type>product</type>" +
+						"<offer>"+offer_detail+"</offer>" +
+						"<discount>"+discount+"</discount>" +
+						"<tax>"+tax+"</tax>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"<transaction_id>"+transaction_id+"</transaction_id>" +
+						"</bills>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>bills</tablename>" +
+						"<link_to>form42</link_to>" +
+						"<title>Updated</title>" +
+						"<notes>Bill no "+data_id+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var transaction_xml="<transactions>" +
+						"<id>"+transaction_id+"</id>" +
+						"<trans_date>"+get_my_time()+"</trans_date>" +
+						"<amount>"+total+"</amount>" +
+						"<receiver>"+customer+"</receiver>" +
+						"<giver>master</giver>" +
+						"<tax>"+tax+"</tax>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</transactions>";
+			if(is_online())
 			{
-				var payment_xml="<payments>" +
-							"<id>"+payments[y]+"</id>" +
-							"<type>received</type>" +
-							"<date>"+get_my_time()+"</date>" +
-							"<total_amount>"+total+"</total_amount>" +
-							"<acc_name>"+customer+"</acc_name>" +
-							"<transaction_id>"+payments[y]+"</transaction_id>" +
-							"<bill_id>"+data_id+"</bill_id>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</payments>";
-				var pt_xml="<transactions>" +
-							"<id>"+payments[y]+"</id>" +
-							"<trans_date>"+get_my_time()+"</trans_date>" +
-							"<amount>"+total+"</amount>" +
-							"<receiver>master</receiver>" +
-							"<giver>"+customer+"</giver>" +
-							"<tax>0</tax>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</transactions>";
-				if(is_online())
-				{
-					server_update_simple_func(payment_xml,function()
-					{
-						modal26_action(payments[y]);
-					});
-				}
-				else
-				{
-					local_update_simple_func(payment_xml,function()
-					{
-						modal26_action(payments[y]);
-					});
-				}
-				break;
+				server_update_row(data_xml,activity_xml);
+				server_update_simple(transaction_xml);
 			}
-		},payment_data);
+			else
+			{
+				local_update_row(data_xml,activity_xml);
+				local_update_simple(transaction_xml);
+			}
+			var payment_data="<payments>" +
+					"<id></id>" +
+					"<bill_id>"+data_id+"</bill_id>" +
+					"</payments>";
+			get_single_column_data(function(payments)
+			{
+				for(var y in payments)
+				{
+					var payment_xml="<payments>" +
+								"<id>"+payments[y]+"</id>" +
+								"<type>received</type>" +
+								"<date>"+get_my_time()+"</date>" +
+								"<total_amount>"+total+"</total_amount>" +
+								"<acc_name>"+customer+"</acc_name>" +
+								"<transaction_id>"+payments[y]+"</transaction_id>" +
+								"<bill_id>"+data_id+"</bill_id>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</payments>";
+					var pt_xml="<transactions>" +
+								"<id>"+payments[y]+"</id>" +
+								"<trans_date>"+get_my_time()+"</trans_date>" +
+								"<amount>"+total+"</amount>" +
+								"<receiver>master</receiver>" +
+								"<giver>"+customer+"</giver>" +
+								"<tax>0</tax>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</transactions>";
+					if(is_online())
+					{
+						server_update_simple_func(payment_xml,function()
+						{
+							modal26_action(payments[y]);
+						});
+					}
+					else
+					{
+						local_update_simple_func(payment_xml,function()
+						{
+							modal26_action(payments[y]);
+						});
+					}
+					break;
+				}
+			},payment_data);
 		
 		});
 		$("[id^='save_form72']").click();
@@ -3989,6 +3984,56 @@ function form80_update_form(button)
 	}
 }
 
+/**
+ * @form Sale leads
+ * @param button
+ */
+function form81_update_item(form)
+{
+	if(is_update_access('form81'))
+	{
+		var customer=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var due_date=get_raw_time(form.elements[2].value);
+		var identified_by=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<detail>"+detail+"</detail>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<identified_by>"+identified_by+"</identified_by>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form81</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Sale lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
 
 /**
  * @form Notifications
@@ -4020,34 +4065,3 @@ function notifications_update(data_id,status)
 	}
 }
 
-
-/**
- * @form Get messages
- * @formNo 82
- * @param data_id
- * @param status
- */
-function form82_update_item(data_id,status)
-{
-	if(is_update_access('form82'))
-	{
-		var last_updated=get_my_time();
-		var data_xml="<whatsapp_messages>" +
-					"<id>"+data_id+"</id>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</whatsapp_messages>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}

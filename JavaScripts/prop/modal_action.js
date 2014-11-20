@@ -67,7 +67,7 @@ function modal8_action()
 			{
 				var batch_data="<product_instances>" +
 						"<batch></batch>" +
-						"<product_name>"+product_name.value+"</product_name>" +
+						"<product_name exact='yes'>"+product_name.value+"</product_name>" +
 						"</product_instances>";
 				set_my_value_list(batch_data,batch);
 			});
@@ -1122,7 +1122,7 @@ function modal19_action(button)
 	
 	var copy_master_data="<product_master>" +
 			"<id></id>" +
-			"<name>"+copy_name+"</name>" +
+			"<name exact='yes'>"+copy_name+"</name>" +
 			"<description></description>" +
 			"<make></make>" +
 			"<tax></tax>" +
@@ -1140,7 +1140,7 @@ function modal19_action(button)
 					"<id></id>" +
 					"<url></url>" +
 					"<doc_type>product_master</doc_type>" +
-					"<target_id>"+result.id+"</target_id>" +
+					"<target_id exact='yes'>"+result.id+"</target_id>" +
 					"</documents>";
 			fetch_requested_data('form39',picture_column,function(pic_results)
 			{
@@ -1234,7 +1234,7 @@ function modal19_action(button)
 			}
 
 			var copy_attributes_data="<attributes>" +
-					"<name>"+copy_name+"</name>" +
+					"<name exact='yes'>"+copy_name+"</name>" +
 					"<type>product</type>" +
 					"<attribute></attribute>" +
 					"<value></value>" +
@@ -1266,7 +1266,7 @@ function modal19_action(button)
 			});
 			
 			var copy_requisite_data="<pre_requisites>" +
-					"<name>"+copy_name+"</name>" +
+					"<name exact='yes'>"+copy_name+"</name>" +
 					"<type>product</type>" +
 					"<requisite_type></requisite_type>" +
 					"<requisite_name></requisite_name>" +
@@ -1300,7 +1300,7 @@ function modal19_action(button)
 			});
 			
 			var copy_cross_data="<cross_sells>" +
-					"<name>"+copy_name+"</name>" +
+					"<name exact='yes'>"+copy_name+"</name>" +
 					"<type>product</type>" +
 					"<cross_type></cross_type>" +
 					"<cross_name></cross_name>" +
@@ -1424,7 +1424,7 @@ function modal21_action()
 	
 	var copy_master_data="<services>" +
 			"<id></id>" +
-			"<name>"+copy_name+"</name>" +
+			"<name exact='yes'>"+copy_name+"</name>" +
 			"<description></description>" +
 			"<price></price>" +
 			"<taxable></taxable>" +
@@ -1485,7 +1485,7 @@ function modal21_action()
 			}	
 
 			var copy_attributes_data="<attributes>" +
-					"<name>"+copy_name+"</name>" +
+					"<name exact='yes'>"+copy_name+"</name>" +
 					"<type>service</type>" +
 					"<attribute></attribute>" +
 					"<value></value>" +
@@ -1517,7 +1517,7 @@ function modal21_action()
 			});
 
 			var copy_requisite_data="<pre_requisites>" +
-					"<name>"+copy_name+"</name>" +
+					"<name exact='yes'>"+copy_name+"</name>" +
 					"<type>service</type>" +
 					"<requisite_type></requisite_type>" +
 					"<requisite_name></requisite_name>" +
@@ -1551,7 +1551,7 @@ function modal21_action()
 			});
 			
 			var copy_cross_data="<cross_sells>" +
-					"<name>"+copy_name+"</name>" +
+					"<name exact='yes'>"+copy_name+"</name>" +
 					"<type>service</type>" +
 					"<cross_type></cross_type>" +
 					"<cross_name></cross_name>" +
@@ -1617,7 +1617,7 @@ function modal22_action()
 	{
 		var batch_data="<product_instances>" +
 				"<batch></batch>" +
-				"<product_name>"+fname.value+"</product_name>" +
+				"<product_name exact='yes'>"+fname.value+"</product_name>" +
 				"</product_instances>";
 		get_single_column_data(function(batches)
 		{
@@ -1712,37 +1712,29 @@ function modal23_action(t_func,i_func)
 		var file=select_file.files[0];
         var fileType = /csv/gi;
 
-        //if(file.type.match(fileType)!=null)
-        //{
-            selected_file.value = "Uploading!! Please don't refresh";
-        	var reader = new FileReader();
-            reader.onload = function(e)
-            {
-               var content=reader.result;
-               var data_array=csv_string_to_obj_array(content);
-
-               if(new_records.checked)
-            	   i_func(data_array,'create_new');
-               else if(update_records.checked)
-            	   i_func(data_array,'update_records');
-               
-               var ajax_complete=setInterval(function(){
-            	   if(number_active_ajax===0)
-            	   {
-            		   selected_file.value = "Upload complete";
-            		   $(select_file).val('');
-            		   $("#modal23").dialog("close");
-            		   clearInterval(ajax_complete);
-            	   }
-               },10000);
-            }
-            reader.readAsText(file);    
- /*       }
-        else
+        selected_file.value = "Uploading!! Please don't refresh";
+    	var reader = new FileReader();
+        reader.onload = function(e)
         {
-            selected_file.value = "File not supported!";
+           var content=reader.result;
+           var data_array=csv_string_to_obj_array(content);
+
+           if(new_records.checked)
+        	   i_func(data_array,'create_new');
+           else if(update_records.checked)
+        	   i_func(data_array,'update_records');
+           
+           var ajax_complete=setInterval(function(){
+        	   if(number_active_ajax===0)
+        	   {
+        		   selected_file.value = "Upload complete";
+        		   $(select_file).val('');
+        		   $("#modal23").dialog("close");
+        		   clearInterval(ajax_complete);
+        	   }
+           },10000);
         }
-*/	
+        reader.readAsText(file);    
     });
 	
 	$("#modal23").dialog("open");
@@ -1980,7 +1972,7 @@ function modal27_action(product_name)
 			"<price></price>" +
 			"<quantity></quantity>" +
 			"<order_id></order_id>" +
-			"<product_name>"+product_name+"</product_name>" +
+			"<product_name exact='yes'>"+product_name+"</product_name>" +
 			"<last_updated></last_updated>" +
 			"</purchase_order_items>";
 	fetch_requested_data('',last_purchase_data,function(last_purchases)
@@ -1999,7 +1991,7 @@ function modal27_action(product_name)
 			
 			var last_order_data="<purchase_orders>" +
 					"<supplier></supplier>" +
-					"<id>"+order_id+"</id>" +
+					"<id exact='yes'>"+order_id+"</id>" +
 					"<status></status>" +
 					"</purchase_orders>";
 			fetch_requested_data('',last_order_data,function(last_orders)
@@ -2063,13 +2055,13 @@ function modal27_action(product_name)
 					{
 						var make_data="<product_master>" +
 								"<make></make>" +
-								"<name>"+product_name+"</name>" +
+								"<name exact='yes'>"+product_name+"</name>" +
 								"</product_master>";
 						set_my_value(make_data,fmake);
 						
 						var price_data="<product_instances>" +
 								"<cost_price></cost_price>" +
-								"<product_name>"+product_name+"</product_name>" +
+								"<product_name exact='yes'>"+product_name+"</product_name>" +
 								"</product_instances>";
 						set_my_value(price_data,fprice);
 						
@@ -2090,7 +2082,7 @@ function modal27_action(product_name)
 
 								var purchase_order_data="<purchase_orders>" +
 										"<id></id>" +
-										"<supplier>"+supplier+"</supplier>" +
+										"<supplier exact='yes'>"+supplier+"</supplier>" +
 										"<status>draft</status>" +
 										"</purchase_orders>";
 								fetch_requested_data('',purchase_order_data,function(purchase_orders)
@@ -2461,7 +2453,7 @@ function modal32_action(date_initiated)
 	{
 		var hours_data="<task_type>" +
 				"<est_hours></est_hours>" +
-				"<name>"+task_filter.value+"</name>" +
+				"<name exact='yes'>"+task_filter.value+"</name>" +
 				"</task_type>";
 		set_my_value(hours_data,hours_filter);
 	});
@@ -2632,7 +2624,7 @@ function modal34_action()
  * @modal Sending Mails
  * @modalNo 50
  */
-function modal50_action()
+/*function modal50_action()
 {
 	$("#modal50").dialog("open");
 	
@@ -2687,7 +2679,7 @@ function modal50_action()
 		
 		email_data_string+="</data>";
 		//console.log(email_data_string);
-		
+				
 		var domain=get_domain();
 		var username=get_username();
 		var re_access=get_session_var('re');
@@ -2715,7 +2707,56 @@ function modal50_action()
 		});
 	});		
 }
+*/
 
+/**
+ * @modal Sending Mails
+ * @modalNo 50
+ */
+function modal50_action()
+{
+	show_loader();
+	var form=document.getElementById("form78_master");
+	var pamphlet_name=form.elements[1].value;
+	var pamphlet_id=form.elements[2].value;
+	//console.log(pamphlet_id);
+	var pamphlet_items_data="<pamphlet_items>" +
+				"<item_name></item_name>" +
+				"<offer></offer>" +
+				"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
+				"</pamphlet_items>";
+			
+	fetch_requested_data('',pamphlet_items_data,function(results)
+	{
+		var email_data_string="Exciting offers from: " +get_session_var('title')+
+		"\nTo avail visit us at: "+get_session_var('address')+"\n";
+		
+		for(var i in results)
+		{
+			email_data_string+="\n"+
+					"Item: "+results[i].item_name+
+					" Offer: "+results[i].offer;
+		}	
+		
+		var email_id_string="";
+		
+		$("[id^='row_form78_']").each(function(index)
+		{
+			var form_id=$(this).attr('id');
+			var form=document.getElementById(form_id);
+			
+			if(form.elements[2].checked)
+			{
+				email_id_string+=form.elements[1].value+";";
+			}
+		});
+		
+		email_data_string=encodeURIComponent(email_data_string);
+		var mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su="+encodeURIComponent(pamphlet_name)+"&to="+get_session_var('email')+"&bcc="+email_id_string+"&body="+email_data_string;
+		hide_loader();
+		window.open(mail_string,'_blank');
+	});		
+}
 
 /**
  * @modal Merge records
@@ -2729,7 +2770,7 @@ function modal51_action(object)
 		
 		var de_duplication_data="<de_duplication>" +
 					"<id></id>" +
-					"<object>"+object+"</object>"+
+					"<object exact='yes'>"+object+"</object>"+
 					"<tablename></tablename>"+
 					"<keycolumn></keycolumn>"+
 					"<slave_id></slave_id>"+
@@ -2773,7 +2814,7 @@ function modal51_action(object)
 						{	
 							var refs_data="<"+tablename+">" +
 									"<id></id>" +
-									"<"+column+">"+result.slave_value+"</"+column+">" +
+									"<"+column+" exact='yes'>"+result.slave_value+"</"+column+">" +
 									"</"+tablename+">";
 							fetch_requested_data('',refs_data,function(ref_results)
 							{
@@ -2809,7 +2850,7 @@ function modal51_action(object)
 						{
 							var ref_ids_data="<"+tablename+">" +
 									"<id></id>" +
-									"<"+column+">"+result.slave_id+"</"+column+">" +
+									"<"+column+" exact='yes'>"+result.slave_id+"</"+column+">" +
 									"</"+tablename+">";
 							fetch_requested_data('',ref_ids_data,function(ref_id_results)
 							{

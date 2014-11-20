@@ -1608,30 +1608,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<tablename>opportunities</tablename>
-			<listname>status</listname>
-			<name>pending</name>
-			<value>Pending</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>opportunities</tablename>
-			<listname>status</listname>
-			<name>reviewed</name>
-			<value>Reviewed</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>opportunities</tablename>
-			<listname>status</listname>
-			<name>closed</name>
-			<value>Closed</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<tablename>user_preferences</tablename>
 			<listname>type</listname>
 			<name>function</name>

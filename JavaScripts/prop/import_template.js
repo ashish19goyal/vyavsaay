@@ -237,3 +237,13 @@ function form79_import_template()
 	var data_array=['id','name','description','est_hours'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Sale leads
+* @formNo 81
+*/
+function form81_import_template()
+{
+	var data_array=['id','customer','detail','due_date','identified_by'];
+	my_array_to_csv(data_array);
+};
