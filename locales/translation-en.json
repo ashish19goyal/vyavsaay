@@ -138,6 +138,11 @@
   	"find_locations":"Find Locations",
   	"place_orders":"Place Orders",
   	"assign_tasks":"Assign Tasks",
-  	"sale_leads":"Sale Leads"
+  	"sale_leads":"Sale Leads",
+  	"attributes":"Attributes",
+  	"product_attributes":"Product Attributes",
+  	"service_attributes":"Service Attributes",
+  	"notifications":"Notifications",
+  	"scan_items":"Scan Items"
   }
 }

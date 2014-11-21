@@ -11,15 +11,16 @@ function form1_update_item(form)
 		var cost_price=form.elements[2].value;
 		var sale_price=form.elements[3].value;
 		var expiry=get_raw_time(form.elements[4].value);
-		var quantity=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var system_quantity=form.elements[5].value;
+		var actual_quantity=form.elements[6].value;
+		var quantity=parseFloat(actual_quantity)-parseFloat(system_quantity);
+		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		var data_xml="<product_instances>" +
 					"<id>"+data_id+"</id>" +
 					"<product_name>"+name+"</product_name>" +
 					"<batch>"+batch+"</batch>" +
 					"<expiry>"+expiry+"</expiry>" +
-					"<quantity>"+quantity+"</quantity>" +
 					"<cost_price>"+cost_price+"</cost_price>" +
 					"<sale_price>"+sale_price+"</sale_price>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -32,15 +33,30 @@ function form1_update_item(form)
 					"<notes>Inventory for batch number "+batch+" of "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var adjust_xml="<inventory_adjust>" +
+					"<id>"+get_new_key()+"</id>" +
+					"<product_name>"+name+"</product_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</inventory_adjust>";	
 		if(is_online())
 		{
 			server_update_row(data_xml,activity_xml);
+			if(quantity!==0)
+			{
+				server_create_simple(adjust_xml);
+			}
 		}
 		else
 		{
 			local_update_row(data_xml,activity_xml);
+			if(quantity!==0)
+			{
+				local_create_simple(adjust_xml);
+			}
 		}
-		for(var i=0;i<6;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -49,7 +65,6 @@ function form1_update_item(form)
 	{
 		$("#modal2").dialog("open");
 	}
-	
 }
 
 
@@ -2883,17 +2898,17 @@ function form60_update_item(form)
 		var value=form.elements[2].value;
 		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var data_xml="<attribute>" +
+		var data_xml="<attributes>" +
 					"<id>"+data_id+"</id>" +
-					"<name>"+product+"</name>" +
+					"<item_name>"+product+"</item_name>" +
 					"<type>product</type>" +
 					"<attribute>"+attribute+"</attribute>" +
 					"<value>"+value+"</value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</attribute>";	
+					"</attributes>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>attributes</tablename>" +
 					"<link_to>form60</link_to>" +
 					"<title>Updated</title>" +
 					"<notes>Attribute "+attribute+" for product "+product+"</notes>" +
@@ -2934,7 +2949,7 @@ function form61_update_item(form)
 		var last_updated=get_my_time();
 		var data_xml="<attribute>" +
 					"<id>"+data_id+"</id>" +
-					"<name>"+service+"</name>" +
+					"<item_name>"+service+"</item_name>" +
 					"<type>service</type>" +
 					"<attribute>"+attribute+"</attribute>" +
 					"<value>"+value+"</value>" +

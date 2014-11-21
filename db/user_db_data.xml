@@ -698,6 +698,22 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>form60</name>
+			<display_name>product_attributes</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form61</name>
+			<display_name>service_attributes</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form69</name>
 			<display_name>create_sale_order</display_name>
 			<status>active</status>
@@ -763,7 +779,7 @@
 		</row>
 		<row>
 			<name>form78</name>
-			<display_name>promotion_emails</display_name>
+			<display_name>promotion_mails</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -793,6 +809,14 @@
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form82</name>
+			<display_name>scan_items</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -809,7 +833,7 @@
 		<row>
 			<username>master</username>
 			<element_id>sync_mode</element_id>
-			<element_name>change_mode_of_operation</element_name>
+			<element_name>mode_of_operation</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -820,7 +844,7 @@
 		<row>
 			<username>master</username>
 			<element_id>notif</element_id>
-			<element_name>Notifications</element_name>
+			<element_name>notifications</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -930,7 +954,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report26</element_id>
-			<element_name>sales_by_period</element_name>
+			<element_name>sales_by_customers</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1546,7 +1570,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form57</element_id>
-			<element_name>manage services</element_name>
+			<element_name>manage_services</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1557,7 +1581,29 @@
 		<row>
 			<username>master</username>
 			<element_id>form58</element_id>
-			<element_name>service pre-requisites</element_name>
+			<element_name>service_pre-requisites</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form60</element_id>
+			<element_name>product_attributes</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form61</element_id>
+			<element_name>service_attributes</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1656,7 +1702,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form78</element_id>
-			<element_name>promotion_emails</element_name>
+			<element_name>promotion_mails</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1699,52 +1745,8 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>form81</element_id>
-			<element_name>whatsapp_promotion</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
 			<element_id>form82</element_id>
-			<element_name>get_messages</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form83</element_id>
-			<element_name>find_locations</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form84</element_id>
-			<element_name>place_orders</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form85</element_id>
-			<element_name>assign_tasks</element_name>
+			<element_name>scan_items</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1819,7 +1821,7 @@
 		</row>
 		<row>
 			<element_id>report26</element_id>
-			<element_name>sales_by_period</element_name>
+			<element_name>sales_by_customers</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -1861,7 +1863,7 @@
 		</row>
 		<row>
 			<element_id>report30</element_id>
-			<element_name>staff_information</element_name>
+			<element_name>tasks_performed</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2106,7 +2108,7 @@
 		</row>
 		<row>
 			<element_id>form50</element_id>
-			<element_name>select_accounting_principles</element_name>
+			<element_name>set_accounting_defaults</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2127,7 +2129,7 @@
 		</row>
 		<row>
 			<element_id>form54</element_id>
-			<element_name>select_templates</element_name>
+			<element_name>select_print_templates</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2147,6 +2149,20 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<element_id>form60</element_id>
+			<element_name>product_attributes</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form61</element_id>
+			<element_name>service_attributes</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<element_id>form77</element_id>
 			<element_name>set_shortcuts</element_name>
 			<status>active</status>
@@ -2155,7 +2171,7 @@
 		</row>
 		<row>
 			<element_id>form78</element_id>
-			<element_name>promotion_emails</element_name>
+			<element_name>promotion_mails</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2177,6 +2193,13 @@
 		<row>
 			<element_id>form81</element_id>
 			<element_name>sale_leads</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form82</element_id>
+			<element_name>scan_items</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>

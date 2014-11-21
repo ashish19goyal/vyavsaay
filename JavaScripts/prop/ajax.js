@@ -105,16 +105,15 @@ function server_read_single_column(column,callback,results)
 	var domain=get_domain();
 	var username=get_username();
 	var re_access=get_session_var('re');
-	ajax_with_custom_func("./ajax/get_rows.php","domain="+domain+"&username="+username+"&re="+re_access+"&columns="+column,function(e)
+	ajax_with_custom_func("./ajax/get_single_column.php","domain="+domain+"&username="+username+"&re="+re_access+"&columns="+column,function(e)
 	{
-		console.log(e.responseText);
+		//console.log(e.responseText);
 		var row=e.responseXML.childNodes[0].childNodes;
 		for(var i=0; i<row.length; i++)
 		{
 			if(row[i].nodeName!="" && row[i].nodeName!="#text")
 			{
-				var data=row[i].childNodes;
-				results.push(data[0].innerHTML);
+				results.push(row[i].innerHTML);
 			}
 		}
 		callback(results);
@@ -129,7 +128,7 @@ function server_read_multiple_column(columns,callback,results)
 	var re_access=get_session_var('re');
 	ajax_with_custom_func("./ajax/get_rows.php","domain="+domain+"&username="+username+"&re="+re_access+"&columns="+columns,function(e)
 	{
-		console.log(e.responseText);
+		//console.log(e.responseText);
 		var row=e.responseXML.childNodes[0].childNodes;
 		for(var i=0; i<row.length; i++)
 		{
@@ -150,10 +149,8 @@ function server_read_multiple_column(columns,callback,results)
 
 /**
  * this function delete a row of data from the server database
- * @param table
  * @param data_xml
- * @param id
- * @param formname
+ * @param activity_xml
  */
 function server_delete_row(data_xml,activity_xml)
 {
@@ -314,5 +311,24 @@ function server_update_simple_func(data_xml,func)
 		console.log(e.responseText);
 		func();
 		hide_loader();
+	});
+}
+
+function server_get_inventory(product,batch,callback)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var re_access=get_session_var('re');
+	ajax_with_custom_func("./ajax/get_inventory.php","domain="+domain+"&username="+username+"&re="+re_access+"&product="+product+"&batch="+batch,function(e)
+	{
+		console.log(e.responseText);
+		if(isNaN(e.responseText))
+		{
+			callback(0);
+		}
+		else
+		{
+			callback(e.responseText);
+		}
 	});
 }

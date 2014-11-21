@@ -1285,81 +1285,35 @@ function form15_create_item(form)
 		var data_id=form.elements[7].value;
 		
 		var last_updated=get_my_time();
-		var quantity_data="<product_instances>" +
-					"<id></id>" +
-					"<product_name exact='yes'>"+name+"</product_name>" +
-					"<batch array='yes'>"+batch+"--"+total_batch+"</batch>" +
-					"<quantity></quantity>" +
-					"</product_instances>";
-		
-		//////updating product quantity in inventory
-		fetch_requested_data('',quantity_data,function(quantities)
+					
+		var data_xml="<customer_return_items>" +
+				"<id>"+data_id+"</id>" +
+				"<return_id>"+return_id+"</return_id>" +
+				"<item_name>"+name+"</item_name>" +
+				"<batch>"+batch+"</batch>" +
+				"<quantity>"+quantity+"</quantity>" +
+				"<type>"+type+"</type>";
+		if(type=='refund')
 		{
-			var returned_quantity=0;
-			var exchanged_quantity=0;
-			var returned_id=1;
-			var exchanged_id=1;
-
-			for (var i in quantities)
-			{
-				if(quantities[i].batch==batch)
-				{
-					returned_id=quantities[i].id;
-					returned_quantity=parseFloat(quantities[i].quantity)+parseFloat(quantity);
-				}
-				else if(quantities[i].batch==total_batch)
-				{	
-					exchanged_id=quantities[i].id;
-					exchanged_quantity=parseFloat(quantities[i].quantity)-parseFloat(quantity);
-				}
-			}
-			
-			var returned_xml="<product_instances>" +
-					"<id>"+returned_id+"</id>" +
-					"<quantity>"+returned_quantity+"</quantity>" +
-					"<last_update>"+last_updated+"</last_updated>"+
-					"</product_instances>";
-			var exchanged_xml="<product_instances>" +
-					"<id>"+exchanged_id+"</id>" +
-					"<quantity>"+exchanged_quantity+"</quantity>" +
-					"<last_update>"+last_updated+"</last_updated>"+
-					"</product_instances>";
-			var data_xml="<customer_return_items>" +
-					"<id>"+data_id+"</id>" +
-					"<return_id>"+return_id+"</return_id>" +
-					"<item_name>"+name+"</item_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<type>"+type+"</type>";
-			if(type=='refund')
-			{
-				data_xml+="<refund_amount>"+total_batch+"</refund_amount>";
-			}
-			else
-			{
-				data_xml+="<exchange_batch>"+total_batch+"</exchange_batch>";
-			}
-			data_xml+="<total>"+total+"</total>" +
-					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</customer_return_items>";	
-		
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-				server_update_simple(returned_xml);
-				if(type=='exchange')
-					server_update_simple(exchanged_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-				local_update_simple(returned_xml);
-				if(type=='exchange')
-					local_update_simple(exchanged_xml);
-			}
-		});
-		
+			data_xml+="<refund_amount>"+total_batch+"</refund_amount>";
+		}
+		else
+		{
+			data_xml+="<exchange_batch>"+total_batch+"</exchange_batch>";
+		}
+		data_xml+="<total>"+total+"</total>" +
+				"<tax>"+tax+"</tax>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</customer_return_items>";	
+	
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}
 				
 		for(var i=0;i<8;i++)
 		{
@@ -1554,52 +1508,28 @@ function form19_create_item(form)
 		var data_id=form.elements[5].value;
 		
 		var last_updated=get_my_time();
-		var quantity_data="<product_instances>" +
-					"<id></id>" +
-					"<product_name exact='yes'>"+name+"</product_name>" +
-					"<batch exact='yes'>"+batch+"</batch>" +
-					"<quantity></quantity>" +
-					"</product_instances>";
-		
-		//////updating product quantity in inventory
-		fetch_requested_data('',quantity_data,function(quantities)
-		{
-			var returned_id="1";
-			var returned_quantity="0";
-			for (var i in quantities)
-			{
-				returned_id=quantities[i].id;
-				returned_quantity=parseFloat(quantities[i].quantity)-parseFloat(quantity);
-				break;
-			}
 			
-			var returned_xml="<product_instances>" +
-					"<id>"+returned_id+"</id>" +
-					"<quantity>"+returned_quantity+"</quantity>" +
-					"<last_update>"+last_updated+"</last_updated>"+
-					"</product_instances>";
-			var data_xml="<supplier_return_items>" +
-					"<id>"+data_id+"</id>" +
-					"<return_id>"+return_id+"</return_id>" +
-					"<item_name>"+name+"</item_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<refund_amount>"+total+"</refund_amount>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</supplier_return_items>";	
-		
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-				server_update_simple(returned_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-				local_update_simple(returned_xml);
-			}
-		});
-		
+		var data_xml="<supplier_return_items>" +
+				"<id>"+data_id+"</id>" +
+				"<return_id>"+return_id+"</return_id>" +
+				"<item_name>"+name+"</item_name>" +
+				"<batch>"+batch+"</batch>" +
+				"<quantity>"+quantity+"</quantity>" +
+				"<refund_amount>"+total+"</refund_amount>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</supplier_return_items>";	
+	
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+			server_update_simple(returned_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+			local_update_simple(returned_xml);
+		}
+	
 				
 		for(var i=0;i<5;i++)
 		{
@@ -2486,14 +2416,14 @@ function form60_create_item(form)
 		var value=form.elements[2].value;
 		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var data_xml="<attribute>" +
+		var data_xml="<attributes>" +
 					"<id>"+data_id+"</id>" +
-					"<name>"+product+"</name>" +
+					"<item_name>"+product+"</item_name>" +
 					"<type>product</type>" +
 					"<attribute>"+attribute+"</attribute>" +
 					"<value>"+value+"</value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</attribute>";	
+					"</attributes>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>attributes</tablename>" +
@@ -2550,7 +2480,7 @@ function form61_create_item(form)
 		var last_updated=get_my_time();
 		var data_xml="<attributes>" +
 					"<id>"+data_id+"</id>" +
-					"<name>"+service+"</name>" +
+					"<item_name>"+service+"</item_name>" +
 					"<type>service</type>" +
 					"<attribute>"+attribute+"</attribute>" +
 					"<value>"+value+"</value>" +

@@ -615,7 +615,6 @@ function form15_add_item()
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
 					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-					"<quantity></quantity>" +
 					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
 			batch_filter.value="";
@@ -626,7 +625,8 @@ function form15_add_item()
 			tax_filter.value=0;
 		});
 		
-		$(batch_filter).on('blur',function(event){
+		$(batch_filter).on('blur',function(event)
+		{
 			var customer_name=document.getElementById("form15_master").elements[1].value;
 			var bill_data="<bills>" +
 					"<id></id>" +
@@ -634,7 +634,6 @@ function form15_add_item()
 					"</bills>";
 			get_single_column_data(function(bills)
 			{
-				//console.log(bills);
 				var bill_string="";
 				bills.forEach(function(bill)
 				{
@@ -693,7 +692,6 @@ function form15_add_item()
 				var batch_data="<product_instances>" +
 						"<batch></batch>" +
 						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-						"<quantity compare='more than'>"+quantity_filter.value+"</quantity>" +
 						"</product_instances>";
 				set_my_value_list(batch_data,total_batch_filter);
 			}
@@ -787,7 +785,6 @@ function form19_add_item()
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
 					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-					"<quantity></quantity>" +
 					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
 			batch_filter.value="";
@@ -2414,4 +2411,59 @@ function form81_add_item()
 	{
 		$("#modal2").dialog("open");
 	}		
+}
+
+/**
+ * @form Scan Items
+ * @formNo 82
+ */
+function form82_add_item()
+{
+	if(is_create_access('form82'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form82_"+id+"'></form>";
+			rowsHTML+="<td data-th='Barcode'>";
+				rowsHTML+="<input type='text' required form='form82_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Product'>";
+				rowsHTML+="<input type='text' required form='form82_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<input type='number' required form='form82_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Unit Price'>";
+				rowsHTML+="<input type='number' required form='form82_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form82_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form82_"+id+"' id='save_form82_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form82_"+id+"' id='delete_form82_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form82_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form82_"+id);
+		var code_filter=fields.elements[0];
+		var product_filter=fields.elements[1];
+		var batch_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var id_filter=fields.elements[4];
+		
+		$(code_filter).focus();
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form82_create_item(fields);
+		});
+				
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
 }

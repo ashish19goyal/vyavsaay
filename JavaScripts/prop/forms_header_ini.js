@@ -257,7 +257,9 @@ function form10_header_ini()
 	fields.elements[7].value=get_new_key();
 	fields.elements[8].value="";
 	fields.elements[9].value=get_new_key();
-	
+	var email_filter=fields.elements[13];
+	var phone_filter=fields.elements[14];
+		
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
 	{
@@ -346,6 +348,8 @@ function form12_header_ini()
 	fields.elements[7].value=get_new_key();
 	fields.elements[8].value="";
 	fields.elements[9].value=get_new_key();
+	var email_filter=fields.elements[13];
+	var phone_filter=fields.elements[14];
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -543,6 +547,8 @@ function form15_header_ini()
 	fields.elements[4].value=get_new_key();
 	fields.elements[5].value=get_new_key();
 	fields.elements[6].value=0;
+	var email_filter=fields.elements[10];
+	var phone_filter=fields.elements[11];
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -643,6 +649,8 @@ function form19_header_ini()
 	fields.elements[3].value=0;
 	fields.elements[4].value=get_new_key();
 	fields.elements[5].value=get_new_key();
+	var email_filter=fields.elements[9];
+	var phone_filter=fields.elements[10];
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -1905,4 +1913,67 @@ function form81_header_ini()
 	{
 		modal23_action(form81_import_template,form81_import);
 	});
+}
+
+/**
+ * @form Scan items
+ * @formNo 82
+ */
+function form82_header_ini()
+{
+	var fields=document.getElementById('form82_master');
+	
+	var customers_filter=fields.elements[1];
+	var bill_date=fields.elements[2];
+	fields.elements[3].value=0;
+	fields.elements[4].value=0;
+	fields.elements[5].value=0;
+	fields.elements[6].value=0;
+	fields.elements[7].value=get_new_key();
+	fields.elements[8].value="";
+	fields.elements[9].value=get_new_key();
+	var email_filter=fields.elements[13];
+	var phone_filter=fields.elements[14];
+	
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form12_create_form();
+	});
+	var customers_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	set_my_value_list(customers_data,customers_filter);
+	
+	$(customers_filter).off('blur');
+	$(customers_filter).on('blur', function(event)
+	{
+		var email_data="<customers>" +
+				"<email></email>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
+				"</customers>";
+		set_my_value(email_data,email_filter);
+		
+		var phone_data="<customers>" +
+				"<phone></phone>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
+				"</customers>";
+		set_my_value(phone_data,phone_filter);
+	});
+	
+	$(bill_date).datepicker();
+	$(bill_date).val(get_my_date());
+	customers_filter.value='';
+	$(customers_filter).focus();
+}
+
+/**
+ * @form Scan Items
+ * @formNo 82
+ */
+function form82_new_form()
+{
+	form82_header_ini();
+	$("#form82_body").find("tr").remove();
 }

@@ -1633,7 +1633,6 @@ function modal22_action()
 		},batch_data);
 	});		
 	
-	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{

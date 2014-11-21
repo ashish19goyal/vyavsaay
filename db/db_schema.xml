@@ -224,33 +224,6 @@
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/expired/closed/extended -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</offers>
-	<stock_request>  
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<req_quantity index='no' type="DECIMAL(12,2)"></req_quantity>
-			<request_date index='no' type="BIGINT"></request_date>
-			<status index='yes' type="VARCHAR(20)"></status><!-- suggested/verified/completed/discarded -->
-			<product_name index='yes' type="VARCHAR(90)"></product_name>
-			<last_updated index='no' type="BIGINT"></last_updated>
-	</stock_request>
-	<predicted_orders>  
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<quantity index='no' type="DECIMAL(12,2)"></quantity>
-			<pred_date index='no' type="BIGINT"></pred_date>
-			<status index='yes' type="VARCHAR(20)"></status><!-- suggested/discarded/pursuing/completed -->
-			<product_name index='yes' type="VARCHAR(90)"></product_name>
-			<service_name index='yes' type="VARCHAR(45)"></service_name>
-			<last_updated index='no' type="BIGINT"></last_updated>
-	</predicted_orders>
-	<enqueued_mails>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<receiver index='yes' type="VARCHAR(100)"></receiver>
-			<subject index='no' type="VARCHAR(100)"></subject>
-			<content index='no' type="TEXT"></content>
-			<delivery_time index='yes' type="BIGINT"></delivery_time>
-			<enqueue_time index='yes' type="BIGINT"></enqueue_time>
-			<status index='yes' type="VARCHAR(45)"></status><!-- pending/discarded/completed -->
-			<last_updated index='no' type="BIGINT"></last_updated>
-	</enqueued_mails>
 	<sale_orders>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer_name index='yes' type="VARCHAR(100)"></customer_name>
@@ -345,13 +318,20 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<batch index='yes' type="VARCHAR(45)"></batch>
 			<bar_code index='yes' type="VARCHAR(45)"></bar_code>
-			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<expiry index='yes' type="BIGINT"></expiry>
 			<cost_price index='no' type="DECIMAL(12,2)"></cost_price>
 			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
 			<product_name index='yes' type="VARCHAR(90)"></product_name>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</product_instances>
+	<inventory_adjust>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<batch index='yes' type="VARCHAR(45)"></batch>
+			<bar_code index='yes' type="VARCHAR(45)"></bar_code>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</inventory_adjust>
 	<product_master>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(90)" unique='yes'></name>
@@ -364,7 +344,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<item_name index='yes' type="VARCHAR(90)"></item_name>
 			<type index='no' type="VARCHAR(10)"></type><!-- service/product -->
-			<attribute index='no' type="VARCHAR(30)"></attribute>
+			<attribute index='no' type="VARCHAR(30)"></attribute><!--recurrent sale(days)/season start date(1 jan)/season end date(2 december)-->
 			<value index='no' type='TEXT'></value>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</attributes>
@@ -500,6 +480,7 @@
 			<detail index='no' type="TEXT"></detail>
 			<due_date index='yes' type="BIGINT"></due_date>
 			<identified_by index='yes' type="VARCHAR(100)"></identified_by>
+			<source_id index='no' type="BIGINT"></source_id>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</sale_leads>
 	<user_preferences>
@@ -603,4 +584,15 @@
 			<status index='no' type="VARCHAR(25)"></status><!--pending/seen/closed-->
 			<last_updated index='no' type="BIGINT"></last_updated>		
 	</messages>
+	<scan_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<batch index='yes' type="VARCHAR(45)"></batch>
+			<bar_code index='yes' type="VARCHAR(45)"></bar_code>
+			<cost_price index='no' type="DECIMAL(12,2)"></cost_price>
+			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<item_name index='yes' type="VARCHAR(90)"></item_name>
+			<bill_id index='yes' type="BIGINT"></bill_id>
+			<last_updated index='no' type="BIGINT"></last_updated>
+	</scan_items>
 </re_xml>

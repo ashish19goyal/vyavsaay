@@ -40,6 +40,19 @@ function fetch_requested_data(element_id,columns,callback)
 	}
 }
 
+function get_inventory(product,batch,callback)
+{	
+	if(is_online())
+	{
+		server_get_inventory(product,batch,callback);
+	}
+	else
+	{
+		local_get_inventory(product,batch,callback);
+	}
+}
+
+
 /**
  * this function resizes and sets the preview of the picture
  * @form Manage Products

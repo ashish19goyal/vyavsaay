@@ -7,7 +7,7 @@
 					<div class="logo">
 						  <a href="#"><img src="images/logo.png" alt=""></a>
 					</div>
-					<a href="#" id='login_pull'>Login</a>
+					<a href="#" id='login_pull' onclick="display_login_box();">Login</a>
 					
 					<!----start-top-nav---->
 					 <nav class="top-nav">
@@ -16,7 +16,7 @@
 							<li><a href="#about" class="top-nav scroll">About</a></li>
 							<li><a href="#reviews" class="top-nav scroll">Reviews</a></li>
 							<li><a href="#pricing" class="top-nav scroll">Pricing</a></li>
-							<li><a href="#register" class="top-nav scroll">Register</a></li>
+							<li><a href="#register" class="top-nav scroll" onclick="$('#register_user_id').focus();">Register</a></li>
 							<li><a href="#contact" class="top-nav scroll">Contact</a></li>
 						</ul>
 						<a href="#" id="pull"><img src="images/menu-icon.png" title="menu" /></a>
@@ -213,7 +213,7 @@
 							<form id="registeration">
 								<fieldset>
 									 <p class="comment-form-author">
-									<label>User ID</label><input class='textbox' type="text" placeholder='user id...' onblur="userid_validation()" required><label id="userid_validation"></label>
+									<label>User ID</label><input id='register_user_id' class='textbox' type="text" placeholder='user id...' onblur="userid_validation()" required><label id="userid_validation"></label>
 									</p></br>
 									 <p class="comment-form-author">
 									<label>Email</label><input class='textbox' type="email" placeholder='email id...' onblur="emailid_validation()" required><label id="emailid_validation"></label>
@@ -333,18 +333,18 @@
         		}
     		});
 
-			var login_pull = $('#login_pull');
-			var	login_box = $('.login_box');
-			$(login_pull).on('click', function(e) {
-				e.preventDefault();
-				login_box.slideToggle();
-				$(login_box).css("display","inline");
-				var user=document.getElementById('login').elements[1];
-				$(user).focus();
-			});
-
 		});
 
+		function display_login_box()
+		{
+			var	login_box = $('.login_box');
+			login_box.slideToggle();
+			$(login_box).css("display","inline");
+			var user=document.getElementById('login').elements[1];
+			$(user).focus();
+		}
+		
+		
 		$('#registeration').on('submit',function(event)
 		{
 			event.preventDefault();

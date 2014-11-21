@@ -35,6 +35,10 @@ function default_load()
 		{
 			notifications_add();
 		},50000);
+		setTimeout(function()
+		{
+			sale_leads_add();
+		},70000);
 	}
 	hide_loader();
 }

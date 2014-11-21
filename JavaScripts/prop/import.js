@@ -14,7 +14,6 @@ function form1_import(data_array,import_type)
 				"<cost_price>"+row.cost_price+"</cost_price>" +
 				"<sale_price>"+row.sale_price+"</sale_price>" +
 				"<expiry>"+row.expiry+"</expiry>" +
-				"<quantity>"+row.quantity+"</quantity>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</product_instances>";
 		if(import_type=='create_new')

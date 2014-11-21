@@ -330,7 +330,7 @@ function register_click()
 					if(e.responseText=="successful")
 					{
 						$("#r_register").slideUp();
-						document.getElementById("r_complete").innerHTML="Registration complete, proceed to <a href='#home'>login</a>";
+						document.getElementById("r_complete").innerHTML="Registration complete, proceed to <a href='#home' onclick='display_login_box();'>login</a>";
 					}
 					else
 					{

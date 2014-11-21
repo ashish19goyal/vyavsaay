@@ -280,3 +280,190 @@ function notifications_add()
 	
 	setTimeout(notifications_add,300000);
 }
+
+/**
+ * This function checks for favourable scenarios to generate sale leads in the background
+ */
+function sale_leads_add()
+{
+	////////recurrent sales////////////
+	
+	var lead_past_time=parseFloat(get_my_time())-86400000;
+	
+	var attributes_data="<attributes>" +
+			"<item_name></item_name>" +
+			"<attribute>recurrent sale</attribute>" +
+			"<value></value>" +
+			"</attributes>";
+	
+	fetch_requested_data('',attributes_data,function(attributes)
+	{
+		var items_string="--";
+		for(var i in attributes)
+		{
+			items_string+=attributes[i].item_name+"--";
+		}
+		
+		var bill_items_data="<bill_items>" +
+				"<id></id>" +
+				"<bill_id></bill_id>" +
+				"<item_name array='yes'>"+items_string+"</item_name>" +
+				"<type>bought</type>" +
+				"<last_updated compare='more than'>"+lead_past_time+"</last_updated>" +
+				"</bill_items>";
+
+		fetch_requested_data('',bill_items_data,function(bill_items)
+		{
+			var bills_string="--";
+			for (var j in bill_items)
+			{
+				bills_string+=bill_items[j].bill_id+"--";
+			}
+			
+			var bills_data="<bills>" +
+					"<id array='yes'>"+bills_string+"</id>" +
+					"<customer_name></customer_name>" +
+					"<bill_date></bill_date>" +
+					"</bills>";
+			fetch_requested_data('',bills_data,function(bills)
+			{
+				bills.forEach(function(bill)
+				{
+					var start_date=bill.bill_date;
+					for(var k in bill_items)
+					{
+						if(bill.id===bill_items[k].bill_id)
+						{
+							for(var l in attributes)
+							{
+								if(bill_items[k].item_name==attributes[l].item_name)
+								{
+									var id=get_new_key()+""+(Math.random()*1000);
+									var detail="Bought "+attributes[l].item_name+" that is expected to be bought again in " +
+											attributes[l].value+" days.\n";
+									var due_date=parseFloat(start_date)+(86400000*parseFloat(attributes[l].value));
+									
+									var sale_lead_xml="<sale_leads>" +
+											"<id>"+id+"</id>" +
+											"<customer>"+bill.customer_name+"</customer>" +
+											"<source_id unique='yes'>"+bill_items[k].id+"</source_id>" +
+											"<detail>"+detail+"</detail>" +
+											"<due_date>"+due_date+"</due_date>" +
+											"<identified_by>auto</identified_by>" +
+											"</sale_leads>";
+									if(is_online())
+									{
+										server_create_simple_no_warning(sale_lead_xml);
+									}
+									else
+									{
+										server_create_simple_no_warning(sale_lead_xml);
+									}
+								}
+							}
+						}
+					}
+					
+				});
+			});
+		});
+	});
+	//////////recurrent sales end//////
+
+	
+////////seasonal sales////////////
+		
+	var seasonal_attributes_data="<attributes>" +
+			"<item_name></item_name>" +
+			"<attribute>season</attribute>" +
+			"<value></value>" +
+			"</attributes>";
+	
+	fetch_requested_data('',seasonal_attributes_data,function(seasonal_attributes)
+	{
+		var items_string="--";
+		for(var i in seasonal_attributes)
+		{
+			items_string+=seasonal_attributes[i].item_name+"--";
+		}
+		
+		var bill_items_data="<bill_items>" +
+				"<id></id>" +
+				"<bill_id></bill_id>" +
+				"<item_name array='yes'>"+items_string+"</item_name>" +
+				"<type>bought</type>" +
+				"<last_updated compare='more than'>"+lead_past_time+"</last_updated>" +
+				"</bill_items>";
+
+		fetch_requested_data('',bill_items_data,function(bill_items)
+		{
+			var bills_string="--";
+			for (var j in bill_items)
+			{
+				bills_string+=bill_items[j].bill_id+"--";
+			}
+			
+			var bills_data="<bills>" +
+					"<id array='yes'>"+bills_string+"</id>" +
+					"<customer_name></customer_name>" +
+					"<bill_date></bill_date>" +
+					"</bills>";
+			fetch_requested_data('',bills_data,function(bills)
+			{
+				bills.forEach(function(bill)
+				{
+					for(var k in bill_items)
+					{
+						if(bill.id==bill_items[k].bill_id)
+						{
+							for(var l in seasonal_attributes)
+							{
+								if(bill_items[k].item_name==seasonal_attributes[l].item_name)
+								{
+									if(seasonal_attributes[l].attribute=='season start date')
+									{
+										var season_start_date=attributes[l].value;
+										var id=get_new_key()+""+(Math.random()*1000);
+										
+										var detail="Bought "+seasonal_attributes[l].item_name+" that is expected to be bought again in season starting from" +
+												season_start_date+"\n";
+										
+										season_start_date=get_time_from_formatted_date(season_start_date);
+										var due_date=season_start_date;
+										var current_time=get_my_time();
+										if(current_time>season_start_date)
+										{
+											due_date=parseFlaot(season_start_date)+(365*86400000);
+										}
+										
+										var sale_lead_xml="<sale_leads>" +
+												"<id>"+id+"</id>" +
+												"<customer>"+bill.customer_name+"</customer>" +
+												"<source_id unique='yes'>"+bill_items[k].id+"</source_id>" +
+												"<detail>"+detail+"</detail>" +
+												"<due_date>"+due_date+"</due_date>" +
+												"<identified_by>auto</identified_by>" +
+												"</sale_leads>";
+										if(is_online())
+										{
+											server_create_simple_no_warning(sale_lead_xml);
+										}
+										else
+										{
+											server_create_simple_no_warning(sale_lead_xml);
+										}
+									}
+								}
+							}
+						}
+					}
+					
+				});
+			});
+		});
+	});
+	//////////seasonal sales end//////
+
+	
+	setTimeout(sale_leads_add,3000000);
+}

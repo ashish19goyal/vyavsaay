@@ -1458,3 +1458,75 @@ function local_delete_simple_func(data_xml,func)
 			});
 		});
 };
+
+
+function local_get_inventory(product,batch,callback)
+{
+	//console.log(filter);
+	var domain=get_domain();
+	var db_name="re_local_"+domain;
+	sklad.open(db_name,{version:2},function(err,database)
+	{
+		var result=0;
+		
+		database.get('bill_items',{index:'item_name',range:IDBKeyRange.only(product)},function(err,bi_records)
+		{
+			for(var row in bi_records)
+			{
+				if(bi_records[row]['batch']==batch)
+				{
+					result-=parseFloat(bi_records[row]['quantity']);
+				}	
+			}
+			
+			database.get('supplier_bill_items',{index:'product_name',range:IDBKeyRange.only(product)},function(err,si_records)
+			{
+				for(var row in si_records)
+				{
+					if(si_records[row]['batch']==batch)
+					{
+						result+=parseFloat(si_records[row]['quantity']);
+					}	
+				}
+				
+				database.get('supplier_return_items',{index:'item_name',range:IDBKeyRange.only(product)},function(err,sr_records)
+				{
+					for(var row in sr_records)
+					{
+						if(sr_records[row]['batch']==batch)
+						{
+							result-=parseFloat(sr_records[row]['quantity']);
+						}	
+					}
+					
+					database.get('inventory_adjust',{index:'product_name',range:IDBKeyRange.only(product)},function(err,ia_records)
+					{
+						for(var row in ia_records)
+						{
+							if(ia_records[row]['batch']==batch)
+							{
+								result+=parseFloat(ia_records[row]['quantity']);
+							}	
+						}
+						database.get('customer_return_items',{index:'item_name',range:IDBKeyRange.only(product)},function(err,cr_records)
+						{
+							for(var row in cr_records)
+							{
+								if(cr_records[row]['batch']==batch)
+								{
+									result+=parseFloat(cr_records[row]['quantity']);
+								}
+								if(cr_records[row]['exchange_batch']==batch)
+								{
+									result-=parseFloat(cr_records[row]['quantity']);
+								}
+							}
+							
+							callback(result);
+						});
+					});
+				});			
+			});
+		});		
+	});
+}

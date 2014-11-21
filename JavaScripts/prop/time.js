@@ -31,6 +31,22 @@ function get_raw_time_24h()
 	return yesterday;
 }
 
+function get_time_from_formatted_date(formatted_date)
+{
+	if(date=='')
+	{
+		return "";
+	}
+	else
+	{
+		var day=parseInt(date.substr(0,2));
+		var month=parseInt(date.substr(3,2))-1;
+		var current_date=new Date();
+		var year=current_date.getFullYear();
+		var d=new Date(year,month,day,0,0,0,0);
+		return d.getTime();
+	} 
+}
 
 function get_formatted_time(my_time)
 {

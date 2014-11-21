@@ -260,7 +260,6 @@
             <cost_price>90</cost_price>
             <sale_price>100</sale_price>
             <batch>abc123</batch>
-            <quantity>50</quantity>
             <expiry>1410739200000</expiry>
             <last_updated>1</last_updated>
 		</row>
@@ -269,7 +268,6 @@
             <cost_price>8</cost_price>
             <sale_price>10</sale_price>
             <batch>abc456</batch>
-            <quantity>50</quantity>
             <expiry>1410739200000</expiry>
             <last_updated>1</last_updated>
 		</row>
@@ -278,7 +276,6 @@
             <cost_price>40</cost_price>
             <sale_price>50</sale_price>
             <batch>abc543</batch>
-            <quantity>50</quantity>
             <expiry>1410739200000</expiry>
             <last_updated>1</last_updated>
 		</row>
