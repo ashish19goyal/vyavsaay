@@ -3,7 +3,8 @@
  * comapre: more than,less than, not equal, equal
  * array: yes
  * exact: yes
- * 
+ * sort: asc,desc
+ * count: <integrer>
  */
 
 

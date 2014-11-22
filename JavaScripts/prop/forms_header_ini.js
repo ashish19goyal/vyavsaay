@@ -301,6 +301,8 @@ function form10_new_form()
 {
 	form10_header_ini();
 	$("#form10_body").find("tr").remove();
+	$("#form10_whatsapp").hide();
+	$("#form10_gmail").hide();
 }
 
 
@@ -391,6 +393,8 @@ function form12_new_form()
 {
 	form12_header_ini();
 	$("#form12_body").find("tr").remove();
+	$("#form12_whatsapp").hide();
+	$("#form12_gmail").hide();
 }
 
 /**
@@ -590,6 +594,8 @@ function form15_new_form()
 {
 	form15_header_ini();
 	$("#form15_body").find("tr").remove();
+	$("#form15_whatsapp").hide();
+	$("#form15_gmail").hide();
 }
 
 
@@ -692,6 +698,8 @@ function form19_new_form()
 {
 	form19_header_ini();
 	$("#form19_body").find("tr").remove();
+	$("#form19_whatsapp").hide();
+	$("#form19_gmail").hide();
 }
 
 
@@ -743,6 +751,8 @@ function form21_new_form()
 {
 	form21_header_ini();
 	$("#form21_body").find("tr").remove();
+	$("#form21_whatsapp").hide();
+	$("#form21_gmail").hide();
 }
 
 
@@ -804,6 +814,8 @@ function form24_new_form()
 {
 	form24_header_ini();
 	$("#form24_body").find("tr").remove();
+	$("#form24_whatsapp").hide();
+	$("#form24_gmail").hide();
 }
 
 /**
@@ -977,7 +989,6 @@ function form40_header_ini()
 
 
 /**
- * this function prepares the table for manage bills form
  * @form Manage Bills
  * @formNo 42
  */
@@ -1179,7 +1190,6 @@ function form51_header_ini()
 };
 
 /**
- * this function prepares the table for manage supplier bills form
  * @form Manage Supplier Bills
  * @formNo 53
  */
@@ -1753,12 +1763,14 @@ function form72_header_ini()
 }
 
 /**
- * This function clears the form72 for new bill
+ * @form Create bills
  */
 function form72_new_form()
 {
 	form72_header_ini();
 	$("#form72_body").find("tr").remove();
+	$("#form72_whatsapp").hide();
+	$("#form72_gmail").hide();
 }
 
 /**
@@ -1921,6 +1933,8 @@ function form81_header_ini()
  */
 function form82_header_ini()
 {
+	$("#form82_body").find("tr").remove();
+
 	var fields=document.getElementById('form82_master');
 	
 	var customers_filter=fields.elements[1];
@@ -1939,7 +1953,7 @@ function form82_header_ini()
 	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
-		form12_create_form();
+		form82_bill();
 	});
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
@@ -1966,14 +1980,4 @@ function form82_header_ini()
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';
 	$(customers_filter).focus();
-}
-
-/**
- * @form Scan Items
- * @formNo 82
- */
-function form82_new_form()
-{
-	form82_header_ini();
-	$("#form82_body").find("tr").remove();
 }

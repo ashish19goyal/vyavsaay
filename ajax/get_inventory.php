@@ -22,6 +22,17 @@
 				$query4="select sum(quantity) from supplier_return_items where item_name=? and batch=?";
 				$query5="select sum(quantity) from customer_return_items where item_name=? and exchange_batch=?";
 				$query6="select sum(quantity) from inventory_adjust where product_name=? and batch=?";
+
+				if($batch=="")
+				{
+					$values=array($product);
+					$query1="select sum(quantity) from bill_items where item_name=?";
+					$query2="select sum(quantity) from supplier_bill_items where product_name=?";
+					$query3="select sum(quantity) from customer_return_items where item_name=?";
+					$query4="select sum(quantity) from supplier_return_items where item_name=?";
+					$query5="select sum(quantity) from customer_return_items where item_name=?";
+					$query6="select sum(quantity) from inventory_adjust where product_name=?";
+				}
 				
 				$db_name="re_user_".$domain;
 				

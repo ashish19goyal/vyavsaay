@@ -2316,7 +2316,6 @@ function form41_ini()
 
 
 /**
- * this function prepares the table for manage bills form
  * @form Manage Bills
  * @formNo 42
  */
@@ -2489,7 +2488,6 @@ function form43_ini()
 
 
 /**
- * this function prepares the table for manage pamphlets form
  * @form Manage Pamphlets
  * @formNo 44
  */
@@ -4027,11 +4025,11 @@ function form69_ini()
 				
 				$(name_filter).on('blur',function(event)
 				{
-					var max_data="<product_instances>" +
-								"<quantity></quantity>" +
-								"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-								"</product_instances>";
-					set_my_max_value(max_data,quantity_filter);
+					get_inventory(name_filter.value,'',function(quantity)
+					{
+						$(quantity_filter).attr('max',quantity);
+						$(quantity_filter).attr('min',"0");
+					});
 				});
 	
 			});
@@ -4110,7 +4108,7 @@ function form70_ini()
 				$(bill_button).attr('title','Create bill');
 				$(bill_button).on('click',function(event)
 				{
-					create_bill_from_order(result.id);
+					form70_bill(result.id);
 				});
 			}
 			else
@@ -5111,9 +5109,11 @@ function form81_ini()
 	});
 };
 
+
 /**
  * @form Scan Items
  */
+/*
 function form82_ini()
 {
 	var bill_id=$("#form82_link").attr('data_id');
@@ -5256,3 +5256,4 @@ function form82_ini()
 		});
 	}
 }
+*/

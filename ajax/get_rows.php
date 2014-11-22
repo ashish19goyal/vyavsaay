@@ -44,9 +44,24 @@
 				$columns_array=array();
 				$values_array=array();
 				$query="select * from $table where ";
+				$order_by=" ORDER BY ";
+				
+				$limit=" limit ?,?";
+				$limit_count=0;
+				if($input->hasAttribute('count'))
+				{
+					$limit_count=$input->getAttribute('count');
+				}
+					
 				foreach($input->childNodes as $col)
 				{
 					$columns_array[]=$col->nodeName;
+					
+					if($col->hasAttribute('sort'))
+					{
+						$order_by.=$col->nodeName." ".$col->getAttribute('sort').", ";
+					}
+					
 					if($col->nodeValue!="")
 					{
 						if($col->hasAttribute('compare'))
@@ -95,12 +110,20 @@
 					}
 				}
 				$query=rtrim($query,"and ");
-				$query.=" ORDER BY id DESC";
+				
 				if(count($values_array)===0)
 				{
-					$query="select * from $table ORDER BY id DESC";
+					$query="select * from $table";
 				}
-					//echo $query;	
+				$query.=$order_by."id DESC";
+
+				if($limit_count!==0)
+				{
+					$query.=$limit;
+					$values_array[]=0;
+					$values_array[]=$limit_count;
+				}
+				
 				$db_name="re_user_".$domain;
 				$xmlresponse="<$table>";
 				

@@ -261,6 +261,7 @@
             <sale_price>100</sale_price>
             <batch>abc123</batch>
             <expiry>1410739200000</expiry>
+            <bar_code>tt</bar_code>
             <last_updated>1</last_updated>
 		</row>
 		<row>
@@ -269,6 +270,7 @@
             <sale_price>10</sale_price>
             <batch>abc456</batch>
             <expiry>1410739200000</expiry>
+            <bar_code>ku</bar_code>
             <last_updated>1</last_updated>
 		</row>
 		<row>
@@ -277,6 +279,7 @@
             <sale_price>50</sale_price>
             <batch>abc543</batch>
             <expiry>1410739200000</expiry>
+            <bar_code>cc</bar_code>
             <last_updated>1</last_updated>
 		</row>
 	</product_instances>
