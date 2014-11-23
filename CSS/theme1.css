@@ -483,17 +483,20 @@ tbody tr:hover{
 	float:left;
 }
 .customers_content{
-	width: 600px;
+	width: auto;
 	float: left;
+	padding:5px;
 }
 .customers_content_item{
-	background-color: #2A894E;
-	color: #ffffff;
-	width: 150px;
+	background-color: #CCD2D6;
+	color: #2A2A2A;
+	width: 200px;
 	height: 120px;
 	float: left;
 	text-align: left;
-	margin:10px; 
+	margin:auto;
+	padding: 5px;
+	border: 2px solid #DCDDD3;
 }
 .customers_bar_wrap{
 	clear: left; 

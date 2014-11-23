@@ -19,6 +19,8 @@
 			<email>ashish.19goyal@gmail.com</email>
 			<phone>9818005232</phone>
 			<status>active</status>
+			<lat>28.600</lat>
+			<lng>77.230</lng>
 			<notes></notes>
 			<last_updated>1</last_updated>
 		</row>
@@ -28,6 +30,8 @@
 			<email>anishgoy@gmail.com</email>
 			<phone>9818005232</phone>
 			<status>active</status>
+			<lat>28.600</lat>
+			<lng>77.230</lng>
 			<notes></notes>
 			<last_updated>1</last_updated>
 		</row>

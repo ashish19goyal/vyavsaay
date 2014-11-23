@@ -34,6 +34,22 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>lat</name>
+			<display_name>latitude</display_name>
+			<status>active</status>
+			<value>28.6100</value>
+			<type>other</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>lng</name>
+			<display_name>longitude</display_name>
+			<status>active</status>
+			<value>77.2300</value>
+			<type>other</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>phone</name>
 			<display_name>phone_no</display_name>
 			<status>active</status>

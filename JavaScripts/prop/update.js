@@ -1969,34 +1969,31 @@ function form41_update_item(form)
 {
 	if(is_update_access('form41'))
 	{
-		var acc_name=form.elements[0].value;
+		var name=form.elements[0].value;
 		var lat=form.elements[1].value;
 		var lng=form.elements[2].value;
 		var data_id=form.elements[3].value;
 		var status=form.elements[4].value;
 		var address=form.elements[5].value;
 		var acc_type=form.elements[6].value;
-		var button=form.elements[7].value;
+		var button=form.elements[7];
 		$(button).hide();		
 
 		var last_updated=get_my_time();
-		var table='address';
-		var data_xml="<"+table+">" +
+		var data_xml="<customers>" +
 					"<id>"+data_id+"</id>" +
-					"<acc_name unique='yes'>"+acc_name+"</acc_name>" +
 					"<lat>"+lat+"</lat>" +
 					"<lng>"+lng+"</lng>" +
-					"<status>confirmed</status>" +
-					"<acc_type>"+acc_type+"</acc_type>" +
+					"<address_status>confirmed</address_status>" +
 					"<address>"+address+"</address>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</customers>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>customers</tablename>" +
 					"<link_to>form41</link_to>" +
 					"<title>Updated</title>" +
-					"<notes>Updated location of customer "+acc_name+"</notes>" +
+					"<notes>Geo-location of customer "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2006,11 +2003,66 @@ function form41_update_item(form)
 		else
 		{
 			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
 		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Verify addresses
+ * @param button
+ */
+function form41_update_master(form)
+{
+	if(is_update_access('form41'))
+	{
+		var lat_lng_data="<user_preferences>" +
+				"<id></id>" +
+				"<name array='yes'>--lat--lng--</name>" +
+				"</user_preferences>";
+		
+		fetch_requested_data('',lat_lng_data,function(lat_lng)
+		{
+			var lat=form.elements[1].value;
+			var lng=form.elements[2].value;
+			var button=form.elements[3];
+			$(button).hide();		
+			
+			lat_lng.forEach(function(ll)
+			{
+				var value=lng;
+				if(ll.name==='lat')
+				{
+					value=lat;
+				}
+				var last_updated=get_my_time();
+				var data_xml="<user_preferences>" +
+							"<id>"+ll.id+"</id>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</user_preferences>";
+				var activity_xml="<activity>" +
+							"<data_id>"+ll.id+"</data_id>" +
+							"<tablename>user_preferences</tablename>" +
+							"<link_to>form46</link_to>" +
+							"<title>Updated</title>" +
+							"<notes>Geo-location of business</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				if(is_online())
+				{
+					server_update_row(data_xml,activity_xml);
+				}
+				else
+				{
+					local_update_row(data_xml,activity_xml);
+				}
+			});
+		});
 	}
 	else
 	{
@@ -3973,7 +4025,7 @@ function form81_update_item(form)
  * @param data_id
  * @param status
  */
-function notifications_update(data_id,status)
+function notifications_update(button,data_id,status)
 {
 	if(is_update_access('notif'))
 	{
@@ -3990,6 +4042,14 @@ function notifications_update(data_id,status)
 		else
 		{
 			local_update_simple(data_xml);
+		}
+		if(status=='closed')
+		{
+			$(button).parent().parent().hide();
+		}
+		if(status=='reviewed')
+		{
+			$(button).hide();
 		}
 	}
 	else

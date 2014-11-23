@@ -2125,7 +2125,6 @@ function form39_ini()
 
 
 /**
- * this function prepares the table for manage vendors form
  * @form Manage Vendors
  * @formNo 40
  */
@@ -2216,102 +2215,159 @@ function form40_ini()
 	});
 };
 
-
+/**
+ * @form Verify geo-location
+ * @formNo 41
+ */
 function form41_ini()
 {
 	show_loader();
+
+	$('#form41_header').html("");
+
 	var coordinates_data="<address>" +
 			"<acc_type>master</acc_type>" +
 			"<lat></lat>" +
 			"<lng></lng>" +
 			"</address>";	
-	fetch_requested_data('form41',coordinates_data,function(coords)
-	{
-		for(var z in coords)
-		{
-			if(typeof map41 != 'undefined')
-				map41.remove();
-
-			map41 = L.map('form41_map',{
-				center: [coords[z].lat,coords[z].lng], 
-				zoom: 10
-			});
-			
-		
-			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
-		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-		        subdomains:'1234'
-		    }).addTo(map41);
-			
-			
-			var customers_data="<address>" +
-					"<id></id>" +
-					"<acc_type>customer</acc_type>" +
-					"<lat></lat>" +
-					"<lng></lng>" +
-					"<acc_name></acc_name>" +
-					"<status>unconfirmed</status>" +
-					"<address></address>" +
-					"</address>";
-			fetch_requested_data('form41',customers_data,function(customers)
-			{
-				$('#form41_header').html("");
-
-				customers.forEach(function(customer)
-				{
-					var latlng=L.latLng(customer.lat,customer.lng);
-					var marker=L.marker(latlng,{draggable:true}).addTo(map41).bindPopup("Name: "+customer.acc_name);
-					marker.on('dragend',function(event){
-						var m=event.target;
-						var latlng=m.getLatLng();
-						var form=document.getElementById('form41_'+customer.id);
-						form.elements[1].value=latlng.lat;
-						form.elements[2].value=latlng.lng;
-						var save_button=form.elements[7];
-						$(save_button).show();
-					});
-					
-					var rowsHTML="";
-					rowsHTML+="<div class='customers_content_item' onclick=''>" +
-							"<form id='form41_"+customer.id+"'>" +
-							"Name: <input type='text' size='25' readonly='readonly' value='"+customer.acc_name+"'>" +
-							"Latitude: <input type='text' size='10' readonly='readonly' value='"+customer.lat+"'>" +
-							"Longitude: <input type='text' size='10' readonly='readonly' value='"+customer.lng+"'>" +
-							"<input type='hidden' value='"+customer.id+"'>" +
-							"<input type='hidden' value='"+customer.status+"'>" +
-							"<input type='hidden' value='"+customer.address+"'>" +
-							"<input type='hidden' value='"+customer.acc_type+"'>" +
-							"<input type='button' value='Confirm' form='form41_"+customer.id+"'>" +
-							"</form>" +
-							"</div>";
-					
-					$('#form41_header').prepend(rowsHTML);
-					var fields=document.getElementById("form41_"+customer.id);
-					$(fields).on("submit", function(event)
-					{
-						event.preventDefault();
-						form41_update_item(fields);
-					});
-				});
-				
-				var scrollPane=$(".customers_pane");
-				var scrollContent=$(".customers_content");
-				scrollContent.css('width',Math.round(200*customers.length)+"px");
-				$(".customers_bar").slider({
-					slide: function(event,ui) {
-						if (scrollContent.width()>scrollPane.width()){
-							scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
-						} 
-						else{
-							scrollContent.css("margin-left",0);
-						}
-					}
-				});
+	var lat=get_session_var('lat');
+	var lng=get_session_var('lng');
+	var title=get_session_var('title');
 	
-				scrollPane.css("overflow","hidden");			
+	if(typeof map41 != 'undefined')
+		map41.remove();
+
+	map41 = L.map('form41_map',{
+		center: [lat,lng], 
+		zoom: 10
+	});
+
+	L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        subdomains:'1234'
+    }).addTo(map41);
+	
+	//////////changeable master coordinates/////////
+	
+	var mlatlng=L.latLng(lat,lng);
+	var mmarker=L.marker(mlatlng,{draggable:true}).addTo(map41).bindPopup("Name: "+title);
+	mmarker.on('dragend',function(event){
+		var m=event.target;
+		var latlng=m.getLatLng();
+		var form=document.getElementById('form41_master');
+		form.elements[1].value=latlng.lat;
+		form.elements[2].value=latlng.lng;
+		var save_button=form.elements[3];
+		$(save_button).show();
+	});
+	
+	var rowsHTML="<div class='customers_content_item'>" +
+			"<form id='form41_master'>" +
+			"Name: <input type='text' width='150px' readonly='readonly' value='"+title+"'>" +
+			"Latitude: <input type='text' width='150px' readonly='readonly' value='"+lat+"'>" +
+			"Longitude: <input type='text' width='150px' readonly='readonly' value='"+lng+"'>" +
+			"<input type='button' value='Confirm' style='display:none;' form='form41_master'>" +
+			"</form>" +
+			"</div>";
+	
+	$('#form41_header').prepend(rowsHTML);
+	var fields=document.getElementById("form41_master");
+	var save_button=fields.elements[3];
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form41_update_master(fields);
+	});
+	$(fields).parent().on('click',function(event)
+	{
+		console.log('clicked on master');
+		mmarker.openPopup();
+	});
+
+	/////////////////////////////////////////////////
+	
+	var customers_data="<customers>" +
+			"<id></id>" +
+			"<name></name>" +
+			"<lat></lat>" +
+			"<lng></lng>" +
+			"<acc_name></acc_name>" +
+			"<address_status>unconfirmed</address_status>" +
+			"<address></address>" +
+			"<street></street>" +
+			"<city></city>" +
+			"<state></state>" +
+			"<country></country>" +
+			"</customers>";
+	fetch_requested_data('form41',customers_data,function(customers)
+	{
+		customers.forEach(function(customer)
+		{
+			//console.log('fetched customer');
+			if(customer.lat=='')
+			{
+				customer.lat=lat;
+			}
+			if(customer.lng=='')
+			{
+				customer.lng=lng;
+			}
+			var latlng=L.latLng(customer.lat,customer.lng);
+			var marker=L.marker(latlng,{draggable:true}).addTo(map41).bindPopup("Name: "+customer.name);
+			marker.on('dragend',function(event){
+				var m=event.target;
+				var latlng=m.getLatLng();
+				var form=document.getElementById('form41_'+customer.id);
+				form.elements[1].value=latlng.lat;
+				form.elements[2].value=latlng.lng;
+				var save_button=form.elements[7];
+				$(save_button).show();
 			});
-			break;
-		}
+			
+			var rowsHTML="<div class='customers_content_item'>" +
+					"<form id='form41_"+customer.id+"'>" +
+					"Name: <input type='text' width='150px' readonly='readonly' value='"+customer.acc_name+"'>" +
+					"Latitude: <input type='text' width='150px' readonly='readonly' value='"+customer.lat+"'>" +
+					"Longitude: <input type='text' width='150px' readonly='readonly' value='"+customer.lng+"'>" +
+					"<input type='hidden' value='"+customer.id+"'>" +
+					"<input type='hidden' value='"+customer.status+"'>" +
+					"<input type='hidden' value='"+customer.address+"'>" +
+					"<input type='hidden' value='"+customer.acc_type+"'>" +
+					"<input type='button' value='Confirm' form='form41_"+customer.id+"'>" +
+					"</form>" +
+					"</div>";
+			
+			$('#form41_header').append(rowsHTML);
+			var fields=document.getElementById("form41_"+customer.id);
+			var save_button=fields.elements[7];
+			$(save_button).on("click", function(event)
+			{
+				event.preventDefault();
+				form41_update_item(fields);
+			});
+			$(fields).parent().on('click',function(event)
+			{
+				console.log('clicked on customer');
+				marker.openPopup();
+			});
+		});
+		
+		var scrollPane=$(".customers_pane");
+		var scrollContent=$(".customers_content");
+		scrollContent.css('width',(Math.round(225*customers.length)+225)+"px");
+		$(".customers_bar").slider({
+			slide: function(event,ui) {
+				if (scrollContent.width()>scrollPane.width()){
+					scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
+				} 
+				else{
+					scrollContent.css("margin-left",0);
+				}
+			}
+		});
+
+		scrollPane.css("overflow","hidden");			
+	
 		hide_loader();
 	});
 }
@@ -4445,8 +4501,8 @@ function notifications_ini()
 					get_formatted_time(notif.t_generated) +
 					"</div>" +
 					"<div>" +
-					"<input type='button' value='Seen' onclick=\"notifications_update('"+notif.id+"','reviewed')\">" +
-					"<input type='button' value='Close' onclick=\"notifications_update('"+notif.id+"','closed')\">" +
+					"<input type='button' value='Seen' onclick=\"notifications_update($(this),'"+notif.id+"','reviewed')\">" +
+					"<input type='button' value='Close' onclick=\"notifications_update($(this),'"+notif.id+"','closed')\">" +
 					"</div>" +
 					"</div>";
 		});
@@ -4475,8 +4531,7 @@ function notifications_ini()
 						get_formatted_time(notif2.t_generated) +
 						"</div>" +
 						"<div>" +
-						"<input type='button' value='Unseen' onclick=\"notifications_update('"+notif2.id+"','pending')\">" +
-						"<input type='button' value='Close' onclick=\"notifications_update('"+notif2.id+"','closed')\">" +
+						"<input type='button' value='Close' onclick=\"notifications_update($(this),'"+notif2.id+"','closed')\">" +
 						"</div>" +
 						"</div>";
 			});
