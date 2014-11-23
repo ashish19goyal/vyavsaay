@@ -2512,17 +2512,17 @@ function form82_add_item()
 		
 		$(code_filter).on('blur',function(event)
 		{
-			var product_data="<product_instances count='1'>" +
+			var product_data="<product_master count='1'>" +
 					"<product_name></product_name>" +
 					"<bar_code exact='yes'>"+code_filter.value+"</bar_code>" +
-					"</product_instances>";
+					"</product_master>";
 			get_single_column_data(function(product_name)
 			{
 				product_filter.value=product_name[0];
 				
 				var batch_data="<product_instances>" +
 						"<batch></batch>" +
-						"<bar_code exact='yes'>"+code_filter.value+"</bar_code>" +
+						"<product_name exact='yes'>"+product_filter.value+"</product_name>" +
 						"</product_instances>";
 				set_my_value_list(batch_data,batch_filter);
 				

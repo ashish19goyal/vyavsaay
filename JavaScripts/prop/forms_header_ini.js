@@ -1934,9 +1934,8 @@ function form81_header_ini()
 function form82_header_ini()
 {
 	$("#form82_body").find("tr").remove();
-
 	var fields=document.getElementById('form82_master');
-	
+
 	var customers_filter=fields.elements[1];
 	var bill_date=fields.elements[2];
 	fields.elements[3].value=0;
@@ -1944,10 +1943,8 @@ function form82_header_ini()
 	fields.elements[5].value=0;
 	fields.elements[6].value=0;
 	fields.elements[7].value=get_new_key();
-	fields.elements[8].value="";
-	fields.elements[9].value=get_new_key();
-	var email_filter=fields.elements[13];
-	var phone_filter=fields.elements[14];
+	var email_filter=fields.elements[11];
+	var phone_filter=fields.elements[12];
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)

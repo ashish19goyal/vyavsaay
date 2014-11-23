@@ -689,6 +689,20 @@ function modal14_action()
 	var fdescription=form.elements[3];
 	var fpictureinfo=form.elements[4];
 	var fpicture=form.elements[5];
+	var fbarcode=form.elements[7];
+	var auto_generate=form.elements[8];
+	
+	$(auto_generate).on('click',function(event)
+	{
+		if(auto_generate.checked)
+		{
+			fbarcode.value=get_my_time();
+		}
+		else
+		{
+			fbarcode.value="";
+		}
+	});
 	
 	var make_data="<product_master>" +
 		"<make></make>" +
@@ -716,6 +730,7 @@ function modal14_action()
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
 			var url=$(fpictureinfo).find('div').find('img').attr('src');
+			var barcode=form.elements[7].value;
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
 						"<id>"+data_id+"</id>" +
@@ -723,6 +738,7 @@ function modal14_action()
 						"<name>"+name+"</name>" +
 						"<description>"+description+"</description>" +
 						"<tax>"+tax+"</tax>" +
+						"<bar_code unique='yes'>"+barcode+"</bar_code>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</product_master>";	
 			var activity_xml="<activity>" +
@@ -1114,7 +1130,22 @@ function modal19_action(button)
 	var fpictureinfo=form.elements[4];
 	var fpicture=form.elements[5];
 	var ftax=form.elements[6];
-		
+	
+	var fbarcode=form.elements[7];
+	var auto_generate=form.elements[8];
+	
+	$(auto_generate).on('toggle',function(event)
+	{
+		if(auto_generate.checked)
+		{
+			fbarcode.value=get_my_time();
+		}
+		else
+		{
+			fbarcode.value="";
+		}
+	});
+
 	/////---------initializing all the values-------///////////
 	var form_id=$(button).attr('form');
 	var copy_form=document.getElementById(form_id);
@@ -1188,6 +1219,7 @@ function modal19_action(button)
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
 			var url=$(fpictureinfo).find('div').find('img').attr('src');
+			var barcode=form.elements[7].value;
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
 						"<id>"+data_id+"</id>" +
@@ -1195,6 +1227,7 @@ function modal19_action(button)
 						"<name>"+name+"</name>" +
 						"<description>"+description+"</description>" +
 						"<tax>"+tax+"</tax>" +
+						"<bar_code unique='yes'>"+barcode+"</bar_code>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</product_master>";	
 			var activity_xml="<activity>" +

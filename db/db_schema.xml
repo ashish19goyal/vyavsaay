@@ -317,7 +317,6 @@
 	<product_instances>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<batch index='yes' type="VARCHAR(45)"></batch>
-			<bar_code index='yes' type="VARCHAR(45)"></bar_code>
 			<expiry index='yes' type="BIGINT"></expiry>
 			<cost_price index='no' type="DECIMAL(12,2)"></cost_price>
 			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
@@ -334,6 +333,7 @@
 	</inventory_adjust>
 	<product_master>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<bar_code index='yes' type="VARCHAR(45)"></bar_code>
 			<name index='yes' type="VARCHAR(90)" unique='yes'></name>
 			<description index='no' type="TEXT"></description>
 			<make index='no' type="VARCHAR(45)"></make>
@@ -584,15 +584,4 @@
 			<status index='no' type="VARCHAR(25)"></status><!--pending/seen/closed-->
 			<last_updated index='no' type="BIGINT"></last_updated>		
 	</messages>
-	<scan_items>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<batch index='yes' type="VARCHAR(45)"></batch>
-			<bar_code index='yes' type="VARCHAR(45)"></bar_code>
-			<cost_price index='no' type="DECIMAL(12,2)"></cost_price>
-			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
-			<quantity index='no' type="DECIMAL(12,2)"></quantity>
-			<item_name index='yes' type="VARCHAR(90)"></item_name>
-			<bill_id index='yes' type="BIGINT"></bill_id>
-			<last_updated index='no' type="BIGINT"></last_updated>
-	</scan_items>
 </re_xml>

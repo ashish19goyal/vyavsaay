@@ -762,7 +762,7 @@ function form11_ini()
 							rowsHTML+="<input type='submit' class='save_icon' form='form11_"+result.id+"' title='Save'>";
 							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+email+"'>";
 							rowsHTML+="<a id='form11_whatsapp_"+result.id+"' href='whatsapp://send?text="+message_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form11_"+result.id+"' title='Send details through WhatsApp'>";
-							rowsHTML+="<a id='form11_gmail_"+result.id+"' href='"+mail_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form11_"+result.id+"' title='Send details through WhatsApp'>";
+							rowsHTML+="<a id='form11_gmail_"+result.id+"' href='"+mail_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/gmail.png' form='form11_"+result.id+"' title='Send details through WhatsApp'>";
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 				
@@ -776,10 +776,12 @@ function form11_ini()
 					event.preventDefault();
 					form11_update_item(fields);
 				});
+				
+				longPressEditable($('.dblclick_editable'));
+				
 			});
 		});
 		
-		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
@@ -5108,152 +5110,3 @@ function form81_ini()
 		hide_loader();
 	});
 };
-
-
-/**
- * @form Scan Items
- */
-/*
-function form82_ini()
-{
-	var bill_id=$("#form82_link").attr('data_id');
-	if(bill_id==null)
-		bill_id="";	
-	
-	$('#form82_body').html("");
-
-	if(bill_id!="")
-	{
-		show_loader();
-		var bill_columns="<bills>" +
-				"<id>"+bill_id+"</id>" +
-				"<customer_name></customer_name>" +
-				"<total></total>" +
-				"<bill_date></bill_date>" +
-				"<amount></amount>" +
-				"<discount></discount>" +
-				"<tax></tax>" +
-				"<offer></offer>" +
-				"<type>product</type>" +
-				"<transaction_id></transaction_id>" +
-				"</bills>";
-		var scan_items_column="<scan_items>" +
-				"<id></id>" +
-				"<item_name></item_name>" +
-				"<batch></batch>" +
-				"<cost_price></cost_price>" +
-				"<sale_price></sale_price>" +
-				"<bar_code></bar_code>" +
-				"<quantity></quantity>" +
-				"<bill_id>"+bill_id+"</bill_id>" +
-				"</scan_items>";
-	
-		////separate fetch function to get bill details like customer name, total etc.
-		fetch_requested_data('',bill_columns,function(bill_results)
-		{
-			var filter_fields=document.getElementById('form82_master');
-			
-			for (var i in bill_results)
-			{
-				filter_fields.elements[1].value=bill_results[i].customer_name;
-				filter_fields.elements[2].value=get_my_past_date(bill_results[i].bill_date);
-				filter_fields.elements[3].value=bill_results[i].amount;
-				filter_fields.elements[4].value=bill_results[i].discount;
-				filter_fields.elements[5].value=bill_results[i].tax;
-				filter_fields.elements[6].value=bill_results[i].total;
-				filter_fields.elements[7].value=bill_id;
-				filter_fields.elements[8].value=bill_results[i].offer;
-				filter_fields.elements[9].value=bill_results[i].transaction_id;
-				
-				$(filter_fields).off('submit');
-				$(filter_fields).on("submit", function(event)
-				{
-					event.preventDefault();
-					form82_update_form();
-				});
-				break;
-			}
-		
-			var customer_data="<customers>" +
-					"<acc_name exact='yes'>"+filter_fields.elements[1].value+"</acc_name>" +
-					"<email></email>" +
-					"<phone></phone>" +
-					"</customers>";
-			fetch_requested_data('',customer_data,function(cust_results)
-			{
-				var email=cust_results[0].email;
-				var phone=cust_results[0].phone;
-				filter_fields.elements[13].value=email;
-				filter_fields.elements[14].value=phone;
-		
-				fetch_requested_data('',scan_items_column,function(results)
-				{
-					var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
-					var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
-		
-					results.forEach(function(result)
-					{
-						message_string+="\nItem: "+result.item_name;
-						message_string+=" Quantity: "+result.quantity;
-						message_string+=" Price: "+result.sale_price;
-						mail_string+="\nItem: "+result.item_name;
-						mail_string+=" Quantity: "+result.quantity;
-						mail_string+=" Pricel: "+result.sale_price;
-						
-						var rowsHTML="";
-						var id=result.id;
-						rowsHTML+="<tr>";
-						rowsHTML+="<form id='form82_"+id+"'></form>";
-							rowsHTML+="<td data-th='Barcode'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form82_"+id+"' value='"+result.barcode+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Product'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form82_"+id+"' value='"+result.item_name+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Batch'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form82_"+id+"' value='"+result.batch+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Unit Price'>";
-								rowsHTML+="<input type='number' readonly='readonly' form='form82_"+id+"' value='"+result.unit_price+"' step='any'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form82_"+id+"' value='"+id+"'>";
-								rowsHTML+="<input type='submit' class='save_icon' form='form82_"+id+"' id='save_form82_"+id+"'>";
-								rowsHTML+="<input type='button' class='delete_icon' form='form82_"+id+"' id='delete_form82_"+id+"' onclick='form82_delete_item($(this));'>";
-							rowsHTML+="</td>";			
-						rowsHTML+="</tr>";
-					
-						$('#form82_body').prepend(rowsHTML);
-						
-						var fields=document.getElementById("form82_"+id);
-						$(fields).on("submit", function(event)
-						{
-							event.preventDefault();
-						});
-					});
-					
-					mail_string+="\nAmount: "+filter_fields.elements[3].value;
-					mail_string+="\ndiscount: "+filter_fields.elements[4].value;
-					mail_string+="\nTax: "+filter_fields.elements[5].value;
-					mail_string+="\nTotal: "+filter_fields.elements[6].value;
-					mail_string=encodeURIComponent(mail_string);
-					
-					message_string+="\nAmount: "+filter_fields.elements[3].value;
-					message_string+="\ndiscount: "+filter_fields.elements[4].value;
-					message_string+="\nTax: "+filter_fields.elements[5].value;
-					message_string+="\nTotal: "+filter_fields.elements[6].value;
-					message_string=encodeURIComponent(message_string);
-					
-					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
-					$('#form82_whatsapp').attr('href',"whatsapp://send?text="+message_string);
-					$('#form82_whatsapp').show();
-					$('#form82_gmail').attr('href',mail_string);
-					$('#form82_gmail').show();
-					
-					hide_loader();
-				});
-			});
-		});
-	}
-}
-*/

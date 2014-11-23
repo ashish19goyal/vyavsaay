@@ -836,7 +836,7 @@ function form12_update_form()
 		var offer_data="<offers>" +
 				"<offer_type>bill</offer_type>" +
 				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount compare='less than'>"+amount-discount+"</criteria_amount>" +
+				"<criteria_amount compare='less than'>"+(amount-discount)+"</criteria_amount>" +
 				"<result_type></result_type>" +
 				"<discount_percent></discount_percent>" +
 				"<discount_amount></discount_amount>" +
@@ -936,8 +936,9 @@ function form12_update_form()
 
 				                $('#form12_body').prepend(rowsHTML);
 				                
+				                var bill_item_id=get_new_key()+""+Math.random()*1000;
 								var free_xml="<bill_items>" +
-											"<id>"+get_new_key()+"</id>" +
+											"<id>"+bill_item_id+"</id>" +
 											"<item_name>"+free_product_name+"</item_name>" +
 											"<batch>"+free_batch+"</batch>" +
 											"<unit_price>0</unit_price>" +

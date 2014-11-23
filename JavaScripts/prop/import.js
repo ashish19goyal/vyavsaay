@@ -447,6 +447,7 @@ function form39_import(data_array,import_type)
 				"<make>"+row.make+"</make>" +
 				"<description>"+row.description+"</description>" +
 				"<tax>"+row.tax+"</tax>" +
+				"<bar_code>"+row.bar_code+"</bar_code>" +
 				"</product_master>";
 		if(import_type=='create_new')
 		{

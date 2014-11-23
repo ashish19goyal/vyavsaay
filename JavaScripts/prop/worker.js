@@ -59,8 +59,39 @@ function count_notif()
 			$('#count_notif').html(num_res);
 			$('#count_notif').show(); 
 		}
+		
+		if('Notification' in window && num_res>0)
+		{		
+			if(Notification.permission==='granted')
+			{
+				//console.log('permission is granted by default');
+				var notification=new Notification('Vyavsaay',
+				{
+					body: "You have "+num_res+" unseen notifications",
+					icon: "./images/favicon.png"
+				});
+			}
+			else
+			{
+				Notification.requestPermission(function(permission)
+				{
+					if(permission==='granted')
+					{
+						console.log('permission granted');
+						var notification=new Notification('Vyavsaay',
+						{
+							body: "You have "+num_res+" unseen notifications",
+							icon: "./images/favicon.png"
+						});							 
+					}
+		        });
+			}
+		}
+		
 	},notif_data);
-	setTimeout(count_notif,100000);
+	
+	clearInterval(count_notif_timer);
+	count_notif_timer=setTimeout(count_notif,100000);
 }
 
 /**

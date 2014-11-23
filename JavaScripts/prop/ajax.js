@@ -108,6 +108,7 @@ function server_read_single_column(column,callback,results)
 	var re_access=get_session_var('re');
 	ajax_with_custom_func("./ajax/get_single_column.php","domain="+domain+"&username="+username+"&re="+re_access+"&columns="+column,function(e)
 	{
+		//console.log(column);
 		//console.log(e.responseText);
 		var row=e.responseXML.childNodes[0].childNodes;
 		for(var i=0; i<row.length; i++)
@@ -129,6 +130,7 @@ function server_read_multiple_column(columns,callback,results)
 	var re_access=get_session_var('re');
 	ajax_with_custom_func("./ajax/get_rows.php","domain="+domain+"&username="+username+"&re="+re_access+"&columns="+columns,function(e)
 	{
+		//console.log(columns);
 		//console.log(e.responseText);
 		var row=e.responseXML.childNodes[0].childNodes;
 		for(var i=0; i<row.length; i++)

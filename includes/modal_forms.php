@@ -153,6 +153,8 @@
 				<label>Picture <output></output>
 								<input type="file"></label><br/>
 				<label>Tax (%) <input type="number"></label><br/>
+				<label>Bar Code <input type="text" required></label>
+				<label><input type='checkbox' checked>Auto generate</label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -234,6 +236,8 @@
 				<label>Picture <output></output>
 								<input type="file"></label><br/>
 				<label>Tax (%) <input type="number"></label><br/>
+				<label>Bar Code <input type="text" required></label>
+				<label><input type='checkbox' checked>Auto generate</label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

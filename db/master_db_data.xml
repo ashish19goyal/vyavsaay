@@ -650,8 +650,8 @@
 		<row>
 			<tablename>payments</tablename>
 			<listname>mode</listname>
-			<name>active</name>
-			<value>Active</value>
+			<name>cash</name>
+			<value>Cash</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

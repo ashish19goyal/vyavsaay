@@ -98,7 +98,7 @@ function form38_import_template()
 */
 function form39_import_template()
 {
-	var data_array=['id','name','make','description','tax'];
+	var data_array=['id','name','make','description','tax','bar_code'];
 	my_array_to_csv(data_array);
 };
 

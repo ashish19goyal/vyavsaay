@@ -15,6 +15,7 @@ function default_load()
 	
 	number_active_ajax=0;
 	loaderTimer=0;
+	count_notif_timer=0;
 	
 	if(is_set_session())
 	{

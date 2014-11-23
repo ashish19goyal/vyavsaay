@@ -4207,6 +4207,8 @@ function form82_bill()
 {
 	if(is_create_access('form82'))
 	{
+		var master_form=document.getElementById('form82_master');
+		   	
 		var bill_type='product';
 		var bill_amount=0;
 		var bill_total=0;
@@ -4214,9 +4216,12 @@ function form82_bill()
 		var bill_discount=0;
 		var bill_tax=0;
 		var pending_items_count=0;
-		var order_id=get_new_key();
+		var order_id=master_form.elements[3].value;
 		///////selecting all scanned items////
 		var order_items=new Array();
+		
+		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		$("[id^='delete_form82']").each(function(index)
 		{
@@ -4229,6 +4234,11 @@ function form82_bill()
 			order_item.quantity=1;
 			order_item.sale_price=parseFloat(form.elements[3].value);
 			order_items.push(order_item);
+			
+			message_string+="\nItem: "+form.elements[1].value;
+			message_string+=" Price: "+form.elements[3].value;
+			mail_string+="\nItem: "+form.elements[1].value;
+			mail_string+=" Price: "+form.elements[3].value;
 		});
 		
 		var scanned_items=new Array();
@@ -4507,13 +4517,8 @@ function form82_bill()
 						local_create_simple(data_xml);
 					}
 				});
-				
 			});
-						
-					
 		});
-	
-		
 		
 		/////saving bill details
 		var bill_items_complete=setInterval(function()
@@ -4522,10 +4527,11 @@ function form82_bill()
 	  	   {
 	  		   	clearInterval(bill_items_complete);
 	  		   	
-	  		   	var master_form=document.getElementById('form82_master');
 	  		   	var customer=master_form.elements[1].value;
 	  		   	var bill_date=master_form.elements[2].value;
-	  		   	
+		  		var email=master_form.elements[11].value;
+		  		var phone=master_form.elements[12].value;
+	  		
 	  		   	//fetch_requested_data('',order_data,function(sale_orders)
 	  		   	//{
 	  		   		///////////////////////////////////////////////////////////
@@ -4628,7 +4634,35 @@ function form82_bill()
 						break;
 					}
 					
-					var bill_xml="<bills>" +
+					master_form.elements[3].value=bill_amount;
+			  		master_form.elements[4].value=bill_discount;
+			  		master_form.elements[5].value=bill_tax;
+			  		master_form.elements[6].value=bill_total;
+			  		
+			  		$(master_form).off('submit');
+			  		$(master_form).on("submit", function(event)
+			  		{
+			  			event.preventDefault();
+			  		});
+			  		
+			  		message_string+="\nAmount: "+bill_amount;
+					message_string+="\ndiscount: "+bill_discount;
+					message_string+="\nTax: "+bill_tax;
+					message_string+="\nTotal: "+bill_total;
+					message_string=encodeURIComponent(message_string);
+					
+					mail_string+="\nAmount: "+bill_amount;
+					mail_string+="\ndiscount: "+bill_discount;
+					mail_string+="\nTax: "+bill_tax;
+					mail_string+="\nTotal: "+bill_total;
+					mail_string=encodeURIComponent(mail_string);
+					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
+					$('#form82_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+					$('#form82_whatsapp').show();
+					$('#form82_gmail').attr('href',mail_string);
+					$('#form82_gmail').show();
+					
+			  		var bill_xml="<bills>" +
 								"<id>"+order_id+"</id>" +
 								"<customer_name>"+customer+"</customer_name>" +
 								"<bill_date>"+get_raw_time(bill_date)+"</bill_date>" +
@@ -4687,14 +4721,21 @@ function form82_bill()
 						server_create_row(bill_xml,activity_xml);
 						server_create_simple(transaction_xml);
 						server_create_simple(pt_xml);
-						server_create_simple(payment_xml);
+						server_create_simple_func(payment_xml,function()
+						{
+							modal26_action(pt_tran_id);
+						});
+
 					}
 					else
 					{
 						local_create_row(bill_xml,activity_xml);
 						local_create_simple(transaction_xml);
 						local_create_simple(pt_xml);
-						local_create_simple(payment_xml);
+						local_create_simple_func(payment_xml,function()
+						{
+							modal26_action(pt_tran_id);
+						});
 					}
 				});
 	  	   }
