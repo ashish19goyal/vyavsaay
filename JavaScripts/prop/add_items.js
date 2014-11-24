@@ -902,14 +902,16 @@ function form21_add_item()
 				rowsHTML+="<input type='number' step='any' required form='form21_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="<input type='number' required form='form21_"+id+"' step='any'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Unit Price'>";
-				rowsHTML+="<input type='number' readonly='readonly' required form='form21_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' required form='form21_"+id+"' step='any'></br>";
+				rowsHTML+="Unit Price: <input type='number' readonly='readonly' form='form21_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form21_"+id+"'>";
 				rowsHTML+="<img class='add_icon' form='form21_"+id+"' title='Add new batch' onclick='modal22_action();'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Storage Area'>";
+				rowsHTML+="<input type='text' form='form21_"+id+"'>";
+				rowsHTML+="<img class='add_icon' form='form21_"+id+"' title='Add new storage' onclick='modal35_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form21_"+id+"' value='"+id+"'>";
@@ -926,7 +928,8 @@ function form21_add_item()
 		var amount_filter=fields.elements[2];
 		var price_filter=fields.elements[3];
 		var batch_filter=fields.elements[4];
-		var id_filter=fields.elements[5];
+		var storage_filter=fields.elements[4];
+		var id_filter=fields.elements[6];
 		
 		$(name_filter).focus();
 		
@@ -941,7 +944,12 @@ function form21_add_item()
 				"</product_master>";
 		set_my_value_list(product_data,name_filter);
 		
-		
+		var storage_data="<store_areas>" +
+					"<name></name>" +
+					"<area_type>"+storage+"</area_type>" +
+					"</store_areas>";
+		set_my_value_list(storage_data,storage_filter);
+
 		$(name_filter).on('blur',function(event){
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
@@ -1065,16 +1073,13 @@ function form38_add_item()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form38_"+id+"'></form>";
-			rowsHTML+="<td data-th='Product Name'>";
+			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' form='form38_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' form='form38_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Store Area'>";
-				rowsHTML+="<input type='text' form='form38_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='text' form='form38_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
@@ -1090,7 +1095,6 @@ function form38_add_item()
 		var product_filter=fields.elements[0];
 		var batch_filter=fields.elements[1];
 		var area_filter=fields.elements[2];
-		var quantity_filter=fields.elements[3];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -1108,7 +1112,7 @@ function form38_add_item()
 		$(product_filter).on('blur',function(event){
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
-					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"<product_name exact='yes'>"+product_filter.value+"</product_name>" +
 					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
 		});

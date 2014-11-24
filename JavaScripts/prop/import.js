@@ -401,10 +401,9 @@ function form38_import(data_array,import_type)
 	{
 		var data_xml="<area_utilization>" +
 				"<id>"+row.id+"</id>" +
-				"<product_name>"+row.product_name+"</product_name>" +
+				"<item_name>"+row.item_name+"</item_name>" +
 				"<batch>"+row.batch+"</batch>" +
 				"<name>"+row.name+"</name>" +
-				"<quantity>"+row.quantity+"</quantity>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</area_utilization>";
 		if(import_type=='create_new')
@@ -1127,3 +1126,55 @@ function form81_import(data_array,import_type)
 		}
 	});
 }
+
+/**
+* @form Store Areas
+* @formNo 83
+*/
+function form83_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<store_areas>" +
+			"<id>"+row.id+"</id>" +
+			"<name>"+row.name+"</name>" +
+			"<area_type>"+row.area_type+"</area_type>" +
+			"<height>"+row.length+"</height>" +
+			"<width>"+row.width+"</width>" +
+			"<length>"+row.length+"</length>" +
+			"<locx>"+row.locx+"</locx>" +
+			"<locy>"+row.locy+"</locy>" +
+			"<locz>"+row.locz+"</locz>" +
+			"<storey>"+row.storey+"</storey>" +
+			"<color>"+row.color+"</color>" +
+			"<loc_type>"+row.loc_type+"</loc_type>" +
+			"<faceEast>"+row.faceEast+"<faceEast>" +
+			"<faceWest>"+row.faceWest+"</faceWest>" +
+			"<faceNorth>"+row.faceNorth+"</faceNorth>" +
+			"<faceSouth>"+row.faceSouth+"</faceSouth>" +
+			"</store_areas>";
+
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};

@@ -87,7 +87,7 @@ function form35_import_template()
 */
 function form38_import_template()
 {
-	var data_array=['id','product_name','batch','name','quantity'];
+	var data_array=['id','item_name','batch','name'];
 	my_array_to_csv(data_array);
 };
 
@@ -245,5 +245,15 @@ function form79_import_template()
 function form81_import_template()
 {
 	var data_array=['id','customer','detail','due_date','identified_by'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Store Areas
+* @formNo 83
+*/
+function form83_import_template()
+{
+	var data_array=['id','name','area_type','height','width','length','locx','locy','locz','storey','color','loc_type','faceEast','faceWest','faceNorth','faceSouth'];
 	my_array_to_csv(data_array);
 };

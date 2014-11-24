@@ -3,6 +3,7 @@
 		<fieldset>
 			Supplier<input type='text' required>
 			Order Date<input type='text' required>
+			Notes <textarea></textarea>
 			Order Status<input type='text' required>
 			<input type='hidden' name='order_id' value=''>
 			<input type='button' title='New Order' class='add_icon' onclick='form24_new_form();'>

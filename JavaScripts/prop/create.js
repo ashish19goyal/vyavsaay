@@ -1656,14 +1656,15 @@ function form21_create_item(form)
 {
 	if(is_create_access('form21'))
 	{
-		var bill_id=document.getElementById("form21_master").elements[7].value;
+		var bill_id=document.getElementById("form21_master").elements[8].value;
 		
 		var name=form.elements[0].value;
 		var quantity=form.elements[1].value;
 		var amount=form.elements[2].value;
 		var price=form.elements[3].value;
 		var batch=form.elements[4].value;
-		var data_id=form.elements[5].value;
+		var storage=form.elements[5].value;
+		var data_id=form.elements[6].value;
 		
 		var last_updated=get_my_time();
 			
@@ -1675,6 +1676,7 @@ function form21_create_item(form)
 				"<quantity>"+quantity+"</quantity>" +
 				"<amount>"+amount+"</amount>" +
 				"<bill_id>"+bill_id+"</bill_id>" +
+				"<storage>"+storage+"</storage>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</supplier_bill_items>";	
 	
@@ -1691,7 +1693,7 @@ function form21_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[7];
+		var del_button=form.elements[8];
 		$(del_button).off('click');
 		$(del_button).on('click',function(event)
 		{
@@ -1838,7 +1840,7 @@ function form24_create_item(form)
 {
 	if(is_create_access('form24'))
 	{
-		var order_id=document.getElementById("form24_master").elements[4].value;
+		var order_id=document.getElementById("form24_master").elements[5].value;
 		
 		var name=form.elements[0].value;
 		var quantity=form.elements[1].value;
@@ -1901,10 +1903,11 @@ function form24_create_form()
 		var form=document.getElementById("form24_master");
 		var supplier=form.elements[1].value;
 		var order_date=get_raw_time(form.elements[2].value);		
-		var status=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var email=form.elements[7].value;
-		var phone=form.elements[8].value;
+		var notes=form.elements[3].value;
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var email=form.elements[8].value;
+		var phone=form.elements[9].value;
 		
 		var message_string="Order from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		var mail_string="Order from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
@@ -1918,6 +1921,11 @@ function form24_create_form()
 			mail_string+="\nProduct: "+subform.elements[0].value;
 			mail_string+="Quantity: "+subform.elements[1].value;
 		});
+	
+		message_string+="\nOrder Date: "+form.elements[2].value;
+		message_string+="\nNotes: "+form.elements[3].value;
+		mail_string+="\nOrder Date: "+form.elements[2].value;
+		mail_string+="\nNotes: "+form.elements[3].value;
 		
 		message_string=encodeURIComponent(message_string);
 		mail_string=encodeURIComponent(mail_string);
@@ -1933,6 +1941,7 @@ function form24_create_form()
 					"<supplier>"+supplier+"</supplier>" +
 					"<order_date>"+order_date+"</order_date>" +
 					"<status>"+status+"</status>" +
+					"<notes>"+notes+"</notes>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_orders>";
 		var activity_xml="<activity>" +
@@ -1979,24 +1988,21 @@ function form38_create_item(form)
 		var product_name=form.elements[0].value;
 		var batch=form.elements[1].value;
 		var name=form.elements[2].value;
-		var quantity=form.elements[3].value;
-		var data_id=form.elements[4].value;
+		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='area_utilization';
-		var data_xml="<"+table+">" +
+		var data_xml="<area_utilization>" +
 					"<id>"+data_id+"</id>" +
-					"<product_name>"+product_name+"</product_name>" +
+					"<item_name>"+product_name+"</item_name>" +
 					"<batch>"+batch+"</batch>" +
 					"<name>"+name+"</name>" +
-					"<quantity>"+quantity+"</quantity>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table+">";	
+					"</area_utilization>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>area_utilization</tablename>" +
 					"<link_to>form38</link_to>" +
-					"<title>Saved</title>" +
-					"<notes>Placed product "+product_name+" at storage "+name+"</notes>" +
+					"<title>Added</title>" +
+					"<notes>Item "+product_name+" to storage area "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2007,11 +2013,13 @@ function form38_create_item(form)
 		{
 			local_create_row(data_xml,activity_xml);
 		}	
-		for(var i=0;i<5;i++)
+		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[6];
+		var save_button=form.elements[4];
+		$(save_button).hide();
+		var del_button=form.elements[5];
 		$(del_button).off('click');
 		$(del_button).on('click',function(event)
 		{
@@ -2022,7 +2030,6 @@ function form38_create_item(form)
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
-			form38_update_item(form);
 		});
 	}
 	else

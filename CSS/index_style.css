@@ -19,17 +19,27 @@
   z-index: 9999;
 }
 
-div.pricing_grid{
-	width: 250px;
-	height: 300px;	
-	margin:3% 0;
-	margin-left: 100px;
-	margin-right: auto;
-	text-align: center;
-	border:6px solid#2ABF5E;
-	padding: auto;
-	background-color: #F2BA13;
+div.pricing_grids{
+	width:100%;
+	margin:0 auto;
+	display:table;
 }
+
+div.pricing_grid{
+	display: inline-block;
+	width: 235px;
+	height: 350px;	
+	margin: 20px auto;
+	text-align: center;
+	border:15px solid #2ABF5E;
+	background-color: #F5F4A8;
+	color: #88886F;
+	position: relative;
+	min-height: 1px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
 
 /*-------social media buttons-----------*/
 

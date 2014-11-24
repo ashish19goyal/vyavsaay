@@ -833,6 +833,14 @@
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form83</name>
+			<display_name>storage_areas</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -1770,6 +1778,17 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<username>master</username>
+			<element_id>form83</element_id>
+			<element_name>storage_areas</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
 	</access_control>
 	<shortcuts>
 		<row>
@@ -2216,6 +2235,13 @@
 		<row>
 			<element_id>form82</element_id>
 			<element_name>scan_items</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form83</element_id>
+			<element_name>storage_areas</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>

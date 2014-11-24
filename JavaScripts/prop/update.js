@@ -1548,7 +1548,7 @@ function form24_update_item(form)
 {
 	if(is_update_access('form24'))
 	{
-		var order_id=document.getElementById("form24_master").elements[4].value;		
+		var order_id=document.getElementById("form24_master").elements[5].value;		
 		var name=form.elements[0].value;
 		var quantity=form.elements[1].value;
 		var make=form.elements[2].value;
@@ -1596,10 +1596,11 @@ function form24_update_form()
 		
 		var supplier=form.elements[1].value;
 		var order_date=get_raw_time(form.elements[2].value);		
-		var status=form.elements[3].value;		
-		var data_id=form.elements[4].value;
-		var email=form.elements[7].value;
-		var phone=form.elements[8].value;
+		var notes=form.elements[3].value;		
+		var status=form.elements[4].value;		
+		var data_id=form.elements[5].value;
+		var email=form.elements[8].value;
+		var phone=form.elements[9].value;
 		
 		var message_string="Order from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		var mail_string="Order from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
@@ -1613,6 +1614,11 @@ function form24_update_form()
 			mail_string+="\nProduct: "+subform.elements[0].value;
 			mail_string+="Quantity: "+subform.elements[1].value;
 		});
+		
+		message_string+="\nOrder Date: "+form.elements[2].value;
+		message_string+="\nNotes: "+form.elements[3].value;
+		mail_string+="\nOrder Date: "+form.elements[2].value;
+		mail_string+="\nNotes: "+form.elements[3].value;
 		
 		message_string=encodeURIComponent(message_string);
 		mail_string=encodeURIComponent(mail_string);
@@ -1629,6 +1635,7 @@ function form24_update_form()
 					"<supplier>"+supplier+"</supplier>" +
 					"<order_date>"+order_date+"</order_date>" +
 					"<status>"+status+"</status>" +
+					"<notes>"+notes+"</notes>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_orders>";
 		var activity_xml="<activity>" +
@@ -2082,13 +2089,15 @@ function form43_update_item(form)
 		var data_id=form.elements[0].value;
 		var supplier_name=form.elements[1].value;
 		var order_date=get_raw_time(form.elements[2].value);
-		var status=form.elements[3].value;
+		var notes=form.elements[3].value;
+		var status=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<purchase_orders>" +
 					"<id>"+data_id+"</id>" +
 					"<supplier>"+supplier_name+"</supplier>" +
 					"<order_date>"+order_date+"</order_date>" +
 					"<status>"+status+"</status>" +
+					"<notes>"+notes+"</notes>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_orders>";	
 		var activity_xml="<activity>" +
@@ -2107,7 +2116,7 @@ function form43_update_item(form)
 		{
 			local_update_row(data_xml,activity_xml);
 		}	
-		for(var i=0;i<4;i++)
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

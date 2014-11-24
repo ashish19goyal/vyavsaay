@@ -717,8 +717,9 @@ function form21_header_ini()
 	var entry_date=fields.elements[4];
 	fields.elements[5].value=0;
 	fields.elements[6].value=0;
-	fields.elements[7].value=get_new_key();
+	fields.elements[7].value="";
 	fields.elements[8].value=get_new_key();
+	fields.elements[9].value=get_new_key();
 	
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
@@ -766,11 +767,12 @@ function form24_header_ini()
 	
 	var supplier_filter=fields.elements[1];
 	var order_date=fields.elements[2];
-	var status_filter=fields.elements[3];
-	var email_filter=fields.elements[7];
-	var phone_filter=fields.elements[8];
+	fields.elements[3].value="";
+	var status_filter=fields.elements[4];
+	var email_filter=fields.elements[8];
+	var phone_filter=fields.elements[9];
 	
-	fields.elements[4].value=get_new_key();
+	fields.elements[5].value=get_new_key();
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -888,7 +890,6 @@ function form35_header_ini()
 
 
 /**
- * this function prepares the table for store placement form
  * @form Store Placement
  * @formNo 38
  */
@@ -1978,3 +1979,26 @@ function form82_header_ini()
 	customers_filter.value='';
 	$(customers_filter).focus();
 }
+
+/**
+ * @form Storage Areas
+ * @formNo 83
+ */
+function form83_header_ini()
+{
+	var filter_fields=document.getElementById('form83_header');
+	var name_filter=filter_fields.elements[0];
+	
+	var area_data="<store_areas>" +
+			"<name></name>" +
+			"</store_areas>";
+	
+	set_my_filter(area_data,name_filter);
+	
+	var import_button=filter_fields.elements[3];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form83_import_template,form83_import);
+	});
+};

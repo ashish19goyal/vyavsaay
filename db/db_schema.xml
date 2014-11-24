@@ -110,6 +110,7 @@
 			<order_date index='yes' type="BIGINT"></order_date>
 			<supplier index='yes' type="VARCHAR(100)"></supplier>
 			<status index='no' type="VARCHAR(25)"></status><!-- cancelled/order placed/draft -->
+			<notes index='yes' type="TEXT"></notes>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</purchase_orders>
 	<purchase_order_items>  
@@ -130,6 +131,7 @@
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<transaction_id index='no' type="BIGINT"></transaction_id>
+			<notes index='yes' type="TEXT"></notes>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</supplier_bills>
 	<supplier_bill_items>
@@ -140,6 +142,7 @@
 			<bill_id index='yes' type="BIGINT"></bill_id>
 			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<storage index='yes' type="VARCHAR(25)"></storage>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</supplier_bill_items>
 	<supplier_returns>
@@ -377,10 +380,8 @@
 	<area_utilization>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(25)"></name>
-			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<item_name index='yes' type="VARCHAR(90)"></item_name>
 			<batch index='yes' type="VARCHAR(50)"></batch>
-			<quantity index='no' type="DECIMAL(12,2)"></quantity>
-			<service_name index='yes' type="VARCHAR(45)"></service_name>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</area_utilization>
 	<store_areas>

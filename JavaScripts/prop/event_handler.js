@@ -68,7 +68,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=8;i<34;i++)
+	for(var i=8;i<36;i++)
 	{
 		$("#modal"+i).dialog({
 	   		autoOpen: false,

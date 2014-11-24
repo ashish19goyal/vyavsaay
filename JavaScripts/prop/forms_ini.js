@@ -661,7 +661,6 @@ function form10_ini()
 
 
 /**
- * this function prepares the table for schedule payments form
  * @form Manage Payments
  * @formNo 11
  */
@@ -956,7 +955,6 @@ function form12_ini()
 
 
 /**
- * this function prepares the table for manage tasks form
  * @form Manage Tasks
  * @formNo 14
  */
@@ -1206,8 +1204,6 @@ function form15_ini()
 		});
 	}
 }
-
-
 
 /**
  * @form Manage customer returns
@@ -1522,6 +1518,7 @@ function form21_ini()
 				"<bill_date></bill_date>" +
 				"<entry_date></entry_date>" +
 				"<discount></discount>" +
+				"<notes></notes>" +
 				"<transaction_id></transaction_id>" +
 				"</supplier_bills>";
 		
@@ -1537,8 +1534,9 @@ function form21_ini()
 				filter_fields.elements[4].value=get_my_past_date(bill_results[i].entry_date);
 				filter_fields.elements[5].value=bill_results[i].discount;
 				filter_fields.elements[6].value=bill_results[i].total;
-				filter_fields.elements[7].value=bill_id;
-				filter_fields.elements[8].value=bill_results[i].transaction_id;
+				filter_fields.elements[7].value=bill_results[i].notes;
+				filter_fields.elements[8].value=bill_id;
+				filter_fields.elements[9].value=bill_results[i].transaction_id;
 				
 				$(filter_fields).off('submit');
 				$(filter_fields).on("submit", function(event)
@@ -1558,6 +1556,7 @@ function form21_ini()
 				"<unit_price></unit_price>" +
 				"<quantity></quantity>" +
 				"<amount></amount>" +
+				"<storage></storage>" +
 				"<bill_id>"+bill_id+"</bill_id>" +
 				"</supplier_bill_items>";
 		
@@ -1576,14 +1575,15 @@ function form21_ini()
 						rowsHTML+="<input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.quantity+"' step='any'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Amount'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.amount+"' step='any'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Unit Price'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.unit_price+"' step='any'>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.amount+"' step='any'></br>";
+						rowsHTML+="Unit Price: <input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.unit_price+"' step='any'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Batch'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form21_"+id+"' value='"+result.batch+"'>";
 						rowsHTML+="<img class='add_icon' form='form21_"+id+"' title='Add new batch' onclick='modal22_action();'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Storage Area'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form21_"+id+"' value='"+result.storage+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form21_"+id+"' value='"+id+"'>";
@@ -1627,6 +1627,7 @@ function form24_ini()
 				"<supplier></supplier>" +
 				"<order_date></order_date>" +
 				"<status></status>" +
+				"<notes></notes>" +
 				"</purchase_orders>";
 		var order_items_column="<purchase_order_items>" +
 				"<id></id>" +
@@ -1646,8 +1647,9 @@ function form24_ini()
 			{
 				filter_fields.elements[1].value=order_results[i].supplier;
 				filter_fields.elements[2].value=get_my_past_date(order_results[i].order_date);
-				filter_fields.elements[3].value=order_results[i].status;
-				filter_fields.elements[4].value=order_id;
+				filter_fields.elements[3].value=order_results[i].notes;
+				filter_fields.elements[4].value=order_results[i].status;
+				filter_fields.elements[5].value=order_id;
 				
 				$(filter_fields).off('submit');
 				$(filter_fields).on("submit", function(event)
@@ -1668,8 +1670,8 @@ function form24_ini()
 			{
 				var email=sup_results[0].email;
 				var phone=sup_results[0].phone;
-				filter_fields.elements[7].value=email;
-				filter_fields.elements[8].value=phone;
+				filter_fields.elements[8].value=email;
+				filter_fields.elements[9].value=phone;
 				
 				fetch_requested_data('',order_items_column,function(results)
 				{
@@ -1717,6 +1719,11 @@ function form24_ini()
 							form24_update_item(fields);
 						});
 					});
+					
+					message_string+="\nOrder Date: "+filter_fields.elements[2].value;
+					message_string+="\nNotes: "+filter_fields.elements[3].value;
+					mail_string+="\nOrder Date: "+filter_fields.elements[2].value;
+					mail_string+="\nNotes: "+filter_fields.elements[3].value;
 					
 					message_string=encodeURIComponent(message_string);
 					mail_string=encodeURIComponent(mail_string);
@@ -1935,7 +1942,6 @@ function form35_ini()
 
 
 /**
- * this function prepares the table for store placement form
  * @form Store Placement
  * @formNo 38
  */
@@ -1955,9 +1961,8 @@ function form38_ini()
 	var columns="<area_utilization>" +
 			"<id>"+fid+"</id>" +
 			"<batch>"+fbatch+"</batch>" +
-			"<product_name>"+fname+"</product_name>" +
+			"<item_name>"+fname+"</item_name>" +
 			"<name>"+farea+"</name>" +
-			"<quantity></quantity>" +
 			"</area_utilization>";
 
 	$('#form38_body').html("");
@@ -1969,22 +1974,18 @@ function form38_ini()
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form38_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Product Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form38_"+result.id+"' class='dblclick_editable' value='"+result.product_name+"'>";
+					rowsHTML+="<td data-th='Item Name'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.item_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Batch'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form38_"+result.id+"' class='dblclick_editable' value='"+result.batch+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.batch+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Store Area'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form38_"+result.id+"' class='dblclick_editable' value='"+result.name+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Quantity'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form38_"+result.id+"' class='dblclick_editable' value='"+result.quantity+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form38_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form38_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form38_"+result.id+"' value='saved' onclick='form38_delete_item($(this));'>";	
+						rowsHTML+="<input type='button' class='delete_icon' form='form38_"+result.id+"' title='Delete' onclick='form38_delete_item($(this));'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -1993,7 +1994,6 @@ function form38_ini()
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
-				form38_update_item(fields);
 			});
 		});
 		
@@ -2003,7 +2003,7 @@ function form38_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'store');
+			my_obj_array_to_csv(results,'store_placement');
 		});
 		hide_loader();
 	});
@@ -2222,6 +2222,17 @@ function form40_ini()
 function form41_ini()
 {
 	show_loader();
+
+	if(is_online())
+	{
+		var domain=get_domain();
+		var username=get_username();
+		var re_access=get_session_var('re');
+		ajax_with_custom_func("./ajax/geoCode.php","domain="+domain+"&username="+username+"&re="+re_access,function(e)
+		{
+			console.log(e.responseText);
+		});
+	}
 
 	$('#form41_header').html("");
 
@@ -2480,6 +2491,7 @@ function form43_ini()
 			"<supplier>"+fname+"</supplier>" +
 			"<order_date></order_date>" +
 			"<status>"+fstatus+"</status>" +
+			"<notes></notes>" +
 			"</purchase_orders>";
 
 	$('#form43_body').html("");
@@ -2488,52 +2500,47 @@ function form43_ini()
 	{	
 		results.forEach(function(result)
 		{
-			var order_items_data="<purchase_order_items>" +
-					"<id></id>" +
-					"<order_id>"+results.id+"</order_id>" +
-					"<product_name></product_name>" +
-					"<quantity></quantity>" +
-					"</purchase_order_items>";
-			fetch_requested_data('',order_items_data,function(item_results)
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form43_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Order No.'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Supplier'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.supplier+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Order Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+get_my_past_date(result.order_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Notes'>";
+						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form43_"+result.id+"'>"+result.notes+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form43_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='button' class='edit_icon' form='form43_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form24');\">";
+						rowsHTML+="<input type='submit' class='save_icon' form='form43_"+result.id+"' title='Save order'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form43_"+result.id+"' title='Delete order' onclick='form43_delete_item($(this));'>";
+					rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+			
+			$('#form43_body').prepend(rowsHTML);
+			var fields=document.getElementById("form43_"+result.id);
+			var status_filter=fields.elements[3];
+			
+			set_static_value_list('purchase_orders','status',status_filter);
+			
+			$(fields).on("submit",function(event)
 			{
-				var rowsHTML="";
-				rowsHTML+="<tr>";
-					rowsHTML+="<form id='form43_"+result.id+"'></form>";
-						rowsHTML+="<td data-th='Order No.'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Supplier'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.supplier+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Order Date'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+get_my_past_date(result.order_date)+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Status'>";
-							rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form43_"+result.id+"' value='"+result.status+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='button' class='edit_icon' form='form43_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form24');\">";
-							rowsHTML+="<input type='submit' class='save_icon' form='form43_"+result.id+"' title='Save order'>";
-							rowsHTML+="<input type='button' class='delete_icon' form='form43_"+result.id+"' title='Delete order' onclick='form43_delete_item($(this));'>";
-						rowsHTML+="</td>";
-				rowsHTML+="</tr>";
-				
-				$('#form43_body').prepend(rowsHTML);
-				var fields=document.getElementById("form43_"+result.id);
-				var status_filter=fields.elements[3];
-				
-				set_static_value_list('purchase_orders','status',status_filter);
-				
-				$(fields).on("submit",function(event)
-				{
-					event.preventDefault();
-					form43_update_item(fields);
-				});
-			});			
+				event.preventDefault();
+				form43_update_item(fields);
+			});
+						
 		});
 		
 		longPressEditable($('.dblclick_editable'));
-		
+
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -3062,6 +3069,7 @@ function form53_ini()
 			"<bill_date></bill_date>" +
 			"<entry_date></entry_date>" +
 			"<total></total>" +
+			"<notes></notes>" +
 			"<transaction_id></transaction_id>" +
 			"</supplier_bills>";
 
@@ -3083,11 +3091,11 @@ function form53_ini()
 					rowsHTML+="<td data-th='Bill Date'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form53_"+result.id+"' value='"+get_my_past_date(result.bill_date)+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Entry Date'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form53_"+result.id+"' value='"+get_my_past_date(result.entry_date)+"'>";
-					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Total'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form53_"+result.id+"' value='"+result.total+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Notes'>";
+						rowsHTML+="<textarea readonly='readonly' form='form53_"+result.id+"' class='dblclick_editable'>"+result.notes+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form53_"+result.id+"' value='"+result.id+"'>";
@@ -5161,6 +5169,103 @@ function form81_ini()
 		$(export_button).on("click", function(event)
 		{
 			my_obj_array_to_csv(results,'sale_leads');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Store Areas
+ * @formNo 83
+ */
+function form83_ini()
+{
+	show_loader();
+	var fid=$("#form83_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form83_header');
+	
+	var fname=filter_fields.elements[0].value;
+	
+	var columns="<store_areas>" +
+			"<id>"+fid+"</id>" +
+			"<name>"+fname+"</name>" +
+			"<area_type></area_type>" +
+			"<height></height>" +
+			"<width></width>" +
+			"<length></length>" +
+			"<locx></locx>" +
+			"<locy></locy>" +
+			"<locz></locz>" +
+			"<storey></storey>" +
+			"<loc_type></loc_type>" +
+			"<faceEast></faceEast>" +
+			"<faceWest></faceWest>" +
+			"<faceNorth></faceNorth>" +
+			"<faceSouth></faceSouth>" +
+			"</store_areas>";
+
+	$('#form83_body').html("");
+
+	fetch_requested_data('form83',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var dimension="Width: "+result.width+"\nHeight: "+result.height+"\nLength: "+result.length;
+			var location="Inside: "+result.locy+"\nFrom left: "+result.locx+"\nHeight: "+result.locz;
+			var facing="";
+			if(result.faceEast=='yes')
+			{
+				facing+="East ";
+			}
+			if(result.faceWest=='yes')
+			{
+				facing+="West ";
+			}
+			if(result.faceNorth=='yes')
+			{
+				facing+="North ";
+			}
+			if(result.faceSouth=='yes')
+			{
+				facing+="South ";
+			}
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form83_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form83_"+result.id+"' value='"+result.name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Dimensions'>";
+						rowsHTML+="<textarea readonly='readonly' form='form83_"+result.id+"'>"+dimension+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Location'>";
+						rowsHTML+="<textarea readonly='readonly' form='form83_"+result.id+"'>"+location+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Facing'>";
+						rowsHTML+="<textarea readonly='readonly' form='form83_"+result.id+"'>"+facing+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form83_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form83_"+result.id+"' title='Delete' onclick='form83_delete_item($(this));'>";	
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form83_body').prepend(rowsHTML);
+			var fields=document.getElementById("form83_"+result.id);
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+			});
+		});
+				
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'store_areas');
 		});
 		hide_loader();
 	});

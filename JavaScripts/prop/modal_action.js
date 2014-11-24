@@ -2651,95 +2651,93 @@ function modal34_action()
 	$("#modal34").dialog("open");
 }
 
-
 /**
- * @modal Sending Mails
- * @modalNo 50
+ * @modal Add Store Area
+ * @modalNo 35
  */
-/*function modal50_action()
+function modal35_action()
 {
-	$("#modal50").dialog("open");
+	var form=document.getElementById("modal35_form");
+	var area_type_filter=form.elements[2];
+	var loc_type_filter=form.elements[6];
 	
-	var form=document.getElementById("form78_master");
-	var pamphlet_name=form.elements[1].value;
-	var pamphlet_id=form.elements[2].value;
-	//console.log(pamphlet_id);
-	var pamphlet_items_data="<pamphlet_items>" +
-				"<item_name></item_name>" +
-				"<offer></offer>" +
-				"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
-				"</pamphlet_items>";
-			
-	fetch_requested_data('',pamphlet_items_data,function(results)
+	set_static_value_list('store_areas','area_type',area_type_filter);
+	set_static_value_list('store_areas','loc_type',loc_type_filter);
+	
+	$(form).on('submit',function(event)
 	{
-		var email_data_string="<data>";
-		email_data_string+="<items>";
-
-		for(var i in results)
+		event.preventDefault();
+		if(is_create_access('form83'))
 		{
-			email_data_string+="<row>"+
-					"<item>"+results[i].item_name+"</item>"+
-					"<offer>"+results[i].offer+"</offer>"+
-					"</row>";
-		}	
-		email_data_string+="</items>";		
-		email_data_string+="<emails>";
-		
-		$("[id^='row_form78_']").each(function(index)
-		{
-			var form_id=$(this).attr('id');
-			var form=document.getElementById(form_id);
-			
-			if(form.elements[2].checked)
+			var name=form.elements[1].value;
+			var area_type=form.elements[2].value;
+			var length=form.elements[3].value;
+			var width=form.elements[4].value;
+			var height=form.elements[5].value;
+			var loc_type=form.elements[6].value;
+			var locy=form.elements[7].value;
+			var locx=form.elements[8].value;
+			var locz=form.elements[9].value;
+			var faceEast="no";
+			if(form.elements[10].checked)
+				faceEast='yes';
+			var faceWest="no";
+			if(form.elements[11].checked)
+				faceWest='yes';
+			var faceSouth="no";
+			if(form.elements[12].checked)
+				faceSouth='yes';
+			var faceNorth="no";
+			if(form.elements[13].checked)
+				faceNorth='yes';
+			var storey=form.elements[14].value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<store_areas>" +
+						"<id>"+data_id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<area_type>"+area_type+"</area_type>" +
+						"<length>"+length+"</length>" +
+						"<width>"+width+"</width>" +
+						"<height>"+height+"</height>" +
+						"<loc_type>"+loc_type+"</loc_type>" +
+						"<locx>"+locx+"</locx>" +
+						"<locy>"+locy+"</locy>" +
+						"<locz>"+locz+"</locz>" +
+						"<faceEast>"+faceEast+"</faceEast>" +
+						"<faceWest>"+faceWest+"</faceWest>" +
+						"<faceNorth>"+faceNorth+"</faceNorth>" +
+						"<faceSouth>"+faceSouth+"</faceSouth>" +
+						"<storey>"+storey+"</storey>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</store_areas>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>store_areas</tablename>" +
+						"<link_to>form83</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Store area "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
 			{
-				email_data_string+="<row>"+
-					"<name>"+form.elements[3].value+"</name>"+
-					"<email>"+form.elements[1].value+"</email>"+
-					"</row>";
-			}
-		});
-		
-		email_data_string+="</emails>";
-		
-		email_data_string+="<sender>" +
-				"<sender_email>"+get_session_var('email')+"</sender_email>"+
-				"<mail_subject>"+pamphlet_name+"</mail_subject>"+
-				"<sender_title>"+get_session_var('title')+"</sender_title>"+
-				"<sender_address>"+get_session_var('address')+"</sender_address>" +
-				"</sender>";
-		
-		
-		email_data_string+="</data>";
-		//console.log(email_data_string);
-				
-		var domain=get_domain();
-		var username=get_username();
-		var re_access=get_session_var('re');
-		var post_data="email_data="+email_data_string+
-					"&domain="+domain+
-					"&username="+username+
-					"&re="+re_access;
-
-		ajax_with_custom_func("./ajax/customer_email.php",post_data,function(e)
-		{
-			if(e.responseText=='Invalid session')
-			{
-				document.getElementById("modal50").innerHTML="Mails not sent. You don't have appropriate permissions to perform this operation.";
-			}
-			else if(e.responseText=='mails sent')
-			{
-				//console.log(e.responseText);
-				document.getElementById("modal50").innerHTML="Hooorray!! Mails sent. You can close this window now.";
+				server_create_row(data_xml,activity_xml);
 			}
 			else
 			{
-				//console.log(e.responseText);
-				document.getElementById("modal50").innerHTML="An error occured. Not sure if the mails were sent out.";
+				local_create_row(data_xml,activity_xml);
 			}	
-		});
-	});		
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal35").dialog("close");		
+	});
+	
+	$("#modal35").dialog("open");
 }
-*/
+
 
 /**
  * @modal Sending Mails

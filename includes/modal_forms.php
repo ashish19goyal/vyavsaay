@@ -420,6 +420,30 @@
 		</form>
 	</div>
 	
+	<div id="modal35" title="Add Store Area">
+		<form id='modal35_form'>
+			<fieldset>
+				<label>Name <input type='text' required></label><br/>
+				<label>Area Type <input type="text"></label><br/>
+				<label>Length <input type="number" step='any'></label><br/>
+				<label>Width <input type="number" step='any'></label><br/>
+				<label>Height <input type="number" step='any'></label><br/>
+				<label>Location Type <input type="text"></label><br/>
+				<label>Location (Inside) <input type="number" step='any'></label><br/>
+				<label>Location (From Left) <input type="number" step='any'></label><br/>
+				<label>Location (Height) <input type="number" step='any'></label><br/>
+				<label>Facing <br/>
+					<label><input type='checkbox'>East</label>
+					<label><input type='checkbox'>West</label>
+					<label><input type='checkbox'>South</label>
+					<label><input type='checkbox'>North</label>
+				</label><br/>
+				<label>Storey <input type="text"></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+	
 	<div id="modal50" title="Sending Mails">
 		<a href='' id='modal50_sendmail'>Send mails through Gmail</a>
 	</div>

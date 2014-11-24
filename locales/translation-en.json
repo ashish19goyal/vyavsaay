@@ -143,6 +143,7 @@
   	"product_attributes":"Product Attributes",
   	"service_attributes":"Service Attributes",
   	"notifications":"Notifications",
-  	"scan_items":"Scan Items"
+  	"scan_items":"Scan Items",
+  	"storage_areas":"Store Areas"
   }
 }

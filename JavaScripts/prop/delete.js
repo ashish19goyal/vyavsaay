@@ -764,7 +764,7 @@ function form24_delete_item(button)
 {
 	if(is_delete_access('form24'))
 	{
-		var order_id=document.getElementById("form24_master").elements[4].value;
+		var order_id=document.getElementById("form24_master").elements[5].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
@@ -926,28 +926,26 @@ function form38_delete_item(button)
 {
 	if(is_delete_access('form38'))
 	{
+		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
 		var product_name=form.elements[0].value;
 		var batch=form.elements[1].value;
 		var name=form.elements[2].value;
-		var quantity=form.elements[3].value;
-		var data_id=form.elements[4].value;
+		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var table='area_utilization';
-		var data_xml="<"+table+">" +
+		var data_xml="<area_utilization>" +
 					"<id>"+data_id+"</id>" +
-					"<product_name>"+product_name+"</product_name>" +
+					"<item_name>"+product_name+"</item_name>" +
 					"<batch>"+batch+"</batch>" +
 					"<name>"+name+"</name>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"</"+table+">";	
+					"</area_utilization>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>"+table+"</tablename>" +
+					"<tablename>area_utilization</tablename>" +
 					"<link_to>form38</link_to>" +
 					"<title>Removed</title>" +
-					"<notes>Removed product "+product_name+" from storage "+name+"</notes>" +
+					"<notes>Item "+product_name+" from storage area "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -1255,13 +1253,11 @@ function form43_delete_item(button)
 		
 		var data_id=form.elements[0].value;
 		var supplier_name=form.elements[1].value;
-		var order_date=get_raw_time(form.elements[2].value);
-		var status=form.elements[3].value;
+		var status=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<purchase_orders>" +
 					"<id>"+data_id+"</id>" +
 					"<supplier>"+supplier_name+"</supplier>" +
-					"<order_date>"+order_date+"</order_date>" +
 					"<status>"+status+"</status>" +
 					"</purchase_orders>";	
 		var activity_xml="<activity>" +
@@ -1358,9 +1354,6 @@ function form53_delete_item(button)
 		
 		var bill_id=form.elements[0].value;
 		var supplier=form.elements[1].value;
-		var bill_date=get_raw_time(form.elements[2].value);
-		var entry_date=get_raw_time(form.elements[3].value);
-		var total=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var transaction_id=form.elements[8].value;
 		var last_updated=get_my_time();
@@ -2344,6 +2337,48 @@ function form81_delete_item(button)
 					"<link_to>form81</link_to>" +
 					"<title>Delete</title>" +
 					"<notes>Sale lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Store Areas
+ * @param button
+ */
+function form83_delete_item(button)
+{
+	if(is_delete_access('form83'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var name=form.elements[0].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<store_areas>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"</store_areas>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>store_areas</tablename>" +
+					"<link_to>form83</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Store area "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
