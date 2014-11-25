@@ -1152,7 +1152,53 @@ function form83_import(data_array,import_type)
 			"<faceWest>"+row.faceWest+"</faceWest>" +
 			"<faceNorth>"+row.faceNorth+"</faceNorth>" +
 			"<faceSouth>"+row.faceSouth+"</faceSouth>" +
+			"</last_updated>"+get_my_time()+"</last_updated>" +
 			"</store_areas>";
+
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Manage Subscriptions
+* @formNo 84
+*/
+function form84_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<service_subscriptions>" +
+				"<id>"+row.id+"</id>" +
+				"<customer>"+row.customer+"</customer>" +
+				"<service>"+row.service+"</service>" +
+				"<status>"+row.status+"</status>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<last_bill_date>"+get_raw_time(row.last_bill_date)+"</last_bill_date>" +
+				"<next_due_date>"+get_raw_time(row.next_due_date)+"</next_due_date>" +
+				"<last_bill_id>"+row.last_bill_id+"</last_bill_id>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</service_subscriptions>";
 
 		if(import_type=='create_new')
 		{

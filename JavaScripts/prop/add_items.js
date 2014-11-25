@@ -928,7 +928,7 @@ function form21_add_item()
 		var amount_filter=fields.elements[2];
 		var price_filter=fields.elements[3];
 		var batch_filter=fields.elements[4];
-		var storage_filter=fields.elements[4];
+		var storage_filter=fields.elements[5];
 		var id_filter=fields.elements[6];
 		
 		$(name_filter).focus();
@@ -946,7 +946,7 @@ function form21_add_item()
 		
 		var storage_data="<store_areas>" +
 					"<name></name>" +
-					"<area_type>"+storage+"</area_type>" +
+					"<area_type>storage</area_type>" +
 					"</store_areas>";
 		set_my_value_list(storage_data,storage_filter);
 
@@ -1452,11 +1452,11 @@ function form61_add_item()
 				"</services>";
 		set_my_value_list(service_data,service_filter);
 		
-		var category_data="<attributes>" +
+		var attribute_data="<attributes>" +
 				"<attribute></attribute>" +
 				"<type>service</type>" +
 				"</attributes>";
-		set_my_filter(category_data,category_filter);
+		set_my_filter(attribute_data,attribute_filter);
 
 		$(service_filter).focus();
 	}
@@ -2596,4 +2596,72 @@ function form82_add_item()
 	{
 		$("#modal2").dialog("open");
 	}
+}
+
+/**
+ * @form Manage Subscriptions
+ * @formNo 84
+ */
+function form84_add_item()
+{
+	if(is_create_access('form84'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form84_"+id+"'></form>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' form='form84_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Service'>";
+				rowsHTML+="<input type='text' form='form84_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' class='dblclick_editable' form='form84_"+id+"' value='active'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Notes'>";
+				rowsHTML+="<textarea form='form84_"+id+"' class='dblclick_editable'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Last Bill'>";
+				rowsHTML+="<textarea readonly='readonly' form='form84_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form84_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form84_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form84_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form84_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form84_"+id);
+		var customer_filter=fields.elements[0];
+		var service_filter=fields.elements[1];
+		var status_filter=fields.elements[2];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form84_create_item(fields);
+		});
+					
+		$(customer_filter).focus();
+		
+		var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+		set_my_value_list(customer_data,customer_filter);
+
+		var service_data="<services>" +
+			"<name></name>" +
+			"</services>";
+		set_my_value_list(service_data,service_filter);
+		
+		set_static_value_list('service_subscriptions','status',status_filter);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
 }

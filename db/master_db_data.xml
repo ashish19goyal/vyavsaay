@@ -88,66 +88,26 @@
 	</templates>
 	<values_list>
 		<row>
-			<tablename>messages</tablename>
-			<listname>message_type</listname>
-			<name>text</name>
-			<value>Text</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>messages</tablename>
-			<listname>message_type</listname>
-			<name>file</name>
-			<value>File</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>messages</tablename>
-			<listname>message_type</listname>
-			<name>image</name>
-			<value>Image</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>messages</tablename>
-			<listname>message_type</listname>
-			<name>video</name>
-			<value>Video</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>messages</tablename>
-			<listname>message_type</listname>
-			<name>location</name>
-			<value>Location</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>messages</tablename>
+			<tablename>service_subscriptions</tablename>
 			<listname>status</listname>
-			<name>pending</name>
-			<value>Pending</value>
+			<name>active</name>
+			<value>Active</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<tablename>messages</tablename>
+			<tablename>service_subscriptions</tablename>
 			<listname>status</listname>
-			<name>seen</name>
-			<value>Seen</value>
+			<name>cancelled</name>
+			<value>Cancelled</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<tablename>messages</tablename>
+			<tablename>service_subscriptions</tablename>
 			<listname>status</listname>
-			<name>closed</name>
-			<value>Closed</value>
+			<name>suspended</name>
+			<value>Suspended</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

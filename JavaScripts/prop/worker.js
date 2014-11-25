@@ -1,13 +1,16 @@
+/**
+ * This function displays updated activities in the side lane
+ */
 function activities_lane_ini()
 {
-	var columns="<activities>" +
+	var columns="<activities count='10'>" +
 		"<title></title>" +
 		"<link_to></link_to>" +
 		"<data_id></data_id>" +
 		"<notes></notes>" +
 		"<updated_by></updated_by>" +
 		"<user_display>yes</user_display>" +
-		"<last_updated compare='more than'>"+get_raw_time_24h()+"</last_updated>" +
+		"<last_updated sort='desc'></last_updated>" +
 		"</activities>";
 	
 	fetch_requested_data('',columns,function(activities)
@@ -59,7 +62,27 @@ function count_notif()
 			$('#count_notif').html(num_res);
 			$('#count_notif').show(); 
 		}
-		
+	},notif_data);
+	
+	clearInterval(count_notif_timer);
+	count_notif_timer=setTimeout(count_notif,100000);
+}
+
+/**
+ * This function counts the unseen notifications and shows a desktop notification
+ */
+function show_notif()
+{
+	//var notifs=fetch_notifications();	
+	var notif_data="<notifications>" +
+			"<id></id>" +
+			"<status>pending</status>" +
+			"</notifications>";
+
+	get_single_column_data(function(notifs)
+	{
+		var num_res=notifs.length;
+				
 		if('Notification' in window && num_res>0)
 		{		
 			if(Notification.permission==='granted')
@@ -87,11 +110,10 @@ function count_notif()
 		        });
 			}
 		}
-		
 	},notif_data);
 	
-	clearInterval(count_notif_timer);
-	count_notif_timer=setTimeout(count_notif,100000);
+	clearInterval(show_notif_timer);
+	show_notif_timer=setTimeout(count_notif,900000);
 }
 
 /**
@@ -309,7 +331,7 @@ function notifications_add()
 	
 	///////////overdue tasks end//////////
 	
-	setTimeout(notifications_add,300000);
+	setTimeout(notifications_add,900000);
 }
 
 /**
@@ -496,5 +518,5 @@ function sale_leads_add()
 	//////////seasonal sales end//////
 
 	
-	setTimeout(sale_leads_add,3000000);
+	setTimeout(sale_leads_add,1800000);
 }

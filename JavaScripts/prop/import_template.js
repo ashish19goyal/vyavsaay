@@ -257,3 +257,13 @@ function form83_import_template()
 	var data_array=['id','name','area_type','height','width','length','locx','locy','locz','storey','color','loc_type','faceEast','faceWest','faceNorth','faceSouth'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Manage Subscriptions
+* @formNo 84
+*/
+function form84_import_template()
+{
+	var data_array=['id','customer','service','status','notes','last_bill_id','last_bill_date','next_due_date'];
+	my_array_to_csv(data_array);
+};

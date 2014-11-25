@@ -419,3 +419,105 @@ function report41_header_ini()
 	set_my_value_list(service_data,service_filter);
 }
 
+
+
+/**
+ * @report Virtual Store
+ * @reportNo 45
+ */
+function report45_header_ini()
+{	
+	var filter_fields=document.getElementById('form45_header');
+	var products_filter=filter_fields.elements[0];
+	var batches_filter=filter_fields.elements[1];
+	
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	set_my_filter(product_data,products_filter);
+	
+	$(products_filter).off('blur');
+	$(products_filter).on('blur',function(event)
+	{
+		var batches_data="<product_instances>" +
+			"<batch></batch>" +
+			"<product_name>"+products_filter.value+"</product_name>" +
+			"</product_instances>";
+
+		set_my_filter(batches_data,batches_filter);
+	});
+	
+	var canvas = document.getElementById('virtual_store');
+	var ctx = canvas.getContext('2d');
+	
+	var blocks_data="<store_areas>" +
+			"<name></name>" +
+			"<area_type>block</area_type>" +
+			"<height></height>" +
+			"<width></width>" +
+			"<length></length>" +
+			"<locx></locx>" +
+			"<locy></locy>" +
+			"<locz></locz>" +
+			"<storey></storey>" +
+			"<color></color>" +
+			"<radius></radius>" +
+			"<loc_type></loc_type>" +
+			"<faceEast></faceEast>" +
+			"<faceWest></faceWest>" +
+			"<faceNorth></faceNorth>" +
+			"<faceSouth></faceSouth>" +	
+			"</store_areas>";
+	fetch_requested_data(blocks_data,function(blocks)
+	{	
+	    draw_blocks(ctx,blocks);
+	});
+	
+	var doors_data="<store_areas>" +
+			"<name></name>" +
+			"<area_type>door</area_type>" +
+			"<height></height>" +
+			"<width></width>" +
+			"<length></length>" +
+			"<locx></locx>" +
+			"<locy></locy>" +
+			"<locz></locz>" +
+			"<storey></storey>" +
+			"<color></color>" +
+			"<radius></radius>" +
+			"<loc_type></loc_type>" +
+			"<faceEast></faceEast>" +
+			"<faceWest></faceWest>" +
+			"<faceNorth></faceNorth>" +
+			"<faceSouth></faceSouth>" +	
+			"</store_areas>";
+
+	fetch_requested_data(doors_data,function(doors)
+	{	
+	    draw_doors(ctx,doors);		
+	});
+	
+	var storages_data="<store_areas>" +
+			"<name></name>" +
+			"<area_type>storage</area_type>" +
+			"<height></height>" +
+			"<width></width>" +
+			"<length></length>" +
+			"<locx></locx>" +
+			"<locy></locy>" +
+			"<locz></locz>" +
+			"<storey></storey>" +
+			"<color></color>" +
+			"<radius></radius>" +
+			"<loc_type></loc_type>" +
+			"<faceEast></faceEast>" +
+			"<faceWest></faceWest>" +
+			"<faceNorth></faceNorth>" +
+			"<faceSouth></faceSouth>" +	
+			"</store_areas>";
+	fetch_requested_data(storages_data,function(storages)
+	{	
+	    draw_storages(ctx,storages);
+	});
+	
+};

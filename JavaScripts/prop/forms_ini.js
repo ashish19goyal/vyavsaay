@@ -3199,62 +3199,6 @@ function form54_ini()
 	});
 };
 
-/**
- * @form Virtual Store
- * @formNo 55
- */
-function form55_ini()
-{
-	show_loader();
-	var fid=$("#form55_link").attr('data_id');
-	if(fid==null)
-		fid="";	
-	
-	var filter_fields=document.getElementById('form55_header');
-	
-	var fname=filter_fields.elements[0].value;
-	var fbatch=filter_fields.elements[1].value;
-	
-	var utilization="<area_utilization>" +
-			"<id>"+fid+"</id>" +
-			"<product_name>"+fname+"</product_name>" +
-			"<name></name>" +
-			"<batch>"+fbatch+"</batch>" +
-			"<quantity></quantity>" +
-			"</area_utilization>";
-
-	$('#form55_body').html("");
-
-	fetch_requested_data('form55',utilization,function(results)
-	{
-		var canvas = document.getElementById('virtual_store');
-		var ctx = canvas.getContext('2d');
-
-		results.forEach(function(result)
-		{
-			var storages_data="<store_areas>" +
-				"<name exact='yes'>"+result.name+"</name>" +
-				"<area_type>storage</area_type>" +
-				"<height></height>" +
-				"<width></width>" +
-				"<length></length>" +
-				"<locx></locx>" +
-				"<locy></locy>" +
-				"<locz></locz>" +
-				"<storey></storey>" +
-				"</store_areas>";
-			
-			fetch_requested_data('form55',storages_data,function(area_results)
-			{
-				for(var i in area_results)
-				{
-					draw_star(ctx,area_results[i].locx,area_results[i].locy,10,"#ff0000");
-				}
-			});
-		});
-		hide_loader();
-	});
-}
 
 /**
  * @form Cash Register
@@ -5266,6 +5210,91 @@ function form83_ini()
 		$(export_button).on("click", function(event)
 		{
 			my_obj_array_to_csv(results,'store_areas');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Service Subscriptions
+ * @formNo 84
+ */
+function form84_ini()
+{
+	show_loader();
+	var fid=$("#form84_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form84_header');
+	
+	var fcustomer=filter_fields.elements[0].value;
+	var fservice=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	var columns="<service_subscriptions>" +
+			"<id>"+fid+"</id>" +
+			"<customer>"+fcustomer+"</customer>" +
+			"<service>"+fservice+"</service>" +
+			"<status>"+fstatus+"</status>" +
+			"<notes></notes>" +
+			"<last_bill_date></last_bill_date>" +
+			"<next_due_date></next_due_date>" +
+			"<last_bill_id></last_bill_id>" +
+			"</service_subscriptions>";
+
+	$('#form84_body').html("");
+
+	fetch_requested_data('form84',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var last_bill_string="Last bill Id: "+result.last_bill_id+"\nLast bill date: "+get_my_past_date(result.last_bill_date)+"\nNext due date: "+get_my_past_date(result.next_due_date);
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form84_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form84_"+result.id+"' value='"+result.customer+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Service'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form84_"+result.id+"' value='"+result.service+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form84_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Notes'>";
+						rowsHTML+="<textarea readonly='readonly' form='form84_"+result.id+"' class='dblclick_editable'>"+result.notes+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Last Bill'>";
+						rowsHTML+="<textarea readonly='readonly' form='form84_"+result.id+"'>"+last_bill_string+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form84_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form84_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form84_"+result.id+"' title='Delete' onclick='form84_delete_item($(this));'>";	
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form84_body').prepend(rowsHTML);
+			var fields=document.getElementById("form84_"+result.id);
+			var status_filter=fields.elements[2];
+			
+			set_static_filter('service_subscriptions','status',status_filter);
+			
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form84_update_item(fields);
+			});
+		});
+		
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'subscriptions');
 		});
 		hide_loader();
 	});

@@ -1444,8 +1444,9 @@ function form21_update_form()
 		var discount=form.elements[5].value;
 		form.elements[6].value=parseFloat(total)-parseFloat(discount);
 		
-		var data_id=form.elements[7].value;
-		var transaction_id=form.elements[8].value;
+		var notes=form.elements[7].value;
+		var data_id=form.elements[8].value;
+		var transaction_id=form.elements[9].value;
 		var last_updated=get_my_time();
 								
 		var data_xml="<supplier_bills>" +
@@ -1457,6 +1458,7 @@ function form21_update_form()
 					"<total>"+total+"</total>" +
 					"<discount>"+discount+"</discount>" +
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
+					"<notes>"+notes+"</notes>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</supplier_bills>";
 		var activity_xml="<activity>" +
@@ -4067,3 +4069,51 @@ function notifications_update(button,data_id,status)
 	}
 }
 
+/**
+ * @form Manage Subscriptions
+ * @param button
+ */
+function form84_update_item(form)
+{
+	if(is_update_access('form84'))
+	{
+		var customer=form.elements[0].value;
+		var service=form.elements[1].value;
+		var status=form.elements[2].value;
+		var notes=form.elements[3].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<service_subscriptions>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<service>"+service+"</service>" +
+					"<status>"+status+"</status>" +
+					"<notes>"+notes+"</notes>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</service_subscriptions>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>service_subscriptions</tablename>" +
+					"<link_to>form84</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Service "+service+" subscription for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

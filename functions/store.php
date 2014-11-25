@@ -5,8 +5,8 @@
 			echo "<li><a id='form5_link' href='#form5' onclick='form5_header_ini(); form5_ini();' data-i18n='form.manage_assets'></a></li>";
 		if(strpos($_SESSION['forms'],'form38-')!==false)
 			echo "<li><a id='form38_link' href='#form38' onclick='form38_header_ini(); form38_ini();' data-i18n='form.store_placement'></a></li>";
-		if(strpos($_SESSION['forms'],'form55-')!==false)
-			echo "<li><a id='form55_link' href='#form55' onclick='form55_header_ini(); form55_ini();' data-i18n='form.virtual_store'></a></li>";
+		if(strpos($_SESSION['reports'],'report55-')!==false)
+			echo "<li><a id='report55_link' href='#report55' onclick='report55_header_ini(); report55_ini();' data-i18n='form.virtual_store'></a></li>";
 		if(strpos($_SESSION['forms'],'form83-')!==false)
 			echo "<li><a id='form83_link' href='#form83' onclick='form83_header_ini(); form83_ini();' data-i18n='form.storage_areas'></a></li>";
 		if(strpos($_SESSION['reports'],'report1-')!==false)
@@ -17,8 +17,8 @@
 			include "forms/form5.php";
 		if(strpos($_SESSION['forms'],'form38-')!==false)
 			include "forms/form38.php";
-		if(strpos($_SESSION['forms'],'form55-')!==false)
-			include "forms/form55.php";
+		if(strpos($_SESSION['reports'],'report55-')!==false)
+			include "reports/report55.php";
 		if(strpos($_SESSION['forms'],'form83-')!==false)
 			include "forms/form83.php";
 		if(strpos($_SESSION['reports'],'report1-')!==false)

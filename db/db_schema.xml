@@ -297,17 +297,17 @@
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</customer_return_items>
-	<service_instances>
+	<service_subscriptions>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<bill_id index='yes' type="BIGINT"></bill_id>
-			<next_due_date index='yes' type="BIGINT"></next_due_date>
-			<estimated_cost index='no' type="DECIMAL(10,2)"></estimated_cost>
-			<actual_cost index='no' type="DECIMAL(10,2)"></actual_cost>
-			<service_name index='yes' type="VARCHAR(45)"></service_name>
-			<instructions index='no' type="TEXT"></instructions>
-			<staff index='yes' type="VARCHAR(100)"></staff>
+			<last_bill_id index='yes' type="BIGINT"></last_bill_id>
+			<last_bill_date index='yes' type="BIGINT"></last_bill_date>
+			<next_due_date index='no' type="BIGINT"></next_due_date>
+			<customer index='yes' type="VARCHAR(100)"></customer>
+			<service index='yes' type="VARCHAR(45)"></service>
+			<notes index='no' type="TEXT"></notes>
+			<status index='yes' type="VARCHAR(25)"></status><!-- active/cancelled/suspended -->
 			<last_updated index='no' type="BIGINT"></last_updated>
-	</service_instances>
+	</service_subscriptions>
 	<services>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(45)" unique='yes'></name>
@@ -347,7 +347,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<item_name index='yes' type="VARCHAR(90)"></item_name>
 			<type index='no' type="VARCHAR(10)"></type><!-- service/product -->
-			<attribute index='no' type="VARCHAR(30)"></attribute><!--recurrent sale(days)/season start date(1 jan)/season end date(2 december)-->
+			<attribute index='no' type="VARCHAR(30)"></attribute><!--recurrent sale(days)/season start date(1 jan)/season end date(2 december)/subscription period(4 days/2 months/10 weeks/1 year)-->
 			<value index='no' type='TEXT'></value>
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</attributes>
@@ -361,7 +361,7 @@
 	</cross_sells>
 	<reviews>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="VARCHAR(90)" unique='yes'></name>
+			<name index='yes' type="VARCHAR(90)"></name>
 			<type index='no' type="VARCHAR(10)"></type><!-- service/product -->
 			<reviewer index='no' type="VARCHAR(100)"></reviewer>
 			<detail index='no' type="TEXT"></detail>
@@ -575,14 +575,4 @@
 			<references_id index='no' type="TEXT"></references_id>
 			<last_updated index='no' type="BIGINT"></last_updated>		
 	</de_duplication_ref>
-	<messages>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<contact index='yes' type="VARCHAR(20)"></contact>
-			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
-			<name index='yes' type="VARCHAR(100)"></name>
-			<message index='no' type="TEXT"></message>
-			<message_type index='no' type="VARCHAR(25)"></message_type><!--text/image/video/location/file-->
-			<status index='no' type="VARCHAR(25)"></status><!--pending/seen/closed-->
-			<last_updated index='no' type="BIGINT"></last_updated>		
-	</messages>
 </re_xml>

@@ -1553,3 +1553,55 @@ function report44_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @report Virtual Store
+ * @reportNo 45
+ */
+function report45_ini()
+{
+	show_loader();
+	
+	var filter_fields=document.getElementById('report45_header');
+	
+	var fname=filter_fields.elements[0].value;
+	var fbatch=filter_fields.elements[1].value;
+	
+	var utilization="<area_utilization>" +
+			"<id>"+fid+"</id>" +
+			"<product_name>"+fname+"</product_name>" +
+			"<name></name>" +
+			"<batch>"+fbatch+"</batch>" +
+			"<quantity></quantity>" +
+			"</area_utilization>";
+
+	fetch_requested_data('report45',utilization,function(results)
+	{
+		var canvas = document.getElementById('virtual_store');
+		var ctx = canvas.getContext('2d');
+
+		results.forEach(function(result)
+		{
+			var storages_data="<store_areas>" +
+				"<name exact='yes'>"+result.name+"</name>" +
+				"<area_type>storage</area_type>" +
+				"<height></height>" +
+				"<width></width>" +
+				"<length></length>" +
+				"<locx></locx>" +
+				"<locy></locy>" +
+				"<locz></locz>" +
+				"<storey></storey>" +
+				"</store_areas>";
+			
+			fetch_requested_data('report45',storages_data,function(area_results)
+			{
+				for(var i in area_results)
+				{
+					draw_star(ctx,area_results[i].locx,area_results[i].locy,10,"#ff0000");
+				}
+			});
+		});
+		hide_loader();
+	});
+}

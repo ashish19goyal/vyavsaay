@@ -1705,6 +1705,36 @@ function form21_create_item(form)
 		{
 			event.preventDefault();
 		});
+		
+		///////////adding store placement////////
+		var storage_data="<area_utilization>" +
+				"<id></id>" +
+				"<name>"+storage+"</name>" +
+				"<item_name>"+name+"</item_name>" +
+				"<batch>"+batch+"</batch>" +
+				"</area_utilization>";
+		fetch_requested_data('',storage_data,function(placements)
+		{
+			if(placements.length===0 && storage!="")
+			{
+				var storage_xml="<area_utilization>" +
+						"<id>"+get_new_key()+"</id>" +
+						"<name>"+storage+"</name>" +
+						"<item_name>"+name+"</item_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</area_utilization>";
+				if(is_online())
+				{
+					server_create_simple(storage_xml);
+				}
+				else
+				{
+					local_create_simple(storage_xml);
+				}
+			}
+		});
+		///////////////////////////////////////
 	}
 	else
 	{
@@ -1740,8 +1770,9 @@ function form21_create_form()
 		var discount=form.elements[5].value;
 		form.elements[6].value=parseFloat(total)-parseFloat(discount);
 		
-		var data_id=form.elements[7].value;
-		var transaction_id=form.elements[8].value;
+		var notes=form.elements[7].value;
+		var data_id=form.elements[8].value;
+		var transaction_id=form.elements[9].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<supplier_bills>" +
@@ -1753,6 +1784,7 @@ function form21_create_form()
 					"<total>"+total+"</total>" +
 					"<discount>"+discount+"</discount>" +
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
+					"<notes>"+notes+"</notes>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</supplier_bills>";
 		var activity_xml="<activity>" +
@@ -2433,7 +2465,7 @@ function form61_create_item(form)
 					"<tablename>attributes</tablename>" +
 					"<link_to>form61</link_to>" +
 					"<title>Added</title>" +
-					"<notes>Attribute "+category+" for service "+service+"</notes>" +
+					"<notes>Attribute "+attribute+" for service "+service+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -4752,4 +4784,522 @@ function form82_bill()
 	{
 		$("#modal2").dialog("open");
 	}	
+}
+
+/**
+ * @form Manage Subscriptions
+ * @param button
+ */
+function form84_create_item(form)
+{
+	if(is_create_access('form84'))
+	{
+		var customer=form.elements[0].value;
+		var service=form.elements[1].value;
+		var status=form.elements[2].value;
+		var notes=form.elements[3].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var next_due_date=get_my_time();
+		var data_xml="<service_subscriptions>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<service>"+service+"</service>" +
+					"<status>"+status+"</status>" +
+					"<notes>"+notes+"</notes>" +
+					"<next_due_date>"+next_due_date+"</next_due_date>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</service_subscriptions>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>service_subscriptions</tablename>" +
+					"<link_to>form84</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Customer "+customer+" for subscription to "+service+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		var del_button=form.elements[7];
+		$(del_button).off('click');
+		$(del_button).on('click',function(event)
+		{
+			form84_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form84_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Manage Subscriptions
+ * @formNo 84
+ */
+function form84_bills()
+{
+	var due_lead_time=parseFloat(get_my_time())+86400000;
+	
+	var subscriptions_data="<service_subscriptions>" +
+			"<id></id>" +
+			"<customer></customer>" +
+			"<service></service>" +
+			"<status>active</status>" +
+			"<notes></notes>" +
+			"<next_due_date compare='less than'>"+due_lead_time+"</next_due_date>" +
+			"</service_subscriptions>";
+	
+	fetch_requested_data('',subscriptions_data,function(subscriptions)
+	{
+		subscriptions.forEach(function(subscription)
+		{
+			var bill_type='service';
+			var order_id=get_new_key();
+			var item_amount=0;
+			var item_total=0;
+			var item_offer="";
+			var item_discount=0;
+			var item_tax=0;
+				
+			var service_data="<services count='1'>" +
+					"<name exact='yes'>"+subscription.service+"</name>" +
+					"<price></price>" +
+					"<tax></tax>" +
+					"</services>";
+			fetch_requested_data('',service_data,function(services)
+			{
+				item_amount=parseFloat(services[0].price);
+				var offer_data="<offers>" +
+						"<offer_type>service</offer_type>" +
+						"<service exact='yes'>"+subscriptions.service+"</service>" +
+						"<criteria_type></criteria_type>" +
+						"<criteria_amount></criteria_amount>" +
+						"<criteria_quantity></criteria_quantity>" +
+						"<result_type></result_type>" +
+						"<discount_percent></discount_percent>" +
+						"<discount_amount></discount_amount>" +
+						"<quantity_add_percent></quantity_add_percent>" +
+						"<quantity_add_amount></quantity_add_amount>" +
+						"<free_product_name></free_product_name>" +
+						"<free_product_quantity></free_product_quantity>" +
+						"<offer_detail></offer_detail>" +
+						"<status array='yes'>active--extended</status>" +
+						"</offers>";
+				fetch_requested_data('',offer_data,function(offers)
+				{
+					////sorting offers based on criteria amount and criteria quantity
+					offers.sort(function(a,b)
+					{
+						if(a.criteria_amount<b.criteria_amount)
+						{	return 1;}
+						else 
+						{	return -1;}
+					});
+							
+					for(var i in offers)
+					{
+						item_offer=offers[i].offer_detail;
+						if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=1)
+						{
+							if(offers[i].result_type=='discount')
+							{
+								if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+								{
+									item_discount=parseFloat((item_amount*parseInt(offers[i].discount_percent))/100);
+								}
+								else 
+								{
+									item_discount=parseFloat(offers[i].discount_amount)*(Math.floor(1/parseFloat(offers[i].criteria_quantity)));
+								}
+							}
+							else if(offers[i].result_type=='service free')
+							{
+								var free_service_name=offers[i].free_service_name;	
+								var id=get_new_key();
+				        		var free_pre_requisite_data="<pre_requisites>" +
+										"<name exact='yes'>"+free_service_name+"</name>" +
+										"<type>service</type>" +
+										"<requisite_type>task</requisite_type>" +
+										"<requisite_name></requisite_name>" +
+										"<quantity></quantity>" +
+										"</pre_requisites>";
+								fetch_requested_data('',free_pre_requisite_data,function(free_pre_requisites)
+								{
+					                var free_xml="<bill_items>" +
+												"<id>"+id+"</id>" +
+												"<item_name>"+free_service_name+"</item_name>" +
+												"<staff></staff>" +
+												"<notes>free service</notes>" +
+												"<unit_price>0</unit_price>" +
+												"<amount>0</amount>" +
+												"<total>0</total>" +
+												"<discount>0</discount>" +
+												"<offer></offer>" +
+												"<type>free</type>" +
+												"<tax>0</tax>" +
+												"<bill_id>"+order_id+"</bill_id>" +
+												"<free_with>"+subscription.service+"</free_with>" +
+												"<last_updated>"+last_updated+"</last_updated>" +
+												"</bill_items>";	
+									if(is_online())
+									{
+										server_create_simple(free_xml);
+									}
+									else
+									{
+										local_create_simple(free_xml);
+									}
+									
+									free_pre_requisites.forEach(function(free_pre_requisite)
+									{
+										var task_id=get_new_key()+""+(Math.random()*1000);
+										var task_xml="<task_instances>" +
+												"<id>"+task_id+"</id>" +
+												"<name>"+free_pre_requisite.name+"</name>" +
+												"<assignee></assignee>" +
+												"<t_initiated>"+get_my_time()+"</t_initiated>" +
+												"<t_due></t_due>" +
+												"<status>pending</status>" +
+												"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
+												"<source>service</source>" +
+												"<source_id>"+id+"</source_id>" +
+												"<last_updated>"+last_updated+"</last_updated>" +
+												"</task_instances>";
+										var activity_xml="<activity>" +
+												"<data_id>"+task_id+"</data_id>" +
+												"<tablename>task_instances</tablename>" +
+												"<link_to>form14</link_to>" +
+												"<title>Added</title>" +
+												"<notes>Task "+free_pre_requisite.name+"</notes>" +
+												"<updated_by>"+get_name()+"</updated_by>" +
+												"</activity>";
+								
+										if(is_online())
+										{
+											server_create_row(task_xml,activity_xml);
+										}
+										else
+										{
+											local_create_row(task_xml,activity_xml);
+										}		
+									});
+							
+								});
+							}
+
+							
+							break;
+						}
+						else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=item_amount)
+						{
+							if(offers[i].result_type=='discount')
+							{
+								if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+								{
+									item_discount=parseFloat((item_amount*parseInt(offers[i].discount_percent))/100);
+								}
+								else 
+								{
+									item_discount=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(item_amount)/parseFloat(offers[i].criteria_amount)));
+								}
+							}
+							else if(offers[i].result_type=='service free')
+							{
+								var free_service_name=offers[i].free_service_name;	
+								var id=get_new_key();
+				        		var free_pre_requisite_data="<pre_requisites>" +
+										"<name exact='yes'>"+free_service_name+"</name>" +
+										"<type>service</type>" +
+										"<requisite_type>task</requisite_type>" +
+										"<requisite_name></requisite_name>" +
+										"<quantity></quantity>" +
+										"</pre_requisites>";
+								fetch_requested_data('',free_pre_requisite_data,function(free_pre_requisites)
+								{
+					                var free_xml="<bill_items>" +
+												"<id>"+id+"</id>" +
+												"<item_name>"+free_service_name+"</item_name>" +
+												"<staff></staff>" +
+												"<notes>free service</notes>" +
+												"<unit_price>0</unit_price>" +
+												"<amount>0</amount>" +
+												"<total>0</total>" +
+												"<discount>0</discount>" +
+												"<offer></offer>" +
+												"<type>free</type>" +
+												"<tax>0</tax>" +
+												"<bill_id>"+order_id+"</bill_id>" +
+												"<free_with>"+subscription.service+"</free_with>" +
+												"<last_updated>"+last_updated+"</last_updated>" +
+												"</bill_items>";	
+									if(is_online())
+									{
+										server_create_simple(free_xml);
+									}
+									else
+									{
+										local_create_simple(free_xml);
+									}
+									
+									free_pre_requisites.forEach(function(free_pre_requisite)
+									{
+										var task_id=get_new_key()+""+(Math.random()*1000);
+										var task_xml="<task_instances>" +
+												"<id>"+task_id+"</id>" +
+												"<name>"+free_pre_requisite.name+"</name>" +
+												"<assignee></assignee>" +
+												"<t_initiated>"+get_my_time()+"</t_initiated>" +
+												"<t_due></t_due>" +
+												"<status>pending</status>" +
+												"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
+												"<source>service</source>" +
+												"<source_id>"+id+"</source_id>" +
+												"<last_updated>"+get_my_time()+"</last_updated>" +
+												"</task_instances>";
+										var activity_xml="<activity>" +
+												"<data_id>"+task_id+"</data_id>" +
+												"<tablename>task_instances</tablename>" +
+												"<link_to>form14</link_to>" +
+												"<title>Added</title>" +
+												"<notes>Task "+free_pre_requisite.name+"</notes>" +
+												"<updated_by>"+get_name()+"</updated_by>" +
+												"</activity>";
+								
+										if(is_online())
+										{
+											server_create_row(task_xml,activity_xml);
+										}
+										else
+										{
+											local_create_row(task_xml,activity_xml);
+										}		
+									});
+							
+								});
+							}
+
+							break;
+						}
+					}
+					
+					item_tax=parseFloat((parseFloat(services[0].tax)*(item_amount-parseFloat(item_discount)))/100);
+					item_total=parseFloat(item_amount)+parseFloat(item_tax)-parseFloat(item_discount);
+					
+					/////saving to bill item
+					var bill_item_id=get_new_key()+""+Math.random()*1000;
+	                var data_xml="<bill_items>" +
+								"<id>"+bill_item_id+"</id>" +
+								"<item_name>"+subscription.service+"</item_name>" +
+								"<batch></batch>" +
+								"<unit_price>"+services[0].price+"</unit_price>" +
+								"<quantity>1</quantity>" +
+								"<amount>"+item_amount+"</amount>" +
+								"<total>"+item_total+"</total>" +
+								"<discount>"+item_discount+"</discount>" +
+								"<offer>"+item_offer+"</offer>" +
+								"<type>bought</type>" +
+								"<tax>"+item_tax+"</tax>" +
+								"<bill_id>"+order_id+"</bill_id>" +
+								"<free_with></free_with>" +
+								"<last_updated>"+get_my_time()+"</last_updated>" +
+								"</bill_items>";	
+	                var bill_xml="<bills>" +
+								"<id>"+order_id+"</id>" +
+								"<customer_name>"+subscription.customer+"</customer_name>" +
+								"<bill_date>"+get_my_time()+"</bill_date>" +
+								"<amount>"+item_amount+"</amount>" +
+								"<total>"+item_total+"</total>" +
+								"<type>service</type>" +
+								"<offer></offer>" +
+								"<discount>"+item_discount+"</discount>" +
+								"<tax>"+item_tax+"</tax>" +
+								"<transaction_id>"+order_id+"</transaction_id>" +
+								"<last_updated>"+get_my_time()+"</last_updated>" +
+								"</bills>";
+					var activity_xml="<activity>" +
+								"<data_id>"+order_id+"</data_id>" +
+								"<tablename>bills</tablename>" +
+								"<link_to>form42</link_to>" +
+								"<title>Saved</title>" +
+								"<notes>Bill no "+order_id+"</notes>" +
+								"<updated_by>"+get_name()+"</updated_by>" +
+								"</activity>";
+					var transaction_xml="<transactions>" +
+								"<id>"+order_id+"</id>" +
+								"<trans_date>"+get_my_time()+"</trans_date>" +
+								"<amount>"+item_total+"</amount>" +
+								"<receiver>"+subscription.customer+"</receiver>" +
+								"<giver>master</giver>" +
+								"<tax>"+item_tax+"</tax>" +
+								"<last_updated>"+get_my_time()+"</last_updated>" +
+								"</transactions>";
+					var pt_tran_id=get_new_key();
+					var payment_xml="<payments>" +
+								"<id>"+pt_tran_id+"</id>" +
+								"<status>pending</status>" +
+								"<type>received</type>" +
+								"<date>"+get_my_time()+"</date>" +
+								"<total_amount>"+item_total+"</total_amount>" +
+								"<paid_amount>0</paid_amount>" +
+								"<acc_name>"+subscription.customer+"</acc_name>" +
+								"<due_date>"+get_my_time()+"</due_date>" +
+								"<mode></mode>" +
+								"<transaction_id>"+pt_tran_id+"</transaction_id>" +
+								"<bill_id>"+order_id+"</bill_id>" +
+								"<last_updated>"+get_my_time()+"</last_updated>" +
+								"</payments>";
+					var pt_xml="<transactions>" +
+								"<id>"+pt_tran_id+"</id>" +
+								"<trans_date>"+get_my_time()+"</trans_date>" +
+								"<amount>"+item_total+"</amount>" +
+								"<receiver>master</receiver>" +
+								"<giver>"+subscription.customer+"</giver>" +
+								"<tax>0</tax>" +
+								"<last_updated>"+get_my_time()+"</last_updated>" +
+								"</transactions>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+						server_create_row(bill_xml,activity_xml);
+						server_create_simple(transaction_xml);
+						server_create_simple(pt_xml);
+						server_create_simple(payment_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+						local_create_row(bill_xml,activity_xml);
+						local_create_simple(transaction_xml);
+						local_create_simple(pt_xml);
+						local_create_simple(payment_xml);
+					}
+					
+					////adding pre-requisite tasks
+					
+					var pre_requisite_data="<pre_requisites>" +
+							"<name exact='yes'>"+subscription.service+"</name>" +
+							"<type>service</type>" +
+							"<requisite_type>task</requisite_type>" +
+							"<requisite_name></requisite_name>" +
+							"<quantity></quantity>" +
+							"</pre_requisites>";
+					fetch_requested_data('',pre_requisite_data,function(pre_requisites)
+					{
+						pre_requisites.forEach(function(pre_requisite)
+						{
+							var task_id=get_new_key()+""+(Math.random()*1000);
+							var task_xml="<task_instances>" +
+									"<id>"+task_id+"</id>" +
+									"<name>"+pre_requisite.name+"</name>" +
+									"<assignee></assignee>" +
+									"<t_initiated>"+get_my_time()+"</t_initiated>" +
+									"<t_due></t_due>" +
+									"<status>pending</status>" +
+									"<task_hours>"+pre_requisite.quantity+"</task_hours>" +
+									"<source>service</source>" +
+									"<source_id>"+bill_item_id+"</source_id>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</task_instances>";
+							var activity_xml="<activity>" +
+									"<data_id>"+task_id+"</data_id>" +
+									"<tablename>task_instances</tablename>" +
+									"<link_to>form14</link_to>" +
+									"<title>Added</title>" +
+									"<notes>Task "+pre_requisite.name+" assigned to </notes>" +
+									"<updated_by>"+get_name()+"</updated_by>" +
+									"</activity>";
+					
+							if(is_online())
+							{
+								server_create_row(task_xml,activity_xml);
+							}
+							else
+							{
+								local_create_row(task_xml,activity_xml);
+							}		
+						});
+					});
+
+					
+					
+					////////////updating subscription//////////////
+					var subscription_period_data="<attributes>" +
+							"<item_name exact='yes'>"+subscription.service+"</item_name>" +
+							"<type>service</type>" +
+							"<attribute>subscription period</attribute>" +
+							"<value></value>" +
+							"</attributes>";
+					fetch_requested_data('',subscription_period_data,function(periods)
+					{
+						if(periods.length>0)
+						{
+							var date=new Date(parseFloat(subscription.next_due_date));
+							var day=date.getDate();
+							var month=date.getMonth();
+							var year=date.getFullYear();
+							var next_due_date="";
+							var period_value=parseInt(periods[0].value.substring(0,2));
+							if(periods[0].value.search('month'))
+							{
+								month+=period_value;
+								year+=parseInt(month/12);
+								month=parseInt(month%12);
+							}
+							else if(periods[0].value.search('day'))
+							{
+								day+=period_value;
+								month+=parseInt(day/30);
+								day=parseInt(day%30);
+								year+=parseInt(month/12);
+								month=parseInt(month%12);
+								
+							}
+							else if(periods[0].value.search('year'))
+							{
+								year+=period_value;
+							}
+							var new_date=new Date(year,month,day,0,0,0,0);
+							next_due_date=new_date.getTime();
+							
+							var subscription_xml="<service_subscriptions>" +
+									"<id>"+subscription.id+"</id>" +
+									"<last_bill_id>"+order_id+"</last_bill_id>" +
+									"<last_bill_date>"+get_my_time()+"</last_bill_date>" +
+									"<next_due_date>"+next_due_date+"</next_due_date>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</service_subscriptions>";
+							if(is_online())
+							{
+								server_update_simple(subscription_xml);
+							}
+							else
+							{
+								local_update_simple(subscription_xml);
+							}
+						}
+					});
+				});
+			});
+		});
+	});
 }

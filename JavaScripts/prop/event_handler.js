@@ -16,6 +16,7 @@ function default_load()
 	number_active_ajax=0;
 	loaderTimer=0;
 	count_notif_timer=0;
+	show_notif_timer=0;
 	
 	if(is_set_session())
 	{
@@ -28,20 +29,29 @@ function default_load()
 		$('textarea').autosize();
 		i18n_setup();
 		home_display();
-		setTimeout(function()
-		{
-			activities_lane_ini();
-		},10000);
-		setTimeout(function()
-		{
-			notifications_add();
-		},50000);
-		setTimeout(function()
-		{
-			sale_leads_add();
-		},70000);
+		start_workers();
 	}
 	hide_loader();
+}
+
+function start_workers()
+{
+	setTimeout(function()
+	{
+		activities_lane_ini();
+	},10000);
+	setTimeout(function()
+	{
+		notifications_add();
+	},50000);
+	setTimeout(function()
+	{
+		show_notif();
+	},60000);
+	setTimeout(function()
+	{
+		sale_leads_add();
+	},70000);
 }
 
 function show_function(function_id)

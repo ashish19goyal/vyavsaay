@@ -2695,7 +2695,7 @@ function modal35_action()
 			var last_updated=get_my_time();
 			var data_xml="<store_areas>" +
 						"<id>"+data_id+"</id>" +
-						"<name>"+name+"</name>" +
+						"<name unique='yes'>"+name+"</name>" +
 						"<area_type>"+area_type+"</area_type>" +
 						"<length>"+length+"</length>" +
 						"<width>"+width+"</width>" +

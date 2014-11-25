@@ -418,6 +418,14 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report45</name>
+			<display_name>virtual_store</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -682,14 +690,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>form55</name>
-			<display_name>virtual_store</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>form</type>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>form56</name>
 			<display_name>cash_register</display_name>
 			<status>active</status>
@@ -836,6 +836,14 @@
 		<row>
 			<name>form83</name>
 			<display_name>storage_areas</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form84</name>
+			<display_name>manage_subscriptions</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -1208,6 +1216,17 @@
 		</row>
 		<row>
 			<username>master</username>
+			<element_id>report45</element_id>
+			<element_name>virtual_store</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
 			<element_id>form1</element_id>
 			<element_name>update_inventory</element_name>
 			<status>active</status>
@@ -1571,17 +1590,6 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>form55</element_id>
-			<element_name>virtual_store</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
 			<element_id>form56</element_id>
 			<element_name>cash_register</element_name>
 			<status>active</status>
@@ -1789,6 +1797,17 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<username>master</username>
+			<element_id>form84</element_id>
+			<element_name>manage_subscriptions</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
 	</access_control>
 	<shortcuts>
 		<row>
@@ -1941,6 +1960,13 @@
 		<row>
 			<element_id>report36</element_id>
 			<element_name>supplier_map_by_products</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report45</element_id>
+			<element_name>virtual_store</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2170,13 +2196,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<element_id>form55</element_id>
-			<element_name>virtual_store</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<element_id>form56</element_id>
 			<element_name>cash_register</element_name>
 			<status>active</status>
@@ -2242,6 +2261,13 @@
 		<row>
 			<element_id>form83</element_id>
 			<element_name>storage_areas</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form84</element_id>
+			<element_name>manage_subscriptions</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>

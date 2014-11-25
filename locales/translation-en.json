@@ -144,6 +144,7 @@
   	"service_attributes":"Service Attributes",
   	"notifications":"Notifications",
   	"scan_items":"Scan Items",
-  	"storage_areas":"Store Areas"
+  	"storage_areas":"Store Areas",
+  	"manage_subscriptions":"Manage Subscriptions"
   }
 }

@@ -722,20 +722,15 @@ function form21_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var quantity=form.elements[1].value;
-		var total=form.elements[2].value;
-		var price=form.elements[3].value;
 		var batch=form.elements[4].value;
-		var data_id=form.elements[5].value;
+		var storage=form.elements[5].value;
+		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<supplier_bill_items>" +
 					"<id>"+data_id+"</id>" +
 					"<product_name>"+name+"</product_name>" +
 					"<batch>"+batch+"</batch>" +
-					"<price>"+price+"</price>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<total>"+total+"</total>" +
 					"<bill_id>"+bill_id+"</bill_id>" +
 					"</supplier_bill_items>";	
 		if(is_online())
@@ -2379,6 +2374,50 @@ function form83_delete_item(button)
 					"<link_to>form83</link_to>" +
 					"<title>Deleted</title>" +
 					"<notes>Store area "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Subscriptions
+ * @param button
+ */
+function form84_delete_item(button)
+{
+	if(is_delete_access('form84'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var customer=form.elements[0].value;
+		var service=form.elements[1].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<service_subscriptions>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<service>"+service+"</service>" +
+					"</service_subscriptions>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>service_subscriptions</tablename>" +
+					"<link_to>form84</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Service "+service+" subscription for customer "+customer+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())

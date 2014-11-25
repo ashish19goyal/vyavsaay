@@ -1234,102 +1234,6 @@ function form54_header_ini()
 
 };
 
-/**
- * @form Virtual Store
- * @formNo 55
- */
-function form55_header_ini()
-{	
-	var filter_fields=document.getElementById('form55_header');
-	var products_filter=filter_fields.elements[0];
-	var batches_filter=filter_fields.elements[1];
-	
-	var product_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-		
-	var batches_data="<product_instances>" +
-			"<batch></batch>" +
-			"</product_instances>";
-	
-	set_my_filter(product_data,products_filter);
-	set_my_filter(batches_data,batches_filter);
-	
-	var canvas = document.getElementById('virtual_store');
-	var ctx = canvas.getContext('2d');
-	
-	var blocks_data="<store_areas>" +
-			"<name></name>" +
-			"<area_type>block</area_type>" +
-			"<height></height>" +
-			"<width></width>" +
-			"<length></length>" +
-			"<locx></locx>" +
-			"<locy></locy>" +
-			"<locz></locz>" +
-			"<storey></storey>" +
-			"<color></color>" +
-			"<radius></radius>" +
-			"<loc_type></loc_type>" +
-			"<faceEast></faceEast>" +
-			"<faceWest></faceWest>" +
-			"<faceNorth></faceNorth>" +
-			"<faceSouth></faceSouth>" +	
-			"</store_areas>";
-	fetch_requested_data(blocks_data,function(blocks)
-	{	
-	    draw_blocks(ctx,blocks);
-	});
-	
-	var doors_data="<store_areas>" +
-			"<name></name>" +
-			"<area_type>door</area_type>" +
-			"<height></height>" +
-			"<width></width>" +
-			"<length></length>" +
-			"<locx></locx>" +
-			"<locy></locy>" +
-			"<locz></locz>" +
-			"<storey></storey>" +
-			"<color></color>" +
-			"<radius></radius>" +
-			"<loc_type></loc_type>" +
-			"<faceEast></faceEast>" +
-			"<faceWest></faceWest>" +
-			"<faceNorth></faceNorth>" +
-			"<faceSouth></faceSouth>" +	
-			"</store_areas>";
-
-	fetch_requested_data(doors_data,function(doors)
-	{	
-	    draw_doors(ctx,doors);		
-	});
-	
-	var storages_data="<store_areas>" +
-			"<name></name>" +
-			"<area_type>storage</area_type>" +
-			"<height></height>" +
-			"<width></width>" +
-			"<length></length>" +
-			"<locx></locx>" +
-			"<locy></locy>" +
-			"<locz></locz>" +
-			"<storey></storey>" +
-			"<color></color>" +
-			"<radius></radius>" +
-			"<loc_type></loc_type>" +
-			"<faceEast></faceEast>" +
-			"<faceWest></faceWest>" +
-			"<faceNorth></faceNorth>" +
-			"<faceSouth></faceSouth>" +	
-			"</store_areas>";
-	fetch_requested_data(storages_data,function(storages)
-	{	
-	    draw_storages(ctx,storages);
-	});
-	
-};
-
 
 /**
  * @form Cash register
@@ -2000,5 +1904,36 @@ function form83_header_ini()
 	$(import_button).on("click", function(event)
 	{
 		modal23_action(form83_import_template,form83_import);
+	});
+};
+
+/**
+ * @form Manage Subscriptions
+ * @formNo 84
+ */
+function form84_header_ini()
+{
+	var filter_fields=document.getElementById('form84_header');
+	var customer_filter=filter_fields.elements[0];
+	var service_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_filter(customer_data,customer_filter);
+
+	var service_data="<services>" +
+			"<name></name>" +
+			"</services>";
+	set_my_filter(service_data,service_filter);
+
+	set_static_filter('service_subscriptions','status',status_filter);
+
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form84_import_template,form84_import);
 	});
 };
