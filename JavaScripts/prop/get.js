@@ -16,6 +16,42 @@ function get_single_column_data(callback,request_data)
 }
 
 /**
+ * @returns {Array}
+ */
+function get_single_column_data_array(request_data_array,callback)
+{	
+	var results=new Array();
+	var array_count=request_data_array.length;
+	request_data_array.forEach(function(request_data)
+	{
+		if(is_online())
+		{
+			server_read_single_column(request_data,function(dummy)
+			{
+				array_count-=1;
+			},results);
+		}
+		else
+		{
+			local_read_single_column(request_data,function(dummy)
+			{
+				array_count-=1;
+			},results);
+		}
+	});
+	
+	var get_data_array_timer=setInterval(function()
+	{
+  	   if(array_count===0)
+  	   {
+  		   	clearInterval(get_data_array_timer);
+  		   	callback(results);
+  	   }
+    },10);			
+}
+
+
+/**
  * 
  * @param columns
  * @param callback

@@ -31,6 +31,11 @@ function draw_doors(ctx,doors)
  */
 function roundedRect(ctx,x,y,width,length,radius)
 {
+	x=parseFloat(x);
+	y=parseFloat(y);
+	width=parseFloat(width);
+	length=parseFloat(length);
+	radius=parseFloat(radius);
   ctx.beginPath();
   ctx.moveTo(x,y+radius);
   ctx.lineTo(x,y+length-radius);
@@ -49,6 +54,12 @@ function roundedRect(ctx,x,y,width,length,radius)
  */
 function roundedFilledRect(ctx,x,y,w,l,r,color)
 {
+	x=parseFloat(x);
+	y=parseFloat(y);
+	w=parseFloat(w);
+	l=parseFloat(l);
+	r=parseFloat(r);
+	
   ctx.beginPath();
   ctx.moveTo(x,y+r);
   ctx.lineTo(x,y+l-r);
@@ -60,17 +71,20 @@ function roundedFilledRect(ctx,x,y,w,l,r,color)
   ctx.lineTo(x+r,y);
   ctx.quadraticCurveTo(x,y,x,y+r);
   
-  var radgrad = ctx.createRadialGradient(x+w/3,y+l/3,w/8+l/8,x+3*w/4,y+3*l/4,w+l);
-  radgrad.addColorStop(0, '#A4A7A8');
-  radgrad.addColorStop(0.5, color);
+//  var radgrad = ctx.createRadialGradient(x+w/3,y+l/3,w/8+l/8,x+3*w/4,y+3*l/4,w+l);
+ // radgrad.addColorStop(0, '#A4A7A8');
+ // radgrad.addColorStop(0.5, color);
   
-  ctx.fillStyle=radgrad;
+  ctx.fillStyle=color;
   ctx.fill();
 }
 
 
 function drawSpirograph(ctx,R,r,O)
 {
+	R=parseFloat(R);
+	r=parseFloat(r);
+
 	var x1 = R-O;
 	var y1 = 0;
 	var i  = 1;
@@ -84,14 +98,18 @@ function drawSpirograph(ctx,R,r,O)
 		x1 = x2;
 		y1 = y2;
 		i++;
-		}
+	}
 	while (x2 != R-O && y2 != 0 );
 	ctx.stroke();
 }
 
 
-function drawStar(ctx,x,y,r,color)
+function draw_star(ctx,x,y,r,color)
 {
+	x=parseFloat(x);
+	y=parseFloat(y);
+	r=parseFloat(r);
+
 	ctx.save();
 	ctx.beginPath();
 	ctx.moveTo(x,y);
@@ -108,6 +126,7 @@ function drawStar(ctx,x,y,r,color)
 		}
 	}
 	ctx.closePath();
-	ctx.fill(color);
+	ctx.fillStyle=color;
+	ctx.fill();
 	ctx.restore();
 }

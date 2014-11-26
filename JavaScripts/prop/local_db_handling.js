@@ -17,7 +17,7 @@ function create_local_db(domain,func)
 	var db_name="re_local_"+domain;
 	ajax_with_custom_func("./db/db_schema.xml","",function(e)
 	{
-		console.log("creating local db");
+		//console.log("creating local db");
 		var request = indexedDB.open(db_name,2);
 	
 		request.onsuccess=function(e)
@@ -30,10 +30,8 @@ function create_local_db(domain,func)
 		
 		request.onupgradeneeded=function(ev)
 		{
-			console.log("db didn't exist. creating it");
+			//console.log("db didn't exist. creating it");
 			db=ev.target.result;
-			//var indexes= new Array(38);
-			//var table=new Array(38);		
 			var tables=e.responseXML.childNodes[0].childNodes;
 			
 			for(var k=0; k<tables.length; k++)
@@ -59,7 +57,7 @@ function create_local_db(domain,func)
 		
 		request.onerror=function(e)
 		{
-			console.log("2.3 error occured when creating tables");
+			//console.log("2.3 error occured when creating tables");
 		};
 	});
 };

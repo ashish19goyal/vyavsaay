@@ -2354,6 +2354,7 @@ function modal30_action()
 {
 	var form=document.getElementById("modal30_form");
 	
+	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
@@ -2424,6 +2425,7 @@ function modal31_action()
 	
 	flogin_id.value="";
 	
+	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
@@ -2490,6 +2492,7 @@ function modal32_action(date_initiated)
 		set_my_value(hours_data,hours_filter);
 	});
 	
+	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
@@ -2559,6 +2562,7 @@ function modal33_action(id)
 	$(due_filter).datetimepicker();
 	set_static_value_list('task_instances','status',status_filter);
 	
+	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
@@ -2635,6 +2639,7 @@ function modal34_action()
 {
 	var form=document.getElementById("modal34_form");
 	
+	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
@@ -2664,6 +2669,7 @@ function modal35_action()
 	set_static_value_list('store_areas','area_type',area_type_filter);
 	set_static_value_list('store_areas','loc_type',loc_type_filter);
 	
+	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();

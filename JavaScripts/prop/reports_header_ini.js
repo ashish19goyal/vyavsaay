@@ -427,7 +427,7 @@ function report41_header_ini()
  */
 function report45_header_ini()
 {	
-	var filter_fields=document.getElementById('form45_header');
+	var filter_fields=document.getElementById('report45_header');
 	var products_filter=filter_fields.elements[0];
 	var batches_filter=filter_fields.elements[1];
 	
@@ -441,13 +441,13 @@ function report45_header_ini()
 	{
 		var batches_data="<product_instances>" +
 			"<batch></batch>" +
-			"<product_name>"+products_filter.value+"</product_name>" +
+			"<product_name exact='yes'>"+products_filter.value+"</product_name>" +
 			"</product_instances>";
 
 		set_my_filter(batches_data,batches_filter);
 	});
 	
-	var canvas = document.getElementById('virtual_store');
+	var canvas = document.getElementById('report45_canvas');
 	var ctx = canvas.getContext('2d');
 	
 	var blocks_data="<store_areas>" +
@@ -468,7 +468,7 @@ function report45_header_ini()
 			"<faceNorth></faceNorth>" +
 			"<faceSouth></faceSouth>" +	
 			"</store_areas>";
-	fetch_requested_data(blocks_data,function(blocks)
+	fetch_requested_data('',blocks_data,function(blocks)
 	{	
 	    draw_blocks(ctx,blocks);
 	});
@@ -492,9 +492,9 @@ function report45_header_ini()
 			"<faceSouth></faceSouth>" +	
 			"</store_areas>";
 
-	fetch_requested_data(doors_data,function(doors)
+	fetch_requested_data('',doors_data,function(doors)
 	{	
-	    draw_doors(ctx,doors);		
+		draw_doors(ctx,doors);		
 	});
 	
 	var storages_data="<store_areas>" +
@@ -515,7 +515,7 @@ function report45_header_ini()
 			"<faceNorth></faceNorth>" +
 			"<faceSouth></faceSouth>" +	
 			"</store_areas>";
-	fetch_requested_data(storages_data,function(storages)
+	fetch_requested_data('',storages_data,function(storages)
 	{	
 	    draw_storages(ctx,storages);
 	});

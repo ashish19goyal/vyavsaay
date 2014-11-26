@@ -94,9 +94,7 @@ function set_session_variables(domain,username,pass)
 	var db_name="re_local_"+domain;
 	
 	
-	sklad.open(db_name,{
-		version:2
-	},function (err,database)
+	sklad.open(db_name,{version:2},function (err,database)
 	{
 		if(err)
 		{
@@ -128,18 +126,14 @@ function set_session_variables(domain,username,pass)
 			}
 			else
 			{
-				database.get('user_profiles',{
-					index:'username',
-					range: IDBKeyRange.only(username)
-					},function(err,records2)
+				database.get('user_profiles',{index:'username',range: IDBKeyRange.only(username)},function(err,records2)
 				{
 						for(var row in records2)
 						{
 							data.name=records2[row].name;
 						}
 	
-						database.get('access_control',{
-							},function(err,records3)
+						database.get('access_control',{},function(err,records3)
 						{
 								var re='';
 								var cr='';
@@ -198,23 +192,23 @@ function try_local_db_login(username,domain,func_success,func_failure)
 	////////////checking if indexed db is supported/////////////////
 	if("indexedDB" in window)
 	{
-		console.log("3. inside try_local_db()");
+		//console.log("3. inside try_local_db()");
 		var db_name="re_local_" + domain;
 		var request = indexedDB.open(db_name);
 		
 		request.onsuccess=function(e)
 		{
-			console.log("3. inside onsucess function of db access inside try_local_db_login");
+			//console.log("3. inside onsucess function of db access inside try_local_db_login");
 			db=e.target.result;
 			if(!db.objectStoreNames.contains("user_profiles"))
 			{
-				console.log("3.1 inside the if section of onsuccess function of try_local_db_login");
+				//console.log("3.1 inside the if section of onsuccess function of try_local_db_login");
 				var deleterequest=indexedDB.deleteDatabase(db_name);
 				deleterequest.onsuccess=func_failure();
 			}
 			else
 			{
-				console.log("3.2 inside the else section of onsuccess function of try_local_db_login");
+				//console.log("3.2 inside the else section of onsuccess function of try_local_db_login");
 				var tran=db.transaction("user_profiles","readonly");
 				var table = tran.objectStore("user_profiles");
 				
@@ -232,25 +226,25 @@ function try_local_db_login(username,domain,func_success,func_failure)
 						else if (records.result){
 							result = records.result;
 							}
-						console.log("3.3 successfully retrieved local password");
+						//console.log("3.3 successfully retrieved local password");
 						
 						func_success(result);
 						
 				};
 				records.onerror=function(e)
 				{
-					console.log("could not retrieve password");
+					//console.log("could not retrieve password");
 					func_failure();
 				};
 			}
 
-			console.log("3. exiting onsucess function of db access inside try_local_db_login");
+			//console.log("3. exiting onsucess function of db access inside try_local_db_login");
 			db.close();
 		};
 		
 		request.onerror = function(e)
 		{
-			console.log("db could not be opened, so login online");
+			//console.log("db could not be opened, so login online");
 			db=e.target.result;
 			db.close();
 			func_failure();

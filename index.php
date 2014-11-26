@@ -143,7 +143,7 @@
 		       			<div class="row revies-content text-center">
 		       				<div class="review_grid">
 			       				<div class="col-md-4 review-img1">
-			       					 <img src="images/img-1.JPG" alt="">
+			       					 <img src="images/sou.jpeg" alt="">
 			       				</div>
 			       				<div class="col-md-8 review-text">
 			       					<p>"Vyavsaay is very user friendly. Anybody can use it with ease. It took us only a few hours to setup and get started with Vyavsaay."</p>
@@ -153,7 +153,7 @@
 			       			</div>
 		       				<div class="review_grid">
 			       				<div class="col-md-4 review-img2">
-			       					 <img src="images/img-2.JPG" alt="">
+			       					 <img src="images/nishu.jpeg" alt="" class='review_picture_rotate'>
 			       				</div>
 			       				<div class="col-md-8 review-text">
 			       					<p>"Now we can manage all our process with just one platform. We don't need to use multiple desktop and mobile solutions and worry about moving data between them."</p>

@@ -40,7 +40,10 @@ div.pricing_grid{
 	padding-right: 5px;
 }
 
-
+img.review_picture_rotate{
+	-webkit-transform: rotate(-25deg); 
+  	-moz-transform: rotate(-25deg);
+}
 /*-------social media buttons-----------*/
 
 #share_box{

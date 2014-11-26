@@ -1568,40 +1568,43 @@ function report45_ini()
 	var fbatch=filter_fields.elements[1].value;
 	
 	var utilization="<area_utilization>" +
-			"<id>"+fid+"</id>" +
-			"<product_name>"+fname+"</product_name>" +
+			"<id></id>" +
+			"<item_name>"+fname+"</item_name>" +
 			"<name></name>" +
 			"<batch>"+fbatch+"</batch>" +
-			"<quantity></quantity>" +
 			"</area_utilization>";
 
 	fetch_requested_data('report45',utilization,function(results)
 	{
-		var canvas = document.getElementById('virtual_store');
+		var canvas = document.getElementById('report45_canvas');
 		var ctx = canvas.getContext('2d');
 
-		results.forEach(function(result)
+		var storage_area_string="--";
+		for(var i in results)
 		{
-			var storages_data="<store_areas>" +
-				"<name exact='yes'>"+result.name+"</name>" +
-				"<area_type>storage</area_type>" +
-				"<height></height>" +
-				"<width></width>" +
-				"<length></length>" +
-				"<locx></locx>" +
-				"<locy></locy>" +
-				"<locz></locz>" +
-				"<storey></storey>" +
-				"</store_areas>";
-			
-			fetch_requested_data('report45',storages_data,function(area_results)
+			storage_area_string+=results[i].name+"--";
+		}
+		
+		var storages_data="<store_areas>" +
+			"<name array='yes'>"+storage_area_string+"</name>" +
+			"<area_type>storage</area_type>" +
+			"<height></height>" +
+			"<width></width>" +
+			"<length></length>" +
+			"<locx></locx>" +
+			"<locy></locy>" +
+			"<locz></locz>" +
+			"<storey></storey>" +
+			"</store_areas>";
+		
+		fetch_requested_data('report45',storages_data,function(area_results)
+		{
+			for(var j in area_results)
 			{
-				for(var i in area_results)
-				{
-					draw_star(ctx,area_results[i].locx,area_results[i].locy,10,"#ff0000");
-				}
-			});
+				draw_star(ctx,area_results[j].locx,area_results[j].locy,5,"#00ff00");
+			}
 		});
+		
 		hide_loader();
 	});
 }

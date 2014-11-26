@@ -697,33 +697,33 @@ function form11_ini()
 		results.forEach(function(result)
 		{
 			var message_string="";
-			var email_data="";
+			var sup_email_data="<suppliers>" +
+					"<email></email>" +
+					"<acc_name exact='yes'>"+result.acc_name+"</acc_name>" +
+					"</suppliers>";
+			var cust_email_data="<customers>" +
+					"<email></email>" +
+					"<acc_name exact='yes'>"+result.acc_name+"</acc_name>" +
+					"</customers>";
+			var staff_email_data="<staff>" +
+					"<email></email>" +
+					"<acc_name exact='yes'>"+result.acc_name+"</acc_name>" +
+					"</staff>";
+			var email_data_array=[sup_email_data,cust_email_data,staff_email_data];
+			
 			if(result.type=='paid')
 			{
 				message_string="Payment of Rs: "+result.paid_amount+" paid on "+get_my_past_date(result.date)+".\n The status of this payment is "+result.status;
-				email_data="<suppliers>" +
-						"<email></email>" +
-						"<acc_name exact='yes'>"+result.acc_name+"</acc_name>" +
-						"</suppliers>";
 			}
 			else
 			{
 				message_string="Payment of Rs: "+result.paid_amount+" received on "+get_my_past_date(result.date)+".\n The status of this payment is "+result.status;
-				email_data="<customers>" +
-						"<email></email>" +
-						"<acc_name exact='yes'>"+result.acc_name+"</acc_name>" +
-						"</customers>";
 			}
 			message_string=encodeURIComponent(message_string);
 			
-			fetch_requested_data('form11',email_data,function(email_results)
+			get_single_column_data_array(email_data_array,function(email_results)
 			{
-				var email="";
-				for (var y in email_results)
-				{
-					email=email_results[y].email;
-					break;
-				}
+				var email=email_results[0];
 				var mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Payment+Receipt+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+message_string;
 				
 				var detail_string="Bill Id: " +result.bill_id+
