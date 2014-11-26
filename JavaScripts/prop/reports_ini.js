@@ -148,10 +148,14 @@ function report4_ini()
 	var start_date=form.elements[1].value;
 	var end_date=form.elements[2].value;
 	
+	var canvas_parent=$("#report4_canvas").parent();
+	$("#report4_canvas").remove();
+	$(canvas_parent).append("<canvas id='report4_canvas' class='report_sizing'><canvas>");
+	
 	var ctx = document.getElementById("report4_canvas").getContext("2d");
 	var modes_data="<payments>" +
 			"<mode></mode>" +
-			"<amount></amount>" +
+			"<paid_amount></paid_amount>" +
 			"<date compare='more than'>"+get_raw_time(start_date)+"</date>" +
 			"<date compare='less than'>"+get_raw_time(end_date)+"</date>" +
 			"<status>closed</status>" +
@@ -160,8 +164,9 @@ function report4_ini()
 
 	fetch_requested_data('report4',modes_data,function(modes)
 	{
-		var result=transform_to_pie_sum(modes,'amount','mode');
-		var mydoughChart = new Chart(ctx).Doughnut(result,{});
+		var result=transform_to_pie_sum(modes,'paid_amount','mode');
+		var mydoughchart = new Chart(ctx).Doughnut(result,{});
+		document.getElementById("report4_legend").innerHTML=mydoughchart.generateLegend();
 	});
 };
 
@@ -567,49 +572,134 @@ function report27_ini()
  */
 function report28_ini()
 {
+	show_loader();
 	var form=document.getElementById('report28_header');
-	var num_days=form.elements[1].value;
+	var num_days=parseInt(form.elements[1].value);
 	var product=form.elements[2].value;
-	var raw_time=get_my_time()-parseInt(num_days)*86400000;
+	var raw_time=get_my_time()-(num_days*86400000);
 	
-	var ctx = document.getElementById("report28_canvas").getContext("2d");
-	var product_data="<product_instances>" +
-			"<quantity></quantity>" +
-			"<product_name>"+product+"</product_name>" +
-			"</product_instances>";
-
-	fetch_requested_data('report28',product_data,function(products)
+	if(num_days>0 && num_days!=null && num_days!="")
 	{
-		var product_array="";
-		for(var k in products)
-		{
-			product_array+=products[k]+"--";
-		}
+		var canvas_parent=$("#report28_canvas").parent();
+		$("#report28_canvas").remove();
+		$(canvas_parent).append("<canvas id='report28_canvas' class='report_sizing'><canvas>");
+		var ctx = document.getElementById("report28_canvas").getContext("2d");
+		//ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+		
 		var bills_data="<bills>" +
 				"<id></id>" +
-				"<date_created compare='more than'>"+raw_time+"</date_created>" +
-				"<type>product</type>" +
+				"<bill_date compare='more than'>"+raw_time+"</bill_date>" +
+				"<type array='yes'>--product--both--</type>" +
 				"</bills>";
-				
 		get_single_column_data(function(bill_ids)
 		{
-			var bill_id_array="";
-			for(var y in bill_ids)
+			var bill_id_array="--";
+			for(var i in bill_ids)
 			{
-				bill_id_array+=bill_ids[y]+"--";
+				bill_id_array+=bill_ids[i]+"--";
 			}
-			var sales_data="<bills_items>" +
+			var sales_data="<bill_items>" +
 					"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
 					"<quantity></quantity>" +
-					"<product_name array='yes'>"+product_array+"</product_name>" +
+					"<item_name></item_name>" +
 					"</bill_items>";
 			fetch_requested_data('report28',sales_data,function(sales_array)
 			{
-				var result=transform_to_multi_bar_sum(product_array,sales_array,'Current Inventory','Sold Quantity','quantity','product_name');
-				var mybarchart = new Chart(ctx).Bar(result,{});
+				var sales_array_result=new Array();
+				for(var k=0; k<sales_array.length;k++)
+				{
+					var new_obj=new Object();
+					new_obj.item_name=sales_array[k].item_name;
+					new_obj.quantity=parseInt(sales_array[k].quantity);
+					for(var j=k+1;j<sales_array.length;j++)
+					{
+						if(sales_array[j].item_name==new_obj.item_name)
+						{
+							new_obj.quantity+=parseInt(sales_array[j].quantity);
+							sales_array.splice(j,1);
+							j-=1;
+						}
+					}
+					sales_array_result.push(new_obj);
+				}
+				
+				///modify sales_array_result as per search criteria
+				if(product!="")
+				{
+					var this_product_sales=new Object;
+					this_product_sales.item_name=product;
+					this_product_sales.quantity=0;
+					for (var l in sales_array_result)
+					{
+						if(sales_array_result[l].item_name===product)
+						{
+							this_product_sales.quantity=sales_array_result[l].quantity;
+							break;
+						}
+					}
+					sales_array_result=[this_product_sales];
+				}
+				else
+				{
+					sales_array_result.sort(function(a,b)
+					{
+						if(a.quantity<b.quantity)
+						{	return 1;}
+						else 
+						{	return -1;}
+					});
+				}
+				
+				var result=new Object();
+				result.datasets=new Array();
+				result.datasets[0]=new Object();
+				result.datasets[0].label="Current Inventory";
+				result.datasets[0].fillColor=getRandomColor();
+				result.datasets[0].strokeColor=result.datasets[0].fillColor;
+				result.datasets[0].highlightFill=getLighterColor(result.datasets[0].fillColor);
+				result.datasets[0].highlightStroke=getLighterColor(result.datasets[0].fillColor);
+				result.datasets[0].data=new Array();
+				result.datasets[1]=new Object();
+				result.datasets[1].label='Sold Quantity';
+				result.datasets[1].fillColor=getRandomColor();
+				result.datasets[1].strokeColor=result.datasets[0].fillColor;
+				result.datasets[1].highlightFill=getLighterColor(result.datasets[1].fillColor);
+				result.datasets[1].highlightStroke=getLighterColor(result.datasets[1].fillColor);
+				result.datasets[1].data=new Array();
+				
+				result.labels=new Array();
+				
+				var sales_array_count=sales_array_result.length;
+				
+				sales_array_result.forEach(function(data1)
+				{
+					var label=data1.item_name;
+					get_inventory(label,'',function(value0)
+					{
+						var value1=data1.quantity;
+						if((value0<=value1 && result.labels.length<11) || product!="")
+						{
+							result.labels.push(label);
+							result.datasets[0].data.push(value0);
+							result.datasets[1].data.push(value1);
+						}
+						sales_array_count-=1;
+					});
+				});
+	
+				var report_timer=setInterval(function()
+				{
+			  	   if(sales_array_count===0)
+			  	   {
+			  		   clearInterval(report_timer);
+			  		   var mybarchart = new Chart(ctx).Bar(result,{});
+			  		   document.getElementById("report28_legend").innerHTML=mybarchart.generateLegend();
+			  		   hide_loader();
+			  	   }
+			    },100);
 			});
 		},bills_data);
-	});
+	}
 };
 
 /**
@@ -691,18 +781,23 @@ function report30_ini()
 	var start_date=form.elements[1].value;
 	var end_date=form.elements[2].value;
 	
+	var canvas_parent=$("#report30_canvas").parent();
+	$("#report30_canvas").remove();
+	$(canvas_parent).append("<canvas id='report30_canvas' class='report_sizing'><canvas>");
+	
 	var ctx = document.getElementById("report30_canvas").getContext("2d");
 	var task_data="<task_instances>" +
 			"<assignee></assignee>" +
-			"<t_executed compare='more than'>"+get_raw_time(start_date)+"</t_executed>" +
-			"<t_executed compare='less than'>"+get_raw_time(end_date)+"</t_executed>" +
+			"<last_updated compare='more than'>"+get_raw_time(start_date)+"</last_updated>" +
+			"<last_updated compare='less than'>"+get_raw_time(end_date)+"</last_updated>" +
 			"<status>completed</status>" +
 			"</task_instances>";
 
 	fetch_requested_data('report30',task_data,function(tasks)
 	{
 		var result=transform_to_pie_count(tasks,'assignee');
-		var mydoughChart = new Chart(ctx).Doughnut(result,{});
+		var mydoughchart = new Chart(ctx).Doughnut(result,{});
+		document.getElementById("report30_legend").innerHTML=mydoughchart.generateLegend();
 	});
 };
 
@@ -1396,49 +1491,134 @@ function report39_ini()
  */
 function report40_ini()
 {
+	show_loader();
 	var form=document.getElementById('report40_header');
-	var num_days=form.elements[1].value;
+	var num_days=parseInt(form.elements[1].value);
 	var product=form.elements[2].value;
-	var raw_time=get_my_time()-parseInt(num_days)*86400000;
+	var raw_time=get_my_time()-(num_days*86400000);
 	
-	var ctx = document.getElementById("report40_canvas").getContext("2d");
-	var product_data="<product_instances>" +
-			"<quantity></quantity>" +
-			"<product_name>"+product+"</product_name>" +
-			"</product_instances>";
-
-	fetch_requested_data('report40',product_data,function(products)
+	if(num_days>0 && num_days!=null && num_days!="")
 	{
-		var products_array="";
-		for(var k in products)
-		{
-			products_array+=products[k]+"--";
-		}
+		var canvas_parent=$("#report40_canvas").parent();
+		$("#report40_canvas").remove();
+		$(canvas_parent).append("<canvas id='report40_canvas' class='report_sizing'><canvas>");
+		var ctx = document.getElementById("report40_canvas").getContext("2d");
+		//ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+		
 		var bills_data="<bills>" +
 				"<id></id>" +
-				"<date_created compare='more than'>"+raw_time+"</date_created>" +
-				"<type>product</type>" +
+				"<bill_date compare='more than'>"+raw_time+"</bill_date>" +
+				"<type array='yes'>--product--both--</type>" +
 				"</bills>";
-				
 		get_single_column_data(function(bill_ids)
 		{
-			var bill_id_array="";
-			for(var y in bill_ids)
+			var bill_id_array="--";
+			for(var i in bill_ids)
 			{
-				bill_id_array+=bill_ids[y]+"--";
+				bill_id_array+=bill_ids[i]+"--";
 			}
-			var sales_data="<bills_items>" +
+			var sales_data="<bill_items>" +
 					"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
 					"<quantity></quantity>" +
-					"<product_name array='yes'>"+products_array+"</product_name>" +
+					"<item_name></item_name>" +
 					"</bill_items>";
 			fetch_requested_data('report40',sales_data,function(sales_array)
 			{
-				var result=transform_to_multi_bar_sum(sales_array,product_array,'Sold Quantity','Current Inventory','quantity','product_name');
-				var mybarchart = new Chart(ctx).Bar(result,{});
+				var sales_array_result=new Array();
+				for(var k=0; k<sales_array.length;k++)
+				{
+					var new_obj=new Object();
+					new_obj.item_name=sales_array[k].item_name;
+					new_obj.quantity=parseInt(sales_array[k].quantity);
+					for(var j=k+1;j<sales_array.length;j++)
+					{
+						if(sales_array[j].item_name==new_obj.item_name)
+						{
+							new_obj.quantity+=parseInt(sales_array[j].quantity);
+							sales_array.splice(j,1);
+							j-=1;
+						}
+					}
+					sales_array_result.push(new_obj);
+				}
+				
+				///modify sales_array_result as per search criteria
+				if(product!="")
+				{
+					var this_product_sales=new Object;
+					this_product_sales.item_name=product;
+					this_product_sales.quantity=0;
+					for (var l in sales_array_result)
+					{
+						if(sales_array_result[l].item_name===product)
+						{
+							this_product_sales.quantity=sales_array_result[l].quantity;
+							break;
+						}
+					}
+					sales_array_result=[this_product_sales];
+				}
+				else
+				{
+					sales_array_result.sort(function(a,b)
+					{
+						if(a.quantity<b.quantity)
+						{	return 1;}
+						else 
+						{	return -1;}
+					});
+				}
+				
+				var result=new Object();
+				result.datasets=new Array();
+				result.datasets[0]=new Object();
+				result.datasets[0].label="Current Inventory";
+				result.datasets[0].fillColor=getRandomColor();
+				result.datasets[0].strokeColor=result.datasets[0].fillColor;
+				result.datasets[0].highlightFill=getLighterColor(result.datasets[0].fillColor);
+				result.datasets[0].highlightStroke=getLighterColor(result.datasets[0].fillColor);
+				result.datasets[0].data=new Array();
+				result.datasets[1]=new Object();
+				result.datasets[1].label='Sold Quantity';
+				result.datasets[1].fillColor=getRandomColor();
+				result.datasets[1].strokeColor=result.datasets[0].fillColor;
+				result.datasets[1].highlightFill=getLighterColor(result.datasets[1].fillColor);
+				result.datasets[1].highlightStroke=getLighterColor(result.datasets[1].fillColor);
+				result.datasets[1].data=new Array();
+				
+				result.labels=new Array();
+				
+				var sales_array_count=sales_array_result.length;
+				
+				sales_array_result.forEach(function(data1)
+				{
+					var label=data1.item_name;
+					get_inventory(label,'',function(value0)
+					{
+						var value1=data1.quantity;
+						if((value0>=value1 && result.labels.length<11) || product!="")
+						{
+							result.labels.push(label);
+							result.datasets[0].data.push(value0);
+							result.datasets[1].data.push(value1);
+						}
+						sales_array_count-=1;
+					});
+				});
+	
+				var report_timer=setInterval(function()
+				{
+			  	   if(sales_array_count===0)
+			  	   {
+			  		   clearInterval(report_timer);
+			  		   var mybarchart = new Chart(ctx).Bar(result,{});
+			  		   document.getElementById("report40_legend").innerHTML=mybarchart.generateLegend();
+			  		   hide_loader();
+			  	   }
+			    },100);
 			});
 		},bills_data);
-	});
+	}
 };
 
 /**

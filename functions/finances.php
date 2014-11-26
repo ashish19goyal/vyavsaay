@@ -6,7 +6,7 @@
 			if(strpos($_SESSION['forms'],'form11-')!==false)
 				echo "<li><a id='form11_link' href='#form11' onclick='form11_header_ini(); form11_ini();' data-i18n='form.manage_payments'></a></li>";
 			if(strpos($_SESSION['reports'],'report4-')!==false)
-				echo "<li><a id='report4_link' href='#report4' onclick='report4_header_ini(); report4_ini();' data-i18n='form.modes_of_payment'></a></li>";
+				echo "<li><a id='report4_link' href='#report4' onclick='report4_header_ini();' data-i18n='form.modes_of_payment'></a></li>";
 			if(strpos($_SESSION['forms'],'form56-')!==false)
 				echo "<li><a id='form56_link' href='#form56' onclick='form56_header_ini(); form56_ini();' data-i18n='form.cash_register'></a></li>";			
 			if(strpos($_SESSION['reports'],'report14-')!==false)

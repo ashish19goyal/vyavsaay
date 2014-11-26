@@ -1,5 +1,5 @@
-<div id='report32' class='function_detail'>
-		<form id='report32_header' style="width: 30%;float:left">
+<div id='report32' class='report_detail'>
+		<form id='report32_header'>
 			<fieldset>
 				<legend>Locate staff by:</legend>
 				<b>Salary</b> <input type='text' name='credit' readonly='readonly'>

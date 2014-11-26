@@ -28,6 +28,8 @@ function report4_header_ini()
 	var end_date=form.elements[2];
 
 	$(start_date).datepicker();
+	$(start_date).val(get_my_past_date((get_my_time()-86400000)));
+
 	$(end_date).datepicker();
 	$(end_date).val(get_my_date());
 }
@@ -230,6 +232,8 @@ function report30_header_ini()
 	var end_date=form.elements[2];
 
 	$(start_date).datepicker();
+	$(start_date).val(get_my_past_date((get_my_time()-86400000)));
+
 	$(end_date).datepicker();
 	$(end_date).val(get_my_date());
 }

@@ -525,7 +525,7 @@ function form14_add_item()
 				rowsHTML+="<input type='submit' class='save_icon' form='form14_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form14_"+id+"' onclick='$(this).parent().parent().remove();'>";	
 				rowsHTML+="<input type='hidden' form='form14_"+id+"' value='"+id+"'>";
-				rowsHTML+="<a id='form14_whatsapp_"+id+"' href='' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form14_"+result.id+"' title='Send details through WhatsApp'>";
+				rowsHTML+="<a id='form14_whatsapp_"+id+"' href='' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form14_"+id+"' title='Send details through WhatsApp'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	

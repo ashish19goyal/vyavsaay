@@ -1114,7 +1114,7 @@ function form14_update_item(form)
 		$("#form14_whatsapp_"+data_id).attr('href',"whatsapp://send?text="+message_string);
 		$("#form14_whatsapp_"+data_id).show();
 
-		for(var i=0;i<6;i++)
+		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

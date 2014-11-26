@@ -66,7 +66,6 @@ function transform_to_pie_sum(data_array,sum_column,filter_column)
 	return result;
 }
 
-
 function transform_to_pie_count(data_array,filter_column)
 {
 	var result=new Array();
@@ -123,68 +122,6 @@ function transform_to_bar_sum(data_array,label_display,sum_column,label_column)
 	return result;
 }
 
-
-function transform_to_multi_bar_sum(data_array0,data_array1,label_display0,label_display1,sum_column,label_column)
-{
-	var result=new Object();
-	result.datasets=new Array();
-	result.datasets[0]=new Object();
-	result.datasets[0].label=label_display0;
-	result.datasets[0].fillColor=getRandomColor();
-	result.datasets[0].strokeColor=result.datasets[0].fillColor;
-	result.datasets[0].highlightFill=getLighterColor(result.datasets[0].fillColor);
-	result.datasets[0].highlightStroke=getLighterColor(result.datasets[0].fillColor);
-	result.datasets[0].data=new Array();
-	result.datasets[1]=new Object();
-	result.datasets[1].label=label_display1;
-	result.datasets[1].fillColor=getRandomColor();
-	result.datasets[1].strokeColor=result.datasets[0].fillColor;
-	result.datasets[1].highlightFill=getLighterColor(result.datasets[1].fillColor);
-	result.datasets[1].highlightStroke=getLighterColor(result.datasets[1].fillColor);
-	result.datasets[1].data=new Array();
-	
-	result.labels=new Array();
-	
-	while(data_array0.length!=0 || data_array1.length!=0)
-	{
-		var label="";
-		var value0=0;
-		var value1=0;
-		
-		if(data_array0.length!=0)
-			label=data_array0[0][label_column];
-		else
-			label=data_array1[0][label_column];
-		
-		
-		for(var k=0;k<data_array0.length;k++)
-		{
-			if(data_array0[k][label_column]==label)
-			{
-				value0+=parseInt(data_array0[k][sum_column]);
-				data_array0.splice(k,1);
-				k-=1;
-			}
-		}
-		
-		for(var j=0;j<data_array1.length;j++)
-		{
-			if(data_array1[j][label_column]==label)
-			{
-				value1+=parseInt(data_array1[j][sum_column]);
-				data_array1.splice(j,1);
-				j-=1;
-			}
-		}
-		if(value0<=value1)
-		{
-			result.labels.push(label);
-			result.datasets[0].data.push(value0);
-			result.datasets[1].data.push(value1);
-		}
-	}
-	return result;
-}
 
 function transform_to_sum_2columns(data_array,sum_column,filter_column1,filter_column2)
 {

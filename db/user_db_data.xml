@@ -210,14 +210,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>report8</name>
-			<display_name>inventory_predictions</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>report</type>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>report9</name>
 			<display_name>product_sales_report</display_name>
 			<status>active</status>
@@ -921,17 +913,6 @@
 			<username>master</username>
 			<element_id>report6</element_id>
 			<element_name>payments_due_from_customers</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report8</element_id>
-			<element_name>inventory_predictions</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1834,13 +1815,6 @@
 		<row>
 			<element_id>report6</element_id>
 			<element_name>manage_payments</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report8</element_id>
-			<element_name>inventory_predictions</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>

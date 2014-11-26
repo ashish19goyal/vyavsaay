@@ -1192,7 +1192,7 @@ function form14_create_item(form)
 		{
 			local_create_row(data_xml,activity_xml);
 		}	
-		for(var i=0;i<6;i++)
+		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

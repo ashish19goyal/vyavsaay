@@ -1,4 +1,4 @@
-<div id='report38' class='function_detail'>
+<div id='report38' class='report_detail'>
 	<form id='report38_header' style="width: 35%;float:left">
 		<fieldset>
 			<legend>Select Filters</legend>
@@ -8,5 +8,9 @@
 			<input type='button' value='Refresh' onclick='report38_ini();'>
 		</fieldset>
 	</form>
-	<canvas id="report38_canvas" style="width:500px;length:500px;float:left"></canvas>
+	</br>
+	<div style='width:90%;height:90%'>
+		<div><b>Legend</b><div id="report38_legend" style='display: block;'></div></div>
+		<canvas id="report38_canvas" class='report_sizing'></canvas>
+	</div>
 </div>

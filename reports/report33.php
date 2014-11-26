@@ -1,5 +1,5 @@
-<div id='report33' class='function_detail'>
-		<form id='report33_header' style="width: 30%;float:left">
+<div id='report33' class='report_detail'>
+		<form id='report33_header'>
 			<fieldset>
 				<legend>Select suppliers by:</legend>
 				<b>Dedit</b> <input type='text' name='credit' readonly='readonly'>
