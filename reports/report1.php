@@ -1,10 +1,10 @@
 <div id='report1' class='function_detail'>
-	<form id='report1_header' style="width: 35%;float:left">
+	<form id='report1_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Date Since <input type='text'>
-			Product <input type='text'>
-			<input type='button' value='Refresh' onclick='report1_ini();'>
+			Date Since <input type='text' required title='Date since the changes are to be evaluated'>
+			Product <input type='text' title='If product is not specified, all applicable products will be shown'>
+			<input type='submit' value='Refresh'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

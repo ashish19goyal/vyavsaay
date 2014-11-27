@@ -4,7 +4,7 @@
 			<legend>Select Filters</legend>
 			Due date <input type='text'>
 			Customer <input type='text'>
-			<input type='button' value='Refresh' onclick='report6_ini();'>
+			<input type='submit' value='Refresh'>
 		</fieldset>
 	</form>
 	</br>

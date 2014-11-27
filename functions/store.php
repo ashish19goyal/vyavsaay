@@ -6,11 +6,11 @@
 		if(strpos($_SESSION['forms'],'form38-')!==false)
 			echo "<li><a id='form38_link' href='#form38' onclick='form38_header_ini(); form38_ini();' data-i18n='form.store_placement'></a></li>";
 		if(strpos($_SESSION['reports'],'report45-')!==false)
-			echo "<li><a id='report45_link' href='#report45' onclick='report45_header_ini(); report45_ini();' data-i18n='form.virtual_store'></a></li>";
+			echo "<li><a id='report45_link' href='#report45' onclick='report45_header_ini();' data-i18n='form.virtual_store'></a></li>";
 		if(strpos($_SESSION['forms'],'form83-')!==false)
 			echo "<li><a id='form83_link' href='#form83' onclick='form83_header_ini(); form83_ini();' data-i18n='form.storage_areas'></a></li>";
 		if(strpos($_SESSION['reports'],'report1-')!==false)
-			echo "<li><a id='report1_link' href='#report1' onclick='report1_header_ini(); report1_ini();' data-i18n='form.signage_changes'></a></li>";			
+			echo "<li><a id='report1_link' href='#report1' onclick='report1_header_ini();' data-i18n='form.signage_changes'></a></li>";			
 	echo "</ul>";
 
 		if(strpos($_SESSION['forms'],'form5-')!==false)

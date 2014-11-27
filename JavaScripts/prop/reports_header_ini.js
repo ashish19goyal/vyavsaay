@@ -11,7 +11,14 @@ function report1_header_ini()
 	var product_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
-	set_my_value_list(product_data,product_filter);
+	set_my_filter(product_data,product_filter);
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report1_ini();
+	});
 	
 	$(date_since).datepicker();
 	$(date_since).val(get_my_date());
@@ -26,6 +33,13 @@ function report4_header_ini()
 	var form=document.getElementById('report4_header');
 	var start_date=form.elements[1];
 	var end_date=form.elements[2];
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report4_ini();
+	});
 
 	$(start_date).datepicker();
 	$(start_date).val(get_my_past_date((get_my_time()-86400000)));
@@ -44,10 +58,17 @@ function report5_header_ini()
 	var balance=form.elements[1];
 	var customer_filter=form.elements[2];
 	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report5_ini();
+	});
+
 	var customer_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
-	set_my_value_list(customer_data,customer_filter);
+	set_my_filter(customer_data,customer_filter);
 }
 
 /**
@@ -63,7 +84,7 @@ function report6_header_ini()
 	var customer_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
-	set_my_value_list(customer_data,customer_filter);
+	set_my_filter(customer_data,customer_filter);
 	
 	$(due_date).datepicker();
 	$(due_date).val(get_my_date());
@@ -78,30 +99,32 @@ function report9_header_ini()
 	var form=document.getElementById('report9_header');
 	var name_filter=form.elements[1];
 	var make_filter=form.elements[2];
-	var type_filter=form.elements[3];
-	var customer_filter=form.elements[4];
-	var date_filter=form.elements[5];
+	var customer_filter=form.elements[3];
+	var date_filter=form.elements[4];
 	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report9_ini();
+	});
+
 	var name_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
 	var make_data="<product_master>" +
 			"<make></make>" +
 			"</product_master>";
-	var type_data="<product_master>" +
-			"<product_type></product_type>" +
-			"</product_master>";
 	var customer_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
 	
-	set_my_value_list(name_data,name_filter);
-	set_my_value_list(make_data,make_filter);
-	set_my_value_list(type_data,type_filter);
-	set_my_value_list(customer_data,customer_filter);
+	set_my_filter(name_data,name_filter);
+	set_my_filter(make_data,make_filter);
+	set_my_filter(customer_data,customer_filter);
 	
 	$(date_filter).datepicker();
-	$(date_filter).val(get_my_date());
+	$(date_filter).val(get_my_past_date((get_my_time()-86400000)));
 }
 
 /**
@@ -137,14 +160,21 @@ function report17_header_ini()
 	var to_filter=form.elements[2];
 	var staff_filter=form.elements[3];
 	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report17_ini();
+	});
+
 	var staff_data="<staff>" +
 			"<acc_name></acc_name>" +
 			"</staff>";
 	
-	set_my_value_list(staff_data,staff_filter);
+	set_my_filter(staff_data,staff_filter);
 	
 	$(from_filter).datepicker();
-	$(from_filter).val(get_my_date());
+	$(from_filter).val(get_my_past_date((get_my_time()-86400000)));
 	$(to_filter).datepicker();
 	$(to_filter).val(get_my_date());
 }
@@ -200,6 +230,13 @@ function report28_header_ini()
 	var nun_days=form.elements[1];
 	var product_filter=form.elements[2];
 
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report28_ini();
+	});
+
 	var product_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
@@ -216,12 +253,18 @@ function report29_header_ini()
 	var form=document.getElementById('report29_header');
 	var product_filter=form.elements[1];
 	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report29_ini();
+	});
+	
 	var product_data="<product_master>" +
 			"<name></name>" +
-			"<manufacture>yes</manufacture>" +
 			"</product_master>";
 	
-	set_my_value_list(product_data,product_filter);
+	set_my_filter(product_data,product_filter);
 }
 
 
@@ -231,6 +274,13 @@ function report30_header_ini()
 	var start_date=form.elements[1];
 	var end_date=form.elements[2];
 
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report30_ini();
+	});
+
 	$(start_date).datepicker();
 	$(start_date).val(get_my_past_date((get_my_time()-86400000)));
 
@@ -238,12 +288,23 @@ function report30_header_ini()
 	$(end_date).val(get_my_date());
 }
 
+/**
+ * @report Customer map by credit
+ * @reportNo 31
+ */
 function report31_header_ini()
 {	
 	var form=document.getElementById('report31_header');
 	var amount=form.elements[1];
 
-	$("#form31_slider").slider({
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report31_ini();
+	});
+
+	$("#report31_slider").slider({
 		range: true,
 		min: 0,
 		max: 50000,
@@ -251,32 +312,43 @@ function report31_header_ini()
 		slide: function(event,ui){
 			$(amount).val("Rs. "+ui.values[0]+" - Rs. "+ui.values[1]);
 		}});
-	$(amount).val("Rs. "+$("#form31_slider").slider("values",0)+" - Rs. "+$("#form31_slider").slider("values",1));
+	$(amount).val("Rs. "+$("#report31_slider").slider("values",0)+" - Rs. "+$("#report31_slider").slider("values",1));
 	
 }
 
+/**
+ * @report Staff map
+ * @reportNo 32
+ */
 function report32_header_ini()
 {	
 	var form=document.getElementById('report32_header');
-	var amount=form.elements[1];
-
-	$("#form32_slider").slider({
-		range: true,
-		min: 0,
-		max: 50000,
-		values: [500,5000],
-		slide: function(event,ui){
-			$(amount).val("Rs. "+ui.values[0]+" - Rs. "+ui.values[1]);
-		}});
-	$(amount).val("Rs. "+$("#form32_slider").slider("values",0)+" - Rs. "+$("#form32_slider").slider("values",1));
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report32_ini();
+	});
 }
 
+/**
+ * @report Supplier map by debit
+ * @reportNo 33
+ */
 function report33_header_ini()
 {	
 	var form=document.getElementById('report33_header');
 	var amount=form.elements[1];
 
-	$("#form33_slider").slider({
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report33_ini();
+	});
+
+	$("#report33_slider").slider({
 		range: true,
 		min: 0,
 		max: 5000000,
@@ -284,7 +356,7 @@ function report33_header_ini()
 		slide: function(event,ui){
 			$(amount).val("Rs. "+ui.values[0]+" - Rs. "+ui.values[1]);
 		}});
-	$(amount).val("Rs. "+$("#form33_slider").slider("values",0)+" - Rs. "+$("#form33_slider").slider("values",1));
+	$(amount).val("Rs. "+$("#report33_slider").slider("values",0)+" - Rs. "+$("#report33_slider").slider("values",1));
 }
 
 /**
@@ -308,24 +380,48 @@ function report34_header_ini()
 }
 
 
+/**
+ * @report Customer map by products
+ * @reportNo 35
+ */
 function report35_header_ini()
 {	
 	var form=document.getElementById('report35_header');
 	var product_filter=form.elements[1];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report35_ini();
+	});
+
 	var product_data="<product_master>" +
 		"<name></name>" +
 		"</product_master>";
-	set_my_value_list(product_data,product_filter);
+	set_my_filter(product_data,product_filter);
 }
 
+/**
+ * @report Supplier map by products
+ * @reportNo 36
+ */
 function report36_header_ini()
 {	
 	var form=document.getElementById('report36_header');
 	var product_filter=form.elements[1];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report36_ini();
+	});
+
 	var product_data="<product_master>" +
 		"<name></name>" +
 		"</product_master>";
-	set_my_value_list(product_data,product_filter);
+	set_my_filter(product_data,product_filter);
 }
 
 /**
@@ -341,7 +437,7 @@ function report37_header_ini()
 	var supplier_data="<suppliers>" +
 			"<acc_name></acc_name>" +
 			"</suppliers>";
-	set_my_value_list(supplier_data,supplier_filter);
+	set_my_filter(supplier_data,supplier_filter);
 	
 	$(due_date).datepicker();
 	$(due_date).val(get_my_date());
@@ -401,6 +497,13 @@ function report40_header_ini()
 	var nun_days=form.elements[1];
 	var product_filter=form.elements[2];
 
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report40_ini();
+	});
+
 	var product_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
@@ -417,12 +520,100 @@ function report41_header_ini()
 	var form=document.getElementById('report41_header');
 	var service_filter=form.elements[1];
 	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report41_ini();
+	});
+
 	var service_data="<services>" +
 			"<name></name>" +
 			"</services>";
-	set_my_value_list(service_data,service_filter);
+	set_my_filter(service_data,service_filter);
 }
 
+/**
+ * @reportNo 42
+ * @report Feedback
+ */
+function report42_header_ini()
+{	
+	var form=document.getElementById('report42_header');
+	var type_filter=form.elements[1];
+	var start_filter=form.elements[2];
+	var end_filter=form.elements[3];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report42_ini();
+	});
+		
+	set_static_filter('feedback','type',type_filter);
+	$(start_filter).datepicker();
+	start_filter.value=get_my_past_date((get_my_time()-86400000));
+	
+	$(end_filter).datepicker();
+	end_filter.value=get_my_date();
+}
+
+/**
+ * @reportNo 43
+ * @report Change in customer behavior
+ */
+function report43_header_ini()
+{	
+	var form=document.getElementById('report43_header');
+	var customer_filter=form.elements[1];
+	var p1_start_filter=form.elements[2];
+	var p1_end_filter=form.elements[3];
+	var p2_start_filter=form.elements[4];
+	var p2_end_filter=form.elements[5];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report43_ini();
+	});
+	
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_filter(customer_data,customer_filter);
+	
+	$(p1_start_filter).datepicker();
+	p1_start_filter.value=get_my_past_date((get_my_time()-86400000));
+	
+	$(p1_end_filter).datepicker();
+	p1_end_filter.value=get_my_date();
+
+	$(p2_start_filter).datepicker();
+	p2_start_filter.value=get_my_past_date((get_my_time()-86400000));
+	
+	$(p2_end_filter).datepicker();
+	p2_end_filter.value=get_my_date();
+}
+
+/**
+ * @reportNo 44
+ * @report Compare products
+ */
+function report44_header_ini()
+{	
+	var form=document.getElementById('report44_header');
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report44_ini();
+	});
+
+	$('#report44_body').html("");
+}
 
 
 /**
@@ -525,3 +716,26 @@ function report45_header_ini()
 	});
 	
 };
+
+/**
+* @reportNo 46
+* @report Suppliers account balances
+*/
+function report46_header_ini()
+{	
+	var form=document.getElementById('report46_header');
+	var balance=form.elements[1];
+	var supplier_filter=form.elements[2];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report46_ini();
+	});
+
+	var supplier_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+	set_my_filter(supplier_data,supplier_filter);
+}

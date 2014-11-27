@@ -1,9 +1,9 @@
 <div id='report41' class='function_detail'>
-	<form id='report41_header' style="width: 35%;float:left">
+	<form id='report41_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Service Name <input type='text'>
-			<input type='button' value='Refresh' onclick='report41_ini();'>
+			Service Name <input type='text' title='If this field is left blank, pre-requisites for all services will be shown'>
+			<input type='submit' value='Refresh'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

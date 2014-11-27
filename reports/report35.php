@@ -2,11 +2,10 @@
 	<form id='report35_header'>
 		<fieldset>
 			<legend>Select customers by:</legend>
-			<b>Products consumed</b> <input type='text' name='credit'>
-			<input type='button' value='Refresh' onclick='report35_ini();'>
+			Product bought <input type='text' required>
+			<input type='submit' value='Refresh'>
 		</fieldset>
 	</form>
 	</br>
-	<div id="report35_map" style="width: 600px; height: 800px"></div>
-	
+	<div id="report35_map" style="width: auto; height: 350px"></div>	
 </div>

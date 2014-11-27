@@ -4,7 +4,7 @@
 
 		echo "<ul>";
 			if(strpos($_SESSION['reports'],'report44-')!==false)
-				echo "<li><a id='report44_link' href='#report44' data-i18n='form.compare_products'></a></li>";
+				echo "<li><a id='report44_link' href='#report44' onclick='report44_header_ini();' data-i18n='form.compare_products'></a></li>";
 			if(strpos($_SESSION['forms'],'form74-')!==false)
 				echo "<li><a id='form74_link' href='#form74' onclick='form74_header_ini(); form74_ini();' data-i18n='form.completed_sale_orders'></a></li>";
 			if(strpos($_SESSION['forms'],'form75-')!==false)

@@ -812,7 +812,7 @@ function modal15_action()
 	set_static_value_list('feedback','type',ftype);
 	set_static_value_list('feedback','rating',frating);
 	$(fdate).datepicker();
-	$(fdate).val(get_my_date());
+	fdate.value=get_my_date();
 		
 	$(form).off("submit");
 	$(form).on("submit",function(event)

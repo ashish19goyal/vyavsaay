@@ -2,9 +2,9 @@
 	<form id='report4_header'>
 		<fieldset>
 			<legend>Select Period</legend>
-			<label>Start date <input type='text'></label>
-			<label>End date <input type='text'></label>
-			<input type='button' value='Refresh' onclick='report4_ini();'>
+			<label>Start date <input type='text' required></label>
+			<label>End date <input type='text' required></label>
+			<input type='submit' value='Refresh'>
 		</fieldset>
 	</form>
 	</br>

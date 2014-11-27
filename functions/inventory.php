@@ -9,7 +9,7 @@
 			if(strpos($_SESSION['reports'],'report40-')!==false)
 				echo "<li><a id='report40_link' href='#report40' onclick='report40_header_ini();' data-i18n='form.surplus_inventory'></a></li>";
 			if(strpos($_SESSION['reports'],'report27-')!==false)
-				echo "<li><a id='report27_link' href='#report27' onclick='report27_header_ini(); report27_ini();' data-i18n='form.expiring_inventory'></a></li>";
+				echo "<li><a id='report27_link' href='#report27' onclick='report27_header_ini();' data-i18n='form.expiring_inventory'></a></li>";
 		echo "</ul>";
 	
 		if(strpos($_SESSION['forms'],'form1-')!==false)

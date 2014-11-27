@@ -1294,7 +1294,7 @@ function form59_add_item()
 				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
+				rowsHTML+="<input type='number' form='form59_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form59_"+id+"' value='"+id+"'>";

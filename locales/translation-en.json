@@ -145,6 +145,7 @@
   	"notifications":"Notifications",
   	"scan_items":"Scan Items",
   	"storage_areas":"Store Areas",
-  	"manage_subscriptions":"Manage Subscriptions"
+  	"manage_subscriptions":"Manage Subscriptions",
+  	"supplier_account_balance" : "Supplier Account Balance"
   }
 }

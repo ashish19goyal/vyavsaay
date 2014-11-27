@@ -10,7 +10,7 @@
 			if(strpos($_SESSION['forms'],'form79-')!==false)
 				echo "<li><a id='form79_link' href='#form79' onclick='form79_header_ini(); form79_ini();' data-i18n='form.manage_task_types'></a></li>";
 			if(strpos($_SESSION['reports'],'report17-')!==false)
-				echo "<li><a id='report17_link' href='#report17' onclick='report17_header_ini(); report17_ini();' data-i18n='form.staff_performance'></a></li>";			
+				echo "<li><a id='report17_link' href='#report17' onclick='report17_header_ini();' data-i18n='form.staff_performance'></a></li>";			
 			if(strpos($_SESSION['reports'],'report30-')!==false)
 				echo "<li><a id='report30_link' href='#report30' onclick='report30_header_ini();' data-i18n='form.tasks_performed'></a></li>";
 		echo "</ul>";

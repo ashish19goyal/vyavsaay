@@ -1,11 +1,11 @@
 <div id='report17' class='function_detail'>
-	<form id='report17_header' style="width: 35%;float:left">
+	<form id='report17_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			From date <input type='text'>
-			To date <input type='text'>
-			Staff Name <input type='text'>
-			<input type='button' value='Refresh' onclick='report17_ini();'>
+			From date <input type='text' required>
+			To date <input type='text' required>
+			Staff Name <input type='text' title='If this field is blank, data for all staff would be shown'>
+			<input type='submit' value='Refresh'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

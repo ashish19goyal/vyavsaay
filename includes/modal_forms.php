@@ -163,11 +163,11 @@
 	<div id="modal15" title="Provide feedback">
 		<form id='modal15_form'>
 			<fieldset>
-				<label>Feedback provider <input type='text'></label><br/>
-				<label>Detail <input type="text"></label><br/>
-				<label>Type <input type="text"></label><br/>
-				<label>Rating <input type="text"></label><br/>
-				<label>Date <input type="text"></label><br/>
+				<label>Feedback provider <input type='text' required></label><br/>
+				<label>Detail <textarea></textarea></label><br/>
+				<label>Type <input type="text" required></label><br/>
+				<label>Rating <input type="text" required></label><br/>
+				<label>Date <input type="text" required></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

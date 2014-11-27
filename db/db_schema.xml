@@ -463,7 +463,7 @@
 			<user_display index='yes' type="VARCHAR(3)"></user_display><!-- yes/no -->
 			<status index='yes' type="VARCHAR(20)"></status><!-- synced/unsynced -->
 			<updated_by index='yes' type='VARCHAR(100)'></updated_by>
-			<last_updated index='no' type="BIGINT"></last_updated>
+			<last_updated index='yes' type="BIGINT"></last_updated>
 	</activities>
 	<notifications>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>

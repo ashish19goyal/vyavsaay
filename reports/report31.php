@@ -3,9 +3,10 @@
 		<fieldset>
 			<legend>Select customers by:</legend>
 			<b>Credit</b> <input type='text' name='credit' readonly='readonly'>
-			<div id="form31_slider"></div>
-			<input type='button' value='Refresh' onclick='report31_ini();'>
+			<div style="width: auto;margin:10px;" id="report31_slider"></div>
+			<input type='submit' value='Refresh'>
 		</fieldset>
 	</form>
-	<div id="report31_map" style="width: 600px; height: 700px"></div>
+	</br>
+	<div id="report31_map" style="width: auto; height: 350px"></div>
 </div>

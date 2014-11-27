@@ -1744,7 +1744,6 @@ function form24_ini()
 
 
 /**
- * this function prepares the table for manage customers form
  * @form Manage Customers
  * @formNo 30
  */
@@ -1844,7 +1843,6 @@ function form30_ini()
 
 
 /**
- * this function prepares the table for manage offers form
  * @form Manage Offers
  * @formNo 35
  */
@@ -1921,6 +1919,11 @@ function form35_ini()
 			
 			$('#form35_body').prepend(rowsHTML);
 			var fields=document.getElementById("form35_"+result.id);
+			var end_filter=fields.elements[2];
+			var status_filter=fields.elements[4];
+			
+			$(end_filter).datepicker();
+			set_static_value_list('offers','status',status_filter);
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -2236,11 +2239,6 @@ function form41_ini()
 
 	$('#form41_header').html("");
 
-	var coordinates_data="<address>" +
-			"<acc_type>master</acc_type>" +
-			"<lat></lat>" +
-			"<lng></lng>" +
-			"</address>";	
 	var lat=get_session_var('lat');
 	var lng=get_session_var('lng');
 	var title=get_session_var('title');
@@ -3082,7 +3080,7 @@ function form53_ini()
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form53_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Bill Id'>";
+					rowsHTML+="<td data-th='Bill Number'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form53_"+result.id+"' value='"+result.bill_id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Supplier'>";

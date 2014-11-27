@@ -2,9 +2,9 @@
 	<form id='report28_header'>
 		<fieldset>
 			<legend>Select filter</legend>
-			Number of days <input type='number' title='Inventory is compared to sales over these many number of days'>
+			Number of days <input type='number' required title='Inventory is compared to sales over these many number of days'>
 			Select Product <input type='text' title='If no product is selected, only top 10 products are shown'>
-			<input type='button' value='Refresh' onclick='report28_ini();'>
+			<input type='submit' value='Refresh'>
 		</fieldset>
 	</form>
 	</br>

@@ -418,6 +418,14 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report46</name>
+			<display_name>supplier_account_balance</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -706,6 +714,14 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>form59</name>
+			<display_name>product_pre-requisites</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form60</name>
 			<display_name>product_attributes</display_name>
 			<status>active</status>
@@ -716,6 +732,38 @@
 		<row>
 			<name>form61</name>
 			<display_name>service_attributes</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form62</name>
+			<display_name>product_reviews</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form63</name>
+			<display_name>service_reviews</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form64</name>
+			<display_name>service_cross_sell</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form66</name>
+			<display_name>product_cross_sell</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -1208,6 +1256,17 @@
 		</row>
 		<row>
 			<username>master</username>
+			<element_id>report46</element_id>
+			<element_name>supplier_account_balance</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
 			<element_id>form1</element_id>
 			<element_name>update_inventory</element_name>
 			<status>active</status>
@@ -1604,6 +1663,17 @@
 		</row>
 		<row>
 			<username>master</username>
+			<element_id>form59</element_id>
+			<element_name>product_pre-requisites</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
 			<element_id>form60</element_id>
 			<element_name>product_attributes</element_name>
 			<status>active</status>
@@ -1617,6 +1687,50 @@
 			<username>master</username>
 			<element_id>form61</element_id>
 			<element_name>service_attributes</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form62</element_id>
+			<element_name>product_reviews</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form63</element_id>
+			<element_name>service_reviews</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form64</element_id>
+			<element_name>service_cross_sell</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form66</element_id>
+			<element_name>product_cross_sell</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1946,6 +2060,13 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<element_id>report46</element_id>
+			<element_name>supplier_account_balance</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<element_id>form1</element_id>
 			<element_name>update_inventory</element_name>
 			<status>active</status>
@@ -2186,6 +2307,83 @@
 		<row>
 			<element_id>form61</element_id>
 			<element_name>service_attributes</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form62</element_id>
+			<element_name>product_reviews</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form63</element_id>
+			<element_name>service_reviews</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form64</element_id>
+			<element_name>service_cross_sell</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form66</element_id>
+			<element_name>product_cross_sell</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form69</element_id>
+			<element_name>create_sale_order</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form70</element_id>
+			<element_name>manage_sale_orders</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form71</element_id>
+			<element_name>manage_accounts</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form72</element_id>
+			<element_name>create_bill</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form74</element_id>
+			<element_name>completed_sale_orders</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form75</element_id>
+			<element_name>pending_sale_orders</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form76</element_id>
+			<element_name>track_payments</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>

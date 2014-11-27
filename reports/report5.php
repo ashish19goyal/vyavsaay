@@ -1,10 +1,10 @@
 <div id='report5' class='function_detail'>
-	<form id='report5_header' style="width: 35%;float:left">
+	<form id='report5_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Min balance amount <input type='text'>
-			Customer <input type='text'>
-			<input type='button' value='Refresh' onclick='report5_ini();'>
+			Min balance amount <input type='number' value='0' required title='Customers with balance more than this amount will be shown'>
+			Customer <input type='text' title='If this field is blank, all applicable customers will be shown'>
+			<input type='submit' value='Refresh'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>
