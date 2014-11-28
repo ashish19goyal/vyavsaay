@@ -323,7 +323,7 @@
 		</row>
 		<row>
 			<name>report34</name>
-			<display_name>profit_projector</display_name>
+			<display_name>effective_margin</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
@@ -420,6 +420,14 @@
 		<row>
 			<name>report46</name>
 			<display_name>supplier_account_balance</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report47</name>
+			<display_name>inventory_value</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
@@ -1125,7 +1133,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report34</element_id>
-			<element_name>profit_projector</element_name>
+			<element_name>effective_margin</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1258,6 +1266,17 @@
 			<username>master</username>
 			<element_id>report46</element_id>
 			<element_name>supplier_account_balance</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report47</element_id>
+			<element_name>inventory_value</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2033,7 +2052,7 @@
 		</row>
 		<row>
 			<element_id>report34</element_id>
-			<element_name>profit_projector</element_name>
+			<element_name>effective_margin</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2062,6 +2081,13 @@
 		<row>
 			<element_id>report46</element_id>
 			<element_name>supplier_account_balance</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report47</element_id>
+			<element_name>inventory_value</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>

@@ -1010,8 +1010,8 @@
 		<row>
 			<tablename>payments</tablename>
 			<listname>type</listname>
-			<name>delivered</name>
-			<value>Delivered</value>
+			<name>paid</name>
+			<value>Paid</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

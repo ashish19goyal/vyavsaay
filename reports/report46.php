@@ -5,6 +5,7 @@
 			Min balance amount <input type='number' value='0' required title='Suppliers with balance more than this amount will be shown'>
 			Supplier <input type='text' title='If this field is blank, all applicable suppliers will be shown'>
 			<input type='submit' value='Refresh'>
+			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

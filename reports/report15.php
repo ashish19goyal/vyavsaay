@@ -1,7 +1,11 @@
 <div id='report15' class='report_detail'>
 	<form id='report15_header'>
 		<fieldset>
-			<input type='button' value='Refresh' onclick='report15_ini();'>
+		<legend>Select Filters</legend>
+			Start date <input type='text' required>
+			End date <input type='text' required>
+			<input type='submit' value='Refresh'>
+			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>
 	</br>

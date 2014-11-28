@@ -12,11 +12,9 @@
 			if(strpos($_SESSION['reports'],'report14-')!==false)
 				echo "<li><a id='report14_link' href='#report14' onclick='report14_header_ini();' data-i18n='form.expenses_by_period'></a></li>";
 			if(strpos($_SESSION['reports'],'report15-')!==false)
-				echo "<li><a id='report15_link' href='#report15' onclick='report15_ini();' data-i18n='form.financial_summary'></a></li>";
+				echo "<li><a id='report15_link' href='#report15' onclick='report15_header_ini();' data-i18n='form.financial_summary'></a></li>";
 			if(strpos($_SESSION['reports'],'report34-')!==false)
-				echo "<li><a id='report34_link' href='#report34' onclick='report34_ini();' data-i18n='form.profit_projector'></a></li>";
-			if(strpos($_SESSION['reports'],'report6-')!==false)
-				echo "<li><a id='report6_link' href='#report6' onclick='report6_header_ini();' data-i18n='form.payments_due'></a></li>";
+				echo "<li><a id='report34_link' href='#report34' onclick='report34_header_ini();' data-i18n='form.effective_margin'></a></li>";
 			if(strpos($_SESSION['forms'],'form71-')!==false)
 				echo "<li><a id='form71_link' href='#form71' onclick='form71_header_ini(); form71_ini();' data-i18n='form.manage_accounts'></a></li>";
 		echo "</ul>";
@@ -33,8 +31,6 @@
 			include "reports/report15.php";
 		if(strpos($_SESSION['reports'],'report34-')!==false)
 			include "reports/report34.php";
-		if(strpos($_SESSION['reports'],'report6-')!==false)
-			include "reports/report6.php";
 		if(strpos($_SESSION['forms'],'form71-')!==false)
 			include "forms/form71.php";
 	?>		

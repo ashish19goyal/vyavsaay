@@ -51,7 +51,7 @@
   	"expense_register":"Expense Register",
   	"expenses_by_period":"Expenses by period",
   	"financial_summary":"Financial Summary",
-  	"profit_projector":"Profit projector",
+  	"effective_margin":"Effective Margin",
   	"payments_due":"Payments due",
   	"payments_due_to_suppliers":"Payments due to Suppliers",
   	"payments_due_from_customers":"Payments Due From Customers",
@@ -146,6 +146,7 @@
   	"scan_items":"Scan Items",
   	"storage_areas":"Store Areas",
   	"manage_subscriptions":"Manage Subscriptions",
-  	"supplier_account_balance" : "Supplier Account Balance"
+  	"supplier_account_balance" : "Supplier Account Balance",
+  	"inventory_value":"Inventory Value"
   }
 }

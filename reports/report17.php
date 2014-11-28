@@ -6,6 +6,7 @@
 			To date <input type='text' required>
 			Staff Name <input type='text' title='If this field is blank, data for all staff would be shown'>
 			<input type='submit' value='Refresh'>
+			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

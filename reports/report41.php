@@ -4,6 +4,7 @@
 			<legend>Select Filters</legend>
 			Service Name <input type='text' title='If this field is left blank, pre-requisites for all services will be shown'>
 			<input type='submit' value='Refresh'>
+			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

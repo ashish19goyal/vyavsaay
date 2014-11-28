@@ -184,10 +184,10 @@
 	</cash_register>
 	<payments>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<acc_name index='yes' type="VARCHAR(90)"></acc_name>
+			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
 			<type index='yes' type="VARCHAR(10)"></type><!-- received/paid -->
-			<total_amount index='no' type="DECIMAL(10,2)"></total_amount>
-			<paid_amount index='no' type="DECIMAL(10,2)"></paid_amount>
+			<total_amount index='no' type="DECIMAL(12,2)"></total_amount>
+			<paid_amount index='no' type="DECIMAL(12,2)"></paid_amount>
 			<status index='yes' type="VARCHAR(10)"></status><!-- pending/closed/cancelled/partial -->
 			<date index='yes' type="BIGINT"></date>
 			<due_date index='yes' type="BIGINT"></due_date>
@@ -248,7 +248,7 @@
 			<customer_name index='yes' type="VARCHAR(100)"></customer_name>
 			<bill_date index='yes' type="BIGINT"></bill_date>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
-			<total index='no' type="DECIMAL(12,2)"></total>
+			<total index='yes' type="DECIMAL(12,2)"></total>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
 			<offer index='no' type="TEXT"></offer>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
@@ -272,7 +272,7 @@
 			<staff index='yes' type="VARCHAR(100)"></staff>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<free_with index="no" type="VARCHAR(90)"></free_with>
-			<last_updated index='no' type="BIGINT"></last_updated>
+			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bill_items>
 	<customer_returns>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>

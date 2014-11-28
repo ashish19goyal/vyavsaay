@@ -2,10 +2,11 @@
 	<form id='report14_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Start date <input type='text'>
-			End date <input type='text'>
-			Select Account <input type='text'>
-			<input type='button' value='Refresh' onclick='report14_ini();'>
+			Start date <input type='text' required>
+			End date <input type='text' required>
+			Select Account <input type='text' title='If this field is left blank, all applicable accounts will be shown'>
+			<input type='submit' value='Refresh'>
+			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>
 	</br>

@@ -168,6 +168,25 @@ function report4_ini()
 		var result=transform_to_pie_sum(modes,'paid_amount','mode');
 		var mydoughchart = new Chart(ctx).Doughnut(result,{});
 		document.getElementById("report4_legend").innerHTML=mydoughchart.generateLegend();
+		
+	   var print_button=form.elements[4];
+	   $(print_button).off('click');
+	   $(print_button).on('click',function(event)
+	   {
+		   var container=document.createElement('div');
+		   var title=document.createElement('div');
+		   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Modes of Payment</b></div>";
+		   var legend=document.createElement('div');
+		   legend.innerHTML="<b>Legend<div style='display: block;'>"+mydoughchart.generateLegend();+"</div></b>";
+		   var report_image=document.createElement('img');
+		   report_image.setAttribute('src',mydoughchart.toBase64Image());
+
+		   container.appendChild(title);
+		   container.appendChild(legend);
+		   container.appendChild(report_image);
+		   $.print(container);
+	   });
+
 		hide_loader();
 	});
 };
@@ -245,6 +264,21 @@ function report5_ini()
 					$('#report5_body').append(rowsHTML);
 				}
 			});
+			
+			var print_button=form.elements[4];
+			$(print_button).off('click');
+			$(print_button).on('click',function(event)
+			{
+			   var container=document.createElement('div');
+			   var title=document.createElement('div');
+			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Customer Account Balance</b></div>";
+			   var table_element=document.getElementById('report5_body').parentNode;
+			   var table_copy=table_element.cloneNode(true);
+			   container.appendChild(title);
+			   container.appendChild(table_copy);
+			   $.print(container);
+			});
+			
 			hide_loader();
 		});
 	});
@@ -257,27 +291,116 @@ function report5_ini()
  */
 function report6_ini()
 {
+	show_loader();
 	var form=document.getElementById('report6_header');
 	var due_date=form.elements[1].value;
 	var customer_name=form.elements[2].value;
 	
+	var canvas_parent=$("#report6_canvas").parent();
+	$("#report6_canvas").remove();
+	$(canvas_parent).append("<canvas id='report6_canvas' class='report_sizing'><canvas>");
+	
 	var ctx = document.getElementById("report6_canvas").getContext("2d");
 
-	var payments_data="<payments>" +
+	var customer_data="<customers>" +
 			"<acc_name>"+customer_name+"</acc_name>" +
-			"<amount></amount>" +
-			"<due_date compare='less than'>"+get_raw_time(due_date)+"</due_date>" +
-			"<status>pending</status>" +
-			"<type>received</type>" +
-			"</payments>";
-
-	fetch_requested_data('report6',payments_data,function(payments)
+			"</customers>";
+	get_single_column_data(function(customers)
 	{
-		console.log(payments);
-		var result=transform_to_bar_sum(payments,'Amount','amount','acc_name');
-		console.log(result);
-		var mybarchart = new Chart(ctx).Bar(result,{});
-	});
+		var customers_string="--";
+		for (var k in customers)
+		{
+			customers_string+=customers[k]+"--";
+		}
+		var payments_data="<payments>" +
+				"<acc_name array='yes'>"+customers_string+"</acc_name>" +
+				"<total_amount></total_amount>" +
+				"<paid_amount></paid_amount>" +
+				"<due_date compare='less than'>"+get_raw_time(due_date)+"</due_date>" +
+				"<status>pending</status>" +
+				"<type></type>" +
+				"</payments>";
+	
+		fetch_requested_data('report6',payments_data,function(payments)
+		{
+			payments.sort(function(a,b)
+			{
+				if(parseFloat(a.total_amount)<parseFloat(b.total_amount))
+				{	return 1;}
+				else 
+				{	return -1;}
+			});
+			
+			var result=new Object();
+			result.datasets=new Array();
+			result.datasets[0]=new Object();
+			result.datasets[0].label="Amount";
+			result.datasets[0].fillColor=getRandomColor();
+			result.datasets[0].strokeColor=result.datasets[0].fillColor;
+			result.datasets[0].highlightFill=getLighterColor(result.datasets[0].fillColor);
+			result.datasets[0].highlightStroke=getLighterColor(result.datasets[0].fillColor);
+			result.datasets[0].data=new Array();
+			result.labels=new Array();
+			
+			for(var i=0; i<payments.length;i++)
+			{
+				var label=payments[i].acc_name;
+				var value=0;
+				if(payments[i].type=='received')
+				{
+					value=parseFloat(payments[i].total_amount)-parseFloat(payments[i].paid_amount);
+				}
+				else
+				{
+					value=parseFloat(payments[i].paid_amount)-parseFloat(payments[i].total_amount);
+				}
+				for(var j=i+1;j<payments.length;j++)
+				{
+					if(payments[j].acc_name===label)
+					{
+						if(payments[j].type=='received')
+						{
+							value+=parseFloat(payments[j].total_amount)-parseFloat(payments[j].paid_amount);
+						}
+						else
+						{
+							value+=parseFloat(payments[j].paid_amount)-parseFloat(payments[j].total_amount);
+						}
+						payments.splice(j,1);
+						j-=1;
+					}
+				}
+				if(result.labels.length<11)
+				{
+					result.labels.push(label);
+					result.datasets[0].data.push(value);
+				}
+			}
+	
+			var mybarchart = new Chart(ctx).Bar(result,{});
+			document.getElementById("report6_legend").innerHTML=mybarchart.generateLegend();
+			
+			var print_button=form.elements[4];
+			$(print_button).off('click');
+			$(print_button).on('click',function(event)
+			{
+  			   var container=document.createElement('div');
+  			   var title=document.createElement('div');
+  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Payments Due from Customers</b></div>";
+  			   var legend=document.createElement('div');
+  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+  			   var report_image=document.createElement('img');
+  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+  			   container.appendChild(title);
+  			   container.appendChild(legend);
+  			   container.appendChild(report_image);
+  			   $.print(container);
+			});
+
+			hide_loader();
+		});
+	},customer_data);
 };
 
 /**
@@ -368,6 +491,21 @@ function report9_ini()
 					}
 				}
 				$('#report9_body').html(rowsHTML);
+				
+				var print_button=form.elements[6];
+				$(print_button).off('click');
+				$(print_button).on('click',function(event)
+				{
+				   var container=document.createElement('div');
+				   var title=document.createElement('div');
+				   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Product Sales report</b></div>";
+				   var table_element=document.getElementById('report9_body').parentNode;
+				   var table_copy=table_element.cloneNode(true);
+				   container.appendChild(title);
+				   container.appendChild(table_copy);
+				   $.print(container);
+				});
+				
 				hide_loader();
 			});
 		});
@@ -380,24 +518,117 @@ function report9_ini()
  */
 function report14_ini()
 {
+	show_loader();
 	var form=document.getElementById('report14_header');
 	var start_date=form.elements[1].value;
 	var end_date=form.elements[2].value;
-	var account=form.elements[3].value;
+	var account_name=form.elements[3].value;
+	
+	var canvas_parent=$("#report14_canvas").parent();
+	$("#report14_canvas").remove();
+	$(canvas_parent).append("<canvas id='report14_canvas' class='report_sizing'><canvas>");
 	
 	var ctx = document.getElementById("report14_canvas").getContext("2d");
-	var expenses_data="<expenses>" +
-			"<amount></amount>" +
-			"<expense_date compare='more than'>"+get_raw_time(start_date)+"</expense_date>" +
-			"<expense_date compare='less than'>"+get_raw_time(end_date)+"</expense_date>" +
-			"<to_acc></to_acc>" +
-			"</expenses>";
 
-	fetch_requested_data('report14',expenses_data,function(expenses)
+	var accounts_data="<accounts>" +
+			"<acc_name>"+account_name+"</acc_name>" +
+			"<type>financial</type>" +
+			"</accounts>";
+	
+	get_single_column_data(function(accounts)
 	{
-		var result=transform_to_bar_sum(expenses,'Amount','amount','to_acc');
-		var mybarchart = new Chart(ctx).Bar(result,{});
-	});
+		var suppliers_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";
+		get_single_column_data(function(suppliers)
+		{
+			var accounts_string="--";
+			var suppliers_string="--";
+			for (var k in accounts)
+			{
+				accounts_string+=accounts[k]+"--";
+			}
+			for (var l in suppliers)
+			{
+				suppliers_string+=suppliers[l]+"--";
+			}
+			
+			var payments_data="<payments>" +
+					"<acc_name array='yes'>"+accounts_string+suppliers_string+"</acc_name>" +
+					"<total_amount></total_amount>" +
+					"<date compare='more than'>"+get_raw_time(start_date)+"</date>" +
+					"<date compare='less than'>"+get_raw_time(end_date)+"</date>" +
+					"<status array='yes'>--pending--closed--</status>" +
+					"<type>paid</type>" +
+					"</payments>";
+		
+			fetch_requested_data('report14',payments_data,function(payments)
+			{
+				var result=new Object();
+				result.datasets=new Array();
+				result.datasets[0]=new Object();
+				result.datasets[0].label="Amount";
+				result.datasets[0].fillColor=getRandomColor();
+				result.datasets[0].strokeColor=result.datasets[0].fillColor;
+				result.datasets[0].highlightFill=getLighterColor(result.datasets[0].fillColor);
+				result.datasets[0].highlightStroke=getLighterColor(result.datasets[0].fillColor);
+				result.datasets[0].data=new Array();
+				result.labels=new Array();
+				
+				for(var i=0;i<accounts.length;i++)
+				{
+					var label=accounts[i];
+					var value=0;
+
+					for(var j=0;j<payments.length;j++)
+					{
+						if(payments[j].acc_name===label)
+						{
+							value+=parseFloat(payments[j].total_amount);
+							payments.splice(j,1);
+							j-=1;
+						}
+					}
+					result.labels.push(label);
+					result.datasets[0].data.push(value);
+				}
+				
+				result.labels.push('Inventory purchase');
+				var value=0
+				for(var j=0;j<payments.length;j++)
+				{
+					if(suppliers_string.search("-"+payments[j].acc_name+"-"))
+					{
+						value+=parseFloat(payments[j].total_amount);
+					}
+				}
+				result.datasets[0].data.push(value);
+			
+				var mybarchart = new Chart(ctx).Bar(result,{});
+				document.getElementById("report14_legend").innerHTML=mybarchart.generateLegend();
+				
+				var print_button=form.elements[5];
+				$(print_button).off('click');
+				$(print_button).on('click',function(event)
+				{
+		  			   var container=document.createElement('div');
+		  			   var title=document.createElement('div');
+		  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Expenses by Period</b></div>";
+		  			   var legend=document.createElement('div');
+		  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+		  			   var report_image=document.createElement('img');
+		  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+		  			   container.appendChild(title);
+		  			   container.appendChild(legend);
+		  			   container.appendChild(report_image);
+		  			   $.print(container);
+				});
+
+				hide_loader();
+			});
+		},suppliers_data);
+	},accounts_data);
 };
 
 
@@ -407,22 +638,30 @@ function report14_ini()
  */
 function report15_ini()
 {
+	show_loader();
+	
+	var form=document.getElementById('report15_header');
+	var start_date=form.elements[1].value;
+	var end_date=form.elements[2].value;
+	
+	var canvas_parent=$("#report15_canvas").parent();
+	$("#report15_canvas").remove();
+	$(canvas_parent).append("<canvas id='report15_canvas' class='report_sizing'><canvas>");
 	var ctx = document.getElementById("report15_canvas").getContext("2d");
 	
 	var payments_data="<payments>" +
-			"<amount></amount>" +
-			"<status>pending</status>" +
-			"<type array='yes'>delivered--received</type>" +
+			"<total_amount></total_amount>" +
+			"<paid_amount></paid_amount>" +
+			"<status array='yes'>--pending--closed--</status>" +
+			"<date compare='more than'>"+get_raw_time(start_date)+"</date>" +
+			"<date compare='less than'>"+get_raw_time(end_date)+"</date>" +
+			"<type></type>" +
 			"</payments>";
-	var capital_data="<payments>" +
-			"<amount></amount>" +
-			"<status>closed</status>" +
-			"<type array='yes'>delivered--received</type>" +
-			"</payments>";
-	var tax_data="<tax>" +
-			"<amount></amount>" +
-			"<status>current</status>" +
-			"</tax>";
+	var tax_data="<transactions>" +
+			"<tax></tax>" +
+			"<trans_date compare='more than'>"+get_raw_time(start_date)+"</trans_date>" +
+			"<trans_date compare='less than'>"+get_raw_time(end_date)+"</trans_date>" +
+			"</transactions>";
 			
 	fetch_requested_data('report15',payments_data,function(payments)
 	{
@@ -437,49 +676,86 @@ function report15_ini()
 		result.datasets[0].data=new Array();
 		result.labels=new Array();
 		
-		var credit_debit=transform_to_sum(payments,'amount','type');
-		for(var i=0;i<credit_debit.length;i++)
+		for(var i=0;i<payments.length;i++)
 		{
-			if(credit_debit[i].label=='delivered')	
+			for(var j=i+1;j<payments.length;j++)
 			{
-				result.labels.push('Debits');
-				result.datasets[0].data.push(credit_debit[i].value);
+				if(payments[i].status==payments[j].status && payments[i].type==payments[j].type)
+				{
+					payments[i].total_amount=parseFloat(payments[i].total_amount)+parseFloat(payments[j].total_amount);
+					payments[i].paid_amount=parseFloat(payments[i].paid_amount)+parseFloat(payments[j].paid_amount);
+					payments.splice(j,1);
+					j-=1;
+				}
 			}
-			else if(credit_debit[i].label=='received')	
+		}
+
+		var capital_amount=0;
+		var debit_amount=0;
+		var credit_amount=0;
+
+		for(var x=0;x<payments.length;x++)
+		{
+			if(payments[x].type=='paid' && payments[x].status=='pending')	
 			{
-				result.labels.push('Credits');
-				result.datasets[0].data.push(credit_debit[i].value);
+				debit_amount+=parseFloat(payments[x].total_amount)-parseFloat(payments[x].paid_amount);
+			}
+			else if(payments[x].type=='received' && payments[x].status=='pending')	
+			{
+				credit_amount+=parseFloat(payments[x].total_amount)-parseFloat(payments[x].paid_amount);
+			}
+			else if(payments[x].status=='closed')	
+			{
+				if(payments[x].type=='paid')
+				{
+					capital_amount+=parseFloat(payments[x].paid_amount);
+				}
+				else
+				{
+					capital_amount+=parseFloat(payments[x].paid_amount);
+				}
 			}
 		}
 		
-		fetch_requested_data('report15',capital_data,function(capital)
+		result.labels.push('Debits');
+		result.datasets[0].data.push(debit_amount);
+		result.labels.push('Credits');
+		result.datasets[0].data.push(credit_amount);
+		result.labels.push('Working Capital');
+		result.datasets[0].data.push(capital_amount);
+		
+		get_single_column_data(function(taxes)
 		{
-			var cap=transform_to_sum(capital,'amount','type');
-			var working_capital=0;
-			for(var j=0;j<cap.length;j++)
+			var tax_value=0;
+			for(var k in taxes)
 			{
-				if(cap[j].label=='delivered')
-					working_capital-=cap[j].value;
-				else if(cap[j].label=='received')
-					working_capital+=cap[j].value;
+				tax_value+=parseFloat(taxes[k]);
 			}
-			if(cap.length>0)
-			{
-				result.labels.push('Working Capital');
-				result.datasets[0].data.push(working_capital);
-			}
+			result.labels.push('Tax');
+			result.datasets[0].data.push(tax_value);
+			var mybarchart = new Chart(ctx).Bar(result,{});
+			document.getElementById("report15_legend").innerHTML=mybarchart.generateLegend();
 			
-			fetch_requested_data('report15',tax_data,function(taxes)
+			var print_button=form.elements[4];
+			$(print_button).off('click');
+			$(print_button).on('click',function(event)
 			{
-				var tax=transform_to_sum(taxes,'amount','status');
-				if(tax.length>0)
-				{
-					result.labels.push('Tax');
-					result.datasets[0].data.push(tax[0].value);
-				}	
-				var mybarchart = new Chart(ctx).Bar(result,{});
+	  			   var container=document.createElement('div');
+	  			   var title=document.createElement('div');
+	  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Financial Summary</b></div>";
+	  			   var legend=document.createElement('div');
+	  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+	  			   var report_image=document.createElement('img');
+	  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+	  			   container.appendChild(title);
+	  			   container.appendChild(legend);
+	  			   container.appendChild(report_image);
+	  			   $.print(container);
 			});
-		});
+
+			hide_loader();
+		},tax_data);
 	});
 };
 
@@ -575,6 +851,21 @@ function report17_ini()
 					rowsHTML+="</tr>";
 				});
 				$('#report17_body').html(rowsHTML);
+				
+				var print_button=form.elements[5];
+				$(print_button).off('click');
+				$(print_button).on('click',function(event)
+				{
+				   var container=document.createElement('div');
+				   var title=document.createElement('div');
+				   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Staff Performance</b></div>";
+				   var table_element=document.getElementById('report17_body').parentNode;
+				   var table_copy=table_element.cloneNode(true);
+				   container.appendChild(title);
+				   container.appendChild(table_copy);
+				   $.print(container);
+				});
+				
 				hide_loader();
 			});
 		});	
@@ -587,23 +878,49 @@ function report17_ini()
  */
 function report26_ini()
 {
+	show_loader();
 	var form=document.getElementById('report26_header');
 	var start_date=form.elements[1].value;
 	var end_date=form.elements[2].value;
 	var customer=form.elements[3].value;
 	
+	var canvas_parent=$("#report26_canvas").parent();
+	$("#report26_canvas").remove();
+	$(canvas_parent).append("<canvas id='report26_canvas' class='report_sizing'><canvas>");
+	
 	var ctx = document.getElementById("report26_canvas").getContext("2d");
 	var sales_data="<bills>" +
-			"<amount></amount>" +
-			"<customer_name exact='yes'>"+customer+"</customer_name>" +
-			"<date_created compare='more than'>"+get_raw_time(start_date)+"</date_created>" +
-			"<date_created compare='less than'>"+get_raw_time(end_date)+"</date_created>" +
+			"<total sort='desc'></total>" +
+			"<customer_name>"+customer+"</customer_name>" +
+			"<bill_date compare='more than'>"+get_raw_time(start_date)+"</bill_date>" +
+			"<bill_date compare='less than'>"+get_raw_time(end_date)+"</bill_date>" +
 			"</bills>";
 
 	fetch_requested_data('report26',sales_data,function(sales)
 	{
-		var result=transform_to_bar_sum(sales,'Amount','amount','customer_name');
+		var result=transform_to_bar_sum(sales,'Bill Total','total','customer_name');
 		var mybarchart = new Chart(ctx).Bar(result,{});
+		document.getElementById("report26_legend").innerHTML=mybarchart.generateLegend();
+		
+		var print_button=form.elements[5];
+		$(print_button).off('click');
+		$(print_button).on('click',function(event)
+		{
+  			   var container=document.createElement('div');
+  			   var title=document.createElement('div');
+  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Sales by Customers</b></div>";
+  			   var legend=document.createElement('div');
+  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+  			   var report_image=document.createElement('img');
+  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+  			   container.appendChild(title);
+  			   container.appendChild(legend);
+  			   container.appendChild(report_image);
+  			   $.print(container);
+		});
+
+		hide_loader();
 	});
 };
 
@@ -613,21 +930,65 @@ function report26_ini()
  */
 function report27_ini()
 {
+	show_loader();
 	var form=document.getElementById('report27_header');
 	var expiry_date=form.elements[1].value;
-	var product=form.elements[2].value;
+	var product_name=form.elements[2].value;
 	
+	var canvas_parent=$("#report27_canvas").parent();
+	$("#report27_canvas").remove();
+	$(canvas_parent).append("<canvas id='report27_canvas' class='report_sizing'><canvas>");
 	var ctx = document.getElementById("report27_canvas").getContext("2d");
+	
 	var product_data="<product_instances>" +
-			"<quantity></quantity>" +
-			"<product_name>"+product+"</product_name>" +
+			"<product_name>"+product_name+"</product_name>" +
+			"<batch></batch>" +
 			"<expiry compare='less than'>"+get_raw_time(expiry_date)+"</expiry>" +
 			"</product_instances>";
 
 	fetch_requested_data('report27',product_data,function(products)
 	{
-		var result=transform_to_bar_sum(products,'Quantity','quantity','product_name');
-		var mybarchart = new Chart(ctx).Bar(result,{});
+		var products_count=products.length;
+		products.forEach(function(data1)
+		{
+			get_inventory(data1.product_name,data1.batch,function(value0)
+			{
+				data1.quantity=value0;
+				products_count-=1;
+			});
+		});
+
+		var report_timer=setInterval(function()
+		{
+	  	   if(products_count===0)
+	  	   {
+	  		   clearInterval(report_timer);
+	  		   var result=transform_to_bar_sum(products,'Quantity','quantity','product_name');
+	  		   var mybarchart = new Chart(ctx).Bar(result,{});
+	  		   document.getElementById("report27_legend").innerHTML=mybarchart.generateLegend();
+	  		   
+	  		   var print_button=form.elements[4];
+	  		   $(print_button).off('click');
+	  		   $(print_button).on('click',function(event)
+	  			{
+	  			   var container=document.createElement('div');
+	  			   var title=document.createElement('div');
+	  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Expiring Inventory</b></div>";
+	  			   var legend=document.createElement('div');
+	  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+	  			   var report_image=document.createElement('img');
+	  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+	  			   container.appendChild(title);
+	  			   container.appendChild(legend);
+	  			   container.appendChild(report_image);
+	  			   $.print(container);
+				});
+
+	  		   hide_loader();
+	  	   }
+	    },100);
+		
 	});
 };
 
@@ -757,6 +1118,25 @@ function report28_ini()
 		  		   clearInterval(report_timer);
 		  		   var mybarchart = new Chart(ctx).Bar(result,{});
 		  		   document.getElementById("report28_legend").innerHTML=mybarchart.generateLegend();
+		  		   
+		  		   var print_button=form.elements[4];
+					$(print_button).off('click');
+					$(print_button).on('click',function(event)
+					{
+			  			   var container=document.createElement('div');
+			  			   var title=document.createElement('div');
+			  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Short Inventory</b></div>";
+			  			   var legend=document.createElement('div');
+			  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+			  			   var report_image=document.createElement('img');
+			  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+			  			   container.appendChild(title);
+			  			   container.appendChild(legend);
+			  			   container.appendChild(report_image);
+			  			   $.print(container);
+					});
+
 		  		   hide_loader();
 		  	   }
 		    },100);
@@ -770,6 +1150,7 @@ function report28_ini()
  */
 function report29_ini()
 {
+	show_loader();
 	var form=document.getElementById('report29_header');
 	var name=form.elements[1].value;
 	
@@ -847,6 +1228,22 @@ function report29_ini()
 				rowsHTML+="</tr>";
 			}
 			$('#report29_body').html(rowsHTML);
+			
+			var print_button=form.elements[3];
+			$(print_button).off('click');
+			$(print_button).on('click',function(event)
+			{
+			   var container=document.createElement('div');
+			   var title=document.createElement('div');
+			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Pre-requisites for products</b></div>";
+			   var table_element=document.getElementById('report29_body').parentNode;
+			   var table_copy=table_element.cloneNode(true);
+			   container.appendChild(title);
+			   container.appendChild(table_copy);
+			   $.print(container);
+			});
+			
+			hide_loader();
 		});	
 	},product_data);
 };
@@ -880,6 +1277,25 @@ function report30_ini()
 		var result=transform_to_pie_count(tasks,'assignee');
 		var mydoughchart = new Chart(ctx).Doughnut(result,{});
 		document.getElementById("report30_legend").innerHTML=mydoughchart.generateLegend();
+		
+		var print_button=form.elements[4];
+		$(print_button).off('click');
+		$(print_button).on('click',function(event)
+		{
+  			   var container=document.createElement('div');
+  			   var title=document.createElement('div');
+  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Tasks performed by Staff</b></div>";
+  			   var legend=document.createElement('div');
+  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+  			   var report_image=document.createElement('img');
+  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+  			   container.appendChild(title);
+  			   container.appendChild(legend);
+  			   container.appendChild(report_image);
+  			   $.print(container);
+		});
+
 		hide_loader();
 	});
 };
@@ -973,6 +1389,7 @@ function report31_ini()
 					var marker=L.marker(latlng).addTo(map31).bindPopup(result.acc_name+"\nBalance: "+balance_amount);	
 				}
 			});
+			
 			hide_loader();
 		});
 	});
@@ -1129,137 +1546,177 @@ function report33_ini()
 
 /**
  * @reportNo 34
- * @report Profit calculator
+ * @report Effective Margin
  */
 function report34_ini()
 {
+	show_loader();
 	var form=document.getElementById('report34_header');
-	var sales_estimate=form.elements[1].value;
-	var three_months=get_my_time()-90*86400000;
+	var start_date=form.elements[1].value;
+	var end_date=form.elements[2].value;
 	
+	var canvas_parent=$("#report34_canvas").parent();
+	$("#report34_canvas").remove();
+	$(canvas_parent).append("<canvas id='report34_canvas' class='report_sizing'><canvas>");
 	var ctx = document.getElementById("report34_canvas").getContext("2d");
 	
-	var bills_data="<bills>" +
-			"<id></id>" +
-			"<amount></amount>" +
-			"<date_created compare='more than'>"+three_months+"</date_created>" +
-			"<date_created compare='less than'>"+get_my_time()+"</date_created>" +
-			"</bills>";
+	var payments_data="<payments>" +
+			"<total_amount></total_amount>" +
+			"<paid_amount></paid_amount>" +
+			"<date compare='more than'>"+get_raw_time(start_date)+"</date>" +
+			"<date compare='less than'>"+get_my_time(end_date)+"</date>" +
+			"<type></type>" +
+			"<status array='yes'>--pending--closed--</status>" +
+			"</payments>";
 
-	fetch_requested_data('report34',bills_data,function(bills)
+	fetch_requested_data('report34',payments_data,function(payments)
 	{
-		var sale_amount=0;
-		var bill_ids_array="";
-		for(var i in bills)
+		var tax_data="<transactions>" +
+				"<tax></tax>" +
+				"<trans_date compare='more than'>"+get_raw_time(start_date)+"</trans_date>" +
+				"<trans_date compare='less than'>"+get_my_time(end_date)+"</trans_date>" +
+				"</transactions>";
+		get_single_column_data(function(taxes)
 		{
-			sale_amount+=bills[i].amount;
-			bill_ids_array+=bills[i].id+"--";
-		}
-		
-		var bill_item_data="<bill_items>" +
-				"<product_name></product_name>" +
-				"<batch></batch>" +
-				"<quantity></quantity>" +
-				"<bill_id array='yes'>"+bill_ids_array+"</bill_id>" +
-				"</bill_items>";
-		
-		fetch_requested_data('report34',bill_item_data,function(bill_items)
-		{
-			var bi_transformed=transform_to_sum_2columns(bill_items,'quantity','product_name','batch');
-			var product_names_string="";
-			var batches_string="";
-			for(var j in bi_transformed)
+			var bills_data="<bills>" +
+					"<id></id>" +
+					"<bill_date compare='more than'>"+get_raw_time(start_date)+"</bill_date>" +
+					"<bill_date compare='less than'>"+get_raw_time(end_date)+"</bill_date>" +
+					"</bills>";
+			get_single_column_data(function(bills)
 			{
-				product_names_string+=bi_transformed[j].product_name;
-				batches_string+=bi_transformed[j].batch;
-			}
-		
-			var goods_received_data="<goods_received>" +
-					"<product_name array='yes'>"+product_names_string+"</product_name>" +
-					"<batch array='yes'>"+batches_string+"</batch>" +
-					"<cost_price></cost_price>" +
-					"</goods_received>";
-			fetch_requested_data('report34',goods_received_data,function(goods_received)
-			{
-				var gr_transformed=jQuery.unique(goods_received);
-				var cost_amount=0;
-				for (var k in gr_transformed)
+				console.log(bills);
+				var bill_id_string="--";
+				for(var i in bills)
 				{
-					for(var l in bi_transformed)
-					{
-						if(gr_transformed[k].product_name==bi_transformed[l].product_name && gr_transformed[k].batch==bi_transformed[l].batch)
-						{
-							cost_amount+=parseInt(gr_transformed[k].cost_price)*parseInt(bi_transformed[l].quantity);
-							bi_transformed.splice(l,1);
-							break;
-						}
-					}
+					bill_id_string+=bills[i]+"--";
 				}
-					
-				var disposal_data="<disposals>" +
-						"<product_name></product_name>" +
-						"<batch></batch>" +
-						"<quantity></quantity>" +
-						"<date compare='more than'>"+three_months+"</date>" +
-						"<date compare='less than'>"+get_my_time()+"</date>" +
-						"</disposals>";
-				fetch_requested_data('report34',disposal_data,function(disposals)
+			
+				var supplier_bills_data="<supplier_bills>" +
+						"<id></id>" +
+						"<bill_date compare='more than'>"+get_raw_time(start_date)+"</bill_date>" +
+						"<bill_date compare='less than'>"+get_raw_time(end_date)+"</bill_date>" +
+						"</supplier_bills>";
+				get_single_column_data(function(supplier_bills)
 				{
-					var di_transformed=transform_to_sum_2columns(disposals,'quantity','product_name','batch');
-					var disposal_amount=0;
-					for (var m in gr_transformed)
+					console.log(supplier_bills);
+					var sup_bill_id_string="--";
+					for(var i in supplier_bills)
 					{
-						for(var n in di_transformed)
-						{
-							if(gr_transformed[m].product_name==di_transformed[n].product_name && gr_transformed[m].batch==di_transformed[n].batch)
-							{
-								disposal_amount+=parseInt(gr_transformed[m].cost_price)*parseInt(di_transformed[n].quantity);
-								di_transformed.splice(n,1);
-								break;
-							}
-						}
+						sup_bill_id_string+=supplier_bills[i]+"--";
 					}
-					
-					var expense_data="<expenses>" +
-							"<expense_date comapre='more than'>"+three_months+"</expense_date>" +
-							"<expense_date comapre='less than'>"+get_my_time()+"</expense_date>" +
-							"<amount></amount>" +
-							"</expenses>";
-					fetch_requested_data('report34',expense_data,function(expenses)
+				
+					var bill_items_data="<bill_items>" +
+							"<item_name></item_name>" +
+							"<batch></batch>" +
+							"<quantity></quantity>" +
+							"<bill_id array='yes'>"+bill_id_string+"</bill_id>" +
+							"</bill_items>";
+					fetch_requested_data('report34',bill_items_data,function(bill_ids)
 					{
-						var expense_amount=0;
-						for (var o in expenses)
+						console.log(bill_ids);
+						var bill_item_string="--";
+						for(var i in bill_ids)
 						{
-							expense_amount+=parseInt(expenses[o].amount);
+							bill_item_string+=bill_ids[i].item_name+"--";
 						}
 						
-						var transaction_data="<transactions>" +
-								"<id></id>" +
-								"<trans_date compare='more than'>"+three_months+"</trans_date>" +
-								"<trans_date compare='less than'>"+get_my_time()+"</trans_date>" +
-								"</transactions>";
-						
-						fetch_requested_data('report34',transaction_data,function(transactions)
+						var sup_bill_items_data="<supplier_bill_items>" +
+								"<product_name></product_name>" +
+								"<batch></batch>" +
+								"<quantity></quantity>" +
+								"<bill_id array='yes'>"+sup_bill_id_string+"</bill_id>" +
+								"</supplier_bill_items>";
+						fetch_requested_data('report34',sup_bill_items_data,function(sup_bill_ids)
 						{
-							var trans_string="";
-							for (var p in transactions)
+							var sup_bill_item_string="--";
+							for(var i in sup_bill_ids)
 							{
-								trans_string+=transactions[p].id+"--";
+								sup_bill_item_string+=sup_bill_ids[i].item_name+"--";
 							}
 							
-							var tax_data="<tax>" +
-									"<transaction_id array='yes'>"+trans_string+"</transaction_id>" +
-									"<amount></amount>" +
-									"</tax>";
+							var products_data="<product_instances>" +
+									"<product_name array='yes'>"+bill_item_string+sup_bill_item_string+"</product_name>" +
+									"<cost_price sort='desc'></cost_price>" +
+									"</product_instances>";
 							
-							fetch_requested_data('report34',tax_data,function(taxes)
+							fetch_requested_data('report34',products_data,function(products)
 							{
-								var tax_amount=0;
-								for (var q in taxes)
+								for(var j=0; j<products.length;j++)
 								{
-									tax_amount+=parseInt(taxes[q].amount);
+									for(var k=j+1; k<products.length;k++)
+									{
+										if(products[j].product_name===products[k].product_name)
+										{
+											products.splice(k,1);
+											k-=1;
+										}
+									}
 								}
 								
+								/////setting inventory amount///
+								var inventory_amount=0;
+								for(var a in bill_ids)
+								{
+									for(var b in products)
+									{
+										if(bill_ids[a].item_name==products[b].product_name)
+										{
+											inventory_amount-=parseFloat(bill_ids[a].quantity)*parseFloat(products[b].cost_price);
+											break;
+										}
+									}
+								}
+								
+								for(var a in sup_bill_ids)
+								{
+									for(var b in products)
+									{
+										if(sup_bill_ids[a].item_name==products[b].product_name)
+										{
+											inventory_amount+=parseFloat(sup_bill_ids[a].quantity)*parseFloat(products[b].cost_price);
+											break;
+										}
+									}
+								}
+								console.log(inventory_amount);
+								/////setting tax value//////////
+								var tax_amount=0;
+								for (var i in taxes)
+								{
+									tax_amount+=parseFloat(taxes[i]);
+								}
+								
+								/////setting income and expense value//////
+								var expenses_amount=0;
+								var received_amount=0;
+								for(var j in payments)
+								{
+									if(payments[j].type=='paid')
+									{
+										if(payments[j].status=='closed')
+										{
+											expenses_amount+=parseFloat(payments[j].paid_amount);
+										}
+										else
+										{
+											expenses_amount+=parseFloat(payments[j].total_amount);
+										}
+									}
+									else
+									{
+										if(payments[j].status=='closed')
+										{
+											received_amount+=parseFloat(payments[j].paid_amount);
+										}
+										else
+										{
+											received_amount+=parseFloat(payments[j].total_amount);
+										}
+									}
+								}
+								
+								/////////chart preparation/////////
 								var result=new Object();
 								result.datasets=new Array();
 								result.datasets[0]=new Object();
@@ -1271,36 +1728,56 @@ function report34_ini()
 								result.datasets[0].data=new Array();
 								result.labels=new Array();
 								
-								result.labels.push('Current average monthly sale');
-								result.datasets[0].data.push(Math.floor(sale_amount/3));
-								result.labels.push('Estimated cost price');
-								result.datasets[0].data.push(Math.floor(cost_amount/3));
-
-								result.labels.push('Current average monthly expenses');
-								result.datasets[0].data.push(Math.floor(expense_amount/3));
-								result.labels.push('Current average monthly wastage');
-								result.datasets[0].data.push(Math.floor(disposal_amount/3));
-								result.labels.push('Current average monthly taxes');
-								result.datasets[0].data.push(Math.floor(tax_amount/3));
-
-								result.labels.push('Current average monthly profit');
-								result.datasets[0].data.push(Math.floor((sale_amount-cost_amount-expense_amount-disposal_amount-tax_amount)/3));
+								result.labels.push('Income');
+								result.datasets[0].data.push(received_amount);
+								result.labels.push('Expenses');
+								result.datasets[0].data.push(expenses_amount);
+								result.labels.push('Tax');
+								result.datasets[0].data.push(tax_amount);
 								
-								result.labels.push('Projected monthly sale');
-								result.datasets[0].data.push(sales_estimate);
-								
-								var project_profit=Math.floor(((sale_amount-cost_amount-disposal_amount-tax_amount)/sale_amount*sales_estimate)-(expense_amount/3));
-								result.labels.push('Projected monthly profit');
-								result.datasets[0].data.push(project_profit);
+								//////final settings////////////
+								if(inventory_amount>=0)
+								{
+									result.labels.push('Inventory Increase');
+						  		   	result.datasets[0].data.push(inventory_amount);
+								}
+								else
+								{
+									result.labels.push('Inventory Decrease');
+						  		   	result.datasets[0].data.push((-inventory_amount));
+								}	
+					  		   	var mybarchart = new Chart(ctx).Bar(result,{});
+					  		   	document.getElementById("report34_legend").innerHTML=mybarchart.generateLegend();
+					  		   	var margin=((received_amount-expenses_amount-tax_amount+inventory_amount)/received_amount)*100;
+					  		   	document.getElementById("report34_margin").value=margin+"%";
+					  		   	
+					  		    var print_button=form.elements[5];
+								$(print_button).off('click');
+								$(print_button).on('click',function(event)
+								{
+						  			   var container=document.createElement('div');
+						  			   var title=document.createElement('div');
+						  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Effective Margin = "+margin+"%</b></div>";
+						  			   var legend=document.createElement('div');
+						  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+						  			   var report_image=document.createElement('img');
+						  			   report_image.setAttribute('src',mybarchart.toBase64Image());
 
-								
-								var mybarchart = new Chart(ctx).Bar(result,{});
+						  			   container.appendChild(title);
+						  			   container.appendChild(legend);
+						  			   container.appendChild(report_image);
+						  			   $.print(container);
+								});
+
+					  		   	
+					  		   	hide_loader();
+							  	
 							});
 						});
 					});
-				});
-			});
-		});
+				},supplier_bills_data);
+			},bills_data);
+		},tax_data);
 	});
 };
 
@@ -1478,25 +1955,116 @@ function report36_ini()
  */
 function report37_ini()
 {
+	show_loader();
 	var form=document.getElementById('report37_header');
 	var due_date=form.elements[1].value;
 	var supplier_name=form.elements[2].value;
 	
+	var canvas_parent=$("#report37_canvas").parent();
+	$("#report37_canvas").remove();
+	$(canvas_parent).append("<canvas id='report37_canvas' class='report_sizing'><canvas>");
+	
 	var ctx = document.getElementById("report37_canvas").getContext("2d");
 
-	var payments_data="<payments>" +
+	var supplier_data="<suppliers>" +
 			"<acc_name>"+supplier_name+"</acc_name>" +
-			"<amount></amount>" +
-			"<due_date compare='less than'>"+get_raw_time(due_date)+"</due_date>" +
-			"<status>pending</status>" +
-			"<type>delivered</type>" +
-			"</payments>";
-
-	fetch_requested_data('report37',payments_data,function(payments)
+			"</suppliers>";
+	get_single_column_data(function(suppliers)
 	{
-		var result=transform_to_bar_sum(payments,'Amount','amount','acc_name');
-		var mybarchart = new Chart(ctx).Bar(result,{});
-	});
+		var suppliers_string="--";
+		for (var k in suppliers)
+		{
+			suppliers_string+=suppliers[k]+"--";
+		}
+		var payments_data="<payments>" +
+				"<acc_name array='yes'>"+suppliers_string+"</acc_name>" +
+				"<total_amount></total_amount>" +
+				"<paid_amount></paid_amount>" +
+				"<due_date compare='less than'>"+get_raw_time(due_date)+"</due_date>" +
+				"<status>pending</status>" +
+				"<type></type>" +
+				"</payments>";
+	
+		fetch_requested_data('report6',payments_data,function(payments)
+		{
+			payments.sort(function(a,b)
+			{
+				if(parseFloat(a.total_amount)<parseFloat(b.total_amount))
+				{	return 1;}
+				else 
+				{	return -1;}
+			});
+			
+			var result=new Object();
+			result.datasets=new Array();
+			result.datasets[0]=new Object();
+			result.datasets[0].label="Amount";
+			result.datasets[0].fillColor=getRandomColor();
+			result.datasets[0].strokeColor=result.datasets[0].fillColor;
+			result.datasets[0].highlightFill=getLighterColor(result.datasets[0].fillColor);
+			result.datasets[0].highlightStroke=getLighterColor(result.datasets[0].fillColor);
+			result.datasets[0].data=new Array();
+			result.labels=new Array();
+			
+			for(var i=0; i<payments.length;i++)
+			{
+				var label=payments[i].acc_name;
+				var value=0;
+				if(payments[i].type=='received')
+				{
+					value=parseFloat(payments[i].paid_amount)-parseFloat(payments[i].total_amount);
+				}
+				else
+				{
+					value=parseFloat(payments[i].total_amount)-parseFloat(payments[i].paid_amount);
+				}
+				for(var j=i+1;j<payments.length;j++)
+				{
+					if(payments[j].acc_name===label)
+					{
+						if(payments[j].type=='received')
+						{
+							value+=parseFloat(payments[j].paid_amount)-parseFloat(payments[j].total_amount);
+						}
+						else
+						{
+							value+=parseFloat(payments[j].total_amount)-parseFloat(payments[j].paid_amount);
+						}
+						payments.splice(j,1);
+						j-=1;
+					}
+				}
+				if(result.labels.length<11)
+				{
+					result.labels.push(label);
+					result.datasets[0].data.push(value);
+				}
+			}
+	
+			var mybarchart = new Chart(ctx).Bar(result,{});
+			document.getElementById("report37_legend").innerHTML=mybarchart.generateLegend();
+			
+			var print_button=form.elements[4];
+			$(print_button).off('click');
+			$(print_button).on('click',function(event)
+			{
+	  			   var container=document.createElement('div');
+	  			   var title=document.createElement('div');
+	  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Payments Due to Suppliers</b></div>";
+	  			   var legend=document.createElement('div');
+	  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+	  			   var report_image=document.createElement('img');
+	  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+	  			   container.appendChild(title);
+	  			   container.appendChild(legend);
+	  			   container.appendChild(report_image);
+	  			   $.print(container);
+			});
+
+			hide_loader();
+		});
+	},supplier_data);
 };
 
 /**
@@ -1505,36 +2073,77 @@ function report37_ini()
  */
 function report38_ini()
 {
+	show_loader();
 	var form=document.getElementById('report38_header');
 	var start_date=form.elements[1].value;
 	var end_date=form.elements[2].value;
-	var products=form.elements[3].value;
+	var product=form.elements[3].value;
+	
+	var canvas_parent=$("#report38_canvas").parent();
+	$("#report38_canvas").remove();
+	$(canvas_parent).append("<canvas id='report38_canvas' class='report_sizing'><canvas>");
 	
 	var ctx = document.getElementById("report38_canvas").getContext("2d");
 	var bills_data="<bills>" +
 			"<id></id>" +
-			"<date_created compare='more than'>"+get_raw_time(start_date)+"</date_created>" +
-			"<date_created compare='less than'>"+get_raw_time(end_date)+"</date_created>" +
-			"<type>product</type>" +
+			"<bill_date compare='more than'>"+get_raw_time(start_date)+"</bill_date>" +
+			"<bill_date compare='less than'>"+get_raw_time(end_date)+"</bill_date>" +
 			"</bills>";
 
 	get_single_column_data(function(bill_ids)
 	{
-		var bill_id_array="";
-		for(var y in bill_ids)
+		var products_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+
+		get_single_column_data(function(products)
 		{
-			bill_id_array+=bill_ids[y]+"--";
-		}
-		var products_data="<bills_items>" +
-				"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
-				"<quantity></quantity>" +
-				"<product_name></product_name>" +
-				"</bill_items>";
-		fetch_requested_data('report38',products_data,function(product_array)
-		{
-			var result=transform_to_bar_sum(product_array,'Quantity','quantity','product_name');
-			var mybarchart = new Chart(ctx).Bar(result,{});
-		});
+			var products_array="--";
+			for(var i in products)
+			{
+				products_array+=products[i]+"--";
+			}
+			
+			var bill_id_array="--";
+			for(var y in bill_ids)
+			{
+				bill_id_array+=bill_ids[y]+"--";
+			}
+			
+			var products_data="<bill_items>" +
+					"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
+					"<total></total>" +
+					"<item_name array='yes'>"+products_array+"</item_name>" +
+					"<last_updated sort='desc'></last_updated>" +
+					"</bill_items>";
+			fetch_requested_data('report38',products_data,function(product_array)
+			{
+				var result=transform_to_bar_sum(product_array,'Total Amount','total','item_name');
+				var mybarchart = new Chart(ctx).Bar(result,{});
+				document.getElementById("report38_legend").innerHTML=mybarchart.generateLegend();
+				
+				var print_button=form.elements[5];
+				$(print_button).off('click');
+				$(print_button).on('click',function(event)
+				{
+		  			   var container=document.createElement('div');
+		  			   var title=document.createElement('div');
+		  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Sales by Products</b></div>";
+		  			   var legend=document.createElement('div');
+		  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+		  			   var report_image=document.createElement('img');
+		  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+		  			   container.appendChild(title);
+		  			   container.appendChild(legend);
+		  			   container.appendChild(report_image);
+		  			   $.print(container);
+				});
+
+				
+				hide_loader();
+			});
+		},products_data);
 	},bills_data);
 };
 
@@ -1544,37 +2153,75 @@ function report38_ini()
  */
 function report39_ini()
 {
+	show_loader();
 	var form=document.getElementById('report39_header');
 	var start_date=form.elements[1].value;
 	var end_date=form.elements[2].value;
-	var services=form.elements[3].value;
+	var service=form.elements[3].value;
+	
+	var canvas_parent=$("#report39_canvas").parent();
+	$("#report39_canvas").remove();
+	$(canvas_parent).append("<canvas id='report39_canvas' class='report_sizing'><canvas>");
 	
 	var ctx = document.getElementById("report39_canvas").getContext("2d");
+	
 	var bills_data="<bills>" +
 			"<id></id>" +
-			"<date_created compare='more than'>"+get_raw_time(start_date)+"</date_created>" +
-			"<date_created compare='less than'>"+get_raw_time(end_date)+"</date_created>" +
-			"<type>service</type>" +
+			"<bill_date compare='more than'>"+get_raw_time(start_date)+"</bill_date>" +
+			"<bill_date compare='less than'>"+get_raw_time(end_date)+"</bill_date>" +
 			"</bills>";
-
 	get_single_column_data(function(bill_ids)
 	{
-		var bill_id_array="";
-		for(var y in bill_ids)
+		var services_data="<services>" +
+				"<name>"+service+"</name>" +
+				"</services>";
+		get_single_column_data(function(services)
 		{
-			bill_id_array+=bill_ids[y]+"--";
-		}
-		var services_data="<service_instances>" +
-				"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
-				"<actual_cost></actual_cost>" +
-				"<service_name></service_name>" +
-				"</service_instances>";
-		fetch_requested_data('report39',services_data,function(service_array)
-		{
-			var result=transform_to_bar_sum(service_array,'Amount','actual_cost','service_name');
-			var mybarchart = new Chart(ctx).Bar(result,{});
-		});
-	},services_data);
+			var services_array="--";
+			for(var i in bill_ids)
+			{
+				services_array+=services[i]+"--";
+			}
+			
+			var bill_id_array="--";
+			for(var j in bill_ids)
+			{
+				bill_id_array+=bill_ids[j]+"--";
+			}
+			var services_data="<bill_items>" +
+					"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
+					"<total sort='desc'></total>" +
+					"<item_name array='yes'>"+services_array+"</item_name>" +
+					"</bill_items>";
+			fetch_requested_data('report39',services_data,function(service_array)
+			{
+				var result=transform_to_bar_sum(service_array,'Total Amount','total','item_name');
+				var mybarchart = new Chart(ctx).Bar(result,{});
+				document.getElementById("report39_legend").innerHTML=mybarchart.generateLegend();
+				
+				var print_button=form.elements[5];
+				$(print_button).off('click');
+				$(print_button).on('click',function(event)
+				{
+		  			   var container=document.createElement('div');
+		  			   var title=document.createElement('div');
+		  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Sales by Services</b></div>";
+		  			   var legend=document.createElement('div');
+		  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+		  			   var report_image=document.createElement('img');
+		  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+		  			   container.appendChild(title);
+		  			   container.appendChild(legend);
+		  			   container.appendChild(report_image);
+		  			   $.print(container);
+				});
+
+				
+				hide_loader();
+			});
+		},services_data);
+	},bills_data);
 };
 
 /**
@@ -1702,6 +2349,26 @@ function report40_ini()
 		  		   clearInterval(report_timer);
 		  		   var mybarchart = new Chart(ctx).Bar(result,{});
 		  		   document.getElementById("report40_legend").innerHTML=mybarchart.generateLegend();
+		  		   
+		  		   var print_button=form.elements[4];
+					$(print_button).off('click');
+					$(print_button).on('click',function(event)
+					{
+			  			   var container=document.createElement('div');
+			  			   var title=document.createElement('div');
+			  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Surplus Inventory</b></div>";
+			  			   var legend=document.createElement('div');
+			  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+			  			   var report_image=document.createElement('img');
+			  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+			  			   container.appendChild(title);
+			  			   container.appendChild(legend);
+			  			   container.appendChild(report_image);
+			  			   $.print(container);
+					});
+
+		  		   
 		  		   hide_loader();
 		  	   }
 		    },100);
@@ -1715,6 +2382,7 @@ function report40_ini()
  */
 function report41_ini()
 {
+	show_loader();
 	var form=document.getElementById('report41_header');
 	var name=form.elements[1].value;
 	
@@ -1791,6 +2459,22 @@ function report41_ini()
 				rowsHTML+="</tr>";
 			}
 			$('#report41_body').html(rowsHTML);
+			
+			var print_button=form.elements[3];
+			$(print_button).off('click');
+			$(print_button).on('click',function(event)
+			{
+			   var container=document.createElement('div');
+			   var title=document.createElement('div');
+			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Pre-requisites for Services</b></div>";
+			   var table_element=document.getElementById('report41_body').parentNode;
+			   var table_copy=table_element.cloneNode(true);
+			   container.appendChild(title);
+			   container.appendChild(table_copy);
+			   $.print(container);
+			});
+			
+			hide_loader();
 		});	
 
 	},service_data);
@@ -1802,6 +2486,8 @@ function report41_ini()
  */
 function report42_ini()
 {
+	show_loader();
+	
 	var form=document.getElementById('report42_header');
 	var type=form.elements[1].value;
 	var start_date=form.elements[2].value;
@@ -1842,6 +2528,22 @@ function report42_ini()
 			rowsHTML+="</tr>";
 		});
 		$('#report42_body').html(rowsHTML);
+		
+		var print_button=form.elements[5];
+		$(print_button).off('click');
+		$(print_button).on('click',function(event)
+		{
+		   var container=document.createElement('div');
+		   var title=document.createElement('div');
+		   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Feedback</b></div>";
+		   var table_element=document.getElementById('report42_body').parentNode;
+		   var table_copy=table_element.cloneNode(true);
+		   container.appendChild(title);
+		   container.appendChild(table_copy);
+		   $.print(container);
+		});
+		
+		hide_loader();
 	});	
 };
 
@@ -1981,6 +2683,26 @@ function report43_ini()
 
   		   var mybarchart = new Chart(ctx).Bar(result,{});
   		   document.getElementById("report43_legend").innerHTML=mybarchart.generateLegend();
+  		   
+  		   var print_button=form.elements[7];
+			$(print_button).off('click');
+			$(print_button).on('click',function(event)
+			{
+	  			   var container=document.createElement('div');
+	  			   var title=document.createElement('div');
+	  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Change in Customer Purchasing</b></div>";
+	  			   var legend=document.createElement('div');
+	  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+	  			   var report_image=document.createElement('img');
+	  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+	  			   container.appendChild(title);
+	  			   container.appendChild(legend);
+	  			   container.appendChild(report_image);
+	  			   $.print(container);
+			});
+
+  		   
   		   hide_loader();
 		});
 	});
@@ -2028,6 +2750,21 @@ function report44_ini()
 				$('#report44_body').prepend(rowsHTML);			
 			}
 		}
+		
+		var print_button=form.elements[3];
+		$(print_button).off('click');
+		$(print_button).on('click',function(event)
+		{
+		   var container=document.createElement('div');
+		   var title=document.createElement('div');
+		   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Compare product prices</b></div>";
+		   var table_element=document.getElementById('report44_body').parentNode;
+		   var table_copy=table_element.cloneNode(true);
+		   container.appendChild(title);
+		   container.appendChild(table_copy);
+		   $.print(container);
+		});
+		
 		hide_loader();
 	});
 };
@@ -2160,7 +2897,147 @@ function report46_ini()
 					$('#report46_body').append(rowsHTML);
 				}
 			});
+			var print_button=form.elements[4];
+			$(print_button).off('click');
+			$(print_button).on('click',function(event)
+			{
+			   var container=document.createElement('div');
+			   var title=document.createElement('div');
+			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Supplier Account Balance</b></div>";
+			   var table_element=document.getElementById('report46_body').parentNode;
+			   var table_copy=table_element.cloneNode(true);
+			   container.appendChild(title);
+			   container.appendChild(table_copy);
+			   $.print(container);
+			});
 			hide_loader();
 		});
 	});
 };
+
+/**
+ * @reportNo 47
+ * @report Inventory Value
+ */
+function report47_ini()
+{
+	show_loader();
+	var form=document.getElementById('report47_header');
+	var product_name=form.elements[1].value;
+	var select_all=form.elements[2];
+	
+	var canvas_parent=$("#report47_canvas").parent();
+	$("#report47_canvas").remove();
+	$(canvas_parent).append("<canvas id='report47_canvas' class='report_sizing'><canvas>");
+	var ctx = document.getElementById("report47_canvas").getContext("2d");
+	
+	var products_data="<product_instances>" +
+			"<product_name>"+product_name+"</product_name>" +
+			"<batch></batch>" +
+			"<cost_price sort='desc'></cost_price>" +
+			"<sale_price></sale_price>" +
+			"</product_instances>";
+	fetch_requested_data('report47',products_data,function(products)
+	{
+		/////setting inventory value//////
+		var products_inventory_count=products.length;
+		var inventory_cost_price=0;
+		var inventory_sale_price=0;
+		products.forEach(function(product)
+		{
+			get_inventory(product.product_name,product.batch,function(quantity)
+			{
+				product.cost=parseFloat(quantity)*parseFloat(product.cost_price);
+				product.sale=parseFloat(quantity)*parseFloat(product.sale_price);
+				inventory_cost_price+=product.cost;
+				inventory_sale_price+=product.sale;
+				products_inventory_count-=1;
+			});
+		});
+				
+		/////////chart preparation/////////
+		var result=new Object();
+		result.datasets=new Array();
+		result.datasets[0]=new Object();
+		result.datasets[0].label="Sale Value";
+		result.datasets[0].fillColor=getRandomColor();
+		result.datasets[0].strokeColor=result.datasets[0].fillColor;
+		result.datasets[0].highlightFill=getLighterColor(result.datasets[0].fillColor);
+		result.datasets[0].highlightStroke=getLighterColor(result.datasets[0].fillColor);
+		result.datasets[0].data=new Array();
+		result.datasets[1]=new Object();
+		result.datasets[1].label='Purchase Value';
+		result.datasets[1].fillColor=getRandomColor();
+		result.datasets[1].strokeColor=result.datasets[0].fillColor;
+		result.datasets[1].highlightFill=getLighterColor(result.datasets[1].fillColor);
+		result.datasets[1].highlightStroke=getLighterColor(result.datasets[1].fillColor);
+		result.datasets[1].data=new Array();
+		
+		result.labels=new Array();
+		
+		//////final settings////////////
+		var report_timer=setInterval(function()
+		{
+	  	   if(products_inventory_count===0)
+	  	   {
+	  		   clearInterval(report_timer);
+	  		   if(select_all.checked)
+	  		   {
+		  		   result.labels.push('Total Inventory');
+		  		   result.datasets[0].data.push(inventory_sale_price);
+		  		   result.datasets[1].data.push(inventory_cost_price);
+	  		   }
+	  		   else
+	  		   {
+	  			   for(var i=0;i<products.length;i++)
+	  			   {
+	  				   for(var j=i+1; j<products.length;j++)
+	  				   {
+	  					   if(products[i].product_name==products[j].name)
+	  					   {
+	  						 products[i].cost+=products[j].cost;
+	  						 products[i].sale+=products[j].sale;
+	  						 products.splice(j,1);
+		  					 j-=1;
+	  					   }
+	  					   
+	  				   }
+	  				   if(result.labels.length<11)
+	  				   {
+		  				   result.labels.push(products[i].product_name);
+				  		   result.datasets[0].data.push(products[i].sale);
+				  		   result.datasets[1].data.push(products[i].cost);
+	  				   }
+	  				   else
+	  				   {
+	  					   break;
+	  				   }
+	  			   }
+	  		   }
+	  		   var mybarchart=new Chart(ctx).Bar(result,{});
+	  		   document.getElementById("report47_legend").innerHTML=mybarchart.generateLegend();
+
+	  		   var print_button=form.elements[4];
+	  		   $(print_button).off('click');
+	  		   $(print_button).on('click',function(event)
+	  		   {
+	  			   var container=document.createElement('div');
+	  			   var title=document.createElement('div');
+	  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Inventory Value</b></div>";
+	  			   var legend=document.createElement('div');
+	  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+	  			   var report_image=document.createElement('img');
+	  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+
+	  			   container.appendChild(title);
+	  			   container.appendChild(legend);
+	  			   container.appendChild(report_image);
+	  			   $.print(container);
+	  		   });
+
+	  		   hide_loader();
+	  	   }
+	    },100);
+	});
+};
+

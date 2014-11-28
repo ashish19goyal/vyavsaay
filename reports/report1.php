@@ -5,6 +5,7 @@
 			Date Since <input type='text' required title='Date since the changes are to be evaluated'>
 			Product <input type='text' title='If product is not specified, all applicable products will be shown'>
 			<input type='submit' value='Refresh'>
+			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

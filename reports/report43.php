@@ -17,6 +17,7 @@
 			</div>
 			<div style='display:block;float:left;margin:5px;'>
 			<input type='submit' value='Refresh'>
+			<input type='button' title='Print' class='print_icon'>
 			</div>
 		</fieldset>
 	</form>

@@ -731,7 +731,7 @@ function form11_update_item(form)
 		$("#form11_whatsapp_"+data_id).attr('href',"whatsapp://send?text="+message_string);
 		
 		var mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Payment+Receipt+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+message_string;
-		$('#form11_gmail').attr('href',mail_string);
+		$("#form11_gmail_"+data_id).attr('href',mail_string);
 		
 		for(var i=0;i<7;i++)
 		{

@@ -120,8 +120,8 @@
 	<div id="modal12" title="Add new account">
 		<form id='modal12_form'>
 			<fieldset>
-				<label>Name <input type='text'></label><br/>
-				<label>Description <input type="text"></label><br/>
+				<label>Name <input type='text' required></label><br/>
+				<label>Description <textarea></textarea></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

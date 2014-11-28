@@ -7,6 +7,7 @@
 			Customer <input type='text'>
 			Date Since <input type='text' required>
 			<input type='submit' value='Refresh'>
+			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

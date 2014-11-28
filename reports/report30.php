@@ -5,6 +5,7 @@
 			Start date <input type='text' required>
 			End date <input type='text' required>
 			<input type='submit' value='Refresh'>
+			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>
 	</br>

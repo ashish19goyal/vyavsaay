@@ -1,11 +1,12 @@
 <div id='report39' class='report_detail'>
-	<form id='report39_header' style="width: 35%;float:left">
+	<form id='report39_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Start date <input type='text'>
-			End date <input type='text'>
-			Select Service <input type='text'>
-			<input type='button' value='Refresh' onclick='report39_ini();'>
+			Start date <input type='text' required>
+			End date <input type='text' required>
+			Select Service <input type='text' title='If this field is left blank, top 10 services will be selected'>
+			<input type='submit' value='Refresh'>
+			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>
 	</br>

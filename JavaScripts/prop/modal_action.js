@@ -567,7 +567,7 @@ function modal12_action()
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>accounts</tablename>" +
-					"<link_to></link_to>" +
+					"<link_to>form71</link_to>" +
 					"<title>Added</title>" +
 					"<notes>New account "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +

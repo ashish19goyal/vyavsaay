@@ -2,9 +2,10 @@
 	<form id='report37_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Due date <input type='text'>
-			Supplier <input type='text'>
-			<input type='button' value='Refresh' onclick='report37_ini();'>
+			Due date <input type='text' required>
+			Supplier <input type='text' title='If this field is left blank, top 10 suppliers will be shown'>
+			<input type='submit' value='Refresh'>
+			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>
 	</br>

@@ -116,8 +116,11 @@ function transform_to_bar_sum(data_array,label_display,sum_column,label_column)
 				j-=1;
 			}
 		}
-		result.labels.push(label);
-		result.datasets[0].data.push(value);
+		if(result.labels.length<11)
+		{
+			result.labels.push(label);
+			result.datasets[0].data.push(value);
+		}
 	}
 	return result;
 }

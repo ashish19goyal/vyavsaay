@@ -2,9 +2,10 @@
 	<form id='report27_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Expiry by <input type='text'>
-			Select Product <input type='text'>
-			<input type='button' value='Refresh' onclick='report27_ini();'>
+			Expiry by <input type='text' required>
+			Select Product <input type='text' title='If this field is left blank, top 10 products will be selected'>
+			<input type='submit' value='Refresh'>
+			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>
 	</br>
