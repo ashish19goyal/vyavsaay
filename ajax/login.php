@@ -40,8 +40,8 @@ use RetailingEssentials\db_connect;
 				
 				$session_var="<session>";
 				
-				$stmt=$conn->conn->prepare("select name,value from user_preferences where type in (?,?) and status=?");
-				$stmt->execute(array('template','other','active'));
+				$stmt=$conn->conn->prepare("select name,value from user_preferences where type in (?,?,?) and status=?");
+				$stmt->execute(array('template','other','accounting','active'));
 				while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
 				{
 					$session_var.="<".$row['name'].">";

@@ -1,8 +1,6 @@
 <div id='maps_main'>
 	<?php
 		echo "<ul>";
-			if(strpos($_SESSION['forms'],'form41-')!==false)
-				echo "<li><a id='form41_link' href='#form41' onclick='form41_ini();' data-i18n='form.verify_addresses'></a></li>";
 			if(strpos($_SESSION['reports'],'report31-')!==false)
 				echo "<li><a id='report31_link' href='#report31' onclick='report31_header_ini();' data-i18n='form.customer_map_by_credit'></a></li>";
 			if(strpos($_SESSION['reports'],'report35-')!==false)
@@ -15,8 +13,6 @@
 				echo "<li><a id='report36_link' href='#report36' onclick='report36_header_ini();' data-i18n='form.supplier_map_by_products'></a></li>";
 		echo "</ul>";
 
-		if(strpos($_SESSION['forms'],'form41-')!==false)
-			include "forms/form41.php";
 		if(strpos($_SESSION['reports'],'report31-')!==false)
 			include "reports/report31.php";
 		if(strpos($_SESSION['reports'],'report35-')!==false)

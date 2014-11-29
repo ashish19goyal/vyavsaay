@@ -1,13 +1,13 @@
 @CHARSET "UTF-8";
 
-input[readonly="readonly"]{
+input[readonly="readonly"],input[readonly="readonly"]:focus{
 	background-color: inherit;
 	color: inherit;
 	border-width: 0;
 	width: auto;
 }
 
-textarea[readonly="readonly"]{
+textarea[readonly="readonly"],textarea[readonly="readonly"]:focus{
 	background-color: inherit;
 	color: inherit;
 	border-width: 0;
@@ -23,10 +23,11 @@ input{
 	width: auto; 
 }
 
-input[type="text"]:focus,input[type="password"]:focus{
+input:not([readonly="readonly"]):focus,textarea:not([readonly="readonly"]):focus{
 	background-color: yellow;
 	outline: none;
 }
+
 
 td>input[type="text"]
 {

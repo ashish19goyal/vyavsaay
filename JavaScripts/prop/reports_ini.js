@@ -1343,7 +1343,7 @@ function report31_ini()
 			"<lng></lng>" +
 			"<acc_name></acc_name>" +
 			"<address></address>" +
-			"<street></street>" +
+			"<pincode></pincode>" +
 			"<city></city>" +
 			"<state></state>" +
 			"<country></country>" +
@@ -1433,7 +1433,7 @@ function report32_ini()
 			"<lng></lng>" +
 			"<acc_name></acc_name>" +
 			"<address></address>" +
-			"<street></street>" +
+			"<pincode></pincode>" +
 			"<city></city>" +
 			"<state></state>" +
 			"<country></country>" +
@@ -1493,7 +1493,7 @@ function report33_ini()
 			"<lng></lng>" +
 			"<acc_name></acc_name>" +
 			"<address></address>" +
-			"<street></street>" +
+			"<pincode></pincode>" +
 			"<city></city>" +
 			"<state></state>" +
 			"<country></country>" +
@@ -1848,7 +1848,7 @@ function report35_ini()
 					"<lng></lng>" +
 					"<acc_name array='yes'>"+customers_array+"</acc_name>" +
 					"<address></address>" +
-					"<street></street>" +
+					"<pincode></pincode>" +
 					"<city></city>" +
 					"<state></state>" +
 					"<country></country>" +
@@ -1930,7 +1930,7 @@ function report36_ini()
 					"<lng></lng>" +
 					"<acc_name array='yes'>"+suppliers_array+"</acc_name>" +
 					"<address></address>" +
-					"<street></street>" +
+					"<pincode></pincode>" +
 					"<city></city>" +
 					"<state></state>" +
 					"<country></country>" +

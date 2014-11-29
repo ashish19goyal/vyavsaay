@@ -36,71 +36,6 @@ function is_online()
 		return false;
 }
 
-/**
- * 
- * @returns {Boolean}
- */
-function is_set_stocks()
-{
-	var stocks=sessionStorage.getItem('stocks');
-	if(stocks=='yes')
-		return true;
-	else
-		return false;
-}
-
-
-/**
- * 
- * @returns {Boolean}
- */
-function is_set_tasks()
-{
-	var tasks=sessionStorage.getItem('tasks');
-	if(tasks=='yes')
-		return true;
-	else
-		return false;
-}
-
-/**
- * 
- * @returns {Boolean}
- */
-function is_set_accounts()
-{
-	var accounts=sessionStorage.getItem('accounts');
-	if(accounts=='yes')
-		return true;
-	else
-		return false;
-}
-
-/**
- * 
- * @returns {Boolean}
- */
-function is_set_customers()
-{
-	var customers=sessionStorage.getItem('customers');
-	if(customers=='yes')
-		return true;
-	else
-		return false;
-}
-
-/**
- * 
- * @returns {Boolean}
- */
-function is_set_bills()
-{
-	var bills=sessionStorage.getItem('bills');
-	if(bills=='yes')
-		return true;
-	else
-		return false;
-}
 
 /**
  * 
@@ -172,6 +107,42 @@ function get_theme()
 	var css="./CSS/"+theme+".css";
 	return css;
 }
+
+
+function get_credit_period()
+{
+	var period=sessionStorage.getItem('credit_period');
+	if(period==null || period=='')
+	{
+		period=0;
+	}
+	var p_time=get_my_time()+(parseFloat(period)*86400000);
+	return p_time;
+}
+
+
+function get_debit_period()
+{
+	var period=sessionStorage.getItem('debit_period');
+	if(period==null || period=='')
+	{
+		period=0;
+	}
+	var p_time=get_my_time()+(parseFloat(period)*86400000);
+	return p_time;
+}
+
+function get_task_due_period()
+{
+	var period=sessionStorage.getItem('task_due_period');
+	if(period==null || period=='')
+	{
+		period=0;
+	}
+	var p_time=get_my_time()+(parseFloat(period)*3600000);
+	return p_time;
+}
+
 
 /**
  * 

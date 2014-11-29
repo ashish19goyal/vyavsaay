@@ -218,7 +218,7 @@ function form10_create_item(form)
 						"<name>"+pre_requisite.name+"</name>" +
 						"<assignee>"+staff+"</assignee>" +
 						"<t_initiated>"+get_my_time()+"</t_initiated>" +
-						"<t_due></t_due>" +
+						"<t_due>"+get_task_due_period()+"</t_due>" +
 						"<status>pending</status>" +
 						"<task_hours>"+pre_requisite.quantity+"</task_hours>" +
 						"<source>service</source>" +
@@ -324,7 +324,7 @@ function form10_create_item(form)
 							"<name>"+free_pre_requisite.name+"</name>" +
 							"<assignee>"+staff+"</assignee>" +
 							"<t_initiated>"+get_my_time()+"</t_initiated>" +
-							"<t_due></t_due>" +
+							"<t_due>"+get_task_due_period()+"</t_due>" +
 							"<status>pending</status>" +
 							"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
 							"<source>service</source>" +
@@ -567,7 +567,7 @@ function form10_create_form()
 									"<name>"+free_pre_requisite.name+"</name>" +
 									"<assignee></assignee>" +
 									"<t_initiated>"+get_my_time()+"</t_initiated>" +
-									"<t_due></t_due>" +
+									"<t_due>"+get_task_due_period()+"</t_due>" +
 									"<status>pending</status>" +
 									"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
 									"<source>service</source>" +
@@ -639,7 +639,7 @@ function form10_create_form()
 						"<total_amount>"+total+"</total_amount>" +
 						"<paid_amount>"+total+"</paid_amount>" +
 						"<acc_name>"+customer+"</acc_name>" +
-						"<due_date>"+get_my_time()+"</due_date>" +
+						"<due_date>"+get_credit_period()+"</due_date>" +
 						"<mode>cash</mode>" +
 						"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 						"<bill_id>"+data_id+"</bill_id>" +
@@ -1099,7 +1099,7 @@ function form12_create_form()
 						"<total_amount>"+total+"</total_amount>" +
 						"<paid_amount>"+total+"</paid_amount>" +
 						"<acc_name>"+customer+"</acc_name>" +
-						"<due_date>"+get_my_time()+"</due_date>" +
+						"<due_date>"+get_credit_period()+"</due_date>" +
 						"<mode>cash</mode>" +
 						"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 						"<bill_id>"+data_id+"</bill_id>" +
@@ -1397,7 +1397,7 @@ function form15_create_form()
 					"<total_amount>"+total+"</total_amount>" +
 					"<paid_amount>0</paid_amount>" +
 					"<acc_name>"+customer+"</acc_name>" +
-					"<due_date>"+get_my_time()+"</due_date>" +
+					"<due_date>"+get_debit_period()+"</due_date>" +
 					"<mode></mode>" +
 					"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 					"<bill_id>"+data_id+"</bill_id>" +
@@ -1596,7 +1596,7 @@ function form19_create_form()
 					"<total_amount>"+total+"</total_amount>" +
 					"<paid_amount>0</paid_amount>" +
 					"<acc_name>"+supplier+"</acc_name>" +
-					"<due_date>"+get_my_time()+"</due_date>" +
+					"<due_date>"+get_credit_period()+"</due_date>" +
 					"<mode></mode>" +
 					"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 					"<bill_id>"+data_id+"</bill_id>" +
@@ -1813,7 +1813,7 @@ function form21_create_form()
 					"<total_amount>"+total+"</total_amount>" +
 					"<paid_amount>0</paid_amount>" +
 					"<acc_name>"+supplier+"</acc_name>" +
-					"<due_date>"+get_my_time()+"</due_date>" +
+					"<due_date>"+get_debit_period()+"</due_date>" +
 					"<mode></mode>" +
 					"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 					"<bill_id>"+data_id+"</bill_id>" +
@@ -2154,10 +2154,12 @@ function form56_create_item(form)
 		var last_updated=get_my_time();
 		var receiver=account;
 		var giver="master";
+		var due_time=get_debit_period();
 		if(type=='received')
 		{
 			giver=account;
 			receiver="master";
+			due_time=get_credit_period();
 		}
 		var data_xml="<cash_register>" +
 					"<id>"+data_id+"</id>" +
@@ -2202,7 +2204,7 @@ function form56_create_item(form)
 					"<paid_amount>"+amount+"</paid_amount>" +
 					"<status>closed</status>" +
 					"<date>"+get_my_time()+"</date>" +
-					"<due_date>"+get_my_time()+"</due_date>" +
+					"<due_date>"+due_time+"</due_date>" +
 					"<mode>cash</mode>" +
 					"<transaction_id>"+payment_id+"</transaction_id>" +
 					"<bill_id>"+data_id+"</bill_id>" +
@@ -3338,7 +3340,7 @@ function form70_bill(order_id)
 										"<total_amount>"+bill_total+"</total_amount>" +
 										"<paid_amount>0</paid_amount>" +
 										"<acc_name>"+sale_orders[z].customer_name+"</acc_name>" +
-										"<due_date>"+get_my_time()+"</due_date>" +
+										"<due_date>"+get_credit_period()+"</due_date>" +
 										"<mode></mode>" +
 										"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 										"<bill_id>"+order_id+"</bill_id>" +
@@ -3462,7 +3464,7 @@ function form72_create_item(form)
 							"<name>"+pre_requisite.name+"</name>" +
 							"<assignee>"+staff+"</assignee>" +
 							"<t_initiated>"+get_my_time()+"</t_initiated>" +
-							"<t_due></t_due>" +
+							"<t_due>"+get_task_due_period()+"</t_due>" +
 							"<status>pending</status>" +
 							"<task_hours>"+pre_requisite.quantity+"</task_hours>" +
 							"<source>service</source>" +
@@ -3984,7 +3986,7 @@ function form72_create_form()
 									"<name>"+free_pre_requisite.name+"</name>" +
 									"<assignee></assignee>" +
 									"<t_initiated>"+get_my_time()+"</t_initiated>" +
-									"<t_due></t_due>" +
+									"<t_due>"+get_task_due_period()+"</t_due>" +
 									"<status>pending</status>" +
 									"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
 									"<source>service</source>" +
@@ -4056,7 +4058,7 @@ function form72_create_form()
 						"<total_amount>"+total+"</total_amount>" +
 						"<paid_amount>"+total+"</paid_amount>" +
 						"<acc_name>"+customer+"</acc_name>" +
-						"<due_date>"+get_my_time()+"</due_date>" +
+						"<due_date>"+get_credit_period()+"</due_date>" +
 						"<mode>cash</mode>" +
 						"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 						"<bill_id>"+data_id+"</bill_id>" +
@@ -4740,7 +4742,7 @@ function form82_bill()
 								"<total_amount>"+bill_total+"</total_amount>" +
 								"<paid_amount>0</paid_amount>" +
 								"<acc_name>"+customer+"</acc_name>" +
-								"<due_date>"+get_my_time()+"</due_date>" +
+								"<due_date>"+get_credit_period()+"</due_date>" +
 								"<mode></mode>" +
 								"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 								"<bill_id>"+order_id+"</bill_id>" +
@@ -4978,7 +4980,7 @@ function form84_bills()
 												"<name>"+free_pre_requisite.name+"</name>" +
 												"<assignee></assignee>" +
 												"<t_initiated>"+get_my_time()+"</t_initiated>" +
-												"<t_due></t_due>" +
+												"<t_due>"+get_task_due_period()+"</t_due>" +
 												"<status>pending</status>" +
 												"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
 												"<source>service</source>" +
@@ -5069,7 +5071,7 @@ function form84_bills()
 												"<name>"+free_pre_requisite.name+"</name>" +
 												"<assignee></assignee>" +
 												"<t_initiated>"+get_my_time()+"</t_initiated>" +
-												"<t_due></t_due>" +
+												"<t_due>"+get_task_due_period()+"</t_due>" +
 												"<status>pending</status>" +
 												"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
 												"<source>service</source>" +
@@ -5162,7 +5164,7 @@ function form84_bills()
 								"<total_amount>"+item_total+"</total_amount>" +
 								"<paid_amount>0</paid_amount>" +
 								"<acc_name>"+subscription.customer+"</acc_name>" +
-								"<due_date>"+get_my_time()+"</due_date>" +
+								"<due_date>"+get_credit_period()+"</due_date>" +
 								"<mode></mode>" +
 								"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 								"<bill_id>"+order_id+"</bill_id>" +
@@ -5213,7 +5215,7 @@ function form84_bills()
 									"<name>"+pre_requisite.name+"</name>" +
 									"<assignee></assignee>" +
 									"<t_initiated>"+get_my_time()+"</t_initiated>" +
-									"<t_due></t_due>" +
+									"<t_due>"+get_task_due_period()+"</t_due>" +
 									"<status>pending</status>" +
 									"<task_hours>"+pre_requisite.quantity+"</task_hours>" +
 									"<source>service</source>" +

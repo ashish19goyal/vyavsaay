@@ -61,7 +61,10 @@
   	"short_inventory":"Short Inventory",
   	"surplus_inventory":"Surplus Inventory",
   	"expiring_inventory":"Expiring Inventory",
-  	"verify_addresses":"Verify Addresses",
+  	"verify_addresses":"Verify Geo-location",
+  	"verify_supplier_addresses":"Verify Supplier Geo-location",
+  	"verify_customer_addresses":"Verify Customer Geo-location",
+  	"verify_staff_addresses":"Verify Staff Geo-location",
   	"customer_map_by_credit":"Customer Map by credit",
   	"customer_map_by_products":"Customer Map by products",
   	"staff_map":"Staff Map",
@@ -147,6 +150,10 @@
   	"storage_areas":"Store Areas",
   	"manage_subscriptions":"Manage Subscriptions",
   	"supplier_account_balance" : "Supplier Account Balance",
-  	"inventory_value":"Inventory Value"
+  	"inventory_value":"Inventory Value",
+  	"product_reviews":"Product Reviews",
+  	"service_reviews":"Service Reviews",
+  	"service_cross_sell":"Service Cross Sell",
+  	"product_cross_sell":"Product Cross Sell"
   }
 }

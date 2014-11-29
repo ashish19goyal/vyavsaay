@@ -23,8 +23,9 @@
 		This operation will result in a duplicate entry. Operation aborted.
 		Please validate whether the required record already exists or try again with different parameters (e.g. different name).
 	</div>
-	<div id="modal6" title="Required fields missing">
-		One or more required fields are missing. Operation aborted.
+
+	<div id="modal6" title="Get online">
+		This operation can be performed in online mode only. Please make sure you are connected to internet and change to online mode.
 	</div>
 	
 	<div id="modal7" title="Offer finished">
@@ -107,7 +108,7 @@
 				<label>Phone <input type="tel"></label><br/>
 				<label>Email <input type="email"></label><br/>
 				<label>Address <textarea></textarea></label><br/>
-				<label>Street <input type="text"></label><br/>
+				<label>Pincode <input type="number"></label><br/>
 				<label>City <input type="text"></label><br/>
 				<label>State <input type="text"></label><br/>
 				<label>Country <input type="text"></label><br/>
@@ -134,7 +135,7 @@
 				<label>Phone <input type="text"></label><br/>
 				<label>Email <input type="text"></label><br/>
 				<label>Address <textarea></textarea></label><br/>
-				<label>Street <input type="text"></label><br/>
+				<label>Pincode <input type="number"></label><br/>
 				<label>City <input type="text"></label><br/>
 				<label>State <input type="text"></label><br/>
 				<label>Country <input type="text"></label><br/>
@@ -180,7 +181,7 @@
 				<label>Phone <input type="text"></label><br/>
 				<label>Email <input type="text"></label><br/>
 				<label>Address <textarea></textarea></label><br/>
-				<label>Street <input type="text"></label><br/>
+				<label>Pincode <input type="number"></label><br/>
 				<label>City <input type="text"></label><br/>
 				<label>State <input type="text"></label><br/>
 				<label>Country <input type="text"></label><br/>
@@ -200,7 +201,7 @@
 		<form id='modal17_form'>
 			<fieldset>
 				<label>Address <input type="text"></label><br/>
-				<label>Street <input type="text"></label><br/>
+				<label>Pincode <input type="number"></label><br/>
 				<label>City <input type="text"></label><br/>
 				<label>State <input type="text"></label><br/>
 				<label>Country <input type="text"></label><br/>
@@ -250,7 +251,6 @@
 				<label>Description <textarea></textarea></label><br/>
 				<label>Tax (%) <input type="number"></label><br/>
 				<label>Price <input type="number"></label><br/>
-				<label>Duration (in min) <input type="number"></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -263,7 +263,6 @@
 				<label>Description <textarea></textarea></label><br/>
 				<label>Tax (%) <input type="number"></label><br/>
 				<label>Price <input type="number"></label><br/>
-				<label>Duration (in min) <input type="number"></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -300,7 +299,7 @@
 		<form id='modal24_form'>
 			<fieldset>
 				<label>Address <textarea></textarea></label><br/>
-				<label>Street <input type="text"></label><br/>
+				<label>Pincode <input type="number"></label><br/>
 				<label>City <input type="text" required></label><br/>
 				<label>State <input type="text"></label><br/>
 				<label>Country <input type="text"></label><br/>
@@ -313,7 +312,7 @@
 		<form id='modal25_form'>
 			<fieldset>
 				<label>Address <textarea></textarea></label><br/>
-				<label>Street <input type="text"></label><br/>
+				<label>Pincode <input type="number"></label><br/>
 				<label>City <input type="text" required></label><br/>
 				<label>State <input type="text"></label><br/>
 				<label>Country <input type="text"></label><br/>
@@ -367,7 +366,7 @@
 		<form id='modal29_form'>
 			<fieldset>
 				<label>Bill Id <input type='text' readonly='readonly'></label><br/>
-				<label>Date Closed<input type="text" readonly='readonly'></label><br/>
+				<label>Date <input type="text" readonly='readonly'></label><br/>
 				<label>Mode of Payment <input type="text"></label><br/>
 				<label>Due Date <input type="text"></label><br/>
 				<input type="submit" value='Save'>

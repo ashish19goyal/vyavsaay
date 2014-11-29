@@ -255,7 +255,6 @@ function form12_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Total'>";
 				rowsHTML+="<input type='number' required form='form12_"+id+"' step='any'>";
-				rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form12_"+id+"' value='Details' onclick='modal6_action($(this));'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
@@ -524,7 +523,7 @@ function form14_add_item()
 				rowsHTML+="<input type='hidden' form='form14_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form14_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form14_"+id+"' onclick='$(this).parent().parent().remove();'>";	
-				rowsHTML+="<input type='hidden' form='form14_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form14_"+id+"'>";
 				rowsHTML+="<a id='form14_whatsapp_"+id+"' href='' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form14_"+id+"' title='Send details through WhatsApp'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
@@ -1844,7 +1843,6 @@ function form72_add_product()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Total'>";
 				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
-				rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form72_"+id+"' value='Details' onclick='modal6_action($(this));'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";

@@ -9,8 +9,8 @@
 			<status index='yes' type='VARCHAR(45)'></status><!--active/archived/overcredit-->
 			<notes index='no' type='TEXT'></notes>
 			<address index='yes' type="VARCHAR(100)"></address>
-			<street index='no' type="VARCHAR(100)"></street>
 			<city index='no' type="VARCHAR(45)"></city>
+			<pincode index='no' type='VARCHAR(15)'></pincode>
 			<state index='no' type="VARCHAR(45)"></state>
 			<country index='no' type="VARCHAR(45)"></country>
 			<address_status index='yes' type="VARCHAR(45)"></address_status><!-- pending analysis/unconfirmed/confirmed/incorrect -->
@@ -27,8 +27,8 @@
 			<phone index='yes' type="VARCHAR(15)"></phone>
 			<notes index='no' type="TEXT"></notes>
 			<address index='yes' type="VARCHAR(100)"></address>
-			<street index='no' type="VARCHAR(100)"></street>
 			<city index='no' type="VARCHAR(45)"></city>
+			<pincode index='no' type='VARCHAR(15)'></pincode>
 			<state index='no' type="VARCHAR(45)"></state>
 			<country index='no' type="VARCHAR(45)"></country>
 			<address_status index='yes' type="VARCHAR(45)"></address_status><!-- pending analysis/unconfirmed/confirmed/incorrect -->
@@ -52,8 +52,8 @@
 			<email index='yes' type="VARCHAR(100)"></email>
 			<phone index='yes' type="VARCHAR(15)"></phone>
 			<address index='yes' type="VARCHAR(100)"></address>
-			<street index='no' type="VARCHAR(100)"></street>
 			<city index='no' type="VARCHAR(45)"></city>
+			<pincode index='no' type='VARCHAR(15)'></pincode>
 			<state index='no' type="VARCHAR(45)"></state>
 			<country index='no' type="VARCHAR(45)"></country>
 			<address_status index='yes' type="VARCHAR(45)"></address_status><!-- pending analysis/unconfirmed/confirmed/incorrect -->
@@ -90,7 +90,6 @@
 			<description index='no' type="TEXT"></description>
 			<t_initiated index='no' type="BIGINT"></t_initiated>
 			<t_due index='yes' type="BIGINT"></t_due>
-			<t_executed index='no' type="BIGINT"></t_executed>
 			<status index='yes' type="VARCHAR(45)"></status><!-- pending/completed/cancelled -->
 			<assignee index='yes' type="VARCHAR(100)"></assignee>
 			<source index='yes' type="VARCHAR(50)"></source>
@@ -314,7 +313,6 @@
 			<description index='no' type="TEXT"></description>
 			<price index='no' type="DECIMAL(12,2)"></price>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
-			<duration index='no' type="DECIMAL(12,2)"></duration><!-- in minutes -->
 			<last_updated index='no' type="BIGINT"></last_updated>
 	</services>
 	<product_instances>

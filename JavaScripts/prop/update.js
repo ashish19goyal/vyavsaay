@@ -259,7 +259,7 @@ function form8_update_item(form)
 		var status=form.elements[5].value;
 		var data_id=form.elements[6].value;
 		var address=form.elements[9].value;
-		var street=form.elements[10].value;
+		var pincode=form.elements[10].value;
 		var city=form.elements[11].value;
 		var state=form.elements[12].value;
 		var country=form.elements[13].value;
@@ -287,7 +287,7 @@ function form8_update_item(form)
 					"<variable_comp_rate>"+var_comp+"</variable_comp_rate>" +
 					"<allowed_pto>"+pto+"</allowed_pto>" +
 					"<address>"+address+"</address>" +
-					"<street>"+street+"</street>" +
+					"<pincode>"+pincode+"</pincode>" +
 					"<city>"+city+"</city>" +
 					"<state>"+state+"</state>" +
 					"<country>"+country+"</country>" +
@@ -540,7 +540,7 @@ function form10_update_form()
 									"<name>"+free_pre_requisite.name+"</name>" +
 									"<assignee></assignee>" +
 									"<t_initiated>"+get_my_time()+"</t_initiated>" +
-									"<t_due></t_due>" +
+									"<t_due>"+get_task_due_period()+"</t_due>" +
 									"<status>pending</status>" +
 									"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
 									"<source>service</source>" +
@@ -623,7 +623,6 @@ function form10_update_form()
 					var payment_xml="<payments>" +
 								"<id>"+payments[y]+"</id>" +
 								"<type>received</type>" +
-								"<date>"+get_my_time()+"</date>" +
 								"<total_amount>"+total+"</total_amount>" +
 								"<acc_name>"+customer+"</acc_name>" +
 								"<transaction_id>"+payments[y]+"</transaction_id>" +
@@ -632,7 +631,6 @@ function form10_update_form()
 								"</payments>";
 					var pt_xml="<transactions>" +
 								"<id>"+payments[y]+"</id>" +
-								"<trans_date>"+get_my_time()+"</trans_date>" +
 								"<amount>"+total+"</amount>" +
 								"<receiver>master</receiver>" +
 								"<giver>"+customer+"</giver>" +
@@ -696,7 +694,6 @@ function form11_update_item(form)
 					"<paid_amount>"+paid_amount+"</paid_amount>" +
 					"<due_date>"+due_date+"</due_date>" +
 					"<status>"+status+"</status>" +
-					"<date>"+date+"</date>" +
 					"<mode>"+mode+"</mode>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</payments>";	
@@ -1026,7 +1023,6 @@ function form12_update_form()
 					var payment_xml="<payments>" +
 								"<id>"+payments[y]+"</id>" +
 								"<type>received</type>" +
-								"<date>"+get_my_time()+"</date>" +
 								"<total_amount>"+total+"</total_amount>" +
 								"<acc_name>"+customer+"</acc_name>" +
 								"<transaction_id>"+payments[y]+"</transaction_id>" +
@@ -1035,7 +1031,6 @@ function form12_update_form()
 								"</payments>";
 					var pt_xml="<transactions>" +
 								"<id>"+payments[y]+"</id>" +
-								"<trans_date>"+get_my_time()+"</trans_date>" +
 								"<amount>"+total+"</amount>" +
 								"<receiver>master</receiver>" +
 								"<giver>"+customer+"</giver>" +
@@ -1238,7 +1233,6 @@ function form15_update_form()
 				var payment_xml="<payments>" +
 							"<id>"+payments[y]+"</id>" +
 							"<type>paid</type>" +
-							"<date>"+get_my_time()+"</date>" +
 							"<total_amount>"+total+"</total_amount>" +
 							"<acc_name>"+customer+"</acc_name>" +
 							"<transaction_id>"+payments[y]+"</transaction_id>" +
@@ -1247,7 +1241,6 @@ function form15_update_form()
 							"</payments>";
 				var pt_xml="<transactions>" +
 							"<id>"+payments[y]+"</id>" +
-							"<trans_date>"+get_my_time()+"</trans_date>" +
 							"<amount>"+total+"</amount>" +
 							"<receiver>"+customer+"</receiver>" +
 							"<giver>master</giver>" +
@@ -1376,7 +1369,6 @@ function form19_update_form()
 				var payment_xml="<payments>" +
 							"<id>"+payments[y]+"</id>" +
 							"<type>received</type>" +
-							"<date>"+get_my_time()+"</date>" +
 							"<total_amount>"+total+"</total_amount>" +
 							"<acc_name>"+supplier+"</acc_name>" +
 							"<transaction_id>"+payments[y]+"</transaction_id>" +
@@ -1385,7 +1377,6 @@ function form19_update_form()
 							"</payments>";
 				var pt_xml="<transactions>" +
 							"<id>"+payments[y]+"</id>" +
-							"<trans_date>"+get_my_time()+"</trans_date>" +
 							"<amount>"+total+"</amount>" +
 							"<receiver>master</receiver>" +
 							"<giver>"+supplier+"</giver>" +
@@ -1499,7 +1490,6 @@ function form21_update_form()
 				var payment_xml="<payments>" +
 							"<id>"+payments[y]+"</id>" +
 							"<type>paid</type>" +
-							"<date>"+get_my_time()+"</date>" +
 							"<total_amount>"+total+"</total_amount>" +
 							"<acc_name>"+supplier+"</acc_name>" +
 							"<transaction_id>"+payments[y]+"</transaction_id>" +
@@ -1508,7 +1498,6 @@ function form21_update_form()
 							"</payments>";
 				var pt_xml="<transactions>" +
 							"<id>"+payments[y]+"</id>" +
-							"<trans_date>"+get_my_time()+"</trans_date>" +
 							"<amount>"+total+"</amount>" +
 							"<receiver>"+supplier+"</receiver>" +
 							"<giver>master</giver>" +
@@ -1680,7 +1669,7 @@ function form30_update_item(form)
 		var status=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var address=form.elements[8].value;
-		var street=form.elements[9].value;
+		var pincode=form.elements[9].value;
 		var city=form.elements[10].value;
 		var state=form.elements[11].value;
 		var country=form.elements[12].value;
@@ -1694,7 +1683,7 @@ function form30_update_item(form)
 					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<status>"+status+"</status>" +
 					"<address>"+address+"</address>" +
-					"<street>"+street+"</street>" +
+					"<pincode>"+pincode+"</pincode>" +
 					"<city>"+city+"</city>" +
 					"<state>"+state+"</state>" +
 					"<country>"+country+"</country>" +
@@ -1913,7 +1902,7 @@ function form40_update_item(form)
 		var notes=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var address=form.elements[8].value;
-		var street=form.elements[9].value;
+		var pincode=form.elements[9].value;
 		var city=form.elements[10].value;
 		var state=form.elements[11].value;
 		var country=form.elements[12].value;
@@ -1928,7 +1917,7 @@ function form40_update_item(form)
 				"<acc_name>"+name+" ("+phone+")</acc_name>" +
 				"<email>"+email+"</email>" +
 				"<address>"+address+"</address>" +
-				"<street>"+street+"</street>" +
+				"<pincode>"+pincode+"</pincode>" +
 				"<city>"+city+"</city>" +
 				"<state>"+state+"</state>" +
 				"<country>"+country+"</country>" +
@@ -1971,7 +1960,7 @@ function form40_update_item(form)
 }
 
 /**
- * @form Verify addresses
+ * @form Verify Customer Geo-location
  * @param button
  */
 function form41_update_item(form)
@@ -1982,10 +1971,7 @@ function form41_update_item(form)
 		var lat=form.elements[1].value;
 		var lng=form.elements[2].value;
 		var data_id=form.elements[3].value;
-		var status=form.elements[4].value;
-		var address=form.elements[5].value;
-		var acc_type=form.elements[6].value;
-		var button=form.elements[7];
+		var button=form.elements[4];
 		$(button).hide();		
 
 		var last_updated=get_my_time();
@@ -1994,7 +1980,6 @@ function form41_update_item(form)
 					"<lat>"+lat+"</lat>" +
 					"<lng>"+lng+"</lng>" +
 					"<address_status>confirmed</address_status>" +
-					"<address>"+address+"</address>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</customers>";	
 		var activity_xml="<activity>" +
@@ -2022,7 +2007,7 @@ function form41_update_item(form)
 
 
 /**
- * @form Verify addresses
+ * @form Verify Customer Geo-location
  * @param button
  */
 function form41_update_master(form)
@@ -2764,16 +2749,14 @@ function form57_update_item(form)
 		var service=form.elements[0].value;
 		var description=form.elements[1].value;
 		var price=form.elements[2].value;
-		var duration=form.elements[3].value;
-		var tax=form.elements[4].value;
-		var data_id=form.elements[5].value;
+		var tax=form.elements[3].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<services>" +
 					"<id>"+data_id+"</id>" +
 					"<name unique='yes'>"+service+"</name>" +
 					"<description>"+description+"</description>" +
 					"<price>"+price+"</price>" +
-					"<duration>"+duration+"</duration>" +
 					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</services>";	
@@ -2793,7 +2776,7 @@ function form57_update_item(form)
 		{
 			local_update_row(data_xml,activity_xml);
 		}	
-		for(var i=0;i<6;i++)
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -3725,7 +3708,7 @@ function form72_update_form()
 									"<name>"+free_pre_requisite.name+"</name>" +
 									"<assignee></assignee>" +
 									"<t_initiated>"+get_my_time()+"</t_initiated>" +
-									"<t_due></t_due>" +
+									"<t_due>"+get_task_due_period()+"</t_due>" +
 									"<status>pending</status>" +
 									"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
 									"<source>service</source>" +
@@ -3809,7 +3792,6 @@ function form72_update_form()
 					var payment_xml="<payments>" +
 								"<id>"+payments[y]+"</id>" +
 								"<type>received</type>" +
-								"<date>"+get_my_time()+"</date>" +
 								"<total_amount>"+total+"</total_amount>" +
 								"<acc_name>"+customer+"</acc_name>" +
 								"<transaction_id>"+payments[y]+"</transaction_id>" +
@@ -3818,7 +3800,6 @@ function form72_update_form()
 								"</payments>";
 					var pt_xml="<transactions>" +
 								"<id>"+payments[y]+"</id>" +
-								"<trans_date>"+get_my_time()+"</trans_date>" +
 								"<amount>"+total+"</amount>" +
 								"<receiver>master</receiver>" +
 								"<giver>"+customer+"</giver>" +
@@ -4111,6 +4092,217 @@ function form84_update_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Verify Supplier Geo-location
+ * @param button
+ */
+function form85_update_item(form)
+{
+	if(is_update_access('form85'))
+	{
+		var name=form.elements[0].value;
+		var lat=form.elements[1].value;
+		var lng=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var button=form.elements[4];
+		$(button).hide();		
+
+		var last_updated=get_my_time();
+		var data_xml="<suppliers>" +
+					"<id>"+data_id+"</id>" +
+					"<lat>"+lat+"</lat>" +
+					"<lng>"+lng+"</lng>" +
+					"<address_status>confirmed</address_status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</suppliers>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>suppliers</tablename>" +
+					"<link_to>form85</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Geo-location of supplier "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Verify Supplier Geo-location
+ * @param button
+ */
+function form85_update_master(form)
+{
+	if(is_update_access('form85'))
+	{
+		var lat_lng_data="<user_preferences>" +
+				"<id></id>" +
+				"<name array='yes'>--lat--lng--</name>" +
+				"</user_preferences>";
+		
+		fetch_requested_data('',lat_lng_data,function(lat_lng)
+		{
+			var lat=form.elements[1].value;
+			var lng=form.elements[2].value;
+			var button=form.elements[3];
+			$(button).hide();		
+			
+			lat_lng.forEach(function(ll)
+			{
+				var value=lng;
+				if(ll.name==='lat')
+				{
+					value=lat;
+				}
+				var last_updated=get_my_time();
+				var data_xml="<user_preferences>" +
+							"<id>"+ll.id+"</id>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</user_preferences>";
+				var activity_xml="<activity>" +
+							"<data_id>"+ll.id+"</data_id>" +
+							"<tablename>user_preferences</tablename>" +
+							"<link_to>form46</link_to>" +
+							"<title>Updated</title>" +
+							"<notes>Geo-location of business</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				if(is_online())
+				{
+					server_update_row(data_xml,activity_xml);
+				}
+				else
+				{
+					local_update_row(data_xml,activity_xml);
+				}
+			});
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Verify Staff Geo-location
+ * @param button
+ */
+function form86_update_item(form)
+{
+	if(is_update_access('form86'))
+	{
+		var name=form.elements[0].value;
+		var lat=form.elements[1].value;
+		var lng=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var button=form.elements[4];
+		$(button).hide();		
+
+		var last_updated=get_my_time();
+		var data_xml="<staff>" +
+					"<id>"+data_id+"</id>" +
+					"<lat>"+lat+"</lat>" +
+					"<lng>"+lng+"</lng>" +
+					"<address_status>confirmed</address_status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</staff>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>staff</tablename>" +
+					"<link_to>form86</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Geo-location of staff "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Verify Staff Geo-location
+ * @param button
+ */
+function form86_update_master(form)
+{
+	if(is_update_access('form86'))
+	{
+		var lat_lng_data="<user_preferences>" +
+				"<id></id>" +
+				"<name array='yes'>--lat--lng--</name>" +
+				"</user_preferences>";
+		
+		fetch_requested_data('',lat_lng_data,function(lat_lng)
+		{
+			var lat=form.elements[1].value;
+			var lng=form.elements[2].value;
+			var button=form.elements[3];
+			$(button).hide();		
+			
+			lat_lng.forEach(function(ll)
+			{
+				var value=lng;
+				if(ll.name==='lat')
+				{
+					value=lat;
+				}
+				var last_updated=get_my_time();
+				var data_xml="<user_preferences>" +
+							"<id>"+ll.id+"</id>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</user_preferences>";
+				var activity_xml="<activity>" +
+							"<data_id>"+ll.id+"</data_id>" +
+							"<tablename>user_preferences</tablename>" +
+							"<link_to>form46</link_to>" +
+							"<title>Updated</title>" +
+							"<notes>Geo-location of business</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				if(is_online())
+				{
+					server_update_row(data_xml,activity_xml);
+				}
+				else
+				{
+					local_update_row(data_xml,activity_xml);
+				}
+			});
+		});
 	}
 	else
 	{

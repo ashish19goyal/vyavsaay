@@ -177,7 +177,7 @@ function form8_delete_item(button)
 		var status=form.elements[5].value;
 		var data_id=form.elements[6].value;
 		var address=form.elements[9].value;
-		var street=form.elements[10].value;
+		var pincode=form.elements[10].value;
 		var city=form.elements[11].value;
 		var state=form.elements[12].value;
 		var country=form.elements[13].value;
@@ -205,7 +205,7 @@ function form8_delete_item(button)
 					"<variable_comp_rate>"+var_comp+"</variable_comp_rate>" +
 					"<allowed_pto>"+pto+"</allowed_pto>" +
 					"<address>"+address+"</address>" +
-					"<street>"+street+"</street>" +
+					"<pincode>"+pincode+"</pincode>" +
 					"<city>"+city+"</city>" +
 					"<state>"+state+"</state>" +
 					"<country>"+country+"</country>" +
@@ -812,7 +812,7 @@ function form30_delete_item(button)
 		var status=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var address=form.elements[8].value;
-		var street=form.elements[9].value;
+		var pincode=form.elements[9].value;
 		var city=form.elements[10].value;
 		var state=form.elements[11].value;
 		var country=form.elements[12].value;
@@ -826,7 +826,7 @@ function form30_delete_item(button)
 					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<status>"+status+"</status>" +
 					"<address>"+address+"</address>" +
-					"<street>"+street+"</street>" +
+					"<pincode>"+pincode+"</pincode>" +
 					"<city>"+city+"</city>" +
 					"<state>"+state+"</state>" +
 					"<country>"+country+"</country>" +
@@ -1062,7 +1062,7 @@ function form40_delete_item(button)
 		var notes=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var address=form.elements[8].value;
-		var street=form.elements[9].value;
+		var pincode=form.elements[9].value;
 		var city=form.elements[10].value;
 		var state=form.elements[11].value;
 		var country=form.elements[12].value;
@@ -1077,7 +1077,7 @@ function form40_delete_item(button)
 					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<email>"+email+"</email>" +
 					"<address>"+address+"</address>" +
-					"<street>"+street+"</street>" +
+					"<pincode>"+pincode+"</pincode>" +
 					"<city>"+city+"</city>" +
 					"<state>"+state+"</state>" +
 					"<country>"+country+"</country>" +

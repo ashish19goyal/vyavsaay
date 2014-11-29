@@ -420,7 +420,7 @@ function form8_ini()
 			"<allowed_pto></allowed_pto>" +
 			"<acc_name></acc_name>" +
 			"<address></address>" +
-			"<street></street>" +
+			"<pincode></pincode>" +
 			"<city></city>" +
 			"<state></state>" +
 			"<country></country>" +
@@ -448,7 +448,7 @@ function form8_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' class='dblclick_editable' value='"+result.email+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
-						rowsHTML+="<textarea wrap='soft' readonly='readonly' form='form8_"+result.id+"'>"+result.address+", "+result.street+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
+						rowsHTML+="<textarea wrap='soft' readonly='readonly' form='form8_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
 						rowsHTML+="<img class='edit_icon' wrap='virtual' src='images/edit.jpeg' form='form8_"+result.id+"' onclick='modal17_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Details'>";
@@ -463,7 +463,7 @@ function form8_ini()
 						rowsHTML+="<input type='submit' class='save_icon' form='form8_"+result.id+"' value='saved'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form8_"+result.id+"' value='saved' onclick='form8_delete_item($(this));'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.address+"'>";
-						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.street+"'>";
+						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.pincode+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.city+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.state+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.country+"'>";
@@ -904,7 +904,6 @@ function form12_ini()
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Total'>";
 								rowsHTML+="<input type='number' readonly='readonly' form='form12_"+id+"' value='"+result.total+"'>";
-								rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form12_"+id+"' value='Details' onclick='modal6_action($(this));'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+result.amount+"'>";
@@ -990,7 +989,6 @@ function form14_ini()
 		results.forEach(function(result)
 		{
 			result.t_due=get_my_datetime(result.t_due);
-			result.t_executed=get_my_datetime(result.t_executed);
 			result.t_initiated=get_my_datetime(result.t_initiated);
 			var message_string="Due time: "+result.t_due+"\nTask: "+result.name+"\nAssignee:"+result.assignee;
 			message_string=encodeURIComponent(message_string);
@@ -1770,7 +1768,7 @@ function form30_ini()
 			"<acc_name></acc_name>" +
 			"<notes></notes>" +
 			"<address></address>" +
-			"<street></street>" +
+			"<pincode></pincode>" +
 			"<city></city>" +
 			"<state></state>" +
 			"<country></country>" +
@@ -1796,7 +1794,7 @@ function form30_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable' value='"+result.email+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
-						rowsHTML+="<textarea readonly='readonly' form='form30_"+result.id+"'>"+result.address+", "+result.street+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
+						rowsHTML+="<textarea readonly='readonly' form='form30_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
 						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form30_"+result.id+"' onclick='modal24_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
@@ -1807,7 +1805,7 @@ function form30_ini()
 						rowsHTML+="<input type='submit' class='save_icon' form='form30_"+result.id+"' value='saved'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form30_"+result.id+"' value='saved' onclick='form30_delete_item($(this));'>";
 						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.address+"'>";
-						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.street+"'>";
+						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.pincode+"'>";
 						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.city+"'>";
 						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.state+"'>";
 						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.country+"'>";
@@ -2152,7 +2150,7 @@ function form40_ini()
 			"<email>"+femail+"</email>" +
 			"<acc_name></acc_name>" +
 			"<address></address>" +
-			"<street></street>" +
+			"<pincode></pincode>" +
 			"<city></city>" +
 			"<state></state>" +
 			"<country></country>" +
@@ -2178,7 +2176,7 @@ function form40_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form40_"+result.id+"' class='dblclick_editable' value='"+result.email+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
-						rowsHTML+="<textarea readonly='readonly' form='form40_"+result.id+"'>"+result.address+", "+result.street+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
+						rowsHTML+="<textarea readonly='readonly' form='form40_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
 						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form40_"+result.id+"' onclick='modal25_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Notes'>";
@@ -2189,7 +2187,7 @@ function form40_ini()
 						rowsHTML+="<input type='submit' class='save_icon' form='form40_"+result.id+"' value='saved'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form40_"+result.id+"' value='saved' onclick='form40_delete_item($(this));'>";
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.address+"'>";
-						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.street+"'>";
+						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.pincode+"'>";
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.city+"'>";
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.state+"'>";
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.country+"'>";
@@ -2219,7 +2217,7 @@ function form40_ini()
 };
 
 /**
- * @form Verify geo-location
+ * @form Verify Customer geo-location
  * @formNo 41
  */
 function form41_ini()
@@ -2231,154 +2229,155 @@ function form41_ini()
 		var domain=get_domain();
 		var username=get_username();
 		var re_access=get_session_var('re');
-		ajax_with_custom_func("./ajax/geoCode.php","domain="+domain+"&username="+username+"&re="+re_access,function(e)
+		ajax_with_custom_func("./ajax/geoCode.php","domain="+domain+"&username="+username+"&type=customers&re="+re_access,function(e)
 		{
 			console.log(e.responseText);
-		});
-	}
 
-	$('#form41_header').html("");
-
-	var lat=get_session_var('lat');
-	var lng=get_session_var('lng');
-	var title=get_session_var('title');
-	
-	if(typeof map41 != 'undefined')
-		map41.remove();
-
-	map41 = L.map('form41_map',{
-		center: [lat,lng], 
-		zoom: 10
-	});
-
-	L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        subdomains:'1234'
-    }).addTo(map41);
-	
-	//////////changeable master coordinates/////////
-	
-	var mlatlng=L.latLng(lat,lng);
-	var mmarker=L.marker(mlatlng,{draggable:true}).addTo(map41).bindPopup("Name: "+title);
-	mmarker.on('dragend',function(event){
-		var m=event.target;
-		var latlng=m.getLatLng();
-		var form=document.getElementById('form41_master');
-		form.elements[1].value=latlng.lat;
-		form.elements[2].value=latlng.lng;
-		var save_button=form.elements[3];
-		$(save_button).show();
-	});
-	
-	var rowsHTML="<div class='customers_content_item'>" +
-			"<form id='form41_master'>" +
-			"Name: <input type='text' width='150px' readonly='readonly' value='"+title+"'>" +
-			"Latitude: <input type='text' width='150px' readonly='readonly' value='"+lat+"'>" +
-			"Longitude: <input type='text' width='150px' readonly='readonly' value='"+lng+"'>" +
-			"<input type='button' value='Confirm' style='display:none;' form='form41_master'>" +
-			"</form>" +
-			"</div>";
-	
-	$('#form41_header').prepend(rowsHTML);
-	var fields=document.getElementById("form41_master");
-	var save_button=fields.elements[3];
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form41_update_master(fields);
-	});
-	$(fields).parent().on('click',function(event)
-	{
-		console.log('clicked on master');
-		mmarker.openPopup();
-	});
-
-	/////////////////////////////////////////////////
-	
-	var customers_data="<customers>" +
-			"<id></id>" +
-			"<name></name>" +
-			"<lat></lat>" +
-			"<lng></lng>" +
-			"<acc_name></acc_name>" +
-			"<address_status>unconfirmed</address_status>" +
-			"<address></address>" +
-			"<street></street>" +
-			"<city></city>" +
-			"<state></state>" +
-			"<country></country>" +
-			"</customers>";
-	fetch_requested_data('form41',customers_data,function(customers)
-	{
-		customers.forEach(function(customer)
-		{
-			//console.log('fetched customer');
-			if(customer.lat=='')
-			{
-				customer.lat=lat;
-			}
-			if(customer.lng=='')
-			{
-				customer.lng=lng;
-			}
-			var latlng=L.latLng(customer.lat,customer.lng);
-			var marker=L.marker(latlng,{draggable:true}).addTo(map41).bindPopup("Name: "+customer.name);
-			marker.on('dragend',function(event){
+			$('#form41_header').html("");
+		
+			var lat=get_session_var('lat');
+			var lng=get_session_var('lng');
+			var title=get_session_var('title');
+			
+			if(typeof map41 != 'undefined')
+				map41.remove();
+		
+			map41 = L.map('form41_map',{
+				center: [lat,lng], 
+				zoom: 10
+			});
+		
+			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap</a>',
+		        subdomains:'1234'
+		    }).addTo(map41);
+			
+			//////////changeable master coordinates/////////
+			
+			var mlatlng=L.latLng(lat,lng);
+			var mmarker=L.marker(mlatlng,{draggable:true}).addTo(map41).bindPopup(title);
+			mmarker.on('dragend',function(event){
 				var m=event.target;
 				var latlng=m.getLatLng();
-				var form=document.getElementById('form41_'+customer.id);
+				var form=document.getElementById('form41_master');
 				form.elements[1].value=latlng.lat;
 				form.elements[2].value=latlng.lng;
-				var save_button=form.elements[7];
+				var save_button=form.elements[3];
 				$(save_button).show();
 			});
 			
 			var rowsHTML="<div class='customers_content_item'>" +
-					"<form id='form41_"+customer.id+"'>" +
-					"Name: <input type='text' width='150px' readonly='readonly' value='"+customer.acc_name+"'>" +
-					"Latitude: <input type='text' width='150px' readonly='readonly' value='"+customer.lat+"'>" +
-					"Longitude: <input type='text' width='150px' readonly='readonly' value='"+customer.lng+"'>" +
-					"<input type='hidden' value='"+customer.id+"'>" +
-					"<input type='hidden' value='"+customer.status+"'>" +
-					"<input type='hidden' value='"+customer.address+"'>" +
-					"<input type='hidden' value='"+customer.acc_type+"'>" +
-					"<input type='button' value='Confirm' form='form41_"+customer.id+"'>" +
+					"<form id='form41_master'>" +
+					"Name: <input type='text' width='150px' readonly='readonly' value='"+title+"'>" +
+					"Latitude: <input type='text' width='150px' readonly='readonly' value='"+lat+"'>" +
+					"Longitude: <input type='text' width='150px' readonly='readonly' value='"+lng+"'>" +
+					"<input type='button' value='Confirm' style='display:none;' form='form41_master'>" +
 					"</form>" +
 					"</div>";
 			
-			$('#form41_header').append(rowsHTML);
-			var fields=document.getElementById("form41_"+customer.id);
-			var save_button=fields.elements[7];
+			$('#form41_header').prepend(rowsHTML);
+			var fields=document.getElementById("form41_master");
+			var save_button=fields.elements[3];
 			$(save_button).on("click", function(event)
 			{
 				event.preventDefault();
-				form41_update_item(fields);
+				form41_update_master(fields);
 			});
 			$(fields).parent().on('click',function(event)
 			{
-				console.log('clicked on customer');
-				marker.openPopup();
+				//console.log('clicked on master');
+				mmarker.openPopup();
+			});
+		
+			/////////////////////////////////////////////////
+			
+			var customers_data="<customers>" +
+					"<id></id>" +
+					"<name></name>" +
+					"<lat></lat>" +
+					"<lng></lng>" +
+					"<acc_name></acc_name>" +
+					"<address_status>unconfirmed</address_status>" +
+					"<address></address>" +
+					"<pincode></pincode>" +
+					"<city></city>" +
+					"<state></state>" +
+					"<country></country>" +
+					"</customers>";
+			fetch_requested_data('form41',customers_data,function(customers)
+			{
+				customers.forEach(function(customer)
+				{
+					//console.log('fetched customer');
+					if(customer.lat=='')
+					{
+						customer.lat=lat;
+					}
+					if(customer.lng=='')
+					{
+						customer.lng=lng;
+					}
+					var latlng=L.latLng(customer.lat,customer.lng);
+					var marker=L.marker(latlng,{draggable:true}).addTo(map41).bindPopup(customer.name);
+					marker.on('dragend',function(event){
+						var m=event.target;
+						var latlng=m.getLatLng();
+						var form=document.getElementById('form41_'+customer.id);
+						form.elements[1].value=latlng.lat;
+						form.elements[2].value=latlng.lng;
+						var save_button=form.elements[4];
+						$(save_button).show();
+					});
+					
+					var rowsHTML="<div class='customers_content_item'>" +
+							"<form id='form41_"+customer.id+"'>" +
+							"Name: <input type='text' width='150px' readonly='readonly' value='"+customer.acc_name+"'>" +
+							"Latitude: <input type='text' width='150px' readonly='readonly' value='"+customer.lat+"'>" +
+							"Longitude: <input type='text' width='150px' readonly='readonly' value='"+customer.lng+"'>" +
+							"<input type='hidden' value='"+customer.id+"'>" +
+							"<input type='button' value='Confirm' form='form41_"+customer.id+"'>" +
+							"</form>" +
+							"</div>";
+					
+					$('#form41_header').append(rowsHTML);
+					var fields=document.getElementById("form41_"+customer.id);
+					var save_button=fields.elements[4];
+					$(save_button).on("click", function(event)
+					{
+						event.preventDefault();
+						form41_update_item(fields);
+					});
+					$(fields).parent().on('click',function(event)
+					{
+						//console.log('clicked on customer');
+						marker.openPopup();
+					});
+				});
+				
+				var scrollPane=$(".customers_pane");
+				var scrollContent=$(".customers_content");
+				scrollContent.css('width',(Math.round(225*customers.length)+225)+"px");
+				$(".customers_bar").slider({
+					slide: function(event,ui) {
+						if (scrollContent.width()>scrollPane.width()){
+							scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
+						} 
+						else{
+							scrollContent.css("margin-left",0);
+						}
+					}
+				});
+		
+				scrollPane.css("overflow","hidden");			
+			
+				hide_loader();
 			});
 		});
-		
-		var scrollPane=$(".customers_pane");
-		var scrollContent=$(".customers_content");
-		scrollContent.css('width',(Math.round(225*customers.length)+225)+"px");
-		$(".customers_bar").slider({
-			slide: function(event,ui) {
-				if (scrollContent.width()>scrollPane.width()){
-					scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
-				} 
-				else{
-					scrollContent.css("margin-left",0);
-				}
-			}
-		});
-
-		scrollPane.css("overflow","hidden");			
-	
-		hide_loader();
-	});
+	}
+	else
+	{
+		$("#modal6").dialog("open");
+	}
 }
 
 
@@ -3291,7 +3290,6 @@ function form57_ini()
 			"<name>"+fservices+"</name>" +
 			"<description></description>" +
 			"<price></price>" +
-			"<duration></duration>" +
 			"<tax></tax>" +
 			"</services>";
 
@@ -3312,9 +3310,6 @@ function form57_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Price'>";
 						rowsHTML+="<input type='number' readonly='readonly' form='form57_"+result.id+"' class='dblclick_editable' value='"+result.price+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Duration'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form57_"+result.id+"' class='dblclick_editable' value='"+result.duration+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Tax(in %)'>";
 						rowsHTML+="<input type='number' readonly='readonly' form='form57_"+result.id+"' class='dblclick_editable' value='"+result.tax+"'>";
@@ -4370,7 +4365,6 @@ function form72_ini()
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Total'>";
 								rowsHTML+="<input type='number' readonly='readonly' form='form72_"+id+"' value='"+result.total+"'>";
-								rowsHTML+="<img class='filter_icon' src='./images/details.jpeg' form='form72_"+id+"' value='Details' onclick='modal6_action($(this));'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+result.amount+"'>";
@@ -5297,3 +5291,331 @@ function form84_ini()
 		hide_loader();
 	});
 };
+
+
+/**
+ * @form Verify supplier geo-location
+ * @formNo 85
+ */
+function form85_ini()
+{
+	show_loader();
+
+	if(is_online())
+	{
+		var domain=get_domain();
+		var username=get_username();
+		var re_access=get_session_var('re');
+		ajax_with_custom_func("./ajax/geoCode.php","domain="+domain+"&username="+username+"&type=suppliers&re="+re_access,function(e)
+		{
+			console.log(e.responseText);
+
+			$('#form85_header').html("");
+		
+			var lat=get_session_var('lat');
+			var lng=get_session_var('lng');
+			var title=get_session_var('title');
+			
+			if(typeof map85 != 'undefined')
+				map85.remove();
+		
+			map85 = L.map('form85_map',{
+				center: [lat,lng], 
+				zoom: 10
+			});
+		
+			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap</a>',
+		        subdomains:'1234'
+		    }).addTo(map85);
+			
+			//////////changeable master coordinates/////////
+			
+			var mlatlng=L.latLng(lat,lng);
+			var mmarker=L.marker(mlatlng,{draggable:true}).addTo(map85).bindPopup(title);
+			mmarker.on('dragend',function(event){
+				var m=event.target;
+				var latlng=m.getLatLng();
+				var form=document.getElementById('form85_master');
+				form.elements[1].value=latlng.lat;
+				form.elements[2].value=latlng.lng;
+				var save_button=form.elements[3];
+				$(save_button).show();
+			});
+			
+			var rowsHTML="<div class='customers_content_item'>" +
+					"<form id='form85_master'>" +
+					"Name: <input type='text' width='150px' readonly='readonly' value='"+title+"'>" +
+					"Latitude: <input type='text' width='150px' readonly='readonly' value='"+lat+"'>" +
+					"Longitude: <input type='text' width='150px' readonly='readonly' value='"+lng+"'>" +
+					"<input type='button' value='Confirm' style='display:none;' form='form85_master'>" +
+					"</form>" +
+					"</div>";
+			
+			$('#form85_header').prepend(rowsHTML);
+			var fields=document.getElementById("form85_master");
+			var save_button=fields.elements[3];
+			$(save_button).on("click", function(event)
+			{
+				event.preventDefault();
+				form85_update_master(fields);
+			});
+			$(fields).parent().on('click',function(event)
+			{
+				//console.log('clicked on master');
+				mmarker.openPopup();
+			});
+		
+			/////////////////////////////////////////////////
+			
+			var suppliers_data="<suppliers>" +
+					"<id></id>" +
+					"<name></name>" +
+					"<lat></lat>" +
+					"<lng></lng>" +
+					"<acc_name></acc_name>" +
+					"<address_status>unconfirmed</address_status>" +
+					"<address></address>" +
+					"<pincode></pincode>" +
+					"<city></city>" +
+					"<state></state>" +
+					"<country></country>" +
+					"</suppliers>";
+			fetch_requested_data('form85',suppliers_data,function(suppliers)
+			{
+				suppliers.forEach(function(supplier)
+				{
+					if(supplier.lat=='')
+					{
+						supplier.lat=lat;
+					}
+					if(supplier.lng=='')
+					{
+						supplier.lng=lng;
+					}
+					var latlng=L.latLng(supplier.lat,supplier.lng);
+					var marker=L.marker(latlng,{draggable:true}).addTo(map85).bindPopup(supplier.name);
+					marker.on('dragend',function(event){
+						var m=event.target;
+						var latlng=m.getLatLng();
+						var form=document.getElementById('form85_'+supplier.id);
+						form.elements[1].value=latlng.lat;
+						form.elements[2].value=latlng.lng;
+						var save_button=form.elements[4];
+						$(save_button).show();
+					});
+					
+					var rowsHTML="<div class='customers_content_item'>" +
+							"<form id='form85_"+supplier.id+"'>" +
+							"Name: <input type='text' width='150px' readonly='readonly' value='"+supplier.acc_name+"'>" +
+							"Latitude: <input type='text' width='150px' readonly='readonly' value='"+supplier.lat+"'>" +
+							"Longitude: <input type='text' width='150px' readonly='readonly' value='"+supplier.lng+"'>" +
+							"<input type='hidden' value='"+supplier.id+"'>" +
+							"<input type='button' value='Confirm' form='form85_"+supplier.id+"'>" +
+							"</form>" +
+							"</div>";
+					
+					$('#form85_header').append(rowsHTML);
+					var fields=document.getElementById("form85_"+supplier.id);
+					var save_button=fields.elements[4];
+					$(save_button).on("click", function(event)
+					{
+						event.preventDefault();
+						form85_update_item(fields);
+					});
+					$(fields).parent().on('click',function(event)
+					{
+						//console.log('clicked on customer');
+						marker.openPopup();
+					});
+				});
+				
+				var scrollPane=$(".customers_pane");
+				var scrollContent=$(".customers_content");
+				scrollContent.css('width',(Math.round(225*suppliers.length)+225)+"px");
+				$(".customers_bar").slider({
+					slide: function(event,ui) {
+						if (scrollContent.width()>scrollPane.width()){
+							scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
+						} 
+						else{
+							scrollContent.css("margin-left",0);
+						}
+					}
+				});
+		
+				scrollPane.css("overflow","hidden");			
+			
+				hide_loader();
+			});
+		});
+	}
+	else
+	{
+		$("#modal6").dialog("open");
+	}
+}
+
+
+/**
+ * @form Verify staff geo-location
+ * @formNo 86
+ */
+function form86_ini()
+{
+	show_loader();
+
+	if(is_online())
+	{
+		var domain=get_domain();
+		var username=get_username();
+		var re_access=get_session_var('re');
+		ajax_with_custom_func("./ajax/geoCode.php","domain="+domain+"&username="+username+"&type=staff&re="+re_access,function(e)
+		{
+			console.log(e.responseText);
+
+			$('#form86_header').html("");
+		
+			var lat=get_session_var('lat');
+			var lng=get_session_var('lng');
+			var title=get_session_var('title');
+			
+			if(typeof map86 != 'undefined')
+				map86.remove();
+		
+			map86 = L.map('form86_map',{
+				center: [lat,lng], 
+				zoom: 10
+			});
+		
+			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap</a>',
+		        subdomains:'1234'
+		    }).addTo(map86);
+			
+			//////////changeable master coordinates/////////
+			
+			var mlatlng=L.latLng(lat,lng);
+			var mmarker=L.marker(mlatlng,{draggable:true}).addTo(map86).bindPopup(title);
+			mmarker.on('dragend',function(event){
+				var m=event.target;
+				var latlng=m.getLatLng();
+				var form=document.getElementById('form86_master');
+				form.elements[1].value=latlng.lat;
+				form.elements[2].value=latlng.lng;
+				var save_button=form.elements[3];
+				$(save_button).show();
+			});
+			
+			var rowsHTML="<div class='customers_content_item'>" +
+					"<form id='form86_master'>" +
+					"Name: <input type='text' width='150px' readonly='readonly' value='"+title+"'>" +
+					"Latitude: <input type='text' width='150px' readonly='readonly' value='"+lat+"'>" +
+					"Longitude: <input type='text' width='150px' readonly='readonly' value='"+lng+"'>" +
+					"<input type='button' value='Confirm' style='display:none;' form='form86_master'>" +
+					"</form>" +
+					"</div>";
+			
+			$('#form86_header').prepend(rowsHTML);
+			var fields=document.getElementById("form86_master");
+			var save_button=fields.elements[3];
+			$(save_button).on("click", function(event)
+			{
+				event.preventDefault();
+				form86_update_master(fields);
+			});
+			$(fields).parent().on('click',function(event)
+			{
+				//console.log('clicked on master');
+				mmarker.openPopup();
+			});
+		
+			/////////////////////////////////////////////////
+			
+			var staff_data="<staff>" +
+					"<id></id>" +
+					"<name></name>" +
+					"<lat></lat>" +
+					"<lng></lng>" +
+					"<acc_name></acc_name>" +
+					"<address_status>unconfirmed</address_status>" +
+					"<address></address>" +
+					"<pincode></pincode>" +
+					"<city></city>" +
+					"<state></state>" +
+					"<country></country>" +
+					"</staff>";
+			fetch_requested_data('form86',staff_data,function(staffs)
+			{
+				staffs.forEach(function(staff)
+				{
+					if(staff.lat=='')
+					{
+						staff.lat=lat;
+					}
+					if(staff.lng=='')
+					{
+						staff.lng=lng;
+					}
+					var latlng=L.latLng(staff.lat,staff.lng);
+					var marker=L.marker(latlng,{draggable:true}).addTo(map86).bindPopup(staff.name);
+					marker.on('dragend',function(event){
+						var m=event.target;
+						var latlng=m.getLatLng();
+						var form=document.getElementById('form86_'+staff.id);
+						form.elements[1].value=latlng.lat;
+						form.elements[2].value=latlng.lng;
+						var save_button=form.elements[4];
+						$(save_button).show();
+					});
+					
+					var rowsHTML="<div class='customers_content_item'>" +
+							"<form id='form86_"+staff.id+"'>" +
+							"Name: <input type='text' width='150px' readonly='readonly' value='"+staff.acc_name+"'>" +
+							"Latitude: <input type='text' width='150px' readonly='readonly' value='"+staff.lat+"'>" +
+							"Longitude: <input type='text' width='150px' readonly='readonly' value='"+staff.lng+"'>" +
+							"<input type='hidden' value='"+staff.id+"'>" +
+							"<input type='button' value='Confirm' form='form86_"+staff.id+"'>" +
+							"</form>" +
+							"</div>";
+					
+					$('#form86_header').append(rowsHTML);
+					var fields=document.getElementById("form86_"+staff.id);
+					var save_button=fields.elements[4];
+					$(save_button).on("click", function(event)
+					{
+						event.preventDefault();
+						form86_update_item(fields);
+					});
+					$(fields).parent().on('click',function(event)
+					{
+						//console.log('clicked on customer');
+						marker.openPopup();
+					});
+				});
+				
+				var scrollPane=$(".customers_pane");
+				var scrollContent=$(".customers_content");
+				scrollContent.css('width',(Math.round(225*staffs.length)+225)+"px");
+				$(".customers_bar").slider({
+					slide: function(event,ui) {
+						if (scrollContent.width()>scrollPane.width()){
+							scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
+						} 
+						else{
+							scrollContent.css("margin-left",0);
+						}
+					}
+				});
+		
+				scrollPane.css("overflow","hidden");			
+			
+				hide_loader();
+			});
+		});
+	}
+	else
+	{
+		$("#modal6").dialog("open");
+	}
+}

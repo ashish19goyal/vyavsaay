@@ -12,33 +12,37 @@
 		private $details_url='';
 	 	private $coordinates='';
 	 	private $conn=null;
+	 	private $table='';
+	 	private $results=array();
 	 	
-		public function __construct($username)
+		public function __construct($username,$type)
 		{
 			$this->conn=new db_connect("re_user_".$username);
+			$this->table=$type;
 			$this->read_addresses();
-			$this->details_url="http://www.mapquestapi.com/geocoding/v1/batch?key=".$this->key."&".$this->location."outFormat=json&maxResults=1";
-			$this->convert();
+			$this->write_addresses();
 			////string for testing
-			//http://www.mapquestapi.com/geocoding/v1/batch?key=Fmjtd%7Cluur250a2u%2C2x%3Do5-9w7w50&location=haryana&location=bengal&json=&outFormat=json&maxResults=1
+			//http://www.mapquestapi.com/geocoding/v1/address?key=Fmjtd%7Cluur250a2u%2C2x%3Do5-9w7w50&street=&city=sirsa&state=haryana&postalCode=125055&country=india&inFormat=kvp&outFormat=json&maxResults=1
 		}
 
 		private function read_addresses()
 		{
-			$query="select id,address,street,city,state,country from customers where address_status=?";
+			$query="select id,address,city,pincode,state,country from ".$this->table." where address_status=?";
 			$result=$this->conn->conn->prepare($query);
 			$result->execute(array('pending analysis'));		
 			
 			$this->location="";
 			while($row=$result->fetch(PDO::FETCH_ASSOC))
 			{
-				$address_string=str_replace(",","  ",$row['address']).",".$row['street'].",".$row['city'].",".$row['state'].",".$row['country'];
-				$address_string=urlencode($address_string);
-				$this->location.="location=".$address_string."&";
+				$address=urlencode($row['address']);
+				$city=urlencode($row['city']);
+				$pincode=urlencode($row['pincode']);
+				$state=urlencode($row['state']);
+				$country=urlencode($row['country']);
+				$location="street=".$address."&city=".$city."&state=".$state."&postalCode=".$pincode."&country=".$country;
+				$this->details_url="http://www.mapquestapi.com/geocoding/v1/address?key=".$this->key."&".$location."&inFormat=kvp&outFormat=json&maxResults=1";
+				$this->convert();
 			}
-			//echo $this->location;
-			//$this->location=rtrim($this->location,",");
-			//$this->location.="}";	
 		}
 		
 		private function convert()
@@ -49,32 +53,36 @@
 			$response=json_decode(curl_exec($ch), true);
 			
 			// If Status Code is ZERO_RESULTS, OVER_QUERY_LIMIT, REQUEST_DENIED or INVALID_REQUEST
-			if($response['info']['statuscode'] != 0) {
+			if($response['info']['statuscode'] != 0)
+			{
 				return null;
 			}
-			
-			$response_length=count($response['results']);
+			$this->results[]=$response['results'][0];
+		}
+
+		private function write_addresses()
+		{
+			$response_length=count($this->results);
 			
 			for($i=0;$i<$response_length;$i++)
 			{
-				$query="update customers set lat=?,lng=?,address_status=? where address=? and street=? and city=? and state=? and country=? and address_status=?";
+				$query="update ".$this->table." set lat=?,lng=?,address_status=? where address=? and city=? and pincode=? and state=? and country=? and address_status=?";
 				$stmt=$this->conn->conn->prepare($query);
 				
-				$address_string=$response['results'][$i]['providedLocation']['location'];
-				//echo "\n".$address_string;
-				$address_string=explode(',',$address_string);
-				$address=str_replace("  ",",",$address_string[0]);
-				$street=$address_string[1];
-				$city=$address_string[2];
-				$state=$address_string[3];
-				$country=$address_string[4];
+				$address_string=$this->results[$i]['providedLocation'];
+
+				$address=$address_string['street'];
+				$city=$address_string['city'];
+				$pincode=$address_string['postalCode'];
+				$state=$address_string['state'];
+				$country=$address_string['country'];
 				
-				$locations = $response['results'][$i]['locations'];
+				$locations = $this->results[$i]['locations'];
 				
 				$latlng = $locations[0]['latLng'];
 				$longitude = $latlng['lng'];
 				$latitude = $latlng['lat'];
-				$stmt->execute(array($latitude,$longitude,'unconfirmed',$address,$street,$city,$state,$country,'pending analysis'));
+				$stmt->execute(array($latitude,$longitude,'unconfirmed',$address,$city,$pincode,$state,$country,'pending analysis'));
 			}
 		}
 	}

@@ -458,7 +458,7 @@ function modal11_action()
 	var fphone=form.elements[2];
 	var femail=form.elements[3];
 	var faddress=form.elements[4];
-	var fstreet=form.elements[5];
+	var fpincode=form.elements[5];
 	var fcity=form.elements[6];
 	var fstate=form.elements[7];
 	var fcountry=form.elements[8];
@@ -474,7 +474,7 @@ function modal11_action()
 			var phone=fphone.value;
 			var email=femail.value;
 			var address=faddress.value;
-			var street=fstreet.value;
+			var pincode=fpincode.value;
 			var city=fcity.value;
 			var state=fstate.value;
 			var country=fcountry.value;
@@ -491,7 +491,7 @@ function modal11_action()
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<status>active</status>" +
 						"<address>"+address+"</address>" +
-						"<street>"+street+"</street>" +
+						"<pincode>"+pincode+"</pincode>" +
 						"<city>"+city+"</city>" +
 						"<state>"+state+"</state>" +
 						"<country>"+country+"</country>" +
@@ -599,7 +599,7 @@ function modal13_action()
 	var fphone=form.elements[2];
 	var femail=form.elements[3];
 	var faddress=form.elements[4];
-	var fstreet=form.elements[5];
+	var fpincode=form.elements[5];
 	var fcity=form.elements[6];
 	var fstate=form.elements[7];
 	var fcountry=form.elements[8];
@@ -615,7 +615,7 @@ function modal13_action()
 			var phone=fphone.value;
 			var email=femail.value;
 			var address=faddress.value;
-			var street=fstreet.value;
+			var pincode=fpincode.value;
 			var city=fcity.value;
 			var state=fstate.value;
 			var country=fcountry.value;
@@ -631,7 +631,7 @@ function modal13_action()
 						"<notes>"+notes+"</notes>" +
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<address>"+address+"</address>" +
-						"<street>"+street+"</street>" +
+						"<pincode>"+pincode+"</pincode>" +
 						"<city>"+city+"</city>" +
 						"<state>"+state+"</state>" +
 						"<country>"+country+"</country>" +
@@ -872,7 +872,7 @@ function modal16_action()
 	var fphone=form.elements[2];
 	var femail=form.elements[3];
 	var faddress=form.elements[4];
-	var fstreet=form.elements[5];
+	var fpincode=form.elements[5];
 	var fcity=form.elements[6];
 	var fstate=form.elements[7];
 	var fcountry=form.elements[8];
@@ -898,7 +898,7 @@ function modal16_action()
 			var phone=fphone.value;
 			var email=femail.value;
 			var address=faddress.value;
-			var street=fstreet.value;
+			var pincode=fpincode.value;
 			var city=fcity.value;
 			var state=fstate.value;
 			var country=fcountry.value;
@@ -919,7 +919,7 @@ function modal16_action()
 						"<email>"+email+"</email>" +
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<address>"+address+"</address>" +
-						"<street>"+street+"</street>" +
+						"<pincode>"+pincode+"</pincode>" +
 						"<city>"+city+"</city>" +
 						"<state>"+state+"</state>" +
 						"<country>"+country+"</country>" +
@@ -989,7 +989,7 @@ function modal17_action(button)
 	var fstaff_detail=father_form.elements[4];
 	
 	var faddress=father_form.elements[9];
-	var fstreet=father_form.elements[10];
+	var fpincode=father_form.elements[10];
 	var fcity=father_form.elements[11];
 	var fstate=father_form.elements[12];
 	var fcountry=father_form.elements[13];
@@ -1005,7 +1005,7 @@ function modal17_action(button)
 	var joining_date=form.elements[6];
 	$(joining_date).datepicker();
 	form.elements[1].value=faddress.value;
-	form.elements[2].value=fstreet.value;
+	form.elements[2].value=fpincode.value;
 	form.elements[3].value=fcity.value;
 	form.elements[4].value=fstate.value;
 	form.elements[5].value=fcountry.value;
@@ -1022,7 +1022,7 @@ function modal17_action(button)
 	{
 		event.preventDefault();
 		var address=form.elements[1].value;
-		var street=form.elements[2].value;
+		var pincode=form.elements[2].value;
 		var city=form.elements[3].value;
 		var state=form.elements[4].value;
 		var country=form.elements[5].value;
@@ -1034,10 +1034,10 @@ function modal17_action(button)
 		var hours=form.elements[11].value;
 		var pto=form.elements[12].value;
 		
-		faddress_detail.value=address+", "+street+", "+city+", "+state+", "+country;
+		faddress_detail.value=address+", "+pincode+", "+city+", "+state+", "+country;
 		fstaff_detail.value="Joined on "+date+", Qualification: "+qual+", Skills: "+skill+", Salary: Rs."+comp+"+ Rs."+rate+"/hour. Allowed "+pto+" per month.";
 		faddress.value=address;
-		fstreet.value=street;
+		fpincode.value=pincode;
 		fcity.value=city;
 		fstate.value=state;
 		fcountry.value=country;
@@ -1397,7 +1397,6 @@ function modal20_action()
 			var description=form.elements[2].value;
 			var tax=form.elements[3].value;
 			var price=form.elements[4].value;
-			var duration=form.elements[5].value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
 			var data_xml="<services>" +
@@ -1406,7 +1405,6 @@ function modal20_action()
 						"<price>"+price+"</price>" +
 						"<description>"+description+"</description>" +
 						"<tax>"+tax+"</tax>" +
-						"<duration>"+duration+"</duration>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</services>";	
 			var activity_xml="<activity>" +
@@ -1462,7 +1460,6 @@ function modal21_action()
 			"<price></price>" +
 			"<taxable></taxable>" +
 			"<tax></tax>" +
-			"<duration></duration>" +
 			"</services>";
 	fetch_requested_data('form57',copy_master_data,function(results)
 	{
@@ -1471,7 +1468,6 @@ function modal21_action()
 			form.elements[2].value=result.description;
 			form.elements[3].value=result.tax;
 			form.elements[4].value=result.price;
-			form.elements[5].value=result.duration;
 		});
 	});
 	
@@ -1487,7 +1483,6 @@ function modal21_action()
 			var description=form.elements[2].value;
 			var tax=form.elements[3].value;
 			var price=form.elements[4].value;
-			var duration=form.elements[5].value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
 			var data_xml="<services>" +
@@ -1497,7 +1492,6 @@ function modal21_action()
 						"<description>"+description+"</description>" +
 						"<taxable>"+taxable+"</taxable>" +
 						"<tax>"+tax+"</tax>" +
-						"<duration>"+duration+"</duration>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</services>";	
 			var activity_xml="<activity>" +
@@ -1784,14 +1778,14 @@ function modal24_action(button)
 	var father_form=document.getElementById(form_id);
 	var faddress_detail=father_form.elements[3];
 	var faddress=father_form.elements[8];
-	var fstreet=father_form.elements[9];
+	var fpincode=father_form.elements[9];
 	var fcity=father_form.elements[10];
 	var fstate=father_form.elements[11];
 	var fcountry=father_form.elements[12];
 	var faddress_status=father_form.elements[13];
 		
 	form.elements[1].value=faddress.value;
-	form.elements[2].value=fstreet.value;
+	form.elements[2].value=fpincode.value;
 	form.elements[3].value=fcity.value;
 	form.elements[4].value=fstate.value;
 	form.elements[5].value=fcountry.value;
@@ -1801,15 +1795,15 @@ function modal24_action(button)
 	{
 		event.preventDefault();
 		var address=form.elements[1].value;
-		var street=form.elements[2].value;
+		var pincode=form.elements[2].value;
 		var city=form.elements[3].value;
 		var state=form.elements[4].value;
 		var country=form.elements[5].value;
 		
-		var address_detail=address+", "+street+", "+city+", "+state+", "+country;
+		var address_detail=address+", "+pincode+", "+city+", "+state+", "+country;
 		faddress_detail.value=address_detail;
 		faddress.value=address;
-		fstreet.value=street;
+		fpincode.value=pincode;
 		fcity.value=city;
 		fstate.value=state;
 		fcountry.value=country;
@@ -1835,14 +1829,14 @@ function modal25_action(button)
 	var father_form=document.getElementById(form_id);
 	var faddress_detail=father_form.elements[3];
 	var faddress=father_form.elements[8];
-	var fstreet=father_form.elements[9];
+	var fpincode=father_form.elements[9];
 	var fcity=father_form.elements[10];
 	var fstate=father_form.elements[11];
 	var fcountry=father_form.elements[12];
 	var faddress_status=father_form.elements[13];
 	
 	form.elements[1].value=faddress.value;
-	form.elements[2].value=fstreet.value;
+	form.elements[2].value=fpincode.value;
 	form.elements[3].value=fcity.value;
 	form.elements[4].value=fstate.value;
 	form.elements[5].value=fcountry.value;
@@ -1852,15 +1846,15 @@ function modal25_action(button)
 	{
 		event.preventDefault();
 		var address=form.elements[1].value;
-		var street=form.elements[2].value;
+		var pincode=form.elements[2].value;
 		var city=form.elements[3].value;
 		var state=form.elements[4].value;
 		var country=form.elements[5].value;
 		
-		var address_detail=address+", "+street+", "+city+", "+state+", "+country;
+		var address_detail=address+", "+pincode+", "+city+", "+state+", "+country;
 		faddress_detail.value=address_detail;
 		faddress.value=address;
-		fstreet.value=street;
+		fpincode.value=pincode;
 		fcity.value=city;
 		fstate.value=state;
 		fcountry.value=country;
@@ -1917,7 +1911,6 @@ function modal26_action(payment_id)
 						"<total_amount>"+total+"</total_amount>" +
 						"<paid_amount>"+paid+"</paid_amount>" +
 						"<status>"+status+"</status>" +
-						"<date>"+get_my_time()+"</date>" +
 						"<due_date>"+due_date+"</due_date>" +
 						"<mode>"+mode+"</mode>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
@@ -2239,7 +2232,6 @@ function modal28_action(payment_id)
 						"<total_amount>"+total+"</total_amount>" +
 						"<paid_amount>"+paid+"</paid_amount>" +
 						"<status>"+status+"</status>" +
-						"<date>"+get_my_time()+"</date>" +
 						"<due_date>"+due_date+"</due_date>" +
 						"<mode>"+mode+"</mode>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
@@ -2335,7 +2327,6 @@ function modal29_action(button)
 
 		fdetail.value=detail_string;
 		fmode.value=form.elements[3].value;
-		fdate.value=get_raw_time(form.elements[2].value);
 		fdue_date.value=get_raw_time(form.elements[4].value);
 		fbill_id.value=form.elements[1].value;	
 	

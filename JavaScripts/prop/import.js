@@ -117,7 +117,7 @@ function form8_import(data_array,import_type)
 				"<status>"+row.status+"</status>" +
 				"<notes>"+row.notes+"</notes>" +
 				"<address>"+row.address+"</address>" +
-				"<street>"+row.street+"</street>" +
+				"<pincode>"+row.pincode+"</pincode>" +
 				"<city>"+row.city+"</city>" +
 				"<state>"+row.state+"</state>" +
 				"<country>"+row.country+"</country>" +
@@ -292,7 +292,7 @@ function form30_import(data_array,import_type)
 				"<status>"+row.status+"</status>" +
 				"<notes>"+row.notes+"</notes>" +
 				"<address>"+row.address+"</address>" +
-				"<street>"+row.street+"</street>" +
+				"<pincode>"+row.pincode+"</pincode>" +
 				"<city>"+row.city+"</city>" +
 				"<state>"+row.state+"</state>" +
 				"<country>"+row.country+"</country>" +
@@ -490,7 +490,7 @@ function form40_import(data_array,import_type)
 				"<acc_name unique='yes'>"+row.acc_name+"</acc_name>" +
 				"<notes>"+row.notes+"</notes>" +
 				"<address>"+row.address+"</address>" +
-				"<street>"+row.street+"</street>" +
+				"<pincode>"+row.pincode+"</pincode>" +
 				"<city>"+row.city+"</city>" +
 				"<state>"+row.state+"</state>" +
 				"<country>"+row.country+"</country>" +

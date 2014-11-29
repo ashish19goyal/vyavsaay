@@ -26,6 +26,14 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>task_due_period</name>
+			<display_name>Default Task Due Period (hours)</display_name>
+			<status>active</status>
+			<value>4</value>
+			<type>other</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>address</name>
 			<display_name>official_address</display_name>
 			<status>active</status>
@@ -284,14 +292,6 @@
 		<row>
 			<name>report30</name>
 			<display_name>tasks_performed</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>report</type>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>report41</name>
-			<display_name>service_pre-requisites</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
@@ -603,7 +603,7 @@
 		</row>
 		<row>
 			<name>form41</name>
-			<display_name>verify_addresses</display_name>
+			<display_name>verify_customer_addresses</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -897,6 +897,22 @@
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form85</name>
+			<display_name>verify_supplier_addresses</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form86</name>
+			<display_name>verify_staff_addresses</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -1068,17 +1084,6 @@
 			<username>master</username>
 			<element_id>report29</element_id>
 			<element_name>product_pre-requisites</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report41</element_id>
-			<element_name>service_pre-requisites</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1518,7 +1523,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form41</element_id>
-			<element_name>verify_addresses</element_name>
+			<element_name>verify_customer_addresses</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1922,6 +1927,28 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<username>master</username>
+			<element_id>form85</element_id>
+			<element_name>verify_supplier_addresses</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form86</element_id>
+			<element_name>verify_staff_addresses</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
 	</access_control>
 	<shortcuts>
 		<row>
@@ -2016,13 +2043,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<element_id>report41</element_id>
-			<element_name>service_pre-requisites</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<element_id>report30</element_id>
 			<element_name>tasks_performed</element_name>
 			<status>active</status>
@@ -2067,6 +2087,13 @@
 		<row>
 			<element_id>report36</element_id>
 			<element_name>supplier_map_by_products</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report41</element_id>
+			<element_name>service_pre-requisites</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2234,7 +2261,7 @@
 		</row>
 		<row>
 			<element_id>form41</element_id>
-			<element_name>verify_addresses</element_name>
+			<element_name>verify_customer_addresses</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2466,6 +2493,20 @@
 		<row>
 			<element_id>form84</element_id>
 			<element_name>manage_subscriptions</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form85</element_id>
+			<element_name>verify_supplier_addresses</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form86</element_id>
+			<element_name>verify_staff_addresses</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
