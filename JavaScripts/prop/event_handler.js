@@ -21,7 +21,8 @@ function default_load()
 	if(is_set_session())
 	{
 		set_menu_shortcuts();
-		setup_elements_display();
+		//setup_elements_display();
+		setup_grid_display();
 		date_formating();
 		modal_forms_ini();
 		print_setup();
@@ -109,13 +110,15 @@ function modal_forms_ini()
 function print_setup()
 {
 //	print_template_setup('sale_bill');
-	print_css_setup('pamphlet');
-	print_css_setup('credit_note');
-	print_css_setup('payment_receipt');
-	print_css_setup('purchase_order');
-	print_css_setup('return_receipt');
 	print_css_setup('sale_bill');
-	print_css_setup('service_receipt');
+	print_css_setup('purchase_order');
+	print_css_setup('payment_receipt');
+	print_css_setup('credit_note');
+	print_css_setup('pamphlet');
+	print_css_setup('service_bill');
+	print_css_setup('product_bill');
+	print_css_setup('return_receipt');
+	print_css_setup('supplier_return');
 }
 
 function print_css_setup(name)
@@ -142,6 +145,26 @@ function set_menu_username()
 	$('#menu_username').html(hello+" "+name);
 }
 
+function setup_grid_display()
+{
+	var functions_array=['sale_bills','purchase','finances','products','services','inventory','customers','suppliers','staff','store','ecommerce','offers','maps','sale_reports'];
+	functions_array.forEach(function(func)
+	{
+		var function_main=$("#"+func+"_main").find('ul').find('li').length;
+		if(function_main===0)
+		{
+			$("#"+func+"_link").parent().hide();
+		}
+	});
+}
+
+function grid_click(func)
+{
+	show_function("#"+func+"_main");
+	$("#"+func+"_main").find('ul').find('li').find('a').first().click();
+}
+
+/*
 function setup_elements_display()
 {
 	$(".function_main").find('ul').find('li').hide();
@@ -158,10 +181,10 @@ function setup_elements_display()
 		for(var i in elements)
 		{
 			$("#"+elements[i]+"_link").parent().show();
-			//$("#"+elements[i]+"_link").click();
 		}
 	},forms_data);
 }
+*/
 
 function i18n_setup()
 {
@@ -215,6 +238,7 @@ function hide_all()
 	$("#search_results_box").hide();
 	$("#all_activities_box").hide();
 	$("#notifications_box").hide();
+	
 	//hide all functions
 	$("#sale_bills_main").hide();
 	$("#products_main").hide();
@@ -234,7 +258,6 @@ function hide_all()
 	
 	$("#home_grid").hide();
 	hide_loader();
-	//$(".forms").show();
 }
 
 /**
@@ -242,12 +265,8 @@ function hide_all()
  */
 function show_loader()
 {
-//	loaderTimer=window.setTimeout(function()
-//	{
 		$("#loading_icon").show();
 		$("#transparent_layer").show();
-//	},100);
-	
 }
 
 /**
@@ -257,23 +276,8 @@ function hide_loader()
 {
 	$("#loading_icon").hide();
 	$("#transparent_layer").hide();
-//	window.clearTimeout(loaderTimer);
 }
 
-function resize_input()
-{
-/*
-	$('input[type="text"]').keyup(function()
-	{  
-		$(this).attr({size: $(this).val().length});
-	});
-	$('input[type="number"]').keyup(function()
-	{  
-		//console.log($(this).val().length);
-		$(this).attr({size: $(this).val().length});
-	});
-*/	
-}
 
 function load_tooltips()
 {

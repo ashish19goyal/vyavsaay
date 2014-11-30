@@ -113,7 +113,7 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 	ajax_with_custom_func("./ajax/sync_download.php","domain="+domain+"&username="+username+"&re="+re_access+"&start_table="+start_table+"&start_offset="+start_offset+"&last_sync_time="+last_sync_time,function(e)
 	{
 		var response=e.responseXML;
-		console.log(e.responseText);
+		//console.log(e.responseText);
 		
 		var end_table=response.childNodes[0].childNodes[1].childNodes[0].innerHTML;
 		var end_offset=response.childNodes[0].childNodes[1].childNodes[1].innerHTML;

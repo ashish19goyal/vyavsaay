@@ -1,7 +1,9 @@
-<div id='products_main'>
+<div id='products_main' class='function_main'>
 	<?php 
 
 		echo "<ul>";
+			if(strpos($_SESSION['forms'],'form87-')!==false)
+				echo "<li><a id='form87_link' href='#form87' onclick='form87_header_ini(); form87_ini();' data-i18n='form.manage_products'></a></li>";
 			if(strpos($_SESSION['forms'],'form39-')!==false)
 				echo "<li><a id='form39_link' href='#form39' onclick='form39_header_ini(); form39_ini();' data-i18n='form.manage_products'></a></li>";
 			if(strpos($_SESSION['forms'],'form59-')!==false)
@@ -18,6 +20,8 @@
 
 		if(strpos($_SESSION['forms'],'form39-')!==false)
 			include "forms/form39.php";
+		if(strpos($_SESSION['forms'],'form87-')!==false)
+			include "forms/form87.php";
 		if(strpos($_SESSION['forms'],'form59-')!==false)
 			include "forms/form59.php";
 		if(strpos($_SESSION['reports'],'report29-')!==false)

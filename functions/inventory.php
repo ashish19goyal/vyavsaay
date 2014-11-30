@@ -1,4 +1,4 @@
-<div id='inventory_main'>
+<div id='inventory_main' class='function_main'>
 	<?php 
 
 		echo "<ul>";

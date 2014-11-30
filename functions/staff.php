@@ -1,4 +1,4 @@
-<div id='staff_main'>
+<div id='staff_main' class='function_main'>
 	<?php 
 		echo "<ul>";
 			if(strpos($_SESSION['forms'],'form8-')!==false)

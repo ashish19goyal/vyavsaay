@@ -1,4 +1,4 @@
-<div id='finances_main'>
+<div id='finances_main' class='function_main'>
 
 	<?php 
 

@@ -1744,13 +1744,20 @@ function modal23_action(t_func,i_func)
         {
            var content=reader.result;
            var data_array=csv_string_to_obj_array(content);
-
-           if(new_records.checked)
-        	   i_func(data_array,'create_new');
-           else if(update_records.checked)
-        	   i_func(data_array,'update_records');
            
-           var ajax_complete=setInterval(function(){
+           //console.log(data_array);
+           
+           if(new_records.checked)
+           {
+        	   i_func(data_array,'create_new');
+           }
+           else if(update_records.checked)
+           {
+        	   i_func(data_array,'update_records');
+           }
+           
+           var ajax_complete=setInterval(function()
+        	{
         	   if(number_active_ajax===0)
         	   {
         		   selected_file.value = "Upload complete";
@@ -1758,7 +1765,7 @@ function modal23_action(t_func,i_func)
         		   $("#modal23").dialog("close");
         		   clearInterval(ajax_complete);
         	   }
-           },10000);
+           },1000);
         }
         reader.readAsText(file);    
     });

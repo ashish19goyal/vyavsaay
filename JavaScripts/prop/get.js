@@ -180,42 +180,106 @@ function set_my_filter(filter_data,filter_element)
 	},filter_data);		
 }
 
+
 function set_static_filter(table,list,filter_element)
 {
-	var list_data="<values_list>" +
+	var list_id='datalist-'+table+list;
+	filter_element.setAttribute("list",list_id);
+	
+	var datalist_element=document.getElementById(list_id);
+	
+	if(datalist_element==null || datalist_element==undefined)
+	{
+		var list_data="<values_list>" +
 			"<name></name>" +
 			"<tablename>"+table+"</tablename>" +
 			"<listname>"+list+"</listname>" +
 			"<status>active</status>" +
 			"</values_list>";
-	get_single_column_data(function(data)
-	{
-		var form=filter_element.form;
-		var datalist=document.createElement('datalist');
-		data.forEach(function(d)
+		get_single_column_data(function(data)
 		{
-			var option=document.createElement('option');
-			option.setAttribute('value',d);
-			datalist.appendChild(option);
-		});
-		
-		var list_id=filter_element.getAttribute('list');
-		if(list_id=='' || list_id==null)
-		{
-			list_id="list_"+get_new_key();
-			filter_element.setAttribute("list",list_id);
-		}
-		else
-		{
-			var oldlist=document.getElementById(list_id);
-			form.removeChild(oldlist);
-		}
-		
-		form.appendChild(datalist);
-		datalist.setAttribute('id',list_id);
-		
-	},list_data);		
+			var form=document.getElementById('master_datalist_form');
+			var datalist=document.createElement('datalist');
+			data.forEach(function(d)
+			{
+				var option=document.createElement('option');
+				option.setAttribute('value',d);
+				datalist.appendChild(option);
+			});
+			
+			var recheck=document.getElementById(list_id);
+			if(recheck==null || recheck==undefined)
+			{
+				form.appendChild(datalist);
+				datalist.setAttribute('id',list_id);
+			}
+		},list_data);		
+	}
 }
+
+function set_static_value_list(table,list,filter_element)
+{
+	var list_id='datalist-'+table+list;
+	filter_element.setAttribute("list",list_id);
+	
+	var datalist_element=document.getElementById(list_id);
+	
+	if(datalist_element==null || datalist_element==undefined)
+	{
+		var list_data="<values_list>" +
+			"<name></name>" +
+			"<tablename>"+table+"</tablename>" +
+			"<listname>"+list+"</listname>" +
+			"<status>active</status>" +
+			"</values_list>";
+		get_single_column_data(function(data)
+		{
+			var form=document.getElementById('master_datalist_form');
+			var datalist=document.createElement('datalist');
+			data.forEach(function(d)
+			{
+				var option=document.createElement('option');
+				option.setAttribute('value',d);
+				datalist.appendChild(option);
+			});
+					
+			var recheck=document.getElementById(list_id);
+			if(recheck==null || recheck==undefined)
+			{
+				form.appendChild(datalist);
+				datalist.setAttribute('id',list_id);
+			}
+		},list_data);
+		
+		$(filter_element).off("change");
+		$(filter_element).on("change",function(event)
+		{
+			var found = $.inArray(filter_element.value, data) > -1;
+			if(!found)
+			{
+	            filter_element.value="";
+	        }
+		});
+	}
+	else
+	{
+		$(filter_element).off("change");
+		$(filter_element).on("change",function(event)
+		{
+			var options=array();
+			for(var i=0;i<datalist_element.options.length;i++)
+			{
+			    options[i]=datalist_element.options[i].value;
+			}
+			var found = $.inArray(filter_element.value,options) > -1;
+			if(!found)
+			{
+	            filter_element.value="";
+	        }
+		});
+	}
+}
+
 
 function set_my_value_list(filter_data,filter_element)
 {	
@@ -341,6 +405,8 @@ function set_my_max_value(filter_data,filter_element)
 	},filter_data);
 }
 
+
+/*
 function set_static_value_list(table,list,filter_element)
 {
 	var list_data="<values_list>" +
@@ -385,8 +451,10 @@ function set_static_value_list(table,list,filter_element)
 	        }
 		});
 	},list_data);
-
 }
+*/
+
+
 
 /**
  * Converts a two dimensional array to csv file

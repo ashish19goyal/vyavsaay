@@ -1,4 +1,4 @@
-<div id='maps_main'>
+<div id='maps_main' class='function_main'>
 	<?php
 		echo "<ul>";
 			if(strpos($_SESSION['reports'],'report31-')!==false)

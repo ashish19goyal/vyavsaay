@@ -335,7 +335,7 @@ function form12_add_item()
 				
 			},last_batch_data);
 			
-			quantity_filter.value=0;
+			quantity_filter.value="";
 			total_filter.value=0;
 			amount_filter.value=0;
 			discount_filter.value=0;
@@ -360,7 +360,7 @@ function form12_add_item()
 				$(quantity_filter).attr('placeholder',quantity);
 			});
 			
-			quantity_filter.value=0;
+			quantity_filter.value="";
 			total_filter.value=0;
 			amount_filter.value=0;
 			discount_filter.value=0;
@@ -1924,7 +1924,7 @@ function form72_add_product()
 				}				
 			},last_batch_data);
 			
-			quantity_filter.value=0;
+			quantity_filter.value="";
 			total_filter.value=0;
 			amount_filter.value=0;
 			discount_filter.value=0;
@@ -1950,7 +1950,7 @@ function form72_add_product()
 				$(quantity_filter).attr('placeholder',quantity);
 			});
 			
-			quantity_filter.value=0;
+			quantity_filter.value="";
 			total_filter.value=0;
 			amount_filter.value=0;
 			discount_filter.value=0;

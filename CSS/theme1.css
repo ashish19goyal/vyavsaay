@@ -23,7 +23,7 @@ input{
 	width: auto; 
 }
 
-input:not([readonly="readonly"]):focus,textarea:not([readonly="readonly"]):focus{
+input:not([readonly="readonly"]):not([type="button"]):focus,textarea:not([readonly="readonly"]):focus{
 	background-color: yellow;
 	outline: none;
 }

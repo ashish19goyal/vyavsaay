@@ -447,6 +447,7 @@ function form39_import(data_array,import_type)
 				"<description>"+row.description+"</description>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<bar_code>"+row.bar_code+"</bar_code>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</product_master>";
 		if(import_type=='create_new')
 		{
@@ -1224,3 +1225,47 @@ function form84_import(data_array,import_type)
 		}
 	});
 };
+
+
+/**
+* @form Manage Products
+* @formNo 87
+*/
+function form87_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<product_master>" +
+				"<id>"+row.id+"</id>" +
+				"<name unique='yes'>"+row.name+"</name>" +
+				"<make>"+row.make+"</make>" +
+				"<description>"+row.description+"</description>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<bar_code>"+row.bar_code+"</bar_code>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</product_master>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+

@@ -1003,7 +1003,7 @@ function form39_delete_item(button)
 				"<type>product</type>" +
 				"</pre_requisites>";
 		var other_delete4="<attributes>" +
-				"<name>"+name+"</name>" +
+				"<item_name>"+name+"</item_name>" +
 				"<type>product</type>" +
 				"</attributes>";
 		var other_delete5="<cross_sells>" +
@@ -1562,7 +1562,7 @@ function form57_delete_item(button)
 				"<type>service</type>" +
 				"</pre_requisites>";
 		var other_delete4="<attributes>" +
-				"<name>"+service+"</name>" +
+				"<item_name>"+service+"</item_name>" +
 				"<type>service</type>" +
 				"</attributes>";
 		var other_delete5="<cross_sells>" +
@@ -2427,6 +2427,91 @@ function form84_delete_item(button)
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Products
+ * @param button
+ */
+function form87_delete_item(button)
+{
+	if(is_delete_access('form87'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var name=form.elements[0].value;
+		var make=form.elements[1].value;
+		var description=form.elements[2].value;
+		var tax=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<product_master>" +
+					"<id>"+data_id+"</id>" +
+					"<make>"+make+"</make>" +
+					"<name>"+name+"</name>" +
+					"<description>"+description+"</description>" +
+					"<tax>"+tax+"</tax>" +
+					"</product_master>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>product_master</tablename>" +
+					"<link_to>form87</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Product "+name+" from inventory</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var other_delete="<product_instances>" +
+				"<product_name>"+name+"</product_name>" +
+				"</product_instances>";
+		var other_delete2="<documents>" +
+				"<doc_type>product</doc_type>" +
+				"<target_id>"+data_id+"</target_id>" +
+				"</documents>";
+		var other_delete3="<pre_requisites>" +
+				"<name>"+name+"</name>" +
+				"<type>product</type>" +
+				"</pre_requisites>";
+		var other_delete4="<attributes>" +
+				"<item_name>"+name+"</item_name>" +
+				"<type>product</type>" +
+				"</attributes>";
+		var other_delete5="<cross_sells>" +
+				"<name>"+name+"</name>" +
+				"<type>product</type>" +
+				"</cross_sells>";
+		var other_delete6="<reviews>" +
+				"<name>"+name+"</name>" +
+				"<type>product</type>" +
+				"</reviews>";
+
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(other_delete);
+			server_delete_simple(other_delete2);
+			server_delete_simple(other_delete3);
+			server_delete_simple(other_delete4);
+			server_delete_simple(other_delete5);
+			server_delete_simple(other_delete6);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(other_delete);
+			local_delete_simple(other_delete2);
+			local_delete_simple(other_delete3);
+			local_delete_simple(other_delete4);
+			local_delete_simple(other_delete5);
+			local_delete_simple(other_delete6);
+
 		}	
 		$(button).parent().parent().remove();
 	}

@@ -1,4 +1,4 @@
-<div id='store_main'>
+<div id='store_main' class='function_main'>
 	<?php
 	echo "<ul>";
 		if(strpos($_SESSION['forms'],'form5-')!==false)

@@ -87,7 +87,7 @@ function local_read_single_column(columns,callback,results)
 	var filter=new Array();
 	for(var j in cols)
 	{
-		if(cols[j].hasAttribute('sort'))
+		if(cols[j].innerHTML!=null && cols[j].hasAttribute('sort'))
 		{
 			sort_index=cols[j].nodeName;
 			sort_order=cols[j].getAttribute('sort');
@@ -1081,7 +1081,7 @@ function local_read_multi_column(columns,callback,results)
 	
 	for(var j in cols)
 	{
-		if(cols[j].hasAttribute('sort'))
+		if(cols[j].innerHTML!=null && cols[j].hasAttribute('sort'))
 		{
 			sort_index=cols[j].nodeName;
 			sort_order=cols[j].getAttribute('sort');

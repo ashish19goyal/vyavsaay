@@ -1,4 +1,4 @@
-<div id='suppliers_main'>
+<div id='suppliers_main' class='function_main'>
 	<?php 
 
 		echo "<ul>";

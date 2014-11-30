@@ -1,4 +1,4 @@
-<div id='ecommerce_main'>
+<div id='ecommerce_main' class='function_main'>
 
 	<?php 
 

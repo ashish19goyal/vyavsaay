@@ -1937,3 +1937,31 @@ function form84_header_ini()
 		modal23_action(form84_import_template,form84_import);
 	});
 };
+
+/**
+ * @form Manage Products
+ * @formNo 87
+ */
+function form87_header_ini()
+{
+	var filter_fields=document.getElementById('form87_header');
+	var name_filter=filter_fields.elements[0];
+	var make_filter=filter_fields.elements[1];
+	
+	var make_data="<product_master>" +
+			"<make></make>" +
+			"</product_master>";
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(make_data,make_filter);
+	set_my_filter(products_data,name_filter);
+	
+	var import_button=filter_fields.elements[4];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form87_import_template,form87_import);
+	});
+};

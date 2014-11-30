@@ -267,3 +267,13 @@ function form84_import_template()
 	var data_array=['id','customer','service','status','notes','last_bill_id','last_bill_date','next_due_date'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Manage Products
+* @formNo 87
+*/
+function form87_import_template()
+{
+	var data_array=['id','name','make','description','tax','bar_code'];
+	my_array_to_csv(data_array);
+};

@@ -1,6 +1,7 @@
 /**
  * @form Update Inventory
  * @formNo 1
+ * @Loading heavy
  */
 function form1_ini()
 {
@@ -14,13 +15,14 @@ function form1_ini()
 	var fname=filter_fields.elements[0].value;
 	var fbatch=filter_fields.elements[1].value;
 	
-	var columns="<product_instances>" +
+	var columns="<product_instances count='100'>" +
 		"<id>"+fid+"</id>" +
 		"<batch>"+fbatch+"</batch>" +
 		"<product_name>"+fname+"</product_name>" +
 		"<cost_price></cost_price>" +
 		"<sale_price></sale_price>" +
 		"<expiry></expiry>" +
+		"<last_updated sort='desc'></last_updated>" +
 		"</product_instances>";
 	
 	$('#form1_body').html("");
@@ -90,6 +92,8 @@ function form1_ini()
 
 /**
  * @form Create Pamphlet
+ * @formNo 2
+ * @Loading light
  */
 function form2_ini()
 {
@@ -97,7 +101,7 @@ function form2_ini()
 	if(pamphlet_id==null)
 		pamphlet_id="";	
 	$('#form2_body').html("");
-	console.log(pamphlet_id);
+	//console.log(pamphlet_id);
 	if(pamphlet_id!="")
 	{
 		show_loader();
@@ -172,9 +176,9 @@ function form2_ini()
 
 
 /**
- * this function prepares the table for manage assets form
  * @form Manage Assets
  * @formNo 5
+ * @Loading light
  */
 function form5_ini()
 {
@@ -270,6 +274,7 @@ function form5_ini()
 /**
  * @form Attendance
  * @formNo 7
+ * @Loading light
  */
 function form7_ini()
 {
@@ -507,6 +512,8 @@ function form8_ini()
 
 /**
  * @form New Service Bill
+ * @formNo 10
+ * @Loading light
  */
 function form10_ini()
 {
@@ -663,6 +670,7 @@ function form10_ini()
 /**
  * @form Manage Payments
  * @formNo 11
+ * @Loading heavy
  */
 function form11_ini()
 {
@@ -677,7 +685,7 @@ function form11_ini()
 	var faccount=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<payments>" +
+	var columns="<payments count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<type>"+ftype+"</type>" +
 			"<total_amount></total_amount>" +
@@ -688,6 +696,7 @@ function form11_ini()
 			"<date></date>" +
 			"<mode></mode>" +
 			"<bill_id></bill_id>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</payments>";
 
 	$('#form11_body').html("");
@@ -794,6 +803,8 @@ function form11_ini()
 
 /**
  * @form New Products Bill
+ * @formNo 12
+ * @Loading light
  */
 function form12_ini()
 {
@@ -956,6 +967,7 @@ function form12_ini()
 /**
  * @form Manage Tasks
  * @formNo 14
+ * @Loading heavy
  */
 function form14_ini()
 {
@@ -971,7 +983,7 @@ function form14_ini()
 	var fassignee=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<task_instances>" +
+	var columns="<task_instances count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+ftype+"</name>" +
 			"<description></description>" +
@@ -980,6 +992,7 @@ function form14_ini()
 			"<t_initiated></t_initiated>" +
 			"<task_hours></task_hours>" +
 			"<status>"+fstatus+"</status>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</task_instances>";
 
 	$('#form14_body').html("");
@@ -1051,6 +1064,8 @@ function form14_ini()
 
 /**
  * @form Enter Customer Returns
+ * @formNo 15
+ * @Loading light
  */
 function form15_ini()
 {
@@ -1206,6 +1221,7 @@ function form15_ini()
 /**
  * @form Manage customer returns
  * @formNo 16
+ * @Loading light
  */
 function form16_ini()
 {
@@ -1285,6 +1301,7 @@ function form16_ini()
 /**
  * @form Manage supplier returns
  * @formNo 17
+ * @Loading light
  */
 function form17_ini()
 {
@@ -1362,6 +1379,8 @@ function form17_ini()
 
 /**
  * @form Enter Supplier Returns
+ * @formNo 19
+ * @Loading light
  */
 function form19_ini()
 {
@@ -1496,6 +1515,8 @@ function form19_ini()
 
 /**
  * @form New Supplier Bill
+ * @formNo 21
+ * @Loading light
  */
 function form21_ini()
 {
@@ -1608,6 +1629,7 @@ function form21_ini()
 /**
  * @form New Purchase order
  * @formNo 24
+ * @Loading light
  */
 function form24_ini()
 {
@@ -1744,6 +1766,7 @@ function form24_ini()
 /**
  * @form Manage Customers
  * @formNo 30
+ * @Loading light
  */
 function form30_ini()
 {
@@ -1759,7 +1782,7 @@ function form30_ini()
 	var femail=filter_fields.elements[2].value;
 	var fstatus=filter_fields.elements[3].value;
 	
-	var columns="<customers>" +
+	var columns="<customers count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<phone>"+fcontact+"</phone>" +
@@ -1773,6 +1796,7 @@ function form30_ini()
 			"<state></state>" +
 			"<country></country>" +
 			"<address_status></address_status>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</customers>";
 
 	$('#form30_body').html("");
@@ -1843,6 +1867,7 @@ function form30_ini()
 /**
  * @form Manage Offers
  * @formNo 35
+ * @Loading light
  */
 function form35_ini()
 {
@@ -1858,7 +1883,7 @@ function form35_ini()
 	//var fdate=get_raw_time(filter_fields.elements[2].value);
 	var fstatus=filter_fields.elements[3].value;
 	
-	var columns="<offers>" +
+	var columns="<offers count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<offer_name>"+fname+"</offer_name>" +
 			"<offer_type>"+ftype+"</offer_type>" +
@@ -1878,6 +1903,7 @@ function form35_ini()
 			"<quantity_add_amount></quantity_add_amount>" +
 			"<free_product_name></free_product_name>" +
 			"<free_product_quantity></free_product_quantity>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</offers>";
 
 	$('#form35_body').html("");
@@ -1945,6 +1971,7 @@ function form35_ini()
 /**
  * @form Store Placement
  * @formNo 38
+ * @Loading light
  */
 function form38_ini()
 {
@@ -1959,11 +1986,12 @@ function form38_ini()
 	var fbatch=filter_fields.elements[1].value;
 	var farea=filter_fields.elements[2].value;
 	
-	var columns="<area_utilization>" +
+	var columns="<area_utilization count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<batch>"+fbatch+"</batch>" +
 			"<item_name>"+fname+"</item_name>" +
 			"<name>"+farea+"</name>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</area_utilization>";
 
 	$('#form38_body').html("");
@@ -2014,6 +2042,7 @@ function form38_ini()
 /**
  * @form Manage Products
  * @formNo 39
+ * @Loading heavy
  */
 function form39_ini()
 {
@@ -2027,12 +2056,14 @@ function form39_ini()
 	var fname=filter_fields.elements[0].value;
 	var fmakes=filter_fields.elements[1].value;
 	
-	var columns="<product_master>" +
+	var columns="<product_master count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<make>"+fmakes+"</make>" +
 			"<description></description>" +
+			"<bar_code></bar_code>" +
 			"<tax></tax>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</product_master>";
 
 	$('#form39_body').html("");
@@ -2067,13 +2098,13 @@ function form39_ini()
 				rowsHTML+="<tr>";
 					rowsHTML+="<form id='form39_"+result.id+"'></form>";
 						rowsHTML+="<td data-th='Name'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' value='"+result.name+"'>";
+							rowsHTML+="<textarea readonly='readonly' form='form39_"+result.id+"'>"+result.name+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Make'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' class='dblclick_editable' value='"+result.make+"'>";
+							rowsHTML+="<textarea readonly='readonly' form='form39_"+result.id+"' class='dblclick_editable'>"+result.make+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Description'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form39_"+result.id+"' class='dblclick_editable' value='"+result.description+"'>";
+							rowsHTML+="<textarea readonly='readonly' form='form39_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Picture'>";
 							rowsHTML+="<output form='form39_"+result.id+"'><div class='figure' name='"+pic_results_id+"'><img id='img_form39_"+result.id+"' src='"+updated_url+"'></div></output>";
@@ -2109,10 +2140,12 @@ function form39_ini()
 						pictureinfo.innerHTML="<div class='figure' name='"+pic_results_id+"'><img id='img_form39_"+result.id+"' src='"+dataURL+"'></div>";			
 					});
 				},false);
+				
+				longPressEditable($('.dblclick_editable'));
+				
 			});
 		});
 		
-		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
@@ -2128,6 +2161,7 @@ function form39_ini()
 /**
  * @form Manage Vendors
  * @formNo 40
+ * @Loading light
  */
 function form40_ini()
 {
@@ -2142,7 +2176,7 @@ function form40_ini()
 	var fcontact=filter_fields.elements[1].value;
 	var femail=filter_fields.elements[2].value;
 	
-	var columns="<suppliers>" +
+	var columns="<suppliers count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<notes></notes>" +
 			"<name>"+fname+"</name>" +
@@ -2155,6 +2189,7 @@ function form40_ini()
 			"<state></state>" +
 			"<country></country>" +
 			"<address_status></address_status>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</suppliers>";
 
 	$('#form40_body').html("");
@@ -2384,6 +2419,7 @@ function form41_ini()
 /**
  * @form Manage Bills
  * @formNo 42
+ * @Loading light
  */
 function form42_ini()
 {
@@ -2399,13 +2435,14 @@ function form42_ini()
 		fid=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	
-	var columns="<bills>" +
+	var columns="<bills count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<customer_name>"+fname+"</customer_name>" +
 			"<bill_date></bill_date>" +
 			"<total></total>" +
 			"<type></type>" +
 			"<transaction_id></transaction_id>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</bills>";
 
 	$('#form42_body').html("");
@@ -2467,6 +2504,7 @@ function form42_ini()
 /**
  * @form Manage Purchase orders
  * @formNo 43
+ * @Loading light
  */
 function form43_ini()
 {
@@ -2483,12 +2521,13 @@ function form43_ini()
 	var fname=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<purchase_orders>" +
+	var columns="<purchase_orders count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<supplier>"+fname+"</supplier>" +
 			"<order_date></order_date>" +
 			"<status>"+fstatus+"</status>" +
 			"<notes></notes>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</purchase_orders>";
 
 	$('#form43_body').html("");
@@ -2552,6 +2591,7 @@ function form43_ini()
 /**
  * @form Manage Pamphlets
  * @formNo 44
+ * @Loading light
  */
 function form44_ini()
 {
@@ -2565,10 +2605,11 @@ function form44_ini()
 	//populating form 
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<pamphlets>" +
+	var columns="<pamphlets count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<count_items></count_items>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</pamphlets>";
 
 	$('#form44_body').html("");
@@ -2613,6 +2654,7 @@ function form44_ini()
 /**
  * @form Set Defaults
  * @formNo 46
+ * @Loading light
  */
 function form46_ini()
 {
@@ -2684,6 +2726,7 @@ function form46_ini()
 /**
  * @form Select Reports
  * @formNo 48
+ * @Loading light
  */
 function form48_ini()
 {
@@ -2754,6 +2797,7 @@ function form48_ini()
 /**
  * @form Select Forms
  * @formNo 49
+ * @Loading light
  */
 function form49_ini()
 {
@@ -2826,6 +2870,7 @@ function form49_ini()
 /**
  * @form Set Accounting Defaults
  * @formNo 50
+ * @Loading light
  */
 function form50_ini()
 {
@@ -2897,6 +2942,7 @@ function form50_ini()
 /**
  * @form Access Control
  * @formNo 51
+ * @Loading light
  */
 function form51_ini()
 {
@@ -3046,6 +3092,7 @@ function form51_ini()
 /**
  * @form Manage Supplier Bills
  * @formNo 53
+ * @Loading light
  */
 function form53_ini()
 {
@@ -3059,7 +3106,7 @@ function form53_ini()
 	var fbill_id=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	
-	var columns="<supplier_bills>" +
+	var columns="<supplier_bills count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<bill_id>"+fbill_id+"</bill_id>" +
 			"<supplier>"+fname+"</supplier>" +
@@ -3068,6 +3115,7 @@ function form53_ini()
 			"<total></total>" +
 			"<notes></notes>" +
 			"<transaction_id></transaction_id>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</supplier_bills>";
 
 	$('#form53_body').html("");
@@ -3200,6 +3248,7 @@ function form54_ini()
 /**
  * @form Cash Register
  * @formNo 56
+ * @Loading light
  */
 function form56_ini()
 {
@@ -3212,12 +3261,13 @@ function form56_ini()
 	var ftype=filter_fields.elements[0].value;
 	var faccount=filter_fields.elements[1].value;
 	
-	var columns="<cash_register>" +
+	var columns="<cash_register count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<type>"+ftype+"</type>" +
 			"<acc_name>"+faccount+"</acc_name>" +
 			"<notes></notes>" +
 			"<amount></amount>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</cash_register>";
 
 	$('#form56_body').html("");
@@ -3273,6 +3323,7 @@ function form56_ini()
 /**
  * @form manage services
  * @formNo 57
+ * @Loading light
  */
 function form57_ini()
 {
@@ -3285,12 +3336,13 @@ function form57_ini()
 	
 	var fservices=filter_fields.elements[0].value;
 	
-	var columns="<services>" +
+	var columns="<services count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservices+"</name>" +
 			"<description></description>" +
 			"<price></price>" +
 			"<tax></tax>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</services>";
 
 	$('#form57_body').html("");
@@ -3347,6 +3399,7 @@ function form57_ini()
 /**
  * @form Service pre-requisites
  * @formNo 58
+ * @Loading light
  */
 function form58_ini()
 {
@@ -3360,13 +3413,14 @@ function form58_ini()
 	var ftype=filter_fields.elements[1].value;
 	var frequisite=filter_fields.elements[2].value;
 	
-	var columns="<pre_requisites>" +
+	var columns="<pre_requisites count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservice+"</name>" +
 			"<type>service</type>" +
 			"<requisite_type>"+ftype+"</requisite_type>" +
 			"<requisite_name>"+frequisite+"</requisite_name>" +
 			"<quantity></quantity>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</pre_requisites>";
 
 	$('#form58_body').html("");
@@ -3422,6 +3476,7 @@ function form58_ini()
 /**
  * @form product pre-requisites
  * @formNo 59
+ * @Loading light
  */
 function form59_ini()
 {
@@ -3436,13 +3491,14 @@ function form59_ini()
 	var ftype=filter_fields.elements[1].value;
 	var frequisite=filter_fields.elements[2].value;
 	
-	var columns="<pre_requisites>" +
+	var columns="<pre_requisites count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fproduct+"</name>" +
 			"<type>product</type>" +
 			"<requisite_type>"+ftype+"</requisite_type>" +
 			"<requisite_name>"+frequisite+"</requisite_name>" +
 			"<quantity></quantity>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</pre_requisites>";
 
 	$('#form59_body').html("");
@@ -3499,6 +3555,7 @@ function form59_ini()
 /**
  * @form Product Attributes
  * @formNo 60
+ * @Loading light
  */
 function form60_ini()
 {
@@ -3512,12 +3569,13 @@ function form60_ini()
 	var fproduct=filter_fields.elements[0].value;
 	var fattribute=filter_fields.elements[1].value;
 	
-	var columns="<attributes>" +
+	var columns="<attributes count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<item_name>"+fproduct+"</item_name>" +
 			"<type>product</type>" +
 			"<attribute>"+fattribute+"</attribute>" +
 			"<value></value>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</attributes>";
 
 	$('#form60_body').html("");
@@ -3570,6 +3628,7 @@ function form60_ini()
 /**
  * @form Service Attributes
  * @formNo 61
+ * @Loading light
  */
 function form61_ini()
 {
@@ -3583,12 +3642,13 @@ function form61_ini()
 	var fservice=filter_fields.elements[0].value;
 	var fattribute=filter_fields.elements[1].value;
 	
-	var columns="<attributes>" +
+	var columns="<attributes count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<item_name>"+fservice+"</item_name>" +
 			"<type>service</type>" +
 			"<attribute>"+fattribute+"</attribute>" +
 			"<value></value>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</attributes>";
 
 	$('#form61_body').html("");
@@ -3641,6 +3701,7 @@ function form61_ini()
 /**
  * @form Product reviews
  * @formNo 62
+ * @Loading light
  */
 function form62_ini()
 {
@@ -3655,13 +3716,14 @@ function form62_ini()
 	var freviewer=filter_fields.elements[1].value;
 	var frating=filter_fields.elements[2].value;
 	
-	var columns="<reviews>" +
+	var columns="<reviews count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fproduct+"</name>" +
 			"<type>product</type>" +
 			"<reviewer>"+freviewer+"</reviewer>" +
 			"<detail></detail>" +
 			"<rating>"+frating+"</rating>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</reviews>";
 
 	$('#form62_body').html("");
@@ -3716,6 +3778,7 @@ function form62_ini()
 /**
  * @form Service reviews
  * @formNo 63
+ * @Loading light
  */
 function form63_ini()
 {
@@ -3730,13 +3793,14 @@ function form63_ini()
 	var freviewer=filter_fields.elements[1].value;
 	var frating=filter_fields.elements[2].value;
 	
-	var columns="<reviews>" +
+	var columns="<reviews count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservice+"</name>" +
 			"<type>service</type>" +
 			"<reviewer>"+freviewer+"</reviewer>" +
 			"<detail></detail>" +
 			"<rating>"+frating+"</rating>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</reviews>";
 
 	$('#form63_body').html("");
@@ -3791,6 +3855,7 @@ function form63_ini()
 /**
  * @form Service Cross sells
  * @formNo 64
+ * @Loading light
  */
 function form64_ini()
 {
@@ -3805,12 +3870,13 @@ function form64_ini()
 	var ftype=filter_fields.elements[1].value;
 	var fcross=filter_fields.elements[2].value;
 	
-	var columns="<cross_sells>" +
+	var columns="<cross_sells count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservice+"</name>" +
 			"<type>service</type>" +
 			"<cross_type>"+ftype+"</cross_type>" +
 			"<cross_name>"+fcross+"</cross_name>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</cross_sells>";
 
 	$('#form64_body').html("");
@@ -3863,6 +3929,7 @@ function form64_ini()
 /**
  * @form Cross sells
  * @formNo 66
+ * @Loading light
  */
 function form66_ini()
 {
@@ -3877,12 +3944,13 @@ function form66_ini()
 	var ftype=filter_fields.elements[1].value;
 	var fcross=filter_fields.elements[2].value;
 	
-	var columns="<cross_sells>" +
+	var columns="<cross_sells count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fproduct+"</name>" +
 			"<type>product</type>" +
 			"<cross_type>"+ftype+"</cross_type>" +
 			"<cross_name>"+fcross+"</cross_name>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</cross_sells>";
 
 	$('#form66_body').html("");
@@ -3934,6 +4002,7 @@ function form66_ini()
 /**
  * @form New sale order
  * @formNo 69
+ * @Loading light
  */
 function form69_ini()
 {
@@ -4045,6 +4114,7 @@ function form69_ini()
 /**
  * @form Manage Sale orders
  * @formNo 70
+ * @Loading light
  */
 function form70_ini()
 {
@@ -4061,12 +4131,13 @@ function form70_ini()
 	var fname=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<sale_orders>" +
+	var columns="<sale_orders count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<customer_name>"+fname+"</customer_name>" +
 			"<order_date></order_date>" +
 			"<type>product</type>" +
 			"<status>"+fstatus+"</status>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</sale_orders>";
 
 	$('#form70_body').html("");
@@ -4143,6 +4214,7 @@ function form70_ini()
 /**
  * @form Manage Accounts
  * @formNo 71
+ * @Loading heavy
  */
 function form71_ini()
 {
@@ -4155,11 +4227,12 @@ function form71_ini()
 	var ftype=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	
-	var columns="<accounts>" +
+	var columns="<accounts count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<acc_name>"+fname+"</acc_name>" +
 			"<description></description>" +
 			"<type>"+ftype+"</type>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</accounts>";
 
 	$('#form71_body').html("");
@@ -4241,6 +4314,8 @@ function form71_ini()
 
 /**
  * @form New Bill
+ * @formNo 72
+ * @Loading light
  */
 function form72_ini()
 {
@@ -4420,7 +4495,7 @@ function form72_ini()
 function notifications_ini()
 {
 	show_loader();
-	var columns="<notifications>" +
+	var columns="<notifications count='100'>" +
 			"<id></id>" +
 			"<title></title>" +
 			"<link_to></link_to>" +
@@ -4428,6 +4503,7 @@ function notifications_ini()
 			"<notes></notes>" +
 			"<t_generated></t_generated>" +
 			"<status>pending</status>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</notifications>";
 
 	fetch_requested_data('notif',columns,function(notifs)
@@ -4451,7 +4527,7 @@ function notifications_ini()
 					"</div>";
 		});
 		
-		var columns2="<notifications>" +
+		var columns2="<notifications count='100'>" +
 				"<id></id>" +
 				"<title></title>" +
 				"<link_to></link_to>" +
@@ -4459,6 +4535,7 @@ function notifications_ini()
 				"<notes></notes>" +
 				"<t_generated></t_generated>" +
 				"<status>reviewed</status>" +
+				"<last_updated sort='desc'></last_updated>" +
 				"</notifications>";
 		
 		fetch_requested_data('notif',columns2,function(notifs2)
@@ -4490,14 +4567,14 @@ function notifications_ini()
 function activities_ini() 
 {
 	show_loader();
-	var columns="<activities>" +
+	var columns="<activities count='100'>" +
 		"<title></title>" +
 		"<link_to></link_to>" +
 		"<data_id></data_id>" +
 		"<notes></notes>" +
 		"<updated_by></updated_by>" +
 		"<user_display>yes</user_display>" +
-		"<last_updated></last_updated>" +
+		"<last_updated sort='desc'></last_updated>" +
 		"</activities>";
 	
 	fetch_requested_data('',columns,function(activities)
@@ -4536,7 +4613,7 @@ function search_ini()
 	if(length>=3)
 	{
 		///////////////////////from products//////////////
-		var product_columns="<product_master>" +
+		var product_columns="<product_master count='10'>" +
 				"<id></id>" +
 				"<name>"+searchStr+"</name>" +
 				"<description></description>" +
@@ -4560,7 +4637,7 @@ function search_ini()
 		});
 	
 		///////////////////////from services//////////////
-		var service_columns="<services>" +
+		var service_columns="<services count='10'>" +
 				"<id></id>" +
 				"<name>"+searchStr+"</name>" +
 				"<description></description>" +
@@ -4584,7 +4661,7 @@ function search_ini()
 		});
 	
 		///////////////////////from customer//////////////
-		var customer_columns="<customers>" +
+		var customer_columns="<customers count='10'>" +
 				"<id></id>" +
 				"<name></name>" +
 				"<acc_name>"+searchStr+"</acc_name>" +
@@ -4610,7 +4687,7 @@ function search_ini()
 		});
 	
 		///////////////////////from supplier//////////////
-		var supplier_columns="<suppliers>" +
+		var supplier_columns="<suppliers count='10'>" +
 				"<id></id>" +
 				"<name></name>" +
 				"<acc_name>"+searchStr+"</acc_name>" +
@@ -4636,7 +4713,7 @@ function search_ini()
 		});
 	
 		///////////////////////from staff//////////////
-		var staff_columns="<staff>" +
+		var staff_columns="<staff count='10'>" +
 				"<id></id>" +
 				"<name></name>" +
 				"<acc_name>"+searchStr+"</acc_name>" +
@@ -4662,7 +4739,7 @@ function search_ini()
 		});
 	
 		///////////////////////from assets//////////////
-		var assets_columns="<assets>" +
+		var assets_columns="<assets count='10'>" +
 				"<id></id>" +
 				"<name>"+searchStr+"</name>" +
 				"<type></type>" +
@@ -4687,7 +4764,7 @@ function search_ini()
 		});
 	
 		/////////////////////from activities///////////
-		var columns="<activities>" +
+		var columns="<activities count='10'>" +
 				"<title></title>" +
 				"<link_to></link_to>" +
 				"<data_id></data_id>" +
@@ -4695,7 +4772,7 @@ function search_ini()
 				"<updated_by></updated_by>" +
 				"<data_xml>"+searchStr+"</data_xml>" +
 				"<user_display>yes</user_display>" +
-				"<last_updated></last_updated>" +
+				"<last_updated sort='desc'></last_updated>" +
 				"</activities>";
 	
 		fetch_requested_data('',columns,function(activity_results)
@@ -4725,6 +4802,7 @@ function search_ini()
 /**
  * @form Set shortcut keys
  * @formNo 77
+ * @Loading light
  */
 function form77_ini()
 {
@@ -4798,6 +4876,7 @@ function form77_ini()
 /**
  * @form Promotion Emails
  * @formNo 78
+ * @Loading light
  */
 function form78_ini()
 {
@@ -4909,6 +4988,7 @@ function form78_ini()
 /**
  * @form Manage task types
  * @formNo 79
+ * @Loading light
  */
 function form79_ini()
 {
@@ -4921,11 +5001,12 @@ function form79_ini()
 	
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<task_type>" +
+	var columns="<task_type count='100'>" +
 		"<id>"+fid+"</id>" +
 		"<name>"+fname+"</name>" +
 		"<description></description>" +
 		"<est_hours></est_hours>" +
+		"<last_updated sort='desc'></last_updated>" +
 		"</task_type>";
 	
 	$('#form79_body').html("");
@@ -4979,6 +5060,7 @@ function form79_ini()
 /**
  * @form De-duplication mapping
  * @formNo 80
+ * @Loading light
  */
 function form80_ini()
 {
@@ -5041,6 +5123,7 @@ function form80_ini()
 /**
  * @form Sale Leads
  * @formNo 81
+ * @Loading light
  */
 function form81_ini()
 {
@@ -5053,12 +5136,13 @@ function form81_ini()
 	
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<sale_leads>" +
+	var columns="<sale_leads count='100'>" +
 		"<id>"+fid+"</id>" +
 		"<customer>"+fname+"</customer>" +
 		"<detail></detail>" +
 		"<due_date></due_date>" +
 		"<identified_by></identified_by>" +
+		"<last_updated sort='desc'></last_updated>" +
 		"</sale_leads>";
 	
 	$('#form81_body').html("");
@@ -5113,6 +5197,7 @@ function form81_ini()
 /**
  * @form Store Areas
  * @formNo 83
+ * @Loading light
  */
 function form83_ini()
 {
@@ -5125,7 +5210,7 @@ function form83_ini()
 	
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<store_areas>" +
+	var columns="<store_areas count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<area_type></area_type>" +
@@ -5141,6 +5226,7 @@ function form83_ini()
 			"<faceWest></faceWest>" +
 			"<faceNorth></faceNorth>" +
 			"<faceSouth></faceSouth>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</store_areas>";
 
 	$('#form83_body').html("");
@@ -5210,6 +5296,7 @@ function form83_ini()
 /**
  * @form Service Subscriptions
  * @formNo 84
+ * @Loading light
  */
 function form84_ini()
 {
@@ -5224,7 +5311,7 @@ function form84_ini()
 	var fservice=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<service_subscriptions>" +
+	var columns="<service_subscriptions count='100'>" +
 			"<id>"+fid+"</id>" +
 			"<customer>"+fcustomer+"</customer>" +
 			"<service>"+fservice+"</service>" +
@@ -5233,6 +5320,7 @@ function form84_ini()
 			"<last_bill_date></last_bill_date>" +
 			"<next_due_date></next_due_date>" +
 			"<last_bill_id></last_bill_id>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</service_subscriptions>";
 
 	$('#form84_body').html("");
@@ -5296,6 +5384,7 @@ function form84_ini()
 /**
  * @form Verify supplier geo-location
  * @formNo 85
+ * @Loading light
  */
 function form85_ini()
 {
@@ -5460,6 +5549,7 @@ function form85_ini()
 /**
  * @form Verify staff geo-location
  * @formNo 86
+ * @Loading light
  */
 function form86_ini()
 {
@@ -5619,3 +5709,82 @@ function form86_ini()
 		$("#modal6").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Products
+ * @formNo 87
+ * @Loading light
+ */
+function form87_ini()
+{
+	show_loader();
+	var fid=$("#form87_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form87_header');
+	
+	var fname=filter_fields.elements[0].value;
+	var fmakes=filter_fields.elements[1].value;
+	
+	var columns="<product_master count='100'>" +
+			"<id>"+fid+"</id>" +
+			"<name>"+fname+"</name>" +
+			"<make>"+fmakes+"</make>" +
+			"<description></description>" +
+			"<tax></tax>" +
+			"<bar_code></bar_code>" +
+			"<last_updated sort='desc'></last_updated>" +
+			"</product_master>";
+
+	$('#form87_body').html("");
+
+	fetch_requested_data('form87',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form87_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form87_"+result.id+"'>"+result.name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Make'>";
+						rowsHTML+="<textarea readonly='readonly' form='form87_"+result.id+"' class='dblclick_editable'>"+result.make+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Description'>";
+						rowsHTML+="<textarea readonly='readonly' form='form87_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Tax'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form87_"+result.id+"' class='dblclick_editable' value='"+result.tax+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form87_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form87_"+result.id+"' value='saved'>";
+						rowsHTML+="<input type='button' class='copy_icon' form='form87_"+result.id+"' value='saved' onclick='modal19_action($(this));'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form87_"+result.id+"' value='saved' onclick='form87_delete_item($(this));'>";	
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+		
+			$('#form87_body').append(rowsHTML);
+
+			var fields=document.getElementById("form87_"+result.id);
+			
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form87_update_item(fields);
+			});
+		});
+		longPressEditable($('.dblclick_editable'));
+		
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'products');
+		});
+		hide_loader();
+	});	
+};
