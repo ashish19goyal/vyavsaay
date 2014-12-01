@@ -1269,3 +1269,46 @@ function form87_import(data_array,import_type)
 	});
 };
 
+
+/**
+* @form Manufacturing Schedule
+* @formNo 88
+*/
+function form88_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<manufacturing_schedule>" +
+				"<id>"+row.id+"</id>" +
+				"<product unique='yes'>"+row.product+"</product>" +
+				"<process_notes>"+row.process_notes+"</process_notes>" +
+				"<status>"+row.status+"</status>" +
+				"<schedule>"+row.schedule+"</schedule>" +
+				"<iteration_notes>"+row.iteration_notes+"</iteration_notes>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</manufacturing_schedule>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+

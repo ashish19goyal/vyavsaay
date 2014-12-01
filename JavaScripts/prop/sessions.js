@@ -143,6 +143,16 @@ function get_task_due_period()
 	return p_time;
 }
 
+function get_task_due_time(raw_time)
+{
+	var period=sessionStorage.getItem('task_due_period');
+	if(period==null || period=='')
+	{
+		period=0;
+	}
+	var p_time=raw_time+(parseFloat(period)*3600000);
+	return p_time;
+}
 
 /**
  * 

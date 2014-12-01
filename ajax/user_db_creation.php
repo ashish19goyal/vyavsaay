@@ -4,6 +4,7 @@
 	use RetailingEssentials\user_setup;
 	
 	$username=$_POST['userid'];
-	$suer_db_setup=new user_setup($username);
+	$industry=$_POST['industry'];
+	$user_db_setup=new user_setup($username,$industry);
 	
 ?>

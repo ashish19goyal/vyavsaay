@@ -155,7 +155,7 @@
 								<input type="file"></label><br/>
 				<label>Tax (%) <input type="number"></label><br/>
 				<label>Bar Code <input type="text" required></label>
-				<label><input type='checkbox' checked>Auto generate</label><br/>
+				<label><input type='checkbox'>Auto generate</label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -238,7 +238,7 @@
 								<input type="file"></label><br/>
 				<label>Tax (%) <input type="number"></label><br/>
 				<label>Bar Code <input type="text" required></label>
-				<label><input type='checkbox' checked>Auto generate</label><br/>
+				<label><input type='checkbox'>Auto generate</label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

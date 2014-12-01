@@ -4359,3 +4359,109 @@ function form87_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manufacturing Schedule
+ * @formNo 88
+ * @param button
+ */
+function form88_update_item(form)
+{
+	if(is_update_access('form88'))
+	{
+		var product=form.elements[0].value;
+		var process=form.elements[1].value;
+		var status=form.elements[2].value;
+		var schedule=get_raw_time(form.elements[3].value);
+		var iteration=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var old_status=form.elements[8].value;
+		form.elements[8].value=status;
+		var last_updated=get_my_time();
+		var data_xml="<manufacturing_schedule>" +
+					"<id>"+data_id+"</id>" +
+					"<product>"+product+"</product>" +
+					"<process_notes>"+process+"</process_notes>" +
+					"<status>"+status+"</status>" +
+					"<schedule>"+schedule+"</schedule>" +
+					"<iteration_notes>"+iteration+"</iteration_notes>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</manufacturing_schedule>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>manufacturing_schedule</tablename>" +
+					"<link_to>form88</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Manufacturing schedule for product "+product+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		
+		if(status=='scheduled' && old_status!='scheduled')
+		{
+			var pre_requisite_data="<pre_requisites>" +
+					"<name exact='yes'>"+product+"</name>" +
+					"<type>product</type>" +
+					"<requisite_type>task</requisite_type>" +
+					"<requisite_name></requisite_name>" +
+					"<quantity></quantity>" +
+					"</pre_requisites>";
+			fetch_requested_data('',pre_requisite_data,function(pre_requisites)
+			{
+				pre_requisites.forEach(function(pre_requisite)
+				{
+					var task_id=get_new_key()+""+(Math.random()*1000);
+					var task_xml="<task_instances>" +
+							"<id>"+task_id+"</id>" +
+							"<name>"+pre_requisite.name+"</name>" +
+							"<assignee></assignee>" +
+							"<t_initiated>"+get_my_time()+"</t_initiated>" +
+							"<t_due>"+get_task_due_time(schedule)+"</t_due>" +
+							"<status>pending</status>" +
+							"<task_hours>"+pre_requisite.quantity+"</task_hours>" +
+							"<source>product</source>" +
+							"<source_id>"+data_id+"</source_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</task_instances>";
+					var activity_xml="<activity>" +
+							"<data_id>"+task_id+"</data_id>" +
+							"<tablename>task_instances</tablename>" +
+							"<link_to>form14</link_to>" +
+							"<title>Added</title>" +
+							"<notes>Task "+pre_requisite.name+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+			
+					if(is_online())
+					{
+						server_create_row(task_xml,activity_xml);
+					}
+					else
+					{
+						local_create_row(task_xml,activity_xml);
+					}		
+				});
+			});
+
+		}
+
+		
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+

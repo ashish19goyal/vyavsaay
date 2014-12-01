@@ -1293,7 +1293,7 @@ function form59_add_item()
 				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="<input type='number' form='form59_"+id+"' value=''>";
+				rowsHTML+="<input type='number' form='form59_"+id+"' value='' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form59_"+id+"' value='"+id+"'>";
@@ -2657,6 +2657,71 @@ function form84_add_item()
 		set_my_value_list(service_data,service_filter);
 		
 		set_static_value_list('service_subscriptions','status',status_filter);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+
+/**
+ * @form Manufacturing Schedule
+ * @formNo 88
+ */
+function form88_add_item()
+{
+	if(is_create_access('form88'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form88_"+id+"'></form>";
+			rowsHTML+="<td data-th='Product'>";
+				rowsHTML+="<input type='text' form='form88_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Process Notes'>";
+				rowsHTML+="<textarea form='form88_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' class='dblclick_editable' required form='form88_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Schedule'>";
+				rowsHTML+="<input type='text' form='form88_"+id+"' class='dblclick_editable'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Iteraton Notes'>";
+				rowsHTML+="<textarea form='form88_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form88_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form88_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form88_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form88_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form88_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form88_"+id);
+		var product_filter=fields.elements[0];
+		var status_filter=fields.elements[2];
+		var schedule_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form88_create_item(fields);
+		});
+					
+		$(product_filter).focus();
+		
+		var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+		set_my_value_list(products_data,product_filter);
+		set_static_value_list('manufacturing_schedule','status',status_filter);
+		$(schedule_filter).datetimepicker();
 	}
 	else
 	{

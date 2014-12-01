@@ -10,7 +10,7 @@ class user_setup
 	private $conn=null;
  	private $dbname="";
  	
-	public function __construct($username)
+	public function __construct($username,$industry)
 	{
 		$this->dbname="re_user_".$username;
 		$this->conn=new db_connect(0);
@@ -19,7 +19,7 @@ class user_setup
 		$this->conn=new db_connect($this->dbname);
 		$this->setup();
 		$this->get_master_data();
-		$this->get_user_data();
+		$this->get_user_data($industry);
 		$this->get_demo_data();
 	}
 
@@ -71,10 +71,10 @@ class user_setup
 		}
 	}
 	
-	private function get_user_data()
+	private function get_user_data($industry)
 	{
 		$db_schema_xml=new \DOMDocument();
-		$db_schema_xml->load("../db/user_db_data.xml");
+		$db_schema_xml->load("../db/".$industry."_user_db_data.xml");
 		$db_schema=$db_schema_xml->documentElement;
 			
 		foreach($db_schema->childNodes as $table)

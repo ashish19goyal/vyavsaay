@@ -5088,8 +5088,7 @@ function form80_ini()
 	{
 		results.forEach(function(result)
 		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
+			var rowsHTML="<tr>";
 				rowsHTML+="<form id='form80_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Change'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form80_"+result.id+"' value='"+result.slave_value+"'>";
@@ -5113,8 +5112,6 @@ function form80_ini()
 				event.preventDefault();
 			});
 		});
-		
-		
 		hide_loader();
 	});
 };
@@ -5784,6 +5781,94 @@ function form87_ini()
 		$(export_button).on("click", function(event)
 		{
 			my_obj_array_to_csv(results,'products');
+		});
+		hide_loader();
+	});	
+};
+
+
+/**
+ * @form Manufacturing Schedule
+ * @formNo 88
+ * @Loading light
+ */
+function form88_ini()
+{
+	show_loader();
+	var fid=$("#form88_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form88_header');
+	
+	var fname=filter_fields.elements[0].value;
+	var fstatus=filter_fields.elements[1].value;
+	
+	var columns="<manufacturing_schedule count='100'>" +
+			"<id>"+fid+"</id>" +
+			"<product>"+fname+"</product>" +
+			"<process_notes></process_notes>" +
+			"<iteration_notes></iteration_notes>" +
+			"<schedule></schedule>" +
+			"<status>"+fstatus+"</status>" +
+			"<last_updated sort='desc'></last_updated>" +
+			"</manufacturing_schedule>";
+
+	$('#form88_body').html("");
+
+	fetch_requested_data('form88',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form88_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Product'>";
+						rowsHTML+="<textarea readonly='readonly' form='form88_"+result.id+"'>"+result.product+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Process Notes'>";
+						rowsHTML+="<textarea readonly='readonly' form='form88_"+result.id+"' class='dblclick_editable'>"+result.process_notes+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form88_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Schedule'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form88_"+result.id+"' class='dblclick_editable' value='"+get_my_datetime(result.schedule)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Iteration Notes'>";
+						rowsHTML+="<textarea readonly='readonly' form='form88_"+result.id+"' class='dblclick_editable'>"+result.iteration_notes+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form88_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form88_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form88_"+result.id+"' title='Delete' onclick='form88_delete_item($(this));'>";
+						rowsHTML+="<input type='hidden' form='form88_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+		
+			$('#form88_body').append(rowsHTML);
+
+			var fields=document.getElementById("form88_"+result.id);
+			var status_filter=fields.elements[2];
+			var schedule_filter=fields.elements[3];
+			
+			set_static_value_list('manufacturing_schedule','status',status_filter);
+			$(schedule_filter).datetimepicker();
+			
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form88_update_item(fields);
+			});
+		});
+		longPressEditable($('.dblclick_editable'));
+		
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'manufacturing_schedule');
 		});
 		hide_loader();
 	});	

@@ -1134,7 +1134,7 @@ function modal19_action(button)
 	var fbarcode=form.elements[7];
 	var auto_generate=form.elements[8];
 	
-	$(auto_generate).on('toggle',function(event)
+	$(auto_generate).on('click',function(event)
 	{
 		if(auto_generate.checked)
 		{
@@ -1144,7 +1144,7 @@ function modal19_action(button)
 		{
 			fbarcode.value="";
 		}
-	});
+	});		
 
 	/////---------initializing all the values-------///////////
 	var form_id=$(button).attr('form');

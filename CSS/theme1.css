@@ -15,6 +15,10 @@ textarea[readonly="readonly"],textarea[readonly="readonly"]:focus{
 	resize:none;
 }
 
+textarea{
+	width: 100px;
+}
+
 input{
 	outline:  none !important;
 	background-color: #ffffff;
@@ -38,7 +42,6 @@ td>input[type="text"]
 
 td>input[type="number"]
 {
-	min-width:25px;
 	max-width:100px;
 	transition: width 0.25s;
 }

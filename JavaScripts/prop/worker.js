@@ -121,7 +121,7 @@ function show_notif()
  */
 function notifications_add()
 {
-	////////overdue payments
+	////////overdue payments/////////////
 	var payments_data="<payments>" +
 			"<id></id>" +
 			"<acc_name></acc_name>" +
@@ -329,7 +329,81 @@ function notifications_add()
 		});
 	});
 	
-	///////////overdue tasks end//////////
+	///////////sale orders end//////////
+	
+	/////out of stock manufactured products//////////
+	var manu_data="<manufacturing_schedule>" +
+			"<id></id>" +
+			"<product></product>" +
+			"<status>out of stock</status>" +
+			"</manufacturing_schedule>";
+	
+	fetch_requested_data('',manu_data,function(manus)
+	{
+		var count_manu=manus.length;
+		if(count_manu>0)
+		{
+			var id=get_new_key()+""+(Math.random()*1000);
+			var notes=count_manu+" manufactured products are out of stock. Please schedule their manufacturing.";
+			var task_xml="<notifications>" +
+					"<id>"+id+"</id>" +
+					"<t_generated>"+get_my_time()+"</t_generated>" +
+					"<data_id unique='yes'>"+get_my_time()+"</data_id>" +
+					"<title>Schedule Manufacturing</title>" +
+					"<notes>"+notes+"</notes>" +
+					"<link_to>form88</link_to>" +
+					"<status>pending</status>" +
+					"</notifications>";
+			if(is_online())
+			{
+				server_create_simple_no_warning(task_xml);
+			}
+			else
+			{
+				local_create_simple_no_warning(task_xml);
+			}
+		}
+	});
+	
+	///////////manufactured product end//////////
+
+
+	/////manufacturing due//////////
+	var schedule_data="<manufacturing_schedule>" +
+			"<id></id>" +
+			"<product></product>" +
+			"<schedule compare='less than'>"+get_my_time()+"</schedule>" +
+			"<status>scheduled</status>" +
+			"<last_updated></last_updated>" +
+			"</manufacturing_schedule>";
+	
+	fetch_requested_data('',schedule_data,function(schedules)
+	{
+		schedules.forEach(function(schedule)
+		{
+			var id=get_new_key()+""+(Math.random()*1000);
+			var notes="Manufacturing for product "+schedule.product+" is due. Please start the process.";
+			var schedule_xml="<notifications>" +
+					"<id>"+id+"</id>" +
+					"<t_generated>"+get_my_time()+"</t_generated>" +
+					"<data_id unique='yes'>"+schedule.last_updated+"</data_id>" +
+					"<title>Schedule Manufacturing</title>" +
+					"<notes>"+notes+"</notes>" +
+					"<link_to>form88</link_to>" +
+					"<status>pending</status>" +
+					"</notifications>";
+			if(is_online())
+			{
+				server_create_simple_no_warning(schedule_xml);
+			}
+			else
+			{
+				local_create_simple_no_warning(schedule_xml);
+			}
+		});
+	});
+	
+	///////////manufacturing end//////////
 	
 	setTimeout(notifications_add,900000);
 }
@@ -410,7 +484,7 @@ function sale_leads_add()
 									}
 									else
 									{
-										server_create_simple_no_warning(sale_lead_xml);
+										local_create_simple_no_warning(sale_lead_xml);
 									}
 								}
 							}
@@ -503,7 +577,7 @@ function sale_leads_add()
 										}
 										else
 										{
-											server_create_simple_no_warning(sale_lead_xml);
+											local_create_simple_no_warning(sale_lead_xml);
 										}
 									}
 								}
@@ -519,4 +593,47 @@ function sale_leads_add()
 
 	
 	setTimeout(sale_leads_add,1800000);
+}
+
+
+/**
+ * This function checks for out of stock manufactured products
+ */
+function manufactured_products_outofstock()
+{
+	var schedule_data="<manufacturing_schedule>" +
+			"<product></product>" +
+			"<status>in stock</status>" +
+			"<schedule compare='less than'>"+get_my_time()+"</schedule>" +
+			"</manufacturing_schedule>";
+	
+	fetch_requested_data('',schedule_data,function(schedules)
+	{
+		schedules.forEach(function(schedule)
+		{
+			var inventory=get_inventory(schedule.product,'',function(quantity)
+			{
+				if(quantity<=0)
+				{
+					var schedule_data="<manufacturing_schedule>" +
+							"<id>"+schedule.id+"</id>" +
+							"<product>"+schedule.product+"</product>" +
+							"<status>out of stock</status>" +
+							"<schedule></schedule>" +
+							"<last_updated>"+get_my_time()+"</last_updated>" +
+							"</manufacturing_schedule>";
+					if(is_online())
+					{
+						server_update_simple(schedule_data);
+					}
+					else
+					{
+						local_update_simple(schedule_data);
+					}
+				}
+			});
+		});
+	});
+	
+	setTimeout(manufactured_products_outofstock,1800000);
 }

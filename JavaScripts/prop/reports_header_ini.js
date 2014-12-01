@@ -837,3 +837,25 @@ function report47_header_ini()
 			"</product_master>";
 	set_my_filter(product_data,product_filter);
 }
+
+/**
+ * @reportNo 48
+ * @report Resource Analysis
+ */
+function report48_header_ini()
+{	
+	var form=document.getElementById('report48_header');
+	var product_filter=form.elements[1];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report48_ini();
+	});
+
+	var product_data="<manufacturing_schedule>" +
+			"<product></product>" +
+			"</manufacturing_schedule>";
+	set_my_filter(product_data,product_filter);
+}

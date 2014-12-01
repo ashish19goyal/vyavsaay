@@ -240,11 +240,11 @@
 									 <p class="comment-form-author">
 									 <label>Select your industry</label><select class='textbox' id="r_industry" required>
 															<option value="general" selected="selected">General Store</option>
-															<option value="clothing">Clothing & Apparels</option>
+															<option value="clothing">Clothing & Footwear</option>
 															<option value="pharmacy">Pharmacy (medicine store)</option>
+															<option value="wholesale">Wholesale or Distributor</option>
 															<option value="clinic">Nursing Home & clinics</option>
-															<option value="food">Bakery & food joints</option>
-															<option value="restaurant">Restaurant</option>
+															<option value="food">Restaurant, Bakery & food joints</option>
 															<option value="hotel">Hotel & Guest house</option>
 															<option value="opticals">Opticals</option>
 															<option value="lawyer">Lawyer or law firm</option>

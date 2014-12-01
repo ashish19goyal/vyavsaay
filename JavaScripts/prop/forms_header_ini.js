@@ -821,7 +821,6 @@ function form24_new_form()
 }
 
 /**
- * this function prepares the table for manage customers form
  * @form Manage Customers
  * @formNo 30
  */
@@ -859,7 +858,6 @@ function form30_header_ini()
 
 
 /**
- * this function prepares the table for manage offers form
  * @form Manage Offers
  * @formNo 35
  */
@@ -953,7 +951,6 @@ function form39_header_ini()
 
 
 /**
- * this function prepares the table for manage vendors form
  * @form Manage Suppliers
  * @formNo 40
  */
@@ -1963,5 +1960,30 @@ function form87_header_ini()
 	$(import_button).on("click", function(event)
 	{
 		modal23_action(form87_import_template,form87_import);
+	});
+};
+
+/**
+ * @form Manufacturing Schedule
+ * @formNo 88
+ */
+function form88_header_ini()
+{
+	var filter_fields=document.getElementById('form88_header');
+	var product_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[1];
+	
+	var name_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(name_data,product_filter);
+	set_static_filter('manufacturing_schedule','status',status_filter);
+	
+	var import_button=filter_fields.elements[4];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form88_import_template,form88_import);
 	});
 };

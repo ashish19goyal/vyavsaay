@@ -156,6 +156,8 @@
   	"service_cross_sell":"Service Cross Sell",
   	"product_cross_sell":"Product Cross Sell",
   	"reviews":"Reviews",
-  	"cross_sells":"Cross Sells"
+  	"cross_sells":"Cross Sells",
+  	"manufacturing_schedule":"Manufacturing Schedule",
+  	"resource_analysis":"Resource Analysis"
   }
 }

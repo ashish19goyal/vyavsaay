@@ -33,7 +33,7 @@ function form2_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[5];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form2_delete_item(del_button);
@@ -358,7 +358,7 @@ function form10_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[11];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form10_delete_item(del_button);
@@ -834,7 +834,7 @@ function form12_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[11];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form12_delete_item(del_button);
@@ -1203,7 +1203,7 @@ function form14_create_item(form)
 		$("#form14_whatsapp_"+data_id).show();
 		
 		var del_button=form.elements[6];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form14_delete_item(del_button);
@@ -1277,7 +1277,7 @@ function form15_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[9];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form15_delete_item(del_button);
@@ -1493,7 +1493,7 @@ function form19_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[7];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form19_delete_item(del_button);
@@ -1694,7 +1694,7 @@ function form21_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[8];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form21_delete_item(del_button);
@@ -1905,7 +1905,7 @@ function form24_create_item(form)
 		}
 		
 		var del_button=form.elements[6];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form24_delete_item(del_button);
@@ -2052,7 +2052,7 @@ function form38_create_item(form)
 		var save_button=form.elements[4];
 		$(save_button).hide();
 		var del_button=form.elements[5];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form38_delete_item(del_button);
@@ -2229,7 +2229,7 @@ function form56_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[6];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form56_delete_item(del_button);
@@ -2294,7 +2294,7 @@ function form58_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[6];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form58_delete_item(del_button);
@@ -2359,7 +2359,7 @@ function form59_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[6];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form59_delete_item(del_button);
@@ -2421,7 +2421,7 @@ function form60_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[5];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form60_delete_item(del_button);
@@ -2483,7 +2483,7 @@ function form61_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[5];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form61_delete_item(del_button);
@@ -2548,7 +2548,7 @@ function form62_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[6];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form62_delete_item(del_button);
@@ -2613,7 +2613,7 @@ function form63_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[6];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form63_delete_item(del_button);
@@ -2675,7 +2675,7 @@ function form64_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[5];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form64_delete_item(del_button);
@@ -2739,7 +2739,7 @@ function form66_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[5];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form66_delete_item(del_button);
@@ -2797,7 +2797,7 @@ function form69_create_item(form)
 		}
 		
 		var del_button=form.elements[5];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form69_delete_item(del_button);
@@ -3679,7 +3679,7 @@ function form72_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[11];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form72_delete_item(del_button);
@@ -4158,7 +4158,7 @@ function form80_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		var del_button=form.elements[6];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form80_delete_item(del_button);
@@ -4220,7 +4220,7 @@ function form81_create_item(form)
 		}
 
 		var del_button=form.elements[6];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form81_delete_item(del_button);
@@ -4834,7 +4834,7 @@ function form84_create_item(form)
 		}
 
 		var del_button=form.elements[7];
-		$(del_button).off('click');
+		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form84_delete_item(del_button);
@@ -5304,4 +5304,119 @@ function form84_bills()
 			});
 		});
 	});
+}
+
+/**
+ * @form Manufacturing Schedule
+ * @formNo 88
+ * @param button
+ */
+function form88_create_item(form)
+{
+	if(is_create_access('form88'))
+	{
+		var product=form.elements[0].value;
+		var process=form.elements[1].value;
+		var status=form.elements[2].value;
+		var schedule=get_raw_time(form.elements[3].value);
+		var iteration=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		form.elements[8].value=status;
+		var last_updated=get_my_time();
+		var data_xml="<manufacturing_schedule>" +
+					"<id>"+data_id+"</id>" +
+					"<product>"+product+"</product>" +
+					"<process_notes>"+process+"</process_notes>" +
+					"<status>"+status+"</status>" +
+					"<schedule>"+schedule+"</schedule>" +
+					"<iteration_notes>"+iteration+"</iteration_notes>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</manufacturing_schedule>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>manufacturing_schedule</tablename>" +
+					"<link_to>form88</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Manufacturing schedule for product "+product+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+
+		if(status=='scheduled')
+		{
+			var pre_requisite_data="<pre_requisites>" +
+					"<name exact='yes'>"+product+"</name>" +
+					"<type>product</type>" +
+					"<requisite_type>task</requisite_type>" +
+					"<requisite_name></requisite_name>" +
+					"<quantity></quantity>" +
+					"</pre_requisites>";
+			fetch_requested_data('',pre_requisite_data,function(pre_requisites)
+			{
+				pre_requisites.forEach(function(pre_requisite)
+				{
+					var task_id=get_new_key()+""+(Math.random()*1000);
+					var task_xml="<task_instances>" +
+							"<id>"+task_id+"</id>" +
+							"<name>"+pre_requisite.name+"</name>" +
+							"<assignee></assignee>" +
+							"<t_initiated>"+get_my_time()+"</t_initiated>" +
+							"<t_due>"+get_task_due_time(schedule)+"</t_due>" +
+							"<status>pending</status>" +
+							"<task_hours>"+pre_requisite.quantity+"</task_hours>" +
+							"<source>product</source>" +
+							"<source_id>"+data_id+"</source_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</task_instances>";
+					var activity_xml="<activity>" +
+							"<data_id>"+task_id+"</data_id>" +
+							"<tablename>task_instances</tablename>" +
+							"<link_to>form14</link_to>" +
+							"<title>Added</title>" +
+							"<notes>Task "+pre_requisite.name+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+			
+					if(is_online())
+					{
+						server_create_row(task_xml,activity_xml);
+					}
+					else
+					{
+						local_create_row(task_xml,activity_xml);
+					}		
+				});
+			});
+		}
+
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		var del_button=form.elements[7];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form88_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form88_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
 }

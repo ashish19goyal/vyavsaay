@@ -53,6 +53,10 @@ function start_workers()
 	{
 		sale_leads_add();
 	},70000);
+	setTimeout(function()
+	{
+		manufactured_products_outofstock();
+	},80000);
 }
 
 function show_function(function_id)

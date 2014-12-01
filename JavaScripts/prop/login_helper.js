@@ -315,7 +315,7 @@ function register_click()
 						"&industry="+industry+
 						"&phone="+phone;
 
-		ajax_with_custom_func("./ajax/user_db_creation.php","userid="+userid,function(e2)
+		ajax_with_custom_func("./ajax/user_db_creation.php","userid="+userid+"&industry="+industry,function(e2)
 		{
 			if(e2.responseText=="")
 			{

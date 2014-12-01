@@ -434,6 +434,14 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report48</name>
+			<display_name>resource_analysis</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -921,6 +929,14 @@
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form88</name>
+			<display_name>manufacturing_schedule</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -1290,6 +1306,17 @@
 			<username>master</username>
 			<element_id>report47</element_id>
 			<element_name>inventory_value</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report48</element_id>
+			<element_name>resource_analysis</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1968,6 +1995,17 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<username>master</username>
+			<element_id>form88</element_id>
+			<element_name>manufacturing_schedule</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
 	</access_control>
 	<shortcuts>
 		<row>
@@ -2134,6 +2172,13 @@
 		<row>
 			<element_id>report47</element_id>
 			<element_name>inventory_value</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report48</element_id>
+			<element_name>resource_analysis</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2533,6 +2578,13 @@
 		<row>
 			<element_id>form87</element_id>
 			<element_name>manage_products</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form88</element_id>
+			<element_name>manufacturing_schedule</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>

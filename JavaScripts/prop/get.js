@@ -266,7 +266,7 @@ function set_static_value_list(table,list,filter_element)
 		$(filter_element).off("change");
 		$(filter_element).on("change",function(event)
 		{
-			var options=array();
+			var options=new Array();
 			for(var i=0;i<datalist_element.options.length;i++)
 			{
 			    options[i]=datalist_element.options[i].value;

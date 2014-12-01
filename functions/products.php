@@ -16,6 +16,10 @@
 				echo "<li><a id='form62_link' href='#form62' onclick='form62_header_ini(); form62_ini();' data-i18n='form.reviews'></a></li>";
 			if(strpos($_SESSION['forms'],'form66-')!==false)
 				echo "<li><a id='form66_link' href='#form66' onclick='form66_header_ini(); form66_ini();' data-i18n='form.cross_sells'></a></li>";
+			if(strpos($_SESSION['forms'],'form88-')!==false)
+				echo "<li><a id='form88_link' href='#form88' onclick='form88_header_ini(); form88_ini();' data-i18n='form.manufacturing_schedule'></a></li>";
+			if(strpos($_SESSION['reports'],'report48-')!==false)
+				echo "<li><a id='report48_link' href='#report48' onclick='report48_header_ini();' data-i18n='form.resource_analysis'></a></li>";
 		echo "</ul>";
 
 		if(strpos($_SESSION['forms'],'form39-')!==false)
@@ -32,6 +36,10 @@
 			include "forms/form62.php";
 		if(strpos($_SESSION['forms'],'form66-')!==false)
 			include "forms/form66.php";
+		if(strpos($_SESSION['forms'],'form88-')!==false)
+			include "forms/form88.php";
+		if(strpos($_SESSION['reports'],'report48-')!==false)
+			include "reports/report48.php";
 	?>
 	
 	<script>

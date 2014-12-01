@@ -5,6 +5,7 @@
 			<username index='no' type="VARCHAR(100) NOT NULL"></username>
 			<phone index='no' type="VARCHAR(15) NOT NULL"></phone>
 			<name index='no' type="VARCHAR(90)"></name>
+			<industry index='no' type="VARCHAR(50)"></industry>
 			<status index='no' type="VARCHAR(45)"></status><!-- active/suspended/archived -->
 			<dbname index='no' type="VARCHAR(100)"></dbname>
 			<email index='no' type="VARCHAR(100)"></email>

@@ -277,3 +277,13 @@ function form87_import_template()
 	var data_array=['id','name','make','description','tax','bar_code'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Manufacturing Schedule
+* @formNo 88
+*/
+function form88_import_template()
+{
+	var data_array=['id','product','process_notes','status','schedule','iteration_notes'];
+	my_array_to_csv(data_array);
+};

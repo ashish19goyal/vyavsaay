@@ -573,4 +573,13 @@
 			<references_id index='no' type="TEXT"></references_id>
 			<last_updated index='no' type="BIGINT"></last_updated>		
 	</de_duplication_ref>
+	<manufacturing_schedule>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<product index='yes' type="VARCHAR(100)"></product>
+			<process_notes index='no' type="TEXT"></process_notes>
+			<status index='yes' type="VARCHAR(25)"></status><!-- in stock/out of stock/scheduled/suspended -->
+			<schedule index='no' type="BIGINT"></schedule>
+			<iteration_notes index='no' type="TEXT"></iteration_notes>
+			<last_updated index='no' type="BIGINT"></last_updated>		
+	</manufacturing_schedule>
 </re_xml>

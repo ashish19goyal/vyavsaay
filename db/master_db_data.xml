@@ -88,6 +88,38 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>manufacturing_schedule</tablename>
+			<listname>status</listname>
+			<name>in stock</name>
+			<value>In stock</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>manufacturing_schedule</tablename>
+			<listname>status</listname>
+			<name>out of stock</name>
+			<value>Out of stock</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>manufacturing_schedule</tablename>
+			<listname>status</listname>
+			<name>scheduled</name>
+			<value>Scheduled</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>manufacturing_schedule</tablename>
+			<listname>status</listname>
+			<name>suspended</name>
+			<value>Suspended</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>service_subscriptions</tablename>
 			<listname>status</listname>
 			<name>active</name>
