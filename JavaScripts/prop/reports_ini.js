@@ -314,7 +314,7 @@ function report6_ini()
 		}
 		var payments_data="<payments>" +
 				"<acc_name array='yes'>"+customers_string+"</acc_name>" +
-				"<total_amount></total_amount>" +
+				"<total_amount sort='desc'></total_amount>" +
 				"<paid_amount></paid_amount>" +
 				"<due_date compare='less than'>"+get_raw_time(due_date)+"</due_date>" +
 				"<status>pending</status>" +
@@ -323,14 +323,6 @@ function report6_ini()
 	
 		fetch_requested_data('report6',payments_data,function(payments)
 		{
-			payments.sort(function(a,b)
-			{
-				if(parseFloat(a.total_amount)<parseFloat(b.total_amount))
-				{	return 1;}
-				else 
-				{	return -1;}
-			});
-			
 			var result=new Object();
 			result.datasets=new Array();
 			result.datasets[0]=new Object();
@@ -1978,7 +1970,7 @@ function report37_ini()
 		}
 		var payments_data="<payments>" +
 				"<acc_name array='yes'>"+suppliers_string+"</acc_name>" +
-				"<total_amount></total_amount>" +
+				"<total_amount sort='desc'></total_amount>" +
 				"<paid_amount></paid_amount>" +
 				"<due_date compare='less than'>"+get_raw_time(due_date)+"</due_date>" +
 				"<status>pending</status>" +
@@ -1987,14 +1979,6 @@ function report37_ini()
 	
 		fetch_requested_data('report6',payments_data,function(payments)
 		{
-			payments.sort(function(a,b)
-			{
-				if(parseFloat(a.total_amount)<parseFloat(b.total_amount))
-				{	return 1;}
-				else 
-				{	return -1;}
-			});
-			
 			var result=new Object();
 			result.datasets=new Array();
 			result.datasets[0]=new Object();

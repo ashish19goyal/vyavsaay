@@ -39,6 +39,33 @@ function start_workers()
 {
 	setTimeout(function()
 	{
+		set_grid_item_1();
+		set_grid_item_2();
+		set_grid_item_3();
+		set_grid_item_4();
+		set_grid_item_5();
+		set_grid_item_6();
+		set_grid_item_7();
+		set_grid_item_8();
+		set_grid_item_9();
+		set_grid_item_11();
+		set_grid_item_12();
+		set_grid_item_13();
+		set_grid_item_14();
+		set_grid_item_15();
+		set_grid_item_16();
+		set_grid_item_17();
+		set_grid_item_18();
+		set_grid_item_19();
+		set_grid_item_20();
+		set_grid_item_22();
+		set_grid_item_23();
+		set_grid_item_24();
+		set_grid_item_25();
+		set_grid_item_26();
+	},2000);
+	setTimeout(function()
+	{
 		activities_lane_ini();
 	},10000);
 	setTimeout(function()

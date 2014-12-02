@@ -3,7 +3,7 @@
 	<accounts>
 		<row>
 			<acc_name>master</acc_name>
-			<description>This accounts refers to the business</description>
+			<description>This account refers to the business</description>
 			<type>master</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -274,18 +274,10 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>report40</name>
-			<display_name>surplus_inventory</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>report</type>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>report29</name>
 			<display_name>product_pre-requisites</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -365,7 +357,7 @@
 			<name>report39</name>
 			<display_name>sales_by_services</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -381,7 +373,7 @@
 			<name>report41</name>
 			<display_name>service_pre-requisites</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -405,7 +397,7 @@
 			<name>report44</name>
 			<display_name>compare_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -413,7 +405,7 @@
 			<name>report45</name>
 			<display_name>virtual_store</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -437,7 +429,7 @@
 			<name>report48</name>
 			<display_name>resource_analysis</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -485,7 +477,7 @@
 			<name>form10</name>
 			<display_name>create_service_bills</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -554,14 +546,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>form22</name>
-			<display_name>dispose_items</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>form</type>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>form24</name>
 			<display_name>create_purchase_order</display_name>
 			<status>active</status>
@@ -597,7 +581,7 @@
 			<name>form39</name>
 			<display_name>manage_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -717,7 +701,7 @@
 			<name>form57</name>
 			<display_name>manage_services</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -725,7 +709,7 @@
 			<name>form58</name>
 			<display_name>service_pre-requisites</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -733,7 +717,7 @@
 			<name>form59</name>
 			<display_name>product_pre-requisites</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -749,7 +733,7 @@
 			<name>form61</name>
 			<display_name>service_attributes</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -765,7 +749,7 @@
 			<name>form63</name>
 			<display_name>service_reviews</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -773,7 +757,7 @@
 			<name>form64</name>
 			<display_name>service_cross_sell</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -813,7 +797,7 @@
 			<name>form72</name>
 			<display_name>create_bill</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -821,7 +805,7 @@
 			<name>form74</name>
 			<display_name>completed_sale_orders</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -829,7 +813,7 @@
 			<name>form75</name>
 			<display_name>pending_sale_orders</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -837,7 +821,7 @@
 			<name>form76</name>
 			<display_name>track_payments</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -885,7 +869,7 @@
 			<name>form82</name>
 			<display_name>scan_items</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -901,7 +885,7 @@
 			<name>form84</name>
 			<display_name>manage_subscriptions</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -933,7 +917,7 @@
 			<name>form88</name>
 			<display_name>manufacturing_schedule</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<last_updated>1</last_updated>
 		</row>
@@ -1086,17 +1070,6 @@
 			<username>master</username>
 			<element_id>report28</element_id>
 			<element_name>short_inventory</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>report40</element_id>
-			<element_name>surplus_inventory</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -1471,17 +1444,6 @@
 			<username>master</username>
 			<element_id>form21</element_id>
 			<element_name>enter_supplier_bills</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form22</element_id>
-			<element_name>dispose_items</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2086,13 +2048,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<element_id>report40</element_id>
-			<element_name>surplus_inventory</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<element_id>report29</element_id>
 			<element_name>product_pre-requisites</element_name>
 			<status>active</status>
@@ -2149,8 +2104,57 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<element_id>report37</element_id>
+			<element_name>payments_due_to_suppliers</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report38</element_id>
+			<element_name>sales_by_products</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report39</element_id>
+			<element_name>sales_by_services</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report40</element_id>
+			<element_name>surplus_inventory</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<element_id>report41</element_id>
 			<element_name>service_pre-requisites</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report42</element_id>
+			<element_name>feedback</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report43</element_id>
+			<element_name>customer_behaviour</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>report44</element_id>
+			<element_name>compare_products</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2255,14 +2259,28 @@
 		</row>
 		<row>
 			<element_id>form15</element_id>
-			<element_name>accept_returns</element_name>
+			<element_name>accept_customer_returns</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form16</element_id>
+			<element_name>manage_customer_returns</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form17</element_id>
+			<element_name>manage_supplier_returns</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<element_id>form19</element_id>
-			<element_name>send_returns</element_name>
+			<element_name>enter_supplier_returns</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2270,13 +2288,6 @@
 		<row>
 			<element_id>form21</element_id>
 			<element_name>enter_supplier_bills</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form22</element_id>
-			<element_name>dispose_items</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2410,6 +2421,27 @@
 		<row>
 			<element_id>form56</element_id>
 			<element_name>cash_register</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form57</element_id>
+			<element_name>manage_services</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form58</element_id>
+			<element_name>service_pre-requisites</element_name>
+			<status>active</status>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<element_id>form59</element_id>
+			<element_name>product_pre-requisites</element_name>
 			<status>active</status>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>

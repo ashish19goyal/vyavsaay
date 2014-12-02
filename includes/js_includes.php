@@ -23,6 +23,7 @@
 <script src='./JavaScripts/prop/forms_header_ini.js'></script>
 <script src='./JavaScripts/prop/forms_ini.js'></script>
 <script src='./JavaScripts/prop/get.js'></script>
+<script src='./JavaScripts/prop/grids.js'></script>
 <script src='./JavaScripts/prop/import_template.js'></script>
 <script src='./JavaScripts/prop/import.js'></script>
 <script src='./JavaScripts/prop/local_db_handling.js'></script>

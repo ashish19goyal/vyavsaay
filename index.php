@@ -46,18 +46,18 @@
 			</div>
 			<div class="social_buttons">
 				<div class="button">
-					<a href='https://plus.google.com' target='_blank'>
+					<a href='https://www.google.com/+Vyavsaayindia' target='_blank'>
 						<img src='./images/google.jpeg' title="+1">
 					</a>
 					<a href="https://plus.google.com/share?url=http%3A%2F%2Fvyavsaay.com" target='_blank'>Share</a>
 				</div>
 				<div class="button">
-					<a href="https://twitter.com/vyavsaaycom" target='_blank'><img src='./images/twitter.jpeg' title="Follow @vyavsaaycom"></a>
+					<a href="https://twitter.com/VyavsaayIndia" target='_blank'><img src='./images/twitter.jpeg' title="Follow @VyavsaayIndia"></a>
 					 <!-- <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://vyavsaay.com" data-text="Latest technology for your business" data-via="ashish_18goyal" data-count="horizontal">Tweet</a> -->
 					<a href="https://twitter.com/intent/tweet?text=Latest%20technology%20for%20your%20business&url=http%3A%2F%2Fvyavsaay.com&via=ashish_18goyal" target='_blank'>Tweet</a>
 				</div>
 				<div class="button">
-					<a href="https://www.facebook.com/ashish.18goyal" target='_blank'><img src='./images/fb.jpeg' title="Like"></a>
+					<a href="https://www.facebook.com/vyavsaayindia" target='_blank'><img src='./images/fb.jpeg' title="Like"></a>
 					<!-- <div class="fb-share-button" data-href="http://vyavsaay.com" data-layout="button"></div> -->
 					<a href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvyavsaay.com&t=Latest%20technology%20for%20your%20business" target='_blank'>Share</a>
 				</div>
@@ -103,8 +103,8 @@
 						</div>
 						<div class="col-md-6 banner-text">
 							<h1>Vyavsaay</h1>
-							<p>Vyavsaay provides lastest technology solutions for your business, on a cloud based platform.</p>
-							<p>Email: info@vyavsaay.com <br> Phone: 9818005232</p>
+							<p>Vyavsaay provides latest technology solutions for your business, on a cloud based platform.</p>
+							<p>Email: info@vyavsaay.com <br> Phone: +91-9818005232</p>
 						</div>
 					<!-- 	<div class="clearfix"> </div> -->
 					</div>
