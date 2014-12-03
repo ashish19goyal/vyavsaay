@@ -15,6 +15,7 @@
 			<status>active</status>
 			<value>30</value>
 			<type>accounting</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -23,6 +24,7 @@
 			<status>active</status>
 			<value>30</value>
 			<type>accounting</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -31,6 +33,7 @@
 			<status>active</status>
 			<value>4</value>
 			<type>other</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -39,6 +42,7 @@
 			<status>active</status>
 			<value>business_complex, sirsa</value>
 			<type>other</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -47,6 +51,7 @@
 			<status>active</status>
 			<value>28.6100</value>
 			<type>other</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -55,6 +60,7 @@
 			<status>active</status>
 			<value>77.2300</value>
 			<type>other</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -63,6 +69,7 @@
 			<status>active</status>
 			<value>9818005232</value>
 			<type>other</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -71,6 +78,7 @@
 			<status>active</status>
 			<value>vyavsaayindia@gmail.com</value>
 			<type>other</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -79,6 +87,7 @@
 			<status>active</status>
 			<value>logo.jpeg</value>
 			<type>other</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -87,6 +96,7 @@
 			<status>active</status>
 			<value>vyavsaay.com</value>
 			<type>other</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -95,6 +105,7 @@
 			<status>active</status>
 			<value>theme1</value>
 			<type>other</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -103,6 +114,7 @@
 			<status>active</status>
 			<value>online</value>
 			<type>other</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -111,6 +123,7 @@
 			<status>active</status>
 			<value>english</value>
 			<type>other</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -119,6 +132,7 @@
 			<status>active</status>
 			<value>default_sale_bill</value>
 			<type>template</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -127,6 +141,7 @@
 			<status>active</status>
 			<value>default_purchase_order</value>
 			<type>template</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -135,6 +150,7 @@
 			<status>active</status>
 			<value>default_payment_receipt</value>
 			<type>template</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -143,6 +159,7 @@
 			<status>active</status>
 			<value>default_credit_note</value>
 			<type>template</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -151,6 +168,7 @@
 			<status>active</status>
 			<value>default_pamphlet</value>
 			<type>template</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -159,6 +177,7 @@
 			<status>active</status>
 			<value>default_service_sale_bill</value>
 			<type>template</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -167,6 +186,7 @@
 			<status>active</status>
 			<value>default_product_sale_bill</value>
 			<type>template</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -175,6 +195,7 @@
 			<status>active</status>
 			<value>default_return_receipt</value>
 			<type>template</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -183,14 +204,16 @@
 			<status>active</status>
 			<value>default_supplier_return</value>
 			<type>template</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>report1</name>
 			<display_name>signage_changes</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -199,6 +222,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -207,6 +231,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -215,14 +240,16 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>report9</name>
 			<display_name>product_sales_report</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -231,6 +258,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -239,6 +267,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -247,6 +276,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -255,6 +285,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -263,6 +294,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -271,6 +303,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -279,6 +312,7 @@
 			<status>active</status>
 			<value>unchecked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -287,6 +321,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -295,6 +330,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -303,6 +339,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -311,6 +348,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -319,14 +357,16 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>report35</name>
 			<display_name>customer_map_by_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -335,6 +375,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -343,14 +384,16 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>report38</name>
 			<display_name>sales_by_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -359,6 +402,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -367,14 +411,16 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>report41</name>
 			<display_name>service_pre-requisites</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -383,30 +429,34 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>report43</name>
 			<display_name>customer_behaviour</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>report44</name>
 			<display_name>compare_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>report45</name>
 			<display_name>virtual_store</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -415,6 +465,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -423,6 +474,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -431,6 +483,7 @@
 			<status>active</status>
 			<value>unchecked</value>
 			<type>report</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -439,14 +492,16 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form2</name>
 			<display_name>create_pamphlet</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -455,6 +510,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -463,6 +519,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -471,6 +528,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -479,6 +537,7 @@
 			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -487,14 +546,16 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form12</name>
 			<display_name>create_bill</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -503,22 +564,25 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form15</name>
 			<display_name>accept_customer_returns</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form16</name>
 			<display_name>manage_customer_returns</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -527,6 +591,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -535,6 +600,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -543,6 +609,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -551,6 +618,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -559,22 +627,25 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form35</name>
 			<display_name>manage_offers</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form38</name>
 			<display_name>store_placement</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -583,6 +654,7 @@
 			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -591,14 +663,16 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form41</name>
 			<display_name>verify_customer_addresses</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -607,6 +681,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -615,14 +690,16 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form44</name>
 			<display_name>manage_pamphlets</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -631,6 +708,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -639,6 +717,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -647,6 +726,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -655,6 +735,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -663,6 +744,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -671,6 +753,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -679,6 +762,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -687,6 +771,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -695,22 +780,25 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form57</name>
 			<display_name>manage_services</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form58</name>
 			<display_name>service_pre-requisites</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -719,70 +807,79 @@
 			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form60</name>
 			<display_name>product_attributes</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form61</name>
 			<display_name>service_attributes</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form62</name>
 			<display_name>product_reviews</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form63</name>
 			<display_name>service_reviews</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form64</name>
 			<display_name>service_cross_sell</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form66</name>
 			<display_name>product_cross_sell</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form69</name>
 			<display_name>create_sale_order</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form70</name>
 			<display_name>manage_sale_orders</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -791,14 +888,16 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form72</name>
 			<display_name>create_bill</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -807,6 +906,7 @@
 			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -815,6 +915,7 @@
 			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -823,6 +924,7 @@
 			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -831,14 +933,16 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form78</name>
 			<display_name>promotion_mails</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -847,6 +951,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -855,6 +960,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -863,30 +969,34 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form82</name>
 			<display_name>scan_items</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form83</name>
 			<display_name>storage_areas</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form84</name>
 			<display_name>manage_subscriptions</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -895,6 +1005,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -903,6 +1014,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -911,6 +1023,7 @@
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -919,6 +1032,16 @@
 			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form89</name>
+			<display_name>appointments</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -1968,658 +2091,16 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<username>master</username>
+			<element_id>form89</element_id>
+			<element_name>appointments</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
 	</access_control>
-	<shortcuts>
-		<row>
-			<element_id>report1</element_id>
-			<element_name>signage_changes</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report4</element_id>
-			<element_name>modes_of_payment</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report5</element_id>
-			<element_name>customer_account_balance</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report6</element_id>
-			<element_name>manage_payments</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report9</element_id>
-			<element_name>product_sales_report</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report14</element_id>
-			<element_name>expenses_by_period</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report15</element_id>
-			<element_name>financial_summary</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report17</element_id>
-			<element_name>staff_performance</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report26</element_id>
-			<element_name>sales_by_customers</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report27</element_id>
-			<element_name>expiring_inventory</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report28</element_id>
-			<element_name>short_inventory</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report29</element_id>
-			<element_name>product_pre-requisites</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report30</element_id>
-			<element_name>tasks_performed</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report31</element_id>
-			<element_name>customer_map_by_credit</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report32</element_id>
-			<element_name>staff_map</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report33</element_id>
-			<element_name>supplier_map_by_debit</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report34</element_id>
-			<element_name>effective_margin</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report35</element_id>
-			<element_name>customer_map_by_products</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report36</element_id>
-			<element_name>supplier_map_by_products</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report37</element_id>
-			<element_name>payments_due_to_suppliers</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report38</element_id>
-			<element_name>sales_by_products</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report39</element_id>
-			<element_name>sales_by_services</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report40</element_id>
-			<element_name>surplus_inventory</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report41</element_id>
-			<element_name>service_pre-requisites</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report42</element_id>
-			<element_name>feedback</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report43</element_id>
-			<element_name>customer_behaviour</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report44</element_id>
-			<element_name>compare_products</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report45</element_id>
-			<element_name>virtual_store</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report46</element_id>
-			<element_name>supplier_account_balance</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report47</element_id>
-			<element_name>inventory_value</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>report48</element_id>
-			<element_name>resource_analysis</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form1</element_id>
-			<element_name>update_inventory</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form2</element_id>
-			<element_name>create_pamphlet</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form5</element_id>
-			<element_name>manage_assets</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form7</element_id>
-			<element_name>attendance</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form8</element_id>
-			<element_name>manage_staff</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form9</element_id>
-			<element_name>cash_register</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form10</element_id>
-			<element_name>create_service_bills</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form11</element_id>
-			<element_name>manage_payments</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form12</element_id>
-			<element_name>create_bill</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form14</element_id>
-			<element_name>manage_tasks</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form15</element_id>
-			<element_name>accept_customer_returns</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form16</element_id>
-			<element_name>manage_customer_returns</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form17</element_id>
-			<element_name>manage_supplier_returns</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form19</element_id>
-			<element_name>enter_supplier_returns</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form21</element_id>
-			<element_name>enter_supplier_bills</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form24</element_id>
-			<element_name>create_purchase_order</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form30</element_id>
-			<element_name>manage_customers</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form35</element_id>
-			<element_name>manage_offers</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form38</element_id>
-			<element_name>store_placement</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form39</element_id>
-			<element_name>manage_products</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form40</element_id>
-			<element_name>manage_suppliers</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form41</element_id>
-			<element_name>verify_customer_addresses</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form42</element_id>
-			<element_name>manage_bills</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form43</element_id>
-			<element_name>manage_purchase_orders</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form44</element_id>
-			<element_name>manage_pamphlets</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form46</element_id>
-			<element_name>set_defaults</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form47</element_id>
-			<element_name>change_password</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form48</element_id>
-			<element_name>select_reports</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form49</element_id>
-			<element_name>select_forms</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form50</element_id>
-			<element_name>set_accounting_defaults</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form51</element_id>
-			<element_name>access_control</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form53</element_id>
-			<element_name>manage_supplier_bills</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form54</element_id>
-			<element_name>select_print_templates</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form56</element_id>
-			<element_name>cash_register</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form57</element_id>
-			<element_name>manage_services</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form58</element_id>
-			<element_name>service_pre-requisites</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form59</element_id>
-			<element_name>product_pre-requisites</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form60</element_id>
-			<element_name>product_attributes</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form61</element_id>
-			<element_name>service_attributes</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form62</element_id>
-			<element_name>product_reviews</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form63</element_id>
-			<element_name>service_reviews</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form64</element_id>
-			<element_name>service_cross_sell</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form66</element_id>
-			<element_name>product_cross_sell</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form69</element_id>
-			<element_name>create_sale_order</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form70</element_id>
-			<element_name>manage_sale_orders</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form71</element_id>
-			<element_name>manage_accounts</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form72</element_id>
-			<element_name>create_bill</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form74</element_id>
-			<element_name>completed_sale_orders</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form75</element_id>
-			<element_name>pending_sale_orders</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form76</element_id>
-			<element_name>track_payments</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form77</element_id>
-			<element_name>set_shortcuts</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form78</element_id>
-			<element_name>promotion_mails</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form79</element_id>
-			<element_name>manage_task_types</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form80</element_id>
-			<element_name>de-duplication_mapping</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form81</element_id>
-			<element_name>sale_leads</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form82</element_id>
-			<element_name>scan_items</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form83</element_id>
-			<element_name>storage_areas</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form84</element_id>
-			<element_name>manage_subscriptions</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form85</element_id>
-			<element_name>verify_supplier_addresses</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form86</element_id>
-			<element_name>verify_staff_addresses</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form87</element_id>
-			<element_name>manage_products</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<element_id>form88</element_id>
-			<element_name>manufacturing_schedule</element_name>
-			<status>active</status>
-			<shortcut></shortcut>
-			<last_updated>1</last_updated>
-		</row>
-	</shortcuts>
 </re_xml>

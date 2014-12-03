@@ -8,8 +8,8 @@
 					<th>Price</th>
 					<th>Tax (in %)</th>
 					<th><input type="button" value='Add new service' form='form57_header' class='add_icon' onclick="modal20_action();">
-						<input type='button' form='form57_header' value='Export' class='export_icon'>
-						<input type='button' form='form57_header' value='Import' class='import_icon'>
+						<input type='button' form='form57_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form57_header' value='IMPORT' class='import_icon'>
 					</th>
 			</tr>
 		</thead>

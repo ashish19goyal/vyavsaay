@@ -7,7 +7,7 @@
 					<th>Customer <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form42_header' onblur="form42_ini();"></th>
 					<th>Bill Date</th>
 					<th>Bill Amount</th>
-					<th><input type='button' form='form42_header' value='Export' class='export_icon'></th>
+					<th><input type='button' form='form42_header' value='EXPORT' class='export_icon'></th>
 			</tr>
 		</thead>
 		<tbody id='form42_body'>

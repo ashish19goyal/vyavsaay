@@ -9,8 +9,8 @@
 					<th>Address</th>
 					<th>Notes</th>
 					<th><input type='button' form='form40_header' value='Add new supplier' class='add_icon' onclick='modal13_action();'>
-						<input type='button' form='form40_header' value='Export' class='export_icon'>
-						<input type='button' form='form40_header' value='Import' class='import_icon'></th>
+						<input type='button' form='form40_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form40_header' value='IMPORT' class='import_icon'></th>
 					</tr>
 		</thead>
 		<tbody id='form40_body'>

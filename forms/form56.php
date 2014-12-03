@@ -8,8 +8,8 @@
 					<th>Amount</th>
 					<th>Notes</th>
 					<th><input type="button" value='Add expense item' form='form56_header' class='add_icon' onclick="form56_add_item();">
-						<input type='button' form='form56_header' value='Export' class='export_icon'>
-						<input type='button' form='form56_header' value='Import' class='import_icon'>
+						<input type='button' form='form56_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form56_header' value='IMPORT' class='import_icon'>
 					</th>
 			</tr>
 		</thead>

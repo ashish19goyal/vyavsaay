@@ -110,7 +110,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=8;i<36;i++)
+	for(var i=8;i<38;i++)
 	{
 		$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -194,28 +194,6 @@ function grid_click(func)
 	show_function("#"+func+"_main");
 	$("#"+func+"_main").find('ul').find('li').find('a').first().click();
 }
-
-/*
-function setup_elements_display()
-{
-	$(".function_main").find('ul').find('li').hide();
-
-	var forms_data="<access_control>" +
-			"<element_id></element_id>" +
-			"<username>"+get_username()+"</username>" +
-			"<status>active</status>" +
-			"<re>checked</re>" +
-			"</access_control>";
-	
-	get_single_column_data(function(elements)
-	{
-		for(var i in elements)
-		{
-			$("#"+elements[i]+"_link").parent().show();
-		}
-	},forms_data);
-}
-*/
 
 function i18n_setup()
 {
@@ -344,13 +322,13 @@ function element_display(fid,element_name)
 
 function set_menu_shortcuts()
 {
-	var shortcuts_data="<shortcuts>" +
+	var shortcuts_data="<user_preferences>" +
 			"<id></id>" +
-			"<element_id></element_id>" +
-			"<element_name></element_name>" +
+			"<name></name>" +
 			"<shortcut></shortcut>" +
-			"<status>active</status>" +
-			"</shortcuts>";
+			"<value>checked</value>" +
+			"<type array='yes'>--form--report--</type>" +
+			"</user_preferences>";
 
 	fetch_requested_data('',shortcuts_data,function(results)
 	{
@@ -358,11 +336,9 @@ function set_menu_shortcuts()
 		{
 			if(result.shortcut!="")
 			{	
-				//var shortcut=result.shortcut.replace(" ","+");
-				Mousetrap.bind(result.shortcut, function(e)
+				Mousetrap.bind(result.shortcut,function(e)
 				{
-					console.log('shortcut used'+result.shortcut);
-			    	element_display('',result.element_id);
+			    	element_display('',result.name);
 				});
 			}
 		});

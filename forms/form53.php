@@ -9,7 +9,7 @@
 					<th>Total (in Rs.)</th>
 					<th>Notes</th>
 					<th><input type="button" titel='Enter new bill' form='form53_header' class='add_icon' onclick="element_display('','form21'); form21_new_form();">
-						<input type='button' form='form53_header' value='Export' class='export_icon'>
+						<input type='button' form='form53_header' value='EXPORT' class='export_icon'>
 					</th>
 			</tr>
 		</thead>

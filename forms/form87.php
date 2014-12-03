@@ -7,9 +7,9 @@
 					<th>Make <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form87_header' onblur="form87_ini();"></th>
 					<th>Description</th>
 					<th>Tax</th>
-					<th><input type='button' form='form87_header' value='Add new product' class='add_icon' onclick='modal14_action();'>
-						<input type='button' form='form87_header' value='Export' class='export_icon'>
-						<input type='button' form='form87_header' value='Import' class='import_icon'></th>
+					<th><input type='button' form='form87_header' title='Add new product' class='add_icon' onclick='modal14_action();'>
+						<input type='button' form='form87_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form87_header' value='IMPORT' class='import_icon'></th>
 					</tr>
 		</thead>
 		<tbody id='form87_body'>

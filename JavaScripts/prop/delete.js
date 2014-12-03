@@ -2565,3 +2565,49 @@ function form88_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Appointments
+ * @formNo 89
+ * @param button
+ */
+function form89_delete_item(button)
+{
+	if(is_delete_access('form89'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var name=form.elements[0].value;
+		var assignee=form.elements[1].value;
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var data_xml="<appointments>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+name+"</customer>" +
+					"<assignee>"+assignee+"</assignee>" +
+					"<status>"+status+"</status>" +
+					"</appointments>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>appointments</tablename>" +
+					"<link_to>form89</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Appointment with "+name+" assigned to "+assignee+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

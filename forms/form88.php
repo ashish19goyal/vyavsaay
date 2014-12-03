@@ -9,8 +9,8 @@
 					<th>Schedule</th>
 					<th>Iteration Notes</th>
 					<th><input type='button' form='form88_header' value='Add new product' class='add_icon' onclick='form88_add_item();'>
-						<input type='button' form='form88_header' value='Export' class='export_icon'>
-						<input type='button' form='form88_header' value='Import' class='import_icon'></th>
+						<input type='button' form='form88_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form88_header' value='IMPORT' class='import_icon'></th>
 					</tr>
 		</thead>
 		<tbody id='form88_body'>

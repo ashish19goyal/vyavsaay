@@ -209,7 +209,7 @@ function get_my_date_from_iso(iso_date)
 {
 	if(iso_date=='')
 	{
-		return "01/01/1970";
+		return "";
 	}
 	else
 	{

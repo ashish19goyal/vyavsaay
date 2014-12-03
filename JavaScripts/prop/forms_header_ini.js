@@ -532,7 +532,7 @@ function form14_header_ini()
 
 function form14_switch_view()
 {
-//	form14_ini();
+	form14_ini();
 	$("#form14_body").parent().toggle();
 	$("#form14_calendar").toggle();
 }
@@ -1629,6 +1629,8 @@ function form72_header_ini()
 	fields.elements[7].value=get_new_key();
 	fields.elements[8].value="";
 	fields.elements[9].value=get_new_key();
+	var email_filter=fields.elements[13];
+	var phone_filter=fields.elements[14];
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -1987,3 +1989,141 @@ function form88_header_ini()
 		modal23_action(form88_import_template,form88_import);
 	});
 };
+
+/**
+ * @form Appointments
+ * @formNo 89
+ */
+function form89_header_ini()
+{
+	$("#form89_body").parent().hide();
+	$("#form89_calendar").show();
+	
+	///initializing calendar
+	
+	$('#form89_calendar').fullCalendar({
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,agendaWeek,agendaDay'
+		},
+		height:400,
+		fixedWeekCount:false,
+		editable: true,
+		eventLimit: true, // allow "more" link when too many events
+		events: function(start, end, timezone, callback) {
+	        var start_time=parseFloat(start.unix())*1000;
+	        var end_time=parseFloat(end.unix())*1000;
+	        var app_data="<appointments>" +
+	        		"<id></id>" +
+	        		"<customer></customer>" +
+	        		"<schedule compare='more than'>"+start_time+"</schedule>" +
+	        		"<schedule compare='less than'>"+end_time+"</schedule>" +
+	        		"<status></status>" +
+	        		"<assignee></assignee>" +
+	        		"<hours></hours>" +
+	        		"<notes></notes>" +
+	        		"</appointments>";
+	        
+	        fetch_requested_data('form89',app_data,function(apps)
+	        {
+	        	var events=[];
+	        	
+	        	apps.forEach(function(app)
+	        	{
+        			var color="yellow";
+        			if(app.status=='cancelled')
+        			{
+        				color="aaaaaa";
+        			}
+        			else if(app.status=='closed')
+        			{
+        				color='#00ff00';
+        			}
+	        		events.push({
+	        			title: "\n"+app.assignee+"\nappointment with: "+app.customer,
+	        			start:get_iso_time(app.schedule),
+	        			end:get_iso_time(parseFloat(app.schedule)+(parseFloat(app.hours)*3600000)),
+	        			color: color,
+	        			textColor:"#333",
+	        			id: app.id
+	        		});	        		
+	        	});
+	        	callback(events);
+	        });
+	    },
+	    dayClick: function(date,jsEvent,view){
+	    	modal36_action(get_my_date_from_iso(date.format()));
+	    },
+	    eventClick: function(calEvent,jsEvent,view){
+	    	modal37_action(calEvent.id);
+	    },
+	    eventDrop: function(event,delta,revertFunc){
+	    	var schedule=(parseFloat(event.start.unix())*1000);
+	    	var data_xml="<appointments>" +
+						"<id>"+event.id+"</id>" +
+						"<schedule>"+schedule+"</schedule>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</appointments>";
+			if(is_online())
+			{
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+	    },
+	    eventResize: function(event, delta, revertFunc){
+	    	var hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
+	    	var data_xml="<appointments>" +
+						"<id>"+event.id+"</id>" +
+						"<hours>"+hours+"</hours>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</appointments>";
+			if(is_online())
+			{
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+	
+	///calendar set
+	var filter_fields=document.getElementById('form89_header');
+	var customer_filter=filter_fields.elements[0];
+	var assignee_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var staff_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	var customer_data="<customers>" +
+			"<name></name>" +
+			"</customers>";
+	
+	set_my_filter(customer_data,customer_filter);	
+	set_my_filter(staff_data,assignee_filter);
+	set_static_filter('appointments','status',status_filter);
+	
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form89_import_template,form89_import);
+	});
+};
+
+/**
+ * @form Appointments
+ * @formNo 89
+ */
+function form89_switch_view()
+{
+	form89_ini();
+	$("#form89_body").parent().toggle();
+	$("#form89_calendar").toggle();
+}

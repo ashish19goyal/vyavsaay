@@ -22,7 +22,7 @@ function create_local_db(domain,func)
 	
 		request.onsuccess=function(e)
 		{
-			console.log("db exists or created. syncing data");
+			//console.log("db exists or created. syncing data");
 			db=e.target.result;
 			db.close();
 			func();
@@ -30,7 +30,6 @@ function create_local_db(domain,func)
 		
 		request.onupgradeneeded=function(ev)
 		{
-			//console.log("db didn't exist. creating it");
 			db=ev.target.result;
 			var tables=e.responseXML.childNodes[0].childNodes;
 			
@@ -47,17 +46,13 @@ function create_local_db(domain,func)
 							//console.log(tables[k].childNodes[i].nodeName);
 							var indexing=tables[k].childNodes[i].getAttribute('index');
 							if(indexing=='yes')
+							{
 								table.createIndex(tables[k].childNodes[i].nodeName,tables[k].childNodes[i].nodeName);
+							}
 						}		
 					}
 				}
 			}			
-
-		};
-		
-		request.onerror=function(e)
-		{
-			//console.log("2.3 error occured when creating tables");
 		};
 	});
 };
@@ -132,11 +127,11 @@ function local_read_single_column(columns,callback,results)
 		}
 		else if(sort_order=='asc')
 		{
-			options={index:sort_index,direction:sklad.asc};
+			options={index:sort_index,direction:sklad.ASC};
 		}
 		else if(sort_order=='desc')
 		{
-			options={index:sort_index,direction:sklad.desc};
+			options={index:sort_index,direction:sklad.DESC};
 		}
 		
 		database.get(table,options,function(err,records)
@@ -1115,10 +1110,9 @@ function local_read_multi_column(columns,callback,results)
 			filter.push(fil);
 		}
 	}
-	//console.log(filter);
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
-	sklad.open(db_name,{version:2},function (err,database)
+	sklad.open(db_name,{version:2},function(err,database)
 	{
 		var options={};
 		if(sort_index=='id')
@@ -1127,22 +1121,23 @@ function local_read_multi_column(columns,callback,results)
 		}
 		else if(sort_order=='asc')
 		{
-			options={index:sort_index,direction:sklad.asc};
+			options={index:sort_index,direction:sklad.ASC};
 		}
 		else if(sort_order=='desc')
 		{
-			options={index:sort_index,direction:sklad.desc};
+			options={index:sort_index,direction:sklad.DESC};
 		}
-		
-		database.get(table,options, function(err,records)
+		console.log(options);
+		database.get(table,options,function(err,records)
 		{
+			console.log(records);
 			for(var row in records)
 			{
 				var match=true;
 				for(var i in filter)
 				{
-					var string=records[row][filter[i].name].toLowerCase();
-					var search=filter[i].value.toLowerCase();
+					var string=records[row][filter[i].name].toString().toLowerCase();
+					var search=filter[i].value.toString().toLowerCase();
 					var found=0;
 					
 					if(filter[i].type=='')
@@ -1204,8 +1199,10 @@ function local_read_multi_column(columns,callback,results)
 				if(match===true)
 				{
 					results.push(records[row]);
-					if(results.length==count)
+					if(results.length===count)
+					{
 						break;
+					}
 				}
 			}
 			callback(results);

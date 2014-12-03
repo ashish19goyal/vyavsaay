@@ -93,30 +93,35 @@ function set_session_variables(domain,username,pass)
 	//console.log("2. inside set_session_variables()");
 	var db_name="re_local_"+domain;
 	
-	
 	sklad.open(db_name,{version:2},function (err,database)
 	{
-		if(err)
-		{
-			console.log(err);
-		}
 		//console.log("reading session variables from database");		
 		database.get('user_preferences', {},function(err,records)
 		{
 			//console.log("inside user_preferences table");
-			if(err)
-			{
-				console.log(err);
-			}
 			var data=new Object();
+			var report_string="-";
+			var form_string="-";
 			for(var row in records)
 			{
 				var row_data=records[row];
-				if(row_data['type']=='template' || row_data['type']=='other')
+				if(row_data['type']=='report')
+				{
+					if(row_data['value']=='checked')
+						report_string+=row_data['name']+"-";
+				}
+				else if(row_data['type']=='form')
+				{
+					if(row_data['value']=='checked')
+						form_string+=row_data['name']+"-";
+				}
+				else
 				{
 					data[row_data['name']]=row_data['value'];
 				}
 			};
+			data.reports=report_string;
+			data.forms=form_string;
 			data.session='yes';
 			data.domain=domain;
 			data.username=username;

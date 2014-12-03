@@ -9,7 +9,7 @@
 					<th>Notes </th>
 					<th>Status <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form43_header' onblur="form43_ini();"></th>
 					<th><input type="button" value='Add new order' class='add_icon' form='form43_header' onclick="element_display('','form24'); form24_new_form();">
-						<input type='button' form='form43_header' value='Export' class='export_icon'>
+						<input type='button' form='form43_header' value='EXPORT' class='export_icon'>
 					</th>
 			</tr>
 		</thead>

@@ -4815,14 +4815,16 @@ function form77_ini()
 	var felement=filter_fields.elements[0].value;
 	var fkey=filter_fields.elements[1].value;
 	
-	var columns="<shortcuts>" +
-		"<id>"+fid+"</id>" +
-		"<element_id></element_id>" +
-		"<element_name>"+felement+"</element_name>" +
-		"<status>active</status>" +
-		"<shortcut>"+fkey+"</shortcut>" +
-		"</shortcuts>";
+	var columns="<user_preferences>" +
+			"<id>"+fid+"</id>" +
+			"<name></name>" +
+			"<display_name>"+felement+"</display_name>" +
+			"<shortcut>"+fkey+"</shortcut>" +
+			"<value>checked</value>" +
+			"<type array='yes'>--form--report--</type>" +
+			"</user_preferences>";
 
+	
 	$('#form77_body').html("");
 
 	fetch_requested_data('form77',columns,function(results)
@@ -4833,14 +4835,14 @@ function form77_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form77_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Report/Form'>";
-						rowsHTML+="<textarea readonly='readonly' form='form77_"+result.id+"' data-i18n='form."+result.element_name+"'></textarea>";
+						rowsHTML+="<textarea readonly='readonly' form='form77_"+result.id+"' data-i18n='form."+result.display_name+"'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Key'>";
 						rowsHTML+="<input type='text' form='form77_"+result.id+"' class='dblclick_editable' value='"+result.shortcut+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form77_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='hidden' form='form77_"+result.id+"' value='"+result.element_id+"'>";
+						rowsHTML+="<input type='hidden' form='form77_"+result.id+"' value='"+result.name+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' id='save_form77_"+result.id+"' form='form77_"+result.id+"'>";	
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
@@ -5872,4 +5874,101 @@ function form88_ini()
 		});
 		hide_loader();
 	});	
+};
+
+/**
+ * @form Appointments
+ * @formNo 89
+ * @Loading heavy
+ */
+function form89_ini()
+{
+	show_loader();
+	var fid=$("#form89_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form89_header');
+	
+	//populating form 
+	var fcustomer=filter_fields.elements[0].value;
+	var fassignee=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	var columns="<appointments count='100'>" +
+			"<id>"+fid+"</id>" +
+			"<customer>"+fcustomer+"</customer>" +
+			"<schedule></schedule>" +
+			"<assignee>"+fassignee+"</assignee>" +
+			"<hours></hours>" +
+			"<status>"+fstatus+"</status>" +
+			"<notes></notes>" +
+			"<last_updated sort='desc'></last_updated>" +
+			"</appointments>";
+
+	$('#form89_body').html("");
+
+	fetch_requested_data('form89',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var message_string=result.customer+" appointment with "+result.assignee+" @"+get_my_datetime(result.schedule)+"\nNotes:"+result.notes;
+			message_string=encodeURIComponent(message_string);
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form89_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form89_"+result.id+"' value='"+result.customer+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Assignee'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form89_"+result.id+"' class='dblclick_editable' value='"+result.assignee+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Schedule'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form89_"+result.id+"' class='dblclick_editable'>"+get_my_datetime(result.schedule)+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Notes'>";
+						rowsHTML+="<textarea readonly='readonly' form='form89_"+result.id+"' class='dblclick_editable'>"+result.notes+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form89_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' readonly='readonly' form='form89_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form89_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form89_"+result.id+"' title='Delete' onclick='form89_delete_item($(this));'>";
+						rowsHTML+="<a id='form89_whatsapp_"+result.id+"' href='whatsapp://send?text="+message_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form89_"+result.id+"' title='Send details through WhatsApp'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form89_body').prepend(rowsHTML);
+			var fields=document.getElementById("form89_"+result.id);
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form89_update_item(fields);
+			});
+			
+			var name_filter=fields.elements[0];
+			var assignee_filter=fields.elements[1];
+			var schedule_filter=fields.elements[2];
+			var status_filter=fields.elements[4];
+						
+			var staff_data="<staff>" +
+					"<acc_name></acc_name>" +
+					"</staff>";
+			set_my_value_list(staff_data,assignee_filter);
+			set_static_value_list('appointments','status',status_filter);
+			$(schedule_filter).datetimepicker();
+		});
+		
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'appointments');
+		});
+		hide_loader();
+	});
 };

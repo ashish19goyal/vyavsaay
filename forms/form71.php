@@ -8,8 +8,8 @@
 					<th>Description </th>
 					<th>Balance </th>
 					<th><input type='button' form='form71_header' value='Add new financial account' class='add_icon' onclick='modal12_action();'>
-						<input type='button' form='form71_header' value='Export' class='export_icon'>
-						<input type='button' form='form71_header' value='Import' class='import_icon'>
+						<input type='button' form='form71_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form71_header' value='IMPORT' class='import_icon'>
 					</th>
 			</tr>
 		</thead>

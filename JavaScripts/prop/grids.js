@@ -186,8 +186,10 @@ function set_grid_item_8()
 			else 
 			{	return -1;}
 		});
-
-		document.getElementById('grid_item_8').innerHTML=results[0].item_name;
+		if(results.length>0)
+		{
+			document.getElementById('grid_item_8').innerHTML=results[0].item_name;
+		}
 	});
 };
 

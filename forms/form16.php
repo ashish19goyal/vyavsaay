@@ -7,7 +7,7 @@
 					<th>Customer <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form16_header' onblur="form16_ini();"></th>
 					<th>Return Date</th>
 					<th>Return Amount</th>
-					<th><input type='button' form='form16_header' value='Export' class='export_icon'></th>
+					<th><input type='button' form='form16_header' value='EXPORT' class='export_icon'></th>
 			</tr>
 		</thead>
 		<tbody id='form16_body'>

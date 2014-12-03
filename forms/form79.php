@@ -7,8 +7,8 @@
 					<th>Description </th>
 					<th>Estimated Hours </th>
 					<th><input type='button' form='form79_header' value='Add task' class='add_icon' onclick='modal18_action();'>
-						<input type='button' form='form79_header' value='Export' class='export_icon'>
-						<input type='button' form='form79_header' value='Import' class='import_icon'></th>
+						<input type='button' form='form79_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form79_header' value='IMPORT' class='import_icon'></th>
 					</tr>
 		</thead>
 		<tbody id='form79_body'>

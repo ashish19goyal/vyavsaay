@@ -158,6 +158,7 @@
   	"reviews":"Reviews",
   	"cross_sells":"Cross Sells",
   	"manufacturing_schedule":"Manufacturing Schedule",
-  	"resource_analysis":"Resource Analysis"
+  	"resource_analysis":"Resource Analysis",
+  	"appointments":"Appointments"
   }
 }

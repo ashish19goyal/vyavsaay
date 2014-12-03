@@ -2742,6 +2742,173 @@ function modal35_action()
 	$("#modal35").dialog("open");
 }
 
+/**
+ * @modal Add Appointment
+ * @modalNo 36
+ */
+function modal36_action(schedule_date)
+{
+	var form=document.getElementById("modal36_form");
+	var customer_filter=form.elements[1];
+	var staff_filter=form.elements[2];
+	var schedule_filter=form.elements[3];
+	var hours_filter=form.elements[4];
+	var status_filter=form.elements[6];
+	
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_value_list(customer_data,customer_filter);
+	
+	var staff_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	set_my_value_list(staff_data,staff_filter);
+	
+	$(schedule_filter).datetimepicker();
+	schedule_filter.value=schedule_date;
+	set_static_value_list('appointments','status',status_filter);
+		
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form89'))
+		{
+			var name=form.elements[1].value;
+			var assignee=form.elements[2].value;
+			var schedule=get_raw_time(form.elements[3].value);
+			var hours=form.elements[4].value;
+			var notes=form.elements[5].value;
+			var status=form.elements[6].value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<appointments>" +
+						"<id>"+data_id+"</id>" +
+						"<customer>"+name+"</customer>" +
+						"<assignee>"+assignee+"</assignee>" +
+						"<schedule>"+schedule+"</schedule>" +
+						"<status>"+status+"</status>" +
+						"<hours>"+hours+"</hours>" +
+						"<notes>"+notes+"</notes>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</appointments>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>appointments</tablename>" +
+						"<link_to>form89</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Appointment with "+name+" assigned to "+assignee+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_create_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal36").dialog("close");
+	});
+	
+	$("#modal36").dialog("open");
+}
+
+/**
+ * @modal Update Appointment
+ * @modalNo 37
+ */
+function modal37_action(id)
+{
+	var form=document.getElementById("modal37_form");
+	var customer_filter=form.elements[1];
+	var staff_filter=form.elements[2];
+	var notes_filter=form.elements[3];
+	var status_filter=form.elements[4];
+	
+	var customer_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	set_my_value_list(customer_data,customer_filter);
+
+	var staff_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	set_my_value_list(staff_data,staff_filter);
+	set_static_value_list('appointments','status',status_filter);
+	
+	
+	var apps_data="<appointments>" +
+			"<id>"+id+"</id>" +
+			"<customer></customer>" +
+			"<assignee></assignee>" +
+			"<notes></notes>" +
+			"<status></status>" +
+			"</appointments>";
+	fetch_requested_data('form89',apps_data,function(results)
+	{
+		for(var i in results)
+		{
+			customer_filter.value=results[i].customer;
+			staff_filter.value=results[i].assignee;
+			notes_filter.value=results[i].notes;
+			status_filter.value=results[i].status;
+			
+			break;
+		}
+		$("#modal37").dialog("open");
+	});
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form89'))
+		{
+			var name=form.elements[1].value;
+			var assignee=form.elements[2].value;
+			var notes=form.elements[3].value;
+			var status=form.elements[4].value;
+			var last_updated=get_my_time();
+			var data_xml="<appointments>" +
+						"<id>"+id+"</id>" +
+						"<customer>"+name+"</customer>" +
+						"<assignee>"+assignee+"</assignee>" +
+						"<notes>"+notes+"</notes>" +
+						"<status>"+status+"</status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</appointments>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>appointments</tablename>" +
+						"<link_to>form89</link_to>" +
+						"<title>Updated</title>" +
+						"<notes>Appointment with "+name+" assigned to "+assignee+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_update_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_update_row(data_xml,activity_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal37").dialog("close");		
+	});
+}
+
 
 /**
  * @modal Sending Mails

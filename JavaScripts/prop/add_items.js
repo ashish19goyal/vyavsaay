@@ -2728,3 +2728,73 @@ function form88_add_item()
 		$("#modal2").dialog("open");
 	}		
 }
+
+/**
+ * @form Appointments
+ * @formNo 89
+ */
+function form89_add_item()
+{
+	if(is_create_access('form89'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form89_"+id+"'></form>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' required form='form89_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Assignee'>";
+				rowsHTML+="<input type='text' form='form89_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Schedule'>";
+				rowsHTML+="<input type='text' required form='form89_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Notes'>";
+				rowsHTML+="<textarea form='form89_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' required form='form89_"+id+"' value='pending'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form89_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form89_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form89_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+				rowsHTML+="<a id='form89_whatsapp_"+id+"' href='' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form89_"+id+"' title='Send details through WhatsApp'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form89_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form89_"+id);
+		var name_filter=fields.elements[0];
+		var assignee_filter=fields.elements[1];
+		var schedule_filter=fields.elements[2];
+		var status_filter=fields.elements[4];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form89_create_item(fields);
+		});
+				
+		$(name_filter).focus();
+
+		var customer_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";
+		set_my_value_list(customer_data,name_filter);
+						
+		var staff_data="<staff>" +
+				"<acc_name></acc_name>" +
+				"</staff>";
+		set_my_value_list(staff_data,assignee_filter);
+		
+		set_static_value_list('appointments','status',status_filter);
+		$(schedule_filter).datetimepicker();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

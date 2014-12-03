@@ -7,8 +7,8 @@
 					<th>Type <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form5_header' onblur="form5_ini('');"></th>
 					<th>Details</th>
 					<th><input type='button' form='form5_header' value='Add item' class='add_icon' onclick='modal10_action();'>
-						<input type='button' form='form5_header' value='Export' class='export_icon'>
-						<input type='button' form='form5_header' value='Import' class='import_icon'>
+						<input type='button' form='form5_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form5_header' value='IMPORT' class='import_icon'>
 					</th>
 					
 			</tr>

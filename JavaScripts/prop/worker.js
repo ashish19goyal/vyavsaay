@@ -405,6 +405,45 @@ function notifications_add()
 	
 	///////////manufacturing end//////////
 	
+	/////appointments//////////
+	var app_time=parseFloat(get_my_time())+3600000;
+	
+	var apps_data="<appointments>" +
+			"<id></id>" +
+			"<customer></customer>" +
+			"<schedule compare='less than'>"+app_time+"</schedule>" +
+			"<status exact='yes'>pending</status>" +
+			"<assignee></assignee>" +
+			"</appointments>";
+	
+	fetch_requested_data('',apps_data,function(apps)
+	{
+		apps.forEach(function(app)
+		{
+			var id=get_new_key()+""+(Math.random()*1000);
+			var notes="Appointment with "+app.customer+" assigned to "+app.assignee+" @"+get_my_datetime(app.schedule);
+			var app_xml="<notifications>" +
+					"<id>"+id+"</id>" +
+					"<t_generated>"+get_my_time()+"</t_generated>" +
+					"<data_id unique='yes'>"+app.id+"</data_id>" +
+					"<title>Appointment</title>" +
+					"<notes>"+notes+"</notes>" +
+					"<link_to>form89</link_to>" +
+					"<status>pending</status>" +
+					"</notifications>";
+			if(is_online())
+			{
+				server_create_simple_no_warning(app_xml);
+			}
+			else
+			{
+				local_create_simple_no_warning(app_xml);
+			}
+		});
+	});
+	
+	///////////due appointments//////////
+
 	setTimeout(notifications_add,900000);
 }
 
