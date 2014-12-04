@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!-- <html manifest="vyavsaay.appcache"> -->
-<html>
+<html manifest="vyavsaay.appcache">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +10,25 @@
 			include "css_includes.php";
 		?>
 		<link rel="icon" href="./images/favicon.png">
+		
+		<script>
+		(function()
+		{
+		    var webappCache=window.applicationCache;
+		
+		    webappCache.addEventListener("updateready", function(event)
+			{
+		    	webappCache.swapCache();
+		        console.log("Cache has been updated due to a change found in the manifest");
+			}, false);
+		    webappCache.addEventListener("error", function(event)
+			{
+				console.log('error in caching');
+				console.log(event);
+			}, false);
+		})();
+		</script>
+		
 	</head>
 	<body onload="default_load();">
 			<div id="loading_icon"><img src="./images/loader.gif"></div>

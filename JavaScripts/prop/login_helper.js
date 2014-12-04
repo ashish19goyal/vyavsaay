@@ -68,11 +68,10 @@ function login_online(username,domain,pass)
 			var session_var=session_xml.getElementsByTagName('session');
 			var session_vars=new Object();
 			var num_svar=session_var[0].childElementCount;
-			//console.log(num_svar);
+
 			for(var z=0;z<num_svar;z++)
 			{
 				session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].innerHTML;
-				//console.log();
 			}
 			ini_session(domain,username);
 			set_session(session_vars);
@@ -151,22 +150,18 @@ function set_session_variables(domain,username,pass)
 									{
 										if(r_data.re==='checked')
 										{	
-											console.log("re element "+r_data.element_id);
 											re+=r_data.element_id+"-";
 										}
 										if(r_data.cr==='checked')
 										{	
-											console.log("cr element "+r_data.element_id);
 											cr+=r_data.element_id+"-";
 										}
 										if(r_data.up==='checked')
 										{
-											console.log("up element "+r_data.element_id);
 											up+=r_data.element_id+"-";
 										}
 										if(r_data.del==='checked')
 										{
-											console.log("del element "+r_data.element_id);
 											del+=r_data.element_id+"-";
 										}
 									}

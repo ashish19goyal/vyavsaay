@@ -249,17 +249,17 @@ function set_static_value_list(table,list,filter_element)
 				form.appendChild(datalist);
 				datalist.setAttribute('id',list_id);
 			}
-		},list_data);
 		
-		$(filter_element).off("change");
-		$(filter_element).on("change",function(event)
-		{
-			var found = $.inArray(filter_element.value, data) > -1;
-			if(!found)
+			$(filter_element).off("change");
+			$(filter_element).on("change",function(event)
 			{
-	            filter_element.value="";
-	        }
-		});
+				var found = $.inArray(filter_element.value, data) > -1;
+				if(!found)
+				{
+		            filter_element.value="";
+		        }
+			});
+		},list_data);
 	}
 	else
 	{

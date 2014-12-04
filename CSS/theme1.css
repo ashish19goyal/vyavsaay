@@ -28,7 +28,7 @@ input{
 }
 
 input:not([readonly="readonly"]):not([type="button"]):focus,textarea:not([readonly="readonly"]):focus{
-	background-color: yellow;
+	background-color: #F5F4A8;
 	outline: none;
 }
 
@@ -37,6 +37,7 @@ td>input[type="text"]
 	max-width: 100px;
 	min-width: 50px;
 	transition: width 0.25s;
+	white-space:normal;
 }
 
 td>input[type="number"]

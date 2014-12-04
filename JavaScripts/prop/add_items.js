@@ -230,7 +230,7 @@ function form10_add_item()
 
 
 /**
- * @form New Bill
+ * @form Create product Bill
  * @formNo 12
  */
 function form12_add_item()
@@ -327,7 +327,7 @@ function form12_add_item()
 					
 					get_inventory(name_filter.value,batch_filter.value,function(quantity)
 					{
-						$(quantity_filter).attr('max',quantity);
+						//$(quantity_filter).attr('max',quantity);
 						$(quantity_filter).attr('min',"0");
 						$(quantity_filter).attr('placeholder',quantity);
 					});
@@ -355,7 +355,7 @@ function form12_add_item()
 			
 			get_inventory(name_filter.value,batch_filter.value,function(quantity)
 			{
-				$(quantity_filter).attr('max',quantity);
+				//$(quantity_filter).attr('max',quantity);
 				$(quantity_filter).attr('min',"0");
 				$(quantity_filter).attr('placeholder',quantity);
 			});
@@ -1917,7 +1917,7 @@ function form72_add_product()
 					
 					get_inventory(name_filter.value,batch_filter.value,function(quantity)
 					{
-						$(quantity_filter).attr('max',quantity);
+						//$(quantity_filter).attr('max',quantity);
 						$(quantity_filter).attr('min',"0");
 						$(quantity_filter).attr('placeholder',quantity);
 					});
@@ -1945,7 +1945,7 @@ function form72_add_product()
 			
 			get_inventory(name_filter.value,batch_filter.value,function(quantity)
 			{
-				$(quantity_filter).attr('max',quantity);
+				//$(quantity_filter).attr('max',quantity);
 				$(quantity_filter).attr('min',"0");
 				$(quantity_filter).attr('placeholder',quantity);
 			});

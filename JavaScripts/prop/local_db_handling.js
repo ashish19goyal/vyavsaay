@@ -141,8 +141,8 @@ function local_read_single_column(columns,callback,results)
 				var match=true;
 				for(var i in filter)
 				{
-					var string=records[row][filter[i].name].toLowerCase();
-					var search=filter[i].value.toLowerCase();
+					var string=records[row][filter[i].name].toString().toLowerCase();
+					var search=filter[i].value.toString().toLowerCase();
 					var found=0;
 					
 					if(filter[i].type=='')
@@ -237,67 +237,43 @@ function local_update_row(data_xml,activity_xml)
 	
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		if(err)
-		{
-			console.log(err);
-		}
 		//console.log("unique length is zero");
 		database.get(table,{range: IDBKeyRange.only(data_id)},function(err,records)
 		{
-			if(err)
+			var data_row=new Object();
+			var type="";
+			for(var i in records)
 			{
-				console.log(err);
+				type='update';
+				data_row=records[i];
+				break;
 			}
-			else
+				
+			for(var j in cols)
 			{
-				var data_row=new Object();
-				var type="";
-				for(var i in records)
-				{
-					type='update';
-					data_row=records[i];
-					break;
-				}
-					
-				for(var j in cols)
-				{
-					data_row[cols[j].nodeName]=cols[j].innerHTML;
-				}
-				database.upsert(table,data_row,function(err,insertedkey)
-				{
-					if(err)
-					{
-						console.log(err);
-					}
-					else
-					{
-						var act_row={id:get_new_key(),
-								type:type,
-								status:'unsynced',
-								data_xml:data_xml,
-								user_display:'yes',
-								last_updated:get_my_time()};
-						for(var k in activity_data)
-						{
-							act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
-						}
-						//console.log("activities length="+activity_data.length);
-						database.upsert('activities',act_row,function(err,insertedkey)
-						{
-							if(err)
-							{
-								console.log(err);
-							}
-							hide_loader();
-						});	
-					}
-				});
+				data_row[cols[j].nodeName]=cols[j].innerHTML;
 			}
+			database.upsert(table,data_row,function(err,insertedkey)
+			{
+				var act_row={id:get_new_key(),
+						type:type,
+						status:'unsynced',
+						data_xml:data_xml,
+						user_display:'yes',
+						last_updated:get_my_time()};
+				for(var k in activity_data)
+				{
+					act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+				}
+				//console.log("activities length="+activity_data.length);
+				database.upsert('activities',act_row,function(err,insertedkey)
+				{
+					hide_loader();
+				});	
+			});
 		});			
 	});
 }
-
-
 
 /**
  * this function save a row of record to local db
@@ -319,66 +295,41 @@ function local_update_simple(data_xml)
 	
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		if(err)
-		{
-			console.log(err);
-		}
 		database.get(table,{range: IDBKeyRange.only(data_id)},function(err,records)
 		{
-			if(err)
+			var data_row=new Object();
+			var type="";
+			for(var i in records)
 			{
-				console.log(err);
+				type='update';
+				data_row=records[i];
+				break;
 			}
-			else
+			
+			for(var j in cols)
 			{
-				var data_row=new Object();
-				var type="";
-				for(var i in records)
-				{
-					type='update';
-					data_row=records[i];
-					break;
-				}
-				
-				for(var j in cols)
-				{
-					data_row[cols[j].nodeName]=cols[j].innerHTML;
-				}
-				database.upsert(table,data_row,function(err,insertedkey)
-				{
-					if(err)
-					{
-						console.log(err);
-					}
-					else
-					{
-						var act_row={id:get_new_key(),
-								type:type,
-								status:'unsynced',
-								data_xml:data_xml,
-								user_display:'no',
-								data_id:data_row.id,
-								tablename:table,
-								link_to:'',
-								last_updated:get_my_time()};
-							
-						database.upsert('activities',act_row,function(err,insertedkey)
-						{
-							if(err)
-							{
-								console.log(err);
-							}
-							hide_loader();
-						});
+				data_row[cols[j].nodeName]=cols[j].innerHTML;
+			}
+			database.upsert(table,data_row,function(err,insertedkey)
+			{
+				var act_row={id:get_new_key(),
+						type:type,
+						status:'unsynced',
+						data_xml:data_xml,
+						user_display:'no',
+						data_id:data_row.id,
+						tablename:table,
+						link_to:'',
+						last_updated:get_my_time()};
 					
-					}
+				database.upsert('activities',act_row,function(err,insertedkey)
+				{
+					hide_loader();
 				});
-			}
+			});
 		});
 	});
 }
-
-
 
 /**
  * @param data_xml
@@ -476,10 +427,6 @@ function local_create_row(data_xml,activity_xml)
 	
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		if(err)
-		{
-			console.log(err);
-		}
 		//console.log(tables);
 		if(unique.length===0)
 		{
@@ -493,106 +440,74 @@ function local_create_row(data_xml,activity_xml)
 			}
 			database.upsert(table,data_row,function(err,insertedkey)
 			{
-				if(err)
+				var act_row={id:get_new_key(),
+						type:type,
+						status:'unsynced',
+						data_xml:data_xml,
+						user_display:'yes',
+						last_updated:get_my_time()};
+				for(var k in activity_data)
 				{
-					console.log(err);
+					act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
 				}
-				else
+				//console.log("activities length="+activity_data.length);
+				database.upsert('activities',act_row,function(err,insertedkey)
 				{
-					var act_row={id:get_new_key(),
-							type:type,
-							status:'unsynced',
-							data_xml:data_xml,
-							user_display:'yes',
-							last_updated:get_my_time()};
-					for(var k in activity_data)
-					{
-						act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
-					}
-					//console.log("activities length="+activity_data.length);
-					database.upsert('activities',act_row,function(err,insertedkey)
-					{
-						if(err)
-						{
-							console.log(err);
-						}
-						hide_loader();
-					});	
-				}
+					hide_loader();
+				});	
 			});
-			
 		}
 		else
 		{
 			//console.log("unique length is non-zero");
 			database.get(table,{},function(err,records)
 			{
-				if(err)
+				var unique_rec=true;
+				var type='create';
+				var data_row=new Object();
+				
+				for(var i in records)
+				{	
+					for(var k in unique)
+					{
+						if(records[i][unique[k].name]==unique[k].value)
+						{
+							unique_rec=false;
+						}
+					}	
+				}
+				
+				if(unique_rec===true)
 				{
-					console.log(err);
+					//console.log("didnt find any duplicate records");
+					for(var j in cols)
+					{
+						data_row[cols[j].nodeName]=cols[j].innerHTML;
+					}
+					database.upsert(table,data_row,function(err,insertedkey)
+					{
+						var act_row={id:get_new_key(),
+								type:type,
+								status:'unsynced',
+								data_xml:data_xml,
+								user_display:'yes',
+								last_updated:get_my_time()};
+						for(var k in activity_data)
+						{
+							act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+						}
+						//console.log("activities length="+activity_data.length);
+						database.upsert('activities',act_row,function(err,insertedkey)
+						{
+							hide_loader();
+						});
+					});
 				}
 				else
 				{
-					var unique_rec=true;
-					var type='create';
-					var data_row=new Object();
-					
-					for(var i in records)
-					{	
-						for(var k in unique)
-						{
-							if(records[i][unique[k].name]==unique[k].value)
-							{
-								unique_rec=false;
-							}
-						}	
-					}
-					
-					if(unique_rec===true)
-					{
-						//console.log("didnt find any duplicate records");
-
-						for(var j in cols)
-						{
-							data_row[cols[j].nodeName]=cols[j].innerHTML;
-						}
-						database.upsert(table,data_row,function(err,insertedkey)
-						{
-							if(err)
-							{
-								console.log(err);
-							}
-							else
-							{
-								var act_row={id:get_new_key(),
-										type:type,
-										status:'unsynced',
-										data_xml:data_xml,
-										user_display:'yes',
-										last_updated:get_my_time()};
-								for(var k in activity_data)
-								{
-									act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
-								}
-								//console.log("activities length="+activity_data.length);
-								database.upsert('activities',act_row,function(err,insertedkey)
-								{
-									if(err)
-									{
-										console.log(err);
-									}
-									hide_loader();
-								});
-							
-							}
-						});
-					}
-					else
-					{
-						//console.log("found duplicate records");
-						hide_loader();
-						$("#modal5").dialog("open");
-					}
+					//console.log("found duplicate records");
+					hide_loader();
+					$("#modal5").dialog("open");
 				}
 			});
 		}
@@ -636,11 +551,6 @@ function local_create_simple(data_xml)
 	
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		if(err)
-		{
-			console.log(err);
-		}
-		//console.log(tables);
 		if(unique.length===0)
 		{
 			var type='create';
@@ -652,32 +562,20 @@ function local_create_simple(data_xml)
 			}
 			database.upsert(table,data_row,function(err,insertedkey)
 			{
-				if(err)
+				var act_row={id:get_new_key(),
+						type:type,
+						status:'unsynced',
+						data_xml:data_xml,
+						user_display:'no',
+						data_id:data_row.id,
+						tablename:table,
+						link_to:'',
+						last_updated:get_my_time()};
+					
+				database.upsert('activities',act_row,function(err,insertedkey)
 				{
-					console.log(err);
-				}
-				else
-				{
-					var act_row={id:get_new_key(),
-							type:type,
-							status:'unsynced',
-							data_xml:data_xml,
-							user_display:'no',
-							data_id:data_row.id,
-							tablename:table,
-							link_to:'',
-							last_updated:get_my_time()};
-						
-					database.upsert('activities',act_row,function(err,insertedkey)
-					{
-						if(err)
-						{
-							console.log(err);
-						}
-						hide_loader();
-					});
-				
-				}
+					hide_loader();
+				});
 			});
 		}
 		else
@@ -685,80 +583,60 @@ function local_create_simple(data_xml)
 			//console.log("unique length is non-zero");
 			database.get(table,{},function(err,records)
 			{
-				if(err)
+				var unique_rec=true;
+				var type='create';
+				var data_row=new Object();
+				
+				for(var i in records)
 				{
-					console.log(err);
+					if(records[i].id==data_id)
+					{
+						type='update';
+						data_row=records[i];
+						unique_rec=true;
+						break;
+					}
+					else 
+					{	
+						for(var k in unique)
+						{
+							if(records[i][unique[k].name]==unique[k].value)
+							{
+								unique_rec=false;
+							}
+						}
+					}
+				}
+				
+				//console.log(unique_rec);
+				if(unique_rec===true)
+				{
+					//console.log("didnt find any duplicate records");
+					for(var j in cols)
+					{
+						data_row[cols[j].nodeName]=cols[j].innerHTML;
+					}
+					database.upsert(table,data_row,function(err,insertedkey)
+					{
+						var act_row={id:get_new_key(),
+								type:type,
+								status:'unsynced',
+								data_xml:data_xml,
+								user_display:'no',
+								last_updated:get_my_time()};
+						
+						//console.log("activities data------"+act_row);
+						database.upsert('activities',act_row,function(err,insertedkey)
+						{
+							hide_loader();
+						});
+					});
 				}
 				else
 				{
-					var unique_rec=true;
-					var type='create';
-					var data_row=new Object();
-					
-					for(var i in records)
-					{
-						if(records[i].id==data_id)
-						{
-							type='update';
-							data_row=records[i];
-							unique_rec=true;
-							break;
-						}
-						else 
-						{	
-							for(var k in unique)
-							{
-								if(records[i][unique[k].name]==unique[k].value)
-								{
-									unique_rec=false;
-								}
-							}
-						}
-						
-					}
-					
-					//console.log(unique_rec);
-					if(unique_rec===true)
-					{
-						//console.log("didnt find any duplicate records");
-
-						for(var j in cols)
-						{
-							data_row[cols[j].nodeName]=cols[j].innerHTML;
-						}
-						database.upsert(table,data_row,function(err,insertedkey)
-						{
-							if(err)
-							{
-								console.log(err);
-							}
-							else
-							{
-								var act_row={id:get_new_key(),
-										type:type,
-										status:'unsynced',
-										data_xml:data_xml,
-										user_display:'no',
-										last_updated:get_my_time()};
-								
-								//console.log("activities data------"+act_row);
-								database.upsert('activities',act_row,function(err,insertedkey)
-								{
-									if(err)
-									{
-										console.log(err);
-									}
-									hide_loader();
-								});
-							}
-						});
-					}
-					else
-					{
-						//console.log("found duplicate records");
-						hide_loader();
-						$("#modal5").dialog("open");
-					}
+					//console.log("found duplicate records");
+					hide_loader();
+					$("#modal5").dialog("open");
 				}
 			});
 		}
@@ -795,10 +673,6 @@ function local_create_simple_func(data_xml,func)
 	
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		if(err)
-		{
-			console.log(err);
-		}
 		//console.log(tables);
 		if(unique.length===0)
 		{
@@ -833,7 +707,6 @@ function local_create_simple_func(data_xml,func)
 			//console.log("unique length is non-zero");
 			database.get(table,{},function(err,records)
 			{
-				
 				var unique_rec=true;
 				var type='create';
 				var data_row=new Object();
@@ -857,7 +730,6 @@ function local_create_simple_func(data_xml,func)
 							}
 						}
 					}
-					
 				}
 				
 				//console.log(unique_rec);
@@ -933,11 +805,6 @@ function local_create_simple_no_warning(data_xml)
 	
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		if(err)
-		{
-			console.log(err);
-		}
-		//console.log(tables);
 		if(unique.length===0)
 		{
 			var type='create';
@@ -949,32 +816,20 @@ function local_create_simple_no_warning(data_xml)
 			}
 			database.upsert(table,data_row,function(err,insertedkey)
 			{
-				if(err)
+				var act_row={id:get_new_key(),
+						type:type,
+						status:'unsynced',
+						data_xml:data_xml,
+						user_display:'no',
+						data_id:data_row.id,
+						tablename:table,
+						link_to:'',
+						last_updated:get_my_time()};
+					
+				database.upsert('activities',act_row,function(err,insertedkey)
 				{
-					console.log(err);
-				}
-				else
-				{
-					var act_row={id:get_new_key(),
-							type:type,
-							status:'unsynced',
-							data_xml:data_xml,
-							user_display:'no',
-							data_id:data_row.id,
-							tablename:table,
-							link_to:'',
-							last_updated:get_my_time()};
-						
-					database.upsert('activities',act_row,function(err,insertedkey)
-					{
-						if(err)
-						{
-							console.log(err);
-						}
-						hide_loader();
-					});
-				
-				}
+					hide_loader();
+				});
 			});
 		}
 		else
@@ -982,74 +837,54 @@ function local_create_simple_no_warning(data_xml)
 			//console.log("unique length is non-zero");
 			database.get(table,{},function(err,records)
 			{
-				if(err)
+				var unique_rec=true;
+				var type='create';
+				var data_row=new Object();
+				
+				for(var i in records)
 				{
-					console.log(err);
+					if(records[i].id==data_id)
+					{
+						type='update';
+						data_row=records[i];
+						unique_rec=true;
+						break;
+					}
+					else 
+					{	
+						for(var k in unique)
+						{
+							if(records[i][unique[k].name]==unique[k].value)
+							{
+								unique_rec=false;
+							}
+						}
+					}
 				}
-				else
+				
+				//console.log(unique_rec);
+				if(unique_rec===true)
 				{
-					var unique_rec=true;
-					var type='create';
-					var data_row=new Object();
-					
-					for(var i in records)
+					//console.log("didnt find any duplicate records");
+					for(var j in cols)
 					{
-						if(records[i].id==data_id)
-						{
-							type='update';
-							data_row=records[i];
-							unique_rec=true;
-							break;
-						}
-						else 
-						{	
-							for(var k in unique)
-							{
-								if(records[i][unique[k].name]==unique[k].value)
-								{
-									unique_rec=false;
-								}
-							}
-						}
+						data_row[cols[j].nodeName]=cols[j].innerHTML;
+					}
+					database.upsert(table,data_row,function(err,insertedkey)
+					{
+						var act_row={id:get_new_key(),
+								type:type,
+								status:'unsynced',
+								data_xml:data_xml,
+								user_display:'no',
+								last_updated:get_my_time()};
 						
-					}
-					
-					//console.log(unique_rec);
-					if(unique_rec===true)
-					{
-						//console.log("didnt find any duplicate records");
-
-						for(var j in cols)
+						//console.log("activities data------"+act_row);
+						database.upsert('activities',act_row,function(err,insertedkey)
 						{
-							data_row[cols[j].nodeName]=cols[j].innerHTML;
-						}
-						database.upsert(table,data_row,function(err,insertedkey)
-						{
-							if(err)
-							{
-								console.log(err);
-							}
-							else
-							{
-								var act_row={id:get_new_key(),
-										type:type,
-										status:'unsynced',
-										data_xml:data_xml,
-										user_display:'no',
-										last_updated:get_my_time()};
-								
-								//console.log("activities data------"+act_row);
-								database.upsert('activities',act_row,function(err,insertedkey)
-								{
-									if(err)
-									{
-										console.log(err);
-									}
-									hide_loader();
-								});
-							}
+							hide_loader();
 						});
-					}
+					});
 				}
 			});
 		}
@@ -1166,7 +1001,7 @@ function local_read_multi_column(columns,callback,results)
 					}
 					else if(filter[i].type=='more than') 
 					{
-						if(parseFlaot(records[row][filter[i].name])<=parseFloat(filter[i].value))
+						if(parseFloat(records[row][filter[i].name])<=parseFloat(filter[i].value))
 						{
 							match=false;
 							break;
@@ -1182,7 +1017,7 @@ function local_read_multi_column(columns,callback,results)
 					}
 					else if(filter[i].type=='not equal') 
 					{
-						if(parseFloat(records[row][filter[i].name])==parseFlaot(filter[i].value))
+						if(parseFloat(records[row][filter[i].name])==parseFloat(filter[i].value))
 						{
 							match=false;
 							break;
@@ -1231,53 +1066,28 @@ function local_delete_row(data_xml,activity_xml)
 	var db_name="re_local_"+domain;
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		if(err)
-		{
-			console.log(err);
-		}
-		//console.log(tables);
-		
 		database.get(table,{range: IDBKeyRange.only(data_id)},function(err,records)
 		{
-			if(err)
+			for(var i in records)
 			{
-				console.log(err);
-			}
-			else
-			{
-				for(var i in records)
+				database.delete(table,data_id,function(err)
 				{
-					database.delete(table,data_id,function(err)
+					var act_row={id:get_new_key(),
+							type:'delete',
+							status:'unsynced',
+							user_display:'yes',
+							data_xml:data_xml,
+							last_updated:get_my_time()};
+					for(var k in activity_data)
 					{
-						if(err)
-						{
-							console.log(err);
-						}
-						else
-						{
-							var act_row={id:get_new_key(),
-									type:'delete',
-									status:'unsynced',
-									user_display:'yes',
-									data_xml:data_xml,
-									last_updated:get_my_time()};
-							for(var k in activity_data)
-							{
-								act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
-							}
-							database.upsert('activities',act_row,function(err,insertedkey)
-							{
-								if(err)
-								{
-									console.log(err);
-									
-								}
-								hide_loader();
-							});
-						}
+						act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+					}
+					database.upsert('activities',act_row,function(err,insertedkey)
+					{
+						hide_loader();
 					});
-					break;
-				}
+				});
+				break;
 			}
 		});
 	});
@@ -1311,69 +1121,42 @@ function local_delete_simple(data_xml)
 	var db_name="re_local_"+domain;
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		if(err)
+		database.get(table,{index: filter[0].name,range: IDBKeyRange.only(filter[0].value)},function(err,records)
 		{
-			console.log(err);
-		}
-		//console.log(tables);
-		
-		database.get(table,{
-			index: filter[0].name,
-			range: IDBKeyRange.only(filter[0].value)
-		},function(err,records)
-		{
-			if(err)
+			records.forEach(function(record)
 			{
-				console.log(err);
-			}
-			else
-			{
-				records.forEach(function(record)
+				var match=true;
+				for(var i in filter)
 				{
-					var match=true;
-					for(var i in filter)
+					var string=record[filter[i].name].toLowerCase();
+					var search=filter[i].value.toLowerCase();
+					var found=string.search(search);
+					if(found===-1)
 					{
-						var string=record[filter[i].name].toLowerCase();
-						var search=filter[i].value.toLowerCase();
-						var found=string.search(search);
-						if(found===-1)
-						{
-							match=false;
-							break;
-						}
+						match=false;
+						break;
 					}
-					if(match===true)
+				}
+				if(match===true)
+				{
+					database.delete(table,record.id,function(err)
 					{
-						database.delete(table,record.id,function(err)
+						var act_row={id:get_new_key(),
+								type:'delete',
+								data_id:record.id,
+								data_xml:data_xml,
+								tablename:table,
+								status:'unsynced',
+								user_display:'no',
+								link_to:'',
+								last_updated:get_my_time()};
+						database.upsert('activities',act_row,function(err,insertedkey)
 						{
-							if(err)
-							{
-								console.log(err);
-							}
-							else
-							{
-								var act_row={id:get_new_key(),
-										type:'delete',
-										data_id:record.id,
-										data_xml:data_xml,
-										tablename:table,
-										status:'unsynced',
-										user_display:'no',
-										link_to:'',
-										last_updated:get_my_time()};
-								database.upsert('activities',act_row,function(err,insertedkey)
-								{
-									if(err)
-									{
-										console.log(err);
-									}
-									hide_loader();
-								});
-							}
+							hide_loader();
 						});
-					}
-				});
-			}
+					});
+				}
+			});
 		});
 	});
 };
@@ -1407,70 +1190,47 @@ function local_delete_simple_func(data_xml,func)
 	var db_name="re_local_"+domain;
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		if(err)
+		database.get(table,{index: filter[0].name,range: IDBKeyRange.only(filter[0].value)},function(err,records)
 		{
-			console.log(err);
-		}
-		//console.log(tables);
-		
-		database.get(table,{
-			index: filter[0].name,
-			range: IDBKeyRange.only(filter[0].value)
-		},function(err,records)
-		{
-			if(err)
+			records.forEach(function(record)
 			{
-				console.log(err);
-			}
-			else
-			{
-				records.forEach(function(record)
+				var match=true;
+				for(var i in filter)
 				{
-					var match=true;
-					for(var i in filter)
+					var string=record[filter[i].name].toLowerCase();
+					var search=filter[i].value.toLowerCase();
+					var found=string.search(search);
+					if(found===-1)
 					{
-						var string=record[filter[i].name].toLowerCase();
-						var search=filter[i].value.toLowerCase();
-						var found=string.search(search);
-						if(found===-1)
-						{
-							match=false;
-							break;
-						}
+						match=false;
+						break;
 					}
-					if(match===true)
+				}
+				if(match===true)
+				{
+					database.delete(table,record.id,function(err)
 					{
-						database.delete(table,record.id,function(err)
+						var act_row={id:get_new_key(),
+								type:'delete',
+								data_id:record.id,
+								data_xml:data_xml,
+								tablename:table,
+								status:'unsynced',
+								user_display:'no',
+								link_to:'',
+								last_updated:get_my_time()};
+						database.upsert('activities',act_row,function(err,insertedkey)
 						{
 							if(err)
 							{
 								console.log(err);
 							}
-							else
-							{
-								var act_row={id:get_new_key(),
-										type:'delete',
-										data_id:record.id,
-										data_xml:data_xml,
-										tablename:table,
-										status:'unsynced',
-										user_display:'no',
-										link_to:'',
-										last_updated:get_my_time()};
-								database.upsert('activities',act_row,function(err,insertedkey)
-								{
-									if(err)
-									{
-										console.log(err);
-									}
-									func();
-									hide_loader();
-								});
-							}
+							func();
+							hide_loader();
 						});
-					}
-				});
-			}
+					});
+				}
+			});
 		});
 	});
 };

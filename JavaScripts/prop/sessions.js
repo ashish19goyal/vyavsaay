@@ -163,7 +163,14 @@ function delete_session()
 	sessionStorage.removeItem('domain');
 	sessionStorage.removeItem('username');
 	sessionStorage.clear();
-	window.location.assign("logout.php");
+	if(is_online())
+	{
+		window.location.assign("logout.php");
+	}
+	else
+	{
+		window.location.assign("index.php");
+	}
 }
 
 function get_pamphlet_template()
