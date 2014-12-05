@@ -18,7 +18,7 @@
 		
 		    webappCache.addEventListener("updateready", function(event)
 			{
-		    	webappCache.swapCache();
+		    	//webappCache.swapCache();
 		        console.log("Cache has been updated due to a change found in the manifest");
 			}, false);
 		    webappCache.addEventListener("error", function(event)

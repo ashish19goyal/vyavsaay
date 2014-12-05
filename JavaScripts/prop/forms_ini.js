@@ -5777,7 +5777,6 @@ function form87_ini()
 		});
 		longPressEditable($('.dblclick_editable'));
 		
-		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)

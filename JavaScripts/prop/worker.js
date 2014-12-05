@@ -158,7 +158,7 @@ function notifications_add()
 			}
 			else
 			{
-				server_create_simple_no_warning(not_pay_xml);
+				local_create_simple_no_warning(not_pay_xml);
 			}
 		});
 	});

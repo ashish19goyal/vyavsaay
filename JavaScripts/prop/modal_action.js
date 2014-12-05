@@ -1745,7 +1745,7 @@ function modal23_action(t_func,i_func)
            var content=reader.result;
            var data_array=csv_string_to_obj_array(content);
            
-           //console.log(data_array);
+           console.log(data_array);
            
            if(new_records.checked)
            {

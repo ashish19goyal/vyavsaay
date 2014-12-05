@@ -28,6 +28,12 @@ function create_local_db(domain,func)
 			func();
 		};
 		
+		request.onerror=function(ev)
+		{
+			console.log('some error occured in db creation');
+			console.log(ev);
+		};
+			
 		request.onupgradeneeded=function(ev)
 		{
 			db=ev.target.result;
@@ -80,7 +86,7 @@ function local_read_single_column(columns,callback,results)
 	var sort_index='id';
 	var sort_order='desc';
 	var filter=new Array();
-	for(var j in cols)
+	for(var j=0; j<cols.length;j++)
 	{
 		if(cols[j].innerHTML!=null && cols[j].hasAttribute('sort'))
 		{
@@ -120,26 +126,42 @@ function local_read_single_column(columns,callback,results)
 	var db_name="re_local_"+domain;
 	sklad.open(db_name,{version:2},function (err,database)
 	{
-		var options={};
-		if(sort_index=='id')
+		var options={direction:sklad.DESC};
+		database.get(table,options,function(err,records_object)
 		{
-			options={direction:sklad.DESC};
-		}
-		else if(sort_order=='asc')
-		{
-			options={index:sort_index,direction:sklad.ASC};
-		}
-		else if(sort_order=='desc')
-		{
-			options={index:sort_index,direction:sklad.DESC};
-		}
-		
-		database.get(table,options,function(err,records)
-		{
-			for(var row in records)
+			var records=[];
+			for(var a in records_object)
+			{
+				records.push(records_object[a]);
+			}
+			if(sort_index!='id')
+			{
+				if(sort_order!='asc')
+				{
+					records.sort(function(a,b)
+					{
+						if(parseFloat(a[sort_index])<parseFloat(b[sort_index]))
+							return 1;
+						else
+							return -1;
+					});
+				}
+				else
+				{
+					records.sort(function(a,b)
+					{
+						if(parseFloat(a[sort_index])>parseFloat(b[sort_index]))
+							return 1;
+						else
+							return -1;
+					});
+				}
+			}
+
+			for(var row=0;row<records.length;row++)
 			{
 				var match=true;
-				for(var i in filter)
+				for(var i=0;i<filter.length;i++)
 				{
 					var string=records[row][filter[i].name].toString().toLowerCase();
 					var search=filter[i].value.toString().toLowerCase();
@@ -205,7 +227,9 @@ function local_read_single_column(columns,callback,results)
 				{
 					results.push(records[row][cols[0].nodeName]);
 					if(results.length==count)
+					{
 						break;
+					}
 				}
 			}
 			callback(results);
@@ -221,14 +245,12 @@ function local_read_single_column(columns,callback,results)
  */
 function local_update_row(data_xml,activity_xml)
 {
-	show_loader();
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
 	var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
 	var cols=data.childNodes[0].childNodes;
 
-	
 	var activity=parser.parseFromString(activity_xml,"text/xml");
 	var activity_data=activity.childNodes[0].childNodes;
 	
@@ -249,7 +271,7 @@ function local_update_row(data_xml,activity_xml)
 				break;
 			}
 				
-			for(var j in cols)
+			for(var j=0;j<cols.length;j++)
 			{
 				data_row[cols[j].nodeName]=cols[j].innerHTML;
 			}
@@ -261,14 +283,16 @@ function local_update_row(data_xml,activity_xml)
 						data_xml:data_xml,
 						user_display:'yes',
 						last_updated:get_my_time()};
-				for(var k in activity_data)
+
+				console.log(act_row);
+				for(var k=0;k<activity_data.length;k++)
 				{
 					act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
 				}
+				console.log(act_row);
 				//console.log("activities length="+activity_data.length);
 				database.upsert('activities',act_row,function(err,insertedkey)
 				{
-					hide_loader();
 				});	
 			});
 		});			
@@ -306,7 +330,7 @@ function local_update_simple(data_xml)
 				break;
 			}
 			
-			for(var j in cols)
+			for(var j=0;j<cols.length;j++)
 			{
 				data_row[cols[j].nodeName]=cols[j].innerHTML;
 			}
@@ -321,7 +345,6 @@ function local_update_simple(data_xml)
 						tablename:table,
 						link_to:'',
 						last_updated:get_my_time()};
-					
 				database.upsert('activities',act_row,function(err,insertedkey)
 				{
 					hide_loader();
@@ -361,7 +384,7 @@ function local_update_simple_func(data_xml,func)
 				break;
 			}
 			
-			for(var j in cols)
+			for(var j=0;j<cols.length;j++)
 			{
 				data_row[cols[j].nodeName]=cols[j].innerHTML;
 			}
@@ -396,15 +419,17 @@ function local_update_simple_func(data_xml,func)
  */
 function local_create_row(data_xml,activity_xml)
 {
+	console.log(data_xml);
+	console.log(activity_xml);
 	show_loader();
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
 	var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
 	var cols=data.childNodes[0].childNodes;
-
+	console.log(cols);
 	var unique=new Array();
-	for(var j in cols)
+	for(var j=0;j<cols.length;j++)
 	{
 		if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
 		{
@@ -421,23 +446,23 @@ function local_create_row(data_xml,activity_xml)
 	
 	var activity=parser.parseFromString(activity_xml,"text/xml");
 	var activity_data=activity.childNodes[0].childNodes;
-	
+	console.log(activity_data);
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		//console.log(tables);
 		if(unique.length===0)
 		{
 			//console.log("unique length is zero");
 			var type='create';
 			var data_row=new Object();
 				
-			for(var j in cols)
+			for(var j=0;j<cols.length;j++)
 			{
 				data_row[cols[j].nodeName]=cols[j].innerHTML;
 			}
+			console.log(data_row);
 			database.upsert(table,data_row,function(err,insertedkey)
 			{
 				var act_row={id:get_new_key(),
@@ -446,7 +471,8 @@ function local_create_row(data_xml,activity_xml)
 						data_xml:data_xml,
 						user_display:'yes',
 						last_updated:get_my_time()};
-				for(var k in activity_data)
+				console.log(act_row);
+				for(var k=0;k<activity_data.length;k++)
 				{
 					act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
 				}
@@ -480,10 +506,14 @@ function local_create_row(data_xml,activity_xml)
 				if(unique_rec===true)
 				{
 					//console.log("didnt find any duplicate records");
-					for(var j in cols)
+					for(var j=0;j<cols.length;j++)
 					{
+						console.log(j);
+						console.log(cols[j].nodeName);
+						console.log(cols[j].innerHTML);
 						data_row[cols[j].nodeName]=cols[j].innerHTML;
 					}
+					console.log(data_row);
 					database.upsert(table,data_row,function(err,insertedkey)
 					{
 						var act_row={id:get_new_key(),
@@ -492,11 +522,11 @@ function local_create_row(data_xml,activity_xml)
 								data_xml:data_xml,
 								user_display:'yes',
 								last_updated:get_my_time()};
-						for(var k in activity_data)
+						console.log(act_row);
+						for(var k=0;k<activity_data.length;k++)
 						{
 							act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
 						}
-						//console.log("activities length="+activity_data.length);
 						database.upsert('activities',act_row,function(err,insertedkey)
 						{
 							hide_loader();
@@ -505,8 +535,6 @@ function local_create_row(data_xml,activity_xml)
 				}
 				else
 				{
-					//console.log("found duplicate records");
-					hide_loader();
 					$("#modal5").dialog("open");
 				}
 			});
@@ -524,15 +552,18 @@ function local_create_row(data_xml,activity_xml)
  */
 function local_create_simple(data_xml)
 {
+	//console.log(data_xml);
 	show_loader();
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
+	//console.log(table);
+	console.log(data.childNodes[0]);
 	var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
 	var cols=data.childNodes[0].childNodes;
 
 	var unique=new Array();
-	for(var j in cols)
+	for(var j=0;j<cols.length;j++)
 	{
 		if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
 		{
@@ -556,7 +587,7 @@ function local_create_simple(data_xml)
 			var type='create';
 			var data_row=new Object();
 			
-			for(var j in cols)
+			for(var j=0;j<cols.length;j++)
 			{
 				data_row[cols[j].nodeName]=cols[j].innerHTML;
 			}
@@ -612,7 +643,7 @@ function local_create_simple(data_xml)
 				if(unique_rec===true)
 				{
 					//console.log("didnt find any duplicate records");
-					for(var j in cols)
+					for(var j=0;j<cols.length;j++)
 					{
 						data_row[cols[j].nodeName]=cols[j].innerHTML;
 					}
@@ -623,6 +654,9 @@ function local_create_simple(data_xml)
 								status:'unsynced',
 								data_xml:data_xml,
 								user_display:'no',
+								data_id:data_row.id,
+								tablename:table,
+								link_to:'',
 								last_updated:get_my_time()};
 						
 						//console.log("activities data------"+act_row);
@@ -634,8 +668,6 @@ function local_create_simple(data_xml)
 				}
 				else
 				{
-					//console.log("found duplicate records");
-					hide_loader();
 					$("#modal5").dialog("open");
 				}
 			});
@@ -646,7 +678,6 @@ function local_create_simple(data_xml)
 
 function local_create_simple_func(data_xml,func)
 {
-	show_loader();
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -654,7 +685,7 @@ function local_create_simple_func(data_xml,func)
 	var cols=data.childNodes[0].childNodes;
 
 	var unique=new Array();
-	for(var j in cols)
+	for(var j=0;j<cols.length;j++)
 	{
 		if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
 		{
@@ -679,7 +710,7 @@ function local_create_simple_func(data_xml,func)
 			var type='create';
 			var data_row=new Object();
 			
-			for(var j in cols)
+			for(var j=0;j<cols.length;j++)
 			{
 				data_row[cols[j].nodeName]=cols[j].innerHTML;
 			}
@@ -698,7 +729,6 @@ function local_create_simple_func(data_xml,func)
 				database.upsert('activities',act_row,function(err,insertedkey)
 				{
 					func();
-					hide_loader();
 				});
 			});
 		}
@@ -736,7 +766,7 @@ function local_create_simple_func(data_xml,func)
 				if(unique_rec===true)
 				{
 					//console.log("didnt find any duplicate records");
-					for(var j in cols)
+					for(var j=0;j<cols.length;j++)
 					{
 						data_row[cols[j].nodeName]=cols[j].innerHTML;
 					}
@@ -747,20 +777,20 @@ function local_create_simple_func(data_xml,func)
 								status:'unsynced',
 								data_xml:data_xml,
 								user_display:'no',
+								data_id:data_row.id,
+								tablename:table,
+								link_to:'',
 								last_updated:get_my_time()};
 						
 						//console.log("activities data------"+act_row);
 						database.upsert('activities',act_row,function(err,insertedkey)
 						{
 							func();
-							hide_loader();
 						});
 					});
 				}
 				else
 				{
-					//console.log("found duplicate records");
-					hide_loader();
 					$("#modal5").dialog("open");
 				}
 			});
@@ -778,7 +808,7 @@ function local_create_simple_func(data_xml,func)
  */
 function local_create_simple_no_warning(data_xml)
 {
-	show_loader();
+	
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -786,7 +816,7 @@ function local_create_simple_no_warning(data_xml)
 	var cols=data.childNodes[0].childNodes;
 
 	var unique=new Array();
-	for(var j in cols)
+	for(var j=0;j<cols.length;j++)
 	{
 		if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
 		{
@@ -810,7 +840,7 @@ function local_create_simple_no_warning(data_xml)
 			var type='create';
 			var data_row=new Object();
 			
-			for(var j in cols)
+			for(var j=0;j<cols.length;j++)
 			{
 				data_row[cols[j].nodeName]=cols[j].innerHTML;
 			}
@@ -828,7 +858,6 @@ function local_create_simple_no_warning(data_xml)
 					
 				database.upsert('activities',act_row,function(err,insertedkey)
 				{
-					hide_loader();
 				});
 			});
 		}
@@ -866,7 +895,7 @@ function local_create_simple_no_warning(data_xml)
 				if(unique_rec===true)
 				{
 					//console.log("didnt find any duplicate records");
-					for(var j in cols)
+					for(var j=0;j<cols.length;j++)
 					{
 						data_row[cols[j].nodeName]=cols[j].innerHTML;
 					}
@@ -877,12 +906,14 @@ function local_create_simple_no_warning(data_xml)
 								status:'unsynced',
 								data_xml:data_xml,
 								user_display:'no',
+								data_id:data_row.id,
+								tablename:table,
+								link_to:'',
 								last_updated:get_my_time()};
 						
 						//console.log("activities data------"+act_row);
 						database.upsert('activities',act_row,function(err,insertedkey)
 						{
-							hide_loader();
 						});
 					});
 				}
@@ -909,7 +940,7 @@ function local_read_multi_column(columns,callback,results)
 	var sort_index='id';
 	var sort_order='desc';
 	
-	for(var j in cols)
+	for(var j=0;j<cols.length;j++)
 	{
 		if(cols[j].innerHTML!=null && cols[j].hasAttribute('sort'))
 		{
@@ -947,29 +978,45 @@ function local_read_multi_column(columns,callback,results)
 	}
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
+	
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		var options={};
-		if(sort_index=='id')
+		var options={direction:sklad.DESC};
+		database.get(table,options,function(err,records_object)
 		{
-			options={direction:sklad.DESC};
-		}
-		else if(sort_order=='asc')
-		{
-			options={index:sort_index,direction:sklad.ASC};
-		}
-		else if(sort_order=='desc')
-		{
-			options={index:sort_index,direction:sklad.DESC};
-		}
-		console.log(options);
-		database.get(table,options,function(err,records)
-		{
-			console.log(records);
-			for(var row in records)
+			var records=[];
+			for(var a in records_object)
+			{
+				records.push(records_object[a]);
+			}
+			if(sort_index!='id')
+			{
+				if(sort_order!='asc')
+				{
+					records.sort(function(a,b)
+					{
+						if(parseFloat(a[sort_index])<parseFloat(b[sort_index]))
+							return 1;
+						else
+							return -1;
+					});
+				}
+				else
+				{
+					records.sort(function(a,b)
+					{
+						if(parseFloat(a[sort_index])>parseFloat(b[sort_index]))
+							return 1;
+						else
+							return -1;
+					});
+				}
+			}
+			
+			for(var row=0;row<records.length;row++)
 			{
 				var match=true;
-				for(var i in filter)
+				for(var i=0;i<filter.length;i++)
 				{
 					var string=records[row][filter[i].name].toString().toLowerCase();
 					var search=filter[i].value.toString().toLowerCase();
@@ -1045,6 +1092,8 @@ function local_read_multi_column(columns,callback,results)
 	});
 }
 
+
+
 /**
  * 
  * @param data_xml
@@ -1057,38 +1106,71 @@ function local_delete_row(data_xml,activity_xml)
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
-	var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
 	
 	var activity=parser.parseFromString(activity_xml,"text/xml");
 	var activity_data=activity.childNodes[0].childNodes;
 	
+	var cols=data.childNodes[0].childNodes;
+	var filter=new Array();
+	for(var j=0;j<cols.length;j++)
+	{
+		if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+		{
+			fil=new Object();
+			fil.name=cols[j].nodeName;
+			fil.value=cols[j].innerHTML;
+			filter.push(fil);
+		}
+	}
+
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		database.get(table,{range: IDBKeyRange.only(data_id)},function(err,records)
+		database.get(table,{index: filter[0].name,range: IDBKeyRange.only(filter[0].value)},function(err,records_object)
 		{
-			for(var i in records)
+			var records=[];
+			for(var row in records_object)
 			{
-				database.delete(table,data_id,function(err)
-				{
-					var act_row={id:get_new_key(),
-							type:'delete',
-							status:'unsynced',
-							user_display:'yes',
-							data_xml:data_xml,
-							last_updated:get_my_time()};
-					for(var k in activity_data)
-					{
-						act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
-					}
-					database.upsert('activities',act_row,function(err,insertedkey)
-					{
-						hide_loader();
-					});
-				});
-				break;
+				records.push(records_object[row]);
 			}
+			
+			records.forEach(function(record)
+			{
+				var match=true;
+				for(var i=0;i<filter.length;i++)
+				{
+					var string=record[filter[i].name].toLowerCase();
+					var search=filter[i].value.toLowerCase();
+					var found=string.search(search);
+					if(found===-1)
+					{
+						match=false;
+						break;
+					}
+				}
+				if(match===true)
+				{
+					database.delete(table,record.id,function(err)
+					{
+						var act_row={id:get_new_key(),
+								type:'delete',
+								status:'unsynced',
+								user_display:'yes',
+								data_xml:data_xml,
+								last_updated:get_my_time()};
+						
+						for(var k=0;k<activity_data.length;k++)
+						{
+							act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
+						}
+						database.upsert('activities',act_row,function(err,insertedkey)
+						{
+							hide_loader();
+						});
+					});
+				}
+			});
 		});
 	});
 };
@@ -1106,7 +1188,7 @@ function local_delete_simple(data_xml)
 
 	var cols=data.childNodes[0].childNodes;
 	var filter=new Array();
-	for(var j in cols)
+	for(var j=0;j<cols.length;j++)
 	{
 		if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
 		{
@@ -1121,12 +1203,18 @@ function local_delete_simple(data_xml)
 	var db_name="re_local_"+domain;
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		database.get(table,{index: filter[0].name,range: IDBKeyRange.only(filter[0].value)},function(err,records)
+		database.get(table,{index: filter[0].name,range: IDBKeyRange.only(filter[0].value)},function(err,records_object)
 		{
+			var records=[];
+			for(var row in records_object)
+			{
+				records.push(records_object[row]);
+			}
+			
 			records.forEach(function(record)
 			{
 				var match=true;
-				for(var i in filter)
+				for(var i=0;i<filter.length;i++)
 				{
 					var string=record[filter[i].name].toLowerCase();
 					var search=filter[i].value.toLowerCase();
@@ -1168,14 +1256,13 @@ function local_delete_simple(data_xml)
  */
 function local_delete_simple_func(data_xml,func)
 {
-	show_loader();
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
 
 	var cols=data.childNodes[0].childNodes;
 	var filter=new Array();
-	for(var j in cols)
+	for(var j=0;j<cols.length;j++)
 	{
 		if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
 		{
@@ -1190,12 +1277,18 @@ function local_delete_simple_func(data_xml,func)
 	var db_name="re_local_"+domain;
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		database.get(table,{index: filter[0].name,range: IDBKeyRange.only(filter[0].value)},function(err,records)
+		database.get(table,{index: filter[0].name,range: IDBKeyRange.only(filter[0].value)},function(err,records_object)
 		{
+			var records=[];
+			for(var row in records_object)
+			{
+				records.push(records_object[row]);
+			}
+			
 			records.forEach(function(record)
 			{
 				var match=true;
-				for(var i in filter)
+				for(var i=0;i<filter.length;i++)
 				{
 					var string=record[filter[i].name].toLowerCase();
 					var search=filter[i].value.toLowerCase();
@@ -1221,12 +1314,7 @@ function local_delete_simple_func(data_xml,func)
 								last_updated:get_my_time()};
 						database.upsert('activities',act_row,function(err,insertedkey)
 						{
-							if(err)
-							{
-								console.log(err);
-							}
 							func();
-							hide_loader();
 						});
 					});
 				}

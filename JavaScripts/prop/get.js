@@ -482,30 +482,27 @@ function my_obj_array_to_csv(data_array,file_name)
 	var csvRows = [];
 
 	///for header row
-	for(var i in data_array)
+	var header_string="";
+	var header_array=[];
+	for(var p in data_array[0])
 	{
-		var header_string="";
-		for(var p in data_array[i])
-		{
-			if(data_array[i].hasOwnProperty(p))
-			{
-				header_string+=p+",";
-			}
-		}
-	    csvRows.push(header_string);
-		break;	   
+		header_array.push(p);	
+		header_string+=p+",";
 	}
+	
+    csvRows.push(header_string);
 	
 	/////for data rows
 	data_array.forEach(function(data_row)
 	{
 		var data_string="";
-		for(var p in data_row)
+		for(var i=0;i<header_array.length;i++)
 		{
-			if(data_row.hasOwnProperty(p))
+			if(data_row[header_array[i]].search(","))
 			{
-				data_string+=data_row[p]+",";
+				data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
 			}
+			data_string+=data_row[header_array[i]]+",";
 		}
 	    csvRows.push(data_string);
 	});
@@ -519,6 +516,7 @@ function my_obj_array_to_csv(data_array,file_name)
 
 	document.body.appendChild(a);
 	a.click();
+	document.body.removeChild(a);
 }
 
 /**
@@ -537,7 +535,6 @@ function csv_string_to_obj_array(csvString)
 		if(rows[i]!="")
 		{
 			var columns=rows[i].split(',');
-		
 			var col_result=new Object();
 			
 			for(var j=0;j<columns.length;j++)
@@ -555,6 +552,7 @@ function csv_string_to_obj_array(csvString)
 							break;
 						}
 					}
+					columns[j]=columns[j].replace("^\"|\"$", "");
 				}
 				col_result[header_cols[j]]=columns[j];
 			}

@@ -132,52 +132,49 @@ function set_session_variables(domain,username,pass)
 			{
 				database.get('user_profiles',{index:'username',range: IDBKeyRange.only(username)},function(err,records2)
 				{
-						for(var row in records2)
+					for(var row in records2)
+					{
+						data.name=records2[row].name;
+					}
+
+					database.get('access_control',{},function(err,records3)
+					{
+						var re='';
+						var cr='';
+						var up='';
+						var del='';
+						for(var r in records3)
 						{
-							data.name=records2[row].name;
-						}
-	
-						database.get('access_control',{},function(err,records3)
-						{
-								var re='';
-								var cr='';
-								var up='';
-								var del='';
-								for(var r in records3)
-								{
-									var r_data=records3[r];
-									if(r_data.status==='active' && r_data.username===username)
-									{
-										if(r_data.re==='checked')
-										{	
-											re+=r_data.element_id+"-";
-										}
-										if(r_data.cr==='checked')
-										{	
-											cr+=r_data.element_id+"-";
-										}
-										if(r_data.up==='checked')
-										{
-											up+=r_data.element_id+"-";
-										}
-										if(r_data.del==='checked')
-										{
-											del+=r_data.element_id+"-";
-										}
-									}
+							var r_data=records3[r];
+							if(r_data.status==='active' && r_data.username===username)
+							{
+								if(r_data.re==='checked')
+								{	
+									re+=r_data.element_id+"-";
 								}
-								data.re=re;
-								data.cr=cr;
-								data.up=up;
-								data.del=del;
-								//console.log("these are session variables: "+data);
-								set_session(data);
-						});
+								if(r_data.cr==='checked')
+								{	
+									cr+=r_data.element_id+"-";
+								}
+								if(r_data.up==='checked')
+								{
+									up+=r_data.element_id+"-";
+								}
+								if(r_data.del==='checked')
+								{
+									del+=r_data.element_id+"-";
+								}
+							}
+						}
+						data.re=re;
+						data.cr=cr;
+						data.up=up;
+						data.del=del;
+						set_session(data);
+					});
 				});
 			}
 		});
-	
-		//console.log("2.1 set_session_variables() exited");
 	});
 };
 
