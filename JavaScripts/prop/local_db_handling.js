@@ -14,53 +14,62 @@
  */
 function create_local_db(domain,func)
 {
-	var db_name="re_local_"+domain;
-	ajax_with_custom_func("./db/db_schema.xml","",function(e)
+	//console.log("2.1");
+	if("indexedDB" in window)
 	{
-		//console.log("creating local db");
-		var request = indexedDB.open(db_name,2);
-	
-		request.onsuccess=function(e)
+		//console.log("2.2");
+		var db_name="re_local_"+domain;
+		ajax_with_custom_func("./db/db_schema.xml","",function(e)
 		{
-			//console.log("db exists or created. syncing data");
-			db=e.target.result;
-			db.close();
-			func();
-		};
+			//console.log("2.3");
+			var request = indexedDB.open(db_name,2);
 		
-		request.onerror=function(ev)
-		{
-			console.log('some error occured in db creation');
-			console.log(ev);
-		};
-			
-		request.onupgradeneeded=function(ev)
-		{
-			db=ev.target.result;
-			var tables=e.responseXML.childNodes[0].childNodes;
-			
-			for(var k=0; k<tables.length; k++)
+			request.onsuccess=function(e)
 			{
-				if(tables[k].nodeName!="" && tables[k].nodeName!="#text" && tables[k].nodeName!="#comment")
-				{	
-					table=db.createObjectStore(tables[k].nodeName,{keyPath:'id'});
+				//console.log("2.4");
+				db=e.target.result;
+				db.close();
+				func();
+			};
+			
+			request.onerror=function(ev)
+			{
+				alert('Could not switch to offline mode. Please refresh your browser and try again.');
+			};
 				
-					for(var i=0;i<tables[k].childNodes.length;i++)
+			request.onupgradeneeded=function(ev)
+			{
+				//console.log("2.6");
+				db=ev.target.result;
+				var tables=e.responseXML.childNodes[0].childNodes;
+				
+				for(var k=0;k<tables.length;k++)
+				{
+					if(tables[k].nodeName!="" && tables[k].nodeName!="#text" && tables[k].nodeName!="#comment")
 					{	
-						if(tables[k].childNodes[i].nodeName!="" && tables[k].childNodes[i].nodeName!="#text" && tables[k].childNodes[i].nodeName!="#comment")
+						table=db.createObjectStore(tables[k].nodeName,{keyPath:'id'});
+					
+						for(var i=0;i<tables[k].childNodes.length;i++)
 						{	
-							//console.log(tables[k].childNodes[i].nodeName);
-							var indexing=tables[k].childNodes[i].getAttribute('index');
-							if(indexing=='yes')
-							{
-								table.createIndex(tables[k].childNodes[i].nodeName,tables[k].childNodes[i].nodeName);
-							}
-						}		
+							if(tables[k].childNodes[i].nodeName!="" && tables[k].childNodes[i].nodeName!="#text" && tables[k].childNodes[i].nodeName!="#comment")
+							{	
+								//console.log(tables[k].childNodes[i].nodeName);
+								var indexing=tables[k].childNodes[i].getAttribute('index');
+								if(indexing=='yes')
+								{
+									table.createIndex(tables[k].childNodes[i].nodeName,tables[k].childNodes[i].nodeName);
+								}
+							}		
+						}
 					}
-				}
-			}			
-		};
-	});
+				}			
+			};
+		});
+	}
+	else
+	{
+		alert('Offline mode is not supported in your browser. Please update your browser.');
+	}
 };
 
 

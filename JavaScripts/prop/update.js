@@ -9,7 +9,6 @@ function form1_update_item(form)
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
 		var cost_price=form.elements[2].value;
-		var sale_price=form.elements[3].value;
 		var expiry=get_raw_time(form.elements[4].value);
 		var system_quantity=form.elements[5].value;
 		var actual_quantity=form.elements[6].value;
@@ -22,7 +21,6 @@ function form1_update_item(form)
 					"<batch>"+batch+"</batch>" +
 					"<expiry>"+expiry+"</expiry>" +
 					"<cost_price>"+cost_price+"</cost_price>" +
-					"<sale_price>"+sale_price+"</sale_price>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</product_instances>";
 		var activity_xml="<activity>" +

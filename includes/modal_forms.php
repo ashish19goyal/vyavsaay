@@ -273,9 +273,12 @@
 			<fieldset>
 				<label>Product Name <input type="text" required></label><br/>
 				<label>Batch <input type='text' required></label><br/>
-				<label>Cost price <input type="number" required></label><br/>
-				<label>Sale Price <input type="number" required></label><br/>
+				<label>Manufacturing Date <input type="text"></label><br/>
 				<label>Expiry Date <input type="text"></label><br/>
+				<label>MRP (Rs.) <input type="number" step='any'></label><br/>
+				<label>Purchase price (Rs.)<input type="number" step='any' required></label><br/>
+				<label>Default Sale Price (Rs.)<input type="number" step='any' required></label><br/>
+				<label id='modal22_billings'></label>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -464,6 +467,16 @@
 				<label>Assignee <input type="text"></label><br/>
 				<label>Notes <textarea></textarea></label><br/>
 				<label>Status <input type="text" required value='pending'></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div id="modal38" title="Update sale price">
+		<form id='modal38_form'>
+			<fieldset>
+				<label>Default Sale Price (Rs.) <input type="number" step='any' required></label><br/>
+				<label id='modal38_billings'></label>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<form id='form83_header'></form>
-					<th>Name <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form83_header' onblur="form83_ini();"></th>
+					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form83_header' onblur="form83_ini();"></th>
 					<th>Dimensions </th>
 					<th>Location </th>
 					<th>Facing </th>

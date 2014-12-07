@@ -44,7 +44,8 @@ function form1_ini()
 						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form1_"+result.id+"' class='dblclick_editable' value='"+result.cost_price+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Sale price'>";
-						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form1_"+result.id+"' class='dblclick_editable' value='"+result.sale_price+"'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form1_"+result.id+"' value='"+result.sale_price+"'>";
+						rowsHTML+="<img src='./images/edit.png' class='edit_icon' onclick=\"modal38_action('"+result.id+"');\">";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Expiry'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.expiry)+"'>";
@@ -4820,7 +4821,7 @@ function form77_ini()
 			"<name></name>" +
 			"<display_name>"+felement+"</display_name>" +
 			"<shortcut>"+fkey+"</shortcut>" +
-			"<value>checked</value>" +
+			"<value exact='yes'>checked</value>" +
 			"<type array='yes'>--form--report--</type>" +
 			"</user_preferences>";
 

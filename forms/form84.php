@@ -3,9 +3,9 @@
 		<thead>
 			<tr>
 				<form id='form84_header'></form>
-					<th>Customer <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form84_header' onblur="form84_ini();"></th>
-					<th>Service <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form84_header' onblur="form84_ini();"></th>
-					<th>Status <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form84_header' onblur="form84_ini();"></th>
+					<th>Customer <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form84_header' onblur="form84_ini();"></th>
+					<th>Service <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form84_header' onblur="form84_ini();"></th>
+					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form84_header' onblur="form84_ini();"></th>
 					<th>Notes</th>
 					<th>Last Bill</th>
 					<th><input type='button' form='form84_header' title='Add subscription' class='add_icon' onclick='form84_add_item();'>

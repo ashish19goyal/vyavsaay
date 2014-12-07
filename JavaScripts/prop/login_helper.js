@@ -189,23 +189,27 @@ function try_local_db_login(username,domain,func_success,func_failure)
 	////////////checking if indexed db is supported/////////////////
 	if("indexedDB" in window)
 	{
-		//console.log("3. inside try_local_db()");
+		//console.log("3.1");
 		var db_name="re_local_" + domain;
 		var request = indexedDB.open(db_name);
 		
 		request.onsuccess=function(e)
 		{
-			//console.log("3. inside onsucess function of db access inside try_local_db_login");
+			//console.log("3.2");
 			db=e.target.result;
 			if(!db.objectStoreNames.contains("user_profiles"))
 			{
-				//console.log("3.1 inside the if section of onsuccess function of try_local_db_login");
+				//console.log("3.3");
 				var deleterequest=indexedDB.deleteDatabase(db_name);
-				deleterequest.onsuccess=func_failure();
+				deleterequest.onsuccess=function(ev)
+				{
+					//console.log("3.3.1");
+					func_failure();
+				};
 			}
 			else
 			{
-				//console.log("3.2 inside the else section of onsuccess function of try_local_db_login");
+				//console.log("3.4");
 				var tran=db.transaction("user_profiles","readonly");
 				var table = tran.objectStore("user_profiles");
 				
@@ -214,34 +218,23 @@ function try_local_db_login(username,domain,func_success,func_failure)
 				
 				records.onsuccess=function(e)
 				{
-					var result;
-					    // IE 9 implementation
-						if(e.result){
-							result = e.result;
-							}
-						// IE 10, Chrome and Firefox implementation
-						else if (records.result){
-							result = records.result;
-							}
-						//console.log("3.3 successfully retrieved local password");
-						
-						func_success(result);
-						
+					var result=records.result;
+					func_success(result);
+					//console.log("3.5");	
 				};
 				records.onerror=function(e)
 				{
-					//console.log("could not retrieve password");
+					//console.log("3.6");
 					func_failure();
 				};
 			}
-
-			//console.log("3. exiting onsucess function of db access inside try_local_db_login");
+			//console.log("3.7");
 			db.close();
 		};
 		
 		request.onerror = function(e)
 		{
-			//console.log("db could not be opened, so login online");
+			//console.log("3.8");
 			db=e.target.result;
 			db.close();
 			func_failure();
@@ -251,7 +244,6 @@ function try_local_db_login(username,domain,func_success,func_failure)
 	{
 		func_failure();
 	}
-	
 };
 
 /**

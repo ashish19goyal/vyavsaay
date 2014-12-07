@@ -47,7 +47,7 @@
 			<div class="social_buttons">
 				<div class="button">
 					<a href='https://www.google.com/+Vyavsaayindia' target='_blank'>
-						<img src='./images/google.jpeg' title="+1">
+						<img src='./images/google.png' title="+1">
 					</a>
 					<a href="https://plus.google.com/share?url=http%3A%2F%2Fvyavsaay.com" target='_blank'>Share</a>
 				</div>
@@ -57,7 +57,7 @@
 					<a href="https://twitter.com/intent/tweet?text=Latest%20technology%20for%20your%20business&url=http%3A%2F%2Fvyavsaay.com&via=ashish_18goyal" target='_blank'>Tweet</a>
 				</div>
 				<div class="button">
-					<a href="https://www.facebook.com/vyavsaayindia" target='_blank'><img src='./images/fb.jpeg' title="Like"></a>
+					<a href="https://www.facebook.com/vyavsaayindia" target='_blank'><img src='./images/fb.png' title="Like"></a>
 					<!-- <div class="fb-share-button" data-href="http://vyavsaay.com" data-layout="button"></div> -->
 					<a href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvyavsaay.com&t=Latest%20technology%20for%20your%20business" target='_blank'>Share</a>
 				</div>

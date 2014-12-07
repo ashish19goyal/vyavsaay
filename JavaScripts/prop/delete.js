@@ -11,7 +11,6 @@ function form1_delete_item(button)
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
 		var cost_price=form.elements[2].value;
-		var sale_price=form.elements[3].value;
 		var expiry=get_raw_time(form.elements[4].value);
 		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
@@ -21,7 +20,6 @@ function form1_delete_item(button)
 					"<batch>"+batch+"</batch>" +
 					"<expiry>"+expiry+"</expiry>" +
 					"<cost_price>"+cost_price+"</cost_price>" +
-					"<sale_price>"+sale_price+"</sale_price>" +
 					"</product_instances>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +

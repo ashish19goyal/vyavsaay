@@ -2,6 +2,7 @@
 	<form id='form10_master'>
 		<fieldset>
 			Customer <input type='text' required>
+			<img src='./images/add.png' class='add_image' onclick='modal11_action();'>
 			Bill Date <input type='text' required>
 			Amount<input readonly='readonly' type='number'>
 			Discount <input readonly='readonly' type='number'>

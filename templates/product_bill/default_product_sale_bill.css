@@ -1,0 +1,60 @@
+.print_product_bill{
+	width:700px;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 5px;
+	border-color: black;
+}
+
+.print_product_bill .title{
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 5px;
+	border-color: black;
+	text-align: center;
+	padding: 2%
+}
+
+.print_product_bill .seller_info{
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 5px;
+	border-color: black;
+	padding: 2%;
+	height: 80px;
+}
+
+.print_product_bill .seller_phone{
+	float: left;
+	width: 100px;	
+}
+
+
+.print_product_bill .seller_address{
+	float: right;
+	width: 100px;
+}
+
+.print_product_bill .content{
+	padding: 5%;
+	font-size:9px;
+}
+
+.print_product_bill>table,.print_product_bill>th,.print_product_bill>td{
+	border: 2px solid black;
+}
+
+.print_product_bill .bill_header{
+	width: 100%;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 5px;
+	border-color: black;
+	margin-top: 10%;
+	padding: 1%
+}
+
+.print_product_bill .bill_header>div{
+	float:left;
+	width:300px;
+}

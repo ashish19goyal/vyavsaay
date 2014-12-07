@@ -3,10 +3,10 @@
 		<thead>
 			<tr>
 				<form id='form46_header'></form>
-					<th>Setting <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type="text" class='filter' onblur="form46_ini();" form='form46_header'/></th>
+					<th>Setting <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type="text" class='filter' onblur="form46_ini();" form='form46_header'/></th>
 					<th>Value</th>
 					<th><input type="submit" class='save_icon' title='Save All' form='form46_header'>
-						<input type='button' form='form46_header' title='EXPORT' class='export_icon'>
+						<input type='button' form='form46_header' value='EXPORT' class='export_icon'>
 					</th>
 			</tr>
 		</thead>

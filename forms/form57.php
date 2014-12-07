@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<form id='form57_header'></form>
-					<th>Name <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form57_header' onblur="form57_ini('');"></th>
+					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form57_header' onblur="form57_ini('');"></th>
 					<th>Description </th>
 					<th>Price</th>
 					<th>Tax (in %)</th>

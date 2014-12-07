@@ -3,8 +3,8 @@
 		<thead>
 			<tr>
 				<form id='form39_header'></form>
-					<th>Name <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form39_header' onblur="form39_ini();"></th>
-					<th>Make <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form39_header' onblur="form39_ini();"></th>
+					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form39_header' onblur="form39_ini();"></th>
+					<th>Make <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form39_header' onblur="form39_ini();"></th>
 					<th>Description</th>
 					<th>Picture</th>
 					<th>Tax</th>

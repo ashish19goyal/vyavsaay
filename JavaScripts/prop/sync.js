@@ -91,7 +91,7 @@ function sync_server_to_local(func)
 	var sync_download_complete=setInterval(function()
 	{
   	   //console.log(number_active_ajax);
-  	   if(number_active_ajax===0)
+  	   if(number_active_ajax===0 && localdb_open_requests===0)
   	   {
   		   	clearInterval(sync_download_complete);
   		   	update_last_sync_time(function()
@@ -141,9 +141,12 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 							var nname=tables[i].childNodes[k].childNodes[j].nodeName;
 							row[nname]=tables[i].childNodes[k].childNodes[j].innerHTML;
 						}
+						
+						localdb_open_requests+=1;
 						database.upsert(tableName,row,function(err,insertedkey)
 						{
 							console.log('adding record to table'+tableName);
+							localdb_open_requests-=1;
 						});
 						
 						if(tableName==='activities')
@@ -152,8 +155,10 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 							{
 								var del_table=row['tablename'];
 								var del_id=row['data_id'];
+								localdb_open_requests+=1;
 								database.delete(del_table,del_id,function(err)
 								{
+									localdb_open_requests-=1;
 								});
 							}
 						}
@@ -171,12 +176,12 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
  */
 function sync_local_to_server(func)
 {
+	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
 	var up_access=get_session_var('up');
 	var del_access=get_session_var('del');
-	show_loader();
 	console.log("syncing started");
 	
 	get_data_from_log_table(function(log_data)
@@ -198,7 +203,6 @@ function sync_local_to_server(func)
 			});
 			var sync_complete=setInterval(function()
 			{
-         	   console.log(number_active_ajax);
          	   if(number_active_ajax===0)
          	   {
          		   clearInterval(sync_complete);
@@ -215,6 +219,7 @@ function sync_local_to_server(func)
  */
 function get_data_from_log_table(func)
 {
+	show_loader();
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
@@ -243,7 +248,7 @@ function get_data_from_log_table(func)
 				
 				counter+=1;
 			}
-			console.log(log_data);
+			//console.log(log_data);
 			func(log_data);
 		});	
 	});
@@ -257,6 +262,7 @@ function get_data_from_log_table(func)
  */
 function set_activities_to_synced(response)
 {
+	show_loader();
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
@@ -290,6 +296,7 @@ function set_activities_to_synced(response)
  */
 function get_last_sync_time(func)
 {
+	show_loader();
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
@@ -300,10 +307,8 @@ function get_last_sync_time(func)
 			var last_sync_time="0";
 			for(var row in records)
 			{
-				var row_data=records[row];
-				last_sync_time=row_data['value'];
+				last_sync_time=records[row]['value'];
 			}
-			//console.log("this is the last sync time :"+last_sync_time);
 			func(last_sync_time);	
 		});	
 	});
@@ -316,13 +321,13 @@ function get_last_sync_time(func)
  */
 function update_last_sync_time(func)
 {
+	show_loader();
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
 	sklad.open(db_name,{version:2},function(err,database)
 	{
 		var time=get_my_time();
-		
 		var row_data={id:'700',name:'last_sync_time',value:time,type:'other',display_name:'Last Sync Time',status:'active'};
 		//{value:row_data,key:row_data.id}
 		database.upsert('user_preferences',row_data,function(err,insertedkey)
@@ -338,6 +343,7 @@ function update_last_sync_time(func)
  */
 function set_session_online()
 {
+	show_loader();
 	var offline_data="<user_preferences>" +
 		"<id></id>" +
 		"<name>offline</name>" +
@@ -378,6 +384,7 @@ function set_session_online()
  */
 function set_session_offline()
 {
+	show_loader();
 	var offline_data="<user_preferences>" +
 			"<id></id>" +
 			"<name>offline</name>" +

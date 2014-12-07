@@ -32,7 +32,7 @@
 	$domain=$_POST['domain'];
 	$re_access=$_POST['re'];
 	$username=$_POST['username'];
-	$last_sync_time=intval($_POST['last_sync_time']);
+	$last_sync_time=$_POST['last_sync_time'];
 	$start_table=$_POST['start_table'];
 	$start_offset=intval($_POST['start_offset']);
 	

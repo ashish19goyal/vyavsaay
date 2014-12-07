@@ -1629,11 +1629,14 @@ function modal22_action()
 	
 	var fname=form.elements[1];
 	var fbatch=form.elements[2];
-	var fcost=form.elements[3];
-	var fsale_price=form.elements[4];
-	var fexpiry=form.elements[5];
+	var fmanufacture=form.elements[3];
+	var fexpiry=form.elements[4];
+	var fmrp=form.elements[5];
+	var fcost=form.elements[6];
+	var fsale_price=form.elements[7];
 	
 	$(fexpiry).datepicker();
+	$(fmanufacture).datepicker();
 	
 	var name_data="<product_master>" +
 			"<name></name>" +
@@ -1660,6 +1663,41 @@ function modal22_action()
 		},batch_data);
 	});		
 	
+	////adding sale price fields for all billing types///////
+	var billing_type_data="<bill_types>" +
+			"<name></name>" +
+			"<status>active</status>" +
+			"</bill_types>";
+	get_single_column_data(function(bill_types)
+	{
+		var billing_label=document.getElementById('modal22_billings');
+		$(billing_label).html("");
+		bill_types.forEach(function(bill_type)
+		{
+			var bill_label=document.createElement('label');
+			bill_label.innerHTML=bill_type+" sale price (Rs.) <input type='number' id='"+bill_type+"' step='any' required>";
+			billing_label.appendChild(bill_label);
+			var line_break=document.createElement('br');
+			billing_label.appendChild(line_break);
+		});
+	},billing_type_data);
+	////////////////////////////////////////////////
+	
+	////auto setting sale price fields/////////
+	$(fsale_price).on('blur',function(event)
+	{
+		var sale_price=fsale_price.value;
+		$("#modal22_billings").find('input').each(function()
+		{
+			if($(this).val()=="")
+			{
+				$(this).val(sale_price);
+			}
+		});
+	});		
+	////////////////////
+	
+	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -1668,18 +1706,22 @@ function modal22_action()
 		{
 			var name=fname.value;
 			var batch=fbatch.value;
-			var cost=fcost.value;
-			var sale_price=fsale_price.value;
+			var manu_date=get_raw_time(fmanufacture.value);
 			var expiry=get_raw_time(fexpiry.value);
+			var cost=fcost.value;
+			var mrp=fmrp.value;
+			var sale_price=fsale_price.value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
 			var data_xml="<product_instances>" +
 						"<id>"+data_id+"</id>" +
 						"<product_name>"+name+"</product_name>" +
 						"<batch>"+batch+"</batch>" +
+						"<expiry>"+expiry+"</expiry>" +
+						"<manufacture_date>"+manu_date+"</manufacture_date>" +
+						"<mrp>"+mrp+"</mrp>" +
 						"<cost_price>"+cost+"</cost_price>" +
 						"<sale_price>"+sale_price+"</sale_price>" +
-						"<expiry>"+expiry+"</expiry>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</product_instances>";
 			var activity_xml="<activity>" +
@@ -1690,7 +1732,6 @@ function modal22_action()
 						"<notes>New batch "+batch+" for product "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			
 			if(is_online())
 			{
 				server_create_row(data_xml,activity_xml);
@@ -1698,7 +1739,31 @@ function modal22_action()
 			else
 			{
 				local_create_row(data_xml,activity_xml);
-			}	
+			}
+			
+			$("#modal22_billings").find('input').each(function()
+			{
+				var id=get_new_key()+""+Math.random()*1000;
+				var price=$(this).val();
+				var bill_type=$(this).attr('id');
+				var sale_price_xml="<sale_prices>" +
+						"<id>"+id+"</id>" +
+						"<product_name>"+name+"</product_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<sale_price>"+price+"</sale_price>" +
+						"<pi_id>"+data_id+"</pi_id>" +
+						"<billing_type>"+bill_type+"</billing_type>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</sale_prices>";
+				if(is_online())
+				{
+					server_create_simple(sale_price_xml);
+				}
+				else
+				{
+					local_create_simple(sale_price_xml);
+				}
+			});
 		}
 		else
 		{
@@ -2907,6 +2972,103 @@ function modal37_action(id)
 		}
 		$("#modal37").dialog("close");		
 	});
+}
+
+/**
+ * @modalNo 38
+ * @modal Update sale price
+ */
+function modal38_action(father_id)
+{
+	var form=document.getElementById('modal38_form');	
+	var fsale_price=form.elements[1];
+		
+	////adding sale price fields for all billing types///////
+	var billing_type_data="<sale_prices>" +
+			"<id></id>" +
+			"<sale_price></sale_price>" +
+			"<billing_type></billing_type>" +
+			"<pi_id>"+father_id+"</pi_id>" +
+			"</sale_prices>";
+	fetch_requested_data('',billing_type_data,function(sale_prices)
+	{
+		var billing_label=document.getElementById('modal38_billings');
+		$(billing_label).html("");
+		sale_prices.forEach(function(sale_price)
+		{
+			var bill_label=document.createElement('label');
+			bill_label.innerHTML=sale_price.billing_type+" sale price (Rs.) <input type='number' id='"+sale_price.id+"' value='"+sale_price.sale_price+"' step='any' required>";
+			billing_label.appendChild(bill_label);
+			var line_break=document.createElement('br');
+			billing_label.appendChild(line_break);
+		});
+	});
+	////////////////////////////////////////////////
+	
+	////auto setting sale price fields/////////
+	$(fsale_price).on('blur',function(event)
+	{
+		var sale_price=fsale_price.value;
+		$("#modal38_billings").find('input').each(function()
+		{
+			if($(this).val()=="")
+			{
+				$(this).val(sale_price);
+			}
+		});
+	});		
+	////////////////////
+	
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form1'))
+		{
+			var sale_price=fsale_price.value;
+			var last_updated=get_my_time();
+			var data_xml="<product_instances>" +
+						"<id>"+father_id+"</id>" +
+						"<sale_price>"+sale_price+"</sale_price>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</product_instances>";
+			if(is_online())
+			{
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+			
+			$("#modal38_billings").find('input').each(function()
+			{
+				var price=$(this).val();
+				var id=$(this).attr('id');
+				var sale_price_xml="<sale_prices>" +
+						"<id>"+id+"</id>" +
+						"<sale_price>"+price+"</sale_price>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</sale_prices>";
+				if(is_online())
+				{
+					server_update_simple(sale_price_xml);
+				}
+				else
+				{
+					local_update_simple(sale_price_xml);
+				}
+			});
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal38").dialog("close");
+	});
+	
+	$("#modal38").dialog("open");
 }
 
 

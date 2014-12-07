@@ -11,8 +11,8 @@
 			<thead>
 				<tr>
 					<form id='form7_header'></form>
-						<th>Staff Name <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form7_header' onblur="form7_ini();"></th>
-						<th>Attendance <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form7_header' onblur="form7_ini();"></th>
+						<th>Staff Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form7_header' onblur="form7_ini();"></th>
+						<th>Attendance <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form7_header' onblur="form7_ini();"></th>
 						<th>Hours worked</th>
 						<th></th>
 				</tr>

@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<form id='form81_header'></form>
-					<th>Customer <img src='../images/filter.jpeg' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form81_header' onblur="form81_ini();"></th>
+					<th>Customer <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form81_header' onblur="form81_ini();"></th>
 					<th>Details </th>
 					<th>Due Date</th>
 					<th>Identified By </th>

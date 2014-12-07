@@ -13,6 +13,7 @@ function default_load()
 		window.location.assign("index.php");
 	}
 	
+	localdb_open_requests=0;
 	number_active_ajax=0;
 	loaderTimer=0;
 	count_notif_timer=0;
@@ -110,7 +111,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=8;i<38;i++)
+	for(var i=8;i<39;i++)
 	{
 		$("#modal"+i).dialog({
 	   		autoOpen: false,

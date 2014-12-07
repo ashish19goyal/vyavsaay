@@ -127,8 +127,10 @@
 			<supplier index='yes' type="VARCHAR(100)"></supplier>
 			<bill_date index='no' type="BIGINT"></bill_date>
 			<entry_date index='no' type="BIGINT"></entry_date>
-			<total index='no' type="DECIMAL(12,2)"></total>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
+			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<total index='no' type="DECIMAL(12,2)"></total>
 			<transaction_id index='no' type="BIGINT"></transaction_id>
 			<notes index='yes' type="TEXT"></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
@@ -141,6 +143,9 @@
 			<bill_id index='yes' type="BIGINT"></bill_id>
 			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<discount index='no' type="DECIMAL(12,2)"></discount>
+			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<total index='no' type="DECIMAL(12,2)"></total>
 			<storage index='yes' type="VARCHAR(25)"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_bill_items>
@@ -261,6 +266,7 @@
 			<item_name index='yes' type="VARCHAR(90)"></item_name>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
+			<mrp index='no' type="DECIMAL(12,2)"></mrp>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
@@ -317,13 +323,24 @@
 	</services>
 	<product_instances>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
 			<batch index='yes' type="VARCHAR(45)"></batch>
+			<manufacture_date index='no' type="BIGINT"></manufacture_date>
 			<expiry index='yes' type="BIGINT"></expiry>
 			<cost_price index='no' type="DECIMAL(12,2)"></cost_price>
 			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
-			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<mrp index='no' type="DECIMAL(12,2)"></mrp>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</product_instances>
+	<sale_prices>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<batch index='yes' type="VARCHAR(45)"></batch>
+			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
+			<pi_id index='yes' type="BIGINT"></pi_id>
+			<billing_type index='yes' type='VARCHAR(25)'></billing_type>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</sale_prices>
 	<inventory_adjust>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<batch index='yes' type="VARCHAR(45)"></batch>
@@ -575,7 +592,7 @@
 			<iteration_notes index='no' type="TEXT"></iteration_notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>		
 	</manufacturing_schedule>
-	<appointments>  
+	<appointments>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer index='yes' type="VARCHAR(100)"></customer>
 			<schedule index='yes' type="BIGINT"></schedule>
@@ -585,4 +602,11 @@
 			<notes index='no' type="TEXT"></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</appointments>
+	<bill_types>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(25)"></name>
+			<notes index='yes' type="TEXT"></notes>
+			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</bill_types>
 </re_xml>

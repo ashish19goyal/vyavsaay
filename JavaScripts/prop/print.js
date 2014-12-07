@@ -1,5 +1,6 @@
 /**
  * @form Create pamphlets
+ * @formNo 2
  */
 function form2_print_form()
 {	
@@ -82,7 +83,11 @@ function form2_print_form()
 	//$(content).hide();
 }
 
-
+/**
+ * @form Manage Pamphlets
+ * @formNo 44
+ * @param button
+ */
 function form44_print_item(button)
 {	
 	var form_id=$(button).attr('form');
@@ -162,4 +167,81 @@ function form44_print_item(button)
 
 	});		
 	//$(content).hide();
+}
+
+
+/**
+ * @form Create Product Bill
+ * @formNo 12
+ */
+function form12_print_form()
+{	
+	var form=document.getElementById("form12_master");
+	var customer=form.elements[1].value;
+	var date=form.elements[2].value;
+	var amount=form.elements[3].value;
+	var discount=form.elements[4].value;
+	var tax=form.elements[5].value;
+	var total=form.elements[6].value;
+	
+	var container=document.getElementById('print_container');
+	
+	var print_bill=document.createElement('div');
+		print_bill.setAttribute('class','print_product_bill');
+	var header=document.createElement('div');
+		header.setAttribute('class','header');
+	var title=document.createElement('div');
+		title.setAttribute('class','title');
+		title.textContent=get_session_var('title');
+	var seller_info=document.createElement('div');
+		seller_info.setAttribute('class','seller_info');
+	var seller_phone=document.createElement('div');
+		seller_phone.setAttribute('class','seller_phone');
+		seller_phone.textContent='Contact No: '+get_session_var('phone');
+	var seller_address=document.createElement('div');
+		seller_address.setAttribute('class','seller_address');
+		seller_address.textContent="Office: "+get_session_var('address');
+	var content=document.createElement('div');
+		content.setAttribute('class','content');
+	var bill_header=document.createElement('div');
+		bill_header.setAttribute('class','bill_header');
+	var bill_customer=document.createElement('div');
+		bill_customer.textContent='Customer: '+customer;
+	var bill_time=document.createElement('div');
+		bill_time.textContent='Date: '+date;
+	var bill_amount=document.createElement('div');
+		bill_amount.textContent='Amount: Rs.'+amount;
+	var bill_discount=document.createElement('div');
+		bill_discount.textContent='Discount Rs.: '+discount;
+	var bill_tax=document.createElement('div');
+		bill_tax.textContent='Tax Rs.: '+tax;
+	var bill_total=document.createElement('div');
+		bill_total.textContent='Total Rs.: '+total;
+	
+	var bill_items=document.createElement('div');
+		bill_items.setAttribute('class','bill_items');
+	
+	container.appendChild(print_bill);
+	print_bill.appendChild(header);
+	print_bill.appendChild(content);
+	header.appendChild(title);
+	header.appendChild(seller_info);
+	seller_info.appendChild(seller_phone);
+	seller_info.appendChild(seller_address);
+	content.appendChild(bill_header);
+	bill_header.appendChild(bill_customer);
+	bill_header.appendChild(bill_time);
+	bill_header.appendChild(bill_amount);
+	bill_header.appendChild(bill_discount);
+	bill_header.appendChild(bill_tax);
+	bill_header.appendChild(bill_total);
+	content.appendChild(bill_items);
+
+	var table_element=document.getElementById('form12_body').parentNode;
+	var table_copy=table_element.cloneNode(true);
+	table_copy.removeAttribute('class');
+	bill_items.appendChild(table_copy);
+			
+	$.print(container);
+	container.removeChild(print_bill);
 }
