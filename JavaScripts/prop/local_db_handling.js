@@ -1151,8 +1151,7 @@ function local_delete_row(data_xml,activity_xml)
 				{
 					var string=record[filter[i].name].toLowerCase();
 					var search=filter[i].value.toLowerCase();
-					var found=string.search(search);
-					if(found===-1)
+					if(string!=search)
 					{
 						match=false;
 						break;
@@ -1227,8 +1226,7 @@ function local_delete_simple(data_xml)
 				{
 					var string=record[filter[i].name].toLowerCase();
 					var search=filter[i].value.toLowerCase();
-					var found=string.search(search);
-					if(found===-1)
+					if(string!=search)
 					{
 						match=false;
 						break;
@@ -1301,8 +1299,7 @@ function local_delete_simple_func(data_xml,func)
 				{
 					var string=record[filter[i].name].toLowerCase();
 					var search=filter[i].value.toLowerCase();
-					var found=string.search(search);
-					if(found===-1)
+					if(string!=search)
 					{
 						match=false;
 						break;

@@ -29,7 +29,7 @@
 		</row>
 		<row>
 			<name>task_due_period</name>
-			<display_name>Default Task Due Period (hours)</display_name>
+			<display_name>default_task_due_period</display_name>
 			<status>active</status>
 			<value>4</value>
 			<type>other</type>
@@ -74,7 +74,7 @@
 		</row>
 		<row>
 			<name>email</name>
-			<display_name>Email</display_name>
+			<display_name>email</display_name>
 			<status>active</status>
 			<value>vyavsaayindia@gmail.com</value>
 			<type>other</type>
@@ -1040,6 +1040,42 @@
 			<display_name>appointments</display_name>
 			<status>active</status>
 			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form90</name>
+			<display_name>billing_types</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form91</name>
+			<display_name>create_bills_multi_register</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form92</name>
+			<display_name>manage_bills_multi_register</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form93</name>
+			<display_name>manage_loans</display_name>
+			<status>active</status>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -2095,6 +2131,50 @@
 			<username>master</username>
 			<element_id>form89</element_id>
 			<element_name>appointments</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form90</element_id>
+			<element_name>billing_types</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form91</element_id>
+			<element_name>create_bills_multi_register</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form92</element_id>
+			<element_name>manage_bills_multi_register</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form93</element_id>
+			<element_name>manage_loans</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

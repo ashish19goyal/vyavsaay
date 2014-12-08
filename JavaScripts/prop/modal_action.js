@@ -2980,9 +2980,11 @@ function modal37_action(id)
  */
 function modal38_action(father_id)
 {
+	var father_form=document.getElementById(father_id);
 	var form=document.getElementById('modal38_form');	
 	var fsale_price=form.elements[1];
 		
+	fsale_price.value=father_form.elements[3].value;
 	////adding sale price fields for all billing types///////
 	var billing_type_data="<sale_prices>" +
 			"<id></id>" +
@@ -3069,6 +3071,139 @@ function modal38_action(father_id)
 	});
 	
 	$("#modal38").dialog("open");
+}
+
+/**
+ * @modal Add Loan
+ * @modalNo 39
+ */
+function modal39_action(schedule_date)
+{
+	var form=document.getElementById("modal39_form");
+	var type_filter=form.elements[1];
+	var account_filter=form.elements[2];
+	var amount_filter=form.elements[3];
+	var date_filter=form.elements[4];
+	var rate_filter=form.elements[5];
+	var period_filter=form.elements[6];
+	var itype_filter=form.elements[7];
+	
+	var account_data="<accounts>" +
+			"<acc_name></acc_name>" +
+			"</accounts>";
+	set_my_value_list(account_data,account_filter);
+	set_static_filter('loans','type',type_filter);
+	set_static_filter('loans','interest_type',itype_filter);
+	
+	$(date_filter).datepicker();
+	date_filter.value=get_my_date();
+		
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form93'))
+		{
+			var type=form.elements[1].value;
+			var account=form.elements[2].value;
+			var amount=form.elements[3].value;
+			var date=get_raw_time(form.elements[4].value);
+			var rate=form.elements[5].value;
+			var period=form.elements[6].value;
+			var itype=form.elements[7].value;
+			var next_date=date+(parseFloat(period)*86400000);
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var adjective="to";
+			var receiver=account;
+			var giver="master";
+			var ptype='paid';
+			var due_time=get_debit_period();
+			if(type=='taken')
+			{
+				adjective="from";
+				giver=account;
+				receiver="master";
+				ptype='received';
+			}
+			var data_xml="<loans>" +
+						"<id>"+data_id+"</id>" +
+						"<type>"+type+"</type>" +
+						"<account>"+account+"</account>" +
+						"<loan_amount>"+amount+"</loan_amount>" +
+						"<date_initiated>"+date+"</date_initiated>" +
+						"<interest_paid>0</interest_paid>" +
+						"<interest_rate>"+rate+"</interest_rate>" +
+						"<interest_period>"+period+"</interest_period>" +
+						"<next_interest_date>"+next_date+"</next_interest_date>" +
+						"<interest_type>"+itype+"</interest_type>" +
+						"<status>open</status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</loans>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>loans</tablename>" +
+						"<link_to>form93</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Loan of amount Rs. "+amount+" "+type+" "+adjective+" "+account+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var transaction_xml="<transactions>" +
+						"<id>"+data_id+"</id>" +
+						"<trans_date>"+get_my_time()+"</trans_date>" +
+						"<amount>"+amount+"</amount>" +
+						"<receiver>"+giver+"</receiver>" +
+						"<giver>"+receiver+"</giver>" +
+						"<tax>0</tax>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</transactions>";
+			var payment_id=get_new_key()+""+(Math.random()*1000);
+			var transaction2_xml="<transactions>" +
+						"<id>"+payment_id+"</id>" +
+						"<trans_date>"+get_my_time()+"</trans_date>" +
+						"<amount>"+amount+"</amount>" +
+						"<receiver>"+receiver+"</receiver>" +
+						"<giver>"+giver+"</giver>" +
+						"<tax>0</tax>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</transactions>";
+			var payment_xml="<payments>" +
+						"<id>"+payment_id+"</id>" +
+						"<acc_name>"+account+"</acc_name>" +
+						"<type>"+ptype+"</type>" +
+						"<total_amount>"+amount+"</total_amount>" +
+						"<paid_amount>"+amount+"</paid_amount>" +
+						"<status>closed</status>" +
+						"<date>"+get_my_time()+"</date>" +
+						"<due_date>"+get_my_time()+"</due_date>" +
+						"<mode>cash</mode>" +
+						"<transaction_id>"+payment_id+"</transaction_id>" +
+						"<bill_id>"+data_id+"</bill_id>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</payments>";
+			if(is_online())
+			{
+				server_create_row(data_xml,activity_xml);
+				server_create_simple(transaction_xml);
+				server_create_simple(transaction2_xml);
+				server_create_simple(payment_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+				local_create_simple(transaction_xml);
+				local_create_simple(transaction2_xml);
+				local_create_simple(payment_xml);
+			}
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal39").dialog("close");
+	});
+	
+	$("#modal39").dialog("open");
 }
 
 

@@ -88,6 +88,70 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>bill_types</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>bill_types</tablename>
+			<listname>status</listname>
+			<name>inactive</name>
+			<value>Inactive</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loans</tablename>
+			<listname>interest_type</listname>
+			<name>paid</name>
+			<value>Paid</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loans</tablename>
+			<listname>interest_type</listname>
+			<name>added to principal</name>
+			<value>Added to principal</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loans</tablename>
+			<listname>status</listname>
+			<name>open</name>
+			<value>Open</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loans</tablename>
+			<listname>status</listname>
+			<name>closed</name>
+			<value>Closed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loans</tablename>
+			<listname>type</listname>
+			<name>taken</name>
+			<value>Taken</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loans</tablename>
+			<listname>type</listname>
+			<name>given</name>
+			<value>Given</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>appointments</tablename>
 			<listname>status</listname>
 			<name>pending</name>

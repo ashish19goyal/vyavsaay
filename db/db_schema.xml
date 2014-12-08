@@ -254,6 +254,7 @@
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<total index='yes' type="DECIMAL(12,2)"></total>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
+			<billing_type index="yes" type="VARCHAR(10)"></billing_type>
 			<offer index='no' type="TEXT"></offer>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
@@ -609,4 +610,18 @@
 			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bill_types>
+	<loans>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<type index='yes' type="VARCHAR(45)"></type><!-- taken/given -->
+			<account index='no' type="VARCHAR(100)"></account>
+			<date_initiated index='no' type="BIGINT"></date_initiated>
+			<loan_amount index='no' type='DECIMAL(12,2)'></loan_amount>
+			<interest_paid index='no' type='DECIMAL(12,2)'></interest_paid>
+			<interest_rate index='no' type='DECIMAL(5,3)'></interest_rate>
+			<interest_period index='no' type='INTEGER'></interest_period><!--in days-->
+			<next_interest_date index='no' type="BIGINT"></next_interest_date>
+			<interest_type index='yes' type="VARCHAR(45)"></interest_type><!-- added to principal/paid -->
+			<status index='yes' type="VARCHAR(45)"></status><!-- open/closed -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</loans>
 </re_xml>

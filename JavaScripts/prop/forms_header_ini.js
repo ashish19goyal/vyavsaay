@@ -2127,3 +2127,152 @@ function form89_switch_view()
 	$("#form89_body").parent().toggle();
 	$("#form89_calendar").toggle();
 }
+
+/**
+ * @form Billing types
+ * @formNo 90
+ */
+function form90_header_ini()
+{
+	var filter_fields=document.getElementById('form90_header');
+	var name_filter=filter_fields.elements[0];
+	
+	var name_data="<bill_types>" +
+			"<name></name>" +
+			"</bill_types>";
+	
+	set_my_filter(name_data,name_filter);
+	
+	var import_button=filter_fields.elements[3];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form90_import_template,form90_import);
+	});
+};
+
+/**
+ * @form Create Bill(multiple registers)
+ * @formNo 91
+ */
+function form91_header_ini()
+{
+	var fields=document.getElementById('form91_master');
+	
+	var customers_filter=fields.elements[1];
+	var bill_type=fields.elements[2];
+	var bill_date=fields.elements[3];
+	fields.elements[4].value=0;
+	fields.elements[5].value=0;
+	fields.elements[6].value=0;
+	fields.elements[7].value=0;
+	fields.elements[8].value=get_new_key();
+	fields.elements[9].value="";
+	fields.elements[10].value=get_new_key();
+	var email_filter=fields.elements[14];
+	var phone_filter=fields.elements[15];
+	
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form91_create_form();
+	});
+	var customers_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	set_my_value_list(customers_data,customers_filter);
+
+	var type_data="<bill_types>" +
+		"<name></name>" +
+		"<status>active</status>" +
+		"</bill_types>";
+	set_my_value_list(type_data,bill_type);
+	bill_type.value='default';
+	
+	$(customers_filter).off('blur');
+	$(customers_filter).on('blur', function(event)
+	{
+		var email_data="<customers>" +
+				"<email></email>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
+				"</customers>";
+		set_my_value(email_data,email_filter);
+		
+		var phone_data="<customers>" +
+				"<phone></phone>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
+				"</customers>";
+		set_my_value(phone_data,phone_filter);
+	});
+	
+	$(bill_date).datepicker();
+	$(bill_date).val(get_my_date());
+	customers_filter.value='';
+	$(customers_filter).focus();
+}
+
+/**
+ * This function clears the form91 for new bill
+ */
+function form91_new_form()
+{
+	form91_header_ini();
+	$("#form91_body").find("tr").remove();
+	$("#form91_whatsapp").hide();
+	$("#form91_gmail").hide();
+}
+
+
+/**
+ * @form Manage Bills(multiple registers)
+ * @formNo 92
+ */
+function form92_header_ini()
+{
+	var filter_fields=document.getElementById('form92_header');
+	var bill_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var name_filter=filter_fields.elements[2];
+	
+	var bill_data="<bills>" +
+			"<id></id>" +
+			"</bills>";
+	var type_data="<bill_types>" +
+			"<name></name>" +
+			"</bill_types>";
+	var cust_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	set_my_filter(bill_data,bill_filter);
+	set_my_filter(type_data,type_filter);
+	set_my_filter(cust_data,name_filter);
+};
+
+/**
+ * @form Manage Loans
+ * @formNo 93
+ */
+function form93_header_ini()
+{
+	var filter_fields=document.getElementById('form93_header');
+	var type_filter=filter_fields.elements[0];
+	var account_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var account_data="<accounts>" +
+			"<acc_name></acc_name>" +
+			"</accounts>";
+	
+	set_my_filter(account_data,account_filter);
+	set_static_filter('loans','type',type_filter);
+	set_static_filter('loans','status',status_filter);
+	
+	var import_button=filter_fields.elements[5];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form93_import_template,form93_import);
+	});
+};

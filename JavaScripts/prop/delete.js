@@ -269,15 +269,6 @@ function form10_delete_item(button)
 		
 		var data_xml="<bill_items>" +
 					"<id>"+data_id+"</id>" +
-					"<item_name>"+name+"</item_name>" +
-					"<notes>"+notes+"</notes>" +
-					"<unit_price>"+price+"</unit_price>" +
-					"<staff>"+staff+"</staff>" +
-					"<amount>"+amount+"</amount>" +
-					"<total>"+total+"</total>" +
-					"<discount>"+discount+"</discount>" +
-					"<offer>"+offer+"</offer>" +
-					"<tax>"+tax+"</tax>" +
 					"<bill_id>"+bill_id+"</bill_id>" +
 					"</bill_items>";
 		var task_xml="<task_instances>" +
@@ -333,7 +324,7 @@ function form12_delete_item(button)
 		
 				
 		var data_xml="<bill_items>" +
-					"<bill_id>"+bill_id+"</bill_id>" +
+					"<id>"+data_id+"</id>" +
 					"</bill_items>";	
 		if(is_online())
 		{
@@ -2148,52 +2139,20 @@ function form71_delete_item(button)
  */
 function form72_delete_item(button)
 {
-	if(is_delete_access('form12'))
+	if(is_delete_access('form72'))
 	{
 		var bill_id=document.getElementById("form72_master").elements[7].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		var name=form.elements[0].value;
-		var batch="";
-		var staff="";
-		var quantity="";
-		var notes="";
-		if(isNaN(form.elements[2].value))
-		{
-			staff=form.elements[1].value;
-			notes=form.elements[2].value;
-		}
-		else
-		{
-			batch=form.elements[1].value;
-			quantity=form.elements[2].value;
-		}
-		var price=form.elements[3].value;
-		var total=form.elements[4].value;
-		var amount=form.elements[5].value;
-		var discount=form.elements[6].value;
-		var tax=form.elements[7].value;
-		var offer=form.elements[8].value;
 		var data_id=form.elements[9].value;
-		var last_updated=get_my_time();
 		
 		if(isNaN(form.elements[2].value))
 		{
 			var data_xml="<bill_items>" +
 					"<id>"+data_id+"</id>" +
-					"<item_name>"+name+"</item_name>" +
-					"<unit_price>"+price+"</unit_price>" +
-					"<notes>"+notes+"</notes>" +
-					"<staff>"+staff+"</staff>" +
-					"<amount>"+amount+"</amount>" +
-					"<total>"+total+"</total>" +
-					"<discount>"+discount+"</discount>" +
-					"<offer>"+offer+"</offer>" +
-					"<type>bought</type>" +
-					"<tax>"+tax+"</tax>" +
 					"<bill_id>"+bill_id+"</bill_id>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bill_items>";	
 			var task_xml="<task_instances>" +
 					"<source></source>" +
@@ -2213,8 +2172,9 @@ function form72_delete_item(button)
 		else
 		{
 			var data_xml="<bill_items>" +
-						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
+					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"</bill_items>";	
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -2526,7 +2486,6 @@ function form87_delete_item(button)
  */
 function form88_delete_item(button)
 {
-	console.log('deleting');
 	if(is_delete_access('form88'))
 	{
 		var form_id=$(button).attr('form');
@@ -2603,6 +2562,314 @@ function form89_delete_item(button)
 			local_delete_row(data_xml,activity_xml);
 		}	
 		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Billing types
+ * @formNo 90
+ * @param button
+ */
+function form90_delete_item(button)
+{
+	if(is_delete_access('form90'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var name=form.elements[0].value;
+		var notes=form.elements[1].value;
+		var data_id=form.elements[2].value;
+		var data_xml="<bill_types>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<notes>"+notes+"</notes>" +
+					"</bill_types>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bill_types</tablename>" +
+					"<link_to>form90</link_to>" +
+					"<title>Delete</title>" +
+					"<notes>Billing type "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var sale_prices_xml="<sale_prices>" +
+					"<billing_type exact='yes'>"+name+"</billing_type>" +
+					"</sale_prices>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(sale_prices_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(sale_prices_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create bill(multiple registers)
+ * @formNo 91
+ * @param button
+ */
+function form91_delete_item(button)
+{
+	if(is_delete_access('form91'))
+	{
+		var bill_id=document.getElementById("form91_master").elements[8].value;
+		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var name=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var price=form.elements[3].value;
+		var total=form.elements[4].value;
+		var amount=form.elements[5].value;
+		var discount=form.elements[6].value;
+		var tax=form.elements[7].value;
+		var offer=form.elements[8].value;
+		var data_id=form.elements[9].value;
+		var last_updated=get_my_time();
+		
+				
+		var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"</bill_items>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}
+				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Manage Bills(multiple registers)
+ * @formNo 92
+ * @param button
+ */
+function form92_delete_item(button)
+{
+	if(is_delete_access('form92'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[0].value;
+		var customer_name=form.elements[2].value;
+		var transaction_id=form.elements[7].value;
+		var last_updated=get_my_time();
+		var bill_xml="<bills>" +
+					"<id>"+data_id+"</id>" +
+					"<customer_name>"+customer_name+"</customer_name>" +
+					"</bills>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bills</tablename>" +
+					"<link_to>form92</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Bill no "+data_id+" for customer "+customer_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var transaction_xml="<transactions>" +
+				"<id>"+transaction_id+"</id>" +
+				"</transactions>";
+
+		if(is_online())
+		{
+			server_delete_row(bill_xml,activity_xml);
+			server_delete_simple(transaction_xml);
+		}
+		else
+		{
+			local_delete_row(bill_xml,activity_xml);
+			local_delete_simple(transaction_xml);
+		}	
+		$(button).parent().parent().remove();
+
+		var payment_xml="<payments>" +
+				"<id></id>" +
+				"<bill_id>"+data_id+"</bill_id>" +
+				"<status array='yes'>pending--cancelled</status>" +
+				"<transaction_id></transaction_id>" +
+				"</payments>";
+		fetch_requested_data('',payment_xml,function(payments)
+		{
+			for(var x in payments)
+			{
+				var pt_xml="<transactions>" +
+						"<id>"+payments[x].transaction_id+"</id>" +
+						"</transactions>";
+				var pay_xml="<payments>" +
+						"<id>"+payments[x].id+"</id>" +
+						"<bill_id></bill_id>" +
+						"<transaction_id></transaction_id>" +
+						"</payments>";
+
+				if(is_online())
+				{
+					server_delete_simple(pay_xml);
+					server_delete_simple(pt_xml);
+				}
+				else
+				{
+					local_delete_simple(pay_xml);
+					local_delete_simple(pt_xml);
+				}
+				break;
+			}
+		});
+
+		
+		var items_data="<bill_items>" +
+				"<id></id>" +
+				"<bill_id>"+data_id+"</bill_id>" +
+				"</bill_items>";
+		fetch_requested_data('',items_data,function(bill_items)
+		{
+			bill_items.forEach(function(bill_item)
+			{
+				var task_xml="<task_instances>" +
+						"<source_id>"+bill_item.id+"</source_id>" +
+						"<source>service</source>" +
+						"</task_instances>";
+
+				if(is_online())
+				{
+					server_delete_simple(task_xml);
+				}
+				else
+				{
+					local_delete_simple(task_xml);
+				}
+			});	
+			
+			if(is_online())
+			{
+				server_delete_simple(items_data);
+			}
+			else
+			{
+				local_delete_simple(items_data);
+			}
+		});		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Manage Loans
+ * @formNo 93
+ * @param button
+ */
+function form93_delete_item(button)
+{
+	if(is_delete_access('form93'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var type=form.elements[0].value;
+		var account=form.elements[1].value;
+		var amount=form.elements[2].value;
+		var data_id=form.elements[5].value;
+		var adjective="to";
+		if(type=='taken')
+		{
+			adjective="from";
+		}
+		var loan_xml="<loans>" +
+					"<id>"+data_id+"</id>" +
+					"</loans>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>loans</tablename>" +
+					"<link_to>form93</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Loan of amount Rs. "+amount+" "+type+" "+adjective+" "+account+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var transaction_xml="<transactions>" +
+				"<id>"+data_id+"</id>" +
+				"</transactions>";
+
+		if(is_online())
+		{
+			server_delete_row(loan_xml,activity_xml);
+			server_delete_simple(transaction_xml);
+		}
+		else
+		{
+			local_delete_row(loan_xml,activity_xml);
+			local_delete_simple(transaction_xml);
+		}	
+		$(button).parent().parent().remove();
+
+		var payment_type="paid";
+		if(type=='taken')
+		{
+			payment_type='received';
+		}
+		var payment_data="<payments>" +
+				"<id></id>" +
+				"<acc_name exact='yes'>"+account+"</acc_name>" +
+				"<type>"+payment_type+"</type>" +
+				"<bill_id>"+data_id+"</bill_id>" +
+				"<total_amount>"+amount+"</total_amount>" +
+				"</payments>";
+		fetch_requested_data('',payment_data,function(payments)
+		{
+			for(var i in payments)
+			{
+				var transaction2_xml="<transactions>" +
+							"<id>"+payments[i].id+"</id>" +
+							"<amount>"+amount+"</amount>" +
+							"</transactions>";
+				var payment_xml="<payments>" +
+							"<id>"+payments[i].id+"</id>" +
+							"<total_amount>"+amount+"</total_amount>" +
+							"</payments>";
+				if(is_online())
+				{
+					server_delete_simple(payment_xml);
+					server_delete_simple(transaction2_xml);
+				}
+				else
+				{
+					local_delete_simple(payment_xml);
+					local_delete_simple(transaction2_xml);
+				}	
+			
+				break;
+			}
+		});
 	}
 	else
 	{

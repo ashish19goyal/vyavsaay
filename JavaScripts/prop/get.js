@@ -192,8 +192,8 @@ function set_static_filter(table,list,filter_element)
 	{
 		var list_data="<values_list>" +
 			"<name></name>" +
-			"<tablename>"+table+"</tablename>" +
-			"<listname>"+list+"</listname>" +
+			"<tablename exact='yes'>"+table+"</tablename>" +
+			"<listname exact='yes'>"+list+"</listname>" +
 			"<status>active</status>" +
 			"</values_list>";
 		get_single_column_data(function(data)
@@ -228,8 +228,8 @@ function set_static_value_list(table,list,filter_element)
 	{
 		var list_data="<values_list>" +
 			"<name></name>" +
-			"<tablename>"+table+"</tablename>" +
-			"<listname>"+list+"</listname>" +
+			"<tablename exact='yes'>"+table+"</tablename>" +
+			"<listname exact='yes'>"+list+"</listname>" +
 			"<status>active</status>" +
 			"</values_list>";
 		get_single_column_data(function(data)

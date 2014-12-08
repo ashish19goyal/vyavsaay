@@ -2798,3 +2798,342 @@ function form89_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Billing types
+ * @formNo 90
+ */
+function form90_add_item()
+{
+	if(is_create_access('form90'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form90_"+id+"'></form>";
+			rowsHTML+="<td data-th='Name'>";
+				rowsHTML+="<input type='text' form='form90_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Notes'>";
+				rowsHTML+="<textarea form='form90_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form90_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form90_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form90_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form90_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form90_"+id);
+		var name_filter=fields.elements[0];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form90_create_item(fields);
+		});
+					
+		$(name_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Create Bill(multiple registers)
+ * @formNo 91
+ */
+function form91_add_item()
+{
+	var filter_fields=document.getElementById('form91_master');
+	var bill_type=filter_fields.elements[2].value;
+	if(is_create_access('form91'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form91_"+id+"'></form>";
+			rowsHTML+="<td data-th='Product Name'>";
+				rowsHTML+="<input type='text' required form='form91_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<input type='text' required form='form91_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' required form='form91_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Unit Price'>";
+				rowsHTML+="<input type='number' required form='form91_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Total'>";
+				rowsHTML+="<input type='number' required form='form91_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form91_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form91_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form91_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form91_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form91_"+id+"' id='save_form91_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form91_"+id+"' id='delete_form91_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form91_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form91_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form91_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form91_"+id);
+		var name_filter=fields.elements[0];
+		var batch_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var total_filter=fields.elements[4];
+		var amount_filter=fields.elements[5];
+		var discount_filter=fields.elements[6];
+		var tax_filter=fields.elements[7];
+		var offer_filter=fields.elements[8];
+		var id_filter=fields.elements[9];
+		var free_product_filter=fields.elements[12];
+		var free_product_quantity=fields.elements[13];
+		
+		$(name_filter).focus();
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form91_create_item(fields);
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,name_filter);
+		
+		
+		$(name_filter).on('blur',function(event)
+		{
+			var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+			set_my_value_list(batch_data,batch_filter);
+			
+			var last_batch_data="<bill_items count='1'>" +
+					"<batch></batch>" +
+					"<item_name>"+name_filter.value+"</item_name>" +
+					"<last_updated sort='desc'></last_updated>" +
+					"</bill_items>";
+			get_single_column_data(function(data)
+			{
+				if(data.length>0)
+				{
+					batch_filter.value=data[0];
+					
+					if(bill_type=='default')
+					{
+						var price_data="<product_instances count='1'>" +
+								"<sale_price></sale_price>" +
+								"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+								"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+								"</product_instances>";
+						set_my_value(price_data,price_filter);
+					}
+					else
+					{
+						var price_data="<sale_prices count='1'>" +
+								"<sale_price></sale_price>" +
+								"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+								"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+								"<billing_type>"+bill_type+"</billing_type>" +
+								"</sale_prices>";
+						set_my_value(price_data,price_filter);
+					}
+					
+					get_inventory(name_filter.value,batch_filter.value,function(quantity)
+					{
+						//$(quantity_filter).attr('max',quantity);
+						$(quantity_filter).attr('min',"0");
+						$(quantity_filter).attr('placeholder',quantity);
+					});
+				}
+				
+			},last_batch_data);
+			
+			quantity_filter.value="";
+			total_filter.value=0;
+			amount_filter.value=0;
+			discount_filter.value=0;
+			tax_filter.value=0;
+			offer_filter.value="";
+			free_product_filter.value="";
+			free_product_quantity.value="";
+		});
+		
+		$(batch_filter).on('blur',function(event)
+		{
+			if(bill_type=='default')
+			{
+				var price_data="<product_instances count='1'>" +
+						"<sale_price></sale_price>" +
+						"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+				set_my_value(price_data,price_filter);
+			}
+			else
+			{
+				var price_data="<sale_prices count='1'>" +
+						"<sale_price></sale_price>" +
+						"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"<billing_type>"+bill_type+"</billing_type>" +
+						"</sale_prices>";
+				set_my_value(price_data,price_filter);
+			}
+			
+			get_inventory(name_filter.value,batch_filter.value,function(quantity)
+			{
+				//$(quantity_filter).attr('max',quantity);
+				$(quantity_filter).attr('min',"0");
+				$(quantity_filter).attr('placeholder',quantity);
+			});
+			
+			quantity_filter.value="";
+			total_filter.value=0;
+			amount_filter.value=0;
+			discount_filter.value=0;
+			tax_filter.value=0;
+			offer_filter.value="";
+			free_product_filter.value="";
+			free_product_quantity.value="";
+		});
+		
+		$(quantity_filter).on('blur',function(event)
+		{
+			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			amount_filter.value=amount;
+			var offer_data="<offers>" +
+					"<offer_type>product</offer_type>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"<batch array='yes'>"+batch_filter.value+"--all</batch>" +
+					"<criteria_type></criteria_type>" +
+					"<criteria_amount></criteria_amount>" +
+					"<criteria_quantity></criteria_quantity>" +
+					"<result_type></result_type>" +
+					"<discount_percent></discount_percent>" +
+					"<discount_amount></discount_amount>" +
+					"<quantity_add_percent></quantity_add_percent>" +
+					"<quantity_add_amount></quantity_add_amount>" +
+					"<free_product_name></free_product_name>" +
+					"<free_product_quantity></free_product_quantity>" +
+					"<offer_detail></offer_detail>" +
+					"<status array='yes'>active--extended</status>" +
+					"</offers>";
+			fetch_requested_data('',offer_data,function(offers)
+			{
+				////sorting offers based on criteria amount and criteria quantity
+				offers.sort(function(a,b)
+				{
+					if(a.criteria_amount<b.criteria_amount)
+					{	return 1;}
+					else if(a.criteria_quantity<b.criteria_quantity)
+					{	return 1;}
+					else 
+					{	return -1;}
+				});
+						
+				for(var i in offers)
+				{
+					offer_filter.value=offers[i].offer_detail;
+					if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=parseFloat(quantity_filter.value))
+					{
+						if(offers[i].result_type=='discount')
+						{
+							if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+							{
+								discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+							}
+							else 
+							{
+								discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
+							}
+						}
+						else if(offers[i].result_type=='quantity addition')
+						{
+							if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+							}
+							else 
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity))));
+							}
+						}
+						else if(offers[i].result_type=='product free')
+						{
+							free_product_filter.value=offers[i].free_product_name;
+							free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
+						}
+						break;
+					}
+					else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=amount)
+					{
+						if(offers[i].result_type=='discount')
+						{
+							if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+							{
+								discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+							}
+							else 
+							{
+								discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+							}
+						}
+						else if(offers[i].result_type=='quantity addition')
+						{
+							if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+							}
+							else 
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount))));
+							}
+						}
+						else if(offers[i].result_type=='product free')
+						{
+							free_product_filter.value=offers[i].free_product_name;
+							free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+						}
+						break;
+					}
+				}
+				
+				var tax_data="<product_master>" +
+						"<name exact='yes'>"+name_filter.value+"</name>" +
+						"<tax></tax>" +
+						"</product_master>";
+				fetch_requested_data('',tax_data,function(taxes)
+				{
+					taxes.forEach(function(tax)
+					{
+						tax_filter.value=parseFloat((parseFloat(tax.tax)*(amount-parseFloat(discount_filter.value)))/100);
+					});
+					
+					total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
+				});
+				
+			});
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

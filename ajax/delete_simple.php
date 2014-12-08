@@ -66,7 +66,7 @@
 					$stmt3->execute($act_data);	
 				}
 				echo "data deleted";
-			}	
+			}
 		}
 		else
 		{

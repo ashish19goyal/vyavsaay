@@ -105,6 +105,10 @@
   	"sync_data": "Sync data",
   	"official_address": "Official Address",
   	"phone_no": "Phone No",
+  	"email":"Email",
+  	"longitude":"Longitude",
+  	"latitude":"Latitude",
+  	"default_task_due_period":"Default Task Due Period",
   	"logo": "Logo",
   	"business_title": "Business Title",
   	"theme": "Theme",
@@ -159,6 +163,12 @@
   	"cross_sells":"Cross Sells",
   	"manufacturing_schedule":"Manufacturing Schedule",
   	"resource_analysis":"Resource Analysis",
-  	"appointments":"Appointments"
+  	"appointments":"Appointments",
+  	"billing_types":"Billing Types",
+  	"manage_loans":"Manage Loans",
+  	"manage_bills_multi_register":"Manage Bills (multiple registers)",
+  	"create_bills_multi_register":"Create Bills (multiple registers)",
+  	"packing_list":"Packing List",
+  	"margin_by_products":"Margin by Products"
   }
 }

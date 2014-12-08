@@ -2686,10 +2686,10 @@ function form46_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form46_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Setting'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form46_"+result.id+"' data-i18n='[value]form."+result.display_name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form46_"+result.id+"' data-i18n='form."+result.display_name+"'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Value'>";
-						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form46_"+result.id+"' value='"+result.value+"'>";
+						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form46_"+result.id+"'>"+result.value+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form46_"+result.id+"' value='"+result.id+"'>";
@@ -2708,7 +2708,7 @@ function form46_ini()
 			});
 		});
 		
-		$('#form46_body').find('input').i18n();
+		$('#form46_body').find('textarea').i18n();
 		
 		
 		longPressEditable($('.dblclick_editable'));
@@ -5971,4 +5971,415 @@ function form89_ini()
 		});
 		hide_loader();
 	});
+};
+
+/**
+ * @form Billing types
+ * @formNo 90
+ * @Loading light
+ */
+function form90_ini()
+{
+	show_loader();
+	var fid=$("#form90_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form90_header');
+	
+	var fname=filter_fields.elements[0].value;
+	
+	var columns="<bill_types count='100'>" +
+			"<id>"+fid+"</id>" +
+			"<name>"+fname+"</name>" +
+			"<notes></notes>" +
+			"<last_updated sort='desc'></last_updated>" +
+			"</bill_types>";
+
+	$('#form90_body').html("");
+
+	fetch_requested_data('form90',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form90_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form90_"+result.id+"' value='"+result.name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Notes'>";
+						rowsHTML+="<textarea readonly='readonly' form='form90_"+result.id+"' class='dblclick_editable'>"+result.notes+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form90_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form90_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form90_"+result.id+"' title='Delete' onclick='form90_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+		
+			$('#form90_body').append(rowsHTML);
+
+			var fields=document.getElementById("form90_"+result.id);
+			
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form90_update_item(fields);
+			});
+		});
+		
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'billing_types');
+		});
+		hide_loader();
+	});	
+};
+
+/**
+ * @form Create Bills(multiple register)
+ * @formNo 91
+ * @Loading light
+ */
+function form91_ini()
+{
+	var bill_id=$("#form91_link").attr('data_id');
+	if(bill_id==null)
+		bill_id="";	
+	
+	$('#form91_body').html("");
+
+	if(bill_id!="")
+	{
+		show_loader();
+		var bill_columns="<bills>" +
+				"<id>"+bill_id+"</id>" +
+				"<customer_name></customer_name>" +
+				"<total></total>" +
+				"<bill_date></bill_date>" +
+				"<amount></amount>" +
+				"<discount></discount>" +
+				"<tax></tax>" +
+				"<offer></offer>" +
+				"<billing_type></billing_type>" +
+				"<type>product</type>" +
+				"<transaction_id></transaction_id>" +
+				"</bills>";
+		var bill_items_column="<bill_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<batch></batch>" +
+				"<unit_price></unit_price>" +
+				"<quantity></quantity>" +
+				"<amount></amount>" +
+				"<total></total>" +
+				"<discount></discount>" +
+				"<offer></offer>" +
+				"<type></type>" +
+				"<bill_id>"+bill_id+"</bill_id>" +
+				"<tax></tax>" +
+				"<free_with></free_with>" +
+				"</bill_items>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',bill_columns,function(bill_results)
+		{
+			var filter_fields=document.getElementById('form91_master');
+			
+			for (var i in bill_results)
+			{
+				filter_fields.elements[1].value=bill_results[i].customer_name;
+				filter_fields.elements[2].value=bill_results[i].billing_type;
+				filter_fields.elements[3].value=get_my_past_date(bill_results[i].bill_date);
+				filter_fields.elements[4].value=bill_results[i].amount;
+				filter_fields.elements[5].value=bill_results[i].discount;
+				filter_fields.elements[6].value=bill_results[i].tax;
+				filter_fields.elements[7].value=bill_results[i].total;
+				filter_fields.elements[8].value=bill_id;
+				filter_fields.elements[9].value=bill_results[i].offer;
+				filter_fields.elements[10].value=bill_results[i].transaction_id;
+				
+				$(filter_fields).off('submit');
+				$(filter_fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form91_update_form();
+				});
+				break;
+			}
+		
+			var customer_data="<customers>" +
+					"<acc_name exact='yes'>"+filter_fields.elements[1].value+"</acc_name>" +
+					"<email></email>" +
+					"<phone></phone>" +
+					"</customers>";
+			fetch_requested_data('',customer_data,function(cust_results)
+			{
+				var email=cust_results[0].email;
+				var phone=cust_results[0].phone;
+				filter_fields.elements[14].value=email;
+				filter_fields.elements[15].value=phone;
+		
+				fetch_requested_data('',bill_items_column,function(results)
+				{
+					var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+					var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		
+					results.forEach(function(result)
+					{
+						message_string+="\nItem: "+result.item_name;
+						message_string+=" Quantity: "+result.quantity;
+						message_string+=" Total: "+result.total;
+						mail_string+="\nItem: "+result.item_name;
+						mail_string+=" Quantity: "+result.quantity;
+						mail_string+=" Total: "+result.total;
+						
+						var rowsHTML="";
+						var id=result.id;
+						rowsHTML+="<tr>";
+						rowsHTML+="<form id='form91_"+id+"'></form>";
+							rowsHTML+="<td data-th='Product Name'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form91_"+id+"' value='"+result.item_name+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Batch'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form91_"+id+"' value='"+result.batch+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Quantity'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form91_"+id+"' value='"+result.quantity+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Unit Price'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form91_"+id+"' value='"+result.unit_price+"' step='any'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Total'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form91_"+id+"' value='"+result.total+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+result.amount+"'>";
+								rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+result.discount+"'>";
+								rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+result.tax+"'>";
+								rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+result.offer+"'>";
+								rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='submit' class='save_icon' form='form91_"+id+"' id='save_form91_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form91_"+id+"' id='delete_form91_"+id+"' onclick='form91_delete_item($(this));'>";
+								rowsHTML+="<input type='hidden' form='form91_"+id+"'>";
+								rowsHTML+="<input type='hidden' form='form91_"+id+"'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+					
+						$('#form91_body').prepend(rowsHTML);
+						
+						var fields=document.getElementById("form91_"+id);
+						$(fields).on("submit", function(event)
+						{
+							event.preventDefault();
+						});
+					});
+					
+					mail_string+="\nAmount: "+filter_fields.elements[3].value;
+					mail_string+="\ndiscount: "+filter_fields.elements[4].value;
+					mail_string+="\nTax: "+filter_fields.elements[5].value;
+					mail_string+="\nTotal: "+filter_fields.elements[6].value;
+					mail_string=encodeURIComponent(mail_string);
+					
+					message_string+="\nAmount: "+filter_fields.elements[3].value;
+					message_string+="\ndiscount: "+filter_fields.elements[4].value;
+					message_string+="\nTax: "+filter_fields.elements[5].value;
+					message_string+="\nTotal: "+filter_fields.elements[6].value;
+					message_string=encodeURIComponent(message_string);
+					
+					mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
+					$('#form91_whatsapp').attr('href',"whatsapp://send?text="+message_string);
+					$('#form91_whatsapp').show();
+					$('#form91_gmail').attr('href',mail_string);
+					$('#form91_gmail').show();
+					
+					hide_loader();
+				});
+			});
+		});
+	}
+}
+
+
+/**
+ * @form Manage Bills(multiple registers)
+ * @formNo 92
+ * @Loading light
+ */
+function form92_ini()
+{
+	show_loader();
+	var fid=$("#form92_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form92_header');
+	
+	//populating form 
+	if(fid==="")
+		fid=filter_fields.elements[0].value;
+	var ftype=filter_fields.elements[1].value;
+	var fname=filter_fields.elements[2].value;
+	
+	var columns="<bills count='100'>" +
+			"<id>"+fid+"</id>" +
+			"<customer_name>"+fname+"</customer_name>" +
+			"<bill_date></bill_date>" +
+			"<total></total>" +
+			"<type></type>" +
+			"<transaction_id></transaction_id>" +
+			"<billing_type>"+ftype+"</billing_type>" +
+			"<last_updated sort='desc'></last_updated>" +
+			"</bills>";
+
+	$('#form92_body').html("");
+
+	fetch_requested_data('form92',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form92_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Bill No.'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form92_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Type'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form92_"+result.id+"' value='"+result.billing_type+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form92_"+result.id+"'>"+result.customer_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Bill Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form92_"+result.id+"' value='"+get_my_past_date(result.bill_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Bill Amount'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form92_"+result.id+"' value='"+result.total+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='button' class='edit_icon' form='form92_"+result.id+"' title='Edit Bill'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form92_"+result.id+"' title='Delete Bill' onclick='form92_delete_item($(this));'>";
+						rowsHTML+="<input type='hidden' form='form92_"+result.id+"' value='"+result.transaction_id+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form92_body').prepend(rowsHTML);
+			var fields=document.getElementById("form92_"+result.id);
+			var edit_button=fields.elements[5];
+			$(edit_button).on("click", function(event)
+			{
+				event.preventDefault();
+				element_display(result.id,'form91');
+			});
+		});
+		
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'bills');
+		});
+		hide_loader();
+	});
+}
+
+/**
+ * @form Manage Loans
+ * @formNo 93
+ * @Loading light
+ */
+function form93_ini()
+{
+	show_loader();
+	var fid=$("#form93_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form93_header');
+	var ftype=filter_fields.elements[0].value;
+	var faccount=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	var columns="<loans count='100'>" +
+			"<id>"+fid+"</id>" +
+			"<type>"+ftype+"</type>" +
+			"<account>"+faccount+"</account>" +
+			"<loan_amount></loan_amount>" +
+			"<status>"+fstatus+"</status>" +
+			"<date_initiated></date_initiated>" +
+			"<interest_paid></interest_paid>" +
+			"<interest_rate></interest_rate>" +
+			"<interest_period></interest_period>" +
+			"<next_interest_date></next_interest_date>" +
+			"<interest_type></interest_type>" +
+			"<last_updated sort='desc'></last_updated>" +
+			"</loans>";
+
+	$('#form93_body').html("");
+
+	fetch_requested_data('form93',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			var details="Date inititated: "+get_my_past_date(result.date_initiated)+
+					"\nInterest rate: "+result.interest_rate +
+					"\nInterest period: "+result.interest_period+" days" +
+					"\nInterest is : "+result.interest_type +
+					"\nInterest paid till date: "+result.interest_paid+
+					"\nNext interest payment date: "+get_my_past_date(result.next_interest_date);
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form93_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Type'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form93_"+result.id+"' value='"+result.type+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Account'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form93_"+result.id+"' value='"+result.account+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Loan Amount'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form93_"+result.id+"' value='"+result.loan_amount+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+="<textarea readonly='readonly' form='form93_"+result.id+"'>"+details+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form93_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form93_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form93_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form93_"+result.id+"' title='Delete' onclick='form93_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+		
+			$('#form93_body').append(rowsHTML);
+
+			var fields=document.getElementById("form93_"+result.id);
+			var status_filter=fields.elements[4];
+			
+			set_static_value_list('loans','status',status_filter);
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form93_update_item(fields);
+			});
+		});
+		
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'loans');
+		});
+		hide_loader();
+	});	
 };

@@ -44,6 +44,7 @@
 			$data_array=array();
 
 			$table=$data_input->nodeName;
+			
 			$id=$data_input->getElementsByTagName('id')->item(0)->nodeValue;
 			
 			$query1="select count(*) from $table where id=?";

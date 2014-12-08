@@ -1312,3 +1312,43 @@ function form88_import(data_array,import_type)
 	});
 };
 
+
+/**
+* @form Billing types
+* @formNo 90
+*/
+function form90_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<bill_types>" +
+				"<id>"+row.id+"</id>" +
+				"<name unique='yes'>"+row.name+"</name>" +
+				"<notes>"+row.process_notes+"</notes>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</bill_types>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+

@@ -287,3 +287,13 @@ function form88_import_template()
 	var data_array=['id','product','process_notes','status','schedule','iteration_notes'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Billing types
+* @formNo 90
+*/
+function form90_import_template()
+{
+	var data_array=['id','name','notes'];
+	my_array_to_csv(data_array);
+};
