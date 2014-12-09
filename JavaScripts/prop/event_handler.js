@@ -72,19 +72,28 @@ function start_workers()
 	setTimeout(function()
 	{
 		notifications_add();
-	},50000);
-	setTimeout(function()
-	{
-		show_notif();
-	},60000);
+	},20000);
 	setTimeout(function()
 	{
 		sale_leads_add();
-	},70000);
+	},30000);
 	setTimeout(function()
 	{
 		manufactured_products_outofstock();
-	},80000);
+	},40000);
+	setTimeout(function()
+	{
+		loans_interest_processing();
+	},50000);
+	setTimeout(function()
+	{
+		loans_instalment_processing();
+	},60000);
+	setTimeout(function()
+	{
+		show_notif();
+	},70000);
+			
 }
 
 function show_function(function_id)
@@ -155,7 +164,7 @@ function print_setup()
 
 function print_css_setup(name)
 {
-	var template_name=sessionStorage.getItem(name);
+	var template_name=get_session_var(name);
 	var link = document.createElement('link');
 		link.setAttribute("rel", "stylesheet");
 		link.setAttribute("type", "text/css");
@@ -172,7 +181,7 @@ function home_display()
 
 function set_menu_username()
 {
-	var name=sessionStorage.getItem('name');
+	var name=get_session_var('name');
 	var hello=i18n.t("general.hello");
 	$('#menu_username').html(hello+" "+name);
 }
@@ -223,7 +232,7 @@ function i18n_setup()
 function hide_menu_items()
 {
 	//console.log("hiding menu items");
-	var offline=sessionStorage.getItem('offline');
+	var offline=get_session_var('offline');
 	if(offline=="online")
 	{
 		$('#offline_icon').hide();

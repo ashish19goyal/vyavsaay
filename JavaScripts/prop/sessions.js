@@ -4,9 +4,9 @@
  */
 function ini_session(domain,user)
 {
-	sessionStorage.setItem('domain',domain);
-	sessionStorage.setItem('session','yes');
-	sessionStorage.setItem('username',user);
+	localStorage.setItem('domain',domain);
+	localStorage.setItem('session','yes');
+	localStorage.setItem('username',user);
 }
 
 /**
@@ -18,10 +18,19 @@ function set_session(session_data)
 {
 	for(var field in session_data)
 	{
-		sessionStorage.setItem(field,session_data[field]);
+		localStorage.setItem(field,session_data[field]);
 	}
 	window.location.assign("main.php");	
 }
+
+/**
+ * 
+ */
+function set_session_var(name,value)
+{
+	localStorage.setItem(name,value);
+}
+
 
 /**
  * 
@@ -29,7 +38,7 @@ function set_session(session_data)
  */
 function is_online()
 {
-	var offline=sessionStorage.getItem('offline');
+	var offline=localStorage.getItem('offline');
 	if(offline=="online")
 		return true;
 	else
@@ -44,7 +53,7 @@ function is_online()
  */
 function get_session_var(ses_var)
 {
-	var value=sessionStorage.getItem(ses_var);
+	var value=localStorage.getItem(ses_var);
 	return value;
 }
 
@@ -54,7 +63,7 @@ function get_session_var(ses_var)
  */
 function get_domain()
 {
-	var domain=sessionStorage.getItem('domain');
+	var domain=localStorage.getItem('domain');
 	return domain;
 }
 
@@ -65,7 +74,7 @@ function get_domain()
  */
 function get_username()
 {
-	var username=sessionStorage.getItem('username');
+	var username=localStorage.getItem('username');
 	return username;
 }
 
@@ -75,7 +84,7 @@ function get_username()
  */
 function get_name()
 {
-	var name=sessionStorage.getItem('name');
+	var name=localStorage.getItem('name');
 	return name;
 }
 
@@ -86,7 +95,7 @@ function get_name()
  */
 function is_set_session()
 {
-	var sess=sessionStorage.getItem('session');
+	var sess=localStorage.getItem('session');
 	if(sess=='yes')
 		return true;
 	else
@@ -99,7 +108,7 @@ function is_set_session()
  */
 function get_theme()
 {
-	var theme=sessionStorage.getItem('theme');
+	var theme=localStorage.getItem('theme');
 	if(theme==null)
 	{
 		theme="theme1";
@@ -111,7 +120,7 @@ function get_theme()
 
 function get_credit_period()
 {
-	var period=sessionStorage.getItem('credit_period');
+	var period=localStorage.getItem('credit_period');
 	if(period==null || period=='')
 	{
 		period=0;
@@ -123,7 +132,7 @@ function get_credit_period()
 
 function get_debit_period()
 {
-	var period=sessionStorage.getItem('debit_period');
+	var period=localStorage.getItem('debit_period');
 	if(period==null || period=='')
 	{
 		period=0;
@@ -134,7 +143,7 @@ function get_debit_period()
 
 function get_task_due_period()
 {
-	var period=sessionStorage.getItem('task_due_period');
+	var period=localStorage.getItem('task_due_period');
 	if(period==null || period=='')
 	{
 		period=0;
@@ -145,7 +154,7 @@ function get_task_due_period()
 
 function get_task_due_time(raw_time)
 {
-	var period=sessionStorage.getItem('task_due_period');
+	var period=localStorage.getItem('task_due_period');
 	if(period==null || period=='')
 	{
 		period=0;
@@ -159,10 +168,10 @@ function get_task_due_time(raw_time)
  */
 function delete_session()
 {
-	sessionStorage.removeItem('session');
-	sessionStorage.removeItem('domain');
-	sessionStorage.removeItem('username');
-	sessionStorage.clear();
+	localStorage.removeItem('session');
+	localStorage.removeItem('domain');
+	localStorage.removeItem('username');
+	localStorage.clear();
 	if(is_online())
 	{
 		window.location.assign("logout.php");
@@ -175,14 +184,14 @@ function delete_session()
 
 function get_pamphlet_template()
 {
-	var template=sessionStorage.getItem('pamphlet');
+	var template=localStorage.getItem('pamphlet');
 	return template;
 }
 
 function is_read_access(form_id)
 {
 //	console.log('checking read access for '+form_id);
-	var re=sessionStorage.getItem('re');
+	var re=localStorage.getItem('re');
 	var found=re.search(form_id+"-");
 	if(found===-1)
 	{
@@ -194,7 +203,7 @@ function is_read_access(form_id)
 
 function is_create_access(form_id)
 {
-	var re=sessionStorage.getItem('cr');
+	var re=localStorage.getItem('cr');
 	var found=re.search(form_id+"-");
 	if(found===-1)
 	{
@@ -206,7 +215,7 @@ function is_create_access(form_id)
 
 function is_update_access(form_id)
 {
-	var re=sessionStorage.getItem('up');
+	var re=localStorage.getItem('up');
 	var found=re.search(form_id+"-");
 	if(found===-1)
 	{
@@ -218,7 +227,7 @@ function is_update_access(form_id)
 
 function is_delete_access(form_id)
 {
-	var re=sessionStorage.getItem('del');
+	var re=localStorage.getItem('del');
 	var found=re.search(form_id+"-");
 	if(found===-1)
 	{

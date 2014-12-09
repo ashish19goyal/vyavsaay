@@ -353,7 +353,7 @@ function set_session_online()
 	{
 		data_ids.forEach(function(data_id)
 		{
-			sessionStorage.setItem('offline','online');
+			set_session_var('offline','online');
 			var data_xml="<user_preferences>" +
 				"<id>"+data_id+"</id>" +
 				"<name>offline</name>" +
@@ -372,7 +372,7 @@ function set_session_online()
 			//server_update_row(data_xml,activity_xml);
 			local_update_row(data_xml,activity_xml);
 			hide_menu_items();
-			sessionStorage.setItem('offline','online');
+			set_session_var('offline','online');
 			hide_loader();
 		});
 	},offline_data);
@@ -394,7 +394,7 @@ function set_session_offline()
 	{
 		data_ids.forEach(function(data_id)
 		{
-			sessionStorage.setItem('offline','offline');
+			set_session_var('offline','offline');
 			var data_xml="<user_preferences>" +
 				"<id>"+data_id+"</id>" +
 				"<name>offline</name>" +
@@ -413,7 +413,7 @@ function set_session_offline()
 			//server_update_simple(data_xml);
 			local_update_row(data_xml,activity_xml);
 			hide_menu_items();
-			sessionStorage.setItem('offline','offline');
+			set_session_var('offline','offline');
 			hide_loader();
 		});
 	},offline_data);

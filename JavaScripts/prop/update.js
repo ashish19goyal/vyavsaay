@@ -4901,37 +4901,87 @@ function form93_update_item(form)
 		var amount=form.elements[2].value;
 		var status=form.elements[4].value;
 		var data_id=form.elements[5].value;
+		var repayment_method=form.elements[6].value;
+		var emi=form.elements[7].value;
+		var pending_emis=form.elements[8].value;
+		var repayment_amount=amount;
+		if(repayment_method=='instalments')
+		{
+			repayment_amount=parseFloat(pending_emis)*parseFloat(emi);
+		}
 		var adjective="to";
+		var receiver="loan";
+		var giver=account;
+		var ptype='received';
+		var due_time=get_debit_period();
 		if(type=='taken')
 		{
 			adjective="from";
-		}
+			giver="loan";
+			receiver=account;
+			ptype='paid';
+		}		
 		var last_updated=get_my_time();
 		var data_xml="<loans>" +
-					"<id>"+data_id+"</id>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</loans>";	
+				"<id>"+data_id+"</id>" +
+				"<status>"+status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</loans>";	
 		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>loans</tablename>" +
-					"<link_to>form93</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Status of loan of amount Rs. "+amount+" "+type+" "+adjective+" "+account+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
+				"<data_id>"+data_id+"</data_id>" +
+				"<tablename>loans</tablename>" +
+				"<link_to>form93</link_to>" +
+				"<title>Closed</title>" +
+				"<notes>Loan of amount Rs. "+amount+" "+type+" "+adjective+" "+account+"</notes>" +
+				"<updated_by>"+get_name()+"</updated_by>" +
+				"</activity>";
+		var payment_id=get_new_key();
+		var transaction2_xml="<transactions>" +
+				"<id>"+payment_id+"</id>" +
+				"<trans_date>"+get_my_time()+"</trans_date>" +
+				"<amount>"+repayment_amount+"</amount>" +
+				"<receiver>"+receiver+"</receiver>" +
+				"<giver>"+giver+"</giver>" +
+				"<tax>0</tax>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</transactions>";
+		var payment_xml="<payments>" +
+				"<id>"+payment_id+"</id>" +
+				"<acc_name>"+account+"</acc_name>" +
+				"<type>"+ptype+"</type>" +
+				"<total_amount>"+repayment_amount+"</total_amount>" +
+				"<paid_amount>0</paid_amount>" +
+				"<status>pending</status>" +
+				"<date>"+get_my_time()+"</date>" +
+				"<due_date>"+get_my_time()+"</due_date>" +
+				"<mode></mode>" +
+				"<transaction_id>"+payment_id+"</transaction_id>" +
+				"<bill_id>"+data_id+"</bill_id>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</payments>";
 		if(is_online())
 		{
 			server_update_row(data_xml,activity_xml);
+			server_create_simple(transaction2_xml);
+			server_create_simple_func(payment_xml,function()
+			{
+				if(type=='taken')
+					modal28_action(payment_id);
+				else
+					modal26_action(payment_id);
+			});
 		}
 		else
 		{
 			local_update_row(data_xml,activity_xml);
-		}
-		
-		for(var i=0;i<6;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
+			local_create_simple(transaction2_xml);
+			local_create_simple_func(payment_xml,function()
+			{
+				if(type=='taken')
+					modal28_action(payment_id);
+				else
+					modal26_action(payment_id);
+			});
 		}
 	}
 	else

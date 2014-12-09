@@ -455,11 +455,11 @@ function form8_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
 						rowsHTML+="<textarea wrap='soft' readonly='readonly' form='form8_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
-						rowsHTML+="<img class='edit_icon' wrap='virtual' src='images/edit.jpeg' form='form8_"+result.id+"' onclick='modal17_action($(this));'>";
+						rowsHTML+="<img class='edit_icon' wrap='virtual' src='images/edit.png' form='form8_"+result.id+"' onclick='modal17_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Details'>";
 						rowsHTML+="<textarea wrap='soft' readonly='readonly' form='form8_"+result.id+"'>"+detail_string+"</textarea>";
-						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form8_"+result.id+"' onclick='modal17_action($(this));'>";
+						rowsHTML+="<img class='edit_icon' src='images/edit.png' form='form8_"+result.id+"' onclick='modal17_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
@@ -747,7 +747,7 @@ function form11_ini()
 							rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' value='"+result.type+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Account'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form11_"+result.id+"' value='"+result.acc_name+"'>";
+							rowsHTML+="<textarea readonly='readonly' form='form11_"+result.id+"'>"+result.acc_name+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Total Amount'>";
 							rowsHTML+="<input type='number' step='any' readonly='readonly' form='form11_"+result.id+"' value='"+result.total_amount+"'>";
@@ -760,7 +760,7 @@ function form11_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Details'>";
 							rowsHTML+="<textarea readonly='readonly' form='form11_"+result.id+"'>"+detail_string+"</textarea>";
-							rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form11_"+result.id+"' onclick='modal29_action($(this));'>";
+							rowsHTML+="<img class='edit_icon' src='images/edit.png' form='form11_"+result.id+"' onclick='modal29_action($(this));'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.id+"'>";
@@ -1820,7 +1820,7 @@ function form30_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
 						rowsHTML+="<textarea readonly='readonly' form='form30_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
-						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form30_"+result.id+"' onclick='modal24_action($(this));'>";
+						rowsHTML+="<img class='edit_icon' src='images/edit.png' form='form30_"+result.id+"' onclick='modal24_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
@@ -2213,7 +2213,7 @@ function form40_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
 						rowsHTML+="<textarea readonly='readonly' form='form40_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
-						rowsHTML+="<img class='edit_icon' src='images/edit.jpeg' form='form40_"+result.id+"' onclick='modal25_action($(this));'>";
+						rowsHTML+="<img class='edit_icon' src='images/edit.png' form='form40_"+result.id+"' onclick='modal25_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Notes'>";
 						rowsHTML+="<textarea readonly='readonly' form='form40_"+result.id+"' class='dblclick_editable'>"+result.notes+"</textarea>";
@@ -6312,12 +6312,18 @@ function form93_ini()
 			"<type>"+ftype+"</type>" +
 			"<account>"+faccount+"</account>" +
 			"<loan_amount></loan_amount>" +
+			"<repayment_method></repayment_method>" +
 			"<status>"+fstatus+"</status>" +
 			"<date_initiated></date_initiated>" +
 			"<interest_paid></interest_paid>" +
 			"<interest_rate></interest_rate>" +
 			"<interest_period></interest_period>" +
 			"<next_interest_date></next_interest_date>" +
+			"<emi></emi>" +
+			"<emi_period></emi_period>" +
+			"<next_emi_date></next_emi_date>" +
+			"<count_instalments></count_instalments>" +
+			"<pending_emi></pending_emi>" +
 			"<interest_type></interest_type>" +
 			"<last_updated sort='desc'></last_updated>" +
 			"</loans>";
@@ -6328,14 +6334,23 @@ function form93_ini()
 	{
 		results.forEach(function(result)
 		{
-			var rowsHTML="";
-			var details="Date inititated: "+get_my_past_date(result.date_initiated)+
-					"\nInterest rate: "+result.interest_rate +
-					"\nInterest period: "+result.interest_period+" days" +
-					"\nInterest is : "+result.interest_type +
+			var details="Repayment as lump sum "+
+					"\nDate inititated: "+get_my_past_date(result.date_initiated)+
+					"\nInterest rate is "+result.interest_rate + "%"+
+					"\nInterest period is "+result.interest_period+" days" +
+					"\nInterest is "+result.interest_type +
 					"\nInterest paid till date: "+result.interest_paid+
 					"\nNext interest payment date: "+get_my_past_date(result.next_interest_date);
-			rowsHTML+="<tr>";
+			if(result.repayment_method=='instalments')
+			{
+				details="Repayment in instalments"+
+				"\nDate inititated: "+get_my_past_date(result.date_initiated)+
+				"\nEMI is Rs. "+result.emi +
+				"\nEMI period is "+result.emi_period+" days" +
+				"\n"+result.pending_emi+" EMIs are pending"+
+				"\nNext emi payment date is "+get_my_past_date(result.next_emi_date);
+			}
+			var rowsHTML="<tr>";
 				rowsHTML+="<form id='form93_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Type'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form93_"+result.id+"' value='"+result.type+"'>";
@@ -6350,11 +6365,14 @@ function form93_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form93_"+result.id+"'>"+details+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form93_"+result.id+"' value='"+result.status+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form93_"+result.id+"' value='"+result.status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form93_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form93_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='hidden' form='form93_"+result.id+"' value='"+result.repayment_method+"'>";
+						rowsHTML+="<input type='hidden' form='form93_"+result.id+"' value='"+result.emi+"'>";
+						rowsHTML+="<input type='hidden' form='form93_"+result.id+"' value='"+result.pending_emi+"'>";
+						rowsHTML+="<input type='submit' class='export_icon' title='Close loan' form='form93_"+result.id+"' value='Close'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form93_"+result.id+"' title='Delete' onclick='form93_delete_item($(this));'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";

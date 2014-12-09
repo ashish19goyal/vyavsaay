@@ -297,3 +297,15 @@ function form90_import_template()
 	var data_array=['id','name','notes'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Manage Loans
+* @formNo 93
+*/
+function form93_import_template()
+{
+	var data_array=['id','type','account','date_initiated','loan_amount','repayment_method',
+	                'interest_paid','interest_rate','interest_period','next_interest_date','interest_type',
+	                'emi','emi_period','next_emi_date','pending_emi','status'];
+	my_array_to_csv(data_array);
+};

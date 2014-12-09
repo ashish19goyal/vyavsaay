@@ -1283,7 +1283,7 @@ function form88_import(data_array,import_type)
 				"<product unique='yes'>"+row.product+"</product>" +
 				"<process_notes>"+row.process_notes+"</process_notes>" +
 				"<status>"+row.status+"</status>" +
-				"<schedule>"+row.schedule+"</schedule>" +
+				"<schedule>"+get_raw_time(row.schedule)+"</schedule>" +
 				"<iteration_notes>"+row.iteration_notes+"</iteration_notes>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</manufacturing_schedule>";
@@ -1327,6 +1327,59 @@ function form90_import(data_array,import_type)
 				"<notes>"+row.process_notes+"</notes>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</bill_types>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+
+/**
+* @form Manage Loans
+* @formNo 93
+*/
+function form93_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<loans>" +
+				"<id>"+row.id+"</id>" +
+				"<type>"+row.type+"</type>" +
+				"<account>"+row.account+"</account>" +
+				"<date_initiated>"+get_raw_time(row.date_initiated)+"</date_initiated>" +
+				"<loan_amount>"+row.loan_amount+"</loan_amount>" +
+				"<repayment_method>"+row.repayment_method+"</repayment_method>" +
+				"<interest_paid>"+row.interest_paid+"</interest_paid>" +
+				"<interest_rate>"+row.interest_rate+"</interest_rate>" +
+				"<interest_period>"+row.interest_period+"</interest_period>" +
+				"<next_interest_date>"+get_raw_time(row.next_interest_date)+"</next_interest_date>" +
+				"<interest_type>"+row.interest_type+"</interest_type>" +
+				"<emi>"+row.emi+"</emi>" +
+				"<emi_period>"+row.emi_period+"</emi_period>" +
+				"<next_emi_date>"+get_raw_time(row.next_emi_date)+"</next_emi_date>" +
+				"<pending_emi>"+row.pending_emi+"</pending_emi>" +
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</loans>";
 		if(import_type=='create_new')
 		{
 			if(is_online())

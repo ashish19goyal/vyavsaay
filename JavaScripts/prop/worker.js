@@ -676,3 +676,194 @@ function manufactured_products_outofstock()
 	
 	setTimeout(manufactured_products_outofstock,1800000);
 }
+
+/**
+ * This function processes interest for active loans
+ */
+function loans_interest_processing()
+{
+	var interest_due_time=parseFloat(get_my_time())+86400000;
+	
+	var loans_data="<loans>" +
+			"<id></id>" +
+			"<type></type>" +
+			"<account></account>" +
+			"<loan_amount></loan_amount>" +
+			"<repayment_method>lump sum</repayment_method>" +
+			"<interest_paid></interest_paid>" +
+			"<interest_rate></interest_rate>" +
+			"<interest_period></interest_period>" +
+			"<next_interest_date compare='less than'>"+interest_due_time+"</next_interest_date>" +
+			"<interest_type></interest_type>" +
+			"<status>open</status>" +
+			"</loans>";
+	
+	fetch_requested_data('',loans_data,function(loans)
+	{
+		loans.forEach(function(loan)
+		{
+			var interest_amount=parseFloat(loan.loan_amount)*(parseFloat(loan.interest_rate)/100);
+			var next_interest_date=parseFloat(loan.next_interest_date)+(parseFloat(loan.interest_period)*86400000);
+			if(loan.interest_type=='paid' && interest_amount>0)
+			{
+				var interest_paid=parseFloat(loan.interest_paid)+interest_amount;
+				var receiver="interest";
+				var giver=loan.account;
+				var payment_type='received';
+				if(loan.type=='taken')
+				{
+					receiver=loan.account;
+					giver="interest";
+					payment_type='paid';
+				}
+				var pt_tran_id=get_new_key()+""+(Math.random()*1000);
+				var loan_xml="<loans>" +
+							"<id>"+loan.id+"</id>" +
+							"<next_interest_date>"+next_interest_date+"</next_interest_date>" +
+							"<interest_paid>"+interest_paid+"</interest_paid>" +
+							"<last_updated>"+get_my_time()+"</last_updated>" +
+							"</loans>";
+				var payment_xml="<payments>" +
+							"<id>"+pt_tran_id+"</id>" +
+							"<status>pending</status>" +
+							"<type>"+payment_type+"</type>" +
+							"<date>"+get_my_time()+"</date>" +
+							"<total_amount>"+interest_amount+"</total_amount>" +
+							"<paid_amount>0</paid_amount>" +
+							"<acc_name>"+loan.account+"</acc_name>" +
+							"<due_date>"+loan.next_interest_date+"</due_date>" +
+							"<mode></mode>" +
+							"<transaction_id>"+pt_tran_id+"</transaction_id>" +
+							"<bill_id>"+loan.id+"</bill_id>" +
+							"<last_updated>"+get_my_time()+"</last_updated>" +
+							"</payments>";
+				var pt_xml="<transactions>" +
+							"<id>"+pt_tran_id+"</id>" +
+							"<trans_date>"+get_my_time()+"</trans_date>" +
+							"<amount>"+interest_amount+"</amount>" +
+							"<receiver>"+receiver+"</receiver>" +
+							"<giver>"+giver+"</giver>" +
+							"<tax>0</tax>" +
+							"<last_updated>"+get_my_time()+"</last_updated>" +
+							"</transactions>";
+				if(is_online())
+				{
+					server_update_simple(loan_xml);
+					server_create_simple(payment_xml);
+					server_create_simple(pt_xml);
+				}
+				else
+				{
+					local_update_simple(loan_xml);
+					local_create_simple(payment_xml);
+					local_create_simple(pt_xml);
+				}
+			}
+			else
+			{
+				var loan_amount=parseFloat(loan.loan_amount)+interest_amount;
+				var loan_xml="<loans>" +
+							"<id>"+loan.id+"</id>" +
+							"<next_interest_date>"+next_interest_date+"</next_interest_date>" +
+							"<loan_amount>"+loan_amount+"</loan_amount>" +
+							"<last_updated>"+get_my_time()+"</last_updated>" +
+							"</loans>";
+				if(is_online())
+				{
+					server_update_simple(loan_xml);
+				}
+				else
+				{
+					local_update_simple(loan_xml);
+				}
+			}
+		});
+	});
+	
+	setTimeout(loans_interest_processing,1800000);
+}
+
+
+/**
+ * This function processes instalments for active loans
+ */
+function loans_instalment_processing()
+{
+	var instalment_due_time=parseFloat(get_my_time())+86400000;
+	
+	var loans_data="<loans>" +
+			"<id></id>" +
+			"<type></type>" +
+			"<account></account>" +
+			"<loan_amount></loan_amount>" +
+			"<repayment_method>instalments</repayment_method>" +
+			"<emi></emi>" +
+			"<emi_period></emi_period>" +
+			"<pending_emi compare='more than'>0</pending_emi>" +
+			"<next_emi_date compare='less than'>"+instalment_due_time+"</next_emi_date>" +
+			"<status>open</status>" +
+			"</loans>";
+	
+	fetch_requested_data('',loans_data,function(loans)
+	{
+		loans.forEach(function(loan)
+		{
+			//var interest_amount=parseFloat(loan.loan_amount)*(parseFloat(loan.interest_rate)/100);
+			var next_emi_date=parseFloat(loan.next_emi_date)+(parseFloat(loan.emi_period)*86400000);
+			var pending_emi=parseFloat(loan.pending_emi)-1;
+			var receiver="interest";
+			var giver=loan.account;
+			var payment_type='received';
+			if(loan.type=='taken')
+			{
+				receiver=loan.account;
+				giver="interest";
+				payment_type='paid';
+			}
+			var pt_tran_id=get_new_key()+""+(Math.random()*1000);
+			var loan_xml="<loans>" +
+						"<id>"+loan.id+"</id>" +
+						"<next_emi_date>"+next_emi_date+"</next_emi_date>" +
+						"<pending_emi>"+pending_emi+"</pending_emi>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</loans>";
+			var payment_xml="<payments>" +
+						"<id>"+pt_tran_id+"</id>" +
+						"<status>pending</status>" +
+						"<type>"+payment_type+"</type>" +
+						"<date>"+get_my_time()+"</date>" +
+						"<total_amount>"+loan.emi+"</total_amount>" +
+						"<paid_amount>0</paid_amount>" +
+						"<acc_name>"+loan.account+"</acc_name>" +
+						"<due_date>"+loan.next_emi_date+"</due_date>" +
+						"<mode></mode>" +
+						"<transaction_id>"+pt_tran_id+"</transaction_id>" +
+						"<bill_id>"+loan.id+"</bill_id>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</payments>";
+			var pt_xml="<transactions>" +
+						"<id>"+pt_tran_id+"</id>" +
+						"<trans_date>"+get_my_time()+"</trans_date>" +
+						"<amount>"+loan.emi+"</amount>" +
+						"<receiver>"+receiver+"</receiver>" +
+						"<giver>"+giver+"</giver>" +
+						"<tax>0</tax>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</transactions>";
+			if(is_online())
+			{
+				server_update_simple(loan_xml);
+				server_create_simple(payment_xml);
+				server_create_simple(pt_xml);
+			}
+			else
+			{
+				local_update_simple(loan_xml);
+				local_create_simple(payment_xml);
+				local_create_simple(pt_xml);
+			}
+		});
+	});
+	
+	setTimeout(loans_instalment_processing,1800000);
+}

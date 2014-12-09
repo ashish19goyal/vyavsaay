@@ -22,7 +22,8 @@
 div.pricing_grids{
 	width:100%;
 	margin:0 auto;
-	display:table;
+	display:block;
+	text-align:center;
 }
 
 div.pricing_grid{
@@ -38,6 +39,7 @@ div.pricing_grid{
 	min-height: 1px;
 	padding-left: 5px;
 	padding-right: 5px;
+	vertical-align: middle;
 }
 
 img.review_picture_rotate{
@@ -55,20 +57,17 @@ img.review_picture_rotate{
 	display:block;
 }
 #share_box .count {
-	color:#444444;
 	display:block;
-	font-size:17px;
 	line-height:34px;
-	height:34px;
+	height:50px;
 	padding:4px 0;
 	position:relative;
-	text-align:center;
-	text-decoration:none;
 	width:50px;
 	background-color:#eee;
 	-webkit-border-radius:4px;
 	-moz-border-radius:4px;
 	border-radius:4px;
+	text-align:center;
 }
 #share_box .share {
 	color:#FFFFFF;

@@ -1956,9 +1956,9 @@ function modal26_action(payment_id)
 	
 	$(fdue_date).datepicker();
 	
-	var customer_data="<customers>" +
+	var customer_data="<accounts>" +
 			"<acc_name></acc_name>" +
-			"</customers>";
+			"</accounts>";
 	set_my_value_list(customer_data,fcustomer);
 	set_static_value_list('payments','status',fstatus);
 	set_static_value_list('payments','mode',fmode);
@@ -3116,14 +3116,14 @@ function modal39_action(schedule_date)
 			var last_updated=get_my_time();
 			var adjective="to";
 			var receiver=account;
-			var giver="master";
+			var giver="loan";
 			var ptype='paid';
 			var due_time=get_debit_period();
 			if(type=='taken')
 			{
 				adjective="from";
 				giver=account;
-				receiver="master";
+				receiver="loan";
 				ptype='received';
 			}
 			var data_xml="<loans>" +
@@ -3148,15 +3148,6 @@ function modal39_action(schedule_date)
 						"<notes>Loan of amount Rs. "+amount+" "+type+" "+adjective+" "+account+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			var transaction_xml="<transactions>" +
-						"<id>"+data_id+"</id>" +
-						"<trans_date>"+get_my_time()+"</trans_date>" +
-						"<amount>"+amount+"</amount>" +
-						"<receiver>"+giver+"</receiver>" +
-						"<giver>"+receiver+"</giver>" +
-						"<tax>0</tax>" +
-						"<last_updated>"+get_my_time()+"</last_updated>" +
-						"</transactions>";
 			var payment_id=get_new_key()+""+(Math.random()*1000);
 			var transaction2_xml="<transactions>" +
 						"<id>"+payment_id+"</id>" +
@@ -3176,7 +3167,7 @@ function modal39_action(schedule_date)
 						"<status>closed</status>" +
 						"<date>"+get_my_time()+"</date>" +
 						"<due_date>"+get_my_time()+"</due_date>" +
-						"<mode>cash</mode>" +
+						"<mode></mode>" +
 						"<transaction_id>"+payment_id+"</transaction_id>" +
 						"<bill_id>"+data_id+"</bill_id>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +
@@ -3184,16 +3175,26 @@ function modal39_action(schedule_date)
 			if(is_online())
 			{
 				server_create_row(data_xml,activity_xml);
-				server_create_simple(transaction_xml);
 				server_create_simple(transaction2_xml);
-				server_create_simple(payment_xml);
+				server_create_simple_func(payment_xml,function()
+				{
+					if(type=='taken')
+						modal26_action(payment_id);
+					else
+						modal28_action(payment_id);
+				});
 			}
 			else
 			{
 				local_create_row(data_xml,activity_xml);
-				local_create_simple(transaction_xml);
 				local_create_simple(transaction2_xml);
-				local_create_simple(payment_xml);
+				local_create_simple_func(payment_xml,function()
+				{
+					if(type=='taken')
+						modal26_action(payment_id);
+					else
+						modal28_action(payment_id);
+				});
 			}
 		}
 		else

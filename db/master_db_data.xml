@@ -88,6 +88,22 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>customer_return_items</tablename>
+			<listname>type</listname>
+			<name>refund</name>
+			<value>Refund</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>customer_return_items</tablename>
+			<listname>type</listname>
+			<name>exchange</name>
+			<value>Exchange</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>bill_types</tablename>
 			<listname>status</listname>
 			<name>active</name>
@@ -100,6 +116,22 @@
 			<listname>status</listname>
 			<name>inactive</name>
 			<value>Inactive</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loans</tablename>
+			<listname>repayment_method</listname>
+			<name>installments</name>
+			<value>Installments</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loans</tablename>
+			<listname>repayment_method</listname>
+			<name>lump sum</name>
+			<value>Lump sum</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

@@ -41,7 +41,7 @@
 		
 		<div id="share_box" data-url="http://vyavsaay.com" data-text="Latest technology for your business" title='Share'>
 			<div class="box">
-				<div class="count">5</div>
+				<div class="count"><img src='./images/share.ico'></div>
 				<div class="share">share</div>
 			</div>
 			<div class="social_buttons">
@@ -103,8 +103,8 @@
 						</div>
 						<div class="col-md-6 banner-text">
 							<h1>Vyavsaay</h1>
-							<p>Vyavsaay provides latest technology solutions for your business, on a cloud based platform.</p>
-							<p>Email: info@vyavsaay.com <br> Phone: +91-9818005232</p>
+							<p><b>Vyavsaay provides latest technology solutions for your business, on a cloud based platform.</b></p>
+							<p><b>Email: info@vyavsaay.com <br> Phone: +91-9818005232</b></p>
 						</div>
 					<!-- 	<div class="clearfix"> </div> -->
 					</div>
@@ -116,8 +116,8 @@
 	       		<div class="container">
 	       		   <div class="gallery-head text-center">
 					  <h3>ABOUT</h3>
-					  <p>Vyavsaay is best suited for small and medium enterprises that don't want to spend a lot of money in setting up and managing IT infrastructure or availing a speedy internet connection.</p>
-					 <p>It takes care of managing your business processes and information, so that you can focus on developing client relationships and optimizing business processes for the growth of your business.</p>
+					  <p>Vyavsaay provides industry standard and customizable automation solutions for your business. It is best suited for small and medium enterprises that don't want to spend a lot of money in setting up and managing IT infrastructure.</p>
+					 <p>It provides solutions around Billing, Inventory management, Accounting, Project management, Task force management and Customer Relationship Management (CRM).</p>
 				    </div>
 	       			<div class="row text-center">
 	       				<div class="col-md-4 about_grid screenshots">
@@ -171,37 +171,42 @@
 		<div id="pricing" class="demo">
        		<div style='height:50px;'></div>
        		<div class="container">
-       		   <div class="demo-head text-center">
+       		   	<div class="demo-head text-center">
 				  <h3>Pricing</h3>
 			    </div>
 			    <div style='height:50px;'></div>
-       			<div class="text-center pricing_grids row">
+       			<div class="pricing_grids">
        					<div class="Demo-text pricing_grid">
 	       					<p style='text-align:center;'><b>Basic Plan</b></p>
-	       					Ideal for small businesses with one business owner. Advanced analytical features are not available under this plan.
-	       					<br>Free subscription for first four months.
+	       					Single User</br></br>
+	       					Covers industry-wise standard business processes</br></br>
+	       					Free 30 day trial
 	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Rs. 500/month</b></p>
 	       				</div>
 	       				<div class="Demo-text pricing_grid">
 	       					<p style='text-align:center;'><b>Premium Plan</b></p>
-	       					Ideal for small businesses with advanced analytical requirements. All the features of Vyavsaay are available under this package.
-	       					<br>Free subscription for first four months.
+	       					Single User</br></br>
+	       					Advanced analytical features</br></br>
+	       					Customizations</br></br>
+	       					Free 30 day trial
 	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Rs. 1000/month</b></p>
 	       				</div>
 	       				<div class="Demo-text pricing_grid">
 	       					<p style='text-align:center;'><b>Multi-User</b></p>
-	       					Suitable for diverse businesses with upto 10 business owners and users. All the features of Vyavsaay are available under this package.
-	       					<br>Free subscription for first three months.
+	       					Multiple Users</br></br>
+	       					Advanced analytical features</br></br>
+	       					Customizations</br></br>
+	       					Free 30 day trial
 	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Rs. 2000/month</b></p>
 	       				</div>
 	       				<div class="Demo-text pricing_grid">
 	       					<p style='text-align:center;'><b>Enterprise Level</b></p>
-	       					Customized solutions for medium sized enterprises with specific business requirements. You can also pick and choose existing implementations.
+	       					Customized solutions for medium sized enterprises with specific business requirements.</br></br>
+	       					Maintenance and updates inclusive.
 	       					<p style='position:absolute;bottom:0;text-align:center;'><b><a href="#contact">Ask for a quote</a></b></p>
 	       				</div>
        			</div>
        			<div style='height:100px;'></div>
-       			<div class="clearfix"></div>
        		</div>
 		</div>
 	  <!---//End-Reviews----->

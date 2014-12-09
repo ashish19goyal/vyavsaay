@@ -327,9 +327,9 @@
 	<div id="modal26" title="Payment Details">
 		<form id='modal26_form'>
 			<fieldset>
-				<label>Customer <input type='text' required readonly='readonly'></label><br/>
-				<label>Total Amount <input type="number" required readonly='readonly' step='any'></label><br/>
-				<label>Amount Paid<input type="number" required step='any'></label><br/>
+				<label>Paid by: <input type='text' required readonly='readonly'></label><br/>
+				<label>Total Amount (Rs.): <input type="number" required readonly='readonly' step='any'></label><br/>
+				<label>Amount Paid (Rs.):<input type="number" required step='any'></label><br/>
 				<label>Due Date <input type="text"></label><br/>
 				<label>Mode of Payment <input type="text"></label><br/>
 				<label>Status<input type="text"></label><br/>
@@ -354,9 +354,9 @@
 	<div id="modal28" title="Payment Details">
 		<form id='modal28_form'>
 			<fieldset>
-				<label>Supplier <input type='text' required readonly='readonly'></label><br/>
-				<label>Total Amount <input type="number" required readonly='readonly' step='any'></label><br/>
-				<label>Amount Paid<input type="number" required step='any'></label><br/>
+				<label>Paid to: <input type='text' required readonly='readonly'></label><br/>
+				<label>Total Amount (Rs.): <input type="number" required readonly='readonly' step='any'></label><br/>
+				<label>Amount Paid (Rs.): <input type="number" required step='any'></label><br/>
 				<label>Due Date <input type="text"></label><br/>
 				<label>Mode of Payment <input type="text"></label><br/>
 				<label>Status<input type="text"></label><br/>
@@ -489,9 +489,13 @@
 				<label>Account <input type="text" required></label><br/>
 				<label>Loan amount <input type='number' min='0' required step='any'></label><br/>
 				<label>Date initiated <input type="text" required></label><br/>
+				<label>Repayment method <input type="text" required></label><br/>
 				<label>Interest rate(%) <input type="number" step='any' min='0' required></label><br/>
 				<label>Interest period(in days) <input type="number" min='0' required></label><br/>
 				<label>Interest is <input type="text" required></label><br/>
+				<label>EMI <input type="number" step='any' min='0' required></label><br/>
+				<label>EMI period(in days) <input type="number" min='0' required></label><br/>
+				<label>Number of EMIs <input type="number" min='0' required></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

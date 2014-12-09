@@ -616,11 +616,16 @@
 			<account index='no' type="VARCHAR(100)"></account>
 			<date_initiated index='no' type="BIGINT"></date_initiated>
 			<loan_amount index='no' type='DECIMAL(12,2)'></loan_amount>
+			<repayment_method index='no' type='VARCHAR(25)'></repayment_method><!--instalments/lump sum-->
 			<interest_paid index='no' type='DECIMAL(12,2)'></interest_paid>
 			<interest_rate index='no' type='DECIMAL(5,3)'></interest_rate>
 			<interest_period index='no' type='INTEGER'></interest_period><!--in days-->
 			<next_interest_date index='no' type="BIGINT"></next_interest_date>
 			<interest_type index='yes' type="VARCHAR(45)"></interest_type><!-- added to principal/paid -->
+			<emi index='no' type='DECIMAL(12,2)'></emi>
+			<emi_period index='no' type='INTEGER'></emi_period><!--in days-->
+			<next_emi_date index='no' type="BIGINT"></next_emi_date>
+			<pending_emi index='no' type='INTEGER'></pending_emi>
 			<status index='yes' type="VARCHAR(45)"></status><!-- open/closed -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</loans>

@@ -2816,19 +2816,13 @@ function form93_delete_item(button)
 					"<notes>Loan of amount Rs. "+amount+" "+type+" "+adjective+" "+account+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var transaction_xml="<transactions>" +
-				"<id>"+data_id+"</id>" +
-				"</transactions>";
-
 		if(is_online())
 		{
 			server_delete_row(loan_xml,activity_xml);
-			server_delete_simple(transaction_xml);
 		}
 		else
 		{
 			local_delete_row(loan_xml,activity_xml);
-			local_delete_simple(transaction_xml);
 		}	
 		$(button).parent().parent().remove();
 
