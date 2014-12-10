@@ -34,15 +34,20 @@ input:not([readonly="readonly"]):not([type="button"]):focus,textarea:not([readon
 
 td>input[type="text"]
 {
-	max-width: 100px;
-	min-width: 50px;
+	min-width:100px;
+	max-width: 120px;
 	transition: width 0.25s;
 	white-space:normal;
 }
 
+td{
+	width: 1px;
+    white-space: nowrap;
+}
+
 td>input[type="number"]
 {
-	max-width:100px;
+	width:50px;
 	transition: width 0.25s;
 }
 

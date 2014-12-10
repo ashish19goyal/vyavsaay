@@ -22,6 +22,8 @@
 				echo "<li><a id='report48_link' href='#report48' onclick='report48_header_ini();' data-i18n='form.resource_analysis'></a></li>";
 			if(strpos($_SESSION['reports'],'report50-')!==false)
 				echo "<li><a id='report50_link' href='#report50' onclick='report50_header_ini();' data-i18n='form.margin_by_products'></a></li>";
+			if(strpos($_SESSION['reports'],'report51-')!==false)
+				echo "<li><a id='report51_link' href='#report51' onclick='report51_header_ini();' data-i18n='form.dead_items'></a></li>";
 		echo "</ul>";
 
 		if(strpos($_SESSION['forms'],'form39-')!==false)
@@ -44,6 +46,8 @@
 			include "reports/report48.php";
 		if(strpos($_SESSION['reports'],'report50-')!==false)
 			include "reports/report50.php";
+		if(strpos($_SESSION['reports'],'report51-')!==false)
+			include "reports/report51.php";
 	?>
 	
 	<script>

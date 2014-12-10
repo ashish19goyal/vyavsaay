@@ -1743,7 +1743,7 @@ function modal22_action()
 			
 			$("#modal22_billings").find('input').each(function()
 			{
-				var id=get_new_key()+""+Math.random()*1000;
+				var id=get_new_key()+""+Math.floor(Math.random()*1000);
 				var price=$(this).val();
 				var bill_type=$(this).attr('id');
 				var sale_price_xml="<sale_prices>" +
@@ -2334,7 +2334,7 @@ function modal28_action(payment_id)
 	});
 	
 	var payments_data="<payments>" +
-			"<id>"+payment_id+"</id>" +
+			"<id exact='yes'>"+payment_id+"</id>" +
 			"<acc_name></acc_name>" +
 			"<type>paid</type>" +
 			"<total_amount></total_amount>" +
@@ -3084,16 +3084,50 @@ function modal39_action(schedule_date)
 	var account_filter=form.elements[2];
 	var amount_filter=form.elements[3];
 	var date_filter=form.elements[4];
-	var rate_filter=form.elements[5];
-	var period_filter=form.elements[6];
-	var itype_filter=form.elements[7];
+	var repayment_filter=form.elements[5];
+	var rate_filter=form.elements[6];
+	var iperiod_filter=form.elements[7];
+	var itype_filter=form.elements[8];
+	var emi_filter=form.elements[9];
+	var emi_period_filter=form.elements[10];
+	var num_emi_filter=form.elements[11];
 	
 	var account_data="<accounts>" +
 			"<acc_name></acc_name>" +
 			"</accounts>";
 	set_my_value_list(account_data,account_filter);
 	set_static_filter('loans','type',type_filter);
+	set_static_filter('loans','repayment_method',repayment_filter);
 	set_static_filter('loans','interest_type',itype_filter);
+
+	$(rate_filter).parent().hide();
+	$(iperiod_filter).parent().hide();
+	$(itype_filter).parent().hide();
+	$(emi_filter).parent().hide();
+	$(emi_period_filter).parent().hide();
+	$(num_emi_filter).parent().hide();
+
+	$(repayment_filter).on('blur',function(event)
+	{
+		if(repayment_filter.value=='instalments')
+		{
+			$(emi_filter).parent().show();
+			$(emi_period_filter).parent().show();
+			$(num_emi_filter).parent().show();
+			$(rate_filter).parent().hide();
+			$(iperiod_filter).parent().hide();
+			$(itype_filter).parent().hide();
+		}
+		else
+		{
+			$(rate_filter).parent().show();
+			$(iperiod_filter).parent().show();
+			$(itype_filter).parent().show();
+			$(emi_filter).parent().hide();
+			$(emi_period_filter).parent().hide();
+			$(num_emi_filter).parent().hide();
+		}
+	});
 	
 	$(date_filter).datepicker();
 	date_filter.value=get_my_date();
@@ -3108,10 +3142,15 @@ function modal39_action(schedule_date)
 			var account=form.elements[2].value;
 			var amount=form.elements[3].value;
 			var date=get_raw_time(form.elements[4].value);
-			var rate=form.elements[5].value;
-			var period=form.elements[6].value;
-			var itype=form.elements[7].value;
+			var repayment=form.elements[5].value;
+			var rate=form.elements[6].value;
+			var period=form.elements[7].value;
+			var itype=form.elements[8].value;
 			var next_date=date+(parseFloat(period)*86400000);
+			var emi=form.elements[9].value;
+			var emi_period=form.elements[10].value;
+			var num_emi=form.elements[11].value;
+			var next_emi_date=date+(parseFloat(emi_period)*86400000);
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
 			var adjective="to";
@@ -3132,11 +3171,16 @@ function modal39_action(schedule_date)
 						"<account>"+account+"</account>" +
 						"<loan_amount>"+amount+"</loan_amount>" +
 						"<date_initiated>"+date+"</date_initiated>" +
+						"<repayment_method>"+repayment+"</repayment_method>" +
 						"<interest_paid>0</interest_paid>" +
 						"<interest_rate>"+rate+"</interest_rate>" +
 						"<interest_period>"+period+"</interest_period>" +
 						"<next_interest_date>"+next_date+"</next_interest_date>" +
 						"<interest_type>"+itype+"</interest_type>" +
+						"<emi>"+emi+"</emi>" +
+						"<emi_period>"+emi_period+"</emi_period>" +
+						"<pending_emi>"+num_emi+"</pending_emi>" +
+						"<next_emi_date>"+next_emi_date+"</next_emi_date>" +
 						"<status>open</status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</loans>";
@@ -3148,7 +3192,7 @@ function modal39_action(schedule_date)
 						"<notes>Loan of amount Rs. "+amount+" "+type+" "+adjective+" "+account+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			var payment_id=get_new_key()+""+(Math.random()*1000);
+			var payment_id=get_new_key()+""+Math.floor(Math.random()*1000);
 			var transaction2_xml="<transactions>" +
 						"<id>"+payment_id+"</id>" +
 						"<trans_date>"+get_my_time()+"</trans_date>" +
@@ -3178,6 +3222,7 @@ function modal39_action(schedule_date)
 				server_create_simple(transaction2_xml);
 				server_create_simple_func(payment_xml,function()
 				{
+					console.log(payment_id);
 					if(type=='taken')
 						modal26_action(payment_id);
 					else

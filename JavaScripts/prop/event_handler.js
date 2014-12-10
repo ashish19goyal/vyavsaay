@@ -122,12 +122,18 @@ function modal_forms_ini()
 	}
 	for(var i=8;i<40;i++)
 	{
+		var j=i;
 		$("#modal"+i).dialog({
 	   		autoOpen: false,
 	   		width: 300,
 	   		modal: true,
 	   		show: "slide",
 	   		closeOnEscape: true,
+	   		close:function(event,ui)
+	   		{
+	   			var form_id="modal"+j+"_form";
+	   			document.getElementById(form_id).reset();
+	   		}
 		});
 	}
 	for(var i=50;i<53;i++)

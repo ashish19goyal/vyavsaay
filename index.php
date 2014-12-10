@@ -41,7 +41,7 @@
 		
 		<div id="share_box" data-url="http://vyavsaay.com" data-text="Latest technology for your business" title='Share'>
 			<div class="box">
-				<div class="count"><img src='./images/share.ico'></div>
+				<div class="count"><img src='./images/share.ico' style='width:40px;height:40px'></div>
 				<div class="share">share</div>
 			</div>
 			<div class="social_buttons">
@@ -116,8 +116,8 @@
 	       		<div class="container">
 	       		   <div class="gallery-head text-center">
 					  <h3>ABOUT</h3>
-					  <p>Vyavsaay provides industry standard and customizable automation solutions for your business. It is best suited for small and medium enterprises that don't want to spend a lot of money in setting up and managing IT infrastructure.</p>
-					 <p>It provides solutions around Billing, Inventory management, Accounting, Project management, Task force management and Customer Relationship Management (CRM).</p>
+					  <p>Vyavsaay provides industry standard and customizable automation solutions for your business. It is well suited for small and medium enterprises that don't want to spend a lot of money in setting up and managing their own IT infrastructure.</p>
+					 <p>Vyavsaay provides solutions around Billing, Inventory management, Accounting, Project management, Task force management and Customer Relationship Management (CRM).</p>
 				    </div>
 	       			<div class="row text-center">
 	       				<div class="col-md-4 about_grid screenshots">

@@ -30,8 +30,6 @@
 				echo "<li><a id='form89_link' href='#form89' onclick='form89_header_ini();' data-i18n='form.appointments'></a></li>";
 			if(strpos($_SESSION['forms'],'form90-')!==false)
 				echo "<li><a id='form90_link' href='#form90' onclick='form90_header_ini(); form90_ini();' data-i18n='form.billing_types'></a></li>";
-			if(strpos($_SESSION['reports'],'report49-')!==false)
-				echo "<li><a id='report49_link' href='#report49' onclick='report49_header_ini();' data-i18n='form.packing_list'></a></li>";
 		echo "</ul>";
 
 		if(strpos($_SESSION['forms'],'form10-')!==false)

@@ -490,12 +490,12 @@
 				<label>Loan amount <input type='number' min='0' required step='any'></label><br/>
 				<label>Date initiated <input type="text" required></label><br/>
 				<label>Repayment method <input type="text" required></label><br/>
-				<label>Interest rate(%) <input type="number" step='any' min='0' required></label><br/>
-				<label>Interest period(in days) <input type="number" min='0' required></label><br/>
-				<label>Interest is <input type="text" required></label><br/>
-				<label>EMI <input type="number" step='any' min='0' required></label><br/>
-				<label>EMI period(in days) <input type="number" min='0' required></label><br/>
-				<label>Number of EMIs <input type="number" min='0' required></label><br/>
+				<label>Interest rate(%) <input type="number" step='any' min='0'></label><br/>
+				<label>Interest period(in days) <input type="number" min='0'></label><br/>
+				<label>Interest is <input type="text"></label><br/>
+				<label>EMI <input type="number" step='any' min='0'></label><br/>
+				<label>EMI period(in days) <input type="number" min='0'></label><br/>
+				<label>Number of EMIs <input type="number" min='0'></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

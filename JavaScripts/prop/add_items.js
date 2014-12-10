@@ -896,21 +896,24 @@ function form21_add_item()
 		rowsHTML+="<form id='form21_"+id+"'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form21_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' form='form21_"+id+"' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' step='any' required form='form21_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="<input type='number' required form='form21_"+id+"' step='any'></br>";
+				rowsHTML+="Total: <input type='number' required form='form21_"+id+"' step='any'></br>";
+				rowsHTML+="Tax: <input type='number' form='form21_"+id+"' value='' step='any'></br>";
+				rowsHTML+="Amount: <input type='number' readonly='readonly' form='form21_"+id+"' value='' step='any'></br>";
 				rowsHTML+="Unit Price: <input type='number' readonly='readonly' form='form21_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form21_"+id+"'>";
-				rowsHTML+="<img class='add_icon' form='form21_"+id+"' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' form='form21_"+id+"' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Storage Area'>";
 				rowsHTML+="<input type='text' form='form21_"+id+"'>";
-				rowsHTML+="<img class='add_icon' form='form21_"+id+"' title='Add new storage' onclick='modal35_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' form='form21_"+id+"' title='Add new storage' onclick='modal35_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form21_"+id+"' value='"+id+"'>";
@@ -924,11 +927,13 @@ function form21_add_item()
 		var fields=document.getElementById("form21_"+id);
 		var name_filter=fields.elements[0];
 		var quantity_filter=fields.elements[1];
-		var amount_filter=fields.elements[2];
-		var price_filter=fields.elements[3];
-		var batch_filter=fields.elements[4];
-		var storage_filter=fields.elements[5];
-		var id_filter=fields.elements[6];
+		var total_filter=fields.elements[2];
+		var tax_filter=fields.elements[3];
+		var amount_filter=fields.elements[4];
+		var price_filter=fields.elements[5];
+		var batch_filter=fields.elements[6];
+		var storage_filter=fields.elements[7];
+		var id_filter=fields.elements[8];
 		
 		$(name_filter).focus();
 		
@@ -966,8 +971,18 @@ function form21_add_item()
 			var price=parseFloat(amount_filter.value)/parseFloat(quantity_filter.value);
 			price_filter.value=price;
 		});
-		$(amount_filter).on('blur',function(event)
+		$(total_filter).on('blur',function(event)
 		{
+			var amount=parseFloat(total_filter.value)-parseFloat(tax_filter.value);
+			amount_filter.value=amount;
+			var price=parseFloat(amount_filter.value)/parseFloat(quantity_filter.value);
+			price_filter.value=price;
+			
+		});
+		$(tax_filter).on('blur',function(event)
+		{
+			var amount=parseFloat(total_filter.value)-parseFloat(tax_filter.value);
+			amount_filter.value=amount;
 			var price=parseFloat(amount_filter.value)/parseFloat(quantity_filter.value);
 			price_filter.value=price;
 		});

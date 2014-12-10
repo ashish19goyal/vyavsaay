@@ -711,9 +711,8 @@ function form21_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var batch=form.elements[4].value;
-		var storage=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var batch=form.elements[6].value;
+		var data_id=form.elements[8].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<supplier_bill_items>" +

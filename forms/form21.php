@@ -2,11 +2,14 @@
 	<form id='form21_master'>
 		<fieldset>
 			Supplier<input type='text' required>
+			<img src='./images/add_image.png' class='add_image' onclick='modal13_action();'>
 			Bill Number<input type='text' required>
 			Bill Date<input type='text' required>
 			Entry Date<input type='text' required>
+			Amount<input readonly='readonly' type='number' required>
 			Discount <input required type='number' value='0' step='any'>
-			Total Amount<input readonly='readonly' type='number' step='any' value='0' required>
+			Tax <input readonly='readonly' type='number' required>
+			Total Amount<input readonly='readonly' type='number' step='any' required>
 			Notes<textarea></textarea>
 			<input type='hidden' value=''>
 			<input type='hidden' name='transaction'>

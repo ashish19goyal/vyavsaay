@@ -487,6 +487,24 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report50</name>
+			<display_name>margin_by_products</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report51</name>
+			<display_name>dead_items</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -1449,6 +1467,28 @@
 			<username>master</username>
 			<element_id>report48</element_id>
 			<element_name>resource_analysis</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report50</element_id>
+			<element_name>margin_by_products</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report51</element_id>
+			<element_name>dead_items</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

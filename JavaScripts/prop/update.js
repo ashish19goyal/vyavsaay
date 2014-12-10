@@ -531,7 +531,7 @@ function form10_update_form()
 						
 						free_pre_requisites.forEach(function(free_pre_requisite)
 						{
-							var task_id=get_new_key()+""+(Math.random()*1000);
+							var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
 							var task_xml="<task_instances>" +
 									"<id>"+task_id+"</id>" +
 									"<name>"+free_pre_requisite.name+"</name>" +
@@ -929,7 +929,7 @@ function form12_update_form()
 
 				                $('#form12_body').prepend(rowsHTML);
 				                
-				                var bill_item_id=get_new_key()+""+Math.random()*1000;
+				                var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
 								var free_xml="<bill_items>" +
 											"<id>"+bill_item_id+"</id>" +
 											"<item_name>"+free_product_name+"</item_name>" +
@@ -1420,20 +1420,26 @@ function form21_update_form()
 		var entry_date=get_raw_time(form.elements[4].value);
 		
 		var total=0;
+		var tax=0;
+		var amount=0;
 		
 		$("[id^='save_form21']").each(function(index)
 		{
-			var form_id=$(this).attr('form');
-			var subform=document.getElementById(form_id);
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
 			total+=parseFloat(subform.elements[2].value);
+			tax+=parseFloat(subform.elements[3].value);
+			amount+=parseFloat(subform.elements[4].value);
 		});
 
-		var discount=form.elements[5].value;
-		form.elements[6].value=parseFloat(total)-parseFloat(discount);
+		var discount=parseFloat(form.elements[6].value);
+		form.elements[5].value=amount;
+		total=total-discount
+		form.elements[8].value=total;
 		
-		var notes=form.elements[7].value;
-		var data_id=form.elements[8].value;
-		var transaction_id=form.elements[9].value;
+		var notes=form.elements[9].value;
+		var data_id=form.elements[10].value;
+		var transaction_id=form.elements[11].value;
 		var last_updated=get_my_time();
 								
 		var data_xml="<supplier_bills>" +
@@ -1444,6 +1450,8 @@ function form21_update_form()
 					"<entry_date>"+entry_date+"</entry_date>" +
 					"<total>"+total+"</total>" +
 					"<discount>"+discount+"</discount>" +
+					"<amount>"+amount+"</amount>" +
+					"<tax>"+tax+"</tax>" +
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<notes>"+notes+"</notes>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -1497,7 +1505,7 @@ function form21_update_form()
 							"<amount>"+total+"</amount>" +
 							"<receiver>"+supplier+"</receiver>" +
 							"<giver>master</giver>" +
-							"<tax>0</tax>" +
+							"<tax>"+(-tax)+"</tax>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</transactions>";
 				if(is_online())
@@ -3696,7 +3704,7 @@ function form72_update_form()
 						
 						free_pre_requisites.forEach(function(free_pre_requisite)
 						{
-							var task_id=get_new_key()+""+(Math.random()*1000);
+							var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
 							var task_xml="<task_instances>" +
 									"<id>"+task_id+"</id>" +
 									"<name>"+free_pre_requisite.name+"</name>" +
@@ -4410,7 +4418,7 @@ function form88_update_item(form)
 			{
 				pre_requisites.forEach(function(pre_requisite)
 				{
-					var task_id=get_new_key()+""+(Math.random()*1000);
+					var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
 					var task_xml="<task_instances>" +
 							"<id>"+task_id+"</id>" +
 							"<name>"+pre_requisite.name+"</name>" +
@@ -4755,7 +4763,7 @@ function form91_update_form()
 
 				                $('#form91_body').prepend(rowsHTML);
 				                
-				                var bill_item_id=get_new_key()+""+(Math.random()*1000);
+				                var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
 								var free_xml="<bill_items>" +
 											"<id>"+bill_item_id+"</id>" +
 											"<item_name>"+free_product_name+"</item_name>" +
@@ -4924,7 +4932,7 @@ function form93_update_item(form)
 		var last_updated=get_my_time();
 		var data_xml="<loans>" +
 				"<id>"+data_id+"</id>" +
-				"<status>"+status+"</status>" +
+				"<status>closed</status>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</loans>";	
 		var activity_xml="<activity>" +

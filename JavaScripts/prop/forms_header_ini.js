@@ -712,14 +712,17 @@ function form21_header_ini()
 	var fields=document.getElementById('form21_master');
 	
 	var supplier_filter=fields.elements[1];
-	var bill_id_filter=fields.elements[2];
+	fields.elements[2].value="";
 	var bill_date=fields.elements[3];
 	var entry_date=fields.elements[4];
 	fields.elements[5].value=0;
-	fields.elements[6].value=0;
-	fields.elements[7].value="";
-	fields.elements[8].value=get_new_key();
-	fields.elements[9].value=get_new_key();
+	var discount_filter=fields.elements[6];
+	discount_filter.value=0;
+	fields.elements[7].value=0;
+	fields.elements[8].value=0;
+	fields.elements[9].value="";
+	fields.elements[10].value=get_new_key();
+	fields.elements[11].value=fields.elements[10].value;
 	
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
@@ -742,7 +745,6 @@ function form21_header_ini()
 
 	supplier_filter.value='';
 	$(supplier_filter).focus();
-	bill_id_filter.value="";
 }
 
 /**
@@ -752,8 +754,6 @@ function form21_new_form()
 {
 	form21_header_ini();
 	$("#form21_body").find("tr").remove();
-	$("#form21_whatsapp").hide();
-	$("#form21_gmail").hide();
 }
 
 

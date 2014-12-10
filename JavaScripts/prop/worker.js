@@ -811,13 +811,13 @@ function loans_instalment_processing()
 			//var interest_amount=parseFloat(loan.loan_amount)*(parseFloat(loan.interest_rate)/100);
 			var next_emi_date=parseFloat(loan.next_emi_date)+(parseFloat(loan.emi_period)*86400000);
 			var pending_emi=parseFloat(loan.pending_emi)-1;
-			var receiver="interest";
+			var receiver="emi";
 			var giver=loan.account;
 			var payment_type='received';
 			if(loan.type=='taken')
 			{
 				receiver=loan.account;
-				giver="interest";
+				giver="emi";
 				payment_type='paid';
 			}
 			var pt_tran_id=get_new_key()+""+(Math.random()*1000);

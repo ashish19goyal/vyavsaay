@@ -859,3 +859,68 @@ function report48_header_ini()
 			"</manufacturing_schedule>";
 	set_my_filter(product_data,product_filter);
 }
+
+/**
+ * @reportNo 50
+ * @report Margin by products
+ */
+function report50_header_ini()
+{	
+	var form=document.getElementById('report50_header');
+	var make_filter=form.elements[1];
+	var product_filter=form.elements[2];
+	var margin_filter=form.elements[3];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report50_ini();
+	});
+
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	set_my_filter(product_data,product_filter);
+	
+	var make_data="<product_master>" +
+		"<make></make>" +
+		"</product_master>";
+	set_my_filter(make_data,make_filter);
+	
+	$("#report50_slider").slider(
+	{
+		range: true,
+		min: 0,
+		max: 100,
+		values: [5,15],
+		slide: function(event,ui){
+			$(margin_filter).val(ui.values[0]+"% - "+ui.values[1]+"%");
+	}});
+	$(margin_filter).val($("#report50_slider").slider("values",0)+"% - "+$("#report50_slider").slider("values",1)+"%");
+}
+
+/**
+ * @reportNo 51
+ * @report Dead items
+ */
+function report51_header_ini()
+{	
+	var form=document.getElementById('report51_header');
+	var product_filter=form.elements[1];
+	var date_filter=form.elements[2];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report51_ini();
+	});
+
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	set_my_filter(product_data,product_filter);
+
+	$(date_filter).datepicker();
+}

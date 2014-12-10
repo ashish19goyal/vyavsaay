@@ -654,6 +654,14 @@ function report15_ini()
 			"<trans_date compare='more than'>"+get_raw_time(start_date)+"</trans_date>" +
 			"<trans_date compare='less than'>"+get_raw_time(end_date)+"</trans_date>" +
 			"</transactions>";
+	var loans_data="<loans>" +
+			"<type></type>" +
+			"<loan_amount></loan_amount>" +
+			"<repayment_method></repayment_method>" +
+			"<emi></emi>" +
+			"<pending_emi></pending_emi>" +
+			"<status>open</status>" +
+			"</loans>";
 			
 	fetch_requested_data('report15',payments_data,function(payments)
 	{
@@ -725,28 +733,79 @@ function report15_ini()
 			}
 			result.labels.push('Tax');
 			result.datasets[0].data.push(tax_value);
-			var mybarchart = new Chart(ctx).Bar(result,{});
-			document.getElementById("report15_legend").innerHTML=mybarchart.generateLegend();
 			
-			var print_button=form.elements[4];
-			$(print_button).off('click');
-			$(print_button).on('click',function(event)
+			
+			fetch_requested_data('report15',loans_data,function(loans)
 			{
-	  			   var container=document.createElement('div');
-	  			   var title=document.createElement('div');
-	  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Financial Summary</b></div>";
-	  			   var legend=document.createElement('div');
-	  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-	  			   var report_image=document.createElement('img');
-	  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-	  			   container.appendChild(title);
-	  			   container.appendChild(legend);
-	  			   container.appendChild(report_image);
-	  			   $.print(container);
+				var loan_label='Loans given';
+				var emi_label='Pending EMIs (receivables)';
+				var loan_amount=0;
+				var pending_emi_amount=0;
+				for(var l=0;l<loans.length;l++)
+				{
+					if(loans[l].repayment_method=='lump sum')
+					{
+						if(loans[l].type=='given')
+						{
+							loan_amount+=parseFloat(loans[l].loan_amount);
+						}
+						else
+						{
+							loan_amount-=parseFloat(loans[l].loan_amount);
+						}
+					}
+					else
+					{
+						if(loans[l].type=='given')
+						{
+							pending_emi_amount+=(parseFloat(loans[l].pending_emi)*parseFloat(loans[l].emi));
+						}
+						else
+						{
+							pending_emi_amount-=(parseFloat(loans[l].pending_emi)*parseFloat(loans[l].emi));
+						}
+					}
+				}
+				
+				if(loan_amount<0)
+				{
+					loan_label='Loans taken';
+					loan_amount=0-loan_amount;
+				}
+				if(pending_emi_amount<0)
+				{
+					emi_label='Pending EMIs (payable)';
+					pending_emi_amount=0-pending_emi_amount;
+				}
+				
+				result.labels.push(loan_label);
+				result.datasets[0].data.push(loan_amount);
+				result.labels.push(emi_label);
+				result.datasets[0].data.push(pending_emi_amount);
+			
+				var mybarchart = new Chart(ctx).Bar(result,{});
+				document.getElementById("report15_legend").innerHTML=mybarchart.generateLegend();
+				
+				var print_button=form.elements[4];
+				$(print_button).off('click');
+				$(print_button).on('click',function(event)
+				{
+		  			   var container=document.createElement('div');
+		  			   var title=document.createElement('div');
+		  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Financial Summary</b></div>";
+		  			   var legend=document.createElement('div');
+		  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
+		  			   var report_image=document.createElement('img');
+		  			   report_image.setAttribute('src',mybarchart.toBase64Image());
+	
+		  			   container.appendChild(title);
+		  			   container.appendChild(legend);
+		  			   container.appendChild(report_image);
+		  			   $.print(container);
+				});
+	
+				hide_loader();
 			});
-
-			hide_loader();
 		},tax_data);
 	});
 };
@@ -3038,7 +3097,7 @@ function report48_ini()
 	
 	$('#report48_body').html('');
 
-	var manu_data="<manufacturing_schedule count='100'>" +
+	var manu_data="<manufacturing_schedule>" +
 		"<product>"+product+"</product>" +
 		"</manufacturing_schedule>";
 	
@@ -3136,4 +3195,189 @@ function report48_ini()
 			});
 		});
 	},manu_data);
+};
+
+
+/**
+ * @reportNo 50
+ * @report Margin by products
+ */
+function report50_ini()
+{
+	show_loader();
+	var form=document.getElementById('report50_header');
+	var make=form.elements[1].value;
+	var product=form.elements[2].value;
+	var margin_start=parseFloat($("#report50_slider").slider("values",0));
+	var margin_end=parseFloat($("#report50_slider").slider("values",1));
+	
+	$('#report50_body').html('');
+
+	var product_data="<product_master>" +
+		"<name>"+product+"</name>" +
+		"<make>"+make+"</make>" +
+		"</product_master>";
+	
+	get_single_column_data(function(products)
+	{
+		var product_string="--";
+		for(var i in products)
+		{
+			product_string+=products[i]+"--";
+		}
+		
+		var margin_data="<product_instances>" +
+				"<id></id>" +
+				"<product_name array='yes'>"+product_string+"</product_name>" +
+				"<batch></batch>" +
+				"<sale_price></sale_price>" +
+				"<cost_price></cost_price>" +
+				"</product_instances>";
+		
+		fetch_requested_data('report50',margin_data,function(product_instances)
+		{
+			var margins=[];
+			for(var j=0;j<product_instances.length;j++)
+			{	
+				var margin=new Object();
+				margin.product=product_instances[j].product_name;
+				margin.highest=((parseFloat(product_instances[j].sale_price)/parseFloat(product_instances[j].cost_price))-1)*100;
+				margin.lowest=margin.highest;
+				
+				for(var k=j+1;k<product_instances.length;k++)
+				{
+					if(product_instances[j].product_name==product_instances[k].product_name)
+					{
+						var new_margin=((parseFloat(product_instances[k].sale_price)/parseFloat(product_instances[k].cost_price))-1)*100;
+						if(new_margin>margin.highest)
+						{
+							margin.highest=new_margin;
+						}
+						else if(new_margin<margin.lowest)
+						{
+							margin.lowest=new_margin;
+						}
+						product_instances.splice(k,1);
+						k-=1;
+					}
+				}
+				if(margin.lowest>margin_start && margin.highest<margin_end)
+				{
+					margins.push(margin);
+				}
+			}
+			
+			margins.forEach(function(margin)
+			{
+				var rowsHTML="<tr>";
+					rowsHTML+="<td data-th='Product'>";
+						rowsHTML+=margin.product;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Highest Margin'>";
+						rowsHTML+=margin.highest;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Lowest Margin'>";
+						rowsHTML+=margin.lowest;
+					rowsHTML+="</td>";
+				rowsHTML+="</tr>";
+				
+				$('#report50_body').append(rowsHTML);
+			});
+			
+			var print_button=form.elements[5];
+			$(print_button).off('click');
+			$(print_button).on('click',function(event)
+			{
+			   var container=document.createElement('div');
+			   var title=document.createElement('div');
+			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Margin by products</b></div>";
+			   var table_element=document.getElementById('report50_body').parentNode;
+			   var table_copy=table_element.cloneNode(true);
+			   container.appendChild(title);
+			   container.appendChild(table_copy);
+			   $.print(container);
+			});
+			hide_loader();
+		});
+	},product_data);
+};
+
+
+/**
+ * @reportNo 51
+ * @report Dead items
+ */
+function report51_ini()
+{
+	show_loader();
+	var form=document.getElementById('report51_header');
+	var product_name=form.elements[1].value;
+	var date_since=get_raw_time(form.elements[2].value);
+	
+	$('#report51_body').html('');
+
+	var product_data="<product_master>" +
+			"<name>"+product_name+"</name>" +
+			"</product_master>";
+	
+	get_single_column_data(function(products)
+	{
+		var product_string="--";
+		for(var i in products)
+		{
+			product_string+=products[i]+"--";
+		}
+		
+		var bill_data="<bill_items>" +
+				"<item_name array='yes'>"+product_string+"</item_name>" +
+				"<last_updated compare='more than'>"+date_since+"</last_updated>" +
+				"</bill_items>";
+		
+		get_single_column_data(function(bill_items)
+		{			
+			products.forEach(function(product)
+			{
+				var sold=false;
+				for(var i in bill_items)
+				{
+					if(bill_items[i]==product)
+					{
+						sold=true;
+						break;
+					}
+				}
+				if(!sold)
+				{
+					get_inventory(product,'',function(quantity)
+					{
+						var rowsHTML="<tr>";
+							rowsHTML+="<td data-th='Product'>";
+								rowsHTML+=product;
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Inventory'>";
+								rowsHTML+=quantity;
+							rowsHTML+="</td>";
+						rowsHTML+="</tr>";
+						
+						$('#report51_body').append(rowsHTML);
+					});
+				}
+			});
+			
+			var print_button=form.elements[4];
+			$(print_button).off('click');
+			$(print_button).on('click',function(event)
+			{
+			   var container=document.createElement('div');
+			   var title=document.createElement('div');
+			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Dead items</b></div>";
+			   var table_element=document.getElementById('report51_body').parentNode;
+			   var table_copy=table_element.cloneNode(true);
+			   container.appendChild(title);
+			   container.appendChild(table_copy);
+			   $.print(container);
+			});
+			hide_loader();
+		},bill_data);
+	},product_data);
 };

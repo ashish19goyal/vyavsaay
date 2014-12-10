@@ -143,7 +143,6 @@
 			<bill_id index='yes' type="BIGINT"></bill_id>
 			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
-			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<storage index='yes' type="VARCHAR(25)"></storage>
@@ -154,6 +153,7 @@
 			<supplier index='yes' type="VARCHAR(100)"></supplier>
 			<return_date index='yes' type="BIGINT"></return_date>
 			<total index='no' type="DECIMAL(12,2)"></total>
+			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
 			<transaction_id index='no' type="BIGINT"></transaction_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
@@ -166,6 +166,7 @@
 			<notes index='yes' type="TEXT"></notes>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<refund_amount index='no' type="DECIMAL(12,2)"></refund_amount>
+			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_return_items>
 	<transactions>
