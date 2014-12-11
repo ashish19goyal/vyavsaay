@@ -225,28 +225,31 @@ function get_data_from_log_table(func)
 	
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		database.get('activities',{index:'status',range:IDBKeyRange.only('unsynced')},function(err,records)
+		database.get('activities',{},function(err,records)
 		{
 			var log_data="";
 			var counter=0;
 			for(var row in records)
 			{
-				if(counter===100)
+				if(records[row].status=='unsynced')
 				{
-					log_data+="<separator></separator>";
-					counter=0;
+					if(counter===100)
+					{
+						log_data+="<separator></separator>";
+						counter=0;
+					}
+					var row_data=records[row];
+					log_data+="<row>";
+					for(var field in row_data)
+					{
+						log_data+="<"+field+">";
+							log_data+=row_data[field];
+						log_data+="</"+field+">";
+					}
+					log_data+="</row>";
+					
+					counter+=1;
 				}
-				var row_data=records[row];
-				log_data+="<row>";
-				for(var field in row_data)
-				{
-					log_data+="<"+field+">";
-						log_data+=row_data[field];
-					log_data+="</"+field+">";
-				}
-				log_data+="</row>";
-				
-				counter+=1;
 			}
 			//console.log(log_data);
 			func(log_data);

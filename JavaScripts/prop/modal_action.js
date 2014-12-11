@@ -2980,7 +2980,7 @@ function modal37_action(id)
  */
 function modal38_action(father_id)
 {
-	var father_form=document.getElementById(father_id);
+	var father_form=document.getElementById("form1_"+father_id);
 	var form=document.getElementById('modal38_form');	
 	var fsale_price=form.elements[1];
 		
@@ -3096,9 +3096,9 @@ function modal39_action(schedule_date)
 			"<acc_name></acc_name>" +
 			"</accounts>";
 	set_my_value_list(account_data,account_filter);
-	set_static_filter('loans','type',type_filter);
-	set_static_filter('loans','repayment_method',repayment_filter);
-	set_static_filter('loans','interest_type',itype_filter);
+	set_static_value_list('loans','type',type_filter);
+	set_static_value_list('loans','repayment_method',repayment_filter);
+	set_static_value_list('loans','interest_type',itype_filter);
 
 	$(rate_filter).parent().hide();
 	$(iperiod_filter).parent().hide();

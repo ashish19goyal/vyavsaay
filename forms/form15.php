@@ -1,9 +1,10 @@
 <div id='form15' class='function_detail'>
 	<form id='form15_master'>
 		<fieldset>
-			Customer<input type='text' required>
-			Return Date<input type='text' required>
-			Total Refund<input readonly='readonly' type='number' step='any'>
+			<label>Customer	<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'></br>
+			<input type='text' required></label>
+			<label>Return Date</br><input type='text' required></label>
+			<label>Total Refund</br>Rs. <input readonly='readonly' type='number' step='any'></label>
 			<input type='hidden' name='bill_id'>
 			<input type='hidden' name='transaction'>
 			<input type='hidden' name='tax'>
@@ -24,8 +25,7 @@
 					<th>Batch</th>
 					<th>Notes</th>
 					<th>Quantity</th>
-					<th>Exchange/Refund</th>
-					<th>Batch/Amount</th>
+					<th>Type</th>
 					<th><input type='button' form='form15_header' title='Add item' class='add_icon' onclick='form15_add_item();'></th>
 			</tr>
 		</thead>

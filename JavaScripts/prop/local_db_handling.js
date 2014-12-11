@@ -293,12 +293,12 @@ function local_update_row(data_xml,activity_xml)
 						user_display:'yes',
 						last_updated:get_my_time()};
 
-				console.log(act_row);
+				//console.log(act_row);
 				for(var k=0;k<activity_data.length;k++)
 				{
 					act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
 				}
-				console.log(act_row);
+				//console.log(act_row);
 				//console.log("activities length="+activity_data.length);
 				database.upsert('activities',act_row,function(err,insertedkey)
 				{
@@ -1111,6 +1111,7 @@ function local_read_multi_column(columns,callback,results)
  */
 function local_delete_row(data_xml,activity_xml)
 {
+	//console.log(data_xml);
 	show_loader();
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
@@ -1131,19 +1132,25 @@ function local_delete_row(data_xml,activity_xml)
 			filter.push(fil);
 		}
 	}
-
+	
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		database.get(table,{index: filter[0].name,range: IDBKeyRange.only(filter[0].value)},function(err,records_object)
+		var options={};
+		if(filter[0].name=='id')
 		{
+			options={range:IDBKeyRange.only(filter[0].value)};
+		}
+		database.get(table,options,function(err,records_object)
+		{
+			//console.log(records_object);
 			var records=[];
 			for(var row in records_object)
 			{
 				records.push(records_object[row]);
 			}
-			
+			//console.log(records);
 			records.forEach(function(record)
 			{
 				var match=true;
@@ -1159,6 +1166,8 @@ function local_delete_row(data_xml,activity_xml)
 				}
 				if(match===true)
 				{
+					//console.log('deleting record');
+					//console.log(record);
 					database.delete(table,record.id,function(err)
 					{
 						var act_row={id:get_new_key(),
@@ -1211,7 +1220,12 @@ function local_delete_simple(data_xml)
 	var db_name="re_local_"+domain;
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		database.get(table,{index: filter[0].name,range: IDBKeyRange.only(filter[0].value)},function(err,records_object)
+		var options={};
+		if(filter[0].name=='id')
+		{
+			options={range:IDBKeyRange.only(filter[0].value)};
+		}
+		database.get(table,options,function(err,records_object)
 		{
 			var records=[];
 			for(var row in records_object)
@@ -1284,7 +1298,12 @@ function local_delete_simple_func(data_xml,func)
 	var db_name="re_local_"+domain;
 	sklad.open(db_name,{version:2},function(err,database)
 	{
-		database.get(table,{index: filter[0].name,range: IDBKeyRange.only(filter[0].value)},function(err,records_object)
+		var options={};
+		if(filter[0].name=='id')
+		{
+			options={range:IDBKeyRange.only(filter[0].value)};
+		}
+		database.get(table,options,function(err,records_object)
 		{
 			var records=[];
 			for(var row in records_object)

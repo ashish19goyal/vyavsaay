@@ -12,9 +12,11 @@ function form2_add_item()
 		rowsHTML+="<form id='form2_"+id+"'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' form='form2_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Offer Name'>";
 				rowsHTML+="<input type='text' form='form2_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new offer' onclick='modal8_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Offer Details'>";
 				rowsHTML+="<textarea readonly='readonly' form='form2_"+id+"'></textarea>";
@@ -90,9 +92,11 @@ function form10_add_item()
 		rowsHTML+="<form id='form10_"+id+"'></form>";
 			rowsHTML+="<td data-th='Service Name'>";
 				rowsHTML+="<input type='text' required form='form10_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Person'>";
 				rowsHTML+="<input type='text' form='form10_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Additional Notes'>";
 				rowsHTML+="<textarea required form='form10_"+id+"'></textarea>";
@@ -243,9 +247,11 @@ function form12_add_item()
 		rowsHTML+="<form id='form12_"+id+"'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form12_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form12_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form12_"+id+"' step='any'>";
@@ -509,9 +515,11 @@ function form14_add_item()
 		rowsHTML+="<form id='form14_"+id+"'></form>";
 			rowsHTML+="<td data-th='Task'>";
 				rowsHTML+="<input type='text' required form='form14_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new task type' onclick='modal18_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Assignee'>";
 				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Due Time'>";
 				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
@@ -587,9 +595,11 @@ function form15_add_item()
 		rowsHTML+="<form id='form15_"+id+"'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form15_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form15_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
 				rowsHTML+="<input type='text' required form='form15_"+id+"'>";
@@ -597,15 +607,15 @@ function form15_add_item()
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form15_"+id+"' step='any'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Exchange/Refund'>";
-				rowsHTML+="<input type='text' required form='form15_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Batch/Amount'>";
-				rowsHTML+="<input type='text' required form='form15_"+id+"'>";
+			rowsHTML+="<td data-th='Type'>";
+				rowsHTML+="<input type='text' required form='form15_"+id+"'></br>";
+				rowsHTML+="<span class='dynamic_before'><input type='text' required form='form15_"+id+"'></span>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form15_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form15_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form15_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form15_"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form15_"+id+"' id='save_form15_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form15_"+id+"' id='delete_form15_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
@@ -622,6 +632,8 @@ function form15_add_item()
 		var total_batch_filter=fields.elements[5];
 		var tax_filter=fields.elements[6];
 		var id_filter=fields.elements[7];
+		var total_unit_filter=fields.elements[8];
+		var tax_unit_filter=fields.elements[9];
 		
 		$(name_filter).focus();
 		
@@ -649,6 +661,8 @@ function form15_add_item()
 			type_filter.value="";
 			total_batch_filter.value=0;
 			tax_filter.value=0;
+			total_unit_filter.value=0;
+			tax_unit_filter.value=0;
 		});
 		
 		$(batch_filter).on('blur',function(event)
@@ -696,6 +710,8 @@ function form15_add_item()
 					{
 						notes_filter.value=notes_value;
 					}
+					total_unit_filter.value=parseFloat(bill_items[0].total)/parseFloat(bill_items[0].quantity);
+					tax_unit_filter.value=parseFloat(bill_items[0].tax)/parseFloat(bill_items[0].quantity);
 				});
 			},bill_data);
 			
@@ -711,33 +727,31 @@ function form15_add_item()
 		{
 			if(type_filter.value=='refund')
 			{
+				$(total_batch_filter).parent().attr('data-content','Amount: ');
 				$(total_batch_filter).removeAttr('list');
+				total_batch_filter.value=parseFloat(total_unit_filter.value)*parseFloat(quantity_filter.value);
+				tax_filter.value=parseFloat(tax_unit_filter.value)*parseFloat(quantity_filter.value);
 			}
 			else
 			{
+				$(total_batch_filter).parent().attr('data-content','Batch: ');
 				var batch_data="<product_instances>" +
 						"<batch></batch>" +
 						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 						"</product_instances>";
 				set_my_value_list(batch_data,total_batch_filter);
+				total_batch_filter.value="";
+				tax_filter.value=0;
 			}
-			total_batch_filter.value="";
-			tax_filter.value=0;
-
 		});
 		
-		$(total_batch_filter).on('blur',function(event)
+		$(quantity_filter).on('blur',function(event)
 		{
 			if(type_filter.value=='refund')
 			{
-				var tax_data="<product_master>" +
-						"<tax></tax>" +
-						"<name exact='yes'>"+name_filter.value+"</name>" +
-						"</product_master>";
-				get_single_column_data(function(taxes)
-				{
-					tax_filter.value=parseFloat(total_batch_filter.value)*(parseFloat(taxes[0])/100);
-				},tax_data);
+				$(total_batch_filter).removeAttr('list');
+				total_batch_filter.value=parseFloat(total_unit_filter.value)*parseFloat(quantity_filter.value);
+				tax_filter.value=parseFloat(tax_unit_filter.value)*parseFloat(quantity_filter.value);
 			}
 		});
 	}
@@ -761,12 +775,14 @@ function form19_add_item()
 		rowsHTML+="<form id='form19_"+id+"'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form19_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form19_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
-				rowsHTML+="<input type='text' form='form19_"+id+"'>";
+				rowsHTML+="<textarea form='form19_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form19_"+id+"' step='any'>";
@@ -775,7 +791,9 @@ function form19_add_item()
 				rowsHTML+="<input type='number' required form='form19_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form19_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form19_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form19_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form19_"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form19_"+id+"' id='save_form19_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form19_"+id+"' id='delete_form19_"+id+"' onclick='$(this).parent().parent().remove();'>";
@@ -790,8 +808,10 @@ function form19_add_item()
 		var notes_filter=fields.elements[2];
 		var quantity_filter=fields.elements[3];
 		var total_filter=fields.elements[4];
-		var id_filter=fields.elements[5];
-		var price_filter=fields.elements[6];
+		var tax_filter=fields.elements[5];
+		var id_filter=fields.elements[6];
+		var price_filter=fields.elements[7];
+		var tax_unit_filter=fields.elements[8];
 		
 		$(name_filter).focus();
 		
@@ -818,9 +838,12 @@ function form19_add_item()
 			quantity_filter.value=0;
 			total_filter.value=0;
 			price_filter.value=0;
+			tax_filter.value=0;
+			tax_unit_filter.value=0;
 		});
 		
-		$(batch_filter).on('blur',function(event){
+		$(batch_filter).on('blur',function(event)
+		{
 			var supplier_name=document.getElementById("form19_master").elements[1].value;
 			var bill_data="<supplier_bills>" +
 					"<id></id>" +
@@ -840,6 +863,8 @@ function form19_add_item()
 						"<batch exact='yes'>"+batch_filter.value+"</batch>" +
 						"<quantity></quantity>" +
 						"<amount></amount>" +
+						"<tax></tax>" +
+						"<total></total>" +
 						"<unit_price></unit_price>" +
 						"<last_updated></last_updated>" +
 						"</supplier_bill_items>";
@@ -851,7 +876,7 @@ function form19_add_item()
 						notes_value+=bill_item.quantity+
 									" quantity bought on "+
 									get_my_past_date(bill_item.last_updated)+
-									" for Rs."+bill_item.amount+
+									" for Rs."+bill_item.total+
 									"\n";
 					});
 					if(notes_value=="")
@@ -862,17 +887,20 @@ function form19_add_item()
 					{
 						notes_filter.value=notes_value;
 					}
-					price_filter.value=bill_item.unit_price;
+					price_filter.value=parseFloat(bill_items[0].total)/parseFloat(bill_items[0].quantity);
+					tax_unit_filter.value=parseFloat(bill_items[0].tax)/parseFloat(bill_items[0].quantity);
 				});
 			},bill_data);
 			
 			quantity_filter.value=0;
+			tax_filter.value=0;
 			total_filter.value=0;
 		});
 						
 		$(quantity_filter).on('blur',function(event)
 		{		
 			total_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			tax_filter.value=parseFloat(quantity_filter.value)*parseFloat(tax_unit_filter.value);
 		});
 	}
 	else
@@ -896,7 +924,7 @@ function form21_add_item()
 		rowsHTML+="<form id='form21_"+id+"'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form21_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' form='form21_"+id+"' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' step='any' required form='form21_"+id+"'>";
@@ -909,11 +937,11 @@ function form21_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form21_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' form='form21_"+id+"' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Storage Area'>";
 				rowsHTML+="<input type='text' form='form21_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' form='form21_"+id+"' title='Add new storage' onclick='modal35_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' onclick='modal35_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form21_"+id+"' value='"+id+"'>";
@@ -1008,6 +1036,7 @@ function form24_add_item()
 		rowsHTML+="<form id='form24_"+id+"'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form24_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form24_"+id+"' value='' step='any'>";
@@ -1089,12 +1118,15 @@ function form38_add_item()
 		rowsHTML+="<form id='form38_"+id+"'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' form='form38_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' form='form38_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Store Area'>";
 				rowsHTML+="<input type='text' form='form38_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' onclick='modal35_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form38_"+id+"' value='"+id+"'>";
@@ -1162,6 +1194,7 @@ function form56_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Account'>";
 				rowsHTML+="<input type='text' required form='form56_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new account' onclick='modal12_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
 				rowsHTML+="<input type='number' required step='any' form='form56_"+id+"' value=''>";
@@ -1215,6 +1248,7 @@ function form58_add_item()
 		rowsHTML+="<form id='form58_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form58_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Requisite Type'>";
 				rowsHTML+="<input type='text' form='form58_"+id+"' value=''>";
@@ -1300,6 +1334,7 @@ function form59_add_item()
 		rowsHTML+="<form id='form59_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Requisite Type'>";
 				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
@@ -1378,6 +1413,7 @@ function form60_add_item()
 		rowsHTML+="<form id='form60_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form60_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
 				rowsHTML+="<input type='text' form='form60_"+id+"' value=''>";
@@ -1436,6 +1472,7 @@ function form61_add_item()
 		rowsHTML+="<form id='form61_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form61_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
 				rowsHTML+="<input type='text' form='form61_"+id+"' value=''>";
@@ -1495,9 +1532,11 @@ function form62_add_item()
 		rowsHTML+="<form id='form62_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form62_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Reviewer'>";
 				rowsHTML+="<input type='text' form='form62_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Detail'>";
 				rowsHTML+="<input type='text' form='form62_"+id+"' value=''>";
@@ -1556,9 +1595,11 @@ function form63_add_item()
 		rowsHTML+="<form id='form63_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form63_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Reviewer'>";
 				rowsHTML+="<input type='text' form='form63_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Detail'>";
 				rowsHTML+="<input type='text' form='form63_"+id+"' value=''>";
@@ -1618,6 +1659,7 @@ function form64_add_item()
 		rowsHTML+="<form id='form64_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form64_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Type'>";
 				rowsHTML+="<input type='text' form='form64_"+id+"' value=''>";
@@ -1674,7 +1716,7 @@ function form64_add_item()
 }
 
 /**
- * @form Cross sells
+ * @form Product Cross sells
  * @formNo 66
  */
 function form66_add_item()
@@ -1687,6 +1729,7 @@ function form66_add_item()
 		rowsHTML+="<form id='form66_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form66_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Type'>";
 				rowsHTML+="<input type='text' form='form66_"+id+"' value=''>";
@@ -1756,6 +1799,7 @@ function form69_add_item()
 		rowsHTML+="<form id='form69_"+id+"'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form69_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form69_"+id+"' value='' step='any'>";
@@ -1794,36 +1838,39 @@ function form69_add_item()
 				
 		$(name_filter).on('blur',function(event)
 		{
-			notes_filter.value="";
-			get_inventory(name_filter.value,'',function(quantity)
+			if(name_filter.value!="")
 			{
-				notes_filter.value=notes_filter.value+"\n Total availability: "+quantity;
-			});
-			
-			var price_data="<product_instances>" +
-						"<sale_price></sale_price>" +
-						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-						"</product_instances>";
-			get_single_column_data(function(prices)
-			{
-				var max_value=Math.max.apply(null,prices);
-				var min_value=Math.min.apply(null,prices);
-				notes_filter.value=notes_filter.value+"\n Minimum price: "+min_value+"\n Maximum price: "+max_value;
-			},price_data);
-			
-			var offer_data="<offers>" +
-					"<offer_detail></offer_detail>" +
-					"<offer_type>product</offer_type>" +
-					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-					"<status array='yes'>active--extended</status>" +
-					"</offers>";
-			get_single_column_data(function(offers)
-			{
-				for(var j=0;j<offers.length;j++)
+				notes_filter.value="";
+				get_inventory(name_filter.value,'',function(quantity)
 				{
-					notes_filter.value=notes_filter.value+"\n Offer("+(j+1)+"): "+offers[j];
-				}
-			},offer_data);
+					notes_filter.value=notes_filter.value+"\n Total availability: "+quantity;
+				});
+				
+				var price_data="<product_instances>" +
+							"<sale_price></sale_price>" +
+							"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+							"</product_instances>";
+				get_single_column_data(function(prices)
+				{
+					var max_value=Math.max.apply(null,prices);
+					var min_value=Math.min.apply(null,prices);
+					notes_filter.value=notes_filter.value+"\n Minimum price: "+min_value+"\n Maximum price: "+max_value;
+				},price_data);
+				
+				var offer_data="<offers>" +
+						"<offer_detail></offer_detail>" +
+						"<offer_type>product</offer_type>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"<status array='yes'>active--extended</status>" +
+						"</offers>";
+				get_single_column_data(function(offers)
+				{
+					for(var j=0;j<offers.length;j++)
+					{
+						notes_filter.value=notes_filter.value+"\n Offer("+(j+1)+"): "+offers[j];
+					}
+				},offer_data);
+			}
 		});
 	}
 	else
@@ -2423,6 +2470,7 @@ function form81_add_item()
 		rowsHTML+="<form id='form81_"+id+"'></form>";
 			rowsHTML+="<td data-th='Customer'>";
 				rowsHTML+="<input type='text' form='form81_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Details'>";
 				rowsHTML+="<textarea form='form81_"+id+"' class='dblclick_editable' required></textarea>";
@@ -2432,6 +2480,7 @@ function form81_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Identified By'>";
 				rowsHTML+="<input type='text' form='form81_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form81_"+id+"' value='"+id+"'>";
@@ -2498,7 +2547,7 @@ function form82_add_item()
 				rowsHTML+="<input type='text' required form='row_form82_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Unit Price'>";
-				rowsHTML+="<input type='number' required form='row_form82_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' readonly='readonly' required form='row_form82_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='row_form82_"+id+"' value='"+id+"'>";
@@ -2530,7 +2579,7 @@ function form82_add_item()
 		$(code_filter).on('blur',function(event)
 		{
 			var product_data="<product_master count='1'>" +
-					"<product_name></product_name>" +
+					"<name></name>" +
 					"<bar_code exact='yes'>"+code_filter.value+"</bar_code>" +
 					"</product_master>";
 			get_single_column_data(function(product_name)
@@ -2561,13 +2610,10 @@ function form82_add_item()
 						set_my_value(price_data,price_filter);
 					}
 				},last_batch_data);
-				
-				//form82_add_item();
-				
 			},product_data);
 		});
 		
-		$(product_filter).on('blur',function(event)
+		$(product_filter).on('change',function(event)
 		{
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
@@ -2625,9 +2671,11 @@ function form84_add_item()
 		rowsHTML+="<form id='form84_"+id+"'></form>";
 			rowsHTML+="<td data-th='Customer'>";
 				rowsHTML+="<input type='text' form='form84_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Service'>";
 				rowsHTML+="<input type='text' form='form84_"+id+"' required>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
 				rowsHTML+="<input type='text' class='dblclick_editable' form='form84_"+id+"' value='active'>";
@@ -2694,6 +2742,7 @@ function form88_add_item()
 		rowsHTML+="<form id='form88_"+id+"'></form>";
 			rowsHTML+="<td data-th='Product'>";
 				rowsHTML+="<input type='text' form='form88_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Process Notes'>";
 				rowsHTML+="<textarea form='form88_"+id+"'></textarea>";
@@ -2758,9 +2807,11 @@ function form89_add_item()
 		rowsHTML+="<form id='form89_"+id+"'></form>";
 			rowsHTML+="<td data-th='Customer'>";
 				rowsHTML+="<input type='text' required form='form89_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Assignee'>";
 				rowsHTML+="<input type='text' form='form89_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Schedule'>";
 				rowsHTML+="<input type='text' required form='form89_"+id+"' value=''>";
@@ -2875,9 +2926,11 @@ function form91_add_item()
 		rowsHTML+="<form id='form91_"+id+"'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form91_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form91_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form91_"+id+"' step='any'>";

@@ -1,9 +1,9 @@
 <div id='form51' class='function_detail'>
 	<form id='form51_master'>
 		<fieldset>
-			User Name<input type='text'>
-			Name<input type='text'>
-			Password<input type='password'>
+			<label>User Name</br><input type='text'></label>
+			<label>Name</br><input type='text'></label>
+			<label>Password</br><input type='password'></label>
 			<input type='hidden' name='user_id'>
 			<input type='submit' title="Save Access" class='save_icon'>
 			<input type='button' value='Add User' onclick='modal30_action();'>

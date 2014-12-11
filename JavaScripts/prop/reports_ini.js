@@ -941,7 +941,7 @@ function report26_ini()
 	
 	var ctx = document.getElementById("report26_canvas").getContext("2d");
 	var sales_data="<bills>" +
-			"<total sort='desc'></total>" +
+			"<amount sort='desc'></amount>" +
 			"<customer_name>"+customer+"</customer_name>" +
 			"<bill_date compare='more than'>"+get_raw_time(start_date)+"</bill_date>" +
 			"<bill_date compare='less than'>"+get_raw_time(end_date)+"</bill_date>" +
@@ -949,7 +949,7 @@ function report26_ini()
 
 	fetch_requested_data('report26',sales_data,function(sales)
 	{
-		var result=transform_to_bar_sum(sales,'Bill Total','total','customer_name');
+		var result=transform_to_bar_sum(sales,'Bill Amount','amount','customer_name');
 		var mybarchart = new Chart(ctx).Bar(result,{});
 		document.getElementById("report26_legend").innerHTML=mybarchart.generateLegend();
 		
@@ -2155,13 +2155,13 @@ function report38_ini()
 			
 			var products_data="<bill_items>" +
 					"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
-					"<total></total>" +
+					"<amount></amount>" +
 					"<item_name array='yes'>"+products_array+"</item_name>" +
 					"<last_updated sort='desc'></last_updated>" +
 					"</bill_items>";
 			fetch_requested_data('report38',products_data,function(product_array)
 			{
-				var result=transform_to_bar_sum(product_array,'Total Amount','total','item_name');
+				var result=transform_to_bar_sum(product_array,'Total Amount','amount','item_name');
 				var mybarchart = new Chart(ctx).Bar(result,{});
 				document.getElementById("report38_legend").innerHTML=mybarchart.generateLegend();
 				
@@ -2233,12 +2233,12 @@ function report39_ini()
 			}
 			var services_data="<bill_items>" +
 					"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
-					"<total sort='desc'></total>" +
+					"<amount sort='desc'></amount>" +
 					"<item_name array='yes'>"+services_array+"</item_name>" +
 					"</bill_items>";
 			fetch_requested_data('report39',services_data,function(service_array)
 			{
-				var result=transform_to_bar_sum(service_array,'Total Amount','total','item_name');
+				var result=transform_to_bar_sum(service_array,'Total Amount','amount','item_name');
 				var mybarchart = new Chart(ctx).Bar(result,{});
 				document.getElementById("report39_legend").innerHTML=mybarchart.generateLegend();
 				
@@ -2592,7 +2592,7 @@ function report42_ini()
 
 /**
  * @reportNo 43
- * @report Change in customer behavior
+ * @report Change in customer purchasing
  */
 function report43_ini()
 {
@@ -2612,7 +2612,7 @@ function report43_ini()
 	var p1_bills_data="<bills>" +
 			"<id></id>" +
 			"<customer_name>"+customer+"</customer_name>" +
-			"<total></total>" +
+			"<amount></amount>" +
 			"<bill_date compare='more than'>"+get_raw_time(p1_start_date)+"</bill_date>" +
 			"<bill_date compare='less than'>"+get_raw_time(p1_end_date)+"</bill_date>" +
 			"</bills>";
@@ -2621,7 +2621,7 @@ function report43_ini()
 		var p2_bills_data="<bills>" +
 				"<id></id>" +
 				"<customer_name>"+customer+"</customer_name>" +
-				"<total></total>" +
+				"<amount></amount>" +
 				"<bill_date compare='more than'>"+get_raw_time(p2_start_date)+"</bill_date>" +
 				"<bill_date compare='less than'>"+get_raw_time(p2_end_date)+"</bill_date>" +
 				"</bills>";
@@ -2652,7 +2652,7 @@ function report43_ini()
 				{
 					if(p1_bills[i].customer_name==p1_bills[j].customer_name)
 					{
-						p1_bills[i].total=parseFloat(p1_bills[i].total)+parseFloat(p1_bills[j].total);
+						p1_bills[i].amount=parseFloat(p1_bills[i].amount)+parseFloat(p1_bills[j].amount);
 						p1_bills.splice(j,1);
 					}
 				}
@@ -2664,7 +2664,7 @@ function report43_ini()
 				{
 					if(p2_bills[i].customer_name==p2_bills[j].customer_name)
 					{
-						p2_bills[i].total=parseFloat(p2_bills[i].total)+parseFloat(p2_bills[j].total);
+						p2_bills[i].amount=parseFloat(p2_bills[i].amount)+parseFloat(p2_bills[j].amount);
 						p2_bills.splice(j,1);
 					}
 				}
@@ -2672,7 +2672,7 @@ function report43_ini()
 
 			p1_bills.sort(function(a,b)
 			{
-				if(parseFlaot(a.total)<parseFloat(b.total))
+				if(parseFlaot(a.amount)<parseFloat(b.amount))
 				{	return 1;}
 				else 
 				{	return -1;}
@@ -2680,7 +2680,7 @@ function report43_ini()
 			
 			p2_bills.sort(function(a,b)
 			{
-				if(parseFlaot(a.total)<parseFloat(b.total))
+				if(parseFlaot(a.amount)<parseFloat(b.amount))
 				{	return 1;}
 				else 
 				{	return -1;}
@@ -2691,13 +2691,13 @@ function report43_ini()
 				if(result.labels.length<11)
 				{
 					result.labels.push(p1_bills[k].customer_name);
-					result.datasets[0].data.push(p1_bills[k].total);
+					result.datasets[0].data.push(p1_bills[k].amount);
 					var p2_sale=0;
 					for(var l=0;l<p2_bills.length;l++)
 					{
 						if(p1_bills[k].customer_name===p2_bills[l].customer_name)
 						{
-							p2_sale=p2_bills[l].total;
+							p2_sale=p2_bills[l].amount;
 							p2_bills.splice(l,1);
 							break;
 						}
@@ -2716,7 +2716,7 @@ function report43_ini()
 				{
 					result.labels.push(p2_bills[m].customer_name);
 					result.datasets[0].data.push(0);
-					result.datasets[1].data.push(p2_bills[m].total);
+					result.datasets[1].data.push(p2_bills[m].amount);
 				}
 				else
 				{

@@ -3,7 +3,7 @@
 	
 		<form id='form7_master'>
 			<fieldset>
-				Select Date <input type='text' required onchange='form7_ini();'>
+				Select Date: <input type='text' required onchange='form7_ini();'>
 				<input type='submit' value="Save All">
 			</fieldset>
 		</form>

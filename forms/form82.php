@@ -1,12 +1,13 @@
 <div id='form82' class='function_detail'>
 	<form id='form82_master'>
 		<fieldset>
-			Customer<input type='text' required>
-			Bill Date<input type='text' required>
-			Amount<input readonly='readonly' type='number'>
-			Discount <input readonly='readonly' type='number'>
-			Tax <input readonly='readonly' type='number'>
-			Total Amount<input readonly='readonly' type='number'>
+			<label>Customer <img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'></br>
+			<input type='text' required></label>
+			<label>Bill Date</br><input type='text' required></label>
+			<label>Amount</br>Rs. <input readonly='readonly' type='number'></label>
+			<label>Discount</br>Rs. <input readonly='readonly' type='number'></label>
+			<label>Tax</br>Rs. <input readonly='readonly' type='number'></label>
+			<label>Total</br>Rs. <input readonly='readonly' type='number'></label>
 			<input type='hidden' name='bill_id'>
 			<input type='hidden' name='offer'>
 			<input type='hidden' name='transaction'>

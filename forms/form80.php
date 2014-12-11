@@ -1,7 +1,7 @@
 <div id='form80' class='function_detail'>
 	<form id='form80_master'>
 		<fieldset>
-			Object type <input type='text' required>
+			<label>Object type: <input type='text' required></label>
 			<input type='hidden' name='table_name'>
 			<input type='hidden' name='column'>
 			<input type='hidden' name='references'>

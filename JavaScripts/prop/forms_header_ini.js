@@ -655,8 +655,9 @@ function form19_header_ini()
 	fields.elements[3].value=0;
 	fields.elements[4].value=get_new_key();
 	fields.elements[5].value=get_new_key();
-	var email_filter=fields.elements[9];
-	var phone_filter=fields.elements[10];
+	fields.elements[6].value=0;
+	var email_filter=fields.elements[10];
+	var phone_filter=fields.elements[11];
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)

@@ -62,7 +62,7 @@ function form1_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form1_body').prepend(rowsHTML);
+			$('#form1_body').append(rowsHTML);
 			var fields=document.getElementById("form1_"+result.id);
 			var sys_inventory=fields.elements[5];
 			var actual_inventory=fields.elements[6];
@@ -162,7 +162,7 @@ function form2_ini()
 					rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 			
-				$('#form2_body').prepend(rowsHTML);
+				$('#form2_body').append(rowsHTML);
 				
 				var fields=document.getElementById("form2_"+id);
 				$(fields).on("submit", function(event)
@@ -248,7 +248,7 @@ function form5_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form5_body').prepend(rowsHTML);
+			$('#form5_body').append(rowsHTML);
 			
 			var fields=document.getElementById("form5_"+result.id);
 			$(fields).on("submit", function(event)
@@ -333,7 +333,7 @@ function form7_ini()
 							rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 					
-					$('#form7_body').prepend(rowsHTML);
+					$('#form7_body').append(rowsHTML);
 					
 					var fields=document.getElementById("form7_"+data_id);
 					var attendance_filter=fields.elements[1];
@@ -373,7 +373,7 @@ function form7_ini()
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 				
-				$('#form7_body').prepend(rowsHTML);
+				$('#form7_body').append(rowsHTML);
 				
 				var fields=document.getElementById("form7_"+result.id);
 				var attendance_filter=fields.elements[1];
@@ -484,7 +484,7 @@ function form8_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form8_body').prepend(rowsHTML);
+			$('#form8_body').append(rowsHTML);
 			
 			var fields=document.getElementById("form8_"+result.id);
 			var fstatus=fields.elements[5];
@@ -633,7 +633,7 @@ function form10_ini()
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 					
-						$('#form10_body').prepend(rowsHTML);
+						$('#form10_body').append(rowsHTML);
 						
 						var fields=document.getElementById("form10_"+id);
 						$(fields).on("submit", function(event)
@@ -775,7 +775,7 @@ function form11_ini()
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 				
-				$('#form11_body').prepend(rowsHTML);
+				$('#form11_body').append(rowsHTML);
 				
 				var fields=document.getElementById("form11_"+result.id);
 				var status_filter=fields.elements[4];
@@ -930,7 +930,7 @@ function form12_ini()
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 					
-						$('#form12_body').prepend(rowsHTML);
+						$('#form12_body').append(rowsHTML);
 						
 						var fields=document.getElementById("form12_"+id);
 						$(fields).on("submit", function(event)
@@ -1029,7 +1029,7 @@ function form14_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form14_body').prepend(rowsHTML);
+			$('#form14_body').append(rowsHTML);
 			var fields=document.getElementById("form14_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -1165,20 +1165,18 @@ function form15_ini()
 							rowsHTML+="<td data-th='Quantity'>";
 								rowsHTML+="<input type='number' readonly='readonly' form='form15_"+id+"' value='"+result.quantity+"' step='any'>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Exchange/Refund'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.type+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Batch/Amount'>";
+							rowsHTML+="<td data-th='Type'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.type+"'></br>";
 								if(result.type=='refund')
 								{
-									rowsHTML+="<input type='number' readonly='readonly' step='any' form='form15_"+id+"' value='"+result.refund_amount+"'>";
+									rowsHTML+="Amount <input type='number' readonly='readonly' step='any' form='form15_"+id+"' value='"+result.refund_amount+"'>";
 									message_string+=" Refund Rs: "+subform.elements[5].value;
 									mail_string+=" Refund Rs: "+subform.elements[5].value;
 
 								}
 								else
 								{
-									rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.exhange_batch+"'>";
+									rowsHTML+="Batch <input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.exhange_batch+"'>";
 									message_string+=" Exchanged";
 									mail_string+=" Exchanged";
 								}
@@ -1191,7 +1189,7 @@ function form15_ini()
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 					
-						$('#form15_body').prepend(rowsHTML);
+						$('#form15_body').append(rowsHTML);
 						
 						var fields=document.getElementById("form15_"+id);
 						$(fields).on("submit", function(event)
@@ -1276,7 +1274,7 @@ function form16_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form16_body').prepend(rowsHTML);
+			$('#form16_body').append(rowsHTML);
 			var fields=document.getElementById("form16_"+result.id);
 			var edit_button=fields.elements[4];
 			$(edit_button).on("click", function(event)
@@ -1355,7 +1353,7 @@ function form17_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form17_body').prepend(rowsHTML);
+			$('#form17_body').append(rowsHTML);
 			var fields=document.getElementById("form17_"+result.id);
 			var edit_button=fields.elements[4];
 			$(edit_button).on("click", function(event)
@@ -1398,6 +1396,7 @@ function form19_ini()
 				"<id>"+data_id+"</id>" +
 				"<supplier></supplier>" +
 				"<total></total>" +
+				"<tax></tax>" +
 				"<return_date></return_date>" +
 				"<type>product</type>" +
 				"<transaction_id></transaction_id>" +
@@ -1410,6 +1409,7 @@ function form19_ini()
 				"<notes></notes>" +
 				"<quantity></quantity>" +
 				"<refund_amount></refund_amount>" +
+				"<tax></tax>" +
 				"</supplier_return_items>";
 	
 		////separate fetch function to get bill details like customer name, total etc.
@@ -1423,6 +1423,7 @@ function form19_ini()
 				filter_fields.elements[3].value=return_results[i].total;
 				filter_fields.elements[4].value=data_id;
 				filter_fields.elements[5].value=return_results[i].transaction_id;
+				filter_fields.elements[6].value=return_results[i].tax;
 				
 				$(filter_fields).off('submit');
 				$(filter_fields).on("submit", function(event)
@@ -1470,7 +1471,7 @@ function form19_ini()
 								rowsHTML+="<input type='text' readonly='readonly' form='form19_"+id+"' value='"+result.batch+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Notes'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form19_"+id+"' value='"+result.notes+"'>";
+								rowsHTML+="<textarea readonly='readonly' form='form19_"+id+"'>"+result.notes+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Quantity'>";
 								rowsHTML+="<input type='number' readonly='readonly' form='form19_"+id+"' value='"+result.quantity+"' step='any'>";
@@ -1479,13 +1480,14 @@ function form19_ini()
 								rowsHTML+="<input type='number' readonly='readonly' step='any' form='form19_"+id+"' value='"+result.refund_amount+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form19_"+id+"' value='"+result.tax+"'>";
 								rowsHTML+="<input type='hidden' form='form19_"+id+"' value='"+id+"'>";
 								rowsHTML+="<input type='submit' class='save_icon' form='form19_"+id+"' id='save_form19_"+id+"'>";
 								rowsHTML+="<input type='button' class='delete_icon' form='form19_"+id+"' id='delete_form19_"+id+"' onclick='form19_delete_item($(this));'>";
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 					
-						$('#form19_body').prepend(rowsHTML);
+						$('#form19_body').append(rowsHTML);
 						
 						var fields=document.getElementById("form19_"+id);
 						$(fields).on("submit", function(event)
@@ -1619,7 +1621,7 @@ function form21_ini()
 					rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 			
-				$('#form21_body').prepend(rowsHTML);
+				$('#form21_body').append(rowsHTML);
 				
 				var fields=document.getElementById("form21_"+id);
 				$(fields).on("submit", function(event)
@@ -1736,7 +1738,7 @@ function form24_ini()
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 					
-						$('#form24_body').prepend(rowsHTML);
+						$('#form24_body').append(rowsHTML);
 						
 						var fields=document.getElementById("form24_"+id);
 						var name_filter=fields.elements[0];
@@ -1845,7 +1847,7 @@ function form30_ini()
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 			
-			$('#form30_body').prepend(rowsHTML);
+			$('#form30_body').append(rowsHTML);
 			var fields=document.getElementById("form30_"+result.id);
 			var fstatus=fields.elements[4];
 			
@@ -1949,7 +1951,7 @@ function form35_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form35_body').prepend(rowsHTML);
+			$('#form35_body').append(rowsHTML);
 			var fields=document.getElementById("form35_"+result.id);
 			var end_filter=fields.elements[2];
 			var status_filter=fields.elements[4];
@@ -2026,7 +2028,7 @@ function form38_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form38_body').prepend(rowsHTML);
+			$('#form38_body').append(rowsHTML);
 			var fields=document.getElementById("form38_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -2238,7 +2240,7 @@ function form40_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form40_body').prepend(rowsHTML);
+			$('#form40_body').append(rowsHTML);
 			var fields=document.getElementById("form40_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -2318,7 +2320,7 @@ function form41_ini()
 					"</form>" +
 					"</div>";
 			
-			$('#form41_header').prepend(rowsHTML);
+			$('#form41_header').append(rowsHTML);
 			var fields=document.getElementById("form41_master");
 			var save_button=fields.elements[3];
 			$(save_button).on("click", function(event)
@@ -2481,7 +2483,7 @@ function form42_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form42_body').prepend(rowsHTML);
+			$('#form42_body').append(rowsHTML);
 			var fields=document.getElementById("form42_"+result.id);
 			var edit_button=fields.elements[4];
 			$(edit_button).on("click", function(event)
@@ -2569,7 +2571,7 @@ function form43_ini()
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 			
-			$('#form43_body').prepend(rowsHTML);
+			$('#form43_body').append(rowsHTML);
 			var fields=document.getElementById("form43_"+result.id);
 			var status_filter=fields.elements[3];
 			
@@ -2643,7 +2645,7 @@ function form44_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form44_body').prepend(rowsHTML);
+			$('#form44_body').append(rowsHTML);
 		});
 		
 		longPressEditable($('.dblclick_editable'));
@@ -2778,7 +2780,7 @@ function form48_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form48_body').prepend(rowsHTML);
+			$('#form48_body').append(rowsHTML);
 			var fields=document.getElementById("form48_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -2850,7 +2852,7 @@ function form49_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form49_body').prepend(rowsHTML);
+			$('#form49_body').append(rowsHTML);
 			var fields=document.getElementById("form49_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -2923,7 +2925,7 @@ function form50_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form50_body').prepend(rowsHTML);
+			$('#form50_body').append(rowsHTML);
 			var fields=document.getElementById("form50_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -3036,7 +3038,7 @@ function form51_ini()
 								rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 						
-						$('#form51_body').prepend(rowsHTML);
+						$('#form51_body').append(rowsHTML);
 						var fields=document.getElementById("form51_"+data_id);
 						$(fields).on("submit", function(event)
 						{
@@ -3078,7 +3080,7 @@ function form51_ini()
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 				
-				$('#form51_body').prepend(rowsHTML);
+				$('#form51_body').append(rowsHTML);
 				var fields=document.getElementById("form51_"+result.id);
 				$(fields).on("submit", function(event)
 				{
@@ -3158,7 +3160,7 @@ function form53_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form53_body').prepend(rowsHTML);
+			$('#form53_body').append(rowsHTML);
 			var fields=document.getElementById("form53_"+result.id);
 			var edit_button=fields.elements[6];
 			$(edit_button).on("click", function(event)
@@ -3306,7 +3308,7 @@ function form56_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form56_body').prepend(rowsHTML);
+			$('#form56_body').append(rowsHTML);
 			var fields=document.getElementById("form56_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -3382,7 +3384,7 @@ function form57_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form57_body').prepend(rowsHTML);
+			$('#form57_body').append(rowsHTML);
 			var fields=document.getElementById("form57_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -3459,7 +3461,7 @@ function form58_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form58_body').prepend(rowsHTML);
+			$('#form58_body').append(rowsHTML);
 			var fields=document.getElementById("form58_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -3537,7 +3539,7 @@ function form59_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form59_body').prepend(rowsHTML);
+			$('#form59_body').append(rowsHTML);
 			var fields=document.getElementById("form59_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -3611,7 +3613,7 @@ function form60_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form60_body').prepend(rowsHTML);
+			$('#form60_body').append(rowsHTML);
 			var fields=document.getElementById("form60_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -3684,7 +3686,7 @@ function form61_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form61_body').prepend(rowsHTML);
+			$('#form61_body').append(rowsHTML);
 			var fields=document.getElementById("form61_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -3762,7 +3764,7 @@ function form62_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form62_body').prepend(rowsHTML);
+			$('#form62_body').append(rowsHTML);
 			var fields=document.getElementById("form62_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -3839,7 +3841,7 @@ function form63_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form63_body').prepend(rowsHTML);
+			$('#form63_body').append(rowsHTML);
 			var fields=document.getElementById("form63_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -3912,7 +3914,7 @@ function form64_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form64_body').prepend(rowsHTML);
+			$('#form64_body').append(rowsHTML);
 			var fields=document.getElementById("form64_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -3986,7 +3988,7 @@ function form66_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form66_body').prepend(rowsHTML);
+			$('#form66_body').append(rowsHTML);
 			var fields=document.getElementById("form66_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -4085,7 +4087,7 @@ function form69_ini()
 					rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 			
-				$('#form69_body').prepend(rowsHTML);
+				$('#form69_body').append(rowsHTML);
 				
 				var fields=document.getElementById("form69_"+id);
 				var name_filter=fields.elements[0];
@@ -4177,7 +4179,7 @@ function form70_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form70_body').prepend(rowsHTML);
+			$('#form70_body').append(rowsHTML);
 			var fields=document.getElementById("form70_"+result.id);
 			var bill_button=fields.elements[7];
 			var status_filter=fields.elements[3];
@@ -4298,7 +4300,7 @@ function form71_ini()
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 				
-				$('#form71_body').prepend(rowsHTML);
+				$('#form71_body').append(rowsHTML);
 				var fields=document.getElementById("form71_"+result.id);
 				$(fields).on("submit", function(event)
 				{
@@ -4463,7 +4465,7 @@ function form72_ini()
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 					
-						$('#form72_body').prepend(rowsHTML);
+						$('#form72_body').append(rowsHTML);
 						
 						var fields=document.getElementById("form72_"+id);
 						$(fields).on("submit", function(event)
@@ -4853,7 +4855,7 @@ function form77_ini()
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 			
-			$('#form77_body').prepend(rowsHTML);
+			$('#form77_body').append(rowsHTML);
 			var fields=document.getElementById("form77_"+result.id);
 			var key_filter=fields.elements[1];
 			
@@ -4982,7 +4984,7 @@ function form78_ini()
 									rowsHTML+="</td>";
 								rowsHTML+="</tr>";
 							
-								$('#form78_body').prepend(rowsHTML);				
+								$('#form78_body').append(rowsHTML);				
 							});
 							hide_loader();
 						});
@@ -5042,7 +5044,7 @@ function form79_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form79_body').prepend(rowsHTML);
+			$('#form79_body').append(rowsHTML);
 			var fields=document.getElementById("form79_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -5113,7 +5115,7 @@ function form80_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form80_body').prepend(rowsHTML);
+			$('#form80_body').append(rowsHTML);
 			var fields=document.getElementById("form80_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -5178,7 +5180,7 @@ function form81_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form81_body').prepend(rowsHTML);
+			$('#form81_body').append(rowsHTML);
 			var fields=document.getElementById("form81_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -5280,7 +5282,7 @@ function form83_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form83_body').prepend(rowsHTML);
+			$('#form83_body').append(rowsHTML);
 			var fields=document.getElementById("form83_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -5360,7 +5362,7 @@ function form84_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form84_body').prepend(rowsHTML);
+			$('#form84_body').append(rowsHTML);
 			var fields=document.getElementById("form84_"+result.id);
 			var status_filter=fields.elements[2];
 			
@@ -5446,7 +5448,7 @@ function form85_ini()
 					"</form>" +
 					"</div>";
 			
-			$('#form85_header').prepend(rowsHTML);
+			$('#form85_header').append(rowsHTML);
 			var fields=document.getElementById("form85_master");
 			var save_button=fields.elements[3];
 			$(save_button).on("click", function(event)
@@ -5611,7 +5613,7 @@ function form86_ini()
 					"</form>" +
 					"</div>";
 			
-			$('#form86_header').prepend(rowsHTML);
+			$('#form86_header').append(rowsHTML);
 			var fields=document.getElementById("form86_master");
 			var save_button=fields.elements[3];
 			$(save_button).on("click", function(event)
@@ -5945,7 +5947,7 @@ function form89_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form89_body').prepend(rowsHTML);
+			$('#form89_body').append(rowsHTML);
 			var fields=document.getElementById("form89_"+result.id);
 			$(fields).on("submit", function(event)
 			{
@@ -6176,7 +6178,7 @@ function form91_ini()
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 					
-						$('#form91_body').prepend(rowsHTML);
+						$('#form91_body').append(rowsHTML);
 						
 						var fields=document.getElementById("form91_"+id);
 						$(fields).on("submit", function(event)
@@ -6273,7 +6275,7 @@ function form92_ini()
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form92_body').prepend(rowsHTML);
+			$('#form92_body').append(rowsHTML);
 			var fields=document.getElementById("form92_"+result.id);
 			var edit_button=fields.elements[5];
 			$(edit_button).on("click", function(event)

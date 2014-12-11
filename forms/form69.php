@@ -1,9 +1,10 @@
 <div id='form69' class='function_detail'>
 	<form id='form69_master'>
 		<fieldset>
-			Customer<input type='text' required>
-			Order Date<input type='text' required>
-			Billing Status<input type='text' required>
+			<label>Customer <img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'></br>
+			<input type='text' required></label>
+			<label>Order Date</br><input type='text' required></label>
+			<label>Billing Status</br><input type='text' required></label>
 			<input type='hidden' name='order_id' value=''>
 			<input type='button' title='New Order' class='add_icon' onclick='form69_new_form();'>
 			<input type='submit' title='Save order' class='save_icon'>

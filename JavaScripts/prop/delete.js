@@ -663,19 +663,13 @@ function form19_delete_item(button)
 		
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var notes=form.elements[2].value;
-		var quantity=form.elements[3].value;
-		var total=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var last_updated=get_my_time();
+		var data_id=form.elements[6].value;
 		
 		var data_xml="<supplier_return_items>" +
 				"<id>"+data_id+"</id>" +
 				"<return_id>"+return_id+"</return_id>" +
 				"<item_name>"+name+"</item_name>" +
 				"<batch>"+batch+"</batch>" +
-				"<quantity>"+quantity+"</quantity>" +
-				"<total>"+total+"</total>" +
 				"</supplier_return_items>";	
 		if(is_online())
 		{

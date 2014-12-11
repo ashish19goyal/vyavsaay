@@ -427,7 +427,7 @@
 			<name>report42</name>
 			<display_name>feedback</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -571,7 +571,7 @@
 			<name>form12</name>
 			<display_name>create_bill</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -994,7 +994,7 @@
 			<name>form82</name>
 			<display_name>scan_items</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>

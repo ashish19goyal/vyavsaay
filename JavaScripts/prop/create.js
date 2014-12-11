@@ -1254,8 +1254,7 @@ function form15_create_item(form)
 		{
 			data_xml+="<exchange_batch>"+total_batch+"</exchange_batch>";
 		}
-		data_xml+="<total>"+total+"</total>" +
-				"<tax>"+tax+"</tax>" +
+		data_xml+="<tax>"+tax+"</tax>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</customer_return_items>";	
 	
@@ -1458,7 +1457,8 @@ function form19_create_item(form)
 		var notes=form.elements[2].value;
 		var quantity=form.elements[3].value;
 		var total=form.elements[4].value;
-		var data_id=form.elements[5].value;
+		var tax=form.elements[5].value;
+		var data_id=form.elements[6].value;
 		
 		var last_updated=get_my_time();
 			
@@ -1469,18 +1469,17 @@ function form19_create_item(form)
 				"<batch>"+batch+"</batch>" +
 				"<quantity>"+quantity+"</quantity>" +
 				"<refund_amount>"+total+"</refund_amount>" +
+				"<tax>"+tax+"</tax>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</supplier_return_items>";	
 	
 		if(is_online())
 		{
 			server_create_simple(data_xml);
-			server_update_simple(returned_xml);
 		}
 		else
 		{
 			local_create_simple(data_xml);
-			local_update_simple(returned_xml);
 		}
 	
 				
@@ -1488,7 +1487,7 @@ function form19_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[7];
+		var del_button=form.elements[10];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
@@ -1520,19 +1519,21 @@ function form19_create_form()
 		
 		var supplier=form.elements[1].value;
 		var return_date=get_raw_time(form.elements[2].value);
-		var email=form.elements[9].value;
-		var phone=form.elements[10].value;
+		var email=form.elements[10].value;
+		var phone=form.elements[11].value;
 		
 		var message_string="Returns from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		var mail_string="Return from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var total=0;
+		var tax=0;
 		
 		$("[id^='save_form19']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);	
 			total+=parseFloat(subform.elements[4].value);
+			tax+=parseFloat(subform.elements[5].value);
 			message_string+="\nItem: "+subform.elements[0].value;
 			message_string+=" Quantity: "+subform.elements[3].value;
 			message_string+=" Amount: "+subform.elements[4].value;
@@ -1542,6 +1543,7 @@ function form19_create_form()
 		});
 
 		form.elements[3].value=total;
+		form.elements[6].value=tax;
 		message_string+="\nTotal Refund Rs : "+total;
 		mail_string+="\nTotal Refund Rs: "+total;
 		
@@ -1562,6 +1564,7 @@ function form19_create_form()
 					"<supplier>"+supplier+"</supplier>" +
 					"<return_date>"+return_date+"</return_date>" +
 					"<total>"+total+"</total>" +
+					"<tax>"+tax+"</tax>" +
 					"<type>product</type>" +
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -1604,7 +1607,7 @@ function form19_create_form()
 					"<amount>"+total+"</amount>" +
 					"<receiver>master</receiver>" +
 					"<giver>"+supplier+"</giver>" +
-					"<tax>0</tax>" +
+					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
 		if(is_online())

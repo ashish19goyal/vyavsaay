@@ -426,7 +426,7 @@
 		<form id='modal35_form'>
 			<fieldset>
 				<label>Name <input type='text' required></label><br/>
-				<label>Area Type <input type="text"></label><br/>
+				<label>Area Type <input type="text" value='storage'></label><br/>
 				<label>Length <input type="number" step='any'></label><br/>
 				<label>Width <input type="number" step='any'></label><br/>
 				<label>Height <input type="number" step='any'></label><br/>
