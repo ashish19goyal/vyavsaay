@@ -333,7 +333,7 @@ function form7_ini()
 							rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 					
-					$('#form7_body').append(rowsHTML);
+					$('#form7_body').prepend(rowsHTML);
 					
 					var fields=document.getElementById("form7_"+data_id);
 					var attendance_filter=fields.elements[1];
@@ -373,7 +373,7 @@ function form7_ini()
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 				
-				$('#form7_body').append(rowsHTML);
+				$('#form7_body').prepend(rowsHTML);
 				
 				var fields=document.getElementById("form7_"+result.id);
 				var attendance_filter=fields.elements[1];

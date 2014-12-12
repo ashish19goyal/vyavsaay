@@ -2193,18 +2193,19 @@ function form46_update_form()
  */
 function form47_update_form()
 {
+	show_loader();
 	if(is_update_access('form47'))
 	{
 		var form=document.getElementById('form47_master');
 		var domain=get_domain();
+		var username=get_username();
 		var current_pass=form.elements[1].value;
 		var new_pass=form.elements[2].value;
 		var last_updated=get_my_time();
-		var table='user_profiles';
 		
-		var user_data="<user_profiles>" +
+		var user_data="<user_profiles count='1'>" +
 				"<id></id>" +
-				"<username exact='yes'>master</username>" +
+				"<username exact='yes'>"+username+"</username>" +
 				"<name></name>" +
 				"<password></password>" +
 				"</user_profiles>";
@@ -2214,55 +2215,49 @@ function form47_update_form()
 			{
 				var salt='$2a$10$'+domain+'1234567891234567891234';
 				var salt_22=salt.substring(0, 29);
-				//console.log("salt: "+salt_22);
 				
 				var bcrypt = new bCrypt();
 				bcrypt.hashpw(current_pass, salt_22, function(currenthash)
 				{
-					//console.log("user provided: "+currenthash);
-					//console.log("system provided: "+results[i].password);
 					if(currenthash.substring(3)===results[i].password.substring(3))
 					{
 						var bcrypt = new bCrypt();
 						bcrypt.hashpw(new_pass, salt_22, function(newhash)
 						{
-							var data_xml="<"+table+">" +
+							var data_xml="<user_profiles>" +
 										"<id>"+results[i].id+"</id>" +
-										"<username unique='yes'>master</username>" +
+										"<username unique='yes'>"+username+"</username>" +
 										"<password>"+newhash+"</password>" +
 										"<name>"+results[i].name+"</name>" +
 										"<status>active</status>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
-										"</"+table+">";	
-							var activity_xml="<activity>" +
-										"<data_id>"+results[i].id+"</data_id>" +
-										"<tablename>"+table+"</tablename>" +
-										"<link_to>form47</link_to>" +
-										"<title>Updated</title>" +
-										"<notes>Updated password for "+results[i].name+"</notes>" +
-										"<updated_by>"+get_name()+"</updated_by>" +
-										"</activity>";
+										"</user_profiles>";
 							if(is_online())
 							{
-								server_update_row(data_xml,activity_xml);
+								server_update_simple(data_xml);
 							}
 							else
 							{
-								local_update_row(data_xml,activity_xml);
+								local_update_simple(data_xml);
 							}
 							$(form).find('.form47_verify').html('Password updated.');
-							//$("#modal3").dialog("open");
+							form.elements[1].value="";
+							form.elements[2].value="";
+							form.elements[3].value="";
+							hide_loader();
 						}, function() {});
 					}
 					else
 					{
 						$(form).find('.form47_verify').html('Incorrect password. Try again!');
+						form.elements[1].value="";
+						form.elements[2].value="";
+						form.elements[3].value="";
+						hide_loader();
 					}
 				}, function() {});
-				
 				break;
 			}
-	
 		});
 	}
 	else

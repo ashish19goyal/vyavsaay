@@ -428,15 +428,15 @@ function local_update_simple_func(data_xml,func)
  */
 function local_create_row(data_xml,activity_xml)
 {
-	console.log(data_xml);
-	console.log(activity_xml);
+	//console.log(data_xml);
+	//console.log(activity_xml);
 	show_loader();
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
 	var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
 	var cols=data.childNodes[0].childNodes;
-	console.log(cols);
+	//console.log(cols);
 	var unique=new Array();
 	for(var j=0;j<cols.length;j++)
 	{
@@ -455,7 +455,7 @@ function local_create_row(data_xml,activity_xml)
 	
 	var activity=parser.parseFromString(activity_xml,"text/xml");
 	var activity_data=activity.childNodes[0].childNodes;
-	console.log(activity_data);
+	//console.log(activity_data);
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
@@ -471,7 +471,7 @@ function local_create_row(data_xml,activity_xml)
 			{
 				data_row[cols[j].nodeName]=cols[j].innerHTML;
 			}
-			console.log(data_row);
+			//console.log(data_row);
 			database.upsert(table,data_row,function(err,insertedkey)
 			{
 				var act_row={id:get_new_key(),
@@ -480,7 +480,7 @@ function local_create_row(data_xml,activity_xml)
 						data_xml:data_xml,
 						user_display:'yes',
 						last_updated:get_my_time()};
-				console.log(act_row);
+				//console.log(act_row);
 				for(var k=0;k<activity_data.length;k++)
 				{
 					act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
@@ -522,7 +522,7 @@ function local_create_row(data_xml,activity_xml)
 						console.log(cols[j].innerHTML);
 						data_row[cols[j].nodeName]=cols[j].innerHTML;
 					}
-					console.log(data_row);
+					//console.log(data_row);
 					database.upsert(table,data_row,function(err,insertedkey)
 					{
 						var act_row={id:get_new_key(),
@@ -567,7 +567,7 @@ function local_create_simple(data_xml)
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
 	//console.log(table);
-	console.log(data.childNodes[0]);
+	//console.log(data.childNodes[0]);
 	var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
 	var cols=data.childNodes[0].childNodes;
 
@@ -1358,56 +1358,59 @@ function local_get_inventory(product,batch,callback)
 	{
 		var result=0;
 		
-		database.get('bill_items',{index:'item_name',range:IDBKeyRange.only(product)},function(err,bi_records)
+		database.get('bill_items',{},function(err,bi_records)
 		{
 			for(var row in bi_records)
 			{
-				if(bi_records[row]['batch']==batch || batch==='' || batch===null)
+				if((bi_records[row]['batch']==batch || batch==='' || batch===null) && bi_records[row]['item_name']==product)
 				{
 					result-=parseFloat(bi_records[row]['quantity']);
 				}	
 			}
 			
-			database.get('supplier_bill_items',{index:'product_name',range:IDBKeyRange.only(product)},function(err,si_records)
+			database.get('supplier_bill_items',{},function(err,si_records)
 			{
 				for(var row in si_records)
 				{
-					if(si_records[row]['batch']==batch || batch==='' || batch===null)
+					if((si_records[row]['batch']==batch || batch==='' || batch===null) && si_records[row]['product_name']==product)
 					{
 						result+=parseFloat(si_records[row]['quantity']);
 					}	
 				}
 				
-				database.get('supplier_return_items',{index:'item_name',range:IDBKeyRange.only(product)},function(err,sr_records)
+				database.get('supplier_return_items',{},function(err,sr_records)
 				{
 					for(var row in sr_records)
 					{
-						if(sr_records[row]['batch']==batch || batch==='' || batch===null)
+						if((sr_records[row]['batch']==batch || batch==='' || batch===null) && sr_records[row]['item_name']==product)
 						{
 							result-=parseFloat(sr_records[row]['quantity']);
 						}	
 					}
 					
-					database.get('inventory_adjust',{index:'product_name',range:IDBKeyRange.only(product)},function(err,ia_records)
+					database.get('inventory_adjust',{},function(err,ia_records)
 					{
 						for(var row in ia_records)
 						{
-							if(ia_records[row]['batch']==batch || batch==='' || batch===null)
+							if((ia_records[row]['batch']==batch || batch==='' || batch===null) && ia_records[row]['product_name']==product)
 							{
 								result+=parseFloat(ia_records[row]['quantity']);
 							}	
 						}
-						database.get('customer_return_items',{index:'item_name',range:IDBKeyRange.only(product)},function(err,cr_records)
+						database.get('customer_return_items',{},function(err,cr_records)
 						{
 							for(var row in cr_records)
 							{
-								if(cr_records[row]['batch']==batch || batch==='' || batch===null)
+								if(cr_records[row]['item_name']==product)
 								{
-									result+=parseFloat(cr_records[row]['quantity']);
-								}
-								if(cr_records[row]['exchange_batch']==batch || batch==='' || batch===null)
-								{
-									result-=parseFloat(cr_records[row]['quantity']);
+									if(cr_records[row]['batch']==batch || batch==='' || batch===null)
+									{
+										result+=parseFloat(cr_records[row]['quantity']);
+									}
+									if(cr_records[row]['exchange_batch']==batch || batch==='' || batch===null)
+									{
+										result-=parseFloat(cr_records[row]['quantity']);
+									}
 								}
 							}
 							

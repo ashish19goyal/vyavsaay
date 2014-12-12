@@ -41,7 +41,8 @@ function ajax_with_custom_func(url,kvp,func)
 					hide_loader();
 					var user=get_username();
 					var domain=get_domain();
-					$("#modal1").dialog({
+					$("#modal1").dialog(
+					{
 						close:function(e,ui)
 						{
 							show_loader();

@@ -867,3 +867,58 @@ function loans_instalment_processing()
 	
 	setTimeout(loans_instalment_processing,1800000);
 }
+
+
+/**
+ * This function processes instalments for active loans
+ */
+function generate_attendance_records()
+{
+	//console.log('creating attendance records');
+	var today=get_raw_time(get_my_date());
+	var columns="<attendance>" +
+		"<id></id>" +
+		"<date>"+today+"</date>" +
+		"<acc_name></acc_name>" +
+		"<presence></presence>" +
+		"<hours_worked></hours_worked>" +
+		"</attendance>";
+	
+	fetch_requested_data('form7',columns,function(results)
+	{
+		//console.log(results.length);
+		if(results.length===0)
+		{
+			var staff_columns="<staff>" +
+					"<acc_name></acc_name>" +
+					"<status>active</status>" +
+					"</staff>";
+			fetch_requested_data('form7',staff_columns,function(staff_names)
+			{
+				staff_names.forEach(function(staff_name)
+				{
+					//console.log('creating attendance record for'+staff_name.acc_name);
+					var id=get_new_key()+""+Math.floor(Math.random()*1000);
+					var data_xml="<attendance>" +
+								"<id>"+id+"</id>" +
+								"<acc_name>"+staff_name.acc_name+"</acc_name>" +
+								"<presence>present</presence>" +
+								"<date>"+today+"</date>" +
+								"<hours_worked>8</hours_worked>" +
+								"<last_updated>"+get_my_time()+"</last_updated>" +
+								"</attendance>";
+					if(is_online())
+					{
+						server_create_simple(data_xml);
+					}
+					else
+					{
+						local_create_simple(data_xml);
+					}
+				});
+			});
+		}
+	});
+
+	setTimeout(generate_attendance_records,86400000);
+}

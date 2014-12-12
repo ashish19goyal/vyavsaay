@@ -119,9 +119,12 @@ function form7_header_ini()
 		fixedWeekCount:false,
 		editable: true,
 		eventLimit: true, // allow "more" link when too many events
-		events: function(start, end, timezone, callback) {
-	        var start_time=parseFloat(start.unix())*1000;
+		events: function(start, end, timezone, callback)
+		{
+	        var start_time=(parseFloat(start.unix())-1000)*1000;
 	        var end_time=parseFloat(end.unix())*1000;
+	        console.log(start_time);
+	        console.log(end_time);
 	        var attendance_data="<attendance>" +
 	        		"<presence></presence>" +
 	        		"<hours_worked></hours_worked>" +
@@ -130,6 +133,7 @@ function form7_header_ini()
 	        		"</attendance>";
 	        fetch_requested_data('form7',attendance_data,function(attendances)
 	        {
+	        	console.log(attendances);
 	        	var events=[];
 	        	
 	        	attendances.sort(function(a,b)
@@ -140,48 +144,46 @@ function form7_header_ini()
 	        			return -1;
 	        	});
 	        	
-	        	var start_iterator=0;
-	        	var presents=0;
-	        	var hours_worked=0;
-	        	var absents=0;
-	        	attendances.forEach(function(attendance)
+	        	for(var i=0;i<attendances.length;i++)
 	        	{
-	        		if(attendance.date===start_iterator)
-	        		{
-	        			hours_worked+=parseFloat(attendance.hours_worked);
-	        			if(attendance.presence=='present')
-	        				presents+=1;
-	        			else
-	        				absents+=1;
-	        		}
-	        		else
-	        		{
-	        			var color="green";
-	        			if(absents>presents)
-	        			{
-	        				color="red";
-	        			}
-		        		events.push({
-		        			title: "Total strength:"+presents+"\n Hours Worked:"+hours_worked,
-		        			start:get_iso_date(start_iterator),
-		        			allDay:true,
-		        			color: color
-		        		});
+		        	var start_iterator=0;
+		        	var presents=0;
+		        	var hours_worked=parseFloat(attendances[i].hours_worked);
+		        	var absents=0;
 
-	        			start_iterator=attendance.date;
-	        			hours_worked=parseFloat(attendance.hours_worked);
-	        			if(attendance.presence=='present')
-	        			{	
-	        				presents=1;
-	        				absents=0;
-	        			}
-	        			else
-	        			{
-	        				presents=0;
-	        				absents=1;
-	        			}
+		        	if(attendances[i].presence=='present')
+        				presents+=1;
+        			else
+        				absents+=1;
+        			
+	        		for(var j=i+1;j<attendances.length;j++)
+	        		{
+		        		if(attendances[i].date===attendances[j].date)
+		        		{
+		        			hours_worked+=parseFloat(attendances[j].hours_worked);
+		        			if(attendances[j].presence=='present')
+		        				presents+=1;
+		        			else
+		        				absents+=1;
+		        			
+		        			attendances.splice(j,1);
+		        			j-=1;
+		        		}
 	        		}
-	        	});
+
+        			var color="green";
+        			if(absents>presents)
+        			{
+        				color="red";
+        			}
+	        		events.push({
+	        			title:"Total strength:"+presents+"\n Hours Worked:"+hours_worked,
+	        			start:get_iso_date(attendances[i].date),
+	        			allDay:true,
+	        			color:color,
+	        			textColor:'#fff'
+	        		});
+	        	}
 	        	
 	        	callback(events);
 	        });

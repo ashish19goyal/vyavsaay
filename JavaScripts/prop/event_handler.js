@@ -75,7 +75,11 @@ function start_workers()
 	},20000);
 	setTimeout(function()
 	{
-		sale_leads_add();
+		notifications_add();
+	},25000);
+	setTimeout(function()
+	{
+		generate_attendance_records();
 	},30000);
 	setTimeout(function()
 	{
