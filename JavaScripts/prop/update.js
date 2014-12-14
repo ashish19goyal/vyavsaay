@@ -1148,18 +1148,18 @@ function form15_update_form()
 			mail_string+="\nItem: "+subform.elements[0].value;
 			mail_string+=" Quanity: "+subform.elements[3].value;
 			
-			if(subform.elements[4].value=='refund')
+			if(subform.elements[5].value=='refund')
 			{	
-				total+=parseFloat(subform.elements[5].value);
-				message_string+=" Refund Rs: "+subform.elements[5].value;
-				mail_string+=" Refund Rs: "+subform.elements[5].value;
+				total+=parseFloat(subform.elements[6].value);
+				message_string+=" Refund Rs: "+subform.elements[6].value;
+				mail_string+=" Refund Rs: "+subform.elements[6].value;
 			}
 			else
 			{
 				message_string+=" Exchanged";
 				mail_string+=" Exchanged";
 			}
-			tax+=parseFloat(subform.elements[6].value);
+			tax+=parseFloat(subform.elements[7].value);
 			
 		});
 		
@@ -1294,14 +1294,14 @@ function form19_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);	
-			total+=parseFloat(subform.elements[4].value);
-			tax+=parseFloat(subform.elements[5].value);
+			total+=parseFloat(subform.elements[5].value);
+			tax+=parseFloat(subform.elements[6].value);
 			message_string+="\nItem: "+subform.elements[0].value;
 			message_string+=" Quantity: "+subform.elements[3].value;
-			message_string+=" Amount: "+subform.elements[4].value;
+			message_string+=" Amount: "+subform.elements[5].value;
 			mail_string+="\nItem: "+subform.elements[0].value;
 			mail_string+=" Quantity: "+subform.elements[3].value;
-			mail_string+=" Amount: "+subform.elements[4].value;
+			mail_string+=" Amount: "+subform.elements[5].value;
 		});
 
 		form.elements[3].value=total;

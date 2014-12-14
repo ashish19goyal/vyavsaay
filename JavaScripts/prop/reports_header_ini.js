@@ -924,3 +924,70 @@ function report51_header_ini()
 
 	$(date_filter).datepicker();
 }
+
+/**
+ * @reportNo 52
+ * @report Product purchase report
+ */
+function report52_header_ini()
+{	
+	var form=document.getElementById('report52_header');
+	var name_filter=form.elements[1];
+	var make_filter=form.elements[2];
+	var supplier_filter=form.elements[3];
+	var date_filter=form.elements[4];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report52_ini();
+	});
+
+	var name_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var make_data="<product_master>" +
+			"<make></make>" +
+			"</product_master>";
+	var supplier_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+	
+	set_my_filter(name_data,name_filter);
+	set_my_filter(make_data,make_filter);
+	set_my_filter(supplier_data,supplier_filter);
+	
+	$(date_filter).datepicker();
+	$(date_filter).val(get_my_past_date((get_my_time()-86400000)));
+}
+
+/**
+ * @reportNo 53
+ * @report Sales tax
+ */
+function report53_header_ini()
+{	
+	var form=document.getElementById('report53_header');
+	var name_filter=form.elements[1];
+	var start_filter=form.elements[2];
+	var end_filter=form.elements[3];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report53_ini();
+	});
+
+	var name_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(name_data,name_filter);
+	
+	$(start_filter).datepicker();
+	$(start_filter).val(get_my_past_date((get_my_time()-86400000)));
+	$(end_filter).datepicker();
+	$(end_filter).val(get_my_past_date(get_my_time()));
+}

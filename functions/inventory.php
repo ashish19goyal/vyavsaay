@@ -4,6 +4,8 @@
 		echo "<ul>";
 			if(strpos($_SESSION['forms'],'form1-')!==false)
 				echo "<li><a id='form1_link' href='#form1' onclick='form1_header_ini(); form1_ini();' data-i18n='form.update_inventory'></a></li>";
+			if(strpos($_SESSION['forms'],'form94-')!==false)
+				echo "<li><a id='form94_link' href='#form94' onclick='form94_header_ini(); form94_ini();' data-i18n='form.discard_items'></a></li>";
 			if(strpos($_SESSION['reports'],'report28-')!==false)
 				echo "<li><a id='report28_link' href='#report28' onclick='report28_header_ini();' data-i18n='form.short_inventory'></a></li>";
 			if(strpos($_SESSION['reports'],'report40-')!==false)
@@ -16,6 +18,8 @@
 	
 		if(strpos($_SESSION['forms'],'form1-')!==false)
 			include "forms/form1.php";
+		if(strpos($_SESSION['forms'],'form94-')!==false)
+			include "forms/form94.php";
 		if(strpos($_SESSION['reports'],'report28-')!==false)
 			include "reports/report28.php";
 		if(strpos($_SESSION['reports'],'report40-')!==false)

@@ -52,7 +52,6 @@ function get_single_column_data_array(request_data_array,callback)
 
 
 /**
- * 
  * @param columns
  * @param callback
  */
@@ -406,55 +405,6 @@ function set_my_max_value(filter_data,filter_element)
 }
 
 
-/*
-function set_static_value_list(table,list,filter_element)
-{
-	var list_data="<values_list>" +
-			"<name></name>" +
-			"<tablename exact='yes'>"+table+"</tablename>" +
-			"<listname exact='yes'>"+list+"</listname>" +
-			"<status>active</status>" +
-			"</values_list>";
-	get_single_column_data(function(data)
-	{
-		data=jQuery.unique(data);
-		var form=filter_element.form;
-		var datalist=document.createElement('datalist');
-		data.forEach(function(d)
-		{
-			var option=document.createElement('option');
-			option.setAttribute('value',d);
-			datalist.appendChild(option);
-		});
-		
-		var list_id=filter_element.getAttribute('list');
-		if(list_id=='' || list_id==null)
-		{
-			list_id="list_"+get_new_key();
-			filter_element.setAttribute("list",list_id);
-		}
-		else
-		{
-			var oldlist=document.getElementById(list_id);
-			form.removeChild(oldlist);
-		}
-		
-		form.appendChild(datalist);
-		datalist.setAttribute('id',list_id);
-		$(filter_element).off("change");
-		$(filter_element).on("change",function(event)
-		{
-			var found = $.inArray($(this).val(), data) > -1;
-			if(!found)
-			{
-	            $(this).val('');
-	        }
-		});
-	},list_data);
-}
-*/
-
-
 
 /**
  * Converts a two dimensional array to csv file
@@ -552,7 +502,8 @@ function csv_string_to_obj_array(csvString)
 							break;
 						}
 					}
-					columns[j]=columns[j].replace("^\"|\"$", "");
+					columns[j]=columns[j].replace(/^\"/, "");
+					columns[j]=columns[j].replace(/\"$/, "");
 				}
 				col_result[header_cols[j]]=columns[j];
 			}

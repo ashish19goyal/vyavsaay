@@ -13,7 +13,9 @@ function form1_import(data_array,import_type)
 				"<batch>"+row.batch+"</batch>" +
 				"<cost_price>"+row.cost_price+"</cost_price>" +
 				"<sale_price>"+row.sale_price+"</sale_price>" +
-				"<expiry>"+row.expiry+"</expiry>" +
+				"<expiry>"+get_raw_time(row.expiry)+"</expiry>" +
+				"<manufacture_date>"+get_raw_time(row.manufacture_date)+"</manufacture_date>" +
+				"<mrp>"+row.mrp+"</mrp>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</product_instances>";
 		if(import_type=='create_new')
@@ -1324,7 +1326,7 @@ function form90_import(data_array,import_type)
 		var data_xml="<bill_types>" +
 				"<id>"+row.id+"</id>" +
 				"<name unique='yes'>"+row.name+"</name>" +
-				"<notes>"+row.process_notes+"</notes>" +
+				"<notes>"+row.notes+"</notes>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</bill_types>";
 		if(import_type=='create_new')
@@ -1405,3 +1407,43 @@ function form93_import(data_array,import_type)
 	});
 };
 
+
+/**
+* @form Discard Items
+* @formNo 94
+*/
+function form94_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<discarded>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.product_name+"</product_name>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</discarded>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+}

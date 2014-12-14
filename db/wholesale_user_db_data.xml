@@ -427,7 +427,7 @@
 			<name>report42</name>
 			<display_name>feedback</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -498,6 +498,24 @@
 		<row>
 			<name>report51</name>
 			<display_name>dead_items</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report52</name>
+			<display_name>product_purchase_report</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report53</name>
+			<display_name>sales_tax</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
@@ -697,7 +715,7 @@
 			<name>form42</name>
 			<display_name>manage_bills</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
@@ -1098,6 +1116,15 @@
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form94</name>
+			<display_name>discard_items</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -1489,6 +1516,28 @@
 			<username>master</username>
 			<element_id>report51</element_id>
 			<element_name>dead_items</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report52</element_id>
+			<element_name>product_purchase_report</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report53</element_id>
+			<element_name>sales_tax</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2215,6 +2264,17 @@
 			<username>master</username>
 			<element_id>form93</element_id>
 			<element_name>manage_loans</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form94</element_id>
+			<element_name>discard_items</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

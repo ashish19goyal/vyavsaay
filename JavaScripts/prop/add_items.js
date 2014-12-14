@@ -606,6 +606,7 @@ function form15_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form15_"+id+"' step='any'>";
+				rowsHTML+="</br>Saleable: <input type='checkbox' form='form15_"+id+"'>";			
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Type'>";
 				rowsHTML+="<input type='text' required form='form15_"+id+"'></br>";
@@ -628,12 +629,12 @@ function form15_add_item()
 		var batch_filter=fields.elements[1];
 		var notes_filter=fields.elements[2];
 		var quantity_filter=fields.elements[3];
-		var type_filter=fields.elements[4];
-		var total_batch_filter=fields.elements[5];
-		var tax_filter=fields.elements[6];
-		var id_filter=fields.elements[7];
-		var total_unit_filter=fields.elements[8];
-		var tax_unit_filter=fields.elements[9];
+		var type_filter=fields.elements[5];
+		var total_batch_filter=fields.elements[6];
+		var tax_filter=fields.elements[7];
+		var id_filter=fields.elements[8];
+		var total_unit_filter=fields.elements[9];
+		var tax_unit_filter=fields.elements[10];
 		
 		$(name_filter).focus();
 		
@@ -701,6 +702,8 @@ function form15_add_item()
 									get_my_past_date(bill_item.last_updated)+
 									" for Rs."+bill_item.total+
 									"\n";
+						total_unit_filter.value=parseFloat(bill_item.total)/parseFloat(bill_item.quantity);
+						tax_unit_filter.value=parseFloat(bill_item.tax)/parseFloat(bill_item.quantity);
 					});
 					if(notes_value=="")
 					{
@@ -710,8 +713,6 @@ function form15_add_item()
 					{
 						notes_filter.value=notes_value;
 					}
-					total_unit_filter.value=parseFloat(bill_items[0].total)/parseFloat(bill_items[0].quantity);
-					tax_unit_filter.value=parseFloat(bill_items[0].tax)/parseFloat(bill_items[0].quantity);
 				});
 			},bill_data);
 			
@@ -786,6 +787,7 @@ function form19_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form19_"+id+"' step='any'>";
+				rowsHTML+="</br>Saleable: <input type='checkbox' form='form19_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Return Amount'>";
 				rowsHTML+="<input type='number' required form='form19_"+id+"' step='any'>";
@@ -807,11 +809,11 @@ function form19_add_item()
 		var batch_filter=fields.elements[1];
 		var notes_filter=fields.elements[2];
 		var quantity_filter=fields.elements[3];
-		var total_filter=fields.elements[4];
-		var tax_filter=fields.elements[5];
-		var id_filter=fields.elements[6];
-		var price_filter=fields.elements[7];
-		var tax_unit_filter=fields.elements[8];
+		var total_filter=fields.elements[5];
+		var tax_filter=fields.elements[6];
+		var id_filter=fields.elements[7];
+		var price_filter=fields.elements[8];
+		var tax_unit_filter=fields.elements[9];
 		
 		$(name_filter).focus();
 		
@@ -878,6 +880,8 @@ function form19_add_item()
 									get_my_past_date(bill_item.last_updated)+
 									" for Rs."+bill_item.total+
 									"\n";
+						price_filter.value=parseFloat(bill_item.total)/parseFloat(bill_item.quantity);
+						tax_unit_filter.value=parseFloat(bill_item.tax)/parseFloat(bill_item.quantity);
 					});
 					if(notes_value=="")
 					{
@@ -887,8 +891,6 @@ function form19_add_item()
 					{
 						notes_filter.value=notes_value;
 					}
-					price_filter.value=parseFloat(bill_items[0].total)/parseFloat(bill_items[0].quantity);
-					tax_unit_filter.value=parseFloat(bill_items[0].tax)/parseFloat(bill_items[0].quantity);
 				});
 			},bill_data);
 			
@@ -3205,3 +3207,4 @@ function form91_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+

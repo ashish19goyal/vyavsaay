@@ -1,5 +1,4 @@
 /**
- * this function prepares the table for update inventroy form
  * @form Update Inventory
  * @formNo 1
  */
@@ -2277,5 +2276,35 @@ function form93_header_ini()
 	$(import_button).on("click", function(event)
 	{
 		modal23_action(form93_import_template,form93_import);
+	});
+};
+
+/**
+ * @form Discard Items
+ * @formNo 94
+ */
+function form94_header_ini()
+{
+	var filter_fields=document.getElementById('form94_header');	
+	var names_filter=filter_fields.elements[0];
+	var batches_filter=filter_fields.elements[1];
+	
+	//setting autocompletes 
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	var batch_data="<product_instances>" +
+			"<batch></batch>" +
+			"</product_instances>";
+
+	set_my_filter(products_data,names_filter);
+	set_my_filter(batch_data,batches_filter);
+	
+	var import_button=filter_fields.elements[4];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form94_import_template,form94_import);
 	});
 };

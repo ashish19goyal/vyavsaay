@@ -169,6 +169,9 @@
   	"manage_bills_multi_register":"Manage Bills (multiple registers)",
   	"create_bills_multi_register":"Create Bills (multiple registers)",
   	"dead_items":"Dead Items",
-  	"margin_by_products":"Margin by Products"
+  	"margin_by_products":"Margin by Products",
+  	"product_purchase_report":"Product Purchase report",
+  	"discard_items":"Discard Items",
+  	"sales_tax":"Sales Tax"
   }
 }

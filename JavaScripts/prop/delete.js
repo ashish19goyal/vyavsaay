@@ -30,7 +30,7 @@ function form1_delete_item(button)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var other_delete="<area_utilization>" +
-					"<product_name>"+name+"</product_name>" +
+					"<item_name>"+name+"</item_name>" +
 					"<batch>"+batch+"</batch>" +
 					"</area_utilization>";
 		var other_delete2="<inventory_adjust>" +
@@ -396,7 +396,7 @@ function form15_delete_item(button)
 {
 	if(is_delete_access('form15'))
 	{
-		var data_id=document.getElementById("form15_master").elements[4].value;
+		var return_id=document.getElementById("form15_master").elements[4].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
@@ -405,38 +405,35 @@ function form15_delete_item(button)
 		var batch=form.elements[1].value;
 		var notes=form.elements[2].value;
 		var quantity=form.elements[3].value;
-		var type=form.elements[4].value;
-		var total_batch=form.elements[5].value;
-		var tax=form.elements[6].value;
-		var data_id=form.elements[7].value;
+		var type=form.elements[5].value;
+		var total_batch=form.elements[6].value;
+		var tax=form.elements[7].value;
+		var data_id=form.elements[8].value;
 		var last_updated=get_my_time();
-		
 			
 		var data_xml="<customer_return_items>" +
 				"<id>"+data_id+"</id>" +
 				"<return_id>"+return_id+"</return_id>" +
 				"<item_name>"+name+"</item_name>" +
 				"<batch>"+batch+"</batch>" +
-				"<quantity>"+quantity+"</quantity>" +
-				"<type>"+type+"</type>";
-		if(type=='refund')
-		{
-			data_xml+="<refund_amount>"+total_batch+"</refund_amount>";
-		}
-		else
-		{
-			data_xml+="<exchange_batch>"+total_batch+"</exchange_batch>";
-		}
-		data_xml+="<total>"+total+"</total>" +
 				"<tax>"+tax+"</tax>" +
 				"</customer_return_items>";	
+		var discard_xml="<discarded>" +
+				"<product_name>"+name+"</product_name>" +
+				"<source_id>"+return_id+"</source_id>" +
+				"<batch>"+batch+"</batch>" +
+				"<source>sale return</source>" +
+				"</discarded>";
 		if(is_online())
 		{
 			server_delete_simple(data_xml);
+			server_delete_simple(discard_xml);
+			
 		}
 		else
 		{
 			local_delete_simple(data_xml);
+			local_delete_simple(discard_xml);
 		}
 				
 		$(button).parent().parent().remove();
@@ -461,14 +458,12 @@ function form16_delete_item(button)
 		
 		var data_id=form.elements[0].value;
 		var customer=form.elements[1].value;
-		var reutrn_date=get_raw_time(form.elements[2].value);
 		var total=form.elements[3].value;
 		var transaction_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var return_xml="<customer_returns>" +
 					"<id>"+data_id+"</id>" +
 					"<customer>"+customer+"</customer>" +
-					"<return_date>"+return_date+"</return_date>" +
 					"<total>"+total+"</total>" +
 					"</customer_returns>";	
 		var activity_xml="<activity>" +
@@ -531,13 +526,20 @@ function form16_delete_item(button)
 		var items_data="<customer_return_items>" +
 				"<return_id>"+data_id+"</return_id>" +
 				"</customer_return_items>";
+		var discard_xml="<discarded>" +
+				"<source_id>"+data_id+"</source_id>" +
+				"<source>sale return</source>" +
+				"</discarded>";
+
 		if(is_online())
 		{
 			server_delete_simple(items_data);
+			server_delete_simple(discard_xml);
 		}
 		else
 		{
 			local_delete_simple(items_data);
+			local_delete_simple(discard_xml);
 		}
 	}
 	else
@@ -560,14 +562,12 @@ function form17_delete_item(button)
 		
 		var data_id=form.elements[0].value;
 		var supplier=form.elements[1].value;
-		var reutrn_date=get_raw_time(form.elements[2].value);
 		var total=form.elements[3].value;
 		var transaction_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var return_xml="<supplier_returns>" +
 					"<id>"+data_id+"</id>" +
 					"<supplier>"+supplier+"</supplier>" +
-					"<return_date>"+return_date+"</return_date>" +
 					"<total>"+total+"</total>" +
 					"</supplier_returns>";	
 		var activity_xml="<activity>" +
@@ -631,15 +631,20 @@ function form17_delete_item(button)
 		var items_data="<supplier_return_items>" +
 				"<return_id>"+data_id+"</return_id>" +
 				"</supplier_return_items>";
+		var discard_xml="<discarded>" +
+				"<source_id>"+data_id+"</source_id>" +
+				"<source>purchase return</source>" +
+				"</discarded>";
 		if(is_online())
 		{
 			server_delete_simple(items_data);
+			server_delete_simple(discard_xml);
 		}
 		else
 		{
 			local_delete_simple(items_data);
+			local_delete_simple(discard_xml);
 		}
-				
 	}
 	else
 	{
@@ -656,30 +661,37 @@ function form19_delete_item(button)
 {
 	if(is_delete_access('form19'))
 	{
-		var data_id=document.getElementById("form19_master").elements[4].value;
+		var return_id=document.getElementById("form19_master").elements[4].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var data_id=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		
 		var data_xml="<supplier_return_items>" +
 				"<id>"+data_id+"</id>" +
 				"<return_id>"+return_id+"</return_id>" +
 				"<item_name>"+name+"</item_name>" +
 				"<batch>"+batch+"</batch>" +
-				"</supplier_return_items>";	
+				"</supplier_return_items>";
+		var discard_xml="<discarded>" +
+				"<product_name>"+name+"</product_name>" +
+				"<source_id>"+return_id+"</source_id>" +
+				"<batch>"+batch+"</batch>" +
+				"<source>purchase return</source>" +
+				"</discarded>";
 		if(is_online())
 		{
 			server_delete_simple(data_xml);
-			server_update_simple(quantity_xml);
+			server_delete_simple(discard_xml);
+			
 		}
 		else
 		{
 			local_delete_simple(data_xml);
-			local_update_simple(quantity_xml);
+			local_delete_simple(discard_xml);
 		}
 				
 		$(button).parent().parent().remove();
@@ -2857,6 +2869,50 @@ function form93_delete_item(button)
 				break;
 			}
 		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Discard Items
+ * @formN0 94
+ * @param button
+ */
+function form94_delete_item(button)
+{
+	if(is_delete_access('form94'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		var name=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<discarded>" +
+					"<id>"+data_id+"</id>" +
+					"<product_name>"+name+"</product_name>" +
+					"<batch>"+batch+"</batch>" +
+					"</discarded>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>discarded</tablename>" +
+					"<link_to>form94</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Batch number "+batch+" of product "+name+" from discarded list</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
 	}
 	else
 	{

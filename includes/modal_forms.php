@@ -500,6 +500,17 @@
 			</fieldset>
 		</form>
 	</div>
+
+	<div id="modal40" title="Discard item">
+		<form id='modal40_form'>
+			<fieldset>
+				<label>Item <input type='text' required></label><br/>
+				<label>Batch <input type="text" required></label><br/>
+				<label>Quantity <input type='number' required></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
 	
 	<div id="modal50" title="Sending Mails">
 		<a href='' id='modal50_sendmail'>Send mails through Gmail</a>

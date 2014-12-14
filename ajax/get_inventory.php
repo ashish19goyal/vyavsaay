@@ -22,16 +22,18 @@
 				$query4="select sum(quantity) from supplier_return_items where item_name=? and batch=?";
 				$query5="select sum(quantity) from customer_return_items where item_name=? and exchange_batch=?";
 				$query6="select sum(quantity) from inventory_adjust where product_name=? and batch=?";
-
+				$query7="select sum(quantity) from discarded where product_name=? and batch=?";
+				
 				if($batch=="")
 				{
 					$values=array($product);
 					$query1="select sum(quantity) from bill_items where item_name=?";
 					$query2="select sum(quantity) from supplier_bill_items where product_name=?";
-					$query3="select sum(quantity) from customer_return_items where item_name=?";
+					$query3="select sum(quantity) from customer_return_items where item_name=? and type=?";
 					$query4="select sum(quantity) from supplier_return_items where item_name=?";
-					$query5="select sum(quantity) from customer_return_items where item_name=?";
+					//$query5="select sum(quantity) from customer_return_items where item_name=? and type=?";
 					$query6="select sum(quantity) from inventory_adjust where product_name=?";
+					$query7="select sum(quantity) from discarded where product_name=?";
 				}
 				
 				$db_name="re_user_".$domain;
@@ -47,28 +49,48 @@
 				$stmt2->execute($values);
 				$res2=$stmt2->fetch(PDO::FETCH_NUM);
 				$supplier_bill_items=$res2[0];
-				
-				$stmt3=$conn->conn->prepare($query3);
-				$stmt3->execute($values);
-				$res3=$stmt3->fetch(PDO::FETCH_NUM);
-				$customer_return_items=$res3[0];
+
+				$customer_return_items=0;
+				if($batch=="")
+				{
+					$stmt3=$conn->conn->prepare($query3);
+					$stmt3->execute(array($product,'refund'));
+					$res3=$stmt3->fetch(PDO::FETCH_NUM);
+					$customer_return_items=$res3[0];
+				}
+				else
+				{
+					$stmt3=$conn->conn->prepare($query3);
+					$stmt3->execute($values);
+					$res3=$stmt3->fetch(PDO::FETCH_NUM);
+					$customer_return_items=$res3[0];
+				}
 				
 				$stmt4=$conn->conn->prepare($query4);
 				$stmt4->execute($values);
 				$res4=$stmt4->fetch(PDO::FETCH_NUM);
 				$supplier_return_items=$res4[0];
-				
-				$stmt5=$conn->conn->prepare($query5);
-				$stmt5->execute($values);
-				$res5=$stmt5->fetch(PDO::FETCH_NUM);
-				$customer_exchange_items=$res5[0];
+
+				$customer_exchange_items=0;
+				if($batch!="")
+				{
+					$stmt5=$conn->conn->prepare($query5);
+					$stmt5->execute($values);
+					$res5=$stmt5->fetch(PDO::FETCH_NUM);
+					$customer_exchange_items=$res5[0];
+				}
 				
 				$stmt6=$conn->conn->prepare($query6);
 				$stmt6->execute($values);
 				$res6=$stmt6->fetch(PDO::FETCH_NUM);
 				$inventory_adjust=$res6[0];
 				
-				$response=$supplier_bill_items+$customer_return_items+$inventory_adjust-$bill_items-$supplier_return_items-$customer_exchange_items;
+				$stmt7=$conn->conn->prepare($query7);
+				$stmt7->execute($values);
+				$res7=$stmt7->fetch(PDO::FETCH_NUM);
+				$discarded=$res7[0];
+				
+				$response=$supplier_bill_items+$customer_return_items+$inventory_adjust-$bill_items-$supplier_return_items-$customer_exchange_items-$discarded;
 				
 				echo $response;
 			}

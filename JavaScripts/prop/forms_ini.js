@@ -14,8 +14,15 @@ function form1_ini()
 	
 	var fname=filter_fields.elements[0].value;
 	var fbatch=filter_fields.elements[1].value;
+
+	////indexing///
+	var index_element=document.getElementById('form1_index');
+	var prev_element=document.getElementById('form1_prev');
+	var next_element=document.getElementById('form1_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
 	
-	var columns="<product_instances count='100'>" +
+	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
 		"<batch>"+fbatch+"</batch>" +
 		"<product_name>"+fname+"</product_name>" +
@@ -35,7 +42,7 @@ function form1_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form1_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' value='"+result.product_name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form1_"+result.id+"'>"+result.product_name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Batch'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' value='"+result.batch+"'>";
@@ -78,6 +85,30 @@ function form1_ini()
 				actual_inventory.value=inventory;
 			});
 		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
 		
 		longPressEditable($('.dblclick_editable'));
 		
@@ -1091,7 +1122,6 @@ function form15_ini()
 		var return_items_column="<customer_return_items>" +
 				"<id></id>" +
 				"<return_id>"+data_id+"</return_id>" +
-				"<bill_id></bill_id>" +
 				"<item_name></item_name>" +
 				"<batch></batch>" +
 				"<notes></notes>" +
@@ -1099,6 +1129,7 @@ function form15_ini()
 				"<type></type>" +
 				"<refund_amount></refund_amount>" +
 				"<exchange_batch></exchange_batch>" +
+				"<saleable></saleable>" +
 				"<tax></tax>" +
 				"</customer_return_items>";
 	
@@ -1164,14 +1195,15 @@ function form15_ini()
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Quantity'>";
 								rowsHTML+="<input type='number' readonly='readonly' form='form15_"+id+"' value='"+result.quantity+"' step='any'>";
+								rowsHTML+="</br>Saleable: <input type='checkbox' readonly='readonly' form='form15_"+id+"' "+result.saleable+">";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Type'>";
 								rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.type+"'></br>";
 								if(result.type=='refund')
 								{
 									rowsHTML+="Amount <input type='number' readonly='readonly' step='any' form='form15_"+id+"' value='"+result.refund_amount+"'>";
-									message_string+=" Refund Rs: "+subform.elements[5].value;
-									mail_string+=" Refund Rs: "+subform.elements[5].value;
+									message_string+=" Refund Rs: "+result.refund_amount;
+									mail_string+=" Refund Rs: "+result.refund_amount;
 
 								}
 								else
@@ -1410,6 +1442,7 @@ function form19_ini()
 				"<quantity></quantity>" +
 				"<refund_amount></refund_amount>" +
 				"<tax></tax>" +
+				"<saleable></saleable>" +
 				"</supplier_return_items>";
 	
 		////separate fetch function to get bill details like customer name, total etc.
@@ -1475,6 +1508,7 @@ function form19_ini()
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Quantity'>";
 								rowsHTML+="<input type='number' readonly='readonly' form='form19_"+id+"' value='"+result.quantity+"' step='any'>";
+								rowsHTML+="</br>Saleable: <input type='checkbox' readonly='readonly' form='form19_"+id+"' "+result.saleable+">";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Return Amount'>";
 								rowsHTML+="<input type='number' readonly='readonly' step='any' form='form19_"+id+"' value='"+result.refund_amount+"'>";
@@ -6409,4 +6443,84 @@ function form93_ini()
 		});
 		hide_loader();
 	});	
+};
+
+
+/**
+ * @form Discard Items
+ * @formNo 94
+ * @Loading light
+ */
+function form94_ini()
+{
+	show_loader();
+	var fid=$("#form94_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form94_header');
+	
+	var fname=filter_fields.elements[0].value;
+	var fbatch=filter_fields.elements[1].value;
+	
+	var columns="<discarded count='100'>" +
+		"<id>"+fid+"</id>" +
+		"<batch>"+fbatch+"</batch>" +
+		"<product_name>"+fname+"</product_name>" +
+		"<quantity></quantity>" +
+		"<source></source>" +
+		"<source_link></source_link>" +
+		"<source_id></source_id>" +
+		"<last_updated sort='desc'></last_updated>" +
+		"</discarded>";
+	
+	$('#form94_body').html("");
+	
+	fetch_requested_data('form94',columns,function(results)
+	{
+		console.log(columns);
+		console.log(results);
+		results.forEach(function(result)
+		{
+			var source_string=result.source+" <a onclick=\"element_display('"+result.source_id+"','"+result.source_link+"')\"><u>"+result.source_id+"</u></a>";
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form94_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Item Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form94_"+result.id+"'>"+result.product_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Batch'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form94_"+result.id+"' value='"+result.batch+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form94_"+result.id+"' value='"+result.quantity+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Source'>";
+						rowsHTML+=source_string;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form94_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form94_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form94_"+result.id+"' onclick='form94_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form94_body').append(rowsHTML);
+			var fields=document.getElementById("form94_"+result.id);
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+			});
+		});
+		
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'discarded_items');
+		});
+		hide_loader();
+	});
 };

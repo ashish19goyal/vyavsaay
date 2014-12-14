@@ -166,6 +166,7 @@
 			<notes index='yes' type="TEXT"></notes>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<refund_amount index='no' type="DECIMAL(12,2)"></refund_amount>
+			<saleable index='no' type="VARCHAR(25)"></saleable><!--checked/unchecked-->
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_return_items>
@@ -301,6 +302,7 @@
 			<type index='yes' type="VARCHAR(25)"></type><!--exchange/refund-->
 			<refund_amount index='no' type="DECIMAL(12,2)"></refund_amount>
 			<exchange_batch index='yes' type="VARCHAR(50)"></exchange_batch>
+			<saleable index='no' type="VARCHAR(25)"></saleable><!--checked/unchecked-->
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</customer_return_items>
@@ -351,6 +353,17 @@
 			<product_name index='yes' type="VARCHAR(90)"></product_name>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</inventory_adjust>
+	<discarded>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<batch index='yes' type="VARCHAR(45)"></batch>
+			<bar_code index='yes' type="VARCHAR(45)"></bar_code>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<source index='no' type="VARCHAR(25)"></source><!--Sale return/Purchase return-->
+			<source_link index='no' type="VARCHAR(25)"></source_link>
+			<source_id index='no' type='BIGINT'></source_id>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</discarded>
 	<product_master>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<bar_code index='yes' type="VARCHAR(45)"></bar_code>

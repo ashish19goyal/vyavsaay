@@ -4,7 +4,7 @@
 */
 function form1_import_template()
 {
-	var data_array=['id','product_name','batch','cost_price','sale_price','expiry'];
+	var data_array=['id','product_name','batch','cost_price','sale_price','expiry','manufacture_date','mrp'];
 	my_array_to_csv(data_array);
 };
 
@@ -307,5 +307,15 @@ function form93_import_template()
 	var data_array=['id','type','account','date_initiated','loan_amount','repayment_method',
 	                'interest_paid','interest_rate','interest_period','next_interest_date','interest_type',
 	                'emi','emi_period','next_emi_date','pending_emi','status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Discard Items
+* @formNo 94
+*/
+function form94_import_template()
+{
+	var data_array=['id','product_name','batch','quantity'];
 	my_array_to_csv(data_array);
 };

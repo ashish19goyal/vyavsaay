@@ -8,8 +8,9 @@ function report1_ini()
 	var date_since=form.elements[1].value;
 	var product_filter=form.elements[2].value;
 
+	show_loader();
 	$('#report1_body').html('');
-
+	var report_count=2;
 	/////appending new arrivals details
 	var product_data="<supplier_bill_items>" +
 			"<product_name>"+product_filter+"</product_name>" +
@@ -19,6 +20,9 @@ function report1_ini()
 	
 	get_single_column_data(function(products)
 	{
+		report_count-=1;
+		report_count+=products.length;
+
 		products.forEach(function(product)
 		{
 			var bill_id_data="<supplier_bill_items>" +
@@ -78,6 +82,7 @@ function report1_ini()
 							rowsHTML+="</tr>";						
 
 							$('#report1_body').append(rowsHTML);
+							report_count-=1;
 						});
 					}
 				});
@@ -96,6 +101,8 @@ function report1_ini()
 	
 	fetch_requested_data('report1',offer_data,function(offers)
 	{
+		report_count-=1;
+		report_count+=offers.length;
 		offers.forEach(function(offer)
 		{
 			var store_data="<area_utilization>" +
@@ -131,9 +138,32 @@ function report1_ini()
 				rowsHTML+="</tr>";
 				
 				$('#report1_body').append(rowsHTML);
-
+				report_count-=1;
 			});
 		});
+	});
+	
+	var report_complete=setInterval(function()
+	{
+	   if(report_count===0)
+	   {
+		   clearInterval(report_complete);
+		   hide_loader();
+	   }
+	},1000);
+	
+	var print_button=form.elements[4];
+	$(print_button).off('click');
+	$(print_button).on('click',function(event)
+	{
+	   var container=document.createElement('div');
+	   var title=document.createElement('div');
+	   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Signage Changes</b></div>";
+	   var table_element=document.getElementById('report1_body').parentNode;
+	   var table_copy=table_element.cloneNode(true);
+	   container.appendChild(title);
+	   container.appendChild(table_copy);
+	   $.print(container);
 	});
 };
 
@@ -3380,4 +3410,330 @@ function report51_ini()
 			hide_loader();
 		},bill_data);
 	},product_data);
+};
+
+/**
+ * @reportNo 52
+ * @report Product purchase report
+ */
+function report52_ini()
+{
+	var form=document.getElementById('report52_header');
+	var name=form.elements[1].value;
+	var make=form.elements[2].value;
+	var supplier=form.elements[3].value;
+	var date=form.elements[4].value;
+	
+	show_loader();
+	$('#report52_body').html('');
+	var rowsHTML="";
+	
+	var bills_data="<supplier_bills>" +
+			"<id></id>" +
+			"<supplier>"+supplier+"</supplier>" +
+			"<entry_date compare='more than'>"+get_raw_time(date)+"</entry_date>" +
+			"</supplier_bills>";
+	
+	fetch_requested_data('report52',bills_data,function(bills)
+	{
+		var bills_string="--";
+		for(var i in bills)
+		{
+			bills_string+=bills[i].id+"--";
+		}
+		
+		var bill_items_data="<supplier_bill_items>" +
+				"<bill_id array='yes'>"+bills_string+"</bill_id>" +
+				"<product_name>"+name+"</product_name>" +
+				"<quantity></quantity>" +
+				"<amount></amount>" +
+				"</supplier_bill_items>";
+		
+		fetch_requested_data('report52',bill_items_data,function(bill_ids)
+		{
+			var product_string="--";
+			for(var j in bill_ids)
+			{
+				product_string+=bill_ids[j].product_name+"--";
+			}
+			var make_data="<product_master>" +
+					"<name array='yes'>"+product_string+"</name>" +
+					"<make>"+make+"</make>" +
+					"</product_master>";
+
+			fetch_requested_data('report52',make_data,function(makes)
+			{
+				for(var k in bill_ids)
+				{
+					for(var z in makes)
+					{
+						if(bill_ids[k].product_name==makes[z].name)
+						{
+							var supplier_name="";
+							for(var m in bills)
+							{
+								if(bills[m].id==bill_ids[k].bill_id)
+								{
+									supplier_name=bills[m].supplier;
+									break;
+								}
+							}
+							rowsHTML+="<tr>";
+								rowsHTML+="<td data-th='Product Name'>";
+									rowsHTML+=bill_ids[k].product_name;
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Make'>";
+									rowsHTML+=makes[z].make;
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Supplier'>";
+									rowsHTML+=supplier_name;
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Quantity'>";
+									rowsHTML+=bill_ids[k].quantity;
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Amount'>";
+									rowsHTML+=bill_ids[k].amount;
+								rowsHTML+="</td>";
+							rowsHTML+="</tr>";
+							break;
+						}
+					}
+				}
+				$('#report52_body').html(rowsHTML);
+				
+				var print_button=form.elements[6];
+				$(print_button).off('click');
+				$(print_button).on('click',function(event)
+				{
+				   var container=document.createElement('div');
+				   var title=document.createElement('div');
+				   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Product purchase report</b></div>";
+				   var table_element=document.getElementById('report52_body').parentNode;
+				   var table_copy=table_element.cloneNode(true);
+				   container.appendChild(title);
+				   container.appendChild(table_copy);
+				   $.print(container);
+				});
+				
+				hide_loader();
+			});
+		});
+	});
+};
+
+
+/**
+ * @reportNo 53
+ * @report Sales tax report
+ */
+function report53_ini()
+{
+	var form=document.getElementById('report53_header');
+	var name=form.elements[1].value;
+	var start_date=form.elements[2].value;
+	var end_date=form.elements[3].value;
+	
+	show_loader();
+	$('#report53_body').html('');
+	var report_count=4;
+	
+	var bills_data="<bill_items>" +
+			"<item_name>"+name+"</item_name>" +
+			"<amount></amount>" +
+			"<tax></tax>" +
+			"<last_updated compare='more than'>"+get_raw_time(start_date)+"</last_updated>" +
+			"<last_updated compare='less than'>"+get_raw_time(end_date)+"</last_updated>" +
+			"</bill_items>";
+	
+	fetch_requested_data('report53',bills_data,function(bills)
+	{
+		console.log(bills);
+		for(var i=0;i<bills.length;i++)
+		{
+			for(var j=i+1;j<bills.length;j++)
+			{
+				if(bills[i].item_name==bills[j].item_name)
+				{
+					bills[i].amount=parseFloat(bills[i].amount)+parseFloat(bills[j].amount);
+					bills[i].tax=parseFloat(bills[i].tax)+parseFloat(bills[j].tax);
+					bills.splice(j,1);
+					j-=1;
+				}
+			}
+			
+			var rowsHTML="<tr>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+=bills[i].item_name;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Transaction Type'>";
+				rowsHTML+='Sale';
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+=bills[i].amount;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Tax'>";
+				rowsHTML+=bills[i].tax;
+			rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+					
+			$('#report53_body').append(rowsHTML);
+		}
+		report_count-=1;
+	});
+
+	var supplier_bills_data="<supplier_bill_items>" +
+			"<product_name>"+name+"</product_name>" +
+			"<amount></amount>" +
+			"<tax></tax>" +
+			"<last_updated compare='more than'>"+get_raw_time(start_date)+"</last_updated>" +
+			"<last_updated compare='less than'>"+get_raw_time(end_date)+"</last_updated>" +
+			"</supplier_bill_items>";
+
+	fetch_requested_data('report53',supplier_bills_data,function(supplier_bills)
+	{
+		console.log(supplier_bills);
+		for(var i=0;i<supplier_bills.length;i++)
+		{
+			for(var j=i+1;j<supplier_bills.length;j++)
+			{
+				if(supplier_bills[i].product_name==supplier_bills[j].product_name)
+				{
+					supplier_bills[i].amount=parseFloat(supplier_bills[i].amount)+parseFloat(supplier_bills[j].amount);
+					supplier_bills[i].tax=parseFloat(supplier_bills[i].tax)+parseFloat(supplier_bills[j].tax);
+					supplier_bills.splice(j,1);
+					j-=1;
+				}
+			}
+			
+			var rowsHTML="<tr>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+=supplier_bills[i].product_name;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Transaction Type'>";
+				rowsHTML+='Purchase';
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+=supplier_bills[i].amount;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Tax'>";
+				rowsHTML+="-"+supplier_bills[i].tax;
+			rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+					
+			$('#report53_body').append(rowsHTML);
+		}
+		report_count-=1;
+	});
+
+	var sale_return_data="<customer_return_items>" +
+			"<item_name>"+name+"</item_name>" +
+			"<refund_amount></refund_amount>" +
+			"<tax></tax>" +
+			"<last_updated compare='more than'>"+get_raw_time(start_date)+"</last_updated>" +
+			"<last_updated compare='less than'>"+get_raw_time(end_date)+"</last_updated>" +
+			"</customer_return_items>";
+
+	fetch_requested_data('report53',sale_return_data,function(sreturns)
+	{
+		console.log(sreturns);
+		for(var i=0;i<sreturns.length;i++)
+		{
+			for(var j=i+1;j<sreturns.length;j++)
+			{
+				if(sreturns[i].item_name==sreturns[j].item_name)
+				{
+					sreturns[i].amount=parseFloat(sreturns[i].amount)+parseFloat(sreturns[j].amount);
+					sreturns[i].tax=parseFloat(sreturns[i].tax)+parseFloat(sreturns[j].tax);
+					sreturns.splice(j,1);
+					j-=1;
+				}
+			}
+			
+			var rowsHTML="<tr>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+=sreturns[i].item_name;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Transaction Type'>";
+				rowsHTML+='Sale return';
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+=sreturns[i].amount;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Tax'>";
+				rowsHTML+="-"+sreturns[i].tax;
+			rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+					
+			$('#report53_body').append(rowsHTML);
+		}
+		report_count-=1;
+	});
+
+	var purchase_return_data="<supplier_return_items>" +
+			"<item_name>"+name+"</item_name>" +
+			"<refund_amount></refund_amount>" +
+			"<tax></tax>" +
+			"<last_updated compare='more than'>"+get_raw_time(start_date)+"</last_updated>" +
+			"<last_updated compare='less than'>"+get_raw_time(end_date)+"</last_updated>" +
+			"</supplier_return_items>";
+
+	fetch_requested_data('report53',purchase_return_data,function(preturns)
+	{
+		console.log(preturns);
+
+		for(var i=0;i<preturns.length;i++)
+		{
+			for(var j=i+1;j<preturns.length;j++)
+			{
+				if(preturns[i].item_name==preturns[j].item_name)
+				{
+					preturns[i].amount=parseFloat(preturns[i].amount)+parseFloat(preturns[j].amount);
+					preturns[i].tax=parseFloat(preturns[i].tax)+parseFloat(preturns[j].tax);
+					preturns.splice(j,1);
+					j-=1;
+				}
+			}
+			
+			var rowsHTML="<tr>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+=preturns[i].item_name;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Transaction Type'>";
+				rowsHTML+='Purchase return';
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+=preturns[i].amount;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Tax'>";
+				rowsHTML+=preturns[i].tax;
+			rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+					
+			$('#report53_body').append(rowsHTML);
+		}
+		report_count-=1;
+	});
+
+    var report_complete=setInterval(function()
+	{
+	   if(report_count===0)
+	   {
+		   clearInterval(report_complete);
+		   hide_loader();
+	   }
+	},1000);
+	
+	var print_button=form.elements[5];
+	$(print_button).off('click');
+	$(print_button).on('click',function(event)
+	{
+	   var container=document.createElement('div');
+	   var title=document.createElement('div');
+	   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Sales Tax report</b></div>";
+	   var table_element=document.getElementById('report53_body').parentNode;
+	   var table_copy=table_element.cloneNode(true);
+	   container.appendChild(title);
+	   container.appendChild(table_copy);
+	   $.print(container);
+	});
 };

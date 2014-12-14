@@ -37,6 +37,7 @@ function modal8_action()
 	set_my_value_list(service_data,service);
 	set_my_value_list(service_data,free_service_name);
 	
+	$(all_batch).off('click');
 	$(all_batch).on('click',function(event)
 	{
 		if(all_batch.checked)
@@ -51,6 +52,7 @@ function modal8_action()
 		}
 	});
 	
+	$(offer_type).off('blur');
 	$(offer_type).on('blur',function(event)
 	{
 		$(product_name).parent().hide();
@@ -63,6 +65,7 @@ function modal8_action()
 		
 		if(offer_type.value=='product')
 		{
+			$(product_name).off('blur');
 			$(product_name).on('blur',function(event)
 			{
 				var batch_data="<product_instances>" +
@@ -92,6 +95,7 @@ function modal8_action()
 		}
 	});
 	
+	$(criteria_type).off('blur');
 	$(criteria_type).on('blur',function(event)
 	{
 		$(criteria_amount).parent().hide();
@@ -108,6 +112,7 @@ function modal8_action()
 		}
 	});
 	
+	$(result_type).off('blur');
 	$(result_type).on('blur',function(event)
 	{
 		$(discount_percent).parent().hide();
@@ -692,6 +697,7 @@ function modal14_action()
 	var fbarcode=form.elements[7];
 	var auto_generate=form.elements[8];
 	
+	$(auto_generate).off('click');
 	$(auto_generate).on('click',function(event)
 	{
 		if(auto_generate.checked)
@@ -1134,6 +1140,7 @@ function modal19_action(button)
 	var fbarcode=form.elements[7];
 	var auto_generate=form.elements[8];
 	
+	$(auto_generate).off('click');
 	$(auto_generate).on('click',function(event)
 	{
 		if(auto_generate.checked)
@@ -1643,6 +1650,7 @@ function modal22_action()
 			"</product_master>";
 	set_my_value_list(name_data,fname);
 	
+	$(fname).off('blur');
 	$(fname).on('blur',function(event)
 	{
 		var batch_data="<product_instances>" +
@@ -1684,6 +1692,7 @@ function modal22_action()
 	////////////////////////////////////////////////
 	
 	////auto setting sale price fields/////////
+	$(fsale_price).off('blur');
 	$(fsale_price).on('blur',function(event)
 	{
 		var sale_price=fsale_price.value;
@@ -1791,12 +1800,14 @@ function modal23_action(t_func,i_func)
 	var select_file=form.elements[4];
 	var selected_file=form.elements[5];
 	var import_button=form.elements[6];
-	
+
+	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
 		t_func();
 	});
 	
+	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
@@ -2546,6 +2557,7 @@ function modal32_action(date_initiated)
 	$(due_filter).datetimepicker();
 	set_static_value_list('task_instances','status',status_filter);
 	
+	$(task_filter).off('blur');
 	$(task_filter).on('blur',function(event)
 	{
 		var hours_data="<task_type>" +
@@ -3008,6 +3020,7 @@ function modal38_action(father_id)
 	////////////////////////////////////////////////
 	
 	////auto setting sale price fields/////////
+	$(fsale_price).off('blur');
 	$(fsale_price).on('blur',function(event)
 	{
 		var sale_price=fsale_price.value;
@@ -3107,6 +3120,7 @@ function modal39_action(schedule_date)
 	$(emi_period_filter).parent().hide();
 	$(num_emi_filter).parent().hide();
 
+	$(repayment_filter).off('blur');
 	$(repayment_filter).on('blur',function(event)
 	{
 		if(repayment_filter.value=='instalments')
@@ -3250,6 +3264,81 @@ function modal39_action(schedule_date)
 	});
 	
 	$("#modal39").dialog("open");
+}
+
+
+/**
+ * @modal Discard Item
+ * @modalNo 40
+ */
+function modal40_action(product,batch)
+{
+	var form=document.getElementById("modal40_form");
+	var item_filter=form.elements[1];
+	var batch_filter=form.elements[2];
+	var quantity_filter=form.elements[3];
+	
+	item_filter.value=product;
+	batch_filter.value=batch;
+	
+	var item_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	set_my_value_list(item_data,item_filter);
+	
+	$(item_filter).off('blur');
+	$(item_filter).on('blur',function(event)
+	{
+		var batch_data="<product_instances>" +
+			"<batch></batch>" +
+			"<product_name exact='yes'>"+item_filter.value+"</product_name>" +
+			"</product_instances>";
+		set_my_value_list(batch_data,batch_filter);
+	});
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form94'))
+		{
+			var item=form.elements[1].value;
+			var batch=form.elements[2].value;
+			var quantity=form.elements[3].value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<discarded>" +
+						"<id>"+data_id+"</id>" +
+						"<product_name>"+item+"</product_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<quantity>"+quantity+"</quantity>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</discarded>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>discarded</tablename>" +
+						"<link_to>form94</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Batch number "+batch+" of product "+name+" to discarded list</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_create_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+			}
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal40").dialog("close");
+	});
+	
+	$("#modal40").dialog("open");
 }
 
 

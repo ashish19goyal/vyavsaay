@@ -6,9 +6,10 @@ function get_raw_time(date)
 	}
 	else
 	{
-		var day=parseInt(date.substr(0,2));
-		var month=parseInt(date.substr(3,2))-1;
-		var year=parseInt(date.substr(6,4));
+		var date_array=date.split("/");
+		var day=parseInt(date_array[0]);
+		var month=parseInt(date_array[1])-1;
+		var year=parseInt(date_array[2]);
 		var hour=0;
 		var minutes=0;
 		if(date.substr(11,2)!="" && date.substr(11,2)!=null)

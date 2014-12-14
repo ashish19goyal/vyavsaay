@@ -5,6 +5,7 @@
  * exact: yes
  * sort: asc,desc
  * count: <integer>
+ * start_index: <integer>
  */
 
 /**
@@ -941,9 +942,14 @@ function local_read_multi_column(columns,callback,results)
 	var table=data.childNodes[0].nodeName;
 	var cols=data.childNodes[0].childNodes;
 	var count=0;
+	var start_index=0;
 	if(data.childNodes[0].hasAttribute('count'))
 	{
 		count=parseInt(data.childNodes[0].getAttribute('count'));
+	}
+	if(data.childNodes[0].hasAttribute('start_index'))
+	{
+		start_index=parseInt(data.childNodes[0].getAttribute('start_index'));
 	}
 	var filter=new Array();
 	var sort_index='id';
@@ -1089,7 +1095,11 @@ function local_read_multi_column(columns,callback,results)
 				
 				if(match===true)
 				{
-					results.push(records[row]);
+					if(start_index==0)
+					{
+						results.push(records[row]);
+					}
+					start_index-=1;
 					if(results.length===count)
 					{
 						break;
@@ -1413,8 +1423,19 @@ function local_get_inventory(product,batch,callback)
 									}
 								}
 							}
-							
-							callback(result);
+
+							database.get('discarded',{},function(err,di_records)
+							{
+								for(var row in di_records)
+								{
+									if((di_records[row]['batch']==batch || batch==='' || batch===null) && di_records[row]['product_name']==product)
+									{
+										result-=parseFloat(di_records[row]['quantity']);
+									}
+								}
+
+								callback(result);
+							});
 						});
 					});
 				});			

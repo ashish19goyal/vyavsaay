@@ -1232,10 +1232,13 @@ function form15_create_item(form)
 		var batch=form.elements[1].value;
 		var notes=form.elements[2].value;
 		var quantity=form.elements[3].value;
-		var type=form.elements[4].value;
-		var total_batch=form.elements[5].value;
-		var tax=form.elements[6].value;
-		var data_id=form.elements[7].value;
+		var saleable='unchecked';
+		if(form.elements[4].checked)
+			saleable='checked';
+		var type=form.elements[5].value;
+		var total_batch=form.elements[6].value;
+		var tax=form.elements[7].value;
+		var data_id=form.elements[8].value;
 		
 		var last_updated=get_my_time();
 					
@@ -1245,7 +1248,8 @@ function form15_create_item(form)
 				"<item_name>"+name+"</item_name>" +
 				"<batch>"+batch+"</batch>" +
 				"<quantity>"+quantity+"</quantity>" +
-				"<type>"+type+"</type>";
+				"<type>"+type+"</type>" +
+				"<saleable>"+saleable+"</saleable>";
 		if(type=='refund')
 		{
 			data_xml+="<refund_amount>"+total_batch+"</refund_amount>";
@@ -1267,11 +1271,34 @@ function form15_create_item(form)
 			local_create_simple(data_xml);
 		}
 				
+		if(saleable!="checked")
+		{
+			var discard_id=get_new_key()+""+Math.floor(Math.random()*1000);
+			var discard_xml="<discarded>" +
+					"<id>"+discard_id+"</id>" +
+					"<product_name>"+name+"</product_name>" +
+					"<source_id>"+return_id+"</source_id>" +
+					"<batch>"+batch+"</batch>" +
+					"<source>sale return</source>" +
+					"<source_link>form15</source_link>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</discarded>";
+			if(is_online())
+			{
+				server_create_simple(discard_xml);
+			}
+			else
+			{
+				local_create_simple(discard_xml);
+			}
+		}
+		
 		for(var i=0;i<8;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[9];
+		var del_button=form.elements[12];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
@@ -1323,18 +1350,18 @@ function form15_create_form()
 			mail_string+="\nItem: "+subform.elements[0].value;
 			mail_string+=" Quanity: "+subform.elements[3].value;
 			
-			if(subform.elements[4].value=='refund')
+			if(subform.elements[5].value=='refund')
 			{	
-				total+=parseFloat(subform.elements[5].value);
-				message_string+=" Refund Rs: "+subform.elements[5].value;
-				mail_string+=" Refund Rs: "+subform.elements[5].value;
+				total+=parseFloat(subform.elements[6].value);
+				message_string+=" Refund Rs: "+subform.elements[6].value;
+				mail_string+=" Refund Rs: "+subform.elements[6].value;
 			}
 			else
 			{
 				message_string+=" Exchanged";
 				mail_string+=" Exchanged";
 			}
-			tax+=parseFloat(subform.elements[6].value);
+			tax+=parseFloat(subform.elements[7].value);
 			
 		});
 		
@@ -1456,9 +1483,12 @@ function form19_create_item(form)
 		var batch=form.elements[1].value;
 		var notes=form.elements[2].value;
 		var quantity=form.elements[3].value;
-		var total=form.elements[4].value;
-		var tax=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var saleable='unchecked';
+		if(form.elements[4].checked)
+			saleable='checked';
+		var total=form.elements[5].value;
+		var tax=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		
 		var last_updated=get_my_time();
 			
@@ -1468,6 +1498,7 @@ function form19_create_item(form)
 				"<item_name>"+name+"</item_name>" +
 				"<batch>"+batch+"</batch>" +
 				"<quantity>"+quantity+"</quantity>" +
+				"<saleable>"+saleable+"</saleable>" +
 				"<refund_amount>"+total+"</refund_amount>" +
 				"<tax>"+tax+"</tax>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
@@ -1482,12 +1513,34 @@ function form19_create_item(form)
 			local_create_simple(data_xml);
 		}
 	
-				
-		for(var i=0;i<5;i++)
+		if(saleable!="checked")
+		{
+			var discard_id=get_new_key()+""+Math.floor(Math.random()*1000);
+			var discard_xml="<discarded>" +
+					"<id>"+discard_id+"</id>" +
+					"<product_name>"+name+"</product_name>" +
+					"<source_id>"+return_id+"</source_id>" +
+					"<batch>"+batch+"</batch>" +
+					"<source>purchase return</source>" +
+					"<source_link>form19</source_link>" +
+					"<quantity>"+(-quantity)+"</quantity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</discarded>";
+			if(is_online())
+			{
+				server_create_simple(discard_xml);
+			}
+			else
+			{
+				local_create_simple(discard_xml);
+			}
+		}
+		
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[10];
+		var del_button=form.elements[11];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
@@ -1532,14 +1585,14 @@ function form19_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);	
-			total+=parseFloat(subform.elements[4].value);
-			tax+=parseFloat(subform.elements[5].value);
+			total+=parseFloat(subform.elements[5].value);
+			tax+=parseFloat(subform.elements[6].value);
 			message_string+="\nItem: "+subform.elements[0].value;
 			message_string+=" Quantity: "+subform.elements[3].value;
-			message_string+=" Amount: "+subform.elements[4].value;
+			message_string+=" Amount: "+subform.elements[5].value;
 			mail_string+="\nItem: "+subform.elements[0].value;
 			mail_string+=" Quantity: "+subform.elements[3].value;
-			mail_string+=" Amount: "+subform.elements[4].value;
+			mail_string+=" Amount: "+subform.elements[5].value;
 		});
 
 		form.elements[3].value=total;

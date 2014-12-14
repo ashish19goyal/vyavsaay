@@ -1,6 +1,6 @@
 <?php
 /*	input data format: 
- * 			<table_name>
+ * 			<table_name count='' start_index=''>
  *				<column1>value1</column1>
  *				<column2>value2</column2>
  *				<column3></column3>
@@ -52,7 +52,12 @@
 				{
 					$limit_count=$input->getAttribute('count');
 				}
-					
+				$limit_start_index=0;
+				if($input->hasAttribute('start_index'))
+				{
+					$limit_start_index=$input->getAttribute('start_index');
+				}
+				
 				foreach($input->childNodes as $col)
 				{
 					$columns_array[]=$col->nodeName;
@@ -120,7 +125,7 @@
 				if($limit_count!==0)
 				{
 					$query.=$limit;
-					$values_array[]=0;
+					$values_array[]=$limit_start_index;
 					$values_array[]=$limit_count;
 				}
 				
