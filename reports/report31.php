@@ -2,7 +2,7 @@
 	<form id='report31_header'>
 		<fieldset>
 			<legend>Select customers by:</legend>
-			<b>Credit</b> <input type='text' name='credit' readonly='readonly'>
+			<label>Credit</br><input type='text' name='credit' readonly='readonly'></label>
 			<div style="width: auto;margin:10px;" id="report31_slider"></div>
 			<input type='submit' value='Refresh'>
 		</fieldset>

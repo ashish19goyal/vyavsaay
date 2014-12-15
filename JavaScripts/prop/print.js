@@ -1,3 +1,50 @@
+function print_tabular_report(report_name,report_title,print_button)
+{
+	$(print_button).off('click');
+	$(print_button).on('click',function(event)
+	{
+	   var container=document.createElement('div');
+	   var business_title=document.createElement('div');
+	   var title=document.createElement('div');
+	   var bt=get_session_var('title');
+	   business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div>";
+	   title.innerHTML="<div style='display: block;width:100%;font-size:1.2em'><b>"+report_title+"</b></div>";
+	   var table_element=document.getElementById(report_name+"_body").parentNode;
+	   var table_copy=table_element.cloneNode(true);
+	   table_copy.removeAttribute('class');
+	   table_copy.setAttribute('style','font-size:1em;');
+	   container.appendChild(business_title);
+	   container.appendChild(title);
+	   container.appendChild(table_copy);
+	   $.print(container);
+	});
+}
+
+function print_graphical_report(report_name,report_title,print_button,chart_element)
+{
+	$(print_button).off('click');
+	$(print_button).on('click',function(event)
+	{
+	   var container=document.createElement('div');
+	   var business_title=document.createElement('div');
+	   var title=document.createElement('div');
+	   var bt=get_session_var('title');
+	   business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div>";
+	   title.innerHTML="<div style='display: block;width:100%;font-size:1.2em'><b>"+report_title+"</b></div>";
+	   var legend=document.createElement('div');
+	   legend.innerHTML="<b>Legend<div style='display: block;'>"+chart_element.generateLegend();+"</div></b>";
+	   var report_image=document.createElement('img');
+	   report_image.setAttribute('src',chart_element.toBase64Image());
+
+	   container.appendChild(business_title);
+	   container.appendChild(title);
+	   container.appendChild(legend);
+	   container.appendChild(report_image);
+	   $.print(container);
+	});
+}
+
+
 /**
  * @form Create pamphlets
  * @formNo 2
@@ -245,3 +292,4 @@ function form12_print_form()
 	$.print(container);
 	container.removeChild(print_bill);
 }
+

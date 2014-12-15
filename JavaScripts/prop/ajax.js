@@ -310,9 +310,10 @@ function server_update_simple_func(data_xml,func)
 	var username=get_username();
 	var up_access=get_session_var('up');
 	data_xml=data_xml.replace(/\+/g,'%2B');
+	
 	ajax_with_custom_func("./ajax/update_simple.php","domain="+domain+"&username="+username+"&up="+up_access+"&data_xml="+data_xml,function(e)
 	{
-		console.log(e.responseText);
+		//console.log(e.responseText);
 		func();
 		hide_loader();
 	});
@@ -325,7 +326,7 @@ function server_get_inventory(product,batch,callback)
 	var re_access=get_session_var('re');
 	ajax_with_custom_func("./ajax/get_inventory.php","domain="+domain+"&username="+username+"&re="+re_access+"&product="+product+"&batch="+batch,function(e)
 	{
-		console.log(e.responseText);
+		//console.log(e.responseText);
 		if(isNaN(e.responseText))
 		{
 			callback(0);

@@ -2,7 +2,7 @@
 	<form id='report36_header'>
 		<fieldset>
 			<legend>Select suppliers by:</legend>
-			Product supplied <input type='text' required>
+			<label>Product supplied <input type='text' required></label>
 			<input type='submit' value='Refresh'>
 		</fieldset>
 	</form>

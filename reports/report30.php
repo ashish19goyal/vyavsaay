@@ -2,8 +2,8 @@
 	<form id='report30_header'>
 		<fieldset>
 			<legend>Select Period</legend>
-			Start date <input type='text' required>
-			End date <input type='text' required>
+			<label>Start date</br><input type='text' required></label>
+			<label>End date</br><input type='text' required></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>

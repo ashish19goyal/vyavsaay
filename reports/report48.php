@@ -2,7 +2,7 @@
 	<form id='report48_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Product <input type='text' title='If this field is blank, all applicable products will be shown'>
+			<label>Product <input type='text' title='If this field is blank, all applicable products will be shown'></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
@@ -17,5 +17,7 @@
 		</thead>
 		<tbody id='report48_body'>
 		</tbody>
+		<tfoot id='report48_foot'>
+		</tfoot>
 	</table>
 </div>

@@ -1099,7 +1099,10 @@ function local_read_multi_column(columns,callback,results)
 					{
 						results.push(records[row]);
 					}
-					start_index-=1;
+					else
+					{					
+						start_index-=1;
+					}
 					if(results.length===count)
 					{
 						break;

@@ -2,8 +2,8 @@
 	<form id='report37_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Due date <input type='text' required>
-			Supplier <input type='text' title='If this field is left blank, top 10 suppliers will be shown'>
+			<label>Due date</br><input type='text' required></label>
+			<label>Supplier</br><input type='text' title='If this field is left blank, top 10 suppliers will be shown'></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>

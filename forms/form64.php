@@ -15,4 +15,9 @@
 		<tbody id='form64_body'>
 		</tbody>
 	</table>
+	<div class='form_nav'>
+		<img src='./images/previous.png' id='form64_prev' class='prev_icon' data-index='-25' onclick="$('#form64_index').attr('data-index',$(this).attr('data-index')); form64_ini();">
+		<div style='display:hidden;' id='form64_index' data-index='0'></div>
+		<img src='./images/next.png' id='form64_next' class='next_icon' data-index='25' onclick="$('#form64_index').attr('data-index',$(this).attr('data-index')); form64_ini();">
+	</div>
 </div>

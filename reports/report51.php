@@ -2,8 +2,8 @@
 	<form id='report51_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Product <input type='text' title='If this field is blank, all applicable suppliers will be shown'>
-			Date since: <input type='text' title='Date since the items are dead'>
+			<label>Product</br><input type='text' title='If this field is blank, all applicable suppliers will be shown'></label>
+			<label>Date since</br><input type='text' title='Date since the items are dead'></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>

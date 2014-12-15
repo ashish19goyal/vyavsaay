@@ -10,10 +10,14 @@
 						<input type='button' form='form5_header' value='EXPORT' class='export_icon'>
 						<input type='button' form='form5_header' value='IMPORT' class='import_icon'>
 					</th>
-					
 			</tr>
 		</thead>
 		<tbody id='form5_body'>
 		</tbody>
 	</table>
+	<div class='form_nav'>
+		<img src='./images/previous.png' id='form5_prev' class='prev_icon' data-index='-25' onclick="$('#form5_index').attr('data-index',$(this).attr('data-index')); form5_ini();">
+		<div style='display:hidden;' id='form5_index' data-index='0'></div>
+		<img src='./images/next.png' id='form5_next' class='next_icon' data-index='25' onclick="$('#form5_index').attr('data-index',$(this).attr('data-index')); form5_ini();">
+	</div>
 </div>

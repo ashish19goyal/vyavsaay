@@ -2,7 +2,7 @@
 	<form id='report41_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Service Name <input type='text' title='If this field is left blank, pre-requisites for all services will be shown'>
+			<label>Service Name <input type='text' title='If this field is left blank, pre-requisites for all services will be shown'></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>

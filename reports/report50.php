@@ -2,9 +2,9 @@
 	<form id='report50_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Make <input type='text' title='If this field is blank, all applicable makes will be shown'>
-			Product <input type='text' title='If this field is blank, all applicable products will be shown'>
-			<b>Margin</b> <input type='text' name='margin' readonly='readonly'>
+			<label>Make</br><input type='text' title='If this field is blank, all applicable makes will be shown'></label>
+			<label>Product</br><input type='text' title='If this field is blank, all applicable products will be shown'></label>
+			<label>Margin</br><input type='text' name='margin' readonly='readonly'></label>
 			<div style="width: auto;margin:10px;" id="report50_slider"></div>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>

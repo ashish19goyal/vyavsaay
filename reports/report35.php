@@ -2,7 +2,7 @@
 	<form id='report35_header'>
 		<fieldset>
 			<legend>Select customers by:</legend>
-			Product bought <input type='text' required>
+			<label>Product bought <input type='text' required></label>
 			<input type='submit' value='Refresh'>
 		</fieldset>
 	</form>

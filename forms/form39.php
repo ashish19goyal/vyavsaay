@@ -16,4 +16,9 @@
 		<tbody id='form39_body'>
 		</tbody>
 	</table>
+	<div class='form_nav'>
+		<img src='./images/previous.png' id='form39_prev' class='prev_icon' data-index='-25' onclick="$('#form39_index').attr('data-index',$(this).attr('data-index')); form39_ini();">
+		<div style='display:hidden;' id='form39_index' data-index='0'></div>
+		<img src='./images/next.png' id='form39_next' class='next_icon' data-index='25' onclick="$('#form39_index').attr('data-index',$(this).attr('data-index')); form39_ini();">
+	</div>
 </div>

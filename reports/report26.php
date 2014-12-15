@@ -2,9 +2,9 @@
 	<form id='report26_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Start date <input type='text' required>
-			End date <input type='text' required>
-			Select Customer <input type='text' title='If this field is left blank, top 10 customers will be selected'>
+			<label>Start date</br><input type='text' required></label>
+			<label>End date</br><input type='text' required></label>
+			<label>Select Customer</br><input type='text' title='If this field is left blank, top 10 customers will be selected'></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>

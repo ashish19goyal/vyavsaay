@@ -2,10 +2,10 @@
 	<form id='report52_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Product Name <input type='text'>
-			Make <input type='text'>
-			Supplier <input type='text'>
-			Date Since <input type='text' required>
+			<label>Product Name</br><input type='text'></label>
+			<label>Make</br><input type='text'></label>
+			<label>Supplier</br><input type='text'></label>
+			<label>Date Since</br><input type='text' required></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
@@ -22,5 +22,7 @@
 		</thead>
 		<tbody id='report52_body'>
 		</tbody>
+		<tfoot id='report52_foot'>
+		</tfoot>
 	</table>
 </div>

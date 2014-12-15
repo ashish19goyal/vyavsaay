@@ -2,9 +2,9 @@
 	<form id='report42_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Feedback Type <input type='text' title='If this field is left blank, both types of feedback will be shown'>
-			Start Date <input type='text' required>
-			End Date <input type='text' required>
+			<label>Feedback Type</br><input type='text' title='If this field is left blank, both types of feedback will be shown'></label>
+			<label>Start Date</br><input type='text' required></label>
+			<label>End Date</br><input type='text' required></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>

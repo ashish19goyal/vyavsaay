@@ -868,8 +868,7 @@ function form35_header_ini()
 	var filter_fields=document.getElementById('form35_header');
 	var name_filter=filter_fields.elements[0];
 	var type_filter=filter_fields.elements[1];
-	var date_filter=filter_fields.elements[2];
-	var status_filter=filter_fields.elements[3];
+	var status_filter=filter_fields.elements[2];
 	
 	var offer_data="<offers>" +
 			"<offer_name></offer_name>" +
@@ -877,10 +876,9 @@ function form35_header_ini()
 	
 	set_my_filter(offer_data,name_filter);
 	set_static_filter('offers','offer_type',type_filter);
-	$(date_filter).datepicker();
 	set_static_filter('offers','status',status_filter);
 	
-	var import_button=filter_fields.elements[6];
+	var import_button=filter_fields.elements[5];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
 	{

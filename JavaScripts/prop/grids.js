@@ -14,14 +14,11 @@ function set_grid_item_1()
 		if(results.length>0)
 		{
 			var grid_item=document.getElementById('grid_item_1');
-			$(grid_item).off('click');
-			$(grid_item).on('click',function(ev)
-			{
-				element_display(results[0],'form42');
-			});
 			grid_item.innerHTML=results[0];
 		}
 	},columns);
+	
+	setTimeout(set_grid_item_1,100000);
 };
 
 /**
@@ -40,6 +37,8 @@ function set_grid_item_2()
 	{
 		document.getElementById('grid_item_2').innerHTML=results.length;
 	},columns);
+
+	setTimeout(set_grid_item_2,100000);
 };
 
 /**
@@ -67,6 +66,8 @@ function set_grid_item_3()
 			grid_item.innerHTML=results[0].bill_id;
 		}
 	});
+
+	setTimeout(set_grid_item_3,100000);
 };
 
 /**
@@ -85,6 +86,8 @@ function set_grid_item_4()
 	{
 		document.getElementById('grid_item_4').innerHTML=results.length;
 	},columns);
+	setTimeout(set_grid_item_4,100000);
+
 };
 
 
@@ -110,6 +113,8 @@ function set_grid_item_5()
 		}
 		document.getElementById('grid_item_5').innerHTML="Rs. "+income;
 	},columns);
+	setTimeout(set_grid_item_5,100000);
+
 };
 
 /**
@@ -134,6 +139,8 @@ function set_grid_item_6()
 		}
 		document.getElementById('grid_item_6').innerHTML="Rs. "+expenses;
 	},columns);
+	setTimeout(set_grid_item_6,100000);
+
 };
 
 /**
@@ -149,6 +156,8 @@ function set_grid_item_7()
 	{
 		document.getElementById('grid_item_7').innerHTML=results.length;
 	},columns);
+	setTimeout(set_grid_item_7,100000);
+
 };
 
 /**
@@ -191,7 +200,10 @@ function set_grid_item_8()
 			document.getElementById('grid_item_8').innerHTML=results[0].item_name;
 		}
 	});
+	setTimeout(set_grid_item_8,100000);
+
 };
+
 
 /**
  * @item # Services offered 
@@ -206,6 +218,8 @@ function set_grid_item_9()
 	{
 		document.getElementById('grid_item_9').innerHTML=results.length;
 	},columns);
+	setTimeout(set_grid_item_9,100000);
+
 };
 
 
@@ -233,6 +247,8 @@ function set_grid_item_11()
 			grid_item.innerHTML=results[0].product_name;
 		}
 	});
+	setTimeout(set_grid_item_11,100000);
+
 };
 
 /**
@@ -244,8 +260,8 @@ function set_grid_item_12()
 	var columns="<product_instances>" +
 		"<id></id>" +
 		"<product_name></product_name>" +
-		"<sale_price sort='desc'></sale_price>" +
-		"<cost_price sort='asc'></cost_price>" +
+		"<sale_price></sale_price>" +
+		"<cost_price></cost_price>" +
 		"</product_instances>";
 	fetch_requested_data('',columns,function(results)
 	{
@@ -253,7 +269,7 @@ function set_grid_item_12()
 		{
 			for(var k in results)
 			{
-				results[k].margin=(parseFloat(results[k].sale_price)/parseFloat(results[k].sale_price));
+				results[k].margin=(parseFloat(results[k].sale_price)/parseFloat(results[k].cost_price));
 			}
 			
 			results.sort(function(a,b)
@@ -273,6 +289,8 @@ function set_grid_item_12()
 			grid_item.innerHTML=results[0].product_name;
 		}
 	});
+	setTimeout(set_grid_item_12,100000);
+
 };
 
 /**
@@ -290,6 +308,8 @@ function set_grid_item_13()
 	{
 		document.getElementById('grid_item_13').innerHTML=results.length;
 	},columns);
+	setTimeout(set_grid_item_13,100000);
+
 };
 
 /**
@@ -309,6 +329,8 @@ function set_grid_item_14()
 			document.getElementById('grid_item_14').innerHTML=results[0];
 		}
 	},columns);
+	setTimeout(set_grid_item_14,100000);
+
 };
 
 /**
@@ -328,6 +350,8 @@ function set_grid_item_15()
 			document.getElementById('grid_item_15').innerHTML=results[0];
 		}
 	},columns);
+	setTimeout(set_grid_item_15,100000);
+
 };
 
 /**
@@ -352,6 +376,8 @@ function set_grid_item_16()
 		}
 		document.getElementById('grid_item_16').innerHTML="Rs. "+payments;
 	},columns);
+	setTimeout(set_grid_item_16,100000);
+
 };
 
 /**
@@ -371,6 +397,8 @@ function set_grid_item_17()
 	{
 		document.getElementById('grid_item_17').innerHTML=results.length;
 	},columns);
+	setTimeout(set_grid_item_17,100000);
+
 };
 
 /**
@@ -388,6 +416,8 @@ function set_grid_item_18()
 	{
 		document.getElementById('grid_item_18').innerHTML=results.length;
 	},columns);
+	setTimeout(set_grid_item_18,100000);
+
 };
 
 /**
@@ -405,6 +435,8 @@ function set_grid_item_19()
 	{
 		document.getElementById('grid_item_19').innerHTML=results.length;
 	},columns);
+	setTimeout(set_grid_item_19,100000);
+
 };
 
 /**
@@ -422,6 +454,8 @@ function set_grid_item_20()
 	{
 		document.getElementById('grid_item_20').innerHTML=results.length;
 	},columns);
+	setTimeout(set_grid_item_20,100000);
+
 };
 
 /**
@@ -439,6 +473,7 @@ function set_grid_item_22()
 	{
 		document.getElementById('grid_item_22').innerHTML=results[0];
 	},columns);
+	setTimeout(set_grid_item_22,100000);
 };
 
 /**
@@ -455,6 +490,8 @@ function set_grid_item_23()
 	{
 		document.getElementById('grid_item_23').innerHTML=results.length;
 	},columns);
+	setTimeout(set_grid_item_23,100000);
+
 };
 
 /**
@@ -471,6 +508,8 @@ function set_grid_item_24()
 	{
 		document.getElementById('grid_item_24').innerHTML=results.length;
 	},columns);
+	setTimeout(set_grid_item_24,100000);
+
 };
 
 /**
@@ -487,6 +526,8 @@ function set_grid_item_25()
 	{
 		document.getElementById('grid_item_25').innerHTML=results.length;
 	},columns);
+	setTimeout(set_grid_item_25,100000);
+
 };
 
 /**
@@ -509,4 +550,6 @@ function set_grid_item_26()
 		}
 		document.getElementById('grid_item_26').innerHTML="Rs. "+sale;
 	},columns);
+	setTimeout(set_grid_item_26,100000);
+
 };

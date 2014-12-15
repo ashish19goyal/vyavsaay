@@ -224,7 +224,14 @@ function form5_ini()
 	var fasset=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	
-	var columns="<assets>" +
+	////indexing///
+	var index_element=document.getElementById('form5_index');
+	var prev_element=document.getElementById('form5_prev');
+	var next_element=document.getElementById('form5_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	
+	var columns="<assets count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fasset+"</name>" +
 			"<type>"+ftype+"</type>" +
@@ -288,6 +295,30 @@ function form5_ini()
 				form5_update_item(fields);
 			});
 		});
+		
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
 		
 		longPressEditable($('.dblclick_editable'));
 		
@@ -442,7 +473,14 @@ function form8_ini()
 	var femail=filter_fields.elements[2].value;
 	var fstatus=filter_fields.elements[3].value;
 	
-	var columns="<staff>" +
+	////indexing///
+	var index_element=document.getElementById('form8_index');
+	var prev_element=document.getElementById('form8_prev');
+	var next_element=document.getElementById('form8_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<staff count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<phone>"+fcontact+"</phone>" +
@@ -529,6 +567,30 @@ function form8_ini()
 			});
 		});
 		
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[5];
@@ -717,7 +779,14 @@ function form11_ini()
 	var faccount=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<payments count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form11_index');
+	var prev_element=document.getElementById('form11_prev');
+	var next_element=document.getElementById('form11_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<payments count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<type>"+ftype+"</type>" +
 			"<total_amount></total_amount>" +
@@ -822,6 +891,29 @@ function form11_ini()
 			});
 		});
 		
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
 		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
@@ -832,6 +924,7 @@ function form11_ini()
 		hide_loader();
 	});
 };
+
 
 /**
  * @form New Products Bill
@@ -1015,7 +1108,14 @@ function form14_ini()
 	var fassignee=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<task_instances count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form14_index');
+	var prev_element=document.getElementById('form14_prev');
+	var next_element=document.getElementById('form14_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<task_instances count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+ftype+"</name>" +
 			"<description></description>" +
@@ -1082,6 +1182,31 @@ function form14_ini()
 			$(due_filter).datetimepicker();
 		});
 		
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -1268,7 +1393,14 @@ function form16_ini()
 		fid=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	
-	var columns="<customer_returns>" +
+	////indexing///
+	var index_element=document.getElementById('form16_index');
+	var prev_element=document.getElementById('form16_prev');
+	var next_element=document.getElementById('form16_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<customer_returns count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<customer>"+fname+"</customer>" +
 			"<return_date></return_date>" +
@@ -1316,7 +1448,32 @@ function form16_ini()
 					element_display(result.id,'form15');
 			});
 		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
 		
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[2];
@@ -1348,7 +1505,14 @@ function form17_ini()
 		fid=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	
-	var columns="<supplier_returns>" +
+	////indexing///
+	var index_element=document.getElementById('form17_index');
+	var prev_element=document.getElementById('form17_prev');
+	var next_element=document.getElementById('form17_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<supplier_returns count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<supplier>"+fname+"</supplier>" +
 			"<return_date></return_date>" +
@@ -1395,7 +1559,31 @@ function form17_ini()
 					element_display(result.id,'form19');
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[2];
@@ -1826,7 +2014,14 @@ function form30_ini()
 	var femail=filter_fields.elements[2].value;
 	var fstatus=filter_fields.elements[3].value;
 	
-	var columns="<customers count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form30_index');
+	var prev_element=document.getElementById('form30_prev');
+	var next_element=document.getElementById('form30_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<customers count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<phone>"+fcontact+"</phone>" +
@@ -1893,8 +2088,31 @@ function form30_ini()
 				form30_update_item(fields);
 			});
 		});
-		
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[5];
@@ -1924,10 +2142,16 @@ function form35_ini()
 	
 	var fname=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
-	//var fdate=get_raw_time(filter_fields.elements[2].value);
-	var fstatus=filter_fields.elements[3].value;
+	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<offers count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form35_index');
+	var prev_element=document.getElementById('form35_prev');
+	var next_element=document.getElementById('form35_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<offers count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<offer_name>"+fname+"</offer_name>" +
 			"<offer_type>"+ftype+"</offer_type>" +
@@ -1998,10 +2222,34 @@ function form35_ini()
 				form35_update_item(fields);
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
-		var export_button=filter_fields.elements[5];
+		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -2030,7 +2278,14 @@ function form38_ini()
 	var fbatch=filter_fields.elements[1].value;
 	var farea=filter_fields.elements[2].value;
 	
-	var columns="<area_utilization count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form38_index');
+	var prev_element=document.getElementById('form38_prev');
+	var next_element=document.getElementById('form38_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<area_utilization count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<batch>"+fbatch+"</batch>" +
 			"<item_name>"+fname+"</item_name>" +
@@ -2069,7 +2324,31 @@ function form38_ini()
 				event.preventDefault();
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -2100,7 +2379,14 @@ function form39_ini()
 	var fname=filter_fields.elements[0].value;
 	var fmakes=filter_fields.elements[1].value;
 	
-	var columns="<product_master count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form39_index');
+	var prev_element=document.getElementById('form39_prev');
+	var next_element=document.getElementById('form39_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<product_master count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<make>"+fmakes+"</make>" +
@@ -2189,7 +2475,31 @@ function form39_ini()
 				
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
@@ -2203,7 +2513,7 @@ function form39_ini()
 
 
 /**
- * @form Manage Vendors
+ * @form Manage suppliers
  * @formNo 40
  * @Loading light
  */
@@ -2220,7 +2530,14 @@ function form40_ini()
 	var fcontact=filter_fields.elements[1].value;
 	var femail=filter_fields.elements[2].value;
 	
-	var columns="<suppliers count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form40_index');
+	var prev_element=document.getElementById('form40_prev');
+	var next_element=document.getElementById('form40_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<suppliers count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<notes></notes>" +
 			"<name>"+fname+"</name>" +
@@ -2282,7 +2599,31 @@ function form40_ini()
 				form40_update_item(fields);
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -2478,8 +2819,15 @@ function form42_ini()
 	if(fid==="")
 		fid=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
-	
-	var columns="<bills count='100'>" +
+
+	////indexing///
+	var index_element=document.getElementById('form42_index');
+	var prev_element=document.getElementById('form42_prev');
+	var next_element=document.getElementById('form42_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<bills count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<customer_name>"+fname+"</customer_name>" +
 			"<bill_date></bill_date>" +
@@ -2531,7 +2879,31 @@ function form42_ini()
 					element_display(result.id,'form72');
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[2];
@@ -2565,7 +2937,14 @@ function form43_ini()
 	var fname=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<purchase_orders count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form43_index');
+	var prev_element=document.getElementById('form43_prev');
+	var next_element=document.getElementById('form43_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<purchase_orders count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<supplier>"+fname+"</supplier>" +
 			"<order_date></order_date>" +
@@ -2618,7 +2997,31 @@ function form43_ini()
 			});
 						
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 
 		var export_button=filter_fields.elements[4];
@@ -2649,7 +3052,14 @@ function form44_ini()
 	//populating form 
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<pamphlets count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form44_index');
+	var prev_element=document.getElementById('form44_prev');
+	var next_element=document.getElementById('form44_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<pamphlets count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<count_items></count_items>" +
@@ -2681,7 +3091,31 @@ function form44_ini()
 			
 			$('#form44_body').append(rowsHTML);
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[2];
@@ -2710,7 +3144,14 @@ function form46_ini()
 	var filter_fields=document.getElementById('form46_header');
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<user_preferences>" +
+	////indexing///
+	var index_element=document.getElementById('form46_index');
+	var prev_element=document.getElementById('form46_prev');
+	var next_element=document.getElementById('form46_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<user_preferences count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name></name>" +
 			"<display_name>"+fname+"</display_name>" +
@@ -2752,7 +3193,31 @@ function form46_ini()
 		});
 		
 		$('#form46_body').find('textarea').i18n();
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		
 		longPressEditable($('.dblclick_editable'));
 		
@@ -2783,7 +3248,14 @@ function form48_ini()
 	
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<user_preferences>" +
+	////indexing///
+	var index_element=document.getElementById('form48_index');
+	var prev_element=document.getElementById('form48_prev');
+	var next_element=document.getElementById('form48_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<user_preferences count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name></name>" +
 			"<display_name>"+fname+"</display_name>" +
@@ -2824,7 +3296,31 @@ function form48_ini()
 		});
 		
 		$('#form48_body').find('textarea').i18n();
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		
 		longPressEditable($('.dblclick_editable'));
 		
@@ -2851,11 +3347,16 @@ function form49_ini()
 		fid="";	
 	
 	var filter_fields=document.getElementById('form49_header');
-	
-	//populating form
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<user_preferences>" +
+	////indexing///
+	var index_element=document.getElementById('form49_index');
+	var prev_element=document.getElementById('form49_prev');
+	var next_element=document.getElementById('form49_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<user_preferences count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name></name>" +
 			"<display_name>"+fname+"</display_name>" +
@@ -2897,7 +3398,31 @@ function form49_ini()
 		
 		$('#form49_body').find('textarea').i18n();
 		
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[2];
@@ -2924,11 +3449,16 @@ function form50_ini()
 		fid="";	
 	
 	var filter_fields=document.getElementById('form50_header');
-	
-	//populating form
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<user_preferences>" +
+	////indexing///
+	var index_element=document.getElementById('form50_index');
+	var prev_element=document.getElementById('form50_prev');
+	var next_element=document.getElementById('form50_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<user_preferences count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
 		"<name></name>" +
 		"<display_name>"+fname+"</display_name>" +
@@ -2969,7 +3499,30 @@ function form50_ini()
 		});
 		
 		$('#form50_body').find('textarea').i18n();
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
 		
 		longPressEditable($('.dblclick_editable'));
 		
@@ -3150,7 +3703,14 @@ function form53_ini()
 	var fbill_id=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	
-	var columns="<supplier_bills count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form53_index');
+	var prev_element=document.getElementById('form53_prev');
+	var next_element=document.getElementById('form53_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<supplier_bills count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<bill_id>"+fbill_id+"</bill_id>" +
 			"<supplier>"+fname+"</supplier>" +
@@ -3203,7 +3763,31 @@ function form53_ini()
 				element_display(result.id,'form21');
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[3];
@@ -3228,10 +3812,16 @@ function form54_ini()
 		fid="";	
 	
 	var filter_fields=document.getElementById('form54_header');
-	
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<user_preferences>" +
+	////indexing///
+	var index_element=document.getElementById('form54_index');
+	var prev_element=document.getElementById('form54_prev');
+	var next_element=document.getElementById('form54_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<user_preferences count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name></name>" +
 			"<display_name>"+fname+"</display_name>" +
@@ -3275,6 +3865,30 @@ function form54_ini()
 		
 		$('#form54_body').find('textarea').i18n();
 
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		
 		longPressEditable($('.dblclick_editable'));
 		
@@ -3305,7 +3919,14 @@ function form56_ini()
 	var ftype=filter_fields.elements[0].value;
 	var faccount=filter_fields.elements[1].value;
 	
-	var columns="<cash_register count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form56_index');
+	var prev_element=document.getElementById('form56_prev');
+	var next_element=document.getElementById('form56_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<cash_register count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<type>"+ftype+"</type>" +
 			"<acc_name>"+faccount+"</acc_name>" +
@@ -3351,7 +3972,31 @@ function form56_ini()
 			});
 		});
 		
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[3];
@@ -3377,10 +4022,16 @@ function form57_ini()
 		fid="";	
 	
 	var filter_fields=document.getElementById('form57_header');
-	
 	var fservices=filter_fields.elements[0].value;
 	
-	var columns="<services count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form57_index');
+	var prev_element=document.getElementById('form57_prev');
+	var next_element=document.getElementById('form57_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<services count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservices+"</name>" +
 			"<description></description>" +
@@ -3427,7 +4078,31 @@ function form57_ini()
 			});			
 		});
 
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[2];
@@ -3456,8 +4131,15 @@ function form58_ini()
 	var fservice=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var frequisite=filter_fields.elements[2].value;
-	
-	var columns="<pre_requisites count='100'>" +
+
+	////indexing///
+	var index_element=document.getElementById('form58_index');
+	var prev_element=document.getElementById('form58_prev');
+	var next_element=document.getElementById('form58_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<pre_requisites count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservice+"</name>" +
 			"<type>service</type>" +
@@ -3504,7 +4186,31 @@ function form58_ini()
 			});
 		});
 		
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -3535,7 +4241,14 @@ function form59_ini()
 	var ftype=filter_fields.elements[1].value;
 	var frequisite=filter_fields.elements[2].value;
 	
-	var columns="<pre_requisites count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form59_index');
+	var prev_element=document.getElementById('form59_prev');
+	var next_element=document.getElementById('form59_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<pre_requisites count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fproduct+"</name>" +
 			"<type>product</type>" +
@@ -3582,7 +4295,31 @@ function form59_ini()
 			});
 		});
 		
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -3613,7 +4350,14 @@ function form60_ini()
 	var fproduct=filter_fields.elements[0].value;
 	var fattribute=filter_fields.elements[1].value;
 	
-	var columns="<attributes count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form60_index');
+	var prev_element=document.getElementById('form60_prev');
+	var next_element=document.getElementById('form60_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<attributes count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<item_name>"+fproduct+"</item_name>" +
 			"<type>product</type>" +
@@ -3655,7 +4399,31 @@ function form60_ini()
 				form60_update_item(fields);
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		
 		longPressEditable($('.dblclick_editable'));
 		
@@ -3686,7 +4454,14 @@ function form61_ini()
 	var fservice=filter_fields.elements[0].value;
 	var fattribute=filter_fields.elements[1].value;
 	
-	var columns="<attributes count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form61_index');
+	var prev_element=document.getElementById('form61_prev');
+	var next_element=document.getElementById('form61_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<attributes count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<item_name>"+fservice+"</item_name>" +
 			"<type>service</type>" +
@@ -3729,6 +4504,30 @@ function form61_ini()
 			});
 		});
 
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		
 		longPressEditable($('.dblclick_editable'));
 		
@@ -3760,7 +4559,14 @@ function form62_ini()
 	var freviewer=filter_fields.elements[1].value;
 	var frating=filter_fields.elements[2].value;
 	
-	var columns="<reviews count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form62_index');
+	var prev_element=document.getElementById('form62_prev');
+	var next_element=document.getElementById('form62_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<reviews count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fproduct+"</name>" +
 			"<type>product</type>" +
@@ -3806,7 +4612,31 @@ function form62_ini()
 				form62_update_item(fields);
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -3837,7 +4667,14 @@ function form63_ini()
 	var freviewer=filter_fields.elements[1].value;
 	var frating=filter_fields.elements[2].value;
 	
-	var columns="<reviews count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form63_index');
+	var prev_element=document.getElementById('form63_prev');
+	var next_element=document.getElementById('form63_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<reviews count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservice+"</name>" +
 			"<type>service</type>" +
@@ -3883,7 +4720,31 @@ function form63_ini()
 				form63_update_item(fields);
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -3914,7 +4775,14 @@ function form64_ini()
 	var ftype=filter_fields.elements[1].value;
 	var fcross=filter_fields.elements[2].value;
 	
-	var columns="<cross_sells count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form64_index');
+	var prev_element=document.getElementById('form64_prev');
+	var next_element=document.getElementById('form64_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<cross_sells count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservice+"</name>" +
 			"<type>service</type>" +
@@ -3956,7 +4824,31 @@ function form64_ini()
 				form64_update_item(fields);
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -3988,7 +4880,14 @@ function form66_ini()
 	var ftype=filter_fields.elements[1].value;
 	var fcross=filter_fields.elements[2].value;
 	
-	var columns="<cross_sells count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form66_index');
+	var prev_element=document.getElementById('form66_prev');
+	var next_element=document.getElementById('form66_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<cross_sells count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fproduct+"</name>" +
 			"<type>product</type>" +
@@ -4030,7 +4929,31 @@ function form66_ini()
 				form66_update_item(fields);
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -4175,7 +5098,14 @@ function form70_ini()
 	var fname=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<sale_orders count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form70_index');
+	var prev_element=document.getElementById('form70_prev');
+	var next_element=document.getElementById('form70_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<sale_orders count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<customer_name>"+fname+"</customer_name>" +
 			"<order_date></order_date>" +
@@ -4241,7 +5171,31 @@ function form70_ini()
 			});
 			
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -4271,7 +5225,14 @@ function form71_ini()
 	var ftype=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	
-	var columns="<accounts count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form71_index');
+	var prev_element=document.getElementById('form71_prev');
+	var next_element=document.getElementById('form71_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<accounts count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<acc_name>"+fname+"</acc_name>" +
 			"<description></description>" +
@@ -4342,7 +5303,31 @@ function form71_ini()
 					form71_update_item(fields);
 				});
 			});
-			
+
+			////indexing///
+			var next_index=parseInt(start_index)+25;
+			var prev_index=parseInt(start_index)-25;
+			next_element.setAttribute('data-index',next_index);
+			prev_element.setAttribute('data-index',prev_index);
+			index_element.setAttribute('data-index','0');
+			if(results.length<25)
+			{
+				$(next_element).hide();
+			}
+			else
+			{
+				$(next_element).show();
+			}
+			if(prev_index<0)
+			{
+				$(prev_element).hide();
+			}
+			else
+			{
+				$(prev_element).show();
+			}
+			/////////////
+
 			longPressEditable($('.dblclick_editable'));
 			
 			var export_button=filter_fields.elements[3];
@@ -4857,7 +5842,14 @@ function form77_ini()
 	var felement=filter_fields.elements[0].value;
 	var fkey=filter_fields.elements[1].value;
 	
-	var columns="<user_preferences>" +
+	////indexing///
+	var index_element=document.getElementById('form77_index');
+	var prev_element=document.getElementById('form77_prev');
+	var next_element=document.getElementById('form77_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<user_preferences count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name></name>" +
 			"<display_name>"+felement+"</display_name>" +
@@ -4904,7 +5896,31 @@ function form77_ini()
 		
 		$('#form77_body').find('textarea').i18n();
 		
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[3];
@@ -5042,10 +6058,16 @@ function form79_ini()
 		fid="";	
 	
 	var filter_fields=document.getElementById('form79_header');
-	
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<task_type count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form79_index');
+	var prev_element=document.getElementById('form79_prev');
+	var next_element=document.getElementById('form79_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<task_type count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
 		"<name>"+fname+"</name>" +
 		"<description></description>" +
@@ -5087,7 +6109,31 @@ function form79_ini()
 			});
 		});
 		
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[2];
@@ -5174,10 +6220,16 @@ function form81_ini()
 		fid="";	
 	
 	var filter_fields=document.getElementById('form81_header');
-	
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<sale_leads count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form81_index');
+	var prev_element=document.getElementById('form81_prev');
+	var next_element=document.getElementById('form81_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<sale_leads count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
 		"<customer>"+fname+"</customer>" +
 		"<detail></detail>" +
@@ -5222,7 +6274,31 @@ function form81_ini()
 				form81_update_item(fields);
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[2];
@@ -5248,10 +6324,16 @@ function form83_ini()
 		fid="";	
 	
 	var filter_fields=document.getElementById('form83_header');
-	
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<store_areas count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form83_index');
+	var prev_element=document.getElementById('form83_prev');
+	var next_element=document.getElementById('form83_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<store_areas count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<area_type></area_type>" +
@@ -5323,7 +6405,32 @@ function form83_ini()
 				event.preventDefault();
 			});
 		});
-				
+		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -5352,7 +6459,14 @@ function form84_ini()
 	var fservice=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<service_subscriptions count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form84_index');
+	var prev_element=document.getElementById('form84_prev');
+	var next_element=document.getElementById('form84_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<service_subscriptions count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<customer>"+fcustomer+"</customer>" +
 			"<service>"+fservice+"</service>" +
@@ -5408,7 +6522,31 @@ function form84_ini()
 				form84_update_item(fields);
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -5768,7 +6906,14 @@ function form87_ini()
 	var fname=filter_fields.elements[0].value;
 	var fmakes=filter_fields.elements[1].value;
 	
-	var columns="<product_master count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form87_index');
+	var prev_element=document.getElementById('form87_prev');
+	var next_element=document.getElementById('form87_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<product_master count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<make>"+fmakes+"</make>" +
@@ -5817,6 +6962,31 @@ function form87_ini()
 				form87_update_item(fields);
 			});
 		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[3];
@@ -5843,11 +7013,17 @@ function form88_ini()
 		fid="";	
 	
 	var filter_fields=document.getElementById('form88_header');
-	
 	var fname=filter_fields.elements[0].value;
 	var fstatus=filter_fields.elements[1].value;
 	
-	var columns="<manufacturing_schedule count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form88_index');
+	var prev_element=document.getElementById('form88_prev');
+	var next_element=document.getElementById('form88_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<manufacturing_schedule count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<product>"+fname+"</product>" +
 			"<process_notes></process_notes>" +
@@ -5904,8 +7080,32 @@ function form88_ini()
 				form88_update_item(fields);
 			});
 		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
-		
 		
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
@@ -5936,7 +7136,14 @@ function form89_ini()
 	var fassignee=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<appointments count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form89_index');
+	var prev_element=document.getElementById('form89_prev');
+	var next_element=document.getElementById('form89_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<appointments count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<customer>"+fcustomer+"</customer>" +
 			"<schedule></schedule>" +
@@ -6001,7 +7208,31 @@ function form89_ini()
 			set_static_value_list('appointments','status',status_filter);
 			$(schedule_filter).datetimepicker();
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -6030,7 +7261,14 @@ function form90_ini()
 	
 	var fname=filter_fields.elements[0].value;
 	
-	var columns="<bill_types count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form90_index');
+	var prev_element=document.getElementById('form90_prev');
+	var next_element=document.getElementById('form90_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<bill_types count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<notes></notes>" +
@@ -6069,7 +7307,31 @@ function form90_ini()
 				form90_update_item(fields);
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[2];
@@ -6267,7 +7529,14 @@ function form92_ini()
 	var ftype=filter_fields.elements[1].value;
 	var fname=filter_fields.elements[2].value;
 	
-	var columns="<bills count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form92_index');
+	var prev_element=document.getElementById('form92_prev');
+	var next_element=document.getElementById('form92_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<bills count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<customer_name>"+fname+"</customer_name>" +
 			"<bill_date></bill_date>" +
@@ -6318,7 +7587,31 @@ function form92_ini()
 				element_display(result.id,'form91');
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[3];
@@ -6348,7 +7641,14 @@ function form93_ini()
 	var faccount=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
-	var columns="<loans count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form93_index');
+	var prev_element=document.getElementById('form93_prev');
+	var next_element=document.getElementById('form93_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<loans count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<type>"+ftype+"</type>" +
 			"<account>"+faccount+"</account>" +
@@ -6432,7 +7732,31 @@ function form93_ini()
 				form93_update_item(fields);
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[4];
@@ -6463,7 +7787,14 @@ function form94_ini()
 	var fname=filter_fields.elements[0].value;
 	var fbatch=filter_fields.elements[1].value;
 	
-	var columns="<discarded count='100'>" +
+	////indexing///
+	var index_element=document.getElementById('form94_index');
+	var prev_element=document.getElementById('form94_prev');
+	var next_element=document.getElementById('form94_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<discarded count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
 		"<batch>"+fbatch+"</batch>" +
 		"<product_name>"+fname+"</product_name>" +
@@ -6512,7 +7843,31 @@ function form94_ini()
 				event.preventDefault();
 			});
 		});
-		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		longPressEditable($('.dblclick_editable'));
 		
 		var export_button=filter_fields.elements[3];

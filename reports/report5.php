@@ -2,8 +2,8 @@
 	<form id='report5_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Min balance amount <input type='number' value='0' required title='Customers with balance more than this amount will be shown'>
-			Customer <input type='text' title='If this field is blank, all applicable customers will be shown'>
+			<label>Min balance amount</br><input type='number' value='0' required title='Customers with balance more than this amount will be shown'></label>
+			<label>Customer</br><input type='text' title='If this field is blank, all applicable customers will be shown'></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
@@ -18,5 +18,7 @@
 		</thead>
 		<tbody id='report5_body'>
 		</tbody>
+		<tfoot id='report5_foot'>
+		</tfoot>
 	</table>
 </div>

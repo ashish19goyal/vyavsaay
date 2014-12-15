@@ -2,9 +2,9 @@
 	<form id='report39_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Start date <input type='text' required>
-			End date <input type='text' required>
-			Select Service <input type='text' title='If this field is left blank, top 10 services will be selected'>
+			<label>Start date</br><input type='text' required></label>
+			<label>End date</br><input type='text' required></label>
+			<label>Select Service</br><input type='text' title='If this field is left blank, top 10 services will be selected'></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>

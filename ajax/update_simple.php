@@ -18,6 +18,7 @@
 	$username=$_POST['username'];
 	$up_access=$_POST['up'];
 	$data_xml=$_POST['data_xml'];
+	$data_xml=preg_replace('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u',' ',$data_xml);
 	
 	$input_xml=new DOMDocument();
 	$input_xml->loadXML($data_xml);

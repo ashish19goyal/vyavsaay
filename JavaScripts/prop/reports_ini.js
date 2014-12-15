@@ -153,18 +153,8 @@ function report1_ini()
 	},1000);
 	
 	var print_button=form.elements[4];
-	$(print_button).off('click');
-	$(print_button).on('click',function(event)
-	{
-	   var container=document.createElement('div');
-	   var title=document.createElement('div');
-	   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Signage Changes</b></div>";
-	   var table_element=document.getElementById('report1_body').parentNode;
-	   var table_copy=table_element.cloneNode(true);
-	   container.appendChild(title);
-	   container.appendChild(table_copy);
-	   $.print(container);
-	});
+	print_tabular_report('report1','Signage Changes',print_button);
+
 };
 
 
@@ -199,24 +189,8 @@ function report4_ini()
 		var mydoughchart = new Chart(ctx).Doughnut(result,{});
 		document.getElementById("report4_legend").innerHTML=mydoughchart.generateLegend();
 		
-	   var print_button=form.elements[4];
-	   $(print_button).off('click');
-	   $(print_button).on('click',function(event)
-	   {
-		   var container=document.createElement('div');
-		   var title=document.createElement('div');
-		   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Modes of Payment</b></div>";
-		   var legend=document.createElement('div');
-		   legend.innerHTML="<b>Legend<div style='display: block;'>"+mydoughchart.generateLegend();+"</div></b>";
-		   var report_image=document.createElement('img');
-		   report_image.setAttribute('src',mydoughchart.toBase64Image());
-
-		   container.appendChild(title);
-		   container.appendChild(legend);
-		   container.appendChild(report_image);
-		   $.print(container);
-	   });
-
+		var print_button=form.elements[4];
+		print_graphical_report('report4','Modes of Payment',print_button,mydoughchart);
 		hide_loader();
 	});
 };
@@ -252,6 +226,7 @@ function report5_ini()
 				"</payments>";
 		fetch_requested_data('report5',payments_data,function(payments)
 		{
+			var total_balance=0;
 			accounts.forEach(function(result)
 			{	
 				var balance_amount=0;
@@ -277,8 +252,8 @@ function report5_ini()
 				
 				if(balance_amount>=balance)
 				{
+					total_balance+=balance_amount;
 					bill_ids_string=bill_ids_string.substr(0,(bill_ids_string.length-2));
-					
 					var rowsHTML="<tr>";
 						rowsHTML+="<td data-th='Customer'>";
 							rowsHTML+=result.acc_name;
@@ -295,20 +270,11 @@ function report5_ini()
 				}
 			});
 			
-			var print_button=form.elements[4];
-			$(print_button).off('click');
-			$(print_button).on('click',function(event)
-			{
-			   var container=document.createElement('div');
-			   var title=document.createElement('div');
-			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Customer Account Balance</b></div>";
-			   var table_element=document.getElementById('report5_body').parentNode;
-			   var table_copy=table_element.cloneNode(true);
-			   container.appendChild(title);
-			   container.appendChild(table_copy);
-			   $.print(container);
-			});
+			var total_row="<tr><td data-th='Total'>Total</td><td colspan='2' data-th='Total Balance'>"+total_balance+"</td></tr>";
+			$('#report5_foot').html(total_row);
 			
+			var print_button=form.elements[4];
+			print_tabular_report('report5','Customer Account Balance',print_button);
 			hide_loader();
 		});
 	});
@@ -403,23 +369,8 @@ function report6_ini()
 			document.getElementById("report6_legend").innerHTML=mybarchart.generateLegend();
 			
 			var print_button=form.elements[4];
-			$(print_button).off('click');
-			$(print_button).on('click',function(event)
-			{
-  			   var container=document.createElement('div');
-  			   var title=document.createElement('div');
-  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Payments Due from Customers</b></div>";
-  			   var legend=document.createElement('div');
-  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-  			   var report_image=document.createElement('img');
-  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-  			   container.appendChild(title);
-  			   container.appendChild(legend);
-  			   container.appendChild(report_image);
-  			   $.print(container);
-			});
-
+			print_graphical_report('report6','Payments Due from Customers',print_button,mybarchart);
+			
 			hide_loader();
 		});
 	},customer_data);
@@ -476,6 +427,8 @@ function report9_ini()
 
 			fetch_requested_data('report9',make_data,function(makes)
 			{
+				var total_quantity=0;
+				var total_amount=0;
 				for(var k in bill_ids)
 				{
 					for(var z in makes)
@@ -491,6 +444,8 @@ function report9_ini()
 									break;
 								}
 							}
+							total_quantity+=parseFloat(bill_ids[k].quantity);
+							total_amount+=parseFloat(bill_ids[k].amount);
 							rowsHTML+="<tr>";
 								rowsHTML+="<td data-th='Product Name'>";
 									rowsHTML+=bill_ids[k].item_name;
@@ -514,19 +469,11 @@ function report9_ini()
 				}
 				$('#report9_body').html(rowsHTML);
 				
+				var total_row="<tr><td colspan='3' data-th='Total'>Total</td><td data-th='Quantity'>"+total_quantity+"</td><td data-th='Amount'>"+total_amount+"</td></tr>";
+				$('#report9_foot').html(total_row);
+				
 				var print_button=form.elements[6];
-				$(print_button).off('click');
-				$(print_button).on('click',function(event)
-				{
-				   var container=document.createElement('div');
-				   var title=document.createElement('div');
-				   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Product Sales report</b></div>";
-				   var table_element=document.getElementById('report9_body').parentNode;
-				   var table_copy=table_element.cloneNode(true);
-				   container.appendChild(title);
-				   container.appendChild(table_copy);
-				   $.print(container);
-				});
+				print_tabular_report('report9','Product Sales Report',print_button);
 				
 				hide_loader();
 			});
@@ -630,23 +577,8 @@ function report14_ini()
 				document.getElementById("report14_legend").innerHTML=mybarchart.generateLegend();
 				
 				var print_button=form.elements[5];
-				$(print_button).off('click');
-				$(print_button).on('click',function(event)
-				{
-		  			   var container=document.createElement('div');
-		  			   var title=document.createElement('div');
-		  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Expenses by Period</b></div>";
-		  			   var legend=document.createElement('div');
-		  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-		  			   var report_image=document.createElement('img');
-		  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-		  			   container.appendChild(title);
-		  			   container.appendChild(legend);
-		  			   container.appendChild(report_image);
-		  			   $.print(container);
-				});
-
+				print_graphical_report('report14','Expenses by Period',print_button,mybarchart);
+				
 				hide_loader();
 			});
 		},suppliers_data);
@@ -817,23 +749,8 @@ function report15_ini()
 				document.getElementById("report15_legend").innerHTML=mybarchart.generateLegend();
 				
 				var print_button=form.elements[4];
-				$(print_button).off('click');
-				$(print_button).on('click',function(event)
-				{
-		  			   var container=document.createElement('div');
-		  			   var title=document.createElement('div');
-		  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Financial Summary</b></div>";
-		  			   var legend=document.createElement('div');
-		  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-		  			   var report_image=document.createElement('img');
-		  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-	
-		  			   container.appendChild(title);
-		  			   container.appendChild(legend);
-		  			   container.appendChild(report_image);
-		  			   $.print(container);
-				});
-	
+				print_graphical_report('report15','Financial Summary',print_button,mybarchart);
+				
 				hide_loader();
 			});
 		},tax_data);
@@ -886,6 +803,11 @@ function report17_ini()
 						"</task_instances>";
 			fetch_requested_data('report17',task_instances_data,function(tasks)
 			{
+				var total_tasks=0;
+				var total_task_hours=0;
+				var total_absence=0;
+				var total_hours_worked=0;
+				
 				employees.forEach(function(employee)
 				{
 					var acc_name=employee;
@@ -913,39 +835,37 @@ function report17_ini()
 						}
 					}
 				
+					total_tasks+=num_tasks;
+					total_task_hours+=task_hours;
+					total_absence+=absents;
+					total_hours_worked+=hours;
+					
 					rowsHTML+="<tr>";
 						rowsHTML+="<td data-th='Staff Name'>";
 							rowsHTML+=acc_name;
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Number of Tasks'>";
+						rowsHTML+="<td data-th='# Tasks'>";
 							rowsHTML+=num_tasks;
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Number of Task Hours'>";
+						rowsHTML+="<td data-th='# Task Hours'>";
 							rowsHTML+=task_hours;
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Number of Absence'>";
+						rowsHTML+="<td data-th='# Absence'>";
 							rowsHTML+=absents;
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Number of hours worked'>";
+						rowsHTML+="<td data-th='# hours worked'>";
 							rowsHTML+=hours;
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 				});
 				$('#report17_body').html(rowsHTML);
 				
+				var total_row="<tr><td data-th='Total'>Total</td><td data-th='# Tasks'>"+total_tasks+"</td><td data-th='# Task Hours'>"+total_task_hours+
+						"</td><td data-th='# Absence'>"+total_absence+"</td><td data-th='# Hours worked'>"+total_hours_worked+"</td></tr>";
+				$('#report17_foot').html(total_row);
+				
 				var print_button=form.elements[5];
-				$(print_button).off('click');
-				$(print_button).on('click',function(event)
-				{
-				   var container=document.createElement('div');
-				   var title=document.createElement('div');
-				   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Staff Performance</b></div>";
-				   var table_element=document.getElementById('report17_body').parentNode;
-				   var table_copy=table_element.cloneNode(true);
-				   container.appendChild(title);
-				   container.appendChild(table_copy);
-				   $.print(container);
-				});
+				print_tabular_report('report17','Staff Performance',print_button);
 				
 				hide_loader();
 			});
@@ -984,23 +904,8 @@ function report26_ini()
 		document.getElementById("report26_legend").innerHTML=mybarchart.generateLegend();
 		
 		var print_button=form.elements[5];
-		$(print_button).off('click');
-		$(print_button).on('click',function(event)
-		{
-  			   var container=document.createElement('div');
-  			   var title=document.createElement('div');
-  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Sales by Customers</b></div>";
-  			   var legend=document.createElement('div');
-  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-  			   var report_image=document.createElement('img');
-  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-  			   container.appendChild(title);
-  			   container.appendChild(legend);
-  			   container.appendChild(report_image);
-  			   $.print(container);
-		});
-
+		print_graphical_report('report26','Sales by Customers',print_button,mybarchart);
+		
 		hide_loader();
 	});
 };
@@ -1049,23 +954,8 @@ function report27_ini()
 	  		   document.getElementById("report27_legend").innerHTML=mybarchart.generateLegend();
 	  		   
 	  		   var print_button=form.elements[4];
-	  		   $(print_button).off('click');
-	  		   $(print_button).on('click',function(event)
-	  			{
-	  			   var container=document.createElement('div');
-	  			   var title=document.createElement('div');
-	  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Expiring Inventory</b></div>";
-	  			   var legend=document.createElement('div');
-	  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-	  			   var report_image=document.createElement('img');
-	  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-	  			   container.appendChild(title);
-	  			   container.appendChild(legend);
-	  			   container.appendChild(report_image);
-	  			   $.print(container);
-				});
-
+	  		   print_graphical_report('report27','Expiring Inventory',print_button,mybarchart);
+	  		   
 	  		   hide_loader();
 	  	   }
 	    },100);
@@ -1201,23 +1091,8 @@ function report28_ini()
 		  		   document.getElementById("report28_legend").innerHTML=mybarchart.generateLegend();
 		  		   
 		  		   var print_button=form.elements[4];
-					$(print_button).off('click');
-					$(print_button).on('click',function(event)
-					{
-			  			   var container=document.createElement('div');
-			  			   var title=document.createElement('div');
-			  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Short Inventory</b></div>";
-			  			   var legend=document.createElement('div');
-			  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-			  			   var report_image=document.createElement('img');
-			  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-			  			   container.appendChild(title);
-			  			   container.appendChild(legend);
-			  			   container.appendChild(report_image);
-			  			   $.print(container);
-					});
-
+		  		   print_graphical_report('report28','Short Inventory',print_button,mybarchart);
+		  		   
 		  		   hide_loader();
 		  	   }
 		    },100);
@@ -1311,18 +1186,7 @@ function report29_ini()
 			$('#report29_body').html(rowsHTML);
 			
 			var print_button=form.elements[3];
-			$(print_button).off('click');
-			$(print_button).on('click',function(event)
-			{
-			   var container=document.createElement('div');
-			   var title=document.createElement('div');
-			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Pre-requisites for products</b></div>";
-			   var table_element=document.getElementById('report29_body').parentNode;
-			   var table_copy=table_element.cloneNode(true);
-			   container.appendChild(title);
-			   container.appendChild(table_copy);
-			   $.print(container);
-			});
+			print_tabular_report('report29','Pre-requisites for products',print_button);
 			
 			hide_loader();
 		});	
@@ -1360,23 +1224,8 @@ function report30_ini()
 		document.getElementById("report30_legend").innerHTML=mydoughchart.generateLegend();
 		
 		var print_button=form.elements[4];
-		$(print_button).off('click');
-		$(print_button).on('click',function(event)
-		{
-  			   var container=document.createElement('div');
-  			   var title=document.createElement('div');
-  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Tasks performed by Staff</b></div>";
-  			   var legend=document.createElement('div');
-  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-  			   var report_image=document.createElement('img');
-  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-  			   container.appendChild(title);
-  			   container.appendChild(legend);
-  			   container.appendChild(report_image);
-  			   $.print(container);
-		});
-
+		print_graphical_report('report30','Tasks performed by Staff',print_button,mydoughchart);
+		
 		hide_loader();
 	});
 };
@@ -1833,24 +1682,7 @@ function report34_ini()
 					  		   	document.getElementById("report34_margin").value=margin+"%";
 					  		   	
 					  		    var print_button=form.elements[5];
-								$(print_button).off('click');
-								$(print_button).on('click',function(event)
-								{
-						  			   var container=document.createElement('div');
-						  			   var title=document.createElement('div');
-						  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Effective Margin = "+margin+"%</b></div>";
-						  			   var legend=document.createElement('div');
-						  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-						  			   var report_image=document.createElement('img');
-						  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-						  			   container.appendChild(title);
-						  			   container.appendChild(legend);
-						  			   container.appendChild(report_image);
-						  			   $.print(container);
-								});
-
-					  		   	
+					  		    print_graphical_report('report34','Effective Margin',print_button,mybarchart);
 					  		   	hide_loader();
 							  	
 							});
@@ -2118,23 +1950,8 @@ function report37_ini()
 			document.getElementById("report37_legend").innerHTML=mybarchart.generateLegend();
 			
 			var print_button=form.elements[4];
-			$(print_button).off('click');
-			$(print_button).on('click',function(event)
-			{
-	  			   var container=document.createElement('div');
-	  			   var title=document.createElement('div');
-	  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Payments Due to Suppliers</b></div>";
-	  			   var legend=document.createElement('div');
-	  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-	  			   var report_image=document.createElement('img');
-	  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-	  			   container.appendChild(title);
-	  			   container.appendChild(legend);
-	  			   container.appendChild(report_image);
-	  			   $.print(container);
-			});
-
+			print_graphical_report('report37','Payments due to Suppliers',print_button,mybarchart);
+			
 			hide_loader();
 		});
 	},supplier_data);
@@ -2196,23 +2013,7 @@ function report38_ini()
 				document.getElementById("report38_legend").innerHTML=mybarchart.generateLegend();
 				
 				var print_button=form.elements[5];
-				$(print_button).off('click');
-				$(print_button).on('click',function(event)
-				{
-		  			   var container=document.createElement('div');
-		  			   var title=document.createElement('div');
-		  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Sales by Products</b></div>";
-		  			   var legend=document.createElement('div');
-		  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-		  			   var report_image=document.createElement('img');
-		  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-		  			   container.appendChild(title);
-		  			   container.appendChild(legend);
-		  			   container.appendChild(report_image);
-		  			   $.print(container);
-				});
-
+				print_graphical_report('report38','Sales by Products',print_button,mybarchart);
 				
 				hide_loader();
 			});
@@ -2273,24 +2074,8 @@ function report39_ini()
 				document.getElementById("report39_legend").innerHTML=mybarchart.generateLegend();
 				
 				var print_button=form.elements[5];
-				$(print_button).off('click');
-				$(print_button).on('click',function(event)
-				{
-		  			   var container=document.createElement('div');
-		  			   var title=document.createElement('div');
-		  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Sales by Services</b></div>";
-		  			   var legend=document.createElement('div');
-		  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-		  			   var report_image=document.createElement('img');
-		  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-		  			   container.appendChild(title);
-		  			   container.appendChild(legend);
-		  			   container.appendChild(report_image);
-		  			   $.print(container);
-				});
-
-				
+				print_graphical_report('report39','Sales by Services',print_button,mybarchart);
+								
 				hide_loader();
 			});
 		},services_data);
@@ -2424,24 +2209,8 @@ function report40_ini()
 		  		   document.getElementById("report40_legend").innerHTML=mybarchart.generateLegend();
 		  		   
 		  		   var print_button=form.elements[4];
-					$(print_button).off('click');
-					$(print_button).on('click',function(event)
-					{
-			  			   var container=document.createElement('div');
-			  			   var title=document.createElement('div');
-			  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Surplus Inventory</b></div>";
-			  			   var legend=document.createElement('div');
-			  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-			  			   var report_image=document.createElement('img');
-			  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-			  			   container.appendChild(title);
-			  			   container.appendChild(legend);
-			  			   container.appendChild(report_image);
-			  			   $.print(container);
-					});
-
-		  		   
+		  		   print_graphical_report('report40','Surplus Inventory',print_button,mybarchart);
+					
 		  		   hide_loader();
 		  	   }
 		    },100);
@@ -2534,18 +2303,7 @@ function report41_ini()
 			$('#report41_body').html(rowsHTML);
 			
 			var print_button=form.elements[3];
-			$(print_button).off('click');
-			$(print_button).on('click',function(event)
-			{
-			   var container=document.createElement('div');
-			   var title=document.createElement('div');
-			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Pre-requisites for Services</b></div>";
-			   var table_element=document.getElementById('report41_body').parentNode;
-			   var table_copy=table_element.cloneNode(true);
-			   container.appendChild(title);
-			   container.appendChild(table_copy);
-			   $.print(container);
-			});
+			print_tabular_report('report41','Pre-requisites for Services',print_button);
 			
 			hide_loader();
 		});	
@@ -2603,18 +2361,7 @@ function report42_ini()
 		$('#report42_body').html(rowsHTML);
 		
 		var print_button=form.elements[5];
-		$(print_button).off('click');
-		$(print_button).on('click',function(event)
-		{
-		   var container=document.createElement('div');
-		   var title=document.createElement('div');
-		   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Feedback</b></div>";
-		   var table_element=document.getElementById('report42_body').parentNode;
-		   var table_copy=table_element.cloneNode(true);
-		   container.appendChild(title);
-		   container.appendChild(table_copy);
-		   $.print(container);
-		});
+		print_tabular_report('report42','Feedback',print_button);
 		
 		hide_loader();
 	});	
@@ -2758,24 +2505,8 @@ function report43_ini()
   		   document.getElementById("report43_legend").innerHTML=mybarchart.generateLegend();
   		   
   		   var print_button=form.elements[7];
-			$(print_button).off('click');
-			$(print_button).on('click',function(event)
-			{
-	  			   var container=document.createElement('div');
-	  			   var title=document.createElement('div');
-	  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Change in Customer Purchasing</b></div>";
-	  			   var legend=document.createElement('div');
-	  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-	  			   var report_image=document.createElement('img');
-	  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-	  			   container.appendChild(title);
-	  			   container.appendChild(legend);
-	  			   container.appendChild(report_image);
-	  			   $.print(container);
-			});
-
-  		   
+  		   print_graphical_report('report43','Change in Customer Purchasing',print_button,mybarchart);
+						  		   
   		   hide_loader();
 		});
 	});
@@ -2825,19 +2556,8 @@ function report44_ini()
 		}
 		
 		var print_button=form.elements[3];
-		$(print_button).off('click');
-		$(print_button).on('click',function(event)
-		{
-		   var container=document.createElement('div');
-		   var title=document.createElement('div');
-		   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Compare product prices</b></div>";
-		   var table_element=document.getElementById('report44_body').parentNode;
-		   var table_copy=table_element.cloneNode(true);
-		   container.appendChild(title);
-		   container.appendChild(table_copy);
-		   $.print(container);
-		});
-		
+		print_tabular_report('report44','Compare Product Prices',print_button);
+				
 		hide_loader();
 	});
 };
@@ -2928,6 +2648,8 @@ function report46_ini()
 				"</payments>";
 		fetch_requested_data('report46',payments_data,function(payments)
 		{
+			var total_balance=0;
+			
 			accounts.forEach(function(result)
 			{	
 				var balance_amount=0;
@@ -2953,6 +2675,8 @@ function report46_ini()
 				
 				if(balance_amount>=balance)
 				{
+					total_balance+=balance_amount;
+					
 					bill_ids_string=bill_ids_string.substr(0,(bill_ids_string.length-2));
 					
 					var rowsHTML="<tr>";
@@ -2970,19 +2694,12 @@ function report46_ini()
 					$('#report46_body').append(rowsHTML);
 				}
 			});
+			
+			var total_row="<tr><td data-th='Total'>Total</td><td colspan='2' data-th='Balance'>"+total_balance+"</td></tr>";
+			$('#report46_foot').html(total_row);
+			
 			var print_button=form.elements[4];
-			$(print_button).off('click');
-			$(print_button).on('click',function(event)
-			{
-			   var container=document.createElement('div');
-			   var title=document.createElement('div');
-			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Supplier Account Balance</b></div>";
-			   var table_element=document.getElementById('report46_body').parentNode;
-			   var table_copy=table_element.cloneNode(true);
-			   container.appendChild(title);
-			   container.appendChild(table_copy);
-			   $.print(container);
-			});
+			print_tabular_report('report46','Supplier Account Balance',print_button);
 			hide_loader();
 		});
 	});
@@ -3007,7 +2724,7 @@ function report47_ini()
 	var products_data="<product_instances>" +
 			"<product_name>"+product_name+"</product_name>" +
 			"<batch></batch>" +
-			"<cost_price sort='desc'></cost_price>" +
+			"<cost_price></cost_price>" +
 			"<sale_price></sale_price>" +
 			"</product_instances>";
 	fetch_requested_data('report47',products_data,function(products)
@@ -3066,14 +2783,13 @@ function report47_ini()
 	  			   {
 	  				   for(var j=i+1; j<products.length;j++)
 	  				   {
-	  					   if(products[i].product_name==products[j].name)
+	  					   if(products[i].product_name==products[j].product_name)
 	  					   {
 	  						 products[i].cost+=products[j].cost;
 	  						 products[i].sale+=products[j].sale;
 	  						 products.splice(j,1);
 		  					 j-=1;
 	  					   }
-	  					   
 	  				   }
 	  				   if(result.labels.length<11)
 	  				   {
@@ -3091,23 +2807,8 @@ function report47_ini()
 	  		   document.getElementById("report47_legend").innerHTML=mybarchart.generateLegend();
 
 	  		   var print_button=form.elements[4];
-	  		   $(print_button).off('click');
-	  		   $(print_button).on('click',function(event)
-	  		   {
-	  			   var container=document.createElement('div');
-	  			   var title=document.createElement('div');
-	  			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Inventory Value</b></div>";
-	  			   var legend=document.createElement('div');
-	  			   legend.innerHTML="<b>Legend<div style='display: block;'>"+mybarchart.generateLegend();+"</div></b>";
-	  			   var report_image=document.createElement('img');
-	  			   report_image.setAttribute('src',mybarchart.toBase64Image());
-
-	  			   container.appendChild(title);
-	  			   container.appendChild(legend);
-	  			   container.appendChild(report_image);
-	  			   $.print(container);
-	  		   });
-
+	  		   print_graphical_report('report47','Inventory Value',print_button,mybarchart);
+				
 	  		   hide_loader();
 	  	   }
 	    },100);
@@ -3164,6 +2865,9 @@ function report48_ini()
 			
 			fetch_requested_data('report48',cost_data,function(costs)
 			{
+				var total_cost=0;
+				var total_time=0;
+				
 				manus.forEach(function(manu)
 				{	
 					var time=0;
@@ -3192,6 +2896,9 @@ function report48_ini()
 							}
 						}
 					}
+					
+					total_cost+=cost;
+					total_time+=time;
 											
 					var rowsHTML="<tr>";
 						rowsHTML+="<td data-th='Product'>";
@@ -3208,19 +2915,11 @@ function report48_ini()
 					$('#report48_body').append(rowsHTML);
 				});
 				
+				var total_row="<tr><td data-th='Total'>Total</td><td data-th='Cost'>"+total_cost+"</td><td data-th='Time'>"+total_time+"</td></tr>";
+				$('#report48_foot').html(total_row);
+		
 				var print_button=form.elements[3];
-				$(print_button).off('click');
-				$(print_button).on('click',function(event)
-				{
-				   var container=document.createElement('div');
-				   var title=document.createElement('div');
-				   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Resource Analysis</b></div>";
-				   var table_element=document.getElementById('report48_body').parentNode;
-				   var table_copy=table_element.cloneNode(true);
-				   container.appendChild(title);
-				   container.appendChild(table_copy);
-				   $.print(container);
-				});
+				print_tabular_report('report48','Resource Analysis',print_button);
 				hide_loader();
 			});
 		});
@@ -3315,18 +3014,7 @@ function report50_ini()
 			});
 			
 			var print_button=form.elements[5];
-			$(print_button).off('click');
-			$(print_button).on('click',function(event)
-			{
-			   var container=document.createElement('div');
-			   var title=document.createElement('div');
-			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Margin by products</b></div>";
-			   var table_element=document.getElementById('report50_body').parentNode;
-			   var table_copy=table_element.cloneNode(true);
-			   container.appendChild(title);
-			   container.appendChild(table_copy);
-			   $.print(container);
-			});
+			print_tabular_report('report50','Margin by Products',print_button);
 			hide_loader();
 		});
 	},product_data);
@@ -3365,6 +3053,8 @@ function report51_ini()
 		
 		get_single_column_data(function(bill_items)
 		{			
+			var report_count=products.length;
+			
 			products.forEach(function(product)
 			{
 				var sold=false;
@@ -3390,26 +3080,25 @@ function report51_ini()
 						rowsHTML+="</tr>";
 						
 						$('#report51_body').append(rowsHTML);
+						report_count-=1;
 					});
 				}
 			});
-			
-			var print_button=form.elements[4];
-			$(print_button).off('click');
-			$(print_button).on('click',function(event)
+
+			var report_complete=setInterval(function()
 			{
-			   var container=document.createElement('div');
-			   var title=document.createElement('div');
-			   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Dead items</b></div>";
-			   var table_element=document.getElementById('report51_body').parentNode;
-			   var table_copy=table_element.cloneNode(true);
-			   container.appendChild(title);
-			   container.appendChild(table_copy);
-			   $.print(container);
-			});
-			hide_loader();
+			   if(report_count===0)
+			   {
+				   clearInterval(report_complete);
+				   hide_loader();
+			   }
+			},1000);
 		},bill_data);
 	},product_data);
+	
+	var print_button=form.elements[4];
+	print_tabular_report('report51','Dead Items',print_button);
+
 };
 
 /**
@@ -3463,6 +3152,7 @@ function report52_ini()
 
 			fetch_requested_data('report52',make_data,function(makes)
 			{
+				var total_amount=0;
 				for(var k in bill_ids)
 				{
 					for(var z in makes)
@@ -3478,6 +3168,9 @@ function report52_ini()
 									break;
 								}
 							}
+							
+							total_amount+=parseFloat(bill_ids[k].amount);
+								
 							rowsHTML+="<tr>";
 								rowsHTML+="<td data-th='Product Name'>";
 									rowsHTML+=bill_ids[k].product_name;
@@ -3501,19 +3194,11 @@ function report52_ini()
 				}
 				$('#report52_body').html(rowsHTML);
 				
+				var total_row="<tr><td colspan='4' data-th='Total'>Total</td><td data-th='Amount'>"+total_amount+"</td></tr>";
+				$('#report52_foot').html(total_row);
+				
 				var print_button=form.elements[6];
-				$(print_button).off('click');
-				$(print_button).on('click',function(event)
-				{
-				   var container=document.createElement('div');
-				   var title=document.createElement('div');
-				   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Product purchase report</b></div>";
-				   var table_element=document.getElementById('report52_body').parentNode;
-				   var table_copy=table_element.cloneNode(true);
-				   container.appendChild(title);
-				   container.appendChild(table_copy);
-				   $.print(container);
-				});
+				print_tabular_report('report52','Product Compare Report',print_button);
 				
 				hide_loader();
 			});
@@ -3545,9 +3230,11 @@ function report53_ini()
 			"<last_updated compare='less than'>"+get_raw_time(end_date)+"</last_updated>" +
 			"</bill_items>";
 	
+	var total_amount=0;
+	var total_tax=0;
+	
 	fetch_requested_data('report53',bills_data,function(bills)
 	{
-		console.log(bills);
 		for(var i=0;i<bills.length;i++)
 		{
 			for(var j=i+1;j<bills.length;j++)
@@ -3561,6 +3248,9 @@ function report53_ini()
 				}
 			}
 			
+			total_amount+=parseFloat(bills[i].amount);
+			total_tax+=parseFloat(bills[i].tax);
+
 			var rowsHTML="<tr>";
 			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+=bills[i].item_name;
@@ -3605,6 +3295,9 @@ function report53_ini()
 				}
 			}
 			
+			total_amount-=parseFloat(supplier_bills[i].amount);
+			total_tax-=parseFloat(supplier_bills[i].tax);
+
 			var rowsHTML="<tr>";
 			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+=supplier_bills[i].product_name;
@@ -3613,7 +3306,7 @@ function report53_ini()
 				rowsHTML+='Purchase';
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+=supplier_bills[i].amount;
+				rowsHTML+="-"+supplier_bills[i].amount;
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Tax'>";
 				rowsHTML+="-"+supplier_bills[i].tax;
@@ -3635,7 +3328,6 @@ function report53_ini()
 
 	fetch_requested_data('report53',sale_return_data,function(sreturns)
 	{
-		console.log(sreturns);
 		for(var i=0;i<sreturns.length;i++)
 		{
 			for(var j=i+1;j<sreturns.length;j++)
@@ -3649,6 +3341,9 @@ function report53_ini()
 				}
 			}
 			
+			total_amount-=parseFloat(sreturns[i].amount);
+			total_tax-=parseFloat(sreturns[i].tax);
+
 			var rowsHTML="<tr>";
 			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+=sreturns[i].item_name;
@@ -3657,7 +3352,7 @@ function report53_ini()
 				rowsHTML+='Sale return';
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+=sreturns[i].amount;
+				rowsHTML+="-"+sreturns[i].amount;
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Tax'>";
 				rowsHTML+="-"+sreturns[i].tax;
@@ -3679,8 +3374,6 @@ function report53_ini()
 
 	fetch_requested_data('report53',purchase_return_data,function(preturns)
 	{
-		console.log(preturns);
-
 		for(var i=0;i<preturns.length;i++)
 		{
 			for(var j=i+1;j<preturns.length;j++)
@@ -3693,6 +3386,9 @@ function report53_ini()
 					j-=1;
 				}
 			}
+			
+			total_amount+=parseFloat(preturns[i].amount);
+			total_tax+=parseFloat(preturns[i].tax);
 			
 			var rowsHTML="<tr>";
 			rowsHTML+="<td data-th='Item'>";
@@ -3718,22 +3414,14 @@ function report53_ini()
 	{
 	   if(report_count===0)
 	   {
+		   var total_row="<tr><td data-th='Total'>Total</td><td data-th='Amount'>"+total_amount+"</td><td data-th='Tax'>"+total_tax+"</td></tr>";
+		   $('#report53_foot').html(total_row);
+	
 		   clearInterval(report_complete);
 		   hide_loader();
 	   }
 	},1000);
 	
 	var print_button=form.elements[5];
-	$(print_button).off('click');
-	$(print_button).on('click',function(event)
-	{
-	   var container=document.createElement('div');
-	   var title=document.createElement('div');
-	   title.innerHTML="<div style='text-align:center;display: block;width:100%'><b>Sales Tax report</b></div>";
-	   var table_element=document.getElementById('report53_body').parentNode;
-	   var table_copy=table_element.cloneNode(true);
-	   container.appendChild(title);
-	   container.appendChild(table_copy);
-	   $.print(container);
-	});
+	print_tabular_report('report53','Sales Tax Report',print_button);
 };

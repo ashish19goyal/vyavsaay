@@ -22,6 +22,7 @@ function report1_header_ini()
 	
 	$(date_since).datepicker();
 	$(date_since).val(get_my_date());
+	
 }
 
 /**

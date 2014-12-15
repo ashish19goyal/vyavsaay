@@ -2,9 +2,9 @@
 	<form id='report53_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Product<input type='text'>
-			Start date <input type='text' required>
-			End date <input type='text' required>
+			<label>Product</br><input type='text'></label>
+			<label>Start date</br><input type='text' required></label>
+			<label>End date</br><input type='text' required></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
@@ -20,5 +20,7 @@
 		</thead>
 		<tbody id='report53_body'>
 		</tbody>
+		<tfoot id='report53_foot'>
+		</tfoot>
 	</table>
 </div>

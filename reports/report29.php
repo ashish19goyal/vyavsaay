@@ -2,7 +2,7 @@
 	<form id='report29_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			Product Name <input type='text' title='If this field is left blank, pre-requisites for all products will be shown'>
+			<label>Product Name <input type='text' title='If this field is left blank, pre-requisites for all products will be shown'></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>

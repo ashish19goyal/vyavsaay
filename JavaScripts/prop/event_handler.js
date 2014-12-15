@@ -18,6 +18,7 @@ function default_load()
 	loaderTimer=0;
 	count_notif_timer=0;
 	show_notif_timer=0;
+	progress_value=0;
 	
 	if(is_set_session())
 	{
@@ -35,6 +36,24 @@ function default_load()
 	}
 	hide_loader();
 }
+
+function show_progress()
+{
+	$("#progress_ind").show();
+	$("#progress_bar").val(progress_value);
+    $('#progress_value').html(progress_value + '%');
+    progress_runner=setTimeout(show_progress,500);
+}
+
+function hide_progress()
+{
+	clearInterval(progress_runner);
+	$("#progress_ind").hide();
+	$("#progress_bar").val(0);
+    $('#progress_value').html('0 %');
+    progress_value=0;
+}
+
 
 function start_workers()
 {
@@ -75,7 +94,7 @@ function start_workers()
 	},20000);
 	setTimeout(function()
 	{
-		notifications_add();
+		sale_leads_add();
 	},25000);
 	setTimeout(function()
 	{

@@ -2,8 +2,8 @@
 	<form id='report45_header'>
 		<fieldset>
 		<legend>Select filter</legend>
-			Select Product<input type="text" form='report45_header'/>
-			Select Batch<input type="text" form='report45_header'/>
+			<label>Select Product</br><input type="text" form='report45_header'/></label>
+			<label>Select Batch</br><input type="text" form='report45_header'/></label>
 			<input type="button" value='Locate' onclick="report45_ini();"/>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>

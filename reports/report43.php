@@ -2,23 +2,16 @@
 	<form id='report43_header' style='text-align:left;'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			<div style='display:block;float:left;margin:5px;'>
-			Customer <input type='text' title='If this field is left blank, top 10 customers will be shown'>
-			</div>
-			<div style='display:block;float:left;margin:5px;'>
-			<b>Period 1</b>:</br>
-			Start Date <input type='text' required></br>
-			End Date <input type='text' required>
-			</div>
-			<div style='display: block;float:left;margin:5px;'>
-			<b>Period 2</b>:</br>
-			Start Date <input type='text' required></br>
-			End Date <input type='text' required>
-			</div>
-			<div style='display:block;float:left;margin:5px;'>
+			<label>Customer</br><input type='text' title='If this field is left blank, top 10 customers will be shown'></label>
+			<label>Period 1</br>
+			<label>Start Date</br><input type='text' required></label></br>
+			<label>End Date</br><input type='text' required></label></label>
+			<label>Period 2</br>
+			<label>Start Date</br><input type='text' required></label></br>
+			<label>End Date</br><input type='text' required></label></label>
 			<input type='submit' value='Refresh'>
 			<input type='button' title='Print' class='print_icon'>
-			</div>
+			
 		</fieldset>
 	</form>
 </br>

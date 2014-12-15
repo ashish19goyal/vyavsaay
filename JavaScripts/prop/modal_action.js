@@ -1810,6 +1810,7 @@ function modal23_action(t_func,i_func)
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
+		show_progress();
 		event.preventDefault();
 		var file=select_file.files[0];
         var fileType = /csv/gi;
@@ -1818,30 +1819,36 @@ function modal23_action(t_func,i_func)
     	var reader = new FileReader();
         reader.onload = function(e)
         {
-           var content=reader.result;
-           var data_array=csv_string_to_obj_array(content);
+        	progress_value=5;
+        	var content=reader.result;
+        	var data_array=csv_string_to_obj_array(content);
+
+        	progress_value=10;
            
-           console.log(data_array);
-           
-           if(new_records.checked)
-           {
-        	   i_func(data_array,'create_new');
-           }
-           else if(update_records.checked)
-           {
-        	   i_func(data_array,'update_records');
-           }
-           
-           var ajax_complete=setInterval(function()
+           //console.log(data_array);
+        	if(new_records.checked)
         	{
-        	   if(number_active_ajax===0)
-        	   {
-        		   selected_file.value = "Upload complete";
-        		   $(select_file).val('');
-        		   $("#modal23").dialog("close");
-        		   clearInterval(ajax_complete);
-        	   }
-           },1000);
+        		i_func(data_array,'create_new');
+        	}
+        	else if(update_records.checked)
+        	{
+        		i_func(data_array,'update_records');
+        	}
+           
+        	progress_value=15;
+        	
+        	var ajax_complete=setInterval(function()
+        	{
+        		progress_value=parseInt(15+(1-(number_active_ajax/data_array.length))*85);
+        		if(number_active_ajax===0)
+        		{
+        			hide_progress();
+        			selected_file.value = "Upload complete";
+        			$(select_file).val('');
+        			$("#modal23").dialog("close");
+        			clearInterval(ajax_complete);
+        		}
+        	},1000);
         }
         reader.readAsText(file);    
     });
