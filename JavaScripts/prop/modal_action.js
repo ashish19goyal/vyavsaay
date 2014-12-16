@@ -1839,8 +1839,16 @@ function modal23_action(t_func,i_func)
         	
         	var ajax_complete=setInterval(function()
         	{
-        		progress_value=parseInt(15+(1-(number_active_ajax/data_array.length))*85);
         		if(number_active_ajax===0)
+        		{
+        			progress_value=15+(1-(localdb_open_requests/data_array.length))*85;
+        		}
+        		else if(localdb_open_requests===0)
+        		{
+        			progress_value=15+(1-(number_active_ajax/data_array.length))*85;
+        		}
+        		
+        		if(number_active_ajax===0 && localdb_open_requests===0)
         		{
         			hide_progress();
         			selected_file.value = "Upload complete";

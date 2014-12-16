@@ -35,12 +35,38 @@ function form8_import_template()
 
 
 /**
+* @form Create Service Bills
+* @formNo 10
+* @table bill_items
+*/
+function form10_import_template()
+{
+	var data_array=['id','bill_id','item_name','quantity','unit_price','mrp','amount',
+	                'total','discount','offer','type','batch','notes',
+	                'staff','tax','free_with'];
+	my_array_to_csv(data_array);
+};
+
+/**
 * @form Manage Payments
 * @formNo 11
 */
 function form11_import_template()
 {
 	var data_array=['id','type','acc_name','total_amount','paid_amount','status','date','due_date','mode','bill_id'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Create Product Bills
+* @formNo 12
+* @table bill_items
+*/
+function form12_import_template()
+{
+	var data_array=['id','bill_id','item_name','quantity','unit_price','mrp','amount',
+	                'total','discount','offer','type','batch','notes',
+	                'staff','tax','free_with'];
 	my_array_to_csv(data_array);
 };
 
@@ -54,6 +80,77 @@ function form14_import_template()
 	var data_array=['id','name','description','assignee','t_due','task_hours','t_initiated','status'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Enter Customer Returns
+* @formNo 15
+* @table customer_return_items
+*/
+function form15_import_template()
+{
+	var data_array=['id','return_id','item_name','quantity','refund_amount','exchange_batch',
+	                'saleable','type','batch','notes','tax'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage Customer Returns
+* @formNo 16
+* @table customer_returns
+*/
+function form16_import_template()
+{
+	var data_array=['id','customer','return_date','total','type','tax','transaction_id'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage Supplier Returns
+* @formNo 17
+* @table supplier_returns
+*/
+function form17_import_template()
+{
+	var data_array=['id','supplier','return_date','total','type','tax','transaction_id'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Enter Supplier Returns
+* @formNo 19
+* @table supplier_return_items
+*/
+function form19_import_template()
+{
+	var data_array=['id','return_id','item_name','quantity','refund_amount',
+	                'saleable','batch','notes','tax'];
+	my_array_to_csv(data_array);
+};
+
+
+/**
+* @form Enter supplier bill
+* @formNo 21
+* @table supplier_bill_items
+*/
+function form21_import_template()
+{
+	var data_array=['id','quantity','product_name','batch',
+	               'bill_id','unit_price','amount','tax','total','storage'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form create Purchase Order
+* @formNo 24
+* @table purchase_order_items
+*/
+function form24_import_template()
+{
+	var data_array=['id','order_id','product_name','quantity','make','price'];
+	my_array_to_csv(data_array);
+};
+
 
 /**
 * @form Manage Customers
@@ -111,6 +208,40 @@ function form40_import_template()
 {
 	var data_array=['id','name','phone','email','notes','acc_name',
 	                'address','pincode','city','state','country','address_status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage Bills
+* @formNo 42
+* @table bills
+*/
+function form42_import_template()
+{
+	var data_array=['id','customer_name','bill_date','amount','total','type','billing_type','offer','discount','tax','transaction_id'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form manage purchase order
+* @formNo 43
+* @table purchase_orders
+*/
+function form43_import_template()
+{
+	var data_array=['id','order_date','supplier','status','notes'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage supplier bill
+* @formNo 53
+* @table supplier_bills
+*/
+function form53_import_template()
+{
+	var data_array=['id','bill_id','supplier','bill_date','entry_date','amount',
+	                'discount','tax','total','transaction_id','notes'];
 	my_array_to_csv(data_array);
 };
 
@@ -216,6 +347,27 @@ function form66_import_template()
 	my_array_to_csv(data_array);
 };
 
+/**
+* @form Create sale order
+* @formNo 69
+* @table sale_order_items
+*/
+function form69_import_template()
+{
+	var data_array=['id','order_id','item_name','quantity','notes'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage sale order
+* @formNo 70
+* @table sale_orders
+*/
+function form70_import_template()
+{
+	var data_array=['id','customer_name','order_date','type','status'];
+	my_array_to_csv(data_array);
+};
 
 
 /**
@@ -227,6 +379,20 @@ function form71_import_template()
 	var data_array=['id','acc_name','description','type'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Create Bills
+* @formNo 72
+* @table bill_items
+*/
+function form72_import_template()
+{
+	var data_array=['id','bill_id','item_name','quantity','unit_price','mrp','amount',
+	                'total','discount','offer','type','batch','notes',
+	                'staff','tax','free_with'];
+	my_array_to_csv(data_array);
+};
+
 
 /**
 * @form Manage task types
@@ -247,6 +413,20 @@ function form81_import_template()
 	var data_array=['id','customer','detail','due_date','identified_by'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Scan items
+* @formNo 82
+* @table bill_items
+*/
+function form82_import_template()
+{
+	var data_array=['id','bill_id','item_name','quantity','unit_price','mrp','amount',
+	                'total','discount','offer','type','batch','notes',
+	                'staff','tax','free_with'];
+	my_array_to_csv(data_array);
+};
+
 
 /**
 * @form Store Areas
@@ -289,6 +469,18 @@ function form88_import_template()
 };
 
 /**
+* @form Appointments
+* @formNo 89
+* @table appointments
+*/
+function form89_import_template()
+{
+	var data_array=['id','customer','schedule','status','assignee','hours','notes'];
+	my_array_to_csv(data_array);
+};
+
+
+/**
 * @form Billing types
 * @formNo 90
 */
@@ -297,6 +489,31 @@ function form90_import_template()
 	var data_array=['id','name','notes'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Create bills(multiple registers)
+* @formNo 91
+* @table bill_items
+*/
+function form91_import_template()
+{
+	var data_array=['id','bill_id','item_name','quantity','unit_price','mrp','amount',
+	                'total','discount','offer','type','batch','notes',
+	                'staff','tax','free_with'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage Bills(multi-register)
+* @formNo 92
+* @table bills
+*/
+function form92_import_template()
+{
+	var data_array=['id','customer_name','bill_date','amount','total','type','billing_type','offer','discount','tax','transaction_id'];
+	my_array_to_csv(data_array);
+};
+
 
 /**
 * @form Manage Loans

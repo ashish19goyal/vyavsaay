@@ -253,7 +253,7 @@ function form5_ini()
 
 	fetch_requested_data('form5',columns,function(results)
 	{	
-		results.forEach(function(results)
+		results.forEach(function(result)
 		{
 			var rowsHTML="";
 			rowsHTML+="<tr>";
@@ -7876,6 +7876,100 @@ function form94_ini()
 		{
 			my_obj_array_to_csv(results,'discarded_items');
 		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Data Import
+ * @formNo 95
+ * @Loading light
+ */
+function form95_ini()
+{
+	show_loader();
+	var fid=$("#form95_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form95_header');
+		
+	var fnumber=filter_fields.elements[0].value;
+	var fname=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form95_index');
+	var prev_element=document.getElementById('form95_prev');
+	var next_element=document.getElementById('form95_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	
+	var columns="<user_preferences count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<name>"+fnumber+"</name>" +
+			"<display_name>"+fname+"</display_name>" +
+			"<type exact='yes'>form</type>" +
+			"<value exact='yes'>checked</value>" +
+			"</user_preferences>";
+	
+	$('#form95_body').html("");
+
+	fetch_requested_data('form95',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form95_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Form No'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form95_"+result.id+"' value='"+result.name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Form Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form95_"+result.id+"' data-i18n='form."+result.display_name+"'></textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Import'>";
+						rowsHTML+="<input type='hidden' form='form95_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='button' class='import_icon' form='form95_"+result.id+"' value='IMPORT'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form95_body').prepend(rowsHTML);
+			
+			var fields=document.getElementById("form95_"+result.id);
+			
+			var import_button=fields.elements[3];
+			$(import_button).on("click",function(event)
+			{
+				import_data(result.name);
+			});
+		});
+		
+		$('#form95_body').find('textarea').i18n();
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
 		hide_loader();
 	});
 };

@@ -6,12 +6,28 @@ function switch_to_online()
 {
 	if(is_read_access('sync_mode'))
 	{	
+		show_progress();
 		show_loader();
+		var progress_timer=setInterval(function()
+		{
+			progress_value+=(2*(80-progress_value))/100;
+		},1000);
+		
 		sync_local_to_server(function()
 		{
+			progress_value=80;
+			clearInterval(progress_timer);
+			var progress_timer=setInterval(function()
+			{
+				progress_value+=(2*(100-progress_value))/100;
+			},1000);
+			
 			sync_server_to_local(function()
 			{
+				clearInterval(progress_timer);
+				progress_value=100;
 				set_session_online();
+				hide_progress();
 			});
 		});
 	}
@@ -30,14 +46,32 @@ function switch_to_offline()
 	if(is_read_access('sync_mode'))
 	{
 		var domain=get_domain();
+		show_progress();
 		show_loader();
+		
 		create_local_db(domain,function(e)
 		{
+			progress_value=5;
+			var progress_timer=setInterval(function()
+			{
+				progress_value+=(2*(80-progress_value))/100;
+			},1000);
+
 			sync_server_to_local(function()
 			{
+				progress_value=80;
+				clearInterval(progress_timer);
+				var progress_timer=setInterval(function()
+				{
+					progress_value+=(2*(100-progress_value))/100;
+				},1000);
+				
 				sync_local_to_server(function()
 				{
+					clearInterval(progress_timer);
+					progress_value=100;
 					set_session_offline();
+					hide_progress();
 				});
 			});
 		});
@@ -55,12 +89,28 @@ function sync_local_and_server()
 {
 	if(is_read_access('sync'))
 	{
+		show_progress();
 		show_loader();
+		var progress_timer=setInterval(function()
+		{
+			progress_value+=(2*(70-progress_value))/100;
+		},1000);
+		
 		sync_local_to_server(function()
 		{
+			progress_value=70;
+			clearInterval(progress_timer);
+			var progress_timer=setInterval(function()
+			{
+				progress_value+=(2*(100-progress_value))/100;
+			},1000);
+			
 			sync_server_to_local(function()
 			{
+				clearInterval(progress_timer);
+				progress_value=100;
 				hide_menu_items();
+				hide_progress();
 				hide_loader();
 			});
 		});
@@ -77,7 +127,6 @@ function sync_local_and_server()
  */
 function sync_server_to_local(func)
 {
-	show_loader();
 	start_table="";
 	start_offset=0;
 	
@@ -176,7 +225,6 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
  */
 function sync_local_to_server(func)
 {
-	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
@@ -188,12 +236,12 @@ function sync_local_to_server(func)
 	{
 		get_last_sync_time(function(last_sync_time)
 		{
-			console.log(log_data);
+			//console.log(log_data);
 			var log_data_array=log_data.split("<separator></separator>");
 			log_data_array.forEach(function(log_data_chunk)
 			{
 				log_data_chunk="<activities>"+log_data_chunk+"</activities>";
-				console.log(log_data_chunk);
+				//console.log(log_data_chunk);
 				ajax_with_custom_func("./ajax/sync_upload.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&up="+up_access+"&del="+del_access+"&data="+log_data_chunk+"&last_sync="+last_sync_time,function(e)
 				{
 					var response=e.responseXML;
@@ -219,7 +267,7 @@ function sync_local_to_server(func)
  */
 function get_data_from_log_table(func)
 {
-	show_loader();
+	//show_loader();
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
@@ -265,7 +313,7 @@ function get_data_from_log_table(func)
  */
 function set_activities_to_synced(response)
 {
-	show_loader();
+	//show_loader();
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
@@ -299,7 +347,7 @@ function set_activities_to_synced(response)
  */
 function get_last_sync_time(func)
 {
-	show_loader();
+	//show_loader();
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
@@ -324,7 +372,7 @@ function get_last_sync_time(func)
  */
 function update_last_sync_time(func)
 {
-	show_loader();
+	//show_loader();
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
@@ -346,7 +394,7 @@ function update_last_sync_time(func)
  */
 function set_session_online()
 {
-	show_loader();
+	//show_loader();
 	var offline_data="<user_preferences>" +
 		"<id></id>" +
 		"<name>offline</name>" +
@@ -387,7 +435,7 @@ function set_session_online()
  */
 function set_session_offline()
 {
-	show_loader();
+	//show_loader();
 	var offline_data="<user_preferences>" +
 			"<id></id>" +
 			"<name>offline</name>" +

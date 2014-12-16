@@ -309,7 +309,8 @@ progress::-moz-progress-bar {
 	line-height: 25px;
 	margin-left: 5px;
 	font-size: 1em;
-	color: #555;
+	color: #fff;
+	font-weight:bold;
 	height: 25px;
 	float: right;
 }

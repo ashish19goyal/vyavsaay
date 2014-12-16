@@ -162,6 +162,58 @@ function form8_import(data_array,import_type)
 	});
 };
 
+/**
+* @form create service bills
+* @formNo 10
+*/
+function form10_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<bill_items>" +
+				"<id>"+row.id+"</id>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<total>"+row.total+"</total>" +
+				"<discount>"+row.discount+"</discount>" +
+				"<offer>"+row.offer+"</offer>" +
+				"<type>"+row.type+"</type>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<staff>"+row.staff+"</staff>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<free_with>"+row.free_with+"</free_with>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</bill_items>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
 
 /**
 * @form Manage Payments
@@ -186,8 +238,8 @@ function form11_import(data_array,import_type)
 				"<acc_name>"+row.acc_name+"</acc_name>" +
 				"<due_date>"+row.due_date+"</due_date>" +
 				"<status>"+row.status+"</status>" +
-				"<date>"+row.date+"</date>" +
-				"<due_date>"+row.due_date+"</due_date>" +
+				"<date>"+get_raw_time(row.date)+"</date>" +
+				"<due_date>"+get_raw_time(row.due_date)+"</due_date>" +
 				"<mode>"+row.mode+"</mode>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<transaction_id>"+row.id+"</transaction_id>" +
@@ -195,7 +247,7 @@ function form11_import(data_array,import_type)
 				"</payments>";
 		var transaction_xml="<transactions>" +
 				"<id>"+row.id+"</id>" +
-				"<trans_date>"+row.date+"</trans_date>" +
+				"<trans_date>"+get_raw_time(row.date)+"</trans_date>" +
 				"<amount>"+row.total_amount+"</amount>" +
 				"<receiver>"+receiver+"</receiver>" +
 				"<giver>"+giver+"</giver>" +
@@ -231,6 +283,59 @@ function form11_import(data_array,import_type)
 	});
 };
 
+/**
+* @form Create Product bills
+* @formNo 12
+*/
+function form12_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<bill_items>" +
+				"<id>"+row.id+"</id>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<total>"+row.total+"</total>" +
+				"<discount>"+row.discount+"</discount>" +
+				"<offer>"+row.offer+"</offer>" +
+				"<type>"+row.type+"</type>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<staff>"+row.staff+"</staff>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<free_with>"+row.free_with+"</free_with>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</bill_items>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+
 
 /**
 * @form Manage Tasks
@@ -251,6 +356,272 @@ function form14_import(data_array,import_type)
 				"<tasks_hours>"+row.task_hours+"</task_hours>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</task_instances>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Enter Customer Returns
+* @formNo 15
+*/
+function form15_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<customer_return_items>" +
+				"<id>"+row.id+"</id>" +
+				"<return_id>"+row.return_id+"</return_id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<refund_amount>"+row.refund_amount+"</refund_amount>" +
+				"<exchange_batch>"+row.exchange_batch+"</exchange_batch>" +
+				"<saleable>"+row.saleable+"</saleable>" +
+				"<type>"+row.type+"</type>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</customer_return_items>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Manage Customer Returns
+* @formNo 16
+*/
+function form16_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<customer_returns>" +
+				"<id>"+row.id+"</id>" +
+				"<customer>"+row.customer+"</customer>" +
+				"<return_date>"+get_raw_time(row.return_date)+"</return_date>" +
+				"<total>"+row.total+"</total>" +
+				"<type>"+row.type+"</type>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</customer_returns>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Manage Supplier Returns
+* @formNo 17
+*/
+function form17_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<supplier_returns>" +
+				"<id>"+row.id+"</id>" +
+				"<supplier>"+row.supplier+"</supplier>" +
+				"<return_date>"+get_raw_time(row.return_date)+"</return_date>" +
+				"<total>"+row.total+"</total>" +
+				"<type>"+row.type+"</type>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</supplier_returns>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Enter Supplier Returns
+* @formNo 19
+*/
+function form19_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<supplier_return_items>" +
+				"<id>"+row.id+"</id>" +
+				"<return_id>"+row.return_id+"</return_id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<refund_amount>"+row.refund_amount+"</refund_amount>" +
+				"<saleable>"+row.saleable+"</saleable>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</supplier_return_items>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Enter Supplier bill
+* @formNo 21
+*/
+function form21_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<supplier_bills>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.product_name+"</product_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<total>"+row.total+"</total>" +
+				"<storage>"+row.storage+"</storage>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</supplier_bills>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form create purchase order
+* @formNo 24
+*/
+function form24_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<purchase_order_items>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.product_name+"</product_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<make>"+row.make+"</make>" +
+				"<order_id>"+row.order_id+"</order_id>" +
+				"<price>"+row.price+"</price>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</purchase_order_items>";
 		if(import_type=='create_new')
 		{
 			if(is_online())
@@ -536,6 +907,141 @@ function form40_import(data_array,import_type)
 	});
 };
 
+/**
+* @form Manage Bills
+* @formNo 42
+*/
+function form42_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<bills>" +
+				"<id>"+row.id+"</id>" +
+				"<customer_name>"+row.customer_name+"</customer_name>" +
+				"<bill_date>"+get_raw_time(row.bill_date)+"</bill_date>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<total>"+row.total+"</total>" +
+				"<type>"+row.type+"</type>" +
+				"<billing_type>"+row.billing_type+"</billing_type>" +
+				"<offer>"+row.offer+"</offer>" +
+				"<discount>"+row.discount+"</discount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</bills>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Manage Purchase orders
+* @formNo 43
+*/
+function form43_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<purchase_orders>" +
+				"<id>"+row.id+"</id>" +
+				"<supplier>"+row.supplier+"</supplier>" +
+				"<order_date>"+get_raw_time(row.order_date)+"</order_date>" +
+				"<status>"+row.status+"</status>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</purchase_orders>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+
+/**
+* @form Manage supplier bill
+* @formNo 53
+*/
+function form53_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<supplier_bills>" +
+				"<id>"+row.id+"</id>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<supplier>"+row.supplier+"</supplier>" +
+				"<bill_date>"+get_raw_time(row.bill_date)+"</bill_date>" +
+				"<entry_date>"+get_raw_time(row.entry_date)+"</entry_date>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<discount>"+row.discount+"</discount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<total>"+row.total+"</total>" +
+				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</supplier_bills>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
 
 /**
 * @form Cash Register
@@ -1008,6 +1514,89 @@ function form66_import(data_array,import_type)
 	});
 };
 
+/**
+* @form Create sale order
+* @formNo 69
+*/
+function form69_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<sale_order_items>" +
+				"<id>"+row.id+"</id>" +
+				"<order_id>"+row.order_id+"</order_id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</sale_order_items>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Manage sale order
+* @formNo 70
+*/
+function form70_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<sale_orders>" +
+				"<id>"+row.id+"</id>" +
+				"<customer_name>"+row.customer_name+"</customer_name>" +
+				"<order_date>"+get_raw_time(row.order_date)+"</order_date>" +
+				"<type>"+row.type+"</type>" +
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</sale_orders>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+
 
 /**
 * @form Manage accounts
@@ -1048,6 +1637,59 @@ function form71_import(data_array,import_type)
 		}
 	});
 };
+
+/**
+* @form create bills
+* @formNo 72
+*/
+function form72_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<bill_items>" +
+				"<id>"+row.id+"</id>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<total>"+row.total+"</total>" +
+				"<discount>"+row.discount+"</discount>" +
+				"<offer>"+row.offer+"</offer>" +
+				"<type>"+row.type+"</type>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<staff>"+row.staff+"</staff>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<free_with>"+row.free_with+"</free_with>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</bill_items>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
 
 /**
 * @form Manage Task Types
@@ -1129,6 +1771,59 @@ function form81_import(data_array,import_type)
 		}
 	});
 }
+
+/**
+* @form scan items
+* @formNo 82
+*/
+function form82_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<bill_items>" +
+				"<id>"+row.id+"</id>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<total>"+row.total+"</total>" +
+				"<discount>"+row.discount+"</discount>" +
+				"<offer>"+row.offer+"</offer>" +
+				"<type>"+row.type+"</type>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<staff>"+row.staff+"</staff>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<free_with>"+row.free_with+"</free_with>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</bill_items>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
 
 /**
 * @form Store Areas
@@ -1314,6 +2009,49 @@ function form88_import(data_array,import_type)
 	});
 };
 
+/**
+* @form Appointments
+* @formNo 89
+*/
+function form89_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<appointments>" +
+				"<id>"+row.id+"</id>" +
+				"<customer>"+row.customer+"</customer>" +
+				"<schedule>"+row.schedule+"</schedule>" +
+				"<status>"+row.status+"</status>" +
+				"<assignee>"+row.assignee+"</assignee>" +
+				"<hours>"+row.hours+"</hours>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</appointments>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
 
 /**
 * @form Billing types
@@ -1329,6 +2067,105 @@ function form90_import(data_array,import_type)
 				"<notes>"+row.notes+"</notes>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</bill_types>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Create Bills(multiple register)
+* @formNo 91
+*/
+function form91_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<bill_items>" +
+				"<id>"+row.id+"</id>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<total>"+row.total+"</total>" +
+				"<discount>"+row.discount+"</discount>" +
+				"<offer>"+row.offer+"</offer>" +
+				"<type>"+row.type+"</type>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<staff>"+row.staff+"</staff>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<free_with>"+row.free_with+"</free_with>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</bill_items>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Manage Bills(multi-register)
+* @formNo 92
+*/
+function form92_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<bills>" +
+				"<id>"+row.id+"</id>" +
+				"<customer_name>"+row.customer_name+"</customer_name>" +
+				"<bill_date>"+get_raw_time(row.bill_date)+"</bill_date>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<total>"+row.total+"</total>" +
+				"<type>"+row.type+"</type>" +
+				"<billing_type>"+row.billing_type+"</billing_type>" +
+				"<offer>"+row.offer+"</offer>" +
+				"<discount>"+row.discount+"</discount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</bills>";
 		if(import_type=='create_new')
 		{
 			if(is_online())

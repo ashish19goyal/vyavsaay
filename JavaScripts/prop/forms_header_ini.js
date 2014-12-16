@@ -2306,3 +2306,30 @@ function form94_header_ini()
 		modal23_action(form94_import_template,form94_import);
 	});
 };
+
+/**
+ * @form Data Import
+ * @formNo 95
+ */
+function form95_header_ini()
+{
+	var filter_fields=document.getElementById('form95_header');	
+	var number_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	
+	//setting autocompletes 
+	var number_data="<user_preferences>" +
+			"<name></name>" +
+			"<type exact='yes'>form</type>" +
+			"<value exact='yes'>checked</value>" +
+			"</user_preferences>";
+	
+	var name_data="<user_preferences>" +
+			"<display_name></display_name>" +
+			"<type exact='yes'>form</type>" +
+			"<value exact='yes'>checked</value>" +
+			"</user_preferences>";
+
+	set_my_filter(number_data,number_filter);
+	set_my_filter(name_data,name_filter);
+};

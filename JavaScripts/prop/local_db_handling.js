@@ -84,6 +84,7 @@ function create_local_db(domain,func)
 function local_read_single_column(columns,callback,results)
 {
 	//console.log(columns);
+	localdb_open_requests+=1;
 	var parser=new DOMParser();
 	var data=parser.parseFromString(columns,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -242,6 +243,7 @@ function local_read_single_column(columns,callback,results)
 					}
 				}
 			}
+			localdb_open_requests-=1;
 			callback(results);
 		});		
 	});
@@ -255,6 +257,8 @@ function local_read_single_column(columns,callback,results)
  */
 function local_update_row(data_xml,activity_xml)
 {
+	localdb_open_requests+=1;
+	
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -303,6 +307,7 @@ function local_update_row(data_xml,activity_xml)
 				//console.log("activities length="+activity_data.length);
 				database.upsert('activities',act_row,function(err,insertedkey)
 				{
+					localdb_open_requests-=1;
 				});	
 			});
 		});			
@@ -317,8 +322,9 @@ function local_update_row(data_xml,activity_xml)
  */
 function local_update_simple(data_xml)
 {
-	show_loader();
+	localdb_open_requests+=1;
 	var parser=new DOMParser();
+	//data_xml=data_xml.replace(/[\x{0009}\x{000a}\x{000d}\x{0020}\x{D7FF}\x{E000}\x{FFFD}]/g," ");
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
 	var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
@@ -357,7 +363,7 @@ function local_update_simple(data_xml)
 						last_updated:get_my_time()};
 				database.upsert('activities',act_row,function(err,insertedkey)
 				{
-					hide_loader();
+					localdb_open_requests-=1;
 				});
 			});
 		});
@@ -371,7 +377,7 @@ function local_update_simple(data_xml)
  */
 function local_update_simple_func(data_xml,func)
 {
-	show_loader();
+	localdb_open_requests+=1;
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -412,8 +418,8 @@ function local_update_simple_func(data_xml,func)
 					
 				database.upsert('activities',act_row,function(err,insertedkey)
 				{
+					localdb_open_requests-=1;
 					func();
-					hide_loader();
 				});
 			});
 		});
@@ -429,8 +435,7 @@ function local_update_simple_func(data_xml,func)
  */
 function local_create_row(data_xml,activity_xml)
 {
-	//console.log(data_xml);
-	//console.log(activity_xml);
+	localdb_open_requests+=1;
 	show_loader();
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
@@ -489,6 +494,7 @@ function local_create_row(data_xml,activity_xml)
 				//console.log("activities length="+activity_data.length);
 				database.upsert('activities',act_row,function(err,insertedkey)
 				{
+					localdb_open_requests-=1;
 					hide_loader();
 				});	
 			});
@@ -518,9 +524,9 @@ function local_create_row(data_xml,activity_xml)
 					//console.log("didnt find any duplicate records");
 					for(var j=0;j<cols.length;j++)
 					{
-						console.log(j);
-						console.log(cols[j].nodeName);
-						console.log(cols[j].innerHTML);
+						//console.log(j);
+						//console.log(cols[j].nodeName);
+						//console.log(cols[j].innerHTML);
 						data_row[cols[j].nodeName]=cols[j].innerHTML;
 					}
 					//console.log(data_row);
@@ -539,12 +545,14 @@ function local_create_row(data_xml,activity_xml)
 						}
 						database.upsert('activities',act_row,function(err,insertedkey)
 						{
+							localdb_open_requests-=1;
 							hide_loader();
 						});
 					});
 				}
 				else
 				{
+					localdb_open_requests-=1;
 					$("#modal5").dialog("open");
 				}
 			});
@@ -563,8 +571,9 @@ function local_create_row(data_xml,activity_xml)
 function local_create_simple(data_xml)
 {
 	//console.log(data_xml);
-	show_loader();
+	localdb_open_requests+=1;
 	var parser=new DOMParser();
+	//data_xml=data_xml.replace(/[\x{0009}\x{000a}\x{000d}\x{0020}\x{D7FF}\x{E000}\x{FFFD}]/g," ");
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
 	//console.log(table);
@@ -615,7 +624,7 @@ function local_create_simple(data_xml)
 					
 				database.upsert('activities',act_row,function(err,insertedkey)
 				{
-					hide_loader();
+					localdb_open_requests-=1;
 				});
 			});
 		}
@@ -672,12 +681,13 @@ function local_create_simple(data_xml)
 						//console.log("activities data------"+act_row);
 						database.upsert('activities',act_row,function(err,insertedkey)
 						{
-							hide_loader();
+							localdb_open_requests-=1;
 						});
 					});
 				}
 				else
 				{
+					localdb_open_requests-=1;
 					$("#modal5").dialog("open");
 				}
 			});
@@ -688,6 +698,7 @@ function local_create_simple(data_xml)
 
 function local_create_simple_func(data_xml,func)
 {
+	localdb_open_requests+=1;
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -738,6 +749,7 @@ function local_create_simple_func(data_xml,func)
 					
 				database.upsert('activities',act_row,function(err,insertedkey)
 				{
+					localdb_open_requests-=1;
 					func();
 				});
 			});
@@ -795,12 +807,14 @@ function local_create_simple_func(data_xml,func)
 						//console.log("activities data------"+act_row);
 						database.upsert('activities',act_row,function(err,insertedkey)
 						{
+							localdb_open_requests-=1;
 							func();
 						});
 					});
 				}
 				else
 				{
+					localdb_open_requests-=1;
 					$("#modal5").dialog("open");
 				}
 			});
@@ -818,7 +832,7 @@ function local_create_simple_func(data_xml,func)
  */
 function local_create_simple_no_warning(data_xml)
 {
-	
+	localdb_open_requests+=1;
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -868,6 +882,7 @@ function local_create_simple_no_warning(data_xml)
 					
 				database.upsert('activities',act_row,function(err,insertedkey)
 				{
+					localdb_open_requests-=1;
 				});
 			});
 		}
@@ -924,6 +939,7 @@ function local_create_simple_no_warning(data_xml)
 						//console.log("activities data------"+act_row);
 						database.upsert('activities',act_row,function(err,insertedkey)
 						{
+							localdb_open_requests-=1;
 						});
 					});
 				}
@@ -936,6 +952,7 @@ function local_create_simple_no_warning(data_xml)
 
 function local_read_multi_column(columns,callback,results)
 {
+	localdb_open_requests+=1;
 	//console.log(columns);
 	var parser=new DOMParser();
 	var data=parser.parseFromString(columns,"text/xml");
@@ -1109,6 +1126,7 @@ function local_read_multi_column(columns,callback,results)
 					}
 				}
 			}
+			localdb_open_requests-=1;
 			callback(results);
 		});		
 	});
@@ -1124,8 +1142,8 @@ function local_read_multi_column(columns,callback,results)
  */
 function local_delete_row(data_xml,activity_xml)
 {
+	localdb_open_requests+=1;
 	//console.log(data_xml);
-	show_loader();
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -1164,6 +1182,7 @@ function local_delete_row(data_xml,activity_xml)
 				records.push(records_object[row]);
 			}
 			//console.log(records);
+			
 			records.forEach(function(record)
 			{
 				var match=true;
@@ -1179,6 +1198,7 @@ function local_delete_row(data_xml,activity_xml)
 				}
 				if(match===true)
 				{
+					localdb_open_requests+=1;
 					//console.log('deleting record');
 					//console.log(record);
 					database.delete(table,record.id,function(err)
@@ -1196,11 +1216,13 @@ function local_delete_row(data_xml,activity_xml)
 						}
 						database.upsert('activities',act_row,function(err,insertedkey)
 						{
-							hide_loader();
+							localdb_open_requests-=1;
 						});
 					});
 				}
 			});
+			localdb_open_requests-=1;
+			
 		});
 	});
 };
@@ -1211,7 +1233,7 @@ function local_delete_row(data_xml,activity_xml)
  */
 function local_delete_simple(data_xml)
 {
-	show_loader();
+	localdb_open_requests+=1;
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -1261,6 +1283,7 @@ function local_delete_simple(data_xml)
 				}
 				if(match===true)
 				{
+					localdb_open_requests+=1;
 					database.delete(table,record.id,function(err)
 					{
 						var act_row={id:get_new_key(),
@@ -1274,11 +1297,12 @@ function local_delete_simple(data_xml)
 								last_updated:get_my_time()};
 						database.upsert('activities',act_row,function(err,insertedkey)
 						{
-							hide_loader();
+							localdb_open_requests-=1;
 						});
 					});
 				}
 			});
+			localdb_open_requests-=1;
 		});
 	});
 };
@@ -1290,6 +1314,8 @@ function local_delete_simple(data_xml)
  */
 function local_delete_simple_func(data_xml,func)
 {
+	localdb_open_requests+=1;
+
 	var parser=new DOMParser();
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -1339,6 +1365,7 @@ function local_delete_simple_func(data_xml,func)
 				}
 				if(match===true)
 				{
+					localdb_open_requests+=1;
 					database.delete(table,record.id,function(err)
 					{
 						var act_row={id:get_new_key(),
@@ -1352,11 +1379,13 @@ function local_delete_simple_func(data_xml,func)
 								last_updated:get_my_time()};
 						database.upsert('activities',act_row,function(err,insertedkey)
 						{
+							localdb_open_requests-=1;
 							func();
 						});
 					});
 				}
 			});
+			localdb_open_requests-=1;
 		});
 	});
 };

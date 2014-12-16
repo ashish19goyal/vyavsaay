@@ -172,6 +172,7 @@
   	"margin_by_products":"Margin by Products",
   	"product_purchase_report":"Product Purchase report",
   	"discard_items":"Discard Items",
-  	"sales_tax":"Sales Tax"
+  	"sales_tax":"Sales Tax",
+  	"data_import":"Data Import"
   }
 }
