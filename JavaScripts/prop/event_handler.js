@@ -403,6 +403,7 @@ function show_settings()
 {	
 	hide_all();
 	$("#settings_main").show();
+	$("#settings_main").find('ul').find('li').find('a').first().click();
 }
 
 function longPressEditable(element)

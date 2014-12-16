@@ -12,7 +12,8 @@ function print_tabular_report(report_name,report_title,print_button)
 	   var table_element=document.getElementById(report_name+"_body").parentNode;
 	   var table_copy=table_element.cloneNode(true);
 	   table_copy.removeAttribute('class');
-	   table_copy.setAttribute('style','font-size:1em;');
+	   var font_size=get_session_var('print_size');
+	   table_copy.setAttribute('style',"font-size:"+font_size+"em");
 	   container.appendChild(business_title);
 	   container.appendChild(title);
 	   container.appendChild(table_copy);

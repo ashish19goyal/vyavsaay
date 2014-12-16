@@ -109,6 +109,7 @@
   	"longitude":"Longitude",
   	"latitude":"Latitude",
   	"default_task_due_period":"Default Task Due Period",
+  	"print_size":"Print Size",
   	"logo": "Logo",
   	"business_title": "Business Title",
   	"theme": "Theme",

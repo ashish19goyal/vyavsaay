@@ -74,6 +74,19 @@ function create_local_db(domain,func)
 };
 
 
+function open_local_db(func)
+{
+	var db_name="re_local_"+get_domain();
+	var request = indexedDB.open(db_name,2);
+	request.onsuccess=function(e)
+	{
+		static_local_db=e.target.result;
+		func();
+	};
+};
+
+
+
 /**
  * This function executes a simple read access on local database
  * @param table table name that is to be accessed
@@ -94,7 +107,7 @@ function local_read_single_column(columns,callback,results)
 	{
 		count=parseInt(data.childNodes[0].getAttribute('count'));
 	}
-	var sort_index='id';
+	var sort_index='last_updated';
 	var sort_order='desc';
 	var filter=new Array();
 	for(var j=0; j<cols.length;j++)
@@ -135,46 +148,35 @@ function local_read_single_column(columns,callback,results)
 	//console.log(filter);
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
-	sklad.open(db_name,{version:2},function (err,database)
+	
+	if(typeof static_local_db=='undefined')
 	{
-		var options={direction:sklad.DESC};
-		database.get(table,options,function(err,records_object)
+		open_local_db(function()
 		{
-			var records=[];
-			for(var a in records_object)
-			{
-				records.push(records_object[a]);
-			}
-			if(sort_index!='id')
-			{
-				if(sort_order!='asc')
-				{
-					records.sort(function(a,b)
-					{
-						if(parseFloat(a[sort_index])<parseFloat(b[sort_index]))
-							return 1;
-						else
-							return -1;
-					});
-				}
-				else
-				{
-					records.sort(function(a,b)
-					{
-						if(parseFloat(a[sort_index])>parseFloat(b[sort_index]))
-							return 1;
-						else
-							return -1;
-					});
-				}
-			}
+			local_read_single_column(columns,callback,results);
+		});
+	}
+	else
+	{
+		if(sort_order=='asc')
+		{
+			sort_order='next';
+		}
+		else
+		{
+			sort_order='prev';
+		}
 
-			for(var row=0;row<records.length;row++)
+		static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(null,sort_order).onsuccess=function(e)
+		{
+			var result=e.target.result;
+			if(result)
 			{
+				var record=result.value;
 				var match=true;
 				for(var i=0;i<filter.length;i++)
 				{
-					var string=records[row][filter[i].name].toString().toLowerCase();
+					var string=record[filter[i].name].toString().toLowerCase();
 					var search=filter[i].value.toString().toLowerCase();
 					var found=0;
 					
@@ -196,7 +198,7 @@ function local_read_single_column(columns,callback,results)
 					}
 					if(filter[i].type=='less than') 
 					{
-						if(parseInt(records[row][filter[i].name])>=filter[i].value)
+						if(parseInt(record[filter[i].name])>=filter[i].value)
 						{
 							match=false;
 							break;
@@ -204,7 +206,7 @@ function local_read_single_column(columns,callback,results)
 					}
 					else if(filter[i].type=='more than') 
 					{
-						if(parseInt(records[row][filter[i].name])<=filter[i].value)
+						if(parseInt(record[filter[i].name])<=filter[i].value)
 						{
 							match=false;
 							break;
@@ -212,7 +214,7 @@ function local_read_single_column(columns,callback,results)
 					}
 					else if(filter[i].type=='equal') 
 					{
-						if(parseInt(records[row][filter[i].name])!=filter[i].value)
+						if(parseInt(record[filter[i].name])!=filter[i].value)
 						{
 							match=false;
 							break;
@@ -220,7 +222,7 @@ function local_read_single_column(columns,callback,results)
 					}
 					else if(filter[i].type=='not equal') 
 					{
-						if(parseInt(records[row][filter[i].name])==filter[i].value)
+						if(parseInt(record[filter[i].name])==filter[i].value)
 						{
 							match=false;
 							break;
@@ -236,17 +238,29 @@ function local_read_single_column(columns,callback,results)
 				
 				if(match===true)
 				{
-					results.push(records[row][cols[0].nodeName]);
-					if(results.length==count)
+					results.push(record[cols[0].nodeName]);
+					if(results.length!=count)
 					{
-						break;
+						result.continue();
+					}
+					else
+					{
+						localdb_open_requests-=1;
+						callback(results);
 					}
 				}
+				else
+				{
+					result.continue();
+				}
 			}
-			localdb_open_requests-=1;
-			callback(results);
-		});		
-	});
+			else
+			{
+				localdb_open_requests-=1;
+				callback(results);
+			}
+		};
+	}
 };
 
 /**

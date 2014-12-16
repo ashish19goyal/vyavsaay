@@ -46,6 +46,15 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>print_size</name>
+			<display_name>print_size</display_name>
+			<status>active</status>
+			<value>1</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>lat</name>
 			<display_name>latitude</display_name>
 			<status>active</status>

@@ -2188,7 +2188,7 @@ function form91_header_ini()
 		"<status>active</status>" +
 		"</bill_types>";
 	set_my_value_list(type_data,bill_type);
-	bill_type.value='default';
+	set_my_value(type_data,bill_type);
 	
 	$(customers_filter).off('blur');
 	$(customers_filter).on('blur', function(event)
