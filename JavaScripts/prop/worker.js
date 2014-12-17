@@ -457,8 +457,9 @@ function sale_leads_add()
 	var lead_past_time=parseFloat(get_my_time())-86400000;
 	
 	var attributes_data="<attributes>" +
-			"<item_name></item_name>" +
+			"<name></name>" +
 			"<attribute>recurrent sale</attribute>" +
+			"<type array='yes'>--product--service--</type>" +
 			"<value></value>" +
 			"</attributes>";
 	
@@ -540,8 +541,9 @@ function sale_leads_add()
 ////////seasonal sales////////////
 		
 	var seasonal_attributes_data="<attributes>" +
-			"<item_name></item_name>" +
+			"<name></name>" +
 			"<attribute>season</attribute>" +
+			"<type array='yes'>--product--service--</type>" +
 			"<value></value>" +
 			"</attributes>";
 	

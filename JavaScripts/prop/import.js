@@ -567,7 +567,7 @@ function form21_import(data_array,import_type)
 {
 	data_array.forEach(function(row)
 	{
-		var data_xml="<supplier_bills>" +
+		var data_xml="<supplier_bill_items>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
 				"<quantity>"+row.quantity+"</quantity>" +
@@ -579,7 +579,7 @@ function form21_import(data_array,import_type)
 				"<total>"+row.total+"</total>" +
 				"<storage>"+row.storage+"</storage>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</supplier_bills>";
+				"</supplier_bill_items>";
 		if(import_type=='create_new')
 		{
 			if(is_online())

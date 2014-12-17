@@ -589,14 +589,10 @@ function local_create_row(data_xml,activity_xml)
  */
 function local_create_simple(data_xml)
 {
-	//console.log(data_xml);
 	localdb_open_requests+=1;
 	var parser=new DOMParser();
-	//data_xml=data_xml.replace(/[\x{0009}\x{000a}\x{000d}\x{0020}\x{D7FF}\x{E000}\x{FFFD}]/g," ");
 	var data=parser.parseFromString(data_xml,"text/xml");
 	var table=data.childNodes[0].nodeName;
-	//console.log(table);
-	//console.log(data.childNodes[0]);
 	var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
 	var cols=data.childNodes[0].childNodes;
 

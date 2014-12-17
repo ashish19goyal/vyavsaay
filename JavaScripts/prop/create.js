@@ -5308,7 +5308,7 @@ function form84_bills()
 					
 					////////////updating subscription//////////////
 					var subscription_period_data="<attributes>" +
-							"<item_name exact='yes'>"+subscription.service+"</item_name>" +
+							"<name exact='yes'>"+subscription.service+"</name>" +
 							"<type>service</type>" +
 							"<attribute>subscription period</attribute>" +
 							"<value></value>" +

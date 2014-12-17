@@ -882,18 +882,8 @@ function modal16_action()
 	var fcity=form.elements[6];
 	var fstate=form.elements[7];
 	var fcountry=form.elements[8];
-	var fjoining=form.elements[9];
-	var fqual=form.elements[10];
-	var fskills=form.elements[11];
-	var ffixed_comp=form.elements[12];
-	var fvar_comp=form.elements[13];
-	var fhours=form.elements[14];
-	var fpto=form.elements[15];
 	var fdata_id=get_new_key();
-		
-	$(fjoining).datepicker();
-	$(fjoining).val(get_my_date());
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -908,13 +898,6 @@ function modal16_action()
 			var city=fcity.value;
 			var state=fstate.value;
 			var country=fcountry.value;
-			var joining=get_raw_time(fjoining.value);
-			var qual=fqual.value;
-			var skills=fskills.value;
-			var fixed_comp=ffixed_comp.value;
-			var var_comp=fvar_comp.value;
-			var hours=fhours.value;
-			var pto=fpto.value;
 			var data_id=get_new_key();
 			var address_id=get_new_key();
 			var last_updated=get_my_time();
@@ -930,13 +913,6 @@ function modal16_action()
 						"<state>"+state+"</state>" +
 						"<country>"+country+"</country>" +
 						"<address_status>pending analysis</address_status>" +
-						"<joining_date>"+joining+"</joining_date>" +
-						"<qualification>"+qual+"</qualification>" +
-						"<skills>"+skills+"</skills>" +
-						"<fixed_comp>"+fixed_comp+"</fixed_comp>" +
-						"<variable_comp_rate>"+var_comp+"</variable_comp_rate>" +
-						"<monthly_hours>"+hours+"</monthly_hours>" +
-						"<allowed_pto>"+pto+"</allowed_pto>" +
 						"<status>active</status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</staff>";
@@ -950,7 +926,7 @@ function modal16_action()
 						"</activity>";
 			var account_xml="<accounts>" +
 						"<id>"+data_id+"</id>" +
-						"<description>"+skills+"</description>" +
+						"<description>account for staff "+name+"</description>" +
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<type>staff</type>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
@@ -988,40 +964,21 @@ function modal17_action(button)
 	
 	var form_id=$(button).attr('form');
 	var father_form=document.getElementById(form_id);
-	var fdetail=father_form.elements[4];
-	var fdata_id=father_form.elements[6];
-	
 	var faddress_detail=father_form.elements[3];
-	var fstaff_detail=father_form.elements[4];
+	var fdata_id=father_form.elements[5];
 	
-	var faddress=father_form.elements[9];
-	var fpincode=father_form.elements[10];
-	var fcity=father_form.elements[11];
-	var fstate=father_form.elements[12];
-	var fcountry=father_form.elements[13];
-	var faddress_status=father_form.elements[14];
-	var fjoining=father_form.elements[15];
-	var fqual=father_form.elements[16];
-	var fskills=father_form.elements[17];
-	var ffixed_comp=father_form.elements[18];
-	var fvar_comp=father_form.elements[19];
-	var fpto=father_form.elements[20];	
-	var fhours=father_form.elements[21];
+	var faddress=father_form.elements[8];
+	var fpincode=father_form.elements[9];
+	var fcity=father_form.elements[10];
+	var fstate=father_form.elements[11];
+	var fcountry=father_form.elements[12];
+	var faddress_status=father_form.elements[13];
 	
-	var joining_date=form.elements[6];
-	$(joining_date).datepicker();
 	form.elements[1].value=faddress.value;
 	form.elements[2].value=fpincode.value;
 	form.elements[3].value=fcity.value;
 	form.elements[4].value=fstate.value;
 	form.elements[5].value=fcountry.value;
-	form.elements[6].value=fjoining.value;
-	form.elements[7].value=fqual.value;
-	form.elements[8].value=fskills.value;
-	form.elements[9].value=ffixed_comp.value;
-	form.elements[10].value=fvar_comp.value;
-	form.elements[11].value=fhours.value;
-	form.elements[12].value=fpto.value;
 	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -1032,31 +989,17 @@ function modal17_action(button)
 		var city=form.elements[3].value;
 		var state=form.elements[4].value;
 		var country=form.elements[5].value;
-		var date=form.elements[6].value;
-		var qual=form.elements[7].value;
-		var skill=form.elements[8].value;
-		var comp=form.elements[9].value;
-		var rate=form.elements[10].value;
-		var hours=form.elements[11].value;
-		var pto=form.elements[12].value;
 		
 		faddress_detail.value=address+", "+pincode+", "+city+", "+state+", "+country;
-		fstaff_detail.value="Joined on "+date+", Qualification: "+qual+", Skills: "+skill+", Salary: Rs."+comp+"+ Rs."+rate+"/hour. Allowed "+pto+" per month.";
 		faddress.value=address;
 		fpincode.value=pincode;
 		fcity.value=city;
 		fstate.value=state;
 		fcountry.value=country;
 		faddress_status.value='pending analysis';
-		fjoining.value=date;
-		fqual.value=qual;
-		fskills.value=skill;
-		ffixed_comp.value=comp;
-		fvar_comp.value=rate;
-		fpto.value=pto;	
-		fhours.value=hours;	
 		
 		$("#modal17").dialog("close");
+		$(father_form).submit();
 	});
 	
 	$("#modal17").dialog("open");
@@ -1810,8 +1753,8 @@ function modal23_action(t_func,i_func)
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
-		show_progress();
 		event.preventDefault();
+		show_progress();
 		var file=select_file.files[0];
         var fileType = /csv/gi;
 

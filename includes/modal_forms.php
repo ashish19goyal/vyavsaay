@@ -185,13 +185,6 @@
 				<label>City <input type="text"></label><br/>
 				<label>State <input type="text"></label><br/>
 				<label>Country <input type="text"></label><br/>
-				<label>Joining Date <input type="text" required></label><br/>
-				<label>Qualification <textarea></textarea></label><br/>
-				<label>Skills <textarea></textarea></label><br/>
-				<label>Fixed Compensation (Rs./month)<input type="number" value='10000' required></label><br/>
-				<label>Variable Compensation Rate (Rs./hour)<input type="number" value='50' required></label><br/>
-				<label>Monthly work hours <input type="number" required value='180'></label><br/>
-				<label>PTOs Allowed <input type="text" required value='0'></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -205,13 +198,6 @@
 				<label>City <input type="text"></label><br/>
 				<label>State <input type="text"></label><br/>
 				<label>Country <input type="text"></label><br/>
-				<label>Joining Date <input type="text"></label><br/>
-				<label>Qualification <textarea></textarea></label><br/>
-				<label>Skills <textarea></textarea></label><br/>
-				<label>Fixed Compensation (Rs./month)<input type="number"></label><br/>
-				<label>Variable Compensation Rate (Rs./hour)<input type="number"></label><br/>
-				<label>Monthly work hours <input type="number"></label><br/>
-				<label>PTOs Allowed <input type="text"></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

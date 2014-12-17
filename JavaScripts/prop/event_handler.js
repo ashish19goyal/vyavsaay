@@ -66,7 +66,7 @@ function start_workers()
 		set_grid_item_5();
 		set_grid_item_6();
 		set_grid_item_7();
-		set_grid_item_8();
+//		set_grid_item_8();
 		set_grid_item_9();
 		set_grid_item_11();
 		set_grid_item_12();

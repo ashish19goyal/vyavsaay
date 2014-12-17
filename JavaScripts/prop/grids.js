@@ -18,7 +18,7 @@ function set_grid_item_1()
 		}
 	},columns);
 	
-	setTimeout(set_grid_item_1,100000);
+	setTimeout(set_grid_item_1,600000);
 };
 
 /**
@@ -38,7 +38,7 @@ function set_grid_item_2()
 		document.getElementById('grid_item_2').innerHTML=results.length;
 	},columns);
 
-	setTimeout(set_grid_item_2,100000);
+	setTimeout(set_grid_item_2,600000);
 };
 
 /**
@@ -67,7 +67,7 @@ function set_grid_item_3()
 		}
 	});
 
-	setTimeout(set_grid_item_3,100000);
+	setTimeout(set_grid_item_3,3600000);
 };
 
 /**
@@ -86,7 +86,7 @@ function set_grid_item_4()
 	{
 		document.getElementById('grid_item_4').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_4,100000);
+	setTimeout(set_grid_item_4,3600000);
 
 };
 
@@ -113,7 +113,7 @@ function set_grid_item_5()
 		}
 		document.getElementById('grid_item_5').innerHTML="Rs. "+income;
 	},columns);
-	setTimeout(set_grid_item_5,100000);
+	setTimeout(set_grid_item_5,3600000);
 
 };
 
@@ -139,7 +139,7 @@ function set_grid_item_6()
 		}
 		document.getElementById('grid_item_6').innerHTML="Rs. "+expenses;
 	},columns);
-	setTimeout(set_grid_item_6,100000);
+	setTimeout(set_grid_item_6,3600000);
 
 };
 
@@ -156,8 +156,6 @@ function set_grid_item_7()
 	{
 		document.getElementById('grid_item_7').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_7,100000);
-
 };
 
 /**
@@ -170,8 +168,7 @@ function set_grid_item_8()
 			"<id></id>" +
 			"<item_name></item_name>" +
 			"<total></total>" +
-			"<last_updated compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</last_updated>" +
-			"<last_updated compare='less than'>"+(get_raw_time(get_my_date())+86400000)+"</last_updated>" +
+			"<last_updated sort='desc' compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</last_updated>" +
 			"</bill_items>";
 	fetch_requested_data('',columns,function(results)
 	{
@@ -200,8 +197,7 @@ function set_grid_item_8()
 			document.getElementById('grid_item_8').innerHTML=results[0].item_name;
 		}
 	});
-	setTimeout(set_grid_item_8,100000);
-
+	setTimeout(set_grid_item_8,3600000);
 };
 
 
@@ -218,8 +214,6 @@ function set_grid_item_9()
 	{
 		document.getElementById('grid_item_9').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_9,100000);
-
 };
 
 
@@ -247,8 +241,6 @@ function set_grid_item_11()
 			grid_item.innerHTML=results[0].product_name;
 		}
 	});
-	setTimeout(set_grid_item_11,100000);
-
 };
 
 /**
@@ -289,8 +281,6 @@ function set_grid_item_12()
 			grid_item.innerHTML=results[0].product_name;
 		}
 	});
-	setTimeout(set_grid_item_12,100000);
-
 };
 
 /**
@@ -308,8 +298,7 @@ function set_grid_item_13()
 	{
 		document.getElementById('grid_item_13').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_13,100000);
-
+	setTimeout(set_grid_item_13,600000);
 };
 
 /**
@@ -330,7 +319,6 @@ function set_grid_item_14()
 		}
 	},columns);
 	setTimeout(set_grid_item_14,100000);
-
 };
 
 /**
@@ -350,7 +338,7 @@ function set_grid_item_15()
 			document.getElementById('grid_item_15').innerHTML=results[0];
 		}
 	},columns);
-	setTimeout(set_grid_item_15,100000);
+	setTimeout(set_grid_item_15,3600000);
 
 };
 
@@ -376,7 +364,7 @@ function set_grid_item_16()
 		}
 		document.getElementById('grid_item_16').innerHTML="Rs. "+payments;
 	},columns);
-	setTimeout(set_grid_item_16,100000);
+	setTimeout(set_grid_item_16,3600000);
 
 };
 
@@ -397,8 +385,6 @@ function set_grid_item_17()
 	{
 		document.getElementById('grid_item_17').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_17,100000);
-
 };
 
 /**
@@ -416,8 +402,7 @@ function set_grid_item_18()
 	{
 		document.getElementById('grid_item_18').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_18,100000);
-
+	setTimeout(set_grid_item_18,600000);
 };
 
 /**
@@ -435,8 +420,6 @@ function set_grid_item_19()
 	{
 		document.getElementById('grid_item_19').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_19,100000);
-
 };
 
 /**
@@ -454,8 +437,7 @@ function set_grid_item_20()
 	{
 		document.getElementById('grid_item_20').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_20,100000);
-
+	setTimeout(set_grid_item_20,600000);
 };
 
 /**
@@ -473,7 +455,6 @@ function set_grid_item_22()
 	{
 		document.getElementById('grid_item_22').innerHTML=results[0];
 	},columns);
-	setTimeout(set_grid_item_22,100000);
 };
 
 /**
@@ -490,8 +471,6 @@ function set_grid_item_23()
 	{
 		document.getElementById('grid_item_23').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_23,100000);
-
 };
 
 /**
@@ -508,8 +487,6 @@ function set_grid_item_24()
 	{
 		document.getElementById('grid_item_24').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_24,100000);
-
 };
 
 /**
@@ -526,8 +503,6 @@ function set_grid_item_25()
 	{
 		document.getElementById('grid_item_25').innerHTML=results.length;
 	},columns);
-	setTimeout(set_grid_item_25,100000);
-
 };
 
 /**
@@ -550,6 +525,5 @@ function set_grid_item_26()
 		}
 		document.getElementById('grid_item_26').innerHTML="Rs. "+sale;
 	},columns);
-	setTimeout(set_grid_item_26,100000);
-
+	setTimeout(set_grid_item_26,600000);
 };

@@ -170,44 +170,11 @@ function form8_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var phone=form.elements[1].value;
-		var email=form.elements[2].value;
-		var status=form.elements[5].value;
-		var data_id=form.elements[6].value;
-		var address=form.elements[9].value;
-		var pincode=form.elements[10].value;
-		var city=form.elements[11].value;
-		var state=form.elements[12].value;
-		var country=form.elements[13].value;
-		var add_status=form.elements[14].value;
-		var joining_date=form.elements[15].value;
-		var qual=form.elements[16].value;
-		var skills=form.elements[17].value;
-		var fixed_comp=form.elements[18].value;
-		var var_comp=form.elements[19].value;
-		var pto=form.elements[20].value;
-		var hours=form.elements[21].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var data_xml="<staff>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
-					"<phone>"+phone+"</phone>" +
-					"<email>"+email+"</email>" +
-					"<acc_name>"+name+" ("+phone+")</acc_name>" +
-					"<status>"+status+"</status>" +
-					"<joining_date>"+joining_date+"</joining_date>" +
-					"<qualification>"+qual+"</qualification>" +
-					"<skills>"+skills+"</skills>" +
-					"<monthly_hours>"+hours+"</monthly_hours>" +
-					"<fixed_comp>"+fixed_comp+"</fixed_comp>" +
-					"<variable_comp_rate>"+var_comp+"</variable_comp_rate>" +
-					"<allowed_pto>"+pto+"</allowed_pto>" +
-					"<address>"+address+"</address>" +
-					"<pincode>"+pincode+"</pincode>" +
-					"<city>"+city+"</city>" +
-					"<state>"+state+"</state>" +
-					"<country>"+country+"</country>" +
-					"<address_status>"+add_status+"</address_status>" +
 					"</staff>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -219,9 +186,7 @@ function form8_delete_item(button)
 					"</activity>";
 		var account_xml="<accounts>" +
 					"<id>"+data_id+"</id>" +
-					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<type>staff</type>" +
-					
 					"</accounts>";
 		if(is_online())
 		{
@@ -997,7 +962,7 @@ function form39_delete_item(button)
 				"<type>product</type>" +
 				"</pre_requisites>";
 		var other_delete4="<attributes>" +
-				"<item_name>"+name+"</item_name>" +
+				"<name exact='yes'>"+name+"</name>" +
 				"<type>product</type>" +
 				"</attributes>";
 		var other_delete5="<cross_sells>" +
@@ -1556,7 +1521,7 @@ function form57_delete_item(button)
 				"<type>service</type>" +
 				"</pre_requisites>";
 		var other_delete4="<attributes>" +
-				"<item_name>"+service+"</item_name>" +
+				"<name>"+service+"</name>" +
 				"<type>service</type>" +
 				"</attributes>";
 		var other_delete5="<cross_sells>" +
@@ -2443,7 +2408,7 @@ function form87_delete_item(button)
 				"<type>product</type>" +
 				"</pre_requisites>";
 		var other_delete4="<attributes>" +
-				"<item_name>"+name+"</item_name>" +
+				"<name>"+name+"</name>" +
 				"<type>product</type>" +
 				"</attributes>";
 		var other_delete5="<cross_sells>" +

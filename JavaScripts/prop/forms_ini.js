@@ -486,13 +486,6 @@ function form8_ini()
 			"<phone>"+fcontact+"</phone>" +
 			"<email>"+femail+"</email>" +
 			"<status>"+fstatus+"</status>" +
-			"<joining_date></joining_date>" +
-			"<qualification></qualification>" +
-			"<skills></skills>" +
-			"<monthly_hours></monthly_hours>" +
-			"<fixed_comp></fixed_comp>" +
-			"<variable_comp_rate></variable_comp_rate>" +
-			"<allowed_pto></allowed_pto>" +
 			"<acc_name></acc_name>" +
 			"<address></address>" +
 			"<pincode></pincode>" +
@@ -508,13 +501,10 @@ function form8_ini()
 	{
 		results.forEach(function(result)
 		{
-			var detail_string="Joined on "+get_my_past_date(result.joining_date)+", Qualification: "+result.qualification+", Skills: "+result.skills+", Salary: Rs."+result.fixed_comp+"+ Rs."+result.variable_comp_rate+"/hour. Allowed "+result.allowed_pto+"/month.";
-
-			var rowsHTML="";
-			rowsHTML+="<tr>";
+			var rowsHTML="<tr>";
 				rowsHTML+="<form id='form8_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' value='"+result.name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form8_"+result.id+"'>"+result.name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Phone'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' value='"+result.phone+"'>";
@@ -525,10 +515,6 @@ function form8_ini()
 					rowsHTML+="<td data-th='Address'>";
 						rowsHTML+="<textarea wrap='soft' readonly='readonly' form='form8_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
 						rowsHTML+="<img class='edit_icon' wrap='virtual' src='images/edit.png' form='form8_"+result.id+"' onclick='modal17_action($(this));'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Details'>";
-						rowsHTML+="<textarea wrap='soft' readonly='readonly' form='form8_"+result.id+"'>"+detail_string+"</textarea>";
-						rowsHTML+="<img class='edit_icon' src='images/edit.png' form='form8_"+result.id+"' onclick='modal17_action($(this));'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
@@ -543,13 +529,6 @@ function form8_ini()
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.state+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.country+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.address_status+"'>";
-						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+get_my_past_date(result.joining_date)+"'>";
-						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.qualification+"'>";
-						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.skills+"'>";
-						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.fixed_comp+"'>";
-						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.variable_comp_rate+"'>";
-						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.allowed_pto+"'>";
-						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.monthly_hours+"'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -2563,13 +2542,13 @@ function form40_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form40_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' required form='form40_"+result.id+"' value='"+result.name+"'>";
+						rowsHTML+="<textarea readonly='readonly' required form='form40_"+result.id+"'>"+result.name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Phone'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form40_"+result.id+"' class='dblclick_editable' value='"+result.phone+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Email'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form40_"+result.id+"' class='dblclick_editable' value='"+result.email+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form40_"+result.id+"' class='dblclick_editable'>"+result.email+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
 						rowsHTML+="<textarea readonly='readonly' form='form40_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";

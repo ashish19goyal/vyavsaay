@@ -1983,7 +1983,7 @@ function report38_ini()
 	get_single_column_data(function(bill_ids)
 	{
 		var products_data="<product_master>" +
-				"<name></name>" +
+				"<name>"+product+"</name>" +
 				"</product_master>";
 
 		get_single_column_data(function(products)
