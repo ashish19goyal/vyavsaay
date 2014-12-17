@@ -1275,7 +1275,7 @@ function form60_import(data_array,import_type)
 		var data_xml="<attributes>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
-				"<type>"+row.type+"</type>" +
+				"<type>product</type>" +
 				"<attribute>"+row.attribute+"</attribute>" +
 				"<value>"+row.value+"</value>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
@@ -1316,7 +1316,7 @@ function form61_import(data_array,import_type)
 		var data_xml="<attributes>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
-				"<type>"+row.type+"</type>" +
+				"<type>service</type>" +
 				"<attribute>"+row.attribute+"</attribute>" +
 				"<value>"+row.value+"</value>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
@@ -2284,3 +2284,127 @@ function form94_import(data_array,import_type)
 		}
 	});
 }
+
+
+/**
+* @form Customer Attributes
+* @formNo 96
+*/
+function form96_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<attributes>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<type>customer</type>" +
+				"<attribute>"+row.attribute+"</attribute>" +
+				"<value>"+row.value+"</value>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</attributes>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Supplier Attributes
+* @formNo 97
+*/
+function form97_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<attributes>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<type>supplier</type>" +
+				"<attribute>"+row.attribute+"</attribute>" +
+				"<value>"+row.value+"</value>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</attributes>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};
+
+/**
+* @form Staff Attributes
+* @formNo 98
+*/
+function form96_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		var data_xml="<attributes>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<type>staff</type>" +
+				"<attribute>"+row.attribute+"</attribute>" +
+				"<value>"+row.value+"</value>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</attributes>";
+		if(import_type=='create_new')
+		{
+			if(is_online())
+			{
+				server_create_simple(data_xml);
+			}
+			else
+			{
+				local_create_simple(data_xml);
+			}
+		}
+		else
+		{
+			if(is_online())
+			{	
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}
+		}
+	});
+};

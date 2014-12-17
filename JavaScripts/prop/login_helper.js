@@ -242,6 +242,7 @@ function try_local_db_login(username,domain,func_success,func_failure)
 	}
 	else
 	{
+		alert('you browser doesnt support offline mode. Please upgrade');
 		func_failure();
 	}
 };

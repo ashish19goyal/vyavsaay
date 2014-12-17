@@ -256,7 +256,7 @@
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<total index='yes' type="DECIMAL(12,2)"></total>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
-			<billing_type index="yes" type="VARCHAR(10)"></billing_type>
+			<billing_type index="yes" type="VARCHAR(20)"></billing_type>
 			<offer index='no' type="TEXT"></offer>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
@@ -332,7 +332,7 @@
 			<manufacture_date index='no' type="BIGINT"></manufacture_date>
 			<expiry index='yes' type="BIGINT"></expiry>
 			<cost_price index='no' type="DECIMAL(12,2)"></cost_price>
-			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
+			<sale_price index='yes' type="DECIMAL(12,2)"></sale_price>
 			<mrp index='no' type="DECIMAL(12,2)"></mrp>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</product_instances>
@@ -375,8 +375,8 @@
 	</product_master>
 	<attributes>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<item_name index='yes' type="VARCHAR(90)"></item_name>
-			<type index='no' type="VARCHAR(10)"></type><!-- service/product -->
+			<name index='yes' type="VARCHAR(100)"></name>
+			<type index='no' type="VARCHAR(10)"></type><!-- service/product/customer/staff/supplier -->
 			<attribute index='no' type="VARCHAR(30)"></attribute><!--recurrent sale(days)/season start date(1 jan)/season end date(2 december)/subscription period(4 days/2 months/10 weeks/1 year)-->
 			<value index='no' type='TEXT'></value>
 			<last_updated index='yes' type="BIGINT"></last_updated>

@@ -1357,6 +1357,7 @@ function form60_header_ini()
 			"</product_master>";
 	var attribute_data="<attributes>" +
 			"<attribute></attribute>" +
+			"<type exact='yes'>product</type>" +
 			"</attributes>";
 	
 	set_my_filter(product_data,product_filter);
@@ -1385,6 +1386,7 @@ function form61_header_ini()
 			"</services>";
 	var attribute_data="<attributes>" +
 			"<attribute></attribute>" +
+			"<type exact='yes'>service</type>" +
 			"</attributes>";
 	
 	set_my_filter(service_data,service_filter);
@@ -2332,4 +2334,91 @@ function form95_header_ini()
 
 	set_my_filter(number_data,number_filter);
 	set_my_filter(name_data,name_filter);
+};
+
+/**
+ * @form Customer Attributes
+ * @formNo 96
+ */
+function form96_header_ini()
+{
+	var filter_fields=document.getElementById('form96_header');
+	var customer_filter=filter_fields.elements[0];
+	var attribute_filter=filter_fields.elements[1];
+	
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	var attribute_data="<attributes>" +
+			"<attribute></attribute>" +
+			"<type exact='yes'>customer</type>" +
+			"</attributes>";
+	
+	set_my_filter(customer_data,customer_filter);
+	set_my_filter(attribute_data,attribute_filter);
+	
+	var import_button=filter_fields.elements[4];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form96_import_template,form96_import);
+	});
+};
+
+/**
+ * @form Supplier Attributes
+ * @formNo 97
+ */
+function form97_header_ini()
+{
+	var filter_fields=document.getElementById('form97_header');
+	var supplier_filter=filter_fields.elements[0];
+	var attribute_filter=filter_fields.elements[1];
+	
+	var supplier_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+	var attribute_data="<attributes>" +
+			"<attribute></attribute>" +
+			"<type exact='yes'>supplier</type>" +
+			"</attributes>";
+	
+	set_my_filter(supplier_data,supplier_filter);
+	set_my_filter(attribute_data,attribute_filter);
+	
+	var import_button=filter_fields.elements[4];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form97_import_template,form97_import);
+	});
+};
+
+/**
+ * @form Staff Attributes
+ * @formNo 98
+ */
+function form98_header_ini()
+{
+	var filter_fields=document.getElementById('form98_header');
+	var staff_filter=filter_fields.elements[0];
+	var attribute_filter=filter_fields.elements[1];
+	
+	var staff_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	var attribute_data="<attributes>" +
+			"<attribute></attribute>" +
+			"<type exact='yes'>staff</type>" +
+			"</attributes>";
+	
+	set_my_filter(staff_data,staff_filter);
+	set_my_filter(attribute_data,attribute_filter);
+	
+	var import_button=filter_fields.elements[4];
+	$(import_button).off("click");
+	$(import_button).on("click", function(event)
+	{
+		modal23_action(form98_import_template,form98_import);
+	});
 };

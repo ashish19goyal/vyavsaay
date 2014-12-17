@@ -365,7 +365,7 @@ function set_menu_shortcuts()
 			"<id></id>" +
 			"<name></name>" +
 			"<shortcut></shortcut>" +
-			"<value>checked</value>" +
+			"<value exact='yes'>checked</value>" +
 			"<type array='yes'>--form--report--</type>" +
 			"</user_preferences>";
 
@@ -373,7 +373,7 @@ function set_menu_shortcuts()
 	{
 		results.forEach(function(result)
 		{
-			if(result.shortcut!="")
+			if(result.shortcut!="" && result.shortcut!="undefined")
 			{	
 				Mousetrap.bind(result.shortcut,function(e)
 				{
@@ -606,6 +606,12 @@ function import_data(form_name)
 		case 'form93':modal23_action(form93_import_template,form93_import);
 		break;
 		case 'form94':modal23_action(form94_import_template,form94_import);
+		break;
+		case 'form96':modal23_action(form96_import_template,form96_import);
+		break;
+		case 'form97':modal23_action(form97_import_template,form97_import);
+		break;
+		case 'form98':modal23_action(form98_import_template,form98_import);
 		break;
 	}
 }

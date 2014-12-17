@@ -73,7 +73,11 @@ function create_local_db(domain,func)
 	}
 };
 
-
+/**
+ * This func sets a global variable to an instance of local db
+ * @param func
+ * @returns
+ */
 function open_local_db(func)
 {
 	var db_name="re_local_"+get_domain();
@@ -84,7 +88,6 @@ function open_local_db(func)
 		func();
 	};
 };
-
 
 
 /**
@@ -246,6 +249,7 @@ function local_read_single_column(columns,callback,results)
 					else
 					{
 						localdb_open_requests-=1;
+						//console.log(results);
 						callback(results);
 					}
 				}
@@ -257,6 +261,7 @@ function local_read_single_column(columns,callback,results)
 			else
 			{
 				localdb_open_requests-=1;
+				//console.log(results);
 				callback(results);
 			}
 		};
@@ -967,7 +972,6 @@ function local_create_simple_no_warning(data_xml)
 function local_read_multi_column(columns,callback,results)
 {
 	localdb_open_requests+=1;
-	//console.log(columns);
 	var parser=new DOMParser();
 	var data=parser.parseFromString(columns,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -983,7 +987,7 @@ function local_read_multi_column(columns,callback,results)
 		start_index=parseInt(data.childNodes[0].getAttribute('start_index'));
 	}
 	var filter=new Array();
-	var sort_index='id';
+	var sort_index='last_updated';
 	var sort_order='desc';
 	
 	for(var j=0;j<cols.length;j++)
@@ -1025,46 +1029,34 @@ function local_read_multi_column(columns,callback,results)
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
-	sklad.open(db_name,{version:2},function(err,database)
+	if(typeof static_local_db=='undefined')
 	{
-		var options={direction:sklad.DESC};
-		database.get(table,options,function(err,records_object)
+		open_local_db(function()
 		{
-			var records=[];
-			for(var a in records_object)
+			local_read_multi_column(columns,callback,results)
+		});
+	}
+	else
+	{
+		if(sort_order=='asc')
+		{
+			sort_order='next';
+		}
+		else
+		{
+			sort_order='prev';
+		}
+		
+		static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(null,sort_order).onsuccess=function(e)
+		{
+			var result=e.target.result;
+			if(result)
 			{
-				records.push(records_object[a]);
-			}
-			if(sort_index!='id')
-			{
-				if(sort_order!='asc')
-				{
-					records.sort(function(a,b)
-					{
-						if(parseFloat(a[sort_index])<parseFloat(b[sort_index]))
-							return 1;
-						else
-							return -1;
-					});
-				}
-				else
-				{
-					records.sort(function(a,b)
-					{
-						if(parseFloat(a[sort_index])>parseFloat(b[sort_index]))
-							return 1;
-						else
-							return -1;
-					});
-				}
-			}
-			
-			for(var row=0;row<records.length;row++)
-			{
+				var record=result.value;
 				var match=true;
 				for(var i=0;i<filter.length;i++)
 				{
-					var string=records[row][filter[i].name].toString().toLowerCase();
+					var string=record[filter[i].name].toString().toLowerCase();
 					var search=filter[i].value.toString().toLowerCase();
 					var found=0;
 					
@@ -1086,7 +1078,7 @@ function local_read_multi_column(columns,callback,results)
 					}
 					if(filter[i].type=='less than') 
 					{
-						if(parseInt(records[row][filter[i].name])>=filter[i].value)
+						if(parseInt(record[filter[i].name])>=filter[i].value)
 						{
 							match=false;
 							break;
@@ -1094,7 +1086,7 @@ function local_read_multi_column(columns,callback,results)
 					}
 					else if(filter[i].type=='more than') 
 					{
-						if(parseFloat(records[row][filter[i].name])<=parseFloat(filter[i].value))
+						if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
 						{
 							match=false;
 							break;
@@ -1102,7 +1094,7 @@ function local_read_multi_column(columns,callback,results)
 					}
 					else if(filter[i].type=='equal') 
 					{
-						if(parseFloat(records[row][filter[i].name])!=parseFloat(filter[i].value))
+						if(parseFloat(record[filter[i].name])!=parseFloat(filter[i].value))
 						{
 							match=false;
 							break;
@@ -1110,7 +1102,7 @@ function local_read_multi_column(columns,callback,results)
 					}
 					else if(filter[i].type=='not equal') 
 					{
-						if(parseFloat(records[row][filter[i].name])==parseFloat(filter[i].value))
+						if(parseFloat(record[filter[i].name])==parseFloat(filter[i].value))
 						{
 							match=false;
 							break;
@@ -1128,23 +1120,36 @@ function local_read_multi_column(columns,callback,results)
 				{
 					if(start_index==0)
 					{
-						results.push(records[row]);
+						results.push(record);
 					}
 					else
 					{					
 						start_index-=1;
 					}
+					
 					if(results.length===count)
 					{
-						break;
+						localdb_open_requests-=1;
+						callback(results);
+					}
+					else
+					{
+						result.continue();
 					}
 				}
+				else
+				{
+					result.continue();
+				}
 			}
-			localdb_open_requests-=1;
-			callback(results);
-		});		
-	});
-}
+			else
+			{
+				localdb_open_requests-=1;
+				callback(results);
+			}
+		};		
+	}
+};
 
 
 
@@ -1404,88 +1409,134 @@ function local_delete_simple_func(data_xml,func)
 	});
 };
 
-
+/**
+ * This function calculates the current inventory levels for a product
+ * @param product
+ * @param batch
+ * @param callback
+ * @returns
+ */
 function local_get_inventory(product,batch,callback)
 {
 	//console.log(filter);
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
-	sklad.open(db_name,{version:2},function(err,database)
+	
+	if(typeof static_local_db=='undefined')
 	{
-		var result=0;
-		
-		database.get('bill_items',{},function(err,bi_records)
+		open_local_db(function()
 		{
-			for(var row in bi_records)
+			local_get_inventory(product,batch,callback)
+		});
+	}
+	else
+	{
+		var sort_order='prev';
+		var result=0;
+		var transaction=static_local_db.transaction(['bill_items','supplier_bill_items','supplier_return_items','inventory_adjust','customer_return_items','discarded'],"readonly");
+		
+		var keyValue=IDBKeyRange.only(product);
+		
+		transaction.objectStore('bill_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+		{
+			var bi_result=e.target.result;
+			if(bi_result)
 			{
-				if((bi_records[row]['batch']==batch || batch==='' || batch===null) && bi_records[row]['item_name']==product)
+				var bi_record=bi_result.value;
+				if(bi_record['batch']==batch || batch==='' || batch===null)
 				{
-					result-=parseFloat(bi_records[row]['quantity']);
-				}	
-			}
-			
-			database.get('supplier_bill_items',{},function(err,si_records)
-			{
-				for(var row in si_records)
-				{
-					if((si_records[row]['batch']==batch || batch==='' || batch===null) && si_records[row]['product_name']==product)
-					{
-						result+=parseFloat(si_records[row]['quantity']);
-					}	
+					result-=parseFloat(bi_record['quantity']);
 				}
-				
-				database.get('supplier_return_items',{},function(err,sr_records)
+				bi_result.continue();
+			}
+			else
+			{
+				transaction.objectStore('supplier_bill_items').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 				{
-					for(var row in sr_records)
+					var si_result=e.target.result;
+					if(si_result)
 					{
-						if((sr_records[row]['batch']==batch || batch==='' || batch===null) && sr_records[row]['item_name']==product)
+						var si_record=si_result.value;
+						if(si_record['batch']==batch || batch==='' || batch===null)
 						{
-							result-=parseFloat(sr_records[row]['quantity']);
-						}	
-					}
-					
-					database.get('inventory_adjust',{},function(err,ia_records)
-					{
-						for(var row in ia_records)
-						{
-							if((ia_records[row]['batch']==batch || batch==='' || batch===null) && ia_records[row]['product_name']==product)
-							{
-								result+=parseFloat(ia_records[row]['quantity']);
-							}	
+							result+=parseFloat(si_record['quantity']);
 						}
-						database.get('customer_return_items',{},function(err,cr_records)
+						si_result.continue();
+					}
+					else
+					{
+						transaction.objectStore('supplier_return_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 						{
-							for(var row in cr_records)
+							var sr_result=e.target.result;
+							if(sr_result)
 							{
-								if(cr_records[row]['item_name']==product)
+								var sr_record=sr_result.value;
+								if(sr_record['batch']==batch || batch==='' || batch===null)
 								{
-									if(cr_records[row]['batch']==batch || batch==='' || batch===null)
-									{
-										result+=parseFloat(cr_records[row]['quantity']);
-									}
-									if(cr_records[row]['exchange_batch']==batch || batch==='' || batch===null)
-									{
-										result-=parseFloat(cr_records[row]['quantity']);
-									}
+									result-=parseFloat(sr_record['quantity']);
 								}
+								sr_result.continue();
 							}
-
-							database.get('discarded',{},function(err,di_records)
+							else
 							{
-								for(var row in di_records)
+								transaction.objectStore('inventory_adjust').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 								{
-									if((di_records[row]['batch']==batch || batch==='' || batch===null) && di_records[row]['product_name']==product)
+									var ia_result=e.target.result;
+									if(ia_result)
 									{
-										result-=parseFloat(di_records[row]['quantity']);
+										var ia_record=ia_result.value;
+										if(ia_record['batch']==batch || batch==='' || batch===null)
+										{
+											result+=parseFloat(ia_record['quantity']);
+										}
+										ia_result.continue();
 									}
-								}
-
-								callback(result);
-							});
-						});
-					});
-				});			
-			});
-		});		
-	});
+									else
+									{
+										transaction.objectStore('customer_return_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+										{
+											var cr_result=e.target.result;
+											if(cr_result)
+											{
+												var cr_record=cr_result.value;
+												if(cr_record['batch']==batch || batch==='' || batch===null)
+												{
+													result+=parseFloat(cr_record['quantity']);
+												}
+												if(cr_record['exchange_batch']==batch || batch==='' || batch===null)
+												{
+													result-=parseFloat(cr_record['quantity']);
+												}
+												cr_result.continue();
+											}
+											else
+											{
+												transaction.objectStore('discarded').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+												{
+													var di_result=e.target.result;
+													if(di_result)
+													{
+														var di_record=di_result.value;
+														if(di_record['batch']==batch || batch==='' || batch===null)
+														{
+															result-=parseFloat(di_record['quantity']);
+														}
+														di_result.continue();
+													}
+													else
+													{
+														callback(result);
+													}
+												};
+											}
+										};
+									}
+								};
+							}
+						};
+					}
+				};			
+			}
+		};		
+	}
 }

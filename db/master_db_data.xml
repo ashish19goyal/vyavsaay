@@ -88,6 +88,46 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>attributes</tablename>
+			<listname>type</listname>
+			<name>service</name>
+			<value>Service</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>attributes</tablename>
+			<listname>type</listname>
+			<name>supplier</name>
+			<value>Supplier</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>attributes</tablename>
+			<listname>type</listname>
+			<name>customer</name>
+			<value>Customer</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>attributes</tablename>
+			<listname>type</listname>
+			<name>product</name>
+			<value>Product</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>attributes</tablename>
+			<listname>type</listname>
+			<name>staff</name>
+			<value>Staff</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>customer_return_items</tablename>
 			<listname>type</listname>
 			<name>refund</name>

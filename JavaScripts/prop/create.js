@@ -2460,7 +2460,7 @@ function form60_create_item(form)
 		var last_updated=get_my_time();
 		var data_xml="<attributes>" +
 					"<id>"+data_id+"</id>" +
-					"<item_name>"+product+"</item_name>" +
+					"<name>"+product+"</name>" +
 					"<type>product</type>" +
 					"<attribute>"+attribute+"</attribute>" +
 					"<value>"+value+"</value>" +
@@ -2522,7 +2522,7 @@ function form61_create_item(form)
 		var last_updated=get_my_time();
 		var data_xml="<attributes>" +
 					"<id>"+data_id+"</id>" +
-					"<item_name>"+service+"</item_name>" +
+					"<name>"+service+"</name>" +
 					"<type>service</type>" +
 					"<attribute>"+attribute+"</attribute>" +
 					"<value>"+value+"</value>" +
@@ -6100,6 +6100,192 @@ function form91_create_form()
 			form12_update_form();
 		});
 		$("[id^='save_form91']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 96
+ * form Customer Attributes
+ * @param button
+ */
+function form96_create_item(form)
+{
+	if(is_create_access('form96'))
+	{
+		var customer=form.elements[0].value;
+		var attribute=form.elements[1].value;
+		var value=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<attributes>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+customer+"</name>" +
+					"<type>customer</type>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</attributes>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>attributes</tablename>" +
+					"<link_to>form96</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Attribute "+attribute+" for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[5];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form96_delete_item(del_button);
+		});
+		$(form).off('submit');
+
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form96_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 97
+ * form Supplier Attributes
+ * @param button
+ */
+function form97_create_item(form)
+{
+	if(is_create_access('form97'))
+	{
+		var supplier=form.elements[0].value;
+		var attribute=form.elements[1].value;
+		var value=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<attributes>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+supplier+"</name>" +
+					"<type>supplier</type>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</attributes>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>attributes</tablename>" +
+					"<link_to>form97</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Attribute "+attribute+" for supplier "+supplier+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[5];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form97_delete_item(del_button);
+		});
+		$(form).off('submit');
+
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form97_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 98
+ * form Staff Attributes
+ * @param button
+ */
+function form98_create_item(form)
+{
+	if(is_create_access('form98'))
+	{
+		var staff=form.elements[0].value;
+		var attribute=form.elements[1].value;
+		var value=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<attributes>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+staff+"</name>" +
+					"<type>staff</type>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</attributes>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>attributes</tablename>" +
+					"<link_to>form98</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Attribute "+attribute+" for staff "+staff+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[5];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form98_delete_item(del_button);
+		});
+		$(form).off('submit');
+
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form98_update_item(form);
+		});
 	}
 	else
 	{

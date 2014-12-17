@@ -293,7 +293,7 @@ function form59_import_template()
 */
 function form60_import_template()
 {
-	var data_array=['id','name','type','attribute','value'];
+	var data_array=['id','name','attribute','value'];
 	my_array_to_csv(data_array);
 };
 
@@ -303,7 +303,7 @@ function form60_import_template()
 */
 function form61_import_template()
 {
-	var data_array=['id','name','type','attribute','value'];
+	var data_array=['id','name','attribute','value'];
 	my_array_to_csv(data_array);
 };
 
@@ -534,5 +534,35 @@ function form93_import_template()
 function form94_import_template()
 {
 	var data_array=['id','product_name','batch','quantity'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Customer Attributes
+* @formNo 96
+*/
+function form96_import_template()
+{
+	var data_array=['id','name','attribute','value'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Supplier Attributes
+* @formNo 97
+*/
+function form97_import_template()
+{
+	var data_array=['id','name','attribute','value'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form staff Attributes
+* @formNo 98
+*/
+function form98_import_template()
+{
+	var data_array=['id','name','attribute','value'];
 	my_array_to_csv(data_array);
 };

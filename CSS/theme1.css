@@ -163,6 +163,7 @@ input[type="text"]#search_box{
 	color:transparent;
 	float: right;		
 	margin: 0.5% 1% .5% 0%;
+	vertical-align:middle;
 }
 
 #home_grid>ul{
@@ -430,6 +431,7 @@ tbody tr:hover{
 	background-size: 25px 25px;
 	color:transparent;
 	border-radius: 1px;
+	vertical-align:middle;
 }
 
 .process_warning_icon{
@@ -441,6 +443,7 @@ tbody tr:hover{
 	background-size: 25px 25px;
 	color:transparent;
 	border-radius: 1px;
+	vertical-align:middle;
 }
 
 .process_info_icon{
@@ -452,6 +455,7 @@ tbody tr:hover{
 	background-size: 25px 25px;
 	color:transparent;
 	border-radius: 1px;
+	vertical-align:middle;
 }
 
 .export_icon{
@@ -505,6 +509,7 @@ tbody tr:hover{
 	border: 0;
 	cursor: pointer;
 	border-radius: 1px;
+	vertical-align:middle;
 }
 
 .delete_icon{
@@ -516,6 +521,7 @@ tbody tr:hover{
 	border: 0;
 	cursor: pointer;
 	border-radius: 1px;
+	vertical-align:middle;
 }
 
 .copy_icon{
@@ -526,6 +532,7 @@ tbody tr:hover{
 	cursor: pointer;
 	background-size: 25px 25px;
 	color:transparent;
+	vertical-align:middle;
 }
 
 .edit_icon{
@@ -536,6 +543,7 @@ tbody tr:hover{
 	cursor: pointer;
 	background-size: 25px 25px;
 	color:transparent;
+	vertical-align:middle;
 }
 
 .add_icon{
@@ -546,6 +554,7 @@ tbody tr:hover{
 	cursor: pointer;
 	background-size: 25px 25px;
 	color:transparent;
+	vertical-align:middle;
 }
 
 .add_image{
@@ -583,6 +592,7 @@ tbody tr:hover{
 	cursor: pointer;
 	background-size: 25px 25px;
 	color:transparent;
+	vertical-align:middle;
 }
 
 

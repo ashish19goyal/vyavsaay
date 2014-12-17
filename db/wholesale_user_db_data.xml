@@ -1143,6 +1143,33 @@
 			<shortcut></shortcut>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form96</name>
+			<display_name>customer_attributes</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form97</name>
+			<display_name>supplier_attributes</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form98</name>
+			<display_name>staff_attributes</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -2304,6 +2331,39 @@
 			<username>master</username>
 			<element_id>form95</element_id>
 			<element_name>data_import</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form96</element_id>
+			<element_name>customer_attributes</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form97</element_id>
+			<element_name>supplier_attributes</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form98</element_id>
+			<element_name>staff_attributes</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

@@ -3208,3 +3208,180 @@ function form91_add_item()
 	}
 }
 
+
+/**
+ * @form Customer Attributes
+ * @formNo 96
+ */
+function form96_add_item()
+{
+	if(is_create_access('form96'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form96_"+id+"'></form>";
+			rowsHTML+="<td data-th='Name'>";
+				rowsHTML+="<input type='text' form='form96_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Attribute'>";
+				rowsHTML+="<input type='text' form='form96_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Value'>";
+				rowsHTML+="<input type='text' form='form96_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form96_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form96_"+id+"' title='Save'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form96_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form96_body').prepend(rowsHTML);
+		var fields=document.getElementById("form96_"+id);
+		var customer_filter=fields.elements[0];
+		var attribute_filter=fields.elements[1];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form96_create_item(fields);
+		});
+				
+		var customer_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";
+		set_my_value_list(customer_data,customer_filter);
+		
+		var attribute_data="<attributes>" +
+				"<attribute></attribute>" +
+				"<type>customer</type>" +
+				"</attributes>";
+		set_my_filter(attribute_data,attribute_filter);
+
+		$(customer_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Supplier Attributes
+ * @formNo 97
+ */
+function form97_add_item()
+{
+	if(is_create_access('form97'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form97_"+id+"'></form>";
+			rowsHTML+="<td data-th='Name'>";
+				rowsHTML+="<input type='text' form='form97_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new supplier' onclick='modal13_action();'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Attribute'>";
+				rowsHTML+="<input type='text' form='form97_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Value'>";
+				rowsHTML+="<input type='text' form='form97_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form97_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form97_"+id+"' title='Save'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form97_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form97_body').prepend(rowsHTML);
+		var fields=document.getElementById("form97_"+id);
+		var supplier_filter=fields.elements[0];
+		var attribute_filter=fields.elements[1];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form97_create_item(fields);
+		});
+				
+		var supplier_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";
+		set_my_value_list(supplier_data,supplier_filter);
+		
+		var attribute_data="<attributes>" +
+				"<attribute></attribute>" +
+				"<type>supplier</type>" +
+				"</attributes>";
+		set_my_filter(attribute_data,attribute_filter);
+
+		$(supplier_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Staff Attributes
+ * @formNo 98
+ */
+function form98_add_item()
+{
+	if(is_create_access('form98'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form98_"+id+"'></form>";
+			rowsHTML+="<td data-th='Name'>";
+				rowsHTML+="<input type='text' form='form98_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Attribute'>";
+				rowsHTML+="<input type='text' form='form98_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Value'>";
+				rowsHTML+="<input type='text' form='form98_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form98_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form98_"+id+"' title='Save'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form98_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form98_body').prepend(rowsHTML);
+		var fields=document.getElementById("form98_"+id);
+		var staff_filter=fields.elements[0];
+		var attribute_filter=fields.elements[1];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form98_create_item(fields);
+		});
+				
+		var staff_data="<staff>" +
+				"<acc_name></acc_name>" +
+				"</staff>";
+		set_my_value_list(staff_data,staff_filter);
+		
+		var attribute_data="<attributes>" +
+				"<attribute></attribute>" +
+				"<type>staff</type>" +
+				"</attributes>";
+		set_my_filter(attribute_data,attribute_filter);
+
+		$(staff_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
