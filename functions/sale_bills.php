@@ -69,7 +69,7 @@
 		$("#sale_bills_main").tabs({
 			show:"slide"}).css(
 			{
-				'min-height': '500px',
+				'min-height': '570px',
 				'overflow': 'auto'
 			});
 		}();

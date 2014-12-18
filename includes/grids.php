@@ -5,7 +5,6 @@
 			<ul>
 				<li>Last Sale Bill Id : <a class='grid_item' id='grid_item_1'>TBD</a></li>
 				<li># Sale bills today : <a class='grid_item' id='grid_item_2'>TBD</a></li>
-				<li>Today's Best seller : <a class='grid_item' id='grid_item_8'>TBD</a></li>
 			</ul>
 		</li>
 		
@@ -41,8 +40,8 @@
 		<li>
 			<a id="inventory_link" onclick="grid_click('inventory');"><div data-i18n="function.inventory"> >>></div></a>		
 			<ul>
-				<li>Most expensive product : <a class='grid_item' id='grid_item_11'>TBD</a></li>
-				<li>Highest Margin product : <a class='grid_item' id='grid_item_12'>TBD</a></li>
+				<li>Most expensive: <a class='grid_item' id='grid_item_11'>TBD</a></li>
+				<li>Highest Margin: <a class='grid_item' id='grid_item_12'>TBD</a></li>
 			</ul>
 		</li>
 		<li>

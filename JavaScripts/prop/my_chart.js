@@ -105,22 +105,29 @@ function transform_to_bar_sum(data_array,label_display,sum_column,label_column)
 	
 	for(var i=0; i<data_array.length;i++)
 	{
-		var label=data_array[i][label_column];
-		var value=parseInt(data_array[i][sum_column]);
 		for(var j=i+1;j<data_array.length;j++)
 		{
-			if(data_array[j][label_column]==label)
+			if(data_array[j][label_column]==data_array[i][label_column])
 			{
-				value+=parseInt(data_array[j][sum_column]);
+				data_array[j][sum_column]=parseFloat(data_array[i][sum_column])+parseFloat(data_array[j][sum_column]);
 				data_array.splice(j,1);
 				j-=1;
 			}
 		}
-		if(result.labels.length<11)
-		{
-			result.labels.push(label);
-			result.datasets[0].data.push(value);
-		}
+	}
+	
+	data_array.sort(function(a,b)
+	{
+		if(parseFloat(a[sum_column])>parseFloat(b[sum_column]))
+			return -1;
+		else
+			return 1;
+	});
+	
+	for(var i=0; i<data_array.length && i<11;i++)
+	{
+		result.labels.push(data_array[i][label_column]);
+		result.datasets[0].data.push(parseInt(data_array[i][sum_column]));
 	}
 	return result;
 }

@@ -3,10 +3,11 @@
 		<thead>
 			<tr>
 				<form id='form54_header'></form>
-					<th>Template Type<img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type="text" class='filter' onblur="form54_ini();" form='form54_header'></th>
+					<th>Template Type<img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type="text" class='filter' form='form54_header'></th>
 					<th>Selection</th>
-					<th><input type="submit" title="Save All" class='save_icon' form='form54_header'>
+					<th><input type="button" title="Save All" class='save_icon' form='form54_header'>
 						<input type='button' form='form54_header' value='EXPORT' class='export_icon'>
+						<input type='submit' form='form54_header' style='visibility: hidden;'>
 					</th>
 			</tr>
 		</thead>

@@ -1515,7 +1515,7 @@ function report34_ini()
 					"</bills>";
 			get_single_column_data(function(bills)
 			{
-				console.log(bills);
+				//console.log(bills);
 				var bill_id_string="--";
 				for(var i in bills)
 				{
@@ -1529,7 +1529,7 @@ function report34_ini()
 						"</supplier_bills>";
 				get_single_column_data(function(supplier_bills)
 				{
-					console.log(supplier_bills);
+					//console.log(supplier_bills);
 					var sup_bill_id_string="--";
 					for(var i in supplier_bills)
 					{
@@ -1544,7 +1544,7 @@ function report34_ini()
 							"</bill_items>";
 					fetch_requested_data('report34',bill_items_data,function(bill_ids)
 					{
-						console.log(bill_ids);
+						//console.log(bill_ids);
 						var bill_item_string="--";
 						for(var i in bill_ids)
 						{

@@ -3,9 +3,9 @@
 		<thead>
 			<tr>
 				<form id='form95_header'></form>
-					<th>Form No <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form95_header' onblur="form95_ini();"></th>
-					<th>Form Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form95_header' onblur="form95_ini();"></th>
-					<th>Import</th>
+					<th>Form No <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form95_header'></th>
+					<th>Form Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form95_header'></th>
+					<th>Import <input type='submit' form='form95_header' style='visibility: hidden;'></th>
 			</tr>
 		</thead>
 		<tbody id='form95_body'>

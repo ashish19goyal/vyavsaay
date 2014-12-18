@@ -3,10 +3,11 @@
 		<thead>
 			<tr>
 				<form id='form48_header'></form>
-					<th>Report <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type="text" class='filter' onblur="form48_ini();" form='form48_header'/></th>
+					<th>Report <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type="text" class='filter' form='form48_header'></th>
 					<th>Selection</th>
-					<th><input type="submit" title="Save All" class='save_icon' form='form48_header'>
+					<th><input type="button" title="Save All" class='save_icon' form='form48_header'>
 						<input type='button' form='form48_header' value='EXPORT' class='export_icon'>
+						<input type='submit' form='form48_header' style='visibility: hidden;'>
 					</th>
 			</tr>
 		</thead>

@@ -11,10 +11,10 @@
 			<thead>
 				<tr>
 					<form id='form7_header'></form>
-						<th>Staff Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form7_header' onblur="form7_ini();"></th>
-						<th>Attendance <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form7_header' onblur="form7_ini();"></th>
+						<th>Staff Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form7_header'></th>
+						<th>Attendance <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form7_header'></th>
 						<th>Hours worked</th>
-						<th></th>
+						<th><input type='submit' form='form7_header' style='visibility: hidden;'></th>
 				</tr>
 			</thead>
 			<tbody id='form7_body'>

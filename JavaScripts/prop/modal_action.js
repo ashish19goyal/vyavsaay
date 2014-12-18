@@ -1784,11 +1784,11 @@ function modal23_action(t_func,i_func)
         	{
         		if(number_active_ajax===0)
         		{
-        			progress_value=15+(1-(localdb_open_requests/data_array.length))*85;
+        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
         		}
         		else if(localdb_open_requests===0)
         		{
-        			progress_value=15+(1-(number_active_ajax/data_array.length))*85;
+        			progress_value=15+(1-(number_active_ajax/(2*data_array.length)))*85;
         		}
         		
         		if(number_active_ajax===0 && localdb_open_requests===0)
@@ -2025,31 +2025,39 @@ function modal27_action(product_name)
 	var fsupplier=form.elements[5];
 	var data_id=get_new_key();
 	
+	fmake.value="";
+	fprice.value="";
+	fquantity.value="";
+	fsupplier.value="";
 	fname.value=product_name;
+	
 	var supplier_data="<suppliers>" +
 		"<acc_name></acc_name>" +
 		"</suppliers>";
 	set_my_value_list(supplier_data,fsupplier);
 
-/// logic for last supplier
+	var make_data="<product_master>" +
+		"<make></make>" +
+		"<name exact='yes'>"+product_name+"</name>" +
+		"</product_master>";
+	set_my_value(make_data,fmake);
+	
+	var price_data="<product_instances>" +
+		"<cost_price></cost_price>" +
+		"<product_name exact='yes'>"+product_name+"</product_name>" +
+		"</product_instances>";
+	set_my_value(price_data,fprice);
+
+	/// logic for last supplier
 	var last_purchase_data="<purchase_order_items>" +
 			"<id></id>" +
-			"<make></make>" +
-			"<price></price>" +
 			"<quantity></quantity>" +
 			"<order_id></order_id>" +
 			"<product_name exact='yes'>"+product_name+"</product_name>" +
-			"<last_updated></last_updated>" +
+			"<last_updated sort='desc'></last_updated>" +
 			"</purchase_order_items>";
 	fetch_requested_data('',last_purchase_data,function(last_purchases)
 	{
-		last_purchases.sort(function(a,b)
-		{
-			if(a.last_updated<b.last_updated)
-				return 1;
-			else 
-				return -1;
-		});
 		var order_id="";
 		for(var k in last_purchases)
 		{
@@ -2066,161 +2074,8 @@ function modal27_action(product_name)
 				{
 					if(last_orders[j].status=='draft')
 					{
-						fmake.value=last_purchases[k].make;
-						fprice.value=last_purchases[k].price;
 						fquantity.value=last_purchases[k].quantity;
-						
-						$(form).off("submit");
-						$(form).on("submit",function(event)
-						{
-							event.preventDefault();
-							if(is_create_access('form43'))
-							{
-								var name=fname.value;
-								var make=fmake.value;
-								var price=fprice.value;
-								var quantity=fquantity.value;
-								var supplier=fsupplier.value;
-								var data_id=last_purchases[k].id;
-								var last_updated=get_my_time();
-
-								var data_xml="<purchase_order_items>" +
-											"<id>"+data_id+"</id>" +
-											"<product_name>"+name+"</product_name>" +
-											"<make>"+make+"</make>" +
-											"<price>"+price+"</price>" +
-											"<quantity>"+quantity+"</quantity>" +
-											"<order_id>"+order_id+"</order_id>" +
-											"<last_updated>"+last_updated+"</last_updated>" +
-											"</purchase_order_items>";
-								var activity_xml="<activity>" +
-											"<data_id>"+data_id+"</data_id>" +
-											"<tablename>purchase_order_items</tablename>" +
-											"<link_to>form43</link_to>" +
-											"<title>Updated</title>" +
-											"<notes>Ordererd product "+name+" for purchase</notes>" +
-											"<updated_by>"+get_name()+"</updated_by>" +
-											"</activity>";
-								if(is_online())
-								{
-									server_update_row(data_xml,activity_xml);
-								}
-								else
-								{
-									local_update_row(data_xml,activity_xml);
-								}	
-							}
-							else
-							{
-								$("#modal2").dialog("open");
-							}
-							$("#modal27").dialog("close");
-						});
-					}
-					else
-					{
-						var make_data="<product_master>" +
-								"<make></make>" +
-								"<name exact='yes'>"+product_name+"</name>" +
-								"</product_master>";
-						set_my_value(make_data,fmake);
-						
-						var price_data="<product_instances>" +
-								"<cost_price></cost_price>" +
-								"<product_name exact='yes'>"+product_name+"</product_name>" +
-								"</product_instances>";
-						set_my_value(price_data,fprice);
-						
-
-						$(form).off("submit");
-						$(form).on("submit",function(event)
-						{
-							event.preventDefault();
-							if(is_create_access('form43'))
-							{
-								var name=fname.value;
-								var make=fmake.value;
-								var price=fprice.value;
-								var quantity=fquantity.value;
-								var supplier=fsupplier.value;
-								var data_id=get_new_key();
-								var last_updated=get_my_time();
-
-								var purchase_order_data="<purchase_orders>" +
-										"<id></id>" +
-										"<supplier exact='yes'>"+supplier+"</supplier>" +
-										"<status>draft</status>" +
-										"</purchase_orders>";
-								fetch_requested_data('',purchase_order_data,function(purchase_orders)
-								{
-									var order_id="";
-									for(var i in purchase_orders)
-									{
-										order_id=purchase_orders[i].id;
-										break;
-									}
-									if(purchase_orders.length===0)
-									{
-										order_id=get_new_key();
-										var data_xml="<purchase_orders>" +
-													"<id>"+order_id+"</id>" +
-													"<order_date>"+get_my_time()+"</order_date>" +
-													"<supplier>"+supplier+"</supplier>" +
-													"<status>draft</status>" +
-													"<last_updated>"+last_updated+"</last_updated>" +
-													"</purchase_orders>";
-										var activity_xml="<activity>" +
-													"<data_id>"+order_id+"</data_id>" +
-													"<tablename>purchase_orders</tablename>" +
-													"<link_to>form43</link_to>" +
-													"<title>Created</title>" +
-													"<notes>Purchase order for supplier "+supplier+" for purchase</notes>" +
-													"<updated_by>"+get_name()+"</updated_by>" +
-													"</activity>";
-										if(is_online())
-										{
-											server_create_row(data_xml,activity_xml);
-										}
-										else
-										{
-											local_create_row(data_xml,activity_xml);
-										}	
-									}
-									var data_xml="<purchase_order_items>" +
-												"<id>"+data_id+"</id>" +
-												"<product_name>"+name+"</product_name>" +
-												"<make>"+make+"</make>" +
-												"<price>"+price+"</price>" +
-												"<quantity>"+quantity+"</quantity>" +
-												"<order_id>"+order_id+"</order_id>" +
-												"<last_updated>"+last_updated+"</last_updated>" +
-												"</purchase_order_items>";
-									var activity_xml="<activity>" +
-												"<data_id>"+data_id+"</data_id>" +
-												"<tablename>purchase_order_items</tablename>" +
-												"<link_to>form43</link_to>" +
-												"<title>Ordered</title>" +
-												"<notes>Product "+name+" for purchase</notes>" +
-												"<updated_by>"+get_name()+"</updated_by>" +
-												"</activity>";
-									if(is_online())
-									{
-										server_create_row(data_xml,activity_xml);
-									}
-									else
-									{
-										local_create_row(data_xml,activity_xml);
-									}	
-								});
-								
-							}
-							else
-							{
-								$("#modal2").dialog("open");
-							}
-							$("#modal27").dialog("close");
-						});
-				
+						data_id=last_purchases[k].id;
 					}
 					fsupplier.value=last_orders[j].supplier;
 					break;
@@ -2228,6 +2083,97 @@ function modal27_action(product_name)
 			});
 			break;
 		}
+	});
+	
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form43'))
+		{
+			var name=fname.value;
+			var make=fmake.value;
+			var price=fprice.value;
+			var quantity=fquantity.value;
+			var supplier=fsupplier.value;
+			var last_updated=get_my_time();
+		
+			var purchase_order_data="<purchase_orders>" +
+					"<id></id>" +
+					"<supplier exact='yes'>"+supplier+"</supplier>" +
+					"<status>draft</status>" +
+					"</purchase_orders>";
+			fetch_requested_data('',purchase_order_data,function(purchase_orders)
+			{
+				var order_id="";
+				for(var i in purchase_orders)
+				{
+					order_id=purchase_orders[i].id;
+					break;
+				}
+				if(purchase_orders.length===0)
+				{
+					order_id=get_new_key();
+					var data_xml="<purchase_orders>" +
+								"<id>"+order_id+"</id>" +
+								"<order_date>"+get_my_time()+"</order_date>" +
+								"<supplier>"+supplier+"</supplier>" +
+								"<status>draft</status>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</purchase_orders>";
+					var activity_xml="<activity>" +
+								"<data_id>"+order_id+"</data_id>" +
+								"<tablename>purchase_orders</tablename>" +
+								"<link_to>form43</link_to>" +
+								"<title>Created</title>" +
+								"<notes>Purchase order for supplier "+supplier+" for purchase</notes>" +
+								"<updated_by>"+get_name()+"</updated_by>" +
+								"</activity>";
+					if(is_online())
+					{
+						server_create_row(data_xml,activity_xml);
+					}
+					else
+					{
+						local_create_row(data_xml,activity_xml);
+					}	
+				}
+				var data_xml="<purchase_order_items>" +
+							"<id>"+data_id+"</id>" +
+							"<product_name>"+name+"</product_name>" +
+							"<make>"+make+"</make>" +
+							"<price>"+price+"</price>" +
+							"<quantity>"+quantity+"</quantity>" +
+							"<order_id>"+order_id+"</order_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</purchase_order_items>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>purchase_order_items</tablename>" +
+							"<link_to>form43</link_to>" +
+							"<title>Ordered</title>" +
+							"<notes>Product "+name+" for purchase</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				if(is_online())
+				{
+					server_create_row(data_xml,activity_xml);
+					server_update_row(data_xml,activity_xml);
+				}
+				else
+				{
+					local_create_row(data_xml,activity_xml);
+					local_update_row(data_xml,activity_xml);
+				}	
+			});
+			
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal27").dialog("close");
 	});
 	
 	$("#modal27").dialog("open");

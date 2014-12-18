@@ -3,12 +3,13 @@
 		<thead>
 			<tr>
 				<form id='form96_header'></form>
-					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form96_header' onblur="form96_ini();"></th>
-					<th>Attribute <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form96_header' onblur="form96_ini();"></th>
+					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form96_header'></th>
+					<th>Attribute <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form96_header'></th>
 					<th>Value</th>
 					<th><input type="button" value='Add new category' form='form96_header' class='add_icon' onclick="form96_add_item();">
 						<input type='button' form='form96_header' value='EXPORT' class='export_icon'>
 						<input type='button' form='form96_header' value='IMPORT' class='import_icon'>
+						<input type='submit' form='form96_header' style='visibility: hidden;'>
 					</th>
 			</tr>
 		</thead>

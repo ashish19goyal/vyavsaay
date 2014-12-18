@@ -236,7 +236,6 @@ function form11_import(data_array,import_type)
 				"<total_amount>"+row.total_amount+"</total_amount>" +
 				"<paid_amount>"+row.paid_amount+"</paid_amount>" +
 				"<acc_name>"+row.acc_name+"</acc_name>" +
-				"<due_date>"+row.due_date+"</due_date>" +
 				"<status>"+row.status+"</status>" +
 				"<date>"+get_raw_time(row.date)+"</date>" +
 				"<due_date>"+get_raw_time(row.due_date)+"</due_date>" +
@@ -446,15 +445,26 @@ function form16_import(data_array,import_type)
 				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</customer_returns>";
+		var transaction_xml="<transactions>" +
+				"<id>"+row.transaction_id+"</id>" +
+				"<trans_date>"+get_raw_time(row.return_date)+"</trans_date>" +
+				"<amount>"+row.total+"</amount>" +
+				"<receiver>master</receiver>" +
+				"<giver>"+row.customer+"</giver>" +
+				"<tax>-"+row.tax+"</tax>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</transactions>";
 		if(import_type=='create_new')
 		{
 			if(is_online())
 			{
 				server_create_simple(data_xml);
+				server_create_simple(transaction_xml);
 			}
 			else
 			{
 				local_create_simple(data_xml);
+				local_create_simple(transaction_xml);
 			}
 		}
 		else
@@ -462,10 +472,12 @@ function form16_import(data_array,import_type)
 			if(is_online())
 			{	
 				server_update_simple(data_xml);
+				server_update_simple(transaction_xml);
 			}
 			else
 			{
 				local_update_simple(data_xml);
+				local_update_simple(transaction_xml);
 			}
 		}
 	});
@@ -489,15 +501,26 @@ function form17_import(data_array,import_type)
 				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</supplier_returns>";
+		var transaction_xml="<transactions>" +
+				"<id>"+row.transaction_id+"</id>" +
+				"<trans_date>"+get_raw_time(row.return_date)+"</trans_date>" +
+				"<amount>"+row.total+"</amount>" +
+				"<receiver>"+row.supplier+"</receiver>" +
+				"<giver>master</giver>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</transactions>";
 		if(import_type=='create_new')
 		{
 			if(is_online())
 			{
 				server_create_simple(data_xml);
+				server_create_simple(transaction_xml);
 			}
 			else
 			{
 				local_create_simple(data_xml);
+				local_create_simple(transaction_xml);
 			}
 		}
 		else
@@ -505,10 +528,12 @@ function form17_import(data_array,import_type)
 			if(is_online())
 			{	
 				server_update_simple(data_xml);
+				server_update_simple(transaction_xml);
 			}
 			else
 			{
 				local_update_simple(data_xml);
+				local_update_simple(transaction_xml);
 			}
 		}
 	});
@@ -929,15 +954,26 @@ function form42_import(data_array,import_type)
 				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</bills>";
+		var transaction_xml="<transactions>" +
+				"<id>"+row.transaction_id+"</id>" +
+				"<trans_date>"+get_raw_time(row.bill_date)+"</trans_date>" +
+				"<amount>"+row.total+"</amount>" +
+				"<receiver>"+row.customer_name+"</receiver>" +
+				"<giver>master</giver>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</transactions>";
 		if(import_type=='create_new')
 		{
 			if(is_online())
 			{
 				server_create_simple(data_xml);
+				server_create_simple(transaction_xml);
 			}
 			else
 			{
 				local_create_simple(data_xml);
+				local_create_simple(transaction_xml);
 			}
 		}
 		else
@@ -945,10 +981,12 @@ function form42_import(data_array,import_type)
 			if(is_online())
 			{	
 				server_update_simple(data_xml);
+				server_update_simple(transaction_xml);
 			}
 			else
 			{
 				local_update_simple(data_xml);
+				local_update_simple(transaction_xml);
 			}
 		}
 	});
@@ -1018,15 +1056,27 @@ function form53_import(data_array,import_type)
 				"<notes>"+row.notes+"</notes>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</supplier_bills>";
+		var transaction_xml="<transactions>" +
+				"<id>"+row.transaction_id+"</id>" +
+				"<trans_date>"+get_raw_time(row.entry_date)+"</trans_date>" +
+				"<amount>"+row.total+"</amount>" +
+				"<receiver>master</receiver>" +
+				"<giver>"+row.supplier+"</giver>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</transactions>";
+
 		if(import_type=='create_new')
 		{
 			if(is_online())
 			{
 				server_create_simple(data_xml);
+				server_create_simple(transaction_xml);
 			}
 			else
 			{
 				local_create_simple(data_xml);
+				local_create_simple(transaction_xml);
 			}
 		}
 		else
@@ -1034,10 +1084,12 @@ function form53_import(data_array,import_type)
 			if(is_online())
 			{	
 				server_update_simple(data_xml);
+				server_update_simple(transaction_xml);
 			}
 			else
 			{
 				local_update_simple(data_xml);
+				local_update_simple(transaction_xml);
 			}
 		}
 	});
@@ -2166,15 +2218,26 @@ function form92_import(data_array,import_type)
 				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</bills>";
+		var transaction_xml="<transactions>" +
+				"<id>"+row.transaction_id+"</id>" +
+				"<trans_date>"+get_raw_time(row.bill_date)+"</trans_date>" +
+				"<amount>"+row.total+"</amount>" +
+				"<receiver>"+row.customer_name+"</receiver>" +
+				"<giver>master</giver>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</transactions>";
 		if(import_type=='create_new')
 		{
 			if(is_online())
 			{
 				server_create_simple(data_xml);
+				server_create_simple(transaction_xml);
 			}
 			else
 			{
 				local_create_simple(data_xml);
+				local_create_simple(transaction_xml);
 			}
 		}
 		else
@@ -2182,10 +2245,12 @@ function form92_import(data_array,import_type)
 			if(is_online())
 			{	
 				server_update_simple(data_xml);
+				server_update_simple(transaction_xml);
 			}
 			else
 			{
 				local_update_simple(data_xml);
+				local_update_simple(transaction_xml);
 			}
 		}
 	});

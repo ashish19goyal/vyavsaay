@@ -8,6 +8,12 @@ function form1_header_ini()
 	var names_filter=filter_fields.elements[0];
 	var batches_filter=filter_fields.elements[1];
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form1_ini();
+	});
 	//setting autocompletes 
 	var products_data="<product_master>" +
 			"<name></name>" +
@@ -58,6 +64,13 @@ function form5_header_ini()
 	var asset_filter=filter_fields.elements[0];
 	var type_filter=filter_fields.elements[1];
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form5_ini();
+	});
+
 	var assets_data="<assets>" +
 		"<name></name>" +
 		"</assets>";
@@ -93,6 +106,13 @@ function form7_header_ini()
 	var filter_fields=document.getElementById('form7_header');
 	var staff_filter=filter_fields.elements[0];
 	var attendance_filter=filter_fields.elements[1];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form7_ini();
+	});
 	
 	var staff_data="<staff>" +
 			"<acc_name></acc_name>" +
@@ -227,6 +247,13 @@ function form8_header_ini()
 		"<email></email>" +
 		"</staff>";
 
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form8_ini();
+	});
+
 	set_my_filter(name_data,name_filter);	
 	set_my_filter(phone_data,phone_filter);	
 	set_my_filter(email_data,email_filter);
@@ -322,6 +349,13 @@ function form11_header_ini()
 			"<acc_name></acc_name>" +
 			"</accounts>";
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form11_ini();
+	});
+
 	set_my_filter(accounts_data,account_filter);
 	set_static_filter('payments','type',type_filter);
 	set_static_filter('payments','status',status_filter);
@@ -512,6 +546,13 @@ function form14_header_ini()
 	var assignee_filter=filter_fields.elements[1];
 	var status_filter=filter_fields.elements[2];
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form14_ini();
+	});
+
 	var staff_data="<staff>" +
 			"<acc_name></acc_name>" +
 			"</staff>";
@@ -610,6 +651,13 @@ function form16_header_ini()
 	var return_filter=filter_fields.elements[0];
 	var name_filter=filter_fields.elements[1];
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form16_ini();
+	});
+
 	var return_data="<customer_returns>" +
 			"<id></id>" +
 			"</customer_returns>";
@@ -631,6 +679,13 @@ function form17_header_ini()
 	var return_filter=filter_fields.elements[0];
 	var name_filter=filter_fields.elements[1];
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form17_ini();
+	});
+
 	var return_data="<supplier_returns>" +
 			"<id></id>" +
 			"</supplier_returns>";
@@ -834,6 +889,13 @@ function form30_header_ini()
 	var email_filter=filter_fields.elements[2];
 	var status_filter=filter_fields.elements[3];
 
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form30_ini();
+	});
+
 	var name_data="<customers>" +
 			"<name></name>" +
 			"</customers>";
@@ -858,7 +920,6 @@ function form30_header_ini()
 	
 };
 
-
 /**
  * @form Manage Offers
  * @formNo 35
@@ -874,6 +935,13 @@ function form35_header_ini()
 			"<offer_name></offer_name>" +
 			"</offers>";
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form35_ini();
+	});
+
 	set_my_filter(offer_data,name_filter);
 	set_static_filter('offers','offer_type',type_filter);
 	set_static_filter('offers','status',status_filter);
@@ -908,6 +976,13 @@ function form38_header_ini()
 			"<name></name>" +
 			"</store_areas>";
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form38_ini();
+	});
+
 	set_my_filter(products_data,name_filter);
 	set_my_filter(batch_data,batch_filter);
 	set_my_filter(area_data,area_filter);
@@ -937,7 +1012,14 @@ function form39_header_ini()
 	var products_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
-	
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form39_ini();
+	});
+
 	set_my_filter(make_data,make_filter);
 	set_my_filter(products_data,name_filter);
 	
@@ -971,6 +1053,13 @@ function form40_header_ini()
 			"<email></email>" +
 			"</suppliers>";
 
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form40_ini();
+	});
+
 	set_my_filter(name_data,name_filter);
 	set_my_filter(phone_data,phone_filter);
 	set_my_filter(email_data,email_filter);
@@ -1003,6 +1092,13 @@ function form42_header_ini()
 			"<acc_name></acc_name>" +
 			"</customers>";
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form42_ini();
+	});
+
 	set_my_filter(bill_data,bill_filter);
 	set_my_filter(cust_data,name_filter);
 };
@@ -1026,6 +1122,13 @@ function form43_header_ini()
 			"<acc_name></acc_name>" +
 			"</suppliers>";
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form43_ini();
+	});
+
 	set_my_filter(order_data,order_filter);
 	set_my_filter(name_data,name_filter);
 	set_static_filter('purchase_orders','status',status_filter);
@@ -1046,6 +1149,14 @@ function form44_header_ini()
 			"</pamphlets>";
 	
 	set_my_filter(name_data,name_filter);
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form44_ini();
+	});
+
 };
 
 /**
@@ -1056,12 +1167,19 @@ function form46_header_ini()
 {
 	var filter_fields=document.getElementById('form46_header');
 	var other_element=filter_fields.elements[0];
+	var save_element=filter_fields.elements[1];
+	
+	$(save_element).off('click');
+	$(save_element).on('click',function(e)
+	{
+		form46_update_form();
+	});
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
 		event.preventDefault();
-		form46_update_form();
+		form46_ini();
 	});
 	
 	var other_data="<user_preferences>" +
@@ -1093,12 +1211,19 @@ function form48_header_ini()
 {
 	var filter_fields=document.getElementById('form48_header');
 	var report_filter=filter_fields.elements[0];
+	var save_element=filter_fields.elements[1];
+	
+	$(save_element).off('click');
+	$(save_element).on('click',function(e)
+	{
+		form48_update_form();
+	});
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
 		event.preventDefault();
-		form48_update_form();
+		form48_ini();
 	});
 	
 	var reports_data="<user_preferences>" +
@@ -1119,12 +1244,19 @@ function form49_header_ini()
 {
 	var filter_fields=document.getElementById('form49_header');
 	var form_filter=filter_fields.elements[0];
+	var save_element=filter_fields.elements[1];
+	
+	$(save_element).off('click');
+	$(save_element).on('click',function(e)
+	{
+		form49_update_form();
+	});
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
 		event.preventDefault();
-		form49_update_form();
+		form49_ini();
 	});
 	
 	var forms_data="<user_preferences>" +
@@ -1144,12 +1276,19 @@ function form50_header_ini()
 {
 	var filter_fields=document.getElementById('form50_header');
 	var accounts_filter=filter_fields.elements[0];
+	var save_element=filter_fields.elements[1];
+	
+	$(save_element).off('click');
+	$(save_element).on('click',function(e)
+	{
+		form50_update_form();
+	});
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
 		event.preventDefault();
-		form50_update_form();
+		form50_ini();
 	});
 	var accounts_data="<user_preferences>" +
 			"<display_name></display_name>" +
@@ -1197,6 +1336,13 @@ function form53_header_ini()
 	var bill_filter=filter_fields.elements[0];
 	var name_filter=filter_fields.elements[1];
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form53_ini();
+	});
+
 	var bill_data="<supplier_bills>" +
 			"<bill_id></bill_id>" +
 			"</supplier_bills>";
@@ -1216,6 +1362,13 @@ function form54_header_ini()
 {
 	var filter_fields=document.getElementById('form54_header');
 	var templates_filter=filter_fields.elements[0];
+	var save_element=filter_fields.elements[1];
+	
+	$(save_element).off('click');
+	$(save_element).on('click',function(e)
+	{
+		form54_update_form();
+	});
 	
 	var templates_data="<user_preferences>" +
 			"<display_name></display_name>" +
@@ -1223,10 +1376,12 @@ function form54_header_ini()
 			"</user_preferences>";
 
 	set_my_filter(templates_data,templates_filter);
+	
+	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
 		event.preventDefault();
-		form54_update_form();
+		form54_ini();
 	});
 
 };
@@ -1249,6 +1404,13 @@ function form56_header_ini()
 	set_my_filter(account_data,account_filter);
 	set_static_filter('cash_register','type',type_filter);	
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form56_ini();
+	});
+
 	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1272,6 +1434,13 @@ function form57_header_ini()
 	
 	set_my_filter(service_data,service_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form57_ini();
+	});
+
 	var import_button=filter_fields.elements[3];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1303,6 +1472,13 @@ function form58_header_ini()
 	set_static_filter('pre_requisites','requisite_type',type_filter);
 	set_my_filter(requisite_data,requisite_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form58_ini();
+	});
+
 	var import_button=filter_fields.elements[5];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1334,6 +1510,13 @@ function form59_header_ini()
 	set_static_filter('pre_requisites','requisite_type',type_filter);
 	set_my_filter(requisite_data,requisite_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form59_ini();
+	});
+
 	var import_button=filter_fields.elements[5];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1363,6 +1546,13 @@ function form60_header_ini()
 	set_my_filter(product_data,product_filter);
 	set_my_filter(attribute_data,attribute_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form60_ini();
+	});
+
 	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1392,6 +1582,13 @@ function form61_header_ini()
 	set_my_filter(service_data,service_filter);
 	set_my_filter(attribute_data,attribute_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form61_ini();
+	});
+
 	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1423,6 +1620,13 @@ function form62_header_ini()
 	set_static_filter('reviews','rating',rating_filter);
 	set_my_filter(reviewer_data,reviewer_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form62_ini();
+	});
+
 	var import_button=filter_fields.elements[5];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1453,6 +1657,13 @@ function form63_header_ini()
 	set_static_filter('reviews','rating',rating_filter);
 	set_my_filter(reviewer_data,reviewer_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form63_ini();
+	});
+
 	var import_button=filter_fields.elements[5];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1483,6 +1694,13 @@ function form64_header_ini()
 	set_static_filter('cross_sells','type',type_filter);
 	set_my_filter(cross_data,cross_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form64_ini();
+	});
+
 	var import_button=filter_fields.elements[5];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1513,6 +1731,13 @@ function form66_header_ini()
 	set_static_filter('cross_sells','type',type_filter);
 	set_my_filter(cross_data,cross_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form66_ini();
+	});
+
 	var import_button=filter_fields.elements[5];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1581,7 +1806,13 @@ function form70_header_ini()
 	var cust_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
-	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form70_ini();
+	});
+
 	set_my_filter(order_data,order_filter);
 	set_my_filter(cust_data,name_filter);
 	set_static_filter('sale_orders','status',status_filter);
@@ -1605,6 +1836,13 @@ function form71_header_ini()
 	set_my_filter(name_data,name_filter);
 	set_static_filter('accounts','type',type_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form71_ini();
+	});
+
 	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1687,12 +1925,19 @@ function form77_header_ini()
 {
 	var filter_fields=document.getElementById('form77_header');
 	var element_filter=filter_fields.elements[0];
+	var save_element=filter_fields.elements[2];
+	
+	$(save_element).off('click');
+	$(save_element).on('click',function(e)
+	{
+		form77_update_form();
+	});
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
 		event.preventDefault();
-		form77_update_form();
+		form77_ini();
 	});
 	
 	var element_data="<user_preferences>" +
@@ -1738,7 +1983,21 @@ function form78_header_ini()
  */
 function form79_header_ini()
 {
+	var filter_fields=document.getElementById('form79_header');
+	var task_filter=filter_fields.elements[0];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form79_ini();
+	});
+	
+	var task_data="<task_type>" +
+			"<name></name>" +
+			"</task_type>";
 
+	set_my_filter(task_data,task_filter);
 }
 
 /**
@@ -1825,6 +2084,13 @@ function form81_header_ini()
 
 	set_my_filter(names_data,names_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form81_ini();
+	});
+
 	var import_button=filter_fields.elements[3];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1900,6 +2166,13 @@ function form83_header_ini()
 	
 	set_my_filter(area_data,name_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form83_ini();
+	});
+
 	var import_button=filter_fields.elements[3];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1931,6 +2204,13 @@ function form84_header_ini()
 
 	set_static_filter('service_subscriptions','status',status_filter);
 
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form84_ini();
+	});
+
 	var import_button=filter_fields.elements[5];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1959,6 +2239,13 @@ function form87_header_ini()
 	set_my_filter(make_data,make_filter);
 	set_my_filter(products_data,name_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form87_ini();
+	});
+
 	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -1984,6 +2271,13 @@ function form88_header_ini()
 	set_my_filter(name_data,product_filter);
 	set_static_filter('manufacturing_schedule','status',status_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form88_ini();
+	});
+
 	var import_button=filter_fields.elements[4];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -2111,6 +2405,13 @@ function form89_header_ini()
 	set_my_filter(staff_data,assignee_filter);
 	set_static_filter('appointments','status',status_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form89_ini();
+	});
+
 	var import_button=filter_fields.elements[5];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -2145,6 +2446,13 @@ function form90_header_ini()
 	
 	set_my_filter(name_data,name_filter);
 	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form90_ini();
+	});
+
 	var import_button=filter_fields.elements[3];
 	$(import_button).off("click");
 	$(import_button).on("click", function(event)
@@ -2250,6 +2558,14 @@ function form92_header_ini()
 	set_my_filter(bill_data,bill_filter);
 	set_my_filter(type_data,type_filter);
 	set_my_filter(cust_data,name_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form92_ini();
+	});
+
 };
 
 /**
@@ -2277,6 +2593,14 @@ function form93_header_ini()
 	{
 		modal23_action(form93_import_template,form93_import);
 	});
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form93_ini();
+	});
+
 };
 
 /**
@@ -2307,6 +2631,14 @@ function form94_header_ini()
 	{
 		modal23_action(form94_import_template,form94_import);
 	});
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form94_ini();
+	});
+
 };
 
 /**
@@ -2334,6 +2666,14 @@ function form95_header_ini()
 
 	set_my_filter(number_data,number_filter);
 	set_my_filter(name_data,name_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form95_ini();
+	});
+
 };
 
 /**
@@ -2363,6 +2703,14 @@ function form96_header_ini()
 	{
 		modal23_action(form96_import_template,form96_import);
 	});
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form96_ini();
+	});
+
 };
 
 /**
@@ -2392,6 +2740,14 @@ function form97_header_ini()
 	{
 		modal23_action(form97_import_template,form97_import);
 	});
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form97_ini();
+	});
+
 };
 
 /**
@@ -2421,4 +2777,12 @@ function form98_header_ini()
 	{
 		modal23_action(form98_import_template,form98_import);
 	});
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form98_ini();
+	});
+
 };

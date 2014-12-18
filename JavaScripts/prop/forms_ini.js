@@ -510,7 +510,7 @@ function form8_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' value='"+result.phone+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Email'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' class='dblclick_editable' value='"+result.email+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form8_"+result.id+"' class='dblclick_editable'>"+result.email+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
 						rowsHTML+="<textarea wrap='soft' readonly='readonly' form='form8_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
@@ -1734,7 +1734,7 @@ function form21_ini()
 	{
 		show_loader();
 		var bill_columns="<supplier_bills>" +
-				"<id>"+bill_id+"</id>" +
+				"<id exact='yes'>"+bill_id+"</id>" +
 				"<bill_id></bill_id>" +
 				"<supplier></supplier>" +
 				"<total></total>" +
@@ -1786,7 +1786,7 @@ function form21_ini()
 				"<unit_price></unit_price>" +
 				"<quantity></quantity>" +
 				"<storage></storage>" +
-				"<bill_id>"+bill_id+"</bill_id>" +
+				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"</supplier_bill_items>";
 		
 		fetch_requested_data('',bill_items_column,function(results)
@@ -1798,7 +1798,7 @@ function form21_ini()
 				rowsHTML+="<tr>";
 				rowsHTML+="<form id='form21_"+id+"'></form>";
 					rowsHTML+="<td data-th='Product Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form21_"+id+"' value='"+result.product_name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form21_"+id+"'>"+result.product_name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Quantity'>";
 						rowsHTML+="<input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.quantity+"' step='any'>";
@@ -2166,7 +2166,7 @@ function form35_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form35_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Offer Name'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+result.id+"' value='"+result.offer_name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form35_"+result.id+"'>"+result.offer_name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Offer Type'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form35_"+result.id+"' value='"+result.offer_type+"'>";
@@ -3714,7 +3714,7 @@ function form53_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form53_"+result.id+"' value='"+result.bill_id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Supplier'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form53_"+result.id+"' value='"+result.supplier+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form53_"+result.id+"'>"+result.supplier+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Bill Date'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form53_"+result.id+"' value='"+get_my_past_date(result.bill_date)+"'>";

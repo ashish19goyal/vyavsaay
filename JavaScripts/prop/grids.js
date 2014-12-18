@@ -168,7 +168,7 @@ function set_grid_item_8()
 			"<id></id>" +
 			"<item_name></item_name>" +
 			"<total></total>" +
-			"<last_updated sort='desc' compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</last_updated>" +
+			"<bill_date sort='desc' compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
 			"</bill_items>";
 	fetch_requested_data('',columns,function(results)
 	{

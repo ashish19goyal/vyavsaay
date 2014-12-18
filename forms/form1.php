@@ -3,8 +3,8 @@
 		<thead>
 			<tr>
 				<form id='form1_header'></form>
-					<th>Product Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form1_header' onblur="form1_ini('');"></th>
-					<th>Batch <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form1_header' onblur="form1_ini('');"></th>
+					<th>Product Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form1_header'></th>
+					<th>Batch <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form1_header'></th>
 					<th>Cost Price (in Rs)</th>
 					<th>Sale Price (in Rs)</th>
 					<th>Expiry</th>
@@ -13,6 +13,7 @@
 						<input type='button' form='form1_header' title='Add new batch' class='add_icon' onclick='modal22_action();'>
 						<input type='button' form='form1_header' value='EXPORT' class='export_icon'>
 						<input type='button' form='form1_header' value='IMPORT' class='import_icon'>
+						<input type='submit' form='form1_header' style='visibility: hidden;'>
 					</th>
 			</tr>
 		</thead>

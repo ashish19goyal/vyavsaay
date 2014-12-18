@@ -718,27 +718,23 @@ canvas{
 	border: 1px solid black;
 }
 
-@media screen and (min-width: 1300px) {
-	canvas.report_sizing{
-		width:900px;
-		float:left;
+@media screen and (min-width: 900px) {
+	#content_box{
+		min-width:700px;
 	}
 }
 
 @media screen and (min-width: 1100px) {
-	canvas.report_sizing{
-		width:700px;
-		float:left;
+	#content_box{
+		min-width:900px;
 	}
 }
 
-@media screen and (min-width: 900px) {
-	canvas.report_sizing{
-		width:500px;
-		float:left;
+@media screen and (min-width: 1300px) {
+	#content_box{
+		min-width:1100px;
 	}
 }
-
 
 .modal_forms{
 	display:none;
@@ -798,9 +794,7 @@ canvas{
 		top: 45px;
 		left: 55px;
 		height: auto;
-	/*	overflow-y: scroll;
-		overflow-x: scroll;
-	*/	margin: 50px 140px 50px 60px;
+		margin: 50px 140px 50px 60px;
 	}
 	.side_lane{
 		width: 150px;

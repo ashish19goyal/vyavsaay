@@ -1636,7 +1636,7 @@ function form19_create_form()
 					"<amount>"+total+"</amount>" +
 					"<receiver>"+supplier+"</receiver>" +
 					"<giver>master</giver>" +
-					"<tax>0</tax>" +
+					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
 		var pt_tran_id=get_new_key();
@@ -1660,7 +1660,7 @@ function form19_create_form()
 					"<amount>"+total+"</amount>" +
 					"<receiver>master</receiver>" +
 					"<giver>"+supplier+"</giver>" +
-					"<tax>"+tax+"</tax>" +
+					"<tax>0</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
 		if(is_online())
@@ -1867,7 +1867,7 @@ function form21_create_form()
 					"<amount>"+total+"</amount>" +
 					"<receiver>master</receiver>" +
 					"<giver>"+supplier+"</giver>" +
-					"<tax></tax>" +
+					"<tax>"+(-tax)+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
 		var pt_tran_id=get_new_key();
@@ -1891,7 +1891,7 @@ function form21_create_form()
 					"<amount>"+total+"</amount>" +
 					"<receiver>"+supplier+"</receiver>" +
 					"<giver>master</giver>" +
-					"<tax>"+(-tax)+"</tax>" +
+					"<tax>0</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
 		if(is_online())

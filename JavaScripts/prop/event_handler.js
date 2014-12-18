@@ -29,6 +29,9 @@ function default_load()
 		modal_forms_ini();
 		print_setup();
 		Chart.defaults.global.responsive = true;
+		Chart.defaults.global.scaleFontSize= 10;
+		Chart.defaults.global.scaleFontColor="#000";
+		Chart.defaults.global.maintainAspectRatio=false;
 		$('textarea').autosize();
 		i18n_setup();
 		home_display();

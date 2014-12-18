@@ -1345,7 +1345,7 @@ function form19_update_form()
 					"<amount>"+total+"</amount>" +
 					"<receiver>"+supplier+"</receiver>" +
 					"<giver>master</giver>" +
-					"<tax>0</tax>" +
+					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
 		if(is_online())
@@ -1380,7 +1380,7 @@ function form19_update_form()
 							"<amount>"+total+"</amount>" +
 							"<receiver>master</receiver>" +
 							"<giver>"+supplier+"</giver>" +
-							"<tax>"+tax+"</tax>" +
+							"<tax>0</tax>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</transactions>";
 				if(is_online())
@@ -1474,7 +1474,7 @@ function form21_update_form()
 					"<amount>"+total+"</amount>" +
 					"<receiver>master</receiver>" +
 					"<giver>"+supplier+"</giver>" +
-					"<tax>0</tax>" +
+					"<tax>"+(-tax)+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
 		if(is_online())
@@ -1509,7 +1509,7 @@ function form21_update_form()
 							"<amount>"+total+"</amount>" +
 							"<receiver>"+supplier+"</receiver>" +
 							"<giver>master</giver>" +
-							"<tax>"+(-tax)+"</tax>" +
+							"<tax>0</tax>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</transactions>";
 				if(is_online())
