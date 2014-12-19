@@ -64,7 +64,7 @@ function form2_print_form()
 		header.setAttribute('class','header');
 	var logo=document.createElement('div');
 		logo.setAttribute('class','logo');
-		logo.innerHTML="<img src='./images/feedback.jpeg'>";
+		//logo.innerHTML="<img src='./images/feedback.jpeg'>";
 	var title=document.createElement('div');
 		title.setAttribute('class','title');
 		title.textContent='Vyavsaay.com';
@@ -89,7 +89,7 @@ function form2_print_form()
 		container.appendChild(print_pamphlet);
 		print_pamphlet.appendChild(header);
 		print_pamphlet.appendChild(content);
-		header.appendChild(logo);
+		//header.appendChild(logo);
 		header.appendChild(title);
 		header.appendChild(seller_info);
 		seller_info.appendChild(seller_phone);
@@ -294,3 +294,230 @@ function form12_print_form()
 	container.removeChild(print_bill);
 }
 
+/**
+ * @form Create Purchase order
+ * @formNo 24
+ */
+function form24_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div></br>";
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Purchase Order</b></div></br>";
+	
+	var header_element=document.getElementById("form24_master");
+	var header_copy=header_element.cloneNode(true);
+	
+	var table_element=document.getElementById("form24_body").parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("th:last-child, td:last-child").remove();
+	$(table_copy).find('input').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	$(header_copy).find("a").remove();
+	$(header_copy).find("input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input[type=text],input[type=number],textarea").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	var font_size=get_session_var('print_size');
+	table_copy.setAttribute('style',"text-align:center;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"font-size:"+font_size+"em");
+	
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(header_copy);
+	container.appendChild(table_copy);
+	
+	$.print(container);
+}
+
+
+/**
+ * @form Create Sale order
+ * @formNo 69
+ */
+function form69_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div></br>";
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale Order</b></div></br>";
+	
+	var header_element=document.getElementById("form69_master");
+	var header_copy=header_element.cloneNode(true);
+	
+	var table_element=document.getElementById("form69_body").parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("th:last-child, td:last-child").remove();
+	$(table_copy).find('input').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	$(header_copy).find("a").remove();
+	$(header_copy).find("input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input[type=text],input[type=number]").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	var font_size=get_session_var('print_size');
+	table_copy.setAttribute('style',"text-align:center;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"font-size:"+font_size+"em");
+	
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(header_copy);
+	container.appendChild(table_copy);
+	
+	$.print(container);
+}
+
+
+/**
+ * @form Create bills
+ * @formNo 72
+ */
+function form72_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div></br>";
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale Bill</b></div></br>";
+	
+	var header_element=document.getElementById("form72_master");
+	var header_copy=header_element.cloneNode(true);
+	
+	var table_element=document.getElementById("form72_body").parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("th:last-child, td:last-child").remove();
+	$(table_copy).find('input').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	$(header_copy).find("a").remove();
+	$(header_copy).find("input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input[type=text],input[type=number]").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	var font_size=get_session_var('print_size');
+	table_copy.setAttribute('style',"text-align:center;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"font-size:"+font_size+"em");
+	
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(table_copy);
+	container.appendChild(header_copy);
+	
+	$.print(container);
+}
+
+
+/**
+ * @form Scan items(multi-register)
+ * @formNo 82
+ */
+function form82_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div></br>";
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale Bill</b></div></br>";
+	
+	var header_element=document.getElementById("form82_master");
+	var header_copy=header_element.cloneNode(true);
+	
+	var table_element=document.getElementById("form82_body").parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("th:last-child, td:last-child").remove();
+	$(table_copy).find('input').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	$(header_copy).find("a").remove();
+	$(header_copy).find("input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input[type=text],input[type=number]").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	var font_size=get_session_var('print_size');
+	table_copy.setAttribute('style',"text-align:center;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"font-size:"+font_size+"em");
+	
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(table_copy);
+	container.appendChild(header_copy);
+	
+	$.print(container);
+}
+
+/**
+ * @form Create bills(multi-register)
+ * @formNo 91
+ */
+function form91_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div></br>";
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale Bill</b></div></br>";
+	
+	var header_element=document.getElementById("form91_master");
+	var header_copy=header_element.cloneNode(true);
+	
+	var table_element=document.getElementById("form91_body").parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("th:last-child, td:last-child").remove();
+	$(table_copy).find('input').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	$(header_copy).find("a").remove();
+	$(header_copy).find("input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input[type=text],input[type=number]").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	var font_size=get_session_var('print_size');
+	table_copy.setAttribute('style',"text-align:center;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"font-size:"+font_size+"em");
+	
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(table_copy);
+	container.appendChild(header_copy);
+	
+	$.print(container);
+}

@@ -1921,13 +1921,13 @@ function form24_ini()
 						rowsHTML+="<tr>";
 						rowsHTML+="<form id='form24_"+id+"'></form>";
 							rowsHTML+="<td data-th='Product Name'>";
-								rowsHTML+="<input type='text' readonly='readonly' required form='form24_"+id+"' value='"+result.product_name+"'>";
+								rowsHTML+="<textarea readonly='readonly' required form='form24_"+id+"'>"+result.product_name+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Quantity'>";
 								rowsHTML+="<input type='number' class='dblclick_editable' readonly='readonly' required form='form24_"+id+"' value='"+result.quantity+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Make'>";
-								rowsHTML+="<input type='text' readonly='readonly' required form='form24_"+id+"' value='"+result.make+"'>";
+								rowsHTML+="<textarea readonly='readonly' required form='form24_"+id+"'>"+result.make+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Price'>";
 								rowsHTML+="<input type='number'readonly='readonly' required form='form24_"+id+"' value='"+result.price+"' step='any'>";
@@ -2829,7 +2829,7 @@ function form42_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form42_"+result.id+"' value='"+result.id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Customer'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form42_"+result.id+"' value='"+result.customer_name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form42_"+result.id+"'>"+result.customer_name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Bill Date'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form42_"+result.id+"' value='"+get_my_past_date(result.bill_date)+"'>";
@@ -3064,7 +3064,7 @@ function form44_ini()
 						rowsHTML+="<input type='hidden' readonly='readonly' form='form44_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='edit_icon' form='form44_"+result.id+"' title='Edit' onclick=\"element_display('"+result.id+"','form2');\">";
 						rowsHTML+="<input type='button' class='delete_icon' form='form44_"+result.id+"' title='Delete' onclick='form44_delete_item($(this));'>";
-						rowsHTML+="<img class='filter_icon' src='./images/print.jpeg' form='form44_"+result.id+"' title='Print' onclick='form44_print_item($(this));'>";
+						rowsHTML+="<img class='filter_icon' src='./images/print.png' form='form44_"+result.id+"' title='Print' onclick='form44_print_item($(this));'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -7426,7 +7426,7 @@ function form91_ini()
 						rowsHTML+="<tr>";
 						rowsHTML+="<form id='form91_"+id+"'></form>";
 							rowsHTML+="<td data-th='Product Name'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form91_"+id+"' value='"+result.item_name+"'>";
+								rowsHTML+="<textarea readonly='readonly' form='form91_"+id+"'>"+result.item_name+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Batch'>";
 								rowsHTML+="<input type='text' readonly='readonly' form='form91_"+id+"' value='"+result.batch+"'>";

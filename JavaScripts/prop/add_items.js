@@ -2596,7 +2596,7 @@ function form82_add_item()
 				
 				var last_batch_data="<bill_items count='1'>" +
 						"<batch></batch>" +
-						"<item_name>"+product_filter.value+"</item_name>" +
+						"<item_name exact='yes'>"+product_filter.value+"</item_name>" +
 						"<last_updated sort='desc'></last_updated>" +
 						"</bill_items>";
 				get_single_column_data(function(data)
@@ -2625,7 +2625,7 @@ function form82_add_item()
 			
 			var last_batch_data="<bill_items count='1'>" +
 					"<batch></batch>" +
-					"<item_name>"+product_filter.value+"</item_name>" +
+					"<item_name exact='yes'>"+product_filter.value+"</item_name>" +
 					"<last_updated sort='desc'></last_updated>" +
 					"</bill_items>";
 			get_single_column_data(function(data)

@@ -4319,7 +4319,7 @@ function form82_bill()
 		var bill_discount=0;
 		var bill_tax=0;
 		var pending_items_count=0;
-		var order_id=master_form.elements[3].value;
+		var order_id=master_form.elements[7].value;
 		///////selecting all scanned items////
 		var order_items=new Array();
 		
@@ -4415,7 +4415,7 @@ function form82_bill()
 					item_offer=offers[i].offer_detail;
 					if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=parseFloat(order_item.quantity))
 					{
-						console.log("offer criteria met");
+						//console.log("offer criteria met");
 
 						if(offers[i].result_type=='discount')
 						{
@@ -4641,7 +4641,7 @@ function form82_bill()
   		   		var offer_data="<offers>" +
 						"<offer_type>bill</offer_type>" +
 						"<criteria_type>min amount crossed</criteria_type>" +
-						"<criteria_amount compare='less than'>"+(bill_amount-bill_discount)+"</criteria_amount>" +
+						"<criteria_amount sort='desc' compare='less than'>"+(bill_amount-bill_discount)+"</criteria_amount>" +
 						"<result_type></result_type>" +
 						"<discount_percent></discount_percent>" +
 						"<discount_amount></discount_amount>" +
@@ -4654,14 +4654,6 @@ function form82_bill()
 						"</offers>";
 				fetch_requested_data('',offer_data,function(offers)
 				{
-					offers.sort(function(a,b)
-					{
-						if(a.criteria_amount<b.criteria_amount)
-						{	return 1;}
-						else 
-						{	return -1;}
-					});
-					
 					for(var i in offers)
 					{
 						if(offers[i].result_type=='discount')
@@ -4798,14 +4790,14 @@ function form82_bill()
 					var pt_tran_id=get_new_key();
 					var payment_xml="<payments>" +
 								"<id>"+pt_tran_id+"</id>" +
-								"<status>pending</status>" +
+								"<status>closed</status>" +
 								"<type>received</type>" +
 								"<date>"+get_my_time()+"</date>" +
 								"<total_amount>"+bill_total+"</total_amount>" +
-								"<paid_amount>0</paid_amount>" +
+								"<paid_amount>"+bill_total+"</paid_amount>" +
 								"<acc_name>"+customer+"</acc_name>" +
 								"<due_date>"+get_credit_period()+"</due_date>" +
-								"<mode></mode>" +
+								"<mode>cash</mode>" +
 								"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 								"<bill_id>"+order_id+"</bill_id>" +
 								"<last_updated>"+get_my_time()+"</last_updated>" +

@@ -11,6 +11,7 @@
 			<input type='submit' title='Save order' class='save_icon'>
 			<input type='hidden' name='email_id' value=''>
 			<input type='hidden' name='phone' value=''>
+			<input type='button' title='Print Bill' class='print_icon' onclick='form24_print_form();'>
 			<a id='form24_whatsapp' target='_blank' style='display:none;'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' title='Send details through WhatsApp'></a>
 			<a id='form24_gmail' target='_blank' style='display:none;'><img style='width:25px;height:25px;' src='./images/gmail.png' title='Send details through Gmail'></a>
 		</fieldset>

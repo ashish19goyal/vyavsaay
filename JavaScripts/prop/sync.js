@@ -194,13 +194,13 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 				var this_table=tables[i];
 				var num_rows=tables[i].childElementCount;
 				localdb_open_requests+=num_rows;
-				if(tableName!="activities" && tableName!="#text")
+				if(tableName!="" && tableName!="#text")
 				{	
 					local_put_record(this_table,objectStore,num_rows,0);
 				}
-				else if(tableName==='activities')
+				if(tableName==='activities')
 				{
-					local_delete_record(this_table,objectStore,num_rows,0);
+					local_delete_record(this_table,num_rows,0);
 				}
 			}
 			//console.log('exiting sync_server_to_local_ajax');
@@ -238,7 +238,7 @@ function local_put_record(this_table,objectStore,num_rows,row_index)
 }
 
 
-function local_delete_record(this_table,objectStore,num_rows,row_index)
+function local_delete_record(this_table,num_rows,row_index)
 {
 	if(row_index<num_rows)
 	{
@@ -262,7 +262,7 @@ function local_delete_record(this_table,objectStore,num_rows,row_index)
 				//console.log("deleted row");
 			};
 		}
-		local_delete_record(this_table,objectStore,num_rows,row_index);
+		local_delete_record(this_table,num_rows,row_index);
 	}
 }
 
