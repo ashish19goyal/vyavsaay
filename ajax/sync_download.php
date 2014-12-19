@@ -49,7 +49,7 @@
 			$xmlresponse="<re_xml><data>";
 		
 			$first_iteration=true;
-			$num_records=100;
+			$num_records=500;
 			$end_table='end_syncing';
 			
 			foreach($db_schema->childNodes as $table)

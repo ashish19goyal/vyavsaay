@@ -4,10 +4,9 @@
 */
 function form1_import_template()
 {
-	var data_array=['id','product_name','batch','cost_price','sale_price','expiry','manufacture_date','mrp'];
+	var data_array=['id','product_name','batch','cost_price','sale_price','expiry','manufacture_date','mrp','adjusted_quantity'];
 	my_array_to_csv(data_array);
 };
-
 
 /**
 * @form Manage Assets

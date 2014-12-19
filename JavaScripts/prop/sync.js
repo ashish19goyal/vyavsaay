@@ -11,8 +11,8 @@ function switch_to_online()
 		var progress_timer=setInterval(function()
 		{
 			progress_value+=(2*(80-progress_value))/100;
-		},1000);
-		
+		},3000);
+		//console.log(localdb_open_requests);
 		sync_local_to_server(function()
 		{
 			progress_value=80;
@@ -20,7 +20,7 @@ function switch_to_online()
 			var progress_timer=setInterval(function()
 			{
 				progress_value+=(2*(100-progress_value))/100;
-			},1000);
+			},3000);
 			
 			sync_server_to_local(function()
 			{
@@ -55,7 +55,7 @@ function switch_to_offline()
 			var progress_timer=setInterval(function()
 			{
 				progress_value+=(2*(80-progress_value))/100;
-			},1000);
+			},3000);
 
 			sync_server_to_local(function()
 			{
@@ -64,7 +64,7 @@ function switch_to_offline()
 				var progress_timer=setInterval(function()
 				{
 					progress_value+=(2*(100-progress_value))/100;
-				},1000);
+				},3000);
 				
 				sync_local_to_server(function()
 				{
@@ -94,7 +94,7 @@ function sync_local_and_server()
 		var progress_timer=setInterval(function()
 		{
 			progress_value+=(2*(70-progress_value))/100;
-		},1000);
+		},2000);
 		
 		sync_local_to_server(function()
 		{
@@ -103,7 +103,7 @@ function sync_local_and_server()
 			var progress_timer=setInterval(function()
 			{
 				progress_value+=(2*(100-progress_value))/100;
-			},1000);
+			},2000);
 			
 			sync_server_to_local(function()
 			{
@@ -131,7 +131,7 @@ function sync_server_to_local(func)
 	start_offset=0;
 	
 	//console.log(number_active_ajax);
-	
+	//console.log(localdb_open_requests);
 	get_last_sync_time(function(last_sync_time)
 	{
 		sync_server_to_local_ajax(start_table,start_offset,last_sync_time);
@@ -139,7 +139,6 @@ function sync_server_to_local(func)
 	
 	var sync_download_complete=setInterval(function()
 	{
-  	   //console.log(number_active_ajax);
   	   if(number_active_ajax===0 && localdb_open_requests===0)
   	   {
   		   	clearInterval(sync_download_complete);
@@ -148,7 +147,7 @@ function sync_server_to_local(func)
 				func();
 			});
   	   }
-     },1000);
+     },2000);
 	
 };
 
@@ -162,60 +161,142 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 	ajax_with_custom_func("./ajax/sync_download.php","domain="+domain+"&username="+username+"&re="+re_access+"&start_table="+start_table+"&start_offset="+start_offset+"&last_sync_time="+last_sync_time,function(e)
 	{
 		var response=e.responseXML;
-		console.log(e.responseText);
-		
-		var end_table=response.childNodes[0].childNodes[1].childNodes[0].innerHTML;
-		var end_offset=response.childNodes[0].childNodes[1].childNodes[1].innerHTML;
-		console.log(end_table);
-		if(end_table!="end_syncing")
+		//console.log(e.responseText);
+		if(typeof static_local_db=='undefined')
 		{
-			sync_server_to_local_ajax(end_table,end_offset,last_sync_time);
+			open_local_db(function()
+			{
+				sync_server_to_local_ajax(start_table,start_offset,last_sync_time);
+			});
 		}
-		
-		sklad.open(db_name,{version:2},function(err,database)
+		else
 		{
+			var end_table=response.childNodes[0].childNodes[1].childNodes[0].innerHTML;
+			var end_offset=response.childNodes[0].childNodes[1].childNodes[1].innerHTML;
+			//console.log(end_table);
+			if(end_table!="end_syncing")
+			{
+				sync_server_to_local_ajax(end_table,end_offset,last_sync_time);
+			}
+			else
+			{
+				console.log('got everything from server');
+			}
+
 			var tables=response.childNodes[0].childNodes[0].childNodes;
+
+			//console.log(localdb_open_requests);
 			for(var i=0;i<tables.length; i++)
 			{
-				tableName=tables[i].nodeName;
-				if(tableName!="" && tableName!="#text")
+				var tableName=tables[i].nodeName;
+				
+				var objectStore=static_local_db.transaction([tableName],"readwrite").objectStore(tableName);
+				var this_table=tables[i];
+				var num_rows=tables[i].childElementCount;
+				localdb_open_requests+=num_rows;
+				if(tableName!="activities" && tableName!="#text")
 				{	
-					var num_rows=tables[i].childElementCount;
-					for(var k=0;k<num_rows;k++)
-					{
-						var el=tables[i].childNodes[0].childElementCount;
-						var row=new Object();
-						for(var j=0;j<el;j++)
-						{
-							var nname=tables[i].childNodes[k].childNodes[j].nodeName;
-							row[nname]=tables[i].childNodes[k].childNodes[j].innerHTML;
-						}
-						
-						localdb_open_requests+=1;
-						database.upsert(tableName,row,function(err,insertedkey)
-						{
-							console.log('adding record to table'+tableName);
-							localdb_open_requests-=1;
-						});
-						
-						if(tableName==='activities')
-						{
-							if(row['type']==='delete')
-							{
-								var del_table=row['tablename'];
-								var del_id=row['data_id'];
-								localdb_open_requests+=1;
-								database.delete(del_table,del_id,function(err)
-								{
-									localdb_open_requests-=1;
-								});
-							}
-						}
-					}			
+					local_put_record(this_table,objectStore,num_rows,0);
+				}
+				else if(tableName==='activities')
+				{
+					local_delete_record(this_table,objectStore,num_rows,0);
 				}
 			}
-		});
+			//console.log('exiting sync_server_to_local_ajax');
+		}
 	});
+}
+
+function local_put_record(this_table,objectStore,num_rows,row_index)
+{
+	if(row_index<num_rows)
+	{
+		var el=this_table.childNodes[0].childElementCount;
+		var row=new Object();
+		for(var j=0;j<el;j++)
+		{
+			var nname=this_table.childNodes[row_index].childNodes[j].nodeName;
+			row[nname]=this_table.childNodes[row_index].childNodes[j].innerHTML;
+		}
+		
+		row_index+=1;
+		var req=objectStore.put(row);
+		req.onsuccess=function(e)
+		{
+			console.log(this_table.nodeName);
+			localdb_open_requests-=1;
+			local_put_record(this_table,objectStore,num_rows,row_index);
+		};
+		req.onerror = function()
+		{
+			console.error("error", this.error);
+			localdb_open_requests-=1;
+			local_put_record(this_table,objectStore,num_rows,row_index);
+		};
+	}
+}
+
+
+function local_delete_record(this_table,objectStore,num_rows,row_index)
+{
+	if(row_index<num_rows)
+	{
+		var el=this_table.childNodes[0].childElementCount;
+		var row=new Object();
+		for(var j=0;j<el;j++)
+		{
+			var nname=this_table.childNodes[row_index].childNodes[j].nodeName;
+			row[nname]=this_table.childNodes[row_index].childNodes[j].innerHTML;
+		}
+		
+		localdb_open_requests-=1;
+		row_index+=1;
+		
+		if(row['type']==='delete')
+		{
+			var del_table=row['tablename'];
+			var del_id=row['data_id'];
+			static_local_db.transaction([del_table],"readwrite").objectStore(del_table).delete(del_id).onsuccess=function(e)
+			{
+				//console.log("deleted row");
+			};
+		}
+		local_delete_record(this_table,objectStore,num_rows,row_index);
+	}
+}
+
+
+function local_update_record(ids,objectStore,row_index)
+{
+	if(row_index<ids.length)
+	{
+		var req=objectStore.get(ids[row_index].innerHTML);
+		req.onsuccess=function(e)
+		{
+			var data=req.result;
+			row_index+=1;
+			if(data)
+			{
+				data['status']='synced';
+				data['data_xml']='';
+				var put_req=objectStore.put(data);
+				put_req.onssuccess=function(e)
+				{
+					local_update_record(ids,objectStore,row_index);
+				};
+				put_req.onerror=function(e)
+				{
+					console.log('error updating activitiy status');
+					local_update_record(ids,objectStore,row_index);
+				};
+			}
+			else
+			{
+				local_update_record(ids,objectStore,row_index);
+			}
+		};
+	}
 }
 
 
@@ -230,7 +311,7 @@ function sync_local_to_server(func)
 	var cr_access=get_session_var('cr');
 	var up_access=get_session_var('up');
 	var del_access=get_session_var('del');
-	console.log("syncing started");
+	//console.log("syncing started");
 	
 	get_data_from_log_table(function(log_data)
 	{
@@ -271,38 +352,50 @@ function get_data_from_log_table(func)
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
-	sklad.open(db_name,{version:2},function(err,database)
+	if(typeof static_local_db=='undefined')
 	{
-		database.get('activities',{},function(err,records)
+		open_local_db(function()
 		{
-			var log_data="";
-			var counter=0;
-			for(var row in records)
+			get_data_from_log_table(func);
+		});
+	}
+	else
+	{
+		var keyValue=IDBKeyRange.only('unsynced');
+		var counter=0;
+		var log_data="";
+		
+		static_local_db.transaction(['activities'],"readonly").objectStore('activities').index('status').openCursor(keyValue).onsuccess=function(e)
+		{
+			var result=e.target.result;
+			if(result)
 			{
-				if(records[row].status=='unsynced')
+				var record=result.value;
+				
+				if(counter===200)
 				{
-					if(counter===100)
-					{
-						log_data+="<separator></separator>";
-						counter=0;
-					}
-					var row_data=records[row];
-					log_data+="<row>";
-					for(var field in row_data)
-					{
-						log_data+="<"+field+">";
-							log_data+=row_data[field];
-						log_data+="</"+field+">";
-					}
-					log_data+="</row>";
-					
-					counter+=1;
+					log_data+="<separator></separator>";
+					counter=0;
 				}
+					
+				log_data+="<row>";
+				for(var field in record)
+				{
+					log_data+="<"+field+">";
+						log_data+=record[field];
+					log_data+="</"+field+">";
+				}
+				log_data+="</row>";
+				counter+=1;
+				result.continue();
 			}
-			//console.log(log_data);
-			func(log_data);
-		});	
-	});
+			else
+			{
+				//console.log(log_data);
+				func(log_data);
+			}
+		};	
+	}
 }
 
 
@@ -317,28 +410,19 @@ function set_activities_to_synced(response)
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
-	sklad.open(db_name,{version:2},function(err,database)
+	if(typeof static_local_db=='undefined')
 	{
-		//console.log(response.childNodes[0]);
-		var table='activities';
-		var ids=response.childNodes[0].getElementsByTagName('id');
-		for(var id=0; id<ids.length; id++)
+		open_local_db(function()
 		{
-			//console.log(ids[id].innerHTML);
-			database.get(table,{range:IDBKeyRange.only(ids[id].innerHTML)},function(err,records)
-			{
-				for(var row in records)
-				{
-					var row_data=records[row];
-					row_data['status']='synced';
-					row_data['data_xml']='';
-					database.upsert(table,row_data,function(err,insertedkey)
-					{
-					});
-				}
-			});				
-		}
-	});
+			set_activities_to_synced(response);
+		});
+	}
+	else
+	{
+		var objectStore=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
+		var ids=response.childNodes[0].getElementsByTagName('id');
+		local_update_record(ids,objectStore,0);
+	}
 }
 
 /**
@@ -351,18 +435,29 @@ function get_last_sync_time(func)
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
 	
-	sklad.open(db_name,{version:2},function(err,database)
+	if(typeof static_local_db=='undefined')
 	{
-		database.get('user_preferences',{index:'name',range:IDBKeyRange.only('last_sync_time')},function(err,records)
+		open_local_db(function()
 		{
+			get_last_sync_time(func);
+		});
+	}
+	else
+	{
+		var objectStore=static_local_db.transaction(['user_preferences'],"readonly").objectStore('user_preferences').index('name');
+		var req=objectStore.get('last_sync_time');
+		
+		req.onsuccess=function(e)
+		{
+			var data=req.result;
 			var last_sync_time="0";
-			for(var row in records)
+			if(data)
 			{
-				last_sync_time=records[row]['value'];
+				last_sync_time=data['value'];
 			}
 			func(last_sync_time);	
-		});	
-	});
+		};	
+	}
 }
 
 
@@ -375,17 +470,26 @@ function update_last_sync_time(func)
 	//show_loader();
 	var domain=get_domain();
 	var db_name="re_local_"+domain;
-	
-	sklad.open(db_name,{version:2},function(err,database)
+		
+	if(typeof static_local_db=='undefined')
 	{
+		open_local_db(function()
+		{
+			update_last_sync_time(func);
+		});
+	}
+	else
+	{
+		var objectStore=static_local_db.transaction(['user_preferences'],"readwrite").objectStore('user_preferences');
 		var time=get_my_time();
 		var row_data={id:'700',name:'last_sync_time',value:time,type:'other',display_name:'Last Sync Time',status:'active'};
-		//{value:row_data,key:row_data.id}
-		database.upsert('user_preferences',row_data,function(err,insertedkey)
+		
+		var req=objectStore.put(row_data);
+		req.onsuccess=function(e)
 		{
-			func();
-		});
-	});	
+			func();	
+		};
+	}
 }
 
 /**
@@ -394,39 +498,37 @@ function update_last_sync_time(func)
  */
 function set_session_online()
 {
-	//show_loader();
-	var offline_data="<user_preferences>" +
-		"<id></id>" +
-		"<name>offline</name>" +
-		"</user_preferences>";
-
-	get_single_column_data(function(data_ids)
+	var domain=get_domain();
+	var db_name="re_local_"+domain;
+		
+	if(typeof static_local_db=='undefined')
 	{
-		data_ids.forEach(function(data_id)
+		open_local_db(function()
 		{
-			set_session_var('offline','online');
-			var data_xml="<user_preferences>" +
-				"<id>"+data_id+"</id>" +
-				"<name>offline</name>" +
-				"<value>online</value>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</user_preferences>";	
-			var activity_xml="<activity>" +
-				"<data_id>1000"+data_id+"</data_id>" +
-				"<tablename>user_preferences</tablename>" +
-				"<link_to></link_to>" +
-				"<title>Changed</title>" +
-				"<notes>Set mode of operation to Online</notes>" +
-				"<user_display>yes</user_display>" +
-				"<updated_by>"+get_name()+"</updated_by>" +
-				"</activity>";
-			//server_update_row(data_xml,activity_xml);
-			local_update_row(data_xml,activity_xml);
-			hide_menu_items();
-			set_session_var('offline','online');
-			hide_loader();
+			set_session_online();
 		});
-	},offline_data);
+	}
+	else
+	{
+		var objectStore=static_local_db.transaction(['user_preferences'],"readwrite").objectStore('user_preferences');
+		
+		var req=objectStore.index('name').get('offline');
+		req.onsuccess=function(e)
+		{
+			var data=req.result;
+			if(data)
+			{
+				data.value='online';
+				var put_req=objectStore.put(data);
+				put_req.onsuccess=function(e)
+				{
+					set_session_var('offline','online');
+					hide_menu_items();
+					hide_loader();
+				};
+			}
+		};
+	}
 };
 
 /**
@@ -435,37 +537,35 @@ function set_session_online()
  */
 function set_session_offline()
 {
-	//show_loader();
-	var offline_data="<user_preferences>" +
-			"<id></id>" +
-			"<name>offline</name>" +
-			"</user_preferences>";
-
-	get_single_column_data(function(data_ids)
+	var domain=get_domain();
+	var db_name="re_local_"+domain;
+		
+	if(typeof static_local_db=='undefined')
 	{
-		data_ids.forEach(function(data_id)
+		open_local_db(function()
 		{
-			set_session_var('offline','offline');
-			var data_xml="<user_preferences>" +
-				"<id>"+data_id+"</id>" +
-				"<name>offline</name>" +
-				"<value>offline</value>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</user_preferences>";	
-			var activity_xml="<activity>" +
-				"<data_id>1000"+data_id+"</data_id>" +
-				"<tablename>user_preferences</tablename>" +
-				"<link_to></link_to>" +
-				"<title>Changed</title>" +
-				"<notes>Set mode of operation to Offline</notes>" +
-				"<user_display>yes</user_display>" +
-				"<updated_by>"+get_name()+"</updated_by>" +
-				"</activity>";
-			//server_update_simple(data_xml);
-			local_update_row(data_xml,activity_xml);
-			hide_menu_items();
-			set_session_var('offline','offline');
-			hide_loader();
+			set_session_online();
 		});
-	},offline_data);
+	}
+	else
+	{
+		var objectStore=static_local_db.transaction(['user_preferences'],"readwrite").objectStore('user_preferences');
+		
+		var req=objectStore.index('name').get('offline');
+		req.onsuccess=function(e)
+		{
+			var data=req.result;
+			if(data)
+			{
+				data.value='offline';
+				var put_req=objectStore.put(data);
+				put_req.onsuccess=function(e)
+				{
+					set_session_var('offline','offline');
+					hide_menu_items();
+					hide_loader();
+				};
+			}
+		};
+	}
 };

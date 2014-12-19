@@ -100,7 +100,6 @@ function open_local_db(func)
 function local_read_single_column(columns,callback,results)
 {
 	//console.log(columns);
-	localdb_open_requests+=1;
 	var parser=new DOMParser();
 	var data=parser.parseFromString(columns,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -161,6 +160,8 @@ function local_read_single_column(columns,callback,results)
 	}
 	else
 	{
+		localdb_open_requests+=1;
+
 		if(sort_order=='asc')
 		{
 			sort_order='next';
@@ -967,7 +968,6 @@ function local_create_simple_no_warning(data_xml)
 
 function local_read_multi_column(columns,callback,results)
 {
-	localdb_open_requests+=1;
 	var parser=new DOMParser();
 	var data=parser.parseFromString(columns,"text/xml");
 	var table=data.childNodes[0].nodeName;
@@ -1034,6 +1034,8 @@ function local_read_multi_column(columns,callback,results)
 	}
 	else
 	{
+		localdb_open_requests+=1;
+		
 		if(sort_order=='asc')
 		{
 			sort_order='next';
