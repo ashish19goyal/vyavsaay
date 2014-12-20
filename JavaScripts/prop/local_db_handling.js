@@ -20,6 +20,7 @@ function create_local_db(domain,func)
 	{
 		//console.log("2.2");
 		var db_name="re_local_"+domain;
+		console.log("creating local db "+db_name);
 		ajax_with_custom_func("./db/db_schema.xml","",function(e)
 		{
 			//console.log("2.3");
@@ -81,11 +82,15 @@ function create_local_db(domain,func)
 function open_local_db(func)
 {
 	var db_name="re_local_"+get_domain();
-	var request = indexedDB.open(db_name,2);
+	var request = indexedDB.open(db_name);
 	request.onsuccess=function(e)
 	{
 		static_local_db=e.target.result;
 		func();
+	};
+	request.onerror=function(e)
+	{
+		console.log(this.error);
 	};
 };
 

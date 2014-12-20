@@ -924,3 +924,56 @@ function generate_attendance_records()
 
 	setTimeout(generate_attendance_records,86400000);
 }
+
+
+/**
+ * This function balances out pending payments for all accounts
+ */
+function balance_out_payments()
+{
+	var payments_data="<payments>" +
+			"<id></id>" +
+			"<acc_name></acc_name>" +
+			"<type></type>" +
+			"<total_amount></total_amount>" +
+			"<paid_amount></paid_amount>" +
+			"<bill_id></bill_id>" +
+			"<status>pending</status>" +
+			"</payments>";
+	fetch_requested_data('',payments_data,function(payments)
+	{
+		var total_balance=0;
+		accounts.forEach(function(result)
+		{	
+			var balance_amount=0;
+			var bill_ids_string="";
+			
+			payments.forEach(function(payment)
+			{
+				if(payment.acc_name==result.acc_name)
+				{
+					bill_ids_string+="<u title='Amount Rs:"+payment.total_amount+"'>"+payment.bill_id+"</u>"+", ";
+					if(payment.type=='received')
+					{
+						balance_amount+=parseFloat(payment.total_amount);
+						balance_amount-=parseFloat(payment.paid_amount);
+					}
+					else if(payment.type=='paid')
+					{
+						balance_amount-=parseFloat(payment.total_amount);
+						balance_amount+=parseFloat(payment.paid_amount);
+					}
+				}
+			});
+			
+			if(balance_amount>=balance)
+			{
+				total_balance+=balance_amount;
+				bill_ids_string=bill_ids_string.substr(0,(bill_ids_string.length-2));
+			}
+		});
+	});
+
+	
+	setTimeout(balance_out_payments,3600000);	
+}

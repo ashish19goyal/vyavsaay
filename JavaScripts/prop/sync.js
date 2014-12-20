@@ -48,7 +48,6 @@ function switch_to_offline()
 		var domain=get_domain();
 		show_progress();
 		show_loader();
-		
 		create_local_db(domain,function(e)
 		{
 			progress_value=5;
@@ -141,13 +140,14 @@ function sync_server_to_local(func)
 	{
   	   if(number_active_ajax===0 && localdb_open_requests===0)
   	   {
-  		   	clearInterval(sync_download_complete);
-  		   	update_last_sync_time(function()
-			{
+  		   console.log('completed server to local sync');
+  		   clearInterval(sync_download_complete);
+  		   update_last_sync_time(function()
+  		   {
 				func();
-			});
+		   });
   	   }
-     },2000);
+     },5000);
 	
 };
 
@@ -326,7 +326,7 @@ function sync_local_to_server(func)
 				ajax_with_custom_func("./ajax/sync_upload.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&up="+up_access+"&del="+del_access+"&data="+log_data_chunk+"&last_sync="+last_sync_time,function(e)
 				{
 					var response=e.responseXML;
-					console.log(e.responseText);
+					//console.log(e.responseText);
 					set_activities_to_synced(response);
 				});
 			});
@@ -348,10 +348,6 @@ function sync_local_to_server(func)
  */
 function get_data_from_log_table(func)
 {
-	//show_loader();
-	var domain=get_domain();
-	var db_name="re_local_"+domain;
-	
 	if(typeof static_local_db=='undefined')
 	{
 		open_local_db(function()
@@ -406,10 +402,6 @@ function get_data_from_log_table(func)
  */
 function set_activities_to_synced(response)
 {
-	//show_loader();
-	var domain=get_domain();
-	var db_name="re_local_"+domain;
-	
 	if(typeof static_local_db=='undefined')
 	{
 		open_local_db(function()
@@ -431,10 +423,6 @@ function set_activities_to_synced(response)
  */
 function get_last_sync_time(func)
 {
-	//show_loader();
-	var domain=get_domain();
-	var db_name="re_local_"+domain;
-	
 	if(typeof static_local_db=='undefined')
 	{
 		open_local_db(function()
@@ -444,9 +432,7 @@ function get_last_sync_time(func)
 	}
 	else
 	{
-		var objectStore=static_local_db.transaction(['user_preferences'],"readonly").objectStore('user_preferences').index('name');
-		var req=objectStore.get('last_sync_time');
-		
+		var req=static_local_db.transaction(['user_preferences'],"readonly").objectStore('user_preferences').index('name').get('last_sync_time');
 		req.onsuccess=function(e)
 		{
 			var data=req.result;
@@ -456,7 +442,11 @@ function get_last_sync_time(func)
 				last_sync_time=data['value'];
 			}
 			func(last_sync_time);	
-		};	
+		};
+		req.onerror=function(e)
+		{
+			console.log(this.error);
+		};
 	}
 }
 
@@ -467,10 +457,6 @@ function get_last_sync_time(func)
  */
 function update_last_sync_time(func)
 {
-	//show_loader();
-	var domain=get_domain();
-	var db_name="re_local_"+domain;
-		
 	if(typeof static_local_db=='undefined')
 	{
 		open_local_db(function()
@@ -483,11 +469,15 @@ function update_last_sync_time(func)
 		var objectStore=static_local_db.transaction(['user_preferences'],"readwrite").objectStore('user_preferences');
 		var time=get_my_time();
 		var row_data={id:'700',name:'last_sync_time',value:time,type:'other',display_name:'Last Sync Time',status:'active'};
-		
+
 		var req=objectStore.put(row_data);
 		req.onsuccess=function(e)
 		{
 			func();	
+		};
+		req.onerror=function(e)
+		{
+			console.log(this.error);
 		};
 	}
 }
@@ -498,9 +488,6 @@ function update_last_sync_time(func)
  */
 function set_session_online()
 {
-	var domain=get_domain();
-	var db_name="re_local_"+domain;
-		
 	if(typeof static_local_db=='undefined')
 	{
 		open_local_db(function()
@@ -528,6 +515,10 @@ function set_session_online()
 				};
 			}
 		};
+		req.onerror=function(e)
+		{
+			console.log(this.error);
+		};
 	}
 };
 
@@ -537,14 +528,11 @@ function set_session_online()
  */
 function set_session_offline()
 {
-	var domain=get_domain();
-	var db_name="re_local_"+domain;
-		
 	if(typeof static_local_db=='undefined')
 	{
 		open_local_db(function()
 		{
-			set_session_online();
+			set_session_offline();
 		});
 	}
 	else

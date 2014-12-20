@@ -217,104 +217,227 @@ function form44_print_item(button)
 	//$(content).hide();
 }
 
-
 /**
- * @form Create Product Bill
- * @formNo 12
+ * @form Create service bills
+ * @formNo 10
  */
-function form12_print_form()
-{	
-	var form=document.getElementById("form12_master");
-	var customer=form.elements[1].value;
-	var date=form.elements[2].value;
-	var amount=form.elements[3].value;
-	var discount=form.elements[4].value;
-	var tax=form.elements[5].value;
-	var total=form.elements[6].value;
-	
-	var container=document.getElementById('print_container');
-	
-	var print_bill=document.createElement('div');
-		print_bill.setAttribute('class','print_product_bill');
-	var header=document.createElement('div');
-		header.setAttribute('class','header');
-	var title=document.createElement('div');
-		title.setAttribute('class','title');
-		title.textContent=get_session_var('title');
-	var seller_info=document.createElement('div');
-		seller_info.setAttribute('class','seller_info');
-	var seller_phone=document.createElement('div');
-		seller_phone.setAttribute('class','seller_phone');
-		seller_phone.textContent='Contact No: '+get_session_var('phone');
-	var seller_address=document.createElement('div');
-		seller_address.setAttribute('class','seller_address');
-		seller_address.textContent="Office: "+get_session_var('address');
-	var content=document.createElement('div');
-		content.setAttribute('class','content');
-	var bill_header=document.createElement('div');
-		bill_header.setAttribute('class','bill_header');
-	var bill_customer=document.createElement('div');
-		bill_customer.textContent='Customer: '+customer;
-	var bill_time=document.createElement('div');
-		bill_time.textContent='Date: '+date;
-	var bill_amount=document.createElement('div');
-		bill_amount.textContent='Amount: Rs.'+amount;
-	var bill_discount=document.createElement('div');
-		bill_discount.textContent='Discount Rs.: '+discount;
-	var bill_tax=document.createElement('div');
-		bill_tax.textContent='Tax Rs.: '+tax;
-	var bill_total=document.createElement('div');
-		bill_total.textContent='Total Rs.: '+total;
-	
-	var bill_items=document.createElement('div');
-		bill_items.setAttribute('class','bill_items');
-	
-	container.appendChild(print_bill);
-	print_bill.appendChild(header);
-	print_bill.appendChild(content);
-	header.appendChild(title);
-	header.appendChild(seller_info);
-	seller_info.appendChild(seller_phone);
-	seller_info.appendChild(seller_address);
-	content.appendChild(bill_header);
-	bill_header.appendChild(bill_customer);
-	bill_header.appendChild(bill_time);
-	bill_header.appendChild(bill_amount);
-	bill_header.appendChild(bill_discount);
-	bill_header.appendChild(bill_tax);
-	bill_header.appendChild(bill_total);
-	content.appendChild(bill_items);
-
-	var table_element=document.getElementById('form12_body').parentNode;
-	var table_copy=table_element.cloneNode(true);
-	table_copy.removeAttribute('class');
-	bill_items.appendChild(table_copy);
-			
-	$.print(container);
-	container.removeChild(print_bill);
-}
-
-/**
- * @form Create Purchase order
- * @formNo 24
- */
-function form24_print_form()
+function form10_print_form()
 {
 	var container=document.createElement('div');
 	var business_title=document.createElement('div');
 	var title=document.createElement('div');
 	var bt=get_session_var('title');
-	business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div></br>";
-	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Purchase Order</b></div></br>";
-	
-	var header_element=document.getElementById("form24_master");
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale Bill</b></div></br>";
+
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b></div>"+
+		"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+		"<br>Address: "+get_session_var('address')+"</div></div></br>";
+	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+
+	var header_element=document.getElementById("form10_master");
 	var header_copy=header_element.cloneNode(true);
 	
-	var table_element=document.getElementById("form24_body").parentNode;
+	var table_element=document.getElementById("form10_body").parentNode;
 	var table_copy=table_element.cloneNode(true);
 	
 	table_copy.removeAttribute('class');
-	$(table_copy).find("th:last-child, td:last-child").remove();
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
+	$(table_copy).find('input').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	$(header_copy).find("a,input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input[type=text],input[type=number],textarea").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	var font_size=get_session_var('print_size');
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"font-size:"+font_size+"em");
+	
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(table_copy);
+	container.appendChild(header_copy);
+	
+	$.print(container);
+}
+
+
+/**
+ * @form Create Product bills
+ * @formNo 12
+ */
+function form12_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale Bill</b></div></br>";
+
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b></div>"+
+		"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+		"<br>Address: "+get_session_var('address')+"</div></div></br>";
+	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+
+	var header_element=document.getElementById("form12_master");
+	var header_copy=header_element.cloneNode(true);
+	
+	var table_element=document.getElementById("form12_body").parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
+	$(table_copy).find('input').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	$(header_copy).find("a,input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input[type=text],input[type=number],textarea").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	var font_size=get_session_var('print_size');
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"font-size:"+font_size+"em");
+	
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(table_copy);
+	container.appendChild(header_copy);
+	
+	$.print(container);
+}
+
+
+/**
+ * @form Enter customer returns
+ * @formNo 15
+ */
+function form15_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale returns</b></div></br>";
+
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b></div>"+
+		"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+		"<br>Address: "+get_session_var('address')+"</div></div></br>";
+	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+
+	var header_element=document.getElementById("form15_master");
+	var header_copy=header_element.cloneNode(true);
+	
+	var table_element=document.getElementById("form15_body").parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
+	$(table_copy).find('input').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	$(header_copy).find("a,input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input[type=text],input[type=number],textarea").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	var font_size=get_session_var('print_size');
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"font-size:"+font_size+"em");
+	
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(table_copy);
+	container.appendChild(header_copy);
+	
+	$.print(container);
+}
+
+
+/**
+ * @form Enter supplier returns
+ * @formNo 19
+ */
+function form19_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Purchase returns</b></div></br>";
+	
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b></div>"+
+		"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+		"<br>Address: "+get_session_var('address')+"</div></div></br>";
+	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+
+	var header_element=document.getElementById("form19_master");
+	var header_copy=header_element.cloneNode(true);
+	
+	var table_element=document.getElementById("form19_body").parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
+	$(table_copy).find('input').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	$(header_copy).find("a,input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input[type=text],input[type=number],textarea").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	var font_size=get_session_var('print_size');
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"font-size:"+font_size+"em");
+	
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(table_copy);
+	container.appendChild(header_copy);
+	
+	$.print(container);
+}
+
+
+/**
+ * @form Enter supplier bill
+ * @formNo 21
+ */
+function form21_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Purchase Bill</b></div></br>";
+
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b></div>"+
+		"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+		"<br>Address: "+get_session_var('address')+"</div></div></br>";
+	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+
+	var header_element=document.getElementById("form21_master");
+	var header_copy=header_element.cloneNode(true);
+	
+	var table_element=document.getElementById("form21_body").parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
 	$(table_copy).find('input').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
@@ -328,7 +451,57 @@ function form24_print_form()
 	});
 			
 	var font_size=get_session_var('print_size');
-	table_copy.setAttribute('style',"text-align:center;font-size:"+font_size+"em");
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"font-size:"+font_size+"em");
+	
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(table_copy);
+	container.appendChild(header_copy);
+	
+	$.print(container);
+}
+
+
+/**
+ * @form Create Purchase order
+ * @formNo 24
+ */
+function form24_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Purchase Order</b></div></br>";
+	
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b></div>"+
+		"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+		"<br>Address: "+get_session_var('address')+"</div></div></br>";
+	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+
+	var header_element=document.getElementById("form24_master");
+	var header_copy=header_element.cloneNode(true);
+	
+	var table_element=document.getElementById("form24_body").parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
+	$(table_copy).find('input').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	$(header_copy).find("a").remove();
+	$(header_copy).find("input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input[type=text],input[type=number],textarea").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	var font_size=get_session_var('print_size');
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	header_copy.setAttribute('style',"font-size:"+font_size+"em");
 	
 	container.appendChild(title);
@@ -350,9 +523,13 @@ function form69_print_form()
 	var business_title=document.createElement('div');
 	var title=document.createElement('div');
 	var bt=get_session_var('title');
-	business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div></br>";
 	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale Order</b></div></br>";
 	
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b></div>"+
+		"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+		"<br>Address: "+get_session_var('address')+"</div></div></br>";
+	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+
 	var header_element=document.getElementById("form69_master");
 	var header_copy=header_element.cloneNode(true);
 	
@@ -360,7 +537,7 @@ function form69_print_form()
 	var table_copy=table_element.cloneNode(true);
 	
 	table_copy.removeAttribute('class');
-	$(table_copy).find("th:last-child, td:last-child").remove();
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
 	$(table_copy).find('input').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
@@ -374,7 +551,7 @@ function form69_print_form()
 	});
 			
 	var font_size=get_session_var('print_size');
-	table_copy.setAttribute('style',"text-align:center;font-size:"+font_size+"em");
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	header_copy.setAttribute('style',"font-size:"+font_size+"em");
 	
 	container.appendChild(title);
@@ -396,9 +573,13 @@ function form72_print_form()
 	var business_title=document.createElement('div');
 	var title=document.createElement('div');
 	var bt=get_session_var('title');
-	business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div></br>";
 	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale Bill</b></div></br>";
 	
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b></div>"+
+		"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+		"<br>Address: "+get_session_var('address')+"</div></div></br>";
+	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+
 	var header_element=document.getElementById("form72_master");
 	var header_copy=header_element.cloneNode(true);
 	
@@ -406,7 +587,7 @@ function form72_print_form()
 	var table_copy=table_element.cloneNode(true);
 	
 	table_copy.removeAttribute('class');
-	$(table_copy).find("th:last-child, td:last-child").remove();
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
 	$(table_copy).find('input').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
@@ -420,7 +601,7 @@ function form72_print_form()
 	});
 			
 	var font_size=get_session_var('print_size');
-	table_copy.setAttribute('style',"text-align:center;font-size:"+font_size+"em");
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	header_copy.setAttribute('style',"font-size:"+font_size+"em");
 	
 	container.appendChild(title);
@@ -442,9 +623,13 @@ function form82_print_form()
 	var business_title=document.createElement('div');
 	var title=document.createElement('div');
 	var bt=get_session_var('title');
-	business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div></br>";
 	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale Bill</b></div></br>";
 	
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b></div>"+
+		"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+		"<br>Address: "+get_session_var('address')+"</div></div></br>";
+	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+
 	var header_element=document.getElementById("form82_master");
 	var header_copy=header_element.cloneNode(true);
 	
@@ -452,7 +637,7 @@ function form82_print_form()
 	var table_copy=table_element.cloneNode(true);
 	
 	table_copy.removeAttribute('class');
-	$(table_copy).find("th:last-child, td:last-child").remove();
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
 	$(table_copy).find('input').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
@@ -466,7 +651,7 @@ function form82_print_form()
 	});
 			
 	var font_size=get_session_var('print_size');
-	table_copy.setAttribute('style',"text-align:center;font-size:"+font_size+"em");
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	header_copy.setAttribute('style',"font-size:"+font_size+"em");
 	
 	container.appendChild(title);
@@ -487,8 +672,13 @@ function form91_print_form()
 	var business_title=document.createElement('div');
 	var title=document.createElement('div');
 	var bt=get_session_var('title');
-	business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div></br>";
+	
 	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale Bill</b></div></br>";
+	
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b></div>"+
+							"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+							"<br>Address: "+get_session_var('address')+"</div></div></br>";
+	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
 	
 	var header_element=document.getElementById("form91_master");
 	var header_copy=header_element.cloneNode(true);
@@ -497,7 +687,7 @@ function form91_print_form()
 	var table_copy=table_element.cloneNode(true);
 	
 	table_copy.removeAttribute('class');
-	$(table_copy).find("th:last-child, td:last-child").remove();
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
 	$(table_copy).find('input').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
@@ -511,8 +701,8 @@ function form91_print_form()
 	});
 			
 	var font_size=get_session_var('print_size');
-	table_copy.setAttribute('style',"text-align:center;font-size:"+font_size+"em");
-	header_copy.setAttribute('style',"font-size:"+font_size+"em");
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"padding:1%;font-size:"+font_size+"em");
 	
 	container.appendChild(title);
 	container.appendChild(business_title);

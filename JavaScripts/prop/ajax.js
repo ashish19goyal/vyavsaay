@@ -38,6 +38,7 @@ function ajax_with_custom_func(url,kvp,func)
 			{
 				if(xmlhttp.responseText=="Invalid session")
 				{
+					number_active_ajax-=1;
 					hide_loader();
 					var user=get_username();
 					var domain=get_domain();
