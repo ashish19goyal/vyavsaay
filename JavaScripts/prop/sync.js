@@ -8,23 +8,11 @@ function switch_to_online()
 	{	
 		show_progress();
 		show_loader();
-		var progress_timer=setInterval(function()
-		{
-			progress_value+=(2*(80-progress_value))/100;
-		},3000);
-		//console.log(localdb_open_requests);
 		sync_local_to_server(function()
 		{
-			progress_value=80;
-			clearInterval(progress_timer);
-			var progress_timer=setInterval(function()
-			{
-				progress_value+=(2*(100-progress_value))/100;
-			},3000);
-			
+			progress_value=50;
 			sync_server_to_local(function()
 			{
-				clearInterval(progress_timer);
 				progress_value=100;
 				set_session_online();
 				hide_progress();
@@ -50,24 +38,12 @@ function switch_to_offline()
 		show_loader();
 		create_local_db(domain,function(e)
 		{
-			progress_value=5;
-			var progress_timer=setInterval(function()
-			{
-				progress_value+=(2*(80-progress_value))/100;
-			},3000);
-
+			progress_value=0;
 			sync_server_to_local(function()
 			{
-				progress_value=80;
-				clearInterval(progress_timer);
-				var progress_timer=setInterval(function()
-				{
-					progress_value+=(2*(100-progress_value))/100;
-				},3000);
-				
+				progress_value=50;
 				sync_local_to_server(function()
 				{
-					clearInterval(progress_timer);
 					progress_value=100;
 					set_session_offline();
 					hide_progress();
@@ -90,23 +66,12 @@ function sync_local_and_server()
 	{
 		show_progress();
 		show_loader();
-		var progress_timer=setInterval(function()
-		{
-			progress_value+=(2*(70-progress_value))/100;
-		},2000);
 		
 		sync_local_to_server(function()
 		{
-			progress_value=70;
-			clearInterval(progress_timer);
-			var progress_timer=setInterval(function()
-			{
-				progress_value+=(2*(100-progress_value))/100;
-			},2000);
-			
+			progress_value=50;
 			sync_server_to_local(function()
 			{
-				clearInterval(progress_timer);
 				progress_value=100;
 				hide_menu_items();
 				hide_progress();
@@ -136,18 +101,31 @@ function sync_server_to_local(func)
 		sync_server_to_local_ajax(start_table,start_offset,last_sync_time);
 	});
 	
+	var max_localdb_open_requests=0;
+	var progress_dummy=progress_value+5;
 	var sync_download_complete=setInterval(function()
 	{
-  	   if(number_active_ajax===0 && localdb_open_requests===0)
+  	   if(number_active_ajax===0)
   	   {
-  		   console.log('completed server to local sync');
-  		   clearInterval(sync_download_complete);
-  		   update_last_sync_time(function()
+  		   if(max_localdb_open_requests===0)
   		   {
-				func();
-		   });
+  			  max_localdb_open_requests=localdb_open_requests;
+  		   }
+  		   else
+  		   {
+  			   progress_value=progress_dummy+(1-(localdb_open_requests/max_localdb_open_requests))*45;
+  		   }
+  		 
+  		   if(localdb_open_requests===0)
+  		   {
+  			   clearInterval(sync_download_complete);
+	  		   update_last_sync_time(function()
+	  		   {
+					func();
+			   });
+  		   }
   	   }
-     },5000);
+     },3000);
 	
 };
 
@@ -178,11 +156,7 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 			{
 				sync_server_to_local_ajax(end_table,end_offset,last_sync_time);
 			}
-			else
-			{
-				console.log('got everything from server');
-			}
-
+			
 			var tables=response.childNodes[0].childNodes[0].childNodes;
 
 			//console.log(localdb_open_requests);
@@ -224,7 +198,7 @@ function local_put_record(this_table,objectStore,num_rows,row_index)
 		var req=objectStore.put(row);
 		req.onsuccess=function(e)
 		{
-			console.log(this_table.nodeName);
+			//console.log(this_table.nodeName);
 			localdb_open_requests-=1;
 			local_put_record(this_table,objectStore,num_rows,row_index);
 		};
@@ -287,7 +261,7 @@ function local_update_record(ids,objectStore,row_index)
 				};
 				put_req.onerror=function(e)
 				{
-					console.log('error updating activitiy status');
+					//console.log('error updating activitiy status');
 					local_update_record(ids,objectStore,row_index);
 				};
 			}
@@ -330,12 +304,19 @@ function sync_local_to_server(func)
 					set_activities_to_synced(response);
 				});
 			});
+			var progress_dummy=progress_value+5;
 			var sync_complete=setInterval(function()
 			{
-         	   if(number_active_ajax===0)
+  			   progress_value=progress_dummy+(1-(number_active_ajax/log_data_array.length))*30;
+  			   
+  			   if(number_active_ajax===0)
          	   {
-         		   clearInterval(sync_complete);
-         		   func();
+  				   if(localdb_open_requests===0)
+  				   {
+  					   progress_value+=15;
+  	         		   clearInterval(sync_complete);
+  	         		   func();
+  				   }
          	   }
             },1000);		
 		});

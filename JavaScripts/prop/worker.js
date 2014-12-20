@@ -942,36 +942,29 @@ function balance_out_payments()
 			"</payments>";
 	fetch_requested_data('',payments_data,function(payments)
 	{
-		var total_balance=0;
-		accounts.forEach(function(result)
-		{	
-			var balance_amount=0;
-			var bill_ids_string="";
-			
-			payments.forEach(function(payment)
+		payments.forEach(function(payment)
+		{
+			if(payment.acc_name==result.acc_name)
 			{
-				if(payment.acc_name==result.acc_name)
+				bill_ids_string+="<u title='Amount Rs:"+payment.total_amount+"'>"+payment.bill_id+"</u>"+", ";
+				if(payment.type=='received')
 				{
-					bill_ids_string+="<u title='Amount Rs:"+payment.total_amount+"'>"+payment.bill_id+"</u>"+", ";
-					if(payment.type=='received')
-					{
-						balance_amount+=parseFloat(payment.total_amount);
-						balance_amount-=parseFloat(payment.paid_amount);
-					}
-					else if(payment.type=='paid')
-					{
-						balance_amount-=parseFloat(payment.total_amount);
-						balance_amount+=parseFloat(payment.paid_amount);
-					}
+					balance_amount+=parseFloat(payment.total_amount);
+					balance_amount-=parseFloat(payment.paid_amount);
 				}
-			});
+				else if(payment.type=='paid')
+				{
+					balance_amount-=parseFloat(payment.total_amount);
+					balance_amount+=parseFloat(payment.paid_amount);
+				}
+			}
+		});
 			
 			if(balance_amount>=balance)
 			{
 				total_balance+=balance_amount;
 				bill_ids_string=bill_ids_string.substr(0,(bill_ids_string.length-2));
 			}
-		});
 	});
 
 	

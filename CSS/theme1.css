@@ -223,7 +223,7 @@ input[type="text"]#search_box{
     height: 30%;
     position: fixed;
     top: 35%;
-    left: 50%;
+    left: 42%;
     z-index:1000;
 }
 
