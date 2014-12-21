@@ -500,6 +500,28 @@ tbody tr:hover{
 	outline: none;
 }
 
+.generic_icon{
+	height: 25px;
+	width: auto;
+	cursor: pointer;
+	border: 2px solid #8B0000;
+	display: inline-block;
+	color: #FFF;
+	font-size: 9px;
+	text-align: center;
+	-webkit-appearance:none;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5s all;
+	border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	-o-border-radius: 0.4em;
+	background: #DB0000;
+	outline: none;
+}
+
+
 .save_icon{
 	height: 25px;
 	width: 25px;

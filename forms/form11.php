@@ -11,6 +11,7 @@
 					<th>Details </th>
 					<th><input type='button' form='form11_header' value='EXPORT' class='export_icon'>
 						<input type='button' form='form11_header' value='IMPORT' class='import_icon'>
+						<input type='button' form='form11_header' value='Balance Out' title='Balance out pending payments' class='generic_icon' onclick='balance_out_payments();'>
 						<input type='submit' form='form11_header' style='visibility: hidden;'>
 					</th>
 			</tr>

@@ -3927,7 +3927,7 @@ function form56_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form56_"+result.id+"' value='"+result.type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Account'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form56_"+result.id+"' value='"+result.acc_name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form56_"+result.id+"'>"+result.acc_name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Amount'>";
 						rowsHTML+="<input type='number' readonly='readonly' step='any' form='form56_"+result.id+"' value='"+result.amount+"'>";

@@ -932,41 +932,205 @@ function generate_attendance_records()
 function balance_out_payments()
 {
 	var payments_data="<payments>" +
-			"<id></id>" +
 			"<acc_name></acc_name>" +
 			"<type></type>" +
 			"<total_amount></total_amount>" +
 			"<paid_amount></paid_amount>" +
-			"<bill_id></bill_id>" +
 			"<status>pending</status>" +
 			"</payments>";
 	fetch_requested_data('',payments_data,function(payments)
 	{
+		//console.log(payments);
+		for(var i=0;i<payments.length;i++)
+		{
+			//console.log(payments[i]);
+			payments[i].total_received=0;
+			payments[i].total_paid=0;
+			
+			if(payments[i].type=='paid')
+			{
+				payments[i].total_paid=parseFloat(payments[i].total_amount)-parseFloat(payments[i].paid_amount);
+				//console.log('paid type of payment'+payments[i].total_paid);
+			}
+			else
+			{
+				payments[i].total_received=parseFloat(payments[i].total_amount)-parseFloat(payments[i].paid_amount);
+				//console.log('received type of payment'+payments[i].total_received);
+			}
+			
+			for(var j=i+1;j<payments.length;j++)
+			{
+				if(payments[i].acc_name==payments[j].acc_name)
+				{
+					if(payments[j].type=='paid')
+					{
+						payments[i].total_paid+=parseFloat(payments[j].total_amount)-parseFloat(payments[j].paid_amount);
+						//console.log('paid type of payment'+payments[i].total_paid);
+					}
+					else
+					{
+						payments[i].total_received+=parseFloat(payments[j].total_amount)-parseFloat(payments[j].paid_amount);
+						//console.log('received type of payment'+payments[i].total_received);
+					}
+					payments.splice(j,1);
+					j-=1;
+				}
+			}
+			if(payments[i].total_received===0 || payments[i].total_paid===0)
+			{
+				payments.splice(i,1);
+				i-=1;
+			}
+		}
+		
+		console.log(payments);
 		payments.forEach(function(payment)
 		{
-			if(payment.acc_name==result.acc_name)
+			var accounts_data="<payments>" +
+					"<id></id>" +
+					"<acc_name>"+payment.acc_name+"</acc_name>" +
+					"<type></type>" +
+					"<total_amount></total_amount>" +
+					"<paid_amount></paid_amount>" +
+					"<status>pending</status>" +
+					"</payments>";
+			fetch_requested_data('',accounts_data,function(accounts)
 			{
-				bill_ids_string+="<u title='Amount Rs:"+payment.total_amount+"'>"+payment.bill_id+"</u>"+", ";
-				if(payment.type=='received')
+				console.log(accounts);
+				accounts.forEach(function(account)
 				{
-					balance_amount+=parseFloat(payment.total_amount);
-					balance_amount-=parseFloat(payment.paid_amount);
-				}
-				else if(payment.type=='paid')
-				{
-					balance_amount-=parseFloat(payment.total_amount);
-					balance_amount+=parseFloat(payment.paid_amount);
-				}
-			}
-		});
-			
-			if(balance_amount>=balance)
-			{
-				total_balance+=balance_amount;
-				bill_ids_string=bill_ids_string.substr(0,(bill_ids_string.length-2));
-			}
-	});
+					if(payment.total_received<payment.total_paid)
+					{
+						if(account.type=='received')
+						{
+							var received_xml="<payments>" +
+								"<id>"+account.id+"</id>" +
+								"<paid_amount>"+account.total_amount+"</paid_amount>" +
+								"<status>closed</status>" +
+								"<last_updated>"+get_my_time()+"</last_updated>" +
+								"</payments>";
+							if(is_online())
+							{
+								server_update_simple(received_xml);
+							}
+							else
+							{
+								local_update_simple(received_xml);
+							}
+						}
+						else
+						{
+							var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
+							if(pending_amount<=payment.total_received)
+							{
+								var paid_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+account.total_amount+"</paid_amount>" +
+									"<status>closed</status>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</payments>";
+								if(is_online())
+								{
+									server_update_simple(paid_xml);
+								}
+								else
+								{
+									local_update_simple(paid_xml);
+								}
 
-	
-	setTimeout(balance_out_payments,3600000);	
+								payment.total_received-=pending_amount;
+								payment.total_paid-=pending_amount;
+							}
+							else
+							{
+								var paid_amount=parseFloat(account.paid_amount)+payment.total_received;
+								var paid_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+paid_amount+"</paid_amount>" +
+									"<status>pending</status>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</payments>";
+								if(is_online())
+								{
+									server_update_simple(paid_xml);
+								}
+								else
+								{
+									local_update_simple(paid_xml);
+								}
+
+								payment.total_received=0;
+								payment.total_paid=0;
+							}
+						}
+					}
+					else
+					{
+						if(account.type=='paid')
+						{
+							var paid_xml="<payments>" +
+								"<id>"+account.id+"</id>" +
+								"<paid_amount>"+account.total_amount+"</paid_amount>" +
+								"<status>closed</status>" +
+								"<last_updated>"+get_my_time()+"</last_updated>" +
+								"</payments>";
+							if(is_online())
+							{
+								server_update_simple(paid_xml);
+							}
+							else
+							{
+								local_update_simple(paid_xml);
+							}
+						}
+						else
+						{
+							var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
+							
+							if(pending_amount<=payment.total_paid)
+							{
+								var received_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+account.total_amount+"</paid_amount>" +
+									"<status>closed</status>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</payments>";
+								if(is_online())
+								{
+									server_update_simple(received_xml);
+								}
+								else
+								{
+									local_update_simple(received_xml);
+								}
+								
+								payment.total_received-=pending_amount;
+								payment.total_paid-=pending_amount;
+							}
+							else
+							{
+								var paid_amount=parseFloat(account.paid_amount)+payment.total_paid;
+								var received_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+paid_amount+"</paid_amount>" +
+									"<status>pending</status>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</payments>";
+								if(is_online())
+								{
+									server_update_simple(received_xml);
+								}
+								else
+								{
+									local_update_simple(received_xml);
+								}
+								payment.total_received=0;
+								payment.total_paid=0;
+							}
+						}
+					}
+				});
+			});
+		});
+	});
 }

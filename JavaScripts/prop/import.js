@@ -18,26 +18,15 @@ function form1_import(data_array,import_type)
 				"<mrp>"+row.mrp+"</mrp>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
 				"</product_instances>";
-		var id=get_new_key()+""+Math.floor(Math.random()*1000);
-		var adjust_xml="<inventory_adjust>" +
-				"<id>"+id+"</id>" +
-				"<product_name>"+row.product_name+"</product_name>" +
-				"<batch>"+row.batch+"</batch>" +
-				"<quantity>"+row.adjusted_quantity+"</quantity>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</inventory_adjust>";	
-
 		if(import_type=='create_new')
 		{
 			if(is_online())
 			{
 				server_create_simple(data_xml);
-				server_create_simple(adjust_xml);
 			}
 			else
 			{
 				local_create_simple(data_xml);
-				local_create_simple(adjust_xml);
 			}
 		}
 		else
@@ -45,11 +34,29 @@ function form1_import(data_array,import_type)
 			if(is_online())
 			{	
 				server_update_simple(data_xml);
-				server_create_simple(adjust_xml);
 			}
 			else
 			{
 				local_update_simple(data_xml);
+			}
+		}
+		
+		if(parseInt(row.adjusted_quantity)>0)
+		{
+			var id=get_new_key()+""+Math.floor(Math.random()*1000);
+			var adjust_xml="<inventory_adjust>" +
+					"<id>"+id+"</id>" +
+					"<product_name>"+row.product_name+"</product_name>" +
+					"<batch>"+row.batch+"</batch>" +
+					"<quantity>"+row.adjusted_quantity+"</quantity>" +
+					"<last_updated>"+get_my_time()+"</last_updated>" +
+					"</inventory_adjust>";	
+			if(is_online())
+			{
+				server_create_simple(adjust_xml);
+			}
+			else
+			{
 				local_create_simple(adjust_xml);
 			}
 		}

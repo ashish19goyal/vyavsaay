@@ -10,7 +10,7 @@
 					<th><input type='button' form='form87_header' title='Add new product' class='add_icon' onclick='modal14_action();'>
 						<input type='button' form='form87_header' value='EXPORT' class='export_icon'>
 						<input type='button' form='form87_header' value='IMPORT' class='import_icon'>
-						<input type='submit' form='form97_header' style='visibility: hidden;'>
+						<input type='submit' form='form87_header' style='visibility: hidden;'>
 					</th>
 			</tr>
 		</thead>

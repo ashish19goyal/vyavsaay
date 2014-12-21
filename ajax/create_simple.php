@@ -77,11 +77,11 @@
 				$stmt2=$conn->conn->prepare($query2);
 				$stmt2->execute($data_array);
 				
-				$act_data=array('no',$table,$id,$data_xml,'online',1000*time(),$act_type);
+/*				$act_data=array('no',$table,$id,$data_xml,'online',1000*time(),$act_type);
 				$query3="insert into activities (user_display,tablename,data_id,data_xml,status,last_updated,type) values(?,?,?,?,?,?,?)";
 				$stmt3=$conn->conn->prepare($query3);
 				$stmt3->execute($act_data);
-				
+*/				
 				echo "data saved";
 			}
 			else

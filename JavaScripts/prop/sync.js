@@ -42,6 +42,7 @@ function switch_to_offline()
 			sync_server_to_local(function()
 			{
 				progress_value=50;
+				//console.log('half completed');
 				sync_local_to_server(function()
 				{
 					progress_value=100;
@@ -115,7 +116,7 @@ function sync_server_to_local(func)
   		   {
   			   progress_value=progress_dummy+(1-(localdb_open_requests/max_localdb_open_requests))*45;
   		   }
-  		 
+  		   //console.log(localdb_open_requests);
   		   if(localdb_open_requests===0)
   		   {
   			   clearInterval(sync_download_complete);
@@ -224,15 +225,16 @@ function local_delete_record(this_table,num_rows,row_index)
 			row[nname]=this_table.childNodes[row_index].childNodes[j].innerHTML;
 		}
 		
-		localdb_open_requests-=1;
 		row_index+=1;
 		
 		if(row['type']==='delete')
 		{
+			localdb_open_requests+=1;
 			var del_table=row['tablename'];
 			var del_id=row['data_id'];
 			static_local_db.transaction([del_table],"readwrite").objectStore(del_table).delete(del_id).onsuccess=function(e)
 			{
+				localdb_open_requests-=1;
 				//console.log("deleted row");
 			};
 		}
@@ -289,9 +291,10 @@ function sync_local_to_server(func)
 	
 	get_data_from_log_table(function(log_data)
 	{
+		//console.log('got data from log table');
 		get_last_sync_time(function(last_sync_time)
 		{
-			//console.log(log_data);
+			//console.log('got last sync time');
 			var log_data_array=log_data.split("<separator></separator>");
 			log_data_array.forEach(function(log_data_chunk)
 			{
@@ -304,6 +307,7 @@ function sync_local_to_server(func)
 					set_activities_to_synced(response);
 				});
 			});
+			
 			var progress_dummy=progress_value+5;
 			var sync_complete=setInterval(function()
 			{
