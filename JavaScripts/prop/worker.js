@@ -988,12 +988,14 @@ function balance_out_payments()
 		{
 			var accounts_data="<payments>" +
 					"<id></id>" +
-					"<acc_name>"+payment.acc_name+"</acc_name>" +
+					"<acc_name exact='yes'>"+payment.acc_name+"</acc_name>" +
 					"<type></type>" +
+					"<date></date>" +
 					"<total_amount></total_amount>" +
 					"<paid_amount></paid_amount>" +
 					"<status>pending</status>" +
 					"</payments>";
+			console.log(accounts_data);
 			fetch_requested_data('',accounts_data,function(accounts)
 			{
 				console.log(accounts);

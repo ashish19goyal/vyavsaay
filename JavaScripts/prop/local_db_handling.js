@@ -329,8 +329,6 @@ function local_read_multi_column(columns,callback,results)
 			filter.push(fil);
 		}
 	}
-	var domain=get_domain();
-	var db_name="re_local_"+domain;
 	
 	if(typeof static_local_db=='undefined')
 	{
