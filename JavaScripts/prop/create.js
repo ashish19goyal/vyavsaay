@@ -5553,6 +5553,8 @@ function form90_create_item(form)
 {
 	if(is_create_access('form90'))
 	{
+		show_loader();
+
 		var name=form.elements[0].value;
 		var notes=form.elements[1].value;
 		var status='active';
@@ -5590,10 +5592,17 @@ function form90_create_item(form)
 					"</product_instances>";
 		fetch_requested_data('',product_instance_data,function(instances)
 		{
+			var prices_xml="<sale_prices>";
+			var id=parseFloat(get_new_key());
+			var counter=0;
 			instances.forEach(function(instance)
 			{
-				var id=get_new_key()+""+Math.floor(Math.random()*1000);
-				var prices_xml="<sale_prices>" +
+				if(counter==500)
+				{
+					counter=0;
+					prices_xml+="</sale_prices><separator></separator><sale_prices>";
+				}
+				prices_xml+="<row>" +
 						"<id>"+id+"</id>" +
 						"<product_name>"+instance.product_name+"</product_name>" +
 						"<batch>"+instance.batch+"</batch>" +
@@ -5601,16 +5610,19 @@ function form90_create_item(form)
 						"<pi_id>"+instance.id+"</pi_id>" +
 						"<billing_type>"+name+"</billing_type>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +
-						"</sale_prices>";
-				if(is_online())
-				{
-					server_create_simple(prices_xml);
-				}
-				else
-				{
-					local_create_simple(prices_xml);
-				}		
+						"</row>";
+				id+=1;
+				counter+=1;
 			});
+			prices_xml+="</sale_prices>";
+			if(is_online())
+			{
+				server_create_batch(prices_xml);
+			}
+			else
+			{
+				local_create_batch(prices_xml);
+			}
 		});
 
 		for(var i=0;i<2;i++)
@@ -5631,6 +5643,15 @@ function form90_create_item(form)
 			event.preventDefault();
 			form90_update_item(form);
 		});
+		
+		var sales_price_complete=setInterval(function()
+		{
+  		   if(localdb_open_requests===0 && number_active_ajax===0)
+  		   {
+  			   clearInterval(sales_price_complete);
+	  		   hide_loader();
+  		   }
+	    },3000);
 	}
 	else
 	{

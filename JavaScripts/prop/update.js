@@ -4338,7 +4338,7 @@ function form87_update_item(form)
 					"<tablename>product_master</tablename>" +
 					"<link_to>form39</link_to>" +
 					"<title>Updated</title>" +
-					"<notes>Product "+name+" from inventory</notes>" +
+					"<notes>Product "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())

@@ -2906,7 +2906,7 @@ function modal38_action(father_id)
 			"<id></id>" +
 			"<sale_price></sale_price>" +
 			"<billing_type></billing_type>" +
-			"<pi_id>"+father_id+"</pi_id>" +
+			"<pi_id exact='yes'>"+father_id+"</pi_id>" +
 			"</sale_prices>";
 	fetch_requested_data('',billing_type_data,function(sale_prices)
 	{

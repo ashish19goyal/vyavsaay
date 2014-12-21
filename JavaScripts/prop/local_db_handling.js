@@ -487,15 +487,15 @@ function local_update_row(data_xml,activity_xml)
 		var req=objectStore.get(data_id);
 		req.onsuccess=function(e)
 		{
-			var data=req.result;
-			if(data)
+			var data_record=req.result;
+			if(data_record)
 			{
 				for(var j=0;j<cols.length;j++)
 				{
-					data[cols[j].nodeName]=cols[j].innerHTML;
+					data_record[cols[j].nodeName]=cols[j].innerHTML;
 				}
 
-				var put_req=objectStore.put(data);
+				var put_req=objectStore.put(data_record);
 				put_req.onssuccess=function(e)
 				{
 					var id=get_new_key()+""+Math.floor(Math.random()*1000);
@@ -550,15 +550,15 @@ function local_update_simple(data_xml)
 		var req=objectStore.get(data_id);
 		req.onsuccess=function(e)
 		{
-			var data=req.result;
-			if(data)
+			var data_record=req.result;
+			if(data_record)
 			{
 				for(var j=0;j<cols.length;j++)
 				{
-					data[cols[j].nodeName]=cols[j].innerHTML;
+					data_record[cols[j].nodeName]=cols[j].innerHTML;
 				}
 				
-				var put_req=objectStore.put(data);
+				var put_req=objectStore.put(data_record);
 				put_req.onssuccess=function(e)
 				{
 					var id=get_new_key()+""+Math.floor(Math.random()*1000);
@@ -567,7 +567,7 @@ function local_update_simple(data_xml)
 							status:'unsynced',
 							data_xml:data_xml,
 							user_display:'no',
-							data_id:data.id,
+							data_id:data_record.id,
 							tablename:table,
 							link_to:'',
 							last_updated:get_my_time()};
@@ -581,6 +581,90 @@ function local_update_simple(data_xml)
 		};
 	}
 }
+
+
+/**
+ * this function updates multiple rows of record in local db
+ * @param data_xml
+ * @param activity_xml
+ * @returns
+ */
+function local_update_batch(data_xml)
+{
+	if(typeof static_local_db=='undefined')
+	{
+		open_local_db(function()
+		{
+			local_update_batch(data_xml);
+		});
+	}
+	else
+	{
+		show_loader();
+		var parser=new DOMParser();
+		//data_xml=data_xml.replace(/[\x{0009}\x{000a}\x{000d}\x{0020}\x{D7FF}\x{E000}\x{FFFD}]/g," ");
+		var data_xml_array=data_xml.split("<separator></separator>");
+		data_xml_array.forEach(function(data_chunk)
+		{
+			var data=parser.parseFromString(data_chunk,"text/xml");
+			var table=data.childNodes[0].nodeName;
+			var rows=data.childNodes[0].childNodes;
+			
+			for(var i=0;i<rows.length;i++)
+			{
+				var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
+				var cols=rows[i].childNodes;
+				
+				var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
+				
+				localdb_open_requests+=1;
+				
+				var req=objectStore.get(data_id);
+				req.onsuccess=function(e)
+				{
+					var data_record=req.result;
+					if(data_record)
+					{
+						for(var j=0;j<cols.length;j++)
+						{
+							data_record[cols[j].nodeName]=cols[j].innerHTML;
+						}
+						
+						var put_req=objectStore.put(data_record);
+						put_req.onssuccess=function(e)
+						{
+							var id=get_new_key()+""+Math.floor(Math.random()*1000);
+							var act_row={id:id,
+									type:'update',
+									status:'unsynced',
+									data_xml:data_xml,
+									user_display:'no',
+									data_id:data_record.id,
+									tablename:table,
+									link_to:'',
+									last_updated:get_my_time()};
+							
+							static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
+							{
+								localdb_open_requests-=1;
+							};
+						};
+					}
+				};
+			}
+		});
+		
+		var local_update_complete=setInterval(function()
+		{
+		   if(localdb_open_requests===0)
+		   {
+			   clearInterval(local_update_complete);
+			   hide_loader();
+		   }
+	    },2000);	
+	}
+}
+
 
 /**
  * @param data_xml
@@ -609,15 +693,15 @@ function local_update_simple_func(data_xml,func)
 		var req=objectStore.get(data_id);
 		req.onsuccess=function(e)
 		{
-			var data=req.result;
-			if(data)
+			var data_record=req.result;
+			if(data_record)
 			{
 				for(var j=0;j<cols.length;j++)
 				{
-					data[cols[j].nodeName]=cols[j].innerHTML;
+					data_record[cols[j].nodeName]=cols[j].innerHTML;
 				}
 				
-				var put_req=objectStore.put(data);
+				var put_req=objectStore.put(data_record);
 				put_req.onssuccess=function(e)
 				{
 					var id=get_new_key()+""+Math.floor(Math.random()*1000);
@@ -626,7 +710,7 @@ function local_update_simple_func(data_xml,func)
 							status:'unsynced',
 							data_xml:data_xml,
 							user_display:'no',
-							data_id:data.id,
+							data_id:data_record.id,
 							tablename:table,
 							link_to:'',
 							last_updated:get_my_time()};
@@ -788,7 +872,6 @@ function local_create_row(data_xml,activity_xml)
 }
 
 
-
 /**
  * this function save a row of record to local db
  * @param data_xml
@@ -925,6 +1008,166 @@ function local_create_simple(data_xml)
 		}
 	}
 }
+
+
+/**
+ * this function saves multiple records to local db
+ * @param data_xml
+ * @param activity_xml
+ * @returns
+ */
+function local_create_batch(data_xml)
+{
+	if(typeof static_local_db=='undefined')
+	{
+		open_local_db(function()
+		{
+			local_create_batch(data_xml);
+		});
+	}
+	else
+	{
+		show_loader();
+		var parser=new DOMParser();
+		var data_xml_array=data_xml.split("<separator></separator>");
+		data_xml_array.forEach(function(data_chunk)
+		{
+			var data=parser.parseFromString(data_chunk,"text/xml");
+			var table=data.childNodes[0].nodeName;
+			var rows=data.childNodes[0].childNodes;
+			
+			for(var i=0;i<rows.length;i++)
+			{
+				console.log('looping');
+				var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
+				var cols=rows[i].childNodes;
+		
+				var unique=new Array();
+				for(var j=0;j<cols.length;j++)
+				{
+					if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+					{
+						if(cols[j].hasAttribute('unique'))
+						{
+							var fil=new Object();
+							fil.name=cols[j].nodeName;
+							fil.value=cols[j].innerHTML;
+							unique.push(fil);
+						}
+					}
+				}
+				var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
+				
+				if(unique.length===0)
+				{
+					//console.log("unique length is zero");
+					var data_row=new Object();
+						
+					for(var j=0;j<cols.length;j++)
+					{
+						data_row[cols[j].nodeName]=cols[j].innerHTML;
+					}
+
+					localdb_open_requests+=1;
+					var put_req=objectStore.put(data_row);
+					put_req.onssuccess=function(e)
+					{
+						console.log('batch put');
+						var id=get_new_key()+""+Math.floor(Math.random()*1000);
+						var act_row={id:id,
+								type:'create',
+								status:'unsynced',
+								data_xml:data_xml,
+								user_display:'no',
+								data_id:data_row.id,
+								tablename:table,
+								link_to:'',
+								last_updated:get_my_time()};
+						static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
+						{
+							localdb_open_requests-=1;
+						};
+					};
+				}
+				else
+				{
+					//console.log("unique length is non-zero");
+					var unique_rec=true;
+					var type='create';
+					var data_row=new Object();
+
+					localdb_open_requests+=1;
+					objectStore.openCursor().onsuccess=function(e)
+					{
+						localdb_open_requests-=1;
+						var result=e.target.result;
+						if(result)
+						{
+							var record=result.value;
+						
+							if(record.id==data_id)
+							{
+								unique_rec=false;
+								localdb_open_requests-=1;
+								$("#modal5").dialog("open");
+							}
+							else 
+							{	
+								for(var k in unique)
+								{
+									if(record[unique[k].name]==unique[k].value)
+									{
+										unique_rec=false;
+										localdb_open_requests-=1;
+										$("#modal5").dialog("open");
+									}
+									else
+									{
+										result.continue();
+									}
+								}
+							}
+						}
+						else
+						{
+							for(var j=0;j<cols.length;j++)
+							{
+								data_row[cols[j].nodeName]=cols[j].innerHTML;
+							}
+							localdb_open_requests+=1;
+							objectStore.put(data_row).onsuccess=function(e)
+							{
+								var id=get_new_key()+""+Math.floor(Math.random()*1000);
+								var act_row={id:id,
+										type:type,
+										status:'unsynced',
+										data_xml:data_xml,
+										user_display:'no',
+										data_id:data_row.id,
+										tablename:table,
+										link_to:'',
+										last_updated:get_my_time()};
+								static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
+								{
+									localdb_open_requests-=1;
+								};
+							};
+						}
+					};
+				}
+			}
+		});
+		var local_create_complete=setInterval(function()
+		{
+		   if(localdb_open_requests===0)
+		   {
+			   clearInterval(local_create_complete);
+			   hide_loader();
+		   }
+	    },2000);	
+	}
+}
+
 
 
 function local_create_simple_func(data_xml,func)

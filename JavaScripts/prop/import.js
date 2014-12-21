@@ -2002,9 +2002,16 @@ function form84_import(data_array,import_type)
 */
 function form87_import(data_array,import_type)
 {
+	var data_xml="<product_master>";
+	var counter=0;
 	data_array.forEach(function(row)
 	{
-		var data_xml="<product_master>" +
+		if(counter===500)
+		{
+			data_xml+="</product_master><separator></separator><product_master>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name unique='yes'>"+row.name+"</name>" +
 				"<make>"+row.make+"</make>" +
@@ -2012,30 +2019,32 @@ function form87_import(data_array,import_type)
 				"<tax>"+row.tax+"</tax>" +
 				"<bar_code>"+row.bar_code+"</bar_code>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</product_master>";
-		if(import_type=='create_new')
+				"</row>";
+	});
+	
+	data_xml+="</product_master>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
 		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-			}
+			server_create_batch(data_xml);
 		}
 		else
 		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
+			local_create_batch(data_xml);
 		}
-	});
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
 };
 
 

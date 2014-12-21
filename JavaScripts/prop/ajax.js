@@ -261,6 +261,34 @@ function server_create_simple_func(data_xml,func)
 	});
 }
 
+function server_create_batch(data_xml)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var cr_access=get_session_var('cr');
+	
+	//console.log('got last sync time');
+	var data_xml_array=data_xml.split("<separator></separator>");
+	data_xml_array.forEach(function(data_chunk)
+	{
+		ajax_with_custom_func("./ajax/create_batch.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&data_xml="+data_chunk,function(e)
+		{
+			console.log(e.responseText);
+		});
+	});
+	
+	var server_create_complete=setInterval(function()
+	{
+	   if(number_active_ajax===0)
+	   {
+		   clearInterval(server_create_complete);
+		   hide_loader();
+	   }
+    },1000);		
+}
+
+
 function server_create_simple_no_warning(data_xml)
 {
 	show_loader();
@@ -319,6 +347,35 @@ function server_update_simple_func(data_xml,func)
 		hide_loader();
 	});
 }
+
+function server_update_batch(data_xml)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var up_access=get_session_var('up');
+	data_xml=data_xml.replace(/\+/g,'%2B');
+	
+	//console.log('got last sync time');
+	var data_xml_array=data_xml.split("<separator></separator>");
+	data_xml_array.forEach(function(data_chunk)
+	{
+		ajax_with_custom_func("./ajax/update_batch.php","domain="+domain+"&username="+username+"&up="+up_access+"&data_xml="+data_chunk,function(e)
+		{
+			console.log(e.responseText);
+		});
+	});
+	
+	var server_update_complete=setInterval(function()
+	{
+	   if(number_active_ajax===0)
+	   {
+		   clearInterval(server_update_complete);
+		   hide_loader();
+	   }
+    },1000);		
+}
+
 
 function server_get_inventory(product,batch,callback)
 {

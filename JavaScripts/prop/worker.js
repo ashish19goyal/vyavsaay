@@ -990,7 +990,7 @@ function balance_out_payments()
 					"<id></id>" +
 					"<acc_name exact='yes'>"+payment.acc_name+"</acc_name>" +
 					"<type></type>" +
-					"<date></date>" +
+					"<date sort='asc'></date>" +
 					"<total_amount></total_amount>" +
 					"<paid_amount></paid_amount>" +
 					"<status>pending</status>" +
