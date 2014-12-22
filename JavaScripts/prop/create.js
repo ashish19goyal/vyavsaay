@@ -212,7 +212,7 @@ function form10_create_item(form)
 
 			pre_requisites.forEach(function(pre_requisite)
 			{
-				var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
+				var task_id=get_new_key();
 				var task_xml="<task_instances>" +
 						"<id>"+task_id+"</id>" +
 						"<name>"+pre_requisite.name+"</name>" +
@@ -317,7 +317,7 @@ function form10_create_item(form)
 				
 				free_pre_requisites.forEach(function(free_pre_requisite)
 				{
-					var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
+					var task_id=get_new_key();
 					var task_xml="<task_instances>" +
 							"<id>"+task_id+"</id>" +
 							"<name>"+free_pre_requisite.name+"</name>" +
@@ -559,7 +559,7 @@ function form10_create_form()
 						
 						free_pre_requisites.forEach(function(free_pre_requisite)
 						{
-							var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
+							var task_id=get_new_key();
 							var task_xml="<task_instances>" +
 									"<id>"+task_id+"</id>" +
 									"<name>"+free_pre_requisite.name+"</name>" +
@@ -1273,7 +1273,7 @@ function form15_create_item(form)
 				
 		if(saleable!="checked")
 		{
-			var discard_id=get_new_key()+""+Math.floor(Math.random()*1000);
+			var discard_id=get_new_key();
 			var discard_xml="<discarded>" +
 					"<id>"+discard_id+"</id>" +
 					"<product_name>"+name+"</product_name>" +
@@ -1515,7 +1515,7 @@ function form19_create_item(form)
 	
 		if(saleable!="checked")
 		{
-			var discard_id=get_new_key()+""+Math.floor(Math.random()*1000);
+			var discard_id=get_new_key();
 			var discard_xml="<discarded>" +
 					"<id>"+discard_id+"</id>" +
 					"<product_name>"+name+"</product_name>" +
@@ -3078,7 +3078,7 @@ function form70_bill(order_id)
 															free_batch=data[0];	
 														}
 														
-														var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
+														var bill_item_id=get_new_key();
 										                var free_xml="<bill_items>" +
 																	"<id>"+bill_item_id+"</id>" +
 																	"<item_name>"+free_product_name+"</item_name>" +
@@ -3156,7 +3156,7 @@ function form70_bill(order_id)
 														{
 															free_batch=data[0];	
 														}
-														var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
+														var bill_item_id=get_new_key();
 										                var free_xml="<bill_items>" +
 																	"<id>"+bill_item_id+"</id>" +
 																	"<item_name>"+free_product_name+"</item_name>" +
@@ -3204,7 +3204,7 @@ function form70_bill(order_id)
 									item_total=parseFloat(item_amount)+parseFloat(item_tax)-parseFloat(item_discount);
 									
 									/////saving to bill item
-									var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
+									var bill_item_id=get_new_key();
 					                var data_xml="<bill_items>" +
 											"<id>"+bill_item_id+"</id>" +
 											"<item_name>"+order_item.item_name+"</item_name>" +
@@ -3326,7 +3326,7 @@ function form70_bill(order_id)
 											{
 												free_batch=data[0];	
 											}
-											var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
+											var bill_item_id=get_new_key();
 							                var free_xml="<bill_items>" +
 														"<id>"+bill_item_id+"</id>" +
 														"<item_name>"+free_product_name+"</item_name>" +
@@ -3524,7 +3524,7 @@ function form72_create_item(form)
 		
 				pre_requisites.forEach(function(pre_requisite)
 				{
-					var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
+					var task_id=get_new_key();
 					var task_xml="<task_instances>" +
 							"<id>"+task_id+"</id>" +
 							"<name>"+pre_requisite.name+"</name>" +
@@ -4042,7 +4042,7 @@ function form72_create_form()
 						
 						free_pre_requisites.forEach(function(free_pre_requisite)
 						{
-							var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
+							var task_id=get_new_key();
 							var task_xml="<task_instances>" +
 									"<id>"+task_id+"</id>" +
 									"<name>"+free_pre_requisite.name+"</name>" +
@@ -4462,7 +4462,7 @@ function form82_bill()
 										{
 											free_batch=data[0];	
 										}
-										var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
+										var bill_item_id=get_new_key();
 						                var free_xml="<bill_items>" +
 													"<id>"+bill_item_id+"</id>" +
 													"<item_name>"+free_product_name+"</item_name>" +
@@ -4541,7 +4541,7 @@ function form82_bill()
 											free_batch=data[0];	
 										}
 									
-										var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
+										var bill_item_id=get_new_key();
 										var free_xml="<bill_items>" +
 													"<id>"+bill_item_id+"</id>" +
 													"<item_name>"+free_product_name+"</item_name>" +
@@ -4589,7 +4589,7 @@ function form82_bill()
 					item_total=parseFloat(item_amount)+parseFloat(item_tax)-parseFloat(item_discount);
 					
 					/////saving to bill item
-					var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
+					var bill_item_id=get_new_key();
 					var data_xml="<bill_items>" +
 							"<id>"+bill_item_id+"</id>" +
 							"<item_name>"+order_item.item_name+"</item_name>" +
@@ -4694,7 +4694,7 @@ function form82_bill()
 										{
 											free_batch=data[0];	
 										}
-										var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
+										var bill_item_id=get_new_key();
 										var free_xml="<bill_items>" +
 													"<id>"+bill_item_id+"</id>" +
 													"<item_name>"+free_product_name+"</item_name>" +
@@ -5028,7 +5028,7 @@ function form84_bills()
 									
 									free_pre_requisites.forEach(function(free_pre_requisite)
 									{
-										var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
+										var task_id=get_new_key();
 										var task_xml="<task_instances>" +
 												"<id>"+task_id+"</id>" +
 												"<name>"+free_pre_requisite.name+"</name>" +
@@ -5119,7 +5119,7 @@ function form84_bills()
 									
 									free_pre_requisites.forEach(function(free_pre_requisite)
 									{
-										var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
+										var task_id=get_new_key();
 										var task_xml="<task_instances>" +
 												"<id>"+task_id+"</id>" +
 												"<name>"+free_pre_requisite.name+"</name>" +
@@ -5162,7 +5162,7 @@ function form84_bills()
 					item_total=parseFloat(item_amount)+parseFloat(item_tax)-parseFloat(item_discount);
 					
 					/////saving to bill item
-					var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
+					var bill_item_id=get_new_key();
 	                var data_xml="<bill_items>" +
 								"<id>"+bill_item_id+"</id>" +
 								"<item_name>"+subscription.service+"</item_name>" +
@@ -5263,7 +5263,7 @@ function form84_bills()
 					{
 						pre_requisites.forEach(function(pre_requisite)
 						{
-							var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
+							var task_id=get_new_key();
 							var task_xml="<task_instances>" +
 									"<id>"+task_id+"</id>" +
 									"<name>"+pre_requisite.name+"</name>" +
@@ -5415,7 +5415,7 @@ function form88_create_item(form)
 			{
 				pre_requisites.forEach(function(pre_requisite)
 				{
-					var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
+					var task_id=get_new_key();
 					var task_xml="<task_instances>" +
 							"<id>"+task_id+"</id>" +
 							"<name>"+pre_requisite.name+"</name>" +

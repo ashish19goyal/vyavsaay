@@ -177,6 +177,7 @@
   	"product_purchase_report":"Product Purchase report",
   	"discard_items":"Discard Items",
   	"sales_tax":"Sales Tax",
-  	"data_import":"Data Import"
+  	"data_import":"Data Import",
+  	"delete_storage":"Delete Storage"
   }
 }

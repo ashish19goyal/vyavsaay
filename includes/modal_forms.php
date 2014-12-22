@@ -507,5 +507,9 @@
 		You can close this window at any time. The process will continue in the background.
 	</div>
 	
-		
+	<div id="modal52" title="Local Storage Cleared">
+		Local storage on this system has been cleared. 
+		You will be logged out now. Login again to access the system in online mode.
+	</div>
+	
 </div>

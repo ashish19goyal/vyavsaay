@@ -531,7 +531,7 @@ function form10_update_form()
 						
 						free_pre_requisites.forEach(function(free_pre_requisite)
 						{
-							var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
+							var task_id=get_new_key();
 							var task_xml="<task_instances>" +
 									"<id>"+task_id+"</id>" +
 									"<name>"+free_pre_requisite.name+"</name>" +
@@ -929,7 +929,7 @@ function form12_update_form()
 
 				                $('#form12_body').prepend(rowsHTML);
 				                
-				                var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
+				                var bill_item_id=get_new_key();
 								var free_xml="<bill_items>" +
 											"<id>"+bill_item_id+"</id>" +
 											"<item_name>"+free_product_name+"</item_name>" +
@@ -3703,7 +3703,7 @@ function form72_update_form()
 						
 						free_pre_requisites.forEach(function(free_pre_requisite)
 						{
-							var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
+							var task_id=get_new_key();
 							var task_xml="<task_instances>" +
 									"<id>"+task_id+"</id>" +
 									"<name>"+free_pre_requisite.name+"</name>" +
@@ -4417,7 +4417,7 @@ function form88_update_item(form)
 			{
 				pre_requisites.forEach(function(pre_requisite)
 				{
-					var task_id=get_new_key()+""+Math.floor(Math.random()*1000);
+					var task_id=get_new_key();
 					var task_xml="<task_instances>" +
 							"<id>"+task_id+"</id>" +
 							"<name>"+pre_requisite.name+"</name>" +
@@ -4762,7 +4762,7 @@ function form91_update_form()
 
 				                $('#form91_body').prepend(rowsHTML);
 				                
-				                var bill_item_id=get_new_key()+""+Math.floor(Math.random()*1000);
+				                var bill_item_id=get_new_key();
 								var free_xml="<bill_items>" +
 											"<id>"+bill_item_id+"</id>" +
 											"<item_name>"+free_product_name+"</item_name>" +

@@ -5,18 +5,31 @@
 function switch_to_online()
 {
 	if(is_read_access('sync_mode'))
-	{	
-		show_progress();
-		show_loader();
-		sync_local_to_server(function()
+	{
+		var domain=get_domain();
+		var username=get_username();
+		var cr_access=get_session_var('cr');
+		var up_access=get_session_var('up');
+		var del_access=get_session_var('del');
+		var re_access=get_session_var('re');
+		
+		ajax_with_custom_func("./ajax/connection_testing.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&up="+up_access+"&del="+del_access+"&re="+re_access,function(e)
 		{
-			progress_value=50;
-			sync_server_to_local(function()
+			if(e.responseText==='connected')
 			{
-				progress_value=100;
-				set_session_online();
-				hide_progress();
-			});
+				show_progress();
+				show_loader();
+				sync_local_to_server(function()
+				{
+					progress_value=50;
+					sync_server_to_local(function()
+					{
+						progress_value=100;
+						set_session_online();
+						hide_progress();
+					});
+				});
+			}
 		});
 	}
 	else
@@ -65,19 +78,32 @@ function sync_local_and_server()
 {
 	if(is_read_access('sync'))
 	{
-		show_progress();
-		show_loader();
+		var domain=get_domain();
+		var username=get_username();
+		var cr_access=get_session_var('cr');
+		var up_access=get_session_var('up');
+		var del_access=get_session_var('del');
+		var re_access=get_session_var('re');
 		
-		sync_local_to_server(function()
+		ajax_with_custom_func("./ajax/connection_testing.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&up="+up_access+"&del="+del_access+"&re="+re_access,function(e)
 		{
-			progress_value=50;
-			sync_server_to_local(function()
+			if(e.responseText==='connected')
 			{
-				progress_value=100;
-				hide_menu_items();
-				hide_progress();
-				hide_loader();
-			});
+				show_progress();
+				show_loader();
+				
+				sync_local_to_server(function()
+				{
+					progress_value=50;
+					sync_server_to_local(function()
+					{
+						progress_value=100;
+						hide_menu_items();
+						hide_progress();
+						hide_loader();
+					});
+				});
+			}
 		});
 	}
 	else

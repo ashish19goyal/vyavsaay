@@ -91,91 +91,106 @@ function set_session_variables(domain,username,pass)
 {
 	//console.log("2. inside set_session_variables()");
 	var db_name="re_local_"+domain;
-	
-	sklad.open(db_name,{version:2},function (err,database)
+
+	var request = indexedDB.open(db_name);
+	request.onsuccess=function(e)
 	{
-		//console.log("reading session variables from database");		
-		database.get('user_preferences', {},function(err,records)
+		static_local_db=e.target.result;
+		var report_string="-";
+		var form_string="-";
+		var data=new Object();
+
+		static_local_db.transaction(['user_preferences'],"readonly").objectStore('user_preferences').openCursor().onsuccess=function(e)
 		{
-			//console.log("inside user_preferences table");
-			var data=new Object();
-			var report_string="-";
-			var form_string="-";
-			for(var row in records)
+			var result=e.target.result;
+			if(result)
 			{
-				var row_data=records[row];
-				if(row_data['type']=='report')
+				var record=result.value;
+				
+				if(record['type']=='report')
 				{
-					if(row_data['value']=='checked')
-						report_string+=row_data['name']+"-";
+					if(record['value']=='checked')
+						report_string+=record['name']+"-";
 				}
-				else if(row_data['type']=='form')
+				else if(record['type']=='form')
 				{
-					if(row_data['value']=='checked')
-						form_string+=row_data['name']+"-";
+					if(record['value']=='checked')
+						form_string+=record['name']+"-";
 				}
 				else
 				{
-					data[row_data['name']]=row_data['value'];
+					data[record['name']]=record['value'];
 				}
-			};
-			data.reports=report_string;
-			data.forms=form_string;
-			data.session='yes';
-			data.domain=domain;
-			data.username=username;
-			if(data.offline==='online')
-			{
-				login_online(username,domain,pass);
+				result.continue();
 			}
 			else
 			{
-				database.get('user_profiles',{index:'username',range: IDBKeyRange.only(username)},function(err,records2)
+				data.reports=report_string;
+				data.forms=form_string;
+				data.session='yes';
+				data.domain=domain;
+				data.username=username;
+				if(data.offline==='online')
 				{
-					for(var row in records2)
+					login_online(username,domain,pass);
+				}
+				else
+				{
+					var keyValue=IDBKeyRange.only(username);
+					static_local_db.transaction(['user_profiles'],"readonly").objectStore('user_profiles').index('username').openCursor(keyValue).onsuccess=function(e)
 					{
-						data.name=records2[row].name;
-					}
-
-					database.get('access_control',{},function(err,records3)
-					{
+						var result2=e.target.result;
+						if(result2)
+						{
+							data.name=result2.value.name;
+						}
 						var re='';
 						var cr='';
 						var up='';
 						var del='';
-						for(var r in records3)
+						
+						static_local_db.transaction(['access_control'],"readonly").objectStore('access_control').index('username').openCursor(keyValue).onsuccess=function(e)
 						{
-							var r_data=records3[r];
-							if(r_data.status==='active' && r_data.username===username)
+							var result3=e.target.result;
+							if(result3)
 							{
-								if(r_data.re==='checked')
-								{	
-									re+=r_data.element_id+"-";
-								}
-								if(r_data.cr==='checked')
-								{	
-									cr+=r_data.element_id+"-";
-								}
-								if(r_data.up==='checked')
+								var record3=result3.value;
+								
+								if(record3.status==='active')
 								{
-									up+=r_data.element_id+"-";
+									if(record3.re==='checked')
+									{	
+										re+=record3.element_id+"-";
+									}
+									if(record3.cr==='checked')
+									{	
+										cr+=record3.element_id+"-";
+									}
+									if(record3.up==='checked')
+									{
+										up+=record3.element_id+"-";
+									}
+									if(record3.del==='checked')
+									{
+										del+=record3.element_id+"-";
+									}
 								}
-								if(r_data.del==='checked')
-								{
-									del+=r_data.element_id+"-";
-								}
+								result3.continue();
 							}
-						}
-						data.re=re;
-						data.cr=cr;
-						data.up=up;
-						data.del=del;
-						set_session(data);
-					});
-				});
+							else
+							{
+								data.re=re;
+								data.cr=cr;
+								data.up=up;
+								data.del=del;
+								set_session(data);
+							}
+						};
+					};
+				}
 			}
-		});
-	});
+		};
+	};
 };
 
 /**

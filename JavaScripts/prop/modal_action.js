@@ -2899,6 +2899,8 @@ function modal38_action(father_id)
 	var father_form=document.getElementById("form1_"+father_id);
 	var form=document.getElementById('modal38_form');	
 	var fsale_price=form.elements[1];
+	var billing_label=document.getElementById('modal38_billings');
+	$(billing_label).html("");
 		
 	fsale_price.value=father_form.elements[3].value;
 	////adding sale price fields for all billing types///////
@@ -2910,8 +2912,6 @@ function modal38_action(father_id)
 			"</sale_prices>";
 	fetch_requested_data('',billing_type_data,function(sale_prices)
 	{
-		var billing_label=document.getElementById('modal38_billings');
-		$(billing_label).html("");
 		sale_prices.forEach(function(sale_price)
 		{
 			var bill_label=document.createElement('label');

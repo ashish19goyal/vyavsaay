@@ -3578,7 +3578,7 @@ function form51_ini()
 					//console.log('elements found for new user');
 					elements.forEach(function(element)
 					{
-						var data_id=get_new_key()+""+Math.floor(Math.random()*1000);
+						var data_id=get_new_key();
 						var rowsHTML="";
 						rowsHTML+="<tr>";
 							rowsHTML+="<form id='form51_"+data_id+"'></form>";

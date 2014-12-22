@@ -2,33 +2,17 @@
 <re_xml>
 	<accounts>
 		<row>
-			<acc_name>ashish goyal (9818005232)</acc_name>
-			<type>customer</type>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<acc_name>anish goyal (9818005232)</acc_name>
+			<acc_name>cash bill</acc_name>
 			<type>customer</type>
 			<last_updated>1</last_updated>
 		</row>
 	</accounts>
 	<customers>
 		<row>
-			<name>ashish goyal</name>
-			<acc_name>ashish goyal (9818005232)</acc_name>
-			<email>ashish.19goyal@gmail.com</email>
-			<phone>9818005232</phone>
-			<status>active</status>
-			<lat>28.600</lat>
-			<lng>77.230</lng>
-			<notes></notes>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>anish goyal</name>
-			<acc_name>anish goyal (9818005232)</acc_name>
-			<email>anishgoy@gmail.com</email>
-			<phone>9818005232</phone>
+			<name>cash bill</name>
+			<acc_name>cash bill</acc_name>
+			<email></email>
+			<phone></phone>
 			<status>active</status>
 			<lat>28.600</lat>
 			<lng>77.230</lng>
@@ -36,144 +20,4 @@
 			<last_updated>1</last_updated>
 		</row>
 	</customers>
-	<pamphlets>
-		<row>
-			<id>1</id>
-			<name>Trial1</name>
-			<count_items>3</count_items>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<id>2</id>
-			<name>Trial2</name>
-			<count_items>1</count_items>
-			<last_updated>1</last_updated>
-		</row>
-	</pamphlets>
-	<pamphlet_items>
-		<row>
-			<pamphlet_id>1</pamphlet_id>
-			<item_name>Product1</item_name>
-			<offer_name>Offer1</offer_name>
-			<offer>Get a discount of 10% on purchase of Rs 1000 or more</offer>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<pamphlet_id>1</pamphlet_id>
-			<item_name>Product2</item_name>
-			<offer_name>Offer2</offer_name>
-			<offer>Get a discount of Rs 10 on purchase of 1 piece of product2</offer>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<pamphlet_id>1</pamphlet_id>
-			<item_name>Product3</item_name>
-			<offer_name>Offer3</offer_name>
-			<offer>Get a discount of 5% on purchase of 10 piece of product3</offer>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<pamphlet_id>2</pamphlet_id>
-			<item_name>Product4</item_name>
-			<offer_name>Offer4</offer_name>
-			<offer>Get a discount of 15% on purchase of product3</offer>
-			<last_updated>1</last_updated>
-		</row>
-	</pamphlet_items>
-	<offers>
-		<row>
-			 <offer_name>Discount on tata tea</offer_name>
-             <offer_type>product</offer_type>
-             <product_name>Tata tea</product_name>
-             <batch>abc123</batch>
-             <service></service>
-             <criteria_type>min amount crossed</criteria_type>
-             <criteria_amount>500</criteria_amount>
-             <criteria_quantity></criteria_quantity>
-             <result_type>discount</result_type>
-             <discount_percent>5</discount_percent>
-             <discount_amount></discount_amount>
-             <quantity_add_percent></quantity_add_percent>
-             <quantity_add_amount></quantity_add_amount>
-             <free_product_name></free_product_name>
-             <free_product_quantity></free_product_quantity>
-             <end_date></end_date>
-             <offer_detail>Get 5% discount on Rs 500 or more worth of Tata tea</offer_detail>
-             <status>active</status>
-             <last_updated>1</last_updated>
-		</row>
-		<row>
-			 <offer_name>Choclate free with Kurkure</offer_name>
-             <offer_type>product</offer_type>
-             <product_name>Kurkure</product_name>
-             <batch>abc456</batch>
-             <service></service>
-             <criteria_type>min quantity crossed</criteria_type>
-             <criteria_amount></criteria_amount>
-             <criteria_quantity>2</criteria_quantity>
-             <result_type>product free</result_type>
-             <discount_percent></discount_percent>
-             <discount_amount></discount_amount>
-             <quantity_add_percent></quantity_add_percent>
-             <quantity_add_amount></quantity_add_amount>
-             <free_product_name>Cadbury Choclate</free_product_name>
-             <free_product_quantity>1</free_product_quantity>
-             <end_date></end_date>
-             <offer_detail>Get 1 cadbury choclate free on purchase of 2 or more Kurkure</offer_detail>
-             <status>active</status>
-             <last_updated>1</last_updated>
-		</row>
-	</offers>
-	<product_master>
-		<row>
-			<name>Tata tea</name>
-            <description>Tea leaves</description>
-            <make>Tata</make>
-            <tax>10</tax>
-            <bar_code>tt</bar_code>
-            <last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>Kurkure</name>
-            <description>tea time snacks</description>
-            <make>Lays</make>
-            <tax>10</tax>
-            <bar_code>ku</bar_code>
-            <last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>Cadbury Choclate</name>
-            <description>choclate</description>
-            <make>Cadbury</make>
-            <tax>10</tax>
-            <bar_code>cc</bar_code>
-            <last_updated>1</last_updated>
-		</row>
-	</product_master>
-	<product_instances>
-		<row>
-			<product_name>Tata tea</product_name>
-            <cost_price>90</cost_price>
-            <sale_price>100</sale_price>
-            <batch>abc123</batch>
-            <expiry>1410739200000</expiry>
-            <last_updated>1</last_updated>
-		</row>
-		<row>
-			<product_name>Kurkure</product_name>
-            <cost_price>8</cost_price>
-            <sale_price>10</sale_price>
-            <batch>abc456</batch>
-            <expiry>1410739200000</expiry>
-            <last_updated>1</last_updated>
-		</row>
-		<row>
-			<product_name>Cadbury Choclate</product_name>
-            <cost_price>40</cost_price>
-            <sale_price>50</sale_price>
-            <batch>abc543</batch>
-            <expiry>1410739200000</expiry>
-            <last_updated>1</last_updated>
-		</row>
-	</product_instances>
 </re_xml>

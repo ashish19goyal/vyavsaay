@@ -135,7 +135,7 @@ function notifications_add()
 	{
 		payments.forEach(function(payment)
 		{
-			var id=get_new_key()+""+(Math.random()*1000);
+			var id=get_new_key();
 			var notes="Payment of Rs. "+payment.total_amount+" from "+
 					payment.acc_name+" is overdue. So far only Rs. "+payment.paid_amount+" has been received";
 			if(payment.type=='paid')
@@ -183,7 +183,7 @@ function notifications_add()
 			var due_time=parseFloat(get_my_time())+(3600000*task.task_hours);
 			if(task.t_due<due_time)
 			{
-				var id=get_new_key()+""+(Math.random()*1000);
+				var id=get_new_key();
 				var notes="Task "+task.name+" assigned to "+
 						task.assignee+" is pending. It is due by "+get_my_datetime(task.t_due);
 				var task_xml="<notifications>" +
@@ -226,7 +226,7 @@ function notifications_add()
 	{
 		leads.forEach(function(lead)
 		{
-			var id=get_new_key()+""+(Math.random()*1000);
+			var id=get_new_key();
 			var notes="A sale opportunity with customer "+lead.customer+" is coming up."+
 					"The details are as follows.\n"+lead.detail;
 			var task_xml="<notifications>" +
@@ -299,7 +299,7 @@ function notifications_add()
 						{
 							if(parseFloat(sale_item.value)>parseFloat(sum_products[k].value))
 							{
-								var id=get_new_key()+""+(Math.random()*1000);
+								var id=get_new_key();
 								var notes="Product "+sale_item.label+" has insufficient inventory to meet all sale orders.";
 										
 								var product_xml="<notifications>" +
@@ -343,7 +343,7 @@ function notifications_add()
 		var count_manu=manus.length;
 		if(count_manu>0)
 		{
-			var id=get_new_key()+""+(Math.random()*1000);
+			var id=get_new_key();
 			var notes=count_manu+" manufactured products are out of stock. Please schedule their manufacturing.";
 			var task_xml="<notifications>" +
 					"<id>"+id+"</id>" +
@@ -381,7 +381,7 @@ function notifications_add()
 	{
 		schedules.forEach(function(schedule)
 		{
-			var id=get_new_key()+""+(Math.random()*1000);
+			var id=get_new_key();
 			var notes="Manufacturing for product "+schedule.product+" is due. Please start the process.";
 			var schedule_xml="<notifications>" +
 					"<id>"+id+"</id>" +
@@ -420,7 +420,7 @@ function notifications_add()
 	{
 		apps.forEach(function(app)
 		{
-			var id=get_new_key()+""+(Math.random()*1000);
+			var id=get_new_key();
 			var notes="Appointment with "+app.customer+" assigned to "+app.assignee+" @"+get_my_datetime(app.schedule);
 			var app_xml="<notifications>" +
 					"<id>"+id+"</id>" +
@@ -505,7 +505,7 @@ function sale_leads_add()
 							{
 								if(bill_items[k].item_name==attributes[l].item_name)
 								{
-									var id=get_new_key()+""+(Math.random()*1000);
+									var id=get_new_key();
 									var detail="Bought "+attributes[l].item_name+" that is expected to be bought again in " +
 											attributes[l].value+" days.\n";
 									var due_date=parseFloat(start_date)+(86400000*parseFloat(attributes[l].value));
@@ -591,7 +591,7 @@ function sale_leads_add()
 									if(seasonal_attributes[l].attribute=='season start date')
 									{
 										var season_start_date=attributes[l].value;
-										var id=get_new_key()+""+(Math.random()*1000);
+										var id=get_new_key();
 										
 										var detail="Bought "+seasonal_attributes[l].item_name+" that is expected to be bought again in season starting from" +
 												season_start_date+"\n";
@@ -718,7 +718,7 @@ function loans_interest_processing()
 					giver="interest";
 					payment_type='paid';
 				}
-				var pt_tran_id=get_new_key()+""+(Math.random()*1000);
+				var pt_tran_id=get_new_key();
 				var loan_xml="<loans>" +
 							"<id>"+loan.id+"</id>" +
 							"<next_interest_date>"+next_interest_date+"</next_interest_date>" +
@@ -822,7 +822,7 @@ function loans_instalment_processing()
 				giver="emi";
 				payment_type='paid';
 			}
-			var pt_tran_id=get_new_key()+""+(Math.random()*1000);
+			var pt_tran_id=get_new_key();
 			var loan_xml="<loans>" +
 						"<id>"+loan.id+"</id>" +
 						"<next_emi_date>"+next_emi_date+"</next_emi_date>" +
@@ -900,7 +900,7 @@ function generate_attendance_records()
 				staff_names.forEach(function(staff_name)
 				{
 					//console.log('creating attendance record for'+staff_name.acc_name);
-					var id=get_new_key()+""+Math.floor(Math.random()*1000);
+					var id=get_new_key();
 					var data_xml="<attendance>" +
 								"<id>"+id+"</id>" +
 								"<acc_name>"+staff_name.acc_name+"</acc_name>" +

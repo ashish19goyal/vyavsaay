@@ -142,7 +142,7 @@ function get_new_key()
 {
 	var d=new Date();
 	var seconds=d.getTime();
-	seconds=""+seconds;
+	seconds=seconds+""+Math.floor(Math.random()*1000);
 	return seconds;
 }
 

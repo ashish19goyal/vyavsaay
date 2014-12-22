@@ -5,9 +5,20 @@
 */
 function form1_import(data_array,import_type)
 {
+	var data_xml="<product_instances>";
+	var adjust_xml="<inventory_adjust>";
+	var counter=0;
+	var new_id=parseFloat(get_new_key());
+	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{
-		var data_xml="<product_instances>" +
+		if(counter===500)
+		{
+			data_xml+="</product_instances><separator></separator><product_instances>";
+			adjust_xml+="</inventory_adjust><separator></separator><inventory_adjust>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
 				"<batch>"+row.batch+"</batch>" +
@@ -16,51 +27,49 @@ function form1_import(data_array,import_type)
 				"<expiry>"+get_raw_time(row.expiry)+"</expiry>" +
 				"<manufacture_date>"+get_raw_time(row.manufacture_date)+"</manufacture_date>" +
 				"<mrp>"+row.mrp+"</mrp>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</product_instances>";
-		if(import_type=='create_new')
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+		if(parseInt(row.adjusted_quantity)>0)
 		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-			}
+			adjust_xml+="<row>" +
+				"<id>"+(new_id+counter)+"</id>" +
+				"<product_name>"+row.product_name+"</product_name>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<quantity>"+row.adjusted_quantity+"</quantity>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";	
+		}
+	});
+
+	data_xml+="</product_instances>";
+	adjust_xml+="</inventory_adjust>";
+	
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+			server_create_batch(adjust_xml);
 		}
 		else
 		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
+			local_create_batch(data_xml);
+			local_create_batch(adjust_xml);
 		}
-		
-		if(parseInt(row.adjusted_quantity)>0)
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+			server_create_batch(adjust_xml);
+		}
+		else
 		{
-			var id=get_new_key()+""+Math.floor(Math.random()*1000);
-			var adjust_xml="<inventory_adjust>" +
-					"<id>"+id+"</id>" +
-					"<product_name>"+row.product_name+"</product_name>" +
-					"<batch>"+row.batch+"</batch>" +
-					"<quantity>"+row.adjusted_quantity+"</quantity>" +
-					"<last_updated>"+get_my_time()+"</last_updated>" +
-					"</inventory_adjust>";	
-			if(is_online())
-			{
-				server_create_simple(adjust_xml);
-			}
-			else
-			{
-				local_create_simple(adjust_xml);
-			}
+			local_update_batch(data_xml);
+			local_create_batch(adjust_xml);
 		}
-	});
+	}
 }
 
 
@@ -70,9 +79,17 @@ function form1_import(data_array,import_type)
 */
 function form5_import(data_array,import_type)
 {
+	var data_xml="<assets>";
+	var counter=0;
+	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{
-		var data_xml="<assets>" +
+		if(counter===500)
+		{
+			data_xml+="</assets><separator></separator><assets>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
 				"<date_inc>"+row.date_inc+"</date_inc>" +
@@ -87,43 +104,55 @@ function form5_import(data_array,import_type)
 				"<initial_value>"+row.initial_value+"</initial_value>" +
 				"<current_value>"+row.current_value+"</current_value>" +
 				"<asset_location>"+row.asset_location+"</asset_location>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</assets>";
-		if(import_type=='create_new')
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</assets>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
 		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-			}
+			server_create_batch(data_xml);
 		}
 		else
 		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
+			local_create_batch(data_xml);
 		}
-	});
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
 };
 
 
-/**
+/** 
 * @form Manage Staff
 * @formNo 8
 */
 function form8_import(data_array,import_type)
 {
+	var data_xml="<staff>";
+	var account_xml="<accounts>";
+	var counter=0;
+	var last_updated=get_my_time();
+	
 	data_array.forEach(function(row)
 	{
-		var data_xml="<staff>" +
+		if(counter===500)
+		{
+			data_xml+="</staff><separator></separator><staff>";
+			account_xml+="</accounts><separator></separator><accounts>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
 				"<phone>"+row.phone+"</phone>" +
@@ -144,42 +173,45 @@ function form8_import(data_array,import_type)
 				"<state>"+row.state+"</state>" +
 				"<country>"+row.country+"</country>" +
 				"<address_status>"+row.address_status+"</address_status>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</staff>";
-		var account_xml="<accounts>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+		account_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<acc_name>"+row.acc_name+"</acc_name>" +
 				"<description></description>" +
 				"<type>staff</type>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</accounts>";
-		if(import_type=='create_new')
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+
+	data_xml+="</assets>";
+	account_xml+="</accounts>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
 		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-				server_create_simple(account_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-				local_create_simple(account_xml);
-			}
+			server_create_batch(data_xml);
+			server_create_batch(account_xml);
 		}
 		else
 		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-				server_update_simple(account_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-				local_update_simple(account_xml);
-			}
-		}		
-	});
+			local_create_batch(data_xml);
+			local_create_batch(account_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+			server_update_batch(account_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+			local_update_batch(account_xml);
+		}
+	}
 };
 
 /**
@@ -188,9 +220,18 @@ function form8_import(data_array,import_type)
 */
 function form10_import(data_array,import_type)
 {
+	var data_xml="<bill_items>";
+	var counter=0;
+	var last_updated=get_my_time();
+	
 	data_array.forEach(function(row)
 	{
-		var data_xml="<bill_items>" +
+		if(counter===500)
+		{
+			data_xml+="</bill_items><separator></separator><bill_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
@@ -207,31 +248,34 @@ function form10_import(data_array,import_type)
 				"<staff>"+row.staff+"</staff>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<free_with>"+row.free_with+"</free_with>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</bill_items>";
-		if(import_type=='create_new')
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+
+	data_xml+="</bill_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
 		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-			}
+			server_create_batch(data_xml);
 		}
 		else
 		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
+			local_create_batch(data_xml);
 		}
-	});
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+
 };
 
 
@@ -241,8 +285,20 @@ function form10_import(data_array,import_type)
 */
 function form11_import(data_array,import_type)
 {
+	var data_xml="<payments>";
+	var transaction_xml="<transactions>";
+	var counter=0;
+	var last_updated=get_my_time();
+	
 	data_array.forEach(function(row)
 	{
+		if(counter===500)
+		{
+			data_xml+="</payments><separator></separator><payments>";
+			transaction_xml+="</transactions><separator></separator><transactions>";
+		}
+		counter+=1;
+	
 		var receiver=row.acc_name;
 		var giver="master";
 		if(row.type=='received')
@@ -250,7 +306,7 @@ function form11_import(data_array,import_type)
 			receiver='master';
 			giver=row.acc_name;
 		}
-		var data_xml="<payments>" +
+		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<type>"+row.type+"</type>" +
 				"<total_amount>"+row.total_amount+"</total_amount>" +
@@ -262,44 +318,47 @@ function form11_import(data_array,import_type)
 				"<mode>"+row.mode+"</mode>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<transaction_id>"+row.id+"</transaction_id>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</payments>";
-		var transaction_xml="<transactions>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+		transaction_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<trans_date>"+get_raw_time(row.date)+"</trans_date>" +
 				"<amount>"+row.total_amount+"</amount>" +
 				"<receiver>"+receiver+"</receiver>" +
 				"<giver>"+giver+"</giver>" +
 				"<tax>0</tax>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</transactions>";
-		if(import_type=='create_new')
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</payments>";
+	account_xml+="</transactions>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
 		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-				server_create_simple(transaction_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-				local_create_simple(transaction_xml);
-			}
+			server_create_batch(data_xml);
+			server_create_batch(transaction_xml);
 		}
 		else
 		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-				server_update_simple(transaction_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-				local_update_simple(transaction_xml);
-			}
+			local_create_batch(data_xml);
+			local_create_batch(transaction_xml);
 		}
-	});
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+			server_update_batch(transaction_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+			local_update_batch(transaction_xml);
+		}
+	}
 };
 
 /**
@@ -308,9 +367,18 @@ function form11_import(data_array,import_type)
 */
 function form12_import(data_array,import_type)
 {
+	var data_xml="<bill_items>";
+	var counter=0;
+	var last_updated=get_my_time();
+	
 	data_array.forEach(function(row)
 	{
-		var data_xml="<bill_items>" +
+		if(counter===500)
+		{
+			data_xml+="</bill_items><separator></separator><bill_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
@@ -327,31 +395,33 @@ function form12_import(data_array,import_type)
 				"<staff>"+row.staff+"</staff>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<free_with>"+row.free_with+"</free_with>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</bill_items>";
-		if(import_type=='create_new')
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</bill_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
 		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-			}
+			server_create_batch(data_xml);
 		}
 		else
 		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
+			local_create_batch(data_xml);
 		}
-	});
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
 };
 
 
@@ -1716,9 +1786,18 @@ function form71_import(data_array,import_type)
 */
 function form72_import(data_array,import_type)
 {
+	var data_xml="<bill_items>";
+	var counter=0;
+	var last_updated=get_my_time();
+	
 	data_array.forEach(function(row)
 	{
-		var data_xml="<bill_items>" +
+		if(counter===500)
+		{
+			data_xml+="</bill_items><separator></separator><bill_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
@@ -1735,31 +1814,33 @@ function form72_import(data_array,import_type)
 				"<staff>"+row.staff+"</staff>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<free_with>"+row.free_with+"</free_with>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</bill_items>";
-		if(import_type=='create_new')
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</bill_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
 		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-			}
+			server_create_batch(data_xml);
 		}
 		else
 		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
+			local_create_batch(data_xml);
 		}
-	});
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
 };
 
 
@@ -1850,9 +1931,18 @@ function form81_import(data_array,import_type)
 */
 function form82_import(data_array,import_type)
 {
+	var data_xml="<bill_items>";
+	var counter=0;
+	var last_updated=get_my_time();
+	
 	data_array.forEach(function(row)
 	{
-		var data_xml="<bill_items>" +
+		if(counter===500)
+		{
+			data_xml+="</bill_items><separator></separator><bill_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
@@ -1869,31 +1959,33 @@ function form82_import(data_array,import_type)
 				"<staff>"+row.staff+"</staff>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<free_with>"+row.free_with+"</free_with>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</bill_items>";
-		if(import_type=='create_new')
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</bill_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
 		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-			}
+			server_create_batch(data_xml);
 		}
 		else
 		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
+			local_create_batch(data_xml);
 		}
-	});
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
 };
 
 
@@ -2179,9 +2271,18 @@ function form90_import(data_array,import_type)
 */
 function form91_import(data_array,import_type)
 {
+	var data_xml="<bill_items>";
+	var counter=0;
+	var last_updated=get_my_time();
+	
 	data_array.forEach(function(row)
 	{
-		var data_xml="<bill_items>" +
+		if(counter===500)
+		{
+			data_xml+="</bill_items><separator></separator><bill_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
@@ -2198,31 +2299,33 @@ function form91_import(data_array,import_type)
 				"<staff>"+row.staff+"</staff>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<free_with>"+row.free_with+"</free_with>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
-				"</bill_items>";
-		if(import_type=='create_new')
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</bill_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
 		{
-			if(is_online())
-			{
-				server_create_simple(data_xml);
-			}
-			else
-			{
-				local_create_simple(data_xml);
-			}
+			server_create_batch(data_xml);
 		}
 		else
 		{
-			if(is_online())
-			{	
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
+			local_create_batch(data_xml);
 		}
-	});
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
 };
 
 /**

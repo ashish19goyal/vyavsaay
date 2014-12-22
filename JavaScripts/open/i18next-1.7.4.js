@@ -787,7 +787,7 @@
         detectLanguage: detectLanguage,
         escape: _escape,
         log: function(str) {
-            if (o.debug && typeof console !== "undefined") console.log(str);
+            if (o.debug && typeof console !== "undefined"){} //console.log(str);
         },
         error: function(str) {
             if (typeof console !== "undefined") console.error(str);

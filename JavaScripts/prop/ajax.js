@@ -18,16 +18,10 @@ function ajax_with_custom_func(url,kvp,func)
 {
 	number_active_ajax+=1;
 	
-	var xmlhttp,xmlhttp2;
+	var xmlhttp;
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp=new XMLHttpRequest();
-		xmlhttp2=new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-		xmlhttp= new ActiveXObject("Microsoft.XMLHTTP");
-		xmlhttp2= new ActiveXObject("Microsoft.XMLHTTP");
 	}
 	
 	xmlhttp.onreadystatechange=function()
@@ -48,38 +42,56 @@ function ajax_with_custom_func(url,kvp,func)
 						{
 							show_loader();
 							var pass=document.getElementById("modal1_pass").value;
-							//console.log(pass+user);
-							xmlhttp2.open("POST","./ajax/login.php",true);
-							xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-							xmlhttp2.send("user="+user+"&pass="+pass+"&domain="+domain);
 							
-							xmlhttp2.onreadystatechange=function()
+							ajax_with_custom_func("./ajax/login.php","domain="+domain+"&user="+user+"&pass="+pass,function(e)
 							{
-								//console.log(xmlhttp2.responseText);
-								if(xmlhttp2.readyState===4 && xmlhttp2.status===200)
+								login_status=e.responseText;
+								var session_xml=e.responseXML;
+								if(login_status=="failed_auth")
 								{
-									if(xmlhttp2.responseText=="failed_auth")
-									{
-										alert("Password is incorrect. Aborting opertion. Please try again.");
-										delete_session();
-										hide_loader();
-									}
-									else
-									{
-										ajax_with_custom_func(url,kvp,func);
-									}
+									alert("Password is incorrect. Aborting operation.");
+									delete_session();
+									hide_loader();
 								}
-							};
+								else
+								{
+									var session_var=session_xml.getElementsByTagName('session');
+									var session_vars=new Object();
+									var num_svar=session_var[0].childElementCount;
+
+									for(var z=0;z<num_svar;z++)
+									{
+										session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].innerHTML;
+									}
+									var offline=get_session_var('offline');
+									for(var field in session_vars)
+									{
+										localStorage.setItem(field,session_vars[field]);
+									}
+									set_session_var('offline',offline);
+									kvp.replace("re=","re_old=");
+									kvp.replace("cr=","cr_old=");
+									kvp.replace("del=","del_old=");
+									kvp.replace("up=","up_old=");
+									kvp+="&cr="+session_vars['cr']+"&up="+session_vars['up']+"&del="+session_vars['del']+"&re="+session_vars['re'];
+									ajax_with_custom_func(url,kvp,func);
+								}
+							});
 						}
-					});	
+					});
 					$("#modal1").dialog("open");
 				}
 				else
 				{
+					number_active_ajax-=1;
 					func(xmlhttp);
 				}
 			}
-			number_active_ajax-=1;
+			else
+			{
+				number_active_ajax-=1;
+				alert('Could not connect to the server. Please check your internet connection.');
+			}
 		}
 	};
 	
@@ -176,14 +188,12 @@ function server_delete_row(data_xml,activity_xml)
  */
 function server_delete_simple(data_xml)
 {
-	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var del_access=get_session_var('del');
 	ajax_with_custom_func("./ajax/delete_simple.php","domain="+domain+"&username="+username+"&del="+del_access+"&data_xml="+data_xml,function(e)
 	{
 		console.log(e.responseText);
-		hide_loader();
 	});
 }
 
@@ -192,7 +202,6 @@ function server_delete_simple(data_xml)
  */
 function server_delete_simple_func(data_xml,func)
 {
-	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var del_access=get_session_var('del');
@@ -200,7 +209,6 @@ function server_delete_simple_func(data_xml,func)
 	{
 		console.log(e.responseText);
 		func();
-		hide_loader();
 	});
 }
 
@@ -225,14 +233,12 @@ function server_create_row(data_xml,activity_xml)
 
 function server_create_simple(data_xml)
 {
-	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
 	ajax_with_custom_func("./ajax/create_simple.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&data_xml="+data_xml,function(e)
 	{
 		console.log(e.responseText);
-		hide_loader();
 		if(e.responseText=='duplicate record')
 		{
 			$("#modal5").dialog("open");
@@ -242,14 +248,12 @@ function server_create_simple(data_xml)
 
 function server_create_simple_func(data_xml,func)
 {
-	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
 	ajax_with_custom_func("./ajax/create_simple.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&data_xml="+data_xml,function(e)
 	{
 		console.log(e.responseText);
-		hide_loader();
 		if(e.responseText=='duplicate record')
 		{
 			$("#modal5").dialog("open");
@@ -291,14 +295,12 @@ function server_create_batch(data_xml)
 
 function server_create_simple_no_warning(data_xml)
 {
-	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var cr_access=get_session_var('cr');
 	ajax_with_custom_func("./ajax/create_simple.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&data_xml="+data_xml,function(e)
 	{
 		console.log(e.responseText);
-		hide_loader();
 	});
 }
 
@@ -320,7 +322,6 @@ function server_update_row(data_xml,activity_xml)
 
 function server_update_simple(data_xml)
 {
-	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var up_access=get_session_var('up');
@@ -328,13 +329,11 @@ function server_update_simple(data_xml)
 	ajax_with_custom_func("./ajax/update_simple.php","domain="+domain+"&username="+username+"&up="+up_access+"&data_xml="+data_xml,function(e)
 	{
 		console.log(e.responseText);
-		hide_loader();
 	});
 }
 
 function server_update_simple_func(data_xml,func)
 {
-	show_loader();
 	var domain=get_domain();
 	var username=get_username();
 	var up_access=get_session_var('up');
@@ -344,7 +343,6 @@ function server_update_simple_func(data_xml,func)
 	{
 		//console.log(e.responseText);
 		func();
-		hide_loader();
 	});
 }
 
