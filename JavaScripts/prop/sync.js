@@ -166,7 +166,7 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 	ajax_with_custom_func("./ajax/sync_download.php","domain="+domain+"&username="+username+"&re="+re_access+"&start_table="+start_table+"&start_offset="+start_offset+"&last_sync_time="+last_sync_time,function(e)
 	{
 		var response=e.responseXML;
-		//console.log(e.responseText);
+		console.log(e.responseText);
 		if(typeof static_local_db=='undefined')
 		{
 			open_local_db(function()
@@ -283,7 +283,7 @@ function local_update_record(ids,objectStore,row_index)
 				data['status']='synced';
 				data['data_xml']='';
 				var put_req=objectStore.put(data);
-				put_req.onssuccess=function(e)
+				put_req.onsuccess=function(e)
 				{
 					local_update_record(ids,objectStore,row_index);
 				};
@@ -313,19 +313,15 @@ function sync_local_to_server(func)
 	var cr_access=get_session_var('cr');
 	var up_access=get_session_var('up');
 	var del_access=get_session_var('del');
-	//console.log("syncing started");
 	
 	get_data_from_log_table(function(log_data)
 	{
-		//console.log('got data from log table');
 		get_last_sync_time(function(last_sync_time)
 		{
-			//console.log('got last sync time');
 			var log_data_array=log_data.split("<separator></separator>");
 			log_data_array.forEach(function(log_data_chunk)
 			{
 				log_data_chunk="<activities>"+log_data_chunk+"</activities>";
-				//console.log(log_data_chunk);
 				ajax_with_custom_func("./ajax/sync_upload.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&up="+up_access+"&del="+del_access+"&data="+log_data_chunk+"&last_sync="+last_sync_time,function(e)
 				{
 					var response=e.responseXML;
@@ -368,40 +364,60 @@ function get_data_from_log_table(func)
 	}
 	else
 	{
-		var keyValue=IDBKeyRange.only('unsynced');
-		var counter=0;
-		var log_data="";
-		
-		static_local_db.transaction(['activities'],"readonly").objectStore('activities').index('status').openCursor(keyValue).onsuccess=function(e)
-		{
-			var result=e.target.result;
-			if(result)
+		var kv=IDBKeyRange.only('checked');
+		var tables="";
+		static_local_db.transaction(['user_preferences'],"readonly").objectStore('user_preferences').index('value').openCursor(kv).onsuccess=function(e)
+		{		
+			var result1=e.target.result;
+			if(result1)
 			{
-				var record=result.value;
-				
-				if(counter===200)
+				var rec=result1.value;
+				if(rec.sync=='checked')
 				{
-					log_data+="<separator></separator>";
-					counter=0;
+					tables+=rec.tables;
 				}
-					
-				log_data+="<row>";
-				for(var field in record)
-				{
-					log_data+="<"+field+">";
-						log_data+=record[field];
-					log_data+="</"+field+">";
-				}
-				log_data+="</row>";
-				counter+=1;
-				result.continue();
+				result1.continue();
 			}
 			else
 			{
-				//console.log(log_data);
-				func(log_data);
+				var keyValue=IDBKeyRange.only('unsynced');
+				var counter=0;
+				var log_data="";
+			
+				static_local_db.transaction(['activities'],"readonly").objectStore('activities').index('status').openCursor(keyValue).onsuccess=function(e)
+				{
+					var result=e.target.result;
+					if(result)
+					{
+						var record=result.value;
+						
+						if(tables.search("-"+record.tablename+"-")>-1)
+						{
+							if(counter===200)
+							{
+								log_data+="<separator></separator>";
+								counter=0;
+							}
+								
+							log_data+="<row>";
+							for(var field in record)
+							{
+								log_data+="<"+field+">";
+									log_data+=record[field];
+								log_data+="</"+field+">";
+							}
+							log_data+="</row>";
+							counter+=1;
+						}
+						result.continue();
+					}
+					else
+					{
+						func(log_data);
+					}
+				};
 			}
-		};	
+		};
 	}
 }
 

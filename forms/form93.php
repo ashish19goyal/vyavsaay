@@ -10,7 +10,6 @@
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form93_header'></th>
 					<th><input type='button' form='form93_header' value='Add new loan' class='add_icon' onclick='modal39_action();'>
 						<input type='button' form='form93_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form93_header' value='IMPORT' class='import_icon'>
 						<input type='submit' form='form93_header' style='visibility: hidden;'>
 					</th>
 			</tr>

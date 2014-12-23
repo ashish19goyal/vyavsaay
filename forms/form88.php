@@ -10,7 +10,6 @@
 					<th>Iteration Notes</th>
 					<th><input type='button' form='form88_header' value='Add new product' class='add_icon' onclick='form88_add_item();'>
 						<input type='button' form='form88_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form88_header' value='IMPORT' class='import_icon'>
 						<input type='submit' form='form88_header' style='visibility: hidden;'>
 					</th>
 			</tr>

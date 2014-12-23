@@ -16,6 +16,7 @@
 			<value>30</value>
 			<type>accounting</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -25,6 +26,7 @@
 			<value>30</value>
 			<type>accounting</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -34,6 +36,7 @@
 			<value>4</value>
 			<type>other</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -43,6 +46,7 @@
 			<value>business_complex, sirsa</value>
 			<type>other</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -52,6 +56,7 @@
 			<value>1</value>
 			<type>other</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -61,6 +66,7 @@
 			<value>28.6100</value>
 			<type>other</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -70,6 +76,7 @@
 			<value>77.2300</value>
 			<type>other</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -79,6 +86,7 @@
 			<value>9818005232</value>
 			<type>other</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -88,6 +96,7 @@
 			<value>vyavsaayindia@gmail.com</value>
 			<type>other</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -97,6 +106,7 @@
 			<value>logo.jpeg</value>
 			<type>other</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -106,6 +116,7 @@
 			<value>vyavsaay.com</value>
 			<type>other</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -115,6 +126,7 @@
 			<value>theme1</value>
 			<type>other</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -124,6 +136,7 @@
 			<value>online</value>
 			<type>other</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -133,6 +146,7 @@
 			<value>english</value>
 			<type>other</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -142,6 +156,7 @@
 			<value>default_sale_bill</value>
 			<type>template</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -151,6 +166,7 @@
 			<value>default_purchase_order</value>
 			<type>template</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -160,6 +176,7 @@
 			<value>default_payment_receipt</value>
 			<type>template</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -169,6 +186,7 @@
 			<value>default_credit_note</value>
 			<type>template</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -178,6 +196,7 @@
 			<value>default_pamphlet</value>
 			<type>template</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -187,6 +206,7 @@
 			<value>default_service_sale_bill</value>
 			<type>template</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -196,6 +216,7 @@
 			<value>default_product_sale_bill</value>
 			<type>template</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -205,6 +226,7 @@
 			<value>default_return_receipt</value>
 			<type>template</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -214,6 +236,7 @@
 			<value>default_supplier_return</value>
 			<type>template</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -223,6 +246,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -232,6 +256,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -241,6 +266,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -250,6 +276,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -259,6 +286,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -268,6 +296,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -277,6 +306,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -286,6 +316,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -295,6 +326,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -304,6 +336,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -313,6 +346,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -322,6 +356,7 @@
 			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -331,6 +366,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -340,6 +376,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -349,6 +386,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -358,6 +396,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -367,6 +406,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -376,6 +416,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -385,6 +426,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -394,6 +436,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -403,6 +446,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -412,6 +456,7 @@
 			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -421,6 +466,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -430,6 +476,7 @@
 			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -439,6 +486,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -448,6 +496,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -457,6 +506,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -466,6 +516,7 @@
 			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -475,6 +526,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -484,6 +536,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -493,6 +546,7 @@
 			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -502,6 +556,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -511,6 +566,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -520,6 +576,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -529,6 +586,7 @@
 			<value>checked</value>
 			<type>report</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -538,6 +596,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_instances--inventory_adjust--bill_items--supplier_bill_items--customer_returns--customer_return_items--sale_prices--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -547,6 +607,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--pamphlets--pamphlet_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -556,6 +618,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--assets--asset_valuations--asset_maintenance--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -565,6 +629,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--attendance--staff--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -574,6 +640,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--staff--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -583,6 +651,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bill_items--bills--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -592,6 +662,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--payments--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -601,6 +673,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bill_items--bills--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -610,6 +684,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--task_instances--task_type--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -619,6 +695,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--customer_returns--customer_return_items--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -628,6 +706,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--customer_returns--customer_return_items--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -637,6 +717,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_returns--supplier_return_items--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -646,6 +728,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_returns--supplier_return_items--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -655,6 +739,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_bills--supplier_bill_items--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -664,6 +750,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--purchase_order_items--purchase_orders--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -673,6 +761,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--customers--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -682,6 +772,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--offers--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -691,6 +783,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--area_utilization--store_areas--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -700,6 +794,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_master--documents</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -709,6 +805,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--suppliers--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -718,6 +816,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--customers--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -727,6 +827,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bills--bill_items--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -736,6 +838,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--purchase_orders--purchase_order_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -745,6 +849,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--pamphlets--pamphlet_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -754,6 +860,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--user_preferences--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -763,6 +871,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--user_profiles--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -772,6 +882,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--user_preferences--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -781,6 +893,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--user_preferences--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -790,6 +904,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--user_preferences--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -799,6 +915,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--access_control--user_profiles--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -808,6 +926,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_bills--supplier_bill_items--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -817,6 +937,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--user_preferences--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -826,6 +948,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--cash_register--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -835,6 +959,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--services--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -844,6 +970,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--pre_requisites--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -853,6 +981,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--pre_requisites--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -862,6 +992,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--attributes--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -871,6 +1003,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--attributes--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -880,6 +1014,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--reviews--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -889,6 +1025,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--reviews--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -898,6 +1036,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--cross_sells--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -907,6 +1047,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--cross_sells--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -916,6 +1058,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_orders--sale_order_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -925,6 +1069,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_orders--sale_order_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -934,6 +1080,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--accounts--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -943,6 +1091,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bill_items--bills--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -952,6 +1102,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_orders--sale_order_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -961,6 +1113,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_orders--sale_order_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -970,6 +1124,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--payments--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -979,6 +1135,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--user_preferences--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -988,6 +1146,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--pamphlets--pamphlet_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -997,6 +1157,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--task_instances--task_type--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1006,6 +1168,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--de_duplication--de_duplication_ref</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1015,6 +1179,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_leads--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1024,6 +1190,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bill_items--bills--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1033,6 +1201,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--store_areas--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1042,6 +1212,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--services--service_subscriptions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1051,6 +1223,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--suppliers--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1060,6 +1234,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--staff--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1069,6 +1245,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_master--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1078,6 +1256,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--manufacturing_schedule--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1087,6 +1267,8 @@
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--appointments--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1096,6 +1278,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bill_types--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1105,6 +1289,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bill_items--bills--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1114,6 +1300,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bill_items--bills--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1123,6 +1311,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--loans--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1132,6 +1322,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--discarded--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1141,6 +1333,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables></tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1150,6 +1344,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--attributes--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1159,6 +1355,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--attributes--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1168,6 +1366,8 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--attributes--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1177,6 +1377,19 @@
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables></tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form100</name>
+			<display_name>selective_sync</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--user_preferences--notifications--activities--values_list--templates--feedback--</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -2384,6 +2597,17 @@
 			<username>master</username>
 			<element_id>form99</element_id>
 			<element_name>delete_storage</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form100</element_id>
+			<element_name>selective_sync</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

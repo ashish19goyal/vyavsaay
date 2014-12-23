@@ -9,7 +9,6 @@
 					<th>Rating <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form62_header'></th>
 					<th><input type="button" value='Add review' form='form62_header' class='add_icon' onclick="form62_add_item();">
 						<input type='button' form='form62_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form62_header' value='IMPORT' class='import_icon'>
 						<input type='submit' form='form62_header' style='visibility: hidden;'>
 					</th>
 			</tr>

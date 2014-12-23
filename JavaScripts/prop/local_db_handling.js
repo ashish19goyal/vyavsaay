@@ -534,9 +534,8 @@ function local_update_row(data_xml,activity_xml)
 				{
 					data_record[cols[j].nodeName]=cols[j].innerHTML;
 				}
-
 				var put_req=objectStore.put(data_record);
-				put_req.onssuccess=function(e)
+				put_req.onsuccess=function(e)
 				{
 					var id=get_new_key();
 					var act_row={id:id,
@@ -599,7 +598,7 @@ function local_update_simple(data_xml)
 				}
 				
 				var put_req=objectStore.put(data_record);
-				put_req.onssuccess=function(e)
+				put_req.onsuccess=function(e)
 				{
 					var id=get_new_key();
 					var act_row={id:id,
@@ -642,7 +641,6 @@ function local_update_batch(data_xml)
 	{
 		show_loader();
 		var parser=new DOMParser();
-		//data_xml=data_xml.replace(/[\x{0009}\x{000a}\x{000d}\x{0020}\x{D7FF}\x{E000}\x{FFFD}]/g," ");
 		var data_xml_array=data_xml.split("<separator></separator>");
 		var table="";
 		var rows=[];
@@ -658,6 +656,9 @@ function local_update_batch(data_xml)
 				rows.push(rows_data[x]);
 			}
 		});
+		
+		console.log(rows.length);
+		
 		var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
 		var os2=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
 		
@@ -668,6 +669,7 @@ function local_update_batch(data_xml)
 		{
 			if(i<rows.length)
 			{
+				//console.log("I"+i);
 				var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
 				var cols=rows[i].childNodes;
 				localdb_open_requests+=1;
@@ -675,6 +677,9 @@ function local_update_batch(data_xml)
 				var req=os1.get(data_id);
 				req.onsuccess=function(e)
 				{
+					i++;
+					localdb_open_requests-=1;
+					
 					var data_record=req.result;
 					if(data_record)
 					{
@@ -684,27 +689,32 @@ function local_update_batch(data_xml)
 						}
 						
 						var put_req=os1.put(data_record);
-						put_req.onssuccess=function(e)
+						put_req.onsuccess=function(e)
 						{
-							i++;
-							localdb_open_requests-=1;
 							update_records();
 						};
 					}
 				};
+				req.onerror=function(e)
+				{
+					i++;
+					localdb_open_requests-=1;
+					update_records();
+				};
 			}
 		};
 		
+		var activity_id=parseFloat(get_new_key());
 		function insert_activities()
 		{
 			if(j<rows.length)
 			{
+				//console.log("J"+j);
 				var data_id=rows[j].getElementsByTagName('id')[0].innerHTML;
 				localdb_open_requests+=1;
 				
 				var row_data_xml="<"+table+">"+rows[j].innerHTML+"</"+table+">";
-				var id=get_new_key();
-				var act_row={id:id,
+				var act_row={id:(activity_id+j),
 						type:'update',
 						status:'unsynced',
 						data_xml:row_data_xml,
@@ -728,6 +738,7 @@ function local_update_batch(data_xml)
 			
 		var local_update_complete=setInterval(function()
 		{
+			console.log(localdb_open_requests);
 		   if(localdb_open_requests===0)
 		   {
 			   clearInterval(local_update_complete);
@@ -774,7 +785,7 @@ function local_update_simple_func(data_xml,func)
 				}
 				
 				var put_req=objectStore.put(data_record);
-				put_req.onssuccess=function(e)
+				put_req.onsuccess=function(e)
 				{
 					var id=get_new_key();
 					var act_row={id:id,
@@ -855,7 +866,7 @@ function local_create_row(data_xml,activity_xml)
 			}
 			
 			var put_req=objectStore.put(data_row);
-			put_req.onssuccess=function(e)
+			put_req.onsuccess=function(e)
 			{
 				var id=get_new_key();
 				var act_row={id:id,
@@ -995,7 +1006,7 @@ function local_create_simple(data_xml)
 			}
 			
 			var put_req=objectStore.put(data_row);
-			put_req.onssuccess=function(e)
+			put_req.onsuccess=function(e)
 			{
 				var id=get_new_key();
 				var act_row={id:id,
@@ -1115,7 +1126,7 @@ function local_create_batch(data_xml)
 				rows.push(rows_data[x]);
 			}
 		});
-			
+		
 		var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
 		var os2=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
 		
@@ -1130,15 +1141,14 @@ function local_create_batch(data_xml)
 				var cols=rows[i].childNodes;
 				
 				var data_row=new Object();
-
+				
 				for(var j=0;j<cols.length;j++)
 				{
 					data_row[cols[j].nodeName]=cols[j].innerHTML;
 				}
 
 				localdb_open_requests+=1;
-				var put_req=os1.put(data_row);
-				put_req.onssuccess=function(e)
+				os1.put(data_row).onsuccess=function(e)
 				{
 					i+=1;
 					localdb_open_requests-=1;
@@ -1147,6 +1157,7 @@ function local_create_batch(data_xml)
 			}
 		};
 
+		var activity_id=parseFloat(get_new_key());
 		function insert_activities()
 		{
 			if(m<rows.length)
@@ -1156,9 +1167,8 @@ function local_create_batch(data_xml)
 				
 				var row_data_xml="<"+table+">"+rows[m].innerHTML+"</"+table+">";
 				//console.log(row_data_xml);
-				var id=get_new_key();
 				//console.log(id);
-				var act_row={id:id,
+				var act_row={id:(activity_id+m),
 						type:'create',
 						status:'unsynced',
 						data_xml:row_data_xml,
@@ -1182,6 +1192,7 @@ function local_create_batch(data_xml)
 
 		var local_create_complete=setInterval(function()
 		{
+			console.log(localdb_open_requests);
 		   if(localdb_open_requests===0)
 		   {
 			   clearInterval(local_create_complete);
@@ -1238,7 +1249,7 @@ function local_create_simple_func(data_xml,func)
 			}
 			
 			var put_req=objectStore.put(data_row);
-			put_req.onssuccess=function(e)
+			put_req.onsuccess=function(e)
 			{
 				var id=get_new_key();
 				var act_row={id:id,
@@ -1377,7 +1388,7 @@ function local_create_simple_no_warning(data_xml)
 			}
 			
 			var put_req=objectStore.put(data_row);
-			put_req.onssuccess=function(e)
+			put_req.onsuccess=function(e)
 			{
 				var id=get_new_key();
 				var act_row={id:id,
@@ -1602,13 +1613,13 @@ function local_delete_row(data_xml,activity_xml)
 						}
 					};
 
+					var activity_id=parseFloat(get_new_key());
 					function insert_activities()
 					{
 						if(j<delete_ids_array.length)
 						{
 							localdb_open_requests+=1;
-							var id=get_new_key();
-							var act_row={id:id,
+							var act_row={id:(activity_id+j),
 									type:'delete',
 									status:'unsynced',
 									user_display:'yes',
@@ -1774,21 +1785,22 @@ function local_delete_simple(data_xml)
 							localdb_open_requests+=1;
 							os1.delete(delete_ids_array[i]).onsuccess=function(e)
 							{
+								i++;
 								localdb_open_requests-=1;
 								delete_records();
 							};
-							i++;
+							
 						}
 					};
 
+					var activity_id=parseFloat(get_new_key());
 					function insert_activities()
 					{
 						//console.log('j '+j);
 						if(j<delete_ids_array.length)
 						{
 							localdb_open_requests+=1;
-							var id=get_new_key();
-							var act_row={id:id,
+							var act_row={id:(activity_id+j),
 									type:'delete',
 									data_id:delete_ids_array[j],
 									data_xml:data_xml,
@@ -1799,10 +1811,10 @@ function local_delete_simple(data_xml)
 									last_updated:get_my_time()};
 							os2.put(act_row).onsuccess=function(e)
 							{
+								j++;
 								localdb_open_requests-=1;
 								insert_activities();
 							};
-							j++;
 						}
 					};
 					
@@ -1957,14 +1969,14 @@ function local_delete_simple_func(data_xml,func)
 						}
 					};
 
+					var activity_id=parseFloat(get_new_key());
 					function insert_activities()
 					{
 						//console.log('j '+j);
 						if(j<delete_ids_array.length)
 						{
 							localdb_open_requests+=1;
-							var id=get_new_key();
-							var act_row={id:id,
+							var act_row={id:(activity_id+j),
 									type:'delete',
 									data_id:delete_ids_array[j],
 									data_xml:data_xml,

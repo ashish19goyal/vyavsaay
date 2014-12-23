@@ -5143,3 +5143,70 @@ function form98_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * @form Selective Sync
+ * @param button
+ */
+function form100_update_item(form)
+{
+	if(is_update_access('form100'))
+	{
+		var name=form.elements[0].getAttribute('data-i18n');
+		name=name.substr(name.indexOf('.')+1);
+		var value='unchecked';
+		if(form.elements[1].checked)
+			value='checked';
+		var data_id=form.elements[2].value;
+		var element_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<user_preferences>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+element_id+"</name>" +
+					"<display_name>"+name+"</display_name>" +
+					"<sync>"+value+"</sync>" +
+					"<type>form</type>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</user_preferences>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>user_preferences</tablename>" +
+					"<link_to>form100</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Sync for "+name+" form</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Selective sync
+ */
+function form100_update_form()
+{	
+	if(is_update_access('form100'))
+	{
+		$("[id^='save_form100_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

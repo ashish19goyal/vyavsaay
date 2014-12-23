@@ -9,7 +9,6 @@
 					<th>Source</th>
 					<th><input type='button' form='form94_header' title='Add new item' class='add_icon' onclick="modal40_action('','');">
 						<input type='button' form='form94_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form94_header' value='IMPORT' class='import_icon'>
 						<input type='submit' form='form94_header' style='visibility: hidden;'>
 					</th>
 			</tr>

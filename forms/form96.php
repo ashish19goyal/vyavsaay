@@ -8,7 +8,6 @@
 					<th>Value</th>
 					<th><input type="button" value='Add new category' form='form96_header' class='add_icon' onclick="form96_add_item();">
 						<input type='button' form='form96_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form96_header' value='IMPORT' class='import_icon'>
 						<input type='submit' form='form96_header' style='visibility: hidden;'>
 					</th>
 			</tr>

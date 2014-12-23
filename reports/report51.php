@@ -13,6 +13,7 @@
 			<tr>
 				<th>Product</th>
 				<th>Inventory</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody id='report51_body'>

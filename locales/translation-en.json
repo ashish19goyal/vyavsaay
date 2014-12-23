@@ -178,6 +178,7 @@
   	"discard_items":"Discard Items",
   	"sales_tax":"Sales Tax",
   	"data_import":"Data Import",
-  	"delete_storage":"Delete Storage"
+  	"delete_storage":"Delete Storage",
+  	"selective_sync":"Selective Sync"
   }
 }

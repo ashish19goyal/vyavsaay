@@ -277,7 +277,7 @@
 				<b>Import pre-filled template</b></br>
 				<label><input type="radio" name='upload_option' value='new'>Create New Records</label></br>
 				<label><input type="radio" name='upload_option' value='existing' checked>Update existing Records</label></br>
-				<input type="file" value='Select file' accept=".csv|.txt"></br>
+				<input type="file" value='Select file' accept=".csv"></br>
 				<output name='selected_file'></output></br>
 				<input type="submit" value='Import'>
 			</fieldset>

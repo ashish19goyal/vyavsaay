@@ -518,9 +518,11 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(30)" unique='yes'></name>
 			<display_name index="no" type="VARCHAR(100)" unique='yes'></display_name>
-			<value index='no' type="VARCHAR(50)"></value>
+			<value index='yes' type="VARCHAR(50)"></value>
 			<type index='yes' type="VARCHAR(20)"></type><!-- function/report/form/accounting/other/template -->
 			<shortcut index='no' type="VARCHAR(40)"></shortcut>
+			<sync index='no' type="VARCHAR(40)"></sync><!-- checked/unchecked -->
+			<tables index='no' type="TEXT"></tables>
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</user_preferences>

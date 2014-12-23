@@ -9,7 +9,6 @@
 					<th>Quantity</th>
 					<th><input type="button" value='Add new requisite' form='form58_header' class='add_icon' onclick="form58_add_item();">
 						<input type='button' form='form58_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form58_header' value='IMPORT' class='import_icon'>
 						<input type='submit' form='form58_header' style='visibility: hidden;'>
 					</th>
 			</tr>

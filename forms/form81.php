@@ -9,7 +9,6 @@
 					<th>Identified By </th>
 					<th><input type='button' form='form81_header' title='Add new' class='add_icon' onclick='form81_add_item();'>
 						<input type='button' form='form81_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form81_header' value='IMPORT' class='import_icon'>
 						<input type='submit' form='form81_header' style='visibility: hidden;'>
 					</th>
 			</tr>

@@ -2096,6 +2096,7 @@ function form87_import(data_array,import_type)
 {
 	var data_xml="<product_master>";
 	var counter=0;
+	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{
 		if(counter===500)
@@ -2110,7 +2111,7 @@ function form87_import(data_array,import_type)
 				"<description>"+row.description+"</description>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<bar_code>"+row.bar_code+"</bar_code>" +
-				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
 	

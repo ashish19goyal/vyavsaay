@@ -1788,7 +1788,7 @@ function modal23_action(t_func,i_func)
         		}
         		else if(localdb_open_requests===0)
         		{
-        			progress_value=15+(1-(number_active_ajax/(2*data_array.length)))*85;
+        			progress_value=15+(1-((500*number_active_ajax)/(2*data_array.length)))*85;
         		}
         		
         		if(number_active_ajax===0 && localdb_open_requests===0)

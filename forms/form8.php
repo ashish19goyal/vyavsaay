@@ -10,7 +10,6 @@
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form8_header'></th>
 					<th><input type='button' form='form8_header' value='Add new staff' class='add_icon' onclick='modal16_action();'>
 						<input type='button' form='form8_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form8_header' value='IMPORT' class='import_icon'>
 						<input type='submit' form='form8_header' style='visibility: hidden;'>
 					</th>
 			</tr>

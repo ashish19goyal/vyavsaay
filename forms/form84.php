@@ -10,8 +10,7 @@
 					<th>Last Bill</th>
 					<th><input type='button' form='form84_header' title='Add subscription' class='add_icon' onclick='form84_add_item();'>
 						<input type='button' form='form84_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form84_header' value='IMPORT' class='import_icon'>
-						<input type='button' form='form84_header' title='Create due bills' class='process_ok_icon' onclick="form84_bills();">
+						<input type='button' form='form84_header' title='Create due bills' value='Create Bills' class='generic_icon' onclick="form84_bills();">
 						<input type='submit' form='form84_header' style='visibility: hidden;'>
 					</th>
 			</tr>

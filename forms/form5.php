@@ -8,7 +8,6 @@
 					<th>Details</th>
 					<th><input type='button' form='form5_header' value='Add item' class='add_icon' onclick='modal10_action();'>
 						<input type='button' form='form5_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form5_header' value='IMPORT' class='import_icon'>
 						<input type='submit' form='form5_header' style='visibility: hidden;'>
 					</th>
 			</tr>

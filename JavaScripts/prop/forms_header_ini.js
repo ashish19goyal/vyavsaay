@@ -25,13 +25,6 @@ function form1_header_ini()
 
 	set_my_filter(products_data,names_filter);
 	set_my_filter(batch_data,batches_filter);
-	
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form1_import_template,form1_import);
-	});
 };
 
 
@@ -78,12 +71,6 @@ function form5_header_ini()
 	set_my_filter(assets_data,asset_filter);
 	set_static_filter('assets','type',type_filter);
 	
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form5_import_template,form5_import);
-	});
 };
 
 
@@ -259,12 +246,6 @@ function form8_header_ini()
 	set_my_filter(email_data,email_filter);
 	set_static_filter('staff','status',status_filter);
 	
-	var import_button=filter_fields.elements[6];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form8_import_template,form8_import);
-	});
 };
 
 
@@ -360,12 +341,6 @@ function form11_header_ini()
 	set_static_filter('payments','type',type_filter);
 	set_static_filter('payments','status',status_filter);
 	
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form11_import_template,form11_import);
-	});
 };
 
 /**
@@ -564,12 +539,6 @@ function form14_header_ini()
 	set_my_filter(staff_data,assignee_filter);
 	set_static_filter('task_instances','status',status_filter);
 	
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form14_import_template,form14_import);
-	});
 };
 
 function form14_switch_view()
@@ -911,13 +880,6 @@ function form30_header_ini()
 	set_my_filter(email_data,email_filter);
 	set_static_filter('customers','status',status_filter);
 	
-	var import_button=filter_fields.elements[6];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form30_import_template,form30_import);
-	});
-	
 };
 
 /**
@@ -946,12 +908,6 @@ function form35_header_ini()
 	set_static_filter('offers','offer_type',type_filter);
 	set_static_filter('offers','status',status_filter);
 	
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form35_import_template,form35_import);
-	});
 };
 
 
@@ -987,12 +943,6 @@ function form38_header_ini()
 	set_my_filter(batch_data,batch_filter);
 	set_my_filter(area_data,area_filter);
 	
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form38_import_template,form38_import);
-	});
 };
 
 
@@ -1023,12 +973,6 @@ function form39_header_ini()
 	set_my_filter(make_data,make_filter);
 	set_my_filter(products_data,name_filter);
 	
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form39_import_template,form39_import);
-	});
 };
 
 
@@ -1064,13 +1008,6 @@ function form40_header_ini()
 	set_my_filter(phone_data,phone_filter);
 	set_my_filter(email_data,email_filter);
 	
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form40_import_template,form40_import);
-	});
-
 };
 
 
@@ -1411,12 +1348,6 @@ function form56_header_ini()
 		form56_ini();
 	});
 
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form56_import_template,form56_import);
-	});
 };
 
 /**
@@ -1441,12 +1372,6 @@ function form57_header_ini()
 		form57_ini();
 	});
 
-	var import_button=filter_fields.elements[3];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form57_import_template,form57_import);
-	});
 };
 
 /**
@@ -1479,12 +1404,6 @@ function form58_header_ini()
 		form58_ini();
 	});
 
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form58_import_template,form58_import);
-	});
 };
 
 /**
@@ -1517,12 +1436,6 @@ function form59_header_ini()
 		form59_ini();
 	});
 
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form59_import_template,form59_import);
-	});
 };
 
 /**
@@ -1553,12 +1466,6 @@ function form60_header_ini()
 		form60_ini();
 	});
 
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form60_import_template,form60_import);
-	});
 };
 
 /**
@@ -1589,12 +1496,6 @@ function form61_header_ini()
 		form61_ini();
 	});
 
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form61_import_template,form61_import);
-	});
 };
 
 
@@ -1627,12 +1528,6 @@ function form62_header_ini()
 		form62_ini();
 	});
 
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form62_import_template,form62_import);
-	});
 };
 
 /**
@@ -1664,12 +1559,6 @@ function form63_header_ini()
 		form63_ini();
 	});
 
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form63_import_template,form63_import);
-	});
 };
 
 /**
@@ -1701,12 +1590,6 @@ function form64_header_ini()
 		form64_ini();
 	});
 
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form64_import_template,form64_import);
-	});
 };
 
 /**
@@ -1738,12 +1621,6 @@ function form66_header_ini()
 		form66_ini();
 	});
 
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form66_import_template,form66_import);
-	});
 };
 
 
@@ -1843,12 +1720,6 @@ function form71_header_ini()
 		form71_ini();
 	});
 
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form71_import_template,form71_import);
-	});
 };
 
 
@@ -2090,13 +1961,7 @@ function form81_header_ini()
 		event.preventDefault();
 		form81_ini();
 	});
-
-	var import_button=filter_fields.elements[3];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form81_import_template,form81_import);
-	});
+	
 }
 
 /**
@@ -2173,12 +2038,6 @@ function form83_header_ini()
 		form83_ini();
 	});
 
-	var import_button=filter_fields.elements[3];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form83_import_template,form83_import);
-	});
 };
 
 /**
@@ -2211,12 +2070,6 @@ function form84_header_ini()
 		form84_ini();
 	});
 
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form84_import_template,form84_import);
-	});
 };
 
 /**
@@ -2245,13 +2098,6 @@ function form87_header_ini()
 		event.preventDefault();
 		form87_ini();
 	});
-
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form87_import_template,form87_import);
-	});
 };
 
 /**
@@ -2278,12 +2124,6 @@ function form88_header_ini()
 		form88_ini();
 	});
 
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form88_import_template,form88_import);
-	});
 };
 
 /**
@@ -2412,12 +2252,6 @@ function form89_header_ini()
 		form89_ini();
 	});
 
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form89_import_template,form89_import);
-	});
 };
 
 /**
@@ -2453,12 +2287,6 @@ function form90_header_ini()
 		form90_ini();
 	});
 
-	var import_button=filter_fields.elements[3];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form90_import_template,form90_import);
-	});
 };
 
 /**
@@ -2587,12 +2415,6 @@ function form93_header_ini()
 	set_static_filter('loans','type',type_filter);
 	set_static_filter('loans','status',status_filter);
 	
-	var import_button=filter_fields.elements[5];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form93_import_template,form93_import);
-	});
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -2625,12 +2447,6 @@ function form94_header_ini()
 	set_my_filter(products_data,names_filter);
 	set_my_filter(batch_data,batches_filter);
 	
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form94_import_template,form94_import);
-	});
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -2697,12 +2513,6 @@ function form96_header_ini()
 	set_my_filter(customer_data,customer_filter);
 	set_my_filter(attribute_data,attribute_filter);
 	
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form96_import_template,form96_import);
-	});
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -2734,12 +2544,6 @@ function form97_header_ini()
 	set_my_filter(supplier_data,supplier_filter);
 	set_my_filter(attribute_data,attribute_filter);
 	
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form97_import_template,form97_import);
-	});
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -2771,18 +2575,45 @@ function form98_header_ini()
 	set_my_filter(staff_data,staff_filter);
 	set_my_filter(attribute_data,attribute_filter);
 	
-	var import_button=filter_fields.elements[4];
-	$(import_button).off("click");
-	$(import_button).on("click", function(event)
-	{
-		modal23_action(form98_import_template,form98_import);
-	});
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
 		event.preventDefault();
 		form98_ini();
+	});
+
+};
+
+
+/**
+ * @form Selective Sync
+ * @formNo 100
+ */
+function form100_header_ini()
+{
+	var filter_fields=document.getElementById('form100_header');
+	var name_filter=filter_fields.elements[0];
+	var save_element=filter_fields.elements[1];
+	
+	$(save_element).off('click');
+	$(save_element).on('click',function(e)
+	{
+		form100_update_form();
+	});
+	
+	var name_data="<user_preferences>" +
+			"<display_name></display_name>" +
+			"<value exact='yes'>checked</value>" +
+			"</user_preferences>";
+	
+	set_my_filter(name_data,name_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form100_ini();
 	});
 
 };

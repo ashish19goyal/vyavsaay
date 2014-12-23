@@ -13,6 +13,7 @@
 	$cr_access=$_POST['cr'];
 	
 	$post_data=$_POST['data'];
+	$post_data=preg_replace('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u',' ',$post_data);
 	$last_sync=$_POST['last_sync'];
 
 	if(isset($_SESSION['session']))
@@ -49,7 +50,7 @@
 					$result1=$stmt1->fetch(PDO::FETCH_ASSOC);
 					$server_last_update=$result1['last_updated'];
 					
-					if($server_last_update<$last_sync)
+					if($server_last_update<$last_updated)
 					{
 						$q_string2="";
 						$data=$data_xml->childNodes->item(0);

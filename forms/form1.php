@@ -9,10 +9,9 @@
 					<th>Sale Price (in Rs)</th>
 					<th>Expiry</th>
 					<th>Quantity</th>
-					<th><input type='button' form='form1_header' title='Add new product' class='add_icon' onclick='modal14_action();'>
-						<input type='button' form='form1_header' title='Add new batch' class='add_icon' onclick='modal22_action();'>
+					<th><input type='button' form='form1_header' value='Add Product' class='generic_icon' onclick='modal14_action();'>
+						<input type='button' form='form1_header' value='Add Batch' class='generic_icon' onclick='modal22_action();'>
 						<input type='button' form='form1_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form1_header' value='IMPORT' class='import_icon'>
 						<input type='submit' form='form1_header' style='visibility: hidden;'>
 					</th>
 			</tr>

@@ -8264,3 +8264,98 @@ function form98_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Selective Sync
+ * @formNo 100
+ * @Loading light
+ */
+function form100_ini()
+{
+	show_loader();
+	var fid=$("#form100_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form100_header');
+	var fname=filter_fields.elements[0].value;
+	var felement=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form100_index');
+	var prev_element=document.getElementById('form100_prev');
+	var next_element=document.getElementById('form100_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<user_preferences count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<name>"+felement+"</name>" +
+			"<display_name>"+fname+"</display_name>" +
+			"<sync></sync>" +
+			"<value exact='yes'>checked</value>" +
+			"<type exact='yes'>form</type>" +
+			"</user_preferences>";
+
+	
+	$('#form100_body').html("");
+
+	fetch_requested_data('form100',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form100_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Form Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form100_"+result.id+"' data-i18n='form."+result.display_name+"'></textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Sync'>";
+						rowsHTML+="<input type='checkbox' form='form100_"+result.id+"' "+result.sync+">";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form100_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='hidden' form='form100_"+result.id+"' value='"+result.name+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' id='save_form100_"+result.id+"' form='form100_"+result.id+"'>";	
+					rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+			
+			$('#form100_body').append(rowsHTML);
+			var fields=document.getElementById("form100_"+result.id);
+			
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form100_update_item(fields);
+			});
+		});
+		
+		$('#form100_body').find('textarea').i18n();
+		
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+
+		hide_loader();
+	});
+};

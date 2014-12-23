@@ -9,7 +9,6 @@
 					<th>Facing </th>
 					<th><input type='button' form='form83_header' value='Add item' class='add_icon' onclick='modal35_action();'>
 						<input type='button' form='form83_header' value='EXPORT' class='export_icon'>
-						<input type='button' form='form83_header' value='IMPORT' class='import_icon'>
 						<input type='submit' form='form83_header' style='visibility: hidden;'>
 					</th>
 			</tr>

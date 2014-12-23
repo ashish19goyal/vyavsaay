@@ -52,6 +52,16 @@
 			$num_records=500;
 			$end_table='end_syncing';
 			
+			$tables_query=$conn->conn->prepare("select tables from user_preferences where value=? and sync=?");
+			$tables_query->execute(array('checked','checked'));
+			$tables_res=$tables_query->fetchAll(PDO::FETCH_NUM);
+			$selected_tables='';
+
+			foreach ($tables_res as $table_value)
+			{
+				$selected_tables.=$table_value[0];
+			}
+
 			foreach($db_schema->childNodes as $table)
 			{	
 				$table_name=$table->nodeName;
@@ -62,33 +72,35 @@
 				}
 				$first_iteration=false;
 				
-				if($table_name!="#text")
+				$found=strpos($selected_tables, "--".$table_name."--");
+				
+				
+				if($table_name!="#text" && ($found!==false))
 				{
 					$xmlresponse.="<$table_name>";
-					try{
-						$struct=$conn->conn->prepare("select distinct column_name from information_schema.columns where table_name=? order by ordinal_position;");
-						$struct->execute(array($table_name));
-						$struct_res=$struct->fetchAll(PDO::FETCH_NUM);	
-					}catch(PDOException $ex)
-					{
-						echo "Could not read table $table_name: " .$ex->getMessage() ."</br>";
-					}
-							
 					$stmt[$table_name]=$conn->conn->prepare("select * from $table_name where last_updated>? limit ?,?;");
 					$stmt[$table_name]->execute(array($last_sync_time,$start_offset,$num_records));
-					$stmt_res=$stmt[$table_name]->fetchAll(PDO::FETCH_NUM);
+					$stmt_res=$stmt[$table_name]->fetchAll(PDO::FETCH_ASSOC);
 					
 					for($i=0;$i<count($stmt_res);$i++)
 					{
-						$xmlresponse.="<row>";
-						
-						for($j=0;$j<count($struct_res);$j++)
+						if($table_name==='activities')
 						{
-							$xmlresponse.="<".$struct_res[$j][0].">";
-								$xmlresponse.=$stmt_res[$i][$j];
-							$xmlresponse.="</".$struct_res[$j][0].">";
+							$found_activity=strpos($selected_tables, "--".$stmt_res[$i]['tablename']."--");
+							if($found_activity==false)
+							{
+								continue;
+							}
 						}
 						
+						$xmlresponse.="<row>";
+						
+						foreach ($stmt_res[$i] as $key => $value)
+						{
+							$xmlresponse.="<".$key.">";
+							$xmlresponse.=$value;
+							$xmlresponse.="</".$key.">";
+						}
 						$xmlresponse.="</row>";
 					}
 					
