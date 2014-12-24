@@ -354,10 +354,11 @@
 	<div id="modal29" title="Payment Details">
 		<form id='modal29_form'>
 			<fieldset>
-				<label>Bill Id <input type='text' readonly='readonly'></label><br/>
-				<label>Date <input type="text" readonly='readonly'></label><br/>
-				<label>Mode of Payment <input type="text"></label><br/>
-				<label>Due Date <input type="text"></label><br/>
+				<label>Bill Id: <input type='text' readonly='readonly'></label><br/>
+				<label>Date: <input type="text" readonly='readonly'></label><br/>
+				<label>Mode of Payment: <input type="text"></label><br/>
+				<label>Due Date: <input type="text"></label><br/>
+				<label>Closing Notes: <textarea></textarea></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -493,6 +494,18 @@
 				<label>Item <input type='text' required></label><br/>
 				<label>Batch <input type="text" required></label><br/>
 				<label>Quantity <input type='number' required></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal41" title="Close Payments">
+		<form id='modal41_form'>
+			<fieldset>
+				<label>Account: <input type='text' readonly='readonly' required></label><br/>
+				<label>Balance: <input type="text" readonly='readonly' required></label><br/>
+				<label>Counter Payment: Rs. <input type='number' step='2' value='0' required></label><br/>
+				<label>Closing Notes: <textarea></textarea></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

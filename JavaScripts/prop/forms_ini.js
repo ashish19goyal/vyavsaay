@@ -776,6 +776,7 @@ function form11_ini()
 			"<date></date>" +
 			"<mode></mode>" +
 			"<bill_id></bill_id>" +
+			"<notes></notes>" +
 			"<last_updated sort='desc'></last_updated>" +
 			"</payments>";
 
@@ -818,7 +819,8 @@ function form11_ini()
 				var detail_string="Bill Id: " +result.bill_id+
 						"\nMode of payment: " +result.mode+
 						"\nDue Date: "+get_my_past_date(result.due_date)+
-						"\nDate closed: "+get_my_past_date(result.date);
+						"\nDate: "+get_my_past_date(result.date)+
+						"\nClosing Notes: "+result.notes;
 				var rowsHTML="";
 				rowsHTML+="<tr>";
 					rowsHTML+="<form id='form11_"+result.id+"'></form>";
@@ -847,6 +849,7 @@ function form11_ini()
 							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.date+"'>";
 							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.due_date+"'>";
 							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.bill_id+"'>";
+							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+result.notes+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form11_"+result.id+"' title='Save'>";
 							rowsHTML+="<input type='hidden' form='form11_"+result.id+"' value='"+email+"'>";
 							rowsHTML+="<a id='form11_whatsapp_"+result.id+"' href='whatsapp://send?text="+message_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form11_"+result.id+"' title='Send details through WhatsApp'>";
@@ -866,7 +869,7 @@ function form11_ini()
 				});
 				
 				longPressEditable($('.dblclick_editable'));
-				
+				$('textarea').autosize();
 			});
 		});
 		
@@ -5252,6 +5255,22 @@ function form71_ini()
 						}
 					}
 				});
+				
+				var balance_display="";
+				if(balance_amount==0)
+				{
+					balance_display="Rs. 0";
+				}
+				else if(balance_amount>0)
+				{
+					balance_display="Receivable: Rs. "+balance_amount;
+				}
+				else
+				{
+					balance_amount=(-balance_amount);
+					balance_display="Payable: Rs. "+balance_amount;
+				}
+				
 				var rowsHTML="";
 				rowsHTML+="<tr>";
 					rowsHTML+="<form id='form71_"+result.id+"'></form>";
@@ -5265,12 +5284,14 @@ function form71_ini()
 							rowsHTML+="<textarea readonly='readonly' form='form71_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Balance'>";
-							rowsHTML+="<input type='number' step='any' readonly='readonly' form='form71_"+result.id+"' value='"+balance_amount+"'>";
+							rowsHTML+="<textarea readonly='readonly' form='form71_"+result.id+"'>"+balance_display+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form71_"+result.id+"' value='"+result.id+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form71_"+result.id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form71_"+result.id+"' onclick='form71_delete_item($(this));'>";
+							rowsHTML+="</br><input type='button' class='generic_icon' value='Close payments' form='form71_"+result.id+"' onclick='modal41_action($(this));'>";
+							rowsHTML+="<input type='hidden' form='form71_"+result.id+"' value='"+balance_amount+"'>";
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 				

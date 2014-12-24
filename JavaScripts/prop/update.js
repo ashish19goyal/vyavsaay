@@ -682,7 +682,8 @@ function form11_update_item(form)
 			date=get_my_time();
 		}
 		var due_date=form.elements[9].value;
-		var email=form.elements[12].value;
+		var notes=form.elements[11].value;
+		var email=form.elements[13].value;
 		var last_updated=get_my_time();
 		var data_xml="<payments>" +
 					"<id>"+data_id+"</id>" +
@@ -691,6 +692,7 @@ function form11_update_item(form)
 					"<paid_amount>"+paid_amount+"</paid_amount>" +
 					"<due_date>"+due_date+"</due_date>" +
 					"<status>"+status+"</status>" +
+					"<notes>"+notes+"</notes>" +
 					"<mode>"+mode+"</mode>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</payments>";	

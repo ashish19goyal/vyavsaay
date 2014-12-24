@@ -200,6 +200,7 @@
 			<mode index='yes' type="VARCHAR(15)"></mode><!-- cash/cheque/draft/credit card/debit card/online banking/coupons -->
 			<transaction_id index='no' type="BIGINT"></transaction_id>
 			<bill_id index='yes' type="BIGINT"></bill_id>
+			<notes index='yes' type="TEXT"></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</payments>
 	<credit_notes>

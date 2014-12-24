@@ -2290,6 +2290,7 @@ function modal29_action(button)
 	var fdate=father_form.elements[8];
 	var fdue_date=father_form.elements[9];
 	var fbill_id=father_form.elements[10];
+	var fnotes=father_form.elements[11];
 		
 	form.elements[1].value=fbill_id.value;
 	var date=form.elements[2];
@@ -2298,6 +2299,7 @@ function modal29_action(button)
 	mode.value=fmode.value;
 	var due_date=form.elements[4];
 	due_date.value=get_my_past_date(fdue_date.value);
+	form.elements[5].value=fnotes.value;
 	
 	$(date).datepicker();
 	$(due_date).datepicker();
@@ -2310,12 +2312,14 @@ function modal29_action(button)
 		var detail_string="Bill Id: " +form.elements[1].value+
 				"\nMode of payment: " +form.elements[3].value+
 				"\nDue Date: "+form.elements[4].value+
-				"\nDate closed: "+form.elements[2].value;
+				"\nDate closed: "+form.elements[2].value+
+				"\nClosing Notes: "+form.elements[5].value;
 
 		fdetail.value=detail_string;
 		fmode.value=form.elements[3].value;
 		fdue_date.value=get_raw_time(form.elements[4].value);
-		fbill_id.value=form.elements[1].value;	
+		fbill_id.value=form.elements[1].value;
+		fnotes.value=form.elements[5].value;
 	
 		$("#modal29").dialog("close");
 		$(father_form).submit();
@@ -3243,6 +3247,231 @@ function modal40_action(product,batch)
 	});
 	
 	$("#modal40").dialog("open");
+}
+
+/**
+ * @modal Close Payments
+ * @modalNo 41
+ */
+function modal41_action(button)
+{
+	var form_id=$(button).attr('form');
+	var father_form=document.getElementById(form_id);
+	
+	var form=document.getElementById("modal41_form");
+	
+	var account_name=father_form.elements[1].value;
+	var balance_display=father_form.elements[3].value;
+	var balance=father_form.elements[8].value;
+	
+	form.elements[1].value=account_name;
+	form.elements[2].value=balance_display;
+	form.elements[3].setAttribute('max',balance);
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		
+		var counter_payment=parseFloat(form.elements[3].value);
+		console.log(counter_payment);
+		var user_notes=form.elements[4].value;
+		
+		if(is_create_access('form11'))
+		{
+			var accounts_data="<payments>" +
+					"<id></id>" +
+					"<acc_name exact='yes'>"+account_name+"</acc_name>" +
+					"<type></type>" +
+					"<date sort='asc'></date>" +
+					"<total_amount></total_amount>" +
+					"<paid_amount></paid_amount>" +
+					"<notes></notes>" +
+					"<status>pending</status>" +
+					"</payments>";
+			
+			fetch_requested_data('',accounts_data,function(accounts)
+			{
+				console.log(accounts);
+				var total_received=0;
+				var total_paid=0;
+				for(var i=0;i<accounts.length;i++)
+				{
+					if(accounts[i].type=='paid')
+					{
+						total_paid=parseFloat(accounts[i].total_amount)-parseFloat(accounts[i].paid_amount);
+					}
+					else
+					{
+						total_received=parseFloat(accounts[i].total_amount)-parseFloat(accounts[i].paid_amount);
+					}
+				}
+				
+				if(total_received<total_paid)
+				{
+					total_received+=counter_payment;
+				}
+				else
+				{
+					total_paid+=counter_payment;
+				}
+
+				accounts.forEach(function(account)
+				{
+					if(total_received<total_paid)
+					{
+						if(account.type=='received')
+						{
+							var notes=account.notes+"\nClosed by balancing against other payables";
+							var received_xml="<payments>" +
+								"<id>"+account.id+"</id>" +
+								"<paid_amount>"+account.total_amount+"</paid_amount>" +
+								"<status>closed</status>" +
+								"<notes>"+notes+"</notes>" +
+								"<last_updated>"+get_my_time()+"</last_updated>" +
+								"</payments>";
+							if(is_online())
+							{
+								server_update_simple(received_xml);
+							}
+							else
+							{
+								local_update_simple(received_xml);
+							}
+						}
+						else
+						{
+							var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
+							if(pending_amount<=total_received)
+							{
+								var notes=account.notes+"\n"+user_notes;
+								var paid_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+account.total_amount+"</paid_amount>" +
+									"<status>closed</status>" +
+									"<notes>"+notes+"</notes>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</payments>";
+								if(is_online())
+								{
+									server_update_simple(paid_xml);
+								}
+								else
+								{
+									local_update_simple(paid_xml);
+								}
+		
+								total_received-=pending_amount;
+								total_paid-=pending_amount;
+							}
+							else
+							{
+								var paid_amount=parseFloat(account.paid_amount)+total_received;
+								//console.log(paid_amount);
+								var notes=account.notes+"\n Rs."+total_received+" balanced against other receivables and "+user_notes;
+								var paid_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+paid_amount+"</paid_amount>" +
+									"<status>pending</status>" +
+									"<notes>"+notes+"</notes>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</payments>";
+								if(is_online())
+								{
+									server_update_simple(paid_xml);
+								}
+								else
+								{
+									local_update_simple(paid_xml);
+								}
+		
+								total_received=0;
+								total_paid=0;
+							}
+						}
+					}
+					else
+					{
+						if(account.type=='paid')
+						{
+							var notes=account.notes+"\nClosed by balancing other receivables";
+							var paid_xml="<payments>" +
+								"<id>"+account.id+"</id>" +
+								"<paid_amount>"+account.total_amount+"</paid_amount>" +
+								"<status>closed</status>" +
+								"<notes>"+notes+"</notes>" +
+								"<last_updated>"+get_my_time()+"</last_updated>" +
+								"</payments>";
+							if(is_online())
+							{
+								server_update_simple(paid_xml);
+							}
+							else
+							{
+								local_update_simple(paid_xml);
+							}
+						}
+						else
+						{
+							var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
+							
+							if(pending_amount<=total_paid)
+							{
+								var notes=account.notes+"\n"+user_notes;
+								var received_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+account.total_amount+"</paid_amount>" +
+									"<status>closed</status>" +
+									"<notes>"+notes+"</notes>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</payments>";
+								if(is_online())
+								{
+									server_update_simple(received_xml);
+								}
+								else
+								{
+									local_update_simple(received_xml);
+								}
+								
+								total_received-=pending_amount;
+								total_paid-=pending_amount;
+							}
+							else
+							{
+								var paid_amount=parseFloat(account.paid_amount)+total_paid;
+								var notes=account.notes+"\n Rs."+total_paid+" balanced against other payables "+user_notes;
+								var received_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+paid_amount+"</paid_amount>" +
+									"<status>pending</status>" +
+									"<notes>"+notes+"</notes>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</payments>";
+								if(is_online())
+								{
+									server_update_simple(received_xml);
+								}
+								else
+								{
+									local_update_simple(received_xml);
+								}
+								total_received=0;
+								total_paid=0;
+							}
+						}
+					}
+				});
+			});
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal41").dialog("close");
+	});
+	
+	$("#modal41").dialog("open");
 }
 
 

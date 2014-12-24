@@ -931,170 +931,89 @@ function generate_attendance_records()
  */
 function balance_out_payments()
 {
-	var payments_data="<payments>" +
-			"<acc_name></acc_name>" +
-			"<type></type>" +
-			"<total_amount></total_amount>" +
-			"<paid_amount></paid_amount>" +
-			"<status>pending</status>" +
-			"</payments>";
-	fetch_requested_data('',payments_data,function(payments)
+	if(is_update_access('form11'))
 	{
-		//console.log(payments);
-		for(var i=0;i<payments.length;i++)
+		var payments_data="<payments>" +
+				"<acc_name></acc_name>" +
+				"<type></type>" +
+				"<total_amount></total_amount>" +
+				"<paid_amount></paid_amount>" +
+				"<status>pending</status>" +
+				"</payments>";
+		fetch_requested_data('',payments_data,function(payments)
 		{
-			//console.log(payments[i]);
-			payments[i].total_received=0;
-			payments[i].total_paid=0;
-			
-			if(payments[i].type=='paid')
+			//console.log(payments);
+			for(var i=0;i<payments.length;i++)
 			{
-				payments[i].total_paid=parseFloat(payments[i].total_amount)-parseFloat(payments[i].paid_amount);
-				//console.log('paid type of payment'+payments[i].total_paid);
-			}
-			else
-			{
-				payments[i].total_received=parseFloat(payments[i].total_amount)-parseFloat(payments[i].paid_amount);
-				//console.log('received type of payment'+payments[i].total_received);
-			}
-			
-			for(var j=i+1;j<payments.length;j++)
-			{
-				if(payments[i].acc_name==payments[j].acc_name)
+				//console.log(payments[i]);
+				payments[i].total_received=0;
+				payments[i].total_paid=0;
+				
+				if(payments[i].type=='paid')
 				{
-					if(payments[j].type=='paid')
+					payments[i].total_paid=parseFloat(payments[i].total_amount)-parseFloat(payments[i].paid_amount);
+					//console.log('paid type of payment'+payments[i].total_paid);
+				}
+				else
+				{
+					payments[i].total_received=parseFloat(payments[i].total_amount)-parseFloat(payments[i].paid_amount);
+					//console.log('received type of payment'+payments[i].total_received);
+				}
+				
+				for(var j=i+1;j<payments.length;j++)
+				{
+					if(payments[i].acc_name==payments[j].acc_name)
 					{
-						payments[i].total_paid+=parseFloat(payments[j].total_amount)-parseFloat(payments[j].paid_amount);
-						//console.log('paid type of payment'+payments[i].total_paid);
+						if(payments[j].type=='paid')
+						{
+							payments[i].total_paid+=parseFloat(payments[j].total_amount)-parseFloat(payments[j].paid_amount);
+							//console.log('paid type of payment'+payments[i].total_paid);
+						}
+						else
+						{
+							payments[i].total_received+=parseFloat(payments[j].total_amount)-parseFloat(payments[j].paid_amount);
+							//console.log('received type of payment'+payments[i].total_received);
+						}
+						payments.splice(j,1);
+						j-=1;
 					}
-					else
-					{
-						payments[i].total_received+=parseFloat(payments[j].total_amount)-parseFloat(payments[j].paid_amount);
-						//console.log('received type of payment'+payments[i].total_received);
-					}
-					payments.splice(j,1);
-					j-=1;
+				}
+				if(payments[i].total_received===0 || payments[i].total_paid===0)
+				{
+					payments.splice(i,1);
+					i-=1;
 				}
 			}
-			if(payments[i].total_received===0 || payments[i].total_paid===0)
+			
+			//console.log(payments);
+			payments.forEach(function(payment)
 			{
-				payments.splice(i,1);
-				i-=1;
-			}
-		}
-		
-		console.log(payments);
-		payments.forEach(function(payment)
-		{
-			var accounts_data="<payments>" +
-					"<id></id>" +
-					"<acc_name exact='yes'>"+payment.acc_name+"</acc_name>" +
-					"<type></type>" +
-					"<date sort='asc'></date>" +
-					"<total_amount></total_amount>" +
-					"<paid_amount></paid_amount>" +
-					"<status>pending</status>" +
-					"</payments>";
-			console.log(accounts_data);
-			fetch_requested_data('',accounts_data,function(accounts)
-			{
-				console.log(accounts);
-				accounts.forEach(function(account)
+				var accounts_data="<payments>" +
+						"<id></id>" +
+						"<acc_name exact='yes'>"+payment.acc_name+"</acc_name>" +
+						"<type></type>" +
+						"<date sort='asc'></date>" +
+						"<total_amount></total_amount>" +
+						"<paid_amount></paid_amount>" +
+						"<notes></notes>" +
+						"<status>pending</status>" +
+						"</payments>";
+				//console.log(accounts_data);
+				fetch_requested_data('',accounts_data,function(accounts)
 				{
-					if(payment.total_received<payment.total_paid)
+					//console.log(accounts);
+					accounts.forEach(function(account)
 					{
-						if(account.type=='received')
+						if(payment.total_received<payment.total_paid)
 						{
-							var received_xml="<payments>" +
-								"<id>"+account.id+"</id>" +
-								"<paid_amount>"+account.total_amount+"</paid_amount>" +
-								"<status>closed</status>" +
-								"<last_updated>"+get_my_time()+"</last_updated>" +
-								"</payments>";
-							if(is_online())
+							if(account.type=='received')
 							{
-								server_update_simple(received_xml);
-							}
-							else
-							{
-								local_update_simple(received_xml);
-							}
-						}
-						else
-						{
-							var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
-							if(pending_amount<=payment.total_received)
-							{
-								var paid_xml="<payments>" +
-									"<id>"+account.id+"</id>" +
-									"<paid_amount>"+account.total_amount+"</paid_amount>" +
-									"<status>closed</status>" +
-									"<last_updated>"+get_my_time()+"</last_updated>" +
-									"</payments>";
-								if(is_online())
-								{
-									server_update_simple(paid_xml);
-								}
-								else
-								{
-									local_update_simple(paid_xml);
-								}
-
-								payment.total_received-=pending_amount;
-								payment.total_paid-=pending_amount;
-							}
-							else
-							{
-								var paid_amount=parseFloat(account.paid_amount)+payment.total_received;
-								var paid_xml="<payments>" +
-									"<id>"+account.id+"</id>" +
-									"<paid_amount>"+paid_amount+"</paid_amount>" +
-									"<status>pending</status>" +
-									"<last_updated>"+get_my_time()+"</last_updated>" +
-									"</payments>";
-								if(is_online())
-								{
-									server_update_simple(paid_xml);
-								}
-								else
-								{
-									local_update_simple(paid_xml);
-								}
-
-								payment.total_received=0;
-								payment.total_paid=0;
-							}
-						}
-					}
-					else
-					{
-						if(account.type=='paid')
-						{
-							var paid_xml="<payments>" +
-								"<id>"+account.id+"</id>" +
-								"<paid_amount>"+account.total_amount+"</paid_amount>" +
-								"<status>closed</status>" +
-								"<last_updated>"+get_my_time()+"</last_updated>" +
-								"</payments>";
-							if(is_online())
-							{
-								server_update_simple(paid_xml);
-							}
-							else
-							{
-								local_update_simple(paid_xml);
-							}
-						}
-						else
-						{
-							var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
-							
-							if(pending_amount<=payment.total_paid)
-							{
+								var notes=account.notes+"\nClosed by balancing other payables";
 								var received_xml="<payments>" +
 									"<id>"+account.id+"</id>" +
 									"<paid_amount>"+account.total_amount+"</paid_amount>" +
 									"<status>closed</status>" +
+									"<notes>"+notes+"</notes>" +
 									"<last_updated>"+get_my_time()+"</last_updated>" +
 									"</payments>";
 								if(is_online())
@@ -1105,34 +1024,135 @@ function balance_out_payments()
 								{
 									local_update_simple(received_xml);
 								}
+							}
+							else
+							{
+								var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
+								if(pending_amount<=payment.total_received)
+								{
+									var notes=account.notes+"\nClosed by balancing other receivables";
+									var paid_xml="<payments>" +
+										"<id>"+account.id+"</id>" +
+										"<paid_amount>"+account.total_amount+"</paid_amount>" +
+										"<status>closed</status>" +
+										"<notes>"+notes+"</notes>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</payments>";
+									if(is_online())
+									{
+										server_update_simple(paid_xml);
+									}
+									else
+									{
+										local_update_simple(paid_xml);
+									}
+	
+									payment.total_received-=pending_amount;
+									payment.total_paid-=pending_amount;
+								}
+								else
+								{
+									var paid_amount=parseFloat(account.paid_amount)+payment.total_received;
+									var notes=account.notes+"\n Rs."+payment.total_received+" balanced against other receivables";
+									var paid_xml="<payments>" +
+										"<id>"+account.id+"</id>" +
+										"<paid_amount>"+paid_amount+"</paid_amount>" +
+										"<status>pending</status>" +
+										"<notes>"+notes+"</notes>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</payments>";
+									if(is_online())
+									{
+										server_update_simple(paid_xml);
+									}
+									else
+									{
+										local_update_simple(paid_xml);
+									}
+	
+									payment.total_received=0;
+									payment.total_paid=0;
+								}
+							}
+						}
+						else
+						{
+							if(account.type=='paid')
+							{
+								var notes=account.notes+"\nClosed by balancing other receivables";
+								var paid_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+account.total_amount+"</paid_amount>" +
+									"<status>closed</status>" +
+									"<notes>"+notes+"</notes>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</payments>";
+								if(is_online())
+								{
+									server_update_simple(paid_xml);
+								}
+								else
+								{
+									local_update_simple(paid_xml);
+								}
+							}
+							else
+							{
+								var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
 								
-								payment.total_received-=pending_amount;
-								payment.total_paid-=pending_amount;
-							}
-							else
-							{
-								var paid_amount=parseFloat(account.paid_amount)+payment.total_paid;
-								var received_xml="<payments>" +
-									"<id>"+account.id+"</id>" +
-									"<paid_amount>"+paid_amount+"</paid_amount>" +
-									"<status>pending</status>" +
-									"<last_updated>"+get_my_time()+"</last_updated>" +
-									"</payments>";
-								if(is_online())
+								if(pending_amount<=payment.total_paid)
 								{
-									server_update_simple(received_xml);
+									var notes=account.notes+"\n Closed by balancing other payables";
+									var received_xml="<payments>" +
+										"<id>"+account.id+"</id>" +
+										"<paid_amount>"+account.total_amount+"</paid_amount>" +
+										"<status>closed</status>" +
+										"<notes>"+notes+"</notes>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</payments>";
+									if(is_online())
+									{
+										server_update_simple(received_xml);
+									}
+									else
+									{
+										local_update_simple(received_xml);
+									}
+									
+									payment.total_received-=pending_amount;
+									payment.total_paid-=pending_amount;
 								}
 								else
 								{
-									local_update_simple(received_xml);
+									var paid_amount=parseFloat(account.paid_amount)+payment.total_paid;
+									var notes=account.notes+"\n Rs."+payment.total_paid+" balanced against other payables";
+									var received_xml="<payments>" +
+										"<id>"+account.id+"</id>" +
+										"<paid_amount>"+paid_amount+"</paid_amount>" +
+										"<status>pending</status>" +
+										"<notes>"+notes+"</notes>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</payments>";
+									if(is_online())
+									{
+										server_update_simple(received_xml);
+									}
+									else
+									{
+										local_update_simple(received_xml);
+									}
+									payment.total_received=0;
+									payment.total_paid=0;
 								}
-								payment.total_received=0;
-								payment.total_paid=0;
 							}
 						}
-					}
+					});
 				});
 			});
 		});
-	});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
 }

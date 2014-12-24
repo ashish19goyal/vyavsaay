@@ -55,7 +55,6 @@ function switch_to_offline()
 			sync_server_to_local(function()
 			{
 				progress_value=50;
-				//console.log('half completed');
 				sync_local_to_server(function()
 				{
 					progress_value=100;
@@ -142,7 +141,6 @@ function sync_server_to_local(func)
   		   {
   			   progress_value=progress_dummy+(1-(localdb_open_requests/max_localdb_open_requests))*45;
   		   }
-  		   //console.log(localdb_open_requests);
   		   if(localdb_open_requests===0)
   		   {
   			   clearInterval(sync_download_complete);
@@ -186,7 +184,6 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 			
 			var tables=response.childNodes[0].childNodes[0].childNodes;
 
-			//console.log(localdb_open_requests);
 			for(var i=0;i<tables.length; i++)
 			{
 				var tableName=tables[i].nodeName;
@@ -204,7 +201,6 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 					local_delete_record(this_table,num_rows,0);
 				}
 			}
-			//console.log('exiting sync_server_to_local_ajax');
 		}
 	});
 }
@@ -261,7 +257,6 @@ function local_delete_record(this_table,num_rows,row_index)
 			static_local_db.transaction([del_table],"readwrite").objectStore(del_table).delete(del_id).onsuccess=function(e)
 			{
 				localdb_open_requests-=1;
-				//console.log("deleted row");
 			};
 		}
 		local_delete_record(this_table,num_rows,row_index);
@@ -289,7 +284,6 @@ function local_update_record(ids,objectStore,row_index)
 				};
 				put_req.onerror=function(e)
 				{
-					//console.log('error updating activitiy status');
 					local_update_record(ids,objectStore,row_index);
 				};
 			}
