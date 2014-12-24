@@ -121,6 +121,7 @@ function show_notif()
  */
 function notifications_add()
 {
+	var last_updated=get_my_time();
 	////////overdue payments/////////////
 	var payments_data="<payments>" +
 			"<id></id>" +
@@ -133,9 +134,16 @@ function notifications_add()
 			"</payments>";
 	fetch_requested_data('',payments_data,function(payments)
 	{
+		var not_pay_xml="<notifications>";
+		var counter=0;
+		var id=parseFloat(get_new_key());
 		payments.forEach(function(payment)
 		{
-			var id=get_new_key();
+			if(counter===500)
+			{
+				not_pay_xml+="</notifications><separator></separator><notifications>";
+			}
+			counter+=1;
 			var notes="Payment of Rs. "+payment.total_amount+" from "+
 					payment.acc_name+" is overdue. So far only Rs. "+payment.paid_amount+" has been received";
 			if(payment.type=='paid')
@@ -143,24 +151,27 @@ function notifications_add()
 				notes="Payment of Rs. "+payment.total_amount+" to "+
 				payment.acc_name+" is overdue. So far only Rs. "+payment.paid_amount+" has been paid";
 			}
-			var not_pay_xml="<notifications>" +
-					"<id>"+id+"</id>" +
+			not_pay_xml+="<row>" +
+					"<id>"+(id+counter)+"</id>" +
 					"<t_generated>"+get_my_time()+"</t_generated>" +
 					"<data_id unique='yes'>"+payment.id+"</data_id>" +
 					"<title>Payment overdue</title>" +
 					"<notes>"+notes+"</notes>" +
 					"<link_to>form11</link_to>" +
 					"<status>pending</status>" +
-					"</notifications>";
-			if(is_online())
-			{
-				server_create_simple_no_warning(not_pay_xml);
-			}
-			else
-			{
-				local_create_simple_no_warning(not_pay_xml);
-			}
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</row>";
 		});
+		not_pay_xml+="</notifications>";
+		
+		if(is_online())
+		{
+			server_create_batch(not_pay_xml);
+		}
+		else
+		{
+			local_create_batch(not_pay_xml);
+		}
 	});
 	//////////overdue payments end//////
 	
@@ -178,33 +189,46 @@ function notifications_add()
 	
 	fetch_requested_data('',tasks_data,function(tasks)
 	{
+		var task_xml="<notifications>";
+		var counter=0;
+		var id=parseFloat(get_new_key());
+		
 		tasks.forEach(function(task)
 		{
+			if(counter===500)
+			{
+				task_xml+="</notifications><separator></separator><notifications>";
+			}
+			counter+=1;
+		
 			var due_time=parseFloat(get_my_time())+(3600000*task.task_hours);
 			if(task.t_due<due_time)
 			{
-				var id=get_new_key();
 				var notes="Task "+task.name+" assigned to "+
 						task.assignee+" is pending. It is due by "+get_my_datetime(task.t_due);
-				var task_xml="<notifications>" +
-						"<id>"+id+"</id>" +
+				task_xml+="<row>" +
+						"<id>"+(id+counter)+"</id>" +
 						"<t_generated>"+get_my_time()+"</t_generated>" +
 						"<data_id unique='yes'>"+task.id+"</data_id>" +
 						"<title>Pending Task</title>" +
 						"<notes>"+notes+"</notes>" +
 						"<link_to>form14</link_to>" +
 						"<status>pending</status>" +
-						"</notifications>";
-				if(is_online())
-				{
-					server_create_simple_no_warning(task_xml);
-				}
-				else
-				{
-					local_create_simple_no_warning(task_xml);
-				}
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</row>";
 			}
 		});
+		
+		task_xml+="</notifications>";
+		
+		if(is_online())
+		{
+			server_create_batch(task_xml);
+		}
+		else
+		{
+			local_create_batch(task_xml);
+		}
 	});
 	
 	///////////overdue tasks end//////////
@@ -224,30 +248,40 @@ function notifications_add()
 	
 	fetch_requested_data('',leads_data,function(leads)
 	{
+		var leads_xml="<notifications>";
+		var counter=0;
+		var id=parseFloat(get_new_key());
+		
 		leads.forEach(function(lead)
 		{
-			var id=get_new_key();
+			if(counter===500)
+			{
+				leads_xml+="</notifications><separator></separator><notifications>";
+			}
+			counter+=1;
+		
 			var notes="A sale opportunity with customer "+lead.customer+" is coming up."+
 					"The details are as follows.\n"+lead.detail;
-			var task_xml="<notifications>" +
-					"<id>"+id+"</id>" +
+			leads_xml+="<row>" +
+					"<id>"+(id+counter)+"</id>" +
 					"<t_generated>"+get_my_time()+"</t_generated>" +
 					"<data_id unique='yes'>"+lead.id+"</data_id>" +
 					"<title>Sale Opportunity</title>" +
 					"<notes>"+notes+"</notes>" +
 					"<link_to>form81</link_to>" +
 					"<status>pending</status>" +
-					"</notifications>";
-			if(is_online())
-			{
-				server_create_simple_no_warning(task_xml);
-			}
-			else
-			{
-				local_create_simple_no_warning(task_xml);
-			}
-			
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</row>";
 		});
+		leads_xml+="</notifications>";
+		if(is_online())
+		{
+			server_create_batch(leads_xml);
+		}
+		else
+		{
+			local_create_batch(leads_xml);
+		}
 	});
 	
 	///////////overdue sale leads end//////////
@@ -275,56 +309,49 @@ function notifications_add()
 				"</sale_order_items>";
 		fetch_requested_data('',sale_order_items_data,function(sale_order_items)
 		{	
-			var items_string="--";
-			for(var j in sale_order_items)
+			for(var j=0;j<sale_order_items.length;j++)
 			{
-				items_string+=sale_order_items[j].item_name+"--";
+				for(var k=j+1;k<sale_order_items.length;k++)
+				{
+					if(sale_order_items[j].item_name==sale_order_items[k].item_name)
+					{
+						sale_order_items[j].quantity=parseFloat(sale_order_items[j].quantity)+parseFloat(sale_order_items[k].quantity);
+						sale_order_items.splice(k,1);
+						k-=1;
+					}
+				}
 			}
 			
-			var product_data="<product_instances>" +
-					"<id></id>" +
-					"<product_name array='yes'>"+items_string+"</product_name>" +
-					"<quantity></quantity>" +
-					"</product_instances>";
-			
-			fetch_requested_data('',product_data,function(products)
+			sale_order_items.forEach(function(sale_order_item)
 			{
-				var sum_products=transform_to_sum(products,'quantity','product_name');
-				var sum_sale_items=transform_to_sum(sale_order_items,'quantity','item_name');
-				sum_sale_items.forEach(function(sale_item)
+				get_inventory(sale_order_item.item_name,'',function(item_quantity)
 				{
-					for (var k in sum_products)
+					if(parseFloat(item_quantity)<parseFloat(sale_order_item.quantity))
 					{
-						if(sale_item.label==sum_products[k].label)
+						var id=get_new_key();
+					
+						var notes="Product "+sale_order_item.item_name+" has insufficient inventory to meet all sale orders.";
+								
+						var product_xml="<notifications>" +
+								"<id>"+id+"</id>" +
+								"<t_generated>"+last_updated+"</t_generated>" +
+								"<data_id unique='yes'></data_id>" +
+								"<title>Short inventory</title>" +
+								"<notes>"+notes+"</notes>" +
+								"<link_to>form1</link_to>" +
+								"<status>pending</status>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</notifications>";
+						if(is_online())
 						{
-							if(parseFloat(sale_item.value)>parseFloat(sum_products[k].value))
-							{
-								var id=get_new_key();
-								var notes="Product "+sale_item.label+" has insufficient inventory to meet all sale orders.";
-										
-								var product_xml="<notifications>" +
-										"<id>"+id+"</id>" +
-										"<t_generated>"+get_my_time()+"</t_generated>" +
-										"<data_id unique='yes'></data_id>" +
-										"<title>Short inventory</title>" +
-										"<notes>"+notes+"</notes>" +
-										"<link_to>form1</link_to>" +
-										"<status>pending</status>" +
-										"</notifications>";
-								if(is_online())
-								{
-									server_create_simple_no_warning(product_xml);
-								}
-								else
-								{
-									local_create_simple_no_warning(product_xml);
-								}
-							}
-							break;
+							server_create_simple_no_warning(product_xml);
+						}
+						else
+						{
+							local_create_simple_no_warning(product_xml);
 						}
 					}
 				});
-
 			});
 		});
 	});
@@ -353,6 +380,7 @@ function notifications_add()
 					"<notes>"+notes+"</notes>" +
 					"<link_to>form88</link_to>" +
 					"<status>pending</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
 					"</notifications>";
 			if(is_online())
 			{
@@ -379,28 +407,39 @@ function notifications_add()
 	
 	fetch_requested_data('',schedule_data,function(schedules)
 	{
+		var schedule_xml="<notifications>";
+		var counter=0;
+		var id=parseFloat(get_new_key());
+		
 		schedules.forEach(function(schedule)
 		{
-			var id=get_new_key();
+			if(counter===500)
+			{
+				schedule_xml+="</notifications><separator></separator><notifications>";
+			}
+			counter+=1;
+		
 			var notes="Manufacturing for product "+schedule.product+" is due. Please start the process.";
-			var schedule_xml="<notifications>" +
-					"<id>"+id+"</id>" +
-					"<t_generated>"+get_my_time()+"</t_generated>" +
+			schedule_xml+="<row>" +
+					"<id>"+(id+counter)+"</id>" +
+					"<t_generated>"+last_updated+"</t_generated>" +
 					"<data_id unique='yes'>"+schedule.last_updated+"</data_id>" +
 					"<title>Schedule Manufacturing</title>" +
 					"<notes>"+notes+"</notes>" +
 					"<link_to>form88</link_to>" +
 					"<status>pending</status>" +
-					"</notifications>";
-			if(is_online())
-			{
-				server_create_simple_no_warning(schedule_xml);
-			}
-			else
-			{
-				local_create_simple_no_warning(schedule_xml);
-			}
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</row>";
 		});
+		schedule+="</notifications>";
+		if(is_online())
+		{
+			server_create_batch(schedule_xml);
+		}
+		else
+		{
+			local_create_batch(schedule_xml);
+		}
 	});
 	
 	///////////manufacturing end//////////
@@ -418,28 +457,39 @@ function notifications_add()
 	
 	fetch_requested_data('',apps_data,function(apps)
 	{
+		var app_xml="<notifications>";
+		var counter=0;
+		var id=paseFloat(get_new_key());
 		apps.forEach(function(app)
 		{
-			var id=get_new_key();
+			if(counter===500)
+			{
+				app_xml+="</notifications><separator></separator><notifications>";
+			}
+			counter+=1;
+		
 			var notes="Appointment with "+app.customer+" assigned to "+app.assignee+" @"+get_my_datetime(app.schedule);
-			var app_xml="<notifications>" +
-					"<id>"+id+"</id>" +
-					"<t_generated>"+get_my_time()+"</t_generated>" +
+			app_xml+="<row>" +
+					"<id>"+(id+counter)+"</id>" +
+					"<t_generated>"+last_updated+"</t_generated>" +
 					"<data_id unique='yes'>"+app.id+"</data_id>" +
 					"<title>Appointment</title>" +
 					"<notes>"+notes+"</notes>" +
 					"<link_to>form89</link_to>" +
 					"<status>pending</status>" +
-					"</notifications>";
-			if(is_online())
-			{
-				server_create_simple_no_warning(app_xml);
-			}
-			else
-			{
-				local_create_simple_no_warning(app_xml);
-			}
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</row>";
 		});
+
+		app_xml+="</notifications>";
+		if(is_online())
+		{
+			server_create_batch(app_xml);
+		}
+		else
+		{
+			local_create_batch(app_xml);
+		}
 	});
 	
 	///////////due appointments//////////
@@ -652,7 +702,7 @@ function manufactured_products_outofstock()
 	{
 		schedules.forEach(function(schedule)
 		{
-			var inventory=get_inventory(schedule.product,'',function(quantity)
+			get_inventory(schedule.product,'',function(quantity)
 			{
 				if(quantity<=0)
 				{

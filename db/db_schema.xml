@@ -123,7 +123,7 @@
 	</purchase_order_items>
 	<supplier_bills>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<bill_id index='no' type="VARCHAR(50)" unique='yes'></bill_id>
+			<bill_id index='no' type="VARCHAR(50)"></bill_id>
 			<supplier index='yes' type="VARCHAR(100)"></supplier>
 			<bill_date index='no' type="BIGINT"></bill_date>
 			<entry_date index='no' type="BIGINT"></entry_date>
@@ -213,7 +213,7 @@
 	</credit_notes>
 	<offers>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<offer_name index='no' type='VARCHAR(30)' unique='yes'></offer_name>
+			<offer_name index='yes' type='VARCHAR(30)' unique='yes'></offer_name>
 			<offer_type index='yes' type='VARCHAR(10)'></offer_type><!-- bill/product/service -->
 			<product_name index='yes' type="VARCHAR(90)"></product_name>
 			<batch index='yes' type="VARCHAR(50)"></batch>
@@ -499,7 +499,7 @@
 	<notifications>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<t_generated index='yes' type="BIGINT"></t_generated>
-			<data_id index='no' type="BIGINT"></data_id>
+			<data_id index='yes' type="BIGINT"></data_id>
 			<title index='yes' type="VARCHAR(300)"></title>
 			<notes index='no' type="TEXT"></notes>
 			<link_to index='no' type="VARCHAR(300)"></link_to>
@@ -518,7 +518,7 @@
 	<user_preferences>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(30)" unique='yes'></name>
-			<display_name index="no" type="VARCHAR(100)" unique='yes'></display_name>
+			<display_name index="no" type="VARCHAR(100)"></display_name>
 			<value index='yes' type="VARCHAR(50)"></value>
 			<type index='yes' type="VARCHAR(20)"></type><!-- function/report/form/accounting/other/template -->
 			<shortcut index='no' type="VARCHAR(40)"></shortcut>

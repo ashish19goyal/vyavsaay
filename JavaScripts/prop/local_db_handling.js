@@ -657,7 +657,7 @@ function local_update_batch(data_xml)
 			}
 		});
 		
-		console.log(rows.length);
+		//console.log(rows.length);
 		
 		var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
 		var os2=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
@@ -1031,14 +1031,17 @@ function local_create_simple(data_xml)
 			var unique_rec=true;
 			var type='create';
 			var data_row=new Object();
-
-			objectStore.openCursor().onsuccess=function(e)
+			var key=IDBKeyRange.only(unique[k].value);
+			objectStore.index(unique[0].name).openCursor(key).onsuccess=function(e)
 			{
 				var result=e.target.result;
 				if(result)
 				{
-					var record=result.value;
-				
+					localdb_open_requests-=1;
+					$("#modal5").dialog("open");
+				}
+				else
+				{
 					if(record.id==data_id)
 					{
 						unique_rec=false;
@@ -1055,37 +1058,33 @@ function local_create_simple(data_xml)
 								localdb_open_requests-=1;
 								$("#modal5").dialog("open");
 							}
-							else
-							{
-								result.continue();
-							}
 						}
 					}
-				}
-				else
-				{
-					for(var j=0;j<cols.length;j++)
+					if(unique_rec)
 					{
-						data_row[cols[j].nodeName]=cols[j].innerHTML;
-					}
-					objectStore.put(data_row).onsuccess=function(e)
-					{
-						var id=get_new_key();
-						var act_row={id:id,
-								type:type,
-								status:'unsynced',
-								data_xml:data_xml,
-								user_display:'no',
-								data_id:data_row.id,
-								tablename:table,
-								link_to:'',
-								last_updated:get_my_time()};
-						static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
+						for(var j=0;j<cols.length;j++)
 						{
-							localdb_open_requests-=1;
-							hide_loader();
+							data_row[cols[j].nodeName]=cols[j].innerHTML;
+						}
+						objectStore.put(data_row).onsuccess=function(e)
+						{
+							var id=get_new_key();
+							var act_row={id:id,
+									type:type,
+									status:'unsynced',
+									data_xml:data_xml,
+									user_display:'no',
+									data_id:data_row.id,
+									tablename:table,
+									link_to:'',
+									last_updated:get_my_time()};
+							static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
+							{
+								localdb_open_requests-=1;
+								hide_loader();
+							};
 						};
-					};
+					}
 				}
 			};
 		}
@@ -1127,6 +1126,22 @@ function local_create_batch(data_xml)
 			}
 		});
 		
+		var first_col=rows[0].childNodes;
+		var unique=new Array();
+		for(var j=0;j<first_col.length;j++)
+		{
+			if(first_col[j].innerHTML!=null && first_col[j].innerHTML!="")
+			{
+				if(first_col[j].hasAttribute('unique'))
+				{
+					var fil=new Object();
+					fil.name=first_col[j].nodeName;
+					fil.value=first_col[j].innerHTML;
+					unique.push(fil);
+				}
+			}
+		}
+		
 		var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
 		var os2=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
 		
@@ -1166,8 +1181,6 @@ function local_create_batch(data_xml)
 				localdb_open_requests+=1;
 				
 				var row_data_xml="<"+table+">"+rows[m].innerHTML+"</"+table+">";
-				//console.log(row_data_xml);
-				//console.log(id);
 				var act_row={id:(activity_id+m),
 						type:'create',
 						status:'unsynced',
