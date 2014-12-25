@@ -25,12 +25,12 @@
 		<thead>
 			<tr>
 				<form id='form91_header'></form>
-					<th>Product Name</th>
-					<th>Batch</th>
-					<th>Quantity</th>
-					<th>Unit Price</th>
-					<th>Total</th>
-					<th><input type='button' form='form91_header' title='Add item' class='add_icon' onclick='form91_add_item();'></th>
+				<th>Product Name</th>
+				<th>Batch</th>
+				<th>Quantity</th>
+				<th>Unit Price</th>
+				<th>Total</th>
+				<th><input type='button' title='Add item' class='add_icon' onclick='form91_add_item();'></th>
 			</tr>
 		</thead>
 		<tbody id='form91_body'>

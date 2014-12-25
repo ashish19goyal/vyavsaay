@@ -5,7 +5,7 @@
 	</div>
 	
 	<div id='notification_icon' class='menu_icon' onclick='show_notifications();'>
-			<div id='count_notif'>5</div>
+			<div id='count_notif'></div>
 			<img title='Notifications' src='./images/notification.png' class="icon">
 	</div>
 		

@@ -7,12 +7,12 @@ function form1_import(data_array,import_type)
 {
 	var data_xml="<product_instances>";
 	var adjust_xml="<inventory_adjust>";
-	var counter=0;
+	var counter=1;
 	var new_id=parseFloat(get_new_key());
 	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</product_instances><separator></separator><product_instances>";
 			adjust_xml+="</inventory_adjust><separator></separator><inventory_adjust>";
@@ -80,11 +80,11 @@ function form1_import(data_array,import_type)
 function form5_import(data_array,import_type)
 {
 	var data_xml="<assets>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</assets><separator></separator><assets>";
 		}
@@ -141,12 +141,12 @@ function form8_import(data_array,import_type)
 {
 	var data_xml="<staff>";
 	var account_xml="<accounts>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</staff><separator></separator><staff>";
 			account_xml+="</accounts><separator></separator><accounts>";
@@ -221,12 +221,12 @@ function form8_import(data_array,import_type)
 function form10_import(data_array,import_type)
 {
 	var data_xml="<bill_items>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
@@ -287,12 +287,12 @@ function form11_import(data_array,import_type)
 {
 	var data_xml="<payments>";
 	var transaction_xml="<transactions>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</payments><separator></separator><payments>";
 			transaction_xml+="</transactions><separator></separator><transactions>";
@@ -368,12 +368,12 @@ function form11_import(data_array,import_type)
 function form12_import(data_array,import_type)
 {
 	var data_xml="<bill_items>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
@@ -432,12 +432,12 @@ function form12_import(data_array,import_type)
 function form14_import(data_array,import_type)
 {
 	var data_xml="<task_instances>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</task_instances><separator></separator><task_instances>";
 		}
@@ -488,14 +488,17 @@ function form14_import(data_array,import_type)
 function form15_import(data_array,import_type)
 {
 	var data_xml="<customer_return_items>";
-	var counter=0;
+	var discard_xml="<discarded>";
+	var counter=1;
 	var last_updated=get_my_time();
+	var discard_id=parseFloat(get_new_key());
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</customer_return_items><separator></separator><customer_return_items>";
+			discard_xml+="</discarded><separator></separator><discarded>";
 		}
 		counter+=1;
 
@@ -513,17 +516,34 @@ function form15_import(data_array,import_type)
 				"<tax>"+row.tax+"</tax>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
+		
+		if(row.saleable!="checked")
+		{
+			discard_xml+="<row>" +
+					"<id>"+(discard_id+counter)+"</id>" +
+					"<product_name>"+row.item_name+"</product_name>" +
+					"<source_id>"+row.return_id+"</source_id>" +
+					"<batch>"+row.batch+"</batch>" +
+					"<source>sale return</source>" +
+					"<source_link>form15</source_link>" +
+					"<quantity>"+row.quantity+"</quantity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</row>";
+		}
 	});
 	data_xml+="</customer_return_items>";
+	discard_xml+="</discarded>";
 	if(import_type=='create_new')
 	{
 		if(is_online())
 		{
 			server_create_batch(data_xml);
+			server_create_batch(discard_xml);
 		}
 		else
 		{
 			local_create_batch(data_xml);
+			local_create_batch(discard_xml);
 		}
 	}
 	else
@@ -531,13 +551,14 @@ function form15_import(data_array,import_type)
 		if(is_online())
 		{	
 			server_update_batch(data_xml);
+			server_update_batch(discard_xml);
 		}
 		else
 		{
 			local_update_batch(data_xml);
+			local_update_batch(discard_xml);
 		}
 	}
-
 };
 
 /**
@@ -548,12 +569,12 @@ function form16_import(data_array,import_type)
 {
 	var data_xml="<customer_returns>";
 	var transaction_xml="<transactions>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</customer_returns><separator></separator><customer_returns>";
 			transaction_xml+="</transactions><separator></separator><transactions>";
@@ -620,12 +641,12 @@ function form17_import(data_array,import_type)
 {
 	var data_xml="<supplier_returns>";
 	var transaction_xml="<transactions>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</supplier_returns><separator></separator><supplier_returns>";
 			transaction_xml+="</transactions><separator></separator><transactions>";
@@ -654,7 +675,7 @@ function form17_import(data_array,import_type)
 		
 	});
 	
-	data+xml+="</supplier_returns>";
+	data_xml+="</supplier_returns>";
 	transaction_xml+="</transactions>";
 	if(import_type=='create_new')
 	{
@@ -691,12 +712,12 @@ function form17_import(data_array,import_type)
 function form19_import(data_array,import_type)
 {
 	var data_xml="<supplier_return_items>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</supplier_return_items><separator></separator><supplier_return_items>";
 		}
@@ -747,12 +768,12 @@ function form19_import(data_array,import_type)
 function form21_import(data_array,import_type)
 {
 	var data_xml="<supplier_bill_items>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</supplier_bill_items><separator></separator><supplier_bill_items>";
 		}
@@ -804,12 +825,12 @@ function form21_import(data_array,import_type)
 function form24_import(data_array,import_type)
 {
 	var data_xml="<purchase_order_items>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</purchase_order_items><separator></separator><purchase_order_items>";
 		}
@@ -859,12 +880,12 @@ function form30_import(data_array,import_type)
 {
 	var data_xml="<customers>";
 	var account_xml="<accounts>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</customers><separator></separator><customers>";
 			account_xml+="</accounts><separator></separator><accounts>";
@@ -933,12 +954,12 @@ function form30_import(data_array,import_type)
 function form35_import(data_array,import_type)
 {
 	var data_xml="<offers>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</offers><separator></separator><offers>";
 		}
@@ -999,12 +1020,12 @@ function form35_import(data_array,import_type)
 function form38_import(data_array,import_type)
 {
 	var data_xml="<area_utilization>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</area_utilization><separator></separator><area_utilization>";
 		}
@@ -1051,12 +1072,12 @@ function form38_import(data_array,import_type)
 function form39_import(data_array,import_type)
 {
 	var data_xml="<product_master>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</product_master><separator></separator><product_master>";
 		}
@@ -1106,12 +1127,12 @@ function form40_import(data_array,import_type)
 {
 	var data_xml="<suppliers>";
 	var account_xml="<accounts>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</suppliers><separator></separator><suppliers>";
 			account_xml+="</accounts><separator></separator><accounts>";
@@ -1179,12 +1200,12 @@ function form42_import(data_array,import_type)
 {
 	var data_xml="<bills>";
 	var transaction_xml="<transactions>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</bills><separator></separator><bills>";
 			transaction_xml+="</transactions><separator></separator><transactions>";
@@ -1251,12 +1272,12 @@ function form42_import(data_array,import_type)
 function form43_import(data_array,import_type)
 {
 	var data_xml="<purchase_orders>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</purchase_orders><separator></separator><purchase_orders>";
 		}
@@ -1305,12 +1326,12 @@ function form53_import(data_array,import_type)
 {
 	var data_xml="<supplier_bills>";
 	var transaction_xml="<transactions>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</supplier_bills><separator></separator><supplier_bills>";
 			transaction_xml+="</transactions><separator></separator><transactions>";
@@ -1380,14 +1401,14 @@ function form56_import(data_array,import_type)
 	var transaction_xml="<transactions>";
 	var payment_xml="<payments>";
 	var transaction2_xml="<transactions>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	var payment_id=parseFloat(get_my_time());
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</cash_register><separator></separator><cash_register>";
 			transaction_xml+="</transactions><separator></separator><transactions>";
@@ -1492,12 +1513,12 @@ function form56_import(data_array,import_type)
 function form57_import(data_array,import_type)
 {
 	var data_xml="<services>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</services><separator></separator><services>";
 		}
@@ -1545,12 +1566,12 @@ function form57_import(data_array,import_type)
 function form58_import(data_array,import_type)
 {
 	var data_xml="<pre_requisites>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</pre_requisites><separator></separator><pre_requisites>";
 		}
@@ -1598,12 +1619,12 @@ function form58_import(data_array,import_type)
 function form59_import(data_array,import_type)
 {
 	var data_xml="<pre_requisites>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</pre_requisites><separator></separator><pre_requisites>";
 		}
@@ -1652,12 +1673,12 @@ function form59_import(data_array,import_type)
 function form60_import(data_array,import_type)
 {
 	var data_xml="<attributes>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</attributes><separator></separator><attributes>";
 		}
@@ -1703,12 +1724,12 @@ function form60_import(data_array,import_type)
 function form61_import(data_array,import_type)
 {
 	var data_xml="<attributes>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</attributes><separator></separator><attributes>";
 		}
@@ -1754,12 +1775,12 @@ function form61_import(data_array,import_type)
 function form62_import(data_array,import_type)
 {
 	var data_xml="<reviews>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</reviews><separator></separator><reviews>";
 		}
@@ -1806,12 +1827,12 @@ function form62_import(data_array,import_type)
 function form63_import(data_array,import_type)
 {
 	var data_xml="<reviews>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</reviews><separator></separator><reviews>";
 		}
@@ -1858,12 +1879,12 @@ function form63_import(data_array,import_type)
 function form64_import(data_array,import_type)
 {
 	var data_xml="<cross_sells>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</cross_sells><separator></separator><cross_sells>";
 		}
@@ -1911,12 +1932,12 @@ function form64_import(data_array,import_type)
 function form66_import(data_array,import_type)
 {
 	var data_xml="<cross_sells>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</cross_sells><separator></separator><cross_sells>";
 		}
@@ -1962,12 +1983,12 @@ function form66_import(data_array,import_type)
 function form69_import(data_array,import_type)
 {
 	var data_xml="<sale_order_items>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</sale_order_items><separator></separator><sale_order_items>";
 		}
@@ -2013,12 +2034,12 @@ function form69_import(data_array,import_type)
 function form70_import(data_array,import_type)
 {
 	var data_xml="<sale_orders>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</sale_orders><separator></separator><sale_orders>";
 		}
@@ -2065,12 +2086,12 @@ function form70_import(data_array,import_type)
 function form71_import(data_array,import_type)
 {
 	var data_xml="<accounts>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</accounts><separator></separator><accounts>";
 		}
@@ -2115,12 +2136,12 @@ function form71_import(data_array,import_type)
 function form72_import(data_array,import_type)
 {
 	var data_xml="<bill_items>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
@@ -2179,12 +2200,12 @@ function form72_import(data_array,import_type)
 function form79_import(data_array,import_type)
 {
 	var data_xml="<task_type>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</task_type><separator></separator><task_type>";
 		}
@@ -2229,12 +2250,12 @@ function form79_import(data_array,import_type)
 function form81_import(data_array,import_type)
 {
 	var data_xml="<sale_leads>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</sale_leads><separator></separator><sale_leads>";
 		}
@@ -2280,12 +2301,12 @@ function form81_import(data_array,import_type)
 function form82_import(data_array,import_type)
 {
 	var data_xml="<bill_items>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
@@ -2344,12 +2365,12 @@ function form82_import(data_array,import_type)
 function form83_import(data_array,import_type)
 {
 	var data_xml="<store_areas>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</store_areas><separator></separator><store_areas>";
 		}
@@ -2407,12 +2428,12 @@ function form83_import(data_array,import_type)
 function form84_import(data_array,import_type)
 {
 	var data_xml="<service_subscriptions>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</service_subscriptions><separator></separator><service_subscriptions>";
 		}
@@ -2462,11 +2483,11 @@ function form84_import(data_array,import_type)
 function form87_import(data_array,import_type)
 {
 	var data_xml="<product_master>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</product_master><separator></separator><product_master>";
 		}
@@ -2515,11 +2536,11 @@ function form87_import(data_array,import_type)
 function form88_import(data_array,import_type)
 {
 	var data_xml="<manufacturing_schedule>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</manufacturing_schedule><separator></separator><manufacturing_schedule>";
 		}
@@ -2567,11 +2588,11 @@ function form88_import(data_array,import_type)
 function form89_import(data_array,import_type)
 {
 	var data_xml="<appointments>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</appointments><separator></separator><appointments>";
 		}
@@ -2621,12 +2642,12 @@ function form89_import(data_array,import_type)
 function form90_import(data_array,import_type)
 {
 	var data_xml="<bill_types>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</bill_types><separator></separator><bill_types>";
 		}
@@ -2670,12 +2691,12 @@ function form90_import(data_array,import_type)
 function form91_import(data_array,import_type)
 {
 	var data_xml="<bill_items>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 	
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
@@ -2734,12 +2755,12 @@ function form92_import(data_array,import_type)
 {
 	var data_xml="<bills>";
 	var transaction_xml="<transactions>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</bills><separator></separator><bills>";
 			transaction_xml+="</transactions><separator></separator><transactions>";
@@ -2808,12 +2829,12 @@ function form92_import(data_array,import_type)
 function form93_import(data_array,import_type)
 {
 	var data_xml="<loans>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</loans><separator></separator><loans>";
 		}
@@ -2871,12 +2892,12 @@ function form93_import(data_array,import_type)
 function form94_import(data_array,import_type)
 {
 	var data_xml="<discarded>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</discarded><separator></separator><discarded>";
 		}
@@ -2922,12 +2943,12 @@ function form94_import(data_array,import_type)
 function form96_import(data_array,import_type)
 {
 	var data_xml="<attributes>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</attributes><separator></separator><attributes>";
 		}
@@ -2973,12 +2994,12 @@ function form96_import(data_array,import_type)
 function form97_import(data_array,import_type)
 {
 	var data_xml="<attributes>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</attributes><separator></separator><attributes>";
 		}
@@ -3024,12 +3045,12 @@ function form97_import(data_array,import_type)
 function form96_import(data_array,import_type)
 {
 	var data_xml="<attributes>";
-	var counter=0;
+	var counter=1;
 	var last_updated=get_my_time();
 
 	data_array.forEach(function(row)
 	{
-		if(counter===500)
+		if((counter%500)===0)
 		{
 			data_xml+="</attributes><separator></separator><attributes>";
 		}

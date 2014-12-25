@@ -35,71 +35,75 @@
 	{
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['cr']==$cr_access)
 		{
-			$db_name="re_user_".$domain;
-			$conn=new db_connect($db_name);
-			$table=$data_input->nodeName;
-			
-			$select_query="select count(*) from $table where ";
-			foreach($data_input->childNodes->item(0)->childNodes as $data)
+			if($data_input->hasChildNodes())
 			{
-				if($data->hasAttribute('unique'))
-				{
-					$select_query.=$data->nodeName."= ? and ";
-				}
-			}
-			$select_query=rtrim($select_query,"and ");
-			$select_query=rtrim($select_query,"where ");
+				$db_name="re_user_".$domain;
+				$conn=new db_connect($db_name);
+				$table=$data_input->nodeName;
 				
-			$select_stmt=$conn->conn->prepare($select_query);
-							
+				$select_query="select count(*) from $table where ";
 			
-			$insert_query="insert into $table(";
-			foreach($data_input->childNodes->item(0)->childNodes as $data)
-			{
-				$insert_query.=$data->nodeName.",";
-			}
-			$insert_query=rtrim($insert_query,",");
-			$insert_query.=") values(";
-			foreach($data_input->childNodes->item(0)->childNodes as $data)
-			{
-				$insert_query.="?,";
-			}
-				
-			$insert_query=rtrim($insert_query,",");
-			$insert_query.=");";
-			$insert_stmt=$conn->conn->prepare($insert_query);
-			
-
-			foreach($data_input->childNodes as $row)
-			{
-				$id=$row->getElementsByTagName('id')->item(0)->nodeValue;
-				$data_array=array();
-				
-				$unique=0;
-				$unique_column_value=array();
-				foreach($row->childNodes as $data)
+				foreach($data_input->childNodes->item(0)->childNodes as $data)
 				{
 					if($data->hasAttribute('unique'))
-					{	
-						$unique_column_value[]=$data->nodeValue;
+					{
+						$select_query.=$data->nodeName."= ? and ";
 					}
 				}
-				if(count($unique_column_value)>0)
+			
+				$select_query=rtrim($select_query,"and ");
+				$select_query=rtrim($select_query,"where ");
+					
+				$select_stmt=$conn->conn->prepare($select_query);
+							
+			
+				$insert_query="insert into $table(";
+				foreach($data_input->childNodes->item(0)->childNodes as $data)
 				{
-					$select_stmt->execute($unique_column_value);
-					$unique=$select_stmt->fetchAll(PDO::FETCH_NUM)[0][0];	
+					$insert_query.=$data->nodeName.",";
+				}
+				$insert_query=rtrim($insert_query,",");
+				$insert_query.=") values(";
+				foreach($data_input->childNodes->item(0)->childNodes as $data)
+				{
+					$insert_query.="?,";
 				}
 					
-				if($unique===0 || $unique=="0")
-				{		
+				$insert_query=rtrim($insert_query,",");
+				$insert_query.=");";
+				$insert_stmt=$conn->conn->prepare($insert_query);
+			
+				foreach($data_input->childNodes as $row)
+				{
+					$id=$row->getElementsByTagName('id')->item(0)->nodeValue;
+					$data_array=array();
+					
+					$unique=0;
+					$unique_column_value=array();
 					foreach($row->childNodes as $data)
 					{
-						$data_array[]=$data->nodeValue;
+						if($data->hasAttribute('unique'))
+						{	
+							$unique_column_value[]=$data->nodeValue;
+						}
 					}
-					$insert_stmt->execute($data_array);
+					if(count($unique_column_value)>0)
+					{
+						$select_stmt->execute($unique_column_value);
+						$unique=$select_stmt->fetchAll(PDO::FETCH_NUM)[0][0];	
+					}
+						
+					if($unique===0 || $unique=="0")
+					{		
+						foreach($row->childNodes as $data)
+						{
+							$data_array[]=$data->nodeValue;
+						}
+						$insert_stmt->execute($data_array);
+					}
 				}
+				echo "data saved";
 			}
-			echo "data saved";
 		}
 		else
 		{

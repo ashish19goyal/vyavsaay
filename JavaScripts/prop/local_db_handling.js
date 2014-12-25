@@ -146,56 +146,6 @@ function delete_local_db()
  */
 function local_read_single_column(columns,callback,results)
 {
-	//console.log(columns);
-	var parser=new DOMParser();
-	var data=parser.parseFromString(columns,"text/xml");
-	var table=data.childNodes[0].nodeName;
-	var cols=data.childNodes[0].childNodes;
-	var count=0;
-	if(data.childNodes[0].hasAttribute('count'))
-	{
-		count=parseInt(data.childNodes[0].getAttribute('count'));
-	}
-	var sort_index='last_updated';
-	var sort_order='desc';
-	var filter=new Array();
-	for(var j=0; j<cols.length;j++)
-	{
-		if(cols[j].innerHTML!=null && cols[j].hasAttribute('sort'))
-		{
-			sort_index=cols[j].nodeName;
-			sort_order=cols[j].getAttribute('sort');
-		}
-		
-		if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
-		{
-			var fil=new Object();
-			fil.name=cols[j].nodeName;
-			if(cols[j].hasAttribute('compare'))
-			{
-				fil.value=parseInt(cols[j].innerHTML);
-				fil.type=cols[j].getAttribute('compare');
-			}
-			else if(cols[j].hasAttribute('array'))
-			{
-				fil.value=cols[j].innerHTML;
-				fil.type='array';
-			}
-			else if(cols[j].hasAttribute('exact'))
-			{
-				fil.value=cols[j].innerHTML;
-				fil.type='exact';
-			}
-			else
-			{
-				fil.value=cols[j].innerHTML;
-				fil.type='';
-			}
-			filter.push(fil);
-		}
-	}
-	//console.log(filter);
-	
 	if(typeof static_local_db=='undefined')
 	{
 		open_local_db(function()
@@ -205,6 +155,55 @@ function local_read_single_column(columns,callback,results)
 	}
 	else
 	{
+		//console.log(columns);
+		var parser=new DOMParser();
+		var data=parser.parseFromString(columns,"text/xml");
+		var table=data.childNodes[0].nodeName;
+		var cols=data.childNodes[0].childNodes;
+		var count=0;
+		if(data.childNodes[0].hasAttribute('count'))
+		{
+			count=parseInt(data.childNodes[0].getAttribute('count'));
+		}
+		var sort_index='last_updated';
+		var sort_order='desc';
+		var filter=new Array();
+		for(var j=0; j<cols.length;j++)
+		{
+			if(cols[j].innerHTML!=null && cols[j].hasAttribute('sort'))
+			{
+				sort_index=cols[j].nodeName;
+				sort_order=cols[j].getAttribute('sort');
+			}
+			
+			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+			{
+				var fil=new Object();
+				fil.name=cols[j].nodeName;
+				if(cols[j].hasAttribute('compare'))
+				{
+					fil.value=parseInt(cols[j].innerHTML);
+					fil.type=cols[j].getAttribute('compare');
+				}
+				else if(cols[j].hasAttribute('array'))
+				{
+					fil.value=cols[j].innerHTML;
+					fil.type='array';
+				}
+				else if(cols[j].hasAttribute('exact'))
+				{
+					fil.value=cols[j].innerHTML;
+					fil.type='exact';
+				}
+				else
+				{
+					fil.value=cols[j].innerHTML;
+					fil.type='';
+				}
+				filter.push(fil);
+			}
+		}
+		
 		localdb_open_requests+=1;
 
 		if(sort_order=='asc')
@@ -315,61 +314,6 @@ function local_read_single_column(columns,callback,results)
 
 function local_read_multi_column(columns,callback,results)
 {
-	var parser=new DOMParser();
-	var data=parser.parseFromString(columns,"text/xml");
-	var table=data.childNodes[0].nodeName;
-	var cols=data.childNodes[0].childNodes;
-	var count=0;
-	var start_index=0;
-	if(data.childNodes[0].hasAttribute('count'))
-	{
-		count=parseInt(data.childNodes[0].getAttribute('count'));
-	}
-	if(data.childNodes[0].hasAttribute('start_index'))
-	{
-		start_index=parseInt(data.childNodes[0].getAttribute('start_index'));
-	}
-	var filter=new Array();
-	var sort_index='last_updated';
-	var sort_order='desc';
-	
-	for(var j=0;j<cols.length;j++)
-	{
-		if(cols[j].innerHTML!=null && cols[j].hasAttribute('sort'))
-		{
-			sort_index=cols[j].nodeName;
-			sort_order=cols[j].getAttribute('sort');
-		}
-		
-		if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
-		{
-			var fil=new Object();
-			fil.name=cols[j].nodeName;
-			
-			if(cols[j].hasAttribute('compare'))
-			{
-				fil.value=parseInt(cols[j].innerHTML);
-				fil.type=cols[j].getAttribute('compare');
-			}
-			else if(cols[j].hasAttribute('array'))
-			{
-				fil.value=cols[j].innerHTML;
-				fil.type='array';
-			}
-			else if(cols[j].hasAttribute('exact'))
-			{
-				fil.value=cols[j].innerHTML;
-				fil.type='exact';
-			}
-			else
-			{
-				fil.value=cols[j].innerHTML;
-				fil.type='';
-			}
-			filter.push(fil);
-		}
-	}
-	
 	if(typeof static_local_db=='undefined')
 	{
 		open_local_db(function()
@@ -379,6 +323,61 @@ function local_read_multi_column(columns,callback,results)
 	}
 	else
 	{
+		var parser=new DOMParser();
+		var data=parser.parseFromString(columns,"text/xml");
+		var table=data.childNodes[0].nodeName;
+		var cols=data.childNodes[0].childNodes;
+		var count=0;
+		var start_index=0;
+		if(data.childNodes[0].hasAttribute('count'))
+		{
+			count=parseInt(data.childNodes[0].getAttribute('count'));
+		}
+		if(data.childNodes[0].hasAttribute('start_index'))
+		{
+			start_index=parseInt(data.childNodes[0].getAttribute('start_index'));
+		}
+		var filter=new Array();
+		var sort_index='last_updated';
+		var sort_order='desc';
+		
+		for(var j=0;j<cols.length;j++)
+		{
+			if(cols[j].innerHTML!=null && cols[j].hasAttribute('sort'))
+			{
+				sort_index=cols[j].nodeName;
+				sort_order=cols[j].getAttribute('sort');
+			}
+			
+			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+			{
+				var fil=new Object();
+				fil.name=cols[j].nodeName;
+				
+				if(cols[j].hasAttribute('compare'))
+				{
+					fil.value=parseInt(cols[j].innerHTML);
+					fil.type=cols[j].getAttribute('compare');
+				}
+				else if(cols[j].hasAttribute('array'))
+				{
+					fil.value=cols[j].innerHTML;
+					fil.type='array';
+				}
+				else if(cols[j].hasAttribute('exact'))
+				{
+					fil.value=cols[j].innerHTML;
+					fil.type='exact';
+				}
+				else
+				{
+					fil.value=cols[j].innerHTML;
+					fil.type='';
+				}
+				filter.push(fil);
+			}
+		}
+	
 		localdb_open_requests+=1;
 		
 		if(sort_order=='asc')
@@ -888,39 +887,15 @@ function local_create_row(data_xml,activity_xml)
 		}
 		else
 		{
-			var unique_rec=true;
-			var type='create';
 			var data_row=new Object();
-
-			objectStore.openCursor().onsuccess=function(e)
+			var key=IDBKeyRange.only(unique[0].value);
+			objectStore.index(unique[0].name).openCursor(key).onsuccess=function(e)
 			{
 				var result=e.target.result;
 				if(result)
 				{
-					var record=result.value;
-				
-					if(record.id==data_id)
-					{
-						unique_rec=false;
-						localdb_open_requests-=1;
-						$("#modal5").dialog("open");
-					}
-					else 
-					{	
-						for(var k in unique)
-						{
-							if(record[unique[k].name]==unique[k].value)
-							{
-								unique_rec=false;
-								localdb_open_requests-=1;
-								$("#modal5").dialog("open");
-							}
-							else
-							{
-								result.continue();
-							}
-						}
-					}
+					localdb_open_requests-=1;
+					$("#modal5").dialog("open");
 				}
 				else
 				{
@@ -932,7 +907,7 @@ function local_create_row(data_xml,activity_xml)
 					{
 						var id=get_new_key();
 						var act_row={id:id,
-								type:type,
+								type:'create',
 								status:'unsynced',
 								data_xml:data_xml,
 								user_display:'yes',
@@ -1021,17 +996,14 @@ function local_create_simple(data_xml)
 				static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 				{
 					localdb_open_requests-=1;
-					hide_loader();
 				};
 			};
 		}
 		else
 		{
 			//console.log("unique length is non-zero");
-			var unique_rec=true;
-			var type='create';
 			var data_row=new Object();
-			var key=IDBKeyRange.only(unique[k].value);
+			var key=IDBKeyRange.only(unique[0].value);
 			objectStore.index(unique[0].name).openCursor(key).onsuccess=function(e)
 			{
 				var result=e.target.result;
@@ -1042,49 +1014,28 @@ function local_create_simple(data_xml)
 				}
 				else
 				{
-					if(record.id==data_id)
+					
+					for(var j=0;j<cols.length;j++)
 					{
-						unique_rec=false;
-						localdb_open_requests-=1;
-						$("#modal5").dialog("open");
+						data_row[cols[j].nodeName]=cols[j].innerHTML;
 					}
-					else 
-					{	
-						for(var k in unique)
-						{
-							if(record[unique[k].name]==unique[k].value)
-							{
-								unique_rec=false;
-								localdb_open_requests-=1;
-								$("#modal5").dialog("open");
-							}
-						}
-					}
-					if(unique_rec)
+					objectStore.put(data_row).onsuccess=function(e)
 					{
-						for(var j=0;j<cols.length;j++)
+						var id=get_new_key();
+						var act_row={id:id,
+								type:'create',
+								status:'unsynced',
+								data_xml:data_xml,
+								user_display:'no',
+								data_id:data_row.id,
+								tablename:table,
+								link_to:'',
+								last_updated:get_my_time()};
+						static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 						{
-							data_row[cols[j].nodeName]=cols[j].innerHTML;
-						}
-						objectStore.put(data_row).onsuccess=function(e)
-						{
-							var id=get_new_key();
-							var act_row={id:id,
-									type:type,
-									status:'unsynced',
-									data_xml:data_xml,
-									user_display:'no',
-									data_id:data_row.id,
-									tablename:table,
-									link_to:'',
-									last_updated:get_my_time()};
-							static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
-							{
-								localdb_open_requests-=1;
-								hide_loader();
-							};
+							localdb_open_requests-=1;
 						};
-					}
+					};
 				}
 			};
 		}
@@ -1126,24 +1077,30 @@ function local_create_batch(data_xml)
 			}
 		});
 		
-		var first_col=rows[0].childNodes;
 		var unique=new Array();
-		for(var j=0;j<first_col.length;j++)
+		
+		if(rows.length>0)
 		{
-			if(first_col[j].innerHTML!=null && first_col[j].innerHTML!="")
+			var first_col=rows[0].childNodes;
+			for(var j=0;j<first_col.length;j++)
 			{
-				if(first_col[j].hasAttribute('unique'))
+				if(first_col[j].innerHTML!=null && first_col[j].innerHTML!="")
 				{
-					var fil=new Object();
-					fil.name=first_col[j].nodeName;
-					fil.value=first_col[j].innerHTML;
-					unique.push(fil);
+					if(first_col[j].hasAttribute('unique'))
+					{
+						var fil=new Object();
+						fil.name=first_col[j].nodeName;
+						fil.value=first_col[j].innerHTML;
+						unique.push(fil);
+					}
 				}
 			}
 		}
-		
-		var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
-		var os2=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
+
+		var transaction=static_local_db.transaction([table,'activities'],"readwrite");
+		var os1=transaction.objectStore(table);
+		var os2=transaction.objectStore('activities');
+		var activity_id=parseFloat(get_new_key());
 		
 		var i=0;
 		var m=0;
@@ -1161,51 +1118,146 @@ function local_create_batch(data_xml)
 				{
 					data_row[cols[j].nodeName]=cols[j].innerHTML;
 				}
-
+				
 				localdb_open_requests+=1;
-				os1.put(data_row).onsuccess=function(e)
+				
+				if(unique.length>0)
 				{
-					i+=1;
-					localdb_open_requests-=1;
-					create_records();
-				};
+					os1.index(unique[0].name).get(data_row[unique[0].name]).onsuccess=function(e)
+					{
+						var data_record=e.target.result;
+						if(data_record)
+						{
+							i+=1;
+							localdb_open_requests-=1;
+							create_records();
+						}
+						else
+						{
+							os1.put(data_row).onsuccess=function(e)
+							{
+								var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
+								var row_data_xml="<"+table+">"+rows[i].innerHTML+"</"+table+">";
+								var act_row={id:(activity_id+i),
+										type:'create',
+										status:'unsynced',
+										data_xml:row_data_xml,
+										user_display:'no',
+										data_id:data_id,
+										tablename:table,
+										link_to:'',
+										last_updated:get_my_time()};
+								
+								os2.put(act_row).onsuccess=function(e)
+								{
+									i+=1;
+									localdb_open_requests-=1;
+									create_records();
+								};
+							};
+						}
+					};
+				}
+				else
+				{
+					os1.put(data_row).onsuccess=function(e)
+					{
+						var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
+						var row_data_xml="<"+table+">"+rows[i].innerHTML+"</"+table+">";
+						var act_row={id:(activity_id+i),
+								type:'create',
+								status:'unsynced',
+								data_xml:row_data_xml,
+								user_display:'no',
+								data_id:data_id,
+								tablename:table,
+								link_to:'',
+								last_updated:get_my_time()};
+						
+						os2.put(act_row).onsuccess=function(e)
+						{
+							i+=1;
+							localdb_open_requests-=1;
+							create_records();
+						};
+					};
+				}
 			}
 		};
 
-		var activity_id=parseFloat(get_new_key());
 		function insert_activities()
 		{
 			if(m<rows.length)
 			{
-				var data_id=rows[m].getElementsByTagName('id')[0].innerHTML;
 				localdb_open_requests+=1;
 				
-				var row_data_xml="<"+table+">"+rows[m].innerHTML+"</"+table+">";
-				var act_row={id:(activity_id+m),
-						type:'create',
-						status:'unsynced',
-						data_xml:row_data_xml,
-						user_display:'no',
-						data_id:data_id,
-						tablename:table,
-						link_to:'',
-						last_updated:get_my_time()};
-				
-				os2.put(act_row).onsuccess=function(e)
+				if(unique.length>0)
 				{
-					m++;
-					localdb_open_requests-=1;
-					insert_activities();
-				};
+					os1.index(unique[0].name).get(unique[0].value).onsuccess=function()
+					{
+						var data_record=e.target.result;
+						if(data_record)
+						{
+							i+=1;
+							localdb_open_requests-=1;
+							create_records();
+						}
+						else
+						{
+							var data_id=rows[m].getElementsByTagName('id')[0].innerHTML;
+							var row_data_xml="<"+table+">"+rows[m].innerHTML+"</"+table+">";
+							var act_row={id:(activity_id+m),
+									type:'create',
+									status:'unsynced',
+									data_xml:row_data_xml,
+									user_display:'no',
+									data_id:data_id,
+									tablename:table,
+									link_to:'',
+									last_updated:get_my_time()};
+							
+							os2.put(act_row).onsuccess=function(e)
+							{
+								m+=1;
+								localdb_open_requests-=1;
+								insert_activities();
+							};
+							
+						}
+					};
+				}
+				else
+				{
+					var data_id=rows[m].getElementsByTagName('id')[0].innerHTML;
+					
+					var row_data_xml="<"+table+">"+rows[m].innerHTML+"</"+table+">";
+					var act_row={id:(activity_id+m),
+							type:'create',
+							status:'unsynced',
+							data_xml:row_data_xml,
+							user_display:'no',
+							data_id:data_id,
+							tablename:table,
+							link_to:'',
+							last_updated:get_my_time()};
+					
+					os2.put(act_row).onsuccess=function(e)
+					{
+						m+=1;
+						localdb_open_requests-=1;
+						insert_activities();
+					};
+				}
 			}
 		};
+
 		
 		create_records();
-		insert_activities();
-
+		//insert_activities();
+		
 		var local_create_complete=setInterval(function()
 		{
-			console.log(localdb_open_requests);
+			//console.log(localdb_open_requests);
 		   if(localdb_open_requests===0)
 		   {
 			   clearInterval(local_create_complete);
@@ -1284,39 +1336,15 @@ function local_create_simple_func(data_xml,func)
 		else
 		{
 			//console.log("unique length is non-zero");
-			var unique_rec=true;
-			var type='create';
 			var data_row=new Object();
-
-			objectStore.openCursor().onsuccess=function(e)
+			var key=IDBKeyRange.only(unique[0].value);
+			objectStore.index(unique[0].name).openCursor(key).onsuccess=function(e)
 			{
 				var result=e.target.result;
 				if(result)
 				{
-					var record=result.value;
-				
-					if(record.id==data_id)
-					{
-						unique_rec=false;
-						localdb_open_requests-=1;
-						$("#modal5").dialog("open");
-					}
-					else 
-					{	
-						for(var k in unique)
-						{
-							if(record[unique[k].name]==unique[k].value)
-							{
-								unique_rec=false;
-								localdb_open_requests-=1;
-								$("#modal5").dialog("open");
-							}
-							else
-							{
-								result.continue();
-							}
-						}
-					}
+					localdb_open_requests-=1;
+					$("#modal5").dialog("open");
 				}
 				else
 				{
@@ -1328,7 +1356,7 @@ function local_create_simple_func(data_xml,func)
 					{
 						var id=get_new_key();
 						var act_row={id:id,
-								type:type,
+								type:'create',
 								status:'unsynced',
 								data_xml:data_xml,
 								user_display:'no',
@@ -1423,37 +1451,14 @@ function local_create_simple_no_warning(data_xml)
 		else
 		{
 			//console.log("unique length is non-zero");
-			var unique_rec=true;
-			var type='create';
 			var data_row=new Object();
-
-			objectStore.openCursor().onsuccess=function(e)
+			var key=IDBKeyRange.only(unique[0].value);
+			objectStore.index(unique[0].name).openCursor(key).onsuccess=function(e)
 			{
 				var result=e.target.result;
 				if(result)
 				{
-					var record=result.value;
-				
-					if(record.id==data_id)
-					{
-						unique_rec=false;
-						localdb_open_requests-=1;
-					}
-					else 
-					{	
-						for(var k in unique)
-						{
-							if(record[unique[k].name]==unique[k].value)
-							{
-								unique_rec=false;
-								localdb_open_requests-=1;
-							}
-							else
-							{
-								result.continue();
-							}
-						}
-					}
+					localdb_open_requests-=1;
 				}
 				else
 				{
@@ -1465,7 +1470,7 @@ function local_create_simple_no_warning(data_xml)
 					{
 						var id=get_new_key();
 						var act_row={id:id,
-								type:type,
+								type:'create',
 								status:'unsynced',
 								data_xml:data_xml,
 								user_display:'no',
@@ -1476,7 +1481,6 @@ function local_create_simple_no_warning(data_xml)
 						static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 						{
 							localdb_open_requests-=1;
-							hide_loader();
 						};
 					};
 				}

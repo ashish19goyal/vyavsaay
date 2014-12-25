@@ -116,7 +116,7 @@
 	       		<div class="container">
 	       		   <div class="gallery-head text-center">
 					  <h3>ABOUT</h3>
-					  <p>Vyavsaay provides industry standard and customizable automation solutions for your business. It is well suited for small and medium enterprises that don't want to spend a lot of money in setting up and managing their own IT infrastructure.</p>
+					  <p>Vyavsaay is an India based company that provides industry standard as well as customizable automation solutions for your business. It is well suited for small and medium enterprises that don't want to spend a lot of money in setting up and managing their own IT infrastructure.</p>
 					 <p>Vyavsaay provides solutions around Billing, Inventory management, Accounting, Project management, Task force management and Customer Relationship Management (CRM).</p>
 				    </div>
 	       			<div class="row text-center">

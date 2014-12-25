@@ -135,11 +135,11 @@ function notifications_add()
 	fetch_requested_data('',payments_data,function(payments)
 	{
 		var not_pay_xml="<notifications>";
-		var counter=0;
+		var counter=1;
 		var id=parseFloat(get_new_key());
 		payments.forEach(function(payment)
 		{
-			if(counter===500)
+			if((counter%500)===0)
 			{
 				not_pay_xml+="</notifications><separator></separator><notifications>";
 			}
@@ -190,12 +190,12 @@ function notifications_add()
 	fetch_requested_data('',tasks_data,function(tasks)
 	{
 		var task_xml="<notifications>";
-		var counter=0;
+		var counter=1;
 		var id=parseFloat(get_new_key());
 		
 		tasks.forEach(function(task)
 		{
-			if(counter===500)
+			if((counter%500)===0)
 			{
 				task_xml+="</notifications><separator></separator><notifications>";
 			}
@@ -249,12 +249,12 @@ function notifications_add()
 	fetch_requested_data('',leads_data,function(leads)
 	{
 		var leads_xml="<notifications>";
-		var counter=0;
+		var counter=1;
 		var id=parseFloat(get_new_key());
 		
 		leads.forEach(function(lead)
 		{
-			if(counter===500)
+			if((counter%500)===0)
 			{
 				leads_xml+="</notifications><separator></separator><notifications>";
 			}
@@ -408,12 +408,12 @@ function notifications_add()
 	fetch_requested_data('',schedule_data,function(schedules)
 	{
 		var schedule_xml="<notifications>";
-		var counter=0;
+		var counter=1;
 		var id=parseFloat(get_new_key());
 		
 		schedules.forEach(function(schedule)
 		{
-			if(counter===500)
+			if((counter%500)===0)
 			{
 				schedule_xml+="</notifications><separator></separator><notifications>";
 			}
@@ -431,7 +431,7 @@ function notifications_add()
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</row>";
 		});
-		schedule+="</notifications>";
+		schedule_xml+="</notifications>";
 		if(is_online())
 		{
 			server_create_batch(schedule_xml);
@@ -458,11 +458,11 @@ function notifications_add()
 	fetch_requested_data('',apps_data,function(apps)
 	{
 		var app_xml="<notifications>";
-		var counter=0;
-		var id=paseFloat(get_new_key());
+		var counter=1;
+		var id=parseFloat(get_new_key());
 		apps.forEach(function(app)
 		{
-			if(counter===500)
+			if((counter%500)===0)
 			{
 				app_xml+="</notifications><separator></separator><notifications>";
 			}

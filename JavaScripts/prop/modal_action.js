@@ -1794,7 +1794,7 @@ function modal23_action(t_func,i_func)
         		if(number_active_ajax===0 && localdb_open_requests===0)
         		{
         			hide_progress();
-        			selected_file.value = "Upload complete";
+        			selected_file.value="Upload complete";
         			$(select_file).val('');
         			$("#modal23").dialog("close");
         			clearInterval(ajax_complete);

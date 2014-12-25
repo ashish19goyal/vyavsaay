@@ -25,7 +25,7 @@ input{
 	background-color: #ffffff;
 	color: #000000;
 	border-width: 1px;
-	width: auto; 
+	width: auto;
 }
 
 label{
@@ -66,6 +66,14 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   display:none;
   margin: 0; 
+}
+
+td:nth-child(2) input[type="text"]{
+	width:150px;
+}
+
+.rwd-table td:nth-child(2), .rwd-table th:nth-child(2){
+	width:180px;
 }
 
 html {
@@ -241,13 +249,10 @@ input[type="text"]#search_box{
 #count_notif{
 	float: right;
 	position:absolute;
-	right: 10px;
+	right: 0px;
 	border-radius: 2px;
 	font-size: .7em;
-	width:13px;
-	height: 15px;
 	text-align: left;
-	padding:0px 3px;
 	display:none;
 	background-color:#dddd00;
 }
@@ -351,18 +356,22 @@ Table formatting for responsive functionality
 .rwd-table td:first-child {
   padding-top: .5em;
 }
+
 .rwd-table td:last-child {
   padding-bottom: .5em;
 }
+
 .rwd-table td:before {
   content: attr(data-th) ": ";
   font-weight: bold;
   width: 120px;
   display: inline-block;
 }
+
 .rwd-table thead tr:first-child{
 	background: #2C8A50;
 }
+
 .rwd-table td:before{
 	background-color:#2C8A50;
 	color: #fff;
@@ -384,7 +393,7 @@ Table formatting for responsive functionality
 	    width:100px;
 	}
 	.rwd-table th:first-child, .rwd-table td:first-child {
-    	padding-left: 0;
+		padding-left: 0;
   	}
   	.rwd-table th:last-child, .rwd-table td:last-child {
     	padding-right: 0;
@@ -408,7 +417,7 @@ table{
 tbody>tr>td{
 	text-align: center;
 	vertical-align: middle;
-	padding: 2px;
+	padding: 0px 2px;
 }
 
 tbody tr:hover{
@@ -708,7 +717,7 @@ tbody tr:hover{
 }
 
 .notification_detail{
-	background-color: #9351A6;
+	background-color: #C37E4C;
 	border: 2px solid #DCDDD3;
 	color:#F5F3EE;
 	padding: 1% 5% 1% 5%;
@@ -717,7 +726,7 @@ tbody tr:hover{
 }
 
 .notification_detail input{
-	color:#171B3A;
+	font-size: .9em;
 }
 
 .notification_status{

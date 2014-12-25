@@ -41,8 +41,12 @@
 	
 					$q_string="insert into activities (id,tablename,type,data_id,data_xml,last_updated,status,link_to) values(?,?,?,?,?,?,?,?)";
 					$stmt=$conn->conn->prepare($q_string);
-					$stmt->execute(array($id,$table_name,$type,$data_id,$xmlresponse_xml->saveXML($data_xml),$last_updated,'synced',$link_to));
-					
+					try{
+						$stmt->execute(array($id,$table_name,$type,$data_id,$xmlresponse_xml->saveXML($data_xml),$last_updated,'synced',$link_to));
+					}
+					catch(PDOException $e)
+					{}		
+							
 					$q_string1="select last_updated from $table_name where id=?;";
 					$stmt1=$conn->conn->prepare($q_string1);
 					$stmt1->execute(array($data_id));
@@ -78,7 +82,10 @@
 								$q_string2=rtrim($q_string2,",");
 								$q_string2.=");";	
 								$stmt2=$conn->conn->prepare($q_string2);
-								$stmt2->execute($data_array);
+								try{
+									$stmt2->execute($data_array);
+								}
+								catch(PDOException $e){}
 								break;
 							case 'update': 
 								$q_string2="update $table_name set ";
@@ -95,7 +102,10 @@
 								$q_string2.=" where id=?";
 								$data_array[]=$data_id;
 								$stmt2=$conn->conn->prepare($q_string2);
-								$stmt2->execute($data_array);
+								try{
+									$stmt2->execute($data_array);
+								}
+								catch(PDOException $e){}
 								break;
 							case 'delete': $q_string2="delete from $table_name where id=?";
 								$stmt2=$conn->conn->prepare($q_string2);

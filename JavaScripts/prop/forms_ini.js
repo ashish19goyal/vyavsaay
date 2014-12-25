@@ -5550,8 +5550,8 @@ function notifications_ini()
 					get_formatted_time(notif.t_generated) +
 					"</div>" +
 					"<div>" +
-					"<input type='button' value='Seen' onclick=\"notifications_update($(this),'"+notif.id+"','reviewed')\">" +
-					"<input type='button' value='Close' onclick=\"notifications_update($(this),'"+notif.id+"','closed')\">" +
+					"<input type='button' class='generic_icon' value='Seen' onclick=\"notifications_update($(this),'"+notif.id+"','reviewed')\">" +
+					"<input type='button' class='generic_icon' value='Close' onclick=\"notifications_update($(this),'"+notif.id+"','closed')\">" +
 					"</div>" +
 					"</div>";
 		});
@@ -5581,7 +5581,7 @@ function notifications_ini()
 						get_formatted_time(notif2.t_generated) +
 						"</div>" +
 						"<div>" +
-						"<input type='button' value='Close' onclick=\"notifications_update($(this),'"+notif2.id+"','closed')\">" +
+						"<input type='button' class='generic_icon' value='Close' onclick=\"notifications_update($(this),'"+notif2.id+"','closed')\">" +
 						"</div>" +
 						"</div>";
 			});
