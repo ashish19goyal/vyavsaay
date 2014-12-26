@@ -23,7 +23,7 @@ function form2_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form2_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form2_"+id+"' id='save_form2_"+id+"' >";	
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form2_"+id+"' id='save_form2_"+id+"' >";	
 				rowsHTML+="<input type='button' class='delete_icon' form='form2_"+id+"' id='delete_form2_"+id+"' onclick='$(this).parent().parent().remove();'>";	
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
@@ -99,7 +99,7 @@ function form10_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Additional Notes'>";
-				rowsHTML+="<textarea required form='form10_"+id+"'></textarea>";
+				rowsHTML+="<textarea form='form10_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Price'>";
 				rowsHTML+="<input type='number' required form='form10_"+id+"' step='any'>";
@@ -111,7 +111,7 @@ function form10_add_item()
 				rowsHTML+="<input type='hidden' form='form10_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form10_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form10_"+id+"' id='save_form10_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form10_"+id+"' id='save_form10_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form10_"+id+"' id='delete_form10_"+id+"' onclick='$(this).parent().parent().remove();'>";
 				rowsHTML+="<input type='hidden' form='form10_"+id+"'>";
 			rowsHTML+="</td>";			
@@ -268,7 +268,7 @@ function form12_add_item()
 				rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form12_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form12_"+id+"' id='save_form12_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form12_"+id+"' id='save_form12_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form12_"+id+"' id='delete_form12_"+id+"' onclick='$(this).parent().parent().remove();'>";
 				rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form12_"+id+"'>";
@@ -599,7 +599,7 @@ function form15_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form15_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
 				rowsHTML+="<input type='text' required form='form15_"+id+"'>";
@@ -617,7 +617,7 @@ function form15_add_item()
 				rowsHTML+="<input type='hidden' form='form15_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form15_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form15_"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form15_"+id+"' id='save_form15_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form15_"+id+"' id='save_form15_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form15_"+id+"' id='delete_form15_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
@@ -797,7 +797,7 @@ function form19_add_item()
 				rowsHTML+="<input type='hidden' form='form19_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form19_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form19_"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form19_"+id+"' id='save_form19_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form19_"+id+"' id='save_form19_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form19_"+id+"' id='delete_form19_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
@@ -947,7 +947,7 @@ function form21_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form21_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form21_"+id+"' id='save_form21_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form21_"+id+"' id='save_form21_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form21_"+id+"' id='delete_form21_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
@@ -1044,14 +1044,14 @@ function form24_add_item()
 				rowsHTML+="<input type='number' required form='form24_"+id+"' value='' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Make'>";
-				rowsHTML+="<input type='text' form='form24_"+id+"' value='' readonly='readonly'>";
+				rowsHTML+="<textarea form='form24_"+id+"' readonly='readonly'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Price'>";
 				rowsHTML+="<input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form24_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form24_"+id+"' id='save_form24_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form24_"+id+"' id='save_form24_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form24_"+id+"' id='delete_form24_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
@@ -1811,7 +1811,7 @@ function form69_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form69_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form69_"+id+"' id='save_form69_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form69_"+id+"' id='save_form69_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form69_"+id+"' id='delete_form69_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
@@ -1895,9 +1895,11 @@ function form72_add_product()
 		rowsHTML+="<form id='form72_"+id+"'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
@@ -1914,7 +1916,7 @@ function form72_add_product()
 				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form72_"+id+"' id='save_form72_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form72_"+id+"' id='save_form72_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='$(this).parent().parent().remove();'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
@@ -2174,9 +2176,11 @@ function form72_add_service()
 		rowsHTML+="<form id='form72_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Person'>";
 				rowsHTML+="<input type='text' form='form72_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
 				rowsHTML+="<textarea form='form72_"+id+"'></textarea>";
@@ -2193,7 +2197,7 @@ function form72_add_service()
 				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form72_"+id+"' id='save_form72_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form72_"+id+"' id='save_form72_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='$(this).parent().parent().remove();'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
@@ -2949,7 +2953,7 @@ function form91_add_item()
 				rowsHTML+="<input type='hidden' form='form91_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form91_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form91_"+id+"' id='save_form91_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form91_"+id+"' id='save_form91_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form91_"+id+"' id='delete_form91_"+id+"' onclick='$(this).parent().parent().remove();'>";
 				rowsHTML+="<input type='hidden' form='form91_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form91_"+id+"'>";

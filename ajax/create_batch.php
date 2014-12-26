@@ -99,7 +99,16 @@
 						{
 							$data_array[]=$data->nodeValue;
 						}
-						$insert_stmt->execute($data_array);
+						try {
+							$insert_stmt->execute($data_array);
+						}catch(PDOException $e)
+						{
+							echo $e;
+							foreach ($data_array as $data_key => $data_array_value)
+							{	
+								echo $data_key."=".$data_array_value."\n";
+							}
+						}
 					}
 				}
 				echo "data saved";

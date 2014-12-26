@@ -29,8 +29,8 @@
 					<th>Quantity/Notes</th>
 					<th>Unit Price</th>
 					<th>Total</th>
-					<th><input type='button' form='form72_header' title='Add product' class='add_icon' onclick='form72_add_product();'>
-						<input type='button' form='form72_header' title='Add service' class='add_icon' onclick='form72_add_service();'></th>
+					<th><input type='button' form='form72_header' value='Add product' class='generic_icon' onclick='form72_add_product();'>
+						<input type='button' form='form72_header' value='Add Service' class='generic_icon' onclick='form72_add_service();'></th>
 			</tr>
 		</thead>
 		<tbody id='form72_body'>

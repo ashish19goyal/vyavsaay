@@ -1649,12 +1649,12 @@ function form24_update_form()
 					"</activity>";
 		if(is_online())
 		{
-			$("[id^='save_form69']").click();
+			$("[id^='save_form24']").click();
 			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			$("[id^='save_form69']").click();
+			$("[id^='save_form24']").click();
 			local_update_row(data_xml,activity_xml);
 		}
 	}

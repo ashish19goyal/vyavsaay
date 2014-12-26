@@ -351,7 +351,7 @@ function set_grid_item_16()
 	var columns="<payments>" +
 		"<total_amount></total_amount>" +
 		"<due_date compare='less than'>"+get_my_time()+"</due_date>" +
-		"<status array='yes'>pending</status>" +
+		"<status exact='yes'>pending</status>" +
 		"<type>paid</type>" +
 		"</payments>";
 	

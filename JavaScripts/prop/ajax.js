@@ -274,6 +274,7 @@ function server_create_batch(data_xml)
 	
 	//console.log('got last sync time');
 	var data_xml_array=data_xml.split("<separator></separator>");
+	console.log(data_xml_array.length);
 	data_xml_array.forEach(function(data_chunk)
 	{
 		ajax_with_custom_func("./ajax/create_batch.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&data_xml="+data_chunk,function(e)

@@ -1,5 +1,5 @@
 <?php
-	include "includes/header.php";
+	include "includes/index_header.php";
 ?>
 		<!----- start-header---->
 			<div id="home" class="header">
@@ -16,9 +16,9 @@
 							<li><a href="#about" class="top-nav scroll">About</a></li>
 							<li><a href="#reviews" class="top-nav scroll">Reviews</a></li>
 							<li><a href="#pricing" class="top-nav scroll">Pricing</a></li>
-							<li><a href="#register" class="top-nav scroll" onclick="$('#register_user_id').focus();">Register</a></li>
 							<li><a href="#contact" class="top-nav scroll">Contact</a></li>
-						</ul>
+							<li><a href="register.php" class="top-nav">Register</a></li>
+							</ul>
 						<a href="#" id="pull"><img src="images/menu-icon.png" title="menu" /></a>
 					</nav>
 					<div class="clearfix"> </div>
@@ -41,7 +41,7 @@
 		
 		<div id="share_box" data-url="http://vyavsaay.com" data-text="Latest technology for your business" title='Share'>
 			<div class="box">
-				<div class="count"><img src='./images/share.ico' style='width:40px;height:40px'></div>
+				<div class="count"><img src='./images/share.png' style='width:40px;height:40px'></div>
 				<div class="share">share</div>
 			</div>
 			<div class="social_buttons">
@@ -93,6 +93,28 @@
 			   		closeOnEscape: true,
 				});
 			}();	
+
+			function modal34_action()
+			{
+				var form=document.getElementById("modal34_form");
+				
+				$(form).off('submit');
+				$(form).on('submit',function(event)
+				{
+					event.preventDefault();
+					var name=form.elements[1].value;
+					var contact=form.elements[2].value;
+					var post_data="name="+name+"&contact="+contact;
+					
+					ajax_with_custom_func("./ajax/whatsapp.php",post_data,function(e)
+					{
+						console.log(e.responseText);
+						$("#modal34").dialog("close");
+					});		
+				});
+				$("#modal34").dialog("open");
+			}
+						
 		</script>
  		<!----- banner ---->
 			<div class="banner">
@@ -210,62 +232,6 @@
        		</div>
 		</div>
 	  <!---//End-Reviews----->
-	  <!----- /strat-Download---->
-		<div id="register" class="contact">
-       		<div class="container">
-       			<div class="demo-head text-center">
-				  <h3>Register</h3>
-			    </div>
-       			<div class="gallery-head text-center">
-       				<p>Fill in the following form to register for a new account.</p>
-       			</div>
-       					
-       					<div id="r_register" class="contact-form">
-							<div id="failed_register"></div>
-							<form id="registeration">
-								<fieldset>
-									 <p class="comment-form-author">
-									<label>User ID</label><input id='register_user_id' class='textbox' type="text" placeholder='user id...' onblur="userid_validation()" required><label id="userid_validation"></label>
-									</p></br>
-									 <p class="comment-form-author">
-									<label>Email</label><input class='textbox' type="email" placeholder='email id...' onblur="emailid_validation()" required><label id="emailid_validation"></label>
-									</p></br>
-									 <p class="comment-form-author">
-									 <label>Full Name</label><input class='textbox' type="text" placeholder='full name...' required>
-									  <p class="comment-form-author"></br>
-									 <p class="comment-form-author">
-									 <label>Contact No</label><input class='textbox' type="tel" required placeholder='contact no...'>
-									  </p></br>
-									 <p class="comment-form-author">
-									 <label>Password</label><input class='textbox' type="password" required placeholder='*********'>
-									  </p></br>
-									 <p class="comment-form-author">
-									 <label>Retype Password</label><input class='textbox' type="password" onkeyup="match_password()" required placeholder='*********'><label id="password_match_validation"></label>
-									 </p></br>
-									 <p class="comment-form-author">
-									 <label>Select your industry</label><select class='textbox' id="r_industry" required>
-															<option value="general" selected="selected">General Store</option>
-															<option value="clothing">Clothing & Footwear</option>
-															<option value="pharmacy">Pharmacy (medicine store)</option>
-															<option value="wholesale">Wholesale or Distributor</option>
-															<option value="clinic">Nursing Home & clinics</option>
-															<option value="food">Restaurant, Bakery & food joints</option>
-															<option value="hotel">Hotel & Guest house</option>
-															<option value="opticals">Opticals</option>
-															<option value="lawyer">Lawyer or law firm</option>
-															<option value="ca">CA or CA firm</option>
-															<option value="events">Event Management (Marriages,Parties,Performances)</option>
-														</select>
-									</p></br>
-									<input type="submit" value='Submit'>
-								</fieldset>
-							</form>
-							</div>
-							<div class="Demo-text"><p id="r_complete"></p></div>			
-       					
-       		</div>       				
-		</div>
-	  <!---//End-Download----->
 	    <!---/start-contact----->
 	    <div class="contact" id="contact">
 	      	<div class="container">
@@ -297,10 +263,18 @@
 	 <!---//end-contact----->
 	<a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
 
-
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-		
 <script>
+
+		addEventListener("load", function()
+		{
+			setTimeout(hideURLbar, 0);
+		}, false); 
+
+		function hideURLbar()
+		{
+			window.scrollTo(0,1); 
+		}
+		
 		$(document).ready(function(){										
 			$().UItoTop({ easingType: 'easeOutQuart' });
 				
@@ -356,12 +330,6 @@
 			$(user).focus();
 		}
 		
-		
-		$('#registeration').on('submit',function(event)
-		{
-			event.preventDefault();
-			register_click();
-		});
 
 		$('#index_contact').on('submit',function(event)
 		{

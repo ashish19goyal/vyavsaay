@@ -85,7 +85,15 @@
 								try{
 									$stmt2->execute($data_array);
 								}
-								catch(PDOException $e){}
+								catch(PDOException $e)
+								{
+									echo $e;
+									foreach ($data_array as $data_key => $data_array_value)
+									{
+										echo $data_key."=".$data_array_value."\n";
+									}
+									continue;
+								}
 								break;
 							case 'update': 
 								$q_string2="update $table_name set ";
@@ -105,7 +113,15 @@
 								try{
 									$stmt2->execute($data_array);
 								}
-								catch(PDOException $e){}
+								catch(PDOException $e)
+								{
+									echo $e;
+									foreach ($data_array as $data_key => $data_array_value)
+									{
+										echo $data_key."=".$data_array_value."\n";
+									}
+									continue;
+								}
 								break;
 							case 'delete': $q_string2="delete from $table_name where id=?";
 								$stmt2=$conn->conn->prepare($q_string2);

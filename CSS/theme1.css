@@ -17,7 +17,7 @@ textarea[readonly="readonly"],textarea[readonly="readonly"]:focus{
 
 textarea{
 	width: 100px;
-	vertical-align:middle;
+	vertical-align:top;
 }
 
 input{
@@ -172,6 +172,10 @@ input[type="text"]#search_box{
 	float: right;		
 	margin: 0.5% 1% .5% 0%;
 	vertical-align:middle;
+}
+
+a div{
+	cursor: pointer;
 }
 
 #home_grid>ul{
@@ -530,6 +534,11 @@ tbody tr:hover{
 	outline: none;
 }
 
+.submit_hidden{
+	width:1px;
+	color:transparent;
+	visibility:hidden;
+}
 
 .save_icon{
 	height: 25px;
@@ -828,7 +837,7 @@ canvas{
 		margin: 50px 140px 50px 60px;
 	}
 	.side_lane{
-		width: 150px;
+		width: 140px;
 		height: 75%;
 		min-height: 50%;
 		text-align: left;

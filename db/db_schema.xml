@@ -371,7 +371,7 @@
 			<name index='yes' type="VARCHAR(90)" unique='yes'></name>
 			<description index='no' type="TEXT"></description>
 			<make index='no' type="VARCHAR(45)"></make>
-			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<tax index='no' type="DECIMAL(12,4)"></tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</product_master>
 	<attributes>

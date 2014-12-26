@@ -133,7 +133,31 @@ img.review_picture_rotate{
 	position: relative;
 }
 
+
 /*----navbar-nav----*/
+
+.option_icon{
+	margin:25px;
+	vertical-align:middle;
+	padding:20px;
+	cursor: pointer;
+	border: 2px solid #1A783B;
+	display: inline-block;
+	color: #FFF;
+	font-size: 35px;
+	text-align: center;
+	-webkit-appearance:none;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5s all;
+	border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	-o-border-radius: 0.4em;
+	background: #2ABF5E;
+	outline: none;
+}
+
 .top-header{
 	padding: 0.5em 0em;
 	background: #2ABF5E;

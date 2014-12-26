@@ -32,7 +32,6 @@ function activities_lane_ini()
 						"</div>";
 		}
 		$("#activity_lane").html(result_html);
-		//postMessage(result_html);
 	});
 	setTimeout(activities_lane_ini,100000);	
 }
@@ -494,7 +493,7 @@ function notifications_add()
 	
 	///////////due appointments//////////
 
-	setTimeout(notifications_add,900000);
+	setTimeout(notifications_add,1800000);
 }
 
 /**

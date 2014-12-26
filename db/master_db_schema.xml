@@ -10,6 +10,14 @@
 			<dbname index='no' type="VARCHAR(100)"></dbname>
 			<email index='no' type="VARCHAR(100)"></email>
 	</user_profile>		
+	<reseller_profile>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<username index='no' type="VARCHAR(100) NOT NULL"></username>
+			<phone index='no' type="VARCHAR(15) NOT NULL"></phone>
+			<name index='no' type="VARCHAR(90)"></name>
+			<status index='no' type="VARCHAR(45)"></status><!-- active/suspended/archived -->
+			<email index='no' type="VARCHAR(100)"></email>
+	</reseller_profile>		
 	<feed_item>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<t_generated index='no' type="BIGINT"></t_generated>

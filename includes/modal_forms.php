@@ -153,7 +153,7 @@
 				<label>Description <textarea></textarea></label><br/>
 				<label>Picture <output></output>
 								<input type="file"></label><br/>
-				<label>Tax (%) <input type="number"></label><br/>
+				<label>Tax (%) <input type="number" step='any'></label><br/>
 				<label>Bar Code <input type="text" required></label>
 				<label><input type='checkbox'>Auto generate</label><br/>
 				<input type="submit" value='Save'>

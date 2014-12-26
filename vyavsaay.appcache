@@ -10,6 +10,7 @@ CACHE MANIFEST
 #these files will be cached
 CACHE:
 index.php
+register.php
 offline.html
 pass_reset.php
 privacy_policy.php

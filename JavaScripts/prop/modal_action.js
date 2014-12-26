@@ -697,6 +697,8 @@ function modal14_action()
 	var fbarcode=form.elements[7];
 	var auto_generate=form.elements[8];
 	
+	fbarcode.value="";
+	
 	$(auto_generate).off('click');
 	$(auto_generate).on('click',function(event)
 	{
@@ -1780,15 +1782,18 @@ function modal23_action(t_func,i_func)
            
         	progress_value=15;
         	
+        	//console.log(data_array.length);
+        	
         	var ajax_complete=setInterval(function()
         	{
+        		//console.log(number_active_ajax);
         		if(number_active_ajax===0)
         		{
         			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
         		}
         		else if(localdb_open_requests===0)
         		{
-        			progress_value=15+(1-((500*number_active_ajax)/(2*data_array.length)))*85;
+        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
         		}
         		
         		if(number_active_ajax===0 && localdb_open_requests===0)
@@ -2614,30 +2619,6 @@ function modal33_action(id)
 	});
 }
 
-/**
- * @modal Whatsapp contact
- * @modalNo 34
- */
-function modal34_action()
-{
-	var form=document.getElementById("modal34_form");
-	
-	$(form).off('submit');
-	$(form).on('submit',function(event)
-	{
-		event.preventDefault();
-		var name=form.elements[1].value;
-		var contact=form.elements[2].value;
-		var post_data="name="+name+"&contact="+contact;
-		
-		ajax_with_custom_func("./ajax/whatsapp.php",post_data,function(e)
-		{
-			console.log(e.responseText);
-			$("#modal34").dialog("close");
-		});		
-	});
-	$("#modal34").dialog("open");
-}
 
 /**
  * @modal Add Store Area

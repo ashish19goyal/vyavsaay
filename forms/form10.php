@@ -1,13 +1,13 @@
 <div id='form10' class='function_detail'>
 	<form id='form10_master'>
 		<fieldset>
-			<label>Customer	<img src='./images/add.png' class='add_image' onclick='modal11_action();'></br>
+			<label>Customer	<img src='./images/add_image.png' class='add_image' onclick='modal11_action();'></br>
 			<input type='text' required></label>
 			<label>Bill Date</br><input type='text' required></label>
 			<label>Amount</br>Rs. <input readonly='readonly' type='number'></label>
 			<label>Discount</br>Rs. <input readonly='readonly' type='number'></label>
 			<label>Tax</br>Rs. <input readonly='readonly' type='number'></label>
-			<label>Total</br>Rs. <input type='text' required></label>
+			<label>Total</br>Rs. <input readonly='readonly' type='text' required></label>
 			<input type='hidden' name='bill_id'>
 			<input type='hidden' name='offer'>
 			<input type='hidden' name='transaction'>

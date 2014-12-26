@@ -354,12 +354,8 @@ function register_click()
 /**
  * This function checks if the desired user id has already been taken
  */
-function userid_validation()
+function userid_validation(userid)
 {
-	var form=document.getElementById('registeration');
-
-	var userid=form.elements[1].value;
-	
 	if(userid!="")
 	{
 		var match=userid.match(/[a-z0-9]*/i);
@@ -394,12 +390,8 @@ function userid_validation()
 /**
  * This function checks if the email id is already registered for an account
  */
-function emailid_validation()
+function emailid_validation(emailid)
 {
-	var form=document.getElementById('registeration');
-
-	var emailid=form.elements[2].value;
-	
 	if(emailid!="")
 	{
 		ajax_with_custom_func("./ajax/verify_id.php","&email="+emailid,function(e)
@@ -447,4 +439,110 @@ function contact_click()
 		//window.location.assign("index.php#contact");	
 		hide_loader();
 	});
+}
+
+
+/**
+ * This function is run to set the preferences during registration process
+ */
+function reseller_register_click()
+{
+	var form=document.getElementById('reseller_registeration');
+
+	var userid=form.elements[1].value;
+	var email=form.elements[2].value;
+	var name=form.elements[3].value;
+	var phone=form.elements[4].value;
+	var userid_valid=document.getElementById("reseller_id_validation").value;
+	var emailid_valid=document.getElementById("reseller_emailid_validation").value;
+	
+	
+	if(userid_valid=="incorrect" || emailid_valid=="incorrect")
+	{
+		document.getElementById("reseller_failed_register").innerHTML="Please update the incorrect fields to proceed!";
+	}
+	else	
+	{
+		show_loader();
+		var post_data="userid="+userid+
+						"&email="+email+
+						"&name="+name+
+						"&phone="+phone;
+
+		ajax_with_custom_func("./ajax/reseller_register.php",post_data,function(e)
+		{
+			if(e.responseText=="successful")
+			{
+				$("#reseller_r_register").slideUp();
+				document.getElementById("reseller_r_complete").innerHTML="Congrats!! you are now reigstered as a reseller with Vyavsaay.";
+			}
+			else
+			{
+				document.getElementById("reseller_failed_register").innerHTML="An error occured, please try again.";
+				console.log(e.responseText);
+			}
+			window.location.assign("#reseller_register");	
+			hide_loader();
+		});
+	}
+}
+
+/**
+ * This function checks if the desired user id has already been taken
+ */
+function reseller_id_validation(userid)
+{
+	if(userid!="")
+	{
+		var match=userid.match(/[a-z0-9]*/i);
+		if(match[0].length!=userid.length)
+		{
+			document.getElementById("reseller_id_validation").innerHTML="The UserId is invalid, it can only contain alpha-numeric characters";
+			document.getElementById("reseller_id_validation").value="incorrect";
+		}
+		else
+		{
+			ajax_with_custom_func("./ajax/reseller_verify_id.php","userid="+userid,function(e)
+			{
+				status=e.responseText;
+				if(status=="match")
+				{
+					document.getElementById("reseller_id_validation").innerHTML="This ID already exists, choose a different ID.";
+					document.getElementById("reseller_id_validation").value="incorrect";
+				}
+				else
+				{
+					document.getElementById("reseller_id_validation").innerHTML="User ID is available.";
+					document.getElementById("reseller_id_validation").value="correct";
+				}
+	
+			});
+		}
+	}
+}
+
+/**
+ * This function checks if the email id is already registered for an account
+ */
+function reseller_emailid_validation(emailid)
+{
+	if(emailid!="")
+	{
+		ajax_with_custom_func("./ajax/reseller_verify_id.php","&email="+emailid,function(e)
+		{
+			status=e.responseText;
+			//console.log(status);
+			if(status=="match")
+			{
+				document.getElementById("reseller_emailid_validation").innerHTML="This email ID is already registered, choose a different ID.";
+				document.getElementById("reseller_emailid_validation").value="incorrect";
+			}
+			else
+			{
+				document.getElementById("reseller_emailid_validation").innerHTML="";
+				document.getElementById("reseller_emailid_validation").value="correct";
+			}
+
+		});
+	}
 }
