@@ -2617,3 +2617,33 @@ function form100_header_ini()
 	});
 
 };
+
+
+/**
+ * @form Manage Sale Orders (multi-register)
+ * @formNo 108
+ */
+function form108_header_ini()
+{
+	var filter_fields=document.getElementById('form108_header');
+	var order_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var order_data="<sale_orders>" +
+			"<id></id>" +
+			"</sale_orders>";
+	var cust_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form108_ini();
+	});
+
+	set_my_filter(order_data,order_filter);
+	set_my_filter(cust_data,name_filter);
+	set_static_filter('sale_orders','status',status_filter);
+};

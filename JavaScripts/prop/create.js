@@ -2944,8 +2944,10 @@ function form69_create_form()
  */
 function form70_bill(order_id)
 {
-	if(is_create_access('form12') || is_create_access('form72'))
+	if(is_create_access('form70'))
 	{
+		console.log('creating bill');
+		show_loader();
 		var bill_type='product';
 		var bill_amount=0;
 		var bill_total=0;
@@ -2956,13 +2958,14 @@ function form70_bill(order_id)
 		///////selecting all ordered items////
 		var order_item_data="<sale_order_items>" +
 				"<id></id>" +
-				"<order_id>"+order_id+"</order_id>" +
+				"<order_id exact='yes'>"+order_id+"</order_id>" +
 				"<item_name></item_name>" +
 				"<quantity></quantity>" +
 				"<notes></notes>" +
 				"</sale_order_items>";
 		fetch_requested_data('',order_item_data,function(order_items)
 		{
+			console.log(order_items);
 			pending_items_count=order_items.length;
 			order_items.forEach(function(order_item)
 			{
@@ -2974,16 +2977,18 @@ function form70_bill(order_id)
 				
 				get_inventory(order_item.item_name,'',function(quantity)
 				{
-					if(quantity>=order_item.quantity)
+					console.log(quantity);
+					if(parseFloat(quantity)>=parseFloat(order_item.quantity))
 					{
 						var batch_data="<product_instances count='1'>" +
 								"<batch></batch>" +
 								"<sale_price></sale_price>" +
-								"<product_name>"+order_item.item_name+"</product_name>" +
+								"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
 								"<last_updated sort='desc'></last_updated>" +
 								"</product_instances>";
 						fetch_requested_data('',batch_data,function(batches)
 						{
+							console.log(batches);
 							var batch="";
 							var sale_price=0;
 							if(batches.length>0)
@@ -3016,9 +3021,9 @@ function form70_bill(order_id)
 								////sorting offers based on criteria amount and criteria quantity
 								offers.sort(function(a,b)
 								{
-									if(a.criteria_amount<b.criteria_amount)
+									if(parseFloat(a.criteria_amount)<parseFloat(b.criteria_amount))
 									{	return 1;}
-									else if(a.criteria_quantity<b.criteria_quantity)
+									else if(parseFloat(a.criteria_quantity)<parseFloat(b.criteria_quantity))
 									{	return 1;}
 									else 
 									{	return -1;}
@@ -3063,7 +3068,7 @@ function form70_bill(order_id)
 											
 											get_inventory(free_product_name,'',function(free_quantities)
 											{
-												if(free_quantities>=free_product_quantity)
+												if(parseFloat(free_quantities)>=free_product_quantity)
 												{
 													var free_batch_data="<bill_items count='1'>" +
 															"<batch></batch>" +
@@ -3196,6 +3201,8 @@ function form70_bill(order_id)
 										"</product_master>";
 								fetch_requested_data('',tax_data,function(taxes)
 								{
+									console.log(taxes);
+
 									taxes.forEach(function(tax)
 									{
 										item_tax=parseFloat((parseFloat(tax.tax)*(item_amount-parseFloat(item_discount)))/100);
@@ -3226,6 +3233,9 @@ function form70_bill(order_id)
 									bill_discount+=item_discount;
 									bill_tax+=item_tax;
 									pending_items_count-=1;
+									
+									console.log(data_xml);
+
 									if(is_online())
 									{
 										server_create_simple(data_xml);
@@ -3239,6 +3249,10 @@ function form70_bill(order_id)
 							});
 							
 						});
+					}
+					else
+					{
+						pending_items_count-=1;
 					}
 				});
 			});
@@ -3261,10 +3275,11 @@ function form70_bill(order_id)
 	  		   			"</sale_orders>";
 	  		   	fetch_requested_data('',order_data,function(sale_orders)
 	  		   	{
+	  		   		console.log(sale_orders);
 	  		   		///////////////////////////////////////////////////////////
 	  		   		var offer_data="<offers>" +
-							"<offer_type>bill</offer_type>" +
-							"<criteria_type>min amount crossed</criteria_type>" +
+							"<offer_type exact='yes'>bill</offer_type>" +
+							"<criteria_type exact='yes'>min amount crossed</criteria_type>" +
 							"<criteria_amount compare='less than'>"+(bill_amount-bill_discount)+"</criteria_amount>" +
 							"<result_type></result_type>" +
 							"<discount_percent></discount_percent>" +
@@ -3280,7 +3295,7 @@ function form70_bill(order_id)
 					{
 						offers.sort(function(a,b)
 						{
-							if(a.criteria_amount<b.criteria_amount)
+							if(parseFloat(a.criteria_amount)<parseFloat(b.criteria_amount))
 							{	return 1;}
 							else 
 							{	return -1;}
@@ -3361,6 +3376,7 @@ function form70_bill(order_id)
 							break;
 						}
 						
+						console.log(sale_orders);
 						for(var z in sale_orders)
 						{
 							var sale_order_xml="<sale_orders>" +
@@ -3438,6 +3454,7 @@ function form70_bill(order_id)
 								local_create_simple(payment_xml);
 							}
 						}
+						hide_loader();
 					});
 	  		   		///////////////////////////////////////////////////////////
 	  		   	});
@@ -6304,4 +6321,541 @@ function form98_create_item(form)
 	{
 		$("#modal2").dialog("open");
 	}
+}
+
+
+/**
+ * This function transforms a sale order into a bill
+ * It is applicable for product bills only
+ * @form 108
+ * @param order_id
+ */
+function form108_bill(order_id,bill_type)
+{
+	if(is_create_access('form108'))
+	{
+		show_loader();
+		var bill_type='product';
+		var bill_amount=0;
+		var bill_total=0;
+		var bill_offer="";
+		var bill_discount=0;
+		var bill_tax=0;
+		var pending_items_count=0;
+		///////selecting all ordered items////
+		var order_item_data="<sale_order_items>" +
+				"<id></id>" +
+				"<order_id exact='yes'>"+order_id+"</order_id>" +
+				"<item_name></item_name>" +
+				"<quantity></quantity>" +
+				"<notes></notes>" +
+				"</sale_order_items>";
+		fetch_requested_data('',order_item_data,function(order_items)
+		{
+			pending_items_count=order_items.length;
+			order_items.forEach(function(order_item)
+			{
+				var item_amount=0;
+				var item_total=0;
+				var item_offer="";
+				var item_discount=0;
+				var item_tax=0;
+				
+				get_inventory(order_item.item_name,'',function(quantity)
+				{
+					if(parseFloat(quantity)>=parseFloat(order_item.quantity))
+					{
+						var batch_data="<product_instances count='1'>" +
+								"<batch></batch>" +
+								"<sale_price></sale_price>" +
+								"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
+								"<last_updated sort='desc'></last_updated>" +
+								"</product_instances>";
+						fetch_requested_data('',batch_data,function(batches)
+						{
+							console.log(batches);
+							var batch="";
+							var sale_price=0;
+							if(batches.length>0)
+							{
+								batch=batches[0].batch;
+								sale_price=batches[0].sale_price;
+							}
+				
+							var price_data="<sale_prices count='1'>" +
+									"<sale_price></sale_price>" +
+									"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+									"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+									"<billing_type>"+bill_type+"</billing_type>" +
+									"</sale_prices>";
+
+							//////adding offer details
+							item_amount=parseFloat(order_item.quantity)*parseFloat(sale_price);
+							var offer_data="<offers>" +
+									"<offer_type>product</offer_type>" +
+									"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
+									"<batch array='yes'>"+batch+"--all</batch>" +
+									"<criteria_type></criteria_type>" +
+									"<criteria_amount></criteria_amount>" +
+									"<criteria_quantity></criteria_quantity>" +
+									"<result_type></result_type>" +
+									"<discount_percent></discount_percent>" +
+									"<discount_amount></discount_amount>" +
+									"<quantity_add_percent></quantity_add_percent>" +
+									"<quantity_add_amount></quantity_add_amount>" +
+									"<free_product_name></free_product_name>" +
+									"<free_product_quantity></free_product_quantity>" +
+									"<offer_detail></offer_detail>" +
+									"<status array='yes'>active--extended</status>" +
+									"</offers>";
+							fetch_requested_data('',offer_data,function(offers)
+							{
+								////sorting offers based on criteria amount and criteria quantity
+								offers.sort(function(a,b)
+								{
+									if(parseFloat(a.criteria_amount)<parseFloat(b.criteria_amount))
+									{	return 1;}
+									else if(parseFloat(a.criteria_quantity)<parseFloat(b.criteria_quantity))
+									{	return 1;}
+									else 
+									{	return -1;}
+								});
+										
+								for(var i in offers)
+								{
+									//console.log("found atleast one offer");
+									item_offer=offers[i].offer_detail;
+									if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=parseFloat(order_item.quantity))
+									{
+										console.log("offer criteria met");
+
+										if(offers[i].result_type=='discount')
+										{
+											if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+											{
+												item_discount=parseFloat((item_amount*parseInt(offers[i].discount_percent))/100);
+											}
+											else 
+											{
+												item_discount=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(order_item.quantity)/parseFloat(offers[i].criteria_quantity)));
+											}
+										}
+										else if(offers[i].result_type=='quantity addition')
+										{
+											if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+											{
+												order_item.quantity=parseFloat(order_item.quantity)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+											}
+											else 
+											{
+												order_items.quantity=parseFloat(order_item.quantity)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(order_items.quantity)/parseFloat(offers[i].criteria_quantity))));
+											}
+										}
+										else if(offers[i].result_type=='product free')
+										{
+											//console.log("adding free product as per offer");
+
+											var free_product_name=offers[i].free_product_name;
+											var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(order_item.quantity)/parseFloat(offers[i].criteria_quantity)));
+											
+											get_inventory(free_product_name,'',function(free_quantities)
+											{
+												if(parseFloat(free_quantities)>=free_product_quantity)
+												{
+													var free_batch_data="<bill_items count='1'>" +
+															"<batch></batch>" +
+															"<item_name>"+free_product_name+"</item_name>" +
+															"<last_updated sort='desc'></last_updated>" +
+															"</bill_items>";
+													get_single_column_data(function(data)
+													{
+														var free_batch="";
+														if(data.length>0)
+														{
+															free_batch=data[0];	
+														}
+														
+														var bill_item_id=get_new_key();
+										                var free_xml="<bill_items>" +
+																	"<id>"+bill_item_id+"</id>" +
+																	"<item_name>"+free_product_name+"</item_name>" +
+																	"<batch>"+free_batch+"</batch>" +
+																	"<unit_price>0</unit_price>" +
+																	"<quantity>"+free_product_quantity+"</quantity>" +
+																	"<amount>0</amount>" +
+																	"<total>0</total>" +
+																	"<discount>0</discount>" +
+																	"<offer></offer>" +
+																	"<type>free</type>" +
+																	"<tax>0</tax>" +
+																	"<bill_id>"+order_id+"</bill_id>" +
+																	"<free_with>"+order_item.item_name+"</free_with>" +
+																	"<last_updated>"+get_my_time()+"</last_updated>" +
+																	"</bill_items>";	
+														
+														if(is_online())
+														{
+															server_create_simple(free_xml);
+														}
+														else
+														{
+															local_create_simple(free_xml);
+														}
+													},free_batch_data);
+												}
+											});
+										}
+										break;
+									}
+									else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=item_amount)
+									{
+										if(offers[i].result_type=='discount')
+										{
+											if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+											{
+												item_discount=parseFloat((item_amount*parseInt(offers[i].discount_percent))/100);
+											}
+											else 
+											{
+												item_discount=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(item_amount)/parseFloat(offers[i].criteria_amount)));
+											}
+										}
+										else if(offers[i].result_type=='quantity addition')
+										{
+											if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+											{
+												order_item.quantity=parseFloat(order_item.quantity)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+											}
+											else 
+											{
+												order_item.quantity=parseFloat(order_item.quantity)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(item_amount)/parseFloat(offers[i].criteria_amount))));
+											}
+										}
+										else if(offers[i].result_type=='product free')
+										{
+											var free_product_name=offers[i].free_product_name;
+											var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(bill_amount-bill_discount)/parseFloat(offers[i].criteria_amount)));
+																						
+											//////updating product quantity in inventory
+											get_inventory(free_product_name,'',function(free_quantities)
+											{
+												if(free_quantities>=free_product_quantity)
+												{
+													var free_batch_data="<bill_items count='1'>" +
+															"<batch></batch>" +
+															"<item_name>"+free_product_name+"</item_name>" +
+															"<last_updated sort='desc'></last_updated>" +
+															"</bill_items>";
+													get_single_column_data(function(data)
+													{
+														var free_batch="";
+														if(data.length>0)
+														{
+															free_batch=data[0];	
+														}
+														var bill_item_id=get_new_key();
+										                var free_xml="<bill_items>" +
+																	"<id>"+bill_item_id+"</id>" +
+																	"<item_name>"+free_product_name+"</item_name>" +
+																	"<batch>"+free_batch+"</batch>" +
+																	"<unit_price>0</unit_price>" +
+																	"<quantity>"+free_product_quantity+"</quantity>" +
+																	"<amount>0</amount>" +
+																	"<total>0</total>" +
+																	"<discount>0</discount>" +
+																	"<offer></offer>" +
+																	"<type>free</type>" +
+																	"<tax>0</tax>" +
+																	"<bill_id>"+order_id+"</bill_id>" +
+																	"<free_with>"+order_item.item_name+"</free_with>" +
+																	"<last_updated>"+last_updated+"</last_updated>" +
+																	"</bill_items>";	
+														
+														if(is_online())
+														{
+															server_create_simple(free_xml);
+														}
+														else
+														{
+															local_create_simple(free_xml);
+														}
+													},free_batch_data);
+												}
+											});
+										}
+										break;
+									}
+								}
+								
+								var tax_data="<product_master>" +
+										"<name exact='yes'>"+order_item.item_name+"</name>" +
+										"<tax></tax>" +
+										"</product_master>";
+								fetch_requested_data('',tax_data,function(taxes)
+								{
+									console.log(taxes);
+
+									taxes.forEach(function(tax)
+									{
+										item_tax=parseFloat((parseFloat(tax.tax)*(item_amount-parseFloat(item_discount)))/100);
+									});
+									
+									item_total=parseFloat(item_amount)+parseFloat(item_tax)-parseFloat(item_discount);
+									
+									/////saving to bill item
+									var bill_item_id=get_new_key();
+					                var data_xml="<bill_items>" +
+											"<id>"+bill_item_id+"</id>" +
+											"<item_name>"+order_item.item_name+"</item_name>" +
+											"<batch>"+batch+"</batch>" +
+											"<unit_price>"+sale_price+"</unit_price>" +
+											"<quantity>"+order_item.quantity+"</quantity>" +
+											"<amount>"+item_amount+"</amount>" +
+											"<total>"+item_total+"</total>" +
+											"<discount>"+item_discount+"</discount>" +
+											"<offer>"+item_offer+"</offer>" +
+											"<type>bought</type>" +
+											"<tax>"+item_tax+"</tax>" +
+											"<bill_id>"+order_id+"</bill_id>" +
+											"<free_with></free_with>" +
+											"<last_updated>"+get_my_time()+"</last_updated>" +
+											"</bill_items>";	
+									bill_amount+=item_amount;
+									bill_total+=item_total;
+									bill_discount+=item_discount;
+									bill_tax+=item_tax;
+									pending_items_count-=1;
+									
+									console.log(data_xml);
+
+									if(is_online())
+									{
+										server_create_simple(data_xml);
+									}
+									else
+									{
+										local_create_simple(data_xml);
+									}
+								});
+								
+							});
+							
+						});
+					}
+					else
+					{
+						pending_items_count-=1;
+					}
+				});
+			});
+		});
+		
+		
+		/////saving bill details
+		var bill_items_complete=setInterval(function()
+		{
+	  	   if(pending_items_count===0)
+	  	   {
+	  		   	clearInterval(bill_items_complete);
+	  		   	
+	  		   	var order_data="<sale_orders>" +
+	  		   			"<id>"+order_id+"</id>" +
+	  		   			"<customer_name></customer_name>" +
+	  		   			"<order_date></order_date>" +
+	  		   			"<type>product</type>" +
+	  		   			"<status>pending</status>" +
+	  		   			"</sale_orders>";
+	  		   	fetch_requested_data('',order_data,function(sale_orders)
+	  		   	{
+	  		   		console.log(sale_orders);
+	  		   		///////////////////////////////////////////////////////////
+	  		   		var offer_data="<offers>" +
+							"<offer_type exact='yes'>bill</offer_type>" +
+							"<criteria_type exact='yes'>min amount crossed</criteria_type>" +
+							"<criteria_amount compare='less than'>"+(bill_amount-bill_discount)+"</criteria_amount>" +
+							"<result_type></result_type>" +
+							"<discount_percent></discount_percent>" +
+							"<discount_amount></discount_amount>" +
+							"<quantity_add_percent></quantity_add_percent>" +
+							"<quantity_add_amount></quantity_add_amount>" +
+							"<free_product_name></free_product_name>" +
+							"<free_product_quantity></free_product_quantity>" +
+							"<offer_detail></offer_detail>" +
+							"<status array='yes'>active--extended</status>" +
+							"</offers>";
+					fetch_requested_data('',offer_data,function(offers)
+					{
+						offers.sort(function(a,b)
+						{
+							if(parseFloat(a.criteria_amount)<parseFloat(b.criteria_amount))
+							{	return 1;}
+							else 
+							{	return -1;}
+						});
+						
+						for(var i in offers)
+						{
+							if(offers[i].result_type=='discount')
+							{
+								if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+								{
+									var dis=parseFloat(((bill_amount-bill_discount)*parseInt(offers[i].discount_percent))/100);
+									bill_tax-=(bill_tax*(dis/(bill_amount-bill_discount)));
+									bill_discount+=dis;
+									bill_total=bill_amount-bill_discount+bill_tax;
+								}
+								else 
+								{
+									var dis=parseFloat(offers[i].discount_amount)*(Math.floor((bill_amount-bill_discount)/parseFloat(offers[i].criteria_amount)));
+									bill_tax-=(bill_tax*(dis/(bill_amount-bill_discount)));
+									bill_discount+=dis;
+									bill_total=bill_amount-bill_discount+bill_tax;
+								}
+							}
+							else if(offers[i].result_type=='product free')
+							{
+								var free_product_name=offers[i].free_product_name;
+								var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(bill_amount-bill_discount)/parseFloat(offers[i].criteria_amount)));
+								
+								get_inventory(free_product_name,'',function(free_quantities)
+								{
+									if(free_quantities>=free_product_quantity)
+									{
+										var free_batch_data="<bill_items count='1'>" +
+												"<batch></batch>" +
+												"<item_name>"+free_product_name+"</item_name>" +
+												"<last_updated sort='desc'></last_updated>" +
+												"</bill_items>";
+										get_single_column_data(function(data)
+										{
+											var free_batch="";
+											if(data.length>0)
+											{
+												free_batch=data[0];	
+											}
+											var bill_item_id=get_new_key();
+							                var free_xml="<bill_items>" +
+														"<id>"+bill_item_id+"</id>" +
+														"<item_name>"+free_product_name+"</item_name>" +
+														"<batch>"+free_batch+"</batch>" +
+														"<unit_price>0</unit_price>" +
+														"<quantity>"+free_product_quantity+"</quantity>" +
+														"<amount>0</amount>" +
+														"<total>0</total>" +
+														"<discount>0</discount>" +
+														"<offer></offer>" +
+														"<type>free</type>" +
+														"<tax>0</tax>" +
+														"<bill_id>"+order_id+"</bill_id>" +
+														"<free_with>bill</free_with>" +
+														"<last_updated>"+last_updated+"</last_updated>" +
+														"</bill_items>";	
+											
+											if(is_online())
+											{
+												server_create_simple(free_xml);
+											}
+											else
+											{
+												local_create_simple(free_xml);
+											}
+											
+										},free_batch_data);
+									}
+								});
+							}
+							bill_offer=offers[i].offer_detail;
+							break;
+						}
+						
+						console.log(sale_orders);
+						for(var z in sale_orders)
+						{
+							var sale_order_xml="<sale_orders>" +
+										"<id>"+order_id+"</id>" +
+										"<status>billed</status>" +
+										"</sale_orders>";
+							var bill_xml="<bills>" +
+										"<id>"+order_id+"</id>" +
+										"<customer_name>"+sale_orders[z].customer_name+"</customer_name>" +
+										"<bill_date>"+get_my_time()+"</bill_date>" +
+										"<billing_type>"+bill_type+"</billing_type>" +
+										"<amount>"+bill_amount+"</amount>" +
+										"<total>"+bill_total+"</total>" +
+										"<type>product</type>" +
+										"<offer>"+bill_offer+"</offer>" +
+										"<discount>"+bill_discount+"</discount>" +
+										"<tax>"+bill_tax+"</tax>" +
+										"<transaction_id>"+order_id+"</transaction_id>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</bills>";
+							var activity_xml="<activity>" +
+										"<data_id>"+order_id+"</data_id>" +
+										"<tablename>bills</tablename>" +
+										"<link_to>form42</link_to>" +
+										"<title>Saved</title>" +
+										"<notes>Bill no "+order_id+"</notes>" +
+										"<updated_by>"+get_name()+"</updated_by>" +
+										"</activity>";
+							var transaction_xml="<transactions>" +
+										"<id>"+order_id+"</id>" +
+										"<trans_date>"+get_my_time()+"</trans_date>" +
+										"<amount>"+bill_total+"</amount>" +
+										"<receiver>"+sale_orders[z].customer_name+"</receiver>" +
+										"<giver>master</giver>" +
+										"<tax>"+bill_tax+"</tax>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</transactions>";
+							var pt_tran_id=get_new_key();
+							var payment_xml="<payments>" +
+										"<id>"+pt_tran_id+"</id>" +
+										"<status>pending</status>" +
+										"<type>received</type>" +
+										"<date>"+get_my_time()+"</date>" +
+										"<total_amount>"+bill_total+"</total_amount>" +
+										"<paid_amount>0</paid_amount>" +
+										"<acc_name>"+sale_orders[z].customer_name+"</acc_name>" +
+										"<due_date>"+get_credit_period()+"</due_date>" +
+										"<mode></mode>" +
+										"<transaction_id>"+pt_tran_id+"</transaction_id>" +
+										"<bill_id>"+order_id+"</bill_id>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</payments>";
+							var pt_xml="<transactions>" +
+										"<id>"+pt_tran_id+"</id>" +
+										"<trans_date>"+get_my_time()+"</trans_date>" +
+										"<amount>"+bill_total+"</amount>" +
+										"<receiver>master</receiver>" +
+										"<giver>"+sale_orders[z].customer_name+"</giver>" +
+										"<tax>0</tax>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</transactions>";
+							if(is_online())
+							{
+								server_update_simple(sale_order_xml);
+								server_create_row(bill_xml,activity_xml);
+								server_create_simple(transaction_xml);
+								server_create_simple(pt_xml);
+								server_create_simple(payment_xml);
+							}
+							else
+							{
+								local_update_simple(sale_order_xml);
+								local_create_row(bill_xml,activity_xml);
+								local_create_simple(transaction_xml);
+								local_create_simple(pt_xml);
+								local_create_simple(payment_xml);
+							}
+						}
+						hide_loader();
+					});
+	  		   		///////////////////////////////////////////////////////////
+	  		   	});
+	  	   }
+	    },100);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}	
 }

@@ -602,7 +602,7 @@ function form15_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
-				rowsHTML+="<input type='text' required form='form15_"+id+"'>";
+				rowsHTML+="<textarea required form='form15_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form15_"+id+"' step='any'>";
@@ -3009,25 +3009,13 @@ function form91_add_item()
 				{
 					batch_filter.value=data[0];
 					
-					if(bill_type=='default')
-					{
-						var price_data="<product_instances count='1'>" +
-								"<sale_price></sale_price>" +
-								"<batch exact='yes'>"+batch_filter.value+"</batch>" +
-								"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-								"</product_instances>";
-						set_my_value(price_data,price_filter);
-					}
-					else
-					{
-						var price_data="<sale_prices count='1'>" +
-								"<sale_price></sale_price>" +
-								"<batch exact='yes'>"+batch_filter.value+"</batch>" +
-								"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-								"<billing_type>"+bill_type+"</billing_type>" +
-								"</sale_prices>";
-						set_my_value(price_data,price_filter);
-					}
+					var price_data="<sale_prices count='1'>" +
+							"<sale_price></sale_price>" +
+							"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+							"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+							"<billing_type>"+bill_type+"</billing_type>" +
+							"</sale_prices>";
+					set_my_value(price_data,price_filter);
 					
 					get_inventory(name_filter.value,batch_filter.value,function(quantity)
 					{

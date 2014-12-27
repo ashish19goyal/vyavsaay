@@ -48,7 +48,7 @@ td input[type="text"]
 
 td{
 	width: 1px;
-    white-space: nowrap;
+ /*   white-space: nowrap;*/
 }
 
 td>input[type="number"],input[type="number"]
@@ -253,12 +253,14 @@ a div{
 #count_notif{
 	float: right;
 	position:absolute;
-	right: 0px;
+	right: 5px;
 	border-radius: 2px;
 	font-size: .7em;
 	text-align: left;
 	display:none;
 	background-color:#dddd00;
+	padding:0px 3px;
+	min-width:15px;
 }
 
 .filter{
@@ -834,7 +836,7 @@ canvas{
 		top: 45px;
 		left: 55px;
 		height: auto;
-		margin: 50px 140px 50px 60px;
+		margin: 50px 130px 50px 60px;
 	}
 	.side_lane{
 		width: 140px;

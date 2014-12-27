@@ -510,6 +510,15 @@
 			</fieldset>
 		</form>
 	</div>
+
+	<div id="modal42" title="Bill Type">
+		<form id='modal42_form'>
+			<fieldset>
+				<label>Bill Type: <input type='text' required></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
 	
 	<div id="modal50" title="Sending Mails">
 		<a href='' id='modal50_sendmail'>Send mails through Gmail</a>

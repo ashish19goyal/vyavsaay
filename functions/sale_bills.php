@@ -18,6 +18,8 @@
 				echo "<li><a id='form69_link' href='#form69' onclick='form69_header_ini(); form69_ini();' data-i18n='form.create_order'></a></li>";
 			if(strpos($_SESSION['forms'],'form70-')!==false)
 				echo "<li><a id='form70_link' href='#form70' onclick='form70_header_ini(); form70_ini();' data-i18n='form.manage_order'></a></li>";
+			if(strpos($_SESSION['forms'],'form108-')!==false)
+				echo "<li><a id='form108_link' href='#form108' onclick='form108_header_ini(); form108_ini();' data-i18n='form.manage_order'></a></li>";
 			if(strpos($_SESSION['forms'],'form15-')!==false)
 				echo "<li><a id='form15_link' href='#form15' onclick='form15_header_ini(); form15_ini();' data-i18n='form.enter_returns'></a></li>";
 			if(strpos($_SESSION['forms'],'form16-')!==false)
@@ -48,6 +50,8 @@
 			include "forms/form69.php";
 		if(strpos($_SESSION['forms'],'form70-')!==false)
 			include "forms/form70.php";		
+		if(strpos($_SESSION['forms'],'form108-')!==false)
+			include "forms/form108.php";		
 		if(strpos($_SESSION['forms'],'form15-')!==false)
 			include "forms/form15.php";		
 		if(strpos($_SESSION['forms'],'form16-')!==false)

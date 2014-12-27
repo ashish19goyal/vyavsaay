@@ -3029,3 +3029,55 @@ function form98_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * @form Manage Sale Orders (multi-register)
+ * @param button
+ */
+function form108_delete_item(button)
+{
+	if(is_delete_access('form108'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[0].value;
+		var customer_name=form.elements[1].value;
+		var order_date=get_raw_time(form.elements[2].value);
+		var status=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<customer_name>"+customer_name+"</customer_name>" +
+					"<order_date>"+order_date+"</order_date>" +
+					"<status>"+status+"</status>" +
+					"</sale_orders>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_orders</tablename>" +
+					"<link_to>form108</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Sale Order no "+data_id+" for customer "+customer_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var other_delete="<sale_order_items>" +
+				"<order_id>"+data_id+"</order_id>" +
+				"</sale_order_items>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(other_delete);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(other_delete);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

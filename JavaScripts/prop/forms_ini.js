@@ -31,7 +31,7 @@ function form1_ini()
 		"<expiry></expiry>" +
 		"<last_updated sort='desc'></last_updated>" +
 		"</product_instances>";
-	
+
 	$('#form1_body').html("");
 	
 	fetch_requested_data('form1',columns,function(results)
@@ -118,6 +118,7 @@ function form1_ini()
 		{
 			my_obj_array_to_csv(results,'inventory');
 		});
+		
 		hide_loader();
 	});
 };
@@ -1516,7 +1517,7 @@ function form17_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form17_"+result.id+"' value='"+result.id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Supplier'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form17_"+result.id+"' value='"+result.supplier+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form17_"+result.id+"'>"+result.supplier+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Return Date'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form17_"+result.id+"' value='"+get_my_past_date(result.return_date)+"'>";
@@ -5121,7 +5122,7 @@ function form70_ini()
 						rowsHTML+="<input type='button' class='edit_icon' form='form70_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form69');\">";
 						rowsHTML+="<input type='submit' class='save_icon' form='form70_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form70_"+result.id+"' title='Delete order' onclick='form70_delete_item($(this));'>";
-						rowsHTML+="<input type='button' form='form70_"+result.id+"'>";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form70_"+result.id+"'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -5134,8 +5135,7 @@ function form70_ini()
 			
 			if(result.status=='pending')
 			{
-				$(bill_button).attr('class','process_ok_icon');
-				$(bill_button).attr('title','Create bill');
+				$(bill_button).attr('value','Create Bill');
 				$(bill_button).on('click',function(event)
 				{
 					form70_bill(result.id);
@@ -8378,3 +8378,135 @@ function form100_ini()
 		hide_loader();
 	});
 };
+
+
+
+/**
+ * @form Manage Sale orders (multi-register)
+ * @formNo 108
+ * @Loading light
+ */
+function form108_ini()
+{
+	show_loader();
+	var fid=$("#form108_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form108_header');
+	
+	//populating form 
+	if(fid==="")
+		fid=filter_fields.elements[0].value;
+	var fname=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form108_index');
+	var prev_element=document.getElementById('form108_prev');
+	var next_element=document.getElementById('form108_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<sale_orders count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<customer_name>"+fname+"</customer_name>" +
+			"<order_date></order_date>" +
+			"<type>product</type>" +
+			"<status>"+fstatus+"</status>" +
+			"<last_updated sort='desc'></last_updated>" +
+			"</sale_orders>";
+
+	$('#form108_body').html("");
+
+	fetch_requested_data('form108',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form108_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Order No.'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form108_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form108_"+result.id+"' class='dblclick_editable' value='"+result.customer_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Order Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form108_"+result.id+"' value='"+get_my_past_date(result.order_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form108_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='button' class='edit_icon' form='form108_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form69');\">";
+						rowsHTML+="<input type='submit' class='save_icon' form='form108_"+result.id+"' title='Save order'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form108_"+result.id+"' title='Delete order' onclick='form108_delete_item($(this));'>";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form108_"+result.id+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form108_body').append(rowsHTML);
+			var fields=document.getElementById("form108_"+result.id);
+			var bill_button=fields.elements[7];
+			var status_filter=fields.elements[3];
+			
+			set_static_value_list('sale_orders','status',status_filter);
+			
+			if(result.status=='pending')
+			{
+				$(bill_button).attr('value','Create Bill');
+				$(bill_button).on('click',function(event)
+				{
+					modal42_action(result.id);
+				});
+			}
+			else
+			{
+				$(bill_button).hide();
+			}
+			
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form108_update_item(fields);
+			});
+			
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'sale_orders');
+		});
+		hide_loader();
+	});
+};
+

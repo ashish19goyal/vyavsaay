@@ -179,6 +179,13 @@
   	"sales_tax":"Sales Tax",
   	"data_import":"Data Import",
   	"delete_storage":"Delete Storage",
-  	"selective_sync":"Selective Sync"
+  	"selective_sync":"Selective Sync",
+  	"manage_projects":"Manage Projects",
+  	"assign_project_team":"Assign Project Team",
+  	"create_project_phases":"Create Project Phases",
+  	"assign_project_tasks":"Assign Project Tasks",
+  	"manage_data_access":"Manage Data Access",
+  	"data_export":"Data Export",
+  	"manage_sale_orders_multi_register":"Manage Sale Orders (multiple registers)"
   }
 }

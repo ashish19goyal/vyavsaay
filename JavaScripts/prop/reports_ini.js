@@ -1586,30 +1586,34 @@ function report34_ini()
 								
 								/////setting inventory amount///
 								var inventory_amount=0;
+								
+								
 								for(var a in bill_ids)
 								{
 									for(var b in products)
 									{
 										if(bill_ids[a].item_name==products[b].product_name)
 										{
-											inventory_amount-=parseFloat(bill_ids[a].quantity)*parseFloat(products[b].cost_price);
+											inventory_amount-=(parseFloat(bill_ids[a].quantity)*parseFloat(products[b].cost_price));
 											break;
 										}
 									}
 								}
 								
+								//console.log(sup_bill_ids);
+								//console.log(products);
 								for(var a in sup_bill_ids)
 								{
 									for(var b in products)
 									{
-										if(sup_bill_ids[a].item_name==products[b].product_name)
+										if(sup_bill_ids[a].product_name==products[b].product_name)
 										{
-											inventory_amount+=parseFloat(sup_bill_ids[a].quantity)*parseFloat(products[b].cost_price);
+											inventory_amount+=(parseFloat(sup_bill_ids[a].quantity)*parseFloat(products[b].cost_price));
 											break;
 										}
 									}
 								}
-								console.log(inventory_amount);
+								//console.log(inventory_amount);
 								/////setting tax value//////////
 								var tax_amount=0;
 								for (var i in taxes)

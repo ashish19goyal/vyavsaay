@@ -3457,6 +3457,35 @@ function modal41_action(button)
 
 
 /**
+ * @modal Bill Type
+ * @modalNo 42
+ */
+function modal42_action(order_id)
+{
+	var form=document.getElementById("modal42_form");
+	var type_filter=form.elements[1];
+	
+	var type_data="<bill_types>" +
+			"<name></name>" +
+			"<status>active</status>" +
+			"</bill_types>";
+	set_my_value_list(type_data,type_filter);
+	set_my_value(type_data,type_filter);
+	
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		form108_bill(order_id,type_filter.value);
+		$("#modal42").dialog("close");
+	});
+	
+	$("#modal42").dialog("open");
+}
+
+
+/**
  * @modal Sending Mails
  * @modalNo 50
  */

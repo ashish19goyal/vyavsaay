@@ -1,4 +1,3 @@
-
 /**
 * @form Update Inventory
 * @formNo 1
@@ -6,7 +5,6 @@
 function form1_import(data_array,import_type)
 {
 	var data_xml="<product_instances>";
-	var adjust_xml="<inventory_adjust>";
 	var counter=1;
 	var new_id=parseFloat(get_new_key());
 	var last_updated=get_my_time();
@@ -15,7 +13,6 @@ function form1_import(data_array,import_type)
 		if((counter%500)===0)
 		{
 			data_xml+="</product_instances><separator></separator><product_instances>";
-			adjust_xml+="</inventory_adjust><separator></separator><inventory_adjust>";
 		}
 		counter+=1;
 		data_xml+="<row>" +
@@ -29,32 +26,45 @@ function form1_import(data_array,import_type)
 				"<mrp>"+row.mrp+"</mrp>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
-		if(parseInt(row.adjusted_quantity)>0)
+		if(row.actual_quantity!="")
 		{
-			adjust_xml+="<row>" +
-				"<id>"+(new_id+counter)+"</id>" +
-				"<product_name>"+row.product_name+"</product_name>" +
-				"<batch>"+row.batch+"</batch>" +
-				"<quantity>"+row.adjusted_quantity+"</quantity>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</row>";	
+			get_inventory(row.product_name,row.batch,function(quantity)
+			{
+				if(parseFloat(quantity)!==parseFloat(row.actual_quantity))
+				{
+					var new_quantity=parseFloat(row.actual_quantity)-parseFloat(quantity);
+					var new_id=get_new_key();
+					var adjust_xml="<inventory_adjust>" +
+							"<id>"+new_id+"</id>" +
+							"<product_name>"+row.product_name+"</product_name>" +
+							"<batch>"+row.batch+"</batch>" +
+							"<quantity>"+new_quantity+"</quantity>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</inventory_adjust>";
+					if(is_online())
+					{
+						server_create_simple_no_warning(adjust_xml);
+					}
+					else
+					{
+						local_create_simple_no_warning(adjust_xml);
+					}
+				}
+			});
 		}
 	});
 
 	data_xml+="</product_instances>";
-	adjust_xml+="</inventory_adjust>";
 	
 	if(import_type=='create_new')
 	{
 		if(is_online())
 		{
 			server_create_batch(data_xml);
-			server_create_batch(adjust_xml);
 		}
 		else
 		{
 			local_create_batch(data_xml);
-			local_create_batch(adjust_xml);
 		}
 	}
 	else
@@ -62,12 +72,10 @@ function form1_import(data_array,import_type)
 		if(is_online())
 		{	
 			server_update_batch(data_xml);
-			server_create_batch(adjust_xml);
 		}
 		else
 		{
 			local_update_batch(data_xml);
-			local_create_batch(adjust_xml);
 		}
 	}
 }
@@ -3088,3 +3096,57 @@ function form96_import(data_array,import_type)
 		}
 	}
 };
+
+
+
+/**
+* @form Manage sale order (multi-register)
+* @formNo 108
+*/
+function form108_import(data_array,import_type)
+{
+	var data_xml="<sale_orders>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</sale_orders><separator></separator><sale_orders>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<customer_name>"+row.customer_name+"</customer_name>" +
+				"<order_date>"+get_raw_time(row.order_date)+"</order_date>" +
+				"<type>"+row.type+"</type>" +
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</sale_orders>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+

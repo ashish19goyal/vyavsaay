@@ -1066,7 +1066,7 @@
 			<name>form70</name>
 			<display_name>manage_sale_orders</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1390,6 +1390,83 @@
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--user_preferences--notifications--activities--values_list--templates--feedback--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form101</name>
+			<display_name>manage_projects</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--projects--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form102</name>
+			<display_name>assign_project_team</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--project_team--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form103</name>
+			<display_name>create_project_phases</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--project_phases--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form104</name>
+			<display_name>assign_project_tasks</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--task_instances--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form105</name>
+			<display_name>manage_data_access</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--data_access--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form106</name>
+			<display_name>data_export</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables></tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form108</name>
+			<display_name>manage_sale_orders_multi_register</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_orders--sale_order_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -2608,6 +2685,83 @@
 			<username>master</username>
 			<element_id>form100</element_id>
 			<element_name>selective_sync</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form101</element_id>
+			<element_name>manage_projects</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form102</element_id>
+			<element_name>assign_project_team</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form103</element_id>
+			<element_name>create_project_phases</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form104</element_id>
+			<element_name>assign_project_tasks</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form105</element_id>
+			<element_name>manage_data_access</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form106</element_id>
+			<element_name>data_export</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form108</element_id>
+			<element_name>manage_sale_orders_multi_register</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
