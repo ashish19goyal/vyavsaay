@@ -3241,7 +3241,7 @@ function modal41_action(button)
 	
 	var form=document.getElementById("modal41_form");
 	
-	var account_name=father_form.elements[1].value;
+	var account_name=father_form.elements[0].value;
 	var balance_display=father_form.elements[3].value;
 	var balance=father_form.elements[8].value;
 	

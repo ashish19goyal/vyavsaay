@@ -27,7 +27,7 @@
 
 		private function read_addresses()
 		{
-			$query="select id,address,city,pincode,state,country from ".$this->table." where address_status=?";
+			$query="select id,name,address,city,pincode,state,country from ".$this->table." where address_status=? limit 0,2";
 			$result=$this->conn->conn->prepare($query);
 			$result->execute(array('pending analysis'));		
 			
@@ -42,6 +42,8 @@
 				$location="street=".$address."&city=".$city."&state=".$state."&postalCode=".$pincode."&country=".$country;
 				$this->details_url="http://www.mapquestapi.com/geocoding/v1/address?key=".$this->key."&".$location."&inFormat=kvp&outFormat=json&maxResults=1";
 				$this->convert();
+				echo 'converting for'.$row['name'];
+				sleep(1);
 			}
 		}
 		

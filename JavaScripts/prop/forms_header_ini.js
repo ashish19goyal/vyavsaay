@@ -1331,8 +1331,8 @@ function form54_header_ini()
 function form56_header_ini()
 {
 	var filter_fields=document.getElementById('form56_header');
-	var type_filter=filter_fields.elements[0];
-	var account_filter=filter_fields.elements[1];
+	var account_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
 	
 	var account_data="<accounts>" +
 			"<acc_name></acc_name>" +
@@ -1703,8 +1703,8 @@ function form70_header_ini()
 function form71_header_ini()
 {
 	var filter_fields=document.getElementById('form71_header');
-	var type_filter=filter_fields.elements[0];
-	var name_filter=filter_fields.elements[1];
+	var name_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
 	
 	var name_data="<accounts>" +
 			"<acc_name></acc_name>" +
@@ -2403,8 +2403,8 @@ function form92_header_ini()
 function form93_header_ini()
 {
 	var filter_fields=document.getElementById('form93_header');
-	var type_filter=filter_fields.elements[0];
-	var account_filter=filter_fields.elements[1];
+	var account_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
 	var status_filter=filter_fields.elements[2];
 	
 	var account_data="<accounts>" +

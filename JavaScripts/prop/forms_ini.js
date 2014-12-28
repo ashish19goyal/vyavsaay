@@ -65,7 +65,7 @@ function form1_ini()
 						rowsHTML+="<input type='hidden' form='form1_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' title='Update and adjust' form='form1_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form1_"+result.id+"' onclick='form1_delete_item($(this));'>";
-						rowsHTML+="<input type='button' class='process_ok_icon' title='Purchase' form='form1_"+result.id+"' onclick=\"modal27_action('"+result.product_name+"');\">";
+						rowsHTML+="<input type='button' class='generic_icon' value='Purchase' form='form1_"+result.id+"' onclick=\"modal27_action('"+result.product_name+"');\">";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -1815,6 +1815,7 @@ function form21_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Batch'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form21_"+id+"' value='"+result.batch+"'>";
+						rowsHTML+="<input type='hidden' form='form21_"+id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Storage Area'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form21_"+id+"' value='"+result.storage+"'>";
@@ -2071,7 +2072,9 @@ function form30_ini()
 				form30_update_item(fields);
 			});
 		});
-
+		
+		$('textarea').autosize();
+		
 		////indexing///
 		var next_index=parseInt(start_index)+25;
 		var prev_index=parseInt(start_index)-25;
@@ -2634,7 +2637,7 @@ function form41_ini()
 		var re_access=get_session_var('re');
 		ajax_with_custom_func("./ajax/geoCode.php","domain="+domain+"&username="+username+"&type=customers&re="+re_access,function(e)
 		{
-			//console.log(e.responseText);
+			console.log(e.responseText);
 
 			$('#form41_header').html("");
 		
@@ -3899,8 +3902,8 @@ function form56_ini()
 		fid="";	
 	var filter_fields=document.getElementById('form56_header');
 	
-	var ftype=filter_fields.elements[0].value;
-	var faccount=filter_fields.elements[1].value;
+	var faccount=filter_fields.elements[0].value;
+	var ftype=filter_fields.elements[1].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form56_index');
@@ -3927,11 +3930,11 @@ function form56_ini()
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form56_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Type'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form56_"+result.id+"' value='"+result.type+"'>";
-					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Account'>";
 						rowsHTML+="<textarea readonly='readonly' form='form56_"+result.id+"'>"+result.acc_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Type'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form56_"+result.id+"' value='"+result.type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Amount'>";
 						rowsHTML+="<input type='number' readonly='readonly' step='any' form='form56_"+result.id+"' value='"+result.amount+"'>";
@@ -4572,10 +4575,10 @@ function form62_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form62_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Reviewer'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form62_"+result.id+"' value='"+result.reviewer+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form62_"+result.id+"'>"+result.reviewer+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Detail'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form62_"+result.id+"' value='"+result.detail+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form62_"+result.id+"'>"+result.detail+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Rating'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form62_"+result.id+"' value='"+result.rating+"'>";
@@ -4680,10 +4683,10 @@ function form63_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form63_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Reviewer'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form63_"+result.id+"' value='"+result.reviewer+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form63_"+result.id+"'>"+result.reviewer+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Detail'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form63_"+result.id+"' value='"+result.detail+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form63_"+result.id+"'>"+result.detail+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Rating'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form63_"+result.id+"' value='"+result.rating+"'>";
@@ -4790,7 +4793,7 @@ function form64_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form64_"+result.id+"' value='"+result.cross_type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Cross-sold Item'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form64_"+result.id+"' value='"+result.cross_name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form64_"+result.id+"'>"+result.cross_name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form64_"+result.id+"' value='"+result.id+"'>";
@@ -4895,7 +4898,7 @@ function form66_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form66_"+result.id+"' value='"+result.cross_type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Cross-sold Item'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form66_"+result.id+"' value='"+result.cross_name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form66_"+result.id+"'>"+result.cross_name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form66_"+result.id+"' value='"+result.id+"'>";
@@ -5204,8 +5207,8 @@ function form71_ini()
 		fid="";	
 	
 	var filter_fields=document.getElementById('form71_header');
-	var ftype=filter_fields.elements[0].value;
-	var fname=filter_fields.elements[1].value;
+	var fname=filter_fields.elements[0].value;
+	var ftype=filter_fields.elements[1].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form71_index');
@@ -5274,11 +5277,11 @@ function form71_ini()
 				var rowsHTML="";
 				rowsHTML+="<tr>";
 					rowsHTML+="<form id='form71_"+result.id+"'></form>";
+						rowsHTML+="<td data-th='Name'>";
+							rowsHTML+="<textarea readonly='readonly' form='form71_"+result.id+"'>"+result.acc_name+"</textarea>";
+						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Type'>";
 							rowsHTML+="<input type='text' readonly='readonly' required form='form71_"+result.id+"' value='"+result.type+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Name'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form71_"+result.id+"' value='"+result.acc_name+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Description'>";
 							rowsHTML+="<textarea readonly='readonly' form='form71_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
@@ -6576,7 +6579,7 @@ function form85_ini()
 		var re_access=get_session_var('re');
 		ajax_with_custom_func("./ajax/geoCode.php","domain="+domain+"&username="+username+"&type=suppliers&re="+re_access,function(e)
 		{
-			//console.log(e.responseText);
+			console.log(e.responseText);
 
 			$('#form85_header').html("");
 		
@@ -6630,7 +6633,6 @@ function form85_ini()
 			});
 			$(fields).parent().on('click',function(event)
 			{
-				//console.log('clicked on master');
 				mmarker.openPopup();
 			});
 		
@@ -7637,8 +7639,8 @@ function form93_ini()
 		fid="";	
 	
 	var filter_fields=document.getElementById('form93_header');
-	var ftype=filter_fields.elements[0].value;
-	var faccount=filter_fields.elements[1].value;
+	var faccount=filter_fields.elements[0].value;
+	var ftype=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
 	////indexing///
@@ -7692,11 +7694,11 @@ function form93_ini()
 			}
 			var rowsHTML="<tr>";
 				rowsHTML+="<form id='form93_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Account'>";
+						rowsHTML+="<textarea readonly='readonly' form='form93_"+result.id+"'>"+result.account+"</textarea>";
+					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Type'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form93_"+result.id+"' value='"+result.type+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Account'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form93_"+result.id+"' value='"+result.account+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Loan Amount'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form93_"+result.id+"' value='"+result.loan_amount+"'>";

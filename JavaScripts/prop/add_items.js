@@ -938,7 +938,8 @@ function form21_add_item()
 				rowsHTML+="Unit Price: <input type='number' readonly='readonly' form='form21_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
-				rowsHTML+="<input type='text' required form='form21_"+id+"'>";
+				rowsHTML+="<input type='text' required form='form21_"+id+"'></br>";
+				rowsHTML+="Previous Price: <input type='number' readonly='readonly' form='form21_"+id+"' value='' step='any'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Storage Area'>";
@@ -962,8 +963,9 @@ function form21_add_item()
 		var amount_filter=fields.elements[4];
 		var price_filter=fields.elements[5];
 		var batch_filter=fields.elements[6];
-		var storage_filter=fields.elements[7];
-		var id_filter=fields.elements[8];
+		var previous_price_filter=fields.elements[7];
+		var storage_filter=fields.elements[8];
+		var id_filter=fields.elements[9];
 		
 		$(name_filter).focus();
 		
@@ -1015,6 +1017,15 @@ function form21_add_item()
 			amount_filter.value=amount;
 			var price=parseFloat(amount_filter.value)/parseFloat(quantity_filter.value);
 			price_filter.value=price;
+		});
+		$(batch_filter).on('blur',function(event)
+		{
+			var price_data="<product_instances count='1'>" +
+					"<cost_price></cost_price>" +
+					"<product_name>"+name_filter.value+"</product_name>" +
+					"<batch>"+batch_filter.value+"</batch>" +
+					"</product_instances>";
+			set_my_value(price_data,previous_price_filter);
 		});
 	}
 	else
@@ -1191,12 +1202,12 @@ function form56_add_item()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form56_"+id+"'></form>";
-			rowsHTML+="<td data-th='Type'>";
-				rowsHTML+="<input type='text' required form='form56_"+id+"' value=''>";
-			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Account'>";
 				rowsHTML+="<input type='text' required form='form56_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new account' onclick='modal12_action();'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Type'>";
+				rowsHTML+="<input type='text' required form='form56_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
 				rowsHTML+="<input type='number' required step='any' form='form56_"+id+"' value=''>";
@@ -1213,8 +1224,8 @@ function form56_add_item()
 	
 		$('#form56_body').prepend(rowsHTML);
 		var fields=document.getElementById("form56_"+id);
-		var type_filter=fields.elements[0];
-		var account_filter=fields.elements[1];
+		var account_filter=fields.elements[0];
+		var type_filter=fields.elements[1];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -1227,7 +1238,7 @@ function form56_add_item()
 				"</accounts>";
 		set_my_value_list(account_data,account_filter);
 		set_static_value_list('cash_register','type',type_filter);
-		$(type_filter).focus();
+		$(account_filter).focus();
 	}
 	else
 	{
@@ -1541,10 +1552,10 @@ function form62_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Detail'>";
-				rowsHTML+="<input type='text' form='form62_"+id+"' value=''>";
+				rowsHTML+="<textarea form='form62_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Rating'>";
-				rowsHTML+="<input type='number' form='form62_"+id+"' value=''>";
+				rowsHTML+="<input type='number' form='form62_"+id+"' min='1' max='5' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form62_"+id+"' value='"+id+"'>";
@@ -1604,10 +1615,10 @@ function form63_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Detail'>";
-				rowsHTML+="<input type='text' form='form63_"+id+"' value=''>";
+				rowsHTML+="<textarea form='form63_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Rating'>";
-				rowsHTML+="<input type='number' form='form63_"+id+"' value=''>";
+				rowsHTML+="<input type='number' form='form63_"+id+"' min='1' max='5' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form63_"+id+"' value='"+id+"'>";
@@ -3009,14 +3020,25 @@ function form91_add_item()
 				{
 					batch_filter.value=data[0];
 					
-					var price_data="<sale_prices count='1'>" +
+					if(bill_type=='undefined')
+					{
+						var price_data="<product_instances count='1'>" +
 							"<sale_price></sale_price>" +
 							"<batch exact='yes'>"+batch_filter.value+"</batch>" +
 							"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-							"<billing_type>"+bill_type+"</billing_type>" +
-							"</sale_prices>";
-					set_my_value(price_data,price_filter);
-					
+							"</product_instances>";
+						set_my_value(price_data,price_filter);
+					}
+					else
+					{
+						var price_data="<sale_prices count='1'>" +
+								"<sale_price></sale_price>" +
+								"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+								"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+								"<billing_type>"+bill_type+"</billing_type>" +
+								"</sale_prices>";
+						set_my_value(price_data,price_filter);
+					}	
 					get_inventory(name_filter.value,batch_filter.value,function(quantity)
 					{
 						//$(quantity_filter).attr('max',quantity);

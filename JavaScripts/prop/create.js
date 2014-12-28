@@ -1718,8 +1718,8 @@ function form21_create_item(form)
 		var amount=form.elements[4].value;
 		var price=form.elements[5].value;
 		var batch=form.elements[6].value;
-		var storage=form.elements[7].value;
-		var data_id=form.elements[8].value;
+		var storage=form.elements[8].value;
+		var data_id=form.elements[9].value;
 		
 		var last_updated=get_my_time();
 			
@@ -1746,11 +1746,11 @@ function form21_create_item(form)
 			local_create_simple(data_xml);
 		}
 				
-		for(var i=0;i<8;i++)
+		for(var i=0;i<9;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[10];
+		var del_button=form.elements[11];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
@@ -1791,7 +1791,6 @@ function form21_create_item(form)
 				}
 			}
 		});
-		///////////////////////////////////////
 	}
 	else
 	{
@@ -1831,7 +1830,7 @@ function form21_create_form()
 		var discount=parseFloat(form.elements[6].value);
 		form.elements[5].value=amount;
 		form.elements[7].value=tax;
-		total=total-discount
+		total=total-discount;
 		form.elements[8].value=total;
 		
 		var notes=form.elements[9].value;
@@ -2212,8 +2211,8 @@ function form56_create_item(form)
 {
 	if(is_create_access('form56'))
 	{
-		var type=form.elements[0].value;
-		var account=form.elements[1].value;
+		var account=form.elements[0].value;
+		var type=form.elements[1].value;
 		var amount=form.elements[2].value;
 		var notes=form.elements[3].value;
 		var data_id=form.elements[4].value;
@@ -6384,261 +6383,268 @@ function form108_bill(order_id,bill_type)
 				
 							var price_data="<sale_prices count='1'>" +
 									"<sale_price></sale_price>" +
-									"<batch exact='yes'>"+batch_filter.value+"</batch>" +
-									"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+									"<batch exact='yes'>"+batch+"</batch>" +
+									"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
 									"<billing_type>"+bill_type+"</billing_type>" +
 									"</sale_prices>";
-
-							//////adding offer details
-							item_amount=parseFloat(order_item.quantity)*parseFloat(sale_price);
-							var offer_data="<offers>" +
-									"<offer_type>product</offer_type>" +
-									"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
-									"<batch array='yes'>"+batch+"--all</batch>" +
-									"<criteria_type></criteria_type>" +
-									"<criteria_amount></criteria_amount>" +
-									"<criteria_quantity></criteria_quantity>" +
-									"<result_type></result_type>" +
-									"<discount_percent></discount_percent>" +
-									"<discount_amount></discount_amount>" +
-									"<quantity_add_percent></quantity_add_percent>" +
-									"<quantity_add_amount></quantity_add_amount>" +
-									"<free_product_name></free_product_name>" +
-									"<free_product_quantity></free_product_quantity>" +
-									"<offer_detail></offer_detail>" +
-									"<status array='yes'>active--extended</status>" +
-									"</offers>";
-							fetch_requested_data('',offer_data,function(offers)
+							get_single_column_data(function(sale_prices)
 							{
-								////sorting offers based on criteria amount and criteria quantity
-								offers.sort(function(a,b)
+								if(sale_prices.length>0)
 								{
-									if(parseFloat(a.criteria_amount)<parseFloat(b.criteria_amount))
-									{	return 1;}
-									else if(parseFloat(a.criteria_quantity)<parseFloat(b.criteria_quantity))
-									{	return 1;}
-									else 
-									{	return -1;}
-								});
-										
-								for(var i in offers)
-								{
-									//console.log("found atleast one offer");
-									item_offer=offers[i].offer_detail;
-									if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=parseFloat(order_item.quantity))
-									{
-										console.log("offer criteria met");
-
-										if(offers[i].result_type=='discount')
-										{
-											if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
-											{
-												item_discount=parseFloat((item_amount*parseInt(offers[i].discount_percent))/100);
-											}
-											else 
-											{
-												item_discount=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(order_item.quantity)/parseFloat(offers[i].criteria_quantity)));
-											}
-										}
-										else if(offers[i].result_type=='quantity addition')
-										{
-											if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
-											{
-												order_item.quantity=parseFloat(order_item.quantity)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
-											}
-											else 
-											{
-												order_items.quantity=parseFloat(order_item.quantity)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(order_items.quantity)/parseFloat(offers[i].criteria_quantity))));
-											}
-										}
-										else if(offers[i].result_type=='product free')
-										{
-											//console.log("adding free product as per offer");
-
-											var free_product_name=offers[i].free_product_name;
-											var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(order_item.quantity)/parseFloat(offers[i].criteria_quantity)));
-											
-											get_inventory(free_product_name,'',function(free_quantities)
-											{
-												if(parseFloat(free_quantities)>=free_product_quantity)
-												{
-													var free_batch_data="<bill_items count='1'>" +
-															"<batch></batch>" +
-															"<item_name>"+free_product_name+"</item_name>" +
-															"<last_updated sort='desc'></last_updated>" +
-															"</bill_items>";
-													get_single_column_data(function(data)
-													{
-														var free_batch="";
-														if(data.length>0)
-														{
-															free_batch=data[0];	
-														}
-														
-														var bill_item_id=get_new_key();
-										                var free_xml="<bill_items>" +
-																	"<id>"+bill_item_id+"</id>" +
-																	"<item_name>"+free_product_name+"</item_name>" +
-																	"<batch>"+free_batch+"</batch>" +
-																	"<unit_price>0</unit_price>" +
-																	"<quantity>"+free_product_quantity+"</quantity>" +
-																	"<amount>0</amount>" +
-																	"<total>0</total>" +
-																	"<discount>0</discount>" +
-																	"<offer></offer>" +
-																	"<type>free</type>" +
-																	"<tax>0</tax>" +
-																	"<bill_id>"+order_id+"</bill_id>" +
-																	"<free_with>"+order_item.item_name+"</free_with>" +
-																	"<last_updated>"+get_my_time()+"</last_updated>" +
-																	"</bill_items>";	
-														
-														if(is_online())
-														{
-															server_create_simple(free_xml);
-														}
-														else
-														{
-															local_create_simple(free_xml);
-														}
-													},free_batch_data);
-												}
-											});
-										}
-										break;
-									}
-									else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=item_amount)
-									{
-										if(offers[i].result_type=='discount')
-										{
-											if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
-											{
-												item_discount=parseFloat((item_amount*parseInt(offers[i].discount_percent))/100);
-											}
-											else 
-											{
-												item_discount=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(item_amount)/parseFloat(offers[i].criteria_amount)));
-											}
-										}
-										else if(offers[i].result_type=='quantity addition')
-										{
-											if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
-											{
-												order_item.quantity=parseFloat(order_item.quantity)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
-											}
-											else 
-											{
-												order_item.quantity=parseFloat(order_item.quantity)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(item_amount)/parseFloat(offers[i].criteria_amount))));
-											}
-										}
-										else if(offers[i].result_type=='product free')
-										{
-											var free_product_name=offers[i].free_product_name;
-											var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(bill_amount-bill_discount)/parseFloat(offers[i].criteria_amount)));
-																						
-											//////updating product quantity in inventory
-											get_inventory(free_product_name,'',function(free_quantities)
-											{
-												if(free_quantities>=free_product_quantity)
-												{
-													var free_batch_data="<bill_items count='1'>" +
-															"<batch></batch>" +
-															"<item_name>"+free_product_name+"</item_name>" +
-															"<last_updated sort='desc'></last_updated>" +
-															"</bill_items>";
-													get_single_column_data(function(data)
-													{
-														var free_batch="";
-														if(data.length>0)
-														{
-															free_batch=data[0];	
-														}
-														var bill_item_id=get_new_key();
-										                var free_xml="<bill_items>" +
-																	"<id>"+bill_item_id+"</id>" +
-																	"<item_name>"+free_product_name+"</item_name>" +
-																	"<batch>"+free_batch+"</batch>" +
-																	"<unit_price>0</unit_price>" +
-																	"<quantity>"+free_product_quantity+"</quantity>" +
-																	"<amount>0</amount>" +
-																	"<total>0</total>" +
-																	"<discount>0</discount>" +
-																	"<offer></offer>" +
-																	"<type>free</type>" +
-																	"<tax>0</tax>" +
-																	"<bill_id>"+order_id+"</bill_id>" +
-																	"<free_with>"+order_item.item_name+"</free_with>" +
-																	"<last_updated>"+last_updated+"</last_updated>" +
-																	"</bill_items>";	
-														
-														if(is_online())
-														{
-															server_create_simple(free_xml);
-														}
-														else
-														{
-															local_create_simple(free_xml);
-														}
-													},free_batch_data);
-												}
-											});
-										}
-										break;
-									}
+									sale_price=sale_prices[0];
 								}
-								
-								var tax_data="<product_master>" +
-										"<name exact='yes'>"+order_item.item_name+"</name>" +
-										"<tax></tax>" +
-										"</product_master>";
-								fetch_requested_data('',tax_data,function(taxes)
+								//////adding offer details
+								item_amount=parseFloat(order_item.quantity)*parseFloat(sale_price);
+								var offer_data="<offers>" +
+										"<offer_type>product</offer_type>" +
+										"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
+										"<batch array='yes'>"+batch+"--all</batch>" +
+										"<criteria_type></criteria_type>" +
+										"<criteria_amount></criteria_amount>" +
+										"<criteria_quantity></criteria_quantity>" +
+										"<result_type></result_type>" +
+										"<discount_percent></discount_percent>" +
+										"<discount_amount></discount_amount>" +
+										"<quantity_add_percent></quantity_add_percent>" +
+										"<quantity_add_amount></quantity_add_amount>" +
+										"<free_product_name></free_product_name>" +
+										"<free_product_quantity></free_product_quantity>" +
+										"<offer_detail></offer_detail>" +
+										"<status array='yes'>active--extended</status>" +
+										"</offers>";
+								fetch_requested_data('',offer_data,function(offers)
 								{
-									console.log(taxes);
-
-									taxes.forEach(function(tax)
+									////sorting offers based on criteria amount and criteria quantity
+									offers.sort(function(a,b)
 									{
-										item_tax=parseFloat((parseFloat(tax.tax)*(item_amount-parseFloat(item_discount)))/100);
+										if(parseFloat(a.criteria_amount)<parseFloat(b.criteria_amount))
+										{	return 1;}
+										else if(parseFloat(a.criteria_quantity)<parseFloat(b.criteria_quantity))
+										{	return 1;}
+										else 
+										{	return -1;}
+									});
+											
+									for(var i in offers)
+									{
+										//console.log("found atleast one offer");
+										item_offer=offers[i].offer_detail;
+										if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=parseFloat(order_item.quantity))
+										{
+											console.log("offer criteria met");
+	
+											if(offers[i].result_type=='discount')
+											{
+												if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+												{
+													item_discount=parseFloat((item_amount*parseInt(offers[i].discount_percent))/100);
+												}
+												else 
+												{
+													item_discount=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(order_item.quantity)/parseFloat(offers[i].criteria_quantity)));
+												}
+											}
+											else if(offers[i].result_type=='quantity addition')
+											{
+												if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+												{
+													order_item.quantity=parseFloat(order_item.quantity)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+												}
+												else 
+												{
+													order_items.quantity=parseFloat(order_item.quantity)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(order_items.quantity)/parseFloat(offers[i].criteria_quantity))));
+												}
+											}
+											else if(offers[i].result_type=='product free')
+											{
+												//console.log("adding free product as per offer");
+	
+												var free_product_name=offers[i].free_product_name;
+												var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(order_item.quantity)/parseFloat(offers[i].criteria_quantity)));
+												
+												get_inventory(free_product_name,'',function(free_quantities)
+												{
+													if(parseFloat(free_quantities)>=free_product_quantity)
+													{
+														var free_batch_data="<bill_items count='1'>" +
+																"<batch></batch>" +
+																"<item_name>"+free_product_name+"</item_name>" +
+																"<last_updated sort='desc'></last_updated>" +
+																"</bill_items>";
+														get_single_column_data(function(data)
+														{
+															var free_batch="";
+															if(data.length>0)
+															{
+																free_batch=data[0];	
+															}
+															
+															var bill_item_id=get_new_key();
+											                var free_xml="<bill_items>" +
+																		"<id>"+bill_item_id+"</id>" +
+																		"<item_name>"+free_product_name+"</item_name>" +
+																		"<batch>"+free_batch+"</batch>" +
+																		"<unit_price>0</unit_price>" +
+																		"<quantity>"+free_product_quantity+"</quantity>" +
+																		"<amount>0</amount>" +
+																		"<total>0</total>" +
+																		"<discount>0</discount>" +
+																		"<offer></offer>" +
+																		"<type>free</type>" +
+																		"<tax>0</tax>" +
+																		"<bill_id>"+order_id+"</bill_id>" +
+																		"<free_with>"+order_item.item_name+"</free_with>" +
+																		"<last_updated>"+get_my_time()+"</last_updated>" +
+																		"</bill_items>";	
+															
+															if(is_online())
+															{
+																server_create_simple(free_xml);
+															}
+															else
+															{
+																local_create_simple(free_xml);
+															}
+														},free_batch_data);
+													}
+												});
+											}
+											break;
+										}
+										else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=item_amount)
+										{
+											if(offers[i].result_type=='discount')
+											{
+												if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+												{
+													item_discount=parseFloat((item_amount*parseInt(offers[i].discount_percent))/100);
+												}
+												else 
+												{
+													item_discount=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(item_amount)/parseFloat(offers[i].criteria_amount)));
+												}
+											}
+											else if(offers[i].result_type=='quantity addition')
+											{
+												if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+												{
+													order_item.quantity=parseFloat(order_item.quantity)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+												}
+												else 
+												{
+													order_item.quantity=parseFloat(order_item.quantity)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(item_amount)/parseFloat(offers[i].criteria_amount))));
+												}
+											}
+											else if(offers[i].result_type=='product free')
+											{
+												var free_product_name=offers[i].free_product_name;
+												var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(bill_amount-bill_discount)/parseFloat(offers[i].criteria_amount)));
+																							
+												//////updating product quantity in inventory
+												get_inventory(free_product_name,'',function(free_quantities)
+												{
+													if(free_quantities>=free_product_quantity)
+													{
+														var free_batch_data="<bill_items count='1'>" +
+																"<batch></batch>" +
+																"<item_name>"+free_product_name+"</item_name>" +
+																"<last_updated sort='desc'></last_updated>" +
+																"</bill_items>";
+														get_single_column_data(function(data)
+														{
+															var free_batch="";
+															if(data.length>0)
+															{
+																free_batch=data[0];	
+															}
+															var bill_item_id=get_new_key();
+											                var free_xml="<bill_items>" +
+																		"<id>"+bill_item_id+"</id>" +
+																		"<item_name>"+free_product_name+"</item_name>" +
+																		"<batch>"+free_batch+"</batch>" +
+																		"<unit_price>0</unit_price>" +
+																		"<quantity>"+free_product_quantity+"</quantity>" +
+																		"<amount>0</amount>" +
+																		"<total>0</total>" +
+																		"<discount>0</discount>" +
+																		"<offer></offer>" +
+																		"<type>free</type>" +
+																		"<tax>0</tax>" +
+																		"<bill_id>"+order_id+"</bill_id>" +
+																		"<free_with>"+order_item.item_name+"</free_with>" +
+																		"<last_updated>"+last_updated+"</last_updated>" +
+																		"</bill_items>";	
+															
+															if(is_online())
+															{
+																server_create_simple(free_xml);
+															}
+															else
+															{
+																local_create_simple(free_xml);
+															}
+														},free_batch_data);
+													}
+												});
+											}
+											break;
+										}
+									}
+								
+									var tax_data="<product_master>" +
+											"<name exact='yes'>"+order_item.item_name+"</name>" +
+											"<tax></tax>" +
+											"</product_master>";
+									fetch_requested_data('',tax_data,function(taxes)
+									{
+										console.log(taxes);
+	
+										taxes.forEach(function(tax)
+										{
+											item_tax=parseFloat((parseFloat(tax.tax)*(item_amount-parseFloat(item_discount)))/100);
+										});
+										
+										item_total=parseFloat(item_amount)+parseFloat(item_tax)-parseFloat(item_discount);
+										
+										/////saving to bill item
+										var bill_item_id=get_new_key();
+						                var data_xml="<bill_items>" +
+												"<id>"+bill_item_id+"</id>" +
+												"<item_name>"+order_item.item_name+"</item_name>" +
+												"<batch>"+batch+"</batch>" +
+												"<unit_price>"+sale_price+"</unit_price>" +
+												"<quantity>"+order_item.quantity+"</quantity>" +
+												"<amount>"+item_amount+"</amount>" +
+												"<total>"+item_total+"</total>" +
+												"<discount>"+item_discount+"</discount>" +
+												"<offer>"+item_offer+"</offer>" +
+												"<type>bought</type>" +
+												"<tax>"+item_tax+"</tax>" +
+												"<bill_id>"+order_id+"</bill_id>" +
+												"<free_with></free_with>" +
+												"<last_updated>"+get_my_time()+"</last_updated>" +
+												"</bill_items>";	
+										bill_amount+=item_amount;
+										bill_total+=item_total;
+										bill_discount+=item_discount;
+										bill_tax+=item_tax;
+										pending_items_count-=1;
+										
+										console.log(data_xml);
+	
+										if(is_online())
+										{
+											server_create_simple(data_xml);
+										}
+										else
+										{
+											local_create_simple(data_xml);
+										}
 									});
 									
-									item_total=parseFloat(item_amount)+parseFloat(item_tax)-parseFloat(item_discount);
-									
-									/////saving to bill item
-									var bill_item_id=get_new_key();
-					                var data_xml="<bill_items>" +
-											"<id>"+bill_item_id+"</id>" +
-											"<item_name>"+order_item.item_name+"</item_name>" +
-											"<batch>"+batch+"</batch>" +
-											"<unit_price>"+sale_price+"</unit_price>" +
-											"<quantity>"+order_item.quantity+"</quantity>" +
-											"<amount>"+item_amount+"</amount>" +
-											"<total>"+item_total+"</total>" +
-											"<discount>"+item_discount+"</discount>" +
-											"<offer>"+item_offer+"</offer>" +
-											"<type>bought</type>" +
-											"<tax>"+item_tax+"</tax>" +
-											"<bill_id>"+order_id+"</bill_id>" +
-											"<free_with></free_with>" +
-											"<last_updated>"+get_my_time()+"</last_updated>" +
-											"</bill_items>";	
-									bill_amount+=item_amount;
-									bill_total+=item_total;
-									bill_discount+=item_discount;
-									bill_tax+=item_tax;
-									pending_items_count-=1;
-									
-									console.log(data_xml);
-
-									if(is_online())
-									{
-										server_create_simple(data_xml);
-									}
-									else
-									{
-										local_create_simple(data_xml);
-									}
 								});
-								
-							});
+									
+							},price_data);
 							
 						});
 					}

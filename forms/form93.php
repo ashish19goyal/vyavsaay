@@ -3,8 +3,8 @@
 		<thead>
 			<tr>
 				<form id='form93_header'></form>
-					<th>Type <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form93_header'></th>
 					<th>Account <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form93_header'></th>
+					<th>Type <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form93_header'></th>
 					<th>Loan Amount</th>
 					<th>Details</th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form93_header'></th>

@@ -259,7 +259,7 @@ function report5_ini()
 							rowsHTML+=result.acc_name;
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Account Balance'>";
-							rowsHTML+=balance_amount;
+							rowsHTML+="Rs. "+balance_amount;
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Bill Ids'>";
 							rowsHTML+=bill_ids_string;
@@ -996,7 +996,7 @@ function report28_ini()
 		var sales_data="<bill_items>" +
 				"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
 				"<quantity></quantity>" +
-				"<item_name></item_name>" +
+				"<item_name>"+product+"</item_name>" +
 				"</bill_items>";
 		fetch_requested_data('report28',sales_data,function(sales_array)
 		{
@@ -1005,12 +1005,12 @@ function report28_ini()
 			{
 				var new_obj=new Object();
 				new_obj.item_name=sales_array[k].item_name;
-				new_obj.quantity=parseInt(sales_array[k].quantity);
+				new_obj.quantity=parseFloat(sales_array[k].quantity);
 				for(var j=k+1;j<sales_array.length;j++)
 				{
 					if(sales_array[j].item_name==new_obj.item_name)
 					{
-						new_obj.quantity+=parseInt(sales_array[j].quantity);
+						new_obj.quantity+=parseFloat(sales_array[j].quantity);
 						sales_array.splice(j,1);
 						j-=1;
 					}
@@ -1019,31 +1019,15 @@ function report28_ini()
 			}
 			
 			///modify sales_array_result as per search criteria
-			if(product!="")
+			
+			sales_array_result.sort(function(a,b)
 			{
-				var this_product_sales=new Object;
-				this_product_sales.item_name=product;
-				this_product_sales.quantity=0;
-				for (var l in sales_array_result)
-				{
-					if(sales_array_result[l].item_name===product)
-					{
-						this_product_sales.quantity=sales_array_result[l].quantity;
-						break;
-					}
-				}
-				sales_array_result=[this_product_sales];
-			}
-			else
-			{
-				sales_array_result.sort(function(a,b)
-				{
-					if(a.quantity<b.quantity)
-					{	return 1;}
-					else 
-					{	return -1;}
-				});
-			}
+				if(a.quantity<b.quantity)
+				{	return 1;}
+				else 
+				{	return -1;}
+			});
+			
 			
 			var result=new Object();
 			result.datasets=new Array();
@@ -1057,7 +1041,7 @@ function report28_ini()
 			result.datasets[1]=new Object();
 			result.datasets[1].label='Sold Quantity';
 			result.datasets[1].fillColor=getRandomColor();
-			result.datasets[1].strokeColor=result.datasets[0].fillColor;
+			result.datasets[1].strokeColor=result.datasets[1].fillColor;
 			result.datasets[1].highlightFill=getLighterColor(result.datasets[1].fillColor);
 			result.datasets[1].highlightStroke=getLighterColor(result.datasets[1].fillColor);
 			result.datasets[1].data=new Array();
@@ -1072,7 +1056,7 @@ function report28_ini()
 				get_inventory(label,'',function(value0)
 				{
 					var value1=data1.quantity;
-					if((value0<=value1 && result.labels.length<11) || product!="")
+					if((value0<=value1 && result.labels.length<11))
 					{
 						result.labels.push(label);
 						result.datasets[0].data.push(value0);
@@ -1682,7 +1666,7 @@ function report34_ini()
 								}	
 					  		   	var mybarchart = new Chart(ctx).Bar(result,{});
 					  		   	document.getElementById("report34_legend").innerHTML=mybarchart.generateLegend();
-					  		   	var margin=((received_amount-expenses_amount-tax_amount+inventory_amount)/received_amount)*100;
+					  		   	var margin=Math.round(((received_amount-expenses_amount-tax_amount+inventory_amount)/received_amount)*10000)/100;
 					  		   	document.getElementById("report34_margin").value=margin+"%";
 					  		   	
 					  		    var print_button=form.elements[5];
@@ -2118,7 +2102,7 @@ function report40_ini()
 		var sales_data="<bill_items>" +
 				"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
 				"<quantity></quantity>" +
-				"<item_name></item_name>" +
+				"<item_name>"+product+"</item_name>" +
 				"</bill_items>";
 		fetch_requested_data('report40',sales_data,function(sales_array)
 		{
@@ -2127,12 +2111,12 @@ function report40_ini()
 			{
 				var new_obj=new Object();
 				new_obj.item_name=sales_array[k].item_name;
-				new_obj.quantity=parseInt(sales_array[k].quantity);
+				new_obj.quantity=parseFloat(sales_array[k].quantity);
 				for(var j=k+1;j<sales_array.length;j++)
 				{
 					if(sales_array[j].item_name==new_obj.item_name)
 					{
-						new_obj.quantity+=parseInt(sales_array[j].quantity);
+						new_obj.quantity+=parseFloat(sales_array[j].quantity);
 						sales_array.splice(j,1);
 						j-=1;
 					}
@@ -2141,31 +2125,14 @@ function report40_ini()
 			}
 			
 			///modify sales_array_result as per search criteria
-			if(product!="")
+			
+			sales_array_result.sort(function(a,b)
 			{
-				var this_product_sales=new Object;
-				this_product_sales.item_name=product;
-				this_product_sales.quantity=0;
-				for (var l in sales_array_result)
-				{
-					if(sales_array_result[l].item_name===product)
-					{
-						this_product_sales.quantity=sales_array_result[l].quantity;
-						break;
-					}
-				}
-				sales_array_result=[this_product_sales];
-			}
-			else
-			{
-				sales_array_result.sort(function(a,b)
-				{
-					if(a.quantity<b.quantity)
-					{	return 1;}
-					else 
-					{	return -1;}
-				});
-			}
+				if(a.quantity<b.quantity)
+				{	return 1;}
+				else 
+				{	return -1;}
+			});
 			
 			var result=new Object();
 			result.datasets=new Array();
@@ -2179,7 +2146,7 @@ function report40_ini()
 			result.datasets[1]=new Object();
 			result.datasets[1].label='Sold Quantity';
 			result.datasets[1].fillColor=getRandomColor();
-			result.datasets[1].strokeColor=result.datasets[0].fillColor;
+			result.datasets[1].strokeColor=result.datasets[1].fillColor;
 			result.datasets[1].highlightFill=getLighterColor(result.datasets[1].fillColor);
 			result.datasets[1].highlightStroke=getLighterColor(result.datasets[1].fillColor);
 			result.datasets[1].data=new Array();
@@ -2194,7 +2161,7 @@ function report40_ini()
 				get_inventory(label,'',function(value0)
 				{
 					var value1=data1.quantity;
-					if((value0>=value1 && result.labels.length<11) || product!="")
+					if((value0>=value1 && result.labels.length<11))
 					{
 						result.labels.push(label);
 						result.datasets[0].data.push(value0);
@@ -2373,7 +2340,7 @@ function report42_ini()
 
 /**
  * @reportNo 43
- * @report Change in customer purchasing
+ * @report Changeing customer purchasing
  */
 function report43_ini()
 {
@@ -2420,21 +2387,22 @@ function report43_ini()
 			result.datasets[1]=new Object();
 			result.datasets[1].label='Period 2 sales';
 			result.datasets[1].fillColor=getRandomColor();
-			result.datasets[1].strokeColor=result.datasets[0].fillColor;
+			result.datasets[1].strokeColor=result.datasets[1].fillColor;
 			result.datasets[1].highlightFill=getLighterColor(result.datasets[1].fillColor);
 			result.datasets[1].highlightStroke=getLighterColor(result.datasets[1].fillColor);
 			result.datasets[1].data=new Array();
 			
 			result.labels=new Array();
 	
-			for(var i=0; i<p1_bills.length;i++)
+			for(var i=0;i<p1_bills.length;i++)
 			{
-				for(var j=i+1; j<p1_bills.length;j++)
+				for(var j=i+1;j<p1_bills.length;j++)
 				{
-					if(p1_bills[i].customer_name==p1_bills[j].customer_name)
+					if(p1_bills[i].customer_name===p1_bills[j].customer_name)
 					{
 						p1_bills[i].amount=parseFloat(p1_bills[i].amount)+parseFloat(p1_bills[j].amount);
 						p1_bills.splice(j,1);
+						j-=1;
 					}
 				}
 			}
@@ -2443,25 +2411,27 @@ function report43_ini()
 			{
 				for(var j=i+1; j<p2_bills.length;j++)
 				{
-					if(p2_bills[i].customer_name==p2_bills[j].customer_name)
+					if(p2_bills[i].customer_name===p2_bills[j].customer_name)
 					{
 						p2_bills[i].amount=parseFloat(p2_bills[i].amount)+parseFloat(p2_bills[j].amount);
 						p2_bills.splice(j,1);
+						j-=1;
 					}
 				}
 			}
 
 			p1_bills.sort(function(a,b)
 			{
-				if(parseFlaot(a.amount)<parseFloat(b.amount))
+				if(parseFloat(a.amount)<parseFloat(b.amount))
 				{	return 1;}
 				else 
 				{	return -1;}
 			});
 			
+			
 			p2_bills.sort(function(a,b)
 			{
-				if(parseFlaot(a.amount)<parseFloat(b.amount))
+				if(parseFloat(a.amount)<parseFloat(b.amount))
 				{	return 1;}
 				else 
 				{	return -1;}
@@ -2472,7 +2442,7 @@ function report43_ini()
 				if(result.labels.length<11)
 				{
 					result.labels.push(p1_bills[k].customer_name);
-					result.datasets[0].data.push(p1_bills[k].amount);
+					result.datasets[0].data.push(Math.round(p1_bills[k].amount));
 					var p2_sale=0;
 					for(var l=0;l<p2_bills.length;l++)
 					{
@@ -2483,7 +2453,7 @@ function report43_ini()
 							break;
 						}
 					}
-					result.datasets[1].data.push(p2_sale);
+					result.datasets[1].data.push(Math.round(p2_sale));
 				}
 				else
 				{
@@ -2497,7 +2467,7 @@ function report43_ini()
 				{
 					result.labels.push(p2_bills[m].customer_name);
 					result.datasets[0].data.push(0);
-					result.datasets[1].data.push(p2_bills[m].amount);
+					result.datasets[1].data.push(Math.round(p2_bills[m].amount));
 				}
 				else
 				{
@@ -2509,7 +2479,7 @@ function report43_ini()
   		   document.getElementById("report43_legend").innerHTML=mybarchart.generateLegend();
   		   
   		   var print_button=form.elements[7];
-  		   print_graphical_report('report43','Change in Customer Purchasing',print_button,mybarchart);
+  		   print_graphical_report('report43','Changeing Customer Purchasing',print_button,mybarchart);
 						  		   
   		   hide_loader();
 		});
@@ -2762,7 +2732,7 @@ function report47_ini()
 		result.datasets[1]=new Object();
 		result.datasets[1].label='Purchase Value';
 		result.datasets[1].fillColor=getRandomColor();
-		result.datasets[1].strokeColor=result.datasets[0].fillColor;
+		result.datasets[1].strokeColor=result.datasets[1].fillColor;
 		result.datasets[1].highlightFill=getLighterColor(result.datasets[1].fillColor);
 		result.datasets[1].highlightStroke=getLighterColor(result.datasets[1].fillColor);
 		result.datasets[1].data=new Array();
@@ -2778,8 +2748,8 @@ function report47_ini()
 	  		   if(select_all.checked)
 	  		   {
 		  		   result.labels.push('Total Inventory');
-		  		   result.datasets[0].data.push(inventory_sale_price);
-		  		   result.datasets[1].data.push(inventory_cost_price);
+		  		   result.datasets[0].data.push(Math.round(inventory_sale_price));
+		  		   result.datasets[1].data.push(Math.round(inventory_cost_price));
 	  		   }
 	  		   else
 	  		   {
@@ -2798,8 +2768,8 @@ function report47_ini()
 	  				   if(result.labels.length<11)
 	  				   {
 		  				   result.labels.push(products[i].product_name);
-				  		   result.datasets[0].data.push(products[i].sale);
-				  		   result.datasets[1].data.push(products[i].cost);
+				  		   result.datasets[0].data.push(Math.round(products[i].sale));
+				  		   result.datasets[1].data.push(Math.round(products[i].cost));
 	  				   }
 	  				   else
 	  				   {
@@ -2994,8 +2964,12 @@ function report50_ini()
 						k-=1;
 					}
 				}
+				
 				if(margin.lowest>margin_start && margin.highest<margin_end)
 				{
+					margin.highest=Math.round(margin.highest*100)/100;
+					margin.lowest=Math.round(margin.lowest*100)/100;
+					
 					margins.push(margin);
 				}
 			}
@@ -3086,6 +3060,10 @@ function report51_ini()
 						$('#report51_body').append(rowsHTML);
 						report_count-=1;
 					});
+				}
+				else
+				{
+					report_count-=1;
 				}
 			});
 
@@ -3285,7 +3263,7 @@ function report53_ini()
 
 	fetch_requested_data('report53',supplier_bills_data,function(supplier_bills)
 	{
-		console.log(supplier_bills);
+		//console.log(supplier_bills);
 		for(var i=0;i<supplier_bills.length;i++)
 		{
 			for(var j=i+1;j<supplier_bills.length;j++)
@@ -3334,18 +3312,23 @@ function report53_ini()
 	{
 		for(var i=0;i<sreturns.length;i++)
 		{
+			if(sreturns[i].refund_amount=="")
+				sreturns[i].refund_amount=0;
+
 			for(var j=i+1;j<sreturns.length;j++)
 			{
 				if(sreturns[i].item_name==sreturns[j].item_name)
 				{
-					sreturns[i].amount=parseFloat(sreturns[i].amount)+parseFloat(sreturns[j].amount);
+					if(sreturns[j].refund_amount=="")
+						sreturns[j].refund_amount=0;
+					sreturns[i].refund_amount=parseFloat(sreturns[i].refund_amount)+parseFloat(sreturns[j].refund_amount);
 					sreturns[i].tax=parseFloat(sreturns[i].tax)+parseFloat(sreturns[j].tax);
 					sreturns.splice(j,1);
 					j-=1;
 				}
 			}
 			
-			total_amount-=parseFloat(sreturns[i].amount);
+			total_amount-=parseFloat(sreturns[i].refund_amount);
 			total_tax-=parseFloat(sreturns[i].tax);
 
 			var rowsHTML="<tr>";
@@ -3356,7 +3339,7 @@ function report53_ini()
 				rowsHTML+='Sale return';
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="-"+sreturns[i].amount;
+				rowsHTML+="-"+sreturns[i].refund_amount;
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Tax'>";
 				rowsHTML+="-"+sreturns[i].tax;
@@ -3384,14 +3367,14 @@ function report53_ini()
 			{
 				if(preturns[i].item_name==preturns[j].item_name)
 				{
-					preturns[i].amount=parseFloat(preturns[i].amount)+parseFloat(preturns[j].amount);
+					preturns[i].refund_amount=parseFloat(preturns[i].refund_amount)+parseFloat(preturns[j].refund_amount);
 					preturns[i].tax=parseFloat(preturns[i].tax)+parseFloat(preturns[j].tax);
 					preturns.splice(j,1);
 					j-=1;
 				}
 			}
 			
-			total_amount+=parseFloat(preturns[i].amount);
+			total_amount+=parseFloat(preturns[i].refund_amount);
 			total_tax+=parseFloat(preturns[i].tax);
 			
 			var rowsHTML="<tr>";
@@ -3402,7 +3385,7 @@ function report53_ini()
 				rowsHTML+='Purchase return';
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+=preturns[i].amount;
+				rowsHTML+=preturns[i].refund_amount;
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Tax'>";
 				rowsHTML+=preturns[i].tax;
@@ -3418,7 +3401,7 @@ function report53_ini()
 	{
 	   if(report_count===0)
 	   {
-		   var total_row="<tr><td data-th='Total'>Total</td><td data-th='Amount'>"+total_amount+"</td><td data-th='Tax'>"+total_tax+"</td></tr>";
+		   var total_row="<tr><td colspan='2' data-th='Total'>Total</td><td data-th='Amount'>"+total_amount+"</td><td data-th='Tax'>"+total_tax+"</td></tr>";
 		   $('#report53_foot').html(total_row);
 	
 		   clearInterval(report_complete);

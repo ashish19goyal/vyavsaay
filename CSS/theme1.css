@@ -383,6 +383,13 @@ Table formatting for responsive functionality
 	color: #fff;
 }
 
+@media (max-width: 850px)
+{
+	td{
+	    white-space: nowrap;
+	}
+}
+
 @media (min-width: 850px)
 {
   .rwd-table td:before {
@@ -534,6 +541,7 @@ tbody tr:hover{
 	-o-border-radius: 0.4em;
 	background: #DB0000;
 	outline: none;
+	margin: 2px 0px;
 }
 
 .submit_hidden{

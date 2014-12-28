@@ -12,7 +12,7 @@
 					<th><input type='button' form='form1_header' value='Add Product' class='generic_icon' onclick='modal14_action();'>
 						<input type='button' form='form1_header' value='Add Batch' class='generic_icon' onclick='modal22_action();'>
 						<input type='button' form='form1_header' value='EXPORT' class='export_icon'>
-						<input type='submit' form='form1_header' style='visibility: hidden;'>
+						<input type='submit' form='form1_header' style='display:none;visibility: hidden;'>
 					</th>
 			</tr>
 		</thead>

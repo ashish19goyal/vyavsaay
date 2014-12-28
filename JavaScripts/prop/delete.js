@@ -683,7 +683,7 @@ function form21_delete_item(button)
 		
 		var name=form.elements[0].value;
 		var batch=form.elements[6].value;
-		var data_id=form.elements[8].value;
+		var data_id=form.elements[9].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<supplier_bill_items>" +
@@ -1399,14 +1399,13 @@ function form53_delete_item(button)
  */
 function form56_delete_item(button)
 {
-	console.log('deleting cash record');
 	if(is_delete_access('form56'))
 	{
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var type=form.elements[0].value;
-		var account=form.elements[1].value;
+		var account=form.elements[0].value;
+		var type=form.elements[1].value;
 		var amount=form.elements[2].value;
 		var notes=form.elements[3].value;
 		var data_id=form.elements[4].value;
@@ -2065,11 +2064,11 @@ function form71_delete_item(button)
 {
 	var form_id=$(button).attr('form');
 	var form=document.getElementById(form_id);
-	var type=form.elements[0].value;
+	var type=form.elements[1].value;
 	
 	if(is_delete_access('form71') && type=='financial')
 	{		
-		var name=form.elements[1].value;
+		var name=form.elements[0].value;
 		var description=form.elements[2].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
@@ -2766,8 +2765,8 @@ function form93_delete_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var type=form.elements[0].value;
-		var account=form.elements[1].value;
+		var account=form.elements[0].value;
+		var type=form.elements[1].value;
 		var amount=form.elements[2].value;
 		var data_id=form.elements[5].value;
 		var adjective="to";

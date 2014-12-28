@@ -1440,7 +1440,7 @@ function form21_update_form()
 
 		var discount=parseFloat(form.elements[6].value);
 		form.elements[5].value=amount;
-		total=total-discount
+		total=total-discount;
 		form.elements[8].value=total;
 		
 		var notes=form.elements[9].value;
@@ -2694,8 +2694,8 @@ function form56_update_item(form)
 {
 	if(is_update_access('form56'))
 	{
-		var type=form.elements[0].value;
-		var account=form.elements[1].value;
+		var account=form.elements[0].value;
+		var type=form.elements[1].value;
 		var amount=form.elements[2].value;
 		var notes=form.elements[3].value;
 		var data_id=form.elements[4].value;
@@ -3345,8 +3345,8 @@ function form71_update_item(form)
 {
 	if(is_update_access('form71'))
 	{
-		var type=form.elements[0].value;
-		var name=form.elements[1].value;
+		var name=form.elements[0].value;
+		var type=form.elements[1].value;
 		var description=form.elements[2].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
@@ -4905,8 +4905,8 @@ function form93_update_item(form)
 {
 	if(is_update_access('form93'))
 	{
-		var type=form.elements[0].value;
-		var account=form.elements[1].value;
+		var account=form.elements[0].value;
+		var type=form.elements[1].value;
 		var amount=form.elements[2].value;
 		var status=form.elements[4].value;
 		var data_id=form.elements[5].value;
