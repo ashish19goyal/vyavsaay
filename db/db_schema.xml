@@ -377,7 +377,7 @@
 	<attributes>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(100)"></name>
-			<type index='no' type="VARCHAR(10)"></type><!-- service/product/customer/staff/supplier -->
+			<type index='no' type="VARCHAR(10)"></type><!-- service/product/customer/staff/supplier/asset -->
 			<attribute index='no' type="VARCHAR(30)"></attribute><!--recurrent sale(days)/season start date(1 jan)/season end date(2 december)/subscription period(4 days/2 months/10 weeks/1 year)-->
 			<value index='no' type='TEXT'></value>
 			<last_updated index='yes' type="BIGINT"></last_updated>
@@ -417,22 +417,8 @@
 	</area_utilization>
 	<store_areas>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="VARCHAR(25)" unique='yes'></name>
-			<area_type index='yes' type="VARCHAR(10)"></area_type><!-- storey/block/door/storage -->
-			<height index='no' type="DECIMAL(12,2)"></height>
-			<width index='no' type="DECIMAL(12,2)"></width>
-			<length index='no' type="DECIMAL(12,2)"></length>
-			<locx index='no' type="DECIMAL(12,2)"></locx>
-			<locy index='no' type="DECIMAL(12,2)"></locy>
-			<locz index='no' type="DECIMAL(12,2)"></locz>
-			<storey index='yes' type="VARCHAR(25)"></storey>
-			<color index='no' type='VARCHAR(10)'></color>
-			<radius index='no' type="DECIMAL(12,2)"></radius>
-			<loc_type index='yes' type="VARCHAR(10)"></loc_type><!-- internal/external -->
-			<faceEast index='no' type="VARCHAR(3)"></faceEast><!-- yes/no -->
-			<faceWest index='no' type="VARCHAR(3)"></faceWest><!-- yes/no -->
-			<faceNorth index='no' type="VARCHAR(3)"></faceNorth><!-- yes/no -->
-			<faceSouth index='no' type="VARCHAR(3)"></faceSouth><!-- yes/no -->
+			<name index='yes' type="VARCHAR(25)"></name>
+			<area_type index='yes' type="VARCHAR(90)"></area_type><!-- storage/block/door/storey -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</store_areas>
 	<assets>
@@ -440,33 +426,8 @@
 			<name index='yes' type="VARCHAR(45)" unique='yes'></name>
 			<type index='yes' type="VARCHAR(25)"></type><!-- information/intellectual property/machine/facility/computer system/PDA/others -->
 			<description index='no' type="TEXT"></description>
-			<date_inc index='no' type="BIGINT"></date_inc>
-			<make index='no' type='VARCHAR(100)'></make>
-			<ownership_type index='yes' type='VARCHAR(25)'></ownership_type><!-- purchased/leased/rented/licensed -->
-			<ownership_contract index='no' type='TEXT'></ownership_contract>
-			<maintained_by index='yes' type='VARCHAR(25)'></maintained_by><!-- self/contractor/manufacturer -->
-			<maintenance_contract index='no' type='TEXT'></maintenance_contract>
-			<maintenance_contact index='no' type='VARCHAR(100)'></maintenance_contact>
-			<maintenance_activities index='no' type="TEXT"></maintenance_activities>
-			<initial_value index='no' type="DECIMAL(10,2)"></initial_value>
-			<current_value index='no' type="DECIMAL(10,2)"></current_value>
-			<asset_location index='no' type="TEXT"></asset_location>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</assets>
-	<asset_valuations>  
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<date_valuated index='no' type="BIGINT"></date_valuated>
-			<value index='no' type="DECIMAL(10,2)"></value>
-			<asset_name index='yes' type="VARCHAR(45)"></asset_name>
-			<last_updated index='yes' type="BIGINT"></last_updated>
-	</asset_valuations>
-	<asset_maintenance>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<date_maintained index='no' type="BIGINT"></date_maintained>
-			<activity index='no' type="TEXT"></activity>
-			<asset_name index='yes' type="VARCHAR(45)"></asset_name>
-			<last_updated index='yes' type="BIGINT"></last_updated>
-	</asset_maintenance>
 	<pamphlets>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(50)" unique='yes'></name>

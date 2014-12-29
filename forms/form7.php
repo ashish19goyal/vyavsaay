@@ -1,6 +1,6 @@
 <div id='form7' class='function_detail'>
-	<div id="attendance_calendar" style="max-width: 900px;margin:20px auto;"></div>
-	
+	<input type='button' value='Switch view' class='generic_icon' onclick='form7_switch_view();'>
+	<div id="form7_calendar" style="max-width: 900px;margin:20px auto;"></div>
 		<form id='form7_master'>
 			<fieldset>
 				Select Date: <input type='text' required onchange='form7_ini();'>

@@ -1448,17 +1448,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>form106</name>
-			<display_name>data_export</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables></tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>form108</name>
 			<display_name>manage_sale_orders_multi_register</display_name>
 			<status>active</status>
@@ -1467,6 +1456,17 @@
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--sale_orders--sale_order_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form109</name>
+			<display_name>asset_attributes</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--attributes--</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -2749,8 +2749,8 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>form106</element_id>
-			<element_name>data_export</element_name>
+			<element_id>form108</element_id>
+			<element_name>manage_sale_orders_multi_register</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2760,8 +2760,8 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>form108</element_id>
-			<element_name>manage_sale_orders_multi_register</element_name>
+			<element_id>form109</element_id>
+			<element_name>asset_attributes</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

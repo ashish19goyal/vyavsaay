@@ -46,7 +46,7 @@ td input[type="text"]
 	white-space:normal;
 }
 
-td{
+.rwd-table td{
 	width: 1px;
  /*   white-space: nowrap;*/
 }
@@ -385,7 +385,7 @@ Table formatting for responsive functionality
 
 @media (max-width: 850px)
 {
-	td{
+	.rwd-table td{
 	    white-space: nowrap;
 	}
 }
@@ -526,7 +526,7 @@ tbody tr:hover{
 	height: 25px;
 	width: auto;
 	cursor: pointer;
-	border: 2px solid #8B0000;
+	border: 2px solid #818060;
 	display: inline-block;
 	color: #FFF;
 	font-size: 9px;
@@ -539,10 +539,33 @@ tbody tr:hover{
 	border-radius: 0.4em;
 	-moz-border-radius: 0.4em;
 	-o-border-radius: 0.4em;
-	background: #DB0000;
+	background: #818060;
 	outline: none;
 	margin: 2px 0px;
 }
+
+.generic_head_icon{
+	height: 25px;
+	width: auto;
+	cursor: pointer;
+	border: 2px solid #1A783B;
+	display: inline-block;
+	color: #FFF;
+	font-size: 9px;
+	text-align: center;
+	-webkit-appearance:none;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5s all;
+	border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	-o-border-radius: 0.4em;
+	background: #2ABF5E;
+	outline: none;
+	margin: 2px 0px;
+}
+
 
 .submit_hidden{
 	width:1px;
@@ -645,20 +668,22 @@ tbody tr:hover{
 	vertical-align:middle;
 }
 
-
 .customers_pane{
-	overflow: auto;
+	overflow-x: auto;
 	width: 99%;
 	float:left;
+	max-width:500px;
 }
 .customers_content{
-	width: auto;
+	width: 99%;
 	float: left;
 	padding:5px;
+	overflow-x: auto;
 }
+
 .customers_content_item{
-	background-color: #CCD2D6;
-	color: #2A2A2A;
+	background-color: #7A8491;
+	color: #FFF;
 	width: 200px;
 	height: 120px;
 	float: left;
@@ -667,10 +692,17 @@ tbody tr:hover{
 	padding: 5px;
 	border: 2px solid #DCDDD3;
 }
+
 .customers_bar_wrap{
 	clear: left; 
-	padding: 0 4px 0 2px; 
-	margin: 0 -1px -1px -1px; 
+	padding: 0 5px;  
+}
+
+.ui-slider .ui-slider-handle {
+    height: 15px !important;
+    width: 30px !important;
+    padding-left: 5px;
+    background-color:#7A8491;
 }
 
 .figure{ 
@@ -772,18 +804,29 @@ canvas{
 	#content_box{
 		min-width:700px;
 	}
+	.customers_pane{
+		max-width:700px;
+	}
 }
 
 @media screen and (min-width: 1100px) {
 	#content_box{
 		min-width:900px;
 	}
+	.customers_pane{
+		max-width:900px;
+	}
+	
 }
 
 @media screen and (min-width: 1300px) {
 	#content_box{
 		min-width:1100px;
 	}
+	.customers_pane{
+		max-width:1100px;
+	}
+	
 }
 
 .modal_forms{
@@ -860,11 +903,14 @@ canvas{
 		position: fixed;
 		top:45px;
 		right:0%;
-		overflow-y: scroll;
+		overflow-y: auto;
 	}
 }
 
 @media screen and (max-width: 550px) {
+	.customers_pane{
+		max-width:300px;
+	}
 	#side_menu{
 		background-color: #A2A2A2;	
 		width: 102%;

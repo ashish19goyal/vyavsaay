@@ -186,6 +186,7 @@
   	"assign_project_tasks":"Assign Project Tasks",
   	"manage_data_access":"Manage Data Access",
   	"data_export":"Data Export",
-  	"manage_sale_orders_multi_register":"Manage Sale Orders (multiple registers)"
+  	"manage_sale_orders_multi_register":"Manage Sale Orders (multiple registers)",
+  	"asset_attributes":"Asset Attributes"
   }
 }

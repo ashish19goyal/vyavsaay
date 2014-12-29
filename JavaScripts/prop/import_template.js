@@ -14,8 +14,7 @@ function form1_import_template()
 */
 function form5_import_template()
 {
-	var data_array=['id','name','type','description','date_inc','ownership_type','ownership_contract','make','maintained_by',
-	                'maintenance_contract','maintenance_activities','initial_value','current_value','asset_location'];
+	var data_array=['id','name','type','description'];
 	my_array_to_csv(data_array);
 };
 
@@ -575,5 +574,15 @@ function form98_import_template()
 function form108_import_template()
 {
 	var data_array=['id','customer_name','order_date','type','status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Asset Attributes
+* @formNo 109
+*/
+function form109_import_template()
+{
+	var data_array=['id','name','attribute','value'];
 	my_array_to_csv(data_array);
 };

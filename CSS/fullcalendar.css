@@ -21,7 +21,7 @@ body .fc { /* extra precedence to overcome jqui */
 
 /* Colors
 --------------------------------------------------------------------------------------------------*/
-
+/**vyavsaay modified*/
 .fc-unthemed th,
 .fc-unthemed td,
 .fc-unthemed hr,
@@ -30,7 +30,9 @@ body .fc { /* extra precedence to overcome jqui */
 .fc-unthemed .fc-row,
 .fc-unthemed .fc-popover {
 	border-color: #ddd;
+	background-color:#D8D0B1;
 }
+
 
 .fc-unthemed .fc-popover {
 	background-color: #d8d0b1;

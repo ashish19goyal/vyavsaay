@@ -6865,3 +6865,66 @@ function form108_bill(order_id,bill_type)
 		$("#modal2").dialog("open");
 	}	
 }
+
+
+/**
+ * formNo 109
+ * form Asset Attributes
+ * @param button
+ */
+function form109_create_item(form)
+{
+	if(is_create_access('form109'))
+	{
+		var asset=form.elements[0].value;
+		var attribute=form.elements[1].value;
+		var value=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<attributes>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+asset+"</name>" +
+					"<type>asset</type>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</attributes>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>attributes</tablename>" +
+					"<link_to>form109</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Attribute "+attribute+" for asset "+asset+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[5];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form109_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form109_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

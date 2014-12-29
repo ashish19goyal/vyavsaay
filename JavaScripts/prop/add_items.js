@@ -3399,3 +3399,62 @@ function form98_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Asset Attributes
+ * @formNo 109
+ */
+function form109_add_item()
+{
+	if(is_create_access('form109'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form109_"+id+"'></form>";
+			rowsHTML+="<td data-th='Name'>";
+				rowsHTML+="<input type='text' form='form109_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new asset' onclick='modal10_action();'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Attribute'>";
+				rowsHTML+="<input type='text' form='form109_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Value'>";
+				rowsHTML+="<input type='text' form='form109_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form109_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form109_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form109_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form109_body').prepend(rowsHTML);
+		var fields=document.getElementById("form109_"+id);
+		var asset_filter=fields.elements[0];
+		var attribute_filter=fields.elements[1];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form109_create_item(fields);
+		});
+				
+		var asset_data="<assets>" +
+				"<name></name>" +
+				"</assets>";
+		set_my_value_list(asset_data,asset_filter);
+		
+		var attribute_data="<attributes>" +
+				"<attribute></attribute>" +
+				"<type>asset</type>" +
+				"</attributes>";
+		set_my_filter(attribute_data,attribute_filter);
+
+		$(asset_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

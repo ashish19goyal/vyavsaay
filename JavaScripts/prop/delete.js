@@ -104,34 +104,11 @@ function form5_delete_item(button)
 		var type=form.elements[1].value;
 		var description=form.elements[2].value;
 		var data_id=form.elements[3].value;
-		var date_inc=form.elements[6].value;
-		var ownership_type=form.elements[7].value;
-		var ownership_contract=form.elements[8].value;
-		var make=form.elements[9].value;
-		var maintained_by=form.elements[10].value;
-		var maintenance_contract=form.elements[11].value;
-		var maintenance_contact=form.elements[12].value;
-		var maintenance_activities=form.elements[13].value;
-		var initial_value=form.elements[14].value;
-		var current_value=form.elements[15].value;
-		var asset_location=form.elements[16].value;
 		var last_updated=get_my_time();
 		var data_xml="<assets>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
-					"<date_inc>"+date_inc+"</date_inc>" +
 					"<type>"+type+"</type>" +
-					"<description>"+description+"</description>" +
-					"<ownership_type>"+ownership_type+"</ownership_type>" +
-					"<ownership_contract>"+ownership_contract+"</ownership_contract>" +
-					"<make>"+make+"</make>" +
-					"<maintained_by>"+maintained_by+"</maintained_by>" +
-					"<maintenance_contract>"+maintenance_contract+"</maintenance_contract>" +
-					"<maintenance_contact>"+maintenance_contact+"</maintenance_contact>" +
-					"<maintenance_activities>"+maintenance_activities+"</maintenance_activities>" +
-					"<initial_value>"+initial_value+"</initial_value>" +
-					"<current_value>"+current_value+"</current_value>" +
-					"<asset_location>"+asset_location+"</asset_location>" +
 					"</assets>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1257,13 +1234,11 @@ function form44_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var count_items=form.elements[1].value;
-		var data_id=form.elements[2].value;
+		var data_id=form.elements[1].value;
 		var last_updated=get_my_time();
 		var data_xml="<pamphlets>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
-					"<count_items>"+count_items+"</count_items>" +
 					"</pamphlets>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -2289,7 +2264,7 @@ function form83_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var data_id=form.elements[4].value;
+		var data_id=form.elements[2].value;
 		var last_updated=get_my_time();
 		var data_xml="<store_areas>" +
 					"<id>"+data_id+"</id>" +
@@ -3072,6 +3047,54 @@ function form108_delete_item(button)
 		{
 			local_delete_row(data_xml,activity_xml);
 			local_delete_simple(other_delete);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 109
+ * form Asset Attributes
+ * @param button
+ */
+function form109_delete_item(button)
+{
+	if(is_delete_access('form109'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var asset=form.elements[0].value;
+		var attribute=form.elements[1].value;
+		var value=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<attributes>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+asset+"</name>" +
+					"<type>asset</type>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
+					"</attributes>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>attributes</tablename>" +
+					"<link_to>form109</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Attribute "+attribute+" for asset "+asset+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
 		}	
 		$(button).parent().parent().remove();
 	}

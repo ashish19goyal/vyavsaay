@@ -14,7 +14,6 @@ function report1_ini()
 	/////appending new arrivals details
 	var product_data="<supplier_bill_items>" +
 			"<product_name>"+product_filter+"</product_name>" +
-			"<bill_id></bill_id>" +
 			"<last_updated compare='more than'>"+get_raw_time(date_since)+"</last_updated>" +
 			"</supplier_bill_items>";
 	
@@ -22,7 +21,7 @@ function report1_ini()
 	{
 		report_count-=1;
 		report_count+=products.length;
-
+		
 		products.forEach(function(product)
 		{
 			var bill_id_data="<supplier_bill_items>" +
@@ -56,7 +55,7 @@ function report1_ini()
 						
 						fetch_requested_data('report1',store_data,function(areas)
 						{
-							var areas_string="--";
+							var areas_string="";
 							for(var x in areas)
 							{
 								areas_string+=areas[x].name+", ";
@@ -1249,7 +1248,6 @@ function report31_ini()
 	var mmarker=L.marker(mlatlng).addTo(map31).bindPopup(title);
 	///////////////////////////////////		
 	
-	
 	var customers_data="<customers>" +
 			"<id></id>" +
 			"<name></name>" +
@@ -1930,7 +1928,7 @@ function report37_ini()
 				if(result.labels.length<11)
 				{
 					result.labels.push(label);
-					result.datasets[0].data.push(value);
+					result.datasets[0].data.push(Math.round(value));
 				}
 			}
 	
@@ -2512,7 +2510,7 @@ function report44_ini()
 							rowsHTML+=data[0].innerHTML;
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Description'>";
-							rowsHTML+=data[1].innerHTML;
+							rowsHTML+=data[1].innerHTML.substr(0,200);
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Picture'>";
 							rowsHTML+="<img src='"+data[2].innerHTML+"'>";
@@ -2658,7 +2656,7 @@ function report46_ini()
 							rowsHTML+=result.acc_name;
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Account Balance'>";
-							rowsHTML+=balance_amount;
+							rowsHTML+=Math.round(balance_amount);
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Bill Ids'>";
 							rowsHTML+=bill_ids_string;

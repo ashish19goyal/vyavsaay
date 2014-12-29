@@ -84,7 +84,7 @@ function form7_header_ini()
 	var fields=document.getElementById('form7_master');
 	var date_filter=fields.elements[1];
 	
-	$(fields).on("submit", function(event)
+	$(fields).on("submit",function(event)
 	{
 		event.preventDefault();
 		form7_update_form();
@@ -110,16 +110,17 @@ function form7_header_ini()
 
 	$(date_filter).datepicker();
 	date_filter.value=get_my_date();
+
 	$("#form7_master").hide();
 	$("#form7_body").parent().hide();
-	$("#attendance_calendar").show();
+	$("#form7_calendar").show();
 	///initializing calendar
 	
-	$('#attendance_calendar').fullCalendar({
+	$('#form7_calendar').fullCalendar('destroy');
+	$('#form7_calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
 			center: 'title'
-		//	right: 'month,agendaWeek,agendaDay'
 		},
 		height:400,
 		fixedWeekCount:false,
@@ -129,8 +130,6 @@ function form7_header_ini()
 		{
 	        var start_time=(parseFloat(start.unix())-1000)*1000;
 	        var end_time=parseFloat(end.unix())*1000;
-	        console.log(start_time);
-	        console.log(end_time);
 	        var attendance_data="<attendance>" +
 	        		"<presence></presence>" +
 	        		"<hours_worked></hours_worked>" +
@@ -139,7 +138,6 @@ function form7_header_ini()
 	        		"</attendance>";
 	        fetch_requested_data('form7',attendance_data,function(attendances)
 	        {
-	        	console.log(attendances);
 	        	var events=[];
 	        	
 	        	attendances.sort(function(a,b)
@@ -187,29 +185,40 @@ function form7_header_ini()
 	        			start:get_iso_date(attendances[i].date),
 	        			allDay:true,
 	        			color:color,
-	        			textColor:'#fff'
+	        			textColor:'#fff',
+	        			editable:false
 	        		});
 	        	}
-	        	
 	        	callback(events);
 	        });
 	    },
 	    dayClick: function(date,jsEvent,view){
-	    	//console.log(date.format());
 	    	var my_date=get_my_date_from_iso(date.format());
 	    	date_filter.value=my_date;
 	    	form7_ini();
 	    	$("#form7_master").show();
 	    	$("#form7_body").parent().show();
-	    	$("#attendance_calendar").hide();
+	    	$("#form7_calendar").hide();
+	    },
+	    eventClick: function(calEvent,jsEvent,view){
+	    	var my_date=get_my_date_from_iso(calEvent.start.format());
+	    	date_filter.value=my_date;
+	    	form7_ini();
+	    	$("#form7_master").show();
+	    	$("#form7_body").parent().show();
+	    	$("#form7_calendar").hide();
 	    }
 	});
-	
-	//$('#attendance_calendar').fullCalendar('today');
-	///calendar set
-	
 };
 
+function form7_switch_view()
+{
+	form7_ini();
+	
+	$("#form7_master").toggle();
+	$("#form7_body").parent().toggle();
+	$("#form7_calendar").toggle();
+}
 
 
 /**
@@ -418,7 +427,7 @@ function form14_header_ini()
 	
 	
 	///initializing calendar
-	
+	$('#form14_calendar').fullCalendar('destroy');
 	$('#form14_calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
@@ -1465,7 +1474,6 @@ function form60_header_ini()
 		event.preventDefault();
 		form60_ini();
 	});
-
 };
 
 /**
@@ -1835,16 +1843,11 @@ function form78_header_ini()
 			"</pamphlets>";
 	set_my_value_list(name_data,name_filter);
 	
-	$(name_filter).on('blur',function(event)
-	{
-		form78_ini();
-	});
-	
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
 	{
 		event.preventDefault();
-		modal50_action();
+		form78_ini();
 	});
 }
 
@@ -2646,4 +2649,34 @@ function form108_header_ini()
 	set_my_filter(order_data,order_filter);
 	set_my_filter(cust_data,name_filter);
 	set_static_filter('sale_orders','status',status_filter);
+};
+
+/**
+ * @form Asset Attributes
+ * @formNo 109
+ */
+function form109_header_ini()
+{
+	var filter_fields=document.getElementById('form109_header');
+	var asset_filter=filter_fields.elements[0];
+	var attribute_filter=filter_fields.elements[1];
+	
+	var asset_data="<assets>" +
+			"<name></name>" +
+			"</assets>";
+	var attribute_data="<attributes>" +
+			"<attribute></attribute>" +
+			"<type exact='yes'>asset</type>" +
+			"</attributes>";
+	
+	set_my_filter(asset_data,asset_filter);
+	set_my_filter(attribute_data,attribute_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form109_ini();
+	});
+
 };

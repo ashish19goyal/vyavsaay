@@ -34,7 +34,7 @@
 				$columns_array=array();
 				$values_array=array();
 				$result_column=$input->childNodes->item(0)->nodeName;
-				$query="select $result_column from $table where ";
+				$query="select distinct $result_column from $table where ";
 				$order_by=" ORDER BY ";
 				
 				$limit=" limit ?,?";
@@ -104,7 +104,7 @@
 				$query=rtrim($query,"and ");
 				if(count($values_array)===0)
 				{
-					$query="select $result_column from $table";
+					$query="select distinct $result_column from $table";
 				}
 				$query.=$order_by."id DESC";
 				

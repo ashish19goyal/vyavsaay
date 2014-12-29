@@ -100,18 +100,8 @@ function form5_import(data_array,import_type)
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
-				"<date_inc>"+row.date_inc+"</date_inc>" +
 				"<type>"+row.type+"</type>" +
 				"<description>"+row.description+"</description>" +
-				"<ownership_type>"+row.ownership_type+"</ownership_type>" +
-				"<ownership_contract>"+row.ownership_contract+"</ownership_contract>" +
-				"<make>"+row.make+"</make>" +
-				"<maintained_by>"+row.maintained_by+"</maintained_by>" +
-				"<maintenance_contract>"+row.maintenance_contract+"</maintenance_contract>" +
-				"<maintenance_activities>"+row.maintenance_activities+"</maintenance_activities>" +
-				"<initial_value>"+row.initial_value+"</initial_value>" +
-				"<current_value>"+row.current_value+"</current_value>" +
-				"<asset_location>"+row.asset_location+"</asset_location>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
@@ -3150,3 +3140,55 @@ function form108_import(data_array,import_type)
 	}
 };
 
+
+
+/**
+* @form Asset Attributes
+* @formNo 109
+*/
+function form109_import(data_array,import_type)
+{
+	var data_xml="<attributes>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</attributes><separator></separator><attributes>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<type>asset</type>" +
+				"<attribute>"+row.attribute+"</attribute>" +
+				"<value>"+row.value+"</value>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</attributes>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};

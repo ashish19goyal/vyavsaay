@@ -1,5 +1,5 @@
 <div id='form14' class='function_detail'>
-	<input type='button' value='Switch view' onclick='form14_switch_view();'>
+	<input type='button' value='Switch view' class='generic_icon' onclick='form14_switch_view();'>
 	<div id="form14_calendar" style="max-width: 900px;margin:20px auto;"></div>
 	<table class='rwd-table'>
 		<thead>

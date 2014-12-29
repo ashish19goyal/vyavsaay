@@ -291,7 +291,6 @@ function local_read_single_column(columns,callback,results)
 				
 				if(match===true)
 				{
-					//console.log(cols);
 					results.push(record[cols[0].nodeName]);
 					if(results.length!=count)
 					{
@@ -311,6 +310,7 @@ function local_read_single_column(columns,callback,results)
 			else
 			{
 				localdb_open_requests-=1;
+				results=jQuery.unique(results);
 				callback(results);
 			}
 		};
