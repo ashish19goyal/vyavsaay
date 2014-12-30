@@ -22,7 +22,7 @@
     "maps": "Maps",
     "sale_reports": "Sale Reports",
     "ecommerce":"E-Commerce",
-    "reach_out":"Reach Out"
+    "projects":"Projects"
   },
   "general":{
   	"hello": "Hello"
@@ -181,10 +181,10 @@
   	"delete_storage":"Delete Storage",
   	"selective_sync":"Selective Sync",
   	"manage_projects":"Manage Projects",
-  	"assign_project_team":"Assign Project Team",
-  	"create_project_phases":"Create Project Phases",
-  	"assign_project_tasks":"Assign Project Tasks",
-  	"manage_data_access":"Manage Data Access",
+  	"project_team":"Assign Project Team",
+  	"project_phases":"Create Project Phases",
+  	"project_tasks":"Assign Project Tasks",
+  	"data_access":"Manage Data Access",
   	"data_export":"Data Export",
   	"manage_sale_orders_multi_register":"Manage Sale Orders (multiple registers)",
   	"asset_attributes":"Asset Attributes"

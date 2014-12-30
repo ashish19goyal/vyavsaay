@@ -3087,6 +3087,223 @@ function form96_import(data_array,import_type)
 	}
 };
 
+/**
+* @form Manage Projects
+* @formNo 101
+*/
+function form101_import(data_array,import_type)
+{
+	var data_xml="<projects>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</projects><separator></separator><projects>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<start_date>"+get_raw_time(row.start_date)+"</start_date>" +
+				"<status>"+row.status+"</status>" +
+				"<details>"+row.details+"</details>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</projects>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Project Team
+* @formNo 102
+*/
+function form102_import(data_array,import_type)
+{
+	var data_xml="<project_team>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</project_team><separator></separator><project_team>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<project_id>"+row.project_id+"</project_id>" +
+				"<member>"+row.member+"</member>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<role>"+row.role+"</role>" +
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</project_team>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Project Phases
+* @formNo 103
+*/
+function form103_import(data_array,import_type)
+{
+	var data_xml="<project_phases>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</project_phases><separator></separator><project_phases>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<project_id>"+row.project_id+"</project_id>" +
+				"<phase_name>"+row.phase_name+"</phase_name>" +
+				"<details>"+row.details+"</details>" +
+				"<start_date>"+get_raw_time(row.start_date)+"</start_date>" +
+				"<due_date>"+get_raw_time(row.due_date)+"</due_date>" +
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</project_phases>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+
+/**
+* @form Manage Project Tasks
+* @formNo 104
+*/
+function form104_import(data_array,import_type)
+{
+	var data_xml="<task_instances>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</task_instances><separator></separator><task_instances>";
+		}
+		counter+=1;
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<description>"+row.description+"</description>" +
+				"<assignee>"+row.assignee+"</assignee>" +
+				"<status>"+row.status+"</status>" +
+				"<t_due>"+get_raw_time(row.t_due)+"</t_due>" +
+				"<t_initiated>"+get_raw_time(row.t_initiated)+"</t_initiated>" +
+				"<tasks_hours>"+row.task_hours+"</task_hours>" +
+				"<source>project</source>" +
+				"<source_id>"+row.project_id+"</source_id>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</task_instances>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
 
 
 /**

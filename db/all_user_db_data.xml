@@ -1405,7 +1405,7 @@
 		</row>
 		<row>
 			<name>form102</name>
-			<display_name>assign_project_team</display_name>
+			<display_name>project_team</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -1416,7 +1416,7 @@
 		</row>
 		<row>
 			<name>form103</name>
-			<display_name>create_project_phases</display_name>
+			<display_name>project_phases</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -1427,7 +1427,7 @@
 		</row>
 		<row>
 			<name>form104</name>
-			<display_name>assign_project_tasks</display_name>
+			<display_name>project_tasks</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -1438,7 +1438,7 @@
 		</row>
 		<row>
 			<name>form105</name>
-			<display_name>manage_data_access</display_name>
+			<display_name>data_access</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -2706,7 +2706,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form102</element_id>
-			<element_name>assign_project_team</element_name>
+			<element_name>project_team</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2717,7 +2717,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form103</element_id>
-			<element_name>create_project_phases</element_name>
+			<element_name>project_phases</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2728,7 +2728,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form104</element_id>
-			<element_name>assign_project_tasks</element_name>
+			<element_name>project_tasks</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2739,7 +2739,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form105</element_id>
-			<element_name>manage_data_access</element_name>
+			<element_name>data_access</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

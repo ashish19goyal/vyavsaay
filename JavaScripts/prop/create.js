@@ -399,7 +399,7 @@ function form10_create_form()
 		var tax=0;
 		var total=0;
 		
-		$("[id^='save_form10']").each(function(index)
+		$("[id^='save_form10_']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
@@ -680,7 +680,7 @@ function form10_create_form()
 			event.preventDefault();
 			form10_update_form();
 		});
-		$("[id^='save_form10']").click();
+		$("[id^='save_form10_']").click();
 	}
 	else
 	{
@@ -6320,6 +6320,272 @@ function form98_create_item(form)
 	{
 		$("#modal2").dialog("open");
 	}
+}
+
+
+/**
+ * formNo 101
+ * form Manage Projects
+ * @param button
+ */
+function form101_create_item(form)
+{
+	if(is_create_access('form101'))
+	{
+		var name=form.elements[0].value;
+		var details=form.elements[1].value;
+		var start_date=get_raw_time(form.elements[2].value);
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<projects>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<details>"+details+"</details>" +
+					"<start_date>"+start_date+"</start_date>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</projects>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>projects</tablename>" +
+					"<link_to>form101</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Project "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[6];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form101_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form101_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Project Team
+ * @formNo 102
+ * @param button
+ */
+function form102_create_item(form)
+{
+	if(is_create_access('form102'))
+	{
+		var project_id=document.getElementById('form102_master').elements[2].value;
+		var member=form.elements[0].value;
+		var role=form.elements[1].value;
+		var notes=form.elements[2].value;
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<project_team>" +
+					"<id>"+data_id+"</id>" +
+					"<project_id>"+project_id+"</project_id>" +
+					"<member>"+member+"</member>" +
+					"<role>"+role+"</role>" +
+					"<notes>"+notes+"</notes>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</project_team>";
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[6];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form102_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form102_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Project Team
+ * @param button
+ */
+function form102_create_form()
+{
+	$("[id^='save_form102_']").click();
+}
+
+/**
+ * @form Project Phases
+ * @formNo 103
+ * @param button
+ */
+function form103_create_item(form)
+{
+	if(is_create_access('form103'))
+	{
+		var project_id=document.getElementById('form103_master').elements[2].value;
+		var phase=form.elements[0].value;
+		var details=form.elements[1].value;
+		var start_date=get_raw_time(form.elements[2].value);
+		var due_date=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<project_phases>" +
+					"<id>"+data_id+"</id>" +
+					"<project_id>"+project_id+"</project_id>" +
+					"<phase_name>"+phase+"</phase_name>" +
+					"<details>"+details+"</details>" +
+					"<start_date>"+start_date+"</start_date>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</project_phases>";
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[7];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form103_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form103_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Project Team
+ * @param button
+ */
+function form103_create_form()
+{
+	$("[id^='save_form103_']").click();
+}
+
+
+/**
+ * @form Manage Data Access
+ * @formNo 105
+ * @param button
+ */
+function form105_create_item(form)
+{
+	if(is_create_access('form105'))
+	{
+		var tablename=document.getElementById('form105_master').elements[1].value;
+		var record_id=document.getElementById('form105_master').elements[2].value;
+		var access_type=form.elements[0].value;
+		var user=form.elements[1].value;
+		var criteria_field=form.elements[2].value;
+		var criteria_value=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<data_access>" +
+					"<id>"+data_id+"</id>" +
+					"<tablename>"+tablename+"</tablename>" +
+					"<record_id>"+record_id+"</record_id>" +
+					"<access_type>"+access_type+"</access_type>" +
+					"<user>"+user+"</user>" +
+					"<criteria_field>"+criteria_field+"</criteria_field>" +
+					"<criteria_value>"+criteria_value+"</criteria_value>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</data_access>";
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[6];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form105_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Data Access
+ * @param button
+ */
+function form105_create_form()
+{
+	$("[id^='save_form105_']").click();
 }
 
 

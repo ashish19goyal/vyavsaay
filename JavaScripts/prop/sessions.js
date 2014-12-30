@@ -188,54 +188,6 @@ function get_pamphlet_template()
 	return template;
 }
 
-function is_read_access(form_id)
-{
-//	console.log('checking read access for '+form_id);
-	var re=localStorage.getItem('re');
-	var found=re.search(form_id+"-");
-	if(found===-1)
-	{
-		return false;
-	}
-	else
-		return true;
-}
-
-function is_create_access(form_id)
-{
-	var re=localStorage.getItem('cr');
-	var found=re.search(form_id+"-");
-	if(found===-1)
-	{
-		return false;
-	}
-	else
-		return true;
-}
-
-function is_update_access(form_id)
-{
-	var re=localStorage.getItem('up');
-	var found=re.search(form_id+"-");
-	if(found===-1)
-	{
-		return false;
-	}
-	else
-		return true;
-}
-
-function is_delete_access(form_id)
-{
-	var re=localStorage.getItem('del');
-	var found=re.search(form_id+"-");
-	if(found===-1)
-	{
-		return false;
-	}
-	else
-		return true;
-}
 
 /**
  * This function sets the session variable to online and write it to db

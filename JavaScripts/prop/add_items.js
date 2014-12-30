@@ -502,86 +502,6 @@ function form12_add_item()
 
 
 /**
- * @form Manage Tasks
- * @formNo 14
- */
-function form14_add_item()
-{
-	if(is_create_access('form14'))
-	{
-		var rowsHTML="";
-		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form14_"+id+"'></form>";
-			rowsHTML+="<td data-th='Task'>";
-				rowsHTML+="<input type='text' required form='form14_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new task type' onclick='modal18_action();'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Assignee'>";
-				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Due Time'>";
-				rowsHTML+="<input type='text' form='form14_"+id+"' value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' required form='form14_"+id+"' value='pending'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form14_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form14_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form14_"+id+"' onclick='$(this).parent().parent().remove();'>";	
-				rowsHTML+="<input type='hidden' form='form14_"+id+"'>";
-				rowsHTML+="<a id='form14_whatsapp_"+id+"' href='' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form14_"+id+"' title='Send details through WhatsApp'>";
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form14_body').prepend(rowsHTML);
-		
-		var fields=document.getElementById("form14_"+id);
-		var name_filter=fields.elements[0];
-		var assignee_filter=fields.elements[1];
-		var due_filter=fields.elements[2];
-		var status_filter=fields.elements[3];
-		var hours_filter=fields.elements[7];
-		
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form14_create_item(fields);
-		});
-				
-		$(name_filter).focus();
-
-		$(name_filter).on('blur',function(event)
-		{
-			var hours_data="<task_type>" +
-					"<est_hours></est_hours>" +
-					"<name exact='yes'>"+name_filter.value+"</name>" +
-					"</task_type>";
-			set_my_value(hours_data,hours_filter);
-		});
-		
-		var tasks_data="<task_type>" +
-				"<name></name>" +
-				"</task_type>";
-		set_my_value_list(tasks_data,name_filter);
-				
-		var staff_data="<staff>" +
-				"<acc_name></acc_name>" +
-				"</staff>";
-		set_my_value_list(staff_data,assignee_filter);
-		
-		set_static_value_list('task_instances','status',status_filter);
-		$(due_filter).datetimepicker();
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-/**
  * @form Enter Customer return
  * @formNo 15
  */
@@ -3399,6 +3319,249 @@ function form98_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Projects
+ * @formNo 101
+ */
+function form101_add_item()
+{
+	if(is_create_access('form101'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form101_"+id+"'></form>";
+			rowsHTML+="<td data-th='Project Name'>";
+				rowsHTML+="<textarea required form='form101_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<textarea form='form101_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Start Date'>";
+				rowsHTML+="<input type='text' required form='form101_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' required form='form101_"+id+"' value='active'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form101_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form101_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form101_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form101_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form101_"+id);
+		var name_filter=fields.elements[0];
+		var start_filter=fields.elements[2];
+		var status_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form101_create_item(fields);
+		});
+				
+		$(name_filter).focus();
+
+		set_static_value_list('projects','status',status_filter);
+		$(start_filter).datepicker();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Project Team
+ * @formNo 102
+ */
+function form102_add_item()
+{
+	if(is_create_access('form102'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form102_"+id+"'></form>";
+			rowsHTML+="<td data-th='Member'>";
+				rowsHTML+="<input type='text' form='form102_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Role'>";
+				rowsHTML+="<textarea form='form102_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Notes'>";
+				rowsHTML+="<textarea form='form102_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form102_"+id+"' required value='active'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form102_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form102_"+id+"' id='save_form102_"+id+"' >";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form102_"+id+"' id='delete_form102_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form102_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form102_"+id);
+		var member_filter=fields.elements[0];
+		var status_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form102_create_item(fields);
+		});
+					
+		$(member_filter).focus();
+		
+		var staff_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	
+		set_my_value_list(staff_data,member_filter);
+		set_static_value_list('project_team','status',status_filter);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Project Phases
+ * @formNo 103
+ */
+function form103_add_item()
+{
+	if(is_create_access('form103'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form103_"+id+"'></form>";
+			rowsHTML+="<td data-th='Phase Name'>";
+				rowsHTML+="<textarea form='form103_"+id+"' required></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<textarea form='form103_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Start Date'>";
+				rowsHTML+="<input type='text' form='form103_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Due Date'>";
+				rowsHTML+="<input type='text' form='form103_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form103_"+id+"' required value='active'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form103_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form103_"+id+"' id='save_form103_"+id+"' >";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form103_"+id+"' id='delete_form103_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form103_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form103_"+id);
+		var name_filter=fields.elements[0];
+		var start_filter=fields.elements[2];
+		var due_filter=fields.elements[3];
+		var status_filter=fields.elements[4];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form103_create_item(fields);
+		});
+					
+		$(name_filter).focus();
+		
+		$(start_filter).datepicker();
+		$(due_filter).datepicker();
+		set_static_value_list('project_team','status',status_filter);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Manage Data Access
+ * @formNo 105
+ */
+function form105_add_item()
+{
+	if(is_create_access('form105'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form105_"+id+"'></form>";
+			rowsHTML+="<td data-th='Access Type'>";
+				rowsHTML+="<input type='text' form='form105_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='User'>";
+				rowsHTML+="<input type='text' form='form105_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Criteria Field'>";
+				rowsHTML+="<input type='text' form='form105_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Criteria Value'>";
+				rowsHTML+="<textarea form='form105_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form105_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form105_"+id+"' id='save_form105_"+id+"' >";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form105_"+id+"' id='delete_form105_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form105_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form105_"+id);
+		var type_filter=fields.elements[0];
+		var user_filter=fields.elements[1];
+		var field_filter=fields.elements[2];
+		
+		var master_fields=document.getElementById('form105_master');
+		var tablename=master_fields.elements[1];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form105_create_item(fields);
+		});
+
+		set_static_value_list('data_access','access_type',type_filter);
+		
+		var user_data="<user_profiles>" +
+				"<username></username>" +
+				"</user_profiles>";
+		set_my_value_list(user_data,user_filter);
+		
+		var field_data="<data_access>" +
+				"<criteria_field></criteria_field>" +
+				"<tablename exact='yes'>"+tablename+"</tablename>" +
+				"</data_access>";
+		set_my_filter(field_data,field_filter);
+		
+		$(type_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
 
 /**
  * @form Asset Attributes

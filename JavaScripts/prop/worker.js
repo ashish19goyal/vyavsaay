@@ -935,7 +935,7 @@ function generate_attendance_records()
 		"<hours_worked></hours_worked>" +
 		"</attendance>";
 	
-	fetch_requested_data('form7',columns,function(results)
+	fetch_requested_data('',columns,function(results)
 	{
 		//console.log(results.length);
 		if(results.length===0)
@@ -944,7 +944,7 @@ function generate_attendance_records()
 					"<acc_name></acc_name>" +
 					"<status>active</status>" +
 					"</staff>";
-			fetch_requested_data('form7',staff_columns,function(staff_names)
+			fetch_requested_data('',staff_columns,function(staff_names)
 			{
 				staff_names.forEach(function(staff_name)
 				{

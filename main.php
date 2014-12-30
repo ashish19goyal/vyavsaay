@@ -37,6 +37,7 @@
 		include "functions/ecommerce.php";
 		include "functions/sale_reports.php";
 		include "functions/maps.php";
+		include "functions/projects.php";
 		//display for settings
 		include "functions/settings.php";
  	echo "</div>";

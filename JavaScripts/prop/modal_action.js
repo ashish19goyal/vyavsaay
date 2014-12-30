@@ -2449,7 +2449,7 @@ function modal33_action(id)
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form14'))
+		if(is_create_access('form14') || is_create_access('form104'))
 		{
 			var name=form.elements[1].value;
 			var assignee=form.elements[2].value;
@@ -2499,7 +2499,7 @@ function modal33_action(id)
 			"<task_hours></task_hours>" +
 			"<status></status>" +
 			"</task_instances>";
-	fetch_requested_data('form14',tasks_data,function(results)
+	fetch_requested_data('',tasks_data,function(results)
 	{
 		for(var i in results)
 		{
@@ -3343,6 +3343,99 @@ function modal42_action(order_id)
 	});
 	
 	$("#modal42").dialog("open");
+}
+
+/**
+ * @modal Add Project Task
+ * @modalNo 43
+ */
+function modal43_action(date_initiated,project_id)
+{
+	var form=document.getElementById("modal43_form");
+	var task_filter=form.elements[1];
+	var staff_filter=form.elements[2];
+	var start_filter=form.elements[3];
+	var due_filter=form.elements[4];
+	var status_filter=form.elements[5];
+	var hours_filter=form.elements[6];
+	
+	start_filter.value=date_initiated;
+		
+	var task_data="<task_type>" +
+			"<name></name>" +
+			"</task_type>";
+	set_my_value_list(task_data,task_filter);
+	
+	var staff_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	set_my_value_list(staff_data,staff_filter);
+	
+	$(due_filter).datetimepicker();
+	$(start_filter).datetimepicker();
+	set_static_value_list('task_instances','status',status_filter);
+	
+	$(task_filter).off('blur');
+	$(task_filter).on('blur',function(event)
+	{
+		var hours_data="<task_type>" +
+				"<est_hours></est_hours>" +
+				"<name exact='yes'>"+task_filter.value+"</name>" +
+				"</task_type>";
+		set_my_value(hours_data,hours_filter);
+	});
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form104'))
+		{
+			var name=form.elements[1].value;
+			var assignee=form.elements[2].value;
+			var t_due=get_raw_time(form.elements[4].value);
+			var t_initiated=get_raw_time(form.elements[3].value);
+			var status=form.elements[5].value;
+			var hours=form.elements[6].value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<task_instances>" +
+						"<id>"+data_id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<assignee>"+assignee+"</assignee>" +
+						"<t_initiated>"+t_initiated+"</t_initiated>" +
+						"<t_due>"+t_due+"</t_due>" +
+						"<status>"+status+"</status>" +
+						"<task_hours>"+hours+"</task_hours>" +
+						"<source>projects</source>" +
+						"<source_id>"+project_id+"</source_id>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</task_instances>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>task_instances</tablename>" +
+						"<link_to>form104</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Task "+name+" assigned to "+assignee+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_create_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal43").dialog("close");
+	});
+	
+	$("#modal43").dialog("open");
 }
 
 

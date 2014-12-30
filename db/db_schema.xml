@@ -584,7 +584,7 @@
 	<bill_types>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(25)"></name>
-			<notes index='yes' type="TEXT"></notes>
+			<notes index='no' type="TEXT"></notes>
 			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bill_types>
@@ -607,4 +607,41 @@
 			<status index='yes' type="VARCHAR(45)"></status><!-- open/closed -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</loans>
+	<projects>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(100)"></name>
+			<details index='no' type="TEXT"></details>
+			<start_date index='no' type="BIGINT"></start_date>
+			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active/suspended/completed -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</projects>
+	<project_team>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<project_id index='yes' type="BIGINT"></project_id>
+			<member index='yes' type="VARCHAR(100)"></member>
+			<notes index='no' type="TEXT"></notes>
+			<role index='no' type="TEXT"></role>
+			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active/left -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</project_team>
+	<project_phases>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<project_id index='yes' type="BIGINT"></project_id>
+			<phase_name index='yes' type="VARCHAR(100)"></phase_name>
+			<details index='no' type="TEXT"></details>
+			<start_date index='no' type="BIGINT"></start_date>
+			<due_date index='no' type="BIGINT"></due_date>
+			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active/suspended/completed -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</project_phases>
+	<data_access>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<tablename index='yes' type="VARCHAR(100)"></tablename>
+			<record_id index='yes' type="VARCHAR(20)"></record_id>
+			<access_type index='yes' type="VARCHAR(25)"></access_type><!--read/create/update/delete-->
+			<user index='yes' type="VARCHAR(100)"></user>
+			<criteria_field index='yes' type="VARCHAR(100)"></criteria_field>
+			<criteria_value index='yes' type="TEXT"></criteria_value>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</data_access>
 </re_xml>

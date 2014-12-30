@@ -474,6 +474,20 @@
 		</form>
 	</div>
 	
+	<div id="modal43" title="Add task">
+		<form id='modal43_form'>
+			<fieldset>
+				<label>Task <input type='text' required></label><br/>
+				<label>Assignee <input type="text"></label><br/>
+				<label>Start time <input type="text"></label><br/>
+				<label>Due time <input type="text"></label><br/>
+				<label>Status <input type="text" required value='pending'></label><br/>
+				<input type='hidden'>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+	
 	<div id="modal50" title="Sending Mails">
 		<a href='' id='modal50_sendmail'>Send mails through Gmail</a>
 	</div>

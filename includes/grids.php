@@ -66,6 +66,13 @@
 			</ul>
 		</li>
 		<li>
+			<a id="projects_link" onclick="grid_click('projects');"><div data-i18n="function.projects"> >>></div></a>		
+			<ul>
+				<li># Active projects: <a class='grid_item' id='grid_item_27'>TBD</a></li>
+				<li># Completed projects: <a class='grid_item' id='grid_item_28'>TBD</a></li>
+			</ul>
+		</li>
+		<li>
 			<a id="store_link" onclick="grid_click('store');"><div data-i18n="function.store"> >>></div></a>		
 			<ul>
 				<li># Storage areas : <a class='grid_item' id='grid_item_19'>TBD</a></li>

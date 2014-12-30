@@ -146,7 +146,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=8;i<43;i++)
+	for(var i=8;i<44;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({
@@ -220,7 +220,7 @@ function set_menu_username()
 
 function setup_grid_display()
 {
-	var functions_array=['sale_bills','purchase','finances','products','services','inventory','customers','suppliers','staff','store','ecommerce','offers','maps','sale_reports'];
+	var functions_array=['sale_bills','purchase','finances','products','services','inventory','customers','projects','suppliers','staff','store','ecommerce','offers','maps','sale_reports'];
 	functions_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main").find('ul').find('li').length;
@@ -299,6 +299,7 @@ function hide_all()
 	$("#finances_main").hide();
 	$("#ecommerce_main").hide();
 	$("#customers_main").hide();
+	$("#projects_main").hide();
 	$("#suppliers_main").hide();
 	$("#staff_main").hide();
 	$("#store_main").hide();
@@ -361,6 +362,25 @@ function element_display(fid,element_name)
 	$(element_link).click();
 	$(element_link).attr('data_id','');
 }
+
+function access_display(tablename,record_id,element_name)
+{
+	var element_link="#form105_link";
+	var function_link=$(element_link).parent().parent().parent().attr('id');
+	show_function("#"+function_link);
+	
+	var fields=document.getElementById('form105_master');
+	var table_filter=fields.elements[1];
+	var record_filter=fields.elements[2];
+	table_filter.value=tablename;
+	record_filter.value=record_id;
+	
+	$(element_link).click();
+	
+	table_filter.setAttribute('readonly','readonly');
+	record_filter.setAttribute('readonly','readonly');
+}
+
 
 function set_menu_shortcuts()
 {

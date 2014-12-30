@@ -2584,7 +2584,7 @@ function form51_update_form()
 					local_update_row(data_xml,activity_xml);
 				}
 				
-				$("[id^='save_form51']").click();
+				$("[id^='save_form51_']").click();
 			}, function() {});
 		}
 	}
@@ -5191,6 +5191,191 @@ function form100_update_form()
 	}
 }
 
+/**
+ * formNo 101
+ * form Manage Projects
+ * @param button
+ */
+function form101_update_item(form)
+{
+	if(is_update_access('form101'))
+	{
+		var name=form.elements[0].value;
+		var details=form.elements[1].value;
+		var start_date=get_raw_time(form.elements[2].value);
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<projects>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<details>"+details+"</details>" +
+					"<start_date>"+start_date+"</start_date>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</projects>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>projects</tablename>" +
+					"<link_to>form101</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Project "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Project Team
+ * @formNo 102
+ * @param button
+ */
+function form102_update_item(form)
+{
+	if(is_update_access('form102'))
+	{
+		var project_id=document.getElementById('form102_master').elements[2].value;
+		var member=form.elements[0].value;
+		var role=form.elements[1].value;
+		var notes=form.elements[2].value;
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<project_team>" +
+					"<id>"+data_id+"</id>" +
+					"<project_id>"+project_id+"</project_id>" +
+					"<member>"+member+"</member>" +
+					"<role>"+role+"</role>" +
+					"<notes>"+notes+"</notes>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</project_team>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Project Phases
+ * @formNo 103
+ * @param button
+ */
+function form103_update_item(form)
+{
+	if(is_update_access('form103'))
+	{
+		var project_id=document.getElementById('form103_master').elements[2].value;
+		var phase=form.elements[0].value;
+		var details=form.elements[1].value;
+		var start_date=get_raw_time(form.elements[2].value);
+		var due_date=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<project_phases>" +
+					"<id>"+data_id+"</id>" +
+					"<project_id>"+project_id+"</project_id>" +
+					"<phase_name>"+phase+"</phase_name>" +
+					"<details>"+details+"</details>" +
+					"<start_date>"+start_date+"</start_date>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</project_phases>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Project Tasks
+ * @formNo 104
+ * @param button
+ */
+function form104_update_item(form)
+{
+	if(is_update_access('form104'))
+	{
+		var project_id=document.getElementById('form104_master').elements[2].value;
+		var task=form.elements[0].value;
+		var assignee=form.elements[1].value;
+		var start_time=get_raw_time(form.elements[2].value);
+		var due_time=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<task_instances>" +
+					"<id>"+data_id+"</id>" +
+					"<source_id>"+project_id+"</source_id>" +
+					"<name>"+task+"</name>" +
+					"<assignee>"+assignee+"</assignee>" +
+					"<t_initiated>"+start_time+"</t_initiated>" +
+					"<t_due>"+due_time+"</t_due>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</task_instances>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
 
 /**
  * @form Manage Sale orders (multi-register)

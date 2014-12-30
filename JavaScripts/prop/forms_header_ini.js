@@ -2621,6 +2621,240 @@ function form100_header_ini()
 
 };
 
+/**
+ * @form Manage Projects
+ * @formNo 101
+ */
+function form101_header_ini()
+{
+	var filter_fields=document.getElementById('form101_header');
+	var name_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[1];
+	
+	var name_data="<projects>" +
+			"<name></name>" +
+			"</projects>";
+	
+	set_my_filter(name_data,name_filter);
+	set_static_filter('projects','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form101_ini();
+	});
+
+};
+
+/**
+ * @form Assign project team
+ * @formNo 102
+ */
+function form102_header_ini()
+{
+	var fields=document.getElementById('form102_master');
+	fields.elements[1].value="";
+	fields.elements[2].value=get_new_key();
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form102_create_form();
+	});
+}
+
+/**
+ * @form Create project phases
+ * @formNo 103
+ */
+function form103_header_ini()
+{
+	var fields=document.getElementById('form103_master');
+	fields.elements[1].value="";
+	fields.elements[2].value=get_new_key();
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form103_create_form();
+	});
+}
+
+/**
+ * @form Assign project tasks
+ * @formNo 104
+ */
+function form104_header_ini()
+{
+	var project_id=$("#form104_link").attr('data_id');
+	if(project_id==null)
+		project_id="";	
+	
+	$("#form104_body").parent().show();
+	$("#form104_calendar").hide();
+	
+	if(project_id!="")
+	{
+		var project_columns="<projects>" +
+				"<id>"+project_id+"</id>" +
+				"<name></name>" +
+				"</projects>";
+		
+		fetch_requested_data('',project_columns,function(project_results)
+		{
+			for (var i in project_results)
+			{
+				var filter_fields=document.getElementById('form104_master');
+				filter_fields.elements[1].value=project_results[i].name;
+				filter_fields.elements[2].value=project_results[i].id;
+				
+				$(filter_fields).off('submit');
+				$(filter_fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form104_create_form();
+				});
+				break;
+			}
+		});
+	
+			
+		$("#form104_body").parent().hide();
+		$("#form104_calendar").show();
+		///initializing calendar
+		
+		$('#form104_calendar').fullCalendar('destroy');
+		$('#form104_calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			height:400,
+			fixedWeekCount:false,
+			editable: true,
+			eventLimit: true, // allow "more" link when too many events
+			events: function(start, end, timezone, callback) {
+		        var start_time=parseFloat(start.unix())*1000;
+		        var end_time=parseFloat(end.unix())*1000;
+		        var tasks_data="<task_instances>" +
+		        		"<id></id>" +
+		        		"<name></name>" +
+		        		"<description></description>" +
+		        		"<t_initiated compare='more than'>"+start_time+"</t_initiated>" +
+		        		"<t_initiated compare='less than'>"+end_time+"</t_initiated>" +
+		        		"<t_due></t_due>" +
+		        		"<status></status>" +
+		        		"<assignee></assignee>" +
+		        		"<task_hours></task_hours>" +
+		        		"<source exact='yes'>projects</source>" +
+		        		"<source_id exact='yes'>"+project_id+"</source_id>" +
+						"</task_instances>";
+		        
+		        fetch_requested_data('form104',tasks_data,function(tasks)
+		        {
+		        	var events=[];
+		        	
+		        	tasks.forEach(function(task)
+		        	{
+	        			var color="yellow";
+	        			if(task.status=='cancelled')
+	        			{
+	        				color="aaaaaa";
+	        			}
+	        			else if(task.status=='pending' && parseFloat(task.t_due)<get_my_time())
+	        			{
+	        				color='#ff0000';
+	        			}
+	        			else if(task.status=='completed')
+	        			{
+	        				color='#00ff00';
+	        			}
+		        		events.push({
+		        			title: "\n"+task.name+"\nAssigned to: "+task.assignee+"\nDue time: "+get_formatted_time(task.t_due),
+		        			start:get_iso_time(task.t_initiated),
+		        			end:get_iso_time(parseFloat(task.t_initiated)+(parseFloat(task.task_hours)*3600000)),
+		        			color: color,
+		        			textColor:"#333",
+		        			id: task.id
+		        		});	        		
+		        	});
+		        	callback(events);
+		        });
+		    },
+		    dayClick: function(date,jsEvent,view){
+		    	modal43_action(get_my_date_from_iso(date.format()),project_id);
+		    },
+		    eventClick: function(calEvent,jsEvent,view){
+		    	modal33_action(calEvent.id);
+		    },
+		    eventDrop: function(event,delta,revertFunc){
+		    	var t_initiated=(parseFloat(event.start.unix())*1000);
+		    	var data_xml="<task_instances>" +
+							"<id>"+event.id+"</id>" +
+							"<t_initiated>"+t_initiated+"</t_initiated>" +
+							"<last_updated>"+get_my_time()+"</last_updated>" +
+							"</task_instances>";
+				if(is_online())
+				{
+					server_update_simple(data_xml);
+				}
+				else
+				{
+					local_update_simple(data_xml);
+				}
+		    },
+		    eventResize: function(event, delta, revertFunc){
+		    	var task_hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
+		    	var data_xml="<task_instances>" +
+							"<id>"+event.id+"</id>" +
+							"<task_hours>"+task_hours+"</task_hours>" +
+							"<last_updated>"+get_my_time()+"</last_updated>" +
+							"</task_instances>";
+				if(is_online())
+				{
+					server_update_simple(data_xml);
+				}
+				else
+				{
+					local_update_simple(data_xml);
+				}
+			}
+		});
+	}
+}
+
+function form104_switch_view()
+{
+	$("#form104_body").parent().toggle();
+	$("#form104_calendar").toggle();
+}
+
+/**
+ * @form Manage Data access
+ * @formNo 105
+ */
+function form105_header_ini()
+{
+	var fields=document.getElementById('form105_master');
+	var table=fields.elements[1];
+	var record=fields.elements[2];
+	table.removeAttribute('readonly');
+	record.removeAttribute('readonly');
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form105_ini();
+	});
+	
+	var tables_data="<data_access>" +
+			"<tablename></tablename>" +
+			"</data_access>";
+	set_my_value_list(tables_data,table);
+}
+
 
 /**
  * @form Manage Sale Orders (multi-register)

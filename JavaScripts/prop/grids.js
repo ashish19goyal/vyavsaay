@@ -378,7 +378,7 @@ function set_grid_item_17()
 		"<id></id>" +
 		"<date compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</date>" +
 		"<date compare='less than'>"+(get_raw_time(get_my_date())+1000)+"</date>" +
-		"<presence>present</presence>" +
+		"<presence exact='yes'>present</presence>" +
 		"</attendance>";
 	
 	get_single_column_data(function(results)
@@ -395,7 +395,7 @@ function set_grid_item_18()
 {
 	var columns="<task_instances>" +
 		"<id></id>" +
-		"<status>pending</status>" +
+		"<status exact='yes'>pending</status>" +
 		"</task_instances>";
 	
 	get_single_column_data(function(results)
@@ -413,7 +413,7 @@ function set_grid_item_19()
 {
 	var columns="<store_areas>" +
 		"<id></id>" +
-		"<area_type>storage</area_type>" +
+		"<area_type exact='yes'>storage</area_type>" +
 		"</store_areas>";
 	
 	get_single_column_data(function(results)
@@ -430,7 +430,7 @@ function set_grid_item_20()
 {
 	var columns="<sale_orders>" +
 		"<id></id>" +
-		"<status>pending</status>" +
+		"<status exact='yes'>pending</status>" +
 		"</sale_orders>";
 	
 	get_single_column_data(function(results)
@@ -465,7 +465,7 @@ function set_grid_item_23()
 {
 	var columns="<offers>" +
 		"<id></id>" +
-		"<status array='yes'>--active--extended--</status>" +
+		"<status exact='yes'>active</status>" +
 		"</offers>";
 	get_single_column_data(function(results)
 	{
@@ -481,7 +481,7 @@ function set_grid_item_24()
 {
 	var columns="<customers>" +
 		"<id></id>" +
-		"<address_status>confirmed</address_status>" +
+		"<address_status exact='yes'>confirmed</address_status>" +
 		"</customers>";
 	get_single_column_data(function(results)
 	{
@@ -497,7 +497,7 @@ function set_grid_item_25()
 {
 	var columns="<suppliers>" +
 		"<id></id>" +
-		"<address_status>confirmed</address_status>" +
+		"<address_status exact='yes'>confirmed</address_status>" +
 		"</suppliers>";
 	get_single_column_data(function(results)
 	{
@@ -527,3 +527,36 @@ function set_grid_item_26()
 	},columns);
 	setTimeout(set_grid_item_26,600000);
 };
+
+/**
+ * @item # Active projects
+ * @itemNo 27
+ */
+function set_grid_item_27()
+{
+	var columns="<projects>" +
+		"<id></id>" +
+		"<status exact='yes'>active</status>" +
+		"</projects>";
+	get_single_column_data(function(results)
+	{
+		document.getElementById('grid_item_27').innerHTML=results.length;
+	},columns);
+};
+
+/**
+ * @item # Completed projects
+ * @itemNo 28
+ */
+function set_grid_item_28()
+{
+	var columns="<projects>" +
+		"<id></id>" +
+		"<status exact='yes'>completed</status>" +
+		"</projects>";
+	get_single_column_data(function(results)
+	{
+		document.getElementById('grid_item_28').innerHTML=results.length;
+	},columns);
+};
+

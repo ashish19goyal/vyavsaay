@@ -565,6 +565,49 @@ function form98_import_template()
 	my_array_to_csv(data_array);
 };
 
+/**
+* @form manage Projects
+* @formNo 101
+* @table projects
+*/
+function form101_import_template()
+{
+	var data_array=['id','name','details','start_date','status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Project Team
+* @formNo 102
+* @table project_team
+*/
+function form102_import_template()
+{
+	var data_array=['id','project_id','member','notes','role','status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Project Phases
+* @formNo 103
+* @table project_phases
+*/
+function form103_import_template()
+{
+	var data_array=['id','project_id','phase_name','details','start_date','due_date','status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Project Tasks
+* @formNo 104
+*/
+function form104_import_template()
+{
+	var data_array=['id','name','project_id','description','assignee','t_due','task_hours','t_initiated','status'];
+	my_array_to_csv(data_array);
+};
+
 
 /**
 * @form Manage sale order (multi-register)
@@ -586,3 +629,4 @@ function form109_import_template()
 	var data_array=['id','name','attribute','value'];
 	my_array_to_csv(data_array);
 };
+
