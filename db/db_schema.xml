@@ -638,7 +638,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<tablename index='yes' type="VARCHAR(100)"></tablename>
 			<record_id index='yes' type="VARCHAR(20)"></record_id>
-			<access_type index='yes' type="VARCHAR(25)"></access_type><!--read/create/update/delete-->
+			<access_type index='yes' type="VARCHAR(25)"></access_type><!--all/read/update/delete-->
 			<user index='yes' type="VARCHAR(100)"></user>
 			<criteria_field index='yes' type="VARCHAR(100)"></criteria_field>
 			<criteria_value index='yes' type="TEXT"></criteria_value>

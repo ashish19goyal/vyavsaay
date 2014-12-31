@@ -2,7 +2,7 @@
 		<form id='report32_header'>
 			<fieldset>
 				<legend>Locate staff</legend>
-				<input type='submit' value='Refresh'>
+				<input type='submit' value='Refresh' class='generic_icon'>
 			</fieldset>
 		</form>
 		</br>

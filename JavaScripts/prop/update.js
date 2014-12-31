@@ -318,18 +318,14 @@ function form10_update_form()
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
 		
-		var email=form.elements[13].value;
-		var phone=form.elements[14].value;
-		
-		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
-		var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var message_string="Bill from: "+get_session_var('title')+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
 		var discount=0;
 		var tax=0;
 		var total=0;
 		
-		$("[id^='save_form10']").each(function(index)
+		$("[id^='save_form10_']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
@@ -340,8 +336,6 @@ function form10_update_form()
 			
 			message_string+="\nItem: "+subform.elements[0].value;
 			message_string+=" Price: "+subform.elements[3].value;
-			mail_string+="\nItem: "+subform.elements[0].value;
-			mail_string+=" Price: "+subform.elements[3].value;
 		});
 
 		form.elements[3].value=amount;
@@ -353,18 +347,13 @@ function form10_update_form()
 		message_string+="\ndiscount: "+discount;
 		message_string+="\nTax: "+tax;
 		message_string+="\nTotal: "+total;
-		message_string=encodeURIComponent(message_string);
 		
-		mail_string+="\nAmount: "+amount;
-		mail_string+="\ndiscount: "+discount;
-		mail_string+="\nTax: "+tax;
-		mail_string+="\nTotal: "+total;
-		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
-		$('#form10_whatsapp').attr('href',"whatsapp://send?text="+message_string);
-		$('#form10_whatsapp').show();
-		$('#form10_gmail').attr('href',mail_string);
-		$('#form10_gmail').show();
+		var subject="Bill from "+get_session_var('title');
+		$('#form10_share').show();
+		$('#form10_share').click(function()
+		{
+			modal44_action(customer,subject,message_string);
+		});
 		
 		var data_id=form.elements[7].value;
 		var transaction_id=form.elements[9].value;
@@ -631,7 +620,7 @@ function form10_update_form()
 			},payment_data);
 			
 		});
-		$("[id^='save_form10']").click();
+		$("[id^='save_form10_']").click();
 	}
 	else
 	{
@@ -661,7 +650,7 @@ function form11_update_item(form)
 		}
 		var due_date=form.elements[9].value;
 		var notes=form.elements[11].value;
-		var email=form.elements[13].value;
+		var share_message=form.elements[13];
 		var last_updated=get_my_time();
 		var data_xml="<payments>" +
 					"<id>"+data_id+"</id>" +
@@ -700,12 +689,7 @@ function form11_update_item(form)
 		{
 			local_update_row(data_xml,activity_xml);
 		}
-		
-		message_string=encodeURIComponent(message_string);
-		$("#form11_whatsapp_"+data_id).attr('href',"whatsapp://send?text="+message_string);
-		
-		var mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Payment+Receipt+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+message_string;
-		$("#form11_gmail_"+data_id).attr('href',mail_string);
+		share_message.value=message_string;
 		
 		for(var i=0;i<7;i++)
 		{
@@ -4564,11 +4548,8 @@ function form91_update_form()
 		var bill_type=form.elements[2].value;
 		var bill_date=get_raw_time(form.elements[3].value);
 		
-		var email=form.elements[14].value;
-		var phone=form.elements[15].value;
 		
 		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
-		var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
 		var discount=0;
@@ -4587,9 +4568,6 @@ function form91_update_form()
 			message_string+="\nItem: "+subform.elements[0].value;
 			message_string+=" Quantity: "+subform.elements[2].value;
 			message_string+=" Total: "+subform.elements[4].value;
-			mail_string+="\nItem: "+subform.elements[0].value;
-			mail_string+=" Quantity: "+subform.elements[2].value;
-			mail_string+=" Total: "+subform.elements[4].value;
 		});
 
 		form.elements[4].value=amount;
@@ -4601,18 +4579,14 @@ function form91_update_form()
 		message_string+="\ndiscount: "+discount;
 		message_string+="\nTax: "+tax;
 		message_string+="\nTotal: "+total;
-		message_string=encodeURIComponent(message_string);
-		
-		mail_string+="\nAmount: "+amount;
-		mail_string+="\ndiscount: "+discount;
-		mail_string+="\nTax: "+tax;
-		mail_string+="\nTotal: "+total;
-		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
-		$('#form91_whatsapp').attr('href',"whatsapp://send?text="+message_string);
-		$('#form91_whatsapp').show();
-		$('#form91_gmail').attr('href',mail_string);
-		$('#form91_gmail').show();
+
+		var subject="Bill from "+get_session_var('title');
+		$('#form91_share').show();
+		$('#form91_share').off('click');
+		$('#form91_share').on('click',function()
+		{
+			modal44_action(customer,subject,message_string);
+		});
 		
 		var data_id=form.elements[8].value;
 		var transaction_id=form.elements[10].value;

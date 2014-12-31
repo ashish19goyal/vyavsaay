@@ -5,7 +5,7 @@
 			<label>From date</br><input type='text' required></label>
 			<label>To date</br><input type='text' required></label>
 			<label>Staff Name</br><input type='text' title='If this field is blank, data for all staff would be shown'></label>
-			<input type='submit' value='Refresh'>
+			<input type='submit' value='Refresh' class='generic_icon'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>

@@ -4,7 +4,7 @@
 		<legend>Select filter</legend>
 			<label>Select Product</br><input type="text" form='report45_header'/></label>
 			<label>Select Batch</br><input type="text" form='report45_header'/></label>
-			<input type="button" value='Locate' onclick="report45_ini();"/>
+			<input type="button" value='Locate' class='generic_icon' onclick="report45_ini();"/>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>

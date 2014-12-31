@@ -488,6 +488,17 @@
 		</form>
 	</div>
 	
+	<div id="modal44" title="Share">
+		<form id='modal44_form'>
+			<fieldset>
+				<label>Choose Client <input type='text' required value='gmail'></label><br/>
+				<label>Recipient Email <input type="text"></label><br/>
+				<label>Recipient Name <input type="text" readonly='readonly'></label><br/>
+				<input type="submit" value='Send'>
+			</fieldset>
+		</form>
+	</div>
+	
 	<div id="modal50" title="Sending Mails">
 		<a href='' id='modal50_sendmail'>Send mails through Gmail</a>
 	</div>

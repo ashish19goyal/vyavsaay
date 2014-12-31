@@ -24,6 +24,7 @@ function default_load()
 	{
 		set_menu_shortcuts();
 		//setup_elements_display();
+		hide_unreadable_elements();
 		setup_grid_display();
 		date_formating();
 		modal_forms_ini();
@@ -146,7 +147,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=8;i<44;i++)
+	for(var i=8;i<45;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({
@@ -224,9 +225,38 @@ function setup_grid_display()
 	functions_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main").find('ul').find('li').length;
-		if(function_main===0)
+		var hidden_function_main=$("#"+func+"_main").find('ul').find('li:hidden').length;
+		if(function_main===0 || function_main===hidden_function_main)
 		{
 			$("#"+func+"_link").parent().hide();
+		}
+	});
+}
+
+function hide_unreadable_elements()
+{
+	var forms_array=[];
+	var reports_array=[];
+	for (var i=1;i<110;i++)
+	{
+		forms_array.push(i);
+		reports_array.push(i);
+	}
+	forms_array.forEach(function(element)
+	{
+		$("#form"+element+"_link").parent().hide();
+		if(is_read_access(element))
+		{
+			$("#form"+element+"_link").parent().show();
+		}
+	});
+	reports_array.forEach(function(element)
+	{
+		$("#report"+element+"_link").parent().hide();
+		
+		if(is_read_access(element))
+		{
+			$("#report"+element+"_link").parent().show();
 		}
 	});
 }
@@ -234,8 +264,9 @@ function setup_grid_display()
 function grid_click(func)
 {
 	show_function("#"+func+"_main");
-	$("#"+func+"_main").find('ul').find('li').find('a').first().click();
+	$("#"+func+"_main").find('ul').find('li:visible').find('a').first().click();
 }
+
 
 function i18n_setup()
 {
@@ -363,7 +394,7 @@ function element_display(fid,element_name)
 	$(element_link).attr('data_id','');
 }
 
-function access_display(tablename,record_id,element_name)
+function access_display(tablename,record_id)
 {
 	var element_link="#form105_link";
 	var function_link=$(element_link).parent().parent().parent().attr('id');

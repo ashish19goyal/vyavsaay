@@ -3513,7 +3513,7 @@ function form105_add_item()
 				rowsHTML+="<input type='text' form='form105_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Criteria Field'>";
-				rowsHTML+="<input type='text' form='form105_"+id+"' required>";
+				rowsHTML+="<input type='text' form='form105_"+id+"' title='Leave this blank for unconditional access'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Criteria Value'>";
 				rowsHTML+="<textarea form='form105_"+id+"'></textarea>";

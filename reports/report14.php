@@ -5,7 +5,7 @@
 			<label>Start date</br><input type='text' required></label>
 			<label>End date</br><input type='text' required></label>
 			<label>Select Account</br><input type='text' title='If this field is left blank, all applicable accounts will be shown'></label>
-			<input type='submit' value='Refresh'>
+			<input type='submit' value='Refresh' class='generic_icon'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>

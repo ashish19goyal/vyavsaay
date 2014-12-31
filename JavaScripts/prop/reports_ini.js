@@ -468,7 +468,7 @@ function report9_ini()
 				}
 				$('#report9_body').html(rowsHTML);
 				
-				var total_row="<tr><td colspan='3' data-th='Total'>Total</td><td data-th='Quantity'>"+total_quantity+"</td><td data-th='Amount'>"+total_amount+"</td></tr>";
+				var total_row="<tr><td colspan='3' data-th='Total'>Total</td><td data-th='Quantity'>"+total_quantity+"</td><td data-th='Amount'>"+Math.round(total_amount)+"</td></tr>";
 				$('#report9_foot').html(total_row);
 				
 				var print_button=form.elements[6];
@@ -1259,6 +1259,7 @@ function report31_ini()
 			"<city></city>" +
 			"<state></state>" +
 			"<country></country>" +
+			"<address_status exact='yes'>confirmed</address_status>" +
 			"</customers>";
 	
 	fetch_requested_data('report31',customers_data,function(accounts)
@@ -1270,7 +1271,7 @@ function report31_ini()
 				"<total_amount></total_amount>" +
 				"<paid_amount></paid_amount>" +
 				"<bill_id></bill_id>" +
-				"<status>pending</status>" +
+				"<status exact='yes'>pending</status>" +
 				"</payments>";
 		fetch_requested_data('report31',payments_data,function(payments)
 		{
@@ -1350,6 +1351,7 @@ function report32_ini()
 			"<state></state>" +
 			"<country></country>" +
 			"<status>active</status>" +
+			"<address_status exact='yes'>confirmed</address_status>" +
 			"</staff>";
 	fetch_requested_data('report32',address_data,function(addresses)
 	{
@@ -1409,6 +1411,7 @@ function report33_ini()
 			"<city></city>" +
 			"<state></state>" +
 			"<country></country>" +
+			"<address_status exact='yes'>confirmed</address_status>" +
 			"</suppliers>";
 	
 	fetch_requested_data('report33',suppliers_data,function(accounts)
@@ -1420,7 +1423,7 @@ function report33_ini()
 				"<total_amount></total_amount>" +
 				"<paid_amount></paid_amount>" +
 				"<bill_id></bill_id>" +
-				"<status>pending</status>" +
+				"<status exact='yes'>pending</status>" +
 				"</payments>";
 		fetch_requested_data('report33',payments_data,function(payments)
 		{
@@ -1751,7 +1754,9 @@ function report35_ini()
 					"<city></city>" +
 					"<state></state>" +
 					"<country></country>" +
+					"<address_status exact='yes'>confirmed</address_status>" +
 					"</customers>";
+			
 			fetch_requested_data('report35',customers_data,function(addresses)
 			{
 				for(var i in addresses)
@@ -1833,6 +1838,7 @@ function report36_ini()
 					"<city></city>" +
 					"<state></state>" +
 					"<country></country>" +
+					"<address_status exact='yes'>confirmed</address_status>" +
 					"</suppliers>";
 
 			fetch_requested_data('report36',suppliers_data,function(addresses)

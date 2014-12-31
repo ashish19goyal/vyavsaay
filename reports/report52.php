@@ -6,7 +6,7 @@
 			<label>Make</br><input type='text'></label>
 			<label>Supplier</br><input type='text'></label>
 			<label>Date Since</br><input type='text' required></label>
-			<input type='submit' value='Refresh'>
+			<input type='submit' value='Refresh' class='generic_icon'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>

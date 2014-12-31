@@ -453,7 +453,10 @@ function set_grid_item_22()
 		"</offers>";
 	get_single_column_data(function(results)
 	{
-		document.getElementById('grid_item_22').innerHTML=results[0];
+		if(results.length>0)
+		{
+			document.getElementById('grid_item_22').innerHTML=results[0];
+		}
 	},columns);
 };
 

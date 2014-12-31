@@ -3040,12 +3040,17 @@ function form101_delete_item(button)
 				"<source_id>"+data_id+"</source_id>" +
 				"<source>projects</source>" +
 				"</tasks_instances>";
+		var access_xml="<data_access>" +
+				"<tablename>projects</tablename>" +
+				"<record_id>"+data_id+"</record_id>" +
+				"</data_access>";
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
 			server_delete_simple(other_delete);
 			server_delete_simple(other_delete2);
 			server_delete_simple(other_delete3);
+			server_delete_simple(access_xml);
 		}
 		else
 		{
@@ -3053,6 +3058,7 @@ function form101_delete_item(button)
 			local_delete_simple(other_delete);
 			local_delete_simple(other_delete2);
 			local_delete_simple(other_delete3);
+			local_delete_simple(access_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -3079,13 +3085,19 @@ function form102_delete_item(button)
 		var data_xml="<project_team>" +
 					"<id>"+data_id+"</id>" +
 					"</project_team>";
+		var access_xml="<data_access>" +
+				"<tablename>project_team</tablename>" +
+				"<record_id>"+data_id+"</record_id>" +
+				"</data_access>";
 		if(is_online())
 		{
 			server_delete_simple(data_xml);
+			server_delete_simple(access_xml);
 		}
 		else
 		{
 			local_delete_simple(data_xml);
+			local_delete_simple(access_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -3112,13 +3124,19 @@ function form103_delete_item(button)
 		var data_xml="<project_phases>" +
 					"<id>"+data_id+"</id>" +
 					"</project_phases>";
+		var access_xml="<data_access>" +
+				"<tablename>project_phases</tablename>" +
+				"<record_id>"+data_id+"</record_id>" +
+				"</data_access>";
 		if(is_online())
 		{
 			server_delete_simple(data_xml);
+			server_delete_simple(access_xml);
 		}
 		else
 		{
 			local_delete_simple(data_xml);
+			local_delete_simple(access_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -3144,13 +3162,19 @@ function form104_delete_item(button)
 		var data_xml="<task_instances>" +
 					"<id>"+data_id+"</id>" +
 					"</task_instances>";
+		var access_xml="<data_access>" +
+				"<tablename>task_instances</tablename>" +
+				"<record_id>"+data_id+"</record_id>" +
+				"</data_access>";
 		if(is_online())
 		{
 			server_delete_simple(data_xml);
+			server_delete_simple(access_xml);
 		}
 		else
 		{
 			local_delete_simple(data_xml);
+			local_delete_simple(access_xml);
 		}	
 		$(button).parent().parent().remove();
 	}

@@ -4,7 +4,7 @@
 			<legend>Select Period</legend>
 			<label>Start date</br><input type='text' required></label>
 			<label>End date</br><input type='text' required></label>
-			<input type='submit' value='Refresh'>
+			<input type='submit' value='Refresh' class='generic_icon'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>

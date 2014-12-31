@@ -3,7 +3,7 @@
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Product <input type='text' title='If this field is blank, all applicable products will be shown'></label>
-			<input type='submit' value='Refresh'>
+			<input type='submit' value='Refresh' class='generic_icon'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
 	</form>

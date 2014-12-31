@@ -88,6 +88,30 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>share</tablename>
+			<listname>share_options</listname>
+			<name>gmail</name>
+			<value>Gmail</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>share</tablename>
+			<listname>share_options</listname>
+			<name>outlook</name>
+			<value>Outlook</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>share</tablename>
+			<listname>share_options</listname>
+			<name>whatsapp</name>
+			<value>Whatsapp</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>projects</tablename>
 			<listname>status</listname>
 			<name>active</name>
@@ -172,6 +196,14 @@
 			<listname>status</listname>
 			<name>completed</name>
 			<value>Completed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>data_access</tablename>
+			<listname>access_type</listname>
+			<name>all</name>
+			<value>All</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

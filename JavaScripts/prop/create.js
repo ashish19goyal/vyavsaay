@@ -388,11 +388,8 @@ function form10_create_form()
 		
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
-		var email=form.elements[13].value;
-		var phone=form.elements[14].value;
 		
-		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
-		var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var message_string="Bill from: "+get_session_var('title')+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
 		var discount=0;
@@ -410,8 +407,6 @@ function form10_create_form()
 			
 			message_string+="\nItem: "+subform.elements[0].value;
 			message_string+=" Price: "+subform.elements[3].value;
-			mail_string+="\nItem: "+subform.elements[0].value;
-			mail_string+=" Price: "+subform.elements[3].value;
 		});
 
 		form.elements[3].value=amount;
@@ -423,18 +418,13 @@ function form10_create_form()
 		message_string+="\ndiscount: "+discount;
 		message_string+="\nTax: "+tax;
 		message_string+="\nTotal: "+total;
-		message_string=encodeURIComponent(message_string);
 		
-		mail_string+="\nAmount: "+amount;
-		mail_string+="\ndiscount: "+discount;
-		mail_string+="\nTax: "+tax;
-		mail_string+="\nTotal: "+total;
-		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
-		$('#form10_whatsapp').attr('href',"whatsapp://send?text="+message_string);
-		$('#form10_whatsapp').show();
-		$('#form10_gmail').attr('href',mail_string);
-		$('#form10_gmail').show();
+		var subject="Bill from "+get_session_var('title');
+		$('#form10_share').show();
+		$('#form10_share').click(function()
+		{
+			modal44_action(customer,subject,message_string);
+		});
 		
 		var data_id=form.elements[7].value;
 		var transaction_id=form.elements[9].value;
@@ -5851,11 +5841,8 @@ function form91_create_form()
 		var customer=form.elements[1].value;
 		var bill_type=form.elements[2].value;
 		var bill_date=get_raw_time(form.elements[3].value);
-		var email=form.elements[14].value;
-		var phone=form.elements[15].value;
 		
-		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
-		var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var message_string="Bill from: "+get_session_var('title')+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
 		var discount=0;
@@ -5874,9 +5861,6 @@ function form91_create_form()
 			message_string+="\nItem: "+subform.elements[0].value;
 			message_string+=" Quantity: "+subform.elements[2].value;
 			message_string+=" Total: "+subform.elements[4].value;
-			mail_string+="\nItem: "+subform.elements[0].value;
-			mail_string+=" Quantity: "+subform.elements[2].value;
-			mail_string+=" Total: "+subform.elements[4].value;
 		});
 
 		form.elements[4].value=amount;
@@ -5888,19 +5872,15 @@ function form91_create_form()
 		message_string+="\ndiscount: "+discount;
 		message_string+="\nTax: "+tax;
 		message_string+="\nTotal: "+total;
-		message_string=encodeURIComponent(message_string);
 		
-		mail_string+="\nAmount: "+amount;
-		mail_string+="\ndiscount: "+discount;
-		mail_string+="\nTax: "+tax;
-		mail_string+="\nTotal: "+total;
-		mail_string=encodeURIComponent(mail_string);
-		mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Bill+from+"+encodeURIComponent(get_session_var('title'))+"&to="+email+"&body="+mail_string;
-		$('#form91_whatsapp').attr('href',"whatsapp://send?text="+message_string);
-		$('#form91_whatsapp').show();
-		$('#form91_gmail').attr('href',mail_string);
-		$('#form91_gmail').show();
-
+		var subject="Bill from "+get_session_var('title');
+		$('#form91_share').show();
+		$('#form91_share').off('click');
+		$('#form91_share').click(function()
+		{
+			modal44_action(customer,subject,message_string);
+		});
+		
 		var data_id=form.elements[8].value;
 		var transaction_id=form.elements[10].value;
 		var last_updated=get_my_time();
@@ -6354,13 +6334,23 @@ function form101_create_item(form)
 					"<notes>Project "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var access_xml="<data_access>" +
+					"<id>"+get_new_key()+"</id>" +
+					"<tablename>projects</tablename>" +
+					"<record_id>"+data_id+"</record_id>" +
+					"<access_type>all</access_type>" +
+					"<user>"+get_username()+"</user>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</data_access>";
 		if(is_online())
 		{
 			server_create_row(data_xml,activity_xml);
+			server_create_simple(access_xml);
 		}
 		else
 		{
 			local_create_row(data_xml,activity_xml);
+			local_create_simple(access_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -6411,13 +6401,23 @@ function form102_create_item(form)
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</project_team>";
+		var access_xml="<data_access>" +
+					"<id>"+get_new_key()+"</id>" +
+					"<tablename>project_team</tablename>" +
+					"<record_id>"+data_id+"</record_id>" +
+					"<access_type>all</access_type>" +
+					"<user>"+get_username()+"</user>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</data_access>";
 		if(is_online())
 		{
 			server_create_simple(data_xml);
+			server_create_simple(access_xml);
 		}
 		else
 		{
 			local_create_simple(data_xml);
+			local_create_simple(access_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -6479,13 +6479,23 @@ function form103_create_item(form)
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</project_phases>";
+		var access_xml="<data_access>" +
+					"<id>"+get_new_key()+"</id>" +
+					"<tablename>project_phases</tablename>" +
+					"<record_id>"+data_id+"</record_id>" +
+					"<access_type>all</access_type>" +
+					"<user>"+get_username()+"</user>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</data_access>";
 		if(is_online())
 		{
 			server_create_simple(data_xml);
+			server_create_simple(access_xml);
 		}
 		else
 		{
 			local_create_simple(data_xml);
+			local_create_simple(access_xml);
 		}	
 		for(var i=0;i<5;i++)
 		{

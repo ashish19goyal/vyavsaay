@@ -585,6 +585,18 @@ tbody tr:hover{
 	vertical-align:middle;
 }
 
+.share_icon{
+	height: 25px;
+	width: 25px;
+	background:url('/images/share.png') no-repeat left top;
+	background-size: 25px 25px;
+	color:transparent;
+	border: 0;
+	cursor: pointer;
+	border-radius: 1px;
+	vertical-align:middle;
+}
+
 .delete_icon{
 	height:25px;
 	width: 25px;
@@ -868,7 +880,7 @@ canvas{
 		bottom:0px;
 		text-align: center;
 		background: #2A2A2A;
-		height: 35px;
+		height: 25px;
 		color: #EDEDE4;
 		border-style: solid;
 		border-width: 2px;
@@ -927,6 +939,7 @@ canvas{
 	footer{
 		display: none;
 		color: transparent;
+		height:35px;
 	}
 	.menu_icon{
 		position:relative;

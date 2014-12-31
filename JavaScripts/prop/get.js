@@ -71,6 +71,7 @@ function fetch_requested_data(element_id,columns,callback)
 	}
 	else
 	{
+		hide_loader();
 		$("#modal2").dialog("open");
 	}
 }

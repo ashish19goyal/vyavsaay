@@ -909,7 +909,6 @@ function modal17_action(button)
  */
 function modal18_action()
 {
-	console.log('opening modal18');
 	var form=document.getElementById('modal18_form');
 	
 	var fname=form.elements[1];
@@ -923,7 +922,6 @@ function modal18_action()
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
-		console.log("submitting form");
 		event.preventDefault();
 		var name=form.elements[1].value;
 		var description=form.elements[2].value;
@@ -3419,13 +3417,23 @@ function modal43_action(date_initiated,project_id)
 						"<notes>Task "+name+" assigned to "+assignee+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
+			var access_xml="<data_access>" +
+						"<id>"+get_new_key()+"</id>" +
+						"<tablename>task_instances</tablename>" +
+						"<record_id>"+data_id+"</record_id>" +
+						"<access_type>all</access_type>" +
+						"<user>"+get_username()+"</user>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</data_access>";
 			if(is_online())
 			{
 				server_create_row(data_xml,activity_xml);
+				server_create_simple(access_xml);
 			}
 			else
 			{
 				local_create_row(data_xml,activity_xml);
+				local_create_simple(access_xml);
 			}	
 		}
 		else
@@ -3436,6 +3444,75 @@ function modal43_action(date_initiated,project_id)
 	});
 	
 	$("#modal43").dialog("open");
+}
+
+/**
+ * @modal Share
+ * @modalNo 44
+ */
+function modal44_action(recipient,subject,message)
+{
+	show_loader();
+	var form=document.getElementById("modal44_form");
+	var client=form.elements[1];
+	
+	set_static_value_list('share','share_options',client);
+	var sup_email_data="<suppliers>" +
+			"<email></email>" +
+			"<acc_name exact='yes'>"+recipient+"</acc_name>" +
+			"</suppliers>";
+	var cust_email_data="<customers>" +
+			"<email></email>" +
+			"<acc_name exact='yes'>"+recipient+"</acc_name>" +
+			"</customers>";
+	var staff_email_data="<staff>" +
+			"<email></email>" +
+			"<acc_name exact='yes'>"+recipient+"</acc_name>" +
+			"</staff>";
+	
+	var email_data_array=[sup_email_data,cust_email_data,staff_email_data];
+	message=encodeURIComponent(message);
+	subject=encodeURIComponent(subject);
+	
+	get_single_column_data_array(email_data_array,function(email_results)
+	{
+		if(email_results.length>0)
+		{
+			form.elements[2].value=email_results[0];
+		}
+		form.elements[3].value=recipient;
+		
+		var whatsapp_link=document.createElement('a');
+		whatsapp_link.setAttribute('href',"whatsapp://send?text="+message);
+		whatsapp_link.setAttribute('target',"_blank");
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+
+			var email=encodeURIComponent(form.elements[2].value);
+			var gmail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su="+subject+"&to="+email+"&body="+message;
+			var outlook_string="https://mail.live.com/default.aspx?rru=compose&to="+email+"&subject="+subject+"&body="+message;
+			var yahoo_string="http://compose.mail.yahoo.com/?To="+email+"&Cc=&Bcc=&Subj="+subject+"&Body="+message;
+			switch(client.value)
+			{
+				case 'gmail': window.open(gmail_string,'_blank');
+								break;
+				case 'outlook':	window.open(outlook_string,'_blank');
+								break;
+				case 'whatsapp': $(whatsapp_link).click();
+								break;
+				case 'yahoo': window.open(yahoo_string,'_blank');
+								break;
+			}
+			$("#modal44").dialog("close");
+		});
+		
+		$("#modal44").dialog("open");
+		hide_loader();
+	});
+	
 }
 
 
@@ -3487,6 +3564,8 @@ function modal50_action()
 		window.open(mail_string,'_blank');
 	});		
 }
+
+
 
 /**
  * @modal Merge records
