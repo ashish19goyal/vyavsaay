@@ -2870,13 +2870,13 @@ function form91_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="<input type='number' required form='form91_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' min='0' required form='form91_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Unit Price'>";
-				rowsHTML+="<input type='number' required form='form91_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' required min='0' form='form91_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Total'>";
-				rowsHTML+="<input type='number' required form='form91_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' required min='0' form='form91_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form91_"+id+"'>";
@@ -2931,7 +2931,7 @@ function form91_add_item()
 			
 			var last_batch_data="<bill_items count='1'>" +
 					"<batch></batch>" +
-					"<item_name>"+name_filter.value+"</item_name>" +
+					"<item_name exact='yes'>"+name_filter.value+"</item_name>" +
 					"<last_updated sort='desc'></last_updated>" +
 					"</bill_items>";
 			get_single_column_data(function(data)
@@ -2961,8 +2961,6 @@ function form91_add_item()
 					}	
 					get_inventory(name_filter.value,batch_filter.value,function(quantity)
 					{
-						//$(quantity_filter).attr('max',quantity);
-						$(quantity_filter).attr('min',"0");
 						$(quantity_filter).attr('placeholder',quantity);
 					});
 				}
@@ -3003,8 +3001,6 @@ function form91_add_item()
 			
 			get_inventory(name_filter.value,batch_filter.value,function(quantity)
 			{
-				//$(quantity_filter).attr('max',quantity);
-				$(quantity_filter).attr('min',"0");
 				$(quantity_filter).attr('placeholder',quantity);
 			});
 			
@@ -3130,7 +3126,7 @@ function form91_add_item()
 						tax_filter.value=parseFloat((parseFloat(tax.tax)*(amount-parseFloat(discount_filter.value)))/100);
 					});
 					
-					total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
+					total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value));
 				});
 				
 			});

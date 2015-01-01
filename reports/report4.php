@@ -9,7 +9,7 @@
 		</fieldset>
 	</form>
 	</br>
-	<div style='width:90%;height:90%'>
+	<div style='width:90%;height:300px'>
 		<div><b>Legend</b><div id="report4_legend" style='display: block;'></div></div>
 		<canvas id="report4_canvas" class='report_sizing'></canvas>
 	</div>

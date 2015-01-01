@@ -239,7 +239,7 @@
 			<customer_name index='yes' type="VARCHAR(100)"></customer_name>
 			<order_date index='yes' type="BIGINT"></order_date>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product -->
-			<status index='no' type='VARCHAR(25)'></status><!-- billed/cancelled/pending -->
+			<status index='yes' type='VARCHAR(25)'></status><!-- billed/cancelled/pending -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</sale_orders>
 	<sale_order_items>

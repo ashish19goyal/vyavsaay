@@ -15,20 +15,15 @@
  */
 function create_local_db(domain,func)
 {
-	//console.log("2.1");
 	if("indexedDB" in window)
 	{
-		//console.log("2.2");
 		var db_name="re_local_"+domain;
-		//console.log("creating local db "+db_name);
 		ajax_with_custom_func("./db/db_schema.xml","",function(e)
 		{
-			//console.log("2.3");
 			var request = indexedDB.open(db_name,2);
 		
 			request.onsuccess=function(e)
 			{
-				//console.log("2.4");
 				db=e.target.result;
 				db.close();
 				func();
@@ -41,7 +36,6 @@ function create_local_db(domain,func)
 				
 			request.onupgradeneeded=function(ev)
 			{
-				//console.log("2.6");
 				db=ev.target.result;
 				var tables=e.responseXML.childNodes[0].childNodes;
 				
@@ -55,7 +49,6 @@ function create_local_db(domain,func)
 						{	
 							if(tables[k].childNodes[i].nodeName!="" && tables[k].childNodes[i].nodeName!="#text" && tables[k].childNodes[i].nodeName!="#comment")
 							{	
-								//console.log(tables[k].childNodes[i].nodeName);
 								var indexing=tables[k].childNodes[i].getAttribute('index');
 								if(indexing=='yes')
 								{
@@ -108,8 +101,6 @@ function delete_local_db()
 	{
 		var db_name="re_local_"+get_domain();
 
-		console.log('deleting db');
-		
 		if(typeof static_local_db!='undefined')
 		{
 			static_local_db.close();
@@ -126,11 +117,11 @@ function delete_local_db()
 			alert('Could not delete local storage. Please refresh your browser and try again.');
 		};
 		
-		deleterequest.onblocked=function(ev)
+/*		deleterequest.onblocked=function(ev)
 		{
 			alert('Could not delete local storage. Please refresh your browser and try again.');
 		};
-	}
+*/	}
 	else
 	{
 		$("#modal52").dialog("open");
@@ -155,7 +146,6 @@ function local_read_single_column(columns,callback,results)
 	}
 	else
 	{
-		//console.log(columns);
 		var parser=new DOMParser();
 		var data=parser.parseFromString(columns,"text/xml");
 		var table=data.childNodes[0].nodeName;
@@ -175,7 +165,8 @@ function local_read_single_column(columns,callback,results)
 		{
 			if(cols[j].innerHTML!=null && cols[j].hasAttribute('sort'))
 			{
-				sort_index=cols[j].nodeName;
+				if(sort_index=='last_updated')
+					sort_index=cols[j].nodeName;
 				sort_order=cols[j].getAttribute('sort');
 			}
 			
@@ -187,25 +178,29 @@ function local_read_single_column(columns,callback,results)
 				{
 					fil.value=parseInt(cols[j].innerHTML);
 					fil.type=cols[j].getAttribute('compare');
+					filter.push(fil);
 				}
 				else if(cols[j].hasAttribute('array'))
 				{
 					fil.value=cols[j].innerHTML;
 					fil.type='array';
-				}
-				else if(cols[j].hasAttribute('exact'))
-				{
-					fil.value=cols[j].innerHTML;
-					fil.type='exact';
-					sort_index=cols[j].nodeName;
-					sort_key=IDBKeyRange.only(fil.value);
+					filter.push(fil);
 				}
 				else
 				{
 					fil.value=cols[j].innerHTML;
 					fil.type='';
+					filter.push(fil);
 				}
-				filter.push(fil);
+			}
+			if(cols[j].hasAttribute('exact'))
+			{
+				var fil=new Object();
+				fil.name=cols[j].nodeName;
+				fil.value=cols[j].innerHTML;
+				fil.type='exact';
+				sort_index=cols[j].nodeName;
+				sort_key=IDBKeyRange.only(fil.value);
 			}
 		}
 		
@@ -220,6 +215,7 @@ function local_read_single_column(columns,callback,results)
 			sort_order='prev';
 		}
 
+		console.log(table+" "+sort_index+" "+sort_key+" "+sort_order);
 		static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order).onsuccess=function(e)
 		{
 			var result=e.target.result;
@@ -352,7 +348,8 @@ function local_read_multi_column(columns,callback,results)
 		{
 			if(cols[j].innerHTML!=null && cols[j].hasAttribute('sort'))
 			{
-				sort_index=cols[j].nodeName;
+				if(sort_index=='last_updated')
+					sort_index=cols[j].nodeName;
 				sort_order=cols[j].getAttribute('sort');
 			}
 			
@@ -365,25 +362,29 @@ function local_read_multi_column(columns,callback,results)
 				{
 					fil.value=parseInt(cols[j].innerHTML);
 					fil.type=cols[j].getAttribute('compare');
+					filter.push(fil);
 				}
 				else if(cols[j].hasAttribute('array'))
 				{
 					fil.value=cols[j].innerHTML;
 					fil.type='array';
-				}
-				else if(cols[j].hasAttribute('exact'))
-				{
-					fil.value=cols[j].innerHTML;
-					fil.type='exact';
-					sort_index=cols[j].nodeName;
-					sort_key=IDBKeyRange.only(fil.value);
+					filter.push(fil);
 				}
 				else
 				{
 					fil.value=cols[j].innerHTML;
 					fil.type='';
+					filter.push(fil);
 				}
-				filter.push(fil);
+			}
+			if(cols[j].hasAttribute('exact'))
+			{
+				var fil=new Object();
+				fil.name=cols[j].nodeName;
+				fil.value=cols[j].innerHTML;
+				fil.type='exact';
+				sort_index=cols[j].nodeName;
+				sort_key=IDBKeyRange.only(fil.value);
 			}
 		}
 	

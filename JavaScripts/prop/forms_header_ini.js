@@ -275,8 +275,6 @@ function form10_header_ini()
 	fields.elements[7].value=get_new_key();
 	fields.elements[8].value="";
 	fields.elements[9].value=get_new_key();
-	var email_filter=fields.elements[13];
-	var phone_filter=fields.elements[14];
 		
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -288,22 +286,6 @@ function form10_header_ini()
 		"<acc_name></acc_name>" +
 		"</customers>";
 	set_my_value_list(customers_data,customers_filter);
-	
-	$(customers_filter).off('blur');
-	$(customers_filter).on('blur', function(event)
-	{
-		var email_data="<customers>" +
-				"<email></email>" +
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		set_my_value(email_data,email_filter);
-		
-		var phone_data="<customers>" +
-				"<phone></phone>" +
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		set_my_value(phone_data,phone_filter);
-	});
 	
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
@@ -369,8 +351,6 @@ function form12_header_ini()
 	fields.elements[7].value=get_new_key();
 	fields.elements[8].value="";
 	fields.elements[9].value=get_new_key();
-	var email_filter=fields.elements[13];
-	var phone_filter=fields.elements[14];
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -382,22 +362,6 @@ function form12_header_ini()
 		"<acc_name></acc_name>" +
 		"</customers>";
 	set_my_value_list(customers_data,customers_filter);
-	
-	$(customers_filter).off('blur');
-	$(customers_filter).on('blur', function(event)
-	{
-		var email_data="<customers>" +
-				"<email></email>" +
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		set_my_value(email_data,email_filter);
-		
-		var phone_data="<customers>" +
-				"<phone></phone>" +
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		set_my_value(phone_data,phone_filter);
-	});
 	
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
@@ -571,8 +535,6 @@ function form15_header_ini()
 	fields.elements[4].value=get_new_key();
 	fields.elements[5].value=get_new_key();
 	fields.elements[6].value=0;
-	var email_filter=fields.elements[10];
-	var phone_filter=fields.elements[11];
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -585,21 +547,6 @@ function form15_header_ini()
 		"</customers>";
 	set_my_value_list(customers_data,customers_filter);
 	
-	$(customers_filter).off('blur');
-	$(customers_filter).on('blur', function(event)
-	{
-		var email_data="<customers>" +
-				"<email></email>" +
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		set_my_value(email_data,email_filter);
-		
-		var phone_data="<customers>" +
-				"<phone></phone>" +
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		set_my_value(phone_data,phone_filter);
-	});
 	
 	$(return_date).datepicker();
 	return_date.value=get_my_date();
@@ -690,8 +637,6 @@ function form19_header_ini()
 	fields.elements[4].value=get_new_key();
 	fields.elements[5].value=get_new_key();
 	fields.elements[6].value=0;
-	var email_filter=fields.elements[10];
-	var phone_filter=fields.elements[11];
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -703,22 +648,6 @@ function form19_header_ini()
 		"<acc_name></acc_name>" +
 		"</suppliers>";
 	set_my_value_list(suppliers_data,supplier_filter);
-	
-	$(supplier_filter).off('blur');
-	$(supplier_filter).on('blur', function(event)
-	{
-		var email_data="<suppliers>" +
-				"<email></email>" +
-				"<acc_name exact='yes'>"+supplier_filter.value+"</acc_name>" +
-				"</suppliers>";
-		set_my_value(email_data,email_filter);
-		
-		var phone_data="<suppliers>" +
-				"<phone></phone>" +
-				"<acc_name exact='yes'>"+supplier_filter.value+"</acc_name>" +
-				"</suppliers>";
-		set_my_value(phone_data,phone_filter);
-	});
 	
 	$(return_date).datepicker();
 	return_date.value=get_my_date();
@@ -804,8 +733,6 @@ function form24_header_ini()
 	var order_date=fields.elements[2];
 	fields.elements[3].value="";
 	var status_filter=fields.elements[4];
-	var email_filter=fields.elements[8];
-	var phone_filter=fields.elements[9];
 	
 	fields.elements[5].value=get_new_key();
 	
@@ -818,22 +745,6 @@ function form24_header_ini()
 	var supplier_data="<suppliers>" +
 		"<acc_name></acc_name>" +
 		"</suppliers>";
-	
-	$(supplier_filter).off('blur');
-	$(supplier_filter).on('blur', function(event)
-	{
-		var email_data="<suppliers>" +
-				"<email></email>" +
-				"<acc_name exact='yes'>"+supplier_filter.value+"</acc_name>" +
-				"</suppliers>";
-		set_my_value(email_data,email_filter);
-		
-		var phone_data="<suppliers>" +
-				"<phone></phone>" +
-				"<acc_name exact='yes'>"+supplier_filter.value+"</acc_name>" +
-				"</suppliers>";
-		set_my_value(phone_data,phone_filter);
-	});
 	
 	set_my_value_list(supplier_data,supplier_filter);
 	$(order_date).datepicker();
@@ -1748,8 +1659,6 @@ function form72_header_ini()
 	fields.elements[7].value=get_new_key();
 	fields.elements[8].value="";
 	fields.elements[9].value=get_new_key();
-	var email_filter=fields.elements[13];
-	var phone_filter=fields.elements[14];
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -1761,22 +1670,6 @@ function form72_header_ini()
 		"<acc_name></acc_name>" +
 		"</customers>";
 	set_my_filter(customers_data,customers_filter);
-	
-	$(customers_filter).off('blur');
-	$(customers_filter).on('blur', function(event)
-	{
-		var email_data="<customers>" +
-				"<email></email>" +
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		set_my_value(email_data,email_filter);
-		
-		var phone_data="<customers>" +
-				"<phone></phone>" +
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		set_my_value(phone_data,phone_filter);
-	});
 	
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
@@ -1983,8 +1876,6 @@ function form82_header_ini()
 	fields.elements[5].value=0;
 	fields.elements[6].value=0;
 	fields.elements[7].value=get_new_key();
-	var email_filter=fields.elements[11];
-	var phone_filter=fields.elements[12];
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -1996,22 +1887,6 @@ function form82_header_ini()
 		"<acc_name></acc_name>" +
 		"</customers>";
 	set_my_value_list(customers_data,customers_filter);
-	
-	$(customers_filter).off('blur');
-	$(customers_filter).on('blur', function(event)
-	{
-		var email_data="<customers>" +
-				"<email></email>" +
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		set_my_value(email_data,email_filter);
-		
-		var phone_data="<customers>" +
-				"<phone></phone>" +
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		set_my_value(phone_data,phone_filter);
-	});
 	
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
@@ -2310,8 +2185,6 @@ function form91_header_ini()
 	fields.elements[8].value=get_new_key();
 	fields.elements[9].value="";
 	fields.elements[10].value=get_new_key();
-	var email_filter=fields.elements[14];
-	var phone_filter=fields.elements[15];
 	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -2331,21 +2204,6 @@ function form91_header_ini()
 	set_my_value_list(type_data,bill_type);
 	set_my_value(type_data,bill_type);
 	
-	$(customers_filter).off('blur');
-	$(customers_filter).on('blur', function(event)
-	{
-		var email_data="<customers>" +
-				"<email></email>" +
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		set_my_value(email_data,email_filter);
-		
-		var phone_data="<customers>" +
-				"<phone></phone>" +
-				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
-				"</customers>";
-		set_my_value(phone_data,phone_filter);
-	});
 	
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());

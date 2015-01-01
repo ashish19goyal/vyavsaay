@@ -11,10 +11,7 @@
 			<input type='button' title='New Bill' class='add_icon' onclick='form15_new_form();'>
 			<input type='submit' title='Save Bill' class='save_icon'>
 			<input type='button' title='Print Bill' class='print_icon' onclick='form15_print_form();'>
-			<input type='hidden' name='email_id' value=''>
-			<input type='hidden' name='phone' value=''>
-			<a id='form15_whatsapp' target='_blank' style='display:none;'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' title='Send details through WhatsApp'></a>
-			<a id='form15_gmail' target='_blank' style='display:none;'><img style='width:25px;height:25px;' src='./images/gmail.png' title='Send details through Gmail'></a>
+			<input type='button' id='form15_share' class='share_icon' style='display:none;'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

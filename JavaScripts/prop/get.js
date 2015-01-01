@@ -387,7 +387,10 @@ function set_my_value(filter_data,filter_element)
 {
 	get_single_column_data(function(data)
 	{
-		filter_element.value=data[0];
+		if(data.length>0)
+		{
+			filter_element.value=data[0];
+		}
 	},filter_data);
 }
 

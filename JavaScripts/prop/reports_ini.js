@@ -170,7 +170,7 @@ function report4_ini()
 	
 	var canvas_parent=$("#report4_canvas").parent();
 	$("#report4_canvas").remove();
-	$(canvas_parent).append("<canvas id='report4_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report4_canvas' class='report_sizing'></canvas>");
 	
 	var ctx = document.getElementById("report4_canvas").getContext("2d");
 	var modes_data="<payments>" +
@@ -293,7 +293,7 @@ function report6_ini()
 	
 	var canvas_parent=$("#report6_canvas").parent();
 	$("#report6_canvas").remove();
-	$(canvas_parent).append("<canvas id='report6_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report6_canvas' class='report_sizing'></canvas>");
 	
 	var ctx = document.getElementById("report6_canvas").getContext("2d");
 
@@ -494,7 +494,7 @@ function report14_ini()
 	
 	var canvas_parent=$("#report14_canvas").parent();
 	$("#report14_canvas").remove();
-	$(canvas_parent).append("<canvas id='report14_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report14_canvas' class='report_sizing'></canvas>");
 	
 	var ctx = document.getElementById("report14_canvas").getContext("2d");
 
@@ -599,7 +599,7 @@ function report15_ini()
 	
 	var canvas_parent=$("#report15_canvas").parent();
 	$("#report15_canvas").remove();
-	$(canvas_parent).append("<canvas id='report15_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report15_canvas' class='report_sizing'></canvas>");
 	var ctx = document.getElementById("report15_canvas").getContext("2d");
 	
 	var payments_data="<payments>" +
@@ -886,7 +886,7 @@ function report26_ini()
 	
 	var canvas_parent=$("#report26_canvas").parent();
 	$("#report26_canvas").remove();
-	$(canvas_parent).append("<canvas id='report26_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report26_canvas' class='report_sizing'></canvas>");
 	
 	var ctx = document.getElementById("report26_canvas").getContext("2d");
 	var sales_data="<bills>" +
@@ -922,7 +922,7 @@ function report27_ini()
 	
 	var canvas_parent=$("#report27_canvas").parent();
 	$("#report27_canvas").remove();
-	$(canvas_parent).append("<canvas id='report27_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report27_canvas' class='report_sizing'></canvas>");
 	var ctx = document.getElementById("report27_canvas").getContext("2d");
 	
 	var product_data="<product_instances>" +
@@ -976,7 +976,7 @@ function report28_ini()
 	
 	var canvas_parent=$("#report28_canvas").parent();
 	$("#report28_canvas").remove();
-	$(canvas_parent).append("<canvas id='report28_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report28_canvas' class='report_sizing'></canvas>");
 	var ctx = document.getElementById("report28_canvas").getContext("2d");
 	//ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
 	
@@ -1190,7 +1190,7 @@ function report30_ini()
 	
 	var canvas_parent=$("#report30_canvas").parent();
 	$("#report30_canvas").remove();
-	$(canvas_parent).append("<canvas id='report30_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report30_canvas' class='pie_report'></canvas>");
 	
 	var ctx = document.getElementById("report30_canvas").getContext("2d");
 	var task_data="<task_instances>" +
@@ -1472,7 +1472,7 @@ function report34_ini()
 	
 	var canvas_parent=$("#report34_canvas").parent();
 	$("#report34_canvas").remove();
-	$(canvas_parent).append("<canvas id='report34_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report34_canvas' class='report_sizing'></canvas>");
 	var ctx = document.getElementById("report34_canvas").getContext("2d");
 	
 	var payments_data="<payments>" +
@@ -1867,7 +1867,7 @@ function report37_ini()
 	
 	var canvas_parent=$("#report37_canvas").parent();
 	$("#report37_canvas").remove();
-	$(canvas_parent).append("<canvas id='report37_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report37_canvas' class='report_sizing'></canvas>");
 	
 	var ctx = document.getElementById("report37_canvas").getContext("2d");
 
@@ -1963,7 +1963,7 @@ function report38_ini()
 	
 	var canvas_parent=$("#report38_canvas").parent();
 	$("#report38_canvas").remove();
-	$(canvas_parent).append("<canvas id='report38_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report38_canvas' class='report_sizing'></canvas>");
 	
 	var ctx = document.getElementById("report38_canvas").getContext("2d");
 	var bills_data="<bills>" +
@@ -2027,7 +2027,7 @@ function report39_ini()
 	
 	var canvas_parent=$("#report39_canvas").parent();
 	$("#report39_canvas").remove();
-	$(canvas_parent).append("<canvas id='report39_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report39_canvas' class='report_sizing'></canvas>");
 	
 	var ctx = document.getElementById("report39_canvas").getContext("2d");
 	
@@ -2088,7 +2088,7 @@ function report40_ini()
 	
 	var canvas_parent=$("#report40_canvas").parent();
 	$("#report40_canvas").remove();
-	$(canvas_parent).append("<canvas id='report40_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report40_canvas' class='report_sizing'></canvas>");
 	var ctx = document.getElementById("report40_canvas").getContext("2d");
 	
 	var bills_data="<bills>" +
@@ -2358,7 +2358,7 @@ function report43_ini()
 	
 	var canvas_parent=$("#report43_canvas").parent();
 	$("#report43_canvas").remove();
-	$(canvas_parent).append("<canvas id='report43_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report43_canvas' class='report_sizing'></canvas>");
 	var ctx = document.getElementById("report43_canvas").getContext("2d");
 	
 	var p1_bills_data="<bills>" +
@@ -2696,7 +2696,7 @@ function report47_ini()
 	
 	var canvas_parent=$("#report47_canvas").parent();
 	$("#report47_canvas").remove();
-	$(canvas_parent).append("<canvas id='report47_canvas' class='report_sizing'><canvas>");
+	$(canvas_parent).append("<canvas id='report47_canvas' class='report_sizing'></canvas>");
 	var ctx = document.getElementById("report47_canvas").getContext("2d");
 	
 	var products_data="<product_instances>" +
