@@ -1,42 +1,6 @@
 <?php
 	include "includes/index_header.php";
 ?>
-		<!----- start-header---->
-			<div id="home" class="header">
-				<div class="top-header">
-					<div class="logo">
-						  <a href="#"><img src="images/logo.png" alt=""></a>
-					</div>
-					<a href="#" id='login_pull' onclick="display_login_box();">Login</a>
-					
-					<!----start-top-nav---->
-					 <nav class="top-nav">
-					 	<ul class="top-nav">
-							<li><a href="index.php#home" class="top-nav">Home</a></li>
-							<li><a href="index.php#about" class="top-nav">About</a></li>
-							<li><a href="index.php#reviews" class="top-nav">Reviews</a></li>
-							<li><a href="index.php#pricing" class="top-nav">Pricing</a></li>
-							<li><a href="index.php#contact" class="top-nav">Contact</a></li>
-							<li><a href="" class="top-nav scroll">Register</a></li>
-						</ul>
-						<a href="#" id="pull"><img src="images/menu-icon.png" title="menu" /></a>
-					</nav>
-					<div class="clearfix"> </div>
-				</div>
-			</div>
-				
-				<div class='login_box'>
-       				<div id="failed_auth"></div>
-					<form id='login'>
-						<fieldset>
-							Login ID: <input type="text" autocomplete="on" autofocus="autofocus" required></br>
-							Password: <input type="password" required></br>
-							<a href="pass_reset.php">Forgot password?</a></br>
-							<input type="submit" value='Login'>
-						</fieldset>
-					</form>
-       			</div>
-		<!----- //End-header---->
 		
 		<!----- /start-About---->
 			<div class='contact' style='height:450px;'>
@@ -136,58 +100,8 @@
 	  <!---//End-register----->
 	
 		
-<script>
-
-		addEventListener("load", function()
-		{
-			setTimeout(hideURLbar, 0);
-		}, false); 
-
-		function hideURLbar()
-		{
-			window.scrollTo(0,1); 
-		}
-
-		$('#login').on('submit',function(event)
-		{
-			event.preventDefault();
-			login_action();
-		});
-
+	<script>
 		 		
-		jQuery(document).ready(function($) {
-			$(".scroll").click(function(event){		
-				event.preventDefault();
-				$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-			});
-		});
-
-		$(function() {
-			var pull = $('#pull');
-			var	menu = $('nav ul');
-			var	menuHeight	= menu.height();
-			$(pull).on('click', function(e) {
-				e.preventDefault();
-				menu.slideToggle();
-			});
-			$(window).resize(function(){
-        		var w = $(window).width();
-        		if(w > 320 && menu.is(':hidden')) {
-        			menu.removeAttr('style');
-        		}
-    		});
-
-		});
-
-		function display_login_box()
-		{
-			var	login_box = $('.login_box');
-			login_box.slideToggle();
-			$(login_box).css("display","inline");
-			var user=document.getElementById('login').elements[1];
-			$(user).focus();
-		}
-		
 		
 		$('#registeration').on('submit',function(event)
 		{
@@ -201,4 +115,6 @@
 			reseller_register_click();
 		});
 				
-</script>
+	</script>
+</body>
+</html>

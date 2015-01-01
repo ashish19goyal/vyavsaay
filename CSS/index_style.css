@@ -108,9 +108,8 @@ img.review_picture_rotate{
 /*----login box----*/
 
 #login_pull {
-	display: block;
+/*	display: block;
 	position: absolute;
-	color: #F26D7D;
 	text-align: right;
 	top: 5px;
 	right: 0px;
@@ -118,6 +117,7 @@ img.review_picture_rotate{
 	font-size: 1.2em;
 	font-weight: bold;
 	z-index: 999;
+*/	color: #F26D7D;
 }
 
 		

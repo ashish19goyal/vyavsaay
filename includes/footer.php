@@ -1,5 +1,5 @@
 		<footer>
-			&copy; 2014 Vyavsaay.com | <a href="privacy_policy.php">Privacy Policy</a> 
+			&copy; 2015 Vyavsaay.com | <a href="privacy_policy.php">Privacy Policy</a> 
 		</footer>
 
 	</body>
