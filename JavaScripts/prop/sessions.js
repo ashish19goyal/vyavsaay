@@ -193,40 +193,48 @@ function get_pamphlet_template()
  * This function sets the session variable to online and write it to db
  * @returns
  */
-function set_session_online()
+function set_session_online(func)
 {
 	if(typeof static_local_db=='undefined')
 	{
 		open_local_db(function()
 		{
-			set_session_online();
+			set_session_online(func);
 		});
 	}
 	else
 	{
-		var objectStore=static_local_db.transaction(['user_preferences'],"readwrite").objectStore('user_preferences');
-		if(objectStore)
+		if(static_local_db.objectStoreNames.contains("user_preferences"))
 		{
-			var req=objectStore.index('name').get('offline');
-			req.onsuccess=function(e)
+			var transaction=static_local_db.transaction(['user_preferences'],"readwrite");
+			var objectStore=transaction.objectStore('user_preferences');
+		
+			if(objectStore)
 			{
-				var data=req.result;
-				if(data)
+				var req=objectStore.index('name').get('offline');
+				req.onsuccess=function(e)
 				{
-					data.value='online';
-					var put_req=objectStore.put(data);
-					put_req.onsuccess=function(e)
+					var data=req.result;
+					if(data)
 					{
-						set_session_var('offline','online');
-						hide_menu_items();
-						hide_loader();
-					};
-				}
-			};
-			req.onerror=function(e)
-			{
-				console.log(this.error);
-			};
+						data.value='online';
+						var put_req=objectStore.put(data);
+						put_req.onsuccess=function(e)
+						{
+							set_session_var('offline','online');
+							hide_menu_items();
+							//hide_loader();
+							func();
+						};
+					}
+				};
+				
+			}
+		}
+		else
+		{
+			set_session_var('offline','online');
+			func();
 		}
 	}
 };

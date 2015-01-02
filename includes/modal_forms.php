@@ -146,6 +146,7 @@
 		<form id='modal16_form'>
 			<fieldset>
 				<label>Name: <input type='text' required></label><br/>
+				<label>UserName: <input type='text' required title='only alphanumeric characters'></label><br/>
 				<label>Phone: <input type="text"></label><br/>
 				<label>Email: <input type="text"></label><br/>
 				<label>Address: <textarea></textarea></label><br/>
@@ -418,6 +419,7 @@
 			<fieldset>
 				<label>Default Sale Price: Rs. <input type="number" step='any' required></label><br/>
 				<label id='modal38_billings'></label>
+				</br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

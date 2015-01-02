@@ -40,15 +40,9 @@
 	<staff>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(90)"></name>
+			<username index='yes' type="VARCHAR(50)" unique='yes'></username>
 			<password index='no' type="VARCHAR(200)"></password>
-			<joining_date index='no' type="BIGINT"></joining_date>
 			<status index='yes' type="VARCHAR(45)"></status><!-- active/retired/suspended -->
-			<skills index='no' type="TEXT"></skills>
-			<qualification index='no' type="TEXT"></qualification>
-			<fixed_comp index='no' type="DECIMAL(10,2)"></fixed_comp>
-			<variable_comp_rate index='no' type="DECIMAL(10,2)"></variable_comp_rate>
-			<monthly_hours index='no' type="DECIMAL(5,2)"></monthly_hours>
-			<allowed_pto index='no' type="DECIMAL(3,2)"></allowed_pto>
 			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
 			<email index='yes' type="VARCHAR(100)"></email>
 			<phone index='yes' type="VARCHAR(15)"></phone>
@@ -489,14 +483,6 @@
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</user_preferences>
-	<user_profiles>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<username index='yes' type="VARCHAR(50)" unique='yes'></username>
-			<password index='no' type="VARCHAR(200)"></password>
-			<name index='no' type="VARCHAR(90)"></name>
-			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
-			<last_updated index='yes' type="BIGINT"></last_updated>
-	</user_profiles>
 	<access_control>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<element_id index='yes' type="VARCHAR(10)"></element_id>

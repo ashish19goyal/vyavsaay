@@ -20,7 +20,7 @@ function ajax_with_custom_func(url,kvp,func)
 	
 	var xmlhttp;
 	if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
+	{
 		xmlhttp=new XMLHttpRequest();
 	}
 	

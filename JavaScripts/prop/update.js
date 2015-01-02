@@ -2118,8 +2118,6 @@ function form46_update_form()
 function form47_update_form()
 {
 	show_loader();
-	if(is_update_access('form47'))
-	{
 		var form=document.getElementById('form47_master');
 		var domain=get_domain();
 		var username=get_username();
@@ -2127,13 +2125,13 @@ function form47_update_form()
 		var new_pass=form.elements[2].value;
 		var last_updated=get_my_time();
 		
-		var user_data="<user_profiles count='1'>" +
+		var user_data="<staff count='1'>" +
 				"<id></id>" +
 				"<username exact='yes'>"+username+"</username>" +
 				"<name></name>" +
 				"<password></password>" +
-				"</user_profiles>";
-		fetch_requested_data('form47',user_data,function(results)
+				"</staff>";
+		fetch_requested_data('',user_data,function(results)
 		{
 			for(var i in results)
 			{
@@ -2148,14 +2146,14 @@ function form47_update_form()
 						var bcrypt = new bCrypt();
 						bcrypt.hashpw(new_pass, salt_22, function(newhash)
 						{
-							var data_xml="<user_profiles>" +
+							var data_xml="<staff>" +
 										"<id>"+results[i].id+"</id>" +
 										"<username unique='yes'>"+username+"</username>" +
 										"<password>"+newhash+"</password>" +
 										"<name>"+results[i].name+"</name>" +
 										"<status>active</status>" +
 										"<last_updated>"+last_updated+"</last_updated>" +
-										"</user_profiles>";
+										"</staff>";
 							if(is_online())
 							{
 								server_update_simple(data_xml);
@@ -2183,11 +2181,6 @@ function form47_update_form()
 				break;
 			}
 		});
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
 }
 
 /**
@@ -2469,16 +2462,16 @@ function form51_update_form()
 		var last_updated=get_my_time();
 		if(password=="")
 		{
-			var data_xml="<user_profiles>" +
+			var data_xml="<staff>" +
 						"<id>"+data_id+"</id>" +
 						"<username>"+username+"</username>" +
 						"<name>"+name+"</name>" +
 						"<status>active</status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</user_profiles>";
+						"</staff>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>user_profiles</tablename>" +
+						"<tablename>staff</tablename>" +
 						"<link_to>form51</link_to>" +
 						"<title>Updated</title>" +
 						"<notes>User account for "+name+"</notes>" +
@@ -2503,17 +2496,17 @@ function form51_update_form()
 			var bcrypt = new bCrypt();
 			bcrypt.hashpw(password, salt_22, function(newhash)
 			{
-				var data_xml="<user_profiles>" +
+				var data_xml="<staff>" +
 							"<id>"+data_id+"</id>" +
 							"<username>"+username+"</username>" +
 							"<name>"+name+"</name>" +
 							"<password>"+newhash+"</password>" +
 							"<status>active</status>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
-							"</user_profiles>";
+							"</staff>";
 				var activity_xml="<activity>" +
 							"<data_id>"+data_id+"</data_id>" +
-							"<tablename>user_profiles</tablename>" +
+							"<tablename>staff</tablename>" +
 							"<link_to>form51</link_to>" +
 							"<title>Updated</title>" +
 							"<notes>User account for "+name+"</notes>" +

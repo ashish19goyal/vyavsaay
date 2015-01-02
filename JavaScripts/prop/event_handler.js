@@ -239,24 +239,24 @@ function hide_unreadable_elements()
 	var reports_array=[];
 	for (var i=1;i<110;i++)
 	{
-		forms_array.push(i);
-		reports_array.push(i);
+		forms_array.push("form"+i);
+		reports_array.push("report"+i);
 	}
 	forms_array.forEach(function(element)
 	{
-		$("#form"+element+"_link").parent().hide();
+		$("#"+element+"_link").parent().hide();
 		if(is_read_access(element))
 		{
-			$("#form"+element+"_link").parent().show();
+			$("#"+element+"_link").parent().show();
 		}
 	});
 	reports_array.forEach(function(element)
 	{
-		$("#report"+element+"_link").parent().hide();
+		$("#"+element+"_link").parent().hide();
 		
 		if(is_read_access(element))
 		{
-			$("#report"+element+"_link").parent().show();
+			$("#"+element+"_link").parent().show();
 		}
 	});
 }

@@ -30,7 +30,7 @@
 		$conn2=new db_connect("re_user_".$username);
 
 		set_user_preferences($conn2,$industry);
-		set_user_profiles($conn2,$pass_hash,$name);
+		set_user_profiles($conn2,$pass_hash,$name,$email,$phone);
 		
 	}catch(PDOException $ex)
 	{
@@ -46,10 +46,10 @@
 		$stmt1->execute(array('industry','industry','active',$industry,'other',1000*time()));
 	}
 	
-	function set_user_profiles($conn2,$pass_hash,$name)
+	function set_user_profiles($conn2,$pass_hash,$name,$email,$phone)
 	{
-		$stmt2=$conn2->conn->prepare("insert into user_profiles (username,password,name,status,last_updated) values(?,?,?,?,?)");
-		$stmt2->execute(array('master',$pass_hash,$name,'active',1000*time()));
+		$stmt2=$conn2->conn->prepare("insert into staff (username,password,name,status,email,phone,acc_name,last_updated) values(?,?,?,?,?,?,?,?)");
+		$stmt2->execute(array('master',$pass_hash,$name,'active',$email,$phone,$name." (".$phone.")",1000*time()));
 	}
 
 ?>

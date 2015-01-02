@@ -3406,11 +3406,11 @@ function form51_ini()
 	if(fuser!="")
 	{
 		show_loader();
-		var user_name_columns="<user_profiles>" +
+		var user_name_columns="<staff>" +
 				"<id></id>" +
 				"<name></name>" +
 				"<username exact='yes'>"+fuser+"</username>" +
-				"</user_profiles>";
+				"</staff>";
 		fetch_requested_data('form51',user_name_columns,function(user_results)
 		{
 			for(var i in user_results)

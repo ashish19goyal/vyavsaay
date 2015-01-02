@@ -2,10 +2,12 @@
 	<?php 
 	
 		echo "<ul>";
-			if(strpos($_SESSION['forms'],'form46-')!==false)
-				echo "<li><a id='form46_link' href='#form46' onclick='form46_header_ini(); form46_ini();' data-i18n='form.set_defaults'></a></li>";
 			if(strpos($_SESSION['forms'],'form47-')!==false)
 				echo "<li><a id='form47_link' href='#form47' onclick='form47_header_ini();' data-i18n='form.change_password'></a></li>";
+			if(strpos($_SESSION['forms'],'form99-')!==false)
+				echo "<li><a id='form99_link' href='#form99' data-i18n='form.delete_storage'></a></li>";
+			if(strpos($_SESSION['forms'],'form46-')!==false)
+				echo "<li><a id='form46_link' href='#form46' onclick='form46_header_ini(); form46_ini();' data-i18n='form.set_defaults'></a></li>";
 			if(strpos($_SESSION['forms'],'form48-')!==false)
 				echo "<li><a id='form48_link' href='#form48' onclick='form48_header_ini(); form48_ini();' data-i18n='form.select_reports'></a></li>";
 			if(strpos($_SESSION['forms'],'form49-')!==false)
@@ -22,8 +24,6 @@
 				echo "<li><a id='form80_link' href='#form80' onclick='form80_header_ini();' data-i18n='form.de-duplication_mapping'></a></li>";
 			if(strpos($_SESSION['forms'],'form95-')!==false)
 				echo "<li><a id='form95_link' href='#form95' onclick='form95_header_ini(); form95_ini();' data-i18n='form.data_import'></a></li>";
-			if(strpos($_SESSION['forms'],'form99-')!==false)
-				echo "<li><a id='form99_link' href='#form99' data-i18n='form.delete_storage'></a></li>";
 			if(strpos($_SESSION['forms'],'form100-')!==false)
 				echo "<li><a id='form100_link' href='#form100' onclick='form100_header_ini(); form100_ini();' data-i18n='form.selective_sync'></a></li>";
 			if(strpos($_SESSION['forms'],'form105-')!==false)

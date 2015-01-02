@@ -1165,9 +1165,9 @@ function form51_header_ini()
 	var fields=document.getElementById('form51_master');
 	var users_filter=fields.elements[1];
 		
-	var username_data="<user_profiles>" +
+	var username_data="<staff>" +
 			"<username></username>" +
-			"</user_profiles>";
+			"</staff>";
 	set_my_value_list(username_data,users_filter);
 
 	$(users_filter).on('select',function(event)

@@ -770,31 +770,32 @@ function modal15_action()
 function modal16_action()
 {
 	var form=document.getElementById('modal16_form');
+	var fusername=form.elements[2];
 	
-	var fname=form.elements[1];
-	var fphone=form.elements[2];
-	var femail=form.elements[3];
-	var faddress=form.elements[4];
-	var fpincode=form.elements[5];
-	var fcity=form.elements[6];
-	var fstate=form.elements[7];
-	var fcountry=form.elements[8];
-	var fdata_id=get_new_key();
-
+	$(fusername).on('blur',function(e)
+	{
+		var match=fusername.value.match(/[a-z0-9]*/i);
+		if(match[0].length!=fusername.value.length)
+		{
+			fusername.value="";
+		}
+	});
+	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
 		if(is_create_access('form8'))
 		{
-			var name=fname.value;
-			var phone=fphone.value;
-			var email=femail.value;
-			var address=faddress.value;
-			var pincode=fpincode.value;
-			var city=fcity.value;
-			var state=fstate.value;
-			var country=fcountry.value;
+			var name=form.elements[1].value;
+			var username=form.elements[2].value;
+			var phone=form.elements[3].value;
+			var email=form.elements[4].value;
+			var address=form.elements[5].value;
+			var pincode=form.elements[6].value;
+			var city=form.elements[7].value;
+			var state=form.elements[8].value;
+			var country=form.elements[9].value;
 			var data_id=get_new_key();
 			var address_id=get_new_key();
 			var last_updated=get_my_time();
@@ -804,6 +805,7 @@ function modal16_action()
 						"<phone>"+phone+"</phone>" +
 						"<email>"+email+"</email>" +
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
+						"<username unique='yes'>"+username+"</username>" +
 						"<address>"+address+"</address>" +
 						"<pincode>"+pincode+"</pincode>" +
 						"<city>"+city+"</city>" +
@@ -2251,7 +2253,7 @@ function modal30_action()
 			var bcrypt = new bCrypt();
 			bcrypt.hashpw(password, salt_22, function(newhash)
 			{
-				var data_xml="<user_profiles>" +
+				var data_xml="<staff>" +
 							"<id>"+data_id+"</id>" +
 							"<username unique='yes'>"+login_id+"</username>" +
 							"<name>"+name+"</name>" +

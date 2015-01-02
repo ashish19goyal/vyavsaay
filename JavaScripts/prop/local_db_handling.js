@@ -83,8 +83,19 @@ function open_local_db(func)
 	};
 	request.onerror=function(e)
 	{
+	    var db=e.target.result;
+	    db.close();
 		console.log(this.error);
+		//func();
 	};
+	request.onabort=function(e)
+	{
+	    var db=e.target.result;
+	    db.close();
+	    console.log(this.error);
+	    //func();
+	};
+	
 };
 
 
@@ -101,7 +112,7 @@ function delete_local_db()
 	{
 		var db_name="re_local_"+get_domain();
 
-		if(typeof static_local_db!='undefined')
+		if(typeof static_local_db!=='undefined')
 		{
 			static_local_db.close();
 		}
@@ -117,11 +128,11 @@ function delete_local_db()
 			alert('Could not delete local storage. Please refresh your browser and try again.');
 		};
 		
-/*		deleterequest.onblocked=function(ev)
+		deleterequest.onblocked=function(ev)
 		{
-			alert('Could not delete local storage. Please refresh your browser and try again.');
+			alert('Deleting local storage. Please wait for a few moments.');
 		};
-*/	}
+	}
 	else
 	{
 		$("#modal52").dialog("open");
@@ -150,166 +161,185 @@ function local_read_single_column(columns,callback,results)
 		var data=parser.parseFromString(columns,"text/xml");
 		var table=data.childNodes[0].nodeName;
 		var cols=data.childNodes[0].childNodes;
-		
-		var count=0;
-		if(data.childNodes[0].hasAttribute('count'))
+		var a=cols;
+		console.log(a);
+		if(cols.length>0)
 		{
-			count=parseInt(data.childNodes[0].getAttribute('count'));
-		}
-		var sort_index='last_updated';
-		var sort_order='desc';
-		var sort_key=IDBKeyRange.lowerBound(0);
-		
-		var filter=new Array();
-		for(var j=0; j<cols.length;j++)
-		{
-			if(cols[j].innerHTML!=null && cols[j].hasAttribute('sort'))
+			var count=0;
+			if(data.childNodes[0].hasAttribute('count'))
 			{
-				if(sort_index=='last_updated')
-					sort_index=cols[j].nodeName;
-				sort_order=cols[j].getAttribute('sort');
+				count=parseInt(data.childNodes[0].getAttribute('count'));
 			}
+			var sort_index='last_updated';
+			var sort_order='desc';
+			var sort_key=IDBKeyRange.lowerBound(0);
 			
-			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
+			
+			var filter=new Array();
+			for(var j=0; j<cols.length;j++)
 			{
-				var fil=new Object();
-				fil.name=cols[j].nodeName;
-				if(cols[j].hasAttribute('compare'))
+				if(cols[j].innerHTML!==null && cols[j].hasAttribute('sort'))
 				{
-					fil.value=parseInt(cols[j].innerHTML);
-					fil.type=cols[j].getAttribute('compare');
-					filter.push(fil);
-				}
-				else if(cols[j].hasAttribute('array'))
-				{
-					fil.value=cols[j].innerHTML;
-					fil.type='array';
-					filter.push(fil);
-				}
-				else
-				{
-					fil.value=cols[j].innerHTML;
-					fil.type='';
-					filter.push(fil);
-				}
-			}
-			if(cols[j].hasAttribute('exact'))
-			{
-				var fil=new Object();
-				fil.name=cols[j].nodeName;
-				fil.value=cols[j].innerHTML;
-				fil.type='exact';
-				sort_index=cols[j].nodeName;
-				sort_key=IDBKeyRange.only(fil.value);
-			}
-		}
-		
-		localdb_open_requests+=1;
-
-		if(sort_order=='asc')
-		{
-			sort_order='next';
-		}
-		else
-		{
-			sort_order='prev';
-		}
-
-		console.log(table+" "+sort_index+" "+sort_key+" "+sort_order);
-		static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order).onsuccess=function(e)
-		{
-			var result=e.target.result;
-			if(result)
-			{
-				var record=result.value;
-				var match=true;
-				for(var i=0;i<filter.length;i++)
-				{
-					var string=record[filter[i].name].toString().toLowerCase();
-					var search=filter[i].value.toString().toLowerCase();
-					var found=0;
-					
-					if(filter[i].type=='')
-					{
-						found=string.search(search);
-					}
-					else if(filter[i].type=='exact')
-					{
-						if(search!==string)
-						{
-							match=false;
-							break;
-						}
-					}
-					else if(filter[i].type=='array')
-					{
-						found=search.search("-"+string+"-");
-					}
-					if(filter[i].type=='less than') 
-					{
-						if(parseInt(record[filter[i].name])>=filter[i].value)
-						{
-							match=false;
-							break;
-						}
-					}
-					else if(filter[i].type=='more than') 
-					{
-						if(parseInt(record[filter[i].name])<=filter[i].value)
-						{
-							match=false;
-							break;
-						}
-					}
-					else if(filter[i].type=='equal') 
-					{
-						if(parseInt(record[filter[i].name])!=filter[i].value)
-						{
-							match=false;
-							break;
-						}
-					}
-					else if(filter[i].type=='not equal') 
-					{
-						if(parseInt(record[filter[i].name])==filter[i].value)
-						{
-							match=false;
-							break;
-						}
-					}
-
-					if(found===-1)
-					{
-						match=false;
-						break;
-					}
+					if(sort_index=='last_updated')
+						sort_index=cols[j].nodeName;
+					sort_order=cols[j].getAttribute('sort');
 				}
 				
-				if(match===true)
+				if(cols[j].innerHTML!==null && cols[j].innerHTML!=="")
 				{
-					results.push(record[cols[0].nodeName]);
-					if(results.length!=count)
+					var fil=new Object();
+					fil.name=cols[j].nodeName;
+					if(cols[j].hasAttribute('compare'))
 					{
-						result.continue();
+						fil.value=parseInt(cols[j].innerHTML);
+						fil.type=cols[j].getAttribute('compare');
+						filter.push(fil);
+					}
+					else if(cols[j].hasAttribute('array'))
+					{
+						fil.value=cols[j].innerHTML;
+						fil.type='array';
+						filter.push(fil);
 					}
 					else
 					{
-						localdb_open_requests-=1;
-						callback(results);
+						fil.value=cols[j].innerHTML;
+						fil.type='';
+						filter.push(fil);
+					}
+				}
+				if(cols[j].hasAttribute('exact'))
+				{
+					var fil=new Object();
+					fil.name=cols[j].nodeName;
+					fil.value=cols[j].innerHTML;
+					fil.type='exact';
+					sort_index=cols[j].nodeName;
+					sort_key=IDBKeyRange.only(fil.value);
+				}
+			}
+			
+			var b=cols;
+			console.log(b);
+			
+			localdb_open_requests+=1;
+	
+			if(sort_order=='asc')
+			{
+				sort_order='next';
+			}
+			else
+			{
+				sort_order='prev';
+			}
+	
+			//console.log(table+" "+sort_index+" "+sort_key+" "+sort_order);
+			static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order).onsuccess=function(e)
+			{
+				var result=e.target.result;
+				if(result)
+				{
+					var record=result.value;
+					var match=true;
+					for(var i=0;i<filter.length;i++)
+					{
+						var string=record[filter[i].name].toString().toLowerCase();
+						var search=filter[i].value.toString().toLowerCase();
+						var found=0;
+						
+						if(filter[i].type=='')
+						{
+							found=string.search(search);
+						}
+						else if(filter[i].type=='exact')
+						{
+							if(search!==string)
+							{
+								match=false;
+								break;
+							}
+						}
+						else if(filter[i].type=='array')
+						{
+							found=search.search("-"+string+"-");
+						}
+						if(filter[i].type=='less than') 
+						{
+							if(parseInt(record[filter[i].name])>=filter[i].value)
+							{
+								match=false;
+								break;
+							}
+						}
+						else if(filter[i].type=='more than') 
+						{
+							if(parseInt(record[filter[i].name])<=filter[i].value)
+							{
+								match=false;
+								break;
+							}
+						}
+						else if(filter[i].type=='equal') 
+						{
+							if(parseInt(record[filter[i].name])!=filter[i].value)
+							{
+								match=false;
+								break;
+							}
+						}
+						else if(filter[i].type=='not equal') 
+						{
+							if(parseInt(record[filter[i].name])==filter[i].value)
+							{
+								match=false;
+								break;
+							}
+						}
+	
+						if(found===-1)
+						{
+							match=false;
+							break;
+						}
+					}
+					
+					if(match===true)
+					{
+						if(cols[0]===undefined)
+						{
+							var c=cols;
+							console.log(c);
+							console.log(columns);
+							console.log(filter);
+						}
+						results.push(record[cols[0].nodeName]);
+						if(results.length!=count)
+						{
+							result.continue();
+						}
+						else
+						{
+							localdb_open_requests-=1;
+							callback(results);
+						}
+					}
+					else
+					{
+						result.continue();
 					}
 				}
 				else
 				{
-					result.continue();
+					localdb_open_requests-=1;
+					results=jQuery.unique(results);
+					callback(results);
 				}
-			}
-			else
-			{
-				localdb_open_requests-=1;
-				results=jQuery.unique(results);
-				callback(results);
-			}
-		};
+			};
+		}
+		else
+		{
+			callback(results);
+		}
 	}
 };
 

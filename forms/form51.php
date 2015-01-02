@@ -6,8 +6,6 @@
 			<label>Password</br><input type='password'></label>
 			<input type='hidden' name='user_id'>
 			<input type='submit' title="Save Access" class='save_icon'>
-			<input type='button' value='Add User' onclick='modal30_action();'>
-			<input type='button' value='Delete User' onclick='modal31_action();'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

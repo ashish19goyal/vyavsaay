@@ -51,13 +51,10 @@ function login_action()
 
 function login_online(username,domain,pass)
 {
-	//console.log("funny---still loging online");
 	ajax_with_custom_func("./ajax/login.php","domain="+domain+"&user="+username+"&pass="+pass,function(e)
 	{
 		login_status=e.responseText;
 		var session_xml=e.responseXML;
-		//console.log(login_status);
-		//console.log("this is session variable"+session_xml);
 		if(login_status=="failed_auth")
 		{
 			document.getElementById("failed_auth").innerHTML="Login failed, try again!";
@@ -74,8 +71,11 @@ function login_online(username,domain,pass)
 				session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].innerHTML;
 			}
 			ini_session(domain,username);
-			set_session(session_vars);
-			set_session_online();
+			
+			set_session_online(function()
+			{
+				set_session(session_vars);
+			});
 		}
 	});
 
@@ -137,7 +137,7 @@ function set_session_variables(domain,username,pass)
 				else
 				{
 					var keyValue=IDBKeyRange.only(username);
-					static_local_db.transaction(['user_profiles'],"readonly").objectStore('user_profiles').index('username').openCursor(keyValue).onsuccess=function(e)
+					static_local_db.transaction(['staff'],"readonly").objectStore('staff').index('username').openCursor(keyValue).onsuccess=function(e)
 					{
 						var result2=e.target.result;
 						if(result2)
@@ -212,7 +212,7 @@ function try_local_db_login(username,domain,func_success,func_failure)
 		{
 			//console.log("3.2");
 			db=e.target.result;
-			if(!db.objectStoreNames.contains("user_profiles"))
+			if(!db.objectStoreNames.contains("staff"))
 			{
 				//console.log("3.3");
 				var deleterequest=indexedDB.deleteDatabase(db_name);
@@ -225,8 +225,8 @@ function try_local_db_login(username,domain,func_success,func_failure)
 			else
 			{
 				//console.log("3.4");
-				var tran=db.transaction("user_profiles","readonly");
-				var table = tran.objectStore("user_profiles");
+				var tran=db.transaction("staff","readonly");
+				var table = tran.objectStore("staff");
 				
 				var index=table.index("username");
 				var records=index.get(username);

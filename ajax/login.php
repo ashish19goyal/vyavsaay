@@ -13,7 +13,7 @@ use RetailingEssentials\db_connect;
 	try 
 	{
 		$conn=new db_connect("re_user_".$domain);
-		$stmt=$conn->conn->prepare("select password from user_profiles where username=?");
+		$stmt=$conn->conn->prepare("select password from staff where username=?");
 		$stmt->execute(array($user));
 		
 		//echo "this is domainname: $domain and password: $pass";
@@ -128,7 +128,7 @@ use RetailingEssentials\db_connect;
 				$_SESSION['del']=$del_access;
 				
 				//////setting username and name
-				$stmt2=$conn->conn->prepare("select name from user_profiles where username=?");
+				$stmt2=$conn->conn->prepare("select name from staff where username=?");
 				$stmt2->execute(array($user));
 				$row2=$stmt2->fetch(PDO::FETCH_ASSOC);
 				$session_var.="<username>";
