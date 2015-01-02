@@ -11,7 +11,6 @@
 						<div class="col-md-6 banner-text">
 							<h1>Vyavsaay</h1>
 							<p><b>Vyavsaay provides latest technology solutions for your business, on a cloud based platform.</b></p>
-							<p><b>Email: info@vyavsaay.com <br> Phone: +91-9818005232</b></p>
 						</div>
 					</div>
 			</div>

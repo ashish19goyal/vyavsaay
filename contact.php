@@ -7,8 +7,9 @@
 	      	<div class="container">
 	      		  <h3>CONTACT</h3>
       			  <div class="gallery-head text-center">
+	       			  <p><b>Email: info@vyavsaay.com <br> Phone: +91-9818005232</b></p>
        			  </div>
-       			
+				  
       			  <div class="contact-form">
 		  	        <form id='index_contact'>
 			    	    <p class="comment-form-author"><label>Name</label>
