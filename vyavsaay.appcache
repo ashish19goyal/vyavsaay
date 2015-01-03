@@ -11,6 +11,8 @@ CACHE MANIFEST
 CACHE:
 index.php
 register.php
+faqs.php
+contact.php
 offline.html
 pass_reset.php
 privacy_policy.php

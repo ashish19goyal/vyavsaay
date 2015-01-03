@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!-- <html manifest="vyavsaay.appcache"> -->
-<html>
+<html manifest="vyavsaay.appcache">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
