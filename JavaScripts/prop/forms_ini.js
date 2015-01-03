@@ -29,7 +29,7 @@ function form1_ini()
 		"<cost_price></cost_price>" +
 		"<sale_price></sale_price>" +
 		"<expiry></expiry>" +
-		"<last_updated sort='desc'></last_updated>" +
+		"<last_updated></last_updated>" +
 		"</product_instances>";
 
 	$('#form1_body').html("");
@@ -736,7 +736,7 @@ function form11_ini()
 			"<mode></mode>" +
 			"<bill_id></bill_id>" +
 			"<notes></notes>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</payments>";
 
 	$('#form11_body').html("");
@@ -1031,7 +1031,7 @@ function form14_ini()
 			"<t_initiated></t_initiated>" +
 			"<task_hours></task_hours>" +
 			"<status>"+fstatus+"</status>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</task_instances>";
 
 	$('#form14_body').html("");
@@ -1887,7 +1887,7 @@ function form30_ini()
 			"<state></state>" +
 			"<country></country>" +
 			"<address_status></address_status>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</customers>";
 
 	$('#form30_body').html("");
@@ -2024,7 +2024,7 @@ function form35_ini()
 			"<quantity_add_amount></quantity_add_amount>" +
 			"<free_product_name></free_product_name>" +
 			"<free_product_quantity></free_product_quantity>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</offers>";
 
 	$('#form35_body').html("");
@@ -2144,7 +2144,7 @@ function form38_ini()
 			"<batch>"+fbatch+"</batch>" +
 			"<item_name>"+fname+"</item_name>" +
 			"<name>"+farea+"</name>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</area_utilization>";
 
 	$('#form38_body').html("");
@@ -2247,7 +2247,7 @@ function form39_ini()
 			"<description></description>" +
 			"<bar_code></bar_code>" +
 			"<tax></tax>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</product_master>";
 
 	$('#form39_body').html("");
@@ -2405,7 +2405,7 @@ function form40_ini()
 			"<state></state>" +
 			"<country></country>" +
 			"<address_status></address_status>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</suppliers>";
 
 	$('#form40_body').html("");
@@ -2690,7 +2690,7 @@ function form42_ini()
 			"<total></total>" +
 			"<type></type>" +
 			"<transaction_id></transaction_id>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</bills>";
 
 	$('#form42_body').html("");
@@ -2806,7 +2806,7 @@ function form43_ini()
 			"<order_date></order_date>" +
 			"<status>"+fstatus+"</status>" +
 			"<notes></notes>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</purchase_orders>";
 
 	$('#form43_body').html("");
@@ -2920,7 +2920,7 @@ function form44_ini()
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<count_items></count_items>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</pamphlets>";
 
 	$('#form44_body').html("");
@@ -3571,7 +3571,7 @@ function form53_ini()
 			"<total></total>" +
 			"<notes></notes>" +
 			"<transaction_id></transaction_id>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</supplier_bills>";
 
 	$('#form53_body').html("");
@@ -3784,7 +3784,7 @@ function form56_ini()
 			"<acc_name>"+faccount+"</acc_name>" +
 			"<notes></notes>" +
 			"<amount></amount>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</cash_register>";
 
 	$('#form56_body').html("");
@@ -3890,7 +3890,7 @@ function form57_ini()
 			"<description></description>" +
 			"<price></price>" +
 			"<tax></tax>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</services>";
 
 	$('#form57_body').html("");
@@ -4000,7 +4000,7 @@ function form58_ini()
 			"<requisite_type>"+ftype+"</requisite_type>" +
 			"<requisite_name>"+frequisite+"</requisite_name>" +
 			"<quantity></quantity>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</pre_requisites>";
 
 	$('#form58_body').html("");
@@ -4109,7 +4109,7 @@ function form59_ini()
 			"<requisite_type>"+ftype+"</requisite_type>" +
 			"<requisite_name>"+frequisite+"</requisite_name>" +
 			"<quantity></quantity>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</pre_requisites>";
 
 	$('#form59_body').html("");
@@ -4217,7 +4217,7 @@ function form60_ini()
 			"<type exact='yes'>product</type>" +
 			"<attribute>"+fattribute+"</attribute>" +
 			"<value></value>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</attributes>";
 
 	$('#form60_body').html("");
@@ -4321,7 +4321,7 @@ function form61_ini()
 			"<type>service</type>" +
 			"<attribute>"+fattribute+"</attribute>" +
 			"<value></value>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</attributes>";
 
 	$('#form61_body').html("");
@@ -4427,7 +4427,7 @@ function form62_ini()
 			"<reviewer>"+freviewer+"</reviewer>" +
 			"<detail></detail>" +
 			"<rating>"+frating+"</rating>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</reviews>";
 
 	$('#form62_body').html("");
@@ -4536,7 +4536,7 @@ function form63_ini()
 			"<reviewer>"+freviewer+"</reviewer>" +
 			"<detail></detail>" +
 			"<rating>"+frating+"</rating>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</reviews>";
 
 	$('#form63_body').html("");
@@ -4644,7 +4644,7 @@ function form64_ini()
 			"<type>service</type>" +
 			"<cross_type>"+ftype+"</cross_type>" +
 			"<cross_name>"+fcross+"</cross_name>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</cross_sells>";
 
 	$('#form64_body').html("");
@@ -4750,7 +4750,7 @@ function form66_ini()
 			"<type>product</type>" +
 			"<cross_type>"+ftype+"</cross_type>" +
 			"<cross_name>"+fcross+"</cross_name>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</cross_sells>";
 
 	$('#form66_body').html("");
@@ -4969,7 +4969,7 @@ function form70_ini()
 			"<order_date></order_date>" +
 			"<type>product</type>" +
 			"<status>"+fstatus+"</status>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</sale_orders>";
 
 	$('#form70_body').html("");
@@ -5095,20 +5095,26 @@ function form71_ini()
 			"<acc_name>"+fname+"</acc_name>" +
 			"<description></description>" +
 			"<type>"+ftype+"</type>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</accounts>";
 
 	$('#form71_body').html("");
 
 	fetch_requested_data('form71',columns,function(results)
 	{	
+		var accounts_string="--";
+		for(var a in results)
+		{
+			accounts_string+=results[a].acc_name+"--";
+		}
+		
 		var payments_data="<payments>" +
 				"<id></id>" +
-				"<acc_name></acc_name>" +
+				"<acc_name array='yes'>"+accounts_string+"</acc_name>" +
 				"<type></type>" +
 				"<total_amount></total_amount>" +
 				"<paid_amount></paid_amount>" +
-				"<status>pending</status>" +
+				"<status exact='yes'>pending</status>" +
 				"</payments>";
 		fetch_requested_data('form71',payments_data,function(payments)
 		{
@@ -5166,7 +5172,7 @@ function form71_ini()
 							rowsHTML+="<input type='hidden' form='form71_"+result.id+"' value='"+result.id+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form71_"+result.id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form71_"+result.id+"' onclick='form71_delete_item($(this));'>";
-							rowsHTML+="</br><input type='button' class='generic_icon' value='Close payments' form='form71_"+result.id+"' onclick='modal41_action($(this));'>";
+							rowsHTML+="<input type='button' class='generic_icon' value='Close payments' form='form71_"+result.id+"' onclick='modal41_action($(this));'>";
 							rowsHTML+="<input type='hidden' form='form71_"+result.id+"' value='"+balance_amount+"'>";
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
@@ -5390,7 +5396,7 @@ function notifications_ini()
 			"<notes></notes>" +
 			"<t_generated></t_generated>" +
 			"<status>pending</status>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</notifications>";
 
 	fetch_requested_data('',columns,function(notifs)
@@ -5421,7 +5427,7 @@ function notifications_ini()
 				"<notes></notes>" +
 				"<t_generated></t_generated>" +
 				"<status>reviewed</status>" +
-				"<last_updated sort='desc'></last_updated>" +
+				"<last_updated></last_updated>" +
 				"</notifications>";
 		
 		fetch_requested_data('',columns2,function(notifs2)
@@ -5459,7 +5465,7 @@ function activities_ini()
 		"<notes></notes>" +
 		"<updated_by></updated_by>" +
 		"<user_display>yes</user_display>" +
-		"<last_updated sort='desc'></last_updated>" +
+		"<last_updated></last_updated>" +
 		"</activities>";
 	
 	fetch_requested_data('',columns,function(activities)
@@ -5655,7 +5661,7 @@ function search_ini()
 				"<updated_by></updated_by>" +
 				"<data_xml>"+searchStr+"</data_xml>" +
 				"<user_display>yes</user_display>" +
-				"<last_updated sort='desc'></last_updated>" +
+				"<last_updated></last_updated>" +
 				"</activities>";
 	
 		fetch_requested_data('',columns,function(activity_results)
@@ -5930,7 +5936,7 @@ function form79_ini()
 		"<name>"+fname+"</name>" +
 		"<description></description>" +
 		"<est_hours></est_hours>" +
-		"<last_updated sort='desc'></last_updated>" +
+		"<last_updated></last_updated>" +
 		"</task_type>";
 	
 	$('#form79_body').html("");
@@ -6094,7 +6100,7 @@ function form81_ini()
 		"<detail></detail>" +
 		"<due_date></due_date>" +
 		"<identified_by></identified_by>" +
-		"<last_updated sort='desc'></last_updated>" +
+		"<last_updated></last_updated>" +
 		"</sale_leads>";
 	
 	$('#form81_body').html("");
@@ -6197,7 +6203,7 @@ function form83_ini()
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<area_type></area_type>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</store_areas>";
 
 	$('#form83_body').html("");
@@ -6299,7 +6305,7 @@ function form84_ini()
 			"<last_bill_date></last_bill_date>" +
 			"<next_due_date></next_due_date>" +
 			"<last_bill_id></last_bill_id>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</service_subscriptions>";
 
 	$('#form84_body').html("");
@@ -6744,7 +6750,7 @@ function form87_ini()
 			"<description></description>" +
 			"<tax></tax>" +
 			"<bar_code></bar_code>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</product_master>";
 
 	$('#form87_body').html("");
@@ -6855,7 +6861,7 @@ function form88_ini()
 			"<iteration_notes></iteration_notes>" +
 			"<schedule></schedule>" +
 			"<status>"+fstatus+"</status>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</manufacturing_schedule>";
 
 	$('#form88_body').html("");
@@ -6977,7 +6983,7 @@ function form89_ini()
 			"<hours></hours>" +
 			"<status>"+fstatus+"</status>" +
 			"<notes></notes>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</appointments>";
 
 	$('#form89_body').html("");
@@ -7099,7 +7105,7 @@ function form90_ini()
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<notes></notes>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</bill_types>";
 
 	$('#form90_body').html("");
@@ -7349,7 +7355,7 @@ function form92_ini()
 			"<type></type>" +
 			"<transaction_id></transaction_id>" +
 			"<billing_type>"+ftype+"</billing_type>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</bills>";
 
 	$('#form92_body').html("");
@@ -7471,7 +7477,7 @@ function form93_ini()
 			"<next_emi_date></next_emi_date>" +
 			"<pending_emi></pending_emi>" +
 			"<interest_type></interest_type>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</loans>";
 
 	$('#form93_body').html("");
@@ -7609,7 +7615,7 @@ function form94_ini()
 		"<source></source>" +
 		"<source_link></source_link>" +
 		"<source_id></source_id>" +
-		"<last_updated sort='desc'></last_updated>" +
+		"<last_updated></last_updated>" +
 		"</discarded>";
 	
 	$('#form94_body').html("");
@@ -7811,7 +7817,7 @@ function form96_ini()
 			"<type exact='yes'>customer</type>" +
 			"<attribute>"+fattribute+"</attribute>" +
 			"<value></value>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</attributes>";
 
 	$('#form96_body').html("");
@@ -7915,7 +7921,7 @@ function form97_ini()
 			"<type exact='yes'>supplier</type>" +
 			"<attribute>"+fattribute+"</attribute>" +
 			"<value></value>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</attributes>";
 
 	$('#form97_body').html("");
@@ -8019,7 +8025,7 @@ function form98_ini()
 			"<type exact='yes'>staff</type>" +
 			"<attribute>"+fattribute+"</attribute>" +
 			"<value></value>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</attributes>";
 
 	$('#form98_body').html("");
@@ -8219,7 +8225,7 @@ function form101_ini()
 			"<details></details>" +
 			"<start_date></start_date>" +
 			"<status>"+fstatus+"</status>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</projects>";
 
 	$('#form101_body').html("");
@@ -8808,7 +8814,7 @@ function form104_ini()
 				"<status></status>" +
 				"<source exact='yes'>projects</source>" +
 				"<source_id exact='yes'>"+project_id+"</source_id>" +
-				"<last_updated sort='desc'></last_updated>" +
+				"<last_updated></last_updated>" +
 				"</task_instances>";
 		
 		if_data_read_access('task_instances',function(accessible_data)
@@ -8944,7 +8950,7 @@ function form105_ini()
 			"<user></user>" +
 			"<criteria_field></criteria_field>" +
 			"<criteria_value></criteria_value>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</data_access>";
 
 	$('#form105_body').html("");
@@ -9023,7 +9029,7 @@ function form108_ini()
 			"<order_date></order_date>" +
 			"<type>product</type>" +
 			"<status>"+fstatus+"</status>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</sale_orders>";
 
 	$('#form108_body').html("");
@@ -9150,7 +9156,7 @@ function form109_ini()
 			"<type exact='yes'>asset</type>" +
 			"<attribute>"+fattribute+"</attribute>" +
 			"<value></value>" +
-			"<last_updated sort='desc'></last_updated>" +
+			"<last_updated></last_updated>" +
 			"</attributes>";
 
 	$('#form109_body').html("");

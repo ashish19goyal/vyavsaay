@@ -161,8 +161,6 @@ function local_read_single_column(columns,callback,results)
 		var data=parser.parseFromString(columns,"text/xml");
 		var table=data.childNodes[0].nodeName;
 		var cols=data.childNodes[0].childNodes;
-		var a=cols;
-		console.log(a);
 		if(cols.length>0)
 		{
 			var count=0;
@@ -218,9 +216,6 @@ function local_read_single_column(columns,callback,results)
 					sort_key=IDBKeyRange.only(fil.value);
 				}
 			}
-			
-			var b=cols;
-			console.log(b);
 			
 			localdb_open_requests+=1;
 	

@@ -98,7 +98,7 @@ function start_workers()
 	},20000);
 	setTimeout(function()
 	{
-		sale_leads_add();
+		//sale_leads_add();
 	},25000);
 	setTimeout(function()
 	{

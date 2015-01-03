@@ -55,6 +55,7 @@ img.review_picture_rotate{
 	left:5px;
 	z-index:999;
 	display:block;
+	cursor: pointer;
 }
 #share_box .count{
 	display:block;

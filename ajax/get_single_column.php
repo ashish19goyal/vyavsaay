@@ -35,7 +35,7 @@
 				$values_array=array();
 				$result_column=$input->childNodes->item(0)->nodeName;
 				$query="select distinct $result_column from $table where ";
-				$order_by=" ORDER BY ";
+				$order_by=" ORDER BY last_updated DESC, ";
 				
 				$limit=" limit ?,?";
 				$limit_count=0;
@@ -50,7 +50,7 @@
 					$columns_array[]=$col->nodeName;
 					if($col->hasAttribute('sort'))
 					{
-						$order_by.=$col->nodeName." ".$col->getAttribute('sort').", ";
+						$order_by=" ORDER BY ".$col->nodeName." ".$col->getAttribute('sort').", ";
 					}
 					
 					if($col->nodeValue!="")

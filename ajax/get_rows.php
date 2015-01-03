@@ -44,7 +44,7 @@
 				$columns_array=array();
 				$values_array=array();
 				$query="select * from $table where ";
-				$order_by=" ORDER BY ";
+				$order_by=" ORDER BY last_updated DESC, ";
 				
 				$limit=" limit ?,?";
 				$limit_count=0;
@@ -64,7 +64,7 @@
 					
 					if($col->hasAttribute('sort'))
 					{
-						$order_by.=$col->nodeName." ".$col->getAttribute('sort').", ";
+						$order_by=" ORDER BY ".$col->nodeName." ".$col->getAttribute('sort').", ";
 					}
 					
 					if($col->nodeValue!="")

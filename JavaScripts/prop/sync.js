@@ -28,6 +28,7 @@ function switch_to_online()
 						set_session_online(function()
 						{
 							hide_progress();
+							hide_loader();
 						});
 					});
 				});
@@ -321,8 +322,8 @@ function sync_local_to_server(func)
 				ajax_with_custom_func("./ajax/sync_upload.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&up="+up_access+"&del="+del_access+"&data="+log_data_chunk+"&last_sync="+last_sync_time,function(e)
 				{
 					var response=e.responseXML;
-					console.log(e.responseText);
-					set_activities_to_synced(response);
+					//console.log(e.responseText);
+					set_activities_to_synced(e);
 				});
 			});
 			
@@ -434,11 +435,15 @@ function set_activities_to_synced(response)
 	}
 	else
 	{
-		if(response!==null)
+		if(response.responseXML!==null)
 		{
-			var ids=response.childNodes[0].getElementsByTagName('id');
+			var ids=response.responseXML.childNodes[0].getElementsByTagName('id');
 			var objectStore=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
 			local_update_record(ids,objectStore,0);
+		}
+		else
+		{
+			console.log(response.responseText);
 		}
 	}
 }

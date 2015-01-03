@@ -270,7 +270,7 @@
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<offer index='no' type="TEXT"></offer>
-			<type index='no' type="VARCHAR(10)"></type><!-- free/bought -->	
+			<type index='yes' type="VARCHAR(10)"></type><!-- free/bought -->	
 			<batch index='yes' type="VARCHAR(50)"></batch>
 			<notes index='no' type="TEXT"></notes>
 			<staff index='yes' type="VARCHAR(100)"></staff>
@@ -373,7 +373,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(100)"></name>
 			<type index='no' type="VARCHAR(10)"></type><!-- service/product/customer/staff/supplier/asset -->
-			<attribute index='no' type="VARCHAR(30)"></attribute><!--recurrent sale(days)/season start date(1 jan)/season end date(2 december)/subscription period(4 days/2 months/10 weeks/1 year)-->
+			<attribute index='yes' type="VARCHAR(30)"></attribute><!--recurrent sale(days)/season start date(1 jan)/season end date(2 december)/subscription period(4 days/2 months/10 weeks/1 year)-->
 			<value index='no' type='TEXT'></value>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</attributes>
@@ -581,7 +581,7 @@
 			<account index='no' type="VARCHAR(100)"></account>
 			<date_initiated index='no' type="BIGINT"></date_initiated>
 			<loan_amount index='no' type='DECIMAL(12,2)'></loan_amount>
-			<repayment_method index='no' type='VARCHAR(25)'></repayment_method><!--instalments/lump sum-->
+			<repayment_method index='yes' type='VARCHAR(25)'></repayment_method><!--instalments/lump sum-->
 			<interest_paid index='no' type='DECIMAL(12,2)'></interest_paid>
 			<interest_rate index='no' type='DECIMAL(5,3)'></interest_rate>
 			<interest_period index='no' type='INTEGER'></interest_period><!--in days-->
@@ -631,4 +631,38 @@
 			<criteria_value index='yes' type="TEXT"></criteria_value>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</data_access>
+	<reports>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(200)"></name>
+			<description index='no' type="TEXT"></description>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</reports>
+	<report_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<report_id index='yes' type="BIGINT"></report_id>
+			<table index='yes' type="VARCHAR(100)"></table>
+			<table2 index='yes' type="VARCHAR(100)"></table2>
+			<field index='yes' type="VARCHAR(100)"></field>
+			<field2 index='yes' type="VARCHAR(100)"></field2>
+			<condition index='no' type="VARCHAR(20)"></condition>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</report_items>
+	<pending_sale_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<customer index='yes' type="VARCHAR(100)"></customer>
+			<item_name index='yes' type="VARCHAR(100)"></item_name>
+			<batch index='yes' type="VARCHAR(100)"></batch>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<notes index='no' type='TEXT'></notes>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</pending_sale_items>
+	<pending_purchase_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<supplier index='yes' type="VARCHAR(100)"></supplier>
+			<item_name index='yes' type="VARCHAR(100)"></item_name>
+			<batch index='yes' type="VARCHAR(100)"></batch>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<notes index='no' type='TEXT'></notes>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</pending_purchase_items>
 </re_xml>

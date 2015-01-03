@@ -9,8 +9,8 @@ function activities_lane_ini()
 		"<data_id></data_id>" +
 		"<notes></notes>" +
 		"<updated_by></updated_by>" +
-		"<user_display>yes</user_display>" +
-		"<last_updated sort='desc'></last_updated>" +
+		"<user_display exact='yes'>yes</user_display>" +
+		"<last_updated></last_updated>" +
 		"</activities>";
 	
 	fetch_requested_data('',columns,function(activities)
@@ -44,7 +44,7 @@ function count_notif()
 	//var notifs=fetch_notifications();	
 	var notif_data="<notifications>" +
 			"<id></id>" +
-			"<status>pending</status>" +
+			"<status exact='yes'>pending</status>" +
 			"</notifications>";
 
 	get_single_column_data(function(notifs)
@@ -75,7 +75,7 @@ function show_notif()
 	//var notifs=fetch_notifications();	
 	var notif_data="<notifications>" +
 			"<id></id>" +
-			"<status>pending</status>" +
+			"<status exact='yes'>pending</status>" +
 			"</notifications>";
 
 	get_single_column_data(function(notifs)
@@ -291,7 +291,7 @@ function notifications_add()
 	var sale_order_data="<sale_orders>" +
 			"<id></id>" +
 			"<type>product</type>" +
-			"<status>pending</status>" +
+			"<status exact='yes'>pending</status>" +
 			"</sale_orders>";
 	
 	fetch_requested_data('',sale_order_data,function(sale_orders)
@@ -361,7 +361,7 @@ function notifications_add()
 	var manu_data="<manufacturing_schedule>" +
 			"<id></id>" +
 			"<product></product>" +
-			"<status>out of stock</status>" +
+			"<status exact='yes'>out of stock</status>" +
 			"</manufacturing_schedule>";
 	
 	fetch_requested_data('',manu_data,function(manus)
@@ -400,7 +400,7 @@ function notifications_add()
 			"<id></id>" +
 			"<product></product>" +
 			"<schedule compare='less than'>"+get_my_time()+"</schedule>" +
-			"<status>scheduled</status>" +
+			"<status exact='yes'>scheduled</status>" +
 			"<last_updated></last_updated>" +
 			"</manufacturing_schedule>";
 	
@@ -507,7 +507,7 @@ function sale_leads_add()
 	
 	var attributes_data="<attributes>" +
 			"<name></name>" +
-			"<attribute>recurrent sale</attribute>" +
+			"<attribute exact='yes'>recurrent sale</attribute>" +
 			"<type array='yes'>--product--service--</type>" +
 			"<value></value>" +
 			"</attributes>";
@@ -524,7 +524,7 @@ function sale_leads_add()
 				"<id></id>" +
 				"<bill_id></bill_id>" +
 				"<item_name array='yes'>"+items_string+"</item_name>" +
-				"<type>bought</type>" +
+				"<type exact='yes'>bought</type>" +
 				"<last_updated compare='more than'>"+lead_past_time+"</last_updated>" +
 				"</bill_items>";
 
@@ -591,7 +591,7 @@ function sale_leads_add()
 		
 	var seasonal_attributes_data="<attributes>" +
 			"<name></name>" +
-			"<attribute>season</attribute>" +
+			"<attribute exact='yes'>season</attribute>" +
 			"<type array='yes'>--product--service--</type>" +
 			"<value></value>" +
 			"</attributes>";
@@ -608,7 +608,7 @@ function sale_leads_add()
 				"<id></id>" +
 				"<bill_id></bill_id>" +
 				"<item_name array='yes'>"+items_string+"</item_name>" +
-				"<type>bought</type>" +
+				"<type exact='yes'>bought</type>" +
 				"<last_updated compare='more than'>"+lead_past_time+"</last_updated>" +
 				"</bill_items>";
 
@@ -680,9 +680,6 @@ function sale_leads_add()
 		});
 	});
 	//////////seasonal sales end//////
-
-	
-	setTimeout(sale_leads_add,1800000);
 }
 
 
@@ -693,7 +690,7 @@ function manufactured_products_outofstock()
 {
 	var schedule_data="<manufacturing_schedule>" +
 			"<product></product>" +
-			"<status>in stock</status>" +
+			"<status exact='yes'>in stock</status>" +
 			"<schedule compare='less than'>"+get_my_time()+"</schedule>" +
 			"</manufacturing_schedule>";
 	
@@ -740,13 +737,13 @@ function loans_interest_processing()
 			"<type></type>" +
 			"<account></account>" +
 			"<loan_amount></loan_amount>" +
-			"<repayment_method>lump sum</repayment_method>" +
+			"<repayment_method exact='yes'>lump sum</repayment_method>" +
 			"<interest_paid></interest_paid>" +
 			"<interest_rate></interest_rate>" +
 			"<interest_period></interest_period>" +
 			"<next_interest_date compare='less than'>"+interest_due_time+"</next_interest_date>" +
 			"<interest_type></interest_type>" +
-			"<status>open</status>" +
+			"<status exact='yes'>open</status>" +
 			"</loans>";
 	
 	fetch_requested_data('',loans_data,function(loans)
@@ -847,12 +844,12 @@ function loans_instalment_processing()
 			"<type></type>" +
 			"<account></account>" +
 			"<loan_amount></loan_amount>" +
-			"<repayment_method>instalments</repayment_method>" +
+			"<repayment_method exact='yes'>instalments</repayment_method>" +
 			"<emi></emi>" +
 			"<emi_period></emi_period>" +
 			"<pending_emi compare='more than'>0</pending_emi>" +
 			"<next_emi_date compare='less than'>"+instalment_due_time+"</next_emi_date>" +
-			"<status>open</status>" +
+			"<status exact='yes'>open</status>" +
 			"</loans>";
 	
 	fetch_requested_data('',loans_data,function(loans)
@@ -929,7 +926,7 @@ function generate_attendance_records()
 	var today=get_raw_time(get_my_date());
 	var columns="<attendance>" +
 		"<id></id>" +
-		"<date>"+today+"</date>" +
+		"<date exact='yes'>"+today+"</date>" +
 		"<acc_name></acc_name>" +
 		"<presence></presence>" +
 		"<hours_worked></hours_worked>" +
@@ -942,7 +939,7 @@ function generate_attendance_records()
 		{
 			var staff_columns="<staff>" +
 					"<acc_name></acc_name>" +
-					"<status>active</status>" +
+					"<status exact='yes'>active</status>" +
 					"</staff>";
 			fetch_requested_data('',staff_columns,function(staff_names)
 			{
@@ -987,7 +984,7 @@ function balance_out_payments()
 				"<type></type>" +
 				"<total_amount></total_amount>" +
 				"<paid_amount></paid_amount>" +
-				"<status>pending</status>" +
+				"<status exact='yes'>pending</status>" +
 				"</payments>";
 		fetch_requested_data('',payments_data,function(payments)
 		{
@@ -1039,13 +1036,13 @@ function balance_out_payments()
 			{
 				var accounts_data="<payments>" +
 						"<id></id>" +
-						"<acc_name exact='yes'>"+payment.acc_name+"</acc_name>" +
 						"<type></type>" +
 						"<date sort='asc'></date>" +
 						"<total_amount></total_amount>" +
 						"<paid_amount></paid_amount>" +
 						"<notes></notes>" +
-						"<status>pending</status>" +
+						"<status exact='yes'>pending</status>" +
+						"<acc_name exact='yes'>"+payment.acc_name+"</acc_name>" +
 						"</payments>";
 				//console.log(accounts_data);
 				fetch_requested_data('',accounts_data,function(accounts)
