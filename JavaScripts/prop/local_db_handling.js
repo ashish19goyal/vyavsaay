@@ -160,8 +160,8 @@ function local_read_single_column(columns,callback,results)
 		var parser=new DOMParser();
 		var data=parser.parseFromString(columns,"text/xml");
 		var table=data.childNodes[0].nodeName;
-		var cols=data.childNodes[0].childNodes;
-		if(cols.length>0)
+		var tcols=data.childNodes[0].childNodes;
+		if(tcols.length>0)
 		{
 			var count=0;
 			if(data.childNodes[0].hasAttribute('count'))
@@ -174,45 +174,45 @@ function local_read_single_column(columns,callback,results)
 			
 			
 			var filter=new Array();
-			for(var j=0; j<cols.length;j++)
+			for(var j=0; j<tcols.length;j++)
 			{
-				if(cols[j].innerHTML!==null && cols[j].hasAttribute('sort'))
+				if(tcols[j].innerHTML!==null && tcols[j].hasAttribute('sort'))
 				{
 					if(sort_index=='last_updated')
-						sort_index=cols[j].nodeName;
-					sort_order=cols[j].getAttribute('sort');
+						sort_index=tcols[j].nodeName;
+					sort_order=tcols[j].getAttribute('sort');
 				}
 				
-				if(cols[j].innerHTML!==null && cols[j].innerHTML!=="")
+				if(tcols[j].innerHTML!==null && tcols[j].innerHTML!="")
 				{
 					var fil=new Object();
-					fil.name=cols[j].nodeName;
-					if(cols[j].hasAttribute('compare'))
+					fil.name=tcols[j].nodeName;
+					if(tcols[j].hasAttribute('compare'))
 					{
-						fil.value=parseInt(cols[j].innerHTML);
-						fil.type=cols[j].getAttribute('compare');
+						fil.value=parseInt(tcols[j].innerHTML);
+						fil.type=tcols[j].getAttribute('compare');
 						filter.push(fil);
 					}
-					else if(cols[j].hasAttribute('array'))
+					else if(tcols[j].hasAttribute('array'))
 					{
-						fil.value=cols[j].innerHTML;
+						fil.value=tcols[j].innerHTML;
 						fil.type='array';
 						filter.push(fil);
 					}
 					else
 					{
-						fil.value=cols[j].innerHTML;
+						fil.value=tcols[j].innerHTML;
 						fil.type='';
 						filter.push(fil);
 					}
 				}
-				if(cols[j].hasAttribute('exact'))
+				if(tcols[j].hasAttribute('exact'))
 				{
 					var fil=new Object();
-					fil.name=cols[j].nodeName;
-					fil.value=cols[j].innerHTML;
+					fil.name=tcols[j].nodeName;
+					fil.value=tcols[j].innerHTML;
 					fil.type='exact';
-					sort_index=cols[j].nodeName;
+					sort_index=tcols[j].nodeName;
 					sort_key=IDBKeyRange.only(fil.value);
 				}
 			}
@@ -291,7 +291,7 @@ function local_read_single_column(columns,callback,results)
 							}
 						}
 	
-						if(found===-1)
+						if(found==-1)
 						{
 							match=false;
 							break;
@@ -300,14 +300,14 @@ function local_read_single_column(columns,callback,results)
 					
 					if(match===true)
 					{
-						if(cols[0]===undefined)
+						if(tcols[0]===undefined)
 						{
-							var c=cols;
+							var c=tcols;
 							console.log(c);
 							console.log(columns);
 							console.log(filter);
 						}
-						results.push(record[cols[0].nodeName]);
+						results.push(record[tcols[0].nodeName]);
 						if(results.length!=count)
 						{
 							result.continue();

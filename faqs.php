@@ -77,42 +77,42 @@
 			<li>
 				<a class="cd-faq-trigger" href="#0">How do I get started?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae quidem blanditiis delectus corporis, possimus officia sint sequi ex tenetur id impedit est pariatur iure animi non a ratione reiciendis nihil sed consequatur atque repellendus fugit perspiciatis rerum et. Dolorum consequuntur fugit deleniti, soluta fuga nobis. Ducimus blanditiis velit sit iste delectus obcaecati debitis omnis, assumenda accusamus cumque perferendis eos aut quidem! Aut, totam rerum, cupiditate quae aperiam voluptas rem inventore quas, ex maxime culpa nam soluta labore at amet nihil laborum? Explicabo numquam, sit fugit, voluptatem autem atque quis quam voluptate fugiat earum rem hic, reprehenderit quaerat tempore at. Aperiam.</p>
+					<p>Go to the <a href='register.php'>register</a> section and fill out the form for registration as a user. You can login and start using the solution right after registration. For initial setup guidance, refer to the <a>get started</a> documentation.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 
 			<li>
-				<a class="cd-faq-trigger" href="#0">Which service package will best suit my needs?</a>
+				<a class="cd-faq-trigger" href="#0">Which service plan will best suit my needs?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi cupiditate et laudantium esse adipisci consequatur modi possimus accusantium vero atque excepturi nobis in doloremque repudiandae soluta non minus dolore voluptatem enim reiciendis officia voluptates, fuga ullam? Voluptas reiciendis cumque molestiae unde numquam similique quas doloremque non, perferendis doloribus necessitatibus itaque dolorem quam officia atque perspiciatis dolore laudantium dolor voluptatem eligendi? Aliquam nulla unde voluptatum molestiae, eos fugit ullam, consequuntur, saepe voluptas quaerat deleniti. Repellendus magni sint temporibus, accusantium rem commodi?</p>
+					<p>If you are not sure about which service plan to use, start with the basic plan. You can upgrade whenever you want.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 
 			<li>
 				<a class="cd-faq-trigger" href="#0">Can this solution be hosted on my servers?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+					<p>Absolutely. Please <a href='contact.php'>contact</a> us.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 
 			<li>
 				<a class="cd-faq-trigger" href="#0">I am using another solution, how do I migrate to Vyavsaay?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+					<p>Its simple. Vyavsaay team will help sanitize your existing data and import it into the new Vyavsaay solution.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 
 			<li>
 				<a class="cd-faq-trigger" href="#0">How would I conduct my business if this service is unavailable?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+					<p>Vyavsaay uses the most trusted AWS cloud for hosting its server. However, in the unlikely scenario of a service outage, you can still carry out your business. You can use the offline mode of Vyavsaay to carry out you bussiness. And when the service is up again, you can sync back your data to the server.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 
 			<li>
 				<a class="cd-faq-trigger" href="#0">If I am not using everything, do I still pay for it?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+					<p>You can start from the basic plan. If you feel the need for more advanced features, you can switch over to the premium or multi-user plans. You can also as Vyavsaay to create a custom plan for you based on your volume of transactions.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 		</ul> <!-- cd-faq-group -->
@@ -122,58 +122,59 @@
 			<li>
 				<a class="cd-faq-trigger" href="#0">What hardware would I need to install?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit quidem delectus rerum eligendi mollitia, repudiandae quae beatae. Et repellat quam atque corrupti iusto architecto impedit explicabo repudiandae qui similique aut iure ipsum quis inventore nulla error aliquid alias quia dolorem dolore, odio excepturi veniam odit veritatis. Quo iure magnam, et cum. Laudantium, eaque non? Tempore nihil corporis cumque dolor ipsum accusamus sapiente aliquid quis ea assumenda deserunt praesentium voluptatibus, accusantium a mollitia necessitatibus nostrum voluptatem numquam modi ab, sint rem.</p>
+					<p>You would only need an internet connection and compture systems/mobile devices. Vyavsaay is hosted on the cloud and accessible from anywhere through an internet connection. Even, if you don't have a consistent internet connection, you can still access it.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 
 			<li>
+				<a class="cd-faq-trigger" href="#0">What if I don't have a good quality internet connection?</a>
+				<div class="cd-faq-content">
+					<p>You can crry out normal business processes without an internet connection. However, it would be required for initial setup and further for data backups. You can plan setup and backup activities as per the availability of internet.</p>
+				</div> <!-- cd-faq-content -->
+			</li>
+			
+			<li>
 				<a class="cd-faq-trigger" href="#0">Where is my data stored?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempore, placeat quisquam rerum! Eligendi fugit dolorum tenetur modi fuga nisi rerum, autem officiis quaerat quos. Magni quia, quo quibusdam odio. Error magni aperiam amet architecto adipisci aspernatur! Officia, quaerat magni architecto nostrum magnam fuga nihil, ipsum laboriosam similique voluptatibus facilis nobis? Eius non asperiores, nesciunt suscipit veniam blanditiis veritatis provident possimus iusto voluptas, eveniet architecto quidem quos molestias, aperiam eum reprehenderit dolores ad deserunt eos amet. Vero molestiae commodi unde dolor dicta maxime alias, velit, nesciunt cum dolorem, ipsam soluta sint suscipit maiores mollitia assumenda ducimus aperiam neque enim! Quas culpa dolorum ipsam? Ipsum voluptatibus numquam natus? Eligendi explicabo eos, perferendis voluptatibus hic sed ipsam rerum maiores officia! Beatae, molestias!</p>
+					<p>Your data is stored on Vyavsaay servers. You can also selectively download your data to your computer systems/mobile devices.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 
 			<li>
 				<a class="cd-faq-trigger" href="#0">Is my data secure?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+					<p>All data is sent or received over a secure HTTP channel. This means your data is first encrypted and then sent over the internet. This makes it very hard for any person with malicious intent to steal it. Frequent backups are taken to ensure continuous availability of data.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 			
 			<li>
 				<a class="cd-faq-trigger" href="#0">What if my systems crash?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+					<p>Your data is safe on Vyavsaay servers in case your systems crash. However, any unsynced data might be lost. Thus, we recommend frequent sync-ups online.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 			
 			<li>
 				<a class="cd-faq-trigger" href="#0">What happens if there is a power outage?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+					<p>Even during a power outage, you can keep using the service through your mobile or other portable devices.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 			
 			<li>
 				<a class="cd-faq-trigger" href="#0">How do I backup my data?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+					<p>Vyavsaay provides a single click button to backup your data on the server.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 			
 			<li>
-				<a class="cd-faq-trigger" href="#0">Can I control access to my data by different employees?</a>
+				<a class="cd-faq-trigger" href="#0">Can I control access to my information by different employees?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+					<p>Absolutely. You can control the access of your employees to different types of information.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 			
-			<li>
-				<a class="cd-faq-trigger" href="#0">What if I don't have a good quality internet connection?</a>
-				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-				</div> <!-- cd-faq-content -->
-			</li>
 			
 		</ul> <!-- cd-faq-group -->
 	</br>
@@ -182,21 +183,21 @@
 			<li>
 				<a class="cd-faq-trigger" href="#0">I follow this particular set of business process, can you set them up for me?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis earum autem consectetur labore eius tenetur esse, in temporibus sequi cum voluptatem vitae repellat nostrum odio perspiciatis dolores recusandae necessitatibus, unde, deserunt voluptas possimus veniam magni soluta deleniti! Architecto, quidem, totam. Fugit minus odit unde ea cupiditate ab aperiam sed dolore facere nihil laboriosam dolorum repellat deleniti aliquam fugiat laudantium delectus sint iure odio, necessitatibus rem quisquam! Ipsum praesentium quam nisi sint, impedit sapiente facilis laudantium mollitia quae fugiat similique. Dolor maiores aliquid incidunt commodi doloremque rem! Quaerat, debitis voluptatem vero qui enim, sunt reiciendis tempore inventore maxime quasi fugiat accusamus beatae modi voluptates iste officia esse soluta tempora labore quisquam fuga, cum. Sint nemo iste nulla accusamus quam qui quos, vero, minus id. Eius mollitia consequatur fugit nam consequuntur nesciunt illo id quis reprehenderit obcaecati voluptates corrupti, minus! Possimus, perspiciatis!</p>
+					<p>Yes, ofcourse. We can set up your business processes on Vyavsaay. We also provide consultation on optimization. <a hreaf='contact.php'>Conact</a> us.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 
 			<li>
 				<a class="cd-faq-trigger" href="#0">How are your out-of-box processes benchmarked?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo tempore soluta, minus magnam non blanditiis dolore, in nam voluptas nobis minima deserunt deleniti id animi amet, suscipit consequuntur corporis nihil laborum facere temporibus. Qui inventore, doloribus facilis, provident soluta voluptas excepturi perspiciatis fugiat odit vero! Optio assumenda animi at! Assumenda doloremque nemo est sequi eaque, ipsum id, labore rem nisi, amet similique vel autem dolore totam facilis deserunt. Mollitia non ut libero unde accusamus praesentium sint maiores, illo, nemo aliquid?</p>
+					<p>We have designed out-of-box processes based on the standards in the retail and manufacturing industry. Furthermore, these have been tested and trusted by other businesses.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 
 			<li>
 				<a class="cd-faq-trigger" href="#0">What if I want to scope out some of the out-of-box processes?</a>
 				<div class="cd-faq-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+					<p>Vyavsaay is customizable to a great extent. You can yourself customize the solution using a easy select/de-select menu. Our recommendation will be, get in touch with us for such requests.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
 

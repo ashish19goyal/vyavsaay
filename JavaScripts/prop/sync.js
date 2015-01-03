@@ -267,38 +267,6 @@ function local_delete_record(this_table,num_rows,row_index)
 }
 
 
-function local_update_record(ids,objectStore,row_index)
-{
-	if(row_index<ids.length)
-	{
-		var req=objectStore.get(ids[row_index].innerHTML);
-		req.onsuccess=function(e)
-		{
-			var data=req.result;
-			row_index+=1;
-			if(data)
-			{
-				data['status']='synced';
-				data['data_xml']='';
-				var put_req=objectStore.put(data);
-				put_req.onsuccess=function(e)
-				{
-					local_update_record(ids,objectStore,row_index);
-				};
-				put_req.onerror=function(e)
-				{
-					local_update_record(ids,objectStore,row_index);
-				};
-			}
-			else
-			{
-				local_update_record(ids,objectStore,row_index);
-			}
-		};
-	}
-}
-
-
 /**
  * This function syncs up the local db to the server db
  * @param func
@@ -316,6 +284,7 @@ function sync_local_to_server(func)
 		get_last_sync_time(function(last_sync_time)
 		{
 			var log_data_array=log_data.split("<separator></separator>");
+			console.log(log_data_array.length);
 			log_data_array.forEach(function(log_data_chunk)
 			{
 				log_data_chunk="<activities>"+log_data_chunk+"</activities>";
@@ -326,7 +295,7 @@ function sync_local_to_server(func)
 					set_activities_to_synced(e);
 				});
 			});
-			
+						
 			var progress_dummy=progress_value+5;
 			var sync_complete=setInterval(function()
 			{
@@ -381,6 +350,7 @@ function get_data_from_log_table(func)
 				var counter=0;
 				var log_data="";
 			
+				/////below section is taking a lot of time/////////
 				static_local_db.transaction(['activities'],"readonly").objectStore('activities').index('status').openCursor(keyValue).onsuccess=function(e)
 				{
 					var result=e.target.result;
@@ -413,6 +383,7 @@ function get_data_from_log_table(func)
 						func(log_data);
 					}
 				};
+				/////above section is taking a lot of time/////////
 			}
 		};
 	}
@@ -435,17 +406,82 @@ function set_activities_to_synced(response)
 	}
 	else
 	{
-		if(response.responseXML!==null)
+		if(response.responseXML!=null)
 		{
-			var ids=response.responseXML.childNodes[0].getElementsByTagName('id');
+			var delete_ids=response.responseXML.childNodes[0].childNodes[0].getElementsByTagName('id');
+			var update_ids=response.responseXML.childNodes[0].childNodes[1].getElementsByTagName('id');
 			var objectStore=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
-			local_update_record(ids,objectStore,0);
+			
+			localdb_open_requests+=delete_ids.length+update_ids.length;
+				
+			function local_delete_record(delete_index)
+			{
+				if(delete_index<delete_ids.length)
+				{
+					var record_id=parseFloat(delete_ids[delete_index].innerHTML);
+					delete_index+=1;
+					var delete_request=objectStore.delete(record_id);
+					delete_request.onsuccess=function(e)
+					{
+						console.log(record_id);
+						localdb_open_requests-=1;
+						local_delete_record(delete_index);
+					};
+					delete_request.onerror=function(e)
+					{
+						localdb_open_requests-=1;
+						local_delete_record(delete_index);
+					};
+				}
+				else
+				{
+					local_update_record(0);
+				}
+			};
+			
+			function local_update_record(row_index)
+			{
+				if(row_index<update_ids.length)
+				{
+					var record_id=update_ids[row_index].innerHTML;
+					var req=objectStore.get(record_id);
+					req.onsuccess=function(e)
+					{
+						var data=req.result;
+						row_index+=1;
+						if(data)
+						{
+							data['status']='synced';
+							data['data_xml']='';
+							var put_req=objectStore.put(data);
+							put_req.onsuccess=function(e)
+							{
+								localdb_open_requests-=1;
+								local_update_record(row_index);
+							};
+							put_req.onerror=function(e)
+							{
+								localdb_open_requests-=1;
+								local_update_record(row_index);
+							};
+						}
+						else
+						{
+							localdb_open_requests-=1;
+							local_update_record(row_index);
+						}
+					};
+				}
+			};
+			
+			local_delete_record(0);
 		}
 		else
 		{
 			console.log(response.responseText);
 		}
 	}
+
 }
 
 /**
