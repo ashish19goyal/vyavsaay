@@ -2673,3 +2673,45 @@ function form109_header_ini()
 	});
 
 };
+
+/**
+ * @form manage Reprots
+ * @formNo 110
+ */
+function form110_header_ini()
+{
+	var filter_fields=document.getElementById('form110_header');
+	var name_filter=filter_fields.elements[0];
+	
+	var name_data="<reports>" +
+			"<name></name>" +
+			"</reports>";
+	
+	set_my_filter(name_data,name_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form110_ini();
+	});
+
+};
+
+/**
+ * @form Create Reports
+ * @formNo 111
+ */
+function form111_header_ini()
+{
+	var fields=document.getElementById('form111_master');
+	fields.elements[1].value="";
+	fields.elements[2].value="";
+	fields.elements[3].value=get_new_key();
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form111_create_form();
+	});
+}

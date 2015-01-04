@@ -88,6 +88,86 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>report_items</tablename>
+			<listname>condition1</listname>
+			<name>equals value</name>
+			<value>Equals Value</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>report_items</tablename>
+			<listname>condition1</listname>
+			<name>not equals value</name>
+			<value>Not equals Value</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>report_items</tablename>
+			<listname>condition1</listname>
+			<name>greater than value</name>
+			<value>Greater than value</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>report_items</tablename>
+			<listname>condition1</listname>
+			<name>less than value</name>
+			<value>Less than value</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>report_items</tablename>
+			<listname>condition1</listname>
+			<name>equals field</name>
+			<value>Equals field</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>report_items</tablename>
+			<listname>condition1</listname>
+			<name>not equals field</name>
+			<value>Not equals field</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>report_items</tablename>
+			<listname>condition1</listname>
+			<name>greater than field</name>
+			<value>Greater than field</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>report_items</tablename>
+			<listname>condition1</listname>
+			<name>less than field</name>
+			<value>Less than field</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loyality_programs</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loyality_programs</tablename>
+			<listname>status</listname>
+			<name>retired</name>
+			<value>Retired</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>share</tablename>
 			<listname>share_options</listname>
 			<name>gmail</name>

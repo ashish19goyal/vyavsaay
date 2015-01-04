@@ -32,6 +32,12 @@
 				echo "<li><a id='form89_link' href='#form89' onclick='form89_header_ini();' data-i18n='form.appointments'></a></li>";
 			if(strpos($_SESSION['forms'],'form90-')!==false)
 				echo "<li><a id='form90_link' href='#form90' onclick='form90_header_ini(); form90_ini();' data-i18n='form.billing_types'></a></li>";
+			if(strpos($_SESSION['forms'],'form112-')!==false)
+				echo "<li><a id='form112_link' href='#form112' onclick='form112_header_ini(); form112_ini();' data-i18n='form.add_unbilled_items'></a></li>";
+			if(strpos($_SESSION['forms'],'form113-')!==false)
+				echo "<li><a id='form113_link' href='#form113' onclick='form113_header_ini(); form113_ini();' data-i18n='form.manage_unbilled_items'></a></li>";
+			if(strpos($_SESSION['forms'],'form118-')!==false)
+				echo "<li><a id='form118_link' href='#form118' onclick='form118_header_ini(); form118_ini();' data-i18n='form.create_bills'></a></li>";
 		echo "</ul>";
 
 		if(strpos($_SESSION['forms'],'form10-')!==false)
@@ -66,6 +72,12 @@
 			include "forms/form90.php";
 		if(strpos($_SESSION['reports'],'report49-')!==false)
 			include "reports/report49.php";
+		if(strpos($_SESSION['forms'],'form112-')!==false)
+			include "forms/form112.php";
+		if(strpos($_SESSION['forms'],'form113-')!==false)
+			include "forms/form113.php";
+		if(strpos($_SESSION['forms'],'form118-')!==false)
+			include "forms/form118.php";
 	?>
 	
 	<script>

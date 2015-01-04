@@ -9228,3 +9228,194 @@ function form109_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Manage Reports
+ * @formNo 110
+ * @Loading Light
+ */
+function form110_ini()
+{
+	show_loader();
+	var fid=$("#form110_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form110_header');
+	
+	var fname=filter_fields.elements[0].value;
+
+	////indexing///
+	var index_element=document.getElementById('form110_index');
+	var prev_element=document.getElementById('form110_prev');
+	var next_element=document.getElementById('form110_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	
+	var columns="<reports count='25' start_index='"+start_index+"'>" +
+		"<id>"+fid+"</id>" +
+		"<name>"+fname+"</name>" +
+		"<description></description>" +
+		"<last_updated></last_updated>" +
+		"</reports>";
+
+	$('#form110_body').html("");
+	
+	fetch_requested_data('form110',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form110_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form110_"+result.id+"'>"+result.name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Description'>";
+						rowsHTML+="<textarea readonly='readonly' form='form110_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form110_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='button' class='edit_icon' title='Edit report settings' form='form110_"+result.id+"' onclick=\"element_display('"+result.id+"','form111');\">";
+						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form110_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form110_"+result.id+"' onclick='form110_delete_item($(this));'>";
+						rowsHTML+="<input type='button' class='generic_icon' value='Generate' form='form110_"+result.id+"' onclick=\"form111_generate('"+result.id+"');\">";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form110_body').append(rowsHTML);
+			var fields=document.getElementById("form110_"+result.id);
+			
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form110_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+
+		hide_loader();
+	});
+};
+
+
+/**
+ * @form Create Reports
+ * @formNo 111
+ * @Loading light
+ */
+function form111_ini()
+{
+	var report_id=$("#form111_link").attr('data_id');
+	if(report_id==null)
+		report_id="";	
+	$('#form111_body').html("");
+	//console.log(pamphlet_id);
+	if(report_id!="")
+	{
+		show_loader();
+		var report_columns="<reports>" +
+				"<id>"+report_id+"</id>" +
+				"<name></name>" +
+				"<description></description>" +
+				"</reports>";
+		var report_item_columns="<report_items>" +
+				"<id></id>" +
+				"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
+				"<item_name></item_name>" +
+				"<offer_name></offer_name>" +
+				"<offer></offer>" +
+				"</report_items>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',report_columns,function(report_results)
+		{
+			for (var i in report_results)
+			{
+				var filter_fields=document.getElementById('form111_master');
+				filter_fields.elements[1].value=report_results[i].name;
+				filter_fields.elements[2].value=report_results[i].description;
+				filter_fields.elements[3].value=report_results[i].id;
+				
+				$(filter_fields).off('submit');
+				$(filter_fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form111_update_form();
+				});
+				break;
+			}
+		});
+		/////////////////////////////////////////////////////////////////////////
+		
+		fetch_requested_data('',report_item_columns,function(results)
+		{
+			results.forEach(function(result)
+			{
+				var rowsHTML="";
+				var id=result.id;
+				rowsHTML+="<tr>";
+				rowsHTML+="<form id='form111_"+id+"'></form>";
+					rowsHTML+="<td data-th='Table'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.table1+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Field'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.field1+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Condition'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.condition1+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Condition Table'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.table2+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Condition Field'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.field2+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Condition Value'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.value+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form111_"+id+"' value='"+id+"'>";
+						rowsHTML+="<input type='submit' class='submit_hidden' form='form111_"+id+"' id='save_form111_"+id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form111_"+id+"' id='delete_form111_"+id+"' onclick='form111_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+			
+				$('#form111_body').append(rowsHTML);
+				
+				var fields=document.getElementById("form111_"+id);
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+				});
+			});
+			hide_loader();
+		});
+	}
+}

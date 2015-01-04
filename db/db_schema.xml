@@ -645,7 +645,8 @@
 			<table2 index='yes' type="VARCHAR(100)"></table2>
 			<field1 index='yes' type="VARCHAR(100)"></field1>
 			<field2 index='yes' type="VARCHAR(100)"></field2>
-			<condition1 index='no' type="VARCHAR(20)"></condition1>
+			<condition1 index='no' type="VARCHAR(30)"></condition1><!--equals value/equals field/not equals value/greater than value/less than value/not equals field/greater than field/less than field-->
+			<value index='no' type="TEXT"></value>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</report_items>
 	<unbilled_sale_items>
@@ -670,4 +671,19 @@
 			<notes index='no' type='TEXT'></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</unbilled_purchase_items>
+	<loyality_programs>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(100)"></name>
+			<points_addition index='no' type="DECIMAL(12,2)"></points_addition>
+			<points_redemption index='no' type="DECIMAL(12,2)"></points_redemption>
+			<status index='yes' type='VARCHAR(25)'></status><!-- active/retired -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</loyality_programs>
+	<loyality_adjust>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<customer index='yes' type="VARCHAR(100)"></customer>
+			<points index='no' type="DECIMAL(12,2)"></points>
+			<date index='yes' type="BIGINT"></date>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</loyality_adjust>
 </re_xml>

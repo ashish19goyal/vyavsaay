@@ -187,6 +187,16 @@
   	"data_access":"Manage Data Access",
   	"data_export":"Data Export",
   	"manage_sale_orders_multi_register":"Manage Sale Orders (multiple registers)",
-  	"asset_attributes":"Asset Attributes"
+  	"asset_attributes":"Asset Attributes",
+  	"manage_reports":"Manage Reports",
+  	"create_reports":"Create Reports",
+  	"add_unbilled_sale_items":"Add Unbilled Items(Sales)",
+  	"manage_unbilled_sale_items":"Manage Unbilled Items(Sales)",
+  	"add_unbilled_purchase_items":"Add Unbilled Items(Purchase)",
+  	"manage_unbilled_purchase_items":"Manage Unbilled Items(Purchase)",
+  	"manage_loyality_programs":"Manage Loyality Programs",
+  	"create_bills_loyality":"Create Bills (Loyality Program)",
+  	"manage_unbilled_items":"Manage Unbilled Items",
+  	"add_unbilled_items":"Add Unbilled Items"
   }
 }
