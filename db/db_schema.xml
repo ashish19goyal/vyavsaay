@@ -276,6 +276,7 @@
 			<staff index='yes' type="VARCHAR(100)"></staff>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<free_with index="no" type="VARCHAR(90)"></free_with>
+			<loyality index='no' type="DECIMAL(12,4)"></loyality>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bill_items>
 	<customer_returns>
@@ -647,22 +648,26 @@
 			<condition1 index='no' type="VARCHAR(20)"></condition1>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</report_items>
-	<pending_sale_items>
+	<unbilled_sale_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<sale_id index='yes' type="BIGINT"></sale_id>
 			<customer index='yes' type="VARCHAR(100)"></customer>
 			<item_name index='yes' type="VARCHAR(100)"></item_name>
 			<batch index='yes' type="VARCHAR(100)"></batch>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<sale_date index='yes' type="BIGINT"></sale_date>
 			<notes index='no' type='TEXT'></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
-	</pending_sale_items>
-	<pending_purchase_items>
+	</unbilled_sale_items>
+	<unbilled_purchase_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<purchase_id index='yes' type="BIGINT"></purchase_id>
 			<supplier index='yes' type="VARCHAR(100)"></supplier>
 			<item_name index='yes' type="VARCHAR(100)"></item_name>
 			<batch index='yes' type="VARCHAR(100)"></batch>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<purchase_date index='yes' type="BIGINT"></purchase_date>
 			<notes index='no' type='TEXT'></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
-	</pending_purchase_items>
+	</unbilled_purchase_items>
 </re_xml>

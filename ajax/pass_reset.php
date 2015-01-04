@@ -18,9 +18,9 @@
 	
 	$subject="Reset your Vyavsaay password";
 	
-	$password=$username.substr(time(),5);
+	$password=$username.substr(time(),4);
 	
-	$salt=$username."1234567891234567891234";
+	$salt=$domain."1234567891234567891234";
 	$salt_22=substr($salt,0,22);
 	$pass_options=['salt'=> $salt_22];
 	$pass_hash=password_hash($password,PASSWORD_DEFAULT,$pass_options);
@@ -28,18 +28,22 @@
 	try
 	{
 		$conn=new db_connect("re_user_".$domain);
-		$stmt1=$conn->conn->prepare("select email from staff where username=?");
-		$stmt1->execute(array($username));
+		$stmt1=$conn->conn->prepare("select count(*) from staff where username=? and email=?");
+		$stmt1->execute(array($username,$userEmail));
+		$unique=$stmt1->fetchAll(PDO::FETCH_NUM)[0][0];
 		
-
-		if()
+		if($unique!==0 && $unique!='0')
 		{
 			$stmt2=$conn->conn->prepare("update staff set password=? where username=?");
 			$stmt2->execute(array($pass_hash,$username));
 			
 			echo $password;
 			
-			$message='<html><head><title>'.$subject.'</title></head><body><table><tr><td>Your Vyavsaay password has been temporarily reset to: '+$password+'</td></tr><tr><td>Please login with this password and change it.</td></tr></table></body></html>';
+			//$message='<html><head><title>'.$subject.'</title></head><body><table><tr><td>Your Vyavsaay password has been temporarily reset to: '+$password+'</td></tr><tr><td>Please login with this password and change it.</td></tr></table></body></html>';
+			$message = '<html><head><title>'.$subject.
+			'</title></head><body><table><tr><td>Your Vyavsaay password has been changed to : <b>'.$password.'</b></td></tr>'.
+			'<tr><td>Please login with this password and change it as soon as possible. </td></tr>'.
+			'</table></body></html>';
 			
 			$to=strip_tags($userEmail);
 			$headers = "From: info@vyavsaay.com \r\n";

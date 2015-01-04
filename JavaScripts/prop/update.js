@@ -2118,69 +2118,69 @@ function form46_update_form()
 function form47_update_form()
 {
 	show_loader();
-		var form=document.getElementById('form47_master');
-		var domain=get_domain();
-		var username=get_username();
-		var current_pass=form.elements[1].value;
-		var new_pass=form.elements[2].value;
-		var last_updated=get_my_time();
-		
-		var user_data="<staff count='1'>" +
-				"<id></id>" +
-				"<username exact='yes'>"+username+"</username>" +
-				"<name></name>" +
-				"<password></password>" +
-				"</staff>";
-		fetch_requested_data('',user_data,function(results)
+	var form=document.getElementById('form47_master');
+	var domain=get_domain();
+	var username=get_username();
+	var current_pass=form.elements[1].value;
+	var new_pass=form.elements[2].value;
+	var last_updated=get_my_time();
+	
+	var user_data="<staff count='1'>" +
+			"<id></id>" +
+			"<username exact='yes'>"+username+"</username>" +
+			"<name></name>" +
+			"<password></password>" +
+			"</staff>";
+	fetch_requested_data('',user_data,function(results)
+	{
+		for(var i in results)
 		{
-			for(var i in results)
+			var salt='$2a$10$'+domain+'1234567891234567891234';
+			var salt_22=salt.substring(0, 29);
+			
+			var bcrypt = new bCrypt();
+			bcrypt.hashpw(current_pass, salt_22, function(currenthash)
 			{
-				var salt='$2a$10$'+domain+'1234567891234567891234';
-				var salt_22=salt.substring(0, 29);
-				
-				var bcrypt = new bCrypt();
-				bcrypt.hashpw(current_pass, salt_22, function(currenthash)
+				if(currenthash.substring(3)===results[i].password.substring(3))
 				{
-					if(currenthash.substring(3)===results[i].password.substring(3))
+					var bcrypt = new bCrypt();
+					bcrypt.hashpw(new_pass, salt_22, function(newhash)
 					{
-						var bcrypt = new bCrypt();
-						bcrypt.hashpw(new_pass, salt_22, function(newhash)
+						var data_xml="<staff>" +
+									"<id>"+results[i].id+"</id>" +
+									"<username unique='yes'>"+username+"</username>" +
+									"<password>"+newhash+"</password>" +
+									"<name>"+results[i].name+"</name>" +
+									"<status>active</status>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</staff>";
+						if(is_online())
 						{
-							var data_xml="<staff>" +
-										"<id>"+results[i].id+"</id>" +
-										"<username unique='yes'>"+username+"</username>" +
-										"<password>"+newhash+"</password>" +
-										"<name>"+results[i].name+"</name>" +
-										"<status>active</status>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</staff>";
-							if(is_online())
-							{
-								server_update_simple(data_xml);
-							}
-							else
-							{
-								local_update_simple(data_xml);
-							}
-							$(form).find('.form47_verify').html('Password updated.');
-							form.elements[1].value="";
-							form.elements[2].value="";
-							form.elements[3].value="";
-							hide_loader();
-						}, function() {});
-					}
-					else
-					{
-						$(form).find('.form47_verify').html('Incorrect password. Try again!');
+							server_update_simple(data_xml);
+						}
+						else
+						{
+							local_update_simple(data_xml);
+						}
+						$(form).find('.form47_verify').html('Password updated.');
 						form.elements[1].value="";
 						form.elements[2].value="";
 						form.elements[3].value="";
 						hide_loader();
-					}
-				}, function() {});
-				break;
-			}
-		});
+					}, function() {});
+				}
+				else
+				{
+					$(form).find('.form47_verify').html('Incorrect password. Try again!');
+					form.elements[1].value="";
+					form.elements[2].value="";
+					form.elements[3].value="";
+					hide_loader();
+				}
+			}, function() {});
+			break;
+		}
+	});
 }
 
 /**

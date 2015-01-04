@@ -5,6 +5,7 @@
 		<div class="contact">
 	      	<div class="container">
 	      		  <h3>Password Reset</h3>
+	      		  <div class="Demo-text"><p id="reset_complete"></p></div>
       			  <div class="contact-form">
 		  	        <form id='index_reset'>
 			    	    <p class="comment-form-author"><label>UserName</label>
@@ -16,7 +17,6 @@
 				        <input type="submit" value="Submit">
 			        </form>
 		          </div>
-		          <div class="Demo-text"><p id="reset_complete"></p></div>
 	      	</div>
 		</div>
 
@@ -43,7 +43,7 @@
 				{
 					if(e.responseText=='failed')
 					{
-						document.getElementById("reset_complete").innerHTML="Couldn't reset your password. ";
+						document.getElementById("reset_complete").innerHTML="Couldn't reset your password. Please confirm that the Username and email ID are correct.";
 					}
 					else
 					{
