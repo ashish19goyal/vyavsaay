@@ -640,11 +640,11 @@
 	<report_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<report_id index='yes' type="BIGINT"></report_id>
-			<table index='yes' type="VARCHAR(100)"></table>
+			<table1 index='yes' type="VARCHAR(100)"></table1>
 			<table2 index='yes' type="VARCHAR(100)"></table2>
-			<field index='yes' type="VARCHAR(100)"></field>
+			<field1 index='yes' type="VARCHAR(100)"></field1>
 			<field2 index='yes' type="VARCHAR(100)"></field2>
-			<condition index='no' type="VARCHAR(20)"></condition>
+			<condition1 index='no' type="VARCHAR(20)"></condition1>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</report_items>
 	<pending_sale_items>

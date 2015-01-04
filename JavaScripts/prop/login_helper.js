@@ -415,34 +415,6 @@ function emailid_validation(emailid)
 
 
 /**
- * This function is run to send email to vyavsaay team
- */
-function contact_click()
-{
-	var form=document.getElementById('index_contact');
-
-	var username=form.elements[0].value;
-	var email=form.elements[1].value;
-	var phone=form.elements[2].value;
-	var message=form.elements[3].value;
-	
-	show_loader();
-	var post_data="userName="+username+
-					"&userEmail="+email+
-					"&userPhone="+phone+
-					"&userMsg="+message;
-
-	ajax_with_custom_func("./ajax/contact.php",post_data,function(e)
-	{
-		$("#index_contact").slideUp();
-		document.getElementById("contact_complete").innerHTML="Thanks for contacting Vyavsaay. We will reach out to you very soon.";
-		//window.location.assign("index.php#contact");	
-		hide_loader();
-	});
-}
-
-
-/**
  * This function is run to set the preferences during registration process
  */
 function reseller_register_click()

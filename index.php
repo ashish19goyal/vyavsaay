@@ -1,7 +1,102 @@
 <?php
 	include "includes/index_header.php";
 ?>
+
+	
+					<!-- share box -->
+		<div id="share_box" data-url="http://vyavsaay.com" data-text="Latest technology for your business" title='Share'>
+			<div class="box">
+				<div class="count"><img src='./images/share.png' style='width:40px;height:40px'></div>
+				<div class="share">share</div>
+			</div>
+			<div class="social_buttons">
+				<div class="button">
+					<a href='https://www.google.com/+Vyavsaayindia' target='_blank'>
+						<img src='./images/google.png' title="+1">
+					</a>
+					<a href="https://plus.google.com/share?url=http%3A%2F%2Fvyavsaay.com" target='_blank'>Share</a>
+				</div>
+				<div class="button">
+					<a href="https://twitter.com/VyavsaayIndia" target='_blank'><img src='./images/twitter.jpeg' title="Follow @VyavsaayIndia"></a>
+					 <!-- <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://vyavsaay.com" data-text="Latest technology for your business" data-via="ashish_18goyal" data-count="horizontal">Tweet</a> -->
+					<a href="https://twitter.com/intent/tweet?text=Latest%20technology%20for%20your%20business&url=http%3A%2F%2Fvyavsaay.com&via=ashish_18goyal" target='_blank'>Tweet</a>
+				</div>
+				<div class="button">
+					<a href="https://www.facebook.com/vyavsaayindia" target='_blank'><img src='./images/fb.png' title="Like"></a>
+					<!-- <div class="fb-share-button" data-href="http://vyavsaay.com" data-layout="button"></div> -->
+					<a href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvyavsaay.com&t=Latest%20technology%20for%20your%20business" target='_blank'>Share</a>
+				</div>
+				<div class="button">
+					<div onclick='modal34_action();'>
+						<img src='./images/whatsapp.jpeg' title="Connect">
+						<div>Connect</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		
+		<div class="modal_forms">
+			<div id="modal34" title="Subscribe to Vyavsaay on whatsapp">
+				<form id='modal34_form'>
+					<fieldset>
+						<label>Name<input type="text"></label></br>
+						<label>Contact Number<input type="number" required></label></br>
+						<input type="submit" value="Subscribe">
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		
+		<!-- end share box -->
+		
+ 		<script>
+			!function()
+			{
+				$("#modal34").dialog({
+			   		autoOpen: false,
+			   		width: 300,
+			   		modal: true,
+			   		show: "slide",
+			   		closeOnEscape: true,
+				});
+			}();	
+
+			function modal34_action()
+			{
+				var form=document.getElementById("modal34_form");
+				
+				$(form).off('submit');
+				$(form).on('submit',function(event)
+				{
+					event.preventDefault();
+					var name=form.elements[1].value;
+					var contact=form.elements[2].value;
+					var post_data="name="+name+"&contact="+contact;
+					
+					ajax_with_custom_func("./ajax/whatsapp.php",post_data,function(e)
+					{
+						console.log(e.responseText);
+						$("#modal34").dialog("close");
+					});		
+				});
+				$("#modal34").dialog("open");
+			}
+						
+	
+		
+		/////display social media buttons
+	    $('#share_box').on('click',function(event)
+	   	{
+		   	$(this).find('.social_buttons').show();
+		});
+	    $('#share_box').on('mouseleave',function(event)
+    	{
+    	   	$(this).find('.social_buttons').hide();
+    	});
+		
+	</script>
+			
+
  		<!----- banner ---->
 			<div class="banner">
 					<div class="banner-info">

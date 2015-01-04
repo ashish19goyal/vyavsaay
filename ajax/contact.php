@@ -9,7 +9,7 @@
 		'</title></head><body><table><tr><td>Email id :  </td><td> '.$userEmail.'</td></tr>'.
 		'<tr><td>Phone No : </td><td> '.$userPhone.'</td></tr><tr><td>Name : </td><td> '.$userName.'</td></tr>'.
 		'<tr><td>Says : </td><td> '.$userMsg.'</td></tr></table></body></html>';
-	$to="vyavsaayindia@gmail.com";
+	$to="info@vyavsaay.com";
 	$headers = "From: " . strip_tags($userEmail) . "\r\n";
 	$headers .= "Reply-To: ". strip_tags($userEmail) . "\r\n";
 	$headers .= "MIME-Version: 1.0"."\r\n";

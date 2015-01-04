@@ -423,7 +423,7 @@ function set_activities_to_synced(response)
 					var delete_request=objectStore.delete(record_id);
 					delete_request.onsuccess=function(e)
 					{
-						console.log(record_id);
+						//console.log(record_id);
 						localdb_open_requests-=1;
 						local_delete_record(delete_index);
 					};
@@ -443,7 +443,7 @@ function set_activities_to_synced(response)
 			{
 				if(row_index<update_ids.length)
 				{
-					var record_id=update_ids[row_index].innerHTML;
+					var record_id=parseFloat(update_ids[row_index].innerHTML);
 					var req=objectStore.get(record_id);
 					req.onsuccess=function(e)
 					{
