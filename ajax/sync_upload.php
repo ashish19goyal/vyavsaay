@@ -81,8 +81,9 @@
 					}
 					catch(PDOException $e)
 					{
-						echo $e;
+					/*	echo $e;
 						echo "activity id=".$id."\n";
+					*/
 					}		
 							
 					$q_string1="select last_updated from $table_name where id=?;";
@@ -125,12 +126,13 @@
 								}
 								catch(PDOException $e)
 								{
-									echo $e;
+								/*	echo $e;
 									foreach ($data_array as $data_key => $data_array_value)
 									{
 										echo $data_key."=".$data_array_value."\n";
 									}
 									continue;
+								*/
 								}
 								break;
 							case 'update': 
@@ -153,12 +155,13 @@
 								}
 								catch(PDOException $e)
 								{
-									echo $e;
+								/*	echo $e;
 									foreach ($data_array as $data_key => $data_array_value)
 									{
 										echo $data_key."=".$data_array_value."\n";
 									}
 									continue;
+								*/
 								}
 								break;
 							case 'delete': $q_string2="delete from $table_name where id=?";

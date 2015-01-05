@@ -22,7 +22,8 @@
     "maps": "Maps",
     "sale_reports": "Sale Reports",
     "ecommerce":"E-Commerce",
-    "projects":"Projects"
+    "projects":"Projects",
+    "admin":"Admin"
   },
   "general":{
   	"hello": "Hello"

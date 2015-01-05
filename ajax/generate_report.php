@@ -108,7 +108,7 @@
 					{
 						foreach ($select_conditions_unique as $cond)
 						{
-							$where_piece.=$cond." and";
+							$where_piece.=$cond." and ";
 						}
 					}
 					else
@@ -118,8 +118,9 @@
 					
 					$select_piece=rtrim($select_piece,", ");
 					$from_piece=rtrim($from_piece,", ");
-					$where_piece=rtrim($where_piece,"and");
 					$where_piece=rtrim($where_piece," ");
+					$where_piece=rtrim($where_piece,"and");
+					
 					
 					$final_query="select ".$select_piece." from ".$from_piece.$where_piece.";";
 					//echo $final_query;

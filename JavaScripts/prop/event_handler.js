@@ -87,6 +87,10 @@ function start_workers()
 		set_grid_item_24();
 		set_grid_item_25();
 		set_grid_item_26();
+		set_grid_item_27();
+		set_grid_item_28();
+		set_grid_item_29();
+		set_grid_item_30();
 	},2000);
 	setTimeout(function()
 	{
@@ -221,7 +225,7 @@ function set_menu_username()
 
 function setup_grid_display()
 {
-	var functions_array=['sale_bills','purchase','finances','products','services','inventory','customers','projects','suppliers','staff','store','ecommerce','offers','maps','sale_reports'];
+	var functions_array=['sale_bills','purchase','finances','products','services','inventory','customers','projects','suppliers','staff','store','ecommerce','offers','maps','sale_reports','admin'];
 	functions_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main").find('ul').find('li').length;
@@ -337,6 +341,7 @@ function hide_all()
 	$("#offers_main").hide();
 	$("#sale_reports_main").hide();
 	$("#maps_main").hide();
+	$("#admin_main").hide();
 	hide_menu_items();
 	
 	$("#home_grid").hide();
@@ -670,3 +675,10 @@ function import_data(form_name)
 	}
 }
 
+function array_unique(array)
+{
+    return array.filter(function(el,index,arr)
+    {
+        return index===arr.indexOf(el);
+    });
+}

@@ -104,5 +104,14 @@
 				<li>Today's total sale: <a class='grid_item' id='grid_item_26'>0</a></li>
 			</ul>
 		</li>
+		
+		<li>
+			<a id="admin_link" onclick="grid_click('admin');"><div data-i18n="function.admin"> </div></a>		
+			<ul>
+				<li># Custom reports: <a class='grid_item' id='grid_item_29'>0</a></li>
+				<li># Active tabs: <a class='grid_item' id='grid_item_30'>0</a></li>
+			</ul>
+		</li>
+		
 	</ul>
 </div>

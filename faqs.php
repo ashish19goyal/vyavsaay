@@ -75,6 +75,18 @@
 		<ul id="basics" class="cd-faq-group">
 			<li class="cd-faq-title"><h2>About Service</h2></li>
 			<li>
+				<a class="cd-faq-trigger" href="#0">How is Vyavsaay better than other ERP solutions?</a>
+				<div class="cd-faq-content">
+				<p>
+					Vyavsaay is the next generation of ERP solutions.
+					It blurs the line between terminal based solution and a mobile based app. It works seamlessly on every platform. 
+					Furthermore, it is designed to be robust, while retaining the capability to scale up as per business' requirements. 
+					It integrates (or plans to) with all the leading online services that can be used for customer, supplier and employee interactions. 
+				</p>
+				</div> <!-- cd-faq-content -->
+			</li>
+			
+			<li>
 				<a class="cd-faq-trigger" href="#0">How do I get started?</a>
 				<div class="cd-faq-content">
 					<p>Go to the <a href='register.php'>register</a> section and fill out the form for registration as a user. You can login and start using the solution right after registration. For initial setup guidance, refer to the <a>get started</a> documentation.</p>
@@ -181,12 +193,12 @@
 		<ul id="account" class="cd-faq-group">
 			<li class="cd-faq-title"><h2>About Processes</h2></li>
 			<li>
-				<a class="cd-faq-trigger" href="#0">I follow this particular set of business process, can you set them up for me?</a>
+				<a class="cd-faq-trigger" href="#0">What out-of-box solutions are provided by Vyavsaay?</a>
 				<div class="cd-faq-content">
-					<p>Yes, ofcourse. We can set up your business processes on Vyavsaay. We also provide consultation on optimization. <a hreaf='contact.php'>Conact</a> us.</p>
+					<p>Vyavsaay provides solutions around billing, accounting, inventory management, project management, customer relationship management and task force management. It also provides integration with leading online and e-commerce services.</p>
 				</div> <!-- cd-faq-content -->
 			</li>
-
+			
 			<li>
 				<a class="cd-faq-trigger" href="#0">How are your out-of-box processes benchmarked?</a>
 				<div class="cd-faq-content">
@@ -201,6 +213,13 @@
 				</div> <!-- cd-faq-content -->
 			</li>
 
+			<li>
+				<a class="cd-faq-trigger" href="#0">I follow this particular set of business process, can you set them up for me?</a>
+				<div class="cd-faq-content">
+					<p>Yes, ofcourse. We can set up your business processes on Vyavsaay. We also provide consultation on optimization. <a hreaf='contact.php'>Conact</a> us.</p>
+				</div> <!-- cd-faq-content -->
+			</li>
+			
 		</ul> <!-- cd-faq-group -->
 
 	</div> <!-- cd-faq-items -->

@@ -406,6 +406,7 @@ function set_activities_to_synced(response)
 	}
 	else
 	{
+		console.log(response.responseText);
 		if(response.responseXML!=null)
 		{
 			var delete_ids=response.responseXML.childNodes[0].childNodes[0].getElementsByTagName('id');

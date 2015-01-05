@@ -328,7 +328,7 @@ function local_read_single_column(columns,callback,results)
 				else
 				{
 					localdb_open_requests-=1;
-					results=jQuery.unique(results);
+					results=array_unique(results);
 					callback(results);
 				}
 			};
@@ -2132,7 +2132,6 @@ function local_get_inventory(product,batch,callback)
 }
 
 
-
 /**
  * This function generated a custom report
  * @param report_id
@@ -2151,10 +2150,141 @@ function local_generate_report(report_id,results,callback)
 	}
 	else
 	{
+		var report_tables=[];
+		var report_fields=[];
+		var field_conditions=[];
+		var value_conditions=[];
+		
 		var keyValue=IDBKeyRange.only(report_id);
 		static_local_db.transaction(['report_items'],"readonly").objectStore('report_items').index('report_id').openCursor(keyValue).onsuccess=function(e)
 		{
-			
+			var result=e.target.result;
+			if(result)
+			{
+				var record=result.value;
+				
+				report_tables.push(record['table1']);
+				report_fields.push([record['table1'],record['field1']]);
+				
+				if(record['condition1']!='none')
+				{
+					if(record['condition1'].indexOf('field')!=-1)
+					{
+						report_tables.push(record['table2']);
+						report_fields.push([record['table2'],record['field2']]);
+						field_conditions.push([record['table1'],record['field1'],record['condition1'],record['table2'],record['field2']]);
+					}
+					else
+					{
+						value_conditions.push([record['table1'],record['field1'],record['condition1'],record['value']]);
+					}
+				}
+				result.continue();
+			}
+			else
+			{
+				report_tables=array_unique(report_tables);
+				report_fields=array_unique(report_fields);
+				field_conditions=array_unique(field_conditions);
+				value_conditions=array_unique(value_conditions);
+				
+				var trans=static_local_db.transaction(report_tables,"readonly");
+				var cursors=[];
+
+				function open_cursor(i)
+				{
+					if(i<report_tables.length)
+					{
+						var objectStore=trans.objectStore(report_tables[i]);
+						var j=i+1;
+						objectStore.openCursor().onsuccess=function(event)
+						{
+							cursors[report_tables[i]]=event.target.result;
+						    if(cursors[report_tables[i]])
+						    {
+								if(j==report_tables.length)
+							    {
+									var match=true;
+									for(var y in field_conditions)
+									{
+										if(field_conditions[y][2]=='equals field' && cursors[field_conditions[y][0]].value[field_conditions[y][1]]!=cursors[field_conditions[y][3]].value[field_conditions[y][4]])
+										{
+											match=false;
+											break;
+										}
+										if(field_conditions[y][2]=='not equals field' && cursors[field_conditions[y][0]].value[field_conditions[y][1]]==cursors[field_conditions[y][3]].value[field_conditions[y][4]])
+										{
+											match=false;
+											break;
+										}	
+										if(field_conditions[y][2]=='greater than field' && cursors[field_conditions[y][0]].value[field_conditions[y][1]]<=cursors[field_conditions[y][3]].value[field_conditions[y][4]])
+										{
+											match=false;
+											break;
+										}
+										if(field_conditions[y][2]=='less than field' && cursors[field_conditions[y][0]].value[field_conditions[y][1]]>=cursors[field_conditions[y][3]].value[field_conditions[y][4]])
+										{
+											match=false;
+											break;
+										}
+									}
+									
+									for(var z in value_conditions)
+									{
+										if(value_conditions[z][2]=='equals value' && cursors[value_conditions[z][0]].value[value_conditions[z][1]]!=value_conditions[z][3])
+										{
+											match=false;
+											break;
+										}
+										if(value_conditions[z][2]=='not equals value' && cursors[value_conditions[z][0]].value[value_conditions[z][1]]==value_conditions[z][3])
+										{
+											match=false;
+											break;
+										}	
+										if(value_conditions[z][2]=='greater than value' && cursors[value_conditions[z][0]].value[value_conditions[z][1]]<=value_conditions[z][3])
+										{
+											match=false;
+											break;
+										}
+										if(value_conditions[z][2]=='less than value' && cursors[value_conditions[z][0]].value[value_conditions[z][1]]>=value_conditions[z][3])
+										{
+											match=false;
+											break;
+										}
+									}
+									
+									if(match===true)
+									{
+										var data_array=new Object();
+										for(var x=0;x<report_fields.length;x++)
+										{
+											data_array[report_fields[x][1]]=cursors[report_fields[x][0]].value[report_fields[x][1]];
+										}
+								    	results.push(data_array);
+							    	}
+							    	
+							    	cursors[report_tables[i]].continue();
+							    }
+							    else
+							    {
+							    	open_cursor(j);
+							    }
+						    }
+						    else if((i-1)>=0)
+						    {
+						    	cursors[report_tables[i-1]].continue();
+						    }
+						    else
+						    {
+						    	callback(results);
+						    }
+						}
+					}
+				};
+				
+				open_cursor(0);
+				
+			}
 		};
 	}
 }

@@ -563,3 +563,36 @@ function set_grid_item_28()
 	},columns);
 };
 
+/**
+ * @item # Customer reports
+ * @itemNo 29
+ */
+function set_grid_item_29()
+{
+	var columns="<reports>" +
+		"<id></id>" +
+		"</reports>";
+	get_single_column_data(function(results)
+	{
+		document.getElementById('grid_item_29').innerHTML=results.length;
+	},columns);
+};
+
+
+/**
+ * @item # Active Tabs
+ * @itemNo 30
+ */
+function set_grid_item_30()
+{
+	var columns="<user_preferences>" +
+		"<id></id>" +
+		"<type array='yes'>--form--report--</type>" +
+		"<value exact='yes'>checked</value>" +
+		"</user_preferences>";
+	get_single_column_data(function(results)
+	{
+		document.getElementById('grid_item_30').innerHTML=results.length;
+	},columns);
+};
+

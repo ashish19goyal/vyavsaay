@@ -176,7 +176,6 @@ function set_my_filter(filter_data,filter_element)
 {
 	get_single_column_data(function(data)
 	{
-		data=jQuery.unique(data);
 		var form=filter_element.form;
 		var datalist=document.createElement('datalist');
 		data.forEach(function(d)
@@ -309,8 +308,6 @@ function set_my_value_list(filter_data,filter_element)
 {	
 	get_single_column_data(function(data)
 	{
-		data=jQuery.unique(data);
-		
 		var form=filter_element.form;
 		var datalist=document.createElement('datalist');
 		data.forEach(function(d)
@@ -394,8 +391,6 @@ function set_multiple_value_list(filter_data_array,filter_element)
 	{
 		get_single_column_data(function(data)
 		{
-			data=jQuery.unique(data);
-			
 			data.forEach(function(d)
 			{
 				var option=document.createElement('option');

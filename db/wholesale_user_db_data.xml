@@ -10,6 +10,36 @@
 	</accounts>
 	<user_preferences>
 		<row>
+			<name>tin</name>
+			<display_name>TIN #</display_name>
+			<status>active</status>
+			<value></value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>vat</name>
+			<display_name>VAT #</display_name>
+			<status>active</status>
+			<value></value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>pan</name>
+			<display_name>PAN #</display_name>
+			<status>active</status>
+			<value></value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>credit_period</name>
 			<display_name>Default Credit Period (days)</display_name>
 			<status>active</status>
