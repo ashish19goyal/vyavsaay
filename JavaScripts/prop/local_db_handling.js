@@ -179,7 +179,9 @@ function local_read_single_column(columns,callback,results)
 				if(tcols[j].innerHTML!==null && tcols[j].hasAttribute('sort'))
 				{
 					if(sort_index=='last_updated')
+					{	
 						sort_index=tcols[j].nodeName;
+					}
 					sort_order=tcols[j].getAttribute('sort');
 				}
 				
@@ -2010,15 +2012,11 @@ function local_delete_simple_func(data_xml,func)
  */
 function local_get_inventory(product,batch,callback)
 {
-	//console.log(filter);
-	var domain=get_domain();
-	var db_name="re_local_"+domain;
-	
 	if(typeof static_local_db=='undefined')
 	{
 		open_local_db(function()
 		{
-			local_get_inventory(product,batch,callback)
+			local_get_inventory(product,batch,callback);
 		});
 	}
 	else
@@ -2130,5 +2128,33 @@ function local_get_inventory(product,batch,callback)
 				};			
 			}
 		};		
+	}
+}
+
+
+
+/**
+ * This function generated a custom report
+ * @param report_id
+ * @param results
+ * @param callback
+ * @returns
+ */
+function local_generate_report(report_id,results,callback)
+{
+	if(typeof static_local_db=='undefined')
+	{
+		open_local_db(function()
+		{
+			local_generate_report(report_id,results,callback);
+		});
+	}
+	else
+	{
+		var keyValue=IDBKeyRange.only(report_id);
+		static_local_db.transaction(['report_items'],"readonly").objectStore('report_items').index('report_id').openCursor(keyValue).onsuccess=function(e)
+		{
+			
+		};
 	}
 }

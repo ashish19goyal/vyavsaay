@@ -9277,20 +9277,12 @@ function form110_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form110_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='edit_icon' title='Edit report settings' form='form110_"+result.id+"' onclick=\"element_display('"+result.id+"','form111');\">";
-						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form110_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form110_"+result.id+"' onclick='form110_delete_item($(this));'>";
-						rowsHTML+="<input type='button' class='generic_icon' value='Generate' form='form110_"+result.id+"' onclick=\"form111_generate('"+result.id+"');\">";
+						rowsHTML+="<input type='button' class='generic_icon' value='Generate' form='form110_"+result.id+"' onclick=\"generate_report('"+result.id+"');\">";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
-			$('#form110_body').append(rowsHTML);
-			var fields=document.getElementById("form110_"+result.id);
-			
-			$(fields).on("submit", function(event)
-			{
-				event.preventDefault();
-				form110_update_item(fields);
-			});
+			$('#form110_body').append(rowsHTML);			
 		});
 
 		////indexing///
@@ -9347,10 +9339,13 @@ function form111_ini()
 				"</reports>";
 		var report_item_columns="<report_items>" +
 				"<id></id>" +
-				"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
-				"<item_name></item_name>" +
-				"<offer_name></offer_name>" +
-				"<offer></offer>" +
+				"<report_id>"+report_id+"</report_id>" +
+				"<table1></table1>" +
+				"<field1></field1>" +
+				"<condition1></condition1>" +
+				"<table2></table2>" +
+				"<field2></field2>" +
+				"<value></value>" +
 				"</report_items>";
 	
 		////separate fetch function to get bill details like customer name, total etc.
@@ -9391,14 +9386,10 @@ function form111_ini()
 					rowsHTML+="<td data-th='Condition'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.condition1+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Condition Table'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.table2+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Condition Field'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.field2+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Condition Value'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.value+"'>";
+					rowsHTML+="<td data-th='Condition Match'>";
+						rowsHTML+="Table <input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.table2+"'>";
+						rowsHTML+="</br>Field <input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.field2+"'>";
+						rowsHTML+="</br>Value <input type='text' readonly='readonly' form='form111_"+id+"' value='"+result.value+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form111_"+id+"' value='"+id+"'>";

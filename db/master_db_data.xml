@@ -90,6 +90,14 @@
 		<row>
 			<tablename>report_items</tablename>
 			<listname>condition1</listname>
+			<name>none</name>
+			<value>None</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>report_items</tablename>
+			<listname>condition1</listname>
 			<name>equals value</name>
 			<value>Equals Value</value>
 			<status>active</status>

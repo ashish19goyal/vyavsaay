@@ -392,3 +392,30 @@ function server_get_inventory(product,batch,callback)
 		}
 	});
 }
+
+function server_generate_report(report_id,results,callback)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var re_access=get_session_var('re');
+	ajax_with_custom_func("./ajax/generate_report.php","domain="+domain+"&username="+username+"&re="+re_access+"&report_id="+report_id,function(e)
+	{
+		//console.log(e.responseText);
+		
+		var row=e.responseXML.childNodes[0].childNodes;
+		for(var i=0; i<row.length; i++)
+		{
+			if(row[i].nodeName!="" && row[i].nodeName!="#text")
+			{
+				var data=row[i].childNodes;
+				var row_data=[];
+				for(var j=0;j<data.length;j++)
+				{
+					row_data[data[j].nodeName]=data[j].innerHTML;
+				}
+				results.push(row_data);
+			}
+		}
+		callback(results);
+	});
+}

@@ -28,6 +28,9 @@
 			$xmlresponse_xml->loadXML($post_data);
 			$xmlresponse=$xmlresponse_xml->documentElement;
 		
+			$q_string="insert into activities (id,tablename,type,data_id,data_xml,last_updated,status,link_to,user_display,title,notes,updated_by) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			$stmt=$conn->conn->prepare($q_string);
+				
 			foreach($xmlresponse->childNodes as $row)
 			{
 				if($row->hasChildNodes())
@@ -73,8 +76,6 @@
 						}
 					}
 					
-					$q_string="insert into activities (id,tablename,type,data_id,data_xml,last_updated,status,link_to,user_display,title,notes,updated_by) values(?,?,?,?,?,?,?,?,?,?,?,?)";
-					$stmt=$conn->conn->prepare($q_string);
 					try{
 						$stmt->execute(array($id,$table_name,$type,$data_id,$xmlresponse_xml->saveXML($data_xml),$last_updated,'synced',$link_to,$user_display,$title,$notes,$updated_by));
 					}

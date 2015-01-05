@@ -90,6 +90,30 @@ function get_inventory(product,batch,callback)
 
 
 /**
+ * @returns {Array}
+ */
+function generate_report(report_id)
+{	
+	var results=new Array();
+
+	if(is_online())
+	{
+		server_generate_report(report_id,results,function()
+		{
+			my_obj_array_to_csv(results,'report');
+		});
+	}
+	else
+	{
+		local_generate_report(report_id,results,function()
+		{
+			my_obj_array_to_csv(results,'report');
+		});
+	}
+}
+
+
+/**
  * this function resizes and sets the preview of the picture
  * @form Manage Products
  * @formNo 39

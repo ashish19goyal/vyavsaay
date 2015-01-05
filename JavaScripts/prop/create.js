@@ -7140,3 +7140,115 @@ function form109_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * @form Create Reports
+ * @param button
+ */
+function form111_create_item(form)
+{
+	if(is_create_access('form111'))
+	{
+		var report_id=document.getElementById('form111_master').elements[3].value;
+		var table1=form.elements[0].value;
+		var field1=form.elements[1].value;
+		var condition=form.elements[2].value;
+		var table2=form.elements[3].value;
+		var field2=form.elements[4].value;
+		var value=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<report_items>" +
+					"<id>"+data_id+"</id>" +
+					"<table1>"+table1+"</table1>" +
+					"<field1>"+field1+"</field1>" +
+					"<condition1>"+condition+"</condition1>" +
+					"<table2>"+table2+"</table2>" +
+					"<field2>"+field2+"</field2>" +
+					"<value>"+value+"</value>" +
+					"<report_id>"+report_id+"</report_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</report_items>";
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[8];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form111_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Create Reports
+ */
+function form111_create_form()
+{
+	if(is_create_access('form111'))
+	{
+		var form=document.getElementById("form111_master");
+
+		var name=form.elements[1].value;
+		var description=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<reports>" +
+					"<id>"+data_id+"</id>" +
+					"<name unique='yes'>"+name+"</name>" +
+					"<description>"+description+"</description>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</reports>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>reports</tablename>" +
+					"<link_to>form111</link_to>" +
+					"<title>Created</title>" +
+					"<notes>Report "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}
+	
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form111_update_form();
+		});
+		
+		$("[id^='save_form111_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}	
+}

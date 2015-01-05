@@ -3617,3 +3617,89 @@ function form109_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create Reports
+ * @formNo 111
+ */
+function form111_add_item()
+{
+	if(is_create_access('form111'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form111_"+id+"'></form>";
+			rowsHTML+="<td data-th='Table'>";
+				rowsHTML+="<input type='text' form='form111_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Field'>";
+				rowsHTML+="<input type='text' form='form111_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Condition'>";
+				rowsHTML+="<input type='text' form='form111_"+id+"' required value='none'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Condition Match'>";
+				rowsHTML+="Table <input type='text' form='form111_"+id+"' value=''>";
+				rowsHTML+="</br>Field <input type='text' form='form111_"+id+"' value=''>";
+				rowsHTML+="</br>Value <input type='text' form='form111_"+id+"' value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form111_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form111_"+id+"' id='save_form111_"+id+"' >";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form111_"+id+"' id='delete_form111_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form111_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form111_"+id);
+		var table1_filter=fields.elements[0];
+		var field1_filter=fields.elements[1];
+		var condition_filter=fields.elements[2];
+		var table2_filter=fields.elements[3];
+		var field2_filter=fields.elements[4];
+		var value_filter=fields.elements[5];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form111_create_item(fields);
+		});
+					
+		$(table1_filter).focus();
+		
+		var tables_data="<report_items>" +
+			"<table1></table1>" +
+			"</report_items>";
+		var fields_data="<report_items>" +
+			"<field1></field1>" +
+			"</report_items>";
+		
+		set_my_filter(tables_data,table1_filter);
+		set_my_filter(tables_data,table2_filter);
+		set_my_filter(fields_data,field1_filter);
+		set_my_filter(fields_data,field2_filter);
+		set_static_value_list('report_items','condition1',condition_filter);
+		
+		$(condition_filter).on('blur',function(event)
+		{
+			if(condition_filter.value.indexOf('field')!=-1)
+			{
+				value_filter.setAttribute('readonly','readonly');
+				table2_filter.removeAttribute('readonly');
+				field2_filter.removeAttribute('readonly');
+			}
+			else
+			{
+				value_filter.removeAttribute('readonly');
+				table2_filter.setAttribute('readonly','readonly');
+				field2_filter.setAttribute('readonly','readonly');
+			}
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}

@@ -101,7 +101,7 @@ function form2_update_form()
 			local_update_row(data_xml,activity_xml);
 		}
 	
-		$("[id^='save_form2']").click();
+		$("[id^='save_form2_']").click();
 		//$("#modal3").dialog("open");
 	}
 	else
@@ -212,7 +212,7 @@ function form7_update_form()
 {
 	if(is_update_access('form7'))
 	{
-		$("[id^='save_form7']").click();
+		$("[id^='save_form7_']").click();
 		form7_header_ini();
 	}
 	else
@@ -1003,7 +1003,7 @@ function form12_update_form()
 			},payment_data);
 			
 		});
-		$("[id^='save_form12']").click();
+		$("[id^='save_form12_']").click();
 		//$("#modal3").dialog("open");
 	}
 	else
@@ -1462,7 +1462,7 @@ function form21_update_form()
 			}
 		},payment_data);
 			
-		$("[id^='save_form21']").click();
+		$("[id^='save_form21_']").click();
 	}
 	else
 	{
@@ -1571,12 +1571,12 @@ function form24_update_form()
 					"</activity>";
 		if(is_online())
 		{
-			$("[id^='save_form24']").click();
+			$("[id^='save_form24_']").click();
 			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			$("[id^='save_form24']").click();
+			$("[id^='save_form24_']").click();
 			local_update_row(data_xml,activity_xml);
 		}
 	}
@@ -2104,7 +2104,7 @@ function form46_update_form()
 {	
 	if(is_update_access('form46'))
 	{
-		$("[id^='save_form46']").click();
+		$("[id^='save_form46_']").click();
 	}
 	else
 	{
@@ -2243,7 +2243,7 @@ function form48_update_form()
 {	
 	if(is_update_access('form48'))
 	{
-		$("[id^='save_form48']").click();
+		$("[id^='save_form48_']").click();
 		//$("#modal3").dialog("open");
 	}
 	else
@@ -2312,7 +2312,7 @@ function form49_update_form()
 {	
 	if(is_update_access('form49'))
 	{
-		$("[id^='save_form49']").click();
+		$("[id^='save_form49_']").click();
 		//$("#modal3").dialog("open");
 	}
 	else
@@ -2377,7 +2377,7 @@ function form50_update_form()
 {
 	if(is_update_access('form50'))
 	{
-		$("[id^='save_form50']").click();
+		$("[id^='save_form50_']").click();
 	}
 	else
 	{
@@ -2486,7 +2486,7 @@ function form51_update_form()
 				local_update_row(data_xml,activity_xml);
 			}
 			
-			$("[id^='save_form51']").click();
+			$("[id^='save_form51_']").click();
 		}
 		else
 		{
@@ -2591,7 +2591,7 @@ function form54_update_form(button)
 {
 	if(is_update_access('form54'))
 	{
-		$("[id^='save_form54']").click();
+		$("[id^='save_form54_']").click();
 		//$("#modal3").dialog("open");
 	}
 	else
@@ -3189,12 +3189,12 @@ function form69_update_form()
 					"</activity>";
 		if(is_online())
 		{
-			$("[id^='save_form69']").click();
+			$("[id^='save_form69_']").click();
 			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			$("[id^='save_form69']").click();
+			$("[id^='save_form69_']").click();
 			local_update_row(data_xml,activity_xml);
 		}
 	}
@@ -3732,7 +3732,7 @@ function form72_update_form()
 			},payment_data);
 		
 		});
-		$("[id^='save_form72']").click();
+		$("[id^='save_form72_']").click();
 	}
 	else
 	{
@@ -3796,7 +3796,7 @@ function form77_update_form(button)
 {
 	if(is_update_access('form77'))
 	{
-		$("[id^='save_form77']").click();
+		$("[id^='save_form77_']").click();
 	}
 	else
 	{
@@ -3859,7 +3859,7 @@ function form80_update_form(button)
 {
 	if(is_update_access('form80'))
 	{
-		$("[id^='save_form80']").click();
+		$("[id^='save_form80_']").click();
 	}
 	else
 	{
@@ -4782,7 +4782,7 @@ function form91_update_form()
 			},payment_data);
 			
 		});
-		$("[id^='save_form91']").click();
+		$("[id^='save_form91_']").click();
 	}
 	else
 	{
@@ -5387,4 +5387,49 @@ function form109_update_item(form)
 	{
 		$("#modal2").dialog("open");
 	}
+}
+
+/**
+ * @form Create Reports
+ * @param button
+ */
+function form111_update_form()
+{
+	if(is_update_access('form111'))
+	{
+		var form=document.getElementById("form111_master");
+
+		var name=form.elements[1].value;
+		var description=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<reports>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<description>"+description+"</description>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</reports>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>reports</tablename>" +
+					"<link_to>form111</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Report "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+	
+		$("[id^='save_form111_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}	
 }
