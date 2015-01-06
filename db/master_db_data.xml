@@ -160,7 +160,7 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<tablename>loyality_programs</tablename>
+			<tablename>loyalty_customers</tablename>
 			<listname>status</listname>
 			<name>active</name>
 			<value>Active</value>
@@ -168,7 +168,47 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<tablename>loyality_programs</tablename>
+			<tablename>loyalty_customers</tablename>
+			<listname>status</listname>
+			<name>inactive</name>
+			<value>Inactive</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loyalty_programs</tablename>
+			<listname>type</listname>
+			<name>discount</name>
+			<value>Discount</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loyalty_programs</tablename>
+			<listname>type</listname>
+			<name>accrual</name>
+			<value>Accrual</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loyalty_programs</tablename>
+			<listname>type</listname>
+			<name>reward product</name>
+			<value>Reward product</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loyalty_programs</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loyalty_programs</tablename>
 			<listname>status</listname>
 			<name>retired</name>
 			<value>Retired</value>

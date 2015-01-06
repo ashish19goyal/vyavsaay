@@ -17,7 +17,7 @@
 			if(strpos($_SESSION['reports'],'report52-')!==false)
 				echo "<li><a id='report52_link' href='#report52' onclick='report52_header_ini();' data-i18n='form.product_purchase_report'></a></li>";			
 			if(strpos($_SESSION['forms'],'form114-')!==false)
-				echo "<li><a id='form114_link' href='#form114' onclick='form114_header_ini(); form114_ini();' data-i18n='form.add_unbilled_items'></a></li>";
+				echo "<li><a id='form114_link' href='#form114' onclick='form114_header_ini();' data-i18n='form.add_unbilled_items'></a></li>";
 			if(strpos($_SESSION['forms'],'form115-')!==false)
 				echo "<li><a id='form115_link' href='#form115' onclick='form115_header_ini(); form115_ini();' data-i18n='form.manage_unbilled_items'></a></li>";			
 		echo "</ul>";

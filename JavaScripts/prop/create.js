@@ -94,7 +94,7 @@ function form2_create_form()
 			form2_update_form();
 		});
 		
-		$("[id^='save_form2']").click();
+		$("[id^='save_form2_']").click();
 		//$("#modal3").dialog("open");
 	}
 	else
@@ -1117,7 +1117,7 @@ function form12_create_form()
 			event.preventDefault();
 			form12_update_form();
 		});
-		$("[id^='save_form12']").click();
+		$("[id^='save_form12_']").click();
 	}
 	else
 	{
@@ -1428,7 +1428,7 @@ function form15_create_form()
 			event.preventDefault();
 			form15_update_form();
 		});
-		$("[id^='save_form15']").click();
+		$("[id^='save_form15_']").click();
 	}
 	else
 	{
@@ -1879,7 +1879,7 @@ function form21_create_form()
 			event.preventDefault();
 			form21_update_form();
 		});
-		$("[id^='save_form21']").click();
+		$("[id^='save_form21_']").click();
 	}
 	else
 	{
@@ -2015,7 +2015,7 @@ function form24_create_form()
 			event.preventDefault();
 			form24_update_form();
 		});
-		$("[id^='save_form24']").click();
+		$("[id^='save_form24_']").click();
 	}
 	else
 	{
@@ -2878,7 +2878,7 @@ function form69_create_form()
 			event.preventDefault();
 			form69_update_form();
 		});
-		$("[id^='save_form69']").click();
+		$("[id^='save_form69_']").click();
 	}
 	else
 	{
@@ -4117,7 +4117,7 @@ function form72_create_form()
 			event.preventDefault();
 			form72_update_form();
 		});
-		$("[id^='save_form72']").click();
+		$("[id^='save_form72_']").click();
 	}
 	else
 	{
@@ -6044,7 +6044,7 @@ function form91_create_form()
 			event.preventDefault();
 			form12_update_form();
 		});
-		$("[id^='save_form91']").click();
+		$("[id^='save_form91_']").click();
 	}
 	else
 	{
@@ -7246,6 +7246,152 @@ function form111_create_form()
 		});
 		
 		$("[id^='save_form111_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}	
+}
+
+
+/**
+ * @form Add unbilled sale items
+ * @param button
+ */
+function form112_create_item(form)
+{
+	if(is_create_access('form112'))
+	{
+		var customer=document.getElementById('form112_master').elements[1].value;
+		var sale_date=get_raw_time(document.getElementById('form112_master').elements[2].value);
+		var item_name=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<unbilled_sale_items>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<item_name>"+item_name+"</item_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<sale_date>"+sale_date+"</sale_date>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</unbilled_sale_items>";
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[5];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form112_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Add unbilled sale items
+ * @param button
+ */
+function form112_create_form()
+{
+	if(is_create_access('form112'))
+	{
+		$("[id^='save_form112_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}	
+}
+
+
+/**
+ * @form Add unbilled purchase items
+ * @param button
+ */
+function form114_create_item(form)
+{
+	if(is_create_access('form114'))
+	{
+		var supplier=document.getElementById('form114_master').elements[1].value;
+		var purchase_date=get_raw_time(document.getElementById('form114_master').elements[2].value);
+		var item_name=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<unbilled_purchase_items>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<item_name>"+item_name+"</item_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<purchase_date>"+purchase_date+"</purchase_date>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</unbilled_purchase_items>";
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[5];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form114_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Add unbilled purchase items
+ * @param button
+ */
+function form114_create_form()
+{
+	if(is_create_access('form114'))
+	{
+		$("[id^='save_form114_']").click();
 	}
 	else
 	{

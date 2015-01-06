@@ -1567,18 +1567,18 @@
 		</row>
 		<row>
 			<name>form116</name>
-			<display_name>manage_loyality_programs</display_name>
+			<display_name>manage_loyalty_programs</display_name>
 			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--loyality_programs--loyality_adjust--</tables>
+			<tables>--loyalty_programs--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<name>form118</name>
-			<display_name>create_bills_loyality</display_name>
+			<display_name>create_bills_loyalty</display_name>
 			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
@@ -2956,7 +2956,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form116</element_id>
-			<element_name>manage_loyality_programs</element_name>
+			<element_name>manage_loyalty_programs</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -2967,7 +2967,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form118</element_id>
-			<element_name>create_bills_loyality</element_name>
+			<element_name>create_bills_loyalty</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

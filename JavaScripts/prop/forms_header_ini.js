@@ -301,8 +301,6 @@ function form10_new_form()
 {
 	form10_header_ini();
 	$("#form10_body").find("tr").remove();
-	$("#form10_whatsapp").hide();
-	$("#form10_gmail").hide();
 }
 
 
@@ -376,8 +374,6 @@ function form12_new_form()
 {
 	form12_header_ini();
 	$("#form12_body").find("tr").remove();
-	$("#form12_whatsapp").hide();
-	$("#form12_gmail").hide();
 }
 
 /**
@@ -561,8 +557,6 @@ function form15_new_form()
 {
 	form15_header_ini();
 	$("#form15_body").find("tr").remove();
-	$("#form15_whatsapp").hide();
-	$("#form15_gmail").hide();
 }
 
 
@@ -662,8 +656,6 @@ function form19_new_form()
 {
 	form19_header_ini();
 	$("#form19_body").find("tr").remove();
-	$("#form19_whatsapp").hide();
-	$("#form19_gmail").hide();
 }
 
 
@@ -762,8 +754,6 @@ function form24_new_form()
 {
 	form24_header_ini();
 	$("#form24_body").find("tr").remove();
-	$("#form24_whatsapp").hide();
-	$("#form24_gmail").hide();
 }
 
 /**
@@ -1685,8 +1675,6 @@ function form72_new_form()
 {
 	form72_header_ini();
 	$("#form72_body").find("tr").remove();
-	$("#form72_whatsapp").hide();
-	$("#form72_gmail").hide();
 }
 
 /**
@@ -2218,8 +2206,6 @@ function form91_new_form()
 {
 	form91_header_ini();
 	$("#form91_body").find("tr").remove();
-	$("#form91_whatsapp").hide();
-	$("#form91_gmail").hide();
 }
 
 
@@ -2715,3 +2701,164 @@ function form111_header_ini()
 		form111_create_form();
 	});
 }
+
+/**
+ * @form Add Unbilled Items
+ * @formNo 112
+ */
+function form112_header_ini()
+{
+	var fields=document.getElementById('form112_master');
+	
+	var customers_filter=fields.elements[1];
+	var sale_date=fields.elements[2];
+		
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form112_create_form();
+	});
+	var customers_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	set_my_value_list(customers_data,customers_filter);
+	
+	$(sale_date).datepicker();
+	$(sale_date).val(get_my_date());
+	customers_filter.value='';
+	
+	$(customers_filter).focus();
+	
+	$('#form112_body').html("");
+}
+
+/**
+ * @form Manage Unbilled Items
+ * @formNo 113
+ */
+function form113_header_ini()
+{
+	var filter_fields=document.getElementById('form113_header');
+	var customer_filter=filter_fields.elements[0];
+	var item_filter=filter_fields.elements[1];
+	var batch_filter=filter_fields.elements[1];
+	
+	var item_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var batch_data="<product_instances>" +
+			"<batch></batch>" +
+			"</product_instances>";
+	var cust_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form113_ini();
+	});
+
+	set_my_filter(cust_data,customer_filter);
+	set_my_filter(item_data,item_filter);
+	set_my_filter(batch_data,batch_filter);
+};
+
+/**
+ * @form Add Unbilled Purchase Items
+ * @formNo 114
+ */
+function form114_header_ini()
+{
+	var fields=document.getElementById('form114_master');
+	
+	var supplier_filter=fields.elements[1];
+	var purchase_date=fields.elements[2];
+		
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form114_create_form();
+	});
+	var supplier_data="<suppliers>" +
+		"<acc_name></acc_name>" +
+		"</suppliers>";
+	set_my_value_list(supplier_data,supplier_filter);
+	
+	$(purchase_date).datepicker();
+	$(purchase_date).val(get_my_date());
+	supplier_filter.value='';
+	
+	$(supplier_filter).focus();
+	
+	$('#form114_body').html("");
+}
+
+/**
+ * @form Manage Unbilled purchase Items
+ * @formNo 115
+ */
+function form115_header_ini()
+{
+	var filter_fields=document.getElementById('form115_header');
+	var supplier_filter=filter_fields.elements[0];
+	var item_filter=filter_fields.elements[1];
+	var batch_filter=filter_fields.elements[1];
+	
+	var item_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var batch_data="<product_instances>" +
+			"<batch></batch>" +
+			"</product_instances>";
+	var supplier_data="<suppliers>" +
+		"<acc_name></acc_name>" +
+		"</suppliers>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form113_ini();
+	});
+
+	set_my_filter(supplier_data,supplier_filter);
+	set_my_filter(item_data,item_filter);
+	set_my_filter(batch_data,batch_filter);
+};
+
+
+/**
+ * @form Manage Loyalty Programs
+ * @formNo 116
+ */
+function form116_header_ini()
+{
+	var filter_fields=document.getElementById('form116_header');
+	var name_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var tier_filter=filter_fields.elements[2];
+	var status_filter=filter_fields.elements[3];
+	
+	var name_data="<loyalty_programs>" +
+			"<name></name>" +
+			"</loyalty_programs>";
+	var tier_data="<loyalty_programs>" +
+			"<tier></tier>" +
+			"</loyalty_programs>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form116_ini();
+	});
+
+	set_my_filter(name_data,name_filter);
+	set_my_filter(tier_data,tier_filter);
+	set_static_filter('loyalty_programs','type',type_filter);
+	set_static_filter('loyalty_programs','status',status_filter);
+};

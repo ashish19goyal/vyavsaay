@@ -151,7 +151,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=8;i<45;i++)
+	for(var i=8;i<47;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({
@@ -389,14 +389,26 @@ function show_all_activities()
 	activities_ini();
 }
 
-function element_display(fid,element_name)
+function element_display(fid,element_name,element2_name)
 {
-	var element_link="#"+element_name+"_link";
-	var function_link=$(element_link).parent().parent().parent().attr('id');
-	show_function("#"+function_link);
-	$(element_link).attr('data_id',fid);
-	$(element_link).click();
-	$(element_link).attr('data_id','');
+	if(is_read_access(element_name))
+	{
+		var element_link="#"+element_name+"_link";
+		var function_link=$(element_link).parent().parent().parent().attr('id');
+		show_function("#"+function_link);
+		$(element_link).attr('data_id',fid);
+		$(element_link).click();
+		$(element_link).attr('data_id','');
+	}
+	else if(element2_name && is_read_access(element2_name))
+	{
+		var element_link="#"+element2_name+"_link";
+		var function_link=$(element_link).parent().parent().parent().attr('id');
+		show_function("#"+function_link);
+		$(element_link).attr('data_id',fid);
+		$(element_link).click();
+		$(element_link).attr('data_id','');
+	}
 }
 
 function access_display(tablename,record_id)
@@ -671,6 +683,26 @@ function import_data(form_name)
 		case 'form97':modal23_action(form97_import_template,form97_import);
 		break;
 		case 'form98':modal23_action(form98_import_template,form98_import);
+		break;
+		case 'form101':modal23_action(form101_import_template,form101_import);
+		break;
+		case 'form102':modal23_action(form102_import_template,form102_import);
+		break;
+		case 'form103':modal23_action(form103_import_template,form103_import);
+		break;
+		case 'form104':modal23_action(form104_import_template,form104_import);
+		break;
+		case 'form108':modal23_action(form108_import_template,form108_import);
+		break;
+		case 'form109':modal23_action(form109_import_template,form109_import);
+		break;
+		case 'form112':modal23_action(form112_import_template,form112_import);
+		break;
+		case 'form113':modal23_action(form113_import_template,form113_import);
+		break;
+		case 'form114':modal23_action(form114_import_template,form114_import);
+		break;
+		case 'form115':modal23_action(form115_import_template,form115_import);
 		break;
 	}
 }

@@ -276,7 +276,6 @@
 			<staff index='yes' type="VARCHAR(100)"></staff>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<free_with index="no" type="VARCHAR(90)"></free_with>
-			<loyality index='no' type="DECIMAL(12,4)"></loyality>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bill_items>
 	<customer_returns>
@@ -345,9 +344,10 @@
 	<inventory_adjust>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<batch index='yes' type="VARCHAR(45)"></batch>
-			<bar_code index='yes' type="VARCHAR(45)"></bar_code>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<product_name index='yes' type="VARCHAR(90)"></product_name>
+			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale_return-->
+			<source_id index='yes' type="BIGINT"></source_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</inventory_adjust>
 	<discarded>
@@ -671,19 +671,35 @@
 			<notes index='no' type='TEXT'></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</unbilled_purchase_items>
-	<loyality_programs>
+	<loyalty_programs>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(100)"></name>
+			<type index='yes' type="VARCHAR(50)"></type><!--discount/reward product/accrual-->
+			<tier index='yes' type="VARCHAR(100)"></tier>
+			<tier_criteria index='yes' type="DECIMAL(12,2)"></tier_criteria>
 			<points_addition index='no' type="DECIMAL(12,2)"></points_addition>
-			<points_redemption index='no' type="DECIMAL(12,2)"></points_redemption>
+			<discount index='no' type="DECIMAL(12,4)"></discount>
+			<accrual index='no' type="DECIMAL(12,4)"></accrual>
+			<reward_product index='no' type="VARCHAR(100)"></reward_product>
 			<status index='yes' type='VARCHAR(25)'></status><!-- active/retired -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
-	</loyality_programs>
-	<loyality_adjust>
+	</loyalty_programs>
+	<loyalty_points>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<program_name index='yes' type="VARCHAR(100)"></program_name>
 			<customer index='yes' type="VARCHAR(100)"></customer>
-			<points index='no' type="DECIMAL(12,2)"></points>
+			<points index='no' type="DECIMAL(12,4)"></points>
 			<date index='yes' type="BIGINT"></date>
+			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale_return-->
+			<source_id index='yes' type="BIGINT"></source_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
-	</loyality_adjust>
+	</loyalty_points>
+	<loyalty_customers>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<program_name index='yes' type="VARCHAR(100)"></program_name>
+			<customer index='yes' type="VARCHAR(100)"></customer>
+			<tier index='yes' type="VARCHAR(100)"></tier>
+			<status index='yes' type='VARCHAR(25)'></status><!-- active/inactive -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</loyalty_customers>
 </re_xml>

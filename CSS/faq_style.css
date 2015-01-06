@@ -39,7 +39,7 @@ body.cd-overlay::after {
   }
 }
 
-a {
+a.cd-faq-trigger,a.cd-faq-trigger:hover {
   color: #2ABF5E;
   text-decoration: none;
 }

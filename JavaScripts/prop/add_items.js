@@ -3703,3 +3703,137 @@ function form111_add_item()
 		$("#modal2").dialog("open");
 	}		
 }
+
+
+/**
+ * @form Add unbilled sale items
+ * @formNo 112
+ */
+function form112_add_item()
+{
+	if(is_create_access('form112'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form112_"+id+"'></form>";
+			rowsHTML+="<td data-th='Item Name'>";
+				rowsHTML+="<input type='text' form='form112_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<input type='text' form='form112_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add batch' onclick='modal22_action();'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' form='form112_"+id+"' required step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form112_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form112_"+id+"' id='save_form112_"+id+"' >";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form112_"+id+"' id='delete_form112_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form112_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form112_"+id);
+		var names_filter=fields.elements[0];
+		var batch_filter=fields.elements[1];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form112_create_item(fields);
+		});
+					
+		$(names_filter).focus();
+		
+		var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+		set_my_value_list(products_data,names_filter);
+		
+		$(names_filter).on('blur',function(event)
+		{
+			var batch_data="<product_instances>" +
+				"<batch></batch>" +
+				"<product_name exact='yes'>"+names_filter.value+"</product_name>" +
+				"</product_instances>";
+				
+			set_my_value_list(batch_data,batch_filter);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+
+/**
+ * @form Add unbilled purchase items
+ * @formNo 114
+ */
+function form114_add_item()
+{
+	if(is_create_access('form114'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form114_"+id+"'></form>";
+			rowsHTML+="<td data-th='Item Name'>";
+				rowsHTML+="<input type='text' form='form114_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<input type='text' form='form114_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add batch' onclick='modal22_action();'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' form='form114_"+id+"' required step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form114_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form114_"+id+"' id='save_form114_"+id+"' >";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form114_"+id+"' id='delete_form114_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form114_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form114_"+id);
+		var names_filter=fields.elements[0];
+		var batch_filter=fields.elements[1];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form114_create_item(fields);
+		});
+					
+		$(names_filter).focus();
+		
+		var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+		set_my_value_list(products_data,names_filter);
+		
+		$(names_filter).on('blur',function(event)
+		{
+			var batch_data="<product_instances>" +
+				"<batch></batch>" +
+				"<product_name exact='yes'>"+names_filter.value+"</product_name>" +
+				"</product_instances>";
+				
+			set_my_value_list(batch_data,batch_filter);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}

@@ -33,7 +33,7 @@
 			if(strpos($_SESSION['forms'],'form90-')!==false)
 				echo "<li><a id='form90_link' href='#form90' onclick='form90_header_ini(); form90_ini();' data-i18n='form.billing_types'></a></li>";
 			if(strpos($_SESSION['forms'],'form112-')!==false)
-				echo "<li><a id='form112_link' href='#form112' onclick='form112_header_ini(); form112_ini();' data-i18n='form.add_unbilled_items'></a></li>";
+				echo "<li><a id='form112_link' href='#form112' onclick='form112_header_ini();' data-i18n='form.add_unbilled_items'></a></li>";
 			if(strpos($_SESSION['forms'],'form113-')!==false)
 				echo "<li><a id='form113_link' href='#form113' onclick='form113_header_ini(); form113_ini();' data-i18n='form.manage_unbilled_items'></a></li>";
 			if(strpos($_SESSION['forms'],'form118-')!==false)

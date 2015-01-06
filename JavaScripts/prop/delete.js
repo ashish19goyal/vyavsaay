@@ -3394,3 +3394,166 @@ function form111_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Add unbilled sale items
+ * @param button
+ */
+function form112_delete_item(button)
+{
+	if(is_delete_access('form112'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[3].value;
+		var data_xml="<unbilled_sale_items>" +
+					"<id>"+data_id+"</id>" +
+					"</unbilled_sale_items>";
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage unbilled sale items
+ * @param button
+ */
+function form113_delete_item(button)
+{
+	if(is_delete_access('form113'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[5].value;
+		var data_xml="<unbilled_sale_items>" +
+					"<id>"+data_id+"</id>" +
+					"</unbilled_sale_items>";
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Add unbilled purchase items
+ * @param button
+ */
+function form114_delete_item(button)
+{
+	if(is_delete_access('form114'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[3].value;
+		var data_xml="<unbilled_purchase_items>" +
+					"<id>"+data_id+"</id>" +
+					"</unbilled_purchase_items>";
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage unbilled purchase items
+ * @param button
+ */
+function form115_delete_item(button)
+{
+	if(is_delete_access('form115'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[5].value;
+		var data_xml="<unbilled_purchase_items>" +
+					"<id>"+data_id+"</id>" +
+					"</unbilled_purchase_items>";
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Loyalty programs
+ * @param button
+ */
+function form116_delete_item(button)
+{
+	if(is_delete_access('form116'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		var program_name=form.elements[0].value;
+		var tier=form.elements[2].value;
+		var data_id=form.elements[6].value;
+		var data_xml="<loyalty_programs>" +
+					"<id>"+data_id+"</id>" +
+					"</loyalty_programs>";
+		var delete2_xml="<loyalty_customers>" +
+				"<program_name>"+program_name+"</program_name>" +
+				"<tier>"+tier+"</tier>" +
+				"</loyalty_customers>";
+		
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+			server_delete_simple(delete2_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+			local_delete_simple(delete2_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

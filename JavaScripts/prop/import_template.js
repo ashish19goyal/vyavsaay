@@ -630,3 +630,43 @@ function form109_import_template()
 	my_array_to_csv(data_array);
 };
 
+/**
+* @form Add unbilled sale items
+* @formNo 112
+*/
+function form112_import_template()
+{
+	var data_array=['id','customer','item_name','batch','quantity','sale_date','notes'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage unbilled sale items
+* @formNo 113
+*/
+function form113_import_template()
+{
+	var data_array=['id','customer','item_name','batch','quantity','sale_date','notes'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Add unbilled purchase items
+* @formNo 114
+*/
+function form114_import_template()
+{
+	var data_array=['id','supplier','item_name','batch','quantity','purchase_date','notes'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage unbilled sale items
+* @formNo 113
+*/
+function form113_import_template()
+{
+	var data_array=['id','supplier','item_name','batch','quantity','purchase_date','notes'];
+	my_array_to_csv(data_array);
+};
+

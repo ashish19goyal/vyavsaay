@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="CSS/faq_reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="CSS/faq_style.css"> <!-- Resource style -->
 	<link rel="stylesheet" href="CSS/bootstrap.css">
+	<link rel="stylesheet" href="./CSS/theme1.css"/>
 	<script src='./JavaScripts/open/jquery-1.11.1.min.js'></script>
 	<script src='./JavaScripts/open/jquery-ui.min.js'></script>
 	<script src="./JavaScripts/prop/faq_main.js"></script> <!-- Resource jQuery -->

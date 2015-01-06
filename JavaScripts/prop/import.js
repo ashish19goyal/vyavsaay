@@ -3409,3 +3409,209 @@ function form109_import(data_array,import_type)
 		}
 	}
 };
+
+
+/**
+* @form Add unbilled sale items
+* @formNo 112
+*/
+function form112_import(data_array,import_type)
+{
+	var data_xml="<unbilled_sale_items>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</unbilled_sale_items><separator></separator><unbilled_sale_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<customer>"+row.customer+"</customer>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<sale_date>"+get_raw_time(row.sale_date)+"</sale_date>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</unbilled_sale_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Add unbilled sale items
+* @formNo 113
+*/
+function form113_import(data_array,import_type)
+{
+	var data_xml="<unbilled_sale_items>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</unbilled_sale_items><separator></separator><unbilled_sale_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<customer>"+row.customer+"</customer>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<sale_date>"+get_raw_time(row.sale_date)+"</sale_date>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</unbilled_sale_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+
+/**
+* @form Add unbilled purchase items
+* @formNo 114
+*/
+function form114_import(data_array,import_type)
+{
+	var data_xml="<unbilled_purchase_items>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</unbilled_purchase_items><separator></separator><unbilled_purchase_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<supplier>"+row.supplier+"</supplier>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<purchase_date>"+get_raw_time(row.purchase_date)+"</purchase_date>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</unbilled_purchase_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Manage unbilled purchase items
+* @formNo 115
+*/
+function form115_import(data_array,import_type)
+{
+	var data_xml="<unbilled_purchase_items>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</unbilled_purchase_items><separator></separator><unbilled_purchase_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<supplier>"+row.supplier+"</supplier>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<purchase_date>"+get_raw_time(row.purchase_date)+"</purchase_date>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</unbilled_purchase_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};

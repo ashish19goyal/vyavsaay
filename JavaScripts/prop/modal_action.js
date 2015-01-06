@@ -3519,6 +3519,266 @@ function modal44_action(recipient,subject,message)
 
 
 /**
+ * @modalNo 45
+ * @modal Add new loyalty program
+ * @param button
+ */
+function modal45_action()
+{
+	var form=document.getElementById('modal45_form');
+		
+	var program_name=form.elements[1];
+	var type=form.elements[2];
+	var tier=form.elements[3];
+	var tier_criteria=form.elements[4];
+	var points_addition=form.elements[5];
+	var discount=form.elements[6];
+	var accrual=form.elements[7];
+	var reward_product=form.elements[8];
+	var status=form.elements[9];
+	
+	var product_data="<product_master>" +
+		"<name></name>" +
+		"</product_master>";
+	set_my_value_list(product_data,reward_product);
+	set_static_value_list('loyalty_programs','type',type);
+	set_static_value_list('loyalty_programs','status',status);
+	$(discount).parent().hide();
+	$(accrual).parent().hide();
+	$(reward_product).parent().hide();
+	
+	$(type).off('blur');
+	$(type).on('blur',function(event)
+	{
+		$(discount).parent().hide();
+		$(accrual).parent().hide();
+		$(reward_product).parent().hide();
+		
+		if(type.value=='accrual')
+		{
+			$(accrual).parent().show();
+		}
+		else if(type.value=='discount')
+		{			
+			$(discount).parent().show();
+		}
+		else if(type.value=='reward product')
+		{
+			$(reward_product).parent().show();
+		}
+	});
+	
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form116'))
+		{
+			var name_value=form.elements[1].value;
+			var type_value=form.elements[2].value;
+			var tier_value=form.elements[3].value;
+			var tier_criteria_value=form.elements[4].value;
+			var points_addition_value=form.elements[5].value;
+			var discount_value=form.elements[6].value;
+			var accrual_value=form.elements[7].value;
+			var reward_product_value=form.elements[8].value;
+			var status_value=form.elements[9].value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+						
+			var data_xml="<loyalty_programs>" +
+						"<id>"+data_id+"</id>" +
+						"<name>"+name_value+"</name>" +
+						"<type>"+type_value+"</type>" +
+						"<tier>"+tier_value+"</tier>" +
+						"<tier_criteria>"+tier_criteria_value+"</tier_criteria>" +
+						"<points_addition>"+points_addition_value+"</points_addition>" +
+						"<discount>"+discount_value+"</discount>" +
+						"<accrual>"+accrual_value+"</accrual>" +
+						"<reward_product>"+reward_product_value+"</reward_product>" +
+						"<status>"+status_value+"</status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</loyalty_programs>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>loyalty_programs</tablename>" +
+						"<link_to>form116</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Loyalty program "+name_value+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_create_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+			}
+			
+			var customer_data="<customers>" +
+						"<acc_name></acc_name>" +
+						"</customers>";
+			get_single_column_data(function(customers)
+			{
+				var customers_xml="<loyalty_customers>";
+				var id=parseFloat(get_new_key());
+				var counter=0;
+				customers.forEach(function(customer)
+				{
+					if(counter==500)
+					{
+						counter=0;
+						customers_xml+="</loyalty_customers><separator></separator><loyalty_customers>";
+					}
+					customers_xml+="<row>" +
+							"<id>"+id+"</id>" +
+							"<program_name>"+name_value+"</program_name>" +
+							"<customer>"+customer+"</batch>" +
+							"<tier>"+tier+"</tier>" +
+							"<status>inactive</status>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+					id+=1;
+					counter+=1;
+				});
+				customers_xml+="</loyalty_customers>";
+				if(is_online())
+				{
+					server_create_batch(customers_xml);
+				}
+				else
+				{
+					local_create_batch(customers_xml);
+				}
+			},customer_data);
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal45").dialog("close");
+	});
+	$("#modal45").dialog("open");	
+}
+
+
+/**
+ * @modalNo 46
+ * @modal Update Loyalty program
+ * @param button
+ */
+function modal46_action(button)
+{
+	var form=document.getElementById('modal46_form');
+	
+	var form_id=$(button).attr('form');
+	var father_form=document.getElementById(form_id);
+	var fname=father_form.elements[0];
+	var ftype=father_form.elements[1];
+	var fdetail=father_form.elements[3];
+	var fstatus=father_form.elements[4];
+	var fdata_id=father_form.elements[5];
+	var ftier_criteria=father_form.elements[8];
+	var fpoint_addition=father_form.elements[9];
+	var fdiscount=father_form.elements[10];
+	var faccrual=father_form.elements[11];
+	var freward_product=father_form.elements[12];
+	
+	form.elements[1].value=ftier_criteria.value;
+	form.elements[2].value=fpoint_addition.value;
+	form.elements[6].value=fstatus.value;
+	
+	var discount=form.elements[3]
+	discount.value=fdiscount.value;
+	var accrual=form.elements[4];
+	accrual.value=faccrual.value;
+	var reward_product=form.elements[5];
+	reward_product.value=freward_product.value;
+	
+	$(discount).parent().hide();
+	$(accrual).parent().hide();
+	$(reward_product).parent().hide();
+	
+	if(ftype.value=='accrual')
+	{
+		$(accrual).parent().show();
+	}
+	else if(ftype.value=='discount')
+	{			
+		$(discount).parent().show();
+	}
+	else if(ftype.value=='reward product')
+	{
+		$(reward_product).parent().show();
+	}
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form116'))
+		{
+			ftier_criteria.value=form.elements[1].value;
+			fpoint_addition.value=form.elements[2].value;
+			fdiscount.value=form.elements[3].value;
+			faccrual.value=form.elements[4].value;
+			freward_product.value=form.elements[5].value;
+			fstatus.value=form.elements[6].value;
+			if(ftype.value=='accrual')
+			{
+				fdetail.value="Tier criteria: "+ftier_criteria.value+"\nPoints Addition: "+fpoint_addition.value+"\nAccrual: "+faccrual.value;
+			}
+			else if(ftype.value=='discount')
+			{
+				fdetail.value="Tier criteria: "+ftier_criteria.value+"\nPoints Addition: "+fpoint_addition.value+"\nDiscount: "+fdiscount.value;
+			}
+			else if(ftype.value=='reward product')
+			{
+				fdetail.value="Tier criteria: "+ftier_criteria.value+"\nPoints Addition: "+fpoint_addition.value+"\nReward Product: "+freward_product.value;
+			}
+			
+			var data_xml="<loyalty_programs>" +
+					"<id>"+fdata_id.value+"</id>" +
+					"<tier_criteria>"+ftier_criteria.value+"</tier_criteria>" +
+					"<points_addition>"+fpoint_addition.value+"</points_addition>" +
+					"<discount>"+fdiscount.value+"</discount>" +
+					"<accrual>"+faccrual.value+"</accrual>" +
+					"<reward_product>"+freward_product.value+"</reward_product>" +
+					"<status>"+fstatus.value+"</status>" +
+					"<last_updated>"+get_my_time()+"</last_updated>" +
+					"</loyalty_programs>";	
+			var activity_xml="<activity>" +
+					"<data_id>"+fdata_id.value+"</data_id>" +
+					"<tablename>loyalty_programs</tablename>" +
+					"<link_to>form116</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Loyalty program "+fname.value+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+			if(is_online())
+			{
+				server_update_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_update_row(data_xml,activity_xml);
+			}
+			
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal46").dialog("close");
+	});
+	
+	$("#modal46").dialog("open");
+}
+
+
+/**
  * @modal Sending Mails
  * @modalNo 50
  */

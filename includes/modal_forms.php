@@ -500,6 +500,37 @@
 			</fieldset>
 		</form>
 	</div>
+
+	<div id="modal45" title="Add new loyalty program">
+		<form id='modal45_form'>
+			<fieldset>
+				<label>Name: <input type='text' required></label><br/>
+				<label>Type: <input type='text' required></label><br/>
+				<label>Tier: <input type='text' required></label><br/>
+				<label title='Minimum points to redeem offers'>Tier Criteria: <input type="number" step='any' required></label><br/>
+				<label title='Points per rupee spent'>Points Addition: <input type="number" step='any' required></label>
+				<label title='% discount on purchases'>Discount: <input type="number" step='any'></label><br/>
+				<label title='Amount accrued per earned point'>Accrual: Rs. <input type="number" step='any'></label><br/>
+				<label title='Reward product on fulfilment of tier criteria'>Reward Product: <input type="text"></label><br/>
+				<label>Status: <input type="text" requried></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div id="modal46" title="Update loyalty program">
+		<form id='modal46_form'>
+			<fieldset>
+				<label title='Minimum points to redeem offers'>Tier Criteria: <input type="number" step='any' required></label><br/>
+				<label title='Points per rupee spent'>Points Addition: <input type="number" step='any' required></label>
+				<label title='% discount on purchases'>Discount: <input type="number" step='any'></label><br/>
+				<label title='Amount accrued per earned point'>Accrual: Rs. <input type="number" step='any'></label><br/>
+				<label title='Reward product on fulfilment of tier criteria'>Reward Product: <input type="text"></label><br/>
+				<label>Status: <input type="text" requried></label><br/>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
 	
 	<div id="modal50" title="Sending Mails">
 		<a href='' id='modal50_sendmail'>Send mails through Gmail</a>
