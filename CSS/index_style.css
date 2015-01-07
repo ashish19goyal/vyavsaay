@@ -622,26 +622,25 @@ p.comment-form-author {
 	text-align: left;
 }
 .contact-form input[type="text"], .contact-form input[type="number"], .contact-form input[type="email"], 
-.contact-form input[type="tel"], .contact-form input[type="password"],.contact-form select {
+.contact-form input[type="tel"], .contact-form input[type="password"],.contact-form select{
 	padding:15px;
 	width:95%;
 	color:#999;
 	font-size:1em;
-	border:none;
+	border:2px solid #A2A2A2;
 	-webkit-appearance:none;
 	background:#fff;
 	outline: none;
 	display: block;
 	font-family: 'Open Sans', sans-serif;
 }
-.contact-form input[type="text"], .contact-form textarea {
-}
+
 .contact-form textarea {
 	padding:10px;
 	display: block;
 	width:95%;
 	background:#fff;
-	border:none;
+	border:2px solid #A2A2A2;
 	outline: none;
 	color:#999;
 	font-size:1em;
