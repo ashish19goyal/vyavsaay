@@ -13,7 +13,7 @@
 		?>
 		<link rel="icon" href="./images/favicon.png">
 	</head>
-	<body onload="default_load();">
+	<body onload="default_load();" style='background-color: #fff;'>
 		<div id="loading_icon"><img src="./images/loader.gif"></div>
 		<div id="transparent_layer"></div>
 		

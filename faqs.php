@@ -17,7 +17,7 @@
 	<title data-i18n="master.vyavsaay">Vyavsaay ERP</title>
 	<link rel="icon" href="./images/favicon.png">
 </head>
-<body>
+<body style='background-color: #fff;'>
 			
 			<!----- start-header-menu---->
 			<div id="home" class="header">
