@@ -2897,6 +2897,8 @@ function form119_header_ini()
 	set_my_value_list(type_data,bill_type);
 	set_my_value(type_data,bill_type);
 	
+	$(unbilled_button).hide();
+	
 	$(customers_filter).off('blur');
 	$(customers_filter).on('blur',function(e)
 	{
@@ -2907,6 +2909,8 @@ function form119_header_ini()
 		get_single_column_data(function(customers)
 		{
 			fields.elements[8].value=customers.length;
+			if(customer.length>0)
+				$(unbilled_button).show();
 		},unbilled_data);
 	});
 	
@@ -3143,7 +3147,7 @@ function form119_header_ini()
 		$(unbilled_button).hide();
 	});
 	
-	$(unbilled_button).show();
+	
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';
@@ -3186,6 +3190,8 @@ function form122_header_ini()
 	
 	set_my_value_list(suppliers_data,supplier_filter);
 	
+	$(unbilled_button).hide();
+	
 	$(supplier_filter).off('blur');
 	$(supplier_filter).on('blur',function(e)
 	{
@@ -3196,6 +3202,8 @@ function form122_header_ini()
 		get_single_column_data(function(suppliers)
 		{
 			fields.elements[10].value=suppliers.length;
+			if(suppliers.length>0)
+				$(unbilled_button).show();
 		},unbilled_data);
 	});
 	
@@ -3332,7 +3340,6 @@ function form122_header_ini()
 		$(unbilled_button).hide();
 	});
 	
-	$(unbilled_button).show();
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 	

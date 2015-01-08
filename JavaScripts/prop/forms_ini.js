@@ -3611,7 +3611,7 @@ function form53_ini()
 			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();
-				element_display(result.id,'form21');
+				element_display(result.id,'form21','form122');
 			});
 		});
 
@@ -9804,6 +9804,7 @@ function form119_ini()
 				filter_fields.elements[9].value=bill_id;
 				filter_fields.elements[10].value=bill_results[i].offer;
 				filter_fields.elements[11].value=bill_results[i].transaction_id;
+				var unbilled_button=filter_fields.elements[12];
 				
 				$(filter_fields).off('submit');
 				$(filter_fields).on("submit", function(event)
@@ -9819,6 +9820,9 @@ function form119_ini()
 				get_single_column_data(function(customers)
 				{
 					filter_fields.elements[8].value=customers.length;
+					if(customers.length>0)
+						$(unbilled_button).show();
+					
 				},unbilled_data);
 		
 				break;
@@ -9932,6 +9936,7 @@ function form122_ini()
 				filter_fields.elements[9].value=bill_results[i].notes;
 				filter_fields.elements[11].value=bill_id;
 				filter_fields.elements[12].value=bill_results[i].transaction_id;
+				var unbilled_button=filter_fields.elements[13];
 				
 				$(filter_fields).off('submit');
 				$(filter_fields).on("submit", function(event)
@@ -9947,6 +9952,8 @@ function form122_ini()
 				get_single_column_data(function(suppliers)
 				{
 					filter_fields.elements[10].value=suppliers.length;
+					if(supplier.length>0)
+						$(unbilled_button).show();
 				},unbilled_data);
 
 				break;
