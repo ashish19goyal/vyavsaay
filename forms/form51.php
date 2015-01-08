@@ -2,10 +2,10 @@
 	<form id='form51_master'>
 		<fieldset>
 			<label>User Name</br><input type='text'></label>
-			<label>Name</br><input type='text'></label>
 			<label>Password</br><input type='password'></label>
 			<input type='hidden' name='user_id'>
-			<input type='submit' title="Save Access" class='save_icon'>
+			<input type='submit' class='submit_hidden'>
+			<input type='button' title="Save Access" class='save_icon'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

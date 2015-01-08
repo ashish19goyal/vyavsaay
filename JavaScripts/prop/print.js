@@ -626,3 +626,103 @@ function form91_print_form()
 	
 	$.print(container);
 }
+
+/**
+ * @form Create bills(multi-register, unbilled items)
+ * @formNo 119
+ */
+function form119_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale Bill</b></div></br>";
+	
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b></div>"+
+							"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+							"<br>Address: "+get_session_var('address')+"</div></div></br>";
+	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+	
+	var header_element=document.getElementById("form119_master");
+	var header_copy=header_element.cloneNode(true);
+	
+	var table_element=document.getElementById("form119_body").parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
+	$(table_copy).find('input,textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	$(header_copy).find("a").remove();
+	$(header_copy).find("input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input[type=text],input[type=number],textarea").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	var font_size=get_session_var('print_size');
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"padding:1%;font-size:"+font_size+"em");
+	
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(table_copy);
+	container.appendChild(header_copy);
+	
+	$.print(container);
+}
+
+/**
+ * @form Enter supplier bill (unbilled items)
+ * @formNo 122
+ */
+function form122_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>Sale Bill</b></div></br>";
+	
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b></div>"+
+							"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+							"<br>Address: "+get_session_var('address')+"</div></div></br>";
+	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+	
+	var header_element=document.getElementById("form122_master");
+	var header_copy=header_element.cloneNode(true);
+	
+	var table_element=document.getElementById("form122_body").parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
+	$(table_copy).find('input,textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	$(header_copy).find("a").remove();
+	$(header_copy).find("input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input[type=text],input[type=number],textarea").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+			
+	var font_size=get_session_var('print_size');
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"padding:1%;font-size:"+font_size+"em");
+	
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(table_copy);
+	container.appendChild(header_copy);
+	
+	$.print(container);
+}

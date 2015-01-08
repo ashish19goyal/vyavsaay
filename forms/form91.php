@@ -1,18 +1,17 @@
 <div id='form91' class='function_detail'>
 	<form id='form91_master'>
 		<fieldset>
-			<label>Customer <img src='./images/add_image.png' class='add_image' onclick='modal11_action();'></br>
+			<label>Customer <img src='./images/add_image.png' class='add_image' onclick='modal11_action();'><br>
 			<input type='text' required></label>
-			<label>Bill Type</br><input type='text' required></label>
-			<label>Bill Date</br><input type='text' required></label>
-			<label>Amount</br>Rs. <input readonly='readonly' type='number'></label>
-			<label>Discount</br>Rs. <input readonly='readonly' type='number'></label>
-			<label>Tax</br>Rs. <input readonly='readonly' type='number'></label>
-			<label>Total</br>Rs. <input readonly='readonly' type='number'></label>
+			<label>Bill Type<br><input type='text' required></label>
+			<label>Bill Date<br><input type='text' required></label>
+			<label>Amount<br>Rs. <input readonly='readonly' type='number'></label>
+			<label>Discount<br>Rs. <input readonly='readonly' type='number'></label>
+			<label>Tax<br>Rs. <input readonly='readonly' type='number'></label>
+			<label>Total<br>Rs. <input readonly='readonly' type='number'></label>
 			<input type='hidden' name='bill_id'>
 			<input type='hidden' name='offer'>
 			<input type='hidden' name='transaction'>
-			<input type='button' title='New Bill' class='add_icon' onclick='form91_new_form();'>
 			<input type='submit' title='Save Bill' class='save_icon'>
 			<input type='button' title='Print Bill' class='print_icon' onclick='form91_print_form();'>
 			<input type='button' id='form91_share' class='share_icon' style='display:none;'>

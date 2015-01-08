@@ -3615,3 +3615,123 @@ function form115_import(data_array,import_type)
 		}
 	}
 };
+
+/**
+* @form Create Bills(multiple register, unbilled items)
+* @formNo 119
+*/
+function form119_import(data_array,import_type)
+{
+	var data_xml="<bill_items>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</bill_items><separator></separator><bill_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<total>"+row.total+"</total>" +
+				"<discount>"+row.discount+"</discount>" +
+				"<offer>"+row.offer+"</offer>" +
+				"<type>"+row.type+"</type>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<staff>"+row.staff+"</staff>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<free_with>"+row.free_with+"</free_with>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</bill_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Enter Supplier bill (unbilled items)
+* @formNo 122
+*/
+function form122_import(data_array,import_type)
+{
+	var data_xml="<supplier_bill_items>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</supplier_bill_items><separator></separator><supplier_bill_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.product_name+"</product_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<total>"+row.total+"</total>" +
+				"<storage>"+row.storage+"</storage>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</supplier_bill_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};

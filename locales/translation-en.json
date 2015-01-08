@@ -125,7 +125,7 @@
   	"manage_order":"Manage Order",
   	"enter_returns":"Enter Returns",
   	"manage_returns":"Manage Returns",
-  	"enter_upplier_bill": "Enter Supplier Bill",
+  	"enter_supplier_bill": "Enter Supplier Bill",
   	"compare_products":"Compare Products",
   	"completed_sale_orders":"Completed Sale Orders",
   	"pending_sale_orders":"Pending Sale Orders",
@@ -198,6 +198,10 @@
   	"manage_loyalty_programs":"Manage Loyalty Programs",
   	"create_bills_loyality":"Create Bills (Loyality Program)",
   	"manage_unbilled_items":"Manage Unbilled Items",
-  	"add_unbilled_items":"Add Unbilled Items"
+  	"add_unbilled_items":"Add Unbilled Items",
+  	"create_bills_multi_register_unbilled":"Create Bills (multiple registers and unbilled items)",
+  	"manage_loyalty_customers":"Manage customers (loyalty programs)",
+  	"adjust_loyalty_points":"Adjust loyalty points",
+  	"enter_supplier_bill_unbilled_items":"Enter Supplier Bill (Unbilled Items)"
   }
 }

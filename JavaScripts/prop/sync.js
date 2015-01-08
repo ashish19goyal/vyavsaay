@@ -351,14 +351,14 @@ function get_data_from_log_table(func)
 				var log_data="";
 			
 				/////below section is taking a lot of time/////////
-				static_local_db.transaction(['activities'],"readonly").objectStore('activities').index('status').openCursor(keyValue).onsuccess=function(e)
+				static_local_db.transaction(['activities'],"readonly").objectStore('activities').index('last_updated').openCursor(null,'next').onsuccess=function(e)
 				{
 					var result=e.target.result;
 					if(result)
 					{
 						var record=result.value;
 						
-						if(tables.search("-"+record.tablename+"-")>-1)
+						if(tables.search("-"+record.tablename+"-")>-1 && record.status=='unsynced')
 						{
 							if(counter===200)
 							{
@@ -406,7 +406,7 @@ function set_activities_to_synced(response)
 	}
 	else
 	{
-		console.log(response.responseText);
+		//console.log(response.responseText);
 		if(response.responseXML!=null)
 		{
 			var delete_ids=response.responseXML.childNodes[0].childNodes[0].getElementsByTagName('id');

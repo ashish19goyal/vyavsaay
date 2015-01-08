@@ -653,20 +653,16 @@ function form21_delete_item(button)
 {
 	if(is_delete_access('form21'))
 	{
-		var bill_id=document.getElementById("form21_master").elements[7].value;
+		var bill_id=document.getElementById("form21_master").elements[10].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var batch=form.elements[6].value;
-		var data_id=form.elements[9].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<supplier_bill_items>" +
 					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
 					"<bill_id>"+bill_id+"</bill_id>" +
 					"</supplier_bill_items>";	
 		if(is_online())
@@ -2576,21 +2572,11 @@ function form91_delete_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var name=form.elements[0].value;
-		var batch=form.elements[1].value;
-		var quantity=form.elements[2].value;
-		var price=form.elements[3].value;
-		var total=form.elements[4].value;
-		var amount=form.elements[5].value;
-		var discount=form.elements[6].value;
-		var tax=form.elements[7].value;
-		var offer=form.elements[8].value;
 		var data_id=form.elements[9].value;
-		var last_updated=get_my_time();
-		
 				
 		var data_xml="<bill_items>" +
 					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
 					"</bill_items>";	
 		if(is_online())
 		{
@@ -3550,6 +3536,80 @@ function form116_delete_item(button)
 			local_delete_simple(data_xml);
 			local_delete_simple(delete2_xml);
 		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create bill(multiple registers, unbilled items)
+ * @formNo 119
+ * @param button
+ */
+function form119_delete_item(button)
+{
+	if(is_delete_access('form119'))
+	{
+		var bill_id=document.getElementById("form119_master").elements[9].value;
+		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[9].value;
+				
+		var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"</bill_items>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}
+				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form New Supplier Bill (unbilled item)
+ * @param button
+ */
+function form122_delete_item(button)
+{
+	if(is_delete_access('form122'))
+	{
+		var bill_id=document.getElementById("form21_master").elements[11].value;
+		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[9].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<supplier_bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"</supplier_bill_items>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}
+				
 		$(button).parent().parent().remove();
 	}
 	else

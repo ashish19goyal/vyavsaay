@@ -11,7 +11,6 @@
 			<input type='hidden' name='bill_id'>
 			<input type='hidden' name='offer'>
 			<input type='hidden' name='transaction'>
-			<input type='button' title='New Bill' class='add_icon' onclick='form10_new_form();'>
 			<input type='submit' title='Save Bill' class='save_icon'>
 			<input type='button' title='Print Bill' class='print_icon' onclick='form10_print_form();'>
 			<input type='button' id='form10_share' class='share_icon' style='display:none;'>

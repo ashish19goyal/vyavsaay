@@ -1587,6 +1587,50 @@
 			<tables>--bill_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form119</name>
+			<display_name>create_bills_multi_register_unbilled</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bill_items--bills--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form120</name>
+			<display_name>manage_loyalty_customers</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--loyalty_customers--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form121</name>
+			<display_name>adjust_loyalty_points</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--loyalty_points--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form122</name>
+			<display_name>enter_supplier_bill_unbilled_items</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_bills--supplier_bill_items--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -2968,6 +3012,50 @@
 			<username>master</username>
 			<element_id>form118</element_id>
 			<element_name>create_bills_loyalty</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form119</element_id>
+			<element_name>create_bills_multi_register_unbilled</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form120</element_id>
+			<element_name>manage_loyalty_customers</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form121</element_id>
+			<element_name>adjust_loyalty_points</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form122</element_id>
+			<element_name>enter_supplier_bill_unbilled_items</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

@@ -1,3 +1,16 @@
+function is_form_access(form_id)
+{
+	var form=get_session_var('forms');
+	var found=form.search(form_id+"-");
+	if(found===-1)
+	{
+		return false;
+	}
+	else
+		return true;
+}
+
+
 function is_read_access(form_id)
 {
 	var re=get_session_var('re');

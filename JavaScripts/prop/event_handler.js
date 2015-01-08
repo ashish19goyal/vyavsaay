@@ -391,7 +391,7 @@ function show_all_activities()
 
 function element_display(fid,element_name,element2_name)
 {
-	if(is_read_access(element_name))
+	if(is_form_access(element_name))
 	{
 		var element_link="#"+element_name+"_link";
 		var function_link=$(element_link).parent().parent().parent().attr('id');
@@ -400,7 +400,7 @@ function element_display(fid,element_name,element2_name)
 		$(element_link).click();
 		$(element_link).attr('data_id','');
 	}
-	else if(element2_name && is_read_access(element2_name))
+	else if(element2_name && is_form_access(element2_name))
 	{
 		var element_link="#"+element2_name+"_link";
 		var function_link=$(element_link).parent().parent().parent().attr('id');
@@ -703,6 +703,10 @@ function import_data(form_name)
 		case 'form114':modal23_action(form114_import_template,form114_import);
 		break;
 		case 'form115':modal23_action(form115_import_template,form115_import);
+		break;
+		case 'form119':modal23_action(form119_import_template,form119_import);
+		break;
+		case 'form122':modal23_action(form122_import_template,form122_import);
 		break;
 	}
 }

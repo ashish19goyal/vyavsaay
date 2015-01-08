@@ -1154,19 +1154,22 @@ function form51_header_ini()
 {
 	var fields=document.getElementById('form51_master');
 	var users_filter=fields.elements[1];
-		
+	var save_button=fields.elements[5];
+	
 	var username_data="<staff>" +
 			"<username></username>" +
 			"</staff>";
 	set_my_value_list(username_data,users_filter);
 
-	$(users_filter).on('select',function(event)
-	{
-		form51_ini();
-	});
-		
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form51_ini();
+	});
+	
+	$(save_button).off('click');
+	$(save_button).on('click',function(event)
 	{
 		event.preventDefault();
 		form51_update_form();
@@ -2199,15 +2202,6 @@ function form91_header_ini()
 	$(customers_filter).focus();
 }
 
-/**
- * This function clears the form91 for new bill
- */
-function form91_new_form()
-{
-	form91_header_ini();
-	$("#form91_body").find("tr").remove();
-}
-
 
 /**
  * @form Manage Bills(multiple registers)
@@ -2862,3 +2856,489 @@ function form116_header_ini()
 	set_static_filter('loyalty_programs','type',type_filter);
 	set_static_filter('loyalty_programs','status',status_filter);
 };
+
+/**
+ * @form Create Bill(multiple registers, unbilled items)
+ * @formNo 119
+ */
+function form119_header_ini()
+{
+	var fields=document.getElementById('form119_master');
+	
+	var customers_filter=fields.elements[1];
+	var bill_type=fields.elements[2];
+	var bill_date=fields.elements[3];
+	fields.elements[4].value=0;
+	fields.elements[5].value=0;
+	fields.elements[6].value=0;
+	fields.elements[7].value=0;
+	fields.elements[8].value=0;
+	fields.elements[9].value=get_new_key();
+	fields.elements[10].value="";
+	fields.elements[11].value=get_new_key();
+	var unbilled_button=fields.elements[12];
+	
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form119_create_form();
+	});
+	
+	var customers_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	set_my_value_list(customers_data,customers_filter);
+
+	var type_data="<bill_types>" +
+		"<name></name>" +
+		"<status>active</status>" +
+		"</bill_types>";
+	set_my_value_list(type_data,bill_type);
+	set_my_value(type_data,bill_type);
+	
+	$(customers_filter).off('blur');
+	$(customers_filter).on('blur',function(e)
+	{
+		var unbilled_data="<unbilled_sale_items>" +
+				"<id></id>" +
+				"<customer exact='yes'>"+customers_filter.value+"</customer>" +
+				"</unbilled_sale_items>";
+		get_single_column_data(function(customers)
+		{
+			fields.elements[8].value=customers.length;
+		},unbilled_data);
+	});
+	
+	$(unbilled_button).off('click');
+	$(unbilled_button).on('click',function(e)
+	{
+		var unbilled_data="<unbilled_sale_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<batch></batch>" +
+				"<quantity></quantity>" +
+				"<customer exact='yes'>"+customers_filter.value+"</customer>" +
+				"</unbilled_sale_items>";
+		fetch_requested_data('form119',unbilled_data,function(unbilled_items)
+		{
+			var ub_items=new Array();
+			for(var i=0; i<unbilled_items.length;i++)
+			{
+				var new_obj=new Object();
+				new_obj.item_name=unbilled_items[i].item_name;
+				new_obj.batch=unbilled_items[i].batch;
+				new_obj.quantity=parseFloat(unbilled_items[i].quantity);
+				for(var j=i+1;j<unbilled_items.length;j++)
+				{
+					if(unbilled_items[j].item_name==new_obj.item_name && order_items[j].batch==new_obj.batch)
+					{
+						new_obj.quantity+=parseFloat(unbilled_items[j].quantity);
+						unbilled_items.splice(j,1);
+						j-=1;
+					}
+				}
+				ub_items.push(new_obj);
+			}
+			
+			ub_items.forEach(function(ub_item)
+			{
+				///////////////////////////////////////////////////////////
+				
+				var filter_fields=document.getElementById('form119_master');
+				var bill_type_value=bill_type.value;
+				if(is_create_access('form119'))
+				{
+					var rowsHTML="";
+					var id=get_new_key();
+					rowsHTML+="<tr>";
+					rowsHTML+="<form id='form119_"+id+"'></form>";
+						rowsHTML+="<td data-th='Product Name'>";
+							rowsHTML+="*<input type='text' readonly='readonly' required form='form119_"+id+"' value='"+ub_item.item_name+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Batch'>";
+							rowsHTML+="<input type='text' readonly='readonly' required form='form119_"+id+"' value='"+ub_item.batch+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' min='0' readonly='readonly' required form='form119_"+id+"' step='any' value='"+ub_item.quantity+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Unit Price'>";
+							rowsHTML+="<input type='number' required min='0' form='form119_"+id+"' step='any'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Total'>";
+							rowsHTML+="<input type='number' required min='0' form='form119_"+id+"' step='any'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form119_"+id+"'>";
+							rowsHTML+="<input type='hidden' form='form119_"+id+"' value='0'>";
+							rowsHTML+="<input type='hidden' form='form119_"+id+"'>";
+							rowsHTML+="<input type='hidden' form='form119_"+id+"'>";
+							rowsHTML+="<input type='hidden' form='form119_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='submit' class='submit_hidden' form='form119_"+id+"' id='save_form119_"+id+"' >";
+							rowsHTML+="<input type='button' class='delete_icon' form='form119_"+id+"' id='delete_form119_"+id+"' onclick='$(this).parent().parent().remove();'>";
+							rowsHTML+="<input type='hidden' form='form119_"+id+"'>";
+							rowsHTML+="<input type='hidden' form='form119_"+id+"'>";
+							rowsHTML+="<input type='hidden' title='unbilled_item_id' form='form119_"+id+"' value='yes'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+				
+					$('#form119_body').prepend(rowsHTML);
+					
+					var fields=document.getElementById("form119_"+id);
+					var name_filter=fields.elements[0];
+					var batch_filter=fields.elements[1];
+					var quantity_filter=fields.elements[2];
+					var price_filter=fields.elements[3];
+					var total_filter=fields.elements[4];
+					var amount_filter=fields.elements[5];
+					var discount_filter=fields.elements[6];
+					var tax_filter=fields.elements[7];
+					var offer_filter=fields.elements[8];
+					var id_filter=fields.elements[9];
+					var free_product_filter=fields.elements[12];
+					var free_product_quantity=fields.elements[13];
+					
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form119_create_item(fields);
+					});
+					
+					var price_data="<sale_prices count='1'>" +
+							"<sale_price></sale_price>" +
+							"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+							"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+							"<billing_type>"+bill_type_value+"</billing_type>" +
+							"</sale_prices>";
+					get_single_column_data(function(sale_price)
+					{
+						if(sale_price.length>0)
+							price_filter.value=sale_price[0];
+						else
+							price_filter.value=0;
+					
+						
+						var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+						amount_filter.value=amount;
+						var offer_data="<offers>" +
+								"<offer_type>product</offer_type>" +
+								"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+								"<batch array='yes'>"+batch_filter.value+"--all</batch>" +
+								"<criteria_type></criteria_type>" +
+								"<criteria_amount></criteria_amount>" +
+								"<criteria_quantity></criteria_quantity>" +
+								"<result_type></result_type>" +
+								"<discount_percent></discount_percent>" +
+								"<discount_amount></discount_amount>" +
+								"<quantity_add_percent></quantity_add_percent>" +
+								"<quantity_add_amount></quantity_add_amount>" +
+								"<free_product_name></free_product_name>" +
+								"<free_product_quantity></free_product_quantity>" +
+								"<offer_detail></offer_detail>" +
+								"<status array='yes'>active--extended</status>" +
+								"</offers>";
+						fetch_requested_data('',offer_data,function(offers)
+						{
+							////sorting offers based on criteria amount and criteria quantity
+							offers.sort(function(a,b)
+							{
+								if(a.criteria_amount<b.criteria_amount)
+								{	return 1;}
+								else if(a.criteria_quantity<b.criteria_quantity)
+								{	return 1;}
+								else 
+								{	return -1;}
+							});
+									
+							for(var i in offers)
+							{
+								offer_filter.value=offers[i].offer_detail;
+								if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=parseFloat(quantity_filter.value))
+								{
+									if(offers[i].result_type=='discount')
+									{
+										if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+										{
+											discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+										}
+										else 
+										{
+											discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
+										}
+									}
+									else if(offers[i].result_type=='quantity addition')
+									{
+										if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+										{
+											quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+										}
+										else 
+										{
+											quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity))));
+										}
+									}
+									else if(offers[i].result_type=='product free')
+									{
+										free_product_filter.value=offers[i].free_product_name;
+										free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
+									}
+									break;
+								}
+								else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=amount)
+								{
+									if(offers[i].result_type=='discount')
+									{
+										if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+										{
+											discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+										}
+										else 
+										{
+											discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+										}
+									}
+									else if(offers[i].result_type=='quantity addition')
+									{
+										if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+										{
+											quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+										}
+										else 
+										{
+											quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount))));
+										}
+									}
+									else if(offers[i].result_type=='product free')
+									{
+										free_product_filter.value=offers[i].free_product_name;
+										free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+									}
+									break;
+								}
+							}
+							
+							var tax_data="<product_master>" +
+									"<name exact='yes'>"+name_filter.value+"</name>" +
+									"<tax></tax>" +
+									"</product_master>";
+							fetch_requested_data('',tax_data,function(taxes)
+							{
+								taxes.forEach(function(tax)
+								{
+									tax_filter.value=parseFloat((parseFloat(tax.tax)*(amount-parseFloat(discount_filter.value)))/100);
+								});
+								console.log('settign total');
+								total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value));
+							});
+						});
+					},price_data);
+				}
+				else
+				{
+					$("#modal2").dialog("open");
+				}
+				/////////////////////////////////////////////////////////////
+			});
+		});
+		$(unbilled_button).hide();
+	});
+	
+	$(unbilled_button).show();
+	$(bill_date).datepicker();
+	$(bill_date).val(get_my_date());
+	customers_filter.value='';
+	$(customers_filter).focus();
+}
+
+
+/**
+ * @form Enter Supplier bills(unbilled items)
+ * @formNo 122
+ */
+function form122_header_ini()
+{
+	var fields=document.getElementById('form122_master');
+	
+	var supplier_filter=fields.elements[1];
+	fields.elements[2].value="";
+	var bill_date=fields.elements[3];
+	var entry_date=fields.elements[4];
+	fields.elements[5].value=0;
+	var discount_filter=fields.elements[6];
+	discount_filter.value=0;
+	fields.elements[7].value=0;
+	fields.elements[8].value=0;
+	fields.elements[9].value="";
+	fields.elements[11].value=get_new_key();
+	fields.elements[12].value=fields.elements[11].value;
+	var unbilled_button=fields.elements[13];
+	
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form122_create_form();
+	});
+	
+	var suppliers_data="<suppliers>" +
+		"<acc_name></acc_name>" +
+		"</suppliers>";
+	
+	set_my_value_list(suppliers_data,supplier_filter);
+	
+	$(supplier_filter).off('blur');
+	$(supplier_filter).on('blur',function(e)
+	{
+		var unbilled_data="<unbilled_purchase_items>" +
+				"<id></id>" +
+				"<supplier exact='yes'>"+supplier_filter.value+"</supplier>" +
+				"</unbilled_purchase_items>";
+		get_single_column_data(function(suppliers)
+		{
+			fields.elements[10].value=suppliers.length;
+		},unbilled_data);
+	});
+	
+	$(unbilled_button).off('click');
+	$(unbilled_button).on('click',function(e)
+	{
+		var unbilled_data="<unbilled_purchase_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<batch></batch>" +
+				"<quantity></quantity>" +
+				"<supplier exact='yes'>"+supplier_filter.value+"</supplier>" +
+				"</unbilled_purchase_items>";
+		fetch_requested_data('form122',unbilled_data,function(unbilled_items)
+		{
+			var ub_items=new Array();
+			for(var i=0; i<unbilled_items.length;i++)
+			{
+				var new_obj=new Object();
+				new_obj.item_name=unbilled_items[i].item_name;
+				new_obj.batch=unbilled_items[i].batch;
+				new_obj.quantity=parseFloat(unbilled_items[i].quantity);
+				for(var j=i+1;j<unbilled_items.length;j++)
+				{
+					if(unbilled_items[j].item_name==new_obj.item_name && unbilled_items[j].batch==new_obj.batch)
+					{
+						new_obj.quantity+=parseFloat(unbilled_items[j].quantity);
+						unbilled_items.splice(j,1);
+						j-=1;
+					}
+				}
+				ub_items.push(new_obj);
+			}
+			
+			ub_items.forEach(function(ub_item)
+			{
+				///////////////////////////////////////////////////////////
+				if(is_create_access('form122'))
+				{
+					var rowsHTML="";
+					var id=get_new_key();
+					rowsHTML+="<tr>";
+					rowsHTML+="<form id='form122_"+id+"'></form>";
+						rowsHTML+="<td data-th='Product Name'>";
+							rowsHTML+="<input type='text' readonly='readonly' required form='form122_"+id+"' value='"+ub_item.item_name+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' readonly='readonly' step='any' required form='form122_"+id+"' value='"+ub_item.quantity+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Amount'>";
+							rowsHTML+="Total: <input type='number' required form='form122_"+id+"' step='any'></br>";
+							rowsHTML+="Tax: <input type='number' form='form122_"+id+"' value='' step='any'></br>";
+							rowsHTML+="Amount: <input type='number' readonly='readonly' form='form122_"+id+"' value='' step='any'></br>";
+							rowsHTML+="Unit Price: <input type='number' readonly='readonly' form='form122_"+id+"' step='any'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Batch'>";
+							rowsHTML+="<input type='text' required readonly='readonly' form='form122_"+id+"' value='"+ub_item.batch+"'></br>";
+							rowsHTML+="Previous Price: <input type='number' readonly='readonly' form='form122_"+id+"' value='' step='any'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Storage Area'>";
+							rowsHTML+="<input type='text' form='form122_"+id+"'>";
+							rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' onclick='modal35_action();'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form122_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='submit' class='submit_hidden' form='form122_"+id+"' id='save_form122_"+id+"' >";
+							rowsHTML+="<input type='button' class='delete_icon' form='form122_"+id+"' id='delete_form122_"+id+"' onclick='$(this).parent().parent().remove();'>";
+							rowsHTML+="<input type='hidden' form='form122_"+id+"' name='unbilled' value='yes'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+				
+					$('#form122_body').prepend(rowsHTML);
+					
+					var fields=document.getElementById("form122_"+id);
+					var name_filter=fields.elements[0];
+					var quantity_filter=fields.elements[1];
+					var total_filter=fields.elements[2];
+					var tax_filter=fields.elements[3];
+					var amount_filter=fields.elements[4];
+					var price_filter=fields.elements[5];
+					var batch_filter=fields.elements[6];
+					var previous_price_filter=fields.elements[7];
+					var storage_filter=fields.elements[8];
+					var id_filter=fields.elements[9];
+					
+					$(name_filter).focus();
+					
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form122_create_item(fields);
+					});
+					
+					
+					var storage_data="<store_areas>" +
+								"<name></name>" +
+								"<area_type>storage</area_type>" +
+								"</store_areas>";
+					set_my_value_list(storage_data,storage_filter);
+
+					
+					$(total_filter).on('blur',function(event)
+					{
+						var amount=parseFloat(total_filter.value)-parseFloat(tax_filter.value);
+						amount_filter.value=amount;
+						var price=parseFloat(amount_filter.value)/parseFloat(quantity_filter.value);
+						price_filter.value=price;
+						
+					});
+					$(tax_filter).on('blur',function(event)
+					{
+						var amount=parseFloat(total_filter.value)-parseFloat(tax_filter.value);
+						amount_filter.value=amount;
+						var price=parseFloat(amount_filter.value)/parseFloat(quantity_filter.value);
+						price_filter.value=price;
+					});
+					
+					var price_data="<product_instances count='1'>" +
+							"<cost_price></cost_price>" +
+							"<product_name>"+name_filter.value+"</product_name>" +
+							"<batch>"+batch_filter.value+"</batch>" +
+							"</product_instances>";
+					set_my_value(price_data,previous_price_filter);
+					
+				}
+				else
+				{
+					$("#modal2").dialog("open");
+				}
+				
+				/////////////////////////////////////////////////////////////
+			});
+		});
+		$(unbilled_button).hide();
+	});
+	
+	$(unbilled_button).show();
+	$(bill_date).datepicker();
+	$(bill_date).val(get_my_date());
+	
+	$(entry_date).datepicker();
+	$(entry_date).val(get_my_date());
+
+	supplier_filter.value='';
+	$(supplier_filter).focus();
+}

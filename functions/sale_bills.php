@@ -12,6 +12,8 @@
 				echo "<li><a id='form42_link' href='#form42' onclick='form42_header_ini(); form42_ini();' data-i18n='form.manage_bills'></a></li>";
 			if(strpos($_SESSION['forms'],'form91-')!==false)
 				echo "<li><a id='form91_link' href='#form91' onclick='form91_header_ini(); form91_ini();' data-i18n='form.create_bill'></a></li>";
+			if(strpos($_SESSION['forms'],'form119-')!==false)
+				echo "<li><a id='form119_link' href='#form119' onclick='form119_header_ini(); form119_ini();' data-i18n='form.create_bill'></a></li>";
 			if(strpos($_SESSION['forms'],'form92-')!==false)
 				echo "<li><a id='form92_link' href='#form92' onclick='form92_header_ini(); form92_ini();' data-i18n='form.manage_bills'></a></li>";
 			if(strpos($_SESSION['forms'],'form69-')!==false)
@@ -37,7 +39,7 @@
 			if(strpos($_SESSION['forms'],'form113-')!==false)
 				echo "<li><a id='form113_link' href='#form113' onclick='form113_header_ini(); form113_ini();' data-i18n='form.manage_unbilled_items'></a></li>";
 			if(strpos($_SESSION['forms'],'form118-')!==false)
-				echo "<li><a id='form118_link' href='#form118' onclick='form118_header_ini(); form118_ini();' data-i18n='form.create_bills'></a></li>";
+				echo "<li><a id='form118_link' href='#form118' onclick='form118_header_ini(); form118_ini();' data-i18n='form.create_bill'></a></li>";
 		echo "</ul>";
 
 		if(strpos($_SESSION['forms'],'form10-')!==false)
@@ -70,14 +72,14 @@
 			include "forms/form89.php";
 		if(strpos($_SESSION['forms'],'form90-')!==false)
 			include "forms/form90.php";
-		if(strpos($_SESSION['reports'],'report49-')!==false)
-			include "reports/report49.php";
 		if(strpos($_SESSION['forms'],'form112-')!==false)
 			include "forms/form112.php";
 		if(strpos($_SESSION['forms'],'form113-')!==false)
 			include "forms/form113.php";
 		if(strpos($_SESSION['forms'],'form118-')!==false)
 			include "forms/form118.php";
+		if(strpos($_SESSION['forms'],'form119-')!==false)
+			include "forms/form119.php";
 	?>
 	
 	<script>

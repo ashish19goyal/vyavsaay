@@ -670,3 +670,27 @@ function form113_import_template()
 	my_array_to_csv(data_array);
 };
 
+/**
+* @form Create bills(multiple registers, unbilled items)
+* @formNo 119
+* @table bill_items
+*/
+function form119_import_template()
+{
+	var data_array=['id','bill_id','item_name','quantity','unit_price','mrp','amount',
+	                'total','discount','offer','type','batch','notes',
+	                'staff','tax','free_with'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Enter supplier bill(unbilled items)
+* @formNo 122
+* @table supplier_bill_items
+*/
+function form122_import_template()
+{
+	var data_array=['id','quantity','product_name','batch',
+	               'bill_id','unit_price','amount','tax','total','storage'];
+	my_array_to_csv(data_array);
+};
