@@ -161,8 +161,10 @@ function local_read_single_column(columns,callback,results)
 		var data=parser.parseFromString(columns,"text/xml");
 		var table=data.childNodes[0].nodeName;
 		var tcols=data.childNodes[0].childNodes;
+		
 		if(tcols.length>0)
 		{
+			var result_column_name=tcols[0].nodeName;
 			var count=0;
 			if(data.childNodes[0].hasAttribute('count'))
 			{
@@ -173,11 +175,10 @@ function local_read_single_column(columns,callback,results)
 			var sort_key=IDBKeyRange.lowerBound(0);
 			
 			var filter=new Array();
-			var x=tcols.length;
 			
 			for(var j=0; j<tcols.length;j++)
 			{
-				if(tcols[j].innerHTML!==null && tcols[j].hasAttribute('sort'))
+				if(tcols[j].innerHTML!=null && tcols[j].hasAttribute('sort'))
 				{
 					if(sort_index=='last_updated')
 					{	
@@ -186,7 +187,7 @@ function local_read_single_column(columns,callback,results)
 					sort_order=tcols[j].getAttribute('sort');
 				}
 				
-				if(tcols[j].innerHTML!==null && tcols[j].innerHTML!="")
+				if(tcols[j].innerHTML!=null && tcols[j].innerHTML!="")
 				{
 					var fil=new Object();
 					fil.name=tcols[j].nodeName;
@@ -263,7 +264,7 @@ function local_read_single_column(columns,callback,results)
 						}
 						if(filter[i].type=='less than') 
 						{
-							if(parseInt(record[filter[i].name])>=filter[i].value)
+							if(parseFloat(record[filter[i].name])>=filter[i].value)
 							{
 								match=false;
 								break;
@@ -271,7 +272,7 @@ function local_read_single_column(columns,callback,results)
 						}
 						else if(filter[i].type=='more than') 
 						{
-							if(parseInt(record[filter[i].name])<=filter[i].value)
+							if(parseFloat(record[filter[i].name])<=filter[i].value)
 							{
 								match=false;
 								break;
@@ -279,7 +280,7 @@ function local_read_single_column(columns,callback,results)
 						}
 						else if(filter[i].type=='equal') 
 						{
-							if(parseInt(record[filter[i].name])!=filter[i].value)
+							if(parseFloat(record[filter[i].name])!=filter[i].value)
 							{
 								match=false;
 								break;
@@ -287,7 +288,7 @@ function local_read_single_column(columns,callback,results)
 						}
 						else if(filter[i].type=='not equal') 
 						{
-							if(parseInt(record[filter[i].name])==filter[i].value)
+							if(parseFloat(record[filter[i].name])==filter[i].value)
 							{
 								match=false;
 								break;
@@ -303,22 +304,15 @@ function local_read_single_column(columns,callback,results)
 					
 					if(match===true)
 					{
-						if(tcols[0]===undefined)
-						{
-							var c=tcols;
-							console.log(c);
-							console.log(columns);
-							console.log(filter);
-						}
-						results.push(record[tcols[0].nodeName]);
-						if(results.length!=count)
-						{
-							result.continue();
-						}
-						else
+						results.push(record[result_column_name]);
+						if(results.length===count)
 						{
 							localdb_open_requests-=1;
 							callback(results);
+						}
+						else
+						{
+							result.continue();
 						}
 					}
 					else
@@ -348,7 +342,7 @@ function local_read_multi_column(columns,callback,results)
 	{
 		open_local_db(function()
 		{
-			local_read_multi_column(columns,callback,results)
+			local_read_multi_column(columns,callback,results);
 		});
 	}
 	else
