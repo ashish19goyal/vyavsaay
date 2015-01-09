@@ -16,14 +16,15 @@
  */
 function ajax_with_custom_func(url,kvp,func)
 {
-	number_active_ajax+=1;
-	
 	var xmlhttp;
 	if (window.XMLHttpRequest)
 	{
 		xmlhttp=new XMLHttpRequest();
 	}
-	
+
+	xmlhttp.open("POST",url,true);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
 	xmlhttp.onreadystatechange=function()
 	{
 		if(xmlhttp.readyState===4)
@@ -90,20 +91,21 @@ function ajax_with_custom_func(url,kvp,func)
 			else
 			{
 				number_active_ajax-=1;
-				alert('Could not connect to the server. Please check your internet connection.');
+				//alert('Could not connect to the server. Please check your internet connection.');
 			}
 		}
 	};
 	
-	xmlhttp.open("POST",url,true);
-	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	
 	try
 	{
+		number_active_ajax+=1;
+		console.log(number_active_ajax);
 		xmlhttp.send(kvp);
 	}catch(e)
 	{
 		//console.log("Network connection is not working. Please check your net connection and try again.");
+		number_active_ajax-=1;
+		console.log(number_active_ajax);
 		hide_loader();
 	}			
 };
