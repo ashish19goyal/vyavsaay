@@ -85,14 +85,14 @@ function ajax_with_custom_func(url,kvp,func)
 				else
 				{
 					number_active_ajax-=1;
-					console.log(number_active_ajax);
+					//console.log(number_active_ajax);
 					func(xmlhttp);
 				}
 			}
 			else
 			{
 				number_active_ajax-=1;
-				console.log(number_active_ajax);
+				//console.log(number_active_ajax);
 			}
 		}
 	};
@@ -100,7 +100,7 @@ function ajax_with_custom_func(url,kvp,func)
 	try
 	{
 		number_active_ajax+=1;
-		console.log(number_active_ajax);
+		//console.log(number_active_ajax);
 		xmlhttp.send(kvp);
 	}catch(e)
 	{

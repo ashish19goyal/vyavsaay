@@ -12,7 +12,6 @@
 	<link rel="stylesheet" href="./CSS/theme1.css"/>
 	<script src='./JavaScripts/open/jquery-1.11.1.min.js'></script>
 	<script src='./JavaScripts/open/jquery-ui.min.js'></script>
-	<script src="./JavaScripts/prop/faq_main.js"></script> <!-- Resource jQuery -->
 	<meta name="description" content="Find industry standard and customizable automation solutions for your business. Setup is fast and easy. The range of solutions include Billing, Inventory management, Accounting, Project management, Task force management and CRM.">
 	<title data-i18n="master.vyavsaay">Vyavsaay ERP</title>
 	<link rel="icon" href="./images/favicon.png">
@@ -226,6 +225,16 @@
 	</div> <!-- cd-faq-items -->
 	<a href="#0" class="cd-close-panel">Close</a>
 
+	<script>
+
+	jQuery(document).ready(function($)
+	{
+		$('.cd-faq-trigger').on('click', function(event){
+			event.preventDefault();
+			$(this).next('.cd-faq-content').slideToggle(200).end().parent('li').toggleClass('content-visible');
+		});
+	});
+	</script>
 
 </body>
 </html>

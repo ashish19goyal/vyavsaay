@@ -77,7 +77,8 @@
 					}
 					
 					try{
-						$stmt->execute(array($id,$table_name,$type,$data_id,$xmlresponse_xml->saveXML($data_xml),$last_updated,'synced',$link_to,$user_display,$title,$notes,$updated_by));
+						if($user_display=='yes')
+							$stmt->execute(array($id,$table_name,$type,$data_id,$xmlresponse_xml->saveXML($data_xml),$last_updated,'synced',$link_to,$user_display,$title,$notes,$updated_by));
 					}
 					catch(PDOException $e)
 					{
@@ -170,6 +171,7 @@
 								break;
 						}	
 					}
+					
 					if($user_display=='yes')
 					{
 						$ids_for_update.="<id>$id</id>";

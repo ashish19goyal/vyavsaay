@@ -33,11 +33,9 @@ body.cd-overlay::after {
   -moz-transition: opacity .3s 0s, visibility 0s 0s;
   transition: opacity .3s 0s, visibility 0s 0s;
 }
-@media only screen and (min-width: 768px) {
-  body::after {
+body::after {
     display: none;
   }
-}
 
 a.cd-faq-trigger,a.cd-faq-trigger:hover {
   color: #2ABF5E;
@@ -61,13 +59,11 @@ Main components
   display: table;
   clear: both;
 }
-@media only screen and (min-width: 768px) {
-  .cd-faq {
+.cd-faq {
     position: relative;
     margin: 4em auto;
     box-shadow: none;
   }
-}
 
 .cd-faq-items {
   position: fixed;
@@ -107,8 +103,7 @@ Main components
   -o-transform: translateX(0);
   transform: translateX(0);
 }
-@media only screen and (min-width: 768px) {
-  .cd-faq-items {
+.cd-faq-items {
     position: static;
     height: auto;
     width: 90%;
@@ -121,17 +116,14 @@ Main components
     padding: 25px;
     background: transparent;
   }
-}
-@media only screen and (min-width: 1024px) {
-  .cd-faq-items {
+.cd-faq-items {
     float: none;
     width: 100%;
     padding-left: 25px;
   }
-  .no-js .cd-faq-items {
+.no-js .cd-faq-items {
     padding-left: 0;
   }
-}
 
 .cd-close-panel {
   position: fixed;
@@ -183,11 +175,9 @@ Main components
 .cd-close-panel.move-left {
   right: 2%;
 }
-@media only screen and (min-width: 768px) {
-  .cd-close-panel {
+.cd-close-panel {
     display: none;
   }
-}
 
 .cd-faq-group {
   /* hide group not selected */
@@ -212,29 +202,27 @@ Main components
 .no-js .cd-faq-group {
   display: block;
 }
-@media only screen and (min-width: 768px) {
-  .cd-faq-group {
-    /* all groups visible */
-    display: block;
-  }
-  .cd-faq-group > li {
-    background: #ffffff;
-    margin-bottom: 6px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-    -webkit-transition: box-shadow 0.2s;
-    -moz-transition: box-shadow 0.2s;
-    transition: box-shadow 0.2s;
-  }
-  .no-touch .cd-faq-group > li:hover {
-    box-shadow: 0 1px 10px rgba(108, 125, 142, 0.3);
-  }
-  .cd-faq-group .cd-faq-title {
-    margin: 2em 0 1em;
-  }
-  .cd-faq-group:first-child .cd-faq-title {
-    margin-top: 0;
-  }
-}
+ .cd-faq-group {
+   /* all groups visible */
+   display: block;
+ }
+ .cd-faq-group > li {
+   background: #ffffff;
+   margin-bottom: 6px;
+   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+   -webkit-transition: box-shadow 0.2s;
+   -moz-transition: box-shadow 0.2s;
+   transition: box-shadow 0.2s;
+ }
+ .no-touch .cd-faq-group > li:hover {
+   box-shadow: 0 1px 10px rgba(108, 125, 142, 0.3);
+ }
+ .cd-faq-group .cd-faq-title {
+   margin: 2em 0 1em;
+ }
+ .cd-faq-group:first-child .cd-faq-title {
+   margin-top: 0;
+ }
 
 .cd-faq-trigger {
   position: relative;
@@ -242,15 +230,14 @@ Main components
   margin: 1.6em 0 .4em;
   line-height: 1.2;
 }
-@media only screen and (min-width: 768px) {
-  .cd-faq-trigger {
+.cd-faq-trigger {
     font-size: 24px;
     font-size: 1.5rem;
     font-weight: 300;
     margin: 0;
     padding: 24px 72px 24px 24px;
   }
-  .cd-faq-trigger::before, .cd-faq-trigger::after {
+.cd-faq-trigger::before, .cd-faq-trigger::after {
     /* arrow icon on the right */
     position: absolute;
     right: 24px;
@@ -296,14 +283,12 @@ Main components
     -o-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-}
 
 .cd-faq-content p {
   font-size: 1.2em;
   line-height: 1.4;
   color: #6c7d8e;
 }
-@media only screen and (min-width: 768px) {
   .cd-faq-content {
     display: none;
     padding: 0 24px 30px;
@@ -314,4 +299,3 @@ Main components
   .no-js .cd-faq-content {
     display: block;
   }
-}

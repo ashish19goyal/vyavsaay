@@ -3106,7 +3106,7 @@ function form101_import(data_array,import_type)
 		counter+=1;
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
-				"<name>"+row.name+"</name>" +
+				"<name unique='yes'>"+row.name+"</name>" +
 				"<start_date>"+get_raw_time(row.start_date)+"</start_date>" +
 				"<status>"+row.status+"</status>" +
 				"<details>"+row.details+"</details>" +
@@ -3463,7 +3463,7 @@ function form112_import(data_array,import_type)
 };
 
 /**
-* @form Add unbilled sale items
+* @form Manage unbilled sale items
 * @formNo 113
 */
 function form113_import(data_array,import_type)

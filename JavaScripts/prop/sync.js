@@ -383,7 +383,6 @@ function get_data_from_log_table(func)
 						func(log_data);
 					}
 				};
-				/////above section is taking a lot of time/////////
 			}
 		};
 	}
@@ -406,12 +405,14 @@ function set_activities_to_synced(response)
 	}
 	else
 	{
+		//console.log(response.responseText);
 		if(response.responseXML!=null)
 		{
 			var delete_ids=response.responseXML.childNodes[0].childNodes[0].getElementsByTagName('id');
 			var update_ids=response.responseXML.childNodes[0].childNodes[1].getElementsByTagName('id');
 			var objectStore=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
-			
+			//console.log(delete_ids);
+			//console.log(update_ids);
 			localdb_open_requests+=delete_ids.length+update_ids.length;
 				
 			function local_delete_record(delete_index)
@@ -423,7 +424,7 @@ function set_activities_to_synced(response)
 					var delete_request=objectStore.delete(record_id);
 					delete_request.onsuccess=function(e)
 					{
-						//console.log(record_id);
+						console.log(record_id);
 						localdb_open_requests-=1;
 						local_delete_record(delete_index);
 					};

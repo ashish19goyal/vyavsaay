@@ -172,7 +172,6 @@ function local_read_single_column(columns,callback,results)
 			var sort_order='desc';
 			var sort_key=IDBKeyRange.lowerBound(0);
 			
-			
 			var filter=new Array();
 			for(var j=0; j<tcols.length;j++)
 			{
@@ -230,7 +229,6 @@ function local_read_single_column(columns,callback,results)
 				sort_order='prev';
 			}
 	
-			//console.log(table+" "+sort_index+" "+sort_key+" "+sort_order);
 			static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order).onsuccess=function(e)
 			{
 				var result=e.target.result;
