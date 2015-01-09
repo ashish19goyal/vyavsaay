@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- <html manifest="vyavsaay.appcache"> -->
+<html manifest="vyavsaay.appcache">
 <html>
 	<head>
 		<meta charset="UTF-8">
