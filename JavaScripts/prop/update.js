@@ -5454,7 +5454,7 @@ function form119_update_form()
 		var tax=0;
 		var total=0;
 		
-		$("[id^='save_form119']").each(function(index)
+		$("[id^='save_form119_']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);

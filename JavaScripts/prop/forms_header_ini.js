@@ -2909,7 +2909,7 @@ function form119_header_ini()
 		get_single_column_data(function(customers)
 		{
 			fields.elements[8].value=customers.length;
-			if(customer.length>0)
+			if(customers.length>0)
 				$(unbilled_button).show();
 		},unbilled_data);
 	});
