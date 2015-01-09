@@ -163,6 +163,28 @@ function get_task_due_time(raw_time)
 	return p_time;
 }
 
+function get_worker_delay()
+{
+	var period=parseFloat(localStorage.getItem('worker_delay'));
+	if(period==null || period=='' || period=='NaN')
+	{
+		period=10;
+	}
+	var p_time=parseFloat(period)*1000;
+	return p_time;
+}
+
+function get_worker_repeat()
+{
+	var period=parseFloat(localStorage.getItem('worker_repeat'));
+	if(period==null || period=='' || period=='NaN')
+	{
+		period=3600;
+	}
+	var p_time=period*1000;
+	return p_time;
+}
+
 /**
  * 
  */

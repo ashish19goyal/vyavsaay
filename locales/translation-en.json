@@ -202,6 +202,8 @@
   	"create_bills_multi_register_unbilled":"Create Bills (multiple registers and unbilled items)",
   	"manage_loyalty_customers":"Manage customers (loyalty programs)",
   	"adjust_loyalty_points":"Adjust loyalty points",
-  	"enter_supplier_bill_unbilled_items":"Enter Supplier Bill (Unbilled Items)"
+  	"enter_supplier_bill_unbilled_items":"Enter Supplier Bill (Unbilled Items)",
+  	"worker_delay":"Background processing delay from login(in seconds)",
+  	"worker_repeat":"Background processing repeat after(in seconds)"
   }
 }

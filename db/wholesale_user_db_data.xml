@@ -60,6 +60,26 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>worker_delay</name>
+			<display_name>worker_delay</display_name>
+			<status>active</status>
+			<value>10</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>worker_repeat</name>
+			<display_name>worker_repeat</display_name>
+			<status>active</status>
+			<value>3600</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>task_due_period</name>
 			<display_name>default_task_due_period</display_name>
 			<status>active</status>

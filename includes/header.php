@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html manifest="vyavsaay.appcache">
-<html>
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=500 user-scalable=no" id="viewport-meta">

@@ -64,7 +64,7 @@ function count_notif()
 	},notif_data);
 	
 	clearInterval(count_notif_timer);
-	count_notif_timer=setTimeout(count_notif,100000);
+	count_notif_timer=setTimeout(count_notif,get_worker_repeat());
 }
 
 /**
@@ -112,13 +112,13 @@ function show_notif()
 	},notif_data);
 	
 	clearInterval(show_notif_timer);
-	show_notif_timer=setTimeout(count_notif,900000);
+	show_notif_timer=setTimeout(count_notif,get_worker_repeat());
 }
 
 /**
  * This function checks for favourable scenarios to generate notifications in the background
  */
-function notifications_add()
+function notifications1_add()
 {
 	var last_updated=get_my_time();
 	////////overdue payments/////////////
@@ -173,6 +173,16 @@ function notifications_add()
 		}
 	});
 	//////////overdue payments end//////
+	
+	setTimeout(notifications1_add,get_worker_repeat());
+}
+
+/**
+ * This function checks for favourable scenarios to generate notifications in the background
+ */
+function notifications2_add()
+{
+	var last_updated=get_my_time();
 	
 	/////overdue tasks//////////
 	var task_due_time=parseFloat(get_my_time())+86400000;
@@ -232,6 +242,17 @@ function notifications_add()
 	
 	///////////overdue tasks end//////////
 
+	setTimeout(notifications2_add,get_worker_repeat());
+}
+
+
+/**
+ * This function checks for favourable scenarios to generate notifications in the background
+ */
+function notifications3_add()
+{
+	var last_updated=get_my_time();
+	
 	/////overdue sale leads//////////
 	var lead_due_time=parseFloat(get_my_time())+86400000;
 	var lead_past_time=parseFloat(get_my_time())-86400000;
@@ -284,7 +305,16 @@ function notifications_add()
 	});
 	
 	///////////overdue sale leads end//////////
+	setTimeout(notifications3_add,get_worker_repeat());
+}
 
+
+/**
+ * This function checks for favourable scenarios to generate notifications in the background
+ */
+function notifications4_add()
+{
+	var last_updated=get_my_time();
 	
 	/////sale orders //////////
 	
@@ -357,6 +387,18 @@ function notifications_add()
 	
 	///////////sale orders end//////////
 	
+	setTimeout(notifications4_add,get_worker_repeat());
+}
+
+
+
+/**
+ * This function checks for favourable scenarios to generate notifications in the background
+ */
+function notifications5_add()
+{
+	var last_updated=get_my_time();
+		
 	/////out of stock manufactured products//////////
 	var manu_data="<manufacturing_schedule>" +
 			"<id></id>" +
@@ -394,7 +436,18 @@ function notifications_add()
 	
 	///////////manufactured product end//////////
 
+	setTimeout(notifications5_add,get_worker_repeat());
+}
 
+
+
+/**
+ * This function checks for favourable scenarios to generate notifications in the background
+ */
+function notifications6_add()
+{
+	var last_updated=get_my_time();
+	
 	/////manufacturing due//////////
 	var schedule_data="<manufacturing_schedule>" +
 			"<id></id>" +
@@ -443,6 +496,17 @@ function notifications_add()
 	
 	///////////manufacturing end//////////
 	
+	setTimeout(notifications6_add,get_worker_repeat());
+}
+
+
+
+/**
+ * This function checks for favourable scenarios to generate notifications in the background
+ */
+function notifications7_add()
+{
+	var last_updated=get_my_time();
 	/////appointments//////////
 	var app_time=parseFloat(get_my_time())+3600000;
 	
@@ -493,8 +557,9 @@ function notifications_add()
 	
 	///////////due appointments//////////
 
-	setTimeout(notifications_add,1800000);
+	setTimeout(notifications7_add,get_worker_repeat());
 }
+
 
 /**
  * This function checks for favourable scenarios to generate sale leads in the background
@@ -722,7 +787,7 @@ function manufactured_products_outofstock()
 		});
 	});
 	
-	setTimeout(manufactured_products_outofstock,1800000);
+	setTimeout(manufactured_products_outofstock,get_worker_repeat());
 }
 
 /**
@@ -828,7 +893,7 @@ function loans_interest_processing()
 		});
 	});
 	
-	setTimeout(loans_interest_processing,1800000);
+	setTimeout(loans_interest_processing,get_worker_repeat());
 }
 
 
@@ -913,7 +978,7 @@ function loans_instalment_processing()
 		});
 	});
 	
-	setTimeout(loans_instalment_processing,1800000);
+	setTimeout(loans_instalment_processing,get_worker_repeat());
 }
 
 
@@ -967,8 +1032,6 @@ function generate_attendance_records()
 			});
 		}
 	});
-
-	setTimeout(generate_attendance_records,86400000);
 }
 
 
@@ -988,22 +1051,18 @@ function balance_out_payments()
 				"</payments>";
 		fetch_requested_data('',payments_data,function(payments)
 		{
-			//console.log(payments);
 			for(var i=0;i<payments.length;i++)
 			{
-				//console.log(payments[i]);
 				payments[i].total_received=0;
 				payments[i].total_paid=0;
 				
 				if(payments[i].type=='paid')
 				{
 					payments[i].total_paid=parseFloat(payments[i].total_amount)-parseFloat(payments[i].paid_amount);
-					//console.log('paid type of payment'+payments[i].total_paid);
 				}
 				else
 				{
 					payments[i].total_received=parseFloat(payments[i].total_amount)-parseFloat(payments[i].paid_amount);
-					//console.log('received type of payment'+payments[i].total_received);
 				}
 				
 				for(var j=i+1;j<payments.length;j++)
@@ -1013,12 +1072,10 @@ function balance_out_payments()
 						if(payments[j].type=='paid')
 						{
 							payments[i].total_paid+=parseFloat(payments[j].total_amount)-parseFloat(payments[j].paid_amount);
-							//console.log('paid type of payment'+payments[i].total_paid);
 						}
 						else
 						{
 							payments[i].total_received+=parseFloat(payments[j].total_amount)-parseFloat(payments[j].paid_amount);
-							//console.log('received type of payment'+payments[i].total_received);
 						}
 						payments.splice(j,1);
 						j-=1;
@@ -1044,10 +1101,8 @@ function balance_out_payments()
 						"<status exact='yes'>pending</status>" +
 						"<acc_name exact='yes'>"+payment.acc_name+"</acc_name>" +
 						"</payments>";
-				//console.log(accounts_data);
 				fetch_requested_data('',accounts_data,function(accounts)
 				{
-					//console.log(accounts);
 					accounts.forEach(function(account)
 					{
 						if(payment.total_received<payment.total_paid)

@@ -36,7 +36,7 @@ function default_load()
 		$('textarea').autosize();
 		i18n_setup();
 		home_display();
-		start_workers();
+		setTimeout(start_workers(),get_worker_delay());
 	}
 	hide_loader();
 }
@@ -58,73 +58,100 @@ function hide_progress()
     progress_value=0;
 }
 
+function set_grid_items()
+{
+	console.log('setting grid items');
+	set_grid_item_1();
+	set_grid_item_2();
+	set_grid_item_3();
+	set_grid_item_4();
+	set_grid_item_5();
+	set_grid_item_6();
+	set_grid_item_7();
+//		set_grid_item_8();
+	set_grid_item_9();
+	set_grid_item_11();
+	set_grid_item_12();
+	set_grid_item_13();
+	set_grid_item_14();
+	set_grid_item_15();
+	set_grid_item_16();
+	set_grid_item_17();
+	set_grid_item_18();
+	set_grid_item_19();
+	set_grid_item_20();
+	set_grid_item_22();
+	set_grid_item_23();
+	set_grid_item_24();
+	set_grid_item_25();
+	set_grid_item_26();
+	set_grid_item_27();
+	set_grid_item_28();
+	set_grid_item_29();
+	set_grid_item_30();
+}
+
+function deferred_execute(func)
+{
+	if(localdb_open_requests===0 && number_active_ajax===0)
+	{
+		func();
+	}
+	else
+	{
+		setTimeout(function()
+		{
+			deferred_execute(func);
+		},5000);
+	}
+}
 
 function start_workers()
 {
-	setTimeout(function()
-	{
-		set_grid_item_1();
-		set_grid_item_2();
-		set_grid_item_3();
-		set_grid_item_4();
-		set_grid_item_5();
-		set_grid_item_6();
-		set_grid_item_7();
-//		set_grid_item_8();
-		set_grid_item_9();
-		set_grid_item_11();
-		set_grid_item_12();
-		set_grid_item_13();
-		set_grid_item_14();
-		set_grid_item_15();
-		set_grid_item_16();
-		set_grid_item_17();
-		set_grid_item_18();
-		set_grid_item_19();
-		set_grid_item_20();
-		set_grid_item_22();
-		set_grid_item_23();
-		set_grid_item_24();
-		set_grid_item_25();
-		set_grid_item_26();
-		set_grid_item_27();
-		set_grid_item_28();
-		set_grid_item_29();
-		set_grid_item_30();
-	},2000);
-	setTimeout(function()
-	{
-		activities_lane_ini();
-	},10000);
-	setTimeout(function()
-	{
-		notifications_add();
-	},20000);
-	setTimeout(function()
-	{
-		//sale_leads_add();
-	},25000);
-	setTimeout(function()
-	{
-		generate_attendance_records();
-	},30000);
-	setTimeout(function()
-	{
-		manufactured_products_outofstock();
-	},40000);
-	setTimeout(function()
-	{
-		loans_interest_processing();
-	},50000);
-	setTimeout(function()
-	{
-		loans_instalment_processing();
-	},60000);
-	setTimeout(function()
-	{
-		show_notif();
-	},70000);
+	deferred_execute(function()
+	{set_grid_items();});
+	
+	deferred_execute(function()
+	{activities_lane_ini();});
+	
+	deferred_execute(function()
+	{notifications1_add();});
+	
+	deferred_execute(function()
+	{notifications2_add();});
+	
+	deferred_execute(function()
+	{notifications3_add();});
+	
+	deferred_execute(function()
+	{notifications4_add();});
+					
+	deferred_execute(function()
+	{notifications5_add();});
+	
+	deferred_execute(function()
+	{notifications6_add();});
+					
+	deferred_execute(function()
+	{notifications7_add();});
 			
+	deferred_execute(function()
+	{sale_leads_add();});
+	
+	deferred_execute(function()
+	{generate_attendance_records();});
+	
+	deferred_execute(function()
+	{manufactured_products_outofstock();});
+	
+	deferred_execute(function()
+	{loans_interest_processing();});
+	
+	deferred_execute(function()
+	{loans_instalment_processing();});
+	
+	deferred_execute(function()
+	{show_notif();});
 }
 
 function show_function(function_id)
