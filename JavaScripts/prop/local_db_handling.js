@@ -173,6 +173,8 @@ function local_read_single_column(columns,callback,results)
 			var sort_key=IDBKeyRange.lowerBound(0);
 			
 			var filter=new Array();
+			var x=tcols.length;
+			
 			for(var j=0; j<tcols.length;j++)
 			{
 				if(tcols[j].innerHTML!==null && tcols[j].hasAttribute('sort'))
@@ -217,6 +219,7 @@ function local_read_single_column(columns,callback,results)
 					sort_key=IDBKeyRange.only(fil.value);
 				}
 			}
+			
 			
 			localdb_open_requests+=1;
 	
