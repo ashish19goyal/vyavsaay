@@ -429,7 +429,7 @@ function set_activities_to_synced(response)
 			{
 				if(delete_index<delete_ids.length)
 				{
-					var record_id=parseFloat(delete_ids[delete_index].innerHTML);
+					var record_id=delete_ids[delete_index].innerHTML;
 					delete_index+=1;
 					var delete_request=objectStore.delete(record_id);
 					delete_request.onsuccess=function(e)
