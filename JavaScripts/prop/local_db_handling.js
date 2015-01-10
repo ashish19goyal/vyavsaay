@@ -221,7 +221,6 @@ function local_read_single_column(columns,callback,results)
 				}
 			}
 			
-			
 			localdb_open_requests+=1;
 	
 			if(sort_order=='asc')

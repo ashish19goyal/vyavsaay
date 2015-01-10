@@ -422,7 +422,9 @@ function set_activities_to_synced(response)
 					var delete_request=objectStore.delete(record_id);
 					delete_request.onsuccess=function(e)
 					{
-						console.log('deleted record');
+						console.log(record_id);
+						var type_record_id=typeof record_id; 
+						console.log(type_record_id);
 						localdb_open_requests-=1;
 						local_delete_record(delete_index);
 					};
