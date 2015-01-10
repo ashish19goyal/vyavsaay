@@ -135,8 +135,8 @@ function start_workers()
 	deferred_execute(function()
 	{notifications7_add();});
 			
-	deferred_execute(function()
-	{sale_leads_add();});
+//	deferred_execute(function()
+//	{sale_leads_add();});
 	
 	deferred_execute(function()
 	{generate_attendance_records();});

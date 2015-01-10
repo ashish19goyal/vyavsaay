@@ -82,30 +82,28 @@
 				$("#modal34").dialog("open");
 			}
 						
-	
-		
-		/////display social media buttons
-	    $('#share_box').on('click',function(event)
-	   	{
-		   	$(this).find('.social_buttons').show();
-		});
-	    $('#share_box').on('mouseleave',function(event)
-    	{
-    	   	$(this).find('.social_buttons').hide();
-    	});
-		
+			/////display social media buttons
+		    $('#share_box').on('click',function(event)
+		   	{
+			   	$(this).find('.social_buttons').show();
+			});
+		    $('#share_box').on('mouseleave',function(event)
+	    	{
+	    	   	$(this).find('.social_buttons').hide();
+	    	});
+			
 	</script>
 			
 
  		<!----- banner ---->
 			<div class="banner">
-					<div class="banner-info">
-						<div class="col-md-6 appp">
+					<div class="banner-info" itemscope itemtype="http://schema.org/Organization">
+						<div itemprop='logo' class="col-md-6 appp">
 							 <img src="images/mbl-app.png" alt="">
 						</div>
 						<div class="col-md-6 banner-text">
-							<h1>Vyavsaay</h1>
-							<p><b>Vyavsaay provides latest technology solutions for your business, on a cloud based platform.</b></p>
+							<h1 itemprop='name'>Vyavsaay</h1>
+							<p itemprop='description'><b>Vyavsaay provides latest technology solutions for your business, on a cloud based platform.</b></p>
 						</div>
 					</div>
 			</div>
@@ -114,7 +112,7 @@
 			<!----- /start-About---->
 			<div id="about" class="about">
 	       		<div class="container">
-	       		   <div class="gallery-head text-center">
+	       		   <div class="gallery-head text-center" >
 					  <h3>ABOUT</h3>
 					  <p>Vyavsaay is an India based company that provides industry standard as well as customizable automation solutions for your business. It is well suited for small and medium enterprises that don't want to spend a lot of money in setting up and managing their own IT infrastructure.</p>
 					 <p>Vyavsaay provides solutions around Billing, Inventory management, Accounting, Project management, Task force management and Customer Relationship Management (CRM).</p>
@@ -141,23 +139,23 @@
 					  <h3>Reviews</h3>
 				    </div>
 	       			<div class="row revies-content text-center">
-	       				<div class="review_grid">
+	       				<div class="review_grid" itemscope itemtype="http://schema.org/Review">
 		       				<div class="col-md-4 review-img1">
 		       					 <img src="images/sou.jpeg" alt="">
 		       				</div>
 		       				<div class="col-md-8 review-text">
-		       					<p>"Vyavsaay is very user friendly. Anybody can use it with ease. It took us only a few hours to setup and get started with Vyavsaay."</p>
-		       					<span>Business Owner,<br>Professional Services Industry</span>
+		       					<p itemprop='description'>"Vyavsaay is very user friendly. Anybody can use it with ease. It took us only a few hours to setup and get started with Vyavsaay."</p>
+		       					<span itemprop='author'>Business Owner,<br>Professional Services Industry</span>
 		       				</div>
 		       				<div class="clearfix"> </div>
 		       			</div>
-	       				<div class="review_grid">
+	       				<div class="review_grid" itemscope itemtype="http://schema.org/Review">
 		       				<div class="col-md-4 review-img2">
 		       					 <img src="images/nishu.jpeg" alt="" class='review_picture_rotate'>
 		       				</div>
 		       				<div class="col-md-8 review-text">
-		       					<p>"Now we can manage all our process with just one platform. We don't need to use multiple desktop and mobile solutions and worry about moving data between them."</p>
-		       					<span>Business owner,<br>HealthCare Industry</span>
+		       					<p itemprop='description'>"Now we can manage all our process with just one platform. We don't need to use multiple desktop and mobile solutions and worry about moving data between them."</p>
+		       					<span itemprop='author'>Business owner,<br>HealthCare Industry</span>
 		       				</div>
 		       				<div class="clearfix"> </div>
 		       			</div>
@@ -176,34 +174,34 @@
 			    </div>
 			    <div style='height:50px;'></div>
        			<div class="pricing_grids">
-       					<div class="Demo-text pricing_grid">
-	       					<p style='text-align:center;'><b>Basic Plan</b></p>
+       					<div class="Demo-text pricing_grid" itemscope itemtype="http://schema.org/Service">
+	       					<p style='text-align:center;' itemprop='name'><b>Basic Plan</b></p>
 	       					Single User</br></br>
 	       					Covers industry-wise standard business processes</br></br>
 	       					Free 30 day trial
-	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Rs. 500/month</b></p>
+	       					<p itemprop='description' style='position:absolute;bottom:0;text-align:center;'><b>Rs. 500/month</b></p>
 	       				</div>
-	       				<div class="Demo-text pricing_grid">
-	       					<p style='text-align:center;'><b>Premium Plan</b></p>
+	       				<div class="Demo-text pricing_grid" itemscope itemtype="http://schema.org/Service">
+	       					<p style='text-align:center;' itemprop='name'><b>Premium Plan</b></p>
 	       					Single User</br></br>
 	       					Advanced analytical features</br></br>
 	       					Customizations</br></br>
 	       					Free 30 day trial
-	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Rs. 1000/month</b></p>
+	       					<p itemprop='description' style='position:absolute;bottom:0;text-align:center;'><b>Rs. 1000/month</b></p>
 	       				</div>
-	       				<div class="Demo-text pricing_grid">
-	       					<p style='text-align:center;'><b>Multi-User</b></p>
+	       				<div class="Demo-text pricing_grid" itemscope itemtype="http://schema.org/Service">
+	       					<p style='text-align:center;' itemprop='name'><b>Multi-User</b></p>
 	       					Multiple Users</br></br>
 	       					Advanced analytical features</br></br>
 	       					Customizations</br></br>
 	       					Free 30 day trial
-	       					<p style='position:absolute;bottom:0;text-align:center;'><b>Rs. 2000/month</b></p>
+	       					<p itemprop='description' style='position:absolute;bottom:0;text-align:center;'><b>Rs. 2000/month</b></p>
 	       				</div>
-	       				<div class="Demo-text pricing_grid">
-	       					<p style='text-align:center;'><b>Enterprise Level</b></p>
+	       				<div class="Demo-text pricing_grid" itemscope itemtype="http://schema.org/Service">
+	       					<p style='text-align:center;' itemprop='name'><b>Enterprise Level</b></p>
 	       					Customized solutions for medium sized enterprises with specific business requirements.</br></br>
 	       					Maintenance and updates inclusive.
-	       					<p style='position:absolute;bottom:0;text-align:center;'><b><a href="#contact">Ask for a quote</a></b></p>
+	       					<p itemprop='description' style='position:absolute;bottom:0;text-align:center;'><b><a href="#contact">Ask for a quote</a></b></p>
 	       				</div>
        			</div>
        			<div style='height:100px;'></div>

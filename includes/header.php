@@ -11,9 +11,9 @@
 			include "css_includes.php";
 		?>
 		<link rel="icon" href="./images/favicon.png">
-		
 	</head>
 	<body onload="default_load();">
 			<div id="loading_icon"><img src="./images/loader.gif"></div>
 			<div id="transparent_layer"></div>
+		
 			

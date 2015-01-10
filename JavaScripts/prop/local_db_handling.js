@@ -452,7 +452,7 @@ function local_read_multi_column(columns,callback,results)
 					}
 					if(filter[i].type=='less than') 
 					{
-						if(parseInt(record[filter[i].name])>=filter[i].value)
+						if(parseFloat(record[filter[i].name])>=filter[i].value)
 						{
 							match=false;
 							break;
