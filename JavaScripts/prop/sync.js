@@ -410,9 +410,21 @@ function set_activities_to_synced(response)
 		{
 			var delete_ids=response.responseXML.childNodes[0].childNodes[0].getElementsByTagName('id');
 			var update_ids=response.responseXML.childNodes[0].childNodes[1].getElementsByTagName('id');
-			var objectStore=static_local_db.transaction(['activities'],"readwrite").objectStore('activities');
+			var transaction=static_local_db.transaction(['activities'],"readwrite");
+			var objectStore=transaction.objectStore('activities');
 			localdb_open_requests+=delete_ids.length+update_ids.length;
-				
+			
+			transaction.onabort = function(e) 
+			{
+				console.log("aborted");
+				console.log(this.error);
+			};
+			transaction.oncomplete = function(e) 
+			{
+				console.log("transaction complete"); 
+			};
+
+			
 			function local_delete_record(delete_index)
 			{
 				if(delete_index<delete_ids.length)
@@ -423,15 +435,12 @@ function set_activities_to_synced(response)
 					delete_request.onsuccess=function(e)
 					{
 						console.log(record_id);
-						var type_record_id=typeof record_id; 
-						console.log(type_record_id);
 						localdb_open_requests-=1;
 						local_delete_record(delete_index);
 					};
 					delete_request.onerror=function(e)
 					{
 						console.log(this.error);
-						console.log('error deleting record');
 						localdb_open_requests-=1;
 						local_delete_record(delete_index);
 					};

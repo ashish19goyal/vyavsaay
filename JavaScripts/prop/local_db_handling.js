@@ -1749,7 +1749,7 @@ function local_delete_simple(data_xml)
 					}
 					if(match===true)
 					{
-						delete_ids_array.push(data.id);
+						delete_ids_array.push(parseInt(data.id));
 					}
 					result.continue();
 				}
