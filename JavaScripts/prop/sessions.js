@@ -170,7 +170,7 @@ function get_worker_delay()
 	{
 		period=10;
 	}
-	var p_time=parseFloat(period)*1000;
+	var p_time=period*1000;
 	return p_time;
 }
 

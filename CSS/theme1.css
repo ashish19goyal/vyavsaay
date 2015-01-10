@@ -16,7 +16,10 @@ textarea[readonly="readonly"],textarea[readonly="readonly"]:focus{
 }
 
 textarea{
+	outline:  none !important;
+	background-color: #ffffff;
 	width: 100px;
+	border-width: 1px;
 	vertical-align:top;
 }
 

@@ -984,7 +984,7 @@
 			<name>form54</name>
 			<display_name>select_print_templates</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>

@@ -16,6 +16,7 @@ contact.php
 offline.html
 pass_reset.php
 privacy_policy.php
+db/db_schema.xml
 images/add_button.png
 images/add_image.png
 images/copy.png

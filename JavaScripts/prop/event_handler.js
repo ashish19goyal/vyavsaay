@@ -36,7 +36,10 @@ function default_load()
 		$('textarea').autosize();
 		i18n_setup();
 		home_display();
-		setTimeout(start_workers(),get_worker_delay());
+		setTimeout(function()
+		{
+			start_workers();
+		},get_worker_delay());
 	}
 	hide_loader();
 }

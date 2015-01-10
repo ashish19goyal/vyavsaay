@@ -350,7 +350,7 @@ function get_data_from_log_table(func)
 				var counter=0;
 				var log_data="";
 			
-				/////below section is taking a lot of time/////////
+				///////below section is taking a lot of time/////////
 				static_local_db.transaction(['activities'],"readonly").objectStore('activities').index('last_updated').openCursor(null,'next').onsuccess=function(e)
 				{
 					var result=e.target.result;
@@ -405,7 +405,7 @@ function set_activities_to_synced(response)
 	}
 	else
 	{
-		//console.log(response.responseText);
+		console.log(response.responseText);
 		if(response.responseXML!=null)
 		{
 			var delete_ids=response.responseXML.childNodes[0].childNodes[0].getElementsByTagName('id');
