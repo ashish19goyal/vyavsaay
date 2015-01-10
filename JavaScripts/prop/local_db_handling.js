@@ -420,9 +420,18 @@ function local_read_multi_column(columns,callback,results)
 			sort_order='prev';
 		}
 		
-		console.log(columns);
-		console.log(sort_index);
-		static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order).onsuccess=function(e)
+		var objectstore=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index);
+		
+		if(filter.length>0)
+		{
+			if(filter[0].name=='id')
+			{
+				objectstore=static_local_db.transaction([table],"readonly").objectStore(table);
+				sort_key=IDBKeyRange.only(filter[0].value);
+			}
+		}
+		
+		objectStore.openCursor(sort_key,sort_order).onsuccess=function(e)
 		{
 			var result=e.target.result;
 			if(result)
