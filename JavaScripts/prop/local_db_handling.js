@@ -431,7 +431,7 @@ function local_read_multi_column(columns,callback,results)
 			}
 		}
 		
-		objectStore.openCursor(sort_key,sort_order).onsuccess=function(e)
+		objectstore.openCursor(sort_key,sort_order).onsuccess=function(e)
 		{
 			var result=e.target.result;
 			if(result)
