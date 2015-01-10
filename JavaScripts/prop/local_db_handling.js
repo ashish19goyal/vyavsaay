@@ -420,6 +420,7 @@ function local_read_multi_column(columns,callback,results)
 			sort_order='prev';
 		}
 		
+		console.log(sort_index);
 		static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order).onsuccess=function(e)
 		{
 			var result=e.target.result;
