@@ -423,18 +423,16 @@ function set_activities_to_synced(response)
 			{
 				console.log("transaction complete"); 
 			};
-
 			
 			function local_delete_record(delete_index)
 			{
 				if(delete_index<delete_ids.length)
 				{
-					var record_id=delete_ids[delete_index].innerHTML;
+					var record_id=parseInt(delete_ids[delete_index].innerHTML);
 					delete_index+=1;
 					var delete_request=objectStore.delete(record_id);
 					delete_request.onsuccess=function(e)
 					{
-						console.log(record_id);
 						localdb_open_requests-=1;
 						local_delete_record(delete_index);
 					};
