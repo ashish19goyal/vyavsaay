@@ -1627,7 +1627,7 @@ function form21_ini()
 	{
 		show_loader();
 		var bill_columns="<supplier_bills>" +
-				"<id exact='yes'>"+bill_id+"</id>" +
+				"<id>"+bill_id+"</id>" +
 				"<bill_id></bill_id>" +
 				"<supplier></supplier>" +
 				"<total></total>" +
@@ -7194,7 +7194,7 @@ function form91_ini()
 	{
 		show_loader();
 		var bill_columns="<bills>" +
-				"<id exact='yes'>"+bill_id+"</id>" +
+				"<id>"+bill_id+"</id>" +
 				"<customer_name></customer_name>" +
 				"<total></total>" +
 				"<bill_date></bill_date>" +
@@ -9759,7 +9759,7 @@ function form119_ini()
 	{
 		show_loader();
 		var bill_columns="<bills>" +
-				"<id exact='yes'>"+bill_id+"</id>" +
+				"<id>"+bill_id+"</id>" +
 				"<customer_name></customer_name>" +
 				"<total></total>" +
 				"<bill_date></bill_date>" +
@@ -9906,7 +9906,7 @@ function form122_ini()
 	{
 		show_loader();
 		var bill_columns="<supplier_bills>" +
-				"<id exact='yes'>"+bill_id+"</id>" +
+				"<id>"+bill_id+"</id>" +
 				"<bill_id></bill_id>" +
 				"<supplier></supplier>" +
 				"<total></total>" +
