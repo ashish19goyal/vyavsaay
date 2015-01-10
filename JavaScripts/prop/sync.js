@@ -405,7 +405,7 @@ function set_activities_to_synced(response)
 	}
 	else
 	{
-		console.log(response.responseText);
+		//console.log(response.responseText);
 		if(response.responseXML!=null)
 		{
 			var delete_ids=response.responseXML.childNodes[0].childNodes[0].getElementsByTagName('id');
@@ -422,11 +422,14 @@ function set_activities_to_synced(response)
 					var delete_request=objectStore.delete(record_id);
 					delete_request.onsuccess=function(e)
 					{
+						console.log('deleted record');
 						localdb_open_requests-=1;
 						local_delete_record(delete_index);
 					};
 					delete_request.onerror=function(e)
 					{
+						console.log(this.error);
+						console.log('error deleting record');
 						localdb_open_requests-=1;
 						local_delete_record(delete_index);
 					};
