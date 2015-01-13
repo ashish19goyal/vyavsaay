@@ -6,16 +6,12 @@
 			<label>Bill Number</br><input type='text' required></label>
 			<label>Bill Date</br><input type='text' required></label>
 			<label>Entry Date</br><input type='text' required></label>
-			<label>Amount</br>Rs. <input readonly='readonly' type='number' required></label>
-			<label>Discount</br>Rs. <input required type='number' value='0' step='any'></label>
-			<label>Tax</br>Rs. <input readonly='readonly' type='number' required></label>
-			<label>Total</br>Rs. <input readonly='readonly' type='number' step='any' required></label>
 			<label>Notes</br><textarea row='1'></textarea></label>
 			<input type='hidden' value=''>
 			<input type='hidden' name='transaction'>
-			<input type='button' title='New Bill' class='add_icon' onclick='form21_new_form();'>
-			<input type='submit' title='Save Bill' class='save_icon'>
+			<input type='button' title='Save Bill' class='save_icon'>
 			<input type='button' title='Print Bill' class='print_icon' onclick='form21_print_form();'>
+			<input type='submit' class='submit_hidden'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>
@@ -32,5 +28,7 @@
 		</thead>
 		<tbody id='form21_body'>
 		</tbody>
+		<tfoot id='form21_foot'>
+		</tfoot>
 	</table>
 </div>

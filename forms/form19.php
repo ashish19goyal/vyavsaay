@@ -4,15 +4,13 @@
 			<label>Supplier <img src='./images/add_image.png' class='add_image' title='Add new supplier' onclick='modal13_action();'></br>
 			<input type='text' required></label>
 			<label>Return Date</br><input type='text' required></label>
-			<label>Total Refund</br>Rs. <input readonly='readonly' type='number' step='any'></label>
 			<input type='hidden' name='id'>
 			<input type='hidden' name='transaction'>
-			<input type='hidden' name='tax'>
-			<input type='button' title='New Bill' class='add_icon' onclick='form19_new_form();'>
-			<input type='submit' title='Save Bill' class='save_icon'>
+			<input type='button' title='Save Bill' class='save_icon'>
 			<input type='button' title='Print Bill' class='print_icon' onclick='form19_print_form();'>
 			<input type='button' id='form19_share' class='share_icon' style='display:none;'>
-			</fieldset>
+			<input type='submit' class='submit_hidden'>
+		</fieldset>
 	</form>
 	<table class='rwd-table'>
 		<thead>
@@ -28,5 +26,7 @@
 		</thead>
 		<tbody id='form19_body'>
 		</tbody>
+		<tfoot id='form19_foot'>
+		</tfoot>
 	</table>
 </div>

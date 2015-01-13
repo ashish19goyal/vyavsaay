@@ -53,12 +53,18 @@
 	
 	<script>
 	!function(){
-		$("#admin_main").tabs({
-			show:"slide"}).css(
+		$("#admin_main").tabs(
+		{
+			show:"slide",
+			activate:function(e, ui) 
+		    {
+		    	e.currentTarget.blur();
+		    }
+		}).css(
 			{
-				'min-height': '500px',
+				'min-height': '570px',
 				'overflow': 'auto'
-			});		
+			});
 		}();
 	</script>
 

@@ -4,14 +4,12 @@
 			<label>Customer	<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'></br>
 			<input type='text' required></label>
 			<label>Return Date</br><input type='text' required></label>
-			<label>Total Refund</br>Rs. <input readonly='readonly' type='number' step='any'></label>
 			<input type='hidden' name='bill_id'>
 			<input type='hidden' name='transaction'>
-			<input type='hidden' name='tax'>
-			<input type='button' title='New Bill' class='add_icon' onclick='form15_new_form();'>
-			<input type='submit' title='Save Bill' class='save_icon'>
+			<input type='button' title='Save Bill' class='save_icon'>
 			<input type='button' title='Print Bill' class='print_icon' onclick='form15_print_form();'>
 			<input type='button' id='form15_share' class='share_icon' style='display:none;'>
+			<input type='submit' class='submit_hidden'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>
@@ -28,5 +26,7 @@
 		</thead>
 		<tbody id='form15_body'>
 		</tbody>
+		<tfoot id='form15_foot'>
+		</tfoot>
 	</table>
 </div>

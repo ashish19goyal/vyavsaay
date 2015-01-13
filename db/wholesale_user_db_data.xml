@@ -60,10 +60,30 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>mode_of_payment</name>
+			<display_name>Default Mode of payment</display_name>
+			<status>active</status>
+			<value>credit</value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>bill_message</name>
+			<display_name>Message on sale bills</display_name>
+			<status>active</status>
+			<value>Bill message here</value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>worker_delay</name>
 			<display_name>worker_delay</display_name>
 			<status>active</status>
-			<value>10</value>
+			<value>600</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>

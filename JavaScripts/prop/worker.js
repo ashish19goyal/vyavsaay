@@ -845,7 +845,7 @@ function loans_interest_processing()
 							"<paid_amount>0</paid_amount>" +
 							"<acc_name>"+loan.account+"</acc_name>" +
 							"<due_date>"+loan.next_interest_date+"</due_date>" +
-							"<mode></mode>" +
+							"<mode>"+get_payment_mode()+"</mode>" +
 							"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 							"<bill_id>"+loan.id+"</bill_id>" +
 							"<last_updated>"+get_my_time()+"</last_updated>" +
@@ -949,7 +949,7 @@ function loans_instalment_processing()
 						"<paid_amount>0</paid_amount>" +
 						"<acc_name>"+loan.account+"</acc_name>" +
 						"<due_date>"+loan.next_emi_date+"</due_date>" +
-						"<mode></mode>" +
+						"<mode>"+get_payment_mode()+"</mode>" +
 						"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 						"<bill_id>"+loan.id+"</bill_id>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +

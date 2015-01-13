@@ -193,7 +193,7 @@ function form10_delete_item(button)
 	if(is_delete_access('form10'))
 	{
 		//console.log('deleting form10_item');
-		var bill_id=document.getElementById("form10_master").elements[7].value;
+		var bill_id=document.getElementById("form10_master").elements[3].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
@@ -247,7 +247,7 @@ function form12_delete_item(button)
 {
 	if(is_delete_access('form12'))
 	{
-		var bill_id=document.getElementById("form12_master").elements[7].value;
+		var bill_id=document.getElementById("form12_master").elements[3].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
@@ -338,7 +338,7 @@ function form15_delete_item(button)
 {
 	if(is_delete_access('form15'))
 	{
-		var return_id=document.getElementById("form15_master").elements[4].value;
+		var return_id=document.getElementById("form15_master").elements[3].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
@@ -603,7 +603,7 @@ function form19_delete_item(button)
 {
 	if(is_delete_access('form19'))
 	{
-		var return_id=document.getElementById("form19_master").elements[4].value;
+		var return_id=document.getElementById("form19_master").elements[3].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
@@ -653,12 +653,12 @@ function form21_delete_item(button)
 {
 	if(is_delete_access('form21'))
 	{
-		var bill_id=document.getElementById("form21_master").elements[10].value;
+		var bill_id=document.getElementById("form21_master").elements[6].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var name=form.elements[0].value;
+		var data_id=form.elements[10].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<supplier_bill_items>" +
@@ -2081,7 +2081,7 @@ function form72_delete_item(button)
 {
 	if(is_delete_access('form72'))
 	{
-		var bill_id=document.getElementById("form72_master").elements[7].value;
+		var bill_id=document.getElementById("form72_master").elements[3].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
@@ -2567,7 +2567,7 @@ function form91_delete_item(button)
 {
 	if(is_delete_access('form91'))
 	{
-		var bill_id=document.getElementById("form91_master").elements[8].value;
+		var bill_id=document.getElementById("form91_master").elements[4].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
@@ -3553,12 +3553,12 @@ function form119_delete_item(button)
 {
 	if(is_delete_access('form119'))
 	{
-		var bill_id=document.getElementById("form119_master").elements[9].value;
+		var bill_id=document.getElementById("form119_master").elements[5].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var data_id=form.elements[9].value;
+		var data_id=form.elements[11].value;
 				
 		var data_xml="<bill_items>" +
 					"<id>"+data_id+"</id>" +
@@ -3589,12 +3589,12 @@ function form122_delete_item(button)
 {
 	if(is_delete_access('form122'))
 	{
-		var bill_id=document.getElementById("form21_master").elements[11].value;
+		var bill_id=document.getElementById("form21_master").elements[7].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var data_id=form.elements[9].value;
+		var data_id=form.elements[10].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<supplier_bill_items>" +

@@ -36,8 +36,14 @@
 	
 	<script>
 	!function(){
-		$("#services_main").tabs({
-			show:"slide"}).css(
+		$("#services_main").tabs(
+		{
+			show:"slide",
+			activate:function(e, ui) 
+		    {
+		    	e.currentTarget.blur();
+		    }
+		}).css(
 			{
 				'min-height': '570px',
 				'overflow': 'auto'

@@ -338,29 +338,13 @@ function form10_update_form()
 			message_string+=" Price: "+subform.elements[3].value;
 		});
 
-		form.elements[3].value=amount;
-		form.elements[4].value=discount;
-		form.elements[5].value=tax;
-		form.elements[6].value=total;
 		
-		message_string+="\nAmount: "+amount;
-		message_string+="\ndiscount: "+discount;
-		message_string+="\nTax: "+tax;
-		message_string+="\nTotal: "+total;
-		
-		var subject="Bill from "+get_session_var('title');
-		$('#form10_share').show();
-		$('#form10_share').click(function()
-		{
-			modal44_action(customer,subject,message_string);
-		});
-		
-		var data_id=form.elements[7].value;
-		var transaction_id=form.elements[9].value;
+		var data_id=form.elements[3].value;
+		var transaction_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var offer_detail="";	
 				
-	/////deleting existing free services
+		/////deleting existing free services
 		var items_data="<bill_items>" +
 				"<id></id>" +
 				"<item_name></item_name>" +
@@ -420,10 +404,7 @@ function form10_update_form()
 						discount+=dis;
 						total=amount-discount+tax;
 					}
-					form.elements[3].value=amount;
-					form.elements[4].value=discount;
-					form.elements[5].value=tax;
-					form.elements[6].value=total;
+				
 				}
 				else if(offers[i].result_type=='service free')
 				{
@@ -576,6 +557,29 @@ function form10_update_form()
 				local_update_row(data_xml,activity_xml);
 				local_update_simple(transaction_xml);
 			}
+			
+			message_string+="\nAmount: "+amount;
+			message_string+="\ndiscount: "+discount;
+			message_string+="\nTax: "+tax;
+			message_string+="\nTotal: "+total;
+			
+			var subject="Bill from "+get_session_var('title');
+			$('#form10_share').show();
+			$('#form10_share').click(function()
+			{
+				modal44_action(customer,subject,message_string);
+			});
+
+			var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+						"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+						"<td>Rs. "+amount+"</br>" +
+						"Rs. "+discount+"</br>" +
+						"Rs. "+tax+"</br>" +
+						"Rs. "+total+"</td>" +
+						"<td></td>" +
+						"</tr>";
+			$('#form10_foot').html(total_row);
+
 			var payment_data="<payments>" +
 					"<id></id>" +
 					"<bill_id>"+data_id+"</bill_id>" +
@@ -736,24 +740,9 @@ function form12_update_form()
 			message_string+=" Total: "+subform.elements[4].value;
 		});
 
-		form.elements[3].value=amount;
-		form.elements[4].value=discount;
-		form.elements[5].value=tax;
-		form.elements[6].value=total;
 		
-		message_string+="\nAmount: "+amount;
-		message_string+="\ndiscount: "+discount;
-		message_string+="\nTax: "+tax;
-		message_string+="\nTotal: "+total;
-		var subject="Bill from "+get_session_var('title');
-		$('#form12_share').show();
-		$('#form12_share').click(function()
-		{
-			modal44_action(customer,subject,message_string);
-		});
-		
-		var data_id=form.elements[7].value;
-		var transaction_id=form.elements[9].value;
+		var data_id=form.elements[3].value;
+		var transaction_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var offer_detail="";
 		
@@ -820,10 +809,6 @@ function form12_update_form()
 						discount+=dis;
 						total=amount-discount+tax;
 					}
-					form.elements[3].value=amount;
-					form.elements[4].value=discount;
-					form.elements[5].value=tax;
-					form.elements[6].value=total;
 				}
 				else if(offers[i].result_type=='product free')
 				{
@@ -959,6 +944,29 @@ function form12_update_form()
 				local_update_row(data_xml,activity_xml);
 				local_update_simple(transaction_xml);
 			}
+			
+			message_string+="\nAmount: "+amount;
+			message_string+="\ndiscount: "+discount;
+			message_string+="\nTax: "+tax;
+			message_string+="\nTotal: "+total;
+			var subject="Bill from "+get_session_var('title');
+			$('#form12_share').show();
+			$('#form12_share').click(function()
+			{
+				modal44_action(customer,subject,message_string);
+			});
+		
+			var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+								"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+								"<td>Rs. "+amount+"</br>" +
+								"Rs. "+discount+"</br>" +
+								"Rs. "+tax+"</br>" +
+								"Rs. "+total+"</td>" +
+								"<td></td>" +
+								"</tr>";
+			$('#form12_foot').html(total_row);
+
+			
 			var payment_data="<payments>" +
 					"<id></id>" +
 					"<bill_id>"+data_id+"</bill_id>" +
@@ -1106,9 +1114,6 @@ function form15_update_form()
 			
 		});
 		
-		form.elements[3].value=total;
-		form.elements[6].value=tax;
-		
 		message_string+="\nTotal: "+total;
 		
 		var subject="Returns Bill from: "+get_session_var('title');
@@ -1118,8 +1123,15 @@ function form15_update_form()
 			modal44_action(customer,subject,message_string);
 		});
 		
-		var data_id=form.elements[4].value;
-		var transaction_id=form.elements[5].value;
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+					"<td>Refund:</td>" +
+					"<td>Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+		$('#form15_foot').html(total_row);
+
+		var data_id=form.elements[3].value;
+		var transaction_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<customer_returns>" +
@@ -1238,8 +1250,6 @@ function form19_update_form()
 			message_string+=" Amount: "+subform.elements[5].value;
 		});
 
-		form.elements[3].value=total;
-		form.elements[6].value=tax;
 		message_string+="\nTotal Refund Rs : "+total;
 		
 		var subject="Returns from "+get_session_var('title');
@@ -1249,8 +1259,15 @@ function form19_update_form()
 			modal44_action(supplier,subject,message_string);
 		});
 				
-		var data_id=form.elements[4].value;
-		var transaction_id=form.elements[5].value;
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+				"<td>Refund:</td>" +
+				"<td>Rs. "+total+"</td>" +
+				"<td></td>" +
+				"</tr>";
+		$('#form19_foot').html(total_row);
+
+		var data_id=form.elements[3].value;
+		var transaction_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<supplier_returns>" +
@@ -1363,19 +1380,27 @@ function form21_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			total+=parseFloat(subform.elements[2].value);
-			tax+=parseFloat(subform.elements[3].value);
-			amount+=parseFloat(subform.elements[4].value);
+			total+=parseFloat(subform.elements[3].value);
+			tax+=parseFloat(subform.elements[4].value);
+			amount+=parseFloat(subform.elements[5].value);
 		});
 
-		var discount=parseFloat(form.elements[6].value);
-		form.elements[5].value=amount;
+		var discount=0;
 		total=total-discount;
-		form.elements[8].value=total;
 		
-		var notes=form.elements[9].value;
-		var data_id=form.elements[10].value;
-		var transaction_id=form.elements[11].value;
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+				"<td>Rs. "+amount+"</br>" +
+				"Rs. "+discount+"</br>" +
+				"Rs. "+tax+"</br>" +
+				"Rs. "+total+"</td>" +
+				"<td></td>" +
+				"</tr>";
+		$('#form21_foot').html(total_row);
+
+		var notes=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var transaction_id=form.elements[7].value;
 		var last_updated=get_my_time();
 								
 		var data_xml="<supplier_bills>" +
@@ -1419,6 +1444,7 @@ function form21_update_form()
 			local_update_row(data_xml,activity_xml);
 			local_update_simple(transaction_xml);
 		}
+		
 		var payment_data="<payments>" +
 				"<id></id>" +
 				"<bill_id>"+data_id+"</bill_id>" +
@@ -1463,50 +1489,6 @@ function form21_update_form()
 		},payment_data);
 			
 		$("[id^='save_form21_']").click();
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-
-/**
- * @form New Purchase orders
- * @param button
- */
-function form24_update_item(form)
-{
-	if(is_update_access('form24'))
-	{
-		var order_id=document.getElementById("form24_master").elements[5].value;		
-		var name=form.elements[0].value;
-		var quantity=form.elements[1].value;
-		var make=form.elements[2].value;
-		var price=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
-		var data_xml="<purchase_order_items>" +
-					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<make>"+make+"</make>" +
-					"<price>"+price+"</price>" +
-					"<order_id>"+order_id+"</order_id>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</purchase_order_items>";	
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
 	}
 	else
 	{
@@ -1987,6 +1969,7 @@ function form41_update_master(form)
 				{
 					local_update_row(data_xml,activity_xml);
 				}
+				set_session_var(ll.name,value);
 			});
 		});
 	}
@@ -2086,6 +2069,7 @@ function form46_update_item(form)
 		{
 			local_update_row(data_xml,activity_xml);
 		}	
+		set_session_var(element_id,value);
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -2359,6 +2343,7 @@ function form50_update_item(form)
 		{
 			local_update_row(data_xml,activity_xml);
 		}	
+		set_session_var(element_id,value);
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -3331,25 +3316,8 @@ function form72_update_form()
 			message_string+=" Total: "+subform.elements[4].value;
 		});
 
-		form.elements[3].value=amount;
-		form.elements[4].value=discount;
-		form.elements[5].value=tax;
-		form.elements[6].value=total;
-		
-		message_string+="\nAmount: "+amount;
-		message_string+="\ndiscount: "+discount;
-		message_string+="\nTax: "+tax;
-		message_string+="\nTotal: "+total;
-		
-		var subject="Bill from "+get_session_var('title');
-		$('#form72_share').show();
-		$('#form72_share').click(function()
-		{
-			modal44_action(customer,subject,message_string);
-		});
-		
-		var data_id=form.elements[7].value;
-		var transaction_id=form.elements[9].value;
+		var data_id=form.elements[3].value;
+		var transaction_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var offer_detail="";
 		
@@ -3437,10 +3405,6 @@ function form72_update_form()
 						discount+=dis;
 						total=amount-discount+tax;
 					}
-					form.elements[3].value=amount;
-					form.elements[4].value=discount;
-					form.elements[5].value=tax;
-					form.elements[6].value=total;
 				}
 				else if(offers[i].result_type=='product free')
 				{
@@ -3488,7 +3452,7 @@ function form72_update_form()
 				                                rowsHTML+="<input type='hidden' form='form72_"+id+"' value='0'>";
 				                                rowsHTML+="<input type='hidden' form='form72_"+id+"' value='free on the bill amount'>";
 				                                rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
-				                                rowsHTML+="<input type='submit' class='save_icon' form='form72_"+id+"' id='save_form72_"+id+"' >";
+				                                rowsHTML+="<input type='button' class='save_icon' form='form72_"+id+"' id='save_form72_"+id+"' >";
 				                                rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='form72_delete_item($(this));'>";
 				                                rowsHTML+="<input type='hidden' form='form72_"+id+"' value=''>";
 				                                rowsHTML+="<input type='hidden' form='form72_"+id+"' value=''>";
@@ -3685,6 +3649,29 @@ function form72_update_form()
 				local_update_row(data_xml,activity_xml);
 				local_update_simple(transaction_xml);
 			}
+			
+			message_string+="\nAmount: "+amount;
+			message_string+="\ndiscount: "+discount;
+			message_string+="\nTax: "+tax;
+			message_string+="\nTotal: "+total;
+			
+			var subject="Bill from "+get_session_var('title');
+			$('#form72_share').show();
+			$('#form72_share').click(function()
+			{
+				modal44_action(customer,subject,message_string);
+			});
+			
+			var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. "+discount+"</br>" +
+					"Rs. "+tax+"</br>" +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+			$('#form72_foot').html(total_row);
+
 			var payment_data="<payments>" +
 					"<id></id>" +
 					"<bill_id>"+data_id+"</bill_id>" +
@@ -4099,6 +4086,7 @@ function form85_update_master(form)
 				{
 					local_update_row(data_xml,activity_xml);
 				}
+				set_session_var(ll.name,value);
 			});
 		});
 	}
@@ -4204,6 +4192,7 @@ function form86_update_master(form)
 				{
 					local_update_row(data_xml,activity_xml);
 				}
+				set_session_var(ll.name,value);
 			});
 		});
 	}
@@ -4487,7 +4476,6 @@ function form91_update_form()
 		var bill_type=form.elements[2].value;
 		var bill_date=get_raw_time(form.elements[3].value);
 		
-		
 		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
@@ -4508,27 +4496,9 @@ function form91_update_form()
 			message_string+=" Quantity: "+subform.elements[2].value;
 			message_string+=" Total: "+subform.elements[4].value;
 		});
-
-		form.elements[4].value=amount;
-		form.elements[5].value=discount;
-		form.elements[6].value=tax;
-		form.elements[7].value=total;
 		
-		message_string+="\nAmount: "+amount;
-		message_string+="\ndiscount: "+discount;
-		message_string+="\nTax: "+tax;
-		message_string+="\nTotal: "+total;
-
-		var subject="Bill from "+get_session_var('title');
-		$('#form91_share').show();
-		$('#form91_share').off('click');
-		$('#form91_share').on('click',function()
-		{
-			modal44_action(customer,subject,message_string);
-		});
-		
-		var data_id=form.elements[8].value;
-		var transaction_id=form.elements[10].value;
+		var data_id=form.elements[4].value;
+		var transaction_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var offer_detail="";
 		
@@ -4595,10 +4565,6 @@ function form91_update_form()
 						discount+=dis;
 						total=amount-discount+tax;
 					}
-					form.elements[4].value=amount;
-					form.elements[5].value=discount;
-					form.elements[6].value=tax;
-					form.elements[7].value=total;
 				}
 				else if(offers[i].result_type=='product free')
 				{
@@ -4735,6 +4701,30 @@ function form91_update_form()
 				local_update_row(data_xml,activity_xml);
 				local_update_simple(transaction_xml);
 			}
+			
+			var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+						"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+						"<td>Rs. "+amount+"</br>" +
+						"Rs. "+discount+"</br>" +
+						"Rs. "+tax+"</br>" +
+						"Rs. "+total+"</td>" +
+						"<td></td>" +
+						"</tr>";
+			$('#form91_foot').html(total_row);
+
+			message_string+="\nAmount: "+amount;
+			message_string+="\ndiscount: "+discount;
+			message_string+="\nTax: "+tax;
+			message_string+="\nTotal: "+total;
+
+			var subject="Bill from "+get_session_var('title');
+			$('#form91_share').show();
+			$('#form91_share').off('click');
+			$('#form91_share').on('click',function()
+			{
+				modal44_action(customer,subject,message_string);
+			});
+
 			var payment_data="<payments>" +
 					"<id></id>" +
 					"<bill_id>"+data_id+"</bill_id>" +
@@ -4854,7 +4844,7 @@ function form93_update_item(form)
 				"<status>pending</status>" +
 				"<date>"+get_my_time()+"</date>" +
 				"<due_date>"+get_my_time()+"</due_date>" +
-				"<mode></mode>" +
+				"<mode>"+get_payment_mode()+"</mode>" +
 				"<transaction_id>"+payment_id+"</transaction_id>" +
 				"<bill_id>"+data_id+"</bill_id>" +
 				"<last_updated>"+get_my_time()+"</last_updated>" +
@@ -5458,45 +5448,23 @@ function form119_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			total+=parseFloat(subform.elements[4].value);
-			amount+=parseFloat(subform.elements[5].value);
-			discount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[7].value);
+			amount+=parseFloat(subform.elements[6].value);
+			discount+=parseFloat(subform.elements[7].value);
+			tax+=parseFloat(subform.elements[8].value);
+			total+=parseFloat(subform.elements[9].value);
 			
 			message_string+="\nItem: "+subform.elements[0].value;
 			message_string+=" Quantity: "+subform.elements[2].value;
 			message_string+=" Total: "+subform.elements[4].value;
 		});
-
-		form.elements[4].value=amount;
-		form.elements[5].value=discount;
-		form.elements[6].value=tax;
-		form.elements[7].value=total;
 		
-		message_string+="\nAmount: "+amount;
-		message_string+="\ndiscount: "+discount;
-		message_string+="\nTax: "+tax;
-		message_string+="\nTotal: "+total;
-
-		var subject="Bill from "+get_session_var('title');
-		$('#form119_share').show();
-		$('#form119_share').off('click');
-		$('#form119_share').on('click',function()
-		{
-			modal44_action(customer,subject,message_string);
-		});
-		
-		var data_id=form.elements[9].value;
-		var transaction_id=form.elements[11].value;
+		var data_id=form.elements[5].value;
+		var transaction_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		var offer_detail="";
 		
 		/////deleting existing free products
 		var items_data="<bill_items>" +
-				"<id></id>" +
-				"<item_name></item_name>" +
-				"<batch></batch>" +
-				"<quantity></quantity>" +
 				"<bill_id>"+data_id+"</bill_id>" +
 				"<free_with>bill</free_with>" +
 				"<last_updated compare='less than'>"+last_updated+"</last_updated>" +
@@ -5554,10 +5522,6 @@ function form119_update_form()
 						discount+=dis;
 						total=amount-discount+tax;
 					}
-					form.elements[4].value=amount;
-					form.elements[5].value=discount;
-					form.elements[6].value=tax;
-					form.elements[7].value=total;
 				}
 				else if(offers[i].result_type=='product free')
 				{
@@ -5582,44 +5546,49 @@ function form119_update_form()
 								}
 
 								var id=get_new_key();
-								rowsHTML="<tr>";
-									rowsHTML+="<form id='form119_"+id+"'></form>";
-					                	rowsHTML+="<td>";
-					                    	rowsHTML+="<input type='text' readonly='readonly' form='form119_"+id+"' value='"+free_product_name+"'>";
-				                        rowsHTML+="</td>";
-				                        rowsHTML+="<td>";
-				                                rowsHTML+="<input type='text' required form='form119_"+id+"' value='"+free_batch+"'>";
-				                        rowsHTML+="</td>";
-				                        rowsHTML+="<td>";
-				                                rowsHTML+="<input type='number' readonly='readonly' required form='form119_"+id+"' value='0'>";
-				                        rowsHTML+="</td>";
-				                        rowsHTML+="<td>";
-				                                rowsHTML+="<input type='number' readonly='readonly' required form='form119_"+id+"' value='"+free_product_quantity+"'>";
-				                        rowsHTML+="</td>";
-				                        rowsHTML+="<td>";
-				                                rowsHTML+="<input type='number' readonly='readonly' required form='form119_"+id+"' value='0'>";
-				                        rowsHTML+="</td>";
-				                        rowsHTML+="<td>";
-				                                rowsHTML+="<input type='hidden' form='form119_"+id+"' value='0'>";
-				                                rowsHTML+="<input type='hidden' form='form119_"+id+"' value='0'>";
-				                                rowsHTML+="<input type='hidden' form='form119_"+id+"' value='0'>";
-				                                rowsHTML+="<input type='hidden' form='form119_"+id+"' value='free on the bill amount'>";
-				                                rowsHTML+="<input type='hidden' form='form119_"+id+"' value='"+id+"'>";
-				                                rowsHTML+="<input type='submit' class='save_icon' form='form119_"+id+"' id='save_form119_"+id+"' >";
-				                                rowsHTML+="<input type='button' class='delete_icon' form='form119_"+id+"' id='delete_form119_"+id+"' onclick='form119_delete_item($(this));'>";
-				                                rowsHTML+="<input type='hidden' form='form119_"+id+"' value=''>";
-				                                rowsHTML+="<input type='hidden' form='form119_"+id+"' value=''>";
-				                        rowsHTML+="</td>";
-				                rowsHTML+="</tr>";
-
+								var rowsHTML="<tr>";
+								rowsHTML+="<form id='form119_"+id+"'></form>";
+									rowsHTML+="<td data-th='Product Name'>";
+										rowsHTML+="<label id='form119_product_make_"+id+"'></label>";
+										rowsHTML+="<br><textarea required form='form119_"+id+"' readonly='readonly'>"+free_product_name+"</textarea>";
+										rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Batch'>";
+										rowsHTML+="<input type='text' required form='form119_"+id+"' value='"+free_batch+"'>";
+										rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Quantity'>";
+										rowsHTML+="Bought: <input type='number' min='0' readonly='readonly' required form='form119_"+id+"' step='any' value='0'>";
+										rowsHTML+="<br>Free: <input type='number' min='0' value='0' readonly='readonly' required form='form119_"+id+"' step='any' value='"+free_product_quantity+"'>";
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Price'>";
+										rowsHTML+="Sale: Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
+										rowsHTML+="</br>MRP: Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Total'>";
+										rowsHTML+="Amount: Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+										rowsHTML+="<br>Discount: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+										rowsHTML+="<br>Tax: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Action'>";
+										rowsHTML+="<input type='hidden' form='form119_"+id+"' value='0'>";
+										rowsHTML+="<input type='hidden' form='form119_"+id+"' value='free with "+name+"'>";
+										rowsHTML+="<input type='hidden' form='form119_"+id+"' value='"+id+"'>";
+										rowsHTML+="<input type='button' class='submit_hidden' form='form119_"+id+"' id='save_form119_"+id+"' >";
+										rowsHTML+="<input type='button' class='delete_icon' form='form119_"+id+"' id='delete_form119_"+id+"' onclick='$(this).parent().parent().remove();'>";
+									rowsHTML+="</td>";			
+								rowsHTML+="</tr>";
+								     
 				                $('#form119_body').prepend(rowsHTML);
-				                
-				                var bill_item_id=get_new_key();
+			
 								var free_xml="<bill_items>" +
-											"<id>"+bill_item_id+"</id>" +
+											"<id>"+id+"</id>" +
 											"<item_name>"+free_product_name+"</item_name>" +
 											"<batch>"+free_batch+"</batch>" +
 											"<unit_price>0</unit_price>" +
+											"<mrp>0</mrp>" +
+											"<p_quantity>0</p_quantity>" +
+											"<f_quantity>"+free_product_quantity+"</f_quantity>" +
 											"<quantity>"+free_product_quantity+"</quantity>" +
 											"<amount>0</amount>" +
 											"<total>0</total>" +
@@ -5693,6 +5662,30 @@ function form119_update_form()
 				local_update_row(data_xml,activity_xml);
 				local_update_simple(transaction_xml);
 			}
+			
+			var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+							"<td>Rs. "+amount+"</br>" +
+							"Rs. "+discount+"</br>" +
+							"Rs. "+tax+"</br>" +
+							"Rs. "+total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+			$('#form119_foot').html(total_row);
+			
+			message_string+="\nAmount: "+amount;
+			message_string+="\ndiscount: "+discount;
+			message_string+="\nTax: "+tax;
+			message_string+="\nTotal: "+total;
+
+			var subject="Bill from "+get_session_var('title');
+			$('#form119_share').show();
+			$('#form119_share').off('click');
+			$('#form119_share').on('click',function()
+			{
+				modal44_action(customer,subject,message_string);
+			});
+
 			var payment_data="<payments>" +
 					"<id></id>" +
 					"<bill_id>"+data_id+"</bill_id>" +
@@ -5767,19 +5760,27 @@ function form122_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			total+=parseFloat(subform.elements[2].value);
-			tax+=parseFloat(subform.elements[3].value);
-			amount+=parseFloat(subform.elements[4].value);
+			total+=parseFloat(subform.elements[3].value);
+			tax+=parseFloat(subform.elements[4].value);
+			amount+=parseFloat(subform.elements[5].value);
 		});
 
-		var discount=parseFloat(form.elements[6].value);
-		form.elements[5].value=amount;
+		var discount=0;
 		total=total-discount;
-		form.elements[8].value=total;
 		
-		var notes=form.elements[9].value;
-		var data_id=form.elements[11].value;
-		var transaction_id=form.elements[12].value;
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+				"<td>Rs. "+bill_results[i].amount+"</br>" +
+				"Rs. "+bill_results[i].discount+"</br>" +
+				"Rs. "+bill_results[i].tax+"</br>" +
+				"Rs. "+bill_results[i].total+"</td>" +
+				"<td></td>" +
+				"</tr>";
+		$('#form122_foot').html(total_row);
+
+		var notes=form.elements[5].value;
+		var data_id=form.elements[7].value;
+		var transaction_id=form.elements[8].value;
 		var last_updated=get_my_time();
 								
 		var data_xml="<supplier_bills>" +
@@ -5823,6 +5824,8 @@ function form122_update_form()
 			local_update_row(data_xml,activity_xml);
 			local_update_simple(transaction_xml);
 		}
+		
+		
 		var payment_data="<payments>" +
 				"<id></id>" +
 				"<bill_id>"+data_id+"</bill_id>" +

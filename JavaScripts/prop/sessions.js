@@ -129,6 +129,16 @@ function get_credit_period()
 	return p_time;
 }
 
+function get_payment_mode()
+{
+	var mode=localStorage.getItem('mode_of_payment');
+	if(mode==null || mode=='undefined')
+	{
+		mode="";
+	}
+	return mode;
+}
+
 
 function get_debit_period()
 {
@@ -168,7 +178,7 @@ function get_worker_delay()
 	var period=parseFloat(localStorage.getItem('worker_delay'));
 	if(period==null || period=='' || period=='NaN')
 	{
-		period=10;
+		period=600;
 	}
 	var p_time=period*1000;
 	return p_time;
@@ -217,48 +227,53 @@ function get_pamphlet_template()
  */
 function set_session_online(func)
 {
-	if(typeof static_local_db=='undefined')
+	var db_name="re_local_"+get_domain();
+	var request = indexedDB.open(db_name);
+	request.onsuccess=function(e)
 	{
-		open_local_db(function()
-		{
-			set_session_online(func);
-		});
-	}
-	else
-	{
+		static_local_db=e.target.result;
 		if(static_local_db.objectStoreNames.contains("user_preferences"))
 		{
 			var transaction=static_local_db.transaction(['user_preferences'],"readwrite");
 			var objectStore=transaction.objectStore('user_preferences');
-		
-			if(objectStore)
+			var req=objectStore.index('name').get('offline');
+			req.onsuccess=function(e)
 			{
-				var req=objectStore.index('name').get('offline');
-				req.onsuccess=function(e)
+				var data=req.result;
+				if(data)
 				{
-					var data=req.result;
-					if(data)
+					data.value='online';
+					var put_req=objectStore.put(data);
+					put_req.onsuccess=function(e)
 					{
-						data.value='online';
-						var put_req=objectStore.put(data);
-						put_req.onsuccess=function(e)
-						{
-							set_session_var('offline','online');
-							hide_menu_items();
-							//hide_loader();
-							func();
-						};
-					}
-				};
-				
-			}
+						set_session_var('offline','online');
+						hide_menu_items();
+						func();
+					};
+				}
+			};
 		}
 		else
 		{
 			set_session_var('offline','online');
 			func();
 		}
-	}
+	};
+	request.onerror=function(e)
+	{
+	    var db=e.target.result;
+	    if(db)
+	    	db.close();
+		console.log(this.error);
+		func();
+	};
+	request.onabort=function(e)
+	{
+	    var db=e.target.result;
+	    db.close();
+	    console.log(this.error);
+	    func();
+	};
 };
 
 /**

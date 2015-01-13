@@ -460,7 +460,7 @@
 			<fieldset>
 				<label>Account: <input type='text' readonly='readonly' required></label><br/>
 				<label>Balance: Rs. <input type="text" readonly='readonly' required></label><br/>
-				<label>Counter Payment: Rs. <input type='number' step='2' value='0' required></label><br/>
+				<label>Counter Payment <input type='number' step='2' value='0' required></label><br/>
 				<label>Closing Notes: <textarea></textarea></label><br/>
 				<input type="submit" value='Save'>
 			</fieldset>

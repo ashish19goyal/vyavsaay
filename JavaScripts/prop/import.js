@@ -779,6 +779,8 @@ function form21_import(data_array,import_type)
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
+				"<p_quantity>"+row.p_quantity+"</p_quantity>" +
+				"<f_quantity>"+row.f_quantity+"</f_quantity>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<batch>"+row.batch+"</batch>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
@@ -3638,6 +3640,8 @@ function form119_import(data_array,import_type)
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
 				"<quantity>"+row.quantity+"</quantity>" +
+				"<p_quantity>"+row.p_quantity+"</p_quantity>" +
+				"<f_quantity>"+row.f_quantity+"</f_quantity>" +
 				"<unit_price>"+row.unit_price+"</unit_price>" +
 				"<mrp>"+row.mrp+"</mrp>" +
 				"<amount>"+row.amount+"</amount>" +
@@ -3699,6 +3703,8 @@ function form122_import(data_array,import_type)
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
+				"<p_quantity>"+row.p_quantity+"</p_quantity>" +
+				"<f_quantity>"+row.f_quantity+"</f_quantity>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<batch>"+row.batch+"</batch>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +

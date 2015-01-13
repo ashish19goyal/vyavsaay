@@ -37,13 +37,20 @@
 	
 	<script>
 	!function(){
-		$("#customers_main").tabs({
-			show:"slide"}).css(
+		$("#customers_main").tabs(
+		{
+			show:"slide",
+			activate:function(e, ui) 
+		    {
+		    	e.currentTarget.blur();
+		    }
+		}).css(
 			{
 				'min-height': '570px',
 				'overflow': 'auto'
 			});
 		}();
+				
 	</script>
 
 </div>

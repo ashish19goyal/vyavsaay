@@ -3116,7 +3116,7 @@ function modal41_action(button)
 		event.preventDefault();
 		
 		var counter_payment=parseFloat(form.elements[3].value);
-		console.log(counter_payment);
+		//console.log(counter_payment);
 		var user_notes=form.elements[4].value;
 		
 		if(is_create_access('form11'))
@@ -3134,7 +3134,7 @@ function modal41_action(button)
 			
 			fetch_requested_data('',accounts_data,function(accounts)
 			{
-				console.log(accounts);
+				//console.log(accounts);
 				var total_received=0;
 				var total_paid=0;
 				for(var i=0;i<accounts.length;i++)

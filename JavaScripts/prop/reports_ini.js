@@ -269,7 +269,7 @@ function report5_ini()
 				}
 			});
 			
-			var total_row="<tr><td data-th='Total'>Total</td><td colspan='2' data-th='Total Balance'>"+total_balance+"</td></tr>";
+			var total_row="<tr><td data-th='Total'>Total</td><td colspan='2' data-th='Total Balance'>Rs. "+total_balance+"</td></tr>";
 			$('#report5_foot').html(total_row);
 			
 			var print_button=form.elements[4];

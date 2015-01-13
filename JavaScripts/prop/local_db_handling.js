@@ -24,7 +24,7 @@ function create_local_db(domain,func)
 		
 			request.onsuccess=function(e)
 			{
-				db=e.target.result;
+				var db=e.target.result;
 				db.close();
 				func();
 			};
@@ -36,7 +36,7 @@ function create_local_db(domain,func)
 				
 			request.onupgradeneeded=function(ev)
 			{
-				db=ev.target.result;
+				var db=ev.target.result;
 				var tables=e.responseXML.childNodes[0].childNodes;
 				
 				for(var k=0;k<tables.length;k++)
@@ -84,7 +84,8 @@ function open_local_db(func)
 	request.onerror=function(e)
 	{
 	    var db=e.target.result;
-	    db.close();
+	    if(db)
+	    	db.close();
 		console.log(this.error);
 		//func();
 	};

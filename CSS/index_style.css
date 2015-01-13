@@ -490,7 +490,6 @@ div#demo {
 .demo-grid {
 	margin: 3% 0;
 	width: 100%;
-	padding: auto;
 }
 .Demo-text p {
 	color: #888;
@@ -1341,7 +1340,7 @@ p.comment-form-author {
 	}
 	.demo-btn {
 	padding: 0.6em 2em;
-	margin-top:0.9;
+	margin-top:0.9em;
 	font-size: 16px;
 	width: 61%;
 	}

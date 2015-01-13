@@ -4,7 +4,8 @@
 		    <label>Customer	<img src='./images/add_image.png' class='add_image' onclick='modal11_action();'></br>
 			<input type='text' required></label>
 			<label>Date</br><input type='text' required></label>
-			<input type='submit' class='save_icon'>
+			<input type='button' class='save_icon'>
+			<input type='submit' class='submit_hidden'>
 		</fieldset>	
 	</form>
 	<table class='rwd-table'>

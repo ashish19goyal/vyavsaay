@@ -66,8 +66,11 @@ function print_tabular_form(form_id,form_title)
 	var container=document.createElement('div');
 	var business_title=document.createElement('div');
 	var title=document.createElement('div');
+	var bill_message=document.createElement('div');
+	var signature=document.createElement('div');
 	var bt=get_session_var('title');
-	
+	signature.innerHTML="<div style='bottom:20px;right:50px;text-align:left;display:block;width:30%;font-size:1em'><b>Signature: </b></div>";
+	bill_message.innerHTML="<div style='bottom:10px;left:5px;text-align:left;display:block;width:60%;font-size:.8em'><textarea style='border:none;width:100%;height:100px;'>"+get_session_var('bill_message')+"</textarea></div>";
 	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>"+form_title+"</b></div></br>";
 	
 	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b><br>" +
@@ -75,7 +78,7 @@ function print_tabular_form(form_id,form_title)
 							"TIN #: "+get_session_var('tin')+"</div></div>"+
 							"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
 							"<br>Address: "+get_session_var('address')+"</div></div></br>";
-	business_title.setAttribute('style',"height:8%;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+	business_title.setAttribute('style',"height:100px;padding:1%;border:2px solid black;font-size:"+font_size+"em");
 	
 	var form_master=form_id+"_master";
 	var form_body=form_id+"_body";
@@ -101,12 +104,14 @@ function print_tabular_form(form_id,form_title)
 			
 	var font_size=get_session_var('print_size');
 	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
-	header_copy.setAttribute('style',"padding:1%;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"padding:1%;font-size:"+font_size+"em;border:2px solid black;");
 	
 	container.appendChild(title);
 	container.appendChild(business_title);
-	container.appendChild(table_copy);
 	container.appendChild(header_copy);
+	container.appendChild(table_copy);
+	container.appendChild(bill_message);
+	container.appendChild(signature);
 	
 	$.print(container);
 }

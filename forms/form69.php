@@ -6,9 +6,9 @@
 			<label>Order Date</br><input type='text' required></label>
 			<label>Billing Status</br><input type='text' required></label>
 			<input type='hidden' name='order_id' value=''>
-			<input type='button' title='New Order' class='add_icon' onclick='form69_new_form();'>
-			<input type='submit' title='Save order' class='save_icon'>
+			<input type='button' title='Save order' class='save_icon'>
 			<input type='button' title='Print Bill' class='print_icon' onclick='form69_print_form();'>
+			<input type='submit' class='submit_hidden'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

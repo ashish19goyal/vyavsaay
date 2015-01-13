@@ -7,10 +7,10 @@
 			<label>Notes</br><textarea></textarea></label>
 			<label>Order Status</br><input type='text' required></label>
 			<input type='hidden' name='order_id' value=''>
-			<input type='button' title='New Order' class='add_icon' onclick='form24_new_form();'>
-			<input type='submit' title='Save order' class='save_icon'>
+			<input type='button' title='Save order' class='save_icon'>
 			<input type='button' title='Print Bill' class='print_icon' onclick='form24_print_form();'>
 			<input type='button' id='form24_share' class='share_icon' style='display:none;'>
+			<input type='submit' class='submit_hidden'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

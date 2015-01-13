@@ -40,6 +40,10 @@ function default_load()
 		{
 			start_workers();
 		},get_worker_delay());
+		deferred_execute(function()
+		{
+			activities_lane_ini();
+		});
 	}
 	hide_loader();
 }
@@ -113,10 +117,7 @@ function start_workers()
 {
 	deferred_execute(function()
 	{set_grid_items();});
-	
-	deferred_execute(function()
-	{activities_lane_ini();});
-	
+		
 	deferred_execute(function()
 	{notifications1_add();});
 	

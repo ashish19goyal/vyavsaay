@@ -72,13 +72,13 @@ function login_online(username,domain,pass)
 			}
 			ini_session(domain,username);
 			
+			console.log('setting session online');
 			set_session_online(function()
 			{
 				set_session(session_vars);
 			});
 		}
 	});
-
 }
 
 
@@ -211,7 +211,7 @@ function try_local_db_login(username,domain,func_success,func_failure)
 		request.onsuccess=function(e)
 		{
 			//console.log("3.2");
-			db=e.target.result;
+			var db=e.target.result;
 			if(!db.objectStoreNames.contains("staff"))
 			{
 				//console.log("3.3");
@@ -250,8 +250,9 @@ function try_local_db_login(username,domain,func_success,func_failure)
 		request.onerror = function(e)
 		{
 			//console.log("3.8");
-			db=e.target.result;
-			db.close();
+			var db=e.target.result;
+			if(db)
+				db.close();
 			func_failure();
 		};
 	}

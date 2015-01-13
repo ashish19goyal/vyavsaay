@@ -154,7 +154,7 @@
 		       					 <img src="images/nishu.jpeg" alt="" class='review_picture_rotate'>
 		       				</div>
 		       				<div class="col-md-8 review-text">
-		       					<p itemprop='description'>"Now we can manage all our process with just one platform. We don't need to use multiple desktop and mobile solutions and worry about moving data between them."</p>
+		       					<p itemprop='description'>"Now we can manage all our processes with just one platform. We don't need to use multiple desktop and mobile solutions and worry about moving data between them."</p>
 		       					<span itemprop='author'>Business owner,<br>HealthCare Industry</span>
 		       				</div>
 		       				<div class="clearfix"> </div>

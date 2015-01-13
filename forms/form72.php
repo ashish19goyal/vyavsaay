@@ -4,17 +4,13 @@
 			<label>Customer <img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'></br>
 			<input type='text' required></label>
 			<label>Bill Date</br><input type='text' required></label>
-			<label>Amount</br>Rs. <input readonly='readonly' type='number'></label>
-			<label>Discount</br>Rs. <input readonly='readonly' type='number'></label>
-			<label>Tax</br>Rs. <input readonly='readonly' type='number'></label>
-			<label>Total</br>Rs. <input readonly='readonly' type='number'></label>
 			<input type='hidden' name='bill_id'>
 			<input type='hidden' name='offer'>
 			<input type='hidden' name='transaction'>
-			<input type='button' title='New Bill' class='add_icon' onclick='form72_new_form();'>
-			<input type='submit' title='Save Bill' class='save_icon'>
+			<input type='button' title='Save Bill' class='save_icon'>
 			<input type='button' title='Print Bill' class='print_icon' onclick='form72_print_form();'>
 			<input type='button' id='form72_share' class='share_icon' style='display:none;'>
+			<input type='submit' class='submit_hidden'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>
@@ -32,5 +28,7 @@
 		</thead>
 		<tbody id='form72_body'>
 		</tbody>
+		<tfoot id='form72_foot'>
+		</tfoot>
 	</table>
 </div>

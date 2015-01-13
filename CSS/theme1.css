@@ -132,7 +132,6 @@ div.search_bar{
 	border-width: 2px;
 	border-radius: 5px;
 	border-color: #2A2A2A;
-	padding: auto;
 }
 
 
@@ -148,7 +147,6 @@ div.searchBlock{
 	float: right;
 	text-align: left;
 	width: 60%;
-	padding: auto;
 }
 
 
