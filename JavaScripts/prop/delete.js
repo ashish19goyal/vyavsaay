@@ -3617,3 +3617,45 @@ function form122_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * formNo 123
+ * form Mandatory Attributes
+ * @param button
+ */
+function form123_delete_item(button)
+{
+	if(is_delete_access('form123'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var object=form.elements[0].value;
+		var attribute=form.elements[1].value;
+		var data_id=form.elements[3].value;
+		var data_xml="<mandatory_attributes>" +
+					"<id>"+data_id+"</id>" +
+					"</mandatory_attributes>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>mandatory_attributes</tablename>" +
+					"<link_to>form123</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Mandatory attribute "+attribute+" for "+object+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

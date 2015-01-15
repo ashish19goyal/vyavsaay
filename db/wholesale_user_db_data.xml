@@ -71,10 +71,20 @@
 		</row>
 		<row>
 			<name>bill_message</name>
-			<display_name>Message on sale bills</display_name>
+			<display_name>bill_message</display_name>
 			<status>active</status>
-			<value>Bill message here</value>
-			<type>accounting</type>
+			<value>E.O.E.</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>bill_print_items</name>
+			<display_name>bill_print_items</display_name>
+			<status>active</status>
+			<value>5</value>
+			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<last_updated>1</last_updated>
@@ -1671,6 +1681,28 @@
 			<tables>--supplier_bills--supplier_bill_items--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form123</name>
+			<display_name>mandatory_attributes</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--mandatory_attributes--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form124</name>
+			<display_name>receipts</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--payments--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3096,6 +3128,28 @@
 			<username>master</username>
 			<element_id>form122</element_id>
 			<element_name>enter_supplier_bill_unbilled_items</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form123</element_id>
+			<element_name>mandatory_attributes</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form124</element_id>
+			<element_name>receipts</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

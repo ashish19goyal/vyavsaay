@@ -694,3 +694,25 @@ function form122_import_template()
 		               'bill_id','unit_price','amount','tax','total','storage'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Mandatory Attributes
+* @formNo 123
+* @table mandatory_attributes
+*/
+function form123_import_template()
+{
+	var data_array=['id','object','attribute','status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Receipts
+* @formNo 124
+* @table receipts
+*/
+function form124_import_template()
+{
+	var data_array=['id','receipt_id','payment_id','type','amount','acc_name','date'];
+	my_array_to_csv(data_array);
+};

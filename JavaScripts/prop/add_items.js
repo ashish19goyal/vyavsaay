@@ -1394,14 +1394,14 @@ function form60_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form60_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
-				rowsHTML+="<input type='text' form='form60_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form60_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
-				rowsHTML+="<input type='text' form='form60_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form60_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Value'>";
-				rowsHTML+="<input type='text' form='form60_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form60_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form60_"+id+"' value='"+id+"'>";
@@ -1453,14 +1453,14 @@ function form61_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form61_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
-				rowsHTML+="<input type='text' form='form61_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form61_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
-				rowsHTML+="<input type='text' form='form61_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form61_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Value'>";
-				rowsHTML+="<input type='text' form='form61_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form61_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form61_"+id+"' value='"+id+"'>";
@@ -3235,14 +3235,14 @@ function form96_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form96_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
-				rowsHTML+="<input type='text' form='form96_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form96_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
-				rowsHTML+="<input type='text' form='form96_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form96_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Value'>";
-				rowsHTML+="<input type='text' form='form96_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form96_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form96_"+id+"' value='"+id+"'>";
@@ -3294,14 +3294,14 @@ function form97_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form97_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
-				rowsHTML+="<input type='text' form='form97_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form97_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new supplier' onclick='modal13_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
-				rowsHTML+="<input type='text' form='form97_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form97_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Value'>";
-				rowsHTML+="<input type='text' form='form97_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form97_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form97_"+id+"' value='"+id+"'>";
@@ -3353,14 +3353,14 @@ function form98_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form98_"+id+"'></form>";
 			rowsHTML+="<td data-th='Name'>";
-				rowsHTML+="<input type='text' form='form98_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form98_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
-				rowsHTML+="<input type='text' form='form98_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form98_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Value'>";
-				rowsHTML+="<input type='text' form='form98_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form98_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form98_"+id+"' value='"+id+"'>";
@@ -3959,17 +3959,17 @@ function form119_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="Bought: <input type='number' min='0' required form='form119_"+id+"' step='any' name='squantity'>";
-				rowsHTML+="<br>Free: <input type='number' min='0' value='0' required form='form119_"+id+"' step='any' name='fquantity'>";
+				rowsHTML+="<v1>Bought: </v1><input type='number' min='0' required form='form119_"+id+"' step='any' name='squantity'>";
+				rowsHTML+="<br><v1>Free: </v1><input type='number' min='0' value='0' required form='form119_"+id+"' step='any' name='fquantity'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Price'>";
-				rowsHTML+="Sale: Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any' name='unit_price'>";
-				rowsHTML+="</br>MRP: Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any' name='mrp'>";
+				rowsHTML+="<v1>Sale: </v1>Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any' name='unit_price'>";
+				rowsHTML+="<br><v1>MRP: </v1>Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any' name='mrp'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Total'>";
-				rowsHTML+="Amount: Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' name='amount'>";
-				rowsHTML+="<br>Discount: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' name='discount'>";
-				rowsHTML+="<br>Tax: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' name='tax'>";
+				rowsHTML+="<v1>Amount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' name='amount'>";
+				rowsHTML+="<br><v1>Discount: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' name='discount'>";
+				rowsHTML+="<br><v1>Tax: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' name='tax'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form119_"+id+"' name='total'>";
@@ -4388,6 +4388,57 @@ function form122_add_item()
 			var price=parseFloat(amount_filter.value)/parseFloat(pquantity_filter.value);
 			price_filter.value=Math.round(price*100)/100;
 		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Mandatory Attributes
+ * @formNo 123
+ */
+function form123_add_item()
+{
+	if(is_create_access('form123'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form123_"+id+"'></form>";
+			rowsHTML+="<td data-th='Object'>";
+				rowsHTML+="<input type='text' form='form123_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Attribute'>";
+				rowsHTML+="<input type='text' form='form123_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form123_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form123_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form123_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form123_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form123_body').prepend(rowsHTML);
+		var fields=document.getElementById("form123_"+id);
+		var object_filter=fields.elements[0];
+		var attribute_filter=fields.elements[1];
+		var status_filter=fields.elements[2];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form123_create_item(fields);
+		});
+				
+		set_static_value_list('mandatory_attributes','object',object_filter);
+		set_static_value_list('mandatory_attributes','status',status_filter);
+
+		$(object_filter).focus();
 	}
 	else
 	{

@@ -1226,6 +1226,7 @@ function form15_create_item(form)
 				"<id>"+data_id+"</id>" +
 				"<return_id>"+return_id+"</return_id>" +
 				"<item_name>"+name+"</item_name>" +
+				"<notes>"+notes+"</notes>" +
 				"<batch>"+batch+"</batch>" +
 				"<quantity>"+quantity+"</quantity>" +
 				"<type>"+type+"</type>" +
@@ -7518,24 +7519,24 @@ function form119_create_item(form)
 								rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Quantity'>";
-								rowsHTML+="Bought: <input type='number' min='0' required readonly='readonly' form='form119_"+id+"' step='any' value='0'>";
-								rowsHTML+="<br>Free: <input type='number' min='0' value='0' required readonly='readonly' form='form119_"+id+"' step='any' value='"+free_product_quantity+"'>";
+								rowsHTML+="<v1>Bought: </v1><input type='number' min='0' required readonly='readonly' form='form119_"+id+"' step='any' value='0'>";
+								rowsHTML+="<br><v1>Free: </v1><input type='number' min='0' value='0' required readonly='readonly' form='form119_"+id+"' step='any' value='"+free_product_quantity+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Price'>";
-								rowsHTML+="Sale: Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
-								rowsHTML+="</br>MRP: Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
+								rowsHTML+="<v1>Sale: </v1>Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
+								rowsHTML+="<br><v1>MRP: </v1>Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Total'>";
-								rowsHTML+="Amount: Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
-								rowsHTML+="<br>Discount: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
-								rowsHTML+="<br>Tax: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+								rowsHTML+="<v1>Amount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+								rowsHTML+="<br><v1>Discount: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+								rowsHTML+="<br><v1>Tax: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form119_"+id+"' value='0'>";
 								rowsHTML+="<input type='hidden' form='form119_"+id+"' value='free with "+name+"'>";
 								rowsHTML+="<input type='hidden' form='form119_"+id+"' value='"+id+"'>";
 								rowsHTML+="<input type='button' class='submit_hidden' form='form119_"+id+"' id='save_form119_"+id+"' >";
-								rowsHTML+="<input type='button' class='delete_icon' form='form119_"+id+"' id='delete_form119_"+id+"' onclick='$(this).parent().parent().remove();'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form119_"+id+"' id='delete_form119_"+id+"' onclick='form119_delete_item($(this));'>";
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 						     
@@ -7719,24 +7720,24 @@ function form119_create_form()
 										rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Quantity'>";
-										rowsHTML+="Bought: <input type='number' min='0' required readonly='readonly' form='form119_"+id+"' step='any' value='0'>";
-										rowsHTML+="<br>Free: <input type='number' min='0' value='0' required readonly='readonly' form='form119_"+id+"' step='any' value='"+free_product_quantity+"'>";
+										rowsHTML+="<v1>Bought: </v1><input type='number' min='0' required readonly='readonly' form='form119_"+id+"' step='any' value='0'>";
+										rowsHTML+="<br><v1>Free: </v1><input type='number' min='0' value='0' required readonly='readonly' form='form119_"+id+"' step='any' value='"+free_product_quantity+"'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Price'>";
-										rowsHTML+="Sale: Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
-										rowsHTML+="</br>MRP: Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
+										rowsHTML+="<v1>Sale: </v1>Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
+										rowsHTML+="<br><v1>MRP: </v1>Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Total'>";
-										rowsHTML+="Amount: Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
-										rowsHTML+="<br>Discount: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
-										rowsHTML+="<br>Tax: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+										rowsHTML+="<v1>Amount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+										rowsHTML+="<br><v1>Discount: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+										rowsHTML+="<br><v1>Tax: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Action'>";
 										rowsHTML+="<input type='hidden' form='form119_"+id+"' value='0'>";
 										rowsHTML+="<input type='hidden' form='form119_"+id+"' value='free with "+name+"'>";
 										rowsHTML+="<input type='hidden' form='form119_"+id+"' value='"+id+"'>";
 										rowsHTML+="<input type='button' class='submit_hidden' form='form119_"+id+"' id='save_form119_"+id+"' >";
-										rowsHTML+="<input type='button' class='delete_icon' form='form119_"+id+"' id='delete_form119_"+id+"' onclick='$(this).parent().parent().remove();'>";
+										rowsHTML+="<input type='button' class='delete_icon' form='form119_"+id+"' id='delete_form119_"+id+"' onclick='form119_delete_item($(this));'>";
 									rowsHTML+="</td>";			
 								rowsHTML+="</tr>";
 								     
@@ -7813,13 +7814,20 @@ function form119_create_form()
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</transactions>";
 			var pt_tran_id=get_new_key();
+			var p_status="closed";
+			var p_amount=total;
+			if((get_payment_mode())=='credit')
+			{
+				p_status='pending';
+				p_amount=0;
+			}
 			var payment_xml="<payments>" +
 						"<id>"+pt_tran_id+"</id>" +
-						"<status>closed</status>" +
+						"<status>"+p_status+"</status>" +
 						"<type>received</type>" +
 						"<date>"+get_my_time()+"</date>" +
 						"<total_amount>"+total+"</total_amount>" +
-						"<paid_amount>"+total+"</paid_amount>" +
+						"<paid_amount>"+p_amount+"</paid_amount>" +
 						"<acc_name>"+customer+"</acc_name>" +
 						"<due_date>"+get_credit_period()+"</due_date>" +
 						"<mode>"+get_payment_mode()+"</mode>" +
@@ -7843,7 +7851,10 @@ function form119_create_form()
 				server_create_simple(pt_xml);
 				server_create_simple_func(payment_xml,function()
 				{
-					modal26_action(pt_tran_id);
+					modal26_action(pt_tran_id,function(mode,paid_amount)
+					{
+						document.getElementById('form119_payment_info').innerHTML="Payment: "+mode+"<br>Paid: Rs."+paid_amount;
+					});
 				});
 			}
 			else
@@ -7853,7 +7864,10 @@ function form119_create_form()
 				local_create_simple(pt_xml);
 				local_create_simple_func(payment_xml,function()
 				{
-					modal26_action(pt_tran_id);
+					modal26_action(pt_tran_id,function(mode,paid_amount)
+					{
+						document.getElementById('form119_payment_info').innerHTML="Payment: "+mode+"<br>Paid: Rs."+paid_amount;
+					});
 				});
 			}
 			
@@ -8140,6 +8154,67 @@ function form122_create_form()
 		});
 		
 		$("[id^='save_form122_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 123
+ * form Mandatory Attributes
+ * @param button
+ */
+function form123_create_item(form)
+{
+	if(is_create_access('form123'))
+	{
+		var object=form.elements[0].value;
+		var attribute=form.elements[1].value;
+		var status=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<mandatory_attributes>" +
+					"<id>"+data_id+"</id>" +
+					"<object>"+object+"</object>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</mandatory_attributes>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>mandatory_attributes</tablename>" +
+					"<link_to>form123</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Mandatory attribute "+attribute+" for "+object+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[5];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form123_delete_item(del_button);
+		});
+		$(form).off('submit');
+
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form123_update_item(form);
+		});
 	}
 	else
 	{

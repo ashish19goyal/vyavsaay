@@ -3,6 +3,8 @@
 	<?php 
 
 		echo "<ul>";
+			if(strpos($_SESSION['forms'],'form124-')!==false)
+				echo "<li><a id='form124_link' href='#form124' onclick='form124_header_ini(); form124_ini();' data-i18n='form.receipts'></a></li>";
 			if(strpos($_SESSION['forms'],'form11-')!==false)
 				echo "<li><a id='form11_link' href='#form11' onclick='form11_header_ini(); form11_ini();' data-i18n='form.manage_payments'></a></li>";
 			if(strpos($_SESSION['reports'],'report4-')!==false)
@@ -23,6 +25,8 @@
 				echo "<li><a id='report53_link' href='#report53' onclick='report53_header_ini();' data-i18n='form.sales_tax'></a></li>";
 		echo "</ul>";
 
+		if(strpos($_SESSION['forms'],'form124-')!==false)
+			include "forms/form124.php"; 
 		if(strpos($_SESSION['forms'],'form11-')!==false)
 			include "forms/form11.php"; 
 		if(strpos($_SESSION['reports'],'report4-')!==false)

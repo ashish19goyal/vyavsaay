@@ -24,6 +24,8 @@
 				echo "<li><a id='form110_link' href='#form110' onclick='form110_header_ini(); form110_ini();' data-i18n='form.manage_reports'></a></li>";
 			if(strpos($_SESSION['forms'],'form111-')!==false)
 				echo "<li><a id='form111_link' href='#form111' onclick='form111_header_ini(); form111_ini();' data-i18n='form.create_reports'></a></li>";
+			if(strpos($_SESSION['forms'],'form123-')!==false)
+				echo "<li><a id='form123_link' href='#form123' onclick='form123_header_ini(); form123_ini();' data-i18n='form.mandatory_attributes'></a></li>";
 		echo "</ul>";
 
 		if(strpos($_SESSION['forms'],'form46-')!==false)
@@ -48,6 +50,8 @@
 			include "forms/form110.php";
 		if(strpos($_SESSION['forms'],'form111-')!==false)
 			include "forms/form111.php";
+		if(strpos($_SESSION['forms'],'form123-')!==false)
+			include "forms/form123.php";
 		
 	?>
 	

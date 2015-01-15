@@ -248,7 +248,7 @@ function local_read_single_column(columns,callback,results)
 						
 						if(filter[i].type=='')
 						{
-							found=string.search(search);
+							found=string.indexOf(search);
 						}
 						else if(filter[i].type=='exact')
 						{
@@ -260,7 +260,7 @@ function local_read_single_column(columns,callback,results)
 						}
 						else if(filter[i].type=='array')
 						{
-							found=search.search("-"+string+"-");
+							found=search.indexOf("-"+string+"-");
 						}
 						if(filter[i].type=='less than') 
 						{
@@ -447,7 +447,7 @@ function local_read_multi_column(columns,callback,results)
 					
 					if(filter[i].type=='')
 					{
-						found=string.search(search);
+						found=string.indexOf(search);
 					}
 					else if(filter[i].type=='exact')
 					{
@@ -459,8 +459,15 @@ function local_read_multi_column(columns,callback,results)
 					}
 					else if(filter[i].type=='array')
 					{
-						found=search.search("-"+string+"-");
+						found=search.indexOf("-"+string+"-");
 					}
+					
+					if(found===-1)
+					{
+						match=false;
+						break;
+					}
+					
 					if(filter[i].type=='less than') 
 					{
 						if(parseFloat(record[filter[i].name])>=filter[i].value)
@@ -492,12 +499,6 @@ function local_read_multi_column(columns,callback,results)
 							match=false;
 							break;
 						}
-					}
-
-					if(found===-1)
-					{
-						match=false;
-						break;
 					}
 				}
 				
@@ -2121,7 +2122,39 @@ function local_get_inventory(product,batch,callback)
 													}
 													else
 													{
-														callback(result);
+														transaction.objectStore('unbilled_sale_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+														{
+															var us_result=e.target.result;
+															if(us_result)
+															{
+																var us_record=us_result.value;
+																if(us_record['batch']==batch || batch==='' || batch===null)
+																{
+																	result-=parseFloat(us_record['quantity']);
+																}
+																us_result.continue();
+															}
+															else
+															{
+																transaction.objectStore('unbilled_purchase_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+																{
+																	var up_result=e.target.result;
+																	if(up_result)
+																	{
+																		var up_record=up_result.value;
+																		if(up_record['batch']==batch || batch==='' || batch===null)
+																		{
+																			result+=parseFloat(up_record['quantity']);
+																		}
+																		up_result.continue();
+																	}
+																	else
+																	{
+																		callback(result);
+																	}
+																};
+															}
+														};
 													}
 												};
 											}

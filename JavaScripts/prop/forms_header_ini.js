@@ -2991,17 +2991,17 @@ function form119_header_ini()
 							rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+="Bought: <input type='number' min='0' required form='form119_"+id+"' step='any' name='squantity' value='"+ub_item.quantity+"'>";
-							rowsHTML+="<br>Free: <input type='number' min='0' value='0' required form='form119_"+id+"' step='any' name='fquantity'>";
+							rowsHTML+="<v1>Bought: </v1><input type='number' min='0' required form='form119_"+id+"' step='any' name='squantity' value='"+ub_item.quantity+"'>";
+							rowsHTML+="<br><v1>Free: </v1><input type='number' min='0' value='0' required form='form119_"+id+"' step='any' name='fquantity'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Price'>";
-							rowsHTML+="Sale: Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any' name='unit_price'>";
-							rowsHTML+="</br>MRP: Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any' name='mrp'>";
+							rowsHTML+="<v1>Sale: </v1>Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any' name='unit_price'>";
+							rowsHTML+="<br><v1>MRP: </v1>Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any' name='mrp'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Total'>";
-							rowsHTML+="Amount: Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' name='amount'>";
-							rowsHTML+="<br>Discount: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' name='discount'>";
-							rowsHTML+="<br>Tax: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' name='tax'>";
+							rowsHTML+="<v1>Amount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' name='amount'>";
+							rowsHTML+="<br><v1>Discount: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' name='discount'>";
+							rowsHTML+="<br><v1>Tax: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' name='tax'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form119_"+id+"' name='total'>";
@@ -3449,3 +3449,65 @@ function form122_header_ini()
 	supplier_filter.value='';
 	$(supplier_filter).focus();
 }
+
+/**
+ * @form Mandatory Attributes
+ * @formNo 123
+ */
+function form123_header_ini()
+{
+	var filter_fields=document.getElementById('form123_header');
+	var object_filter=filter_fields.elements[0];
+	var attr_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var attr_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"</mandatory_attributes>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form123_ini();
+	});
+
+	set_my_filter(attr_data,attr_filter);
+	set_static_filter('mandatory_attributes','object',object_filter);
+	set_static_filter('mandatory_attributes','status',status_filter);
+};
+
+/**
+ * @form Receipts
+ * @formNo 124
+ */
+function form124_header_ini()
+{
+	var filter_fields=document.getElementById('form124_header');
+	var id_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var account_filter=filter_fields.elements[2];
+	var pid_filter=filter_fields.elements[3];
+	
+	var id_data="<receipts>" +
+			"<receipt_id></receipt_id>" +
+			"</receipts>";
+	var account_data="<accounts>" +
+			"<acc_name></acc_name>" +
+			"</accounts>";
+	var pid_data="<receipts>" +
+			"<payment_id></payment_id>" +
+			"</receipts>";
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form124_ini();
+	});
+
+	set_my_filter(id_data,id_filter);
+	set_my_filter(pid_data,pid_filter);
+	set_my_filter(account_data,account_filter);
+	set_static_filter('receipts','type',type_filter);
+};

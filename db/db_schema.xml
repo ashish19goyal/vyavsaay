@@ -179,12 +179,22 @@
 	<cash_register>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<type index='yes' type="VARCHAR(10)"></type><!-- received/paid -->
-			<amount index='no' type="DECIMAL(10,2)"></amount>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
 			<notes index='no' type="TEXT"></notes>
 			<transaction_id index='no' type="BIGINT"></transaction_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</cash_register>
+	<receipts>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<receipt_id index='yes' type="VARCHAR(20)"></receipt_id>
+			<payment_id index='yes' type="BIGINT"></payment_id>
+			<type index='yes' type="VARCHAR(10)"></type><!-- received/paid -->
+			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
+			<date index='yes' type="BIGINT"></date>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</receipts>
 	<payments>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<acc_name index='yes' type="VARCHAR(100)"></acc_name>
@@ -378,10 +388,17 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(100)"></name>
 			<type index='no' type="VARCHAR(10)"></type><!-- service/product/customer/staff/supplier/asset -->
-			<attribute index='yes' type="VARCHAR(30)"></attribute><!--recurrent sale(days)/season start date(1 jan)/season end date(2 december)/subscription period(4 days/2 months/10 weeks/1 year)-->
+			<attribute index='yes' type="VARCHAR(50)"></attribute><!--recurrent sale(days)/season start date(1 jan)/season end date(2 december)/subscription period(4 days/2 months/10 weeks/1 year)-->
 			<value index='no' type='TEXT'></value>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</attributes>
+	<mandatory_attributes>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<object index='yes' type="VARCHAR(100)"></object><!-- account/task/storage/loan/loyalty program/service/product/customer/staff/supplier/asset -->
+			<attribute index='yes' type="VARCHAR(50)"></attribute>
+			<status index='yes' type="VARCHAR(20)"></status><!-- active/inactive -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</mandatory_attributes>
 	<cross_sells>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(90)" unique='yes'></name>

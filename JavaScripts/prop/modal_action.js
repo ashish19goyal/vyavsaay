@@ -304,6 +304,26 @@ function modal10_action()
 	var ftype=form.elements[2];
 	var fdescription=form.elements[3];
 	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal10_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status exact='yes'>active</status>" +
+			"<object exact='yes'>asset</object>" +
+			"</mandatory_attributes>";
+	get_single_column_data(function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			var attr_label=document.createElement('label');
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attribute_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			attribute_label.appendChild(line_break);
+		});
+	},attributes_data);
+	
 	set_static_value_list('assets','type',ftype);
 		
 	$(form).off("submit");
@@ -337,7 +357,32 @@ function modal10_action()
 		else
 		{
 			local_create_row(data_xml,activity_xml);
-		}	
+		}
+
+		var id=get_new_key();
+		$("#modal10_attributes").find('input').each(function()
+		{
+			id++;
+			var value=$(this).val();
+			var attribute=$(this).attr('name');
+			var attribute_xml="<attributes>" +
+					"<id>"+id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<type>asset</type>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</attributes>";
+			if(is_online())
+			{
+				server_create_simple(attribute_xml);
+			}
+			else
+			{
+				local_create_simple(attribute_xml);
+			}
+		});
+		
 		$("#modal10").dialog("close");
 	});
 	
@@ -363,7 +408,27 @@ function modal11_action()
 	var fstate=form.elements[7];
 	var fcountry=form.elements[8];
 	var fnotes=form.elements[9];
-		
+	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal11_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status exact='yes'>active</status>" +
+			"<object exact='yes'>customer</object>" +
+			"</mandatory_attributes>";
+	get_single_column_data(function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			var attr_label=document.createElement('label');
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attribute_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			attribute_label.appendChild(line_break);
+		});
+	},attributes_data);
+	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -372,6 +437,7 @@ function modal11_action()
 		{
 			var name=fname.value;
 			var phone=fphone.value;
+			var acc_name=name+" ("+phone+")";
 			var email=femail.value;
 			var address=faddress.value;
 			var pincode=fpincode.value;
@@ -388,7 +454,7 @@ function modal11_action()
 						"<phone>"+phone+"</phone>" +
 						"<email>"+email+"</email>" +
 						"<notes>"+notes+"</notes>" +
-						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
+						"<acc_name unique='yes'>"+acc_name+"</acc_name>" +
 						"<status>active</status>" +
 						"<address>"+address+"</address>" +
 						"<pincode>"+pincode+"</pincode>" +
@@ -423,6 +489,30 @@ function modal11_action()
 				local_create_row(data_xml,activity_xml);
 				local_create_simple(account_xml);
 			}	
+			
+			var id=get_new_key();
+			$("#modal11_attributes").find('input').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<name>"+acc_name+"</name>" +
+						"<type>customer</type>" +
+						"<attribute>"+attribute+"</attribute>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				if(is_online())
+				{
+					server_create_simple(attribute_xml);
+				}
+				else
+				{
+					local_create_simple(attribute_xml);
+				}
+			});
 		}
 		else
 		{
@@ -447,7 +537,27 @@ function modal12_action()
 	var fname=form.elements[1];
 	var fdescription=form.elements[2];
 	var fdata_id=get_new_key();
-		
+	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal12_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status exact='yes'>active</status>" +
+			"<object exact='yes'>account</object>" +
+			"</mandatory_attributes>";
+	get_single_column_data(function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			var attr_label=document.createElement('label');
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attribute_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			attribute_label.appendChild(line_break);
+		});
+	},attributes_data);
+	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -480,6 +590,31 @@ function modal12_action()
 		{
 			local_create_row(data_xml,activity_xml);
 		}	
+		
+		var id=get_new_key();
+		$("#modal12_attributes").find('input').each(function()
+		{
+			id++;
+			var value=$(this).val();
+			var attribute=$(this).attr('name');
+			var attribute_xml="<attributes>" +
+					"<id>"+id+"</id>" +
+					"<name>"+acc_name+"</name>" +
+					"<type>account</type>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</attributes>";
+			if(is_online())
+			{
+				server_create_simple(attribute_xml);
+			}
+			else
+			{
+				local_create_simple(attribute_xml);
+			}
+		});
+
 		$("#modal12").dialog("close");
 	});
 	
@@ -504,7 +639,28 @@ function modal13_action()
 	var fstate=form.elements[7];
 	var fcountry=form.elements[8];
 	var fnotes=form.elements[9];
-		
+	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal13_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status exact='yes'>active</status>" +
+			"<object exact='yes'>supplier</object>" +
+			"</mandatory_attributes>";
+	get_single_column_data(function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			var attr_label=document.createElement('label');
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attribute_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			attribute_label.appendChild(line_break);
+		});
+	},attributes_data);
+	
+	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -513,6 +669,7 @@ function modal13_action()
 		{
 			var name=fname.value;
 			var phone=fphone.value;
+			var acc_name=name+" ("+phone+")";
 			var email=femail.value;
 			var address=faddress.value;
 			var pincode=fpincode.value;
@@ -529,7 +686,7 @@ function modal13_action()
 						"<phone>"+phone+"</phone>" +
 						"<email>"+email+"</email>" +
 						"<notes>"+notes+"</notes>" +
-						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
+						"<acc_name unique='yes'>"+acc_name+"</acc_name>" +
 						"<address>"+address+"</address>" +
 						"<pincode>"+pincode+"</pincode>" +
 						"<city>"+city+"</city>" +
@@ -563,6 +720,30 @@ function modal13_action()
 				local_create_row(data_xml,activity_xml);
 				local_create_simple(account_xml);
 			}	
+			
+			var id=get_new_key();
+			$("#modal13_attributes").find('input').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<name>"+acc_name+"</name>" +
+						"<type>supplier</type>" +
+						"<attribute>"+attribute+"</attribute>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				if(is_online())
+				{
+					server_create_simple(attribute_xml);
+				}
+				else
+				{
+					local_create_simple(attribute_xml);
+				}
+			});
 		}
 		else
 		{
@@ -620,6 +801,26 @@ function modal14_action()
 		});
 	},false);
 	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal14_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status exact='yes'>active</status>" +
+			"<object exact='yes'>product</object>" +
+			"</mandatory_attributes>";
+	get_single_column_data(function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			var attr_label=document.createElement('label');
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attribute_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			attribute_label.appendChild(line_break);
+		});
+	},attributes_data);
+	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -660,6 +861,30 @@ function modal14_action()
 			{
 				local_create_row(data_xml,activity_xml);
 			}	
+
+			var id=get_new_key();
+			$("#modal14_attributes").find('input').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<type>product</type>" +
+						"<attribute>"+attribute+"</attribute>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				if(is_online())
+				{
+					server_create_simple(attribute_xml);
+				}
+				else
+				{
+					local_create_simple(attribute_xml);
+				}
+			});
 
 			if(url!="")
 			{
@@ -781,6 +1006,27 @@ function modal16_action()
 		}
 	});
 	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal16_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status exact='yes'>active</status>" +
+			"<object exact='yes'>staff</object>" +
+			"</mandatory_attributes>";
+	get_single_column_data(function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			var attr_label=document.createElement('label');
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attribute_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			attribute_label.appendChild(line_break);
+		});
+	},attributes_data);
+	
+	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -790,6 +1036,7 @@ function modal16_action()
 			var name=form.elements[1].value;
 			var username=form.elements[2].value;
 			var phone=form.elements[3].value;
+			var acc_name=name+" ("+phone+")";
 			var email=form.elements[4].value;
 			var address=form.elements[5].value;
 			var pincode=form.elements[6].value;
@@ -804,7 +1051,7 @@ function modal16_action()
 						"<name>"+name+"</name>" +
 						"<phone>"+phone+"</phone>" +
 						"<email>"+email+"</email>" +
-						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
+						"<acc_name unique='yes'>"+acc_name+"</acc_name>" +
 						"<username unique='yes'>"+username+"</username>" +
 						"<address>"+address+"</address>" +
 						"<pincode>"+pincode+"</pincode>" +
@@ -840,6 +1087,30 @@ function modal16_action()
 				local_create_row(data_xml,activity_xml);
 				local_create_simple(account_xml);
 			}	
+			
+			var id=get_new_key();
+			$("#modal16_attributes").find('input').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<name>"+acc_name+"</name>" +
+						"<type>staff</type>" +
+						"<attribute>"+attribute+"</attribute>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				if(is_online())
+				{
+					server_create_simple(attribute_xml);
+				}
+				else
+				{
+					local_create_simple(attribute_xml);
+				}
+			});
 		}
 		else
 		{
@@ -921,6 +1192,27 @@ function modal18_action()
 	fdescription.value='';
 	fest_hours.value='';
 	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal18_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status exact='yes'>active</status>" +
+			"<object exact='yes'>task</object>" +
+			"</mandatory_attributes>";
+	get_single_column_data(function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			var attr_label=document.createElement('label');
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attribute_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			attribute_label.appendChild(line_break);
+		});
+	},attributes_data);
+	
+	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -954,6 +1246,30 @@ function modal18_action()
 			local_create_row(data_xml,activity_xml);
 		}
 		
+		var id=get_new_key();
+		$("#modal18_attributes").find('input').each(function()
+		{
+			id++;
+			var value=$(this).val();
+			var attribute=$(this).attr('name');
+			var attribute_xml="<attributes>" +
+					"<id>"+id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<type>task</type>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+value+"</value>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</attributes>";
+			if(is_online())
+			{
+				server_create_simple(attribute_xml);
+			}
+			else
+			{
+				local_create_simple(attribute_xml);
+			}
+		});
+
 		$("#modal18").dialog("close");
 		//$("#modal18").dialog("destroy");
 	});
@@ -1233,7 +1549,27 @@ function modal20_action()
 	
 	var fname=form.elements[1];
 	var fdescription=form.elements[2];
-			
+	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal20_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status exact='yes'>active</status>" +
+			"<object exact='yes'>service</object>" +
+			"</mandatory_attributes>";
+	get_single_column_data(function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			var attr_label=document.createElement('label');
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attribute_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			attribute_label.appendChild(line_break);
+		});
+	},attributes_data);
+	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -1270,6 +1606,30 @@ function modal20_action()
 			{
 				local_create_row(data_xml,activity_xml);
 			}	
+			
+			var id=get_new_key();
+			$("#modal20_attributes").find('input').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<type>service</type>" +
+						"<attribute>"+attribute+"</attribute>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				if(is_online())
+				{
+					server_create_simple(attribute_xml);
+				}
+				else
+				{
+					local_create_simple(attribute_xml);
+				}
+			});
 		}
 		else
 		{
@@ -1514,12 +1874,12 @@ function modal22_action()
 	////adding sale price fields for all billing types///////
 	var billing_type_data="<bill_types>" +
 			"<name></name>" +
-			"<status>active</status>" +
+			"<status exact='yes'>active</status>" +
 			"</bill_types>";
 	get_single_column_data(function(bill_types)
 	{
 		var billing_label=document.getElementById('modal22_billings');
-		$(billing_label).html("");
+		billing_label.innerHTML="";
 		bill_types.forEach(function(bill_type)
 		{
 			var bill_label=document.createElement('label');
@@ -1590,9 +1950,11 @@ function modal22_action()
 				local_create_row(data_xml,activity_xml);
 			}
 			
+			var id=get_new_key();
+			
 			$("#modal22_billings").find('input').each(function()
 			{
-				var id=get_new_key()+""+Math.floor(Math.random()*1000);
+				id++;
 				var price=$(this).val();
 				var bill_type=$(this).attr('id');
 				var sale_price_xml="<sale_prices>" +
@@ -1812,7 +2174,7 @@ function modal25_action(button)
  * @modalNo 26
  * @modal Payment Details
  */
-function modal26_action(payment_id)
+function modal26_action(payment_id,func)
 {
 	var form=document.getElementById('modal26_form');
 	
@@ -1872,7 +2234,11 @@ function modal26_action(payment_id)
 			else
 			{
 				local_update_row(data_xml,activity_xml);
-			}	
+			}
+			if(func)
+			{
+				func(mode,paid);
+			}
 		}
 		else
 		{
@@ -1905,7 +2271,6 @@ function modal26_action(payment_id)
 		}
 		$("#modal26").dialog("open");
 	});		
-	
 }
 
 
@@ -2229,114 +2594,384 @@ function modal29_action(button)
 }
 
 /**
- * @modal Add user
+ * @modal Add Receipt
  * @modalNo 30
  */
 function modal30_action()
 {
 	var form=document.getElementById("modal30_form");
+	var account_filter=form.elements[2];
+	var amount_filter=form.elements[3];
+	var balance_filter=form.elements[4];
+	var type_filter=form.elements[5];
+	
+	var accounts_data="<accounts>" +
+			"<acc_name></acc_name>" +
+			"</accounts>";
+	set_my_value_list(accounts_data,account_filter);
+	set_static_value_list('receipts','type',type_filter);
+	
+	$(account_filter).off('blur');
+	$(account_filter).on('blur',function(e)
+	{
+		var payments_data="<payments>" +
+				"<id></id>" +
+				"<type></type>" +
+				"<total_amount></total_amount>" +
+				"<paid_amount></paid_amount>" +
+				"<status exact='yes'>pending</status>" +
+				"<acc_name exact='yes'>"+account_filter.value+"</acc_name>" +
+				"</payments>";
+
+		fetch_requested_data('',payments_data,function(payments)
+		{
+			var balance_amount=0;
+			payments.forEach(function(payment)
+			{
+				if(payment.type=='received')
+				{
+					balance_amount+=parseFloat(payment.total_amount);
+					balance_amount-=parseFloat(payment.paid_amount);
+				}
+				else if(payment.type=='paid')
+				{
+					balance_amount-=parseFloat(payment.total_amount);
+					balance_amount+=parseFloat(payment.paid_amount);
+				}
+			});
+			
+			if(balance_amount==0)
+			{
+				balance_filter.value="Rs. 0";
+				$(form).off('submit');
+				$(form).on('submit',function(event)
+				{
+					event.preventDefault();
+					$("#modal30").dialog("close");
+				});
+			}
+			else if(balance_amount>0)
+			{
+				balance_filter.value="Receivable: Rs. "+balance_amount;
+				type_filter.value='received';
+			}
+			else
+			{
+				balance_amount=(-balance_amount);
+				balance_filter.value="Payable: Rs. "+balance_amount;
+				type_filter.value='paid';
+			}
+			amount_filter.setAttribute('max',balance_amount);
+		});
+	});
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
+		///////////////////////////////////////
 		event.preventDefault();
-		if(is_create_access('form51'))
-		{	
-			var login_id=form.elements[1].value;
-			var name=form.elements[2].value;
-			var password=form.elements[3].value;
-			var data_id=get_new_key();
-			var last_updated=get_my_time();
-			var salt='$2a$10$'+get_domain()+'1234567891234567891234';
-			var salt_22=salt.substring(0, 29);
+		var receipt_id=form.elements[1].value;
+		var receipt_type=type_filter.value;
+		var account_name=account_filter.value;
+		var counter_payment=parseFloat(amount_filter.value);
+		
+		if(is_create_access('form124'))
+		{
+			var accounts_data="<payments>" +
+					"<id></id>" +
+					"<acc_name exact='yes'>"+account_name+"</acc_name>" +
+					"<type exact='yes'>"+receipt_type+"</type>" +
+					"<date sort='asc'></date>" +
+					"<total_amount></total_amount>" +
+					"<paid_amount></paid_amount>" +
+					"<notes></notes>" +
+					"<status>pending</status>" +
+					"</payments>";
 			
-			var bcrypt = new bCrypt();
-			bcrypt.hashpw(password, salt_22, function(newhash)
+			fetch_requested_data('',accounts_data,function(accounts)
 			{
-				var data_xml="<staff>" +
-							"<id>"+data_id+"</id>" +
-							"<username unique='yes'>"+login_id+"</username>" +
-							"<name>"+name+"</name>" +
-							"<password>"+newhash+"</password>" +
-							"<status>active</status>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</user_profiles>";
-				var activity_xml="<activity>" +
-							"<data_id>"+data_id+"</data_id>" +
-							"<tablename>user_profiles</tablename>" +
-							"<link_to>form51</link_to>" +
-							"<title>Added</title>" +
-							"<notes>User account for "+login_id+"</notes>" +
-							"<updated_by>"+get_name()+"</updated_by>" +
-							"</activity>";
-				if(is_online())
+				var total_amount=0;
+				for(var i=0;i<accounts.length;i++)
 				{
-					server_create_row(data_xml,activity_xml);
+					total_amount=parseFloat(accounts[i].total_amount)-parseFloat(accounts[i].paid_amount);
 				}
-				else
-				{
-					local_create_row(data_xml,activity_xml);
-				}
-				$("#modal30").dialog("close");
 				
-			}, function(){});
+				var new_id=get_new_key();
+				var last_updated=get_my_time();
+				accounts.forEach(function(account)
+				{
+					new_id++;
+					if(total_amount==counter_payment)
+					{
+						var notes=account.notes+"\nClosed by receipt # "+receipt_id;
+						var payment_xml="<payments>" +
+								"<id>"+account.id+"</id>" +
+								"<paid_amount>"+account.total_amount+"</paid_amount>" +
+								"<status>closed</status>" +
+								"<notes>"+notes+"</notes>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</payments>";
+						var receipt_xml="<receipts>" +
+								"<id>"+new_id+"</id>" +
+								"<receipt_id>"+receipt_id+"</receipt_id>" +
+								"<payment_id>"+account.id+"</payment_id>" +
+								"<type>"+receipt_type+"</type>" +
+								"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
+								"<acc_name>"+account_name+"</acc_name>" +
+								"<date>"+get_my_date()+"</date>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</receipts>";
+						if(is_online())
+						{
+							server_update_simple(payment_xml);
+							server_create_simple(receipt_xml);
+						}
+						else
+						{
+							local_update_simple(payment_xml);
+							local_create_simple(receipt_xml);
+						}
+					}
+					else
+					{
+						var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
+						if(pending_amount<=counter_payment)
+						{
+							var notes=account.notes+"\nClosed by receipt # "+receipt_id;
+							var payment_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+account.total_amount+"</paid_amount>" +
+									"<status>closed</status>" +
+									"<notes>"+notes+"</notes>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</payments>";
+							var receipt_xml="<receipts>" +
+									"<id>"+new_id+"</id>" +
+									"<receipt_id>"+receipt_id+"</receipt_id>" +
+									"<payment_id>"+account.id+"</payment_id>" +
+									"<type>"+receipt_type+"</type>" +
+									"<amount>"+pending_amount+"</amount>" +
+									"<acc_name>"+account_name+"</acc_name>" +
+									"<date>"+get_my_date()+"</date>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</receipts>";
+							if(is_online())
+							{
+								server_update_simple(payment_xml);
+								server_create_simple(receipt_xml);
+							}
+							else
+							{
+								local_update_simple(payment_xml);
+								local_create_simple(receipt_xml);
+							}
+							
+							counter_payment-=pending_amount;
+						}
+						else
+						{
+							var paid_amount=parseFloat(account.paid_amount)+counter_payment;
+							var notes=account.notes+"\n Rs."+counter_payment+" balanced against receipt # "+receipt_id;
+							var payment_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+paid_amount+"</paid_amount>" +
+									"<status>pending</status>" +
+									"<notes>"+notes+"</notes>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</payments>";
+							var receipt_xml="<receipts>" +
+									"<id>"+new_id+"</id>" +
+									"<receipt_id>"+receipt_id+"</receipt_id>" +
+									"<payment_id>"+account.id+"</payment_id>" +
+									"<type>"+receipt_type+"</type>" +
+									"<amount>"+counter_payment+"</amount>" +
+									"<acc_name>"+account_name+"</acc_name>" +
+									"<date>"+get_my_date()+"</date>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</receipts>";
+							if(is_online())
+							{
+								server_update_simple(payment_xml);
+								server_create_simple(receipt_xml);
+							}
+							else
+							{
+								local_update_simple(payment_xml);
+								local_create_simple(receipt_xml);
+							}
+							counter_payment=0;
+						}
+					}
+				});
+			});
 		}
 		else
 		{
 			$("#modal2").dialog("open");
 		}
+		$("#modal30").dialog("close");
+		/////////////////////////////////////////
 	});
-	
 	$("#modal30").dialog("open");
 }
 
 
 /**
- * @modal Delete user
+ * @modal Delete Receipt
  * @modalNo 31
  */
 function modal31_action()
 {
 	var form=document.getElementById("modal31_form");
-	var flogin_id=form.elements[1];
-	
-	var login_data="<user_profiles>" +
-			"<username></username>" +
-			"</user_profiles>";
-	set_my_value_list(login_data,flogin_id);
-	
-	flogin_id.value="";
+	var receipt_filter=form.elements[1];
+	var account_filter=form.elements[2];
+	var balance_filter=form.elements[3];
+	var amount_filter=form.elements[4];
+		
+	$(receipt_filter).off('blur');
+	$(receipt_filter).on('blur',function(e)
+	{
+		var receipts_data="<receipts>" +
+				"<id></id>" +
+				"<receipt_id exact='yes'>"+receipt_filter.value+"</receipt_id>" +
+				"<amount></amount>" +
+				"<acc_name></acc_name>" +
+				"</receipts>";
+		fetch_requested_data('',receipts_data,function(receipts)
+		{
+			if(receipts.length>0)
+			{
+				account_filter.value=receipts[0].acc_name;
+				var receipt_amount=0;
+				for(var j in receipts)
+				{
+					receipt_amount+=parseFloat(receipts[j].amount);
+				}
+				amount_filter.value=receipt_amount;
+				
+				var payments_data="<payments>" +
+					"<id></id>" +
+					"<type></type>" +
+					"<total_amount></total_amount>" +
+					"<paid_amount></paid_amount>" +
+					"<status exact='yes'>pending</status>" +
+					"<acc_name exact='yes'>"+account_filter.value+"</acc_name>" +
+					"</payments>";
+				fetch_requested_data('',payments_data,function(payments)
+				{
+					var balance_amount=0;
+					payments.forEach(function(payment)
+					{
+						if(payment.type=='received')
+						{
+							balance_amount+=parseFloat(payment.total_amount);
+							balance_amount-=parseFloat(payment.paid_amount);
+						}
+						else if(payment.type=='paid')
+						{
+							balance_amount-=parseFloat(payment.total_amount);
+							balance_amount+=parseFloat(payment.paid_amount);
+						}
+					});
+					
+					if(balance_amount==0)
+					{
+						balance_filter.value="Rs. 0";
+					}
+					else if(balance_amount>0)
+					{
+						balance_filter.value="Receivable: Rs. "+balance_amount;
+					}
+					else
+					{
+						balance_amount=(-balance_amount);
+						balance_filter.value="Payable: Rs. "+balance_amount;
+					}
+				});
+			}
+		});
+	});
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
+		///////////////////////////////////////
 		event.preventDefault();
-		if(is_delete_access('form51'))
-		{	
-			var login_id=form.elements[1].value;
-			var last_updated=get_my_time();
-			var data_xml="<user_profiles>" +
-						"<username>"+login_id+"</username>" +
-						"</user_profiles>";
-			var other_delete="<access_control>" +
-						"<username>"+login_id+"</username>" +
-						"</access_control>";
-			if(is_online())
+		var receipt_id=form.elements[1].value;
+		
+		if(is_delete_access('form124'))
+		{
+			var receipts_data="<receipts>" +
+				"<id></id>" +
+				"<receipt_id exact='yes'>"+receipt_filter.value+"</receipt_id>" +
+				"<payment_id></payment_id>" +
+				"<amount></amount>" +
+				"<type></type>" +
+				"<acc_name></acc_name>" +
+				"</receipts>";
+
+			fetch_requested_data('',receipts_data,function(receipts)
 			{
-				server_delete_simple(data_xml);
-				server_delete_simple(other_delete);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-				local_delete_simple(other_delete);
-			}
-			$("#modal31").dialog("close");
+				var payments_string="--";
+				for(var k in receipts)
+				{
+					payments_string+=receipts[k].payment_id+"--";
+				}
+				
+				var payments_data="<payments count='"+receipts.length+"'>" +
+							"<id array='yes'>"+payments_string+"</id>" +
+							"<paid_amount></paid_amount>" +
+							"</payments>";
+				fetch_requested_data('',payments_data,function(payments)
+				{	
+					var last_updated=get_my_time();
+					payments.forEach(function(payment)
+					{
+						var paid_amount=parseFloat(payment.paid_amount);
+						for(var l in receipts)
+						{
+							if(receipts[l].payment_id==payment.id)
+							{
+								paid_amount-=parseFloat(receipts[l].amount);
+								break;
+							}
+						}
+						var payment_xml="<payments>" +
+								"<id>"+payment.id+"</id>" +
+								"<paid_amount>"+paid_amount+"</paid_amount>" +
+								"<status>pending</status>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</payments>";
+						if(is_online())
+						{
+							server_update_simple(payment_xml);
+						}
+						else
+						{
+							local_update_simple(payment_xml);
+						}
+					});
+					
+					var receipt_xml="<receipts>" +
+						"<receipt_id>"+receipt_filter.value+"</receipt_id>" +
+						"</receipts>";
+					if(is_online())
+					{
+						server_delete_simple(receipt_xml);
+					}
+					else
+					{
+						local_delete_simple(receipt_xml);
+					}
+				});
+			});
 		}
 		else
 		{
 			$("#modal2").dialog("open");
 		}
+		$("#modal31").dialog("close");
+		/////////////////////////////////////////
 	});
 	$("#modal31").dialog("open");
 }
@@ -2526,6 +3161,27 @@ function modal35_action()
 	
 	set_static_value_list('store_areas','area_type',area_type_filter);
 	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal35_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status exact='yes'>active</status>" +
+			"<object exact='yes'>storage</object>" +
+			"</mandatory_attributes>";
+	get_single_column_data(function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			var attr_label=document.createElement('label');
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attribute_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			attribute_label.appendChild(line_break);
+		});
+	},attributes_data);
+	
+	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -2557,7 +3213,31 @@ function modal35_action()
 			else
 			{
 				local_create_row(data_xml,activity_xml);
-			}	
+			}
+			
+			var id=get_new_key();
+			$("#modal35_attributes").find('input').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<type>storage</type>" +
+						"<attribute>"+attribute+"</attribute>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				if(is_online())
+				{
+					server_create_simple(attribute_xml);
+				}
+				else
+				{
+					local_create_simple(attribute_xml);
+				}
+			});
 		}
 		else
 		{
@@ -2895,7 +3575,28 @@ function modal39_action(schedule_date)
 	
 	$(date_filter).datepicker();
 	date_filter.value=get_my_date();
-		
+	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal39_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status exact='yes'>active</status>" +
+			"<object exact='yes'>loan</object>" +
+			"</mandatory_attributes>";
+	get_single_column_data(function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			var attr_label=document.createElement('label');
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attribute_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			attribute_label.appendChild(line_break);
+		});
+	},attributes_data);
+	
+	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -3005,6 +3706,31 @@ function modal39_action(schedule_date)
 						modal28_action(payment_id);
 				});
 			}
+			
+			var id=get_new_key();
+			$("#modal39_attributes").find('input').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<name>"+data_id+"</name>" +
+						"<type>loan</type>" +
+						"<attribute>"+attribute+"</attribute>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				if(is_online())
+				{
+					server_create_simple(attribute_xml);
+				}
+				else
+				{
+					local_create_simple(attribute_xml);
+				}
+			});
+
 		}
 		else
 		{
@@ -3568,6 +4294,26 @@ function modal45_action()
 		}
 	});
 	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal45_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status exact='yes'>active</status>" +
+			"<object exact='yes'>loyalty program</object>" +
+			"</mandatory_attributes>";
+	get_single_column_data(function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			var attr_label=document.createElement('label');
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attribute_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			attribute_label.appendChild(line_break);
+		});
+	},attributes_data);
+	
 	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -3617,13 +4363,37 @@ function modal45_action()
 				local_create_row(data_xml,activity_xml);
 			}
 			
+			var id=get_new_key();
+			$("#modal45_attributes").find('input').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<name>"+name_value+"</name>" +
+						"<type>loyalty program</type>" +
+						"<attribute>"+attribute+"</attribute>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				if(is_online())
+				{
+					server_create_simple(attribute_xml);
+				}
+				else
+				{
+					local_create_simple(attribute_xml);
+				}
+			});
+
 			var customer_data="<customers>" +
 						"<acc_name></acc_name>" +
 						"</customers>";
 			get_single_column_data(function(customers)
 			{
 				var customers_xml="<loyalty_customers>";
-				var id=parseFloat(get_new_key());
+				var id=get_new_key();
 				var counter=0;
 				customers.forEach(function(customer)
 				{

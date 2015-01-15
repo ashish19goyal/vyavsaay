@@ -64,6 +64,7 @@
 				<label>Name: <input type='text' required></label><br/>
 				<label>Type: <input type='text' required></label><br/>
 				<label>Description: <textarea></textarea></label><br/>
+				<label id='modal10_attributes'></label></br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -81,6 +82,7 @@
 				<label>State: <input type="text"></label><br/>
 				<label>Country: <input type="text"></label><br/>
 				<label>Notes: <textarea></textarea></label><br/>
+				<label id='modal11_attributes'></label></br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -91,6 +93,7 @@
 			<fieldset>
 				<label>Name: <input type='text' required></label><br/>
 				<label>Description: <textarea></textarea></label><br/>
+				<label id='modal12_attributes'></label></br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -108,6 +111,7 @@
 				<label>State: <input type="text"></label><br/>
 				<label>Country: <input type="text"></label><br/>
 				<label>Notes: <textarea></textarea></label><br/>
+				<label id='modal13_attributes'></label></br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -124,6 +128,7 @@
 				<label>Tax (%): <input type="number" step='any'></label><br/>
 				<label>Bar Code: <input type="text" required></label>
 				<label><input type='checkbox'>Auto generate</label><br/>
+				<label id='modal14_attributes'></label></br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -154,6 +159,7 @@
 				<label>City: <input type="text"></label><br/>
 				<label>State: <input type="text"></label><br/>
 				<label>Country: <input type="text"></label><br/>
+				<label id='modal16_attributes'></label></br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -178,6 +184,7 @@
 				<label>Name: <input type="text" required></label><br/>
 				<label>Description: <textarea></textarea></label><br/>
 				<label>Estimated Hours: <input type="number" step='any' required></label><br/>
+				<label id='modal18_attributes'></label></br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -206,6 +213,7 @@
 				<label>Description: <textarea></textarea></label><br/>
 				<label>Tax (%): <input type="number"></label><br/>
 				<label>Price: <input type="number"></label><br/>
+				<label id='modal20_attributes'></label></br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -333,21 +341,26 @@
 		</form>
 	</div>
 	
-	<div id="modal30" title="Add user">
+	<div id="modal30" title="Add Receipt">
 		<form id='modal30_form'>
 			<fieldset>
-				<label>Login Id: <input type='text' required></label><br/>
-				<label>Name: <input type="text" required></label><br/>
-				<label>Password: <input type="password" required></label><br/>
+				<label>Receipt Id: <input type='text' required></label><br/>
+				<label>Account: <input type="text" required></label><br/>
+				<label>Receipt Amount: Rs. <input type="number" min='0' step='any' required></label><br/>
+				<label>Balance <input type="text" readonly='readonly'></label><br/>
+				<input type="hidden" name='type'>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
 	</div>
 	
-	<div id="modal31" title="Delete user">
+	<div id="modal31" title="Delete Receipt">
 		<form id='modal31_form'>
 			<fieldset>
-				<label>Login Id: <input type='text' required></label><br/>
+				<label>Receipt Id: <input type='text' required></label><br/>
+				<label>Account: <input type="text" readonly='readonly' required></label><br/>
+				<label>Balance <input type="text" readonly='readonly'></label><br/>
+				<label>Receipt Amount: Rs. <input type="number" step='any' readonly='readonly' required></label><br/>
 				<input type="submit" value='Delete'>
 			</fieldset>
 		</form>
@@ -383,6 +396,7 @@
 			<fieldset>
 				<label>Name: <input type='text' required></label><br/>
 				<label>Area Type: <input type="text" value='storage'></label><br/>
+				<label id='modal35_attributes'></label></br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -439,6 +453,7 @@
 				<label>EMI: Rs. <input type="number" step='any' min='0'></label><br/>
 				<label>EMI period(in days): <input type="number" min='0'></label><br/>
 				<label>Number of EMIs: <input type="number" min='0'></label><br/>
+				<label id='modal39_attributes'></label></br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -513,6 +528,7 @@
 				<label title='Amount accrued per earned point'>Accrual: Rs. <input type="number" step='any'></label><br/>
 				<label title='Reward product on fulfilment of tier criteria'>Reward Product: <input type="text"></label><br/>
 				<label>Status: <input type="text" requried></label><br/>
+				<label id='modal45_attributes'></label></br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

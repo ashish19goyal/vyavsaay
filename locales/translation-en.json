@@ -204,6 +204,10 @@
   	"adjust_loyalty_points":"Adjust loyalty points",
   	"enter_supplier_bill_unbilled_items":"Enter Supplier Bill (Unbilled Items)",
   	"worker_delay":"Background processing delay from login(in seconds)",
-  	"worker_repeat":"Background processing repeat after(in seconds)"
+  	"worker_repeat":"Background processing repeat after(in seconds)",
+  	"bill_message":"Message on the Bill",
+  	"bill_print_items":"Max number of items on 1 printed bill",
+  	"mandatory_attributes":"Mandatory Atrributes",
+  	"receipts":"Receipts"
   }
 }

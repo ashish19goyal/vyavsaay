@@ -1226,7 +1226,7 @@ function form15_ini()
 							rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.batch+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Notes'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.notes+"'>";
+							rowsHTML+="<textarea readonly='readonly' form='form15_"+id+"'>"+result.notes+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
 							rowsHTML+="<input type='number' readonly='readonly' form='form15_"+id+"' value='"+result.quantity+"' step='any'>";
@@ -1241,9 +1241,8 @@ function form15_ini()
 							}
 							else
 							{
-								rowsHTML+="Batch <input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.exhange_batch+"'>";
+								rowsHTML+="Batch <input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.exchange_batch+"'>";
 								message_string+=" Exchanged";
-								mail_string+=" Exchanged";
 							}
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
@@ -5198,7 +5197,7 @@ function form71_ini()
 							rowsHTML+="<input type='hidden' form='form71_"+result.id+"' value='"+result.id+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form71_"+result.id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form71_"+result.id+"' onclick='form71_delete_item($(this));'>";
-							rowsHTML+="<input type='button' class='generic_icon' value='Close payments' form='form71_"+result.id+"' onclick='modal41_action($(this));'>";
+							//rowsHTML+="<input type='button' class='generic_icon' value='Close payments' form='form71_"+result.id+"' onclick='modal41_action($(this));'>";
 							rowsHTML+="<input type='hidden' form='form71_"+result.id+"' value='"+balance_amount+"'>";
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
@@ -9801,6 +9800,7 @@ function form119_ini()
 	$('#form119_body').html("");
 	$('#form119_foot').html("");
 	document.getElementById('form119_customer_info').innerHTML="";
+	document.getElementById('form119_payment_info').innerHTML="";
 	
 	if(bill_id!="")
 	{
@@ -9823,6 +9823,7 @@ function form119_ini()
 				"<item_name></item_name>" +
 				"<batch></batch>" +
 				"<unit_price></unit_price>" +
+				"<mrp></mrp>" +
 				"<quantity></quantity>" +
 				"<p_quantity></p_quantity>" +
 				"<f_quantity></f_quantity>" +
@@ -9875,6 +9876,20 @@ function form119_ini()
 					document.getElementById('form119_customer_info').innerHTML=attributes_string;
 				});
 				
+				var payment_data="<payments>" +
+						"<id></id>" +
+						"<mode></mode>" +
+						"<paid_amount></paid_amount>" +
+						"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
+						"</payments>";
+				fetch_requested_data('',payment_data,function(payments)
+				{
+					if(payments.length>0)
+					{
+						document.getElementById('form119_payment_info').innerHTML="Payment: "+payments[0].mode+"<br>Paid: Rs."+payments[0].paid_amount;
+					}
+				});
+				
 				var unbilled_data="<unbilled_sale_items>" +
 						"<id></id>" +
 						"<customer exact='yes'>"+bill_results[i].customer_name+"</customer>" +
@@ -9921,24 +9936,24 @@ function form119_ini()
 							rowsHTML+="<input type='text' required form='form119_"+id+"' readonly='readonly' value='"+result.batch+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+="Bought: <input type='number' min='0' required form='form119_"+id+"' readonly='readonly' step='any' value='"+result.p_quantity+"'>";
-							rowsHTML+="<br>Free: <input type='number' min='0' value='0' required form='form119_"+id+"' readonly='readonly' step='any' value='"+result.f_quantity+"'>";
+							rowsHTML+="<v1>Bought: </v1><input type='number' min='0' required form='form119_"+id+"' readonly='readonly' step='any' value='"+result.p_quantity+"'>";
+							rowsHTML+="<br><v1>Free: </v1><input type='number' min='0' value='0' required form='form119_"+id+"' readonly='readonly' step='any' value='"+result.f_quantity+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Price'>";
-							rowsHTML+="Sale: Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any' value='"+result.unit_price+"'>";
-							rowsHTML+="</br>MRP: Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any' value='"+result.mrp+"'>";
+							rowsHTML+="<v1>Sale: </v1>Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any' value='"+result.unit_price+"'>";
+							rowsHTML+="<br><v1>MRP: </v1>Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any' value='"+result.mrp+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Total'>";
-							rowsHTML+="Amount: Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='"+result.amount+"'>";
-							rowsHTML+="<br>Discount: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='"+result.discount+"'>";
-							rowsHTML+="<br>Tax: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='"+result.tax+"'>";
+							rowsHTML+="<v1>Amount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='"+result.amount+"'>";
+							rowsHTML+="<br><v1>Discount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='"+result.discount+"'>";
+							rowsHTML+="<br><v1>Tax: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='"+result.tax+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form119_"+id+"' value='"+result.total+"'>";
 							rowsHTML+="<input type='hidden' form='form119_"+id+"' value='"+result.offer+"'>";
 							rowsHTML+="<input type='hidden' form='form119_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form119_"+id+"' id='save_form119_"+id+"' >";
-							rowsHTML+="<input type='button' class='delete_icon' form='form119_"+id+"' id='delete_form119_"+id+"' onclick='$(this).parent().parent().remove();'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form119_"+id+"' id='delete_form119_"+id+"' onclick='form119_delete_item($(this));'>";
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 
@@ -10114,3 +10129,205 @@ function form122_ini()
 		});
 	}
 }
+
+/**
+ * @form Mandatory Attributes
+ * @formNo 123
+ * @Loading light
+ */
+function form123_ini()
+{
+	show_loader();
+	var fid=$("#form123_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form123_header');
+	
+	var fobject=filter_fields.elements[0].value;
+	var fattribute=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form123_index');
+	var prev_element=document.getElementById('form123_prev');
+	var next_element=document.getElementById('form123_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<mandatory_attributes count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<object>"+fobject+"</object>" +
+			"<attribute>"+fattribute+"</attribute>" +
+			"<status>"+fstatus+"</status>" +
+			"</mandatory_attributes>";
+
+	$('#form123_body').html("");
+
+	fetch_requested_data('form123',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form123_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Object'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form123_"+result.id+"' value='"+result.object+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Attribute'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form123_"+result.id+"' value='"+result.attribute+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form123_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form123_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form123_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form123_"+result.id+"' title='Delete' onclick='form123_delete_item($(this));'>";	
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form123_body').append(rowsHTML);
+			var fields=document.getElementById("form123_"+result.id);
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form123_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'mandatory_attributes');
+		});
+		hide_loader();
+	});
+};
+
+
+/**
+ * @form Receipts
+ * @formNo 124
+ * @Loading light
+ */
+function form124_ini()
+{
+	show_loader();
+	var fid=$("#form124_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form124_header');
+	
+	var rid=filter_fields.elements[0].value;
+	var ftype=filter_fields.elements[1].value;
+	var faccount=filter_fields.elements[2].value;
+	var pid=filter_fields.elements[3].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form124_index');
+	var prev_element=document.getElementById('form124_prev');
+	var next_element=document.getElementById('form124_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<receipts count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<receipt_id>"+rid+"</receipt_id>" +
+			"<type>"+ftype+"</type>" +
+			"<acc_name>"+faccount+"</acc_name>" +
+			"<payment_id>"+pid+"</payment_id>" +
+			"<amount></amount>" +
+			"</receipts>";
+
+	$('#form124_body').html("");
+
+	fetch_requested_data('form124',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form124_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Receipt Id'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form124_"+result.id+"' value='"+result.receipt_id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Type'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form124_"+result.id+"' value='"+result.type+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Account'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form124_"+result.id+"' value='"+result.acc_name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Payment Id'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form124_"+result.id+"' value='"+result.payment_id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Amount'>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form124_"+result.id+"' value='"+result.amount+"'>";
+						rowsHTML+="<input type='hidden' form='form124_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form124_body').append(rowsHTML);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		var export_button=filter_fields.elements[6];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'receipts');
+		});
+		hide_loader();
+	});
+};

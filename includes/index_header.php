@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="Find industry standard and customizable automation solutions for your business. Setup is fast and easy. Includes Billing, Inventory, Accounting, PM, CRM.">
 		<meta name="msvalidate.01" content="087FEC7E032A681827421F0C55C1A22C" />
-		<title data-i18n="master.vyavsaay">Vyavsaay ERP</title>
+		<title>Vyavsaay ERP</title>
 		<?php
 			session_start();			
 			include "js_includes_index.php";

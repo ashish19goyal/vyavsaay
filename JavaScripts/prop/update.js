@@ -582,7 +582,7 @@ function form10_update_form()
 
 			var payment_data="<payments>" +
 					"<id></id>" +
-					"<bill_id>"+data_id+"</bill_id>" +
+					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"</payments>";
 			get_single_column_data(function(payments)
 			{
@@ -969,7 +969,7 @@ function form12_update_form()
 			
 			var payment_data="<payments>" +
 					"<id></id>" +
-					"<bill_id>"+data_id+"</bill_id>" +
+					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"</payments>";
 			get_single_column_data(function(payments)
 			{
@@ -1173,7 +1173,7 @@ function form15_update_form()
 		}
 		var payment_data="<payments>" +
 				"<id></id>" +
-				"<bill_id>"+data_id+"</bill_id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 				"</payments>";
 		get_single_column_data(function(payments)
 		{
@@ -1309,7 +1309,7 @@ function form19_update_form()
 		}
 		var payment_data="<payments>" +
 				"<id></id>" +
-				"<bill_id>"+data_id+"</bill_id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 				"</payments>";
 		get_single_column_data(function(payments)
 		{
@@ -1447,7 +1447,7 @@ function form21_update_form()
 		
 		var payment_data="<payments>" +
 				"<id></id>" +
-				"<bill_id>"+data_id+"</bill_id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 				"</payments>";
 		get_single_column_data(function(payments)
 		{
@@ -3674,7 +3674,7 @@ function form72_update_form()
 
 			var payment_data="<payments>" +
 					"<id></id>" +
-					"<bill_id>"+data_id+"</bill_id>" +
+					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"</payments>";
 			get_single_column_data(function(payments)
 			{
@@ -4727,7 +4727,7 @@ function form91_update_form()
 
 			var payment_data="<payments>" +
 					"<id></id>" +
-					"<bill_id>"+data_id+"</bill_id>" +
+					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"</payments>";
 			get_single_column_data(function(payments)
 			{
@@ -5558,24 +5558,24 @@ function form119_update_form()
 										rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Quantity'>";
-										rowsHTML+="Bought: <input type='number' min='0' readonly='readonly' required form='form119_"+id+"' step='any' value='0'>";
-										rowsHTML+="<br>Free: <input type='number' min='0' value='0' readonly='readonly' required form='form119_"+id+"' step='any' value='"+free_product_quantity+"'>";
+										rowsHTML+="<v1>Bought: </v1><input type='number' min='0' readonly='readonly' required form='form119_"+id+"' step='any' value='0'>";
+										rowsHTML+="<br><v1>Free: </v1><input type='number' min='0' value='0' readonly='readonly' required form='form119_"+id+"' step='any' value='"+free_product_quantity+"'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Price'>";
-										rowsHTML+="Sale: Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
-										rowsHTML+="</br>MRP: Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
+										rowsHTML+="<v1>Sale: </v1>Rs. <input type='number' required min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
+										rowsHTML+="<br><v1>MRP: </v1>Rs. <input type='number' min='0' readonly='readonly' form='form119_"+id+"' step='any'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Total'>";
-										rowsHTML+="Amount: Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
-										rowsHTML+="<br>Discount: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
-										rowsHTML+="<br>Tax: Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+										rowsHTML+="<v1>Amount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+										rowsHTML+="<br><v1>Discount: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+										rowsHTML+="<br><v1>Tax: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Action'>";
 										rowsHTML+="<input type='hidden' form='form119_"+id+"' value='0'>";
 										rowsHTML+="<input type='hidden' form='form119_"+id+"' value='free with "+name+"'>";
 										rowsHTML+="<input type='hidden' form='form119_"+id+"' value='"+id+"'>";
 										rowsHTML+="<input type='button' class='submit_hidden' form='form119_"+id+"' id='save_form119_"+id+"' >";
-										rowsHTML+="<input type='button' class='delete_icon' form='form119_"+id+"' id='delete_form119_"+id+"' onclick='$(this).parent().parent().remove();'>";
+										rowsHTML+="<input type='button' class='delete_icon' form='form119_"+id+"' id='delete_form119_"+id+"' onclick='form119_delete_item($(this));'>";
 									rowsHTML+="</td>";			
 								rowsHTML+="</tr>";
 								     
@@ -5688,7 +5688,7 @@ function form119_update_form()
 
 			var payment_data="<payments>" +
 					"<id></id>" +
-					"<bill_id>"+data_id+"</bill_id>" +
+					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"</payments>";
 			get_single_column_data(function(payments)
 			{
@@ -5715,14 +5715,20 @@ function form119_update_form()
 					{
 						server_update_simple_func(payment_xml,function()
 						{
-							modal26_action(payments[y]);
+							modal26_action(payments[y],function(mode,paid_amount)
+							{
+								document.getElementById('form119_payment_info').innerHTML="Payment: "+mode+"<br>Paid: Rs."+paid_amount;
+							});
 						});
 					}
 					else
 					{
 						local_update_simple_func(payment_xml,function()
 						{
-							modal26_action(payments[y]);
+							modal26_action(payments[y],function(mode,paid_amount)
+							{
+								document.getElementById('form119_payment_info').innerHTML="Payment: "+mode+"<br>Paid: Rs."+paid_amount;
+							});
 						});
 					}
 					break;
@@ -5828,7 +5834,7 @@ function form122_update_form()
 		
 		var payment_data="<payments>" +
 				"<id></id>" +
-				"<bill_id>"+data_id+"</bill_id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 				"</payments>";
 		get_single_column_data(function(payments)
 		{
@@ -5870,6 +5876,54 @@ function form122_update_form()
 		},payment_data);
 			
 		$("[id^='save_form122_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 123
+ * form Mandatory Attributes
+ * @param button
+ */
+function form123_update_item(form)
+{
+	if(is_update_access('form123'))
+	{
+		var object=form.elements[0].value;
+		var attribute=form.elements[1].value;
+		var status=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<mandatory_attributes>" +
+					"<id>"+data_id+"</id>" +
+					"<object>"+object+"</object>" +
+					"<attribute>"+attribute+"</attribute>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</mandatory_attributes>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>mandatory_attributes</tablename>" +
+					"<link_to>form123</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Mandatory attribute "+attribute+" for "+object+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
 	}
 	else
 	{

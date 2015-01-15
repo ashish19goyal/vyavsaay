@@ -44,6 +44,7 @@ function default_load()
 		{
 			activities_lane_ini();
 		});
+		document.getElementsByTagName('title')[0].innerHTML=get_session_var('title');
 	}
 	hide_loader();
 }
@@ -738,6 +739,10 @@ function import_data(form_name)
 		case 'form119':modal23_action(form119_import_template,form119_import);
 		break;
 		case 'form122':modal23_action(form122_import_template,form122_import);
+		break;
+		case 'form123':modal23_action(form123_import_template,form123_import);
+		break;
+		case 'form124':modal23_action(form124_import_template,form124_import);
 		break;
 	}
 }

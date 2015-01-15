@@ -61,47 +61,52 @@ function print_graphical_report(report_name,report_title,print_button,chart_elem
 /**
  * Print bills, receipts etc in tabular format
  */
-function print_tabular_form(form_id,form_title)
+function print_tabular_form(form_id,form_title,table_copy)
 {
 	var container=document.createElement('div');
 	var business_title=document.createElement('div');
 	var title=document.createElement('div');
 	var bill_message=document.createElement('div');
 	var signature=document.createElement('div');
+	var footer=document.createElement('div');
 	var bt=get_session_var('title');
-	signature.innerHTML="<div style='bottom:20px;right:50px;text-align:left;display:block;width:30%;font-size:1em'><b>Signature: </b></div>";
-	bill_message.innerHTML="<div style='bottom:10px;left:5px;text-align:left;display:block;width:60%;font-size:.8em'><textarea style='border:none;width:100%;height:100px;'>"+get_session_var('bill_message')+"</textarea></div>";
-	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em'><b>"+form_title+"</b></div></br>";
+	signature.innerHTML="<div style='float:right;text-align:left;display:block;width:30%;font-size:1em'><b>Signature: </b></div>";
+	bill_message.innerHTML="<div style='float:left;text-align:left;display:block;width:60%;font-size:.8em'><textarea style='border:none;width:100%;height:100px;'>"+get_session_var('bill_message')+"</textarea></div>";
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em;margin:2px;'><b>"+form_title+"</b></div>";
 	
 	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b><br>" +
 							"<div style='font-size:.6em;padding:5px'>VAT #: "+get_session_var('vat')+"<br>" +
 							"TIN #: "+get_session_var('tin')+"</div></div>"+
 							"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
-							"<br>Address: "+get_session_var('address')+"</div></div></br>";
-	business_title.setAttribute('style',"height:100px;padding:1%;border:2px solid black;font-size:"+font_size+"em");
+							"<br>Address: "+get_session_var('address')+"</div></div>";
+	business_title.setAttribute('style',"height:80px;padding:1%;border:2px solid black;border-bottom:none;font-size:"+font_size+"em");
 	
 	var form_master=form_id+"_master";
-	var form_body=form_id+"_body";
 	var header_element=document.getElementById(form_master);
 	var header_copy=header_element.cloneNode(true);
-	
-	var table_element=document.getElementById(form_body).parentNode;
-	var table_copy=table_element.cloneNode(true);
-	
-	table_copy.removeAttribute('class');
-	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child").remove();
-	$(table_copy).find('input,textarea').each(function(index)
-	{
-		$(this).replaceWith($(this).val());
-	});
-			
 	$(header_copy).find("a").remove();
 	$(header_copy).find("input[type=hidden],input[type=button],input[type=submit],img").remove();
 	$(header_copy).find("input[type=text],input[type=number],textarea").each(function(index)
 	{
 		$(this).replaceWith($(this).val());
 	});
-			
+	
+	if(!table_copy)
+	{
+		var table_element=document.getElementById(form_id+'_body').parentNode;
+		table_copy=table_element.cloneNode(true);
+	}
+	table_copy.removeAttribute('class');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,v1").remove();
+	$(table_copy).find('input').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+	$(table_copy).find('textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).html());
+	});
+	
 	var font_size=get_session_var('print_size');
 	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	header_copy.setAttribute('style',"padding:1%;font-size:"+font_size+"em;border:2px solid black;");
@@ -110,9 +115,9 @@ function print_tabular_form(form_id,form_title)
 	container.appendChild(business_title);
 	container.appendChild(header_copy);
 	container.appendChild(table_copy);
-	container.appendChild(bill_message);
-	container.appendChild(signature);
-	
+	footer.appendChild(bill_message);
+	footer.appendChild(signature);
+	container.appendChild(footer);
 	$.print(container);
 }
 
@@ -301,7 +306,53 @@ function form91_print_form()
  */
 function form119_print_form()
 {
-	print_tabular_form('form119','Sale Bill');
+	var new_thead="<tr>"+
+				"<th>Make</th>"+
+				"<th>Item</th>"+
+				"<th>Batch</th>" +
+				"<th>Qty.</th>" +
+				"<th>Free</th>"+
+				"<th>S. Price</th>"+
+				"<th>MRP</th>"+
+				"<th>Amount</th>" +
+				"<th>Discount</th>" +
+				"<th>Tax</th>" +
+				"<th></th>"+
+				"</tr>";
+	var table_element=document.getElementById('form119_body').parentNode;
+	var table_copy=table_element.cloneNode(true);
+	
+	var tbody=table_copy.children[1].innerHTML;
+	var new_tbody=tbody.replace(/<br>/g,'</td><td>');
+	
+	var tfoot=table_copy.children[2].innerHTML;
+	var new_tfoot=tfoot.replace(/<td>/g,"<td colspan='2'>");
+	var new_tfoot=new_tfoot.replace(/<td colspan='3'/g,"<td colspan='6'");
+	var new_tfoot=new_tfoot.replace(/<td colspan=\"3\"/g,"<td colspan='6'");
+	
+	//console.log(tbody);
+	table_copy.children[0].innerHTML=new_thead;
+	table_copy.children[1].innerHTML=new_tbody;
+	table_copy.children[2].innerHTML=new_tfoot;
+	$(table_copy).find('datalist').remove();
+	
+	var single_bill_items=parseInt(get_session_var('bill_print_items'));
+	var rows=table_copy.children[1].children.length;
+	while(rows>0)
+	{
+		var new_table_copy=table_copy.cloneNode(true);
+		
+		for(var j=single_bill_items;j<rows;j++)
+		{
+			new_table_copy.children[1].removeChild(new_table_copy.children[1].children[single_bill_items]);
+		}
+		for(var i=0;i<single_bill_items && i<rows;i++)
+		{
+			table_copy.children[1].removeChild(table_copy.children[1].children[0]);
+		}
+		rows=table_copy.children[1].children.length;
+		print_tabular_form('form119','Sale Bill',new_table_copy);
+	}
 }
 
 /**

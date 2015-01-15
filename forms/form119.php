@@ -3,9 +3,10 @@
 		<fieldset>
 			<label>Customer <img src='./images/add_image.png' class='add_image' onclick='modal11_action();'></br>
 			<input type='text' required></label>
-			<label id='form119_customer_info'></label></br>
+			<label id='form119_customer_info'></label>
 			<label>Bill Type</br><input type='text' required></label>
 			<label>Bill Date</br><input type='text' required></label>
+			<label id='form119_payment_info'></label>
 			<label>Unbilled Items</br><input readonly='readonly' type='number'></label>
 			<input type='hidden' name='bill_id'>
 			<input type='hidden' name='offer'>
