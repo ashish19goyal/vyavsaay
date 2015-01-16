@@ -54,8 +54,8 @@ function form2_add_item()
 		{
 			var offer_data="<offers>" +
 				"<offer_name></offer_name>" +
+				"<status exact='yes'>active</status>" +
 				"<product_name exact='yes'>"+names_filter.value+"</product_name>" +
-				"<status>active</status>" +
 				"</offers>";
 				
 			set_my_value_list(offer_data,offer_filter);
@@ -183,10 +183,10 @@ function form10_add_item()
 					var amount=parseFloat(prices[a].price);
 					amount_filter.value=amount;
 					var offer_data="<offers>" +
-							"<offer_type>service</offer_type>" +
-							"<service exact='yes'>"+name_filter.value+"</service>" +
+							"<offer_type exact='yes'>service</offer_type>" +
 							"<criteria_type>min amount crossed</criteria_type>" +
-							"<criteria_amount compare='less than'>"+amount+"</criteria_amount>" +
+							"<criteria_amount upperbound='yes'>"+amount+"</criteria_amount>" +
+							"<service exact='yes'>"+name_filter.value+"</service>" +
 							"<result_type></result_type>" +
 							"<discount_percent></discount_percent>" +
 							"<discount_amount></discount_amount>" +
@@ -331,8 +331,7 @@ function form12_add_item()
 			
 			var last_batch_data="<bill_items count='1'>" +
 					"<batch></batch>" +
-					"<item_name>"+name_filter.value+"</item_name>" +
-					"<last_updated sort='desc'></last_updated>" +
+					"<item_name exact='yes'>"+name_filter.value+"</item_name>" +
 					"</bill_items>";
 			get_single_column_data(function(data)
 			{
@@ -942,7 +941,7 @@ function form21_add_item()
 		
 		var storage_data="<store_areas>" +
 					"<name></name>" +
-					"<area_type>storage</area_type>" +
+					"<area_type exact='yes'>storage</area_type>" +
 					"</store_areas>";
 		set_my_value_list(storage_data,storage_filter);
 
@@ -957,7 +956,6 @@ function form21_add_item()
 			var price_data="<supplier_bill_items count='1'>" +
 					"<unit_price></unit_price>" +
 					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-					"<last_updated sort='desc'></last_updated>" +
 					"</supplier_bill_items>";
 			set_my_value(price_data,previous_price_filter);
 			
@@ -1428,7 +1426,7 @@ function form60_add_item()
 		
 		var attribute_data="<attributes>" +
 				"<attribute></attribute>" +
-				"<type>product</type>" +
+				"<type exact='yes'>product</type>" +
 				"</attributes>";
 		set_my_filter(attribute_data,attribute_filter);
 
@@ -1487,7 +1485,7 @@ function form61_add_item()
 		
 		var attribute_data="<attributes>" +
 				"<attribute></attribute>" +
-				"<type>service</type>" +
+				"<type exact='yes'>service</type>" +
 				"</attributes>";
 		set_my_filter(attribute_data,attribute_filter);
 
@@ -1682,7 +1680,7 @@ function form64_add_item()
 		
 			if(type_filter.value=='service')
 			{
-				var cross_data="<services>" +
+				cross_data="<services>" +
 					"<name></name>" +
 					"</services>";
 			}
@@ -1752,7 +1750,7 @@ function form66_add_item()
 		
 			if(type_filter.value=='service')
 			{
-				var cross_data="<services>" +
+				cross_data="<services>" +
 					"<name></name>" +
 					"</services>";
 			}
@@ -1849,9 +1847,9 @@ function form69_add_item()
 				
 				var offer_data="<offers>" +
 						"<offer_detail></offer_detail>" +
-						"<offer_type>product</offer_type>" +
+						"<offer_type exact='yes'>product</offer_type>" +
 						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-						"<status array='yes'>active--extended</status>" +
+						"<status array='yes'>--active--extended--</status>" +
 						"</offers>";
 				get_single_column_data(function(offers)
 				{
@@ -1960,8 +1958,7 @@ function form72_add_product()
 			
 			var last_batch_data="<bill_items count='1'>" +
 					"<batch></batch>" +
-					"<item_name>"+name_filter.value+"</item_name>" +
-					"<last_updated sort='desc'></last_updated>" +
+					"<item_name exact='yes'>"+name_filter.value+"</item_name>" +
 					"</bill_items>";
 			get_single_column_data(function(data)
 			{
@@ -2241,7 +2238,7 @@ function form72_add_service()
 		
 		var staff_data="<staff>" +
 				"<acc_name></acc_name>" +
-				"<status>active</status>" +
+				"<status exact='yes'>active</status>" +
 				"</staff>";
 		set_my_value_list(staff_data,staff_filter);
 		
@@ -2272,9 +2269,9 @@ function form72_add_service()
 					amount_filter.value=amount;
 					var offer_data="<offers>" +
 							"<offer_type>service</offer_type>" +
-							"<service exact='yes'>"+name_filter.value+"</service>" +
 							"<criteria_type>min amount crossed</criteria_type>" +
-							"<criteria_amount compare='less than'>"+amount+"</criteria_amount>" +
+							"<criteria_amount upperbound='yes'>"+amount+"</criteria_amount>" +
+							"<service exact='yes'>"+name_filter.value+"</service>" +
 							"<result_type></result_type>" +
 							"<discount_percent></discount_percent>" +
 							"<discount_amount></discount_amount>" +
@@ -2607,7 +2604,6 @@ function form82_add_item()
 				var last_batch_data="<bill_items count='1'>" +
 						"<batch></batch>" +
 						"<item_name exact='yes'>"+product_filter.value+"</item_name>" +
-						"<last_updated sort='desc'></last_updated>" +
 						"</bill_items>";
 				get_single_column_data(function(data)
 				{
@@ -2636,7 +2632,6 @@ function form82_add_item()
 			var last_batch_data="<bill_items count='1'>" +
 					"<batch></batch>" +
 					"<item_name exact='yes'>"+product_filter.value+"</item_name>" +
-					"<last_updated sort='desc'></last_updated>" +
 					"</bill_items>";
 			get_single_column_data(function(data)
 			{
@@ -3015,7 +3010,6 @@ function form91_add_item()
 			var last_batch_data="<bill_items count='1'>" +
 					"<batch></batch>" +
 					"<item_name exact='yes'>"+name_filter.value+"</item_name>" +
-					"<last_updated sort='desc'></last_updated>" +
 					"</bill_items>";
 			get_single_column_data(function(data)
 			{
@@ -3269,7 +3263,7 @@ function form96_add_item()
 		
 		var attribute_data="<attributes>" +
 				"<attribute></attribute>" +
-				"<type>customer</type>" +
+				"<type exact='yes'>customer</type>" +
 				"</attributes>";
 		set_my_filter(attribute_data,attribute_filter);
 
@@ -3328,7 +3322,7 @@ function form97_add_item()
 		
 		var attribute_data="<attributes>" +
 				"<attribute></attribute>" +
-				"<type>supplier</type>" +
+				"<type exact='yes'>supplier</type>" +
 				"</attributes>";
 		set_my_filter(attribute_data,attribute_filter);
 
@@ -3387,7 +3381,7 @@ function form98_add_item()
 		
 		var attribute_data="<attributes>" +
 				"<attribute></attribute>" +
-				"<type>staff</type>" +
+				"<type exact='yes'>staff</type>" +
 				"</attributes>";
 		set_my_filter(attribute_data,attribute_filter);
 
@@ -3689,7 +3683,7 @@ function form109_add_item()
 		
 		var attribute_data="<attributes>" +
 				"<attribute></attribute>" +
-				"<type>asset</type>" +
+				"<type exact='yes'>asset</type>" +
 				"</attributes>";
 		set_my_filter(attribute_data,attribute_filter);
 
@@ -4045,7 +4039,6 @@ function form119_add_item()
 			var last_batch_data="<bill_items count='1'>" +
 					"<batch></batch>" +
 					"<item_name exact='yes'>"+name_filter.value+"</item_name>" +
-					"<last_updated sort='desc'></last_updated>" +
 					"</bill_items>";
 			get_single_column_data(function(data)
 			{
@@ -4343,7 +4336,7 @@ function form122_add_item()
 		
 		var storage_data="<store_areas>" +
 					"<name></name>" +
-					"<area_type>storage</area_type>" +
+					"<area_type exact='yes'>storage</area_type>" +
 					"</store_areas>";
 		set_my_value_list(storage_data,storage_filter);
 

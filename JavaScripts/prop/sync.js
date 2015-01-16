@@ -330,7 +330,7 @@ function get_data_from_log_table(func)
 	}
 	else
 	{
-		var kv=IDBKeyRange.only('checked');
+		var kv=IDBKeyRange.bound(['checked','0'],['checked','99999999']);
 		var tables="";
 		static_local_db.transaction(['user_preferences'],"readonly").objectStore('user_preferences').index('value').openCursor(kv).onsuccess=function(e)
 		{		
@@ -346,19 +346,19 @@ function get_data_from_log_table(func)
 			}
 			else
 			{
-				var keyValue=IDBKeyRange.only('unsynced');
+				var keyValue=IDBKeyRange.bound(['unsynced','0'],['unsynced','99999999']);
 				var counter=0;
 				var log_data="";
 			
 				///////below section is taking a lot of time/////////
-				static_local_db.transaction(['activities'],"readonly").objectStore('activities').index('last_updated').openCursor(null,'next').onsuccess=function(e)
+				static_local_db.transaction(['activities'],"readonly").objectStore('activities').index('last_updated').openCursor(keyValue,'next').onsuccess=function(e)
 				{
 					var result=e.target.result;
 					if(result)
 					{
 						var record=result.value;
 						
-						if(tables.search("-"+record.tablename+"-")>-1 && record.status=='unsynced')
+						if(tables.search("-"+record.tablename+"-")>-1)
 						{
 							if(counter===200)
 							{
@@ -509,7 +509,8 @@ function get_last_sync_time(func)
 	}
 	else
 	{
-		var req=static_local_db.transaction(['user_preferences'],"readonly").objectStore('user_preferences').index('name').get('last_sync_time');
+		var kv=IDBKeyRange.bound(['last_sync_time','0'],['last_sync_time','99999999']);
+		var req=static_local_db.transaction(['user_preferences'],"readonly").objectStore('user_preferences').index('name').get(kv);
 		req.onsuccess=function(e)
 		{
 			var data=req.result;
@@ -545,7 +546,7 @@ function update_last_sync_time(func)
 	{
 		var objectStore=static_local_db.transaction(['user_preferences'],"readwrite").objectStore('user_preferences');
 		var time=get_my_time();
-		var row_data={id:'700',name:'last_sync_time',value:time,type:'other',display_name:'Last Sync Time',status:'active'};
+		var row_data={id:'700',name:'last_sync_time',value:time,type:'other',display_name:'Last Sync Time',status:'active',last_updated:'1'};
 
 		var req=objectStore.put(row_data);
 		req.onsuccess=function(e)

@@ -12,6 +12,7 @@ function report1_ini()
 	$('#report1_body').html('');
 	var report_count=2;
 	/////appending new arrivals details
+	////optimize this query
 	var product_data="<supplier_bill_items>" +
 			"<product_name>"+product_filter+"</product_name>" +
 			"<last_updated compare='more than'>"+get_raw_time(date_since)+"</last_updated>" +
@@ -500,7 +501,7 @@ function report14_ini()
 
 	var accounts_data="<accounts>" +
 			"<acc_name>"+account_name+"</acc_name>" +
-			"<type>financial</type>" +
+			"<type exact='yes'>financial</type>" +
 			"</accounts>";
 	
 	get_single_column_data(function(accounts)
@@ -610,6 +611,7 @@ function report15_ini()
 			"<date compare='less than'>"+get_raw_time(end_date)+"</date>" +
 			"<type></type>" +
 			"</payments>";
+	/////optimize this query
 	var tax_data="<transactions>" +
 			"<tax></tax>" +
 			"<trans_date compare='more than'>"+get_raw_time(start_date)+"</trans_date>" +
@@ -773,7 +775,7 @@ function report17_ini()
 	
 	var staff_data="<staff>" +
 			"<acc_name>"+staff+"</acc_name>" +
-			"<status>active</status>" +
+			"<status exact='yes'>active</status>" +
 			"</staff>";
 	get_single_column_data(function(employees)
 	{	
@@ -1486,6 +1488,7 @@ function report34_ini()
 
 	fetch_requested_data('report34',payments_data,function(payments)
 	{
+		///optimize this query
 		var tax_data="<transactions>" +
 				"<tax></tax>" +
 				"<trans_date compare='more than'>"+get_raw_time(start_date)+"</trans_date>" +
@@ -1719,7 +1722,7 @@ function report35_ini()
 
 	var product_data="<bill_items>" +
 			"<bill_id></bill_id>" +
-			"<item_name>"+product_name+"</item_name>" +
+			"<item_name exact='yes'>"+product_name+"</item_name>" +
 			"</bill_items>";
 	
 	get_single_column_data(function(bill_ids)
@@ -1805,7 +1808,7 @@ function report36_ini()
 		
 	var product_data="<supplier_bill_items>" +
 			"<bill_id></bill_id>" +
-			"<product_name>"+product_name+"</product_name>" +
+			"<product_name exact='yes'>"+product_name+"</product_name>" +
 			"</supplier_bill_items>";
 	
 	get_single_column_data(function(bill_ids)
@@ -1996,7 +1999,6 @@ function report38_ini()
 					"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
 					"<amount></amount>" +
 					"<item_name array='yes'>"+products_array+"</item_name>" +
-					"<last_updated sort='desc'></last_updated>" +
 					"</bill_items>";
 			fetch_requested_data('report38',products_data,function(product_array)
 			{

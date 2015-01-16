@@ -136,7 +136,7 @@ function set_session_variables(domain,username,pass)
 				}
 				else
 				{
-					var keyValue=IDBKeyRange.only(username);
+					var keyValue=IDBKeyRange.bound([username,'0'],[username,'99999999']);
 					static_local_db.transaction(['staff'],"readonly").objectStore('staff').index('username').openCursor(keyValue).onsuccess=function(e)
 					{
 						var result2=e.target.result;
@@ -229,7 +229,8 @@ function try_local_db_login(username,domain,func_success,func_failure)
 				var table = tran.objectStore("staff");
 				
 				var index=table.index("username");
-				var records=index.get(username);
+				var kv=IDBKeyRange.bound([username,'0'],[username,'99999999']);
+				var records=index.get(kv);
 				
 				records.onsuccess=function(e)
 				{

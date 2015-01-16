@@ -178,9 +178,9 @@ function form10_create_item(form)
 		var free_service_name=form.elements[12].value;
 		
 		var pre_requisite_data="<pre_requisites>" +
+				"<type exact='yes'>service</type>" +
+				"<requisite_type exact='yes'>task</requisite_type>" +
 				"<name exact='yes'>"+name+"</name>" +
-				"<type>service</type>" +
-				"<requisite_type>task</requisite_type>" +
 				"<requisite_name></requisite_name>" +
 				"<quantity></quantity>" +
 				"</pre_requisites>";
@@ -282,9 +282,9 @@ function form10_create_item(form)
             $('#form10_body').prepend(rowsHTML);
 
     		var free_pre_requisite_data="<pre_requisites>" +
+					"<type exact='yes'>service</type>" +
+					"<requisite_type exact='yes'>task</requisite_type>" +
 					"<name exact='yes'>"+free_service_name+"</name>" +
-					"<type>service</type>" +
-					"<requisite_type>task</requisite_type>" +
 					"<requisite_name></requisite_name>" +
 					"<quantity></quantity>" +
 					"</pre_requisites>";
@@ -412,9 +412,9 @@ function form10_create_form()
 		var offer_detail="";
 		
 		var offer_data="<offers>" +
-				"<offer_type>bill</offer_type>" +
 				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount compare='less than'>"+(amount-discount)+"</criteria_amount>" +
+				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
+				"<offer_type exact='yes'>bill</offer_type>" +
 				"<result_type></result_type>" +
 				"<discount_percent></discount_percent>" +
 				"<discount_amount></discount_amount>" +
@@ -489,9 +489,9 @@ function form10_create_form()
 	                $('#form10_body').prepend(rowsHTML);
 
 	        		var free_pre_requisite_data="<pre_requisites>" +
+							"<type exact='yes'>service</type>" +
+							"<requisite_type exact='yes'>task</requisite_type>" +
 							"<name exact='yes'>"+free_service_name+"</name>" +
-							"<type>service</type>" +
-							"<requisite_type>task</requisite_type>" +
 							"<requisite_name></requisite_name>" +
 							"<quantity></quantity>" +
 							"</pre_requisites>";
@@ -739,8 +739,7 @@ function form12_create_item(form)
 				{
 					var free_batch_data="<bill_items count='1'>" +
 							"<batch></batch>" +
-							"<item_name>"+free_product_name+"</item_name>" +
-							"<last_updated sort='desc'></last_updated>" +
+							"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 							"</bill_items>";
 					get_single_column_data(function(data)
 					{
@@ -878,9 +877,9 @@ function form12_create_form()
 		var offer_detail="";
 		
 		var offer_data="<offers>" +
-				"<offer_type>bill</offer_type>" +
 				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount compare='less than'>"+(amount-discount)+"</criteria_amount>" +
+				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
+				"<offer_type exact='yes'>bill</offer_type>" +
 				"<result_type></result_type>" +
 				"<discount_percent></discount_percent>" +
 				"<discount_amount></discount_amount>" +
@@ -931,8 +930,7 @@ function form12_create_form()
 						{
 							var free_batch_data="<bill_items count='1'>" +
 									"<batch></batch>" +
-									"<item_name>"+free_product_name+"</item_name>" +
-									"<last_updated sort='desc'></last_updated>" +
+									"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 									"</bill_items>";
 							get_single_column_data(function(data)
 							{
@@ -1734,9 +1732,9 @@ function form21_create_item(form)
 		///////////adding store placement////////
 		var storage_data="<area_utilization>" +
 				"<id></id>" +
-				"<name>"+storage+"</name>" +
-				"<item_name>"+name+"</item_name>" +
-				"<batch>"+batch+"</batch>" +
+				"<name exact='yes'>"+storage+"</name>" +
+				"<item_name exact='yes'>"+name+"</item_name>" +
+				"<batch exact='yes'>"+batch+"</batch>" +
 				"</area_utilization>";
 		fetch_requested_data('',storage_data,function(placements)
 		{
@@ -2948,7 +2946,6 @@ function form70_bill(order_id)
 								"<batch></batch>" +
 								"<sale_price></sale_price>" +
 								"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
-								"<last_updated sort='desc'></last_updated>" +
 								"</product_instances>";
 						fetch_requested_data('',batch_data,function(batches)
 						{
@@ -3036,8 +3033,7 @@ function form70_bill(order_id)
 												{
 													var free_batch_data="<bill_items count='1'>" +
 															"<batch></batch>" +
-															"<item_name>"+free_product_name+"</item_name>" +
-															"<last_updated sort='desc'></last_updated>" +
+															"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 															"</bill_items>";
 													get_single_column_data(function(data)
 													{
@@ -3115,8 +3111,7 @@ function form70_bill(order_id)
 												{
 													var free_batch_data="<bill_items count='1'>" +
 															"<batch></batch>" +
-															"<item_name>"+free_product_name+"</item_name>" +
-															"<last_updated sort='desc'></last_updated>" +
+															"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 															"</bill_items>";
 													get_single_column_data(function(data)
 													{
@@ -3235,16 +3230,16 @@ function form70_bill(order_id)
 	  		   			"<customer_name></customer_name>" +
 	  		   			"<order_date></order_date>" +
 	  		   			"<type>product</type>" +
-	  		   			"<status>pending</status>" +
+	  		   			"<status exact='yes'>pending</status>" +
 	  		   			"</sale_orders>";
 	  		   	fetch_requested_data('',order_data,function(sale_orders)
 	  		   	{
 	  		   		console.log(sale_orders);
 	  		   		///////////////////////////////////////////////////////////
 	  		   		var offer_data="<offers>" +
-							"<offer_type exact='yes'>bill</offer_type>" +
 							"<criteria_type exact='yes'>min amount crossed</criteria_type>" +
-							"<criteria_amount compare='less than'>"+(bill_amount-bill_discount)+"</criteria_amount>" +
+							"<criteria_amount upperbound='yes'>"+(bill_amount-bill_discount)+"</criteria_amount>" +
+							"<offer_type exact='yes'>bill</offer_type>" +
 							"<result_type></result_type>" +
 							"<discount_percent></discount_percent>" +
 							"<discount_amount></discount_amount>" +
@@ -3295,8 +3290,7 @@ function form70_bill(order_id)
 									{
 										var free_batch_data="<bill_items count='1'>" +
 												"<batch></batch>" +
-												"<item_name>"+free_product_name+"</item_name>" +
-												"<last_updated sort='desc'></last_updated>" +
+												"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 												"</bill_items>";
 										get_single_column_data(function(data)
 										{
@@ -3471,9 +3465,9 @@ function form72_create_item(form)
 		if(isNaN(form.elements[2].value))
 		{
 			var pre_requisite_data="<pre_requisites>" +
+					"<type exact='yes'>service</type>" +
+					"<requisite_type exact='yes'>task</requisite_type>" +
 					"<name exact='yes'>"+name+"</name>" +
-					"<type>service</type>" +
-					"<requisite_type>task</requisite_type>" +
 					"<requisite_name></requisite_name>" +
 					"<quantity></quantity>" +
 					"</pre_requisites>";
@@ -3641,8 +3635,7 @@ function form72_create_item(form)
 				{
 					var free_batch_data="<bill_items count='1'>" +
 							"<batch></batch>" +
-							"<item_name>"+free_product_name+"</item_name>" +
-							"<last_updated sort='desc'></last_updated>" +
+							"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 							"</bill_items>";
 					get_single_column_data(function(data)
 					{
@@ -3781,9 +3774,9 @@ function form72_create_form()
 		var offer_detail="";
 		
 		var offer_data="<offers>" +
-				"<offer_type>bill</offer_type>" +
 				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount compare='less than'>"+(amount-discount)+"</criteria_amount>" +
+				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
+				"<offer_type exact='yes'>bill</offer_type>" +
 				"<result_type></result_type>" +
 				"<discount_percent></discount_percent>" +
 				"<discount_amount></discount_amount>" +
@@ -3835,8 +3828,7 @@ function form72_create_form()
 						{
 							var free_batch_data="<bill_items count='1'>" +
 									"<batch></batch>" +
-									"<item_name>"+free_product_name+"</item_name>" +
-									"<last_updated sort='desc'></last_updated>" +
+									"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 									"</bill_items>";
 							get_single_column_data(function(data)
 							{
@@ -3952,9 +3944,9 @@ function form72_create_form()
 	                $('#form72_body').prepend(rowsHTML);
 
 	                var free_pre_requisite_data="<pre_requisites>" +
+							"<type exact='yes'>service</type>" +
+							"<requisite_type exact='yes'>task</requisite_type>" +
 							"<name exact='yes'>"+free_service_name+"</name>" +
-							"<type>service</type>" +
-							"<requisite_type>task</requisite_type>" +
 							"<requisite_name></requisite_name>" +
 							"<quantity></quantity>" +
 							"</pre_requisites>";
@@ -4418,8 +4410,7 @@ function form82_bill()
 								{
 									var free_batch_data="<bill_items count='1'>" +
 											"<batch></batch>" +
-											"<item_name>"+free_product_name+"</item_name>" +
-											"<last_updated sort='desc'></last_updated>" +
+											"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 											"</bill_items>";
 									get_single_column_data(function(data)
 									{
@@ -4496,8 +4487,7 @@ function form82_bill()
 								{
 									var free_batch_data="<bill_items count='1'>" +
 											"<batch></batch>" +
-											"<item_name>"+free_product_name+"</item_name>" +
-											"<last_updated sort='desc'></last_updated>" +
+											"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 											"</bill_items>";
 									get_single_column_data(function(data)
 									{
@@ -4601,9 +4591,9 @@ function form82_bill()
 		  		
 	  		   		///////////////////////////////////////////////////////////
   		   		var offer_data="<offers>" +
-						"<offer_type>bill</offer_type>" +
 						"<criteria_type>min amount crossed</criteria_type>" +
-						"<criteria_amount sort='desc' compare='less than'>"+(bill_amount-bill_discount)+"</criteria_amount>" +
+						"<criteria_amount upperbound='yes'>"+(bill_amount-bill_discount)+"</criteria_amount>" +
+						"<offer_type exact='yes'>bill</offer_type>" +
 						"<result_type></result_type>" +
 						"<discount_percent></discount_percent>" +
 						"<discount_amount></discount_amount>" +
@@ -4616,6 +4606,10 @@ function form82_bill()
 						"</offers>";
 				fetch_requested_data('',offer_data,function(offers)
 				{
+					////sort offers based on criteria amount
+					
+					//////////////
+					
 					for(var i in offers)
 					{
 						if(offers[i].result_type=='discount')
@@ -4646,8 +4640,7 @@ function form82_bill()
 								{
 									var free_batch_data="<bill_items count='1'>" +
 											"<batch></batch>" +
-											"<item_name>"+free_product_name+"</item_name>" +
-											"<last_updated sort='desc'></last_updated>" +
+											"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 											"</bill_items>";
 									get_single_column_data(function(data)
 									{
@@ -4883,9 +4876,9 @@ function form84_bills()
 			"<id></id>" +
 			"<customer></customer>" +
 			"<service></service>" +
-			"<status>active</status>" +
+			"<status exact='yes'>active</status>" +
 			"<notes></notes>" +
-			"<next_due_date compare='less than'>"+due_lead_time+"</next_due_date>" +
+			"<next_due_date upperbound='yes'>"+due_lead_time+"</next_due_date>" +
 			"</service_subscriptions>";
 	
 	fetch_requested_data('',subscriptions_data,function(subscriptions)
@@ -4956,9 +4949,9 @@ function form84_bills()
 								var free_service_name=offers[i].free_service_name;	
 								var id=get_new_key();
 				        		var free_pre_requisite_data="<pre_requisites>" +
+										"<type exact='yes'>service</type>" +
+										"<requisite_type exact='yes'>task</requisite_type>" +
 										"<name exact='yes'>"+free_service_name+"</name>" +
-										"<type>service</type>" +
-										"<requisite_type>task</requisite_type>" +
 										"<requisite_name></requisite_name>" +
 										"<quantity></quantity>" +
 										"</pre_requisites>";
@@ -5047,9 +5040,9 @@ function form84_bills()
 								var free_service_name=offers[i].free_service_name;	
 								var id=get_new_key();
 				        		var free_pre_requisite_data="<pre_requisites>" +
+										"<type exact='yes'>service</type>" +
+										"<requisite_type exact='yes'>task</requisite_type>" +
 										"<name exact='yes'>"+free_service_name+"</name>" +
-										"<type>service</type>" +
-										"<requisite_type>task</requisite_type>" +
 										"<requisite_name></requisite_name>" +
 										"<quantity></quantity>" +
 										"</pre_requisites>";
@@ -5216,9 +5209,9 @@ function form84_bills()
 					////adding pre-requisite tasks
 					
 					var pre_requisite_data="<pre_requisites>" +
+							"<type exact='yes'>service</type>" +
+							"<requisite_type exact='yes'>task</requisite_type>" +
 							"<name exact='yes'>"+subscription.service+"</name>" +
-							"<type>service</type>" +
-							"<requisite_type>task</requisite_type>" +
 							"<requisite_name></requisite_name>" +
 							"<quantity></quantity>" +
 							"</pre_requisites>";
@@ -5263,9 +5256,9 @@ function form84_bills()
 					
 					////////////updating subscription//////////////
 					var subscription_period_data="<attributes>" +
-							"<name exact='yes'>"+subscription.service+"</name>" +
-							"<type>service</type>" +
+							"<type exact='yes'>service</type>" +
 							"<attribute>subscription period</attribute>" +
+							"<name exact='yes'>"+subscription.service+"</name>" +
 							"<value></value>" +
 							"</attributes>";
 					fetch_requested_data('',subscription_period_data,function(periods)
@@ -5368,9 +5361,9 @@ function form88_create_item(form)
 		if(status=='scheduled')
 		{
 			var pre_requisite_data="<pre_requisites>" +
+					"<type exact='yes'>product</type>" +
+					"<requisite_type exact='yes'>task</requisite_type>" +
 					"<name exact='yes'>"+product+"</name>" +
-					"<type>product</type>" +
-					"<requisite_type>task</requisite_type>" +
 					"<requisite_name></requisite_name>" +
 					"<quantity></quantity>" +
 					"</pre_requisites>";
@@ -5683,8 +5676,7 @@ function form91_create_item(form)
 				{
 					var free_batch_data="<bill_items count='1'>" +
 							"<batch></batch>" +
-							"<item_name>"+free_product_name+"</item_name>" +
-							"<last_updated sort='desc'></last_updated>" +
+							"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 							"</bill_items>";
 					get_single_column_data(function(data)
 					{
@@ -5823,9 +5815,9 @@ function form91_create_form()
 		var offer_detail="";
 		
 		var offer_data="<offers>" +
-				"<offer_type>bill</offer_type>" +
 				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount compare='less than'>"+(amount-discount)+"</criteria_amount>" +
+				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
+				"<offer_type exact='yes'>bill</offer_type>" +
 				"<result_type></result_type>" +
 				"<discount_percent></discount_percent>" +
 				"<discount_amount></discount_amount>" +
@@ -5876,8 +5868,7 @@ function form91_create_form()
 						{
 							var free_batch_data="<bill_items count='1'>" +
 									"<batch></batch>" +
-									"<item_name>"+free_product_name+"</item_name>" +
-									"<last_updated sort='desc'></last_updated>" +
+									"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 									"</bill_items>";
 							get_single_column_data(function(data)
 							{
@@ -6601,7 +6592,6 @@ function form108_bill(order_id,bill_type)
 								"<batch></batch>" +
 								"<sale_price></sale_price>" +
 								"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
-								"<last_updated sort='desc'></last_updated>" +
 								"</product_instances>";
 						fetch_requested_data('',batch_data,function(batches)
 						{
@@ -6616,9 +6606,9 @@ function form108_bill(order_id,bill_type)
 				
 							var price_data="<sale_prices count='1'>" +
 									"<sale_price></sale_price>" +
+									"<billing_type exact='yes'>"+bill_type+"</billing_type>" +
 									"<batch exact='yes'>"+batch+"</batch>" +
 									"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
-									"<billing_type>"+bill_type+"</billing_type>" +
 									"</sale_prices>";
 							get_single_column_data(function(sale_prices)
 							{
@@ -6701,8 +6691,7 @@ function form108_bill(order_id,bill_type)
 													{
 														var free_batch_data="<bill_items count='1'>" +
 																"<batch></batch>" +
-																"<item_name>"+free_product_name+"</item_name>" +
-																"<last_updated sort='desc'></last_updated>" +
+																"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 																"</bill_items>";
 														get_single_column_data(function(data)
 														{
@@ -6780,8 +6769,7 @@ function form108_bill(order_id,bill_type)
 													{
 														var free_batch_data="<bill_items count='1'>" +
 																"<batch></batch>" +
-																"<item_name>"+free_product_name+"</item_name>" +
-																"<last_updated sort='desc'></last_updated>" +
+																"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 																"</bill_items>";
 														get_single_column_data(function(data)
 														{
@@ -6902,16 +6890,16 @@ function form108_bill(order_id,bill_type)
 	  		   			"<customer_name></customer_name>" +
 	  		   			"<order_date></order_date>" +
 	  		   			"<type>product</type>" +
-	  		   			"<status>pending</status>" +
+	  		   			"<status exact='yes'>pending</status>" +
 	  		   			"</sale_orders>";
 	  		   	fetch_requested_data('',order_data,function(sale_orders)
 	  		   	{
 	  		   		console.log(sale_orders);
 	  		   		///////////////////////////////////////////////////////////
 	  		   		var offer_data="<offers>" +
-							"<offer_type exact='yes'>bill</offer_type>" +
 							"<criteria_type exact='yes'>min amount crossed</criteria_type>" +
-							"<criteria_amount compare='less than'>"+(bill_amount-bill_discount)+"</criteria_amount>" +
+							"<criteria_amount upperbound='yes'>"+(bill_amount-bill_discount)+"</criteria_amount>" +
+							"<offer_type exact='yes'>bill</offer_type>" +
 							"<result_type></result_type>" +
 							"<discount_percent></discount_percent>" +
 							"<discount_amount></discount_amount>" +
@@ -6962,8 +6950,7 @@ function form108_bill(order_id,bill_type)
 									{
 										var free_batch_data="<bill_items count='1'>" +
 												"<batch></batch>" +
-												"<item_name>"+free_product_name+"</item_name>" +
-												"<last_updated sort='desc'></last_updated>" +
+												"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 												"</bill_items>";
 										get_single_column_data(function(data)
 										{
@@ -7495,7 +7482,6 @@ function form119_create_item(form)
 					var free_batch_data="<bill_items count='1'>" +
 							"<batch></batch>" +
 							"<item_name exact='yes'>"+free_product_name+"</item_name>" +
-							"<last_updated sort='desc'></last_updated>" +
 							"</bill_items>";
 					get_single_column_data(function(data)
 					{
@@ -7642,9 +7628,9 @@ function form119_create_form()
 		var offer_detail="";
 		
 		var offer_data="<offers>" +
-				"<offer_type>bill</offer_type>" +
 				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount compare='less than'>"+(amount-discount)+"</criteria_amount>" +
+				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
+				"<offer_type exact='yes'>bill</offer_type>" +
 				"<result_type></result_type>" +
 				"<discount_percent></discount_percent>" +
 				"<discount_amount></discount_amount>" +
@@ -7696,7 +7682,6 @@ function form119_create_form()
 							var free_batch_data="<bill_items count='1'>" +
 									"<batch></batch>" +
 									"<item_name>"+free_product_name+"</item_name>" +
-									"<last_updated sort='desc'></last_updated>" +
 									"</bill_items>";
 							get_single_column_data(function(data)
 							{
@@ -7990,9 +7975,9 @@ function form122_create_item(form)
 		///////////adding store placement////////
 		var storage_data="<area_utilization>" +
 				"<id></id>" +
-				"<name>"+storage+"</name>" +
-				"<item_name>"+name+"</item_name>" +
-				"<batch>"+batch+"</batch>" +
+				"<name exact='yes'>"+storage+"</name>" +
+				"<item_name exact='yes'>"+name+"</item_name>" +
+				"<batch exact='yes'>"+batch+"</batch>" +
 				"</area_utilization>";
 		fetch_requested_data('',storage_data,function(placements)
 		{

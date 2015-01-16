@@ -52,7 +52,7 @@ function create_local_db(domain,func)
 								var indexing=tables[k].childNodes[i].getAttribute('index');
 								if(indexing=='yes')
 								{
-									table.createIndex(tables[k].childNodes[i].nodeName,[tables[k].childNodes[i].nodeName,'last_updated']);
+									table.createIndex(tables[k].childNodes[i].nodeName,tables[k].childNodes[i].nodeName);
 								}
 							}		
 						}
@@ -172,43 +172,38 @@ function local_read_single_column(columns,callback,results)
 				count=parseInt(data.childNodes[0].getAttribute('count'));
 			}
 			var sort_index='last_updated';
-			var sort_order='prev';
-			var lowerbound=['0','0'];
-			var upperbound=['9999999999','9999999999'];
+			var sec_sort_index="";
+			var sec_sort_order="";
+			var sort_order='desc';
+			var sort_key=IDBKeyRange.lowerBound(0);
 			
 			var filter=new Array();
 			
 			for(var j=0; j<tcols.length;j++)
 			{
+				if(tcols[j].innerHTML!=null && tcols[j].hasAttribute('sort'))
+				{
+					sec_sort_index=tcols[j].nodeName;
+					sec_sort_order=tcols[j].getAttribute('sort');
+				}
+				
 				if(tcols[j].innerHTML!=null && tcols[j].innerHTML!="")
 				{
 					var fil=new Object();
 					fil.name=tcols[j].nodeName;
-					
-					if(tcols[j].hasAttribute('lowerbound'))
+					if(tcols[j].hasAttribute('compare'))
 					{
-						fil.value=parseFloat(tcols[j].innerHTML);
-						fil.type='lowerbound';
+						fil.value=parseInt(tcols[j].innerHTML);
+						fil.type=tcols[j].getAttribute('compare');
 						filter.push(fil);
-						lowerbound=[fil.value,'0'];
-						sort_index=tcols[j].nodeName;
 					}
-					if(tcols[j].hasAttribute('upperbound'))
-					{
-						fil.value=parseFloat(tcols[j].innerHTML);
-						fil.type='lowerbound';
-						filter.push(fil);
-						upperbound=[fil.value,'999999999999'];
-						sort_index=tcols[j].nodeName;
-					}
-					
-					if(tcols[j].hasAttribute('array'))
+					else if(tcols[j].hasAttribute('array'))
 					{
 						fil.value=tcols[j].innerHTML;
 						fil.type='array';
 						filter.push(fil);
 					}
-					else if(!(tcols[j].hasAttributes()))
+					else
 					{
 						fil.value=tcols[j].innerHTML;
 						fil.type='';
@@ -221,16 +216,21 @@ function local_read_single_column(columns,callback,results)
 					fil.name=tcols[j].nodeName;
 					fil.value=tcols[j].innerHTML;
 					fil.type='exact';
-					filter.push(fil);
 					sort_index=tcols[j].nodeName;
-					lowerbound=[fil.value,'0'];
-					upperbound=[fil.value,'99999999'];
+					sort_key=IDBKeyRange.only(fil.value);
 				}
 			}
 			
-			var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
-			
 			localdb_open_requests+=1;
+	
+			if(sort_order=='asc')
+			{
+				sort_order='next';
+			}
+			else
+			{
+				sort_order='prev';
+			}
 	
 			static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order).onsuccess=function(e)
 			{
@@ -261,7 +261,7 @@ function local_read_single_column(columns,callback,results)
 						{
 							found=search.indexOf("-"+string+"-");
 						}
-						else if(filter[i].type=='upperbound') 
+						if(filter[i].type=='less than') 
 						{
 							if(parseFloat(record[filter[i].name])>=filter[i].value)
 							{
@@ -269,7 +269,7 @@ function local_read_single_column(columns,callback,results)
 								break;
 							}
 						}
-						else if(filter[i].type=='lowerbound') 
+						else if(filter[i].type=='more than') 
 						{
 							if(parseFloat(record[filter[i].name])<=filter[i].value)
 							{
@@ -277,7 +277,23 @@ function local_read_single_column(columns,callback,results)
 								break;
 							}
 						}
-						
+						else if(filter[i].type=='equal') 
+						{
+							if(parseFloat(record[filter[i].name])!=filter[i].value)
+							{
+								match=false;
+								break;
+							}
+						}
+						else if(filter[i].type=='not equal') 
+						{
+							if(parseFloat(record[filter[i].name])==filter[i].value)
+							{
+								match=false;
+								break;
+							}
+						}
+	
 						if(found==-1)
 						{
 							match=false;
@@ -346,41 +362,36 @@ function local_read_multi_column(columns,callback,results)
 		}
 		var filter=new Array();
 		var sort_index='last_updated';
-		var sort_order='prev';
-		var lowerbound=['0','0'];
-		var upperbound=['9999999999','9999999999'];
-		
+		var sort_order='desc';
+		var sort_key=IDBKeyRange.lowerBound(0);
+
 		for(var j=0;j<cols.length;j++)
 		{
+			if(cols[j].innerHTML!=null && cols[j].hasAttribute('sort'))
+			{
+				if(sort_index=='last_updated')
+					sort_index=cols[j].nodeName;
+				sort_order=cols[j].getAttribute('sort');
+			}
+			
 			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
 			{
 				var fil=new Object();
 				fil.name=cols[j].nodeName;
 				
-				if(cols[j].hasAttribute('lowerbound'))
+				if(cols[j].hasAttribute('compare'))
 				{
-					fil.value=parseFloat(cols[j].innerHTML);
-					fil.type='lowerbound';
+					fil.value=parseInt(cols[j].innerHTML);
+					fil.type=cols[j].getAttribute('compare');
 					filter.push(fil);
-					lowerbound=[fil.value,'0'];
-					sort_index=cols[j].nodeName;
 				}
-				if(cols[j].hasAttribute('upperbound'))
-				{
-					fil.value=parseFloat(cols[j].innerHTML);
-					fil.type='lowerbound';
-					filter.push(fil);
-					upperbound=[fil.value,'999999999999'];
-					sort_index=cols[j].nodeName;
-				}
-				
-				if(cols[j].hasAttribute('array'))
+				else if(cols[j].hasAttribute('array'))
 				{
 					fil.value=cols[j].innerHTML;
 					fil.type='array';
 					filter.push(fil);
 				}
-				else if(!(cols[j].hasAttributes()))
+				else
 				{
 					fil.value=cols[j].innerHTML;
 					fil.type='';
@@ -393,15 +404,22 @@ function local_read_multi_column(columns,callback,results)
 				fil.name=cols[j].nodeName;
 				fil.value=cols[j].innerHTML;
 				fil.type='exact';
-				filter.push(fil);
 				sort_index=cols[j].nodeName;
-				lowerbound=[fil.value,'0'];
-				upperbound=[fil.value,'99999999'];
+				sort_key=IDBKeyRange.only(fil.value);
 			}
 		}
 	
-		var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
 		localdb_open_requests+=1;
+		
+		if(sort_order=='asc')
+		{
+			sort_order='next';
+		}
+		else
+		{
+			sort_order='prev';
+		}
+		
 		var objectstore=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index);
 		
 		if(filter.length>0)
@@ -449,7 +467,7 @@ function local_read_multi_column(columns,callback,results)
 						break;
 					}
 					
-					if(filter[i].type=='upperbound') 
+					if(filter[i].type=='less than') 
 					{
 						if(parseFloat(record[filter[i].name])>=filter[i].value)
 						{
@@ -457,9 +475,25 @@ function local_read_multi_column(columns,callback,results)
 							break;
 						}
 					}
-					else if(filter[i].type=='lowerbound') 
+					else if(filter[i].type=='more than') 
 					{
 						if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
+						{
+							match=false;
+							break;
+						}
+					}
+					else if(filter[i].type=='equal') 
+					{
+						if(parseFloat(record[filter[i].name])!=parseFloat(filter[i].value))
+						{
+							match=false;
+							break;
+						}
+					}
+					else if(filter[i].type=='not equal') 
+					{
+						if(parseFloat(record[filter[i].name])==parseFloat(filter[i].value))
 						{
 							match=false;
 							break;
@@ -898,7 +932,7 @@ function local_create_row(data_xml,activity_xml)
 		else
 		{
 			var data_row=new Object();
-			var key=IDBKeyRange.bound([unique[0].value,'0'],[unique[0].value,'99999999']);
+			var key=IDBKeyRange.only(unique[0].value);
 			objectStore.index(unique[0].name).openCursor(key).onsuccess=function(e)
 			{
 				var result=e.target.result;
@@ -1013,7 +1047,7 @@ function local_create_simple(data_xml)
 		{
 			//console.log("unique length is non-zero");
 			var data_row=new Object();
-			var key=IDBKeyRange.bound([unique[0].value,'0'],[unique[0].value,'99999999']);
+			var key=IDBKeyRange.only(unique[0].value);
 			objectStore.index(unique[0].name).openCursor(key).onsuccess=function(e)
 			{
 				var result=e.target.result;
@@ -1133,8 +1167,7 @@ function local_create_batch(data_xml)
 				
 				if(unique.length>0)
 				{
-					var kv=IDBKeyRange.bound([data_row[unique[0].name],'0'],[data_row[unique[0].name],'99999999']);
-					os1.index(unique[0].name).get(kv).onsuccess=function(e)
+					os1.index(unique[0].name).get(data_row[unique[0].name]).onsuccess=function(e)
 					{
 						var data_record=e.target.result;
 						if(data_record)
@@ -1281,7 +1314,7 @@ function local_create_simple_func(data_xml,func)
 		{
 			//console.log("unique length is non-zero");
 			var data_row=new Object();
-			var key=IDBKeyRange.bound([unique[0].value,'0'],[unique[0].value,'99999999']);
+			var key=IDBKeyRange.only(unique[0].value);
 			objectStore.index(unique[0].name).openCursor(key).onsuccess=function(e)
 			{
 				var result=e.target.result;
@@ -1396,7 +1429,7 @@ function local_create_simple_no_warning(data_xml)
 		{
 			//console.log("unique length is non-zero");
 			var data_row=new Object();
-			var key=IDBKeyRange.bound([unique[0].value,'0'],[unique[0].value,'99999999']);
+			var key=IDBKeyRange.only(unique[0].value);
 			objectStore.index(unique[0].name).openCursor(key).onsuccess=function(e)
 			{
 				var result=e.target.result;
@@ -1526,7 +1559,7 @@ function local_delete_row(data_xml,activity_xml)
 		}
 		else
 		{
-			var keyValue=IDBKeyRange.bound([filter[0].value,'0'],[filter[0].value,'99999999']);
+			var keyValue=IDBKeyRange.only(filter[0].value);
 			var delete_ids_array=[];
 			objectStore.index(filter[0].name).openCursor(keyValue).onsuccess=function(e)
 			{
@@ -1706,7 +1739,7 @@ function local_delete_simple(data_xml)
 		else
 		{
 			show_loader();
-			var keyValue=IDBKeyRange.bound([filter[0].value,'0'],[filter[0].value,'99999999']);
+			var keyValue=IDBKeyRange.only(filter[0].value);
 			var delete_ids_array=[];
 			objectStore.index(filter[0].name).openCursor(keyValue).onsuccess=function(e)
 			{
@@ -1883,7 +1916,7 @@ function local_delete_simple_func(data_xml,func)
 		}
 		else
 		{
-			var keyValue=IDBKeyRange.bound([filter[0].value,'0'],[filter[0].value,'99999999']);
+			var keyValue=IDBKeyRange.only(filter[0].value);
 			var delete_ids_array=[];
 			objectStore.index(filter[0].name).openCursor(keyValue).onsuccess=function(e)
 			{
@@ -1998,7 +2031,8 @@ function local_get_inventory(product,batch,callback)
 		var result=0;
 		var transaction=static_local_db.transaction(['bill_items','supplier_bill_items','supplier_return_items','inventory_adjust','customer_return_items','discarded'],"readonly");
 		
-		var keyValue=IDBKeyRange.bound([product,'0'],[product,'99999999']);
+		var keyValue=IDBKeyRange.only(product);
+		
 		transaction.objectStore('bill_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 		{
 			var bi_result=e.target.result;
@@ -2159,7 +2193,7 @@ function local_generate_report(report_id,results,callback)
 		var field_conditions=[];
 		var value_conditions=[];
 		
-		var keyValue=IDBKeyRange.bound([report_id,'0'],[report_id,'99999999']);
+		var keyValue=IDBKeyRange.only(report_id);
 		static_local_db.transaction(['report_items'],"readonly").objectStore('report_items').index('report_id').openCursor(keyValue).onsuccess=function(e)
 		{
 			var result=e.target.result;

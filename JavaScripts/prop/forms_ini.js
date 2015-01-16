@@ -145,7 +145,7 @@ function form2_ini()
 				"</pamphlets>";
 		var pamphlet_item_columns="<pamphlet_items>" +
 				"<id></id>" +
-				"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
+				"<pamphlet_id exact='yes'>"+pamphlet_id+"</pamphlet_id>" +
 				"<item_name></item_name>" +
 				"<offer_name></offer_name>" +
 				"<offer></offer>" +
@@ -334,7 +334,7 @@ function form7_ini()
 	
 	var columns="<attendance>" +
 			"<id>"+fid+"</id>" +
-			"<date>"+get_raw_time(fdate)+"</date>" +
+			"<date exact='yes'>"+get_raw_time(fdate)+"</date>" +
 			"<acc_name>"+fstaff+"</acc_name>" +
 			"<presence>"+fattendance+"</presence>" +
 			"<hours_worked></hours_worked>" +
@@ -348,7 +348,7 @@ function form7_ini()
 		{
 			var staff_columns="<staff>" +
 					"<acc_name></acc_name>" +
-					"<status>active</status>" +
+					"<status exact='yes'>active</status>" +
 					"</staff>";
 			fetch_requested_data('form7',staff_columns,function(staff_names)
 			{
@@ -602,7 +602,7 @@ function form10_ini()
 				"<discount></discount>" +
 				"<offer></offer>" +
 				"<type></type>" +
-				"<bill_id>"+bill_id+"</bill_id>" +
+				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"<tax></tax>" +
 				"</bill_items>";
 	
@@ -896,7 +896,7 @@ function form12_ini()
 				"<discount></discount>" +
 				"<offer></offer>" +
 				"<type></type>" +
-				"<bill_id>"+bill_id+"</bill_id>" +
+				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"<tax></tax>" +
 				"<free_with></free_with>" +
 				"</bill_items>";
@@ -1164,7 +1164,7 @@ function form15_ini()
 				"</customer_returns>";
 		var return_items_column="<customer_return_items>" +
 				"<id></id>" +
-				"<return_id>"+data_id+"</return_id>" +
+				"<return_id exact='yes'>"+data_id+"</return_id>" +
 				"<item_name></item_name>" +
 				"<batch></batch>" +
 				"<notes></notes>" +
@@ -1528,7 +1528,7 @@ function form19_ini()
 				"</supplier_returns>";
 		var return_items_column="<supplier_return_items>" +
 				"<id></id>" +
-				"<return_id>"+data_id+"</return_id>" +
+				"<return_id exact='yes'>"+data_id+"</return_id>" +
 				"<item_name></item_name>" +
 				"<batch></batch>" +
 				"<notes></notes>" +
@@ -1784,7 +1784,7 @@ function form24_ini()
 				"<id></id>" +
 				"<product_name></product_name>" +
 				"<quantity></quantity>" +
-				"<order_id>"+order_id+"</order_id>" +
+				"<order_id exact='yes'>"+order_id+"</order_id>" +
 				"<make></make>" +
 				"<price></price>" +
 				"</purchase_order_items>";
@@ -2282,8 +2282,8 @@ function form39_ini()
 			var picture_column="<documents>" +
 					"<id></id>" +
 					"<url></url>" +
-					"<doc_type>product_master</doc_type>" +
-					"<target_id>"+result.id+"</target_id>" +
+					"<doc_type exact='yes'>product_master</doc_type>" +
+					"<target_id exact='yes'>"+result.id+"</target_id>" +
 					"</documents>";
 			fetch_requested_data('form39',picture_column,function(pic_results)
 			{
@@ -2596,7 +2596,7 @@ function form41_ini()
 					"<lat></lat>" +
 					"<lng></lng>" +
 					"<acc_name></acc_name>" +
-					"<address_status>unconfirmed</address_status>" +
+					"<address_status exact='yes'>unconfirmed</address_status>" +
 					"<address></address>" +
 					"<pincode></pincode>" +
 					"<city></city>" +
@@ -3029,8 +3029,8 @@ function form46_ini()
 			"<name></name>" +
 			"<display_name>"+fname+"</display_name>" +
 			"<value></value>" +
-			"<status>active</status>" +
-			"<type>other</type>" +
+			"<status exact='yes'>active</status>" +
+			"<type exact='yes'>other</type>" +
 			"</user_preferences>";
 
 	$('#form46_body').html("");
@@ -3134,8 +3134,8 @@ function form48_ini()
 			"<name></name>" +
 			"<display_name>"+fname+"</display_name>" +
 			"<value></value>" +
-			"<status>active</status>" +
-			"<type>report</type>" +
+			"<status exact='yes'>active</status>" +
+			"<type exact='yes'>report</type>" +
 			"</user_preferences>";
 
 	$('#form48_body').html("");
@@ -3234,8 +3234,8 @@ function form49_ini()
 			"<name></name>" +
 			"<display_name>"+fname+"</display_name>" +
 			"<value></value>" +
-			"<status>active</status>" +
-			"<type>form</type>" +
+			"<status exact='yes'>active</status>" +
+			"<type exact='yes'>form</type>" +
 			"</user_preferences>";
 
 	$('#form49_body').html("");
@@ -3337,8 +3337,8 @@ function form50_ini()
 		"<name></name>" +
 		"<display_name>"+fname+"</display_name>" +
 		"<value></value>" +
-		"<status>active</status>" +
-		"<type>accounting</type>" +
+		"<status exact='yes'>active</status>" +
+		"<type exact='yes'>accounting</type>" +
 		"</user_preferences>";
 
 	$('#form50_body').html("");
@@ -3458,10 +3458,10 @@ function form51_ini()
 				//console.log('new user');
 				var elements_name="<access_control>" +
 							"<id></id>" +
-							"<username exact='yes'>master</username>"+
 							"<element_id></element_id>"+
 							"<element_name></element_name>"+
-							"<status>active</status>"+
+							"<status exact='yes'>active</status>"+
+							"<username exact='yes'>master</username>"+
 							"</access_control>";
 				
 				fetch_requested_data('form51',elements_name,function(elements)
@@ -3701,8 +3701,8 @@ function form54_ini()
 			"<name></name>" +
 			"<display_name>"+fname+"</display_name>" +
 			"<value></value>" +
-			"<status>active</status>" +
-			"<type>template</type>" +
+			"<status exact='yes'>active</status>" +
+			"<type exact='yes'>template</type>" +
 			"</user_preferences>";
 
 	$('#form54_body').html("");
@@ -4018,7 +4018,7 @@ function form58_ini()
 	var columns="<pre_requisites count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservice+"</name>" +
-			"<type>service</type>" +
+			"<type exact='yes'>service</type>" +
 			"<requisite_type>"+ftype+"</requisite_type>" +
 			"<requisite_name>"+frequisite+"</requisite_name>" +
 			"<quantity></quantity>" +
@@ -4127,7 +4127,7 @@ function form59_ini()
 	var columns="<pre_requisites count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fproduct+"</name>" +
-			"<type>product</type>" +
+			"<type exact='yes'>product</type>" +
 			"<requisite_type>"+ftype+"</requisite_type>" +
 			"<requisite_name>"+frequisite+"</requisite_name>" +
 			"<quantity></quantity>" +
@@ -4340,7 +4340,7 @@ function form61_ini()
 	var columns="<attributes count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservice+"</name>" +
-			"<type>service</type>" +
+			"<type exact='yes'>service</type>" +
 			"<attribute>"+fattribute+"</attribute>" +
 			"<value></value>" +
 			"<last_updated></last_updated>" +
@@ -4445,7 +4445,7 @@ function form62_ini()
 	var columns="<reviews count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fproduct+"</name>" +
-			"<type>product</type>" +
+			"<type exact='yes'>product</type>" +
 			"<reviewer>"+freviewer+"</reviewer>" +
 			"<detail></detail>" +
 			"<rating>"+frating+"</rating>" +
@@ -4554,7 +4554,7 @@ function form63_ini()
 	var columns="<reviews count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservice+"</name>" +
-			"<type>service</type>" +
+			"<type exact='yes'>service</type>" +
 			"<reviewer>"+freviewer+"</reviewer>" +
 			"<detail></detail>" +
 			"<rating>"+frating+"</rating>" +
@@ -4663,7 +4663,7 @@ function form64_ini()
 	var columns="<cross_sells count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fservice+"</name>" +
-			"<type>service</type>" +
+			"<type exact='yes'>service</type>" +
 			"<cross_type>"+ftype+"</cross_type>" +
 			"<cross_name>"+fcross+"</cross_name>" +
 			"<last_updated></last_updated>" +
@@ -4769,7 +4769,7 @@ function form66_ini()
 	var columns="<cross_sells count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fproduct+"</name>" +
-			"<type>product</type>" +
+			"<type exact='yes'>product</type>" +
 			"<cross_type>"+ftype+"</cross_type>" +
 			"<cross_name>"+fcross+"</cross_name>" +
 			"<last_updated></last_updated>" +
@@ -4874,7 +4874,7 @@ function form69_ini()
 				"<id></id>" +
 				"<item_name></item_name>" +
 				"<quantity></quantity>" +
-				"<order_id>"+order_id+"</order_id>" +
+				"<order_id exact='yes'>"+order_id+"</order_id>" +
 				"<notes></notes>" +
 				"</sale_order_items>";
 	
@@ -4992,7 +4992,7 @@ function form70_ini()
 			"<id>"+fid+"</id>" +
 			"<customer_name>"+fname+"</customer_name>" +
 			"<order_date></order_date>" +
-			"<type>product</type>" +
+			"<type exact='yes'>product</type>" +
 			"<status>"+fstatus+"</status>" +
 			"<last_updated></last_updated>" +
 			"</sale_orders>";
@@ -5291,7 +5291,7 @@ function form72_ini()
 				"<discount></discount>" +
 				"<offer></offer>" +
 				"<type></type>" +
-				"<bill_id>"+bill_id+"</bill_id>" +
+				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"<tax></tax>" +
 				"<free_with></free_with>" +
 				"</bill_items>";
@@ -5428,7 +5428,7 @@ function notifications_ini()
 			"<data_id></data_id>" +
 			"<notes></notes>" +
 			"<t_generated></t_generated>" +
-			"<status>pending</status>" +
+			"<status exact='yes'>pending</status>" +
 			"<last_updated></last_updated>" +
 			"</notifications>";
 
@@ -5459,7 +5459,7 @@ function notifications_ini()
 				"<data_id></data_id>" +
 				"<notes></notes>" +
 				"<t_generated></t_generated>" +
-				"<status>reviewed</status>" +
+				"<status exact='yes'>reviewed</status>" +
 				"<last_updated></last_updated>" +
 				"</notifications>";
 		
@@ -5693,7 +5693,7 @@ function search_ini()
 				"<notes></notes>" +
 				"<updated_by></updated_by>" +
 				"<data_xml>"+searchStr+"</data_xml>" +
-				"<user_display>yes</user_display>" +
+				"<user_display exact='yes'>yes</user_display>" +
 				"<last_updated></last_updated>" +
 				"</activities>";
 	
@@ -5832,7 +5832,7 @@ function form77_ini()
 /**
  * @form Promotion Emails
  * @formNo 78
- * @Loading light
+ * @Loading heavy
  */
 function form78_ini()
 {
@@ -5865,7 +5865,7 @@ function form78_ini()
 			/////////////////////////////////////////////////////////////////////////
 			var pamphlet_item_columns="<pamphlet_items>" +
 				"<id></id>" +
-				"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
+				"<pamphlet_id exact='yes'>"+pamphlet_id+"</pamphlet_id>" +
 				"<item_name></item_name>" +
 				"<offer_name></offer_name>" +
 				"<offer></offer>" +
@@ -5880,6 +5880,7 @@ function form78_ini()
 					items_string+=pamphlet_items[j].item_name+"--";
 				}
 				
+				//optimise this query
 				var bill_items_columns="<bill_items>" +
 						"<bill_id></bill_id>" +
 						"<item_name array='yes'>"+items_string+"</item_name>" +
@@ -5892,6 +5893,7 @@ function form78_ini()
 						bill_id_string+=bill_items[k].bill_id+"--";
 					}
 					
+					//optimise this query
 					var bills_columns="<bills>" +
 							"<customer_name></customer_name>" +
 							"<id array='yes'>"+bill_id_string+"</id>" +
@@ -6067,7 +6069,7 @@ function form80_ini()
 		"<slave_value></slave_value>" +
 		"<master_id></master_id>" +
 		"<master_value></master_value>" +
-		"<status>pending</status>" +
+		"<status exact='yes'>pending</status>" +
 		"</de_duplication>";
 	
 	$('#form80_body').html("");
@@ -6505,7 +6507,7 @@ function form85_ini()
 					"<lat></lat>" +
 					"<lng></lng>" +
 					"<acc_name></acc_name>" +
-					"<address_status>unconfirmed</address_status>" +
+					"<address_status exact='yes'>unconfirmed</address_status>" +
 					"<address></address>" +
 					"<pincode></pincode>" +
 					"<city></city>" +
@@ -6670,7 +6672,7 @@ function form86_ini()
 					"<lat></lat>" +
 					"<lng></lng>" +
 					"<acc_name></acc_name>" +
-					"<address_status>unconfirmed</address_status>" +
+					"<address_status exact='yes'>unconfirmed</address_status>" +
 					"<address></address>" +
 					"<pincode></pincode>" +
 					"<city></city>" +
@@ -8423,7 +8425,7 @@ function form102_ini()
 				"</projects>";
 		var member_columns="<project_team>" +
 				"<id></id>" +
-				"<project_id>"+project_id+"</project_id>" +
+				"<project_id exact='yes'>"+project_id+"</project_id>" +
 				"<member></member>" +
 				"<role></role>" +
 				"<notes></notes>" +
@@ -8567,7 +8569,7 @@ function form103_ini()
 				"</projects>";
 		var phase_columns="<project_phases>" +
 				"<id></id>" +
-				"<project_id>"+project_id+"</project_id>" +
+				"<project_id exact='yes'>"+project_id+"</project_id>" +
 				"<phase_name></phase_name>" +
 				"<details></details>" +
 				"<start_date></start_date>" +
@@ -8723,8 +8725,8 @@ function form104_ini()
 		        		"<id></id>" +
 		        		"<name></name>" +
 		        		"<description></description>" +
-		        		"<t_initiated compare='more than'>"+start_time+"</t_initiated>" +
-		        		"<t_initiated compare='less than'>"+end_time+"</t_initiated>" +
+		        		"<t_initiated lowerbound='yes'>"+start_time+"</t_initiated>" +
+		        		"<t_initiated upperbound='yes'>"+end_time+"</t_initiated>" +
 		        		"<t_due></t_due>" +
 		        		"<status></status>" +
 		        		"<assignee></assignee>" +
@@ -9381,7 +9383,7 @@ function form111_ini()
 				"</reports>";
 		var report_item_columns="<report_items>" +
 				"<id></id>" +
-				"<report_id>"+report_id+"</report_id>" +
+				"<report_id exact='yes'>"+report_id+"</report_id>" +
 				"<table1></table1>" +
 				"<field1></field1>" +
 				"<condition1></condition1>" +

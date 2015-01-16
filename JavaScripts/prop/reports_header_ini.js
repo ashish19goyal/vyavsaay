@@ -155,7 +155,7 @@ function report14_header_ini()
 
 	var accounts_data="<accounts>" +
 			"<acc_name></acc_name>" +
-			"<type>financial</type>" +
+			"<type exact='yes'>financial</type>" +
 			"</accounts>";
 	set_my_filter(accounts_data,account_filter);
 	
@@ -724,7 +724,7 @@ function report45_header_ini()
 	
 	var blocks_data="<store_areas>" +
 			"<name></name>" +
-			"<area_type>block</area_type>" +
+			"<area_type exact='yes'>block</area_type>" +
 			"<height></height>" +
 			"<width></width>" +
 			"<length></length>" +
@@ -747,7 +747,7 @@ function report45_header_ini()
 	
 	var doors_data="<store_areas>" +
 			"<name></name>" +
-			"<area_type>door</area_type>" +
+			"<area_type exact='yes'>door</area_type>" +
 			"<height></height>" +
 			"<width></width>" +
 			"<length></length>" +
@@ -771,7 +771,7 @@ function report45_header_ini()
 	
 	var storages_data="<store_areas>" +
 			"<name></name>" +
-			"<area_type>storage</area_type>" +
+			"<area_type exact='yes'>storage</area_type>" +
 			"<height></height>" +
 			"<width></width>" +
 			"<length></length>" +

@@ -2319,7 +2319,6 @@ function modal27_action(product_name)
 			"<quantity></quantity>" +
 			"<order_id></order_id>" +
 			"<product_name exact='yes'>"+product_name+"</product_name>" +
-			"<last_updated sort='desc'></last_updated>" +
 			"</purchase_order_items>";
 	fetch_requested_data('',last_purchase_data,function(last_purchases)
 	{
@@ -2514,7 +2513,7 @@ function modal28_action(payment_id)
 	});
 	
 	var payments_data="<payments>" +
-			"<id exact='yes'>"+payment_id+"</id>" +
+			"<id>"+payment_id+"</id>" +
 			"<acc_name></acc_name>" +
 			"<type>paid</type>" +
 			"<total_amount></total_amount>" +
@@ -2679,8 +2678,8 @@ function modal30_action()
 		{
 			var accounts_data="<payments>" +
 					"<id></id>" +
-					"<acc_name exact='yes'>"+account_name+"</acc_name>" +
 					"<type exact='yes'>"+receipt_type+"</type>" +
+					"<acc_name exact='yes'>"+account_name+"</acc_name>" +
 					"<date sort='asc'></date>" +
 					"<total_amount></total_amount>" +
 					"<paid_amount></paid_amount>" +
@@ -2690,6 +2689,10 @@ function modal30_action()
 			
 			fetch_requested_data('',accounts_data,function(accounts)
 			{
+				////sort accounts based on date
+				
+				
+				//////////
 				var total_amount=0;
 				for(var i=0;i<accounts.length;i++)
 				{
@@ -2912,57 +2915,46 @@ function modal31_action()
 
 			fetch_requested_data('',receipts_data,function(receipts)
 			{
-				var payments_string="--";
-				for(var k in receipts)
-				{
-					payments_string+=receipts[k].payment_id+"--";
-				}
-				
-				var payments_data="<payments count='"+receipts.length+"'>" +
-							"<id array='yes'>"+payments_string+"</id>" +
-							"<paid_amount></paid_amount>" +
-							"</payments>";
-				fetch_requested_data('',payments_data,function(payments)
+				receipts.forEach(function(receipt)
 				{	
-					var last_updated=get_my_time();
-					payments.forEach(function(payment)
-					{
-						var paid_amount=parseFloat(payment.paid_amount);
-						for(var l in receipts)
-						{
-							if(receipts[l].payment_id==payment.id)
-							{
-								paid_amount-=parseFloat(receipts[l].amount);
-								break;
-							}
-						}
-						var payment_xml="<payments>" +
-								"<id>"+payment.id+"</id>" +
-								"<paid_amount>"+paid_amount+"</paid_amount>" +
-								"<status>pending</status>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
+					var payments_data="<payments>" +
+								"<id>"+receipt.payment_id+"</id>" +
+								"<paid_amount></paid_amount>" +
 								"</payments>";
+					fetch_requested_data('',payments_data,function(payments)
+					{	
+						var last_updated=get_my_time();
+						payments.forEach(function(payment)
+						{
+							var paid_amount=parseFloat(payment.paid_amount)-parseFloat(receipt.amount);
+							var payment_xml="<payments>" +
+									"<id>"+payment.id+"</id>" +
+									"<paid_amount>"+paid_amount+"</paid_amount>" +
+									"<status>pending</status>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</payments>";
+							if(is_online())
+							{
+								server_update_simple(payment_xml);
+							}
+							else
+							{
+								local_update_simple(payment_xml);
+							}
+						});
+						
+						var receipt_xml="<receipts>" +
+							"<receipt_id>"+receipt_filter.value+"</receipt_id>" +
+							"</receipts>";
 						if(is_online())
 						{
-							server_update_simple(payment_xml);
+							server_delete_simple(receipt_xml);
 						}
 						else
 						{
-							local_update_simple(payment_xml);
+							local_delete_simple(receipt_xml);
 						}
 					});
-					
-					var receipt_xml="<receipts>" +
-						"<receipt_id>"+receipt_filter.value+"</receipt_id>" +
-						"</receipts>";
-					if(is_online())
-					{
-						server_delete_simple(receipt_xml);
-					}
-					else
-					{
-						local_delete_simple(receipt_xml);
-					}
 				});
 			});
 		}
@@ -3860,7 +3852,10 @@ function modal41_action(button)
 			
 			fetch_requested_data('',accounts_data,function(accounts)
 			{
-				//console.log(accounts);
+				//sort payments by date
+				
+				
+				///////////////////
 				var total_received=0;
 				var total_paid=0;
 				for(var i=0;i<accounts.length;i++)
@@ -4054,7 +4049,7 @@ function modal42_action(order_id)
 	
 	var type_data="<bill_types>" +
 			"<name></name>" +
-			"<status>active</status>" +
+			"<status exact='yes'>active</status>" +
 			"</bill_types>";
 	set_my_value_list(type_data,type_filter);
 	set_my_value(type_data,type_filter);
@@ -4562,7 +4557,7 @@ function modal50_action()
 	var pamphlet_items_data="<pamphlet_items>" +
 				"<item_name></item_name>" +
 				"<offer></offer>" +
-				"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
+				"<pamphlet_id exact='yes'>"+pamphlet_id+"</pamphlet_id>" +
 				"</pamphlet_items>";
 			
 	fetch_requested_data('',pamphlet_items_data,function(results)

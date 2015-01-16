@@ -345,6 +345,8 @@ function form10_update_form()
 		var offer_detail="";	
 				
 		/////deleting existing free services
+		////optimise this query....it will not delete the desired records
+		////deleting these records may be problematic
 		var items_data="<bill_items>" +
 				"<id></id>" +
 				"<item_name></item_name>" +
@@ -352,7 +354,7 @@ function form10_update_form()
 				"<notes></notes>" +
 				"<bill_id>"+data_id+"</bill_id>" +
 				"<free_with>bill</free_with>" +
-				"<last_updated compare='less than'>"+last_updated+"</last_updated>" +
+				"<last_updated upperbound='yes'>"+last_updated+"</last_updated>" +
 				"</bill_items>";
 		
 		if(is_online())
@@ -366,15 +368,15 @@ function form10_update_form()
 		///////////////////////////////////
 		
 		var offer_data="<offers>" +
-				"<offer_type>bill</offer_type>" +
 				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount compare='less than'>"+(amount-discount)+"</criteria_amount>" +
+				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
+				"<offer_type exact='yes'>bill</offer_type>" +
 				"<result_type></result_type>" +
 				"<discount_percent></discount_percent>" +
 				"<discount_amount></discount_amount>" +
 				"<free_service_name></free_service_name>" +
 				"<offer_detail></offer_detail>" +
-				"<status array='yes'>active--extended</status>" +
+				"<status array='yes'>--active--extended--</status>" +
 				"</offers>";
 		fetch_requested_data('',offer_data,function(offers)
 		{
@@ -443,9 +445,9 @@ function form10_update_form()
 	                $('#form10_body').prepend(rowsHTML);
 
 	                var free_pre_requisite_data="<pre_requisites>" +
+							"<type exact='yes'>service</type>" +
+							"<requisite_type exact='yes'>task</requisite_type>" +
 							"<name exact='yes'>"+free_service_name+"</name>" +
-							"<type>service</type>" +
-							"<requisite_type>task</requisite_type>" +
 							"<requisite_name></requisite_name>" +
 							"<quantity></quantity>" +
 							"</pre_requisites>";
@@ -754,7 +756,7 @@ function form12_update_form()
 				"<quantity></quantity>" +
 				"<bill_id>"+data_id+"</bill_id>" +
 				"<free_with>bill</free_with>" +
-				"<last_updated compare='less than'>"+last_updated+"</last_updated>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
 				"</bill_items>";
 
 		if(is_online())
@@ -768,9 +770,9 @@ function form12_update_form()
 		///////////////////////////////////
 		
 		var offer_data="<offers>" +
-				"<offer_type>bill</offer_type>" +
+				"<offer_type exact='yes'>bill</offer_type>" +
 				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount compare='less than'>"+(amount-discount)+"</criteria_amount>" +
+				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
 				"<result_type></result_type>" +
 				"<discount_percent></discount_percent>" +
 				"<discount_amount></discount_amount>" +
@@ -821,8 +823,7 @@ function form12_update_form()
 						{
 							var free_batch_data="<bill_items count='1'>" +
 									"<batch></batch>" +
-									"<item_name>"+free_product_name+"</item_name>" +
-									"<last_updated sort='desc'></last_updated>" +
+									"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 									"</bill_items>";
 							get_single_column_data(function(data)
 							{
@@ -3329,7 +3330,7 @@ function form72_update_form()
 				"<notes></notes>" +
 				"<bill_id>"+data_id+"</bill_id>" +
 				"<free_with>bill</free_with>" +
-				"<last_updated compare='less than'>"+last_updated+"</last_updated>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
 				"</bill_items>";
 		
 		if(is_online())
@@ -3350,7 +3351,7 @@ function form72_update_form()
 				"<quantity></quantity>" +
 				"<bill_id>"+data_id+"</bill_id>" +
 				"<free_with>bill</free_with>" +
-				"<last_updated compare='less than'>"+last_updated+"</last_updated>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
 				"</bill_items>";
 		if(is_online())
 		{
@@ -3363,9 +3364,9 @@ function form72_update_form()
 		
 		
 		var offer_data="<offers>" +
-				"<offer_type>bill</offer_type>" +
 				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount compare='less than'>"+(amount-discount)+"</criteria_amount>" +
+				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
+				"<offer_type exact='yes'>bill</offer_type>" +
 				"<result_type></result_type>" +
 				"<discount_percent></discount_percent>" +
 				"<discount_amount></discount_amount>" +
@@ -3417,8 +3418,7 @@ function form72_update_form()
 						{
 							var free_batch_data="<bill_items count='1'>" +
 									"<batch></batch>" +
-									"<item_name>"+free_product_name+"</item_name>" +
-									"<last_updated sort='desc'></last_updated>" +
+									"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 									"</bill_items>";
 							get_single_column_data(function(data)
 							{
@@ -3534,9 +3534,9 @@ function form72_update_form()
 	                $('#form72_body').prepend(rowsHTML);
 
 	                var free_pre_requisite_data="<pre_requisites>" +
+							"<type exact='yes'>service</type>" +
+							"<requisite_type exact='yes'>task</requisite_type>" +
 							"<name exact='yes'>"+free_service_name+"</name>" +
-							"<type>service</type>" +
-							"<requisite_type>task</requisite_type>" +
 							"<requisite_name></requisite_name>" +
 							"<quantity></quantity>" +
 							"</pre_requisites>";
@@ -4299,9 +4299,9 @@ function form88_update_item(form)
 		if(status=='scheduled' && old_status!='scheduled')
 		{
 			var pre_requisite_data="<pre_requisites>" +
+					"<type exact='yes'>product</type>" +
+					"<requisite_type exact='yes'>task</requisite_type>" +
 					"<name exact='yes'>"+product+"</name>" +
-					"<type>product</type>" +
-					"<requisite_type>task</requisite_type>" +
 					"<requisite_name></requisite_name>" +
 					"<quantity></quantity>" +
 					"</pre_requisites>";
@@ -4510,7 +4510,7 @@ function form91_update_form()
 				"<quantity></quantity>" +
 				"<bill_id>"+data_id+"</bill_id>" +
 				"<free_with>bill</free_with>" +
-				"<last_updated compare='less than'>"+last_updated+"</last_updated>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
 				"</bill_items>";
 
 		if(is_online())
@@ -4524,9 +4524,9 @@ function form91_update_form()
 		///////////////////////////////////
 		
 		var offer_data="<offers>" +
-				"<offer_type>bill</offer_type>" +
 				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount compare='less than'>"+(amount-discount)+"</criteria_amount>" +
+				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
+				"<offer_type exact='yes'>bill</offer_type>" +
 				"<result_type></result_type>" +
 				"<discount_percent></discount_percent>" +
 				"<discount_amount></discount_amount>" +
@@ -4577,8 +4577,7 @@ function form91_update_form()
 						{
 							var free_batch_data="<bill_items count='1'>" +
 									"<batch></batch>" +
-									"<item_name>"+free_product_name+"</item_name>" +
-									"<last_updated sort='desc'></last_updated>" +
+									"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 									"</bill_items>";
 							get_single_column_data(function(data)
 							{
@@ -5467,7 +5466,7 @@ function form119_update_form()
 		var items_data="<bill_items>" +
 				"<bill_id>"+data_id+"</bill_id>" +
 				"<free_with>bill</free_with>" +
-				"<last_updated compare='less than'>"+last_updated+"</last_updated>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
 				"</bill_items>";
 
 		if(is_online())
@@ -5481,9 +5480,9 @@ function form119_update_form()
 		///////////////////////////////////
 		
 		var offer_data="<offers>" +
-				"<offer_type>bill</offer_type>" +
 				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount compare='less than'>"+(amount-discount)+"</criteria_amount>" +
+				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
+				"<offer_type exact='yes'>bill</offer_type>" +
 				"<result_type></result_type>" +
 				"<discount_percent></discount_percent>" +
 				"<discount_amount></discount_amount>" +
@@ -5534,8 +5533,7 @@ function form119_update_form()
 						{
 							var free_batch_data="<bill_items count='1'>" +
 									"<batch></batch>" +
-									"<item_name>"+free_product_name+"</item_name>" +
-									"<last_updated sort='desc'></last_updated>" +
+									"<item_name exact='yes'>"+free_product_name+"</item_name>" +
 									"</bill_items>";
 							get_single_column_data(function(data)
 							{

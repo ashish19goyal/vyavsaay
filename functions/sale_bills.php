@@ -87,7 +87,7 @@
 		$("#sale_bills_main").tabs(
 		{
 			show:"slide",
-			activate:function(e, ui) 
+			activate:function(e,ui) 
 		    {
 		    	e.currentTarget.blur();
 		    }

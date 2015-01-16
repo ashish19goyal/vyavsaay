@@ -48,34 +48,21 @@
 				foreach($input->childNodes as $col)
 				{
 					$columns_array[]=$col->nodeName;
-					if($col->hasAttribute('sort'))
-					{
-						$order_by=" ORDER BY ".$col->nodeName." ".$col->getAttribute('sort').", ";
-					}
 					
 					if($col->nodeValue!="")
 					{
-						if($col->hasAttribute('compare'))
+						if($col->hasAttribute('upperbound'))
 						{
-							if($col->getAttribute('compare')==='less than')
-							{
-								$query.=$col->nodeName." < ? and ";
-							}
-							else if($col->getAttribute('compare')==='more than')
-							{
-								$query.=$col->nodeName." > ? and ";
-							}
-							else if($col->getAttribute('compare')==='equal')
-							{
-								$query.=$col->nodeName." = ? and ";
-							}
-							else if($col->getAttribute('compare')==='not equal')
-							{
-								$query.=$col->nodeName." <> ? and ";
-							}
+							$query.=$col->nodeName." < ? and ";
 							$values_array[]=$col->nodeValue;
 						}
-						else if($col->hasAttribute('array'))
+						if($col->hasAttribute('lowerbound'))
+						{
+							$query.=$col->nodeName." > ? and ";
+							$values_array[]=$col->nodeValue;
+						}
+						
+						if($col->hasAttribute('array'))
 						{
 							$query.=$col->nodeName." in (";
 							$string=rtrim($col->nodeValue,"-");
@@ -88,7 +75,7 @@
 							$query=rtrim($query,",");
 							$query.=") and ";
 						}
-						else
+						else if(!($col->hasAttribues()))
 						{
 							$query.=$col->nodeName." like ? and ";
 							$values_array[]="%".$col->nodeValue."%";

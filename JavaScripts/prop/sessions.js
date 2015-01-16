@@ -236,7 +236,8 @@ function set_session_online(func)
 		{
 			var transaction=static_local_db.transaction(['user_preferences'],"readwrite");
 			var objectStore=transaction.objectStore('user_preferences');
-			var req=objectStore.index('name').get('offline');
+			var kv=IDBKeyRange.bound(['offline','0'],['offline','99999999']);
+			var req=objectStore.index('name').get(kv);
 			req.onsuccess=function(e)
 			{
 				var data=req.result;
@@ -292,8 +293,8 @@ function set_session_offline()
 	else
 	{
 		var objectStore=static_local_db.transaction(['user_preferences'],"readwrite").objectStore('user_preferences');
-		
-		var req=objectStore.index('name').get('offline');
+		var kv=IDBKeyRange.bound(['offline','0'],['offline','99999999']);
+		var req=objectStore.index('name').get(kv);
 		req.onsuccess=function(e)
 		{
 			var data=req.result;
@@ -308,6 +309,10 @@ function set_session_offline()
 					hide_loader();
 				};
 			}
+		};
+		req.onerror=function(e)
+		{
+			console.log(this.error);
 		};
 	}
 };

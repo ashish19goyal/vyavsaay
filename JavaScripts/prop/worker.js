@@ -320,66 +320,64 @@ function notifications4_add()
 	
 	var sale_order_data="<sale_orders>" +
 			"<id></id>" +
-			"<type>product</type>" +
+			"<type exact='yes'>product</type>" +
 			"<status exact='yes'>pending</status>" +
 			"</sale_orders>";
 	
 	fetch_requested_data('',sale_order_data,function(sale_orders)
 	{
-		var sale_orders_string="--";
-		for(var i in sale_orders)
+		sale_orders.forEach(function(sale_order)
 		{
-			sale_orders_string+=sale_orders[i].id+"--";
-		}
-		var sale_order_items_data="<sale_order_items>" +
-				"<order_id array='yes'>"+sale_orders_string+"</order_id>" +
-				"<item_name></item_name>" +
-				"<quantity></quantity>" +
-				"</sale_order_items>";
-		fetch_requested_data('',sale_order_items_data,function(sale_order_items)
-		{	
-			for(var j=0;j<sale_order_items.length;j++)
-			{
-				for(var k=j+1;k<sale_order_items.length;k++)
+			var sale_order_items_data="<sale_order_items>" +
+					"<order_id exact='yes'>"+sale_order.id+"</order_id>" +
+					"<item_name></item_name>" +
+					"<quantity></quantity>" +
+					"</sale_order_items>";
+			fetch_requested_data('',sale_order_items_data,function(sale_order_items)
+			{	
+				for(var j=0;j<sale_order_items.length;j++)
 				{
-					if(sale_order_items[j].item_name==sale_order_items[k].item_name)
+					for(var k=j+1;k<sale_order_items.length;k++)
 					{
-						sale_order_items[j].quantity=parseFloat(sale_order_items[j].quantity)+parseFloat(sale_order_items[k].quantity);
-						sale_order_items.splice(k,1);
-						k-=1;
+						if(sale_order_items[j].item_name==sale_order_items[k].item_name)
+						{
+							sale_order_items[j].quantity=parseFloat(sale_order_items[j].quantity)+parseFloat(sale_order_items[k].quantity);
+							sale_order_items.splice(k,1);
+							k-=1;
+						}
 					}
 				}
-			}
-			
-			sale_order_items.forEach(function(sale_order_item)
-			{
-				get_inventory(sale_order_item.item_name,'',function(item_quantity)
+				
+				sale_order_items.forEach(function(sale_order_item)
 				{
-					if(parseFloat(item_quantity)<parseFloat(sale_order_item.quantity))
+					get_inventory(sale_order_item.item_name,'',function(item_quantity)
 					{
-						var id=get_new_key();
-					
-						var notes="Product "+sale_order_item.item_name+" has insufficient inventory to meet all sale orders.";
-								
-						var product_xml="<notifications>" +
-								"<id>"+id+"</id>" +
-								"<t_generated>"+last_updated+"</t_generated>" +
-								"<data_id unique='yes'></data_id>" +
-								"<title>Short inventory</title>" +
-								"<notes>"+notes+"</notes>" +
-								"<link_to>form1</link_to>" +
-								"<status>pending</status>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</notifications>";
-						if(is_online())
+						if(parseFloat(item_quantity)<parseFloat(sale_order_item.quantity))
 						{
-							server_create_simple_no_warning(product_xml);
+							var id=get_new_key();
+						
+							var notes="Product "+sale_order_item.item_name+" has insufficient inventory to meet all sale orders.";
+									
+							var product_xml="<notifications>" +
+									"<id>"+id+"</id>" +
+									"<t_generated>"+last_updated+"</t_generated>" +
+									"<data_id unique='yes'></data_id>" +
+									"<title>Short inventory</title>" +
+									"<notes>"+notes+"</notes>" +
+									"<link_to>form1</link_to>" +
+									"<status>pending</status>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</notifications>";
+							if(is_online())
+							{
+								server_create_simple_no_warning(product_xml);
+							}
+							else
+							{
+								local_create_simple_no_warning(product_xml);
+							}
 						}
-						else
-						{
-							local_create_simple_no_warning(product_xml);
-						}
-					}
+					});
 				});
 			});
 		});
@@ -579,72 +577,66 @@ function sale_leads_add()
 	
 	fetch_requested_data('',attributes_data,function(attributes)
 	{
-		var items_string="--";
-		for(var i in attributes)
+		attributes.forEach(function(attribute)
 		{
-			items_string+=attributes[i].item_name+"--";
-		}
-		
-		var bill_items_data="<bill_items>" +
-				"<id></id>" +
-				"<bill_id></bill_id>" +
-				"<item_name array='yes'>"+items_string+"</item_name>" +
-				"<type exact='yes'>bought</type>" +
-				"<last_updated compare='more than'>"+lead_past_time+"</last_updated>" +
-				"</bill_items>";
-
-		fetch_requested_data('',bill_items_data,function(bill_items)
-		{
-			var bills_string="--";
-			for (var j in bill_items)
+			var bill_items_data="<bill_items>" +
+					"<id></id>" +
+					"<bill_id></bill_id>" +
+					"<type exact='yes'>bought</type>" +
+					"<item_name exact='yes'>"+attribute.item_name+"</item_name>" +
+					"<last_updated compare='more than'>"+lead_past_time+"</last_updated>" +
+					"</bill_items>";
+	
+			fetch_requested_data('',bill_items_data,function(bill_items)
 			{
-				bills_string+=bill_items[j].bill_id+"--";
-			}
-			
-			var bills_data="<bills>" +
-					"<id array='yes'>"+bills_string+"</id>" +
-					"<customer_name></customer_name>" +
-					"<bill_date></bill_date>" +
-					"</bills>";
-			fetch_requested_data('',bills_data,function(bills)
-			{
-				bills.forEach(function(bill)
+				var bills_string="--";
+				for (var j in bill_items)
 				{
-					var start_date=bill.bill_date;
-					for(var k in bill_items)
+					bills_string+=bill_items[j].bill_id+"--";
+				}
+				
+				var bills_data="<bills>" +
+						"<id array='yes'>"+bills_string+"</id>" +
+						"<customer_name></customer_name>" +
+						"<bill_date></bill_date>" +
+						"<last_updated compare='more than'>"+lead_past_time+"</last_updated>" +
+						"</bills>";
+				fetch_requested_data('',bills_data,function(bills)
+				{
+					bills.forEach(function(bill)
 					{
-						if(bill.id===bill_items[k].bill_id)
+						var start_date=bill.bill_date;
+						for(var k in bill_items)
 						{
-							for(var l in attributes)
+							if(bill.id==bill_items[k].bill_id)
 							{
-								if(bill_items[k].item_name==attributes[l].item_name)
+								var id=get_new_key();
+								var detail="Bought "+attribute.item_name+" that is expected to be bought again in " +
+										attribute.value+" days.\n";
+								var due_date=parseFloat(start_date)+(86400000*parseFloat(attributes[l].value));
+								
+								var sale_lead_xml="<sale_leads>" +
+										"<id>"+id+"</id>" +
+										"<customer>"+bill.customer_name+"</customer>" +
+										"<source_id unique='yes'>"+bill_items[k].id+"</source_id>" +
+										"<detail>"+detail+"</detail>" +
+										"<due_date>"+due_date+"</due_date>" +
+										"<identified_by>auto</identified_by>" +
+										"</sale_leads>";
+								if(is_online())
 								{
-									var id=get_new_key();
-									var detail="Bought "+attributes[l].item_name+" that is expected to be bought again in " +
-											attributes[l].value+" days.\n";
-									var due_date=parseFloat(start_date)+(86400000*parseFloat(attributes[l].value));
-									
-									var sale_lead_xml="<sale_leads>" +
-											"<id>"+id+"</id>" +
-											"<customer>"+bill.customer_name+"</customer>" +
-											"<source_id unique='yes'>"+bill_items[k].id+"</source_id>" +
-											"<detail>"+detail+"</detail>" +
-											"<due_date>"+due_date+"</due_date>" +
-											"<identified_by>auto</identified_by>" +
-											"</sale_leads>";
-									if(is_online())
-									{
-										server_create_simple_no_warning(sale_lead_xml);
-									}
-									else
-									{
-										local_create_simple_no_warning(sale_lead_xml);
-									}
+									server_create_simple_no_warning(sale_lead_xml);
 								}
+								else
+								{
+									local_create_simple_no_warning(sale_lead_xml);
+								}
+								
+								break;
 							}
 						}
-					}
-					
+						
+					});
 				});
 			});
 		});

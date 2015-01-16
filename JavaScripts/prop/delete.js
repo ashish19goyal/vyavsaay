@@ -434,8 +434,8 @@ function form16_delete_item(button)
 
 		var payment_xml="<payments>" +
 				"<id></id>" +
-				"<bill_id>"+data_id+"</bill_id>" +
-				"<status array='yes'>pending--cancelled</status>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"<status array='yes'>--pending--cancelled--</status>" +
 				"<transaction_id></transaction_id>" +
 				"</payments>";
 		fetch_requested_data('',payment_xml,function(payments)
@@ -538,8 +538,8 @@ function form17_delete_item(button)
 
 		var payment_xml="<payments>" +
 				"<id></id>" +
-				"<bill_id>"+data_id+"</bill_id>" +
-				"<status array='yes'>pending--cancelled</status>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"<status array='yes'>--pending--cancelled--</status>" +
 				"<transaction_id></transaction_id>" +
 				"</payments>";
 		fetch_requested_data('',payment_xml,function(payments)
@@ -1095,8 +1095,8 @@ function form42_delete_item(button)
 
 		var payment_xml="<payments>" +
 				"<id></id>" +
-				"<bill_id>"+data_id+"</bill_id>" +
-				"<status array='yes'>pending--cancelled</status>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"<status array='yes'>--pending--cancelled--</status>" +
 				"<transaction_id></transaction_id>" +
 				"</payments>";
 		fetch_requested_data('',payment_xml,function(payments)
@@ -1129,7 +1129,7 @@ function form42_delete_item(button)
 		
 		var items_data="<bill_items>" +
 				"<id></id>" +
-				"<bill_id>"+data_id+"</bill_id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 				"</bill_items>";
 		fetch_requested_data('',items_data,function(bill_items)
 		{
@@ -1312,8 +1312,8 @@ function form53_delete_item(button)
 
 		var payment_xml="<payments>" +
 				"<id></id>" +
-				"<bill_id>"+data_id+"</bill_id>" +
-				"<status array='yes'>pending--cancelled</status>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"<status array='yes'>--pending--cancelled--</status>" +
 				"<transaction_id></transaction_id>" +
 				"</payments>";
 		fetch_requested_data('',payment_xml,function(payments)
@@ -1403,7 +1403,7 @@ function form56_delete_item(button)
 					"<id></id>" +
 					"<acc_name exact='yes'>"+account+"</acc_name>" +
 					"<type>"+type+"</type>" +
-					"<bill_id>"+data_id+"</bill_id>" +
+					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"<total_amount>"+amount+"</total_amount>" +
 					"</payments>";
 		fetch_requested_data('',payment_data,function(payments)
@@ -2642,8 +2642,8 @@ function form92_delete_item(button)
 
 		var payment_xml="<payments>" +
 				"<id></id>" +
-				"<bill_id>"+data_id+"</bill_id>" +
-				"<status array='yes'>pending--cancelled</status>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"<status array='yes'>--pending--cancelled--</status>" +
 				"<transaction_id></transaction_id>" +
 				"</payments>";
 		fetch_requested_data('',payment_xml,function(payments)
@@ -2676,7 +2676,7 @@ function form92_delete_item(button)
 		
 		var items_data="<bill_items>" +
 				"<id></id>" +
-				"<bill_id>"+data_id+"</bill_id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 				"</bill_items>";
 		fetch_requested_data('',items_data,function(bill_items)
 		{
@@ -2765,7 +2765,7 @@ function form93_delete_item(button)
 				"<id></id>" +
 				"<acc_name exact='yes'>"+account+"</acc_name>" +
 				"<type>"+payment_type+"</type>" +
-				"<bill_id>"+data_id+"</bill_id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 				"<total_amount>"+amount+"</total_amount>" +
 				"</payments>";
 		fetch_requested_data('',payment_data,function(payments)

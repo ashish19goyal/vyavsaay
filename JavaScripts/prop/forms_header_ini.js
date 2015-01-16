@@ -1012,7 +1012,7 @@ function form46_header_ini()
 	
 	var other_data="<user_preferences>" +
 			"<display_name></display_name>" +
-			"<type>other</type>" +
+			"<type exact='yes'>other</type>" +
 			"</user_preferences>";
 	
 	set_my_filter(other_data,other_element);
@@ -1056,7 +1056,7 @@ function form48_header_ini()
 	
 	var reports_data="<user_preferences>" +
 			"<display_name></display_name>" +
-			"<type>report</type>" +
+			"<type exact='yes'>report</type>" +
 			"</user_preferences>";
 
 	set_my_filter(reports_data,report_filter);
@@ -1089,7 +1089,7 @@ function form49_header_ini()
 	
 	var forms_data="<user_preferences>" +
 			"<display_name></display_name>" +
-			"<type>form</type>" +
+			"<type exact='yes'>form</type>" +
 			"</user_preferences>";
 
 	set_my_filter(forms_data,form_filter);
@@ -1120,7 +1120,7 @@ function form50_header_ini()
 	});
 	var accounts_data="<user_preferences>" +
 			"<display_name></display_name>" +
-			"<type>accounting</type>" +
+			"<type exact='yes'>accounting</type>" +
 			"</user_preferences>";
 
 	set_my_filter(accounts_data,accounts_filter);
@@ -1203,7 +1203,7 @@ function form54_header_ini()
 	
 	var templates_data="<user_preferences>" +
 			"<display_name></display_name>" +
-			"<type>template</type>" +
+			"<type exact='yes'>template</type>" +
 			"</user_preferences>";
 
 	set_my_filter(templates_data,templates_filter);
@@ -1284,7 +1284,7 @@ function form58_header_ini()
 			"</services>";
 	var requisite_data="<pre_requisites>" +
 			"<requisite_name></requisite_name>" +
-			"<type>service</type>" +
+			"<type exact='yes'>service</type>" +
 			"</pre_requisites>";
 	
 	set_my_filter(service_data,service_filter);
@@ -1316,7 +1316,7 @@ function form59_header_ini()
 			"</product_master>";
 	var requisite_data="<pre_requisites>" +
 			"<requisite_name></requisite_name>" +
-			"<type>product</type>" +
+			"<type exact='yes'>product</type>" +
 			"</pre_requisites>";
 	
 	set_my_filter(product_data,product_filter);
@@ -2178,7 +2178,7 @@ function form91_header_ini()
 
 	var type_data="<bill_types>" +
 		"<name></name>" +
-		"<status>active</status>" +
+		"<status exact='yes'>active</status>" +
 		"</bill_types>";
 	set_my_value_list(type_data,bill_type);
 	set_my_value(type_data,bill_type);
@@ -2523,7 +2523,7 @@ function form104_header_ini()
 	if(project_id!="")
 	{
 		var project_columns="<projects>" +
-				"<id>"+project_id+"</id>" +
+				"<id exact='yes'>"+project_id+"</id>" +
 				"<name></name>" +
 				"</projects>";
 		
@@ -2902,7 +2902,7 @@ function form119_header_ini()
 
 	var type_data="<bill_types>" +
 		"<name></name>" +
-		"<status>active</status>" +
+		"<status exact='yes'>active</status>" +
 		"</bill_types>";
 	set_my_value_list(type_data,bill_type);
 	set_my_value(type_data,bill_type);
@@ -3399,7 +3399,7 @@ function form122_header_ini()
 							
 					var storage_data="<store_areas>" +
 								"<name></name>" +
-								"<area_type>storage</area_type>" +
+								"<area_type exact='yes'>storage</area_type>" +
 								"</store_areas>";
 					set_my_value_list(storage_data,storage_filter);
 
