@@ -542,7 +542,7 @@ function csv_string_to_obj_array(csvString)
 function my_round(any_number,decimal_p)
 {
 	var multiplier=1;
-	for(var i=0;i<decimal_p)
+	for(var i=0;i<decimal_p;i++)
 	{
 		multiplier*=10;
 	}
