@@ -128,8 +128,8 @@ function notifications1_add()
 			"<type></type>" +
 			"<total_amount></total_amount>" +
 			"<paid_amount></paid_amount>" +
+			"<due_date upperbound='yes'>"+get_my_time()+"</due_date>" +
 			"<status exact='yes'>pending</status>" +
-			"<due_date compare='less than'>"+get_my_time()+"</due_date>" +
 			"</payments>";
 	fetch_requested_data('',payments_data,function(payments)
 	{
@@ -190,7 +190,7 @@ function notifications2_add()
 	var tasks_data="<task_instances>" +
 			"<id></id>" +
 			"<name></name>" +
-			"<t_due compare='less than'>"+task_due_time+"</t_due>" +
+			"<t_due upperbound='yes'>"+task_due_time+"</t_due>" +
 			"<status exact='yes'>pending</status>" +
 			"<assignee></assignee>" +
 			"<task_hours></task_hours>" +
@@ -260,8 +260,8 @@ function notifications3_add()
 	var leads_data="<sale_leads>" +
 			"<id></id>" +
 			"<customer></customer>" +
-			"<due_date compare='less than'>"+lead_due_time+"</due_date>" +
-			"<due_date compare='more than'>"+lead_past_time+"</due_date>" +
+			"<due_date upperbound='yes'>"+lead_due_time+"</due_date>" +
+			"<due_date lowerbound='yes'>"+lead_past_time+"</due_date>" +
 			"<detail></detail>" +
 			"<identified_by></identified_by>" +
 			"</sale_leads>";
@@ -450,7 +450,7 @@ function notifications6_add()
 	var schedule_data="<manufacturing_schedule>" +
 			"<id></id>" +
 			"<product></product>" +
-			"<schedule compare='less than'>"+get_my_time()+"</schedule>" +
+			"<schedule upperbound='yes'>"+get_my_time()+"</schedule>" +
 			"<status exact='yes'>scheduled</status>" +
 			"<last_updated></last_updated>" +
 			"</manufacturing_schedule>";
@@ -511,7 +511,7 @@ function notifications7_add()
 	var apps_data="<appointments>" +
 			"<id></id>" +
 			"<customer></customer>" +
-			"<schedule compare='less than'>"+app_time+"</schedule>" +
+			"<schedule upperbound='yes'>"+app_time+"</schedule>" +
 			"<status exact='yes'>pending</status>" +
 			"<assignee></assignee>" +
 			"</appointments>";
@@ -583,8 +583,8 @@ function sale_leads_add()
 					"<id></id>" +
 					"<bill_id></bill_id>" +
 					"<type exact='yes'>bought</type>" +
+					"<last_updated lowerbound='yes'>"+lead_past_time+"</last_updated>" +
 					"<item_name exact='yes'>"+attribute.item_name+"</item_name>" +
-					"<last_updated compare='more than'>"+lead_past_time+"</last_updated>" +
 					"</bill_items>";
 	
 			fetch_requested_data('',bill_items_data,function(bill_items)
@@ -599,7 +599,7 @@ function sale_leads_add()
 						"<id array='yes'>"+bills_string+"</id>" +
 						"<customer_name></customer_name>" +
 						"<bill_date></bill_date>" +
-						"<last_updated compare='more than'>"+lead_past_time+"</last_updated>" +
+						"<last_updated lowerbound='yes'>"+lead_past_time+"</last_updated>" +
 						"</bills>";
 				fetch_requested_data('',bills_data,function(bills)
 				{
@@ -666,7 +666,7 @@ function sale_leads_add()
 				"<bill_id></bill_id>" +
 				"<item_name array='yes'>"+items_string+"</item_name>" +
 				"<type exact='yes'>bought</type>" +
-				"<last_updated compare='more than'>"+lead_past_time+"</last_updated>" +
+				"<last_updated lowerbound='yes'>"+lead_past_time+"</last_updated>" +
 				"</bill_items>";
 
 		fetch_requested_data('',bill_items_data,function(bill_items)
@@ -681,6 +681,7 @@ function sale_leads_add()
 					"<id array='yes'>"+bills_string+"</id>" +
 					"<customer_name></customer_name>" +
 					"<bill_date></bill_date>" +
+					"<last_updated lowerbound='yes'>"+lead_past_time+"</last_updated>" +
 					"</bills>";
 			fetch_requested_data('',bills_data,function(bills)
 			{
@@ -748,7 +749,7 @@ function manufactured_products_outofstock()
 	var schedule_data="<manufacturing_schedule>" +
 			"<product></product>" +
 			"<status exact='yes'>in stock</status>" +
-			"<schedule compare='less than'>"+get_my_time()+"</schedule>" +
+			"<schedule upperbound='yes'>"+get_my_time()+"</schedule>" +
 			"</manufacturing_schedule>";
 	
 	fetch_requested_data('',schedule_data,function(schedules)
@@ -798,7 +799,7 @@ function loans_interest_processing()
 			"<interest_paid></interest_paid>" +
 			"<interest_rate></interest_rate>" +
 			"<interest_period></interest_period>" +
-			"<next_interest_date compare='less than'>"+interest_due_time+"</next_interest_date>" +
+			"<next_interest_date upperbound='yes'>"+interest_due_time+"</next_interest_date>" +
 			"<interest_type></interest_type>" +
 			"<status exact='yes'>open</status>" +
 			"</loans>";
@@ -904,8 +905,8 @@ function loans_instalment_processing()
 			"<repayment_method exact='yes'>instalments</repayment_method>" +
 			"<emi></emi>" +
 			"<emi_period></emi_period>" +
-			"<pending_emi compare='more than'>0</pending_emi>" +
-			"<next_emi_date compare='less than'>"+instalment_due_time+"</next_emi_date>" +
+			"<pending_emi lowerbound='yes'>1</pending_emi>" +
+			"<next_emi_date upperbound='yes'>"+instalment_due_time+"</next_emi_date>" +
 			"<status exact='yes'>open</status>" +
 			"</loans>";
 	
@@ -1086,7 +1087,7 @@ function balance_out_payments()
 				var accounts_data="<payments>" +
 						"<id></id>" +
 						"<type></type>" +
-						"<date sort='asc'></date>" +
+						"<date></date>" +
 						"<total_amount></total_amount>" +
 						"<paid_amount></paid_amount>" +
 						"<notes></notes>" +
@@ -1095,6 +1096,14 @@ function balance_out_payments()
 						"</payments>";
 				fetch_requested_data('',accounts_data,function(accounts)
 				{
+					accounts.sort(function(a,b)
+					{
+						if(a.date>b.date)
+						{	return 1;}
+						else 
+						{	return -1;}
+					});
+					
 					accounts.forEach(function(account)
 					{
 						if(payment.total_received<payment.total_paid)

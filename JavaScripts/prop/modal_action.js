@@ -2680,7 +2680,7 @@ function modal30_action()
 					"<id></id>" +
 					"<type exact='yes'>"+receipt_type+"</type>" +
 					"<acc_name exact='yes'>"+account_name+"</acc_name>" +
-					"<date sort='asc'></date>" +
+					"<date></date>" +
 					"<total_amount></total_amount>" +
 					"<paid_amount></paid_amount>" +
 					"<notes></notes>" +
@@ -2689,10 +2689,14 @@ function modal30_action()
 			
 			fetch_requested_data('',accounts_data,function(accounts)
 			{
-				////sort accounts based on date
+				accounts.sort(function(a,b)
+				{
+					if(a.date>b.date)
+					{	return 1;}
+					else 
+					{	return -1;}
+				});
 				
-				
-				//////////
 				var total_amount=0;
 				for(var i=0;i<accounts.length;i++)
 				{
@@ -3841,21 +3845,25 @@ function modal41_action(button)
 		{
 			var accounts_data="<payments>" +
 					"<id></id>" +
+					"<status exact='yes'>pending</status>" +
 					"<acc_name exact='yes'>"+account_name+"</acc_name>" +
 					"<type></type>" +
-					"<date sort='asc'></date>" +
+					"<date></date>" +
 					"<total_amount></total_amount>" +
 					"<paid_amount></paid_amount>" +
 					"<notes></notes>" +
-					"<status>pending</status>" +
 					"</payments>";
 			
 			fetch_requested_data('',accounts_data,function(accounts)
 			{
-				//sort payments by date
+				accounts.sort(function(a,b)
+				{
+					if(a.date>b.date)
+					{	return 1;}
+					else 
+					{	return -1;}
+				});
 				
-				
-				///////////////////
 				var total_received=0;
 				var total_paid=0;
 				for(var i=0;i<accounts.length;i++)
@@ -4735,4 +4743,79 @@ function modal51_action(object)
 	}
 }
 
+/**
+ * @modalNo 53
+ * @modal Scheme to customer
+ */
+function modal53_action(item_name,customer)
+{
+	var bills_data="<bills>" +
+			"<id></id>" +
+			"<customer_name exact='yes'>"+customer+"</customer_name>" +
+			"</bills>";
+	get_single_column_data(function(bills)
+	{
+		var bill_id_string="--";
+		for(var i in bills)
+		{
+			bill_id_string+=bills[i]+"--";
+		}
+		
+		var bill_items_data="<bill_items count='5'>" +
+				"<id></id>" +
+				"<item_name exact='yes'>"+item_name+"</item_name>" +
+				"<p_quantity></p_quantity>" +
+				"<f_quantity></f_quantity>" +
+				"<batch></batch>" +
+				"<bill_id array='yes'>"+bill_id_string+"</bill_id>" +
+				"</bill_items>";
+		fetch_requested_data('',bill_items_data,function(bill_items)
+		{
+			var item_table=document.getElementById("modal53_table");
+			item_table.innerHTML="";
+			var item_head=document.createElement('tr');
+			item_head.innerHTML="<th>Batch</th><th>Quantity</th>";
+			item_table.appendChild(item_head);
+			bill_items.forEach(function(bill_item)
+			{
+				var item_row=document.createElement('tr');
+				item_row.innerHTML="<td>"+bill_item.batch+"</td><td>"+bill_item.p_quantity+"+"+bill_item.f_quantity+"</td>";
+				item_table.appendChild(item_row);
+			});
+			
+			$("#modal53").dialog("open");
+		});
+	},bills_data);
+}
 
+/**
+ * @modalNo 54
+ * @modal Scheme from suppliers
+ */
+function modal54_action(item_name)
+{
+	var bill_items_data="<supplier_bill_items count='5'>" +
+			"<id></id>" +
+			"<product_name exact='yes'>"+item_name+"</product_name>" +
+			"<p_quantity></p_quantity>" +
+			"<f_quantity></f_quantity>" +
+			"<batch></batch>" +
+			"</supplier_bill_items>";
+	fetch_requested_data('',bill_items_data,function(bill_items)
+	{
+		var item_table=document.getElementById("modal54_table");
+		item_table.innerHTML="";
+		var item_head=document.createElement('tr');
+		item_head.innerHTML="<th>Batch</th><th>Quantity</th>";
+		item_table.appendChild(item_head);
+		bill_items.forEach(function(bill_item)
+		{
+			var item_row=document.createElement('tr');
+			item_row.innerHTML="<td>"+bill_item.batch+"</td><td>"+bill_item.p_quantity+"+"+bill_item.f_quantity+"</td>";
+			item_table.appendChild(item_row);
+		});
+	});
+	////////////////////////////////////////////////
+		
+	$("#modal54").dialog("open");
+}

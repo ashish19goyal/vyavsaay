@@ -133,8 +133,8 @@ function form7_header_ini()
 	        var attendance_data="<attendance>" +
 	        		"<presence></presence>" +
 	        		"<hours_worked></hours_worked>" +
-	        		"<date compare='more than'>"+start_time+"</date>" +
-	        		"<date compare='less than'>"+end_time+"</date>" +
+	        		"<date lowerbound='yes'>"+start_time+"</date>" +
+	        		"<date upperbound='yes'>"+end_time+"</date>" +
 	        		"</attendance>";
 	        fetch_requested_data('form7',attendance_data,function(attendances)
 	        {
@@ -397,8 +397,8 @@ function form14_header_ini()
 	        		"<id></id>" +
 	        		"<name></name>" +
 	        		"<description></description>" +
-	        		"<t_initiated compare='more than'>"+start_time+"</t_initiated>" +
-	        		"<t_initiated compare='less than'>"+end_time+"</t_initiated>" +
+	        		"<t_initiated lowerbound='yes'>"+start_time+"</t_initiated>" +
+	        		"<t_initiated upperbound='yes'>"+end_time+"</t_initiated>" +
 	        		"<t_due></t_due>" +
 	        		"<status></status>" +
 	        		"<assignee></assignee>" +
@@ -2006,8 +2006,8 @@ function form89_header_ini()
 	        var app_data="<appointments>" +
 	        		"<id></id>" +
 	        		"<customer></customer>" +
-	        		"<schedule compare='more than'>"+start_time+"</schedule>" +
-	        		"<schedule compare='less than'>"+end_time+"</schedule>" +
+	        		"<schedule lowerbound='yes'>"+start_time+"</schedule>" +
+	        		"<schedule upperbound='yes'>"+end_time+"</schedule>" +
 	        		"<status></status>" +
 	        		"<assignee></assignee>" +
 	        		"<hours></hours>" +
@@ -2989,6 +2989,7 @@ function form119_header_ini()
 						rowsHTML+="<td data-th='Batch'>";
 							rowsHTML+="<input type='text' required form='form119_"+id+"' readonly='readonly' name='batch' value='"+ub_item.batch+"'>";
 							rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+							rowsHTML+="<br><v1>Expiry: </v1><label id='form119_exp_"+id+"'></label>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
 							rowsHTML+="<v1>Bought: </v1><input type='number' min='0' required form='form119_"+id+"' step='any' name='squantity' value='"+ub_item.quantity+"'>";
@@ -3000,7 +3001,7 @@ function form119_header_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Total'>";
 							rowsHTML+="<v1>Amount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' name='amount'>";
-							rowsHTML+="<br><v1>Discount: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' name='discount'>";
+							rowsHTML+="<input type='hidden' value='0' form='form119_"+id+"' readonly='readonly' name='discount'>";
 							rowsHTML+="<br><v1>Tax: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' name='tax'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
@@ -3061,6 +3062,19 @@ function form119_header_ini()
 							document.getElementById('form119_product_make_'+id).innerHTML=data[0]+":";
 						}
 					},make_data);
+					
+					var exp_data="<product_instances>" +
+							"<expiry></expiry>" +
+							"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+							"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+							"</product_instances>";
+					get_single_column_data(function(data)
+					{
+						if(data.length>0)
+						{
+							document.getElementById('form119_exp_'+id).innerHTML=get_my_past_date(data[0]);
+						}
+					},exp_data);
 
 					var price_data="";
 					if(bill_type_value=='undefined' || bill_type_value=='')
@@ -3130,7 +3144,6 @@ function form119_header_ini()
 								"</offers>";
 						fetch_requested_data('',offer_data,function(offers)
 						{
-							////sorting offers based on criteria amount and criteria quantity
 							offers.sort(function(a,b)
 							{
 								if(a.criteria_amount<b.criteria_amount)

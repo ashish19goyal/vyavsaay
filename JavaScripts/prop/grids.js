@@ -26,11 +26,10 @@ function set_grid_item_1()
  */
 function set_grid_item_2()
 {
-	//optimise this query
 	var columns="<bills>" +
 		"<id></id>" +
-		"<bill_date compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
-		"<bill_date compare='less than'>"+(get_raw_time(get_my_date())+1000)+"</bill_date>" +
+		"<bill_date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
+		"<bill_date upperbound='yes'>"+(get_raw_time(get_my_date())+1000)+"</bill_date>" +
 		"</bills>";
 	
 	get_single_column_data(function(results)
@@ -77,8 +76,8 @@ function set_grid_item_4()
 {
 	var columns="<supplier_bills>" +
 		"<id></id>" +
-		"<entry_date compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</entry_date>" +
-		"<entry_date compare='less than'>"+(get_raw_time(get_my_date())+1000)+"</entry_date>" +
+		"<entry_date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</entry_date>" +
+		"<entry_date upperbound='yes'>"+(get_raw_time(get_my_date())+1000)+"</entry_date>" +
 		"</supplier_bills>";
 	
 	get_single_column_data(function(results)
@@ -98,10 +97,10 @@ function set_grid_item_5()
 {
 	var columns="<payments>" +
 		"<total_amount></total_amount>" +
-		"<date compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</date>" +
-		"<date compare='less than'>"+(get_raw_time(get_my_date())+1000)+"</date>" +
-		"<status array='yes'>--pending--closed--</status>" +
 		"<type exact='yes'>received</type>" +
+		"<date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</date>" +
+		"<date upperbound='yes'>"+(get_raw_time(get_my_date())+1000)+"</date>" +
+		"<status array='yes'>--pending--closed--</status>" +
 		"</payments>";
 	get_single_column_data(function(results)
 	{
@@ -124,10 +123,10 @@ function set_grid_item_6()
 {
 	var columns="<payments>" +
 		"<total_amount></total_amount>" +
-		"<date compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</date>" +
-		"<date compare='less than'>"+(get_raw_time(get_my_date())+1000)+"</date>" +
-		"<status array='yes'>--pending--closed--</status>" +
 		"<type exact='yes'>paid</type>" +
+		"<date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</date>" +
+		"<date upperbound='yes'>"+(get_raw_time(get_my_date())+1000)+"</date>" +
+		"<status array='yes'>--pending--closed--</status>" +
 		"</payments>";
 	get_single_column_data(function(results)
 	{
@@ -167,7 +166,7 @@ function set_grid_item_8()
 			"<id></id>" +
 			"<item_name></item_name>" +
 			"<total></total>" +
-			"<bill_date compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
+			"<bill_date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
 			"</bill_items>";
 	fetch_requested_data('',columns,function(results)
 	{
@@ -225,14 +224,18 @@ function set_grid_item_11()
 	var columns="<product_instances count='1'>" +
 		"<id></id>" +
 		"<product_name></product_name>" +
-		"<sale_price sort='desc'></sale_price>" +
+		"<sale_price></sale_price>" +
 		"</product_instances>";
 	fetch_requested_data('',columns,function(results)
 	{
-		////sort product instances by sale price
-		
-		
-		///////
+		results.sort(function(a,b)
+		{
+			if(parseFloat(a.sale_price)<parseFloat(b.sale_price))
+			{	return 1;}
+			else 
+			{	return -1;}
+		});
+				
 		if(results.length>0)
 		{
 			var grid_item=document.getElementById('grid_item_11');
@@ -294,8 +297,8 @@ function set_grid_item_13()
 {
 	var columns="<bills>" +
 		"<customer_name></customer_name>" +
-		"<bill_date compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
-		"<bill_date compare='less than'>"+(get_raw_time(get_my_date())+1000)+"</bill_date>" +
+		"<bill_date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
+		"<bill_date upperbound='yes'>"+(get_raw_time(get_my_date())+1000)+"</bill_date>" +
 		"</bills>";
 	get_single_column_data(function(results)
 	{
@@ -351,7 +354,7 @@ function set_grid_item_16()
 {
 	var columns="<payments>" +
 		"<total_amount></total_amount>" +
-		"<due_date compare='less than'>"+get_my_time()+"</due_date>" +
+		"<due_date upperbound='yes'>"+get_my_time()+"</due_date>" +
 		"<type exact='yes'>paid</type>" +
 		"<status exact='yes'>pending</status>" +
 		"</payments>";
@@ -377,9 +380,9 @@ function set_grid_item_17()
 {
 	var columns="<attendance>" +
 		"<id></id>" +
-		"<date compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</date>" +
-		"<date compare='less than'>"+(get_raw_time(get_my_date())+1000)+"</date>" +
 		"<presence exact='yes'>present</presence>" +
+		"<date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</date>" +
+		"<date upperbound='yes'>"+(get_raw_time(get_my_date())+1000)+"</date>" +
 		"</attendance>";
 	
 	get_single_column_data(function(results)
@@ -516,8 +519,8 @@ function set_grid_item_26()
 {
 	var columns="<bills>" +
 		"<total></total>" +
-		"<bill_date compare='more than'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
-		"<bill_date compare='less than'>"+(get_raw_time(get_my_date())+1000)+"</bill_date>" +
+		"<bill_date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
+		"<bill_date upperbound='yes'>"+(get_raw_time(get_my_date())+1000)+"</bill_date>" +
 		"</bills>";
 	get_single_column_data(function(results)
 	{

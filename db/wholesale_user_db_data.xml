@@ -8,6 +8,20 @@
 			<last_updated>1</last_updated>
 		</row>
 	</accounts>
+	<mandatory_attributes>
+		<row>
+			<object>customer</object>
+			<attribute>DL No</attribute>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<object>customer</object>
+			<attribute>TIN</attribute>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+	</mandatory_attributes>
 	<user_preferences>
 		<row>
 			<name>tin</name>
@@ -32,6 +46,16 @@
 		<row>
 			<name>pan</name>
 			<display_name>PAN #</display_name>
+			<status>active</status>
+			<value></value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>dealer</name>
+			<display_name>DL #</display_name>
 			<status>active</status>
 			<value></value>
 			<type>accounting</type>

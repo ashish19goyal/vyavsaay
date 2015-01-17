@@ -538,3 +538,14 @@ function csv_string_to_obj_array(csvString)
 	}
 	return results;
 }
+
+function my_round(any_number,decimal_p)
+{
+	var multiplier=1;
+	for(var i=0;i<decimal_p)
+	{
+		multiplier*=10;
+	}
+	var result=(Math.round(any_number*multiplier))/multiplier;
+	return result;
+}

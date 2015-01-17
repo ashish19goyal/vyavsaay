@@ -98,11 +98,11 @@ function print_tabular_form(form_id,form_title,table_copy)
 	}
 	table_copy.removeAttribute('class');
 	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,v1").remove();
-	$(table_copy).find('input').each(function(index)
+	$(table_copy).find('input,textarea').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
 	});
-	$(table_copy).find('textarea').each(function(index)
+	$(table_copy).find('label').each(function(index)
 	{
 		$(this).replaceWith($(this).html());
 	});
@@ -308,36 +308,48 @@ function form119_print_form()
 {
 	var new_thead="<tr>"+
 				"<th>Make</th>"+
-				"<th>Item</th>"+
+				"<th colspan='2'>Item</th>"+
 				"<th>Batch</th>" +
+				"<th>Expiry</th>" +
 				"<th>Qty.</th>" +
 				"<th>Free</th>"+
 				"<th>S. Price</th>"+
 				"<th>MRP</th>"+
 				"<th>Amount</th>" +
-				"<th>Discount</th>" +
 				"<th>Tax</th>" +
 				"<th></th>"+
 				"</tr>";
 	var table_element=document.getElementById('form119_body').parentNode;
 	var table_copy=table_element.cloneNode(true);
+	$(table_copy).find('datalist,form').remove();
+	
+	$(table_copy).find('input,textarea').each(function(index)
+	{
+		$(this).attr('value',$(this).val());
+	});
 	
 	var tbody=table_copy.children[1].innerHTML;
 	var new_tbody=tbody.replace(/<br>/g,'</td><td>');
 	
 	var tfoot=table_copy.children[2].innerHTML;
 	var new_tfoot=tfoot.replace(/<td>/g,"<td colspan='2'>");
-	var new_tfoot=new_tfoot.replace(/<td colspan='3'/g,"<td colspan='6'");
-	var new_tfoot=new_tfoot.replace(/<td colspan=\"3\"/g,"<td colspan='6'");
+	var new_tfoot=new_tfoot.replace(/<td colspan='3'/g,"<td colspan='7'");
+	var new_tfoot=new_tfoot.replace(/<td colspan=\"3\"/g,"<td colspan='7'");
 	
 	//console.log(tbody);
 	table_copy.children[0].innerHTML=new_thead;
 	table_copy.children[1].innerHTML=new_tbody;
 	table_copy.children[2].innerHTML=new_tfoot;
-	$(table_copy).find('datalist').remove();
+	
 	
 	var single_bill_items=parseInt(get_session_var('bill_print_items'));
 	var rows=table_copy.children[1].children.length;
+
+	for(var i=0;i<rows;i++)
+	{
+		table_copy.children[1].children[i].children[1].setAttribute('colspan','2');
+	}
+	
 	while(rows>0)
 	{
 		var new_table_copy=table_copy.cloneNode(true);

@@ -2979,7 +2979,6 @@ function form70_bill(order_id)
 									"</offers>";
 							fetch_requested_data('',offer_data,function(offers)
 							{
-								////sorting offers based on criteria amount and criteria quantity
 								offers.sort(function(a,b)
 								{
 									if(parseFloat(a.criteria_amount)<parseFloat(b.criteria_amount))
@@ -4356,7 +4355,6 @@ function form82_bill()
 					"</offers>";
 			fetch_requested_data('',offer_data,function(offers)
 			{
-				////sorting offers based on criteria amount and criteria quantity
 				offers.sort(function(a,b)
 				{
 					if(a.criteria_amount<b.criteria_amount)
@@ -4606,9 +4604,13 @@ function form82_bill()
 						"</offers>";
 				fetch_requested_data('',offer_data,function(offers)
 				{
-					////sort offers based on criteria amount
-					
-					//////////////
+					offers.sort(function(a,b)
+					{
+						if(parseFloat(a.criteria_amount)<parseFloat(b.criteria_amount))
+						{	return 1;}
+						else 
+						{	return -1;}
+					});
 					
 					for(var i in offers)
 					{
@@ -4919,7 +4921,6 @@ function form84_bills()
 						"</offers>";
 				fetch_requested_data('',offer_data,function(offers)
 				{
-					////sorting offers based on criteria amount and criteria quantity
 					offers.sort(function(a,b)
 					{
 						if(a.criteria_amount<b.criteria_amount)
@@ -6637,7 +6638,6 @@ function form108_bill(order_id,bill_type)
 										"</offers>";
 								fetch_requested_data('',offer_data,function(offers)
 								{
-									////sorting offers based on criteria amount and criteria quantity
 									offers.sort(function(a,b)
 									{
 										if(parseFloat(a.criteria_amount)<parseFloat(b.criteria_amount))
@@ -7503,6 +7503,7 @@ function form119_create_item(form)
 							rowsHTML+="<td data-th='Batch'>";
 								rowsHTML+="<input type='text' required form='form119_"+id+"' value='"+free_batch+"'>";
 								rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+								rowsHTML+="<br><v1>Expiry: </v1><label id='form119_exp_"+id+"'></label>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Quantity'>";
 								rowsHTML+="<v1>Bought: </v1><input type='number' min='0' required readonly='readonly' form='form119_"+id+"' step='any' value='0'>";
@@ -7514,7 +7515,7 @@ function form119_create_item(form)
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Total'>";
 								rowsHTML+="<v1>Amount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
-								rowsHTML+="<br><v1>Discount: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+								rowsHTML+="<input type='hidden' value='0' form='form119_"+id+"' readonly='readonly'>";
 								rowsHTML+="<br><v1>Tax: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
@@ -7528,6 +7529,31 @@ function form119_create_item(form)
 						     
 		                $('#form119_body').prepend(rowsHTML);
 	
+		                var make_data="<product_master>" +
+								"<make></make>" +
+								"<name exact='yes'>"+free_product_name+"</name>" +
+								"</product_master>";
+						get_single_column_data(function(data)
+						{
+							if(data.length>0)
+							{
+								document.getElementById('form119_product_make_'+id).innerHTML=data[0]+":";
+							}
+						},make_data);
+						
+						var exp_data="<product_instances>" +
+								"<expiry></expiry>" +
+								"<product_name exact='yes'>"+free_product_name+"</product_name>" +
+								"<batch exact='yes'>"+free_batch+"</batch>" +
+								"</product_instances>";
+						get_single_column_data(function(data)
+						{
+							if(data.length>0)
+							{
+								document.getElementById('form119_exp_'+id).innerHTML=get_my_past_date(data[0]);
+							}
+						},exp_data);
+		                
 						var free_xml="<bill_items>" +
 									"<id>"+id+"</id>" +
 									"<item_name>"+free_product_name+"</item_name>" +
@@ -7703,6 +7729,7 @@ function form119_create_form()
 									rowsHTML+="<td data-th='Batch'>";
 										rowsHTML+="<input type='text' required form='form119_"+id+"' value='"+free_batch+"'>";
 										rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+										rowsHTML+="<br><v1>Expiry: </v1><label id='form119_exp_"+id+"'></label>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Quantity'>";
 										rowsHTML+="<v1>Bought: </v1><input type='number' min='0' required readonly='readonly' form='form119_"+id+"' step='any' value='0'>";
@@ -7714,7 +7741,7 @@ function form119_create_form()
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Total'>";
 										rowsHTML+="<v1>Amount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
-										rowsHTML+="<br><v1>Discount: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
+										rowsHTML+="<input type='hidden' value='0' form='form119_"+id+"' readonly='readonly'>";
 										rowsHTML+="<br><v1>Tax: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' value='0'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Action'>";
@@ -7728,6 +7755,31 @@ function form119_create_form()
 								     
 				                $('#form119_body').prepend(rowsHTML);
 			
+				                var make_data="<product_master>" +
+										"<make></make>" +
+										"<name exact='yes'>"+free_product_name+"</name>" +
+										"</product_master>";
+								get_single_column_data(function(data)
+								{
+									if(data.length>0)
+									{
+										document.getElementById('form119_product_make_'+id).innerHTML=data[0]+":";
+									}
+								},make_data);
+								
+								var exp_data="<product_instances>" +
+										"<expiry></expiry>" +
+										"<product_name exact='yes'>"+free_product_name+"</product_name>" +
+										"<batch exact='yes'>"+free_batch+"</batch>" +
+										"</product_instances>";
+								get_single_column_data(function(data)
+								{
+									if(data.length>0)
+									{
+										document.getElementById('form119_exp_'+id).innerHTML=get_my_past_date(data[0]);
+									}
+								},exp_data);
+				                
 								var free_xml="<bill_items>" +
 											"<id>"+id+"</id>" +
 											"<item_name>"+free_product_name+"</item_name>" +

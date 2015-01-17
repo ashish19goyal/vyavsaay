@@ -196,7 +196,6 @@ function form10_add_item()
 							"</offers>";
 					fetch_requested_data('',offer_data,function(offers)
 					{
-						////sorting offers based on criteria amount and criteria quantity
 						offers.sort(function(a,b)
 						{
 							if(a.criteria_amount<b.criteria_amount)
@@ -414,7 +413,6 @@ function form12_add_item()
 					"</offers>";
 			fetch_requested_data('',offer_data,function(offers)
 			{
-				////sorting offers based on criteria amount and criteria quantity
 				offers.sort(function(a,b)
 				{
 					if(a.criteria_amount<b.criteria_amount)
@@ -883,9 +881,9 @@ function form21_add_item()
 				rowsHTML+="</br>Free: <input type='number' step='any' required form='form21_"+id+"' value='0'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="Total: <input type='number' required form='form21_"+id+"' step='any'></br>";
-				rowsHTML+="</br>Tax: <input type='number' form='form21_"+id+"' value='' step='any'></br>";
-				rowsHTML+="</br>Amount: <input type='number' readonly='readonly' form='form21_"+id+"' value='' step='any'></br>";
+				rowsHTML+="Total: <input type='number' required form='form21_"+id+"' step='any'>";
+				rowsHTML+="</br>Tax: <input type='number' form='form21_"+id+"' value='' step='any'>";
+				rowsHTML+="</br>Amount: <input type='number' readonly='readonly' form='form21_"+id+"' value='' step='any'>";
 				rowsHTML+="</br>Unit Price: <input type='number' readonly='readonly' form='form21_"+id+"' step='any'>";
 				rowsHTML+="</br>Previous Price: <input type='number' readonly='readonly' form='form21_"+id+"' value='' step='any'>";
 			rowsHTML+="</td>";
@@ -2044,7 +2042,6 @@ function form72_add_product()
 					"</offers>";
 			fetch_requested_data('',offer_data,function(offers)
 			{
-				////sorting offers based on criteria amount and criteria quantity
 				offers.sort(function(a,b)
 				{
 					if(a.criteria_amount<b.criteria_amount)
@@ -2283,7 +2280,6 @@ function form72_add_service()
 							"</offers>";
 					fetch_requested_data('',offer_data,function(offers)
 					{
-						////sorting offers based on criteria amount and criteria quantity
 						offers.sort(function(a,b)
 						{
 							if(a.criteria_amount<b.criteria_amount)
@@ -3114,7 +3110,6 @@ function form91_add_item()
 					"</offers>";
 			fetch_requested_data('',offer_data,function(offers)
 			{
-				////sorting offers based on criteria amount and criteria quantity
 				offers.sort(function(a,b)
 				{
 					if(a.criteria_amount<b.criteria_amount)
@@ -3938,6 +3933,8 @@ function form119_add_item()
 {
 	var filter_fields=document.getElementById('form119_master');
 	var bill_type=filter_fields.elements[2].value;
+	var customer_name=filter_fields.elements[1].value;
+	
 	if(is_create_access('form119'))
 	{
 		var id=get_new_key();
@@ -3951,6 +3948,7 @@ function form119_add_item()
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form119_"+id+"' name='batch'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<br><v1>Expiry: </v1><label id='form119_exp_"+id+"'></label>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<v1>Bought: </v1><input type='number' min='0' required form='form119_"+id+"' step='any' name='squantity'>";
@@ -3962,7 +3960,7 @@ function form119_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Total'>";
 				rowsHTML+="<v1>Amount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' name='amount'>";
-				rowsHTML+="<br><v1>Discount: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' name='discount'>";
+				rowsHTML+="<input type='hidden' value='0' form='form119_"+id+"' readonly='readonly' name='discount'>";
 				rowsHTML+="<br><v1>Tax: </v1>Rs. <input type='number' required min='0' value='0' form='form119_"+id+"' readonly='readonly' step='any' name='tax'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
@@ -3998,6 +3996,20 @@ function form119_add_item()
 		var free_product_quantity=fields.elements[15];
 		
 		$(name_filter).focus();
+		
+		$(name_filter).on('keydown',function(e)
+		{
+			if(e.keyCode==118)
+			{
+				e.preventDefault();
+				modal53_action(name_filter.value,customer_name);
+			}
+			else if(e.keyCode==117)
+			{
+				e.preventDefault();
+				modal54_action(name_filter.value);
+			}
+		});
 		
 		$(save_button).on("click", function(event)
 		{
@@ -4091,6 +4103,19 @@ function form119_add_item()
 		
 		$(batch_filter).on('blur',function(event)
 		{
+			var exp_data="<product_instances>" +
+					"<expiry></expiry>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+					"</product_instances>";
+			get_single_column_data(function(data)
+			{
+				if(data.length>0)
+				{
+					document.getElementById('form119_exp_'+id).innerHTML=get_my_past_date(data[0]);
+				}
+			},exp_data);
+			
 			if(bill_type=='undefined' || bill_type=='')
 			{
 				var price_data="<product_instances count='1'>" +
@@ -4135,7 +4160,7 @@ function form119_add_item()
 		
 		$(squantity_filter).on('blur',function(event)
 		{
-			var amount=parseFloat(squantity_filter.value)*parseFloat(price_filter.value);
+			var amount=my_round(parseFloat(squantity_filter.value)*parseFloat(price_filter.value),2);
 			amount_filter.value=amount;
 			var offer_data="<offers>" +
 					"<offer_type>product</offer_type>" +
@@ -4156,7 +4181,6 @@ function form119_add_item()
 					"</offers>";
 			fetch_requested_data('',offer_data,function(offers)
 			{
-				////sorting offers based on criteria amount and criteria quantity
 				offers.sort(function(a,b)
 				{
 					if(a.criteria_amount<b.criteria_amount)
@@ -4242,10 +4266,10 @@ function form119_add_item()
 				{
 					taxes.forEach(function(tax)
 					{
-						tax_filter.value=parseFloat((parseFloat(tax.tax)*(amount-parseFloat(discount_filter.value)))/100);
+						tax_filter.value=my_round(parseFloat((parseFloat(tax.tax)*(amount-parseFloat(discount_filter.value)))/100),2);
 					});
 					
-					total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value));
+					total_filter.value=my_round((parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value)),2);
 				});
 			});
 		});
@@ -4277,9 +4301,9 @@ function form122_add_item()
 				rowsHTML+="</br>Free: <input type='number' step='any' required form='form122_"+id+"' value='0'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="Total: <input type='number' required form='form122_"+id+"' step='any'></br>";
-				rowsHTML+="</br>Tax: <input type='number' form='form122_"+id+"' value='' step='any'></br>";
-				rowsHTML+="</br>Amount: <input type='number' readonly='readonly' form='form122_"+id+"' value='' step='any'></br>";
+				rowsHTML+="Total: <input type='number' required form='form122_"+id+"' step='any'>";
+				rowsHTML+="</br>Tax: <input type='number' form='form122_"+id+"' value='' step='any'>";
+				rowsHTML+="</br>Amount: <input type='number' readonly='readonly' form='form122_"+id+"' value='' step='any'>";
 				rowsHTML+="</br>Unit Price: <input type='number' readonly='readonly' form='form122_"+id+"' step='any'>";
 				rowsHTML+="</br>Previous Price: <input type='number' readonly='readonly' form='form122_"+id+"' value='' step='any'>";
 			rowsHTML+="</td>";

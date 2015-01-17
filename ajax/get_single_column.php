@@ -75,7 +75,7 @@
 							$query=rtrim($query,",");
 							$query.=") and ";
 						}
-						else if(!($col->hasAttribues()))
+						else if(!($col->hasAttributes()))
 						{
 							$query.=$col->nodeName." like ? and ";
 							$values_array[]="%".$col->nodeValue."%";

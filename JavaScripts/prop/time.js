@@ -85,7 +85,6 @@ function get_my_time()
 {
 	var d=new Date();
 	var seconds=d.getTime();
-	seconds=seconds;
 	return seconds;
 }
 

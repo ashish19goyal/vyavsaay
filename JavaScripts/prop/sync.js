@@ -333,7 +333,7 @@ function get_data_from_log_table(func)
 		var kv=IDBKeyRange.bound(['checked','0'],['checked','99999999']);
 		var tables="";
 		static_local_db.transaction(['user_preferences'],"readonly").objectStore('user_preferences').index('value').openCursor(kv).onsuccess=function(e)
-		{		
+		{
 			var result1=e.target.result;
 			if(result1)
 			{
@@ -350,8 +350,7 @@ function get_data_from_log_table(func)
 				var counter=0;
 				var log_data="";
 			
-				///////below section is taking a lot of time/////////
-				static_local_db.transaction(['activities'],"readonly").objectStore('activities').index('last_updated').openCursor(keyValue,'next').onsuccess=function(e)
+				static_local_db.transaction(['activities'],"readonly").objectStore('activities').index('status').openCursor(keyValue,'next').onsuccess=function(e)
 				{
 					var result=e.target.result;
 					if(result)
@@ -428,7 +427,8 @@ function set_activities_to_synced(response)
 			{
 				if(delete_index<delete_ids.length)
 				{
-					var record_id=parseInt(delete_ids[delete_index].innerHTML);
+/////remove parseint from here
+					var record_id=delete_ids[delete_index].innerHTML;
 					delete_index+=1;
 					var delete_request=objectStore.delete(record_id);
 					delete_request.onsuccess=function(e)
@@ -453,7 +453,7 @@ function set_activities_to_synced(response)
 			{
 				if(row_index<update_ids.length)
 				{
-					var record_id=parseFloat(update_ids[row_index].innerHTML);
+					var record_id=update_ids[row_index].innerHTML;
 					var req=objectStore.get(record_id);
 					req.onsuccess=function(e)
 					{

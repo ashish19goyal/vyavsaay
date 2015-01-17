@@ -176,6 +176,7 @@ function local_read_single_column(columns,callback,results)
 			var lowerbound=['0','0'];
 			var upperbound=['9999999999','9999999999'];
 			
+			var bound_count=0;
 			var filter=new Array();
 			
 			for(var j=0; j<tcols.length;j++)
@@ -187,19 +188,31 @@ function local_read_single_column(columns,callback,results)
 					
 					if(tcols[j].hasAttribute('lowerbound'))
 					{
-						fil.value=parseFloat(tcols[j].innerHTML);
+						fil.value=tcols[j].innerHTML;
 						fil.type='lowerbound';
 						filter.push(fil);
 						lowerbound=[fil.value,'0'];
 						sort_index=tcols[j].nodeName;
+						
+						if(bound_count==0)
+						{
+							upperbound=['9999999999','9999999999'];
+						}
+						bound_count+=1;
 					}
 					if(tcols[j].hasAttribute('upperbound'))
 					{
-						fil.value=parseFloat(tcols[j].innerHTML);
+						fil.value=tcols[j].innerHTML;
 						fil.type='lowerbound';
 						filter.push(fil);
 						upperbound=[fil.value,'999999999999'];
 						sort_index=tcols[j].nodeName;
+						
+						if(bound_count==0)
+						{
+							lowerbound=['0','0'];
+						}
+						bound_count+=1;
 					}
 					
 					if(tcols[j].hasAttribute('array'))
@@ -225,6 +238,7 @@ function local_read_single_column(columns,callback,results)
 					sort_index=tcols[j].nodeName;
 					lowerbound=[fil.value,'0'];
 					upperbound=[fil.value,'99999999'];
+					bound_count=0;
 				}
 			}
 			
@@ -232,7 +246,8 @@ function local_read_single_column(columns,callback,results)
 			
 			localdb_open_requests+=1;
 	
-			static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order).onsuccess=function(e)
+			var read_request=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order);
+			read_request.onsuccess=function(e)
 			{
 				var result=e.target.result;
 				if(result)
@@ -350,6 +365,8 @@ function local_read_multi_column(columns,callback,results)
 		var lowerbound=['0','0'];
 		var upperbound=['9999999999','9999999999'];
 		
+		var bound_count=0;
+		
 		for(var j=0;j<cols.length;j++)
 		{
 			if(cols[j].innerHTML!=null && cols[j].innerHTML!="")
@@ -359,19 +376,31 @@ function local_read_multi_column(columns,callback,results)
 				
 				if(cols[j].hasAttribute('lowerbound'))
 				{
-					fil.value=parseFloat(cols[j].innerHTML);
+					fil.value=cols[j].innerHTML;
 					fil.type='lowerbound';
 					filter.push(fil);
 					lowerbound=[fil.value,'0'];
 					sort_index=cols[j].nodeName;
+					
+					if(bound_count==0)
+					{
+						var upperbound=['9999999999','9999999999'];
+					}
+					bound_count+=1;
 				}
 				if(cols[j].hasAttribute('upperbound'))
 				{
-					fil.value=parseFloat(cols[j].innerHTML);
+					fil.value=cols[j].innerHTML;
 					fil.type='lowerbound';
 					filter.push(fil);
 					upperbound=[fil.value,'999999999999'];
 					sort_index=cols[j].nodeName;
+					
+					if(bound_count==0)
+					{
+						lowerbound=['0','0'];
+					}
+					bound_count+=1;
 				}
 				
 				if(cols[j].hasAttribute('array'))
@@ -397,6 +426,7 @@ function local_read_multi_column(columns,callback,results)
 				sort_index=cols[j].nodeName;
 				lowerbound=[fil.value,'0'];
 				upperbound=[fil.value,'99999999'];
+				bound_count=0;
 			}
 		}
 	
@@ -547,12 +577,12 @@ function local_update_row(data_xml,activity_xml)
 				put_req.onsuccess=function(e)
 				{
 					var id=get_new_key();
-					var act_row={id:id,
+					var act_row={id:id+"",
 							type:'update',
 							status:'unsynced',
 							data_xml:data_xml,
 							user_display:'yes',
-							last_updated:get_my_time()};
+							last_updated:""+get_my_time()};
 
 					for(var k=0;k<activity_data.length;k++)
 					{
@@ -611,7 +641,7 @@ function local_update_simple(data_xml)
 				put_req.onsuccess=function(e)
 				{
 					var id=get_new_key();
-					var act_row={id:id,
+					var act_row={id:id+"",
 							type:'update',
 							status:'unsynced',
 							data_xml:data_xml,
@@ -619,7 +649,7 @@ function local_update_simple(data_xml)
 							data_id:data_record.id,
 							tablename:table,
 							link_to:'',
-							last_updated:get_my_time()};
+							last_updated:""+get_my_time()};
 					
 					static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 					{
@@ -724,7 +754,7 @@ function local_update_batch(data_xml)
 				localdb_open_requests+=1;
 				
 				var row_data_xml="<"+table+">"+rows[j].innerHTML+"</"+table+">";
-				var act_row={id:(activity_id+j),
+				var act_row={id:""+(activity_id+j),
 						type:'update',
 						status:'unsynced',
 						data_xml:row_data_xml,
@@ -732,7 +762,7 @@ function local_update_batch(data_xml)
 						data_id:data_id,
 						tablename:table,
 						link_to:'',
-						last_updated:get_my_time()};
+						last_updated:""+get_my_time()};
 				
 				os2.put(act_row).onsuccess=function(e)
 				{
@@ -797,7 +827,7 @@ function local_update_simple_func(data_xml,func)
 				put_req.onsuccess=function(e)
 				{
 					var id=get_new_key();
-					var act_row={id:id,
+					var act_row={id:id+"",
 							type:'update',
 							status:'unsynced',
 							data_xml:data_xml,
@@ -805,7 +835,7 @@ function local_update_simple_func(data_xml,func)
 							data_id:data_record.id,
 							tablename:table,
 							link_to:'',
-							last_updated:get_my_time()};
+							last_updated:""+get_my_time()};
 				
 					static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 					{
@@ -878,12 +908,12 @@ function local_create_row(data_xml,activity_xml)
 			put_req.onsuccess=function(e)
 			{
 				var id=get_new_key();
-				var act_row={id:id,
+				var act_row={id:""+id,
 						type:'create',
 						status:'unsynced',
 						data_xml:data_xml,
 						user_display:'yes',
-						last_updated:get_my_time()};
+						last_updated:""+get_my_time()};
 				for(var k=0;k<activity_data.length;k++)
 				{
 					act_row[activity_data[k].nodeName]=activity_data[k].innerHTML;
@@ -916,12 +946,12 @@ function local_create_row(data_xml,activity_xml)
 					objectStore.put(data_row).onsuccess=function(e)
 					{
 						var id=get_new_key();
-						var act_row={id:id,
+						var act_row={id:""+id,
 								type:'create',
 								status:'unsynced',
 								data_xml:data_xml,
 								user_display:'yes',
-								last_updated:get_my_time()};
+								last_updated:""+get_my_time()};
 						
 						for(var k=0;k<activity_data.length;k++)
 						{
@@ -994,7 +1024,7 @@ function local_create_simple(data_xml)
 			put_req.onsuccess=function(e)
 			{
 				var id=get_new_key();
-				var act_row={id:id,
+				var act_row={id:""+id,
 						type:'create',
 						status:'unsynced',
 						data_xml:data_xml,
@@ -1002,7 +1032,7 @@ function local_create_simple(data_xml)
 						data_id:data_row.id,
 						tablename:table,
 						link_to:'',
-						last_updated:get_my_time()};
+						last_updated:""+get_my_time()};
 				static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 				{
 					localdb_open_requests-=1;
@@ -1032,7 +1062,7 @@ function local_create_simple(data_xml)
 					objectStore.put(data_row).onsuccess=function(e)
 					{
 						var id=get_new_key();
-						var act_row={id:id,
+						var act_row={id:""+id,
 								type:'create',
 								status:'unsynced',
 								data_xml:data_xml,
@@ -1040,7 +1070,7 @@ function local_create_simple(data_xml)
 								data_id:data_row.id,
 								tablename:table,
 								link_to:'',
-								last_updated:get_my_time()};
+								last_updated:""+get_my_time()};
 						static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 						{
 							localdb_open_requests-=1;
@@ -1149,7 +1179,7 @@ function local_create_batch(data_xml)
 							{
 								var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
 								var row_data_xml="<"+table+">"+rows[i].innerHTML+"</"+table+">";
-								var act_row={id:(activity_id+i),
+								var act_row={id:""+(activity_id+i),
 										type:'create',
 										status:'unsynced',
 										data_xml:row_data_xml,
@@ -1157,7 +1187,7 @@ function local_create_batch(data_xml)
 										data_id:data_id,
 										tablename:table,
 										link_to:'',
-										last_updated:get_my_time()};
+										last_updated:""+get_my_time()};
 								
 								os2.put(act_row).onsuccess=function(e)
 								{
@@ -1175,7 +1205,7 @@ function local_create_batch(data_xml)
 					{
 						var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
 						var row_data_xml="<"+table+">"+rows[i].innerHTML+"</"+table+">";
-						var act_row={id:(activity_id+i),
+						var act_row={id:""+(activity_id+i),
 								type:'create',
 								status:'unsynced',
 								data_xml:row_data_xml,
@@ -1183,7 +1213,7 @@ function local_create_batch(data_xml)
 								data_id:data_id,
 								tablename:table,
 								link_to:'',
-								last_updated:get_my_time()};
+								last_updated:""+get_my_time()};
 						
 						os2.put(act_row).onsuccess=function(e)
 						{
@@ -1261,7 +1291,7 @@ function local_create_simple_func(data_xml,func)
 			put_req.onsuccess=function(e)
 			{
 				var id=get_new_key();
-				var act_row={id:id,
+				var act_row={id:""+id,
 						type:'create',
 						status:'unsynced',
 						data_xml:data_xml,
@@ -1269,7 +1299,7 @@ function local_create_simple_func(data_xml,func)
 						data_id:data_row.id,
 						tablename:table,
 						link_to:'',
-						last_updated:get_my_time()};
+						last_updated:""+get_my_time()};
 				static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 				{
 					localdb_open_requests-=1;
@@ -1299,7 +1329,7 @@ function local_create_simple_func(data_xml,func)
 					objectStore.put(data_row).onsuccess=function(e)
 					{
 						var id=get_new_key();
-						var act_row={id:id,
+						var act_row={id:""+id,
 								type:'create',
 								status:'unsynced',
 								data_xml:data_xml,
@@ -1307,7 +1337,7 @@ function local_create_simple_func(data_xml,func)
 								data_id:data_row.id,
 								tablename:table,
 								link_to:'',
-								last_updated:get_my_time()};
+								last_updated:""+get_my_time()};
 						static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 						{
 							localdb_open_requests-=1;
@@ -1376,7 +1406,7 @@ function local_create_simple_no_warning(data_xml)
 			put_req.onsuccess=function(e)
 			{
 				var id=get_new_key();
-				var act_row={id:id,
+				var act_row={id:""+id,
 						type:'create',
 						status:'unsynced',
 						data_xml:data_xml,
@@ -1384,7 +1414,7 @@ function local_create_simple_no_warning(data_xml)
 						data_id:data_row.id,
 						tablename:table,
 						link_to:'',
-						last_updated:get_my_time()};
+						last_updated:""+get_my_time()};
 				static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 				{
 					localdb_open_requests-=1;
@@ -1413,7 +1443,7 @@ function local_create_simple_no_warning(data_xml)
 					objectStore.put(data_row).onsuccess=function(e)
 					{
 						var id=get_new_key();
-						var act_row={id:id,
+						var act_row={id:""+id,
 								type:'create',
 								status:'unsynced',
 								data_xml:data_xml,
@@ -1421,7 +1451,7 @@ function local_create_simple_no_warning(data_xml)
 								data_id:data_row.id,
 								tablename:table,
 								link_to:'',
-								last_updated:get_my_time()};
+								last_updated:""+get_my_time()};
 						static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 						{
 							localdb_open_requests-=1;
@@ -1502,12 +1532,12 @@ function local_delete_row(data_xml,activity_xml)
 						objectStore.delete(filter[0].value).onsuccess=function(e)
 						{
 							var id=get_new_key();
-							var act_row={id:id,
+							var act_row={id:""+id,
 									type:'delete',
 									status:'unsynced',
 									user_display:'yes',
 									data_xml:data_xml,
-									last_updated:get_my_time()};
+									last_updated:""+get_my_time()};
 							
 							for(var k=0;k<activity_data.length;k++)
 							{
@@ -1581,12 +1611,12 @@ function local_delete_row(data_xml,activity_xml)
 						if(j<delete_ids_array.length)
 						{
 							localdb_open_requests+=1;
-							var act_row={id:(activity_id+j),
+							var act_row={id:""+(activity_id+j),
 									type:'delete',
 									status:'unsynced',
 									user_display:'yes',
 									data_xml:data_xml,
-									last_updated:get_my_time()};
+									last_updated:""+get_my_time()};
 							
 							for(var k=0;k<activity_data.length;k++)
 							{
@@ -1684,7 +1714,7 @@ function local_delete_simple(data_xml)
 						objectStore.delete(filter[0].value).onsuccess=function(e)
 						{
 							var id=get_new_key();
-							var act_row={id:id,
+							var act_row={id:""+id,
 									type:'delete',
 									data_id:data.id,
 									data_xml:data_xml,
@@ -1692,7 +1722,7 @@ function local_delete_simple(data_xml)
 									status:'unsynced',
 									user_display:'no',
 									link_to:'',
-									last_updated:get_my_time()};
+									last_updated:""+get_my_time()};
 							static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 							{
 								localdb_open_requests-=1;
@@ -1763,7 +1793,7 @@ function local_delete_simple(data_xml)
 						if(j<delete_ids_array.length)
 						{
 							localdb_open_requests+=1;
-							var act_row={id:(activity_id+j),
+							var act_row={id:""+(activity_id+j),
 									type:'delete',
 									data_id:delete_ids_array[j],
 									data_xml:data_xml,
@@ -1771,7 +1801,7 @@ function local_delete_simple(data_xml)
 									status:'unsynced',
 									user_display:'no',
 									link_to:'',
-									last_updated:get_my_time()};
+									last_updated:""+get_my_time()};
 							os2.put(act_row).onsuccess=function(e)
 							{
 								j++;
@@ -1862,7 +1892,7 @@ function local_delete_simple_func(data_xml,func)
 						objectStore.delete(filter[0].value).onsuccess=function(e)
 						{
 							var id=get_new_key();
-							var act_row={id:id,
+							var act_row={id:""+id,
 									type:'delete',
 									data_id:data.id,
 									data_xml:data_xml,
@@ -1870,7 +1900,7 @@ function local_delete_simple_func(data_xml,func)
 									status:'unsynced',
 									user_display:'no',
 									link_to:'',
-									last_updated:get_my_time()};
+									last_updated:""+get_my_time()};
 							static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 							{
 								localdb_open_requests-=1;
@@ -1939,7 +1969,7 @@ function local_delete_simple_func(data_xml,func)
 						if(j<delete_ids_array.length)
 						{
 							localdb_open_requests+=1;
-							var act_row={id:(activity_id+j),
+							var act_row={id:""+(activity_id+j),
 									type:'delete',
 									data_id:delete_ids_array[j],
 									data_xml:data_xml,
@@ -1947,7 +1977,7 @@ function local_delete_simple_func(data_xml,func)
 									status:'unsynced',
 									user_display:'no',
 									link_to:'',
-									last_updated:get_my_time()};
+									last_updated:""+get_my_time()};
 							os2.put(act_row).onsuccess=function(e)
 							{
 								localdb_open_requests-=1;
@@ -1996,7 +2026,7 @@ function local_get_inventory(product,batch,callback)
 	{
 		var sort_order='prev';
 		var result=0;
-		var transaction=static_local_db.transaction(['bill_items','supplier_bill_items','supplier_return_items','inventory_adjust','customer_return_items','discarded'],"readonly");
+		var transaction=static_local_db.transaction(['bill_items','supplier_bill_items','supplier_return_items','inventory_adjust','customer_return_items','discarded','unbilled_sale_items','unbilled_purchase_items'],"readonly");
 		
 		var keyValue=IDBKeyRange.bound([product,'0'],[product,'99999999']);
 		transaction.objectStore('bill_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
@@ -2005,7 +2035,7 @@ function local_get_inventory(product,batch,callback)
 			if(bi_result)
 			{
 				var bi_record=bi_result.value;
-				if(bi_record['batch']==batch || batch==='' || batch===null)
+				if(bi_record['batch']==batch || batch=='' || batch===null)
 				{
 					result-=parseFloat(bi_record['quantity']);
 				}
@@ -2019,7 +2049,7 @@ function local_get_inventory(product,batch,callback)
 					if(si_result)
 					{
 						var si_record=si_result.value;
-						if(si_record['batch']==batch || batch==='' || batch===null)
+						if(si_record['batch']==batch || batch=='' || batch===null)
 						{
 							result+=parseFloat(si_record['quantity']);
 						}
@@ -2033,7 +2063,7 @@ function local_get_inventory(product,batch,callback)
 							if(sr_result)
 							{
 								var sr_record=sr_result.value;
-								if(sr_record['batch']==batch || batch==='' || batch===null)
+								if(sr_record['batch']==batch || batch=='' || batch===null)
 								{
 									result-=parseFloat(sr_record['quantity']);
 								}
@@ -2047,7 +2077,7 @@ function local_get_inventory(product,batch,callback)
 									if(ia_result)
 									{
 										var ia_record=ia_result.value;
-										if(ia_record['batch']==batch || batch==='' || batch===null)
+										if(ia_record['batch']==batch || batch=='' || batch===null)
 										{
 											result+=parseFloat(ia_record['quantity']);
 										}
@@ -2061,11 +2091,11 @@ function local_get_inventory(product,batch,callback)
 											if(cr_result)
 											{
 												var cr_record=cr_result.value;
-												if(cr_record['batch']==batch || batch==='' || batch===null)
+												if(cr_record['batch']==batch || batch=='' || batch===null)
 												{
 													result+=parseFloat(cr_record['quantity']);
 												}
-												if(cr_record['exchange_batch']==batch || batch==='' || batch===null)
+												if(cr_record['exchange_batch']==batch || batch=='' || batch===null)
 												{
 													result-=parseFloat(cr_record['quantity']);
 												}
@@ -2079,7 +2109,7 @@ function local_get_inventory(product,batch,callback)
 													if(di_result)
 													{
 														var di_record=di_result.value;
-														if(di_record['batch']==batch || batch==='' || batch===null)
+														if(di_record['batch']==batch || batch=='' || batch===null)
 														{
 															result-=parseFloat(di_record['quantity']);
 														}
@@ -2093,7 +2123,7 @@ function local_get_inventory(product,batch,callback)
 															if(us_result)
 															{
 																var us_record=us_result.value;
-																if(us_record['batch']==batch || batch==='' || batch===null)
+																if(us_record['batch']==batch || batch=='' || batch===null)
 																{
 																	result-=parseFloat(us_record['quantity']);
 																}
@@ -2107,7 +2137,7 @@ function local_get_inventory(product,batch,callback)
 																	if(up_result)
 																	{
 																		var up_record=up_result.value;
-																		if(up_record['batch']==batch || batch==='' || batch===null)
+																		if(up_record['batch']==batch || batch=='' || batch===null)
 																		{
 																			result+=parseFloat(up_record['quantity']);
 																		}

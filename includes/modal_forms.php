@@ -562,4 +562,12 @@
 		You will be logged out now. Login again to access the system in online mode.
 	</div>
 	
+	<div id="modal53" title="Scheme to customer">
+		<table id='modal53_table'>
+		</table>
+	</div>
+	<div id="modal54" title="Scheme from supplier">
+		<table id='modal54_table'>
+		</table>
+	</div>
 </div>

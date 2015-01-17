@@ -1723,9 +1723,9 @@ function form21_ini()
 						rowsHTML+="</br>Free: <input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.f_quantity+"' step='any'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Amount'>";
-						rowsHTML+="Total: <input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.total+"' step='any'></br>";
-						rowsHTML+="</br>Tax: <input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.tax+"' step='any'></br>";
-						rowsHTML+="</br>Amount: <input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.amount+"' step='any'></br>";
+						rowsHTML+="Total: <input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.total+"' step='any'>";
+						rowsHTML+="</br>Tax: <input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.tax+"' step='any'>";
+						rowsHTML+="</br>Amount: <input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.amount+"' step='any'>";
 						rowsHTML+="</br>Unit Price: <input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.unit_price+"' step='any'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Batch'>";
@@ -9936,6 +9936,7 @@ function form119_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Batch'>";
 							rowsHTML+="<input type='text' required form='form119_"+id+"' readonly='readonly' value='"+result.batch+"'>";
+							rowsHTML+="<br><v1>Expiry: </v1><label id='form119_exp_"+id+"'></label>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
 							rowsHTML+="<v1>Bought: </v1><input type='number' min='0' required form='form119_"+id+"' readonly='readonly' step='any' value='"+result.p_quantity+"'>";
@@ -9947,7 +9948,7 @@ function form119_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Total'>";
 							rowsHTML+="<v1>Amount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='"+result.amount+"'>";
-							rowsHTML+="<br><v1>Discount: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='"+result.discount+"'>";
+							rowsHTML+="<input type='hidden' form='form119_"+id+"' readonly='readonly' value='"+result.discount+"'>";
 							rowsHTML+="<br><v1>Tax: </v1>Rs. <input type='number' required min='0' form='form119_"+id+"' readonly='readonly' step='any' value='"+result.tax+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
@@ -9972,6 +9973,20 @@ function form119_ini()
 							document.getElementById('form119_product_make_'+id).innerHTML=data[0]+":";
 						}
 					},make_data);
+					
+					var exp_data="<product_instances>" +
+							"<expiry></expiry>" +
+							"<product_name exact='yes'>"+result.item_name+"</product_name>" +
+							"<batch exact='yes'>"+result.batch+"</batch>" +
+							"</product_instances>";
+					get_single_column_data(function(data)
+					{
+						if(data.length>0)
+						{
+							document.getElementById('form119_exp_'+id).innerHTML=get_my_past_date(data[0]);
+						}
+					},exp_data);
+
 				});
 				
 				message_string+="\nAmount: "+bill_results[0].amount;
@@ -10100,9 +10115,9 @@ function form122_ini()
 						rowsHTML+="</br>Free: <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.f_quantity+"' step='any'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Amount'>";
-						rowsHTML+="Total: <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.total+"' step='any'></br>";
-						rowsHTML+="</br>Tax: <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.tax+"' step='any'></br>";
-						rowsHTML+="</br>Amount: <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.amount+"' step='any'></br>";
+						rowsHTML+="Total: <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.total+"' step='any'>";
+						rowsHTML+="</br>Tax: <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.tax+"' step='any'>";
+						rowsHTML+="</br>Amount: <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.amount+"' step='any'>";
 						rowsHTML+="</br>Unit Price: <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.unit_price+"' step='any'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Batch'>";
