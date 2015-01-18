@@ -13,6 +13,11 @@ function set_grid_item_1()
 		if(results.length>0)
 		{
 			var grid_item=document.getElementById('grid_item_1');
+			$(grid_item).off('click');
+			$(grid_item).on('click',function(ev)
+			{
+				element_display(results[0].id,'form92','form42');
+			});
 			grid_item.innerHTML=results[0];
 		}
 	},columns);
@@ -221,7 +226,7 @@ function set_grid_item_9()
  */
 function set_grid_item_11()
 {
-	var columns="<product_instances count='1'>" +
+	var columns="<product_instances>" +
 		"<id></id>" +
 		"<product_name></product_name>" +
 		"<sale_price></sale_price>" +
@@ -267,7 +272,9 @@ function set_grid_item_12()
 		{
 			for(var k in results)
 			{
-				results[k].margin=(parseFloat(results[k].sale_price)/parseFloat(results[k].cost_price));
+				var cost_price=parseFloat(results[k].cost_price);
+				if(cost_price!=0 && cost_price!='NaN')
+					results[k].margin=(parseFloat(results[k].sale_price)/cost_price);
 			}
 			
 			results.sort(function(a,b)

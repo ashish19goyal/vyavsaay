@@ -203,7 +203,7 @@ function local_read_single_column(columns,callback,results)
 					if(tcols[j].hasAttribute('upperbound'))
 					{
 						fil.value=tcols[j].innerHTML;
-						fil.type='lowerbound';
+						fil.type='upperbound';
 						filter.push(fil);
 						upperbound=[fil.value,'999999999999'];
 						sort_index=tcols[j].nodeName;
@@ -278,7 +278,7 @@ function local_read_single_column(columns,callback,results)
 						}
 						else if(filter[i].type=='upperbound') 
 						{
-							if(parseFloat(record[filter[i].name])>=filter[i].value)
+							if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
 							{
 								match=false;
 								break;
@@ -286,7 +286,7 @@ function local_read_single_column(columns,callback,results)
 						}
 						else if(filter[i].type=='lowerbound') 
 						{
-							if(parseFloat(record[filter[i].name])<=filter[i].value)
+							if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
 							{
 								match=false;
 								break;
@@ -391,7 +391,7 @@ function local_read_multi_column(columns,callback,results)
 				if(cols[j].hasAttribute('upperbound'))
 				{
 					fil.value=cols[j].innerHTML;
-					fil.type='lowerbound';
+					fil.type='upperbound';
 					filter.push(fil);
 					upperbound=[fil.value,'999999999999'];
 					sort_index=cols[j].nodeName;
@@ -481,7 +481,7 @@ function local_read_multi_column(columns,callback,results)
 					
 					if(filter[i].type=='upperbound') 
 					{
-						if(parseFloat(record[filter[i].name])>=filter[i].value)
+						if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
 						{
 							match=false;
 							break;
@@ -811,8 +811,8 @@ function local_update_simple_func(data_xml,func)
 		var data_id=data.childNodes[0].getElementsByTagName('id')[0].innerHTML;
 		var cols=data.childNodes[0].childNodes;
 		
-		var objectStore=static_local_db.transaction([table],"readwrite").objectStore(table);
-		var req=objectStore.get(data_id);
+		var os1=static_local_db.transaction([table],"readwrite").objectStore(table);
+		var req=os1.get(data_id);
 		req.onsuccess=function(e)
 		{
 			var data_record=req.result;
@@ -823,7 +823,7 @@ function local_update_simple_func(data_xml,func)
 					data_record[cols[j].nodeName]=cols[j].innerHTML;
 				}
 				
-				var put_req=objectStore.put(data_record);
+				var put_req=os1.put(data_record);
 				put_req.onsuccess=function(e)
 				{
 					var id=get_new_key();
