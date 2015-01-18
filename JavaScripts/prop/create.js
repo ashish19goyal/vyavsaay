@@ -5690,22 +5690,22 @@ function form91_create_item(form)
 						var id=get_new_key();
 						rowsHTML="<tr>";
 							rowsHTML+="<form id='form91_"+id+"'></form>";
-			                	rowsHTML+="<td>";
+			                	rowsHTML+="<td data-th='Item'>";
 			                    	rowsHTML+="<input type='text' readonly='readonly' form='form91_"+id+"' value='"+free_product_name+"'>";
 		                        rowsHTML+="</td>";
-		                        rowsHTML+="<td>";
+		                        rowsHTML+="<td data-th='Batch'>";
 		                                rowsHTML+="<input type='text' required form='form91_"+id+"' value='"+free_batch+"'>";
 		                        rowsHTML+="</td>";
-		                        rowsHTML+="<td>";
+		                        rowsHTML+="<td data-th='Quantity'>";
 		                                rowsHTML+="<input type='number' readonly='readonly' required form='form91_"+id+"' value='"+free_product_quantity+"'>";
 		                        rowsHTML+="</td>";
-		                        rowsHTML+="<td>";
+		                        rowsHTML+="<td data-th='Unit Price'>";
 		                                rowsHTML+="<input type='number' readonly='readonly' required form='form91_"+id+"' value='0'>";
 		                        rowsHTML+="</td>";
-		                        rowsHTML+="<td>";
+		                        rowsHTML+="<td data-th='Total'>";
 		                                rowsHTML+="<input type='number' readonly='readonly' required form='form91_"+id+"' value='0'>";
 		                        rowsHTML+="</td>";
-		                        rowsHTML+="<td>";
+		                        rowsHTML+="<td data-th='Action'>";
 		                                rowsHTML+="<input type='hidden' form='form91_"+id+"' value='0'>";
 		                                rowsHTML+="<input type='hidden' form='form91_"+id+"' value='0'>";
 		                                rowsHTML+="<input type='hidden' form='form91_"+id+"' value='0'>";
@@ -5775,7 +5775,7 @@ function form91_create_item(form)
 
 
 /**
- * @form Create bill(multiple registers)
+ * @form Create bill(bakery)
  * @formNo 91
  * @param button
  */
@@ -5882,22 +5882,22 @@ function form91_create_form()
 								var id=get_new_key();
 								rowsHTML="<tr>";
 									rowsHTML+="<form id='form91_"+id+"'></form>";
-					                	rowsHTML+="<td>";
+					                	rowsHTML+="<td data-th='Item'>";
 					                    	rowsHTML+="<input type='text' readonly='readonly' form='form91_"+id+"' value='"+free_product_name+"'>";
 				                        rowsHTML+="</td>";
-				                        rowsHTML+="<td>";
+				                        rowsHTML+="<td data-th='Batch'>";
 				                                rowsHTML+="<input type='text' required form='form91_"+id+"' value='"+free_batch+"'>";
 				                        rowsHTML+="</td>";
-				                        rowsHTML+="<td>";
+				                        rowsHTML+="<td data-th='Quantity'>";
 				                                rowsHTML+="<input type='number' readonly='readonly' required form='form91_"+id+"' value='"+free_product_quantity+"'>";
 				                        rowsHTML+="</td>";
-				                        rowsHTML+="<td>";
+				                        rowsHTML+="<td data-th='Unit Price'>";
 				                        	rowsHTML+="<input type='number' readonly='readonly' required form='form91_"+id+"' value='0'>";
 				                        rowsHTML+="</td>";
-				                        rowsHTML+="<td>";
-				                                rowsHTML+="<input type='number' readonly='readonly' required form='form91_"+id+"' value='0'>";
+				                        rowsHTML+="<td data-th='Total'>";
+				                        	rowsHTML+="<input type='number' readonly='readonly' required form='form91_"+id+"' value='0'>";
 				                        rowsHTML+="</td>";
-				                        rowsHTML+="<td>";
+				                        rowsHTML+="<td data-th='Action'>";
 				                                rowsHTML+="<input type='hidden' form='form91_"+id+"' value='0'>";
 				                                rowsHTML+="<input type='hidden' form='form91_"+id+"' value='0'>";
 				                                rowsHTML+="<input type='hidden' form='form91_"+id+"' value='0'>";

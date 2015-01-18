@@ -393,7 +393,8 @@ function report9_ini()
 	var name=form.elements[1].value;
 	var make=form.elements[2].value;
 	var customer=form.elements[3].value;
-	var date=form.elements[4].value;
+	var start_date=form.elements[4].value;
+	var end_date=form.elements[5].value;
 	
 	show_loader();
 	$('#report9_body').html('');
@@ -402,7 +403,8 @@ function report9_ini()
 	var bills_data="<bills>" +
 			"<id></id>" +
 			"<customer_name>"+customer+"</customer_name>" +
-			"<bill_date lowerbound='yes'>"+get_raw_time(date)+"</bill_date>" +
+			"<bill_date lowerbound='yes'>"+get_raw_time(start_date)+"</bill_date>" +
+			"<bill_date upperbound='yes'>"+get_raw_time(end_date)+"</bill_date>" +
 			"</bills>";
 	
 	fetch_requested_data('report9',bills_data,function(bills)
@@ -418,7 +420,8 @@ function report9_ini()
 				"<item_name>"+name+"</item_name>" +
 				"<quantity></quantity>" +
 				"<amount></amount>" +
-				"<last_updated lowerbound='yes'>"+get_raw_time(date)+"</last_updated>" +
+				"<last_updated lowerbound='yes'>"+get_raw_time(start_date)+"</last_updated>" +
+				"<last_updated upperbound='yes'>"+get_raw_time(end_date)+"</last_updated>" +
 				"</bill_items>";
 		
 		fetch_requested_data('report9',bill_items_data,function(bill_ids)
@@ -480,7 +483,7 @@ function report9_ini()
 				var total_row="<tr><td colspan='3' data-th='Total'>Total</td><td data-th='Quantity'>"+total_quantity+"</td><td data-th='Amount'>"+Math.round(total_amount)+"</td></tr>";
 				$('#report9_foot').html(total_row);
 				
-				var print_button=form.elements[6];
+				var print_button=form.elements[7];
 				print_tabular_report('report9','Product Sales Report',print_button);
 				
 				hide_loader();
@@ -3472,4 +3475,130 @@ function report53_ini()
 	
 	var print_button=form.elements[5];
 	print_tabular_report('report53','Sales Tax Report',print_button);
+};
+
+
+/**
+ * @reportNo 54
+ * @report Best days (by sales)
+ */
+function report54_ini()
+{
+	show_loader();
+	var form=document.getElementById('report54_header');
+	var start_date=form.elements[1].value;
+	var end_date=form.elements[2].value;
+	
+	var canvas_parent=$("#report54_canvas").parent();
+	$("#report54_canvas").remove();
+	$(canvas_parent).append("<canvas id='report54_canvas' class='report_sizing'></canvas>");
+	
+	var ctx = document.getElementById("report54_canvas").getContext("2d");
+	
+	var bills_data="<bills>" +
+			"<id></id>" +
+			"<total></total>" +
+			"<bill_date lowerbound='yes'>"+get_raw_time(start_date)+"</bill_date>" +
+			"<bill_date upperbound='yes'>"+get_raw_time(end_date)+"</bill_date>" +
+			"</bills>";
+	fetch_requested_data('report54',bills_data,function(bills)
+	{
+		for(var i=0;i<bills.length;i++)
+		{
+			for(var j=i+1;j<bills.length;j++)
+			{
+				if(bills[i].bill_date==bills[j].bill_date)
+				{
+					bills[i].total=parseFloat(bills[i].total)+parseFloat(bills[j].total);
+					bills.splice(j,1);
+					j-=1;
+				}
+			}
+		}
+		
+		bills.sort(function(a,b)
+		{
+			if(parseFloat(a.total)<parseFloat(b.total))
+			{	return 1;}
+			else 
+			{	return -1;}
+		});
+		
+		bills.splice(10,bills.length);
+		bills.forEach(function(bill)
+		{
+			bill.bill_date=get_my_past_date(bill.bill_date);
+		});
+		
+		var result=transform_to_bar_sum(bills,'Total Sale','total','bill_date');
+		var mybarchart = new Chart(ctx).Bar(result,{});
+		document.getElementById("report54_legend").innerHTML=mybarchart.generateLegend();
+		
+		var print_button=form.elements[4];
+		print_graphical_report('report54','Best days (by Sales)',print_button,mybarchart);
+		hide_loader();
+	});
+};
+
+
+/**
+ * @reportNo 55
+ * @report Worst days (by sales)
+ */
+function report55_ini()
+{
+	show_loader();
+	var form=document.getElementById('report55_header');
+	var start_date=form.elements[1].value;
+	var end_date=form.elements[2].value;
+	
+	var canvas_parent=$("#report55_canvas").parent();
+	$("#report55_canvas").remove();
+	$(canvas_parent).append("<canvas id='report55_canvas' class='report_sizing'></canvas>");
+	
+	var ctx = document.getElementById("report55_canvas").getContext("2d");
+	
+	var bills_data="<bills>" +
+			"<id></id>" +
+			"<total></total>" +
+			"<bill_date lowerbound='yes'>"+get_raw_time(start_date)+"</bill_date>" +
+			"<bill_date upperbound='yes'>"+get_raw_time(end_date)+"</bill_date>" +
+			"</bills>";
+	fetch_requested_data('report55',bills_data,function(bills)
+	{
+		for(var i=0;i<bills.length;i++)
+		{
+			for(var j=i+1;j<bills.length;j++)
+			{
+				if(bills[i].bill_date==bills[j].bill_date)
+				{
+					bills[i].total=parseFloat(bills[i].total)+parseFloat(bills[j].total);
+					bills.splice(j,1);
+					j-=1;
+				}
+			}
+		}
+		
+		bills.sort(function(a,b)
+		{
+			if(parseFloat(a.total)>parseFloat(b.total))
+			{	return 1;}
+			else 
+			{	return -1;}
+		});
+		
+		bills.splice(10,bills.length);
+		bills.forEach(function(bill)
+		{
+			bill.bill_date=get_my_past_date(bill.bill_date);
+		});
+		
+		var result=transform_to_bar_sum(bills,'Total Sale','total','bill_date');
+		var mybarchart = new Chart(ctx).Bar(result,{});
+		document.getElementById("report55_legend").innerHTML=mybarchart.generateLegend();
+		
+		var print_button=form.elements[4];
+		print_graphical_report('report55','Worst days (by Sales)',print_button,mybarchart);
+		hide_loader();
+	});
 };

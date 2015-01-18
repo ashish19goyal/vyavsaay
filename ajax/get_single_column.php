@@ -53,12 +53,12 @@
 					{
 						if($col->hasAttribute('upperbound'))
 						{
-							$query.=$col->nodeName." < ? and ";
+							$query.=$col->nodeName." <= ? and ";
 							$values_array[]=$col->nodeValue;
 						}
 						if($col->hasAttribute('lowerbound'))
 						{
-							$query.=$col->nodeName." > ? and ";
+							$query.=$col->nodeName." >= ? and ";
 							$values_array[]=$col->nodeValue;
 						}
 						

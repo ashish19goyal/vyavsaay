@@ -208,6 +208,10 @@
   	"bill_message":"Message on the Bill",
   	"bill_print_items":"Max number of items on 1 printed bill",
   	"mandatory_attributes":"Mandatory Atrributes",
-  	"receipts":"Receipts"
+  	"receipts":"Receipts",
+  	"best_days":"Best Days",
+  	"best_days_by_sales":"Best Days (by sales)",
+  	"worst_days":"Worst Days",
+  	"worst_days_by_sales":"Worst Days (by sales)"
   }
 }

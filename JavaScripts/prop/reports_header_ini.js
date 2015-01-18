@@ -108,7 +108,8 @@ function report9_header_ini()
 	var name_filter=form.elements[1];
 	var make_filter=form.elements[2];
 	var customer_filter=form.elements[3];
-	var date_filter=form.elements[4];
+	var start_date_filter=form.elements[4];
+	var end_date_filter=form.elements[5];
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -131,8 +132,10 @@ function report9_header_ini()
 	set_my_filter(make_data,make_filter);
 	set_my_filter(customer_data,customer_filter);
 	
-	$(date_filter).datepicker();
-	$(date_filter).val(get_my_past_date((get_my_time()-86400000)));
+	$(start_date_filter).datepicker();
+	$(end_date_filter).datepicker();
+	$(start_date_filter).val(get_my_past_date((get_my_time()-86400000)));
+	$(end_date_filter).val(get_my_date());
 }
 
 /**
@@ -991,4 +994,50 @@ function report53_header_ini()
 	$(start_filter).val(get_my_past_date((get_my_time()-86400000)));
 	$(end_filter).datepicker();
 	$(end_filter).val(get_my_past_date(get_my_time()));
+}
+
+/**
+ * @reportNo 54
+ * @report Best days (by sales)
+ */
+function report54_header_ini()
+{	
+	var form=document.getElementById('report54_header');
+	var start_date=form.elements[1];
+	var end_date=form.elements[2];
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report54_ini();
+	});
+	
+	$(start_date).datepicker();
+	$(end_date).datepicker();
+	start_date.value=get_my_past_date((get_my_time()-86400000));
+	end_date.value=get_my_date();
+}
+
+/**
+ * @reportNo 55
+ * @report worst days (by sales)
+ */
+function report55_header_ini()
+{	
+	var form=document.getElementById('report55_header');
+	var start_date=form.elements[1];
+	var end_date=form.elements[2];
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report55_ini();
+	});
+	
+	$(start_date).datepicker();
+	$(end_date).datepicker();
+	start_date.value=get_my_past_date((get_my_time()-86400000));
+	end_date.value=get_my_date();
 }

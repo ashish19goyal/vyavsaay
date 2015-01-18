@@ -70,12 +70,13 @@ function print_tabular_form(form_id,form_title,table_copy)
 	var signature=document.createElement('div');
 	var footer=document.createElement('div');
 	var bt=get_session_var('title');
-	signature.innerHTML="<div style='float:right;text-align:left;display:block;width:30%;font-size:1em'><b>Signature: </b></div>";
-	bill_message.innerHTML="<div style='float:left;text-align:left;display:block;width:60%;font-size:.8em'><textarea style='border:none;width:100%;height:100px;'>"+get_session_var('bill_message')+"</textarea></div>";
+	var font_size=get_session_var('print_size');
+	signature.innerHTML="<div style='float:right;text-align:left;display:block;width:30%;font-size:"+font_size+"em'><b>Signature: </b></div>";
+	bill_message.innerHTML="<div style='float:left;text-align:left;display:block;width:60%;font-size:"+font_size+"em'><textarea style='border:none;width:100%;height:100px;'>"+get_session_var('bill_message')+"</textarea></div>";
 	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em;margin:2px;'><b>"+form_title+"</b></div>";
 	
 	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b><br>" +
-							"<div style='font-size:.6em;padding:5px'>VAT #: "+get_session_var('vat')+"<br>" +
+							"<div style='font-size:"+font_size+"em;padding:5px'>VAT #: "+get_session_var('vat')+"<br>" +
 							"TIN #: "+get_session_var('tin')+"</div></div>"+
 							"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
 							"<br>Address: "+get_session_var('address')+"</div></div>";
@@ -107,7 +108,6 @@ function print_tabular_form(form_id,form_title,table_copy)
 		$(this).replaceWith($(this).html());
 	});
 	
-	var font_size=get_session_var('print_size');
 	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	header_copy.setAttribute('style',"padding:1%;font-size:"+font_size+"em;border:2px solid black;");
 	
@@ -297,7 +297,56 @@ function form82_print_form()
  */
 function form91_print_form()
 {
-	print_tabular_form('form91','Sale Bill');
+	var new_thead="<tr>"+
+		"<th colspan='2'>Item</th>"+
+		"<th>Qty.</th>" +
+		"<th>Total</th>" +
+		"<th></th>"+
+		"</tr>";
+	
+	var table_element=document.getElementById('form91_body').parentNode;
+	var table_copy=table_element.cloneNode(true);
+	$(table_copy).find('datalist,form').remove();
+	
+	$(table_copy).find('input,textarea').each(function(index)
+	{
+		$(this).attr('value',$(this).val());
+	});
+	
+	var tfoot=table_copy.children[2].innerHTML;
+	var new_tfoot=tfoot.replace(/<td colspan='3'/g,"<td colspan='2'");
+	var new_tfoot=new_tfoot.replace(/<td colspan=\"3\"/g,"<td colspan='2'");
+	
+	//console.log(tbody);
+	table_copy.children[0].innerHTML=new_thead;
+	table_copy.children[2].innerHTML=new_tfoot;
+	
+	var single_bill_items=parseInt(get_session_var('bill_print_items'));
+	var rows=table_copy.children[1].children.length;
+	
+	for(var i=0;i<rows;i++)
+	{
+		table_copy.children[1].children[i].children[0].setAttribute('colspan','2');
+		
+		table_copy.children[1].children[i].removeChild(table_copy.children[1].children[i].children[1]);
+		table_copy.children[1].children[i].removeChild(table_copy.children[1].children[i].children[2]);
+	}
+	
+	while(rows>0)
+	{
+		var new_table_copy=table_copy.cloneNode(true);
+		
+		for(var j=single_bill_items;j<rows;j++)
+		{
+			new_table_copy.children[1].removeChild(new_table_copy.children[1].children[single_bill_items]);
+		}
+		for(var i=0;i<single_bill_items && i<rows;i++)
+		{
+			table_copy.children[1].removeChild(table_copy.children[1].children[0]);
+		}
+		rows=table_copy.children[1].children.length;
+		print_tabular_form('form91','Sale Bill',new_table_copy);
+	}
 }
 
 /**

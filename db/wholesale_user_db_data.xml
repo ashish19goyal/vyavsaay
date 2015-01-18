@@ -694,6 +694,26 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report54</name>
+			<display_name>best_days_by_sales</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report55</name>
+			<display_name>worst_days_by_sales</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -2140,6 +2160,28 @@
 			<username>master</username>
 			<element_id>report53</element_id>
 			<element_name>sales_tax</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report54</element_id>
+			<element_name>best_days_by_sales</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report55</element_id>
+			<element_name>worst_days_by_sales</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

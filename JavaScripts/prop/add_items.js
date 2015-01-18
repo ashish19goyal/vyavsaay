@@ -2914,7 +2914,7 @@ function form90_add_item()
 }
 
 /**
- * @form Create Bill(multiple registers)
+ * @form Create Bill(bakery)
  * @formNo 91
  */
 function form91_add_item()
@@ -2927,7 +2927,7 @@ function form91_add_item()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form91_"+id+"'></form>";
-			rowsHTML+="<td data-th='Product Name'>";
+			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' required form='form91_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
 			rowsHTML+="</td>";
@@ -2939,10 +2939,10 @@ function form91_add_item()
 				rowsHTML+="<input type='number' min='0' required form='form91_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Unit Price'>";
-				rowsHTML+="<input type='number' required min='0' form='form91_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' required readonly='readonly' form='form91_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Total'>";
-				rowsHTML+="<input type='number' required min='0' form='form91_"+id+"' step='any'>";
+				rowsHTML+="<input type='number' required readonly='readonly' form='form91_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form91_"+id+"'>";

@@ -5163,6 +5163,7 @@ function form71_ini()
 					}
 				});
 				
+				balance_amount=my_round(balance_amount,2);
 				var balance_display="";
 				if(balance_amount==0)
 				{
@@ -7226,6 +7227,7 @@ function form91_ini()
 	
 	$('#form91_body').html("");
 	$('#form91_foot').html("");
+	document.getElementById('form91_customer_info').innerHTML="";
 	
 	if(bill_id!="")
 	{
@@ -7274,6 +7276,21 @@ function form91_ini()
 				filter_fields.elements[6].value=bill_results[i].transaction_id;
 				var save_button=filter_fields.elements[7];
 				
+				var address_data="<customers>" +
+						"<address></address>" +
+						"<city></city>" +
+						"<acc_name exact='yes'>"+bill_results[i].customer_name+"</acc_name>" +
+						"</customers>";
+				fetch_requested_data('',address_data,function(addresses)
+				{
+					var address_string="";
+					if(addresses.length>0)
+					{
+						address_string+=addresses[i].address+", "+addresses[i].city;
+					}
+					document.getElementById('form91_customer_info').innerHTML="Address<br>"+address_string;
+				});
+				
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
@@ -7308,7 +7325,7 @@ function form91_ini()
 					var id=result.id;
 					rowsHTML+="<tr>";
 					rowsHTML+="<form id='form91_"+id+"'></form>";
-						rowsHTML+="<td data-th='Product Name'>";
+						rowsHTML+="<td data-th='Item'>";
 							rowsHTML+="<textarea readonly='readonly' form='form91_"+id+"'>"+result.item_name+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Batch'>";

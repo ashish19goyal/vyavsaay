@@ -8,6 +8,20 @@
 			<last_updated>1</last_updated>
 		</row>
 	</accounts>
+	<mandatory_attributes>
+		<row>
+			<object>product</object>
+			<attribute>recurrent sale</attribute>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<object>product</object>
+			<attribute>season</attribute>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+	</mandatory_attributes>
 	<user_preferences>
 		<row>
 			<name>tin</name>
@@ -670,6 +684,26 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report54</name>
+			<display_name>best_days_by_sales</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report55</name>
+			<display_name>worst_days_by_sales</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -871,7 +905,7 @@
 			<name>form39</name>
 			<display_name>manage_products</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1322,7 +1356,7 @@
 			<name>form87</name>
 			<display_name>manage_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2116,6 +2150,28 @@
 			<username>master</username>
 			<element_id>report53</element_id>
 			<element_name>sales_tax</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report54</element_id>
+			<element_name>best_days_by_sales</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report55</element_id>
+			<element_name>worst_days_by_sales</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

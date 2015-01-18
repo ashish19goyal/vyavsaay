@@ -3,6 +3,7 @@
 		<fieldset>
 			<label>Customer <img src='./images/add_image.png' class='add_image' onclick='modal11_action();'><br>
 			<input type='text' required></label>
+			<label id='form91_customer_info'></label>
 			<label>Bill Type<br><input type='text' required></label>
 			<label>Bill Date<br><input type='text' required></label>
 			<input type='hidden' name='bill_id'>
@@ -18,7 +19,7 @@
 		<thead>
 			<tr>
 				<form id='form91_header'></form>
-				<th>Product Name</th>
+				<th>Item</th>
 				<th>Batch</th>
 				<th>Quantity</th>
 				<th>Unit Price</th>

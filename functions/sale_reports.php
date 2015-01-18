@@ -10,6 +10,10 @@
 				echo "<li><a id='report39_link' href='#report39' onclick='report39_header_ini();' data-i18n='form.sales_by_services'></a></li>";
 			if(strpos($_SESSION['reports'],'report9-')!==false)
 				echo "<li><a id='report9_link' href='#report9' onclick='report9_header_ini();' data-i18n='form.product_sales_report'></a></li>";
+			if(strpos($_SESSION['reports'],'report54-')!==false)
+				echo "<li><a id='report54_link' href='#report54' onclick='report54_header_ini();' data-i18n='form.best_days'></a></li>";
+			if(strpos($_SESSION['reports'],'report55-')!==false)
+				echo "<li><a id='report55_link' href='#report55' onclick='report55_header_ini();' data-i18n='form.worst_days'></a></li>";
 		echo "</ul>";
 
 		if(strpos($_SESSION['reports'],'report26-')!==false)
@@ -20,6 +24,10 @@
 			include "reports/report39.php";
 		if(strpos($_SESSION['reports'],'report9-')!==false)
 			include "reports/report9.php";
+		if(strpos($_SESSION['reports'],'report54-')!==false)
+			include "reports/report54.php";
+		if(strpos($_SESSION['reports'],'report55-')!==false)
+			include "reports/report55.php";
 	?>
 	
 	<script>

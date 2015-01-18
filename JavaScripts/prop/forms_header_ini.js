@@ -2183,7 +2183,29 @@ function form91_header_ini()
 	set_my_value_list(type_data,bill_type);
 	set_my_value(type_data,bill_type);
 	
-	
+	$(customers_filter).off('blur');
+	$(customers_filter).on('blur',function(e)
+	{
+		var address_data="<customers>" +
+				"<address></address>" +
+				"<city></city>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
+				"</customers>";
+		fetch_requested_data('',address_data,function(addresses)
+		{
+			var address_string="";
+			if(addresses.length>0)
+			{
+				address_string+=addresses[0].address+", "+addresses[0].city;
+				document.getElementById('form91_customer_info').innerHTML="Address<br>"+address_string;
+			}
+			else
+			{
+				document.getElementById('form91_customer_info').innerHTML="";
+			}
+		});
+	});
+
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';

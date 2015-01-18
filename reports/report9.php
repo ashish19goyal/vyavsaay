@@ -5,7 +5,8 @@
 			<label>Product Name</br><input type='text'></label>
 			<label>Make</br><input type='text'></label>
 			<label>Customer</br><input type='text'></label>
-			<label>Date Since</br><input type='text' required></label>
+			<label>Start Date</br><input type='text' required></label>
+			<label>End Date</br><input type='text' required></label>
 			<input type='submit' value='Refresh' class='generic_icon'>
 			<input type='button' title='Print' class='print_icon'>
 		</fieldset>
