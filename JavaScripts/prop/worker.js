@@ -631,11 +631,9 @@ function sale_leads_add()
 								{
 									local_create_simple_no_warning(sale_lead_xml);
 								}
-								
 								break;
 							}
 						}
-						
 					});
 				});
 			});

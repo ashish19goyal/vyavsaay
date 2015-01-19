@@ -661,14 +661,26 @@ function form114_import_template()
 };
 
 /**
-* @form Manage unbilled sale items
-* @formNo 113
+* @form Manage unbilled purchase items
+* @formNo 115
 */
-function form113_import_template()
+function form115_import_template()
 {
 	var data_array=['id','supplier','item_name','batch','quantity','purchase_date','notes'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Manage Loyalty Programs
+* @formNo 116
+*/
+function form116_import_template()
+{
+	var data_array=['id','name','type','tier','tier_criteria_lower','tier_criteria_upper','points_addition',
+	                'discount','accrual','reward_product','status'];
+	my_array_to_csv(data_array);
+};
+
 
 /**
 * @form Create bills(multiple registers, unbilled items)
@@ -680,6 +692,26 @@ function form119_import_template()
 	var data_array=['id','bill_id','item_name','quantity','p_quantity','f_quantity','unit_price','mrp','amount',
 	                'total','discount','offer','type','batch','notes',
 	                'staff','tax','free_with'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage Loyalty customers
+* @formNo 120
+*/
+function form120_import_template()
+{
+	var data_array=['id','program_name','customer','tier','status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Adjust Loyalty Points
+* @formNo 121
+*/
+function form121_import_template()
+{
+	var data_array=['id','program_name','customer','points','date','source','source_id'];
 	my_array_to_csv(data_array);
 };
 

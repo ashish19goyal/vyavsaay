@@ -549,3 +549,11 @@ function my_round(any_number,decimal_p)
 	var result=(Math.round(any_number*multiplier))/multiplier;
 	return result;
 }
+
+function array_unique(array)
+{
+    return array.filter(function(el,index,arr)
+    {
+        return index===arr.indexOf(el);
+    });
+}

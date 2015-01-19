@@ -4281,6 +4281,73 @@ function form119_add_item()
 }
 
 /**
+ * @form Adjust Loyalty Points
+ * @formNo 121
+ */
+function form121_add_item()
+{
+	if(is_create_access('form121'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form121_"+id+"'></form>";
+			rowsHTML+="<td data-th='Program Name'>";
+				rowsHTML+="<input type='text' form='form121_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' form='form121_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Points'>";
+				rowsHTML+="<input type='number' form='form121_"+id+"' required step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date'>";
+				rowsHTML+="<input type='text' form='form121_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Source'>";
+				rowsHTML+="<input type='text' form='form121_"+id+"' value='Manual' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form121_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form121_"+id+"' id='save_form121_"+id+"' >";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form121_"+id+"' id='delete_form121_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form121_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form121_"+id);
+		var name_filter=fields.elements[0];
+		var customer_filter=fields.elements[1];
+		var date_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form121_create_item(fields);
+		});
+							
+		$(name_filter).focus();
+		
+		var program_data="<loyalty_programs>" +
+				"<name></name>" +
+				"</loyalty_programs>";
+		set_my_value_list(program_data,name_filter);
+		
+		var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+		set_my_value_list(customer_data,customer_filter);
+		$(date_filter).datepicker();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+
+/**
  * @form Enter Supplier Bill(unbilled items)
  * @formNo 122
  */

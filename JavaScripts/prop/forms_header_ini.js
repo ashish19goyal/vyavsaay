@@ -279,7 +279,15 @@ function form10_header_ini()
 		event.preventDefault();
 		form10_create_form();
 	});
-	
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
 	{
@@ -349,7 +357,14 @@ function form12_header_ini()
 		form12_create_form();
 	});
 
-	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
 	{
@@ -530,6 +545,14 @@ function form15_header_ini()
 		form15_create_form();
 	});
 	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
 	{
@@ -627,6 +650,14 @@ function form19_header_ini()
 		form19_create_form();
 	});
 
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
 	{
@@ -670,7 +701,14 @@ function form21_header_ini()
 		form21_create_form();
 	});
 
-	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
 	{
@@ -716,6 +754,14 @@ function form24_header_ini()
 	{
 		event.preventDefault();
 		form24_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
 	});
 
 	$(fields).off('submit');
@@ -1155,6 +1201,15 @@ function form51_header_ini()
 		event.preventDefault();
 		form51_update_form();
 	});
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
 };
 
 /**
@@ -1538,6 +1593,14 @@ function form69_header_ini()
 		event.preventDefault();
 		form69_create_form();
 	});
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
 
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
@@ -1636,6 +1699,14 @@ function form72_header_ini()
 	{
 		event.preventDefault();
 		form72_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
 	});
 
 	$(fields).off('submit');
@@ -1849,6 +1920,14 @@ function form82_header_ini()
 	{
 		event.preventDefault();
 		form82_bill();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
 	});
 
 	$(fields).off('submit');
@@ -2164,7 +2243,23 @@ function form91_header_ini()
 		event.preventDefault();
 		form91_create_form();
 	});
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
 
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
 	{
@@ -2726,6 +2821,14 @@ function form112_header_ini()
 		form112_create_form();
 	});
 
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
 	{
@@ -2797,6 +2900,14 @@ function form114_header_ini()
 	{
 		event.preventDefault();
 		form114_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
 	});
 
 	$(fields).off('submit');
@@ -2885,6 +2996,7 @@ function form116_header_ini()
 	set_static_filter('loyalty_programs','status',status_filter);
 };
 
+
 /**
  * @form Create Bill(multiple registers, unbilled items)
  * @formNo 119
@@ -2902,6 +3014,14 @@ function form119_header_ini()
 	fields.elements[7].value=fields.elements[5].value;
 	var unbilled_button=fields.elements[8];
 	var save_button=fields.elements[9];
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -3276,6 +3396,67 @@ function form119_header_ini()
 	$(customers_filter).focus();
 }
 
+/**
+ * @form Manage Loyalty Customers
+ * @formNo 120
+ */
+function form120_header_ini()
+{
+	var filter_fields=document.getElementById('form120_header');
+	var name_filter=filter_fields.elements[0];
+	var customer_filter=filter_fields.elements[1];
+	var tier_filter=filter_fields.elements[2];
+	
+	var name_data="<loyalty_programs>" +
+			"<name></name>" +
+			"</loyalty_programs>";
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	var tier_data="<loyalty_programs>" +
+			"<tier></tier>" +
+			"</loyalty_programs>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form120_ini();
+	});
+
+	set_my_filter(name_data,name_filter);
+	set_my_filter(customer_data,customer_filter);
+	set_my_filter(tier_data,tier_filter);
+};
+
+/**
+ * @form Adjust Loyalty Points
+ * @formNo 121
+ */
+function form121_header_ini()
+{
+	var filter_fields=document.getElementById('form121_header');
+	var name_filter=filter_fields.elements[0];
+	var customer_filter=filter_fields.elements[1];
+	
+	var name_data="<loyalty_programs>" +
+			"<name></name>" +
+			"</loyalty_programs>";
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form121_ini();
+	});
+
+	set_my_filter(name_data,name_filter);
+	set_my_filter(customer_data,customer_filter);
+};
+
 
 /**
  * @form Enter Supplier bills(unbilled items)
@@ -3300,6 +3481,14 @@ function form122_header_ini()
 	{
 		event.preventDefault();
 		form122_create_form();
+	});
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
 	});
 
 	$(fields).off('submit');

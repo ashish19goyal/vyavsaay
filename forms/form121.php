@@ -7,6 +7,7 @@
 					<th>Customer <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form121_header'></th>
 					<th>Points</th>
 					<th>Date</th>
+					<th>Source</th>
 					<th><input type='button' form='form121_header' value='Add points' class='generic_head_icon' onclick='form121_add_item();'>
 						<input type='button' form='form121_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form121_header' style='display:none;visibility: hidden;'>

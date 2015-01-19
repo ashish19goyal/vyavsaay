@@ -3582,6 +3582,52 @@ function form119_delete_item(button)
 }
 
 /**
+ * formNo 121
+ * form Adjust Loyalty Points
+ * @param button
+ */
+function form121_delete_item(button)
+{
+	if(is_delete_access('form121'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var program=form.elements[0].value;
+		var customer=form.elements[1].value;
+		var points=form.elements[2].value;
+		var date=form.elements[3].value;
+		var source=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var data_xml="<loyalty_points>" +
+				"<id>"+data_id+"</id>" +
+				"</loyalty_points>";	
+		var activity_xml="<activity>" +
+				"<data_id>"+data_id+"</data_id>" +
+				"<tablename>loyalty_points</tablename>" +
+				"<link_to>form121</link_to>" +
+				"<title>Deleted</title>" +
+				"<notes>"+points+" Loyalty points from "+customer+"</notes>" +
+				"<updated_by>"+get_name()+"</updated_by>" +
+				"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form New Supplier Bill (unbilled item)
  * @param button
  */

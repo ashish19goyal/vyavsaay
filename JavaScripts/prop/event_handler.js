@@ -19,7 +19,7 @@ function default_load()
 	count_notif_timer=0;
 	show_notif_timer=0;
 	progress_value=0;
-	
+
 	if(is_set_session())
 	{
 		set_menu_shortcuts();
@@ -243,9 +243,10 @@ function print_css_setup(name)
 
 function home_display()
 {
+	$(document).off('keydown');
 	count_notif();
 	hide_all();
-	$('#home_grid').show();
+	$('#home_grid').show();	
 }
 
 function set_menu_username()
@@ -738,6 +739,10 @@ function import_data(form_name)
 		break;
 		case 'form119':modal23_action(form119_import_template,form119_import);
 		break;
+		case 'form120':modal23_action(form120_import_template,form120_import);
+		break;
+		case 'form121':modal23_action(form121_import_template,form121_import);
+		break;
 		case 'form122':modal23_action(form122_import_template,form122_import);
 		break;
 		case 'form123':modal23_action(form123_import_template,form123_import);
@@ -745,12 +750,4 @@ function import_data(form_name)
 		case 'form124':modal23_action(form124_import_template,form124_import);
 		break;
 	}
-}
-
-function array_unique(array)
-{
-    return array.filter(function(el,index,arr)
-    {
-        return index===arr.indexOf(el);
-    });
 }

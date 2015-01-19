@@ -9678,7 +9678,6 @@ function form115_ini()
 }
 
 
-
 /**
  * @form Manage Loyalty Programs
  * @formNo 116
@@ -10022,6 +10021,220 @@ function form119_ini()
 		});
 	}
 }
+
+/**
+ * @form Manage Loyalty Customers
+ * @formNo 120
+ * @Loading light
+ */
+function form120_ini()
+{
+	show_loader();
+	var fid=$("#form120_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form120_header');
+	
+	var	fname=filter_fields.elements[0].value;
+	var fcustomer=filter_fields.elements[1].value;
+	var ftier=filter_fields.elements[2].value;
+	var fstatus=filter_fields.elements[3].value;
+	////indexing///
+	var index_element=document.getElementById('form120_index');
+	var prev_element=document.getElementById('form120_prev');
+	var next_element=document.getElementById('form120_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<loyalty_customers count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<program_name>"+fname+"</program_name>" +
+			"<customer>"+fcustomer+"</customer>" +
+			"<tier>"+ftier+"</tier>" +
+			"<status exact='yes'>active</status>" +
+			"</loyalty_customers>";
+
+	$('#form120_body').html("");
+
+	fetch_requested_data('form120',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var points_data="<loyalty_points>" +
+					"<points></points>" +
+					"<program_name exact='yes'>"+result.program_name+"</program_name>" +
+					"<customer exact='yes'>"+result.customer+"</customer>" +
+					"</loyalty_points>";
+			get_single_column_data(function(points)
+			{
+				var points_value=0;
+				for(var i in points)
+				{
+					points_value+=parseFloat(points[i]);
+				}
+				var rowsHTML="";
+				rowsHTML+="<tr>";
+					rowsHTML+="<form id='form120_"+result.id+"'></form>";
+						rowsHTML+="<td data-th='Program Name'>";
+							rowsHTML+="<textarea readonly='readonly' form='form120_"+result.id+"'>"+result.program_name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Customer'>";
+							rowsHTML+="<textarea readonly='readonly' form='form120_"+result.id+"'>"+result.customer+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Tier'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form120_"+result.id+"' value='"+result.tier+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Points'>";
+							rowsHTML+="<input type='number' readonly='readonly' step='any' form='form120_"+result.id+"' value='"+points_value+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form116_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+				
+				$('#form120_body').append(rowsHTML);
+			},points_data);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'loyalty_customers');
+		});
+		hide_loader();
+	});
+}
+
+/**
+ * @form adjust Loyalty Points
+ * @formNo 121
+ * @Loading light
+ */
+function form121_ini()
+{
+	show_loader();
+	var fid=$("#form121_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form121_header');
+	
+	var	fname=filter_fields.elements[0].value;
+	var fcustomer=filter_fields.elements[1].value;
+	////indexing///
+	var index_element=document.getElementById('form121_index');
+	var prev_element=document.getElementById('form121_prev');
+	var next_element=document.getElementById('form121_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<loyalty_points count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<program_name>"+fname+"</program_name>" +
+			"<customer>"+fcustomer+"</customer>" +
+			"<points></points>" +
+			"<date></date>" +
+			"<source></source>" +
+			"<source_id></source_id>" +
+			"</loyalty_points>";
+
+	$('#form121_body').html("");
+
+	fetch_requested_data('form121',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form121_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Program Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form121_"+result.id+"'>"+result.program_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form121_"+result.id+"'>"+result.customer+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Points'>";
+						rowsHTML+="<input type='number' readonly='readonly' step='any' form='form121_"+result.id+"' value='"+result.points+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form121_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Source'>";
+						rowsHTML+=result.source+": "+result.source_id;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form121_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form121_"+result.id+"' id='delete_form121_"+result.id+"' onclick='form121_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form121_body').append(rowsHTML);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'loyalty_points');
+		});
+		hide_loader();
+	});
+}
+
 
 /**
  * @form Enter Supplier Bill (unbilled items)

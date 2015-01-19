@@ -336,6 +336,22 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<tablename>loyalty_points</tablename>
+			<listname>source</listname>
+			<name>sale</name>
+			<value>Sale</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>loyalty_points</tablename>
+			<listname>source</listname>
+			<name>sale return</name>
+			<value>Sale return</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>share</tablename>
 			<listname>share_options</listname>
 			<name>gmail</name>

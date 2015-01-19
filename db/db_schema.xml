@@ -695,7 +695,8 @@
 			<name index='yes' type="VARCHAR(100)"></name>
 			<type index='yes' type="VARCHAR(50)"></type><!--discount/reward product/accrual-->
 			<tier index='yes' type="VARCHAR(100)"></tier>
-			<tier_criteria index='yes' type="DECIMAL(12,2)"></tier_criteria>
+			<tier_criteria_lower index='yes' type="DECIMAL(12,2)"></tier_criteria_lower>
+			<tier_criteria_upper index='yes' type="DECIMAL(12,2)"></tier_criteria_upper>
 			<points_addition index='no' type="DECIMAL(12,2)"></points_addition>
 			<discount index='no' type="DECIMAL(12,4)"></discount>
 			<accrual index='no' type="DECIMAL(12,4)"></accrual>
@@ -709,7 +710,7 @@
 			<customer index='yes' type="VARCHAR(100)"></customer>
 			<points index='no' type="DECIMAL(12,4)"></points>
 			<date index='yes' type="BIGINT"></date>
-			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale_return-->
+			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale return-->
 			<source_id index='yes' type="BIGINT"></source_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</loyalty_points>

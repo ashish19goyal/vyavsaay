@@ -304,7 +304,7 @@ function modal10_action()
 	var ftype=form.elements[2];
 	var fdescription=form.elements[3];
 	
-	////adding attribute fields///////
+	////adding attribute fields/////
 	var attribute_label=document.getElementById('modal10_attributes');
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
@@ -317,7 +317,7 @@ function modal10_action()
 		attributes.forEach(function(attribute)
 		{
 			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
 			attribute_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			attribute_label.appendChild(line_break);
@@ -365,21 +365,24 @@ function modal10_action()
 			id++;
 			var value=$(this).val();
 			var attribute=$(this).attr('name');
-			var attribute_xml="<attributes>" +
-					"<id>"+id+"</id>" +
-					"<name>"+name+"</name>" +
-					"<type>asset</type>" +
-					"<attribute>"+attribute+"</attribute>" +
-					"<value>"+value+"</value>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</attributes>";
-			if(is_online())
+			if(value!="")
 			{
-				server_create_simple(attribute_xml);
-			}
-			else
-			{
-				local_create_simple(attribute_xml);
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<type>asset</type>" +
+						"<attribute>"+attribute+"</attribute>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				if(is_online())
+				{
+					server_create_simple(attribute_xml);
+				}
+				else
+				{
+					local_create_simple(attribute_xml);
+				}
 			}
 		});
 		
@@ -422,7 +425,7 @@ function modal11_action()
 		attributes.forEach(function(attribute)
 		{
 			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
 			attribute_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			attribute_label.appendChild(line_break);
@@ -496,21 +499,24 @@ function modal11_action()
 				id++;
 				var value=$(this).val();
 				var attribute=$(this).attr('name');
-				var attribute_xml="<attributes>" +
-						"<id>"+id+"</id>" +
-						"<name>"+acc_name+"</name>" +
-						"<type>customer</type>" +
-						"<attribute>"+attribute+"</attribute>" +
-						"<value>"+value+"</value>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</attributes>";
-				if(is_online())
+				if(value!="")
 				{
-					server_create_simple(attribute_xml);
-				}
-				else
-				{
-					local_create_simple(attribute_xml);
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+acc_name+"</name>" +
+							"<type>customer</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					if(is_online())
+					{
+						server_create_simple(attribute_xml);
+					}
+					else
+					{
+						local_create_simple(attribute_xml);
+					}
 				}
 			});
 		}
@@ -551,7 +557,7 @@ function modal12_action()
 		attributes.forEach(function(attribute)
 		{
 			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
 			attribute_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			attribute_label.appendChild(line_break);
@@ -597,21 +603,24 @@ function modal12_action()
 			id++;
 			var value=$(this).val();
 			var attribute=$(this).attr('name');
-			var attribute_xml="<attributes>" +
-					"<id>"+id+"</id>" +
-					"<name>"+acc_name+"</name>" +
-					"<type>account</type>" +
-					"<attribute>"+attribute+"</attribute>" +
-					"<value>"+value+"</value>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</attributes>";
-			if(is_online())
-			{
-				server_create_simple(attribute_xml);
-			}
-			else
-			{
-				local_create_simple(attribute_xml);
+			if(value!="")
+			{	
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<name>"+acc_name+"</name>" +
+						"<type>account</type>" +
+						"<attribute>"+attribute+"</attribute>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				if(is_online())
+				{
+					server_create_simple(attribute_xml);
+				}
+				else
+				{
+					local_create_simple(attribute_xml);
+				}
 			}
 		});
 
@@ -653,7 +662,7 @@ function modal13_action()
 		attributes.forEach(function(attribute)
 		{
 			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
 			attribute_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			attribute_label.appendChild(line_break);
@@ -727,21 +736,24 @@ function modal13_action()
 				id++;
 				var value=$(this).val();
 				var attribute=$(this).attr('name');
-				var attribute_xml="<attributes>" +
-						"<id>"+id+"</id>" +
-						"<name>"+acc_name+"</name>" +
-						"<type>supplier</type>" +
-						"<attribute>"+attribute+"</attribute>" +
-						"<value>"+value+"</value>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</attributes>";
-				if(is_online())
+				if(value!="")
 				{
-					server_create_simple(attribute_xml);
-				}
-				else
-				{
-					local_create_simple(attribute_xml);
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+acc_name+"</name>" +
+							"<type>supplier</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					if(is_online())
+					{
+						server_create_simple(attribute_xml);
+					}
+					else
+					{
+						local_create_simple(attribute_xml);
+					}
 				}
 			});
 		}
@@ -814,7 +826,7 @@ function modal14_action()
 		attributes.forEach(function(attribute)
 		{
 			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
 			attribute_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			attribute_label.appendChild(line_break);
@@ -868,21 +880,24 @@ function modal14_action()
 				id++;
 				var value=$(this).val();
 				var attribute=$(this).attr('name');
-				var attribute_xml="<attributes>" +
-						"<id>"+id+"</id>" +
-						"<name>"+name+"</name>" +
-						"<type>product</type>" +
-						"<attribute>"+attribute+"</attribute>" +
-						"<value>"+value+"</value>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</attributes>";
-				if(is_online())
+				if(value!="")
 				{
-					server_create_simple(attribute_xml);
-				}
-				else
-				{
-					local_create_simple(attribute_xml);
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+name+"</name>" +
+							"<type>product</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					if(is_online())
+					{
+						server_create_simple(attribute_xml);
+					}
+					else
+					{
+						local_create_simple(attribute_xml);
+					}
 				}
 			});
 
@@ -1019,7 +1034,7 @@ function modal16_action()
 		attributes.forEach(function(attribute)
 		{
 			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
 			attribute_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			attribute_label.appendChild(line_break);
@@ -1094,21 +1109,24 @@ function modal16_action()
 				id++;
 				var value=$(this).val();
 				var attribute=$(this).attr('name');
-				var attribute_xml="<attributes>" +
-						"<id>"+id+"</id>" +
-						"<name>"+acc_name+"</name>" +
-						"<type>staff</type>" +
-						"<attribute>"+attribute+"</attribute>" +
-						"<value>"+value+"</value>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</attributes>";
-				if(is_online())
-				{
-					server_create_simple(attribute_xml);
-				}
-				else
-				{
-					local_create_simple(attribute_xml);
+				if(value!="")
+				{	
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+acc_name+"</name>" +
+							"<type>staff</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					if(is_online())
+					{
+						server_create_simple(attribute_xml);
+					}
+					else
+					{
+						local_create_simple(attribute_xml);
+					}
 				}
 			});
 		}
@@ -1205,7 +1223,7 @@ function modal18_action()
 		attributes.forEach(function(attribute)
 		{
 			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
 			attribute_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			attribute_label.appendChild(line_break);
@@ -1252,21 +1270,24 @@ function modal18_action()
 			id++;
 			var value=$(this).val();
 			var attribute=$(this).attr('name');
-			var attribute_xml="<attributes>" +
-					"<id>"+id+"</id>" +
-					"<name>"+name+"</name>" +
-					"<type>task</type>" +
-					"<attribute>"+attribute+"</attribute>" +
-					"<value>"+value+"</value>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</attributes>";
-			if(is_online())
+			if(value!="")
 			{
-				server_create_simple(attribute_xml);
-			}
-			else
-			{
-				local_create_simple(attribute_xml);
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<type>task</type>" +
+						"<attribute>"+attribute+"</attribute>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				if(is_online())
+				{
+					server_create_simple(attribute_xml);
+				}
+				else
+				{
+					local_create_simple(attribute_xml);
+				}
 			}
 		});
 
@@ -1563,7 +1584,7 @@ function modal20_action()
 		attributes.forEach(function(attribute)
 		{
 			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
 			attribute_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			attribute_label.appendChild(line_break);
@@ -1612,22 +1633,25 @@ function modal20_action()
 			{
 				id++;
 				var value=$(this).val();
-				var attribute=$(this).attr('name');
-				var attribute_xml="<attributes>" +
-						"<id>"+id+"</id>" +
-						"<name>"+name+"</name>" +
-						"<type>service</type>" +
-						"<attribute>"+attribute+"</attribute>" +
-						"<value>"+value+"</value>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</attributes>";
-				if(is_online())
+				if(value!="")
 				{
-					server_create_simple(attribute_xml);
-				}
-				else
-				{
-					local_create_simple(attribute_xml);
+					var attribute=$(this).attr('name');
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+name+"</name>" +
+							"<type>service</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					if(is_online())
+					{
+						server_create_simple(attribute_xml);
+					}
+					else
+					{
+						local_create_simple(attribute_xml);
+					}
 				}
 			});
 		}
@@ -3170,7 +3194,7 @@ function modal35_action()
 		attributes.forEach(function(attribute)
 		{
 			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
 			attribute_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			attribute_label.appendChild(line_break);
@@ -3216,22 +3240,25 @@ function modal35_action()
 			{
 				id++;
 				var value=$(this).val();
-				var attribute=$(this).attr('name');
-				var attribute_xml="<attributes>" +
-						"<id>"+id+"</id>" +
-						"<name>"+name+"</name>" +
-						"<type>storage</type>" +
-						"<attribute>"+attribute+"</attribute>" +
-						"<value>"+value+"</value>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</attributes>";
-				if(is_online())
+				if(value!="")
 				{
-					server_create_simple(attribute_xml);
-				}
-				else
-				{
-					local_create_simple(attribute_xml);
+					var attribute=$(this).attr('name');
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+name+"</name>" +
+							"<type>storage</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					if(is_online())
+					{
+						server_create_simple(attribute_xml);
+					}
+					else
+					{
+						local_create_simple(attribute_xml);
+					}
 				}
 			});
 		}
@@ -3585,7 +3612,7 @@ function modal39_action(schedule_date)
 		attributes.forEach(function(attribute)
 		{
 			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
 			attribute_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			attribute_label.appendChild(line_break);
@@ -3708,22 +3735,25 @@ function modal39_action(schedule_date)
 			{
 				id++;
 				var value=$(this).val();
-				var attribute=$(this).attr('name');
-				var attribute_xml="<attributes>" +
-						"<id>"+id+"</id>" +
-						"<name>"+data_id+"</name>" +
-						"<type>loan</type>" +
-						"<attribute>"+attribute+"</attribute>" +
-						"<value>"+value+"</value>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</attributes>";
-				if(is_online())
+				if(value!="")
 				{
-					server_create_simple(attribute_xml);
-				}
-				else
-				{
-					local_create_simple(attribute_xml);
+					var attribute=$(this).attr('name');
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+data_id+"</name>" +
+							"<type>loan</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					if(is_online())
+					{
+						server_create_simple(attribute_xml);
+					}
+					else
+					{
+						local_create_simple(attribute_xml);
+					}
 				}
 			});
 
@@ -4259,12 +4289,13 @@ function modal45_action()
 	var program_name=form.elements[1];
 	var type=form.elements[2];
 	var tier=form.elements[3];
-	var tier_criteria=form.elements[4];
-	var points_addition=form.elements[5];
-	var discount=form.elements[6];
-	var accrual=form.elements[7];
-	var reward_product=form.elements[8];
-	var status=form.elements[9];
+	var tier_criteria_min=form.elements[4];
+	var tier_criteria_max=form.elements[5];
+	var points_addition=form.elements[6];
+	var discount=form.elements[7];
+	var accrual=form.elements[8];
+	var reward_product=form.elements[9];
+	var status=form.elements[10];
 	
 	var product_data="<product_master>" +
 		"<name></name>" +
@@ -4310,7 +4341,7 @@ function modal45_action()
 		attributes.forEach(function(attribute)
 		{
 			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"' required>";
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
 			attribute_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			attribute_label.appendChild(line_break);
@@ -4327,12 +4358,13 @@ function modal45_action()
 			var name_value=form.elements[1].value;
 			var type_value=form.elements[2].value;
 			var tier_value=form.elements[3].value;
-			var tier_criteria_value=form.elements[4].value;
-			var points_addition_value=form.elements[5].value;
-			var discount_value=form.elements[6].value;
-			var accrual_value=form.elements[7].value;
-			var reward_product_value=form.elements[8].value;
-			var status_value=form.elements[9].value;
+			var tier_criteria_min_value=form.elements[4].value;
+			var tier_criteria_max_value=form.elements[5].value;
+			var points_addition_value=form.elements[6].value;
+			var discount_value=form.elements[7].value;
+			var accrual_value=form.elements[8].value;
+			var reward_product_value=form.elements[9].value;
+			var status_value=form.elements[10].value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
 						
@@ -4341,7 +4373,8 @@ function modal45_action()
 						"<name>"+name_value+"</name>" +
 						"<type>"+type_value+"</type>" +
 						"<tier>"+tier_value+"</tier>" +
-						"<tier_criteria>"+tier_criteria_value+"</tier_criteria>" +
+						"<tier_criteria_lower>"+tier_criteria_min_value+"</tier_criteria_lower>" +
+						"<tier_criteria_upper>"+tier_criteria_max_value+"</tier_criteria_upper>" +
 						"<points_addition>"+points_addition_value+"</points_addition>" +
 						"<discount>"+discount_value+"</discount>" +
 						"<accrual>"+accrual_value+"</accrual>" +
@@ -4371,22 +4404,25 @@ function modal45_action()
 			{
 				id++;
 				var value=$(this).val();
-				var attribute=$(this).attr('name');
-				var attribute_xml="<attributes>" +
-						"<id>"+id+"</id>" +
-						"<name>"+name_value+"</name>" +
-						"<type>loyalty program</type>" +
-						"<attribute>"+attribute+"</attribute>" +
-						"<value>"+value+"</value>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</attributes>";
-				if(is_online())
+				if(value!="")
 				{
-					server_create_simple(attribute_xml);
-				}
-				else
-				{
-					local_create_simple(attribute_xml);
+					var attribute=$(this).attr('name');
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+name_value+"</name>" +
+							"<type>loyalty program</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					if(is_online())
+					{
+						server_create_simple(attribute_xml);
+					}
+					else
+					{
+						local_create_simple(attribute_xml);
+					}
 				}
 			});
 

@@ -8059,6 +8059,70 @@ function form122_create_item(form)
 	}
 }
 
+/**
+ * formNo 121
+ * form Adjust Loyalty Points
+ * @param button
+ */
+function form121_create_item(form)
+{
+	if(is_create_access('form121'))
+	{
+		var program=form.elements[0].value;
+		var customer=form.elements[1].value;
+		var points=form.elements[2].value;
+		var date=form.elements[3].value;
+		var source=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<loyalty_points>" +
+					"<id>"+data_id+"</id>" +
+					"<program_name>"+program_name+"</program_name>" +
+					"<customer>"+customer+"</customer>" +
+					"<points>"+points+"</points>" +
+					"<date>"+get_raw_time(date)+"</date>" +
+					"<source>"+source+"</source>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</loyalty_points>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>loyalty_points</tablename>" +
+					"<link_to>form121</link_to>" +
+					"<title>Added</title>" +
+					"<notes>"+points+" Loyalty points to "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[7];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form121_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 /**
  * @form New supplier Bill

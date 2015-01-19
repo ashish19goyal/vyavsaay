@@ -3619,6 +3619,63 @@ function form115_import(data_array,import_type)
 };
 
 /**
+* @form Manage Loyalty Programs
+* @formNo 116
+*/
+function form116_import(data_array,import_type)
+{
+	var data_xml="<loyalty_programs>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</loyalty_programs><separator></separator><loyalty_programs>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<type>"+row.type+"</type>" +
+				"<tier>"+row.tier+"</tier>" +
+				"<tier_criteria_lower>"+row.tier_criteria_lower+"</tier_criteria_lower>" +
+				"<tier_criteria_upper>"+row.tier_criteria_upper+"</tier_criteria_upper>" +
+				"<points_addition>"+row.points_addition+"</points_addition>" +
+				"<discount>"+row.discount+"<discount>" +
+				"<accrual>"+row.accrual+"</accrual>" +
+				"<reward_product>"+row.reward_product+"</reward_product>" +
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</loyalty_programs>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+
+/**
 * @form Create Bills(multiple register, unbilled items)
 * @formNo 119
 */
@@ -3682,6 +3739,109 @@ function form119_import(data_array,import_type)
 		}
 	}
 };
+
+/**
+* @form Manage Loyalty customers
+* @formNo 120
+*/
+function form120_import(data_array,import_type)
+{
+	var data_xml="<loyalty_customers>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</loyalty_customers><separator></separator><loyalty_customers>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<program_name>"+row.program_name+"</program_name>" +
+				"<customer>"+row.customer+"</customer>" +
+				"<tier>"+row.tier+"</tier>" +
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</loyalty_customers>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Adjust Loyalty Points
+* @formNo 121
+*/
+function form121_import(data_array,import_type)
+{
+	var data_xml="<loyalty_points>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</loyalty_points><separator></separator><loyalty_points>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<program_name>"+row.program_name+"</program_name>" +
+				"<customer>"+row.customer+"</customer>" +
+				"<points>"+row.points+"</points>" +
+				"<date>"+get_raw_time(row.date)+"</date>" +
+				"<source>"+row.source+"</source>" +
+				"<source_id>"+row.source_id+"</source_id>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</loyalty_points>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
 
 /**
 * @form Enter Supplier bill (unbilled items)

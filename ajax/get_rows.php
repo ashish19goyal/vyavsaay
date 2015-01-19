@@ -91,8 +91,16 @@
 						}
 						else if(!($col->hasAttributes()))
 						{
-							$query.=$col->nodeName." like ? and ";
-							$values_array[]="%".$col->nodeValue."%";
+							if($col->nodeName=='id')
+							{
+								$query.=$col->nodeName." = ? and ";
+								$values_array[]=$col->nodeValue;
+							}
+							else 
+							{	
+								$query.=$col->nodeName." like ? and ";
+								$values_array[]="%".$col->nodeValue."%";
+							}
 						}
 					}
 					if($col->hasAttribute('exact'))
