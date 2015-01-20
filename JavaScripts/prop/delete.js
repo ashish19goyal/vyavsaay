@@ -1080,16 +1080,21 @@ function form42_delete_item(button)
 		var transaction_xml="<transactions>" +
 				"<id>"+transaction_id+"</id>" +
 				"</transactions>";
-
+		var points_xml="<loyalty_points>" +
+					"<source>sale</source>"+
+					"<source_id>"+data_id+"</source_id>" +
+					"</loyalty_points>";	
 		if(is_online())
 		{
 			server_delete_row(bill_xml,activity_xml);
 			server_delete_simple(transaction_xml);
+			server_delete_simple(points_xml);
 		}
 		else
 		{
 			local_delete_row(bill_xml,activity_xml);
 			local_delete_simple(transaction_xml);
+			local_delete_simple(points_xml);
 		}	
 		$(button).parent().parent().remove();
 
@@ -1126,7 +1131,6 @@ function form42_delete_item(button)
 			}
 		});
 
-		
 		var items_data="<bill_items>" +
 				"<id></id>" +
 				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
@@ -2655,8 +2659,6 @@ function form92_delete_item(button)
 						"</transactions>";
 				var pay_xml="<payments>" +
 						"<id>"+payments[x].id+"</id>" +
-						"<bill_id></bill_id>" +
-						"<transaction_id></transaction_id>" +
 						"</payments>";
 
 				if(is_online())
@@ -3517,7 +3519,7 @@ function form116_delete_item(button)
 		var form=document.getElementById(form_id);
 		var program_name=form.elements[0].value;
 		var tier=form.elements[2].value;
-		var data_id=form.elements[6].value;
+		var data_id=form.elements[5].value;
 		var data_xml="<loyalty_programs>" +
 					"<id>"+data_id+"</id>" +
 					"</loyalty_programs>";
@@ -3543,6 +3545,40 @@ function form116_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create bill(loyalty)
+ * @formNo 118
+ * @param button
+ */
+function form118_delete_item(button)
+{
+	if(is_delete_access('form118'))
+	{
+		var bill_id=document.getElementById("form118_master").elements[3].value;
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		var data_id=form.elements[9].value;
+		var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"</bill_items>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 /**
  * @form Create bill(multiple registers, unbilled items)

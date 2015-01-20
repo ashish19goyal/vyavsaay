@@ -4291,11 +4291,12 @@ function modal45_action()
 	var tier=form.elements[3];
 	var tier_criteria_min=form.elements[4];
 	var tier_criteria_max=form.elements[5];
-	var points_addition=form.elements[6];
-	var discount=form.elements[7];
-	var accrual=form.elements[8];
-	var reward_product=form.elements[9];
-	var status=form.elements[10];
+	var redemption_criteria=form.elements[6];
+	var points_addition=form.elements[7];
+	var discount=form.elements[8];
+	var cashback=form.elements[9];
+	var reward_product=form.elements[10];
+	var status=form.elements[11];
 	
 	var product_data="<product_master>" +
 		"<name></name>" +
@@ -4304,19 +4305,22 @@ function modal45_action()
 	set_static_value_list('loyalty_programs','type',type);
 	set_static_value_list('loyalty_programs','status',status);
 	$(discount).parent().hide();
-	$(accrual).parent().hide();
+	$(cashback).parent().hide();
 	$(reward_product).parent().hide();
+	$(redemption_criteria).parent().hide();
 	
 	$(type).off('blur');
 	$(type).on('blur',function(event)
 	{
 		$(discount).parent().hide();
-		$(accrual).parent().hide();
+		$(cashback).parent().hide();
 		$(reward_product).parent().hide();
+		$(redemption_criteria).parent().hide();
 		
-		if(type.value=='accrual')
+		if(type.value=='cashback')
 		{
-			$(accrual).parent().show();
+			$(cashback).parent().show();
+			$(redemption_criteria).parent().show();
 		}
 		else if(type.value=='discount')
 		{			
@@ -4325,6 +4329,7 @@ function modal45_action()
 		else if(type.value=='reward product')
 		{
 			$(reward_product).parent().show();
+			$(redemption_criteria).parent().show();
 		}
 	});
 	
@@ -4360,11 +4365,12 @@ function modal45_action()
 			var tier_value=form.elements[3].value;
 			var tier_criteria_min_value=form.elements[4].value;
 			var tier_criteria_max_value=form.elements[5].value;
-			var points_addition_value=form.elements[6].value;
-			var discount_value=form.elements[7].value;
-			var accrual_value=form.elements[8].value;
-			var reward_product_value=form.elements[9].value;
-			var status_value=form.elements[10].value;
+			var redemption_criteria_value=form.elements[6].value;
+			var points_addition_value=form.elements[7].value;
+			var discount_value=form.elements[8].value;
+			var cashback_value=form.elements[9].value;
+			var reward_product_value=form.elements[10].value;
+			var status_value=form.elements[11].value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
 						
@@ -4375,9 +4381,10 @@ function modal45_action()
 						"<tier>"+tier_value+"</tier>" +
 						"<tier_criteria_lower>"+tier_criteria_min_value+"</tier_criteria_lower>" +
 						"<tier_criteria_upper>"+tier_criteria_max_value+"</tier_criteria_upper>" +
+						"<redemption_criteria>"+redemption_criteria_value+"</redemption_criteria>" +
 						"<points_addition>"+points_addition_value+"</points_addition>" +
 						"<discount>"+discount_value+"</discount>" +
-						"<accrual>"+accrual_value+"</accrual>" +
+						"<cashback>"+cashback_value+"</cashback>" +
 						"<reward_product>"+reward_product_value+"</reward_product>" +
 						"<status>"+status_value+"</status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
@@ -4387,7 +4394,7 @@ function modal45_action()
 						"<tablename>loyalty_programs</tablename>" +
 						"<link_to>form116</link_to>" +
 						"<title>Added</title>" +
-						"<notes>Loyalty program "+name_value+"</notes>" +
+						"<notes>Loyalty program "+name_value+" tier "+tier_value+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			if(is_online())
@@ -4444,8 +4451,8 @@ function modal45_action()
 					customers_xml+="<row>" +
 							"<id>"+id+"</id>" +
 							"<program_name>"+name_value+"</program_name>" +
-							"<customer>"+customer+"</batch>" +
-							"<tier>"+tier+"</tier>" +
+							"<customer>"+customer+"</customer>" +
+							"<tier>"+tier_value+"</tier>" +
 							"<status>inactive</status>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</row>";
@@ -4489,30 +4496,37 @@ function modal46_action(button)
 	var fdetail=father_form.elements[3];
 	var fstatus=father_form.elements[4];
 	var fdata_id=father_form.elements[5];
-	var ftier_criteria=father_form.elements[8];
-	var fpoint_addition=father_form.elements[9];
-	var fdiscount=father_form.elements[10];
-	var faccrual=father_form.elements[11];
-	var freward_product=father_form.elements[12];
+	var ftier_criteria_lower=father_form.elements[8];
+	var ftier_criteria_upper=father_form.elements[9];
+	var fpoint_addition=father_form.elements[10];
+	var fdiscount=father_form.elements[11];
+	var fcashback=father_form.elements[12];
+	var freward_product=father_form.elements[13];
+	var fredemption_criteria=father_form.elements[14];
 	
-	form.elements[1].value=ftier_criteria.value;
-	form.elements[2].value=fpoint_addition.value;
-	form.elements[6].value=fstatus.value;
+	form.elements[1].value=ftier_criteria_lower.value;
+	form.elements[2].value=ftier_criteria_upper.value;
+	form.elements[4].value=fpoint_addition.value;
+	form.elements[8].value=fstatus.value;
 	
-	var discount=form.elements[3]
+	var redemption=form.elements[3];
+	redemption_criteria.value=fredemption_criteria.value;
+	var discount=form.elements[5]
 	discount.value=fdiscount.value;
-	var accrual=form.elements[4];
-	accrual.value=faccrual.value;
-	var reward_product=form.elements[5];
+	var cashback=form.elements[6];
+	cashback.value=fcashback.value;
+	var reward_product=form.elements[7];
 	reward_product.value=freward_product.value;
 	
 	$(discount).parent().hide();
-	$(accrual).parent().hide();
+	$(cashback).parent().hide();
 	$(reward_product).parent().hide();
+	$(redemption_criteria).parent().hide();
 	
-	if(ftype.value=='accrual')
+	if(ftype.value=='cashback')
 	{
-		$(accrual).parent().show();
+		$(cashback).parent().show();
+		$(redemption_criteria).parent().show();
 	}
 	else if(ftype.value=='discount')
 	{			
@@ -4521,6 +4535,7 @@ function modal46_action(button)
 	else if(ftype.value=='reward product')
 	{
 		$(reward_product).parent().show();
+		$(redemption_criteria).parent().show();
 	}
 	
 	$(form).off("submit");
@@ -4529,31 +4544,35 @@ function modal46_action(button)
 		event.preventDefault();
 		if(is_update_access('form116'))
 		{
-			ftier_criteria.value=form.elements[1].value;
-			fpoint_addition.value=form.elements[2].value;
-			fdiscount.value=form.elements[3].value;
-			faccrual.value=form.elements[4].value;
-			freward_product.value=form.elements[5].value;
-			fstatus.value=form.elements[6].value;
-			if(ftype.value=='accrual')
+			ftier_criteria_lower.value=form.elements[1].value;
+			ftier_criteria_upper.value=form.elements[2].value;
+			fredemption_criteria.value=form.elements[3].value;
+			fpoint_addition.value=form.elements[4].value;
+			fdiscount.value=form.elements[5].value;
+			fcashback.value=form.elements[6].value;
+			freward_product.value=form.elements[7].value;
+			fstatus.value=form.elements[8].value;
+			if(ftype.value=='cashback')
 			{
-				fdetail.value="Tier criteria: "+ftier_criteria.value+"\nPoints Addition: "+fpoint_addition.value+"\nAccrual: "+faccrual.value;
+				fdetail.value="Tier criteria: "+ftier_criteria_lower.value+"-"+ftier_criteria_upper.value+"\nPoints Addition: "+fpoint_addition.value+"\nCashback: "+fcashback.value+"\nRedemption Criteria: "+fredemption_criteria.value;
 			}
 			else if(ftype.value=='discount')
 			{
-				fdetail.value="Tier criteria: "+ftier_criteria.value+"\nPoints Addition: "+fpoint_addition.value+"\nDiscount: "+fdiscount.value;
+				fdetail.value="Tier criteria: "+ftier_criteria_lower.value+"-"+ftier_criteria_upper.value+"\nPoints Addition: "+fpoint_addition.value+"\nDiscount: "+fdiscount.value;
 			}
 			else if(ftype.value=='reward product')
 			{
-				fdetail.value="Tier criteria: "+ftier_criteria.value+"\nPoints Addition: "+fpoint_addition.value+"\nReward Product: "+freward_product.value;
+				fdetail.value="Tier criteria: "+ftier_criteria_lower.value+"-"+ftier_criteria_upper.value+"\nPoints Addition: "+fpoint_addition.value+"\nReward Product: "+freward_product.value+"\nRedemption Criteria: "+fredemption_criteria.value;
 			}
 			
 			var data_xml="<loyalty_programs>" +
 					"<id>"+fdata_id.value+"</id>" +
-					"<tier_criteria>"+ftier_criteria.value+"</tier_criteria>" +
+					"<tier_criteria_lower>"+ftier_criteria_lower.value+"</tier_criteria_lower>" +
+					"<tier_criteria_upper>"+ftier_criteria_upper.value+"</tier_criteria_upper>" +
+					"<redemption_criteria>"+fredemption_criteria.value+"</redemption_criteria>" +
 					"<points_addition>"+fpoint_addition.value+"</points_addition>" +
 					"<discount>"+fdiscount.value+"</discount>" +
-					"<accrual>"+faccrual.value+"</accrual>" +
+					"<cashback>"+fcashback.value+"</cashback>" +
 					"<reward_product>"+freward_product.value+"</reward_product>" +
 					"<status>"+fstatus.value+"</status>" +
 					"<last_updated>"+get_my_time()+"</last_updated>" +
@@ -4574,7 +4593,6 @@ function modal46_action(button)
 			{
 				local_update_row(data_xml,activity_xml);
 			}
-			
 		}
 		else
 		{

@@ -306,8 +306,8 @@
 		<row>
 			<tablename>loyalty_programs</tablename>
 			<listname>type</listname>
-			<name>accrual</name>
-			<value>Accrual</value>
+			<name>cashback</name>
+			<value>CashBack</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

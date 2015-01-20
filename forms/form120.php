@@ -8,6 +8,7 @@
 					<th>Tier <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form120_header'></th>
 					<th>Points</th>
 					<th><input type='button' form='form120_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form120_header' onclick='activate_loyalty_programs();' value='Refresh Tiers' class='generic_head_icon'>
 						<input type='submit' form='form120_header' style='visibility: hidden;'>
 					</th>
 			</tr>

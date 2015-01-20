@@ -693,13 +693,14 @@
 	<loyalty_programs>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(100)"></name>
-			<type index='yes' type="VARCHAR(50)"></type><!--discount/reward product/accrual-->
+			<type index='yes' type="VARCHAR(50)"></type><!--discount/reward product/cashback-->
 			<tier index='yes' type="VARCHAR(100)"></tier>
 			<tier_criteria_lower index='yes' type="DECIMAL(12,2)"></tier_criteria_lower>
 			<tier_criteria_upper index='yes' type="DECIMAL(12,2)"></tier_criteria_upper>
+			<redemption_criteria index='yes' type="DECIMAL(12,2)"></redemption_criteria>
 			<points_addition index='no' type="DECIMAL(12,2)"></points_addition>
 			<discount index='no' type="DECIMAL(12,4)"></discount>
-			<accrual index='no' type="DECIMAL(12,4)"></accrual>
+			<cashback index='no' type="DECIMAL(12,4)"></cashback>
 			<reward_product index='no' type="VARCHAR(100)"></reward_product>
 			<status index='yes' type='VARCHAR(25)'></status><!-- active/retired -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
@@ -709,6 +710,7 @@
 			<program_name index='yes' type="VARCHAR(100)"></program_name>
 			<customer index='yes' type="VARCHAR(100)"></customer>
 			<points index='no' type="DECIMAL(12,4)"></points>
+			<points_addition index='no' type="DECIMAL(12,2)"></points_addition>
 			<date index='yes' type="BIGINT"></date>
 			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale return-->
 			<source_id index='yes' type="BIGINT"></source_id>

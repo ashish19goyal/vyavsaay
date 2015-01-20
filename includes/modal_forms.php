@@ -522,11 +522,12 @@
 				<label>Name: <input type='text' required></label><br/>
 				<label>Type: <input type='text' required></label><br/>
 				<label>Tier: <input type='text' required></label><br/>
-				<label title='Minimum points to redeem offers'>Tier Criteria(min.): <input type="number" step='any' required></label><br/>
-				<label title='Maximum points to redeem offers'>Tier Criteria(max.): <input type="number" step='any' required></label><br/>
+				<label title='Minimum points for tier qualification'>Tier Criteria(min.): <input type="number" step='any' required></label><br/>
+				<label title='Maximum points for tier qualification'>Tier Criteria(max.): <input type="number" step='any' required></label><br/>
+				<label title='Minimum points to redeem'>Redemption Criteria(max.): <input type="number" step='any' required></label><br/>
 				<label title='Points per rupee spent'>Points Addition: <input type="number" step='any' required></label>
 				<label title='% discount on purchases'>Discount: <input type="number" step='any'></label><br/>
-				<label title='Amount accrued per earned point'>Accrual: Rs. <input type="number" step='any'></label><br/>
+				<label title='Cashback per earned point'>Cashback: Rs. <input type="number" step='any'></label><br/>
 				<label title='Reward product on fulfilment of tier criteria'>Reward Product: <input type="text"></label><br/>
 				<label>Status: <input type="text" requried></label><br/>
 				<label id='modal45_attributes'></label></br>
@@ -538,11 +539,12 @@
 	<div id="modal46" title="Update loyalty program">
 		<form id='modal46_form'>
 			<fieldset>
-				<label title='Minimum points to redeem offers'>Tier Criteria: <input type="number" step='any' required></label><br/>
-				<label title='Maximum points to redeem offers'>Tier Criteria: <input type="number" step='any' required></label><br/>
+				<label title='Minimum points for tier qualification'>Tier Criteria(min.): <input type="number" step='any' required></label><br/>
+				<label title='Maximum points for tier qualification'>Tier Criteria(max.): <input type="number" step='any' required></label><br/>
+				<label title='Minimum points to redeem'>Redemption Criteria(max.): <input type="number" step='any' required></label><br/>
 				<label title='Points per rupee spent'>Points Addition: <input type="number" step='any' required></label>
 				<label title='% discount on purchases'>Discount: <input type="number" step='any'></label><br/>
-				<label title='Amount accrued per earned point'>Accrual: Rs. <input type="number" step='any'></label><br/>
+				<label title='Cashback per earned point'>Cashback: Rs. <input type="number" step='any'></label><br/>
 				<label title='Reward product on fulfilment of tier criteria'>Reward Product: <input type="text"></label><br/>
 				<label>Status: <input type="text" requried></label><br/>
 				<input type="submit" value='Save'>

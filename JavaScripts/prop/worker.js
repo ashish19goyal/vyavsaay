@@ -1256,3 +1256,94 @@ function balance_out_payments()
 		$("#modal2").dialog("open");
 	}
 }
+
+
+function activate_loyalty_programs()
+{
+	var tier_data="<loyalty_programs>"+
+			"<name></name>"+
+			"<tier></tier>"+
+			"<tier_criteria_lower></tier_criteria_lower>"+
+			"<tier_criteria_upper></tier_criteria_upper>"+
+			"<status exact='yes'>active</status>"+
+			"</loyalty_programs>";
+	fetch_requested_data('',tier_data,function(tiers)
+	{
+		var customers_data="<loyalty_customers>"+
+					"<customer></customer>"+
+					"</loyalty_customers>";
+		get_single_column_data(function(customers)
+		{
+			customers.forEach(function(customer)
+			{
+				var points_data="<loyalty_points>"+
+								"<program_name></program_name>"+
+								"<customer exact='yes'>"+customer+"</customer>"+
+								"<points></points>"+
+								"</loyalty_points>";
+				fetch_requested_data('',points_data,function(points)
+				{
+					for(var i=0;i<points.length;i++)
+					{
+						for(var j=i+1;j<points.length;j++)
+						{
+							if(points[i].program_name==points[j].program_name)
+							{
+								points[i].points=parseFloat(points[i].points)+parseFloat(points[j].points);
+								points.splice(j,1);
+								j-=1;
+							}
+						}
+					}
+					
+					var loyalty_data="<loyalty_customers>"+
+									"<id></id>"+
+									"<customer exact='yes'>"+customer+"</customer>"+
+									"<program_name></program_name>"+
+									"<tier></tier>"+
+									"</loyalty_customers>";
+					fetch_requested_data('',loyalty_data,function(loyalties)
+					{
+						loyalties.forEach(function(loyalty)
+						{
+							for(var x in tiers)
+							{
+								if(tiers[x].name==loyalty.program_name && tiers[x].tier==loyalty.tier)
+								{
+									for(var y in points)
+									{
+										if(loyalty.program_name==points[y].program_name)
+										{
+											if(parseFloat(tiers[x].tier_criteria_lower)>parseFloat(points[y].points) || parseFloat(tiers[x].tier_criteria_upper)<parseFloat(points[y].points))
+											{	
+												break;
+											}
+											else
+											{
+												var loyalty_xml="<loyalty_customers>"+
+														"<id>"+loyalty.id+"</id>"+
+														"<status>active</status>"+
+														"<last_updated>"+get_my_time()+"</last_updated>"+
+														"</loyalty_customers>";
+												if(is_online())
+												{
+													server_update_simple(loyalty_xml);
+												}
+												else
+												{
+													local_update_simple(loyalty_xml);
+												}
+												break;
+											}
+										}
+									}
+									break;
+								}
+							}
+						});
+					});
+				});
+			});
+		},customers_data);
+	});
+}

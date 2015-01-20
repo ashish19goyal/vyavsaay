@@ -677,7 +677,20 @@ function form115_import_template()
 function form116_import_template()
 {
 	var data_array=['id','name','type','tier','tier_criteria_lower','tier_criteria_upper','points_addition',
-	                'discount','accrual','reward_product','status'];
+	                'discount','redemption_criteria','cashback','reward_product','status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Create bills(loyalty)
+* @formNo 118
+* @table bill_items
+*/
+function form118_import_template()
+{
+	var data_array=['id','bill_id','item_name','quantity','p_quantity','f_quantity','unit_price','mrp','amount',
+	                'total','discount','offer','type','batch','notes',
+	                'staff','tax','free_with'];
 	my_array_to_csv(data_array);
 };
 

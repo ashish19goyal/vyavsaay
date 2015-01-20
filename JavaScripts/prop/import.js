@@ -3641,15 +3641,81 @@ function form116_import(data_array,import_type)
 				"<tier>"+row.tier+"</tier>" +
 				"<tier_criteria_lower>"+row.tier_criteria_lower+"</tier_criteria_lower>" +
 				"<tier_criteria_upper>"+row.tier_criteria_upper+"</tier_criteria_upper>" +
+				"<redemption_criteria>"+row.redemption_criteria+"</redemption_criteria>" +
 				"<points_addition>"+row.points_addition+"</points_addition>" +
 				"<discount>"+row.discount+"<discount>" +
-				"<accrual>"+row.accrual+"</accrual>" +
+				"<cashback>"+row.cashback+"</cashback>" +
 				"<reward_product>"+row.reward_product+"</reward_product>" +
 				"<status>"+row.status+"</status>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
 	data_xml+="</loyalty_programs>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Create Bills(loyalty)
+* @formNo 118
+*/
+function form118_import(data_array,import_type)
+{
+	var data_xml="<bill_items>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</bill_items><separator></separator><bill_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<p_quantity>"+row.p_quantity+"</p_quantity>" +
+				"<f_quantity>"+row.f_quantity+"</f_quantity>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<total>"+row.total+"</total>" +
+				"<discount>"+row.discount+"</discount>" +
+				"<offer>"+row.offer+"</offer>" +
+				"<type>"+row.type+"</type>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<staff>"+row.staff+"</staff>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<free_with>"+row.free_with+"</free_with>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</bill_items>";
 	if(import_type=='create_new')
 	{
 		if(is_online())

@@ -2252,14 +2252,6 @@ function form91_header_ini()
 	    }
 	});
 
-	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
-	    	event.preventDefault();
-	    	$(save_button).trigger('click');
-	    }
-	});
-	
 	$(fields).off('submit');
 	$(fields).on("submit", function(event)
 	{
@@ -2995,6 +2987,131 @@ function form116_header_ini()
 	set_static_filter('loyalty_programs','type',type_filter);
 	set_static_filter('loyalty_programs','status',status_filter);
 };
+
+/**
+ * @form Create Bill(loyalty)
+ * @formNo 118
+ */
+function form118_header_ini()
+{
+	var fields=document.getElementById('form118_master');
+	
+	var customers_filter=fields.elements[1];
+	var bill_date=fields.elements[2];
+	fields.elements[3].value=get_new_key();
+	fields.elements[4].value="";
+	fields.elements[5].value=fields.elements[3].value;
+	var loyalty_program=fields.elements[6];
+	var loyalty_points=fields.elements[7];
+	var redeem_check=fields.elements[8];
+	var save_button=fields.elements[9];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form118_create_form();
+	});
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+	
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form118_add_item();
+	});
+	
+	var loyalty_data="<loyalty_programs>"+
+			"<name></name>"+
+			"<status exact='yes'>active</status>"
+			"</loyalty_programs>";
+	set_my_value_list(loyalty_data,loyalty_program);
+	
+	$(loyalty_program).off('blur');
+	$(loyalty_program).on('blur',function(e)
+	{
+		var points_data="<loyalty_points>"+
+				"<points></points>"+
+				"<program_name exact='yes'>"+loyalty_program.value+"</program_name>"+
+				"<customer exact='yes'>"+customers_filter.value+"</customer>"+
+				"</loyalty_points>";
+		get_single_column_data(function(points)
+		{
+			var points_value=0;
+			for(var i=0;i<points.length;i++)
+			{
+				points_value+=parseFloat(points[i]);
+			}
+			loyalty_points.value=points_value;	
+		},points_data);
+	});	
+
+	var customers_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	set_my_value_list(customers_data,customers_filter);
+
+	$(customers_filter).off('blur');
+	$(customers_filter).on('blur',function(e)
+	{
+		var address_data="<customers>" +
+				"<address></address>" +
+				"<city></city>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
+				"</customers>";
+		fetch_requested_data('',address_data,function(addresses)
+		{
+			var address_string="";
+			if(addresses.length>0)
+			{
+				address_string+=addresses[0].address+", "+addresses[0].city;
+				document.getElementById('form118_customer_info').innerHTML="Address<br>"+address_string;
+			}
+			else
+			{
+				document.getElementById('form118_customer_info').innerHTML="";
+			}
+		});
+		
+		var loyalty_data="<loyalty_programs count='1'>"+
+			"<name></name>"+
+			"<status exact='yes'>active</status>"
+			"</loyalty_programs>";
+		get_single_column_data(function(programs)
+		{
+			if(programs.length>0)
+			{
+				loyalty_program.value=programs[0];
+				var points_data="<loyalty_points>"+
+					"<points></points>"+
+					"<program_name exact='yes'>"+loyalty_program.value+"</program_name>"+
+					"<customer exact='yes'>"+customers_filter.value+"</customer>"+
+					"</loyalty_points>";
+				get_single_column_data(function(points)
+				{
+					var points_value=0;
+					for(var i=0;i<points.length;i++)
+					{
+						points_value+=parseFloat(points[i]);
+					}	
+					loyalty_points.value=points_value;	
+				},points_data);
+			}
+		},loyalty_data);
+	});
+
+	$(bill_date).datepicker();
+	$(bill_date).val(get_my_date());
+	customers_filter.value='';
+	$(customers_filter).focus();
+}
 
 
 /**
