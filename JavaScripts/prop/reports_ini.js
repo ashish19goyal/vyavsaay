@@ -1242,92 +1242,99 @@ function report30_ini()
  */
 function report31_ini()
 {	
-	show_loader();
-	//console.log('running report 31');
-	var form=document.getElementById('report31_header');
-	var min_amount=parseFloat($("#report31_slider").slider("values",0));
-	var max_amount=parseFloat($("#report31_slider").slider("values",1));
-	
-	/// master coordinate placement////
-	var lat=get_session_var('lat');
-	var lng=get_session_var('lng');
-	var title=get_session_var('title');
-	
-	if(typeof map31 != 'undefined')
-		map31.remove();
-
-	map31 = L.map('report31_map',{
-		center: [lat,lng], 
-		zoom: 10
-	});
-	
-	L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',{
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        subdomains:'1234'
-	}).addTo(map31);
-	
-	var mlatlng=L.latLng(lat,lng);
-	var mmarker=L.marker(mlatlng).addTo(map31).bindPopup(title);
-	///////////////////////////////////		
-	
-	var customers_data="<customers>" +
-			"<id></id>" +
-			"<name></name>" +
-			"<lat></lat>" +
-			"<lng></lng>" +
-			"<acc_name></acc_name>" +
-			"<address></address>" +
-			"<pincode></pincode>" +
-			"<city></city>" +
-			"<state></state>" +
-			"<country></country>" +
-			"<address_status exact='yes'>confirmed</address_status>" +
-			"</customers>";
-	
-	fetch_requested_data('report31',customers_data,function(accounts)
+	if(is_online())
 	{
-		var payments_data="<payments>" +
+		show_loader();
+		//console.log('running report 31');
+		var form=document.getElementById('report31_header');
+		var min_amount=parseFloat($("#report31_slider").slider("values",0));
+		var max_amount=parseFloat($("#report31_slider").slider("values",1));
+		
+		/// master coordinate placement////
+		var lat=get_session_var('lat');
+		var lng=get_session_var('lng');
+		var title=get_session_var('title');
+		
+		if(typeof map31 != 'undefined')
+			map31.remove();
+	
+		map31 = L.map('report31_map',{
+			center: [lat,lng], 
+			zoom: 10
+		});
+		
+		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',{
+	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	        subdomains:'1234'
+		}).addTo(map31);
+		
+		var mlatlng=L.latLng(lat,lng);
+		var mmarker=L.marker(mlatlng).addTo(map31).bindPopup(title);
+		///////////////////////////////////		
+		
+		var customers_data="<customers>" +
 				"<id></id>" +
+				"<name></name>" +
+				"<lat></lat>" +
+				"<lng></lng>" +
 				"<acc_name></acc_name>" +
-				"<type></type>" +
-				"<total_amount></total_amount>" +
-				"<paid_amount></paid_amount>" +
-				"<bill_id></bill_id>" +
-				"<status exact='yes'>pending</status>" +
-				"</payments>";
-		fetch_requested_data('report31',payments_data,function(payments)
+				"<address></address>" +
+				"<pincode></pincode>" +
+				"<city></city>" +
+				"<state></state>" +
+				"<country></country>" +
+				"<address_status exact='yes'>confirmed</address_status>" +
+				"</customers>";
+		
+		fetch_requested_data('report31',customers_data,function(accounts)
 		{
-			accounts.forEach(function(result)
-			{	
-				var balance_amount=0;
-				
-				payments.forEach(function(payment)
-				{
-					if(payment.acc_name==result.acc_name)
+			var payments_data="<payments>" +
+					"<id></id>" +
+					"<acc_name></acc_name>" +
+					"<type></type>" +
+					"<total_amount></total_amount>" +
+					"<paid_amount></paid_amount>" +
+					"<bill_id></bill_id>" +
+					"<status exact='yes'>pending</status>" +
+					"</payments>";
+			fetch_requested_data('report31',payments_data,function(payments)
+			{
+				accounts.forEach(function(result)
+				{	
+					var balance_amount=0;
+					
+					payments.forEach(function(payment)
 					{
-						if(payment.type=='received')
+						if(payment.acc_name==result.acc_name)
 						{
-							balance_amount+=parseFloat(payment.total_amount);
-							balance_amount-=parseFloat(payment.paid_amount);
+							if(payment.type=='received')
+							{
+								balance_amount+=parseFloat(payment.total_amount);
+								balance_amount-=parseFloat(payment.paid_amount);
+							}
+							else if(payment.type=='paid')
+							{
+								balance_amount-=parseFloat(payment.total_amount);
+								balance_amount+=parseFloat(payment.paid_amount);
+							}
 						}
-						else if(payment.type=='paid')
-						{
-							balance_amount-=parseFloat(payment.total_amount);
-							balance_amount+=parseFloat(payment.paid_amount);
-						}
+					});
+					
+					if(balance_amount>=min_amount && balance_amount<=max_amount)
+					{
+						var latlng=L.latLng(result.lat,result.lng);
+						var marker=L.marker(latlng).addTo(map31).bindPopup(result.acc_name+"\nBalance: "+balance_amount);	
 					}
 				});
 				
-				if(balance_amount>=min_amount && balance_amount<=max_amount)
-				{
-					var latlng=L.latLng(result.lat,result.lng);
-					var marker=L.marker(latlng).addTo(map31).bindPopup(result.acc_name+"\nBalance: "+balance_amount);	
-				}
+				hide_loader();
 			});
-			
-			hide_loader();
 		});
-	});
+	}
+	else
+	{
+		$("#modal6").dialog("open");
+	}
 }
 
 /**
@@ -1336,55 +1343,61 @@ function report31_ini()
  */
 function report32_ini()
 {	
-	show_loader();
-	var form=document.getElementById('report32_header');
-	
-	/// master coordinate placement////
-	var lat=get_session_var('lat');
-	var lng=get_session_var('lng');
-	var title=get_session_var('title');
-	
-	if(typeof map32 != 'undefined')
-		map32.remove();
-
-	map32 = L.map('report32_map',{
-		center: [lat,lng], 
-		zoom: 10
-	});
-	
-	L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',{
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        subdomains:'1234'
-	}).addTo(map32);
-	
-	var mlatlng=L.latLng(lat,lng);
-	var mmarker=L.marker(mlatlng).addTo(map32).bindPopup(title);
-	///////////////////////////////////		
-	
-	var address_data="<staff>" +
-			"<id></id>" +
-			"<name></name>" +
-			"<lat></lat>" +
-			"<lng></lng>" +
-			"<acc_name></acc_name>" +
-			"<address></address>" +
-			"<pincode></pincode>" +
-			"<city></city>" +
-			"<state></state>" +
-			"<country></country>" +
-			"<status exact='yes'>active</status>" +
-			"<address_status exact='yes'>confirmed</address_status>" +
-			"</staff>";
-	fetch_requested_data('report32',address_data,function(addresses)
+	if(is_online())
 	{
-		for(var i in addresses)
+		show_loader();
+		var form=document.getElementById('report32_header');
+		
+		/// master coordinate placement////
+		var lat=get_session_var('lat');
+		var lng=get_session_var('lng');
+		var title=get_session_var('title');
+		
+		if(typeof map32 != 'undefined')
+			map32.remove();
+	
+		map32 = L.map('report32_map',{
+			center: [lat,lng], 
+			zoom: 10
+		});
+		
+		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',{
+	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	        subdomains:'1234'
+		}).addTo(map32);
+		
+		var mlatlng=L.latLng(lat,lng);
+		var mmarker=L.marker(mlatlng).addTo(map32).bindPopup(title);
+		///////////////////////////////////		
+		
+		var address_data="<staff>" +
+				"<id></id>" +
+				"<name></name>" +
+				"<lat></lat>" +
+				"<lng></lng>" +
+				"<acc_name></acc_name>" +
+				"<address></address>" +
+				"<pincode></pincode>" +
+				"<city></city>" +
+				"<state></state>" +
+				"<country></country>" +
+				"<status exact='yes'>active</status>" +
+				"<address_status exact='yes'>confirmed</address_status>" +
+				"</staff>";
+		fetch_requested_data('report32',address_data,function(addresses)
 		{
-			var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
-			var marker=L.marker(latlng).addTo(map32).bindPopup(addresses[i].acc_name);	
-		}
-		hide_loader();
-	});
-			
+			for(var i in addresses)
+			{
+				var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
+				var marker=L.marker(latlng).addTo(map32).bindPopup(addresses[i].acc_name);	
+			}
+			hide_loader();
+		});
+	}
+	else
+	{
+		$("#modal6").dialog("open");
+	}
 }
 
 
@@ -1394,91 +1407,98 @@ function report32_ini()
  */
 function report33_ini()
 {	
-	show_loader();
-	//console.log('running report 31');
-	var form=document.getElementById('report33_header');
-	var min_amount=parseFloat($("#report33_slider").slider("values",0));
-	var max_amount=parseFloat($("#report33_slider").slider("values",1));
-	
-	/// master coordinate placement////
-	var lat=get_session_var('lat');
-	var lng=get_session_var('lng');
-	var title=get_session_var('title');
-	
-	if(typeof map33 != 'undefined')
-		map33.remove();
-
-	map33 = L.map('report33_map',{
-		center: [lat,lng], 
-		zoom: 10
-	});
-	
-	L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',{
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        subdomains:'1234'
-	}).addTo(map33);
-	
-	var mlatlng=L.latLng(lat,lng);
-	var mmarker=L.marker(mlatlng).addTo(map33).bindPopup(title);
-	///////////////////////////////////		
-	
-	var suppliers_data="<suppliers>" +
-			"<id></id>" +
-			"<name></name>" +
-			"<lat></lat>" +
-			"<lng></lng>" +
-			"<acc_name></acc_name>" +
-			"<address></address>" +
-			"<pincode></pincode>" +
-			"<city></city>" +
-			"<state></state>" +
-			"<country></country>" +
-			"<address_status exact='yes'>confirmed</address_status>" +
-			"</suppliers>";
-	
-	fetch_requested_data('report33',suppliers_data,function(accounts)
+	if(is_online())
 	{
-		var payments_data="<payments>" +
+		show_loader();
+		//console.log('running report 31');
+		var form=document.getElementById('report33_header');
+		var min_amount=parseFloat($("#report33_slider").slider("values",0));
+		var max_amount=parseFloat($("#report33_slider").slider("values",1));
+		
+		/// master coordinate placement////
+		var lat=get_session_var('lat');
+		var lng=get_session_var('lng');
+		var title=get_session_var('title');
+		
+		if(typeof map33 != 'undefined')
+			map33.remove();
+	
+		map33 = L.map('report33_map',{
+			center: [lat,lng], 
+			zoom: 10
+		});
+		
+		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',{
+	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	        subdomains:'1234'
+		}).addTo(map33);
+		
+		var mlatlng=L.latLng(lat,lng);
+		var mmarker=L.marker(mlatlng).addTo(map33).bindPopup(title);
+		///////////////////////////////////		
+		
+		var suppliers_data="<suppliers>" +
 				"<id></id>" +
+				"<name></name>" +
+				"<lat></lat>" +
+				"<lng></lng>" +
 				"<acc_name></acc_name>" +
-				"<type></type>" +
-				"<total_amount></total_amount>" +
-				"<paid_amount></paid_amount>" +
-				"<bill_id></bill_id>" +
-				"<status exact='yes'>pending</status>" +
-				"</payments>";
-		fetch_requested_data('report33',payments_data,function(payments)
+				"<address></address>" +
+				"<pincode></pincode>" +
+				"<city></city>" +
+				"<state></state>" +
+				"<country></country>" +
+				"<address_status exact='yes'>confirmed</address_status>" +
+				"</suppliers>";
+		
+		fetch_requested_data('report33',suppliers_data,function(accounts)
 		{
-			accounts.forEach(function(result)
-			{	
-				var balance_amount=0;
-				
-				payments.forEach(function(payment)
-				{
-					if(payment.acc_name==result.acc_name)
+			var payments_data="<payments>" +
+					"<id></id>" +
+					"<acc_name></acc_name>" +
+					"<type></type>" +
+					"<total_amount></total_amount>" +
+					"<paid_amount></paid_amount>" +
+					"<bill_id></bill_id>" +
+					"<status exact='yes'>pending</status>" +
+					"</payments>";
+			fetch_requested_data('report33',payments_data,function(payments)
+			{
+				accounts.forEach(function(result)
+				{	
+					var balance_amount=0;
+					
+					payments.forEach(function(payment)
 					{
-						if(payment.type=='received')
+						if(payment.acc_name==result.acc_name)
 						{
-							balance_amount-=parseFloat(payment.total_amount);
-							balance_amount+=parseFloat(payment.paid_amount);
+							if(payment.type=='received')
+							{
+								balance_amount-=parseFloat(payment.total_amount);
+								balance_amount+=parseFloat(payment.paid_amount);
+							}
+							else if(payment.type=='paid')
+							{
+								balance_amount+=parseFloat(payment.total_amount);
+								balance_amount-=parseFloat(payment.paid_amount);
+							}
 						}
-						else if(payment.type=='paid')
-						{
-							balance_amount+=parseFloat(payment.total_amount);
-							balance_amount-=parseFloat(payment.paid_amount);
-						}
+					});
+					
+					if(balance_amount>=min_amount && balance_amount<=max_amount)
+					{
+						var latlng=L.latLng(result.lat,result.lng);
+						var marker=L.marker(latlng).addTo(map33).bindPopup(result.acc_name+"\nBalance: "+balance_amount);	
 					}
 				});
-				
-				if(balance_amount>=min_amount && balance_amount<=max_amount)
-				{
-					var latlng=L.latLng(result.lat,result.lng);
-					var marker=L.marker(latlng).addTo(map33).bindPopup(result.acc_name+"\nBalance: "+balance_amount);	
-				}
+				hide_loader();
 			});
-			hide_loader();
 		});
-	});
+	}
+	else
+	{
+		$("#modal6").dialog("open");
+	}
 }
 
 /**
@@ -1725,85 +1745,92 @@ function report34_ini()
  */
 function report35_ini()
 {	
-	show_loader();
-	var form=document.getElementById('report35_header');
-	var product_name=form.elements[1].value;
-	
-
-	/// master coordinate placement////
-	var lat=get_session_var('lat');
-	var lng=get_session_var('lng');
-	var title=get_session_var('title');
-	
-	if(typeof map35 != 'undefined')
-		map35.remove();
-
-	map35 = L.map('report35_map',{
-		center: [lat,lng], 
-		zoom: 10
-	});
-	
-	L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',{
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        subdomains:'1234'
-	}).addTo(map35);
-	
-	var mlatlng=L.latLng(lat,lng);
-	var mmarker=L.marker(mlatlng).addTo(map35).bindPopup(title);
-	///////////////////////////////////		
-
-	var product_data="<bill_items>" +
-			"<bill_id></bill_id>" +
-			"<item_name exact='yes'>"+product_name+"</item_name>" +
-			"</bill_items>";
-	
-	get_single_column_data(function(bill_ids)
+	if(is_online())
 	{
-		var bill_id_array="--";
-		for(var y in bill_ids)
-		{
-			bill_id_array+=bill_ids[y]+"--";
-		}
+		show_loader();
+		var form=document.getElementById('report35_header');
+		var product_name=form.elements[1].value;
 		
-		//optimise this query
-		var customer_data="<bills>" +
-				"<customer_name></customer_name>" +
-				"<id array='yes'>"+bill_id_array+"</id>" +
-				"</bills>";
+	
+		/// master coordinate placement////
+		var lat=get_session_var('lat');
+		var lng=get_session_var('lng');
+		var title=get_session_var('title');
 		
-		get_single_column_data(function(customers)
+		if(typeof map35 != 'undefined')
+			map35.remove();
+	
+		map35 = L.map('report35_map',{
+			center: [lat,lng], 
+			zoom: 10
+		});
+		
+		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',{
+	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	        subdomains:'1234'
+		}).addTo(map35);
+		
+		var mlatlng=L.latLng(lat,lng);
+		var mmarker=L.marker(mlatlng).addTo(map35).bindPopup(title);
+		///////////////////////////////////		
+	
+		var product_data="<bill_items>" +
+				"<bill_id></bill_id>" +
+				"<item_name exact='yes'>"+product_name+"</item_name>" +
+				"</bill_items>";
+		
+		get_single_column_data(function(bill_ids)
 		{
-			var customers_array="--";
-			for(var x in customers)
+			var bill_id_array="--";
+			for(var y in bill_ids)
 			{
-				customers_array+=customers[x]+"--";
-			}	
+				bill_id_array+=bill_ids[y]+"--";
+			}
 			
-			var customers_data="<customers>" +
-					"<id></id>" +
-					"<name></name>" +
-					"<lat></lat>" +
-					"<lng></lng>" +
-					"<acc_name array='yes'>"+customers_array+"</acc_name>" +
-					"<address></address>" +
-					"<pincode></pincode>" +
-					"<city></city>" +
-					"<state></state>" +
-					"<country></country>" +
-					"<address_status exact='yes'>confirmed</address_status>" +
-					"</customers>";
+			//optimise this query
+			var customer_data="<bills>" +
+					"<customer_name></customer_name>" +
+					"<id array='yes'>"+bill_id_array+"</id>" +
+					"</bills>";
 			
-			fetch_requested_data('report35',customers_data,function(addresses)
+			get_single_column_data(function(customers)
 			{
-				for(var i in addresses)
+				var customers_array="--";
+				for(var x in customers)
 				{
-					var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
-					var marker=L.marker(latlng).addTo(map35).bindPopup(addresses[i].acc_name);	
-				}
-				hide_loader();
-			});
-		},customer_data);
-	},product_data);
+					customers_array+=customers[x]+"--";
+				}	
+				
+				var customers_data="<customers>" +
+						"<id></id>" +
+						"<name></name>" +
+						"<lat></lat>" +
+						"<lng></lng>" +
+						"<acc_name array='yes'>"+customers_array+"</acc_name>" +
+						"<address></address>" +
+						"<pincode></pincode>" +
+						"<city></city>" +
+						"<state></state>" +
+						"<country></country>" +
+						"<address_status exact='yes'>confirmed</address_status>" +
+						"</customers>";
+				
+				fetch_requested_data('report35',customers_data,function(addresses)
+				{
+					for(var i in addresses)
+					{
+						var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
+						var marker=L.marker(latlng).addTo(map35).bindPopup(addresses[i].acc_name);	
+					}
+					hide_loader();
+				});
+			},customer_data);
+		},product_data);
+	}
+	else
+	{
+		$("#modal6").dialog("open");
+	}
 }
 
 
@@ -1813,83 +1840,90 @@ function report35_ini()
  */
 function report36_ini()
 {	
-	show_loader();
-	var form=document.getElementById('report36_header');
-	var product_name=form.elements[1].value;
-	
-	/// master coordinate placement////
-	var lat=get_session_var('lat');
-	var lng=get_session_var('lng');
-	var title=get_session_var('title');
-	
-	if(typeof map36 != 'undefined')
-		map36.remove();
-
-	map36 = L.map('report36_map',{
-		center: [lat,lng], 
-		zoom: 10
-	});
-	
-	L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',{
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        subdomains:'1234'
-	}).addTo(map36);
-	
-	var mlatlng=L.latLng(lat,lng);
-	var mmarker=L.marker(mlatlng).addTo(map36).bindPopup(title);
-	///////////////////////////////////		
-		
-	var product_data="<supplier_bill_items>" +
-			"<bill_id></bill_id>" +
-			"<product_name exact='yes'>"+product_name+"</product_name>" +
-			"</supplier_bill_items>";
-	
-	get_single_column_data(function(bill_ids)
+	if(is_online())
 	{
-		var bill_id_array="--";
-		for(var y in bill_ids)
-		{
-			bill_id_array+=bill_ids[y]+"--";
-		}
+		show_loader();
+		var form=document.getElementById('report36_header');
+		var product_name=form.elements[1].value;
 		
-		//optimise this query
-		var supplier_data="<supplier_bills>" +
-				"<supplier></supplier>" +
-				"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
-				"</supplier_bills>";
+		/// master coordinate placement////
+		var lat=get_session_var('lat');
+		var lng=get_session_var('lng');
+		var title=get_session_var('title');
 		
-		get_single_column_data(function(suppliers)
+		if(typeof map36 != 'undefined')
+			map36.remove();
+	
+		map36 = L.map('report36_map',{
+			center: [lat,lng], 
+			zoom: 10
+		});
+		
+		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',{
+	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	        subdomains:'1234'
+		}).addTo(map36);
+		
+		var mlatlng=L.latLng(lat,lng);
+		var mmarker=L.marker(mlatlng).addTo(map36).bindPopup(title);
+		///////////////////////////////////		
+			
+		var product_data="<supplier_bill_items>" +
+				"<bill_id></bill_id>" +
+				"<product_name exact='yes'>"+product_name+"</product_name>" +
+				"</supplier_bill_items>";
+		
+		get_single_column_data(function(bill_ids)
 		{
-			var suppliers_array="--";
-			for(var x in suppliers)
+			var bill_id_array="--";
+			for(var y in bill_ids)
 			{
-				suppliers_array+=suppliers[x]+"--";
-			}	
-			var suppliers_data="<suppliers>" +
-					"<id></id>" +
-					"<name></name>" +
-					"<lat></lat>" +
-					"<lng></lng>" +
-					"<acc_name array='yes'>"+suppliers_array+"</acc_name>" +
-					"<address></address>" +
-					"<pincode></pincode>" +
-					"<city></city>" +
-					"<state></state>" +
-					"<country></country>" +
-					"<address_status exact='yes'>confirmed</address_status>" +
-					"</suppliers>";
-
-			fetch_requested_data('report36',suppliers_data,function(addresses)
+				bill_id_array+=bill_ids[y]+"--";
+			}
+			
+			//optimise this query
+			var supplier_data="<supplier_bills>" +
+					"<supplier></supplier>" +
+					"<bill_id array='yes'>"+bill_id_array+"</bill_id>" +
+					"</supplier_bills>";
+			
+			get_single_column_data(function(suppliers)
 			{
-				for(var i in addresses)
+				var suppliers_array="--";
+				for(var x in suppliers)
 				{
-					var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
-					var marker=L.marker(latlng).addTo(map36).bindPopup(addresses[i].acc_name);	
-				}
-				hide_loader();
-			});
-		},supplier_data);
-	},product_data);
+					suppliers_array+=suppliers[x]+"--";
+				}	
+				var suppliers_data="<suppliers>" +
+						"<id></id>" +
+						"<name></name>" +
+						"<lat></lat>" +
+						"<lng></lng>" +
+						"<acc_name array='yes'>"+suppliers_array+"</acc_name>" +
+						"<address></address>" +
+						"<pincode></pincode>" +
+						"<city></city>" +
+						"<state></state>" +
+						"<country></country>" +
+						"<address_status exact='yes'>confirmed</address_status>" +
+						"</suppliers>";
+	
+				fetch_requested_data('report36',suppliers_data,function(addresses)
+				{
+					for(var i in addresses)
+					{
+						var latlng=L.latLng(addresses[i].lat,addresses[i].lng);
+						var marker=L.marker(latlng).addTo(map36).bindPopup(addresses[i].acc_name);	
+					}
+					hide_loader();
+				});
+			},supplier_data);
+		},product_data);
+	}
+	else
+	{
+		$("#modal6").dialog("open");
+	}
 }
 
 /**

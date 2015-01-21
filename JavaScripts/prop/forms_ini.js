@@ -2521,10 +2521,9 @@ function form40_ini()
  */
 function form41_ini()
 {
-	show_loader();
-
 	if(is_online())
 	{
+		show_loader();
 		var domain=get_domain();
 		var username=get_username();
 		var re_access=get_session_var('re');
@@ -6434,10 +6433,9 @@ function form84_ini()
  */
 function form85_ini()
 {
-	show_loader();
-
 	if(is_online())
 	{
+		show_loader();
 		var domain=get_domain();
 		var username=get_username();
 		var re_access=get_session_var('re');
@@ -6598,10 +6596,9 @@ function form85_ini()
  */
 function form86_ini()
 {
-	show_loader();
-
 	if(is_online())
 	{
+		show_loader();
 		var domain=get_domain();
 		var username=get_username();
 		var re_access=get_session_var('re');
