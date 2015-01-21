@@ -363,7 +363,7 @@ function report31_header_ini()
 	$("#report31_slider").slider({
 		range: true,
 		min: 0,
-		max: 50000,
+		max: 1000000,
 		values: [75,3000],
 		slide: function(event,ui){
 			$(amount).val("Rs. "+ui.values[0]+" - Rs. "+ui.values[1]);

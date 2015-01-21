@@ -9,7 +9,7 @@
 					<th>Picture</th>
 					<th>Tax</th>
 					<th><input type='button' form='form39_header' title='Add new product' class='add_icon' onclick='modal14_action();'>
-						<input type='button' form='form39_header' title='EXPORT' class='export_icon'>
+						<input type='button' form='form39_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form39_header' style='visibility: hidden;'>
 					</th>
 			</tr>

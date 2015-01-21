@@ -56,6 +56,7 @@
 									<option value="ca">CA or CA firm</option>
 									<option value="events">Event Management (Marriages,Parties,Performances)</option>
 									<option value="all">Contributor</option>
+									<option value="demo">Demo</option>
 								</select>
 							</p></br>
 							<input type="submit" value='Submit'>
