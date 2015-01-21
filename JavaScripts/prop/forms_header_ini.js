@@ -3002,7 +3002,9 @@ function form118_header_ini()
 	fields.elements[4].value="";
 	fields.elements[5].value=fields.elements[3].value;
 	var loyalty_program=fields.elements[6];
+	loyalty_program.value='';
 	var loyalty_points=fields.elements[7];
+	loyalty_program.value='';
 	var redeem_check=fields.elements[8];
 	var save_button=fields.elements[9];
 	
@@ -3030,7 +3032,7 @@ function form118_header_ini()
 	
 	var loyalty_data="<loyalty_programs>"+
 			"<name></name>"+
-			"<status exact='yes'>active</status>"
+			"<status exact='yes'>active</status>"+
 			"</loyalty_programs>";
 	set_my_value_list(loyalty_data,loyalty_program);
 	
@@ -3082,7 +3084,7 @@ function form118_header_ini()
 		
 		var loyalty_data="<loyalty_programs count='1'>"+
 			"<name></name>"+
-			"<status exact='yes'>active</status>"
+			"<status exact='yes'>active</status>"+
 			"</loyalty_programs>";
 		get_single_column_data(function(programs)
 		{

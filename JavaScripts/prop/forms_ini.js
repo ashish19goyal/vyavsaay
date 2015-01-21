@@ -9904,7 +9904,7 @@ function form118_ini()
 				
 				var loyalty_data="<loyalty_programs count='1'>"+
 					"<name></name>"+
-					"<status exact='yes'>active</status>"
+					"<status exact='yes'>active</status>"+
 					"</loyalty_programs>";
 				get_single_column_data(function(programs)
 				{

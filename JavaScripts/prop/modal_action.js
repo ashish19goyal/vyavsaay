@@ -4509,7 +4509,7 @@ function modal46_action(button)
 	form.elements[4].value=fpoint_addition.value;
 	form.elements[8].value=fstatus.value;
 	
-	var redemption=form.elements[3];
+	var redemption_criteria=form.elements[3];
 	redemption_criteria.value=fredemption_criteria.value;
 	var discount=form.elements[5]
 	discount.value=fdiscount.value;

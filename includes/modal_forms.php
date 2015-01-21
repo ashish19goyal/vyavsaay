@@ -524,7 +524,7 @@
 				<label>Tier: <input type='text' required></label><br/>
 				<label title='Minimum points for tier qualification'>Tier Criteria(min.): <input type="number" step='any' required></label><br/>
 				<label title='Maximum points for tier qualification'>Tier Criteria(max.): <input type="number" step='any' required></label><br/>
-				<label title='Minimum points to redeem'>Redemption Criteria(max.): <input type="number" step='any' required></label><br/>
+				<label title='Minimum points to redeem'>Redemption Criteria(max.): <input type="number" step='any'></label><br/>
 				<label title='Points per rupee spent'>Points Addition: <input type="number" step='any' required></label>
 				<label title='% discount on purchases'>Discount: <input type="number" step='any'></label><br/>
 				<label title='Cashback per earned point'>Cashback: Rs. <input type="number" step='any'></label><br/>
@@ -541,7 +541,7 @@
 			<fieldset>
 				<label title='Minimum points for tier qualification'>Tier Criteria(min.): <input type="number" step='any' required></label><br/>
 				<label title='Maximum points for tier qualification'>Tier Criteria(max.): <input type="number" step='any' required></label><br/>
-				<label title='Minimum points to redeem'>Redemption Criteria(max.): <input type="number" step='any' required></label><br/>
+				<label title='Minimum points to redeem'>Redemption Criteria(max.): <input type="number" step='any'></label><br/>
 				<label title='Points per rupee spent'>Points Addition: <input type="number" step='any' required></label>
 				<label title='% discount on purchases'>Discount: <input type="number" step='any'></label><br/>
 				<label title='Cashback per earned point'>Cashback: Rs. <input type="number" step='any'></label><br/>
