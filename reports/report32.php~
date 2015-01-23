@@ -6,5 +6,5 @@
 			</fieldset>
 		</form>
 		</br>
-	<div id="report32_map" style="height: 350px"></div>
+	<div id="report32_map" style="width: auto; height: 350px"></div>
 </div>

@@ -8,5 +8,5 @@
 		</fieldset>
 	</form>
 	<br>
-	<div id="report31_map" style="width:auto;height:350px"></div>
+	<div id="report31_map" style="height:350px"></div>
 </div>
