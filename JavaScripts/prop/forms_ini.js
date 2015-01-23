@@ -2544,11 +2544,14 @@ function form41_ini()
 				center: [lat,lng], 
 				zoom: 10
 			});
-		
-			L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
-		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap</a>',
-		        subdomains:'1234'
-		    }).addTo(map41);
+			
+			var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+			var mqUrl='http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png';
+			L.tileLayer(mqUrl, 
+				{
+			        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap contributors</a>',
+			        subdomains:'1234'
+		    	}).addTo(map41);
 			
 			//////////changeable master coordinates/////////
 			
@@ -2606,7 +2609,6 @@ function form41_ini()
 			{
 				customers.forEach(function(customer)
 				{
-					//console.log('fetched customer');
 					if(customer.lat=='')
 					{
 						customer.lat=lat;
@@ -2647,7 +2649,6 @@ function form41_ini()
 					});
 					$(fields).parent().on('click',function(event)
 					{
-						//console.log('clicked on customer');
 						marker.openPopup();
 					});
 				});
@@ -2677,7 +2678,6 @@ function form41_ini()
 		$("#modal6").dialog("open");
 	}
 }
-
 
 /**
  * @form Manage Bills
