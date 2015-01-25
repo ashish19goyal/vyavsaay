@@ -29,7 +29,6 @@ function form1_ini()
 		"<cost_price></cost_price>" +
 		"<sale_price></sale_price>" +
 		"<expiry></expiry>" +
-		"<last_updated></last_updated>" +
 		"</product_instances>";
 
 	$('#form1_body').html("");
@@ -81,6 +80,8 @@ function form1_ini()
 			
 			get_inventory(result.product_name,result.batch,function(inventory)
 			{
+				console.log(result.product_name);
+				console.log(result.batch);
 				sys_inventory.value=inventory;
 				actual_inventory.value=inventory;
 			});
