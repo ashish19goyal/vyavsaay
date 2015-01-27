@@ -15,6 +15,7 @@
     "services": "Services",
     "inventory": "Inventory",
     "customers": "Customers",
+    "customer_service": "Customer Service",
     "suppliers": "Suppliers",
     "staff": "Staff",
     "store": "Store",
@@ -212,6 +213,12 @@
   	"best_days":"Best Days",
   	"best_days_by_sales":"Best Days (by sales)",
   	"worst_days":"Worst Days",
-  	"worst_days_by_sales":"Worst Days (by sales)"
+  	"worst_days_by_sales":"Worst Days (by sales)",
+  	"customer_accounts":"Customer Accounts",
+  	"issues_list":"Issues List",
+  	"manage_service_requests":"Manage Service Requests",
+  	"engineer_locations":"Engineer's Location",
+  	"job_orders":"Job Orders",
+  	"create_service_request":"Create Service Request"
   }
 }

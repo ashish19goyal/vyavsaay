@@ -88,6 +88,62 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>issues</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>issues</tablename>
+			<listname>status</listname>
+			<name>archived</name>
+			<value>Archived</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>solutions</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>solutions</tablename>
+			<listname>status</listname>
+			<name>archived</name>
+			<value>Archived</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>service_requests</tablename>
+			<listname>status</listname>
+			<name>open</name>
+			<value>Open</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>service_requests</tablename>
+			<listname>status</listname>
+			<name>closed</name>
+			<value>Closed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>service_requests</tablename>
+			<listname>status</listname>
+			<name>cancelled</name>
+			<value>Cancelled</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>receipts</tablename>
 			<listname>type</listname>
 			<name>paid</name>

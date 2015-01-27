@@ -45,7 +45,6 @@
 			activate:function(e, ui) 
 		    {
 		    	e.currentTarget.blur();
-		    	map86.invalidateSize(false);
 		    },
 		    beforeActivate:function(event,ui)
 		    {

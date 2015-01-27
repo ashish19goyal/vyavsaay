@@ -3864,6 +3864,7 @@ function form126_header_ini()
 	var filter_fields=document.getElementById('form126_header');
 	var id_filter=filter_fields.elements[0];
 	var desc_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
 	
 	var id_data="<issues>" +
 			"<id></id>" +
@@ -3881,6 +3882,7 @@ function form126_header_ini()
 
 	set_my_filter(id_data,id_filter);
 	set_my_filter(desc_data,desc_filter);
+	set_static_filter('issues','status',status_filter);
 };
 
 

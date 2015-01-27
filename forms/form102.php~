@@ -1,7 +1,7 @@
 <div id='form102' class='function_detail'>
 	<form id='form102_master'>
 		<fieldset>
-			<label>Project Name<br><input type='text' required></label>
+			<label>Project Name</br><input type='text' required></label>
 			<input type='hidden' name='project_id' form='form102_master'>
 			<input type='submit' title='Save' class='save_icon'>
 			<input type='button' title='Print' class='print_icon' onclick='form102_print_form($(this));'>

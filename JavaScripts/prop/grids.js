@@ -606,3 +606,36 @@ function set_grid_item_30()
 	},columns);
 };
 
+/**
+ * @item # Open service requests
+ * @itemNo 31
+ */
+function set_grid_item_31()
+{
+	var columns="<service_requests>" +
+		"<id></id>" +
+		"<status exact='yes'>open</status>" +
+		"</service_requests>";
+	get_single_column_data(function(results)
+	{
+		document.getElementById('grid_item_31').innerHTML=results.length;
+	},columns);
+};
+
+/**
+ * @item Service requests closed today
+ * @itemNo 32
+ */
+function set_grid_item_32()
+{
+	var columns="<service_requests>" +
+		"<id></id>" +
+		"<status exact='yes'>closed</status>" +
+		"<last_updated lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</last_updated>"+
+		"</service_requests>";
+	get_single_column_data(function(results)
+	{
+		document.getElementById('grid_item_32').innerHTML=results.length;
+	},columns);
+};
+

@@ -52,6 +52,13 @@
 			</ul>
 		</li>
 		<li>
+			<a id="customer_service_link" onclick="grid_click('customer_service');"><div data-i18n="function.customer_service"> </div></a>		
+			<ul>
+				<li># open service requests: <a class='grid_item' id='grid_item_31'>0</a></li>
+				<li>Service requests closed today: <a class='grid_item' id='grid_item_32'></a></li>
+			</ul>
+		</li>
+		<li>
 			<a id="suppliers_link" onclick="grid_click('suppliers');"><div data-i18n="function.suppliers"> </div></a>		
 			<ul>
 				<li>Last supplier: <a class='grid_item' id='grid_item_15'>TBD</a></li>

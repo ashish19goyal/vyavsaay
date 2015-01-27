@@ -35,7 +35,6 @@
 			activate:function(e, ui) 
 		    {
 		    	e.currentTarget.blur();
-		    	map85.invalidateSize(false);
 		    },
 		    beforeActivate:function(event,ui)
 		    {

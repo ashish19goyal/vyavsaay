@@ -45,7 +45,7 @@ function default_load()
 			activities_lane_ini();
 		});
 		//document.getElementsByTagName('title')[0].innerHTML=get_session_var('title');
-		document.getElementById('master_title').innerHTML=get_session_var('title');		
+		//document.getElementById('master_title').innerHTML=get_session_var('title');		
 	}
 	hide_loader();
 }

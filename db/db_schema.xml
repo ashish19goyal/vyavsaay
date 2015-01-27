@@ -724,4 +724,30 @@
 			<status index='yes' type='VARCHAR(25)'></status><!-- active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</loyalty_customers>
+	<issues>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<short_desc index='yes' type="TEXT"></short_desc>
+			<detail index='no' type="TEXT"></detail>
+			<status index='yes' type='VARCHAR(25)'></status><!-- active/archived -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</issues>
+	<solutions>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<issue_id index='yes' type="BIGINT"></issue_id>
+			<detail index='no' type="TEXT"></detail>
+			<status index='yes' type='VARCHAR(25)'></status><!-- active/archived -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</solutions>
+	<service_requests>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<customer index='yes' type="VARCHAR(100)"></customer>
+			<assignee index='yes' type="VARCHAR(100)"></assignee>
+			<notes index='no' type="TEXT"></notes>
+			<closing_notes index='no' type="TEXT"></closing_notes>
+			<reported_time index='yes' type="BIGINT"></reported_time>
+			<start_time index='yes' type="BIGINT"></start_time>
+			<end_time index='yes' type="BIGINT"></end_time>
+			<status index='yes' type='VARCHAR(25)'></status><!-- open/closed/cancelled -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</service_requests>
 </re_xml>

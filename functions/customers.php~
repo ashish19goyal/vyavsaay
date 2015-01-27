@@ -43,6 +43,7 @@
 			activate:function(e, ui) 
 		    {
 		    	e.currentTarget.blur();
+		    	console.log('resizing map');
 		    	map41.invalidateSize(false);
 		    },
 		    beforeActivate:function(event,ui)
