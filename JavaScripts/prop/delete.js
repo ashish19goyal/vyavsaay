@@ -3752,47 +3752,31 @@ function form126_delete_item(button)
 	{
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
-		var name=form.elements[0].value;
-		var batch=form.elements[1].value;
-		var cost_price=form.elements[2].value;
-		var expiry=get_raw_time(form.elements[4].value);
-		var data_id=form.elements[7].value;
-		var last_updated=get_my_time();
-		var data_xml="<product_instances>" +
+		var data_id=form.elements[0].value;
+		var data_xml="<issues>" +
 					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<expiry>"+expiry+"</expiry>" +
-					"<cost_price>"+cost_price+"</cost_price>" +
-					"</product_instances>";	
+					"</issues>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>product_instances</tablename>" +
-					"<link_to>form1</link_to>" +
+					"<tablename>issues</tablename>" +
+					"<link_to>form126</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Batch number "+batch+" of product "+name+"</notes>" +
+					"<notes>Deleted issue number "+data_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var other_delete="<area_utilization>" +
-					"<item_name>"+name+"</item_name>" +
-					"<batch>"+batch+"</batch>" +
-					"</area_utilization>";
-		var other_delete2="<inventory_adjust>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
-					"</inventory_adjust>";	
+		var other_delete="<solutions>" +
+					"<issue_id>"+data_id+"</issue_id>" +
+					"</solutions>";
 		
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
 			server_delete_simple(other_delete);
-			server_delete_simple(other_delete2);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
 			local_delete_simple(other_delete);
-			local_delete_simple(other_delete2);
 		}	
 		$(button).parent().parent().remove();
 	}

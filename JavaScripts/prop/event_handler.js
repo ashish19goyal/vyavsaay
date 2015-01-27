@@ -44,8 +44,7 @@ function default_load()
 		{
 			activities_lane_ini();
 		});
-		//document.getElementsByTagName('title')[0].innerHTML=get_session_var('title');
-		document.getElementById('master_title').innerHTML=get_session_var('title');		
+		//document.getElementById('master_title').innerHTML=get_session_var('title');		
 	}
 	hide_loader();
 }
@@ -54,8 +53,8 @@ function show_progress()
 {
 	$("#progress_ind").show();
 	$("#progress_bar").val(progress_value);
-    $('#progress_value').html(parseInt(progress_value) + '%');
-    progress_runner=setTimeout(show_progress,500);
+   $('#progress_value').html(parseInt(progress_value) + '%');
+   progress_runner=setTimeout(show_progress,500);
 }
 
 function hide_progress()
