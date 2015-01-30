@@ -220,6 +220,6 @@
   	"engineer_locations":"Engineer's Location",
   	"job_orders":"Job Orders",
   	"create_service_request":"Create Service Request",
-  	"check_tasks":"Tasks"
+  	"tasks":"Tasks"
   }
 }

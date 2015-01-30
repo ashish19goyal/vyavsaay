@@ -8,7 +8,8 @@
 					<th>Detail</th>
 					<th>Assignee</th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form128_header'></th>
-					<th><input type='button' form='form128_header' value='EXPORT' class='export_icon'>
+					<th><input type="button" value='Add new project' class='add_icon' form='form128_header' onclick="form128_add_item();">
+						<input type='button' form='form128_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form128_header' style='visibility: hidden;'>
 					</th>
 			</tr>
