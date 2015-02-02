@@ -4801,6 +4801,64 @@ function form123_add_item()
 }
 
 /**
+ * @form Customer Accounts
+ * @formNo 125
+ */
+function form125_add_item()
+{
+	if(is_create_access('form125'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form125_"+id+"'></form>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' form='form125_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Username'>";
+				rowsHTML+="<input type='text' form='form125_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Password'>";
+				rowsHTML+="<input type='password' form='form125_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form125_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form125_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form125_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form125_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form125_body').prepend(rowsHTML);
+		var fields=document.getElementById("form125_"+id);
+		var customer_filter=fields.elements[0];
+		var username_filter=fields.elements[1];
+		var status_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form125_create_item(fields);
+		});
+				
+		var customer_data="<customers>"+
+								"<acc_name></acc_name>"+
+								"</customers>";
+		set_my_value_list(customer_data,customer_filter);
+		set_static_value_list('accounts','status',status_filter);
+
+		$(customer_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form New Bill
  * @formNo 130
  */

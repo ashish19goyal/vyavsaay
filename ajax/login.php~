@@ -129,7 +129,7 @@ use RetailingEssentials\db_connect;
 				
 				//////setting username and name
 				$stmt2=$conn->conn->prepare("select staff.name from staff,accounts where accounts.username=? and staff.acc_name=accounts.acc_name union select customers.name from customers,accounts where accounts.username=? and customers.acc_name=accounts.acc_name union select suppliers.name from suppliers,accounts where accounts.username=? and suppliers.acc_name=accounts.acc_name");
-				$stmt2->execute(array($user,$user,$user));
+				$stmt2->execute(array($user));
 				$row2=$stmt2->fetch(PDO::FETCH_ASSOC);
 				$session_var.="<username>";
 				$session_var.=$user;

@@ -2,8 +2,6 @@
 	<?php 
 		
 		echo "<ul>";
-			if(strpos($_SESSION['forms'],'form125-')!==false)
-				echo "<li><a id='form125_link' href='#form125' onclick='form125_header_ini(); form125_ini();' data-i18n='form.customer_accounts'></a></li>";			
 			if(strpos($_SESSION['forms'],'form126-')!==false)
 				echo "<li><a id='form126_link' href='#form126' onclick='form126_header_ini(); form126_ini();' data-i18n='form.issues_list'></a></li>";
 			if(strpos($_SESSION['forms'],'form128-')!==false)
@@ -15,11 +13,9 @@
 			if(strpos($_SESSION['forms'],'form131-')!==false)
 				echo "<li><a id='form131_link' href='#form131' onclick='form131_header_ini(); form131_ini();' data-i18n='form.check_tasks'></a></li>";
 			if(strpos($_SESSION['forms'],'form132-')!==false)
-				echo "<li><a id='form132_link' href='#form132' onclick='form132_header_ini(); form132_ini();' data-i18n='form.create_service_request'></a></li>";			
+				echo "<li><a id='form132_link' href='#form132' onclick='form132_header_ini();' data-i18n='form.create_service_request'></a></li>";			
 		echo "</ul>";
 
-		if(strpos($_SESSION['forms'],'form125-')!==false)
-			include "forms/form125.php";
 		if(strpos($_SESSION['forms'],'form126-')!==false)	
 			include "forms/form126.php"; 
 		if(strpos($_SESSION['forms'],'form128-')!==false)
@@ -42,6 +38,8 @@
 			activate:function(e, ui) 
 		    {
 		    	e.currentTarget.blur();
+		    	$('#form131_calendar').fullCalendar('render');
+		    	$('#form132_calendar').fullCalendar('render');
 		    },
 		    beforeActivate:function(event,ui)
 		    {

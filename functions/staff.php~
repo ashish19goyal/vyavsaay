@@ -46,8 +46,6 @@
 		    {
 		    	e.currentTarget.blur();
 		    	map86.invalidateSize(false);
-		    	$('#form7_calendar').fullCalendar('render');
-		    	$('#form14_calendar').fullCalendar('render');
 		    },
 		    beforeActivate:function(event,ui)
 		    {

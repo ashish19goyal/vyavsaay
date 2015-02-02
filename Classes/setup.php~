@@ -241,7 +241,7 @@ class master_setup
 	{
 		$this->conn=new db_connect(0);
 		$this->setup();
-		//$this->get_master_data();
+		$this->get_master_data();
 	}
 
 	public function __destruct()

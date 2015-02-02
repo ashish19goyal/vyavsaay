@@ -40,8 +40,6 @@
 	<staff>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(90)"></name>
-			<username index='yes' type="VARCHAR(50)" unique='yes'></username>
-			<password index='no' type="VARCHAR(200)"></password>
 			<status index='yes' type="VARCHAR(45)"></status><!-- active/retired/suspended -->
 			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
 			<email index='yes' type="VARCHAR(100)"></email>
@@ -59,9 +57,12 @@
 	</staff>
 	<accounts>
 			<id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
-			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
+			<username index='yes' type="VARCHAR(50)" unique='yes'></username>
+			<password index='no' type="VARCHAR(200)"></password>
+			<acc_name index='yes' type='VARCHAR(100)'></acc_name>
 			<description index='no' type='TEXT'></description>
 			<type index='yes' type='VARCHAR(20)'></type><!-- customer/staff/supplier/financial/master -->
+			<status index='yes' type="VARCHAR(45)"></status><!-- active/retired/suspended -->
 			<last_updated index='yes' type='BIGINT'></last_updated>
 	</accounts>
 	<attendance>

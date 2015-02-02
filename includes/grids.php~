@@ -1,7 +1,7 @@
 <div id='home_grid'>
 	<ul>
-		<li id="sale_bills_link" onclick="grid_click('sale_bills');">
-			<a><div data-i18n="function.sale_bills"></div></a>
+		<li>
+			<a id="sale_bills_link" onclick="grid_click('sale_bills');"><div data-i18n="function.sale_bills"></div></a>
 			<ul>
 				<li>Last Sale Bill Id: <a class='grid_item' id='grid_item_1'></a></li>
 				<li># Sale bills today: <a class='grid_item' id='grid_item_2'>0</a></li>

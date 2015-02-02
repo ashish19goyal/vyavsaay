@@ -3416,7 +3416,6 @@ function form50_ini()
  */
 function form51_ini()
 {
-	console.log('51_ini');
 	var header_fields=document.getElementById('form51_master');
 	header_fields.elements[2].value="";
 	header_fields.elements[3].value='';
@@ -3427,10 +3426,10 @@ function form51_ini()
 	if(fuser!="")
 	{
 		show_loader();
-		var user_name_columns="<staff>" +
+		var user_name_columns="<accounts>" +
 				"<id></id>" +
 				"<username exact='yes'>"+fuser+"</username>" +
-				"</staff>";
+				"</accounts>";
 		get_single_column_data(function(user_results)
 		{
 			if(user_results.length>0)
@@ -10766,6 +10765,117 @@ function form124_ini()
 	});
 };
 
+/**
+ * @form Customer Accounts
+ * @formNo 125
+ * @Loading light
+ */
+function form125_ini()
+{
+	show_loader();
+	var fid=$("#form125_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form125_header');
+	
+	var fcustomer=filter_fields.elements[0].value;
+	var fusername=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form125_index');
+	var prev_element=document.getElementById('form125_prev');
+	var next_element=document.getElementById('form125_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<accounts count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<acc_name>"+fcustomer+"</acc_name>" +
+			"<username>"+fusername+"</username>" +
+			"<status>"+fstatus+"</status>" +
+			"<type exact='yes'>customer</type>"+			
+			"</accounts>";
+
+	$('#form125_body').html("");
+
+	fetch_requested_data('form125',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form125_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form125_"+result.id+"'>"+result.acc_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Username'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form125_"+result.id+"' value='"+result.username+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Password'>";
+						rowsHTML+="<input type='password' readonly='readonly' class='dblclick_editable' form='form125_"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form125_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form125_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form125_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form125_"+result.id+"' title='Delete' onclick='form125_delete_item($(this));'>";	
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form125_body').append(rowsHTML);
+			var fields=document.getElementById("form125_"+result.id);
+			var status_filter=fields.elements[3];
+			set_static_value_list('accounts','status',status_filter);
+			
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form125_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[5];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'customer_accounts');
+		});
+		hide_loader();
+	});
+};
+
+
 
 /**
  * @form Issues List
@@ -11553,7 +11663,6 @@ function form131_ini()
 					$(due_filter).datetimepicker();
 				}
 			});
-		
 		
 			////indexing///
 			var next_index=parseInt(start_index)+25;

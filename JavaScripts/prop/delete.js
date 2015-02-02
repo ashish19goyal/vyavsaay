@@ -3743,6 +3743,48 @@ function form123_delete_item(button)
 }
 
 /**
+ * formNo 125
+ * form Customer Accounts
+ * @param button
+ */
+function form125_delete_item(button)
+{
+	if(is_delete_access('form125'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var customer=form.elements[0].value;
+		var username=form.elements[1].value;
+		var data_id=form.elements[4].value;
+		var data_xml="<accounts>" +
+					"<id>"+data_id+"</id>" +
+					"</accounts>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>accounts</tablename>" +
+					"<link_to>form125</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Account for "+username+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Issues List
  * @param button
  */

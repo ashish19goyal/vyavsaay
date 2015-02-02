@@ -1067,7 +1067,6 @@ function modal16_action()
 						"<phone>"+phone+"</phone>" +
 						"<email>"+email+"</email>" +
 						"<acc_name unique='yes'>"+acc_name+"</acc_name>" +
-						"<username unique='yes'>"+username+"</username>" +
 						"<address>"+address+"</address>" +
 						"<pincode>"+pincode+"</pincode>" +
 						"<city>"+city+"</city>" +
@@ -1088,6 +1087,7 @@ function modal16_action()
 			var account_xml="<accounts>" +
 						"<id>"+data_id+"</id>" +
 						"<description>account for staff "+name+"</description>" +
+						"<username unique='yes'>"+username+"</username>" +
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<type>staff</type>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
@@ -4621,9 +4621,63 @@ function modal47_action(service_date)
 	var by_filter=form.elements[3];
 	var to_filter=form.elements[4];
 	var problem_filter=form.elements[5];
+	var assignee_username_filter=form.elements[6];
 	id_filter.value=get_my_time();
+	by_filter.value=get_name();	
+	/////add logic to auto populate customer and assignee and assignee_username
+
+	var customers_list_data="<customers>"+
+									"<acc_name></acc_name>"+									
+									"</customers>";	
+	set_my_value_list(customers_list_data,customer_filter);
+	
+	var customer_data="<accounts count='1'>"+
+							"<acc_name></acc_name>"+
+							"<username>"+get_username()+"</username>"+
+							"</accounts>";	
+	set_my_value(customer_data,customer_filter);
+
+	var assignee_data="<accounts>"+
+							"<username></username>"+
+							"<acc_name></acc_name>"+							
+							"<status exact='yes'>active</status>"+							
+							"</accounts>";	
+	fetch_requested_data('',assignee_data,function(assignees)
+	{
+		var assignees_string='--';
+		for(var i in assignees)
+		{
+			assignees_string+=assignees[i].acc_name;
+		}
 		
-/////add login to auto populate customer and assignee		
+		var service_eng_data="<service_requests>"+
+									"<assignee></assignee>"+									
+									"<status exact='yes'>open</status>"+									
+									"</service_requests>";
+		get_single_column_data(function(service_engs)
+		{
+			for(var i in service_engs)
+			{
+				for(var j=0;j<assignees.length;j++)
+				{
+					if(assignees[j].acc_name==service_engs[i])
+					{
+						assignees.splice(j,1);
+						break;
+					}
+				}
+			}
+			if(assignees.length>0)
+			{
+				to_filter.value=assignees[0].acc_name;
+				assignee_username_filter.value=assignees[0].username;
+			}
+			else {
+				to_filter.value='Will be assigned shortly';
+				assignee_username_filter.value="";
+			}
+		},service_eng_data);
+	});
 		
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -4648,6 +4702,14 @@ function modal47_action(service_date)
 						"<status>open</status>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</service_requests>";
+			var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>service_requests</tablename>" +
+					"<link_to>form128</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Service request from customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
 			var access1_xml="<data_access>" +
 					"<id>"+get_new_key()+"</id>" +
 					"<tablename>service_requests</tablename>" +
@@ -4661,17 +4723,21 @@ function modal47_action(service_date)
 					"<tablename>service_requests</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
-					"<user>"+assignee+"</user>" +
+					"<user>"+assignee_username_filter.value+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
 					
 			if(is_online())
 			{
-				server_create_simple(data_xml);
+				server_create_row(data_xml,activity_xml);
+				server_create_simple(access1_xml);
+				server_create_simple(access2_xml);
 			}
 			else
 			{
-				local_create_simple(data_xml);
+				local_create_row(data_xml,activity_xml);
+				local_create_simple(access1_xml);
+				local_create_simple(access2_xml);
 			}	
 		}
 		else

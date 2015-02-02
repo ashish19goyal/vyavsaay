@@ -769,6 +769,6 @@ function form124_import_template()
 */
 function form125_import_template()
 {
-	var data_array=['id','username','acc_name','description','type','status'];
+	var data_array=['id','username','password','acc_name','description','type','status'];
 	my_array_to_csv(data_array);
 };

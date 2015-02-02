@@ -2110,12 +2110,11 @@ function form47_update_form()
 	var new_pass=form.elements[2].value;
 	var last_updated=get_my_time();
 	
-	var user_data="<staff count='1'>" +
+	var user_data="<accounts count='1'>" +
 			"<id></id>" +
 			"<username exact='yes'>"+username+"</username>" +
-			"<name></name>" +
 			"<password></password>" +
-			"</staff>";
+			"</accounts>";
 	fetch_requested_data('',user_data,function(results)
 	{
 		for(var i in results)
@@ -2131,14 +2130,11 @@ function form47_update_form()
 					var bcrypt = new bCrypt();
 					bcrypt.hashpw(new_pass, salt_22, function(newhash)
 					{
-						var data_xml="<staff>" +
+						var data_xml="<accounts>" +
 									"<id>"+results[i].id+"</id>" +
-									"<username unique='yes'>"+username+"</username>" +
 									"<password>"+newhash+"</password>" +
-									"<name>"+results[i].name+"</name>" +
-									"<status>active</status>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
-									"</staff>";
+									"</accounts>";
 						if(is_online())
 						{
 							server_update_simple(data_xml);
@@ -6295,6 +6291,71 @@ function form123_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * formNo 125
+ * form Customer Accounts
+ * @param button
+ */
+function form125_update_item(form)
+{
+	if(is_update_access('form125'))
+	{
+		var customer=form.elements[0].value;
+		var username=form.elements[1].value;
+		var password=form.elements[2].value;
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var domain=get_domain();
+		var salt='$2a$10$'+domain+'1234567891234567891234';
+		var salt_22=salt.substring(0, 29);
+		
+		var bcrypt = new bCrypt();
+		bcrypt.hashpw(password, salt_22, function(newhash)
+		{
+			var data_xml="<accounts>" +
+							"<id>"+data_id+"</id>" +
+							"<status>"+status+"</status>" +
+							"<password>"+newhash+"</password>"+					
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</accounts>";	
+			if(password=='null' || password=='undefined' || password=="")
+			{
+				data_xml="<accounts>" +
+							"<id>"+data_id+"</id>" +
+							"<status>"+status+"</status>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</accounts>";	
+			}			
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>accounts</tablename>" +
+						"<link_to>form125</link_to>" +
+						"<title>Updated</title>" +
+						"<notes>Account for username "+username+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_update_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_update_row(data_xml,activity_xml);
+			}	
+			for(var i=0;i<5;i++)
+			{
+				$(form.elements[i]).attr('readonly','readonly');
+			}
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 /**
  * formNo 128

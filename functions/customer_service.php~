@@ -13,9 +13,9 @@
 			if(strpos($_SESSION['forms'],'form130-')!==false)
 				echo "<li><a id='form130_link' href='#form130' onclick='form130_header_ini(); form130_ini();' data-i18n='form.job_orders'></a></li>";
 			if(strpos($_SESSION['forms'],'form131-')!==false)
-				echo "<li><a id='form131_link' href='#form131' onclick='form131_header_ini(); form131_ini();' data-i18n='form.tasks'></a></li>";
+				echo "<li><a id='form131_link' href='#form131' onclick='form131_header_ini(); form131_ini();' data-i18n='form.check_tasks'></a></li>";
 			if(strpos($_SESSION['forms'],'form132-')!==false)
-				echo "<li><a id='form132_link' href='#form132' onclick='form132_header_ini(); form132_ini();' data-i18n='form.create_service_request'></a></li>";			
+				echo "<li><a id='form132_link' href='#form132' onclick='form132_header_ini();' data-i18n='form.create_service_request'></a></li>";			
 		echo "</ul>";
 
 		if(strpos($_SESSION['forms'],'form125-')!==false)
@@ -42,6 +42,8 @@
 			activate:function(e, ui) 
 		    {
 		    	e.currentTarget.blur();
+		    	$('#form131_calendar').fullCalendar('render');
+		    	$('#form132_calendar').fullCalendar('render');
 		    },
 		    beforeActivate:function(event,ui)
 		    {

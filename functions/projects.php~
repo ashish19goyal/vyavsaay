@@ -31,7 +31,6 @@
 			activate:function(e, ui) 
 		    {
 		    	e.currentTarget.blur();
-		    	$('#form104_calendar').fullCalendar('render');
 		    },
 		    beforeActivate:function(event,ui)
 		    {

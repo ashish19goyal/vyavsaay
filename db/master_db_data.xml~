@@ -1570,14 +1570,6 @@
 		<row>
 			<tablename>accounts</tablename>
 			<listname>status</listname>
-			<name>suspended</name>
-			<value>Suspended</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>accounts</tablename>
-			<listname>status</listname>
 			<name>retired</name>
 			<value>Retired</value>
 			<status>active</status>

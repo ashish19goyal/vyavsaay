@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <re_xml>
+	<accounts>
+		<row>
+			<acc_name>master</acc_name>
+			<description>This account refers to the business</description>
+			<type>master</type>
+			<last_updated>1</last_updated>
+		</row>
+	</accounts>
 	<user_preferences>
 		<row>
 			<name>tin</name>

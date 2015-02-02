@@ -4093,8 +4093,9 @@ function form125_import(data_array,import_type)
 				"<username>"+row.username+"</username>" +
 				"<acc_name>"+row.acc_name+"</acc_name>" +
 				"<type>"+row.type+"</type>" +
-				"<description>"+row.description+"</description>" +
-				"<status>"+row.status+"</status>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<acc_name>"+row.acc_name+"</acc_name>" +
+				"<date>"+get_raw_time(row.date)+"</date>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});

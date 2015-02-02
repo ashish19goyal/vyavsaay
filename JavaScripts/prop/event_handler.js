@@ -23,7 +23,6 @@ function default_load()
 	if(is_set_session())
 	{
 		set_menu_shortcuts();
-		//setup_elements_display();
 		hide_unreadable_elements();
 		setup_grid_display();
 		date_formating();
@@ -62,8 +61,8 @@ function hide_progress()
 	clearInterval(progress_runner);
 	$("#progress_ind").hide();
 	$("#progress_bar").val(0);
-    $('#progress_value').html('0 %');
-    progress_value=0;
+   $('#progress_value').html('0 %');
+   progress_value=0;
 }
 
 function set_grid_items()
@@ -265,7 +264,7 @@ function setup_grid_display()
 		var hidden_function_main=$("#"+func+"_main").find('ul').find('li:hidden').length;
 		if(function_main===0 || function_main===hidden_function_main)
 		{
-			$("#"+func+"_link").parent().hide();
+			$("#"+func+"_link").hide();
 		}
 	});
 }
@@ -274,7 +273,7 @@ function hide_unreadable_elements()
 {
 	var forms_array=[];
 	var reports_array=[];
-	for (var i=1;i<110;i++)
+	for (var i=1;i<133;i++)
 	{
 		forms_array.push("form"+i);
 		reports_array.push("report"+i);
@@ -751,6 +750,8 @@ function import_data(form_name)
 		case 'form123':modal23_action(form123_import_template,form123_import);
 		break;
 		case 'form124':modal23_action(form124_import_template,form124_import);
+		break;
+		case 'form125':modal23_action(form125_import_template,form125_import);
 		break;
 	}
 }

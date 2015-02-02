@@ -8830,7 +8830,7 @@ function form125_create_item(form)
 						"<acc_name>"+customer+"</acc_name>" +
 						"<username unique='yes'>"+username+"</username>" +
 						"<status>"+status+"</status>" +
-						"<password>"+newhash+"</password>"+					
+						"<password>"+password+"</password>"+					
 						"<type>customer</type>"+					
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</accounts>";	

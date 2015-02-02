@@ -556,10 +556,11 @@
 		<form id='modal47_form'>
 			<fieldset>
 				<label>Request Id: <input type="text" readonly='readonly'></label><br>
-				<label>Customer: <input type='text' required></label><br>
-				<label>Reported By: <textarea required></textarea></label><br>
-				<label>Assigned To: <textarea required></textarea></label><br>
+				<label>Customer: <input type='text' readonly="readonly" required></label><br>
+				<label>Reported By: <textarea required readonly="readonly"></textarea></label><br>
+				<label>Assigned To: <textarea required readonly="readonly"></textarea></label><br>
 				<label>Problem Detail: <textarea required></textarea></label><br>
+				<input type="hidden">
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

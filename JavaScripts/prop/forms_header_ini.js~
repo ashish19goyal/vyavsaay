@@ -1183,9 +1183,9 @@ function form51_header_ini()
 	var users_filter=fields.elements[1];
 	var save_button=fields.elements[5];
 	
-	var username_data="<accounts>" +
+	var username_data="<staff>" +
 			"<username></username>" +
-			"</accounts>";
+			"</staff>";
 	set_my_value_list(username_data,users_filter);
 
 	$(fields).off('submit');

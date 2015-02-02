@@ -90,7 +90,6 @@
 			activate:function(e,ui) 
 		    {
 		    	e.currentTarget.blur();
-		    	$('#form89_calendar').fullCalendar('render');
 		    },
 		    beforeActivate:function(event,ui)
 		    {
