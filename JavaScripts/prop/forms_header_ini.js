@@ -4172,17 +4172,19 @@ function form132_header_ini()
 	        	var aggregate_tasks=[];
 				for(var i=0;i<tasks.length;i++)
 				{
-					aggregate_tasks[i].start_date=tasks[i].start_date;
-					aggregate_tasks[i].count=1;
+					var aggregate_task=new Object();
+					aggregate_task.start_time=tasks[i].start_time;
+					aggregate_task.count=1;
 					for(var k=i+1;k<tasks.length;k++)
 					{
 						if(tasks[i].start_time==tasks[k].start_time)
 						{
-							aggregate_tasks[i].count+=1;
+							aggregate_task.count+=1;
 							tasks.splice(k,1);
 							k-=1;
 						}
 					}
+					aggregate_tasks.push(aggregate_task);
 				}
 				
 				var staff_data="<attendance>"+
@@ -4200,14 +4202,15 @@ function form132_header_ini()
 	        			if(task.count>=staff_length)
 	        			{
 	        				color="ff0000";
-	        				title='No slots available on this day';
+	        				title='No slots available';
 	        			}
 		        		events.push({
 		        			title: title,
-		        			start:get_iso_time(task.start_date),
+		        			start:get_iso_time(task.start_time),
 		        			allDay:true,
 		        			color: color,
-		        			textColor:"#333"
+		        			textColor:"#333",
+		        			editable:false
 		        		});	        		
 		        	});
 		        	callback(events);

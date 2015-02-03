@@ -1090,6 +1090,7 @@ function modal16_action()
 						"<username unique='yes'>"+username+"</username>" +
 						"<acc_name unique='yes'>"+name+" ("+phone+")</acc_name>" +
 						"<type>staff</type>" +
+						"<status>active</status>"+						
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</accounts>";
 			if(is_online())
@@ -4624,8 +4625,7 @@ function modal47_action(service_date)
 	var assignee_username_filter=form.elements[6];
 	id_filter.value=get_my_time();
 	by_filter.value=get_name();	
-	/////add logic to auto populate customer and assignee and assignee_username
-
+	
 	var customers_list_data="<customers>"+
 									"<acc_name></acc_name>"+									
 									"</customers>";	
@@ -4633,9 +4633,17 @@ function modal47_action(service_date)
 	
 	var customer_data="<accounts count='1'>"+
 							"<acc_name></acc_name>"+
+							"<type exact='yes'>customer</type>"+							
 							"<username>"+get_username()+"</username>"+
 							"</accounts>";	
-	set_my_value(customer_data,customer_filter);
+	get_single_column_data(function(customer_names)
+	{
+		if(customer_names.length>0)
+		{
+			customer_filter.value=customer_names[0];
+			customer_filter.setAttribute('readonly','readonly');
+		}
+	},customer_data);
 
 	var assignee_data="<accounts>"+
 							"<username></username>"+
@@ -4672,21 +4680,40 @@ function modal47_action(service_date)
 			{
 				to_filter.value=assignees[0].acc_name;
 				assignee_username_filter.value=assignees[0].username;
+				to_filter.setAttribute('readonly','readonly');
 			}
 			else {
 				to_filter.value='Will be assigned shortly';
 				assignee_username_filter.value="";
+				
+				var assignee_data="<accounts>"+
+							"<acc_name></acc_name>"+							
+							"<status exact='yes'>active</status>"+							
+							"<type exact='yes'>staff</type>"+							
+							"</accounts>";	
+				set_my_value_list(assignee_data,to_filter);
+				$(to_filter).off('blur');
+				$(to_filter).on('blur',function(e)
+				{
+						var username_data="<accounts>"+
+							"<username></username>"+							
+							"<status exact='yes'>active</status>"+							
+							"<type exact='yes'>staff</type>"+							
+							"<acc_name exact='yes'>"+to_filter.value+"</acc_name>"+							
+							"</accounts>";
+						set_my_value(username_data,assignee_username_filter);
+				});
 			}
 		},service_eng_data);
 	});
-		
+			
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
 		if(is_create_access('form132'))
 		{
-			var request_id=id_filter.value;			
+			var data_id=id_filter.value;			
 			var customer=customer_filter.value;
 			var reported_by=by_filter.value;
 			var assignee=to_filter.value;

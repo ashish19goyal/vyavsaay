@@ -2127,6 +2127,7 @@ function form47_update_form()
 			{
 				if(currenthash.substring(3)===results[i].password.substring(3))
 				{
+					console.log(newhash);
 					var bcrypt = new bCrypt();
 					bcrypt.hashpw(new_pass, salt_22, function(newhash)
 					{
@@ -2443,15 +2444,15 @@ function form51_update_form()
 		var last_updated=get_my_time();
 		if(password=="")
 		{
-			var data_xml="<staff>" +
+			var data_xml="<accounts>" +
 						"<id>"+data_id+"</id>" +
 						"<username>"+username+"</username>" +
 						"<status>active</status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</staff>";
+						"</accounts>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>staff</tablename>" +
+						"<tablename>accounts</tablename>" +
 						"<link_to>form51</link_to>" +
 						"<title>Updated</title>" +
 						"<notes>Access for "+username+"</notes>" +
@@ -2476,16 +2477,16 @@ function form51_update_form()
 			var bcrypt = new bCrypt();
 			bcrypt.hashpw(password, salt_22, function(newhash)
 			{
-				var data_xml="<staff>" +
+				var data_xml="<accounts>" +
 							"<id>"+data_id+"</id>" +
 							"<username>"+username+"</username>" +
 							"<password>"+newhash+"</password>" +
 							"<status>active</status>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
-							"</staff>";
+							"</accounts>";
 				var activity_xml="<activity>" +
 							"<data_id>"+data_id+"</data_id>" +
-							"<tablename>staff</tablename>" +
+							"<tablename>accounts</tablename>" +
 							"<link_to>form51</link_to>" +
 							"<title>Updated</title>" +
 							"<notes>Access for "+username+"</notes>" +

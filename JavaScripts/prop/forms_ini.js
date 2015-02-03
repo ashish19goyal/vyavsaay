@@ -11026,7 +11026,7 @@ function form128_ini()
 			"<closing_notes></closing_notes>"+
 			"<start_time></start_time>"+
 			"<end_time></end_time>"+
-			"<status exact='yes'>"+fstatus+"</status>" +
+			"<status>"+fstatus+"</status>" +
 			"</service_requests>";
 
 	$('#form128_body').html("");
@@ -11043,9 +11043,9 @@ function form128_ini()
 				var access=false;
 				for(var x in accessible_data)
 				{
-					if(accessible_data[x].record_id===result.id || accessible_data[x].record_id=='all')
+					if(accessible_data[x].record_id==result.id || accessible_data[x].record_id=='all')
 					{
-						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || result[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
+						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field=='null' || result[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
 						{
 							if(accessible_data[x].access_type=='all')
 							{
@@ -11070,8 +11070,7 @@ function form128_ini()
 						}
 					}
 				}
-		
-
+				
 				if(read)
 				{
 					var rowsHTML="<tr>";
@@ -11083,18 +11082,18 @@ function form128_ini()
 							rowsHTML+="<textarea readonly='readonly' form='form128_"+result.id+"'>"+result.customer+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Detail'>";
-							rowsHTML+="<textarea readonly='readonly' form='form128_"+result.id+"'>"+result.detail+"</textarea>";
+							rowsHTML+="<textarea readonly='readonly' form='form128_"+result.id+"'>"+result.notes+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Assignee'>";
 							rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form128_"+result.id+"'>"+result.assignee+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Status'>";
-							rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form128_"+result.id+"' value='"+result.assignee+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form128_"+result.id+"' value='"+result.status+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form128_"+result.id+"' value='"+result.id+"'>";
 						if(update)
-							rowsHTML+="<input type='submit' class='submit_hidden' form='form128_"+id+"' id='save_form128_"+id+"'>";
+							rowsHTML+="<input type='submit' class='submit_hidden' form='form128_"+result.id+"' id='save_form128_"+result.id+"'>";
 						if(del)								
 							rowsHTML+="<input type='button' class='delete_icon' form='form128_"+result.id+"' title='Delete' onclick='form128_delete_item($(this));'>";
 						rowsHTML+="</td>";
