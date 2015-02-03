@@ -3611,9 +3611,9 @@ function form105_add_item()
 
 		set_static_value_list('data_access','access_type',type_filter);
 		
-		var user_data="<staff>" +
+		var user_data="<accounts>" +
 				"<username></username>" +
-				"</staff>";
+				"</accounts>";
 		set_my_value_list(user_data,user_filter);
 		
 		var field_data="<data_access>" +

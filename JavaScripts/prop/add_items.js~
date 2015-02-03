@@ -3611,9 +3611,9 @@ function form105_add_item()
 
 		set_static_value_list('data_access','access_type',type_filter);
 		
-		var user_data="<staff>" +
+		var user_data="<accounts>" +
 				"<username></username>" +
-				"</staff>";
+				"</accounts>";
 		set_my_value_list(user_data,user_filter);
 		
 		var field_data="<data_access>" +
@@ -4849,7 +4849,7 @@ function form125_add_item()
 		set_my_value_list(customer_data,customer_filter);
 		set_static_value_list('accounts','status',status_filter);
 
-		$(object_filter).focus();
+		$(customer_filter).focus();
 	}
 	else
 	{

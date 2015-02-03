@@ -1713,7 +1713,7 @@ function form72_header_ini()
 	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
-		form72_add_item();
+		form72_add_product();
 	});
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
@@ -3981,7 +3981,7 @@ function form130_header_ini()
 	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
-		form130_add_item();
+		form130_add_product();
 	});
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
