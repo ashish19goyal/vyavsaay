@@ -54,6 +54,11 @@ div.pricing_grid{
 	vertical-align: middle;
 }
 
+.banner-text {
+	text-align: right;
+	margin-top: -18em;
+	}
+
 img.review_picture_rotate{
 	-webkit-transform: rotate(-25deg); 
   	-moz-transform: rotate(-25deg);

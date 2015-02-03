@@ -115,11 +115,11 @@ body {
 	line-height: 15px;
 	font-family: 'ubuntu', 'Open Sans', serif;
 }
-
+/*
 img {
 	max-width: 80%;
 }
-
+*/
 div.search_bar{
 	color:#EDEDE4;
 	width:100%;
