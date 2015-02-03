@@ -29,7 +29,7 @@ $wgScriptPath = "/mediawiki";
 $wgScriptExtension = ".php";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://vyavsaay.com";
+$wgServer = "https://vyavsaay.com";
 
 ## The relative URL path to the skins directory
 $wgStylePath = "$wgScriptPath/skins";
@@ -98,11 +98,11 @@ $wgShellLocale = "en_US.utf8";
 # Site language code, should be one of the list in ./languages/Names.php
 $wgLanguageCode = "en";
 
-$wgSecretKey = "ed971df2afa76618579c99777e3faacf682e594179246a8b10206f65c7edb388";
+$wgSecretKey = "2de3820368b2609b670043b2a725fd2b4cc5e7d336034cbb0f329c56f2c082c9";
 
 # Site upgrade key. Must be set to a string (default provided) to turn on the
 # web installer while LocalSettings.php is in place
-$wgUpgradeKey = "70a0493726ee16ed";
+$wgUpgradeKey = "96dad2c713b8a11d";
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation
