@@ -3754,18 +3754,18 @@ function form125_delete_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var object=form.elements[0].value;
-		var attribute=form.elements[1].value;
-		var data_id=form.elements[3].value;
-		var data_xml="<mandatory_attributes>" +
+		var customer=form.elements[0].value;
+		var username=form.elements[1].value;
+		var data_id=form.elements[4].value;
+		var data_xml="<accounts>" +
 					"<id>"+data_id+"</id>" +
-					"</mandatory_attributes>";	
+					"</accounts>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>mandatory_attributes</tablename>" +
-					"<link_to>form123</link_to>" +
+					"<tablename>accounts</tablename>" +
+					"<link_to>form125</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Mandatory attribute "+attribute+" for "+object+"</notes>" +
+					"<notes>Account for "+username+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -3971,6 +3971,40 @@ function form131_delete_item(button)
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service documents
+ * @param button
+ */
+function form133_delete_item(button)
+{
+	if(is_delete_access('form133'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<documents>" +
+				"<id>"+data_id+"</id>"+				
+				"<doc_type>service request</doc_type>" +
+				"</documents>";
+
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
 		}	
 		$(button).parent().parent().remove();
 	}

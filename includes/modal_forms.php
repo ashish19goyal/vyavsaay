@@ -57,14 +57,26 @@
 			</fieldset>
 		</form>
 	</div>
+
+	<div id="modal9" title="Add document">
+		<form id='modal9_form'>
+			<fieldset>
+				<label>Request Id: <input type="text" required></label><br>
+				<label>Document Name: <input type="text"></label><br>
+				<label>File: <a id='modal9_url'>link</a>
+						<input type="file"></label><br>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
 	
 	<div id="modal10" title="Add new asset">
 		<form id='modal10_form'>
 			<fieldset>
-				<label>Name: <input type='text' required></label><br/>
-				<label>Type: <input type='text' required></label><br/>
-				<label>Description: <textarea></textarea></label><br/>
-				<label id='modal10_attributes'></label></br>
+				<label>Name: <input type='text' required></label><br>
+				<label>Type: <input type='text' required></label><br>
+				<label>Description: <textarea></textarea></label><br>
+				<label id='modal10_attributes'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -73,16 +85,16 @@
 	<div id="modal11" title="Add new customer">
 		<form id='modal11_form'>
 			<fieldset>
-				<label>Name: <input type='text' required></label><br/>
-				<label>Phone: <input type="tel"></label><br/>
-				<label>Email: <input type="email"></label><br/>
-				<label>Address: <textarea></textarea></label><br/>
-				<label>Pincode: <input type="number"></label><br/>
-				<label>City: <input type="text"></label><br/>
-				<label>State: <input type="text"></label><br/>
-				<label>Country: <input type="text"></label><br/>
-				<label>Notes: <textarea></textarea></label><br/>
-				<label id='modal11_attributes'></label></br>
+				<label>Name: <input type='text' required></label><br>
+				<label>Phone: <input type="tel"></label><br>
+				<label>Email: <input type="email"></label><br>
+				<label>Address: <textarea></textarea></label><br>
+				<label>Pincode: <input type="number"></label><br>
+				<label>City: <input type="text"></label><br>
+				<label>State: <input type="text"></label><br>
+				<label>Country: <input type="text"></label><br>
+				<label>Notes: <textarea></textarea></label><br>
+				<label id='modal11_attributes'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -93,7 +105,7 @@
 			<fieldset>
 				<label>Name: <input type='text' required></label><br/>
 				<label>Description: <textarea></textarea></label><br/>
-				<label id='modal12_attributes'></label></br>
+				<label id='modal12_attributes'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -111,7 +123,7 @@
 				<label>State: <input type="text"></label><br/>
 				<label>Country: <input type="text"></label><br/>
 				<label>Notes: <textarea></textarea></label><br/>
-				<label id='modal13_attributes'></label></br>
+				<label id='modal13_attributes'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -128,7 +140,7 @@
 				<label>Tax (%): <input type="number" step='any'></label><br/>
 				<label>Bar Code: <input type="text" required></label>
 				<label><input type='checkbox'>Auto generate</label><br/>
-				<label id='modal14_attributes'></label></br>
+				<label id='modal14_attributes'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -159,7 +171,7 @@
 				<label>City: <input type="text"></label><br/>
 				<label>State: <input type="text"></label><br/>
 				<label>Country: <input type="text"></label><br/>
-				<label id='modal16_attributes'></label></br>
+				<label id='modal16_attributes'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -184,7 +196,7 @@
 				<label>Name: <input type="text" required></label><br/>
 				<label>Description: <textarea></textarea></label><br/>
 				<label>Estimated Hours: <input type="number" step='any' required></label><br/>
-				<label id='modal18_attributes'></label></br>
+				<label id='modal18_attributes'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -213,7 +225,7 @@
 				<label>Description: <textarea></textarea></label><br/>
 				<label>Tax (%): <input type="number"></label><br/>
 				<label>Price: <input type="number"></label><br/>
-				<label id='modal20_attributes'></label></br>
+				<label id='modal20_attributes'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -251,11 +263,11 @@
 		<form id='modal23_form'>
 			<fieldset>
 				<input type="button" value='Download import template'><br/>
-				<b>Import pre-filled template</b></br>
-				<label><input type="radio" name='upload_option' value='new'>Create New Records</label></br>
-				<label><input type="radio" name='upload_option' value='existing' checked>Update existing Records</label></br>
-				<input type="file" value='Select file' accept=".csv"></br>
-				<output name='selected_file'></output></br>
+				<b>Import pre-filled template</b><br>
+				<label><input type="radio" name='upload_option' value='new'>Create New Records</label><br>
+				<label><input type="radio" name='upload_option' value='existing' checked>Update existing Records</label><br>
+				<input type="file" value='Select file' accept=".csv"><br>
+				<output name='selected_file'></output><br>
 				<input type="submit" value='Import'>
 			</fieldset>
 		</form>
@@ -396,7 +408,7 @@
 			<fieldset>
 				<label>Name: <input type='text' required></label><br/>
 				<label>Area Type: <input type="text" value='storage'></label><br/>
-				<label id='modal35_attributes'></label></br>
+				<label id='modal35_attributes'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -432,8 +444,7 @@
 		<form id='modal38_form'>
 			<fieldset>
 				<label>Default Sale Price: Rs. <input type="number" step='any' required></label><br/>
-				<label id='modal38_billings'></label>
-				</br>
+				<label id='modal38_billings'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -453,7 +464,7 @@
 				<label>EMI: Rs. <input type="number" step='any' min='0'></label><br/>
 				<label>EMI period(in days): <input type="number" min='0'></label><br/>
 				<label>Number of EMIs: <input type="number" min='0'></label><br/>
-				<label id='modal39_attributes'></label></br>
+				<label id='modal39_attributes'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -530,7 +541,7 @@
 				<label title='Cashback per earned point'>Cashback: Rs. <input type="number" step='any'></label><br/>
 				<label title='Reward product on fulfilment of tier criteria'>Reward Product: <input type="text"></label><br/>
 				<label>Status: <input type="text" requried></label><br/>
-				<label id='modal45_attributes'></label></br>
+				<label id='modal45_attributes'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -559,6 +570,8 @@
 				<label>Customer: <input type='text' required></label><br>
 				<label>Reported By: <textarea required readonly="readonly"></textarea></label><br>
 				<label>Assigned To: <input type='text' required></label><br>
+				<label>Problem Type: <input type='text'></label><br>
+				<label>Machine Type: <input type='text'></label><br>
 				<label>Problem Detail: <textarea required></textarea></label><br>
 				<input type="hidden">
 				<input type="submit" value='Save'>
@@ -610,3 +623,36 @@
 		</table>
 	</div>
 </div>
+
+	<div id="modal101" title="Update details">
+		<form id='modal101_form'>
+			<fieldset>
+				<label>Request Id: <input type='text' readonly="readonly"></label><br>
+				<label>Machine Type: <textarea></textarea></label><br>
+				<label>Problem Type: <input type='text' required></label><br>
+				<label>Problem Detail: <textarea required></textarea></label><br>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal102" title="Re-assign">
+		<form id='modal102_form'>
+			<fieldset>
+				<label>Request Id: <input type='text' readonly="readonly"></label><br>
+				<label>Assignee: <input type='text' required></label><br>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal103" title="Close service request">
+		<form id='modal103_form'>
+			<fieldset>
+				<label>Request Id: <input type='text' readonly="readonly"></label><br>
+				<label>Closing notes: <textarea required></textarea></label><br>
+				<label>Status: <input type='text' required></label><br>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>

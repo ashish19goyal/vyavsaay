@@ -6357,55 +6357,6 @@ function form125_update_item(form)
 	}
 }
 
-
-/**
- * formNo 128
- * form Manage Service Requests
- * @param button
- */
-function form128_update_item(form)
-{
-	if(is_update_access('form128'))
-	{
-		var data_id=form.elements[0].value;
-		var customer=form.elements[1].value;
-		var assignee=form.elements[3].value;
-		var status=form.elements[4].value;
-		var last_updated=get_my_time();
-		var data_xml="<service_requests>" +
-					"<id>"+data_id+"</id>" +
-					"<assignee>"+assignee+"</assignee>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</service_requests>";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>service_requests</tablename>" +
-					"<link_to>form128</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Service request id "+data_id+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<3;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-
 /**
  * @form Job Order
  * @param button

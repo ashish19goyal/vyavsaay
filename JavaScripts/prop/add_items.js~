@@ -5321,3 +5321,75 @@ function form130_add_service()
 	}
 }
 
+/**
+ * @form Service Documents
+ * @formNo 133
+ */
+function form133_add_item()
+{
+	if(is_create_access('form133'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form133_"+id+"'></form>";
+			rowsHTML+="<td data-th='Request Id'>";
+				rowsHTML+="<input type='text' form='form133_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' form='form133_"+id+"' required readonly='readonly'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Document Name'>";
+				rowsHTML+="<input type='text' form='form133_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='File'>";
+				rowsHTML+="<output form='form133_"+id+"'></output>";
+				rowsHTML+="<input type='file' form='form133_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form133_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form133_"+id+"' title='Save'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form133_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form133_body').prepend(rowsHTML);
+		var fields=document.getElementById("form133_"+id);
+		var id_filter=fields.elements[0];
+		var customer_filter=fields.elements[1];
+		var picture_filter=fields.elements[4];
+		var fpictureinfo=fields.elements[3];
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form133_create_item(fields);
+		});
+		
+		picture_filter.addEventListener('change',function(evt)
+		{
+			select_picture(evt,fpictureinfo,function(dataURL)
+			{
+				fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
+			});
+		},false);
+				
+		var id_data="<service_requests>" +
+				"<id></id>" +
+				"</service_requests>";
+		set_my_value_list(id_data,id_filter);
+		
+		$(id_filter).on('blur',function(event)
+		{
+			var customer_data="<service_requests>" +
+				"<customer></customer>" +
+				"<id exact='yes'>"+id_filter.value+"</id>"+
+				"</service_requests>";		
+			set_my_value(customer_data,customer_filter);
+		});
+		
+		$(id_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

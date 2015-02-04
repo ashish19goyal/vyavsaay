@@ -2452,7 +2452,7 @@ function form51_update_form()
 						"</accounts>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>staff</tablename>" +
+						"<tablename>accounts</tablename>" +
 						"<link_to>form51</link_to>" +
 						"<title>Updated</title>" +
 						"<notes>Access for "+username+"</notes>" +
@@ -2477,16 +2477,16 @@ function form51_update_form()
 			var bcrypt = new bCrypt();
 			bcrypt.hashpw(password, salt_22, function(newhash)
 			{
-				var data_xml="<staff>" +
+				var data_xml="<accounts>" +
 							"<id>"+data_id+"</id>" +
 							"<username>"+username+"</username>" +
 							"<password>"+newhash+"</password>" +
 							"<status>active</status>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
-							"</staff>";
+							"</accounts>";
 				var activity_xml="<activity>" +
 							"<data_id>"+data_id+"</data_id>" +
-							"<tablename>staff</tablename>" +
+							"<tablename>accounts</tablename>" +
 							"<link_to>form51</link_to>" +
 							"<title>Updated</title>" +
 							"<notes>Access for "+username+"</notes>" +

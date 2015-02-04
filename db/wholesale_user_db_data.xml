@@ -706,6 +706,26 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report56</name>
+			<display_name>service_requests_report</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report57</name>
+			<display_name>warranty_status</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -1816,6 +1836,17 @@
 			<tables>--service_requests--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form133</name>
+			<display_name>service_documents</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--service_requests--documents--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -2251,6 +2282,28 @@
 			<username>master</username>
 			<element_id>report55</element_id>
 			<element_name>worst_days_by_sales</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report56</element_id>
+			<element_name>service_requests_report</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report57</element_id>
+			<element_name>warranty_status</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3362,6 +3415,17 @@
 			<username>master</username>
 			<element_id>form132</element_id>
 			<element_name>create_service_request</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form133</element_id>
+			<element_name>service_documents</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

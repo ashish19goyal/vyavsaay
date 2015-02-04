@@ -14,6 +14,12 @@
 				echo "<li><a id='form131_link' href='#form131' onclick='form131_header_ini(); form131_ini();' data-i18n='form.check_tasks'></a></li>";
 			if(strpos($_SESSION['forms'],'form132-')!==false)
 				echo "<li><a id='form132_link' href='#form132' onclick='form132_header_ini();' data-i18n='form.create_service_request'></a></li>";			
+			if(strpos($_SESSION['forms'],'form133-')!==false)
+				echo "<li><a id='form133_link' href='#form133' onclick='form133_header_ini(); form133_ini();' data-i18n='form.service_documents'></a></li>";			
+			if(strpos($_SESSION['reports'],'report56-')!==false)
+				echo "<li><a id='report56_link' href='#report56' onclick='report56_header_ini();' data-i18n='form.service_requests_report'></a></li>";			
+			if(strpos($_SESSION['reports'],'report57-')!==false)
+				echo "<li><a id='report57_link' href='#report57' onclick='report57_header_ini();' data-i18n='form.warranty_status'></a></li>";			
 		echo "</ul>";
 
 		if(strpos($_SESSION['forms'],'form126-')!==false)	
@@ -28,6 +34,12 @@
 			include "forms/form131.php";
 		if(strpos($_SESSION['forms'],'form132-')!==false)
 			include "forms/form132.php";
+		if(strpos($_SESSION['forms'],'form133-')!==false)
+			include "forms/form133.php";
+		if(strpos($_SESSION['reports'],'report56-')!==false)
+			include "reports/report56.php";
+		if(strpos($_SESSION['reports'],'report57-')!==false)
+			include "reports/report57.php";
 	?>		
 	
 	<script>

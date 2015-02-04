@@ -1713,7 +1713,7 @@ function form72_header_ini()
 	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
-		form72_add_item();
+		form72_add_product();
 	});
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
@@ -4221,4 +4221,29 @@ function form132_header_ini()
 	    	modal47_action(get_my_date_from_iso(date.format()));
 	    }
 	});	
+};
+
+/**
+ * @form Service documents
+ * @formNo 133
+ */
+function form133_header_ini()
+{
+	var filter_fields=document.getElementById('form133_header');
+	var id_filter=filter_fields.elements[0];
+	var customer_filter=filter_fields.elements[1];
+	var doc_name_filter=filter_fields.elements[2];
+	
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form133_ini();
+	});
+
+	set_my_filter(customer_data,customer_filter);
 };

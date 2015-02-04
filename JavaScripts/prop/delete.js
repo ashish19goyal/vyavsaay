@@ -927,7 +927,7 @@ function form39_delete_item(button)
 				"<product_name>"+name+"</product_name>" +
 				"</product_instances>";
 		var other_delete2="<documents>" +
-				"<doc_type>product</doc_type>" +
+				"<doc_type>product_master</doc_type>" +
 				"<target_id>"+data_id+"</target_id>" +
 				"</documents>";
 		var other_delete3="<pre_requisites>" +
@@ -3971,6 +3971,40 @@ function form131_delete_item(button)
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service documents
+ * @param button
+ */
+function form133_delete_item(button)
+{
+	if(is_delete_access('form133'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<documents>" +
+				"<id>"+data_id+"</id>"+				
+				"<doc_type>service request</doc_type>" +
+				"</documents>";
+
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
 		}	
 		$(button).parent().parent().remove();
 	}

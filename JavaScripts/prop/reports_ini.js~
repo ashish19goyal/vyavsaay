@@ -3661,7 +3661,7 @@ function report56_ini()
 			"<notes>"+problem+"</notes>"+
 			"<closing_notes></closing_notes>"+
 			"<reported_time lowerbound='yes'>"+get_raw_time(start_date)+"</reported_time>" +
-			"<reported_time upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</reported_time>" +
+			"<reported_time upperbound='yes'>"+get_raw_time(end_date)+"</reported_time>" +
 			"</service_requests>";
 	
 	fetch_requested_data('report56',request_data,function(requests)

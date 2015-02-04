@@ -4222,3 +4222,27 @@ function form132_header_ini()
 	    }
 	});	
 };
+
+/**
+ * @form Service documents
+ * @formNo 133
+ */
+function form133_header_ini()
+{
+	var filter_fields=document.getElementById('form133_header');
+	var id_filter=filter_fields.elements[0];
+	var customer_filter=filter_fields.elements[1];
+	
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form133_ini();
+	});
+
+	set_my_filter(customer_data,customer_filter);
+};

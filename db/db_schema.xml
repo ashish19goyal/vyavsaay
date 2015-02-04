@@ -75,8 +75,9 @@
 	</attendance>
 	<documents>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<url index='no' type="TEXT"></url>
-			<doc_type index='yes' type="VARCHAR(50)"></doc_type><!-- service/service instance/staff/product/product instance/asset -->
+			<url index='no' type="MEDIUMBLOB"></url>
+			<doc_name index='no' type="TEXT"></doc_name>
+			<doc_type index='yes' type="VARCHAR(50)"></doc_type><!-- service/service instance/staff/product_master/product instance/asset/service request -->
 			<target_id index='yes' type="BIGINT"></target_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</documents>
@@ -743,7 +744,10 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer index='yes' type="VARCHAR(100)"></customer>
 			<assignee index='yes' type="VARCHAR(100)"></assignee>
+			<reported_by index='yes' type="VARCHAR(100)"></reported_by>
 			<notes index='no' type="TEXT"></notes>
+			<problem_type index='yes' type="TEXT"></problem_type>
+			<machine_type index='yes' type="TEXT"></machine_type>
 			<closing_notes index='no' type="TEXT"></closing_notes>
 			<reported_time index='yes' type="BIGINT"></reported_time>
 			<start_time index='yes' type="BIGINT"></start_time>
@@ -751,4 +755,11 @@
 			<status index='yes' type='VARCHAR(25)'></status><!-- open/closed/cancelled -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</service_requests>
+	<warranty>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<customer index='yes' type="VARCHAR(100)"></customer>
+			<end_time index='yes' type="BIGINT"></end_time>
+			<status index='yes' type='VARCHAR(25)'></status><!-- in warranty/out of warranty/amc with parts/amc without parts -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</warranty>
 </re_xml>

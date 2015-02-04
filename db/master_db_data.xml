@@ -88,6 +88,38 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>warranty</tablename>
+			<listname>status</listname>
+			<name>In warranty</name>
+			<value>In warranty</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>warranty</tablename>
+			<listname>status</listname>
+			<name>Out of warranty</name>
+			<value>Out of warranty</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>warranty</tablename>
+			<listname>status</listname>
+			<name>amc with parts</name>
+			<value>AMC with parts</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>warranty</tablename>
+			<listname>status</listname>
+			<name>amc without parts</name>
+			<value>AMC without parts</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>issues</tablename>
 			<listname>status</listname>
 			<name>active</name>
@@ -1420,6 +1452,14 @@
 			<listname>doc_type</listname>
 			<name>asset</name>
 			<value>Asset</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>documents</tablename>
+			<listname>doc_type</listname>
+			<name>service request</name>
+			<value>Service request</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

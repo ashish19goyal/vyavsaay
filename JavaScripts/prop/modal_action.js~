@@ -293,6 +293,76 @@ function modal8_action()
 }
 
 /**
+ * @modalNo 9
+ * @modal Add document
+ * @param button
+ */
+function modal9_action()
+{
+	var form=document.getElementById('modal9_form');
+	
+	var fid=form.elements[1];
+	var fname=form.elements[2];
+	var docInfo=document.getElementById('modal9_url');
+	var fpicture=form.elements[3];
+		
+	var id_data="<service_requests>" +
+		"<id></id>" +
+		"</service_requests>";
+	set_my_value_list(id_data,fid);
+	
+	fpicture.addEventListener('change',function(evt)
+	{
+		select_document(evt,function(dataURL)
+		{
+			docInfo.setAttribute('href',dataURL);
+		});
+	},false);
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form39'))
+		{
+			var target_id=fid.value;
+			var doc_name=fname.value;
+			var data_id=get_my_time();
+			var url=$(docInfo).attr('href');
+			var last_updated=data_id;
+
+			if(url!="")
+			{
+				var pic_xml="<documents>" +
+							"<id>"+data_id+"</id>" +
+							"<url>"+url+"</url>" +
+							"<doc_type>service request</doc_type>" +
+							"<doc_name>"+doc_name+"</doc_name>"+						
+							"<target_id>"+target_id+"</target_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</documents>";
+				if(is_online())
+				{
+					server_create_simple(pic_xml);
+				}
+				else
+				{
+					local_create_simple(pic_xml);
+				}	
+			}
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal9").dialog("close");
+	});
+	
+	$("#modal9").dialog("open");
+}
+
+
+/**
  * @modalNo 10
  * @modal Add new asset
  * @param button
@@ -4610,8 +4680,10 @@ function modal47_action(service_date)
 	var customer_filter=form.elements[2];
 	var by_filter=form.elements[3];
 	var to_filter=form.elements[4];
-	var problem_filter=form.elements[5];
-	var assignee_username_filter=form.elements[6];
+	var problem_type_filter=form.elements[5];
+	var machine_type_filter=form.elements[6];
+	var problem_filter=form.elements[7];
+	var assignee_username_filter=form.elements[8];
 	id_filter.value=get_my_time();
 	by_filter.value=get_name();	
 	
@@ -4619,6 +4691,16 @@ function modal47_action(service_date)
 									"<acc_name></acc_name>"+									
 									"</customers>";	
 	set_my_value_list(customers_list_data,customer_filter);
+	
+	var problem_type_data="<service_requests>"+
+								"<problem_type></problem_type>"+								
+								"</service_requests>";	
+	set_my_filter(problem_type_data,problem_type_filter);
+	
+	var machine_type_data="<service_requests>"+
+								"<machine_type></machine_type>"+								
+								"</service_requests>";	
+	set_my_filter(machine_type_data,machine_type_filter);
 	
 	var customer_data="<accounts count='1'>"+
 							"<acc_name></acc_name>"+
@@ -4642,12 +4724,6 @@ function modal47_action(service_date)
 							"</accounts>";	
 	fetch_requested_data('',assignee_data,function(assignees)
 	{
-		var assignees_string='--';
-		for(var i in assignees)
-		{
-			assignees_string+=assignees[i].acc_name;
-		}
-		
 		var service_eng_data="<service_requests>"+
 									"<assignee></assignee>"+									
 									"<status exact='yes'>open</status>"+									
@@ -4707,12 +4783,17 @@ function modal47_action(service_date)
 			var reported_by=by_filter.value;
 			var assignee=to_filter.value;
 			var problem=problem_filter.value;
+			var problem_type=problem_type_filter.value;
+			var machine_type=machine_type_filter.value;
 			var last_updated=get_my_time();
 			var data_xml="<service_requests>" +
 						"<id>"+data_id+"</id>" +
 						"<customer>"+customer+"</customer>" +
 						"<assignee>"+assignee+"</assignee>" +
 						"<notes>"+problem+"</notes>" +
+						"<problem_type>"+problem_type+"</problem_type>" +
+						"<machine_type>"+machine_type+"</machine_type>" +
+						"<reported_by>"+reported_by+"</reported_by>" +
 						"<reported_time>"+last_updated+"</reported_time>" +
 						"<start_time>"+get_raw_time(service_date)+"</start_time>" +
 						"<end_time>"+(get_raw_time(service_date)+86400000)+"</end_time>" +
@@ -5129,4 +5210,73 @@ function modal54_action(item_name)
 	////////////////////////////////////////////////
 		
 	$("#modal54").dialog("open");
+}
+
+/**
+ * @modalNo 101
+ * @modal Update service request details
+ * @param button
+ */
+function modal101_action(request_id)
+{
+	var form=document.getElementById('modal101_form');
+	
+	var request_id=form.elements[1];
+	var machine_filter=form.elements[2];
+	var problem_type_filter=form.elements[3];
+	var problem_filter=form.elements[4];
+		
+	var id_data="<service_requests>" +
+		"<id></id>" +
+		"</service_requests>";
+	set_my_value_list(id_data,fid);
+	
+	fpicture.addEventListener('change',function(evt)
+	{
+		select_document(evt,function(dataURL)
+		{
+			docInfo.setAttribute('href',dataURL);
+		});
+	},false);
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form39'))
+		{
+			var target_id=fid.value;
+			var doc_name=fname.value;
+			var data_id=get_my_time();
+			var url=$(docInfo).attr('href');
+			var last_updated=data_id;
+
+			if(url!="")
+			{
+				var pic_xml="<documents>" +
+							"<id>"+data_id+"</id>" +
+							"<url>"+url+"</url>" +
+							"<doc_type>service request</doc_type>" +
+							"<doc_name>"+doc_name+"</doc_name>"+						
+							"<target_id>"+target_id+"</target_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</documents>";
+				if(is_online())
+				{
+					server_create_simple(pic_xml);
+				}
+				else
+				{
+					local_create_simple(pic_xml);
+				}	
+			}
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal9").dialog("close");
+	});
+	
+	$("#modal9").dialog("open");
 }
