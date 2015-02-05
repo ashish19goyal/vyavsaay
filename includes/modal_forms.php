@@ -622,7 +622,6 @@
 		<table id='modal54_table'>
 		</table>
 	</div>
-</div>
 
 	<div id="modal101" title="Update details">
 		<form id='modal101_form'>
@@ -656,3 +655,5 @@
 			</fieldset>
 		</form>
 	</div>
+	
+</div>
