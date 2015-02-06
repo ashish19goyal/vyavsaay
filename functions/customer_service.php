@@ -52,6 +52,7 @@
 		    	e.currentTarget.blur();
 		    	$('#form131_calendar').fullCalendar('render');
 		    	$('#form132_calendar').fullCalendar('render');
+		    	map129.invalidateSize(false);
 		    },
 		    beforeActivate:function(event,ui)
 		    {

@@ -6154,8 +6154,8 @@ function form81_ini()
 					rowsHTML+="<td data-th='Due Date'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form81_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.due_date)+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Indetified By'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form81_"+result.id+"' value='"+result.identified_by+"'>";
+					rowsHTML+="<td data-th='Identified By'>";
+						rowsHTML+="<textarea readonly='readonly' form='form81_"+result.id+"'>"+result.identified_by+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form81_"+result.id+"' value='"+result.id+"'>";

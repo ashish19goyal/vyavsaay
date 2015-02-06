@@ -149,11 +149,11 @@ function set_session_variables(domain,username,pass)
 						var acc_table='staff';
 						if(data.acc_type=='customer')
 						{
-							acc_table='customer';
+							acc_table='customers';
 						}
-						else if(data.acc_type=='suppler')
+						else if(data.acc_type=='supplier')
 						{
-							acc_table='supplier';
+							acc_table='suppliers';
 						}
 
 						var keyV=IDBKeyRange.bound([data.acc_name,'0'],[data.acc_name,'99999999']);
@@ -162,7 +162,7 @@ function set_session_variables(domain,username,pass)
 							var result21=e.target.result;
 							if(result21)
 							{
-								data.name=result2.value.name;
+								data.name=result21.value.name;
 							}
 							
 							var re='';

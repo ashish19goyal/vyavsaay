@@ -34,6 +34,8 @@
 			include "forms/form131.php";
 		if(strpos($_SESSION['forms'],'form132-')!==false)
 			include "forms/form132.php";
+		if(strpos($_SESSION['forms'],'form133-')!==false)
+			include "forms/form133.php";
 		if(strpos($_SESSION['reports'],'report56-')!==false)
 			include "reports/report56.php";
 		if(strpos($_SESSION['reports'],'report57-')!==false)
