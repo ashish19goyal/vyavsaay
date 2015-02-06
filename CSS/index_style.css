@@ -116,6 +116,10 @@ img.review_picture_rotate{
 	margin:5px auto;
 	height:65px;
 }
+
+#share_box .button img {
+	width:80%;
+}
 /*-----end-------*/
 
 /*----login box----*/
