@@ -45,6 +45,7 @@ function default_load()
 		});
 		//document.getElementById('master_title').innerHTML=get_session_var('title');		
 	}
+
 	hide_loader();
 }
 

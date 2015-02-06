@@ -5225,58 +5225,152 @@ function modal101_action(request_id)
 	var machine_filter=form.elements[2];
 	var problem_type_filter=form.elements[3];
 	var problem_filter=form.elements[4];
-		
-	var id_data="<service_requests>" +
-		"<id></id>" +
-		"</service_requests>";
-	set_my_value_list(id_data,fid);
-	
-	fpicture.addEventListener('change',function(evt)
+
+	var request_data="<service_requests count='1'>"+
+						"<id>"+request_id+"</id>"+						
+						"<machine_type></machine_type>"+
+						"<problem_type></problem_type>"+
+						"<notes></notes>"+
+						"</service_requests>";	
+	fetch_requested_data('',request_data,function(requests)
 	{
-		select_document(evt,function(dataURL)
+		if(requests.length>0)
 		{
-			docInfo.setAttribute('href',dataURL);
-		});
-	},false);
-	
+			machine_filter.value=requests[0].machine_type;
+			problem_type_filter.value=requests[0].problem_type;
+			problem_filter.value=requests[0].notes;
+		}
+	});
+		
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form39'))
-		{
-			var target_id=fid.value;
-			var doc_name=fname.value;
-			var data_id=get_my_time();
-			var url=$(docInfo).attr('href');
-			var last_updated=data_id;
+		var machine=machine_filter.value;
+		var problem_type=problem_type_filter.value;
+		var problem=problem_filter.value;
+		var last_updated=get_my_time();
 
-			if(url!="")
-			{
-				var pic_xml="<documents>" +
-							"<id>"+data_id+"</id>" +
-							"<url>"+url+"</url>" +
-							"<doc_type>service request</doc_type>" +
-							"<doc_name>"+doc_name+"</doc_name>"+						
-							"<target_id>"+target_id+"</target_id>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</documents>";
-				if(is_online())
-				{
-					server_create_simple(pic_xml);
-				}
-				else
-				{
-					local_create_simple(pic_xml);
-				}	
-			}
+		var request_xml="<service_requests>" +
+					"<id>"+request_id+"</id>" +
+					"<machine_type>"+machine+"</machine_type>" +
+					"<problem_type>"+problem_type+"</problem_type>" +
+					"<notes>"+problem+"</notes>"+						
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</service_requests>";
+		if(is_online())
+		{
+			server_update_simple(request_xml);
 		}
 		else
 		{
-			$("#modal2").dialog("open");
-		}
-		$("#modal9").dialog("close");
+			local_update_simple(request_xml);
+		}	
+		
+		$("#modal101").dialog("close");
 	});
 	
-	$("#modal9").dialog("open");
+	$("#modal101").dialog("open");
+}
+
+/**
+ * @modalNo 102
+ * @modal re-assign service request
+ * @param button
+ */
+function modal102_action(request_id)
+{
+	var form=document.getElementById('modal102_form');
+	
+	var request_id=form.elements[1];
+	var assignee_filter=form.elements[2];
+
+	var request_data="<service_requests count='1'>"+
+						"<assignee></assignee>"+						
+						"<id>"+request_id+"</id>"+						
+						"</service_requests>";
+	set_my_value(request_data,assignee_filter);	
+		
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		var assignee=assignee_filter.value;
+		var last_updated=get_my_time();
+
+		var request_xml="<service_requests>" +
+					"<id>"+request_id+"</id>" +
+					"<assignee>"+assignee+"</assignee>"+						
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</service_requests>";
+		if(is_online())
+		{
+			server_update_simple(request_xml);
+		}
+		else
+		{
+			local_update_simple(request_xml);
+		}	
+		
+		$("#modal102").dialog("close");
+	});
+	
+	$("#modal102").dialog("open");
+}
+
+/**
+ * @modalNo 103
+ * @modal close service request
+ * @param button
+ */
+function modal103_action(request_id)
+{
+	var form=document.getElementById('modal103_form');
+	
+	var request_id=form.elements[1];
+	var closing_filter=form.elements[2];
+	var status_filter=form.elements[2];
+
+	set_static_value_list('service_requests','status',status_filter);
+	var request_data="<service_requests count='1'>"+
+						"<id>"+request_id+"</id>"+						
+						"<closing_notes></closing_notes>"+
+						"<status></status>"+						
+						"</service_requests>";
+	fetch_requested_data('',request_data,function(requests)
+	{
+		if(requests.length>0)
+		{
+			closing_filter.value=requests[0].closing_notes;
+			status_filter.value=requests[0].status;
+		}
+	});
+		
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		var closing_notes=closing_filter.value;
+		var status=status_filter.value;
+		var last_updated=get_my_time();
+
+		var request_xml="<service_requests>" +
+					"<id>"+request_id+"</id>" +
+					"<closing_notes>"+closing_notes+"</closing_notes>"+
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</service_requests>";
+		if(is_online())
+		{
+			server_update_simple(request_xml);
+		}
+		else
+		{
+			local_update_simple(request_xml);
+		}	
+		
+		$("#modal103").dialog("close");
+	});
+	
+	$("#modal103").dialog("open");
 }

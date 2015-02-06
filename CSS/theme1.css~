@@ -748,9 +748,11 @@ tbody tr:hover{
 }
 
 .activity_header{
-	background-color: #2A2A2A;
+	background-color:#2A2A2A;
 	color: #EBE5DC;
-	font-size:.8em;
+	font-size:1em;
+	height: 20px;
+	cursor: pointer;
 }
 
 .activity_detail{
@@ -777,7 +779,7 @@ tbody tr:hover{
 	color:#F5F3EE;
 	padding: 1% 5% 1% 5%;
 	float:left;
-	width:100%;
+	width:90%;
 }
 
 .all_activity_log{
@@ -790,7 +792,11 @@ tbody tr:hover{
 	color:#F5F3EE;
 	padding: 1% 5% 1% 5%;
 	float:left;
-	width:100%;
+	width:90%;
+}
+
+.notification_detail a{
+	cursor: pointer;
 }
 
 .notification_detail input{
@@ -951,8 +957,7 @@ canvas{
 	}
 	.icon{
 		border-radius: 2px;
-		width: 40px;
-		height: 40px;
+		width: 100%;
 	}
 	#content_box{
 		width: auto;

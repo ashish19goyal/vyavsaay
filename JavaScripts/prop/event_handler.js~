@@ -19,7 +19,7 @@ function default_load()
 	count_notif_timer=0;
 	show_notif_timer=0;
 	progress_value=0;
-
+/*
 	if(is_set_session())
 	{
 		set_menu_shortcuts();
@@ -45,6 +45,7 @@ function default_load()
 		});
 		//document.getElementById('master_title').innerHTML=get_session_var('title');		
 	}
+*/
 	hide_loader();
 }
 
@@ -273,7 +274,7 @@ function hide_unreadable_elements()
 {
 	var forms_array=[];
 	var reports_array=[];
-	for (var i=1;i<130;i++)
+	for (var i=1;i<133;i++)
 	{
 		forms_array.push("form"+i);
 		reports_array.push("report"+i);
