@@ -272,7 +272,7 @@ function form8_update_item(form)
 		{
 			local_update_row(data_xml,activity_xml);
 		}	
-		for(var i=0;i<7;i++)
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
