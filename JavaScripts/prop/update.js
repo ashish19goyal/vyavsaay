@@ -232,21 +232,14 @@ function form8_update_item(form)
 		var name=form.elements[0].value;
 		var phone=form.elements[1].value;
 		var email=form.elements[2].value;
-		var status=form.elements[5].value;
-		var data_id=form.elements[6].value;
-		var address=form.elements[9].value;
-		var pincode=form.elements[10].value;
-		var city=form.elements[11].value;
-		var state=form.elements[12].value;
-		var country=form.elements[13].value;
-		var add_status=form.elements[14].value;
-		var joining_date=form.elements[15].value;
-		var qual=form.elements[16].value;
-		var skills=form.elements[17].value;
-		var fixed_comp=form.elements[18].value;
-		var var_comp=form.elements[19].value;
-		var pto=form.elements[20].value;
-		var hours=form.elements[21].value;
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var address=form.elements[8].value;
+		var pincode=form.elements[9].value;
+		var city=form.elements[10].value;
+		var state=form.elements[11].value;
+		var country=form.elements[12].value;
+		var add_status=form.elements[13].value;
 		var last_updated=get_my_time();
 		var data_xml="<staff>" +
 					"<id>"+data_id+"</id>" +
@@ -255,13 +248,6 @@ function form8_update_item(form)
 					"<email>"+email+"</email>" +
 					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<status>"+status+"</status>" +
-					"<joining_date>"+joining_date+"</joining_date>" +
-					"<qualification>"+qual+"</qualification>" +
-					"<skills>"+skills+"</skills>" +
-					"<monthly_hours>"+hours+"</monthly_hours>" +
-					"<fixed_comp>"+fixed_comp+"</fixed_comp>" +
-					"<variable_comp_rate>"+var_comp+"</variable_comp_rate>" +
-					"<allowed_pto>"+pto+"</allowed_pto>" +
 					"<address>"+address+"</address>" +
 					"<pincode>"+pincode+"</pincode>" +
 					"<city>"+city+"</city>" +
@@ -278,21 +264,13 @@ function form8_update_item(form)
 					"<notes>Staff profile of "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var account_xml="<accounts>" +
-					"<id>"+data_id+"</id>" +
-					"<acc_name>"+name+" ("+phone+")</acc_name>" +
-					"<type>staff</type>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</accounts>";
 		if(is_online())
 		{
 			server_update_row(data_xml,activity_xml);
-			server_update_simple(account_xml);
 		}
 		else
 		{
 			local_update_row(data_xml,activity_xml);
-			server_update_simple(account_xml);
 		}	
 		for(var i=0;i<7;i++)
 		{

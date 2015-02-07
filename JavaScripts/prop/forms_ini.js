@@ -499,8 +499,8 @@ function form8_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form8_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form8_"+result.id+"' value='saved' onclick='form8_delete_item($(this));'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form8_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form8_"+result.id+"' title='Delete' onclick='form8_delete_item($(this));'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.address+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.pincode+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.city+"'>";
@@ -520,6 +520,7 @@ function form8_ini()
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
+				console.log('saving staff details');
 				form8_update_item(fields);
 			});
 		});
