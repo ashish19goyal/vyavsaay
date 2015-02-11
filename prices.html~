@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">		
+	<meta name="description" content="Find industry standard and customizable automation solutions for your business. Setup is fast and easy. Includes Billing, Inventory, Accounting, PM, CRM.">
+	<meta name="msvalidate.01" content="087FEC7E032A681827421F0C55C1A22C" />
+  	<meta name="keywords" content="ERP, Vyavsaay, Mobile, Cloud"> 								<!--Change content-->	
+    <meta name="author" content="Ashish" > 												<!--Change content-->						
+	<title>Vyavsaay - Pricing</title>																<!--Change title-->	     
+    <link href="appic/css/style.css?v=1" rel="stylesheet">                          		 			<!-- Stylesheet -->    
+
+</head>
+
+<body>
+<div class="wrapper">
+	<!-- Begin header -->
+	<header>
+		<div class="presentation">
+			<!-- Begin main navigation -->
+			<div class="main-nav">
+
+		        <div class="divider-circle"></div>
+
+	        	<nav class="container">  
+	        		<!-- Logo -->
+	                <div class="logo pull-left">
+	                    <a href="index.html">
+	                    	<!-- Remove comments to choose image and add comment to h1 -->
+	                    	<!--<img class="logo-img" src="images/logo.png" alt="Appic logo">-->	
+	                        <h1 class="logo-text">V<span class="text-highlight">yavsaa</span>y</h1>			
+	                    </a>
+	                </div>
+	                <!-- End Logo -->
+
+	 				<!-- Main navigation-->
+					<div class="pull-right" id="navigation-box">
+	                    <a id="navigation-toggle" href="#">
+	                        <span class="menu-icon"></span>
+	                    </a>
+	                    <ul id="navigation">
+	                        <li class="active-item"><a href="index.html">Home</a></li>
+	                        <li><a href="prices.html">Pricing</a></li>
+	                        <li><a href="http://vyavsaaydiaries.blogspot.in/" target="_blank">Blog</a></li>
+	                        <li><a href="register.html">Register</a></li>
+  	                        <li><a> </a></li>
+	                    </ul>
+	                </div>
+	        	</nav>
+			</div> 
+			<!-- End main navigation -->
+		</div>
+		<!-- End presentation-->
+		
+	</header>
+	<!-- End header -->
+
+
+	<!-- Begin main content -->
+	<section class="container page-content-wrapper">
+		<h2 class="hidden-title">Prices</h2>
+		
+		<!-- Begin Pricing tables (5 columns, light)-->
+		<div class="row price-tables-wrapper">
+            <div class="col-sm-12">
+
+				<!-- Pricing table Standard -->
+				<div class="price price-width price--light price--standard">
+				    <header class="price__header">
+				        <p class="price__package">Standard<br>
+				        <strong>Rs. 1000</strong></p>
+				    </header>
+				    <div>
+				        <ul class="feather-wrapper">
+				            <li class="price__feather"><strong>10 GB</strong> storage</li>
+				            <li class="price__feather">Limited Domains</li>
+				            <li class="price__feather">Email Marketing</li>
+				            <li class="price__feather">Limited Databases</li>
+				            <li class="price__feather"><strong>1 user</strong> lisence</li>
+				            <li class="price__feather"><strong>15 GB</strong> Bandwidth</li>
+				        </ul>
+			        </div>
+				    <footer class="price__btn">
+				        <a class="btn btn--highlight btn-lg" href="#">Purchase</a>   
+				    </footer>
+				</div> 
+				<!-- End Pricing table Standard -->
+
+				<!-- Pricing table Advanced -->
+				<div class="price price-width price--light price--advanced">
+				    <header class="price__header">
+				        <p class="price__package">Advanced<br>
+				        <strong>Rs. 2000</strong></p>
+				    </header>
+				    <div>
+				        <ul class="feather-wrapper">
+				            <li class="price__feather"><strong>10 GB</strong> storage</li>
+				            <li class="price__feather">Limited Domains</li>
+				            <li class="price__feather">Email Marketing</li>
+				            <li class="price__feather">Limited Databases</li>
+				            <li class="price__feather"><strong>1 user</strong> lisence</li>
+				            <li class="price__feather"><strong>15 GB</strong> Bandwidth</li>
+				        </ul>
+			        </div>
+				    <footer class="price__btn">
+				        <a class="btn btn--highlight btn-lg" href="#">Purchase</a>   
+				    </footer>
+				</div> 
+				<!-- End Pricing table Advanced -->
+
+				<!-- Pricing table Professional -->
+				<div class="price price-width price--light price--professional">
+				    <header class="price__header">
+				        <p class="price__package">Multi-user<br>
+				        <strong>Rs. 5000</strong></p>
+				    </header>
+				    <div>
+				        <ul class="feather-wrapper">
+				            <li class="price__feather"><strong>10 GB</strong> storage</li>
+				            <li class="price__feather">Limited Domains</li>
+				            <li class="price__feather">Email Marketing</li>
+				            <li class="price__feather">Limited Databases</li>
+				            <li class="price__feather"><strong>1 user</strong> lisence</li>
+				            <li class="price__feather"><strong>15 GB</strong> Bandwidth</li>
+				        </ul>
+			        </div>
+				    <footer class="price__btn">
+				        <a class="btn btn--highlight btn-lg" href="#">Purchase</a>   
+				    </footer>
+				</div> 
+				<!-- End Pricing table Professional -->
+
+				<!-- Pricing table Premium -->
+				<div class="price price-width price--light price--premium">
+				    <header class="price__header">
+				        <p class="price__package">Enterprise<br>
+				        <strong>Get a quote</strong></p>
+				    </header>
+				    <div>
+				        <ul class="feather-wrapper">
+				            <li class="price__feather"><strong>10 GB</strong> storage</li>
+				            <li class="price__feather">Limited Domains</li>
+				            <li class="price__feather">Email Marketing</li>
+				            <li class="price__feather">Limited Databases</li>
+				            <li class="price__feather"><strong>1 user</strong> lisence</li>
+				            <li class="price__feather"><strong>15 GB</strong> Bandwidth</li>
+				        </ul>
+			        </div>
+				    <footer class="price__btn">
+				        <a class="btn btn-danger btn-lg" href="#">Purchase</a>   
+				    </footer>
+				</div> 
+				<!-- End Pricing table Premium -->
+
+			</div>
+		</div>
+		<!-- End Pricing tables (5 columns, light) -->
+		<!-- End row -->	
+
+	</section>
+	<!-- End main content -->
+
+
+
+	<!-- Begin page section -->
+    <section class="services services--preview">
+    	<div class="container">
+			<div class="row">
+	            <div class="col-sm-12">
+		        	<div class="divider-circle divider-circle--light"></div>
+
+					<h2 class="section-title">Features</h2>
+	            </div>	          
+			</div>
+		</div>
+
+        <!-- Decorated slider -->	
+        <div class="decorated-slider-wrapper">
+			<div class="decorative-lines"></div>
+			<div class="container">
+				<div class="row">
+		            <div class="col-sm-12">
+
+						<div class="swiper-controls decorated-slider-controls">
+							<a class="prev-arrow" href="#"></a>
+							<a class="next-arrow" href="#"></a>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<div class="swiper-container decorated-slider">
+						 	<div class="swiper-wrapper">
+
+							    <div class="swiper-slide" data-order="slide4"> 	    	
+				                	<div class="services__item">
+										<i class="icon icon-circle icon-circle--lg fa fa-tags"></i>
+										<h4 class="service__title">Mobile & Web Apps</h4>							
+									</div>
+								</div>
+
+							    <div class="swiper-slide" data-order="slide3"> 	    	
+				                	<div class="services__item">
+										<i class="icon icon-circle icon-circle--lg fa fa-cloud"></i>
+										<h4 class="service__title">Cloud Computing</h4>
+									</div>
+								</div>
+			            					
+							    <div class="swiper-slide swiper-slide--active" data-order="slide1"> 	
+				                	<div class="services__item">
+										<i class="icon icon-circle icon-circle--lg fa fa-cog"></i>
+										<h4 class="service__title">Quick Support</h4>
+									</div>
+								</div>
+								
+							    <div class="swiper-slide" data-order="slide2"> 	    	
+				                	<div class="services__item">
+										<i class="icon icon-circle icon-circle--lg fa fa-users"></i>
+										<h4 class="service__title">Multiple Users</h4>
+									</div>
+								</div>
+								
+			            	</div>
+						</div>
+
+			            <div class="service__info">
+							<p class="service__description slide1 service__description--active">With Vyavsaay, you get mobile apps and web apps for your customers, on-field staff and business coordinators.</p>
+		                	<p class="service__description slide2">Our solutions are hosted on the cloud to be accessible from anywhere anytime. It also brings down your setup and maintenance cost.</p>
+		                	<p class="service__description slide3">Our team provides support for your solution as per the selected plans.</p>
+		                	<p class="service__description slide4">Multiple employees of your business can use the solution at the same time. It is flexible and you can scale up as your business grows.</p>
+			            </div>	   
+
+		            </div>	          
+				</div>          
+			</div>
+		</div>
+        <!-- End Decorated slider -->
+
+	</section>
+	<!-- End page section -->
+
+
+	<!--Begin footer -->
+	<footer class="footer-wrapper">
+		<!--Begin footer widget-->
+		<div class="container footer-widgets">
+			<div class="row">
+				<div class="col-sm-12 col-md-5 col-lg-6 widget-news">
+					<h3 class="widget-title">News from Vyavsaay</h3>
+					<div class="row">
+						<div class="col-sm-6 col-md-12">
+			                <p class="widget-news__text">Get information about our latest solutions.</p>
+			                <!-- subscribe form -->
+			                <form class="subscribe-form" id="subscribe-form" name="subscribe-form" method="post" action="getEmail.php" novalidate>
+			                    <input class="subscribe-input" id="input-email" name="input-email" type="email" placeholder="your email here">
+			                    <button class="submit-button" id="submit-button" type="submit">
+					                <i class="icon-circle icon-circle--thin fa fa-arrow-right"></i>
+					            </button>
+			                </form>
+						</div>
+						<div class="col-sm-6 col-md-12">
+			                <address class="widget-contacts">
+			                	<span class="widget-contacts__item"><i class="icon-circle icon-circle--thin fa fa-phone"></i>+91-9818005232, +91-7042838701</span>
+			                    <span class="widget-contacts__item"><i class="icon-circle icon-circle--thin fa fa-envelope"></i><a href="mailto:info@vyavsaay.com">info@vyavsaay.com</a></span>
+			                    <span class="widget-contacts__item"><i class="icon-circle icon-circle--thin fa fa-map-marker"></i>Gurgaon, India</span>
+		               		</address>
+						</div>
+					</div>
+				</div>
+					<!-- Begin page section 
+						<div style='float:right;width:200px,height:200px;' id="contact__map"></div>
+				 End page section -->
+					
+				
+			</div>
+		</div>
+		<!--End footer widget -->
+
+		<!--Begin footer secondary -->
+		<div class="footer-secondary">
+
+            <div class="divider-circle"></div>
+
+			<div class="container">
+				<ul class="social">
+		            <li class="social__item custom-tooltip tooltip--info" title="google">
+		            	<a class="icon-circle fa fa-google-plus" href="https://www.google.com/+Vyavsaayindia" target="_blank"></a>
+		            </li>
+		            <li class="social__item custom-tooltip tooltip--info" title="twitter">
+		            	<a class="icon-circle fa fa-twitter" href="https://twitter.com/VyavsaayIndia" target="_blank"></a>
+		            </li>
+		            <li class="social__item custom-tooltip tooltip--info" title="facebook">
+		            	<a class="icon-circle fa fa-facebook" href="https://www.facebook.com/vyavsaayindia" target="_blank"></a>
+		            </li>
+	        	</ul>
+		    	<div class="copyright">
+		        	<small class="small">&copy; Vyavsaay, 2015. All rights reserved.</small>
+		        </div>
+			</div>
+		</div>
+		<!--End footer secondary -->
+	</footer>
+	<!--End footer -->
+
+
+
+</div>
+
+<!--End wrapper -->
+<script src='JavaScripts/open/jquery-1.11.1.min.js'></script>	
+<script src="appic/external/jquery/jquery-migrate-1.2.1.min.js"></script>			<!--Script jQuery for old version jQuery-->
+<script src="appic/external/bootstrap/js/bootstrap.min.js"></script>				<!--Bootstrap JavaScript-->
+<script src="appic/external/jquery-twitter/jquery.twitter.js"></script>			<!--Script Twitter-->
+<script src="appic/external/jflickrfeed/jflickrfeed.js"></script>					<!--Script Widget Flikr-->
+<script src="appic/external/gozha-nav/jquery.mobile.menu.js"></script>			<!--Script Mobile menu-->
+<script src="appic/external/modernizr/modernizr.custom.91224.js"></script>		<!--Script Modernizr-->
+<script src="appic/external/colorbox/jquery.colorbox.js"></script>				<!--Script Сolorbox-->
+<script src="appic/js/form.js"></script>											<!--Script Forms -->
+<script src="appic/js/custom.js"></script>										<!--Script Custom-->
+
+<script>
+$(document).ready(function() {
+
+	//Button hover
+	init_Button ();
+	
+	//Swiper
+//	init_DecoratedSlider();
+
+	//Services hover
+	init_ServicesInfo();
+		
+});
+</script>
+
+</body>
+</html> 

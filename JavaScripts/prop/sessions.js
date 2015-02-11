@@ -210,7 +210,7 @@ function delete_session()
 	}
 	else
 	{
-		window.location.assign("index.php");
+		window.location.assign("index.html");
 	}
 }
 

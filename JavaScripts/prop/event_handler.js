@@ -10,7 +10,7 @@ function default_load()
 	}
 	else if(!is_set_session() && (location.indexOf("main")>-1))
 	{
-		window.location.assign("index.php");
+		window.location.assign("index.html");
 	}
 	
 	localdb_open_requests=0;

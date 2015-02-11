@@ -43,7 +43,7 @@
 			</div>
 				
 				<div class='login_box'>
-       				<div id="failed_auth"></div>
+       			<div id="failed_auth"></div>
 					<form id='login'>
 						<fieldset>
 							Login ID: <input type="text" autocomplete="on" autofocus="autofocus" required></br>
@@ -52,7 +52,7 @@
 							<input type="submit" value='Login'>
 						</fieldset>
 					</form>
-       			</div>
+       		</div>
 			<!----- start-header-menu---->
 			
 		

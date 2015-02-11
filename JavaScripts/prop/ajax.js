@@ -99,12 +99,12 @@ function ajax_with_custom_func(url,kvp,func)
 	try
 	{
 		number_active_ajax+=1;
-		//console.log(number_active_ajax);
+		console.log(number_active_ajax);
 		xmlhttp.send(kvp);
 	}catch(e)
 	{
 		number_active_ajax-=1;
-		console.log(number_active_ajax);
+//		console.log(number_active_ajax);
 		hide_loader();
 	}			
 };

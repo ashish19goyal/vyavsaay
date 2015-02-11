@@ -35,7 +35,7 @@
 							<li><a href="http://vyavsaaydiaries.blogspot.in/" target='_blank' class="top-nav">Diaries</a></li>
 							<li><a href="contact.php" class="top-nav">Contact</a></li>
 							<li><a href="#" id='login_pull' onclick='display_login_box();' class="top-nav">Login</a></li>
-							</ul>
+						</ul>
 						<a href="#" id="pull"><img src="images/menu-icon.png" title="menu" /></a>
 					</nav>
 					<div class="clearfix"> </div>
