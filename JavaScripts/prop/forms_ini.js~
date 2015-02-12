@@ -7451,7 +7451,7 @@ function form92_ini()
 			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();
-				element_display(result.id,'form119','form91','form130');
+				element_display(result.id,'form119','form130','form91');
 			});
 		});
 
