@@ -1078,9 +1078,11 @@ function report28_ini()
 			
 			sales_array_result.forEach(function(data1)
 			{
+			
 				var label=data1.item_name;
 				get_inventory(label,'',function(value0)
 				{
+					console.log('report28-5');
 					var value1=data1.quantity;
 					if((value0<=value1 && result.labels.length<11))
 					{
@@ -1104,9 +1106,9 @@ function report28_ini()
 		  		   
 		  		   var print_button=form.elements[4];
 		  		   print_graphical_report('report28','Short Inventory',print_button,mybarchart);		  		   
+		  		   hide_loader();
 		  	   }
 		    },100);
-		    hide_loader();
 		});
 	},bills_data);
 };

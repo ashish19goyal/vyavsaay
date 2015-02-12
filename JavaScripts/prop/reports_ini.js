@@ -1078,9 +1078,11 @@ function report28_ini()
 			
 			sales_array_result.forEach(function(data1)
 			{
+			
 				var label=data1.item_name;
 				get_inventory(label,'',function(value0)
 				{
+					console.log('report28-5');
 					var value1=data1.quantity;
 					if((value0<=value1 && result.labels.length<11))
 					{
