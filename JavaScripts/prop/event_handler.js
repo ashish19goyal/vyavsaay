@@ -215,6 +215,23 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
+	for(var i=101;i<104;i++)
+	{
+		var j=i;
+		$("#modal"+i).dialog({
+	   		autoOpen: false,
+	   		width: 300,
+	   		modal: true,
+	   		show: "slide",
+	   		closeOnEscape: true,
+	   		close:function(event,ui)
+	   		{
+	   			var form_id="modal"+j+"_form";
+	   			document.getElementById(form_id).reset();
+	   		}
+		});
+	}
+
 }
 
 function print_setup()
