@@ -1104,9 +1104,9 @@ function report28_ini()
 		  		   
 		  		   var print_button=form.elements[4];
 		  		   print_graphical_report('report28','Short Inventory',print_button,mybarchart);		  		   
-		  		   hide_loader();
 		  	   }
 		    },100);
+		    hide_loader();
 		});
 	},bills_data);
 };

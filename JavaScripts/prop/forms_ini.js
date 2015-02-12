@@ -10045,7 +10045,7 @@ function form119_ini()
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
-			console.log(bill_results);
+			//console.log(bill_results);
 			var filter_fields=document.getElementById('form119_master');
 			
 			for (var i in bill_results)
