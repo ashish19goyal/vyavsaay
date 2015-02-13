@@ -1078,7 +1078,6 @@ function report28_ini()
 			
 			sales_array_result.forEach(function(data1)
 			{
-			
 				var label=data1.item_name;
 				get_inventory(label,'',function(value0)
 				{

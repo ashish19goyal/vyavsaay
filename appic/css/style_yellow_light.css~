@@ -1,6 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Oswald|PT+Sans:400,700,400italic);
-@import "https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css";
-@import "https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css";
+@import url(http://fonts.googleapis.com/css?family=Oswald|PT+Sans:400,700,400italic);
+@import "http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css";
+@import "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css";
 @import "../external/gozha-nav/gozha-nav.css";
 @import "../external/magnific-popup/magnific-popup.css";
 @import "../external/colorbox/colorbox.css";
@@ -3469,8 +3469,8 @@ input[type="search"] {
 .divider-circle {
   position: relative;
   padding-top: 2px;
-  border-top: 1px solid #0d1629;
-  border-bottom: 1px solid #0d1629;
+  border-top: 1px solid #e3e8ec;
+  border-bottom: 1px solid #e3e8ec;
 }
 .divider-circle:before {
   content: "";
@@ -3481,8 +3481,8 @@ input[type="search"] {
   width: 16px;
   height: 16px;
   margin-left: -8px;
-  background: #0d1629;
-  border: solid 3px #212c43;
+  background: #e3e8ec;
+  border: solid 3px #f3f5f7;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -3811,7 +3811,7 @@ TABLE OF CONTENT
 .top-info {
   padding-top: 8px;
   padding-bottom: 10px;
-  background: #1b253b;
+  background: #f3f5f7;
 }
 .top-info__text {
   color: #7d8e98;
@@ -3822,7 +3822,7 @@ TABLE OF CONTENT
 }
 .main-nav {
   height: 85px;
-  background: #212c43;
+  background: #f3f5f7;
 }
 .logo {
   padding-top: 22px;
@@ -3831,7 +3831,7 @@ TABLE OF CONTENT
 .logo-text {
   margin-top: -5px;
   font-size: 30px;
-  color: #fff;
+  color: #212c43;
   text-transform: uppercase;
 }
 .logo-img {
@@ -3865,6 +3865,9 @@ ul#navigation ul {
 ul#navigation li {
   padding: 7px 0 8px;
   border-bottom-color: #1b253b;
+}
+ul#navigation a {
+  color: #212c43;
 }
 ul#navigation a:hover,
 ul#navigation .active-item > a {
@@ -3950,11 +3953,11 @@ ul#navigation > li:hover:after {
 .footer-wrapper {
   margin-top: 36px;
   color: #8b98b2;
-  background: #212c43;
+  background: #f3f5f7;
 }
 .footer-wrapper a:hover,
 .footer-wrapper a:focus {
-  color: #fff;
+  color: #212c43;
 }
 .footer-widgets {
   padding-top: 64px;
@@ -3966,7 +3969,7 @@ ul#navigation > li:hover:after {
   margin-bottom: 10px;
   font-size: 20px;
   line-height: 24px;
-  color: #fff;
+  color: #212c43;
 }
 .widget-news__text {
   float: left;
@@ -3991,7 +3994,7 @@ ul#navigation > li:hover:after {
   height: 40px;
   padding: 0 37px 0 15px;
   font-size: 13px;
-  background: #e5e5da;
+  color: #212c43;
   background: #fff;
   border: none;
 }
@@ -4041,7 +4044,7 @@ ul#navigation > li:hover:after {
   clear: both;
   margin-bottom: 25px;
   font-size: 0;
-  color: #fff;
+  color: #212c43;
 }
 .widget-contacts__item {
   display: inline-block;
@@ -4134,7 +4137,7 @@ ul#navigation > li:hover:after {
 .footer-secondary {
   min-height: 60px;
   text-align: center;
-  background: #1b253b;
+  background: #f3f5f7;
 }
 .copyright {
   padding-top: 9px;
@@ -6632,7 +6635,7 @@ a.custom-tooltip:hover {
 }
 .error {
   text-align: center;
-  background: #212c43;
+  background: #f3f5f7;
 }
 .error__header {
   padding-top: 24px;
@@ -6659,7 +6662,7 @@ a.custom-tooltip:hover {
   margin-bottom: 25px;
   font-size: 30px;
   line-height: 40px;
-  color: #e5e5da;
+  color: #212c43;
 }
 .error__content .error__text {
   margin-bottom: 35px;
@@ -6683,7 +6686,7 @@ a.custom-tooltip:hover {
   padding-top: 26px;
   padding-bottom: 18px;
   text-align: center;
-  background: #212c43;
+  background: #f3f5f7;
 }
 .coming-header .decorative-lines:before {
   top: 7px;
@@ -8677,7 +8680,7 @@ a.custom-tooltip:hover {
     top: 120px;
     right: 0;
     min-width: 230px;
-    background: rgba(33, 44, 67, 0.8);
+    background: rgba(243, 245, 247, 0.8);
   }
   ul#navigation a {
     padding: 7px 17px 8px;
@@ -8734,7 +8737,7 @@ a.custom-tooltip:hover {
     display: block;
     min-width: 180px;
     padding: 0 15px;
-    background: rgba(33, 44, 67, 0.8);
+    background: rgba(243, 245, 247, 0.8);
     -webkit-transform-origin: left top;
     -moz-transform-origin: left top;
     -ms-transform-origin: left top;

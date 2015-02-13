@@ -9527,6 +9527,9 @@ a.custom-tooltip:hover {
   .item-width-1 {
     width: 185px;
   }
+  .item-width-1-5 {
+    width: 286px;
+  }
   .item-width-2 {
     width: 382px;
   }
