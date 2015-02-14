@@ -45,8 +45,7 @@
 			activate:function(e, ui) 
 		    {
 		    	e.currentTarget.blur();
-				if(typeof map86 != 'undefined')		    	
-		    		map86.invalidateSize(false);
+		    	map86.invalidateSize(false);
 		    	$('#form7_calendar').fullCalendar('render');
 		    	$('#form14_calendar').fullCalendar('render');
 		    },

@@ -47,10 +47,10 @@
 			activate:function(e, ui) 
 		    {
 		    	e.currentTarget.blur();
-				if(typeof map41 != 'undefined')
+			/*	if(typeof map41 != 'undefined')
 				{
 				  	map41.invalidateSize(false);
-				}
+				}*/
 		    },
 		    beforeActivate:function(event,ui)
 		    {
