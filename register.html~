@@ -64,7 +64,7 @@
 						<fieldset>
 							Login ID: <input type="text" autocomplete="on" autofocus="autofocus" required><br>
 							Password: <input type="password" required><br>
-							<a href="pass_reset.html">Forgot password?</a><br>
+							<a href="pass_reset.php">Forgot password?</a><br>
 							<input type="submit" value='Login'>
 						</fieldset>
 					</form>

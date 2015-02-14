@@ -8590,6 +8590,9 @@ a.custom-tooltip:hover {
   .contact-form .form__field--message {
     width: 100%;
   }
+  .contact-form .form__field--full {
+    width: 100%;
+  }
   .contact-form .btn {
     padding-right: 46px;
     padding-left: 46px;

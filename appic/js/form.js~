@@ -1,6 +1,6 @@
 //Plaeholder handler
 $(function() {
-
+	
 if(!Modernizr.input.placeholder){             //placeholder for old brousers and IE
  
   $('[placeholder]').focus(function() {
@@ -118,6 +118,7 @@ $('#subscribe-form').submit(function(e) {
 		var formInput = self.serialize();
 		$.post(self.attr('action'),formInput, function(data){}); // end post
 }); // end submit
+		
 		
 
 function createErrTult(text, $elem) {

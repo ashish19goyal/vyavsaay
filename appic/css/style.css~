@@ -1,6 +1,6 @@
-@import url(http://fonts.googleapis.com/css?family=Oswald|PT+Sans:400,700,400italic);
-@import "http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css";
-@import "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css";
+@import url(https://fonts.googleapis.com/css?family=Oswald|PT+Sans:400,700,400italic);
+@import "https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css";
+@import "https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css";
 @import "../external/gozha-nav/gozha-nav.css";
 @import "../external/magnific-popup/magnific-popup.css";
 @import "../external/colorbox/colorbox.css";
@@ -8588,6 +8588,9 @@ a.custom-tooltip:hover {
     width: 48.638132%;
   }
   .contact-form .form__field--message {
+    width: 100%;
+  }
+  .contact-form .form__field--full {
     width: 100%;
   }
   .contact-form .btn {
