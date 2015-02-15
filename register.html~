@@ -134,10 +134,8 @@
 	   		modal: true,
 	   		show: "slide",
 	   		closeOnEscape: true,
-			});
-			
+			});			
 		});	
-
 	});
 	
 	$('#registeration').on('submit',function(event)

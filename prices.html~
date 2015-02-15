@@ -241,6 +241,16 @@ $(window).load(function()
 {
 	$('#prices_header').load('header.html',function () 
 	{
+		default_load();
+
+		$("#login_box").dialog({
+	   		autoOpen: false,
+	   		width: 300,
+	   		modal: true,
+	   		show: "slide",
+	   		closeOnEscape: true,
+		});
+
 		//Services hover
 		init_ServicesInfo();
 	});	

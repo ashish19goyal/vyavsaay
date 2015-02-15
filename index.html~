@@ -234,8 +234,6 @@ $(window).load(function()
 	$('#index_footer').load('footer.html');
 	$('#index_header').load('header.html',function () 
 	{
-		default_load();
-	
 		$("#login_box").dialog({
 	   		autoOpen: false,
 	   		width: 300,
