@@ -310,7 +310,7 @@ function init_GalleryMasonry() {
 
 //Google map
 function init_Map() {
-	var myLatlng = new google.maps.LatLng(28.487377,77.090399);
+	var myLatlng = new google.maps.LatLng(40.764324,-73.973057);
 	var myOptions = {
 		zoom: 11,
 		center: myLatlng,
@@ -332,10 +332,10 @@ function init_Map() {
 	var marker = new google.maps.Marker({
 		position: myLatlng,
 		map: map,
-		title:"28.487377,77.090399"
+		title:"40.764324,-73.973057"
 	});
 	var infowindow = new google.maps.InfoWindow({
-		content: "<b>My Adress:</b><br> Gurgaon, Haryana"
+		content: "<b>My Adress:</b><br> 1 Central Park New York 10019"
 		});
 		google.maps.event.addListener(marker, "click", function() {
 			infowindow.open(map, marker);

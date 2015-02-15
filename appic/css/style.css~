@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Oswald|PT+Sans:400,700,400italic);
 @import "https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css";
-@import "https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css";
+@import "jquery-ui.min.css";
 @import "../external/gozha-nav/gozha-nav.css";
 @import "../external/magnific-popup/magnific-popup.css";
 @import "../external/colorbox/colorbox.css";
@@ -3806,7 +3806,7 @@ TABLE OF CONTENT
 
 */
 .presentation {
-  height: 120px;
+  height: 85px;
 }
 .top-info {
   padding-top: 8px;

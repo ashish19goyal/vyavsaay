@@ -10,97 +10,76 @@
    <meta name="author" content="Ashish" > 												<!--Change content-->						
 	<title>Vyavsaay - Register</title>																<!--Change title-->	      
    <link href="appic/css/style.css?v=1" rel="stylesheet">                          		 			<!-- Stylesheet -->    
+<style>
+#loading_icon{
+	width:30%;
+    height: 30%;
+    position: fixed;
+    top: 35%;
+    left: 42%;
+    z-index:1000;
+}
 
+#transparent_layer{
+	width:100%;
+	height:100%;
+	position:fixed;
+	top: 0;
+	left: 0;
+	z-index:999;
+	opacity: 0.8;
+	background-color: #333333;
+}
+</style>
 </head>
 
 <body>
+
 <div class="wrapper">
+<div id="loading_icon"><img src="./images/loader.gif"></div>
+<div id="transparent_layer"></div>
 	<!-- Begin header -->
-	<header>
-		<div class="presentation">
-
-			<!-- Begin main navigation -->
-			<div class="main-nav">
-
-		        <div class="divider-circle"></div>
-
-	        	<nav class="container">  
-	        		<!-- Logo -->
-	                <div class="logo pull-left">
-	                    <a href="index.html">
-	                    	<!-- Remove comments to choose image and add comment to h1 -->
-	                    	<!--<img class="logo-img" src="images/logo.png" alt="Appic logo">-->	
-	                        <h1 class="logo-text">V<span class="text-highlight">yavsaa</span>y</h1>			
-	                    </a>
-	                </div>
-	                <!-- End Logo -->
-
-	 				<!-- Main navigation-->
-					<div class="pull-right" id="navigation-box">
-	                    <a id="navigation-toggle" href="#">
-	                        <span class="menu-icon"></span>
-	                    </a>
-	                    <ul id="navigation">
-	                        <li class="active-item"><a href="index.html">Home</a></li>
-	                        <li><a href="prices.html">Pricing</a></li>
-	                        <li><a href="http://vyavsaaydiaries.blogspot.in/" target="_blank">Blog</a></li>
-	                        <li><a href="register.html">Register</a></li>
-									<li><a href="#" onclick='display_login_box();'>Login</a></li>
-	                    </ul>
-	                </div>
-	        	</nav>
-			</div> 
-			<!-- End main navigation -->
-		</div>
-		<!-- End presentation-->
-		
+	<header id='register_header'>
 	</header>
 	<!-- End header -->
-
-	<!--begin login box-->
-				<div style='display:none' id='login_box' class='login_box'>
-       			<div id="failed_auth"></div>
-					<form id='login'>
-						<fieldset>
-							Login ID: <input type="text" autocomplete="on" autofocus="autofocus" required><br>
-							Password: <input type="password" required><br>
-							<a href="pass_reset.html">Forgot password?</a><br>
-							<input type="submit" value='Login'>
-						</fieldset>
-					</form>
-       		</div>
-
-	<!--end login box-->
 
 	<!-- Begin main content -->
 
 	<!-- Begin page section -->
 	<section class="container contact">
 		<div class="row">
-            <div class="col-sm-12">
-            	<form class="contact-form" id="contact-form" name="contact-form" method="post" action="send.php" novalidate>
-                	<input class="form__field pull-left" id="user-name" name="user-name" type="text" placeholder="Name:">
-                    <input class="form__field pull-right" id="user-email" name="user-email" type="email" placeholder="Email:">
-                    <input class="form__field pull-left" id="user-phone" name="user-phone" type="text" placeholder="Phone:">
-                    <input class="form__field pull-right clearfix" id="user-title" name="user-title" type="text" placeholder="Title:">
-  						  <select class='form__field pull-left' id="r_industry" required>
-									<option value="general" selected="selected">General Store</option>
-									<option value="clothing">Clothing & Footwear</option>
-									<option value="pharmacy">Pharmacy (medicine store)</option>
-									<option value="wholesale">Wholesale or Distributor</option>
-									<option value="clinic">Nursing Home & clinics</option>
-									<option value="food">Restaurant, Bakery & food joints</option>
-									<option value="hotel">Hotel & Guest house</option>
-									<option value="opticals">Opticals</option>
-									<option value="lawyer">Lawyer or law firm</option>
-									<option value="ca">CA or CA firm</option>
-									<option value="events">Event Management (Marriages,Parties,Performances)</option>
-									<option value="all">Contributor</option>
-									<option value="demo">Demo</option>
-								</select>          
-                    <button class="btn btn-info btn-lg btn--highlight" id="submit-btn" name="submit-btn" type="submit">Send Us Message</button>
-                    <div id="response"></div>
-                </form>
+			<div><p id="r_complete"></p></div>
+			<div id="r_register">
+				<div id="failed_register"></div>
+				<div class="col-sm-12">
+					<label id="userid_validation"></label><br>
+					<label id="emailid_validation"></label><br>
+					<label id="password_match_validation"></label>
+					<form id="registeration" class='contact-form'>
+						<input id='register_user_id' class='form__field pull-left' type="text" placeholder='Login Id:' onblur="userid_validation($(this).val())" required>
+						<input class='form__field pull-right' type="email" placeholder='Email Id:' onblur="emailid_validation($(this).val())" required>
+						<input class='form__field pull-left' type="text" placeholder='Full Name:' required>
+						<input class='form__field pull-right' type="tel" required placeholder='Contact No:'>
+						<input class='form__field pull-left' type="password" required placeholder='Password'>
+						<input class='form__field pull-right' type="password" onkeyup="match_password()" required placeholder='Retype Password:'>
+						<select class='form__field--full' id="r_industry" required>
+							<option value="general" selected="selected">General Store</option>
+							<option value="clothing">Clothing & Footwear</option>
+							<option value="pharmacy">Pharmacy (medicine store)</option>
+							<option value="wholesale">Wholesale or Distributor</option>
+							<option value="clinic">Nursing Home & clinics</option>
+							<option value="food">Restaurant, Bakery & food joints</option>
+							<option value="hotel">Hotel & Guest house</option>
+							<option value="opticals">Opticals</option>
+							<option value="lawyer">Lawyer or law firm</option>
+							<option value="ca">CA or CA firm</option>
+							<option value="events">Event Management (Marriages,Parties,Performances)</option>
+							<option value="all">Contributor</option>
+							<option value="demo">Demo</option>
+						</select>
+              		<button class="btn btn-info btn-lg btn--highlight" id="submit-btn" name="submit-btn" type="submit">Register</button>
+					</form>                
+				</div>
 			</div>
 		</div>
 		<!-- End row -->
@@ -110,60 +89,7 @@
 	<!-- End main content -->
 
 	<!--Begin footer -->
-	<footer class="footer-wrapper">
-		<!--Begin footer widget-->
-		<div class="container footer-widgets">
-			<div class="row">
-				<div class="col-sm-12 col-md-5 col-lg-6 widget-news">
-					<h3 class="widget-title">News from Vyavsaay</h3>
-					<div class="row">
-						<div class="col-sm-6 col-md-12">
-			                <p class="widget-news__text">Get information about our latest solutions.</p>
-			                <!-- subscribe form -->
-			                <form class="subscribe-form" id="subscribe-form" name="subscribe-form" method="post" action="getEmail.php" novalidate>
-			                    <input class="subscribe-input" id="input-email" name="input-email" type="email" placeholder="your email here">
-			                    <button class="submit-button" id="submit-button" type="submit">
-					                <i class="icon-circle icon-circle--thin fa fa-arrow-right"></i>
-					            </button>
-			                </form>
-						</div>
-						<div class="col-sm-6 col-md-12">
-			                <address class="widget-contacts">
-			                	<span class="widget-contacts__item"><i class="icon-circle icon-circle--thin fa fa-phone"></i>+91-9818005232, +91-7042838701</span>
-			                    <span class="widget-contacts__item"><i class="icon-circle icon-circle--thin fa fa-envelope"></i><a href="mailto:info@vyavsaay.com">info@vyavsaay.com</a></span>
-			                    <span class="widget-contacts__item"><i class="icon-circle icon-circle--thin fa fa-map-marker"></i>Gurgaon, India</span>
-		               		</address>
-						</div>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-		<!--End footer widget -->
-
-		<!--Begin footer secondary -->
-		<div class="footer-secondary">
-
-            <div class="divider-circle"></div>
-
-			<div class="container">
-				<ul class="social">
-		            <li class="social__item custom-tooltip tooltip--info" title="google">
-		            	<a class="icon-circle fa fa-google-plus" href="https://www.google.com/+Vyavsaayindia" target="_blank"></a>
-		            </li>
-		            <li class="social__item custom-tooltip tooltip--info" title="twitter">
-		            	<a class="icon-circle fa fa-twitter" href="https://twitter.com/VyavsaayIndia" target="_blank"></a>
-		            </li>
-		            <li class="social__item custom-tooltip tooltip--info" title="facebook">
-		            	<a class="icon-circle fa fa-facebook" href="https://www.facebook.com/vyavsaayindia" target="_blank"></a>
-		            </li>
-	        	</ul>
-		    	<div class="copyright">
-		        	<small class="small">&copy; Vyavsaay, 2015. All rights reserved.</small>
-		        </div>
-			</div>
-		</div>
-		<!--End footer secondary -->
+	<footer class="footer-wrapper" id='register_footer'>
 	</footer>
 	<!--End footer -->
 
@@ -194,36 +120,36 @@
 <script src="appic/js/custom.js"></script>
 <script src="appic/js/form.js"></script>
 
-<script>
-	!function()
+<script defer="defer">
+	$(document).ready(function() 
 	{
-		$("#login_box").dialog({
+		$('#register_footer').load('footer.html');		
+		$('#register_header').load('header.html',function () 
+		{
+				default_load();
+
+				$("#login_box").dialog({
 	   		autoOpen: false,
 	   		width: 300,
 	   		modal: true,
 	   		show: "slide",
 	   		closeOnEscape: true,
-		});
-	}();
-
-	function display_login_box()
+			});			
+		});	
+	});
+	
+	$('#registeration').on('submit',function(event)
 	{
-		var form=document.getElementById("login");
+		event.preventDefault();
+		register_click();
+	});
+
+	$('#reseller_registeration').on('submit',function(event)
+	{
+		event.preventDefault();
+		reseller_register_click();
+	});
 		
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-			//$("#login_box").dialog("close");
-			login_action();
-		});
-		$("#login_box").dialog("open");
-	}
-
-$(document).ready(function() {
-
-	default_load();
-});
 </script>
 
 </body>

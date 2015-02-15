@@ -18,6 +18,16 @@ Modernizr.load({
 
 $(document).ready(function() {
 
+/*
+//Flikr
+$('#flickr').jflickrfeed({
+	limit: 			10,
+	qstrings: 		{id: '52617155@N08'},
+	itemTemplate: 	'<li><a href="{{image_b}}" data-rel="colorbox"><img src="{{image_s}}" alt="{{title}}" /><span class="flickr__hover"></span></a></li>'
+	},function(data){$('#flickr a').colorbox({'data-rel':'colorbox'});}
+);
+*/
+
 //Colorbox responsive
 $.colorbox.settings.maxWidth  = '95%';
 $.colorbox.settings.maxHeight = '95%';
@@ -301,7 +311,7 @@ function init_GalleryMasonry() {
 
 //Google map
 function init_Map() {
-	var myLatlng = new google.maps.LatLng(28.487377,77.090399);
+	var myLatlng = new google.maps.LatLng(40.764324,-73.973057);
 	var myOptions = {
 		zoom: 11,
 		center: myLatlng,
@@ -323,10 +333,10 @@ function init_Map() {
 	var marker = new google.maps.Marker({
 		position: myLatlng,
 		map: map,
-		title:"28.487377,77.090399"
+		title:"40.764324,-73.973057"
 	});
 	var infowindow = new google.maps.InfoWindow({
-		content: "<b>My Adress:</b><br> Gurgaon, Haryana"
+		content: "<b>My Adress:</b><br> 1 Central Park New York 10019"
 		});
 		google.maps.event.addListener(marker, "click", function() {
 			infowindow.open(map, marker);

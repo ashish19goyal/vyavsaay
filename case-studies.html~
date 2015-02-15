@@ -100,7 +100,7 @@
 <script src="appic/external/swiper/idangerous.swiper.min.js"></script>			<!--Script Swiper slider -->	
 
 <script>
-	$(window).load(function()
+	$(document).ready(function()
 	{
 		$('#case_footer').load('footer.html');		
 		$('#case_header').load('header.html',function () 

@@ -15,44 +15,7 @@
 <body>
 <div class="wrapper">
 	<!-- Begin header -->
-	<header>
-		<div class="presentation">
-
-			<!-- Begin main navigation -->
-			<div class="main-nav">
-
-	        <div class="divider-circle"></div>
-
-	        	<nav class="container">  
-	        		<!-- Logo -->
-	                <div class="logo pull-left">
-	                    <a href="index.html">
-	                    	<!-- Remove comments to choose image and add comment to h1 -->
-	                    	<!--<img class="logo-img" src="images/logo.png" alt="Appic logo">-->	
-	                        <h1 class="logo-text">V<span class="text-highlight">yavsaa</span>y</h1>			
-	                    </a>
-	                </div>
-	                <!-- End Logo -->
-
-	 				<!-- Main navigation-->
-						<div class="pull-right" id="navigation-box">
-	                    <a id="navigation-toggle" href="#">
-	                        <span class="menu-icon"></span>
-	                    </a>
-	                    <ul id="navigation">
-	                        <li class="active-item"><a href="index.html">Home</a></li>
-	                        <li><a href="prices.html">Pricing</a></li>
-	                        <li><a href="http://vyavsaaydiaries.blogspot.in/" target="_blank">Blog</a></li>
-	                        <li><a href="register.html">Register</a></li>
-	                        <li><a href="#" onclick='display_login_box();'>Login</a></li>
-	                    </ul>
-	               </div>
-	        	</nav>
-			</div>
-			<!-- End main navigation -->
-		</div>
-		<!-- End presentation-->
-	
+	<header id='index_header'>
 	</header>
 	<!-- End header -->
 
@@ -235,60 +198,7 @@
 	<!-- End main content -->
 
 	<!--Begin footer -->
-	<footer class="footer-wrapper">
-		<!--Begin footer widget-->
-		<div class="container footer-widgets">
-			<div class="row">
-				<div class="col-sm-12 col-md-5 col-lg-6 widget-news">
-					<h3 class="widget-title">News from Vyavsaay</h3>
-					<div class="row">
-						<div class="col-sm-6 col-md-12">
-			                <p class="widget-news__text">Get information about our latest solutions.</p>
-			                <!-- subscribe form -->
-			                <form class="subscribe-form" id="subscribe-form" name="subscribe-form" method="post" action="getEmail.php" novalidate>
-			                    <input class="subscribe-input" id="input-email" name="input-email" type="email" placeholder="your email here">
-			                    <button class="submit-button" id="submit-button" type="submit">
-					                <i class="icon-circle icon-circle--thin fa fa-arrow-right"></i>
-					            </button>
-			                </form>
-						</div>
-						<div class="col-sm-6 col-md-12">
-			                <address class="widget-contacts">
-			                	<span class="widget-contacts__item"><i class="icon-circle icon-circle--thin fa fa-phone"></i>+91-9818005232, +91-7042838701</span>
-			                    <span class="widget-contacts__item"><i class="icon-circle icon-circle--thin fa fa-envelope"></i><a href="mailto:info@vyavsaay.com">info@vyavsaay.com</a></span>
-			                    <span class="widget-contacts__item"><i class="icon-circle icon-circle--thin fa fa-map-marker"></i>Gurgaon, India</span>
-		               		</address>
-						</div>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-		<!--End footer widget -->
-
-		<!--Begin footer secondary -->
-		<div class="footer-secondary">
-
-            <div class="divider-circle"></div>
-
-			<div class="container">
-				<ul class="social">
-		            <li class="social__item custom-tooltip tooltip--info" title="google">
-		            	<a class="icon-circle fa fa-google-plus" href="https://www.google.com/+Vyavsaayindia" target="_blank"></a>
-		            </li>
-		            <li class="social__item custom-tooltip tooltip--info" title="twitter">
-		            	<a class="icon-circle fa fa-twitter" href="https://twitter.com/VyavsaayIndia" target="_blank"></a>
-		            </li>
-		            <li class="social__item custom-tooltip tooltip--info" title="facebook">
-		            	<a class="icon-circle fa fa-facebook" href="https://www.facebook.com/vyavsaayindia" target="_blank"></a>
-		            </li>
-	        	</ul>
-		    	<div class="copyright">
-		        	<small class="small">&copy; Vyavsaay, 2015. All rights reserved.</small>
-		        </div>
-			</div>
-		</div>
-		<!--End footer secondary -->
+	<footer class="footer-wrapper" id='index_footer'>
 	</footer>
 	<!--End footer -->
 </div>
@@ -304,6 +214,8 @@
 <script src="appic/external/gozha-nav/jquery.mobile.menu.js"></script>			<!--Script Mobile menu-->
 <script src="appic/external/modernizr/modernizr.custom.91224.js"></script>		<!--Script Modernizr-->
 <script src="appic/external/colorbox/jquery.colorbox.js"></script>				<!--Script Сolorbox-->
+<script src="appic/js/custom.js"></script>
+<script src="appic/js/form.js"></script>
 
 <script src='./JavaScripts/open/bcrypt.js'></script>
 <script src='./JavaScripts/open/indexeddb.js'></script>
@@ -315,29 +227,15 @@
 <script src='./JavaScripts/prop/local_db_handling.js'></script>
 <script src='./JavaScripts/prop/login_helper.js'></script>
 <script src='./JavaScripts/prop/sessions.js'></script>
-<script src="appic/js/custom.js"></script>
-<script src="appic/js/form.js"></script>
 
-<script>
-$(document).ready(function() {
-
-	default_load();
-	//Button hover
-	init_ButtonInfo();
-
-	init_Button ();
-
-
-	//Roundabout slider
-	init_Roundabout();	
-
-	//Services hover
-	init_ServicesInfo();
-	
-});
-
-	!function()
+<script defer='defer'>
+$(window).load(function()
+{
+	$('#index_footer').load('footer.html');
+	$('#index_header').load('header.html',function () 
 	{
+		default_load();
+	
 		$("#login_box").dialog({
 	   		autoOpen: false,
 	   		width: 300,
@@ -345,20 +243,16 @@ $(document).ready(function() {
 	   		show: "slide",
 	   		closeOnEscape: true,
 		});
-	}();
+		//Button hover
+		init_ButtonInfo();
+	
+		init_Button ();
+	
+		//Services hover
+		init_ServicesInfo();	
 
-	function display_login_box()
-	{
-		var form=document.getElementById("login");
-		
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-			login_action();
-		});
-		$("#login_box").dialog("open");
-	}
+	});
+});
 
 </script>
 
