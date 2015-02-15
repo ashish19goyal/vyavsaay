@@ -228,12 +228,12 @@
 <script src='./JavaScripts/prop/login_helper.js'></script>
 <script src='./JavaScripts/prop/sessions.js'></script>
 
-<script defer='defer'>
+<script>
 $(window).load(function()
 {
-	$('#index_footer').load('footer.html');
 	$('#index_header').load('header.html',function () 
 	{
+		default_load();
 		$("#login_box").dialog({
 	   		autoOpen: false,
 	   		width: 300,
@@ -241,15 +241,15 @@ $(window).load(function()
 	   		show: "slide",
 	   		closeOnEscape: true,
 		});
-		//Button hover
+
 		init_ButtonInfo();
 	
 		init_Button ();
 	
 		//Services hover
 		init_ServicesInfo();	
-
-	});
+	});		
+	$('#index_footer').load('footer.html');
 });
 
 </script>
