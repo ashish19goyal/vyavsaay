@@ -10719,7 +10719,7 @@ function form124_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form124_"+result.id+"' value='"+result.type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Account'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form124_"+result.id+"' value='"+result.acc_name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form124_"+result.id+"'>"+result.acc_name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Payment Id'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form124_"+result.id+"' value='"+result.payment_id+"'>";

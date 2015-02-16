@@ -3766,7 +3766,9 @@ function report58_ini()
 			"<acc_name>"+account+"</acc_name>" +
 			"<type></type>" +
 			"<total_amount></total_amount>" +
+			"<mode></mode>"+			
 			"<status array='yes'>--pending--closed--</status>"+
+			"<bill_id></bill_id>"+			
 			"<date lowerbound='yes'>"+get_raw_time(start_date)+"</date>" +
 			"<date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</date>" +
 			"</payments>";
@@ -3777,7 +3779,7 @@ function report58_ini()
 							"<id></id>"+							
 							"<type></type>"+
 							"<amount></amount>"+
-							"<acc_name>"+account+"<acc_name>"+							
+							"<acc_name>"+account+"</acc_name>"+							
 							"<date lowerbound='yes'>"+get_raw_time(start_date)+"</date>" +
 							"<date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</date>" +
 							"</receipts>";		
@@ -3792,8 +3794,11 @@ function report58_ini()
 				{
 					receipt_to_pay.type="paid";
 				}
+				receipt_to_pay.mode='credit';
 				receipt_to_pay.total_amount=receipts[k].amount;
 				receipt_to_pay.date=receipts[k].date;
+				receipt_to_pay.bill_id=receipts[k].id;
+				receipt_to_pay.status='from receipt';
 				payments.push(receipt_to_pay);
 			}
 			
@@ -3814,12 +3819,20 @@ function report58_ini()
 				if(payments[i].type=='received')
 				{
 					credit="Rs. "+payments[i].total_amount;
-					particulars="To "+payments[i].acc_name;
+					particulars="To "+payments[i].acc_name+" for bill id: "+payments[i].bill_id;
+					if(payments[i].status=='from receipt')
+					{
+						particulars="To "+payments[i].acc_name+" through receipt id: "+payments[i].bill_id;
+					}
 				}
 				else 
 				{
 					debit="Rs. "+payments[i].total_amount;
-					particulars="From "+payments[i].acc_name;
+					particulars="From "+payments[i].acc_name+" for bill id: "+payments[i].bill_id;
+					if(payments[i].status=='from receipt')
+					{
+						particulars="From "+payments[i].acc_name+" through receipt id: "+payments[i].bill_id;
+					}
 				}
 								
 				var rowsHTML="<tr>";
@@ -3839,7 +3852,7 @@ function report58_ini()
 						
 				$('#report58_body').append(rowsHTML);
 				
-				if(payments[i].type!='credit')
+				if(payments[i].mode!='credit')
 				{
 					var debit="-";
 					var credit="-";
@@ -3848,12 +3861,12 @@ function report58_ini()
 					if(payments[i].type=='received')
 					{
 						debit="Rs. "+payments[i].total_amount;
-						particulars="From "+payments[i].acc_name;
+						particulars="From "+payments[i].acc_name+" by payment id "+payments[i].id;
 					}
 					else 
 					{
 						credit="Rs. "+payments[i].total_amount;
-						particulars="To "+payments[i].acc_name;
+						particulars="To "+payments[i].acc_name+" by payment id "+payments[i].id;
 					}
 									
 					var rowsHTML="<tr>";

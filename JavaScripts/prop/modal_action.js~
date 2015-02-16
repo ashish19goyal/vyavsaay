@@ -2809,7 +2809,7 @@ function modal30_action()
 								"<type>"+receipt_type+"</type>" +
 								"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
 								"<acc_name>"+account_name+"</acc_name>" +
-								"<date>"+last_updated+"</date>" +
+								"<date>"+get_my_date()+"</date>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</receipts>";
 						if(is_online())
@@ -2843,7 +2843,7 @@ function modal30_action()
 									"<type>"+receipt_type+"</type>" +
 									"<amount>"+pending_amount+"</amount>" +
 									"<acc_name>"+account_name+"</acc_name>" +
-									"<date>"+last_updated+"</date>" +
+									"<date>"+get_my_date()+"</date>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</receipts>";
 							if(is_online())
@@ -2877,7 +2877,7 @@ function modal30_action()
 									"<type>"+receipt_type+"</type>" +
 									"<amount>"+counter_payment+"</amount>" +
 									"<acc_name>"+account_name+"</acc_name>" +
-									"<date>"+last_updated+"</date>" +
+									"<date>"+get_my_date()+"</date>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</receipts>";
 							if(is_online())
