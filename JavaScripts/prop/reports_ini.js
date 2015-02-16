@@ -3746,3 +3746,138 @@ function report57_ini()
 	var print_button=form.elements[4];
 	print_tabular_report('report57','Warranty Report',print_button);
 };
+
+/**
+ * @reportNo 58
+ * @report Ledger
+ */
+function report58_ini()
+{
+	var form=document.getElementById('report58_header');
+	var account=form.elements[1].value;
+	var start_date=form.elements[2].value;
+	var end_date=form.elements[3].value;
+	
+	show_loader();
+	$('#report58_body').html('');
+		
+	var payments_data="<payments>" +
+			"<id></id>"+
+			"<acc_name>"+account+"</acc_name>" +
+			"<type></type>" +
+			"<total_amount></total_amount>" +
+			"<status array='yes'>--pending--closed--</status>"+
+			"<date lowerbound='yes'>"+get_raw_time(start_date)+"</date>" +
+			"<date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</date>" +
+			"</payments>";
+	
+	fetch_requested_data('report58',payments_data,function(payments)
+	{	
+		var receipts_data="<receipts>"+
+							"<id></id>"+							
+							"<type></type>"+
+							"<amount></amount>"+
+							"<acc_name>"+account+"</acc_name>"+							
+							"<date lowerbound='yes'>"+get_raw_time(start_date)+"</date>" +
+							"<date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</date>" +
+							"</receipts>";		
+		fetch_requested_data('report58',receipts_data,function(receipts)
+		{	
+			for(var k in receipts)
+			{
+				var receipt_to_pay=new Object();
+				receipt_to_pay.acc_name=receipts[k].acc_name;
+				receipt_to_pay.type="received";
+				if(receipts[k].type=='received')
+				{
+					receipt_to_pay.type="paid";
+				}
+				receipt_to_pay.total_amount=receipts[k].amount;
+				receipt_to_pay.date=receipts[k].date;
+				payments.push(receipt_to_pay);
+			}
+			
+			payments.sort(function(a,b)
+			{
+				if(parseFloat(a.date)>parseFloat(b.date))
+				{	return 1;}
+				else 
+				{	return -1;}
+			});
+			
+			for(var i=0;i<payments.length;i++)
+			{
+				var debit="-";
+				var credit="-";
+				var particulars="";
+				
+				if(payments[i].type=='received')
+				{
+					credit="Rs. "+payments[i].total_amount;
+					particulars="To "+payments[i].acc_name;
+				}
+				else 
+				{
+					debit="Rs. "+payments[i].total_amount;
+					particulars="From "+payments[i].acc_name;
+				}
+								
+				var rowsHTML="<tr>";
+				rowsHTML+="<td data-th='Date'>";
+					rowsHTML+=get_my_past_date(payments[i].date);
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Particulars'>";
+					rowsHTML+=particulars;
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Debit'>";
+					rowsHTML+=debit;
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Credit'>";
+					rowsHTML+=credit;
+				rowsHTML+="</td>";
+				rowsHTML+="</tr>";
+						
+				$('#report58_body').append(rowsHTML);
+				
+				if(payments[i].type!='credit')
+				{
+					var debit="-";
+					var credit="-";
+					var particulars="";
+					
+					if(payments[i].type=='received')
+					{
+						debit="Rs. "+payments[i].total_amount;
+						particulars="From "+payments[i].acc_name;
+					}
+					else 
+					{
+						credit="Rs. "+payments[i].total_amount;
+						particulars="To "+payments[i].acc_name;
+					}
+									
+					var rowsHTML="<tr>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+=get_my_past_date(payments[i].date);
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Particulars'>";
+						rowsHTML+=particulars;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Debit'>";
+						rowsHTML+=debit;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Credit'>";
+						rowsHTML+=credit;
+					rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+							
+					$('#report58_body').append(rowsHTML);
+				}
+			}
+			hide_loader();
+		});
+	});
+	
+	var print_button=form.elements[5];
+	print_tabular_report('report58','Ledger',print_button);
+};

@@ -91,35 +91,6 @@ $('#contact-form').submit(function(e) {
 		$.post(self.attr('action'),formInput, function(data){}); // end post
 }); // end submit
 
-$('#subscribe-form').submit(function(e) {
-      
-		e.preventDefault();	
-		var error = 0;
-		var self = $(this);
-		
-	    var $email = self.find('[type=email]');	
-	    	
-				
-		var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-		
-  		if(!emailRegex.test($email.val())) {
-			createErrTult("Enter proper email", $email)
-			error++;	
-		}	
-		
-		if (error!=0)return;
-		self.find('[type=submit]').attr('disabled', 'disabled');
-
-		self.children().fadeOut(300,function(){ $(this).remove() })
-		$('<p>Thank you! We have received your email!</p>').appendTo(self)
-		.hide().delay(300).fadeIn();
-
-
-		var formInput = self.serialize();
-		$.post(self.attr('action'),formInput, function(data){}); // end post
-}); // end submit
-		
-		
 
 function createErrTult(text, $elem) {
 	$('<p />', {

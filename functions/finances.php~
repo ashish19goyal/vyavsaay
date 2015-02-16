@@ -47,8 +47,7 @@
 			include "forms/form93.php";
 		if(strpos($_SESSION['reports'],'report53-')!==false)
 			include "reports/report53.php";
-		if(strpos($_SESSION['reports'],'report58-')!==false)
-			include "reports/report58.php";		
+		
 	?>		
 	
 	<script>

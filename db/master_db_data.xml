@@ -1306,16 +1306,16 @@
 		<row>
 			<tablename>payments</tablename>
 			<listname>mode</listname>
-			<name>debit card</name>
-			<value>Debit Card</value>
+			<name>credit</name>
+			<value>Credit</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<tablename>payments</tablename>
 			<listname>mode</listname>
-			<name>credit card</name>
-			<value>Credit Card</value>
+			<name>card</name>
+			<value>Card</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

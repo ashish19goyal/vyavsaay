@@ -7,11 +7,11 @@
 						<div class="col-sm-6 col-md-12">
 			                <p class="widget-news__text">Get information about our latest solutions.</p>
 			                <!-- subscribe form -->
-			                <form class="subscribe-form" id="subscribe-form" name="subscribe-form" method="post" action="ajax/newLetter.php" novalidate>
+			                <form class="subscribe-form" id="subscribe-form" name="subscribe-form">
 			                    <input class="subscribe-input" id="input-email" name="input-email" type="email" placeholder="your email here">
 			                    <button class="submit-button" id="submit-button" type="submit">
-					                <i class="icon-circle icon-circle--thin fa fa-arrow-right"></i>
-					            </button>
+						           		<i class="icon-circle icon-circle--thin fa fa-arrow-right"></i>
+						           </button>
 			                </form>
 						</div>
 						<div class="col-sm-6 col-md-12">
@@ -30,8 +30,7 @@
 		<!--Begin footer secondary -->
 		<div class="footer-secondary">
 
-            <div class="divider-circle"></div>
-
+         <div class="divider-circle"></div>
 			<div class="container">
 				<ul class="social">
 		            <li class="social__item custom-tooltip tooltip--info" title="google">
@@ -46,7 +45,65 @@
 	        	</ul>
 		    	<div class="copyright">
 		        	<small class="small">&copy; Vyavsaay, 2015. All rights reserved.</small>
-		        </div>
+		      </div>
 			</div>
 		</div>
 		<!--End footer secondary -->
+
+	<script>
+		$('#subscribe-form').submit(function(e)
+		{      
+			e.preventDefault();	
+			console.log('subscribing');
+			var error = 0;
+			var self = $(this);
+			var $email = self.find('[type=email]');	
+		   var email_value=$email.val(); 	
+					
+			var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+			
+	  		if(!emailRegex.test($email.val())) {
+				createErrTult("Enter proper email", $email)
+				error++;	
+			}	
+			
+			if (error!=0)return;
+			self.find('[type=submit]').attr('disabled', 'disabled');
+	
+			self.children().fadeOut(300,function(){ $(this).remove() })
+			$('<p>Thank you! We have received your email!</p>').appendTo(self)
+			.hide().delay(300).fadeIn();
+	
+			var formInput = self.serialize();
+			
+			var xmlhttp;
+			if (window.XMLHttpRequest)
+			{
+				xmlhttp=new XMLHttpRequest();
+			}
+			xmlhttp.open("POST",'./ajax/newsLetter.php',true);
+			xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xmlhttp.onreadystatechange=function()
+			{
+				if(xmlhttp.readyState===4)
+				{
+					if(xmlhttp.status===200)
+					{
+					 	console.log(xmlhttp.responseText);
+					}
+				}
+			};	
+			xmlhttp.send("input-email="+email_value);
+			//$.post(self.attr('action'),formInput, function(data){}); // end post
+		}); // end submit
+		
+
+	function createErrTult(text, $elem) {
+		$('<p />', {
+			'class':'form__tooltip',
+			'text':text,
+		}).css({'top':$elem.position().top,"left":$elem.position().left})
+		.appendTo($elem.addClass('form__field--invalid').parent()) 
+		.delay(3000).fadeOut(300, function(){$(this).remove()});
+	}
+	</script>
