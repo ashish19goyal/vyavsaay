@@ -5532,14 +5532,28 @@ function form90_create_item(form)
 					"<notes>Billing type "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var num_xml="<user_preferences>" +
+					"<id>"+data_id+"</id>" +
+					"<name unique='yes'>"+name+"_bill_num</name>" +
+					"<display_name>Next "+name+" Bill series number</display_name>"+					
+					"<value>1</value>" +
+					"<status>active</status>" +
+					"<type>accounting</type>"+
+					"<shortcut></shortcut>"+
+					"<sync>checked</sync>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</user_preferences>";
+
 		if(is_online())
 		{
 			server_create_row(data_xml,activity_xml);
+			server_create_simple(num_xml);
 		}
 		else
 		{
 			local_create_row(data_xml,activity_xml);
-		}	
+			local_create_simple(num_xml);
+		}
 
 		var product_instance_data="<product_instances>" +
 					"<id></id>" +

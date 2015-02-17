@@ -2,6 +2,16 @@
 <re_xml>
 	<user_preferences>
 		<row>
+			<name>bill_num</name>
+			<display_name>Next Bill series number</display_name>
+			<status>active</status>
+			<value></value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>tin</name>
 			<display_name>TIN #</display_name>
 			<status>active</status>
@@ -694,6 +704,16 @@
 		<row>
 			<name>report57</name>
 			<display_name>warranty_status</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report58</name>
+			<display_name>ledger</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>

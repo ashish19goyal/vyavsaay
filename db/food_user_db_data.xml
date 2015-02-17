@@ -16,6 +16,16 @@
 	</mandatory_attributes>
 	<user_preferences>
 		<row>
+			<name>bill_num</name>
+			<display_name>Next Bill series number</display_name>
+			<status>active</status>
+			<value>1</value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>tin</name>
 			<display_name>TIN #</display_name>
 			<status>active</status>

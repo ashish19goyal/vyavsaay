@@ -2299,6 +2299,17 @@
 		</row>
 		<row>
 			<username>master</username>
+			<element_id>report58</element_id>
+			<element_name>ledger</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
 			<element_id>form1</element_id>
 			<element_name>update_inventory</element_name>
 			<status>active</status>

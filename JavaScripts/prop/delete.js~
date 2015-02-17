@@ -2547,20 +2547,24 @@ function form90_delete_item(button)
 		var num_xml="<user_preferences>" +
 					"<id>"+data_id+"</id>" +
 					"<name unique='yes'>"+name+"_bill_num</name>" +
+					"<display_name>Next "+name+" Bill series number</display_name>"+					
+					"<value>1</value>" +
+					"<status>active</status>" +
 					"<type>accounting</type>"+
+					"<shortcut></shortcut>"+
+					"<sync>checked</sync>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
 					"</user_preferences>";
 		
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
 			server_delete_simple(sale_prices_xml);
-			server_delete_simple(num_xml);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
 			local_delete_simple(sale_prices_xml);
-			local_delete_simple(num_xml);			
 		}	
 		$(button).parent().parent().remove();
 	}
