@@ -3755,23 +3755,24 @@ function report58_ini()
 {
 	var form=document.getElementById('report58_header');
 	var account=form.elements[1].value;
-	var start_date=form.elements[2].value;
-	var end_date=form.elements[3].value;
+//	var start_date=form.elements[2].value;
+//	var end_date=form.elements[3].value;
 	
 	show_loader();
 	$('#report58_body').html('');
 		
 	var payments_data="<payments>" +
 			"<id></id>"+
-			"<acc_name>"+account+"</acc_name>" +
+			"<acc_name exact='yes'>"+account+"</acc_name>" +
 			"<type></type>" +
 			"<total_amount></total_amount>" +
 			"<mode></mode>"+			
 			"<status array='yes'>--pending--closed--</status>"+
 			"<bill_id></bill_id>"+			
-			"<date lowerbound='yes'>"+get_raw_time(start_date)+"</date>" +
-			"<date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</date>" +
+			"<date></date>"+			
 			"</payments>";
+//			"<date lowerbound='yes'>"+get_raw_time(start_date)+"</date>" +
+//			"<date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</date>" +
 	
 	fetch_requested_data('report58',payments_data,function(payments)
 	{	
@@ -3779,10 +3780,12 @@ function report58_ini()
 							"<id></id>"+							
 							"<type></type>"+
 							"<amount></amount>"+
-							"<acc_name>"+account+"</acc_name>"+							
-							"<date lowerbound='yes'>"+get_raw_time(start_date)+"</date>" +
-							"<date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</date>" +
-							"</receipts>";		
+							"<acc_name exact='yes'>"+account+"</acc_name>"+							
+							"<date></date>"+
+							"</receipts>";
+//							"<date lowerbound='yes'>"+get_raw_time(start_date)+"</date>" +
+//							"<date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</date>" +
+
 		fetch_requested_data('report58',receipts_data,function(receipts)
 		{	
 			for(var k in receipts)
@@ -3810,6 +3813,8 @@ function report58_ini()
 				{	return -1;}
 			});
 			
+			var balance=0;
+			
 			for(var i=0;i<payments.length;i++)
 			{
 				var debit="-";
@@ -3818,6 +3823,7 @@ function report58_ini()
 				
 				if(payments[i].type=='received')
 				{
+					balance+=parseFloat(payments[i].total_amount);
 					credit="Rs. "+payments[i].total_amount;
 					particulars="To "+payments[i].acc_name+" for bill id: "+payments[i].bill_id;
 					if(payments[i].status=='from receipt')
@@ -3827,6 +3833,7 @@ function report58_ini()
 				}
 				else 
 				{
+					balance-=parseFloat(payments[i].total_amount);
 					debit="Rs. "+payments[i].total_amount;
 					particulars="From "+payments[i].acc_name+" for bill id: "+payments[i].bill_id;
 					if(payments[i].status=='from receipt')
@@ -3848,6 +3855,9 @@ function report58_ini()
 				rowsHTML+="<td data-th='Credit'>";
 					rowsHTML+=credit;
 				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Balance'>";
+					rowsHTML+="Rs. "+balance;
+				rowsHTML+="</td>";
 				rowsHTML+="</tr>";
 						
 				$('#report58_body').append(rowsHTML);
@@ -3860,11 +3870,13 @@ function report58_ini()
 					
 					if(payments[i].type=='received')
 					{
+						balance-=parseFloat(payments[i].total_amount);						
 						debit="Rs. "+payments[i].total_amount;
 						particulars="From "+payments[i].acc_name+" by payment id "+payments[i].id;
 					}
 					else 
 					{
+						balance+=parseFloat(payments[i].total_amount);
 						credit="Rs. "+payments[i].total_amount;
 						particulars="To "+payments[i].acc_name+" by payment id "+payments[i].id;
 					}
@@ -3881,6 +3893,9 @@ function report58_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Credit'>";
 						rowsHTML+=credit;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Balance'>";
+						rowsHTML+="Rs. "+balance;
 					rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 							

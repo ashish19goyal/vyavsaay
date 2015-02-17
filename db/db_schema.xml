@@ -262,6 +262,7 @@
 	<bills>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer_name index='yes' type="VARCHAR(100)"></customer_name>
+			<bill_num index='yes' type="VARCHAR(10)"></bill_num>
 			<bill_date index='yes' type="BIGINT"></bill_date>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<total index='yes' type="DECIMAL(12,2)"></total>
