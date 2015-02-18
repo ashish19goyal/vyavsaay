@@ -2770,7 +2770,6 @@ function form92_import(data_array,import_type)
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
-				"<bill_num>"+row.bill_num+"</bill_num>"+
 				"<customer_name>"+row.customer_name+"</customer_name>" +
 				"<bill_date>"+get_raw_time(row.bill_date)+"</bill_date>" +
 				"<amount>"+row.amount+"</amount>" +

@@ -28,11 +28,11 @@
 	try
 	{
 		$conn=new db_connect("re_user_".$domain);
-		$stmt1=$conn->conn->prepare("select count(*) from staff,accounts where accounts.username=? and staff.acc_name=accounts.acc_name and staff.email=? union select customers.name from customers,accounts where accounts.username=? and customers.acc_name=accounts.acc_name and customers.email=? union select suppliers.name from suppliers,accounts where accounts.username=? and suppliers.acc_name=accounts.acc_name  and suppliers.email=?");
+		$stmt1=$conn->conn->prepare("select count(*) from staff,accounts where staff.username=? and staff.email=? union select count(*) from customers,accounts where customers.username=? and customers.email=? union select count(*) from suppliers,accounts where suppliers.username=? and suppliers.email=?");
 		$stmt1->execute(array($username,$userEmail,$username,$userEmail,$username,$userEmail));
 		$unique=$stmt1->fetchAll(PDO::FETCH_NUM)[0][0];
-		
-		if($unique!==0 && $unique!='0')
+		echo $unique;
+		if($unique!=0 && $unique!='0')
 		{
 			$stmt2=$conn->conn->prepare("update accounts set password=? where username=?");
 			$stmt2->execute(array($pass_hash,$username));
@@ -59,6 +59,7 @@
 		
 	}catch(PDOException $ex)
 	{
-		echo 'failed';
+		echo 'failed due to exception';
+		echo $ex;
 	}
 ?>

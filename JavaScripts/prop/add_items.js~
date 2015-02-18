@@ -89,7 +89,7 @@ function form10_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form10_"+id+"'></form>";
+		rowsHTML+="<form id='form10_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Service Name'>";
 				rowsHTML+="<input type='text' required form='form10_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
@@ -251,7 +251,7 @@ function form12_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form12_"+id+"'></form>";
+		rowsHTML+="<form id='form12_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form12_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -525,7 +525,7 @@ function form15_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form15_"+id+"'></form>";
+		rowsHTML+="<form id='form15_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form15_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -714,7 +714,7 @@ function form19_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form19_"+id+"'></form>";
+		rowsHTML+="<form id='form19_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form19_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -871,7 +871,7 @@ function form21_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form21_"+id+"'></form>";
+		rowsHTML+="<form id='form21_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form21_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -1003,7 +1003,7 @@ function form24_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form24_"+id+"'></form>";
+		rowsHTML+="<form id='form24_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form24_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -1093,7 +1093,7 @@ function form38_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form38_"+id+"'></form>";
+		rowsHTML+="<form id='form38_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' form='form38_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -1166,7 +1166,7 @@ function form56_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form56_"+id+"'></form>";
+		rowsHTML+="<form id='form56_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Account'>";
 				rowsHTML+="<input type='text' required form='form56_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new account' onclick='modal12_action();'>";
@@ -1223,7 +1223,7 @@ function form58_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form58_"+id+"'></form>";
+		rowsHTML+="<form id='form58_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form58_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
@@ -1309,7 +1309,7 @@ function form59_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form59_"+id+"'></form>";
+		rowsHTML+="<form id='form59_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -1388,7 +1388,7 @@ function form60_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form60_"+id+"'></form>";
+		rowsHTML+="<form id='form60_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form60_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -1447,7 +1447,7 @@ function form61_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form61_"+id+"'></form>";
+		rowsHTML+="<form id='form61_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form61_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
@@ -1507,7 +1507,7 @@ function form62_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form62_"+id+"'></form>";
+		rowsHTML+="<form id='form62_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form62_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -1570,7 +1570,7 @@ function form63_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form63_"+id+"'></form>";
+		rowsHTML+="<form id='form63_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form63_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
@@ -1634,7 +1634,7 @@ function form64_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form64_"+id+"'></form>";
+		rowsHTML+="<form id='form64_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form64_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
@@ -1704,7 +1704,7 @@ function form66_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form66_"+id+"'></form>";
+		rowsHTML+="<form id='form66_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form66_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -1774,7 +1774,7 @@ function form69_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form69_"+id+"'></form>";
+		rowsHTML+="<form id='form69_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form69_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -1876,7 +1876,7 @@ function form72_add_product()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form72_"+id+"'></form>";
+		rowsHTML+="<form id='form72_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -2138,7 +2138,6 @@ function form72_add_product()
 					{
 						tax_filter.value=parseFloat((parseFloat(tax)*(amount-parseFloat(discount_filter.value)))/100);
 					});
-					
 					total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
 				},tax_data);
 				
@@ -2163,7 +2162,7 @@ function form72_add_service()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form72_"+id+"'></form>";
+		rowsHTML+="<form id='form72_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
@@ -2340,7 +2339,7 @@ function form78_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='row_form78_"+id+"'></form>";
+		rowsHTML+="<form id='row_form78_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer Name'>";
 				rowsHTML+="<input type='text' form='row_form78_"+id+"' value=''>";
 			rowsHTML+="</td>";
@@ -2396,7 +2395,7 @@ function form80_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form80_"+id+"'></form>";
+		rowsHTML+="<form id='form80_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Change'>";
 				rowsHTML+="<input type='text' form='form80_"+id+"' value=''>";
 				rowsHTML+="<input type='hidden' form='form80_"+id+"' value=''>";
@@ -2470,7 +2469,7 @@ function form81_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form81_"+id+"'></form>";
+		rowsHTML+="<form id='form81_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
 				rowsHTML+="<input type='text' form='form81_"+id+"' required value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
@@ -2539,7 +2538,7 @@ function form82_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='row_form82_"+id+"'></form>";
+		rowsHTML+="<form id='row_form82_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Barcode'>";
 				rowsHTML+="<input type='text' required form='row_form82_"+id+"'>";
 			rowsHTML+="</td>";
@@ -2671,7 +2670,7 @@ function form84_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form84_"+id+"'></form>";
+		rowsHTML+="<form id='form84_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
 				rowsHTML+="<input type='text' form='form84_"+id+"' required value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
@@ -2742,7 +2741,7 @@ function form88_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form88_"+id+"'></form>";
+		rowsHTML+="<form id='form88_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product'>";
 				rowsHTML+="<input type='text' form='form88_"+id+"' required value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -2807,7 +2806,7 @@ function form89_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form89_"+id+"'></form>";
+		rowsHTML+="<form id='form89_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
 				rowsHTML+="<input type='text' required form='form89_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
@@ -2879,7 +2878,7 @@ function form90_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form90_"+id+"'></form>";
+		rowsHTML+="<form id='form90_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form90_"+id+"' required value=''>";
 			rowsHTML+="</td>";
@@ -2926,7 +2925,7 @@ function form91_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form91_"+id+"'></form>";
+		rowsHTML+="<form id='form91_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' required form='form91_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -3222,7 +3221,7 @@ function form96_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form96_"+id+"'></form>";
+		rowsHTML+="<form id='form96_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form96_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
@@ -3281,7 +3280,7 @@ function form97_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form97_"+id+"'></form>";
+		rowsHTML+="<form id='form97_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form97_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new supplier' onclick='modal13_action();'>";
@@ -3340,7 +3339,7 @@ function form98_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form98_"+id+"'></form>";
+		rowsHTML+="<form id='form98_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form98_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
@@ -3399,7 +3398,7 @@ function form101_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form101_"+id+"'></form>";
+		rowsHTML+="<form id='form101_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Project Name'>";
 				rowsHTML+="<textarea required form='form101_"+id+"'></textarea>";
 			rowsHTML+="</td>";
@@ -3454,7 +3453,7 @@ function form102_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form102_"+id+"'></form>";
+		rowsHTML+="<form id='form102_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Member'>";
 				rowsHTML+="<input type='text' form='form102_"+id+"' required value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
@@ -3513,7 +3512,7 @@ function form103_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form103_"+id+"'></form>";
+		rowsHTML+="<form id='form103_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Phase Name'>";
 				rowsHTML+="<textarea form='form103_"+id+"' required></textarea>";
 			rowsHTML+="</td>";
@@ -3573,7 +3572,7 @@ function form105_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form105_"+id+"'></form>";
+		rowsHTML+="<form id='form105_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Access Type'>";
 				rowsHTML+="<input type='text' form='form105_"+id+"' required>";
 			rowsHTML+="</td>";
@@ -3642,7 +3641,7 @@ function form109_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form109_"+id+"'></form>";
+		rowsHTML+="<form id='form109_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form109_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new asset' onclick='modal10_action();'>";
@@ -3701,7 +3700,7 @@ function form111_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form111_"+id+"'></form>";
+		rowsHTML+="<form id='form111_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Table'>";
 				rowsHTML+="<input type='text' form='form111_"+id+"' required value=''>";
 			rowsHTML+="</td>";
@@ -3788,7 +3787,7 @@ function form112_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form112_"+id+"'></form>";
+		rowsHTML+="<form id='form112_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' form='form112_"+id+"' required value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -3862,7 +3861,7 @@ function form114_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form114_"+id+"'></form>";
+		rowsHTML+="<form id='form114_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' form='form114_"+id+"' required value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -3937,7 +3936,7 @@ function form118_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form118_"+id+"'></form>";
+		rowsHTML+="<form id='form118_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' required form='form118_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -4561,7 +4560,7 @@ function form121_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form121_"+id+"'></form>";
+		rowsHTML+="<form id='form121_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Program Name'>";
 				rowsHTML+="<input type='text' form='form121_"+id+"' required value=''>";
 			rowsHTML+="</td>";
@@ -4628,7 +4627,7 @@ function form122_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form122_"+id+"'></form>";
+		rowsHTML+="<form id='form122_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form122_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -4760,7 +4759,7 @@ function form123_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form123_"+id+"'></form>";
+		rowsHTML+="<form id='form123_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Object'>";
 				rowsHTML+="<input type='text' form='form123_"+id+"' required>";
 			rowsHTML+="</td>";
@@ -4811,7 +4810,7 @@ function form125_add_item()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form125_"+id+"'></form>";
+		rowsHTML+="<form id='form125_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
 				rowsHTML+="<input type='text' form='form125_"+id+"' required>";
 			rowsHTML+="</td>";
@@ -4869,7 +4868,7 @@ function form130_add_product()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form130_"+id+"'></form>";
+		rowsHTML+="<form id='form130_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' required form='form130_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
@@ -5156,7 +5155,7 @@ function form130_add_service()
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form130_"+id+"'></form>";
+		rowsHTML+="<form id='form130_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' required form='form130_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";

@@ -5984,7 +5984,7 @@ function form119_update_form()
 						"<tablename>bills</tablename>" +
 						"<link_to>form92</link_to>" +
 						"<title>Updated</title>" +
-						"<notes>Bill no "+bill_num+"</notes>" +
+						"<notes>Bill no "+data_id+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			var transaction_xml="<transactions>" +

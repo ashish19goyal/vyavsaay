@@ -581,6 +581,7 @@ function form10_ini()
 		show_loader();
 		var bill_columns="<bills>" +
 				"<id>"+bill_id+"</id>" +
+				"<bill_num></bill_num>"+
 				"<customer_name></customer_name>" +
 				"<total></total>" +
 				"<bill_date></bill_date>" +
@@ -615,10 +616,11 @@ function form10_ini()
 			{
 				filter_fields.elements[1].value=bill_results[i].customer_name;
 				filter_fields.elements[2].value=get_my_past_date(bill_results[i].bill_date);
-				filter_fields.elements[3].value=bill_id;
-				filter_fields.elements[4].value=bill_results[i].offer;
-				filter_fields.elements[5].value=bill_results[i].transaction_id;
-				var save_button=filter_fields.elements[6];
+				filter_fields.elements[3].value=bill_results[i].bill_num;
+				filter_fields.elements[4].value=bill_id;
+				filter_fields.elements[5].value=bill_results[i].offer;
+				filter_fields.elements[6].value=bill_results[i].transaction_id;
+				var save_button=filter_fields.elements[7];
 				
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
@@ -875,6 +877,7 @@ function form12_ini()
 		show_loader();
 		var bill_columns="<bills>" +
 				"<id>"+bill_id+"</id>" +
+				"<bill_num></bill_num>"+				
 				"<customer_name></customer_name>" +
 				"<total></total>" +
 				"<bill_date></bill_date>" +
@@ -910,10 +913,11 @@ function form12_ini()
 			{
 				filter_fields.elements[1].value=bill_results[i].customer_name;
 				filter_fields.elements[2].value=get_my_past_date(bill_results[i].bill_date);
-				filter_fields.elements[3].value=bill_id;
-				filter_fields.elements[4].value=bill_results[i].offer;
-				filter_fields.elements[5].value=bill_results[i].transaction_id;
-				var save_button=filter_fields.elements[6];
+				filter_fields.elements[3].value=bill_results[i].bill_num;
+				filter_fields.elements[4].value=bill_id;
+				filter_fields.elements[5].value=bill_results[i].offer;
+				filter_fields.elements[6].value=bill_results[i].transaction_id;
+				var save_button=filter_fields.elements[7];
 				
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
@@ -987,10 +991,10 @@ function form12_ini()
 					});
 				});
 				
-				message_string+="\nAmount: "+filter_fields.elements[3].value;
-				message_string+="\ndiscount: "+filter_fields.elements[4].value;
-				message_string+="\nTax: "+filter_fields.elements[5].value;
-				message_string+="\nTotal: "+filter_fields.elements[6].value;
+				message_string+="\nAmount: "+bill_results[0].amount;
+				message_string+="\ndiscount: "+bill_results[0].discount;
+				message_string+="\nTax: "+bill_results[0].tax;
+				message_string+="\nTotal: "+bill_results[0].total;
 				
 				var subject="Bill from "+get_session_var('title');
 				$('#form12_share').show();
@@ -2694,8 +2698,7 @@ function form42_ini()
 	var filter_fields=document.getElementById('form42_header');
 	
 	//populating form 
-	if(fid==="")
-		fid=filter_fields.elements[0].value;
+	var fnum=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 
 	////indexing///
@@ -2707,6 +2710,7 @@ function form42_ini()
 
 	var columns="<bills count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
+			"<bill_num>"+fnum+"</bill_num>"+			
 			"<customer_name>"+fname+"</customer_name>" +
 			"<bill_date></bill_date>" +
 			"<total></total>" +
@@ -2725,7 +2729,7 @@ function form42_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form42_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Bill No.'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form42_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form42_"+result.id+"' value='"+result.bill_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Customer'>";
 						rowsHTML+="<textarea readonly='readonly' form='form42_"+result.id+"'>"+result.customer_name+"</textarea>";
@@ -2737,6 +2741,7 @@ function form42_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form42_"+result.id+"' value='"+result.total+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form42_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='edit_icon' form='form42_"+result.id+"' title='Edit Bill'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form42_"+result.id+"' title='Delete Bill' onclick='form42_delete_item($(this));'>";
 						rowsHTML+="<input type='hidden' form='form42_"+result.id+"' value='"+result.transaction_id+"'>";
@@ -2745,7 +2750,7 @@ function form42_ini()
 			
 			$('#form42_body').append(rowsHTML);
 			var fields=document.getElementById("form42_"+result.id);
-			var edit_button=fields.elements[4];
+			var edit_button=fields.elements[5];
 			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();
@@ -5267,6 +5272,7 @@ function form72_ini()
 		show_loader();
 		var bill_columns="<bills>" +
 				"<id>"+bill_id+"</id>" +
+				"<bill_num></bill_num>"+				
 				"<customer_name></customer_name>" +
 				"<total></total>" +
 				"<bill_date></bill_date>" +
@@ -5304,11 +5310,11 @@ function form72_ini()
 			{
 				filter_fields.elements[1].value=bill_results[i].customer_name;
 				filter_fields.elements[2].value=get_my_past_date(bill_results[i].bill_date);
-				filter_fields.elements[3].value=bill_id;
-				filter_fields.elements[4].value=bill_results[i].offer;
-				filter_fields.elements[5].value=bill_results[i].transaction_id;
-				
-				var save_button=filter_fields.elements[6];
+				filter_fields.elements[3].value=bill_results[i].bill_num;
+				filter_fields.elements[4].value=bill_id;
+				filter_fields.elements[5].value=bill_results[i].offer;
+				filter_fields.elements[6].value=bill_results[i].transaction_id;
+				var save_button=filter_fields.elements[7];
 				
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
@@ -5394,11 +5400,10 @@ function form72_ini()
 					});
 				});
 				
-				
-				message_string+="\nAmount: "+filter_fields.elements[3].value;
-				message_string+="\ndiscount: "+filter_fields.elements[4].value;
-				message_string+="\nTax: "+filter_fields.elements[5].value;
-				message_string+="\nTotal: "+filter_fields.elements[6].value;
+				message_string+="\nAmount: "+bill_results[0].amount;
+				message_string+="\ndiscount: "+bill_results[0].discount;
+				message_string+="\nTax: "+bill_results[0].tax;
+				message_string+="\nTotal: "+bill_results[0].total;
 
 				var subject="Bill from "+get_session_var('title');
 				$('#form72_share').show();
@@ -7230,6 +7235,7 @@ function form91_ini()
 		show_loader();
 		var bill_columns="<bills>" +
 				"<id>"+bill_id+"</id>" +
+				"<bill_num></bill_num>"+
 				"<customer_name></customer_name>" +
 				"<total></total>" +
 				"<bill_date></bill_date>" +
@@ -7267,10 +7273,11 @@ function form91_ini()
 				filter_fields.elements[1].value=bill_results[i].customer_name;
 				filter_fields.elements[2].value=bill_results[i].billing_type;
 				filter_fields.elements[3].value=get_my_past_date(bill_results[i].bill_date);
-				filter_fields.elements[4].value=bill_id;
-				filter_fields.elements[5].value=bill_results[i].offer;
-				filter_fields.elements[6].value=bill_results[i].transaction_id;
-				var save_button=filter_fields.elements[7];
+				filter_fields.elements[4].value=bill_results[i].bill_num;
+				filter_fields.elements[5].value=bill_id;				
+				filter_fields.elements[6].value=bill_results[i].offer;
+				filter_fields.elements[7].value=bill_results[i].transaction_id;
+				var save_button=filter_fields.elements[8];
 				
 				var address_data="<customers>" +
 						"<address></address>" +
@@ -7391,8 +7398,7 @@ function form92_ini()
 	var filter_fields=document.getElementById('form92_header');
 	
 	//populating form 
-	if(fid==="")
-		fid=filter_fields.elements[0].value;
+	var fnum=filter_fields.elements[0].value;
 	var ftype=filter_fields.elements[1].value;
 	var fname=filter_fields.elements[2].value;
 	
@@ -7405,6 +7411,7 @@ function form92_ini()
 
 	var columns="<bills count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
+			"<bill_num>"+fnum+"</bill_num>"+
 			"<customer_name>"+fname+"</customer_name>" +
 			"<bill_date></bill_date>" +
 			"<total></total>" +
@@ -7424,7 +7431,7 @@ function form92_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form92_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Bill No.'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form92_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form92_"+result.id+"' value='"+result.bill_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Type'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form92_"+result.id+"' value='"+result.billing_type+"'>";
@@ -7439,6 +7446,7 @@ function form92_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form92_"+result.id+"' value='"+result.total+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form92_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='edit_icon' form='form92_"+result.id+"' title='Edit Bill'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form92_"+result.id+"' title='Delete Bill' onclick='form92_delete_item($(this));'>";
 						rowsHTML+="<input type='hidden' form='form92_"+result.id+"' value='"+result.transaction_id+"'>";
@@ -7447,7 +7455,7 @@ function form92_ini()
 			
 			$('#form92_body').append(rowsHTML);
 			var fields=document.getElementById("form92_"+result.id);
-			var edit_button=fields.elements[5];
+			var edit_button=fields.elements[6];
 			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();
@@ -9825,6 +9833,7 @@ function form118_ini()
 		show_loader();
 		var bill_columns="<bills>" +
 				"<id>"+bill_id+"</id>" +
+				"<bill_num></bill_num>"+
 				"<customer_name></customer_name>" +
 				"<total></total>" +
 				"<bill_date></bill_date>" +
@@ -9861,10 +9870,11 @@ function form118_ini()
 			{
 				filter_fields.elements[1].value=bill_results[i].customer_name;
 				filter_fields.elements[2].value=get_my_past_date(bill_results[i].bill_date);
-				filter_fields.elements[3].value=bill_id;
-				filter_fields.elements[4].value=bill_results[i].offer;
-				filter_fields.elements[5].value=bill_results[i].transaction_id;
-				var save_button=filter_fields.elements[9];
+				filter_fields.elements[3].value=bill_results[i].bill_num;
+				filter_fields.elements[4].value=bill_id;
+				filter_fields.elements[5].value=bill_results[i].offer;
+				filter_fields.elements[6].value=bill_results[i].transaction_id;
+				var save_button=filter_fields.elements[10];
 				
 				var address_data="<customers>" +
 						"<address></address>" +
@@ -9906,7 +9916,7 @@ function form118_ini()
 				{
 					if(programs.length>0)
 					{
-						filter_fields.elements[6].value=programs[0];
+						filter_fields.elements[7].value=programs[0];
 						var points_data="<loyalty_points>"+
 							"<points></points>"+
 							"<program_name exact='yes'>"+loyalty_program.value+"</program_name>"+
@@ -9919,7 +9929,7 @@ function form118_ini()
 							{
 								points_value+=parseFloat(points[i]);
 							}	
-							filter_fields.elements[7].value=points_value;	
+							filter_fields.elements[8].value=points_value;	
 						},points_data);
 					}
 				},loyalty_data);
@@ -10012,6 +10022,7 @@ function form119_ini()
 		show_loader();
 		var bill_columns="<bills>" +
 				"<id>"+bill_id+"</id>" +
+				"<bill_num></bill_num>"+
 				"<customer_name></customer_name>" +
 				"<total></total>" +
 				"<bill_date></bill_date>" +
@@ -10053,11 +10064,12 @@ function form119_ini()
 				filter_fields.elements[1].value=bill_results[i].customer_name;
 				filter_fields.elements[2].value=bill_results[i].billing_type;
 				filter_fields.elements[3].value=get_my_past_date(bill_results[i].bill_date);
-				filter_fields.elements[5].value=bill_id;
-				filter_fields.elements[6].value=bill_results[i].offer;
-				filter_fields.elements[7].value=bill_results[i].transaction_id;
-				var unbilled_button=filter_fields.elements[8];
-				var save_button=filter_fields.elements[9];
+				filter_fields.elements[4].value=bill_results[i].bill_num;
+				filter_fields.elements[6].value=bill_id;
+				filter_fields.elements[7].value=bill_results[i].offer;
+				filter_fields.elements[8].value=bill_results[i].transaction_id;
+				var unbilled_button=filter_fields.elements[9];
+				var save_button=filter_fields.elements[10];
 				
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
@@ -10102,7 +10114,7 @@ function form119_ini()
 						"</unbilled_sale_items>";
 				get_single_column_data(function(customers)
 				{
-					filter_fields.elements[4].value=customers.length;
+					filter_fields.elements[5].value=customers.length;
 					if(customers.length>0)
 						$(unbilled_button).show();
 					

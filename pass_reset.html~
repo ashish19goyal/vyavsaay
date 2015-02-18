@@ -88,36 +88,21 @@
 <script src="appic/js/form.js"></script>
 
 <script>
-	!function()
+	$(document).ready(function()
 	{
-		$("#login_box").dialog({
+		$('#reset_footer').load('footer.html');
+		$('#reset_header').load('header.html',function () 
+		{
+				default_load();
+				$("#login_box").dialog({
 	   		autoOpen: false,
 	   		width: 300,
 	   		modal: true,
 	   		show: "slide",
 	   		closeOnEscape: true,
-		});
-	}();
+			});
+		});	
 
-	function display_login_box()
-	{
-		var form=document.getElementById("login");
-		
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-			//$("#login_box").dialog("close");
-			login_action();
-		});
-		$("#login_box").dialog("open");
-	}
-
-	$(document).ready(function()
-	{
-		$('#reset_header').load('header.html');	
-		$('#reset_footer').load('footer.html');
-		default_load();
 	});
 	
 	$('#index_reset').on('submit',function(event)

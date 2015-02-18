@@ -6,7 +6,6 @@
 			<label id='form119_customer_info'></label>
 			<label>Bill Type</br><input type='text' required></label>
 			<label>Bill Date</br><input type='text' required></label>
-			<label>Bill #<br><input type='text' name='bill_num' readonly="readonly"></label>
 			<label id='form119_payment_info'></label>
 			<label>Unbilled Items</br><input readonly='readonly' type='number'></label>
 			<input type='hidden' name='bill_id'>

@@ -162,7 +162,7 @@ function form10_create_item(form)
 {
 	if(is_create_access('form10'))
 	{
-		var bill_id=document.getElementById("form10_master").elements[3].value;
+		var bill_id=document.getElementById("form10_master").elements[4].value;
 		
 		var name=form.elements[0].value;
 		var staff=form.elements[1].value;
@@ -246,7 +246,7 @@ function form10_create_item(form)
 		});
 
 		
-	//////adding free service to the bill if applicable
+   	//////adding free service to the bill if applicable
 		if(free_service_name!="" && free_service_name!=null)
 		{
 			var id=get_new_key();
@@ -279,7 +279,7 @@ function form10_create_item(form)
                     rowsHTML+="</td>";
             rowsHTML+="</tr>";
 
-            $('#form10_body').prepend(rowsHTML);
+         $('#form10_body').prepend(rowsHTML);
 
     		var free_pre_requisite_data="<pre_requisites>" +
 					"<type exact='yes'>service</type>" +
@@ -385,7 +385,7 @@ function form10_create_form()
 		
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
-		
+		var bill_num=form.elements[3].value;
 		var message_string="Bill from: "+get_session_var('title')+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
@@ -406,8 +406,8 @@ function form10_create_form()
 			message_string+=" Price: "+subform.elements[3].value;
 		});
 
-		var data_id=form.elements[3].value;
-		var transaction_id=form.elements[5].value;
+		var data_id=form.elements[4].value;
+		var transaction_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var offer_detail="";
 		
@@ -486,7 +486,7 @@ function form10_create_form()
 	                        rowsHTML+="</td>";
 	                rowsHTML+="</tr>";
 
-	                $('#form10_body').prepend(rowsHTML);
+	            $('#form10_body').prepend(rowsHTML);
 
 	        		var free_pre_requisite_data="<pre_requisites>" +
 							"<type exact='yes'>service</type>" +
@@ -497,7 +497,7 @@ function form10_create_form()
 							"</pre_requisites>";
 					fetch_requested_data('',free_pre_requisite_data,function(free_pre_requisites)
 					{
-		                var free_xml="<bill_items>" +
+		             var free_xml="<bill_items>" +
 									"<id>"+id+"</id>" +
 									"<item_name>"+free_service_name+"</item_name>" +
 									"<staff></staff>" +
@@ -566,6 +566,7 @@ function form10_create_form()
 			
 			var data_xml="<bills>" +
 						"<id>"+data_id+"</id>" +
+						"<bill_num>"+bill_num+"</bill_num>"+
 						"<customer_name>"+customer+"</customer_name>" +
 						"<bill_date>"+bill_date+"</bill_date>" +
 						"<amount>"+amount+"</amount>" +
@@ -582,7 +583,7 @@ function form10_create_form()
 						"<tablename>bills</tablename>" +
 						"<link_to>form42</link_to>" +
 						"<title>Saved</title>" +
-						"<notes>Bill no "+data_id+"</notes>" +
+						"<notes>Bill no "+bill_num+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			var transaction_xml="<transactions>" +
@@ -607,6 +608,7 @@ function form10_create_form()
 						"<mode>"+get_payment_mode()+"</mode>" +
 						"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 						"<bill_id>"+data_id+"</bill_id>" +
+						"<source_info>for sale bill #"+bill_num+"</source_info>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</payments>";
 			var pt_xml="<transactions>" +
@@ -618,6 +620,28 @@ function form10_create_form()
 						"<tax>0</tax>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</transactions>";
+			var num_data="<user_preferences>"+
+						"<id></id>"+						
+						"<name exact='yes'>bill_num</name>"+												
+						"</user_preferences>";
+			get_single_column_data(function (bill_num_ids)
+			{
+				if(bill_num_ids.length>0)
+				{
+					var num_xml="<user_preferences>"+
+									"<id>"+bill_num_ids[0]+"</id>"+
+									"<value>"+(parseInt(bill_num)+1)+"</value>"+
+									"</user_preferences>";
+					if(is_online())
+					{
+						server_update_simple(num_xml);
+					}
+					else 
+					{
+						local_update_simple(num_xml);
+					}
+				}
+			},num_data);
 			if(is_online())
 			{
 				server_create_row(data_xml,activity_xml);
@@ -662,7 +686,7 @@ function form10_create_form()
 			$('#form10_foot').html(total_row);
 		});
 		
-		var save_button=form.elements[6];
+		var save_button=form.elements[7];
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
 		{
@@ -687,7 +711,7 @@ function form12_create_item(form)
 {
 	if(is_create_access('form12'))
 	{
-		var bill_id=document.getElementById("form12_master").elements[3].value;
+		var bill_id=document.getElementById("form12_master").elements[4].value;
 		
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
@@ -828,7 +852,6 @@ function form12_create_item(form)
 
 		var save_button=form.elements[10];
 		$(save_button).off('click');
-
 	}
 	else
 	{
@@ -849,6 +872,7 @@ function form12_create_form()
 		
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
+		var bill_num=form.elements[3].value;
 		
 		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
@@ -871,8 +895,8 @@ function form12_create_form()
 			message_string+=" Total: "+subform.elements[4].value;
 		});
 
-		var data_id=form.elements[3].value;
-		var transaction_id=form.elements[5].value;
+		var data_id=form.elements[4].value;
+		var transaction_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var offer_detail="";
 		
@@ -1012,6 +1036,7 @@ function form12_create_form()
 			
 			var data_xml="<bills>" +
 						"<id>"+data_id+"</id>" +
+						"<bill_num></bill_num>"+
 						"<customer_name>"+customer+"</customer_name>" +
 						"<bill_date>"+bill_date+"</bill_date>" +
 						"<amount>"+amount+"</amount>" +
@@ -1028,7 +1053,7 @@ function form12_create_form()
 						"<tablename>bills</tablename>" +
 						"<link_to>form42</link_to>" +
 						"<title>Saved</title>" +
-						"<notes>Bill no "+data_id+"</notes>" +
+						"<notes>Bill no "+bill_num+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			var transaction_xml="<transactions>" +
@@ -1053,6 +1078,7 @@ function form12_create_form()
 						"<mode>"+get_payment_mode()+"</mode>" +
 						"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 						"<bill_id>"+data_id+"</bill_id>" +
+						"<source_info>for sale bill #"+bill_num+"</source_info>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</payments>";
 			var pt_xml="<transactions>" +
@@ -1064,6 +1090,29 @@ function form12_create_form()
 						"<tax>0</tax>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</transactions>";
+			var num_data="<user_preferences>"+
+						"<id></id>"+						
+						"<name exact='yes'>bill_num</name>"+												
+						"</user_preferences>";
+			get_single_column_data(function (bill_num_ids)
+			{
+				if(bill_num_ids.length>0)
+				{
+					var num_xml="<user_preferences>"+
+									"<id>"+bill_num_ids[0]+"</id>"+
+									"<value>"+(parseInt(bill_num)+1)+"</value>"+
+									"</user_preferences>";
+					if(is_online())
+					{
+						server_update_simple(num_xml);
+					}
+					else 
+					{
+						local_update_simple(num_xml);
+					}
+				}
+			},num_data);
+						
 			if(is_online())
 			{
 				server_create_row(data_xml,activity_xml);
@@ -1108,7 +1157,7 @@ function form12_create_form()
 			$('#form12_foot').html(total_row);
 		});
 
-		var save_button=form.elements[6];
+		var save_button=form.elements[7];
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
 		{
@@ -3432,7 +3481,7 @@ function form72_create_item(form)
 {
 	if(is_create_access('form72'))
 	{
-		var bill_id=document.getElementById("form72_master").elements[3].value;
+		var bill_id=document.getElementById("form72_master").elements[4].value;
 		
 		var name=form.elements[0].value;
 		var batch="";
@@ -3744,6 +3793,7 @@ function form72_create_form()
 		
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
+		var bill_date=form.elements[3].value;
 		
 		var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
 		
@@ -3767,8 +3817,8 @@ function form72_create_form()
 		});
 		
 				
-		var data_id=form.elements[3].value;
-		var transaction_id=form.elements[5].value;
+		var data_id=form.elements[4].value;
+		var transaction_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var offer_detail="";
 		
@@ -4021,6 +4071,7 @@ function form72_create_form()
 			var data_xml="<bills>" +
 						"<id>"+data_id+"</id>" +
 						"<customer_name>"+customer+"</customer_name>" +
+						"<bill_num>"+bill_num+"</bill_num>"+
 						"<bill_date>"+bill_date+"</bill_date>" +
 						"<amount>"+amount+"</amount>" +
 						"<total>"+total+"</total>" +
@@ -4036,7 +4087,7 @@ function form72_create_form()
 						"<tablename>bills</tablename>" +
 						"<link_to>form42</link_to>" +
 						"<title>Saved</title>" +
-						"<notes>Bill no "+data_id+"</notes>" +
+						"<notes>Bill no "+bill_num+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			var transaction_xml="<transactions>" +
@@ -4061,6 +4112,7 @@ function form72_create_form()
 						"<mode>"+get_payment_mode()+"</mode>" +
 						"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 						"<bill_id>"+data_id+"</bill_id>" +
+						"<source_info>from sale bill #"+bill_num+"</source_info>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</payments>";
 			var pt_xml="<transactions>" +
@@ -4072,6 +4124,28 @@ function form72_create_form()
 						"<tax>0</tax>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</transactions>";
+			var num_data="<user_preferences>"+
+						"<id></id>"+						
+						"<name exact='yes'>bill_num</name>"+												
+						"</user_preferences>";
+			get_single_column_data(function (bill_num_ids)
+			{
+				if(bill_num_ids.length>0)
+				{
+					var num_xml="<user_preferences>"+
+									"<id>"+bill_num_ids[0]+"</id>"+
+									"<value>"+(parseInt(bill_num)+1)+"</value>"+
+									"</user_preferences>";
+					if(is_online())
+					{
+						server_update_simple(num_xml);
+					}
+					else 
+					{
+						local_update_simple(num_xml);
+					}
+				}
+			},num_data);
 			if(is_online())
 			{
 				server_create_row(data_xml,activity_xml);
@@ -4115,7 +4189,7 @@ function form72_create_form()
 			$('#form72_foot').html(total_row);
 		});
 		
-		var save_button=form.elements[6];
+		var save_button=form.elements[7];
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
 		{
@@ -4279,7 +4353,7 @@ function form82_bill()
 		var bill_discount=0;
 		var bill_tax=0;
 		var pending_items_count=0;
-		var order_id=master_form.elements[3].value;
+		var order_id=master_form.elements[4].value;
 		///////selecting all scanned items////
 		var order_items=new Array();
 		
@@ -4289,7 +4363,6 @@ function form82_bill()
 		{
 			var form_id=$(this).attr('form');
 			var form=document.getElementById(form_id);
-			//console.log(form);
 			var order_item=new Object();
 			order_item.item_name=form.elements[1].value;
 			order_item.batch=form.elements[2].value;
@@ -4586,7 +4659,7 @@ function form82_bill()
 	  		   	
 	  		   	var customer=master_form.elements[1].value;
 	  		   	var bill_date=master_form.elements[2].value;
-		  		
+					var bill_num=master_form.elements[3].value;		  		
 	  		   		///////////////////////////////////////////////////////////
   		   		var offer_data="<offers>" +
 						"<criteria_type>min amount crossed</criteria_type>" +
@@ -4696,7 +4769,7 @@ function form82_bill()
 							"</tr>";
 					$('#form82_foot').html(total_row);
 
-			  		var save_button=master_form.elements[10];
+			  		var save_button=master_form.elements[7];
 					$(save_button).off('click');
 					$(save_button).on('click',function(event)
 					{
@@ -4717,6 +4790,7 @@ function form82_bill()
 					
 			  		var bill_xml="<bills>" +
 								"<id>"+order_id+"</id>" +
+								"<bill_num>"+bill_num+"</bill_num>"+
 								"<customer_name>"+customer+"</customer_name>" +
 								"<bill_date>"+get_raw_time(bill_date)+"</bill_date>" +
 								"<amount>"+bill_amount+"</amount>" +
@@ -4733,7 +4807,7 @@ function form82_bill()
 								"<tablename>bills</tablename>" +
 								"<link_to>form42</link_to>" +
 								"<title>Saved</title>" +
-								"<notes>Bill no "+order_id+"</notes>" +
+								"<notes>Bill no "+bill_num+"</notes>" +
 								"<updated_by>"+get_name()+"</updated_by>" +
 								"</activity>";
 					var transaction_xml="<transactions>" +
@@ -4758,6 +4832,7 @@ function form82_bill()
 								"<mode>"+get_payment_mode()+"</mode>" +
 								"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 								"<bill_id>"+order_id+"</bill_id>" +
+								"<source_info>for sale bill #"+bill_num+"</source_info>"+
 								"<last_updated>"+get_my_time()+"</last_updated>" +
 								"</payments>";
 					var pt_xml="<transactions>" +
@@ -4769,6 +4844,29 @@ function form82_bill()
 								"<tax>0</tax>" +
 								"<last_updated>"+get_my_time()+"</last_updated>" +
 								"</transactions>";
+					var num_data="<user_preferences>"+
+								"<id></id>"+						
+								"<name exact='yes'>bill_num</name>"+												
+								"</user_preferences>";
+					get_single_column_data(function (bill_num_ids)
+					{
+						if(bill_num_ids.length>0)
+						{
+							var num_xml="<user_preferences>"+
+											"<id>"+bill_num_ids[0]+"</id>"+
+											"<value>"+(parseInt(bill_num)+1)+"</value>"+
+											"</user_preferences>";
+							if(is_online())
+							{
+								server_update_simple(num_xml);
+							}
+							else 
+							{
+								local_update_simple(num_xml);
+							}
+						}
+					},num_data);
+					
 					if(is_online())
 					{
 						server_create_row(bill_xml,activity_xml);
@@ -5639,7 +5737,7 @@ function form91_create_item(form)
 {
 	if(is_create_access('form91'))
 	{
-		var bill_id=document.getElementById("form91_master").elements[4].value;
+		var bill_id=document.getElementById("form91_master").elements[5].value;
 		
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
@@ -5732,7 +5830,7 @@ function form91_create_item(form)
 		                        rowsHTML+="</td>";
 		                rowsHTML+="</tr>";
 	
-		                $('#form91_body').prepend(rowsHTML);
+		            $('#form91_body').prepend(rowsHTML);
 	
 						var free_xml="<bill_items>" +
 									"<id>"+id+"</id>" +
@@ -5802,6 +5900,7 @@ function form91_create_form()
 		var customer=form.elements[1].value;
 		var bill_type=form.elements[2].value;
 		var bill_date=get_raw_time(form.elements[3].value);
+		var bill_num=form.elements[4].value;
 		
 		var message_string="Bill from: "+get_session_var('title')+"\nAddress: "+get_session_var('address');
 		
@@ -5824,8 +5923,8 @@ function form91_create_form()
 			message_string+=" Total: "+subform.elements[4].value;
 		});
 
-		var data_id=form.elements[4].value;
-		var transaction_id=form.elements[6].value;
+		var data_id=form.elements[5].value;
+		var transaction_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		var offer_detail="";
 		
@@ -5965,6 +6064,7 @@ function form91_create_form()
 			
 			var data_xml="<bills>" +
 						"<id>"+data_id+"</id>" +
+						"<bill_num>"+bill_num+"</bill_num>"+
 						"<customer_name>"+customer+"</customer_name>" +
 						"<bill_date>"+bill_date+"</bill_date>" +
 						"<amount>"+amount+"</amount>" +
@@ -5982,7 +6082,7 @@ function form91_create_form()
 						"<tablename>bills</tablename>" +
 						"<link_to>form92</link_to>" +
 						"<title>Saved</title>" +
-						"<notes>Bill no "+data_id+"</notes>" +
+						"<notes>Bill no "+bill_num+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			var transaction_xml="<transactions>" +
@@ -6007,6 +6107,7 @@ function form91_create_form()
 						"<mode>"+get_payment_mode()+"</mode>" +
 						"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 						"<bill_id>"+data_id+"</bill_id>" +
+						"<source_info>for sale bill #"+bill_num+"</source_info>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</payments>";
 			var pt_xml="<transactions>" +
@@ -6018,6 +6119,29 @@ function form91_create_form()
 						"<tax>0</tax>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</transactions>";
+			var num_data="<user_preferences>"+
+						"<id></id>"+						
+						"<name exact='yes'>"+bill_type+"_bill_num</name>"+												
+						"</user_preferences>";
+			get_single_column_data(function (bill_num_ids)
+			{
+				if(bill_num_ids.length>0)
+				{
+					var num_xml="<user_preferences>"+
+									"<id>"+bill_num_ids[0]+"</id>"+
+									"<value>"+(parseInt(bill_num)+1)+"</value>"+
+									"</user_preferences>";
+					if(is_online())
+					{
+						server_update_simple(num_xml);
+					}
+					else 
+					{
+						local_update_simple(num_xml);
+					}
+				}
+			},num_data);
+
 			if(is_online())
 			{
 				server_create_row(data_xml,activity_xml);
@@ -6063,7 +6187,7 @@ function form91_create_form()
 			});
 		});
 		
-		var save_button=form.elements[7];
+		var save_button=form.elements[8];
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
 		{
@@ -7426,7 +7550,7 @@ function form118_create_item(form)
 {
 	if(is_create_access('form118'))
 	{
-		var bill_id=document.getElementById("form118_master").elements[3].value;
+		var bill_id=document.getElementById("form118_master").elements[4].value;
 		
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
@@ -7587,6 +7711,7 @@ function form118_create_form()
 		
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
+		var bill_num=form.elements[3].value;
 		
 		var message_string="Bill from: "+get_session_var('title')+"\nAddress: "+get_session_var('address');
 		
@@ -7609,8 +7734,8 @@ function form118_create_form()
 			message_string+=" Total: "+subform.elements[4].value;
 		});
 
-		var data_id=form.elements[3].value;
-		var transaction_id=form.elements[5].value;
+		var data_id=form.elements[4].value;
+		var transaction_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var offer_detail="";
 		
@@ -7750,6 +7875,7 @@ function form118_create_form()
 			
 			var data_xml="<bills>" +
 						"<id>"+data_id+"</id>" +
+						"<bill_num>"+bill_num+"</bill_num>"+
 						"<customer_name>"+customer+"</customer_name>" +
 						"<bill_date>"+bill_date+"</bill_date>" +
 						"<amount>"+amount+"</amount>" +
@@ -7766,7 +7892,7 @@ function form118_create_form()
 						"<tablename>bills</tablename>" +
 						"<link_to>form42</link_to>" +
 						"<title>Saved</title>" +
-						"<notes>Bill no "+data_id+"</notes>" +
+						"<notes>Bill no "+bill_num+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			var transaction_xml="<transactions>" +
@@ -7791,6 +7917,7 @@ function form118_create_form()
 						"<mode>"+get_payment_mode()+"</mode>" +
 						"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 						"<bill_id>"+data_id+"</bill_id>" +
+						"<source_info>for sale bill #"+bill_num+"</source_info>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</payments>";
 			var pt_xml="<transactions>" +
@@ -7802,6 +7929,29 @@ function form118_create_form()
 						"<tax>0</tax>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</transactions>";
+			var num_data="<user_preferences>"+
+						"<id></id>"+						
+						"<name exact='yes'>bill_num</name>"+												
+						"</user_preferences>";
+			get_single_column_data(function (bill_num_ids)
+			{
+				if(bill_num_ids.length>0)
+				{
+					var num_xml="<user_preferences>"+
+									"<id>"+bill_num_ids[0]+"</id>"+
+									"<value>"+(parseInt(bill_num)+1)+"</value>"+
+									"</user_preferences>";
+					if(is_online())
+					{
+						server_update_simple(num_xml);
+					}
+					else 
+					{
+						local_update_simple(num_xml);
+					}
+				}
+			},num_data);
+
 			if(is_online())
 			{
 				server_create_row(data_xml,activity_xml);
@@ -7880,7 +8030,7 @@ function form118_create_form()
 			});
 		});
 		
-		var save_button=form.elements[6];
+		var save_button=form.elements[10];
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
 		{
@@ -7906,7 +8056,7 @@ function form119_create_item(form)
 {
 	if(is_create_access('form119'))
 	{
-		var bill_id=document.getElementById("form119_master").elements[5].value;
+		var bill_id=document.getElementById("form119_master").elements[6].value;
 		var customer=document.getElementById("form119_master").elements[1].value;
 		
 		var name=form.elements[0].value;
@@ -8020,9 +8170,9 @@ function form119_create_item(form)
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 						     
-		                $('#form119_body').prepend(rowsHTML);
+		            $('#form119_body').prepend(rowsHTML);
 	
-		                var make_data="<product_master>" +
+		            var make_data="<product_master>" +
 								"<make></make>" +
 								"<name exact='yes'>"+free_product_name+"</name>" +
 								"</product_master>";
@@ -8119,6 +8269,7 @@ function form119_create_form()
 		var customer=form.elements[1].value;
 		var bill_type=form.elements[2].value;
 		var bill_date=get_raw_time(form.elements[3].value);
+		var bill_num=form.elements[4].value;
 		
 		var message_string="Bill from: "+get_session_var('title')+"\nAddress: "+get_session_var('address');
 		
@@ -8141,8 +8292,8 @@ function form119_create_form()
 			message_string+=" Total: "+subform.elements[9].value;
 		});
 		
-		var data_id=form.elements[5].value;
-		var transaction_id=form.elements[7].value;
+		var data_id=form.elements[6].value;
+		var transaction_id=form.elements[8].value;
 		var last_updated=get_my_time();
 		var offer_detail="";
 		
@@ -8314,6 +8465,7 @@ function form119_create_form()
 			
 			var data_xml="<bills>" +
 						"<id>"+data_id+"</id>" +
+						"<bill_num>"+bill_num+"</bill_num>"+
 						"<customer_name>"+customer+"</customer_name>" +
 						"<bill_date>"+bill_date+"</bill_date>" +
 						"<amount>"+amount+"</amount>" +
@@ -8331,7 +8483,7 @@ function form119_create_form()
 						"<tablename>bills</tablename>" +
 						"<link_to>form92</link_to>" +
 						"<title>Saved</title>" +
-						"<notes>Bill no "+data_id+"</notes>" +
+						"<notes>Bill no "+bill_num+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			var transaction_xml="<transactions>" +
@@ -8343,6 +8495,29 @@ function form119_create_form()
 						"<tax>"+tax+"</tax>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</transactions>";
+			var num_data="<user_preferences>"+
+						"<id></id>"+						
+						"<name exact='yes'>"+bill_type+"_bill_num</name>"+												
+						"</user_preferences>";
+			get_single_column_data(function (bill_num_ids)
+			{
+				if(bill_num_ids.length>0)
+				{
+					var num_xml="<user_preferences>"+
+									"<id>"+bill_num_ids[0]+"</id>"+
+									"<value>"+(parseInt(bill_num)+1)+"</value>"+
+									"</user_preferences>";
+					if(is_online())
+					{
+						server_update_simple(num_xml);
+					}
+					else 
+					{
+						local_update_simple(num_xml);
+					}
+				}
+			},num_data);
+			
 			var pt_tran_id=get_new_key();
 			var p_status="closed";
 			var p_amount=total;
@@ -8363,6 +8538,7 @@ function form119_create_form()
 						"<mode>"+get_payment_mode()+"</mode>" +
 						"<transaction_id>"+pt_tran_id+"</transaction_id>" +
 						"<bill_id>"+data_id+"</bill_id>" +
+						"<source_info>for sale bill #"+bill_num+"</source_info>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</payments>";
 			var pt_xml="<transactions>" +
@@ -8426,7 +8602,7 @@ function form119_create_form()
 
 		});
 
-		var save_button=form.elements[9];
+		var save_button=form.elements[10];
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
 		{

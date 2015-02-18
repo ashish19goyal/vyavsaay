@@ -2138,10 +2138,8 @@ function form72_add_product()
 					{
 						tax_filter.value=parseFloat((parseFloat(tax)*(amount-parseFloat(discount_filter.value)))/100);
 					});
-					
 					total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
-				},tax_data);
-				
+				},tax_data);				
 			});
 		});
 	}

@@ -4,7 +4,7 @@
 			<label>Customer	<img src='./images/add_image.png' class='add_image' onclick='modal11_action();'></br>
 			<input type='text' required></label>
 			<label>Bill Date<br><input type='text' required></label>
-			<label>Bill #<br><input type='text' name='bill_num' readonly="readonly"></label>
+			<label>Bill #<br><input type='text' name='bill_num'></label>
 			<input type='hidden' name='bill_id'>
 			<input type='hidden' name='offer'>
 			<input type='hidden' name='transaction'>
