@@ -3869,7 +3869,7 @@ function report58_ini()
 					rowsHTML+=credit;
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Balance'>";
-					rowsHTML+="Rs. "+balance;
+					rowsHTML+="Rs. "+my_round(balance,2);
 				rowsHTML+="</td>";
 				rowsHTML+="</tr>";
 						
@@ -3908,7 +3908,7 @@ function report58_ini()
 						rowsHTML+=credit;
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Balance'>";
-						rowsHTML+="Rs. "+balance;
+						rowsHTML+="Rs. "+my_round(balance,2);
 					rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 							
