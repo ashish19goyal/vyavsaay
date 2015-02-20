@@ -305,7 +305,7 @@ function set_grid_item_13()
 	var columns="<bills>" +
 		"<customer_name></customer_name>" +
 		"<bill_date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
-		"<bill_date upperbound='yes'>"+(get_raw_time(get_my_date())+86400000)+"</bill_date>" +
+		"<bill_date upperbound='yes'>"+(get_raw_time(get_my_date())+1000)+"</bill_date>" +
 		"</bills>";
 	get_single_column_data(function(results)
 	{
@@ -389,7 +389,7 @@ function set_grid_item_17()
 		"<id></id>" +
 		"<presence exact='yes'>present</presence>" +
 		"<date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</date>" +
-		"<date upperbound='yes'>"+(get_raw_time(get_my_date())+86400000)+"</date>" +
+		"<date upperbound='yes'>"+(get_raw_time(get_my_date())+1000)+"</date>" +
 		"</attendance>";
 	
 	get_single_column_data(function(results)
@@ -527,7 +527,7 @@ function set_grid_item_26()
 	var columns="<bills>" +
 		"<total></total>" +
 		"<bill_date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
-		"<bill_date upperbound='yes'>"+(get_raw_time(get_my_date())+86400000)+"</bill_date>" +
+		"<bill_date upperbound='yes'>"+(get_raw_time(get_my_date())+1000)+"</bill_date>" +
 		"</bills>";
 	get_single_column_data(function(results)
 	{
