@@ -787,6 +787,7 @@
 	<service_request_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<request_id index='yes' type="BIGINT NOT NULL"></request_id>
+			<assignee index='yes' type="VARCHAR(100)"></assignee>
 			<item_name index='yes' type="VARCHAR(90)"></item_name>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<status index='yes' type='VARCHAR(25)'></status><!-- requested/approved/dispatched/used -->

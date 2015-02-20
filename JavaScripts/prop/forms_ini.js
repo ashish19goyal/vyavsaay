@@ -11828,3 +11828,292 @@ function form133_ini()
 		hide_loader();
 	});	
 };
+
+
+/**
+ * @form Service Request Dashboard
+ * @formNo 134
+ * @Loading light
+ */
+function form134_ini()
+{
+	var request_id=$("#form134_link").attr('data_id');
+	if(request_id==null)
+		request_id="";	
+	$('#form134_detail_body').html("");
+	$('#form134_machine_body').html("");
+	$('#form134_team_foot').html("");
+	$('#form134_document_body').html("");
+	$('#form134_task_body').html("");
+	$('#form134_item_body').html("");
+	$('#form134_expense_body').html("");	
+	
+	if(request_id!="")
+	{
+		show_loader();
+		var request_columns="<service_requests>" +
+				"<id>"+request_id+"</id>" +
+				"<customer></customer>"+
+				"<reported_by></reported_by>" +
+				"<notes></notes>" +
+				"<problem_type></problem_type>" +
+				"<closing_notes></closing_notes>" +
+				"<reported_time></reported_time>" +
+				"<status></status>" +
+				"</service_requests>";
+	
+		fetch_requested_data('form134',request_columns,function(request_results)
+		{
+			var filter_fields=document.getElementById('form134_master');
+			
+			if(request_results.length>0)
+			{
+				filter_fields.elements[1].value=request_results[0].id;
+				filter_fields.elements[2].value=request_results[0].customer;
+				filter_fields.elements[3].value=request_results[0].status;
+				var id=request_results.id;
+				var rowsHTML="<tr>";
+					rowsHTML+="<td data-th='Reported By'>";
+						rowsHTML+=request_results[0].reported_by;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Reported Time'>";
+						rowsHTML+=get_my_datetime(request_results[0].reported_time);
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Problem Type'>";
+						rowsHTML+=request_results[0].problem_type;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Problem'>";
+						rowsHTML+=request_results[0].notes;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Closing Notes'>";
+						rowsHTML+=request_results[0].closing_notes;
+					rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+			
+				$('#form134_detail_body').append(rowsHTML);				
+			}
+		
+			/////////////service request machines////////////////////////
+			var machines_data="<service_request_machines>"+
+									"<id></id>"+
+									"<request_id exact='yes'>"+request_results[0].id+"</request_id>"+
+									"<machine_type></machine_type>"+
+									"<machine></machine>"+
+									"<problem_type></problem_type>"+
+									"<problem></problem>"+
+									"<closing_notes></closing_notes>"+
+									"<status></status>"+
+									"</service_request_machines>";
+			fetch_requested_data('',machines_data,function(machine_results)
+			{				
+				machine_results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form134_machine_"+id+"'></form>";
+						rowsHTML+="<td data-th='Machine Type'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form134_machine_"+id+"' value='"+result.machine_type+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Machine'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form134_machine_"+id+"' value='"+result.machine+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Problem'>";
+							rowsHTML+="<textarea readonly='readonly' form='form134_machine_"+id+"'>"+result.problem+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Closing Notes'>";
+							rowsHTML+="<textarea readonly='readonly' form='form134_machine_"+id+"'>"+result.closing_notes+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form134_machine_"+id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form134_machine_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='generic_icon' value='Close' form='form134_machine_"+id+"' onclick=\"modal104_action('"+id+"')\">";
+							rowsHTML+="<input type='button' class='delete_icon' form='form134_machine_"+id+"' id='delete_form134_machine_"+id+"' onclick='form134_delete_machine($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form134_machine_body').append(rowsHTML);
+				});				
+			});
+
+			/////////////service request team////////////////////////
+			var team_data="<service_request_team>"+
+									"<id></id>"+
+									"<request_id exact='yes'>"+request_results[0].id+"</request_id>"+
+									"<assignee></assignee>"+
+									"<phone></phone>"+
+									"<email></email>"+
+									"</service_request_team>";
+			fetch_requested_data('',team_data,function(team_results)
+			{				
+				team_results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form134_team_"+id+"'></form>";
+						rowsHTML+="<td data-th='Assignee'>";
+							rowsHTML+="<textarea readonly='readonly' form='form134_team_"+id+"'>"+result.assignee+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Phone'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form134_team_"+id+"' value='"+result.phone+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Email'>";
+							rowsHTML+="<textarea readonly='readonly' form='form134_team_"+id+"'>"+result.email+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form134_team_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form134_team_"+id+"' id='delete_form134_team_"+id+"' onclick='form134_delete_team($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form134_team_body').append(rowsHTML);
+				});				
+			});
+			
+			/////////////service request document////////////////////
+			var document_data="<documents>"+
+								"<id></id>"+
+								"<doc_type exact='yes'>service request</doc_type>"+
+								"<target_id exact='yes'>"+request_results[0].id+"</target_id>"+
+								"<doc_name></doc_name>"+
+								"<url></url>"+
+								"</documents>";
+			fetch_requested_data('',document_data,function(document_results)
+			{				
+				document_results.forEach(function(result)
+				{
+					var id=result.id;
+					var updated_url=result.url.replace(/ /g,"+");
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form134_document_"+id+"'></form>";
+						rowsHTML+="<td data-th='Document Name'>";
+							rowsHTML+="<textarea readonly='readonly' form='form134_document_"+id+"'>"+result.doc_name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='File'>";
+							rowsHTML+="<a href='"+updated_url+"' download='"+result.doc_name+"'><u>link</u></a>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form134_document_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form134_document_"+id+"' id='delete_form134_document_"+id+"' onclick='form134_delete_document($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form134_document_body').append(rowsHTML);
+				});				
+			});
+
+			/////////////service request tasks////////////////////
+			var task_data="<task_instances>"+
+								"<id></id>"+
+								"<source exact='yes'>service request</source>"+
+								"<source_id exact='yes'>"+request_results[0].id+"</source_id>"+
+								"<name></name>"+
+								"<assignee></assignee>"+
+								"<status></status>"+
+								"<t_due></t_due>"+
+								"<description></description>"+
+								"</task_instances>";
+			fetch_requested_data('',task_data,function(task_results)
+			{				
+				task_results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form134_task_"+id+"'></form>";
+						rowsHTML+="<td data-th='Task'>";
+							rowsHTML+="<textarea readonly='readonly' form='form134_task_"+id+"'>"+result.name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Description'>";
+							rowsHTML+="<textarea readonly='readonly' form='form134_task_"+id+"'>"+result.description+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Assignee'>";
+							rowsHTML+="<textarea readonly='readonly' form='form134_task_"+id+"'>"+result.assignee+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Due By'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form134_task_"+id+"' value='"+get_my_datetime(result.t_due)+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form134_task_"+id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form134_task_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form134_task_"+id+"' id='delete_form134_task_"+id+"' onclick='form134_delete_task($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form134_task_body').append(rowsHTML);
+				});				
+			});
+
+			/////////////service request items////////////////////
+			var item_data="<service_request_items>"+
+								"<id></id>"+
+								"<request_id exact='yes'>"+request_results[0].id+"</request_id>"+
+								"<item_name></item_name>"+
+								"<quantity></quantity>"+
+								"<status></status>"+
+								"</service_request_items>";
+			fetch_requested_data('',item_data,function(item_results)
+			{				
+				item_results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form134_item_"+id+"'></form>";
+						rowsHTML+="<td data-th='Item Name'>";
+							rowsHTML+="<textarea readonly='readonly' form='form134_item_"+id+"'>"+result.item_name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' readonly='readonly' form='form134_item_"+id+"' value='"+result.quantity+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form134_item_"+id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form134_item_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form134_item_"+id+"' id='delete_form134_item_"+id+"' onclick='form134_delete_item($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form134_item_body').append(rowsHTML);
+				});				
+			});
+
+			/////////////service request expenses////////////////////
+			var expense_data="<expenses>"+
+								"<id></id>"+
+								"<source exact='yes'>service request</source>"+
+								"<source_id exact='yes'>"+request_results[0].id+"</source_id>"+
+								"<person></person>"+
+								"<amount></amount>"+
+								"<status></status>"+
+								"<detail></detail>"+
+								"</expenses>";
+			fetch_requested_data('',expense_data,function(expense_results)
+			{				
+				expense_results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form134_expense_"+id+"'></form>";
+						rowsHTML+="<td data-th='Person'>";
+							rowsHTML+="<textarea readonly='readonly' form='form134_expense_"+id+"'>"+result.person+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Amount'>";
+							rowsHTML+="Rs. <input type='number' readonly='readonly' form='form134_expense_"+id+"' value='"+result.amount+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Detail'>";
+							rowsHTML+="<textarea readonly='readonly' form='form134_expense_"+id+"'>"+result.detail+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form134_expense_"+id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form134_expense_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form134_expense_"+id+"' id='delete_form134_expense_"+id+"' onclick='form134_delete_expense($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form134_expense_body').append(rowsHTML);
+				});				
+			});
+			
+			hide_loader();
+		});
+	}
+}

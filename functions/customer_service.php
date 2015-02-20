@@ -2,10 +2,12 @@
 	<?php 
 		
 		echo "<ul>";
-			if(strpos($_SESSION['forms'],'form126-')!==false)
-				echo "<li><a id='form126_link' href='#form126' onclick='form126_header_ini(); form126_ini();' data-i18n='form.issues_list'></a></li>";
 			if(strpos($_SESSION['forms'],'form128-')!==false)
 				echo "<li><a id='form128_link' href='#form128' onclick='form128_header_ini(); form128_ini();' data-i18n='form.manage_service_requests'></a></li>";
+			if(strpos($_SESSION['forms'],'form134-')!==false)
+				echo "<li><a id='form134_link' href='#form134' onclick='form134_header_ini(); form134_ini();' data-i18n='form.service_request_dashboard'></a></li>";
+			if(strpos($_SESSION['forms'],'form126-')!==false)
+				echo "<li><a id='form126_link' href='#form126' onclick='form126_header_ini(); form126_ini();' data-i18n='form.issues_list'></a></li>";
 			if(strpos($_SESSION['forms'],'form129-')!==false)
 				echo "<li><a id='form129_link' href='#form129' onclick='form129_ini();' data-i18n='form.engineer_locations'></a></li>";
 			if(strpos($_SESSION['forms'],'form130-')!==false)
@@ -22,10 +24,12 @@
 				echo "<li><a id='report57_link' href='#report57' onclick='report57_header_ini();' data-i18n='form.warranty_status'></a></li>";			
 		echo "</ul>";
 
-		if(strpos($_SESSION['forms'],'form126-')!==false)	
-			include "forms/form126.php"; 
 		if(strpos($_SESSION['forms'],'form128-')!==false)
 			include "forms/form128.php";
+		if(strpos($_SESSION['forms'],'form134-')!==false)
+			include "forms/form134.php";
+		if(strpos($_SESSION['forms'],'form126-')!==false)	
+			include "forms/form126.php"; 
 		if(strpos($_SESSION['forms'],'form129-')!==false)
 			include "forms/form129.php";
 		if(strpos($_SESSION['forms'],'form130-')!==false)

@@ -2139,8 +2139,7 @@ function form72_add_product()
 						tax_filter.value=parseFloat((parseFloat(tax)*(amount-parseFloat(discount_filter.value)))/100);
 					});
 					total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
-				},tax_data);
-				
+				},tax_data);				
 			});
 		});
 	}
@@ -4263,9 +4262,12 @@ function form119_add_item()
 		var save_button=fields.elements[12];
 		var free_product_filter=fields.elements[14];
 		var free_product_quantity=fields.elements[15];
-		
-		$(name_filter).focus();
-		
+
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,name_filter);
+				
 		$(name_filter).on('keydown',function(e)
 		{
 			if(e.keyCode==118)
@@ -4292,11 +4294,7 @@ function form119_add_item()
 			form119_add_item();
 		});
 
-		var product_data="<product_master>" +
-				"<name></name>" +
-				"</product_master>";
-		set_my_value_list(product_data,name_filter);
-		
+		$(name_filter).focus();
 		$(name_filter).on('blur',function(event)
 		{
 			var make_data="<product_master>" +
@@ -5313,6 +5311,358 @@ function form130_add_service()
 				total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
 			});					
 		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service Dashboard - machine
+ * @formNo 134
+ */
+function form134_add_machine()
+{
+	if(is_create_access('form134'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form134_machine_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Machine Type'>";
+				rowsHTML+="<input type='text' form='form134_machine_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Machine'>";
+				rowsHTML+="<input type='text' form='form134_machine_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Problem'>";
+				rowsHTML+="<textarea form='form134_machine_"+id+"' required></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Closing Notes'>";
+				rowsHTML+="<textarea form='form134_machine_"+id+"' required></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form134_machine_"+id+"' value='open' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form134_machine_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form134_machine_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form134_machine_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form134_machine_body').prepend(rowsHTML);
+		var fields=document.getElementById("form134_machine_"+id);
+		var type_filter=fields.elements[0];
+		var machine_filter=fields.elements[1];
+		var status_filter=fields.elements[4];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form134_create_machine(fields);
+		});
+				
+		set_static_value_list('service_request_machines','machine_type',type_filter);
+		set_static_value_list('service_request_machines','machine',machine_filter);
+		set_static_value_list('service_request_machines','status',status_filter);
+
+		$(type_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service Dashboard - team
+ * @formNo 134
+ */
+function form134_add_team()
+{
+	if(is_create_access('form134'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form134_team_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Assignee'>";
+				rowsHTML+="<input type='text' form='form134_team_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Phone'>";
+				rowsHTML+="<input type='text' form='form134_team_"+id+"' readonly='readonly'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Email'>";
+				rowsHTML+="<textarea form='form134_team_"+id+"' readonly='readonly'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form134_team_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form134_team_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form134_team_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form134_team_body').prepend(rowsHTML);
+		var fields=document.getElementById("form134_team_"+id);
+		var assignee_filter=fields.elements[0];
+		var phone_filter=fields.elements[1];
+		var email_filter=fields.elements[2];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form134_create_team(fields);
+		});
+		
+		var assignee_data="<staff>"+
+							"<acc_name></acc_name>"+							
+							"</staff>";		
+		set_my_value_list(assignee_data,assignee_filter);
+
+		$(assignee_filter).off('blur');
+		$(assignee_filter).on('blur',function ()
+		{
+			var contact_data="<staff>"+
+								"<phone></phone>"+
+								"<email></email>"+
+								"<acc_name exact='yes'>"+assignee_filter.value+"</acc_name>"+
+								"</staff>";
+			fetch_requested_data('',contact_data,function(contacts)
+			{
+				if(contacts.length>0)
+				{
+					phone_filter.value=contacts[0].phone;
+					email_filter.value=contacts[0].email;
+				}
+			});
+		});
+		$(assignee_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service Dashboard - document
+ * @formNo 134
+ */
+function form134_add_document()
+{
+	if(is_create_access('form134'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form134_document_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Document Name'>";
+				rowsHTML+="<input type='text' form='form134_document_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='File'>";
+				rowsHTML+="<a id='form134_document_url'>link</a><input type='file' form='form134_document_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form134_document_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form134_document_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form134_document_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form134_document_body').prepend(rowsHTML);
+		var fields=document.getElementById("form134_document_"+id);
+		var name_filter=fields.elements[0];
+		var docInfo=document.getElementById('form134_document_url');
+		var fpicture=form.elements[1];
+					
+		fpicture.addEventListener('change',function(evt)
+		{
+			select_document(evt,function(dataURL)
+			{
+				docInfo.setAttribute('href',dataURL);
+			});
+		},false);
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form134_create_document(fields);
+		});
+		
+		$(name_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service Dashboard - task
+ * @formNo 134
+ */
+function form134_add_task()
+{
+	if(is_create_access('form134'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form134_task_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Task'>";
+				rowsHTML+="<input type='text' form='form134_task_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Description'>";
+				rowsHTML+="<textarea form='form134_task_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Assignee'>";
+				rowsHTML+="<input type='text' form='form134_task_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Due By'>";
+				rowsHTML+="<input type='text' form='form134_task_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='status'>";
+				rowsHTML+="<input type='text' form='form134_task_"+id+"' value='pending'>";
+			rowsHTML+="</td>";			
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form134_task_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form134_task_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form134_task_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form134_task_body').prepend(rowsHTML);
+		var fields=document.getElementById("form134_task_"+id);
+		var task_filter=fields.elements[0];
+		var assignee_filter=fields.elements[2];
+		var due_filter=fields.elements[3];
+		var status_filter=fields.elements[4];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form134_create_task(fields);
+		});
+		
+		var task_data="<task_type>"+
+							"<name></name>"+
+							"</task_type>";
+		set_my_value_list(task_data,task_filter);
+							
+		var assignee_data="<staff>"+
+							"<acc_name></acc_name>"+							
+							"</staff>";		
+		set_my_value_list(assignee_data,assignee_filter);
+		set_static_value_list('task_instances','status',status_filter);
+		$(task_filter).focus();
+		$(due_filter).datepicker();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service Dashboard - item
+ * @formNo 134
+ */
+function form134_add_item()
+{
+	if(is_create_access('form134'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form134_item_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item Name'>";
+				rowsHTML+="<input type='text' form='form134_item_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' form='form134_item_"+id+"' min='0' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form134_item_"+id+"' value='requested'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form134_item_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form134_item_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form134_item_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form134_item_body').prepend(rowsHTML);
+		var fields=document.getElementById("form134_item_"+id);
+		var item_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var amount_filter=fields.elements[2];
+		var status_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form134_create_item(fields);
+		});
+		
+		var item_data="<product_master>"+
+							"<name></name>"+
+							"</product_master>";
+		set_my_value_list(item_data,item_filter);
+							
+		set_static_value_list('service_request_items','status',status_filter);
+		$(item_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service Dashboard - expenses
+ * @formNo 134
+ */
+function form134_add_expense()
+{
+	if(is_create_access('form134'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form134_expense_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Person'>";
+				rowsHTML+="<input type='text' form='form134_expense_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+="Rs. <input type='number' form='form134_expense_"+id+"' min='0' step='any' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Detail'>";
+				rowsHTML+="<textarea form='form134_expense_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form134_expense_"+id+"' value='submitted'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form134_expense_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form134_expense_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form134_expense_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form134_expense_body').prepend(rowsHTML);
+		var fields=document.getElementById("form134_expense_"+id);
+		var person_filter=fields.elements[0];
+		var status_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form134_create_expense(fields);
+		});
+		
+		var person_data="<staff>"+
+							"<acc_name></acc_name>"+
+							"</staff>";
+		set_my_value_list([erson_data,person_filter);
+							
+		set_static_value_list('expenses','status',status_filter);
+		$(person_filter).focus();
 	}
 	else
 	{

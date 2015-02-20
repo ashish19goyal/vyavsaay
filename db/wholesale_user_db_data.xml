@@ -1867,6 +1867,28 @@
 			<tables>--service_requests--documents--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form134</name>
+			<display_name>service_request_dashboard</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--service_requests--documents--task_instances--bills--bill_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form135</name>
+			<display_name>project_dashboard</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--projects--documents--project_phases--project_team--task_instances--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3457,6 +3479,28 @@
 			<username>master</username>
 			<element_id>form133</element_id>
 			<element_name>service_documents</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form134</element_id>
+			<element_name>service_dashboard</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form135</element_id>
+			<element_name>project_dashboard</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

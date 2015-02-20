@@ -176,6 +176,86 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<tablename>service_request_machines</tablename>
+			<listname>status</listname>
+			<name>open</name>
+			<value>Open</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>service_request_machines</tablename>
+			<listname>status</listname>
+			<name>closed</name>
+			<value>Closed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>service_request_machines</tablename>
+			<listname>status</listname>
+			<name>cancelled</name>
+			<value>Cancelled</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>service_request_items</tablename>
+			<listname>status</listname>
+			<name>requested</name>
+			<value>Requested</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>service_request_items</tablename>
+			<listname>status</listname>
+			<name>approved</name>
+			<value>Approved</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>service_request_items</tablename>
+			<listname>status</listname>
+			<name>rejected</name>
+			<value>Rejected</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>service_request_items</tablename>
+			<listname>status</listname>
+			<name>used</name>
+			<value>Used</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>expenses</tablename>
+			<listname>status</listname>
+			<name>approved</name>
+			<value>Approved</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>expenses</tablename>
+			<listname>status</listname>
+			<name>rejected</name>
+			<value>Rejected</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>expenses</tablename>
+			<listname>status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>receipts</tablename>
 			<listname>type</listname>
 			<name>paid</name>
@@ -1314,8 +1394,8 @@
 		<row>
 			<tablename>payments</tablename>
 			<listname>mode</listname>
-			<name>debit card</name>
-			<value>Debit Card</value>
+			<name>card</name>
+			<value>Card</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
@@ -1460,6 +1540,14 @@
 			<listname>doc_type</listname>
 			<name>service request</name>
 			<value>Service request</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>documents</tablename>
+			<listname>doc_type</listname>
+			<name>project</name>
+			<value>Project</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

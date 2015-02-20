@@ -224,6 +224,8 @@
   	"service_requests_report":"Service Requests report",
   	"warranty_status":"Warranty Status",
   	"service_documents":"Service Documents",
-  	"ledger":"Ledger"
+  	"ledger":"Ledger",
+  	"project_dashboard":"Project Dashboard",
+  	"service_request_dashboard":"Service Request Dashboard"
   }
 }

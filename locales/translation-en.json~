@@ -223,6 +223,7 @@
   	"check_tasks":"Tasks",
   	"service_requests_report":"Service Requests report",
   	"warranty_status":"Warranty Status",
-  	"service_documents":"Service Documents"
+  	"service_documents":"Service Documents",
+  	"ledger":"Ledger"
   }
 }

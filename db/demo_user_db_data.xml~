@@ -2,6 +2,16 @@
 <re_xml>
 	<user_preferences>
 		<row>
+			<name>bill_num</name>
+			<display_name>Next Bill series number</display_name>
+			<status>active</status>
+			<value>1</value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>tin</name>
 			<display_name>TIN #</display_name>
 			<status>active</status>
@@ -1831,6 +1841,28 @@
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--service_requests--documents--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form134</name>
+			<display_name>service_request_dashboard</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--service_requests--documents--task_instances--bills--bill_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form135</name>
+			<display_name>project_dashboard</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--projects--documents--project_phases--project_team--task_instances--</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>

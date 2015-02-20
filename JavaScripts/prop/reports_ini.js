@@ -3766,6 +3766,7 @@ function report58_ini()
 			"<acc_name exact='yes'>"+account+"</acc_name>" +
 			"<type></type>" +
 			"<total_amount></total_amount>" +
+			"<paid_amount></paid_amount>"+
 			"<mode></mode>"+			
 			"<status array='yes'>--pending--closed--</status>"+
 			"<bill_id></bill_id>"+			
@@ -3777,7 +3778,9 @@ function report58_ini()
 	fetch_requested_data('report58',payments_data,function(payments)
 	{	
 		var receipts_data="<receipts>"+
-							"<id></id>"+							
+							"<id></id>"+
+							"<receipt_id></receipt_id>"+
+							"<payment_id></payment_id>"+
 							"<type></type>"+
 							"<amount></amount>"+
 							"<acc_name exact='yes'>"+account+"</acc_name>"+							
@@ -3799,9 +3802,19 @@ function report58_ini()
 				}
 				receipt_to_pay.mode='credit';
 				receipt_to_pay.total_amount=receipts[k].amount;
+				receipt_to_pay.paid_amount=0;
 				receipt_to_pay.date=receipts[k].date;
-				receipt_to_pay.bill_id=receipts[k].id;
+				receipt_to_pay.bill_id=receipts[k].receipt_id;
+				receipt_to_pay.id=receipts[k].payment_id;
 				receipt_to_pay.status='from receipt';
+				for(var j in payments)
+				{
+					if(payments[j].id==receipt_to_pay.id)
+					{
+						payments[j].paid_amount=parseFloat(payments[j].paid_amount)-parseFloat(receipt_to_pay.total_amount);
+					}
+				}				
+				
 				payments.push(receipt_to_pay);
 			}
 			
@@ -3862,22 +3875,22 @@ function report58_ini()
 						
 				$('#report58_body').append(rowsHTML);
 				
-				if(payments[i].mode!='credit')
+				if(parseFloat(payments[i].paid_amount)>=0 && payments[i].paid_amount!='0')
 				{
-					var debit="-";
-					var credit="-";
-					var particulars="";
+					debit="-";
+					credit="-";
+					particulars="";
 					
 					if(payments[i].type=='received')
 					{
-						balance-=parseFloat(payments[i].total_amount);						
-						debit="Rs. "+payments[i].total_amount;
+						balance-=parseFloat(payments[i].paid_amount);						
+						debit="Rs. "+payments[i].paid_amount;
 						particulars="From "+payments[i].acc_name+" by payment id "+payments[i].id;
 					}
 					else 
 					{
-						balance+=parseFloat(payments[i].total_amount);
-						credit="Rs. "+payments[i].total_amount;
+						balance+=parseFloat(payments[i].paid_amount);
+						credit="Rs. "+payments[i].paid_amount;
 						particulars="To "+payments[i].acc_name+" by payment id "+payments[i].id;
 					}
 									

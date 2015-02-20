@@ -4341,3 +4341,35 @@ function form133_header_ini()
 
 	set_my_filter(customer_data,customer_filter);
 };
+
+/**
+ * @form Service Request Dashboard
+ * @formNo 134
+ */
+function form134_header_ini()
+{
+	var fields=document.getElementById('form134_master');
+	
+	var id_filter=fields.elements[1];
+	var customer_filter=fields.elements[2];
+	var status_filter=fields.elements[3];
+	var save_button=fields.elements[4];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form134_update_form();
+	});
+		
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+	
+	customer_filter.value='';
+	set_static_value_list('service_requests','status',status_filter);	
+}
