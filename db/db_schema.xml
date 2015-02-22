@@ -99,7 +99,7 @@
 			<t_due index='yes' type="BIGINT"></t_due>
 			<status index='yes' type="VARCHAR(45)"></status><!-- pending/completed/cancelled -->
 			<assignee index='yes' type="VARCHAR(100)"></assignee>
-			<source index='yes' type="VARCHAR(50)"></source>
+			<source index='yes' type="VARCHAR(50)"></source><!--service request-->
 			<source_id index='yes' type="BIGINT"></source_id>
 			<task_hours index='no' type="DECIMAL(5,2)"></task_hours>
 			<last_updated index='yes' type="BIGINT"></last_updated>

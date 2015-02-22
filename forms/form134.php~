@@ -94,7 +94,6 @@
 				<form id='form134_item_header'></form>
 					<th>Item Name </th>
 					<th>Quantity </th>
-					<th>Amount </th>
 					<th>Status </th>
 					<th><input type='button' class='add_icon' form='form134_item_header' title='Add item' onclick='form134_add_item();'></th>
 			</tr>

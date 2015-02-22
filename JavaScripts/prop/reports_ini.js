@@ -3919,6 +3919,6 @@ function report58_ini()
 		});
 	});
 	
-	var print_button=form.elements[5];
+	var print_button=form.elements[3];
 	print_tabular_report('report58','Ledger',print_button);
 };

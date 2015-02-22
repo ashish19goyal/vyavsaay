@@ -571,6 +571,7 @@
 				<label>Reported By: <textarea required readonly="readonly"></textarea></label><br>
 				<label>Problem Type: <input type='text'></label><br>
 				<label>Problem Detail: <textarea required></textarea></label><br>
+				<input type="hidden">
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

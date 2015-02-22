@@ -6,7 +6,6 @@
 					<th>Request Id <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form128_header'></th>
 					<th>Customer <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form128_header'></th>
 					<th>Detail</th>
-					<th>Assignee</th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form128_header'></th>
 					<th><input type='button' form='form128_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form128_header' style='visibility: hidden;'>

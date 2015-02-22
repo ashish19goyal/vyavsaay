@@ -5528,8 +5528,6 @@ function activities_ini()
 	});
 }
 
-
-
 function search_ini()
 {
 	var searchStr=document.getElementById("search_box").value;	
@@ -11035,9 +11033,7 @@ function form128_ini()
 	var columns="<service_requests count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<customer>"+fcustomer+"</customer>" +
-			"<assignee></assignee>" +
 			"<notes></notes>"+
-			"<machine_type></machine_type>"+
 			"<problem_type></problem_type>"+
 			"<reported_by></reported_by>"+			
 			"<closing_notes></closing_notes>"+
@@ -11090,7 +11086,7 @@ function form128_ini()
 				
 				if(read)
 				{
-					var details="Reported By: "+result.reported_by+"\nMachine Type: "+result.machine_type+"\nProblem Type: "+result.problem_type+"\nProblem detail: "+result.notes;
+					var details="Reported By: "+result.reported_by+"\nProblem Type: "+result.problem_type+"\nProblem detail: "+result.notes;
 					var rowsHTML="<tr>";
 					rowsHTML+="<form id='form128_"+result.id+"'></form>";
 						rowsHTML+="<td data-th='Request Id'>";
@@ -11101,23 +11097,17 @@ function form128_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Detail'>";
 							rowsHTML+="<textarea readonly='readonly' form='form128_"+result.id+"'>"+details+"</textarea>";
-							if(update)
-								rowsHTML+="<br><input type='button' class='generic_icon' value='Update' form='form128_"+result.id+"' onclick=\"modal101_action('"+result.id+"')\">";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Assignee'>";
-							rowsHTML+="<textarea readonly='readonly' form='form128_"+result.id+"'>"+result.assignee+"</textarea>";
-							if(access)
-								rowsHTML+="<br><input type='button' class='generic_icon' value='Re-assign' form='form128_"+result.id+"' onclick=\"modal102_action('"+result.id+"')\">";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Status'>";
 							rowsHTML+="<input type='text' readonly='readonly' form='form128_"+result.id+"' value='"+result.status+"'>";
 							if(update)
-								rowsHTML+="<br><input type='button' class='generic_icon' value='Close' form='form128_"+result.id+"' onclick=\"modal103_action('"+result.id+"')\">";
+								rowsHTML+="<br><input type='button' class='generic_icon' value='Close' form='form128_"+result.id+"' onclick='modal103_action($(this))'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form128_"+result.id+"' value='"+result.id+"'>";
-						if(del)								
-							rowsHTML+="<input type='button' class='delete_icon' form='form128_"+result.id+"' title='Delete' onclick='form128_delete_item($(this));'>";
+							if(del)								
+								rowsHTML+="<input type='button' class='delete_icon' form='form128_"+result.id+"' title='Delete' onclick='form128_delete_item($(this));'>";
+							rowsHTML+="<input type='button' class='edit_icon' title='Service Request Details' form='form128_"+result.id+"' onclick=\"element_display('"+result.id+"','form134')\">";
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 				
@@ -11148,8 +11138,8 @@ function form128_ini()
 			{
 				$(prev_element).show();
 			}
-			/////////////
 			
+			/////////////			
 			var export_button=filter_fields.elements[3];
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
@@ -11842,7 +11832,7 @@ function form134_ini()
 		request_id="";	
 	$('#form134_detail_body').html("");
 	$('#form134_machine_body').html("");
-	$('#form134_team_foot').html("");
+	$('#form134_team_body').html("");
 	$('#form134_document_body').html("");
 	$('#form134_task_body').html("");
 	$('#form134_item_body').html("");
@@ -11992,6 +11982,7 @@ function form134_ini()
 							rowsHTML+="<a href='"+updated_url+"' download='"+result.doc_name+"'><u>link</u></a>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form134_document_"+id+"'>";
 							rowsHTML+="<input type='hidden' form='form134_document_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form134_document_"+id+"' id='delete_form134_document_"+id+"' onclick='form134_delete_document($(this));'>";
 						rowsHTML+="</td>";			

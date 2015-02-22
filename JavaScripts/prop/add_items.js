@@ -5459,7 +5459,7 @@ function form134_add_document()
 				rowsHTML+="<input type='text' form='form134_document_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='File'>";
-				rowsHTML+="<a id='form134_document_url'>link</a><input type='file' form='form134_document_"+id+"'>";
+				rowsHTML+="<a id='form134_document_url_"+id+"'><u>link</u></a><input type='file' form='form134_document_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form134_document_"+id+"' value='"+id+"'>";
@@ -5471,8 +5471,8 @@ function form134_add_document()
 		$('#form134_document_body').prepend(rowsHTML);
 		var fields=document.getElementById("form134_document_"+id);
 		var name_filter=fields.elements[0];
-		var docInfo=document.getElementById('form134_document_url');
-		var fpicture=form.elements[1];
+		var docInfo=document.getElementById('form134_document_url_'+id);
+		var fpicture=fields.elements[1];
 					
 		fpicture.addEventListener('change',function(evt)
 		{

@@ -4679,13 +4679,11 @@ function modal47_action(service_date)
 	var id_filter=form.elements[1];
 	var customer_filter=form.elements[2];
 	var by_filter=form.elements[3];
-	var to_filter=form.elements[4];
-	var problem_type_filter=form.elements[5];
-	var machine_type_filter=form.elements[6];
-	var problem_filter=form.elements[7];
-	var assignee_username_filter=form.elements[8];
+	var problem_type_filter=form.elements[4];
+	var problem_filter=form.elements[5];
+//	var assignee_username_filter=form.elements[6];
 	id_filter.value=get_my_time();
-	by_filter.value=get_name();	
+	by_filter.value=get_name();
 	
 	var customers_list_data="<customers>"+
 									"<acc_name></acc_name>"+									
@@ -4696,12 +4694,7 @@ function modal47_action(service_date)
 								"<problem_type></problem_type>"+								
 								"</service_requests>";	
 	set_my_filter(problem_type_data,problem_type_filter);
-	
-	var machine_type_data="<service_requests>"+
-								"<machine_type></machine_type>"+								
-								"</service_requests>";	
-	set_my_filter(machine_type_data,machine_type_filter);
-	
+		
 	var customer_data="<accounts count='1'>"+
 							"<acc_name></acc_name>"+
 							"<type exact='yes'>customer</type>"+							
@@ -4715,7 +4708,7 @@ function modal47_action(service_date)
 			customer_filter.setAttribute('readonly','readonly');
 		}
 	},customer_data);
-
+/*
 	var assignee_data="<accounts>"+
 							"<username></username>"+
 							"<acc_name></acc_name>"+							
@@ -4771,7 +4764,7 @@ function modal47_action(service_date)
 			}
 		},service_eng_data);
 	});
-			
+*/			
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -4781,18 +4774,14 @@ function modal47_action(service_date)
 			var data_id=id_filter.value;			
 			var customer=customer_filter.value;
 			var reported_by=by_filter.value;
-			var assignee=to_filter.value;
 			var problem=problem_filter.value;
 			var problem_type=problem_type_filter.value;
-			var machine_type=machine_type_filter.value;
 			var last_updated=get_my_time();
 			var data_xml="<service_requests>" +
 						"<id>"+data_id+"</id>" +
 						"<customer>"+customer+"</customer>" +
-						"<assignee>"+assignee+"</assignee>" +
 						"<notes>"+problem+"</notes>" +
 						"<problem_type>"+problem_type+"</problem_type>" +
-						"<machine_type>"+machine_type+"</machine_type>" +
 						"<reported_by>"+reported_by+"</reported_by>" +
 						"<reported_time>"+last_updated+"</reported_time>" +
 						"<start_time>"+get_raw_time(service_date)+"</start_time>" +
@@ -4816,7 +4805,7 @@ function modal47_action(service_date)
 					"<user>"+get_username()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
-			var access2_xml="<data_access>" +
+/*			var access2_xml="<data_access>" +
 					"<id>"+get_new_key()+"</id>" +
 					"<tablename>service_requests</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
@@ -4824,18 +4813,18 @@ function modal47_action(service_date)
 					"<user>"+assignee_username_filter.value+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
-					
+*/					
 			if(is_online())
 			{
 				server_create_row(data_xml,activity_xml);
 				server_create_simple(access1_xml);
-				server_create_simple(access2_xml);
+//				server_create_simple(access2_xml);
 			}
 			else
 			{
 				local_create_row(data_xml,activity_xml);
 				local_create_simple(access1_xml);
-				local_create_simple(access2_xml);
+//				local_create_simple(access2_xml);
 			}	
 		}
 		else
@@ -5323,13 +5312,17 @@ function modal102_action(request_id)
  * @modal close service request
  * @param button
  */
-function modal103_action(request_id)
+function modal103_action(button)
 {
 	var form=document.getElementById('modal103_form');
-	
-	var request_id=form.elements[1];
+
+	var form_id=$(button).attr('form');
+	var father_form=document.getElementById(form_id);
+
+	var request_id=father_form.elements[0].value;
+	form.elements[1].value=request_id;
 	var closing_filter=form.elements[2];
-	var status_filter=form.elements[2];
+	var status_filter=form.elements[3];
 
 	set_static_value_list('service_requests','status',status_filter);
 	var request_data="<service_requests count='1'>"+
@@ -5353,7 +5346,8 @@ function modal103_action(request_id)
 		var closing_notes=closing_filter.value;
 		var status=status_filter.value;
 		var last_updated=get_my_time();
-
+		father_form.elements[3].value=status;
+		
 		var request_xml="<service_requests>" +
 					"<id>"+request_id+"</id>" +
 					"<closing_notes>"+closing_notes+"</closing_notes>"+

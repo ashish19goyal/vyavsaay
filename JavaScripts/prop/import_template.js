@@ -51,7 +51,7 @@ function form10_import_template()
 */
 function form11_import_template()
 {
-	var data_array=['id','type','acc_name','total_amount','paid_amount','status','date','due_date','mode','bill_id'];
+	var data_array=['id','type','acc_name','total_amount','paid_amount','status','date','source_info','due_date','mode','bill_id'];
 	my_array_to_csv(data_array);
 };
 

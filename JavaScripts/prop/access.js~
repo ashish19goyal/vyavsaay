@@ -94,6 +94,7 @@ function if_data_update_access(tablename,func)
 	{
 		func(data);
 	});
+
 }
 
 function if_data_delete_access(tablename,func)

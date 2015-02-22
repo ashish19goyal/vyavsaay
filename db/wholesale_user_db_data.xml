@@ -359,7 +359,7 @@
 			<name>report4</name>
 			<display_name>modes_of_payment</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -479,7 +479,7 @@
 			<name>report31</name>
 			<display_name>customer_map_by_credit</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -489,7 +489,7 @@
 			<name>report32</name>
 			<display_name>staff_map</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -499,7 +499,7 @@
 			<name>report33</name>
 			<display_name>supplier_map_by_debit</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -519,7 +519,7 @@
 			<name>report35</name>
 			<display_name>customer_map_by_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -529,7 +529,7 @@
 			<name>report36</name>
 			<display_name>supplier_map_by_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -609,7 +609,7 @@
 			<name>report44</name>
 			<display_name>compare_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>

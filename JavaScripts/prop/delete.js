@@ -3830,23 +3830,56 @@ function form128_delete_item(button)
 					"<tablename>service_requests</tablename>" +
 					"<link_to>form128</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Deleted service request number "+data_id+"</notes>" +
+					"<notes>Deleted service request id "+data_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var access_xml="<data_access>" +
 				"<tablename>service_requests</tablename>" +
 				"<record_id>"+data_id+"</record_id>" +
 				"</data_access>";
+		var machine_xml="<service_request_machines>" +
+				"<request_id>"+data_id+"</request_id>" +
+				"</service_request_machines>";
+		var team_xml="<service_request_team>" +
+				"<request_id>"+data_id+"</request_id>" +
+				"</service_request_team>";
+		var document_xml="<documents>" +
+				"<target_id>"+data_id+"</target_id>" +
+				"<doc_type>service request</doc_type>"+
+				"</documents>";
+		var task_xml="<task_instances>" +
+				"<source_id>"+data_id+"</source_id>" +
+				"<source>service request</source>"+
+				"</task_instances>";
+		var item_xml="<service_request_items>" +
+				"<request_id>"+data_id+"</request_id>" +
+				"</service_request_items>";
+		var expense_xml="<expenses>" +
+				"<source_id>"+data_id+"</source_id>" +
+				"<source>service request</source>"+
+				"</expenses>";
 			
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
 			server_delete_simple(access_xml);
+			server_delete_simple(machine_xml);
+			server_delete_simple(team_xml);
+			server_delete_simple(document_xml);
+			server_delete_simple(task_xml);
+			server_delete_simple(item_xml);
+			server_delete_simple(expense_xml);									
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
 			local_delete_simple(access_xml);
+			local_delete_simple(machine_xml);
+			local_delete_simple(team_xml);
+			local_delete_simple(document_xml);
+			local_delete_simple(task_xml);
+			local_delete_simple(item_xml);
+			local_delete_simple(expense_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -3987,6 +4020,293 @@ function form133_delete_item(button)
 		else
 		{
 			local_delete_simple(data_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 134
+ * form Service Dashboard - machine
+ * @param button
+ */
+function form134_delete_item(button)
+{
+	if(is_delete_access('form134'))
+	{
+		var master_fields=document.getElementById('form134_master');
+		var request_id=master_fields.elements[1].value;
+
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);		
+		var data_id=form.elements[5].value;
+		var data_xml="<service_request_machines>" +
+					"<id>"+data_id+"</id>" +
+					"<request_id>"+request_id+"</request_id>"+
+					"</service_request_machines>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>service_request_machines</tablename>" +
+					"<link_to>form134</link_to>" +
+					"<title>Removed</title>" +
+					"<notes>Machine from service request id "+request_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 134
+ * form Service Dashboard - team
+ * @param button
+ */
+function form134_delete_team(button)
+{
+	if(is_delete_access('form134'))
+	{
+		var master_fields=document.getElementById('form134_master');
+		var request_id=master_fields.elements[1].value;
+
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);		
+		var assignee=form.elements[0].value;
+		var data_id=form.elements[3].value;
+		var data_xml="<service_request_team>" +
+					"<id>"+data_id+"</id>" +
+					"<request_id>"+request_id+"</request_id>"+
+					"</service_request_team>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>service_request_team</tablename>" +
+					"<link_to>form134</link_to>" +
+					"<title>Removed</title>" +
+					"<notes>Assignee from service request id "+request_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var username_data="<accounts>"+
+							"<username></username>"+							
+							"<status exact='yes'>active</status>"+							
+							"<type exact='yes'>staff</type>"+							
+							"<acc_name exact='yes'>"+assignee+"</acc_name>"+							
+							"</accounts>";
+		get_single_column_data(function (usernames) 
+		{
+			if(usernames.length>0)
+			{
+				var access_xml="<data_access>" +
+					"<record_id>"+request_id+"</record_id>" +
+					"<tablename>service_requests</tablename>" +
+					"<user>"+usernames[0]+"</user>" +
+					"</data_access>";
+				if(is_online())
+				{
+					server_delete_simple(access_xml);
+				}
+				else
+				{
+					local_delete_simple(access_xml);
+				}	
+			}
+		},username_data);
+
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 134
+ * form Service Dashboard - document
+ * @param button
+ */
+function form134_delete_document(button)
+{
+	if(is_delete_access('form134'))
+	{
+		var master_fields=document.getElementById('form134_master');
+		var request_id=master_fields.elements[1].value;
+
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);		
+		var data_id=form.elements[2].value;
+		var data_xml="<documents>" +
+					"<id>"+data_id+"</id>" +
+					"<target_id>"+request_id+"</target_id>"+
+					"</documents>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>documents</tablename>" +
+					"<link_to>form134</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Document for service request id "+request_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 134
+ * form Service Dashboard - Task
+ * @param button
+ */
+function form134_delete_task(button)
+{
+	if(is_delete_access('form134'))
+	{
+		var master_fields=document.getElementById('form134_master');
+		var request_id=master_fields.elements[1].value;
+
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);		
+		var data_id=form.elements[5].value;
+		var data_xml="<task_instances>" +
+					"<id>"+data_id+"</id>" +
+					"<source_id>"+request_id+"</source_id>"+
+					"<source>service request</source>"+
+					"</task_instances>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>task_instances</tablename>" +
+					"<link_to>form134</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Task for service request id "+request_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 134
+ * form Service Dashboard - Item
+ * @param button
+ */
+function form134_delete_item(button)
+{
+	if(is_delete_access('form134'))
+	{
+		var master_fields=document.getElementById('form134_master');
+		var request_id=master_fields.elements[1].value;
+
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);		
+		var data_id=form.elements[3].value;
+		var data_xml="<service_request_items>" +
+					"<id>"+data_id+"</id>" +
+					"<request_id>"+request_id+"</request_id>"+
+					"</service_request_items>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>service_request_items</tablename>" +
+					"<link_to>form134</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Service item for service request id "+request_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 134
+ * form Service Dashboard - Expense
+ * @param button
+ */
+function form134_delete_expense(button)
+{
+	if(is_delete_access('form134'))
+	{
+		var master_fields=document.getElementById('form134_master');
+		var request_id=master_fields.elements[1].value;
+
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);		
+		var data_id=form.elements[4].value;
+		var data_xml="<expenses>" +
+					"<id>"+data_id+"</id>" +
+					"<source_id>"+request_id+"</source_id>"+
+					"<source>service request</source>"+
+					"</expenses>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>expenses</tablename>" +
+					"<link_to>form134</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Expense for service request id "+request_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
 		}	
 		$(button).parent().parent().remove();
 	}

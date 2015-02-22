@@ -179,7 +179,7 @@ function report4_ini()
 			"<status exact='yes'>closed</status>" +
 			"<type exact='yes'>received</type>" +
 			"<date lowerbound='yes'>"+get_raw_time(start_date)+"</date>" +
-			"<date upperbound='yes'>"+get_raw_time(end_date)+"</date>" +
+			"<date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</date>" +
 			"</payments>";
 
 	fetch_requested_data('report4',modes_data,function(modes)
@@ -311,7 +311,7 @@ function report6_ini()
 				"<acc_name array='yes'>"+customers_string+"</acc_name>" +
 				"<total_amount></total_amount>" +
 				"<paid_amount></paid_amount>" +
-				"<due_date upperbound='yes'>"+get_raw_time(due_date)+"</due_date>" +
+				"<due_date upperbound='yes'>"+(get_raw_time(due_date)+86400000)+"</due_date>" +
 				"<status exact='yes'>pending</status>" +
 				"<type></type>" +
 				"</payments>";
@@ -404,7 +404,7 @@ function report9_ini()
 			"<id></id>" +
 			"<customer_name>"+customer+"</customer_name>" +
 			"<bill_date lowerbound='yes'>"+get_raw_time(start_date)+"</bill_date>" +
-			"<bill_date upperbound='yes'>"+get_raw_time(end_date)+"</bill_date>" +
+			"<bill_date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</bill_date>" +
 			"</bills>";
 	
 	fetch_requested_data('report9',bills_data,function(bills)
@@ -421,7 +421,7 @@ function report9_ini()
 				"<quantity></quantity>" +
 				"<amount></amount>" +
 				"<last_updated lowerbound='yes'>"+get_raw_time(start_date)+"</last_updated>" +
-				"<last_updated upperbound='yes'>"+get_raw_time(end_date)+"</last_updated>" +
+				"<last_updated upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</last_updated>" +
 				"</bill_items>";
 		
 		fetch_requested_data('report9',bill_items_data,function(bill_ids)
@@ -3461,7 +3461,7 @@ function report53_ini()
 			"<refund_amount></refund_amount>" +
 			"<tax></tax>" +
 			"<last_updated lowerbound='yes'>"+get_raw_time(start_date)+"</last_updated>" +
-			"<last_updated upperbound='yes'>"+get_raw_time(end_date)+"</last_updated>" +
+			"<last_updated upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</last_updated>" +
 			"</supplier_return_items>";
 
 	fetch_requested_data('report53',purchase_return_data,function(preturns)
@@ -3540,7 +3540,7 @@ function report54_ini()
 			"<id></id>" +
 			"<total></total>" +
 			"<bill_date lowerbound='yes'>"+get_raw_time(start_date)+"</bill_date>" +
-			"<bill_date upperbound='yes'>"+get_raw_time(end_date)+"</bill_date>" +
+			"<bill_date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</bill_date>" +
 			"</bills>";
 	fetch_requested_data('report54',bills_data,function(bills)
 	{
@@ -3603,7 +3603,7 @@ function report55_ini()
 			"<id></id>" +
 			"<total></total>" +
 			"<bill_date lowerbound='yes'>"+get_raw_time(start_date)+"</bill_date>" +
-			"<bill_date upperbound='yes'>"+get_raw_time(end_date)+"</bill_date>" +
+			"<bill_date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</bill_date>" +
 			"</bills>";
 	fetch_requested_data('report55',bills_data,function(bills)
 	{
@@ -3919,6 +3919,6 @@ function report58_ini()
 		});
 	});
 	
-	var print_button=form.elements[5];
+	var print_button=form.elements[3];
 	print_tabular_report('report58','Ledger',print_button);
 };

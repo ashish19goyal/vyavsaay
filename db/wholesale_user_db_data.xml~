@@ -359,7 +359,7 @@
 			<name>report4</name>
 			<display_name>modes_of_payment</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -479,7 +479,7 @@
 			<name>report31</name>
 			<display_name>customer_map_by_credit</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -489,7 +489,7 @@
 			<name>report32</name>
 			<display_name>staff_map</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -499,7 +499,7 @@
 			<name>report33</name>
 			<display_name>supplier_map_by_debit</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -519,7 +519,7 @@
 			<name>report35</name>
 			<display_name>customer_map_by_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -529,7 +529,7 @@
 			<name>report36</name>
 			<display_name>supplier_map_by_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -3479,6 +3479,28 @@
 			<username>master</username>
 			<element_id>form133</element_id>
 			<element_name>service_documents</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form134</element_id>
+			<element_name>service_dashboard</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form135</element_id>
+			<element_name>project_dashboard</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

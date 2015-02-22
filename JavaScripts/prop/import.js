@@ -33,9 +33,8 @@ function form1_import(data_array,import_type)
 				if(parseFloat(quantity)!==parseFloat(row.actual_quantity))
 				{
 					var new_quantity=parseFloat(row.actual_quantity)-parseFloat(quantity);
-					var new_id=get_new_key();
 					var adjust_xml="<inventory_adjust>" +
-							"<id>"+new_id+"</id>" +
+							"<id>"+(new_id+counter)+"</id>" +
 							"<product_name>"+row.product_name+"</product_name>" +
 							"<batch>"+row.batch+"</batch>" +
 							"<quantity>"+new_quantity+"</quantity>" +
@@ -314,6 +313,7 @@ function form11_import(data_array,import_type)
 				"<date>"+get_raw_time(row.date)+"</date>" +
 				"<due_date>"+get_raw_time(row.due_date)+"</due_date>" +
 				"<mode>"+row.mode+"</mode>" +
+				"<source_info>"+row.source_info+"</source_info>" +				
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<transaction_id>"+row.id+"</transaction_id>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
