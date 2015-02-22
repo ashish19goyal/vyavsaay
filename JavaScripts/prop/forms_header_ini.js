@@ -3188,6 +3188,7 @@ function form118_header_ini()
 function form119_header_ini()
 {
 	var fields=document.getElementById('form119_master');
+	var bill_id=$("#form119_link").attr('data_id');
 	
 	var customers_filter=fields.elements[1];
 	var bill_type=fields.elements[2];
@@ -3232,27 +3233,31 @@ function form119_header_ini()
 		"<status exact='yes'>active</status>" +
 		"</bill_types>";
 	set_my_value_list(type_data,bill_type);
-	get_single_column_data(function (bill_types) 
-	{
-		if(bill_types.length>0)
-		{
-			bill_type.value=bill_types[0];
-			var bill_num_data="<user_preferences count='1'>"+
-						"<value></value>"+
-						"<name exact='yes'>"+bill_type.value+"_bill_num</name>"+
-						"</user_preferences>";
-			set_my_value(bill_num_data,bill_num);	
-		}
-		else 
-		{
-			var bill_num_data="<user_preferences count='1'>"+
-						"<value></value>"+
-						"<name exact='yes'>bill_num</name>"+
-						"</user_preferences>";
-			set_my_value(bill_num_data,bill_num);	
-		}
-	},type_data);
 
+	if(bill_id==null || bill_id=='')
+	{	
+		get_single_column_data(function (bill_types) 
+		{
+			if(bill_types.length>0)
+			{
+				bill_type.value=bill_types[0];
+				var bill_num_data="<user_preferences count='1'>"+
+							"<value></value>"+
+							"<name exact='yes'>"+bill_type.value+"_bill_num</name>"+
+							"</user_preferences>";
+				set_my_value(bill_num_data,bill_num);	
+			}
+			else 
+			{
+				var bill_num_data="<user_preferences count='1'>"+
+							"<value></value>"+
+							"<name exact='yes'>bill_num</name>"+
+							"</user_preferences>";
+				set_my_value(bill_num_data,bill_num);	
+			}
+		},type_data);
+	}
+	
 	$(bill_type).off('blur');
 	$(bill_type).on('blur',function (e) 
 	{

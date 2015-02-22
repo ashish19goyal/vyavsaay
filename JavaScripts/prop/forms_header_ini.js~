@@ -3188,6 +3188,7 @@ function form118_header_ini()
 function form119_header_ini()
 {
 	var fields=document.getElementById('form119_master');
+	var bill_id=$("#form119_link").attr('data_id');
 	
 	var customers_filter=fields.elements[1];
 	var bill_type=fields.elements[2];
