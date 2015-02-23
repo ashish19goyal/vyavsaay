@@ -149,16 +149,17 @@ function form10_add_item()
 		var service_data="<services>" +
 				"<name></name>" +
 				"</services>";
-		set_my_value_list(service_data,name_filter);
-		
+		set_my_value_list_func(service_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
 		var staff_data="<staff>" +
 				"<acc_name></acc_name>" +
 				"<status exact='yes'>active</status>" +
 				"</staff>";
 		set_my_value_list(staff_data,staff_filter);
-		
-		$(name_filter).focus();
-		
+				
 		$(name_filter).on('blur',function(event){
 			notes_filter.value="";
 			price_filter.value=0;
@@ -299,9 +300,7 @@ function form12_add_item()
 		var save_button=fields.elements[10];
 		var free_product_filter=fields.elements[12];
 		var free_product_quantity=fields.elements[13];
-		
-		$(name_filter).focus();
-		
+				
 		$(save_button).on("click", function(event)
 		{
 			event.preventDefault();
@@ -317,8 +316,11 @@ function form12_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list(product_data,name_filter);
-		
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
 		
 		$(name_filter).on('blur',function(event)
 		{
@@ -1926,9 +1928,7 @@ function form72_add_product()
 		var free_product_filter=fields.elements[12];
 		var free_product_quantity=fields.elements[13];
 		var free_service_filter=fields.elements[14];
-		
-		$(name_filter).focus();
-		
+				
 		$(save_button).on("click", function(event)
 		{
 			event.preventDefault();
@@ -1944,7 +1944,11 @@ function form72_add_product()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list(product_data,name_filter);
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+		
 		
 		$(name_filter).on('blur',function(event)
 		{
@@ -2211,9 +2215,7 @@ function form72_add_service()
 		var free_product_filter=fields.elements[12];
 		var free_product_quantity=fields.elements[13];
 		var free_service_filter=fields.elements[14];
-		
-		$(name_filter).focus();
-		
+				
 		$(save_button).on("click", function(event)
 		{
 			event.preventDefault();
@@ -2229,7 +2231,11 @@ function form72_add_service()
 		var service_data="<services>" +
 				"<name></name>" +
 				"</services>";
-		set_my_value_list(service_data,name_filter);
+		set_my_value_list_func(service_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+		
 		
 		var staff_data="<staff>" +
 				"<acc_name></acc_name>" +
@@ -2973,8 +2979,6 @@ function form91_add_item()
 		var free_product_filter=fields.elements[12];
 		var free_product_quantity=fields.elements[13];
 		
-		$(name_filter).focus();
-		
 		$(save_button).on("click", function(event)
 		{
 			event.preventDefault();
@@ -2990,8 +2994,11 @@ function form91_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list(product_data,name_filter);
-		
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
 		
 		$(name_filter).on('blur',function(event)
 		{
@@ -3984,7 +3991,6 @@ function form118_add_item()
 		var free_product_filter=fields.elements[12];
 		var free_product_quantity=fields.elements[13];
 		
-		$(name_filter).focus();
 		
 		$(save_button).on("click", function(event)
 		{
@@ -4001,7 +4007,10 @@ function form118_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list(product_data,name_filter);
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
 		
 		
 		$(name_filter).on('blur',function(event)
@@ -4194,7 +4203,7 @@ function form118_add_item()
 
 
 /**
- * @form Create Bill(multiple registers, unbilled items)
+ * @form Create Bill(wholesale)
  * @formNo 119
  */
 function form119_add_item()
@@ -4266,48 +4275,11 @@ function form119_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		//set_my_value_list(product_data,name_filter);
-		
-	get_single_column_data(function(data)
-	{
-		var form=name_filter.form;
-		var datalist=document.createElement('datalist');
-		data.forEach(function(d)
+		set_my_value_list_func(product_data,name_filter,function () 
 		{
-			var option=document.createElement('option');
-			option.setAttribute('value',d);
-			datalist.appendChild(option);
+			$(name_filter).focus();
 		});
-		
-		var list_id=name_filter.getAttribute('list');
-		if(list_id=='' || list_id==null)
-		{
-			list_id="list_"+get_new_key();
-			name_filter.setAttribute("list",list_id);
-		}
-		else
-		{
-			var oldlist=document.getElementById(list_id);
-			form.removeChild(oldlist);
-		}
-		
-		form.appendChild(datalist);
-		datalist.setAttribute('id',list_id);
-		
-		$(name_filter).off("change");
-		$(name_filter).on("change",function(event)
-		{
-			var found = $.inArray($(this).val(), data) > -1;
-			if(!found)
-			{
-	            $(this).val('');
-	        }
-		});
-		
-		$(name_filter).focus();
-	},product_data);		
-		
-				
+
 		$(name_filter).on('keydown',function(e)
 		{
 			if(e.keyCode==118)
