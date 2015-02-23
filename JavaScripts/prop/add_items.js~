@@ -4266,7 +4266,45 @@ function form119_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list(product_data,name_filter);
+		//set_my_value_list(product_data,name_filter);
+		
+	get_single_column_data(function(data)
+	{
+		var form=filter_element.form;
+		var datalist=document.createElement('datalist');
+		data.forEach(function(d)
+		{
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			datalist.appendChild(option);
+		});
+		
+		var list_id=filter_element.getAttribute('list');
+		if(list_id=='' || list_id==null)
+		{
+			list_id="list_"+get_new_key();
+			filter_element.setAttribute("list",list_id);
+		}
+		else
+		{
+			var oldlist=document.getElementById(list_id);
+			form.removeChild(oldlist);
+		}
+		
+		form.appendChild(datalist);
+		datalist.setAttribute('id',list_id);
+		
+		$(filter_element).off("change");
+		$(filter_element).on("change",function(event)
+		{
+			var found = $.inArray($(this).val(), data) > -1;
+			if(!found)
+			{
+	            $(this).val('');
+	        }
+		});
+	},product_data);		
+		
 				
 		$(name_filter).on('keydown',function(e)
 		{
@@ -4294,7 +4332,7 @@ function form119_add_item()
 			form119_add_item();
 		});
 
-		$(name_filter).focus();
+		//$(name_filter).focus();
 		$(name_filter).on('blur',function(event)
 		{
 			var make_data="<product_master>" +
@@ -5459,7 +5497,7 @@ function form134_add_document()
 				rowsHTML+="<input type='text' form='form134_document_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='File'>";
-				rowsHTML+="<a id='form134_document_url_"+id+"'>link</a><input type='file' form='form134_document_"+id+"'>";
+				rowsHTML+="<a id='form134_document_url_"+id+"'><u>link</u></a><input type='file' form='form134_document_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form134_document_"+id+"' value='"+id+"'>";

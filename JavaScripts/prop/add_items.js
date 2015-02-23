@@ -4266,7 +4266,47 @@ function form119_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list(product_data,name_filter);
+		//set_my_value_list(product_data,name_filter);
+		
+	get_single_column_data(function(data)
+	{
+		var form=name_filter.form;
+		var datalist=document.createElement('datalist');
+		data.forEach(function(d)
+		{
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			datalist.appendChild(option);
+		});
+		
+		var list_id=name_filter.getAttribute('list');
+		if(list_id=='' || list_id==null)
+		{
+			list_id="list_"+get_new_key();
+			name_filter.setAttribute("list",list_id);
+		}
+		else
+		{
+			var oldlist=document.getElementById(list_id);
+			form.removeChild(oldlist);
+		}
+		
+		form.appendChild(datalist);
+		datalist.setAttribute('id',list_id);
+		
+		$(name_filter).off("change");
+		$(name_filter).on("change",function(event)
+		{
+			var found = $.inArray($(this).val(), data) > -1;
+			if(!found)
+			{
+	            $(this).val('');
+	        }
+		});
+		
+		$(name_filter).focus();
+	},product_data);		
+		
 				
 		$(name_filter).on('keydown',function(e)
 		{
@@ -4294,7 +4334,7 @@ function form119_add_item()
 			form119_add_item();
 		});
 
-		$(name_filter).focus();
+		//$(name_filter).focus();
 		$(name_filter).on('blur',function(event)
 		{
 			var make_data="<product_master>" +
