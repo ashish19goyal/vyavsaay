@@ -2288,52 +2288,61 @@ function modal26_action(payment_id,func)
 	set_my_value_list(customer_data,fcustomer);
 	set_static_value_list('payments','status',fstatus);
 	set_static_value_list('payments','mode',fmode);
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		var customer=fcustomer.value;
-		var total=ftotal.value;
-		var paid=fpaid.value;
-		var due_date=get_raw_time(fdue_date.value);
-		var mode=fmode.value;
-		var status=fstatus.value;
-		var last_updated=get_my_time();
-		var data_xml="<payments>" +
-					"<id>"+payment_id+"</id>" +
-					"<acc_name>"+customer+"</acc_name>" +
-					"<type>received</type>" +
-					"<total_amount>"+total+"</total_amount>" +
-					"<paid_amount>"+paid+"</paid_amount>" +
-					"<status>"+status+"</status>" +
-					"<due_date>"+due_date+"</due_date>" +
-					"<mode>"+mode+"</mode>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</payments>";
-		var activity_xml="<activity>" +
-					"<data_id>"+payment_id+"</data_id>" +
-					"<tablename>payments</tablename>" +
-					"<link_to>form11</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Payment of "+paid+" from "+customer+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		
-		if(is_online())
+
+		if(fstatus.value=='closed' && (ftotal.value>(fpaid.value+1) || fpaid.value==""))
 		{
-			server_update_row(data_xml,activity_xml);
+			alert("Payment can't be closed as the full amount has not been paid.");
+			fstatus.value='pending';
 		}
-		else
+		else 
 		{
-			local_update_row(data_xml,activity_xml);
+			var customer=fcustomer.value;
+			var total=ftotal.value;
+			var paid=fpaid.value;
+			var due_date=get_raw_time(fdue_date.value);
+			var mode=fmode.value;
+			var status=fstatus.value;
+			var last_updated=get_my_time();
+			var data_xml="<payments>" +
+						"<id>"+payment_id+"</id>" +
+						"<acc_name>"+customer+"</acc_name>" +
+						"<type>received</type>" +
+						"<total_amount>"+total+"</total_amount>" +
+						"<paid_amount>"+paid+"</paid_amount>" +
+						"<status>"+status+"</status>" +
+						"<due_date>"+due_date+"</due_date>" +
+						"<mode>"+mode+"</mode>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</payments>";
+			var activity_xml="<activity>" +
+						"<data_id>"+payment_id+"</data_id>" +
+						"<tablename>payments</tablename>" +
+						"<link_to>form11</link_to>" +
+						"<title>Updated</title>" +
+						"<notes>Payment of "+paid+" from "+customer+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			
+			if(is_online())
+			{
+				server_update_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_update_row(data_xml,activity_xml);
+			}
+			if(func)
+			{
+				func(mode,paid);
+			}
+			
+			$("#modal26").dialog("close");
 		}
-		if(func)
-		{
-			func(mode,paid);
-		}
-		
-		$("#modal26").dialog("close");
 	});
 	
 	var payments_data="<payments>" +
@@ -2552,48 +2561,58 @@ function modal28_action(payment_id)
 	set_static_value_list('payments','status',fstatus);
 	set_static_value_list('payments','mode',fmode);
 	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		
-		var supplier=fsupplier.value;
-		var total=ftotal.value;
-		var paid=fpaid.value;
-		var due_date=get_raw_time(fdue_date.value);
-		var mode=fmode.value;
-		var status=fstatus.value;
-		var last_updated=get_my_time();
-		var data_xml="<payments>" +
-					"<id>"+payment_id+"</id>" +
-					"<acc_name>"+supplier+"</acc_name>" +
-					"<type>paid</type>" +
-					"<total_amount>"+total+"</total_amount>" +
-					"<paid_amount>"+paid+"</paid_amount>" +
-					"<status>"+status+"</status>" +
-					"<due_date>"+due_date+"</due_date>" +
-					"<mode>"+mode+"</mode>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</payments>";
-		var activity_xml="<activity>" +
-					"<data_id>"+payment_id+"</data_id>" +
-					"<tablename>payments</tablename>" +
-					"<link_to>form11</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Payment of "+paid+" to "+supplier+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		
-		if(is_online())
+
+		if(fstatus.value=='closed' && (ftotal.value>(fpaid.value+1) || fpaid.value==""))
 		{
-			server_update_row(data_xml,activity_xml);
+			alert("Payment can't be closed as the full amount has not been paid.");
+			fstatus.value='pending';
 		}
-		else
+		else 
 		{
-			local_update_row(data_xml,activity_xml);
-		}	
-	
-		$("#modal28").dialog("close");
+				
+			var supplier=fsupplier.value;
+			var total=ftotal.value;
+			var paid=fpaid.value;
+			var due_date=get_raw_time(fdue_date.value);
+			var mode=fmode.value;
+			var status=fstatus.value;
+			var last_updated=get_my_time();
+			var data_xml="<payments>" +
+						"<id>"+payment_id+"</id>" +
+						"<acc_name>"+supplier+"</acc_name>" +
+						"<type>paid</type>" +
+						"<total_amount>"+total+"</total_amount>" +
+						"<paid_amount>"+paid+"</paid_amount>" +
+						"<status>"+status+"</status>" +
+						"<due_date>"+due_date+"</due_date>" +
+						"<mode>"+mode+"</mode>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</payments>";
+			var activity_xml="<activity>" +
+						"<data_id>"+payment_id+"</data_id>" +
+						"<tablename>payments</tablename>" +
+						"<link_to>form11</link_to>" +
+						"<title>Updated</title>" +
+						"<notes>Payment of "+paid+" to "+supplier+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			
+			if(is_online())
+			{
+				server_update_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_update_row(data_xml,activity_xml);
+			}	
+		
+			$("#modal28").dialog("close");
+		}
 	});
 	
 	var payments_data="<payments>" +
@@ -4818,13 +4837,13 @@ function modal47_action(service_date)
 			{
 				server_create_row(data_xml,activity_xml);
 				server_create_simple(access1_xml);
-				server_create_simple(access2_xml);
+//				server_create_simple(access2_xml);
 			}
 			else
 			{
 				local_create_row(data_xml,activity_xml);
 				local_create_simple(access1_xml);
-				local_create_simple(access2_xml);
+//				local_create_simple(access2_xml);
 			}	
 		}
 		else

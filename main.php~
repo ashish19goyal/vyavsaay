@@ -28,7 +28,7 @@
 		include "functions/services.php";
 		include "functions/purchase.php";
 		include "functions/store.php";
-		//include "functions/inventory.php";
+		include "functions/inventory.php";
 		include "functions/customers.php";
 		include "functions/customer_service.php";
 		include "functions/staff.php";

@@ -275,7 +275,7 @@ function set_menu_username()
 
 function setup_grid_display()
 {
-	var functions_array=['sale_bills','purchase','finances','products','services','inventory','customers','customer_service','projects','suppliers','staff','store','ecommerce','offers','maps','sale_reports','admin'];
+	var functions_array=['sale_bills','purchase','finances','products','services','customers','customer_service','projects','suppliers','staff','store','ecommerce','offers','maps','sale_reports','admin'];
 	functions_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main").find('ul').find('li').length;
@@ -380,7 +380,7 @@ function hide_all()
 	$("#products_main").hide();
 	$("#purchase_main").hide();
 	$("#services_main").hide();
-	$("#inventory_main").hide();
+	//$("#inventory_main").hide();
 	$("#finances_main").hide();
 	$("#ecommerce_main").hide();
 	$("#customers_main").hide();

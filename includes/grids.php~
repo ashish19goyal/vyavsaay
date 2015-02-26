@@ -40,6 +40,12 @@
 			</ul>
 		</li>
 		
+		<li id="inventory_link" onclick="grid_click('inventory');">
+			<a><div data-i18n="function.inventory"> </div></a>		
+			<ul>
+			</ul>
+		</li>
+
 		<li id="customers_link" onclick="grid_click('customers');">
 			<a><div data-i18n="function.customers"> </div></a>		
 			<ul>
