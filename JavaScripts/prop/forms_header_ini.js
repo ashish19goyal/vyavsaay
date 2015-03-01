@@ -4399,6 +4399,206 @@ function form134_header_ini()
 	    }
 	});
 	
+	id_filter.value='';
 	customer_filter.value='';
+	status_filter.value='';
 	set_static_value_list('service_requests','status',status_filter);	
 }
+
+/**
+ * @form Project Dashboard
+ * @formNo 135
+ */
+function form135_header_ini()
+{
+	var fields=document.getElementById('form135_master');
+	
+	var name_filter=fields.elements[1];
+	var description_filter=fields.elements[2];
+	var status_filter=fields.elements[3];
+	var save_button=fields.elements[4];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form135_update_form();
+	});
+		
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+	
+	name_filter.value='';
+	description_filter.value='';
+	status_filter.value='';
+	set_static_value_list('projects','status',status_filter);	
+}
+
+/**
+ * @form Enter Supplier bills(wholesale)
+ * @formNo 136
+ */
+function form136_header_ini()
+{
+	var fields=document.getElementById('form136_master');
+	
+	var supplier_filter=fields.elements[1];
+	fields.elements[2].value="";
+	var bill_date=fields.elements[3];
+	var entry_date=fields.elements[4];
+	fields.elements[5].value="";
+	fields.elements[6].value=get_new_key();
+	fields.elements[7].value=fields.elements[6].value;
+	var save_button=fields.elements[8];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form136_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form136_add_item();
+	});
+	
+	var suppliers_data="<suppliers>" +
+		"<acc_name></acc_name>" +
+		"</suppliers>";
+	
+	set_my_value_list(suppliers_data,supplier_filter);
+	
+	$(bill_date).datepicker();
+	$(bill_date).val(get_my_date());
+	
+	$(entry_date).datepicker();
+	$(entry_date).val(get_my_date());
+
+	supplier_filter.value='';
+	$(supplier_filter).focus();
+}
+
+/**
+ * @form Project Expenses
+ * @formNo 137
+ */
+function form137_header_ini()
+{
+	var filter_fields=document.getElementById('form137_header');
+	var code_filter=filter_fields.elements[0];
+	var person_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+		
+	var name_data="<projects>" +
+			"<name></name>" +
+			"</projects>";
+	
+	set_my_filter(name_data,code_filter);
+	set_static_filter('projects','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form137_ini();
+	});
+};
+
+/**
+ * @form Project Schedule
+ * @formNo 138
+ */
+function form138_header_ini()
+{
+	var fields=document.getElementById('form138_master');
+	var code_filter=fields.elements[1];
+	var id_filter=fields.elements[2];
+	
+	var name_data="<projects>" +
+			"<name></name>" +
+			"</projects>";
+	
+	set_my_value_list(name_data,code_filter);
+
+	code_filter.value="";
+	
+	$(code_filter).off('blur');
+	$(code_filter).on('blur',function () 
+	{
+		var id_data="<projects>"+
+					"<id></id>"+
+					"<name exact='yes'>"+code_filter.value+"</name>"+					
+					"</projects>";
+		set_my_value(id_data,id_filter);
+	});
+};
+
+
+/**
+ * @form Customer Profiling
+ * @formNo 139
+ */
+function form139_header_ini()
+{
+	var filter_fields=document.getElementById('form139_header');
+	var name_filter=filter_fields.elements[0];
+		
+	var name_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	set_my_filter(name_data,name_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form139_ini();
+	});
+};
+
+/**
+ * @form Supplier Profiling
+ * @formNo 140
+ */
+function form140_header_ini()
+{
+	var filter_fields=document.getElementById('form140_header');
+	var name_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+		
+	var name_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+	
+	set_my_filter(name_data,name_filter);
+
+	var type_data="<assets>" +
+			"<type></type>" +
+			"</assets>";
+	
+	set_my_filter(type_data,type_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form140_ini();
+	});
+};

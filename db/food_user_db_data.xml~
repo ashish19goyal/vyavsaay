@@ -1879,6 +1879,61 @@
 			<tables>--projects--documents--project_phases--project_team--task_instances--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form136</name>
+			<display_name>enter_supplier_bill_wholesale</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_bills--supplier_bill_items--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form137</name>
+			<display_name>project_expenses</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--expenses--projects--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form138</name>
+			<display_name>project_schedule</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--tasks--projects--project_phases--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form139</name>
+			<display_name>customer_profiling</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--customers--facilities--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form140</name>
+			<display_name>supplier_profiling</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--suppliers--assets--</tables>
+			<last_updated>1</last_updated>
+		</row>		
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3469,6 +3524,83 @@
 			<username>master</username>
 			<element_id>form133</element_id>
 			<element_name>service_documents</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form134</element_id>
+			<element_name>service_dashboard</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form135</element_id>
+			<element_name>project_dashboard</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form136</element_id>
+			<element_name>enter_supplier_bill_wholesale</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form137</element_id>
+			<element_name>project_expenses</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form138</element_id>
+			<element_name>project_schedule</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form139</element_id>
+			<element_name>customer_profiling</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form140</element_id>
+			<element_name>supplier_profiling</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

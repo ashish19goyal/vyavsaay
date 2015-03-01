@@ -10,11 +10,16 @@
 <script src='./JavaScripts/open/moment.min.js'></script>
 <script src='./JavaScripts/open/fullcalendar.min.js'></script>
 <script src='./JavaScripts/open/jquery.datetimepicker.js'></script>
-
 <script src='./JavaScripts/open/jquery.easing.min.js'></script>
 <script src='./JavaScripts/open/move-top.js'></script>
-
 <script src='./JavaScripts/open/shortcuts.min.js'></script>
+
+<script src='./JavaScripts/open/dataDays.js'></script>
+<script src='./JavaScripts/open/dataDaysEnh.js'></script>
+<script src='./JavaScripts/open/dataHours.js'></script>
+<script src='./JavaScripts/open/jquery.cookie.js'></script>
+<script src='./JavaScripts/open/jquery.fn.gantt.min.js'></script>
+
 <script src='./JavaScripts/prop/add_items.js'></script>
 <script src='./JavaScripts/prop/ajax.js'></script>
 <script src='./JavaScripts/prop/create.js'></script>

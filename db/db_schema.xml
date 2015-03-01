@@ -17,6 +17,7 @@
 			<lat index='no' type="DECIMAL(14,10)"></lat>
 			<lng index='no' type="DECIMAL(14,10)"></lng>
 			<shipping index='yes' type="BOOL"></shipping>
+			<business_type index='yes' type="TEXT"></business_type>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</customers>
 	<suppliers>  
@@ -35,6 +36,7 @@
 			<lat index='no' type="DECIMAL(14,10)"></lat>
 			<lng index='no' type="DECIMAL(14,10)"></lng>
 			<shipping index='yes' type="BOOL"></shipping>
+			<business_type index='yes' type="TEXT"></business_type>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</suppliers>
 	<staff>
@@ -456,7 +458,13 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(45)" unique='yes'></name>
 			<type index='yes' type="VARCHAR(25)"></type><!-- information/intellectual property/machine/facility/computer system/PDA/others -->
+			<owner_type index='yes' type="VARCHAR(25)"></owner_type><!-- customer/supplier/staff -->
 			<description index='no' type="TEXT"></description>
+			<location index='no' type="TEXT"></location>
+			<area index='no' type="TEXT"></area>
+			<floors index='no' type="INT"></floors>
+			<notes index='no' type="TEXT"></notes>
+			<owner index='yes' type="VARCHAR(100)"></owner>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</assets>
 	<pamphlets>
@@ -654,6 +662,7 @@
 			<details index='no' type="TEXT"></details>
 			<start_date index='yes' type="BIGINT"></start_date>
 			<due_date index='yes' type="BIGINT"></due_date>
+			<percent_complete index='no' type="INT"></percent_complete>
 			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active/suspended/completed -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</project_phases>
