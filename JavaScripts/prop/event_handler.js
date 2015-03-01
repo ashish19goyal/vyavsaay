@@ -771,5 +771,13 @@ function import_data(form_name)
 		break;
 		case 'form125':modal23_action(form125_import_template,form125_import);
 		break;
+		case 'form136':modal23_action(form136_import_template,form136_import);
+		break;
+		case 'form137':modal23_action(form137_import_template,form137_import);
+		break;
+		case 'form139':modal23_action(form139_import_template,form139_import);
+		break;
+		case 'form140':modal23_action(form140_import_template,form140_import);
+		break;
 	}
 }

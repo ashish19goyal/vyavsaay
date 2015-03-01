@@ -33,9 +33,8 @@ function form1_import(data_array,import_type)
 				if(parseFloat(quantity)!==parseFloat(row.actual_quantity))
 				{
 					var new_quantity=parseFloat(row.actual_quantity)-parseFloat(quantity);
-					var new_id=get_new_key();
 					var adjust_xml="<inventory_adjust>" +
-							"<id>"+new_id+"</id>" +
+							"<id>"+(new_id+counter)+"</id>" +
 							"<product_name>"+row.product_name+"</product_name>" +
 							"<batch>"+row.batch+"</batch>" +
 							"<quantity>"+new_quantity+"</quantity>" +
@@ -4102,6 +4101,230 @@ function form125_import(data_array,import_type)
 				"</row>";
 	});
 	data_xml+="</accounts>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Enter Supplier bill (wholesale)
+* @formNo 136
+*/
+function form136_import(data_array,import_type)
+{
+	var data_xml="<supplier_bill_items>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</supplier_bill_items><separator></separator><supplier_bill_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.product_name+"</product_name>" +
+				"<p_quantity>"+row.p_quantity+"</p_quantity>" +
+				"<f_quantity>"+row.f_quantity+"</f_quantity>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<total>"+row.total+"</total>" +
+				"<storage>"+row.storage+"</storage>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</supplier_bill_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Project Expenses
+* @formNo 137
+*/
+function form137_import(data_array,import_type)
+{
+	var data_xml="<expenses>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</expenses><separator></separator><expenses>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<status>"+row.status+"</status>" +
+				"<person>"+row.person+"</person>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<detail>"+row.detail+"</detail>" +
+				"<source>"+row.source+"</source>" +
+				"<source_id>"+row.source_id+"</source_id>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</expenses>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Customer Profiling
+* @formNo 139
+*/
+function form139_import(data_array,import_type)
+{
+	var data_xml="<assets>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</assets><separator></separator><assets>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<type>"+row.type+"</type>" +
+				"<owner_type>"+row.owner_type+"</owner_type>" +
+				"<description>"+row.description+"</description>" +
+				"<location>"+row.location+"</location>" +
+				"<area>"+row.area+"</area>"+
+				"<floors>"+row.floors+"</floors>"+
+				"<notes>"+row.notes+"</notes>"+
+				"<owner>"+row.owner+"</owner>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</assets>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Supplier Profiling
+* @formNo 140
+*/
+function form139_import(data_array,import_type)
+{
+	var data_xml="<assets>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</assets><separator></separator><assets>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<type>"+row.type+"</type>" +
+				"<owner_type>"+row.owner_type+"</owner_type>" +
+				"<description>"+row.description+"</description>" +
+				"<location>"+row.location+"</location>" +
+				"<area>"+row.area+"</area>"+
+				"<floors>"+row.floors+"</floors>"+
+				"<notes>"+row.notes+"</notes>"+
+				"<owner>"+row.owner+"</owner>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</assets>";
 	if(import_type=='create_new')
 	{
 		if(is_online())

@@ -772,3 +772,49 @@ function form125_import_template()
 	var data_array=['id','username','acc_name','description','type','status'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Enter supplier bill (wholesale)
+* @formNo 136
+* @table supplier_bill_items
+*/
+function form136_import_template()
+{
+	var data_array=['id','p_quantity','f_quantity','quantity','product_name','batch',
+	               'bill_id','unit_price','amount','tax','total','storage'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Project Expenses
+* @formNo 137
+* @table expenses
+*/
+function form137_import_template()
+{
+	var data_array=['id','status','person','amount','detail','source','source_id'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Customer Profiling
+* @formNo 139
+* @table expenses
+*/
+function form139_import_template()
+{
+	var data_array=['id','name','type','owner','owner_type','description','location','area','floors','notes'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Customer Profiling
+* @formNo 140
+* @table expenses
+*/
+function form140_import_template()
+{
+	var data_array=['id','name','type','owner','owner_type','description','location','area','floors','notes'];
+	my_array_to_csv(data_array);
+};
+

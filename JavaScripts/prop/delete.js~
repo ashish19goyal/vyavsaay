@@ -4315,3 +4315,135 @@ function form134_delete_expense(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Enter Supplier Bill (wholesale)
+ * @param button
+ */
+function form136_delete_item(button)
+{
+	if(is_delete_access('form136'))
+	{
+		var bill_id=document.getElementById("form136_master").elements[6].value;
+		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[9].value;
+		
+		var data_xml="<supplier_bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"</supplier_bill_items>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}
+				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Project Expenses
+ * @param button
+ */
+function form137_delete_item(button)
+{
+	if(is_delete_access('form137'))
+	{		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);	
+		var data_id=form.elements[5].value;
+		
+		var data_xml="<expenses>" +
+					"<id>"+data_id+"</id>" +
+					"</expenses>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}
+				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Customer Profiling
+ * @param button
+ */
+function form139_delete_item(button)
+{
+	if(is_delete_access('form139'))
+	{		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);	
+		var data_id=form.elements[6].value;
+		
+		var data_xml="<assets>" +
+					"<id>"+data_id+"</id>" +
+					"</assets>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}
+				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Supplier Profiling
+ * @param button
+ */
+function form140_delete_item(button)
+{
+	if(is_delete_access('form140'))
+	{		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);	
+		var data_id=form.elements[6].value;
+		
+		var data_xml="<assets>" +
+					"<id>"+data_id+"</id>" +
+					"</assets>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}
+				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
