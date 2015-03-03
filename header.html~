@@ -48,14 +48,7 @@
 	
 	<script>
 	
-	$(document).ready(function() {
-	//Mobile menu
-		$('#navigation').mobileMenu({
-			triggerMenu:'#navigation-toggle',
-			subMenuTrigger: ".sub-nav-toggle",
-			animationSpeed: 500 
-		});
-	});
+		
 	
 	function display_login_box()
 	{
