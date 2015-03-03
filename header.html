@@ -57,6 +57,7 @@
 		});
 	});
 	
+
 	function display_login_box()
 	{
 		var form=document.getElementById("login");
@@ -68,6 +69,20 @@
 			//$("#login_box").dialog("close");
 			login_action();
 		});
+	
+		$('#navigation').slideToggle(500, function(){
+				var $this=$(this);
+		
+				if ($this.attr('style')&&$this.css('display')=='none')
+				{
+					$this.removeAttr('style').removeClass('showen-c').addClass('hidden-c');
+				}
+			  
+				if ($this.attr('style')&&$this.css('display')=='block'){
+					$this.removeAttr('style').removeClass('hidden-c').addClass('showen-c');
+				}	
+		});	
+		$('#navigation').toggleClass('open-menu');
 		$("#login_box").dialog("open");
 	}	
 </script>
