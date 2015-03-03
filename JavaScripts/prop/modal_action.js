@@ -5387,3 +5387,59 @@ function modal103_action(button)
 	
 	$("#modal103").dialog("open");
 }
+
+
+/**
+ * @modalNo 105
+ * @modal close service request
+ * @param button
+ */
+function modal105_action(project_id)
+{
+	console.log(project_id);
+	var form=document.getElementById('modal105_form');
+
+	var start_filter=form.elements[3];
+	var due_filter=form.elements[4];
+	var status_filter=form.elements[5];
+
+	$(start_filter).datetimepicker();
+	$(due_filter).datetimepicker();
+	set_static_value_list('project_phases','status',status_filter);
+		
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		
+		var phase=form.elements[1].value;
+		var details=form.elements[2].value;
+		var start_date=get_raw_time(form.elements[3].value);
+		var due_date=get_raw_time(form.elements[4].value);
+		var status=form.elements[5].value;
+		var data_id=get_new_key();
+		var last_updated=get_my_time();
+		var data_xml="<project_phases>" +
+					"<id>"+data_id+"</id>" +
+					"<project_id>"+project_id+"</project_id>" +
+					"<phase_name>"+phase+"</phase_name>" +
+					"<details>"+details+"</details>" +
+					"<start_date>"+start_date+"</start_date>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</project_phases>";
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+		
+		$("#modal105").dialog("close");
+	});
+	
+	$("#modal105").dialog("open");
+}

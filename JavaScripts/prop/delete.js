@@ -4362,7 +4362,7 @@ function form137_delete_item(button)
 	{		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);	
-		var data_id=form.elements[5].value;
+		var data_id=form.elements[4].value;
 		
 		var data_xml="<expenses>" +
 					"<id>"+data_id+"</id>" +
@@ -4394,7 +4394,7 @@ function form139_delete_item(button)
 	{		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);	
-		var data_id=form.elements[6].value;
+		var data_id=form.elements[5].value;
 		
 		var data_xml="<assets>" +
 					"<id>"+data_id+"</id>" +

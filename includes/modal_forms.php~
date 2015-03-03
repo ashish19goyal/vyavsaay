@@ -571,7 +571,6 @@
 				<label>Reported By: <textarea required readonly="readonly"></textarea></label><br>
 				<label>Problem Type: <input type='text'></label><br>
 				<label>Problem Detail: <textarea required></textarea></label><br>
-				<input type="hidden">
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>
@@ -649,6 +648,19 @@
 				<label>Request Id: <input type='text' readonly="readonly"></label><br>
 				<label>Closing notes: <textarea required></textarea></label><br>
 				<label>Status: <input type='text' required></label><br>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal105" title="Add Schedule">
+		<form id='modal105_form'>
+			<fieldset>
+				<label>Name: <input type='text'></label><br>
+				<label>Details: <textarea required></textarea></label><br>
+				<label>Start Time: <input type='text' required></label><br>
+				<label>Due Time: <input type='text' required></label><br>
+				<label>Status: <input type='text' required value='inactive'></label><br>
 				<input type="submit" value='Save'>
 			</fieldset>
 		</form>

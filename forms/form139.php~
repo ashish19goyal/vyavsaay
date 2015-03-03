@@ -4,7 +4,7 @@
 			<tr>
 				<form id='form139_header'></form>
 					<th>Customer <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form139_header'></th>
-					<th>Facility <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form139_header'></th>
+					<th>Facility </th>
 					<th>Location </th>
 					<th>Area</th>
 					<th>Floors</th>

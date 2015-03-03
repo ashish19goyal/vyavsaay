@@ -652,5 +652,18 @@
 			</fieldset>
 		</form>
 	</div>
+
+	<div id="modal105" title="Add Schedule">
+		<form id='modal105_form'>
+			<fieldset>
+				<label>Name: <input type='text'></label><br>
+				<label>Details: <textarea required></textarea></label><br>
+				<label>Start Time: <input type='text' required></label><br>
+				<label>End Time: <input type='text' required></label><br>
+				<label>Status: <input type='text' required value='inactive'></label><br>
+				<input type="submit" value='Save'>
+			</fieldset>
+		</form>
+	</div>
 	
 </div>

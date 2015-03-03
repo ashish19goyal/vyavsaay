@@ -4500,24 +4500,16 @@ function form136_header_ini()
  */
 function form137_header_ini()
 {
-	var filter_fields=document.getElementById('form137_header');
-	var code_filter=filter_fields.elements[0];
-	var person_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-		
-	var name_data="<projects>" +
-			"<name></name>" +
-			"</projects>";
-	
-	set_my_filter(name_data,code_filter);
-	set_static_filter('projects','status',status_filter);
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
+
+	var fields=document.getElementById('form137_master');
+	fields.elements[1].value="";
+	fields.elements[2].value=get_new_key();
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
 	{
 		event.preventDefault();
-		form137_ini();
-	});
+		form137_create_form();
+	});	
 };
 
 /**
@@ -4529,13 +4521,21 @@ function form138_header_ini()
 	var fields=document.getElementById('form138_master');
 	var code_filter=fields.elements[1];
 	var id_filter=fields.elements[2];
+	var add_button=fields.elements[4];
 	
+	$(add_button).off('click');
+	$(add_button).on('click',function()
+	{
+		modal105_action(id_filter.value);
+	});
+		
 	var name_data="<projects>" +
 			"<name></name>" +
 			"</projects>";
 	
 	set_my_value_list(name_data,code_filter);
 
+	id_filter.value="";
 	code_filter.value="";
 	
 	$(code_filter).off('blur');

@@ -10214,12 +10214,12 @@ function form137_create_item(form)
 {
 	if(is_create_access('form137'))
 	{
-		var project_code=form.elements[0].value;
-		var person=form.elements[1].value;
-		var amount=form.elements[2].value;
-		var details=form.elements[3].value;
-		var status=form.elements[4].value;		
-		var data_id=form.elements[5].value;
+		var project_code=document.getElementById('form137_master').elements[2].value;
+		var person=form.elements[0].value;
+		var amount=form.elements[1].value;
+		var details=form.elements[2].value;
+		var status=form.elements[3].value;		
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<expenses>" +
 					"<id>"+data_id+"</id>" +
@@ -10228,7 +10228,7 @@ function form137_create_item(form)
 					"<status>"+status+"</status>" +
 					"<person>"+person+"</person>" +
 					"<amount>"+amount+"</amount>" +
-					"<detail>"+detail+"</detail>" +
+					"<detail>"+details+"</detail>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</expenses>";
 		var access_xml="<data_access>" +
@@ -10249,11 +10249,11 @@ function form137_create_item(form)
 			local_create_simple(data_xml);
 			local_create_simple(access_xml);
 		}	
-		for(var i=0;i<5;i++)
+		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[7];
+		var del_button=form.elements[6];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
@@ -10265,13 +10265,23 @@ function form137_create_item(form)
 		{
 			event.preventDefault();
 			form137_update_item(form);
-		});
+		});		
 	}
 	else
 	{
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Project Expenses
+ * @param button
+ */
+function form137_create_form()
+{
+	$("[id^='save_form137_']").click();
+}
+
 
 /**
  * @form Customer Profiling
@@ -10287,8 +10297,7 @@ function form139_create_item(form)
 		var location=form.elements[2].value;
 		var area=form.elements[3].value;
 		var floors=form.elements[4].value;
-		var notes=form.elements[5].value;		
-		var data_id=form.elements[6].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var data_xml="<assets>" +
 					"<id>"+data_id+"</id>" +
@@ -10298,7 +10307,6 @@ function form139_create_item(form)
 					"<owner_type>customer</owner_type>" +
 					"<location>"+location+"</location>" +
 					"<floors>"+floors+"</floors>"+
-					"<notes>"+notes+"</notes>"+
 					"<area>"+area+"</area>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</assets>";
@@ -10310,18 +10318,18 @@ function form139_create_item(form)
 		{
 			local_create_simple(data_xml);
 		}	
-		for(var i=0;i<6;i++)
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[8];
+		var del_button=form.elements[7];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form139_delete_item(del_button);
-		});
 		
 		$(form).off('submit');
+		});
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();

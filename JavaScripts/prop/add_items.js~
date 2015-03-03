@@ -5819,9 +5819,6 @@ function form137_add_item()
 		var id=get_new_key();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form137_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Project Code'>";
-				rowsHTML+="<input type='text' form='form137_"+id+"' required>";
-			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Person'>";
 				rowsHTML+="<input type='text' form='form137_"+id+"' required>";
 			rowsHTML+="</td>";
@@ -5836,17 +5833,16 @@ function form137_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form137_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form137_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form137_"+id+"' id='save_form137_"+id+"' >";	
 				rowsHTML+="<input type='button' class='delete_icon' form='form137_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
 		$('#form137_body').prepend(rowsHTML);
 		var fields=document.getElementById("form137_"+id);
-		var code_filter=fields.elements[0];
-		var person_filter=fields.elements[1];
-		var amount_filter=fields.elements[2];
-		var status_filter=fields.elements[4];
+		var person_filter=fields.elements[0];
+		var amount_filter=fields.elements[1];
+		var status_filter=fields.elements[3];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -5860,7 +5856,7 @@ function form137_add_item()
 		set_my_value_list(person_data,person_filter);
 		set_static_value_list('expenses','status',status_filter);
 
-		$(item_filter).focus();
+		$(person_filter).focus();
 	}
 	else
 	{
@@ -5893,9 +5889,6 @@ function form139_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Floors'>";
 				rowsHTML+="<input type='number' step='any' form='form139_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Notes'>";
-				rowsHTML+="<textarea form='form139_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form139_"+id+"' value='"+id+"'>";
@@ -5971,11 +5964,13 @@ function form140_add_item()
 		var person_data="<suppliers>"+
 						"<acc_name></acc_name>"+
 						"</suppliers>";
-		set_my_value_list(person_data,customer_filter);
+		set_my_value_list(person_data,supplier_filter);
 
 		var type_data="<assets>"+
 					"<type></type>"+
 					"</assets>";
+		set_my_value_list(type_data,type_filter);
+					
 		$(supplier_filter).focus();
 	}
 	else
