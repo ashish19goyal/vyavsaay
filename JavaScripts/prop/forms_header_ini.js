@@ -4500,7 +4500,6 @@ function form136_header_ini()
  */
 function form137_header_ini()
 {
-
 	var fields=document.getElementById('form137_master');
 	fields.elements[1].value="";
 	fields.elements[2].value=get_new_key();

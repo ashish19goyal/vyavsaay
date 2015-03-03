@@ -12287,7 +12287,7 @@ function form137_ini()
 		});
 		/////////////////////////////////////////////////////////////////////////
 		
-		if_data_read_access('project_phases',function(accessible_data)
+		if_data_read_access('expenses',function(accessible_data)
 		{
 			//console.log(accessible_data);
 			fetch_requested_data('',member_columns,function(results)
