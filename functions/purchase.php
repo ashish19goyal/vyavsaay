@@ -25,8 +25,9 @@
 			include "forms/form19.php";
 			include "reports/report52.php";
 			include "forms/form114.php";
-	?>
 			include "forms/form115.php";
+	?>
+			
 	
 	<script>
 	!function(){
