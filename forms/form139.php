@@ -5,7 +5,7 @@
 				<form id='form139_header'></form>
 					<th>Customer <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form139_header'></th>
 					<th>Facility </th>
-					<th>Location </th>
+					<th>Location <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form139_header'></th>
 					<th>Area</th>
 					<th>Floors</th>
 					<th><input type="button" value='Add new' class='add_icon' form='form139_header' onclick="form139_add_item();">

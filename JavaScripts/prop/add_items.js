@@ -5940,6 +5940,9 @@ function form140_add_item()
 			rowsHTML+="<td data-th='Description'>";
 				rowsHTML+="<textarea form='form140_"+id+"' required></textarea>";
 			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Location'>";
+				rowsHTML+="<textarea form='form140_"+id+"' required></textarea>";
+			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
 				rowsHTML+="<textarea form='form140_"+id+"'></textarea>";
 			rowsHTML+="</td>";

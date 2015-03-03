@@ -5422,7 +5422,7 @@ function modal105_action(project_id)
 		var data_xml="<project_phases>" +
 					"<id>"+data_id+"</id>" +
 					"<project_id>"+project_id+"</project_id>" +
-					"<phase_name unique='yes'>"+phase+"</phase_name>" +
+					"<phase_name>"+phase+"</phase_name>" +
 					"<details>"+details+"</details>" +
 					"<start_date>"+start_date+"</start_date>" +
 					"<due_date>"+due_date+"</due_date>" +

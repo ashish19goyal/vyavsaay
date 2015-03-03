@@ -10354,8 +10354,9 @@ function form140_create_item(form)
 		var supplier=form.elements[0].value;
 		var asset_type=form.elements[1].value;
 		var desc=form.elements[2].value;
-		var notes=form.elements[3].value;
-		var data_id=form.elements[4].value;
+		var location=form.elements[3].value;	
+		var notes=form.elements[4].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var data_xml="<assets>" +
 					"<id>"+data_id+"</id>" +
@@ -10363,6 +10364,7 @@ function form140_create_item(form)
 					"<description>"+desc+"</description>"+
 					"<owner>"+supplier+"</owner>" +
 					"<owner_type>supplier</owner_type>" +
+					"<location>"+location+"</location>"+
 					"<notes>"+notes+"</notes>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</assets>";
@@ -10374,11 +10376,11 @@ function form140_create_item(form)
 		{
 			local_create_simple(data_xml);
 		}
-		for(var i=0;i<6;i++)
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[6];
+		var del_button=form.elements[7];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{

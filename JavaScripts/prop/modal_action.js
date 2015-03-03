@@ -5403,8 +5403,8 @@ function modal105_action(project_id)
 	var due_filter=form.elements[4];
 	var status_filter=form.elements[5];
 
-	$(start_filter).datetimepicker();
-	$(due_filter).datetimepicker();
+	$(start_filter).datepicker();
+	$(due_filter).datepicker();
 	set_static_value_list('project_phases','status',status_filter);
 		
 	$(form).off("submit");

@@ -12399,7 +12399,7 @@ function form138_ini()
 	if(project_id==null)
 		project_id="";
 
-	console.log(project_id);
+	//console.log(project_id);
 	var fields=document.getElementById('form138_master');
 	if(project_id=="")
 	{	
@@ -12414,8 +12414,13 @@ function form138_ini()
 	if(project_id!="")
 	{
 		show_loader();
-		console.log(project_id);
+		
 		var project_name=fields.elements[1].value;
+		var project_columns="<projects>" +
+				"<id>"+project_id+"</id>" +
+				"<name></name>" +
+				"</projects>";
+	
 		var member_columns="<project_phases>" +
 				"<id></id>" +
 				"<project_id exact='yes'>"+project_id+"</project_id>" +
@@ -12427,6 +12432,16 @@ function form138_ini()
 				"<status></status>" +
 				"</project_phases>";
 	
+		fetch_requested_data('',project_columns,function(project_results)
+		{
+			for (var i in project_results)
+			{
+				var filter_fields=document.getElementById('form138_master');
+				filter_fields.elements[1].value=project_results[i].name;
+				filter_fields.elements[2].value=project_results[i].id;				
+				break;
+			}
+		});
 		/////////////////////////////////////////////////////////////////////////
 		
 		if_data_read_access('projects',function(accessible_data)
@@ -12434,6 +12449,15 @@ function form138_ini()
 			fetch_requested_data('',member_columns,function(results)
 			{
 				var source_array=[];
+				
+				results.sort(function(a,b)
+				{
+					if(parseFloat(a.start_date)>parseFloat(b.start_date))
+					{	return 1;}
+					else 
+					{	return -1;}
+				});	
+					
 				results.forEach(function(result)
 				{
 					var read=false;
@@ -12496,6 +12520,7 @@ function form138_ini()
 						source_array.push(source_item);
 					}
 				});
+				
 								
 				$("#form138_gantt").gantt({
 					source: source_array,
@@ -12520,21 +12545,26 @@ function form138_ini()
 function form139_ini()
 {
 	var data_id=$("#form139_link").attr('data_id');
+	show_loader();
+
 	if(data_id==null)
 		data_id="";
 	$('#form139_body').html("");
 
-	show_loader();
+	var filter_fields=document.getElementById('form139_header');
+	var fcustomer=filter_fields.elements[0].value;
+	var flocation=filter_fields.elements[1].value;
+	
 	var member_columns="<assets>" +
 			"<id>"+data_id+"</id>" +
 			"<name></name>" +
 			"<type></type>" +
 			"<description></description>" +
-			"<location></location>"+
+			"<location>"+flocation+"</location>"+
 			"<area></area>"+
 			"<floors></floors>"+
 			"<notes></notes>"+
-			"<owner></owner>" +
+			"<owner>"+fcustomer+"</owner>" +
 			"<owner_type exact='yes'>customer</owner_type>"+
 			"<type exact='yes'>facility</type>"+
 			"</assets>";
@@ -12602,18 +12632,24 @@ function form140_ini()
 	$('#form140_body').html("");
 
 	show_loader();
+	
+	var filter_fields=document.getElementById('form140_header');
+	var fsupplier=filter_fields.elements[0].value;
+	var ftype=filter_fields.elements[1].value;	
+	var flocation=filter_fields.elements[2].value;
+
 	var member_columns="<assets>" +
 			"<id>"+data_id+"</id>" +
 			"<name></name>" +
 			"<type></type>" +
 			"<description></description>" +
-			"<location></location>"+
+			"<location>"+flocation+"</location>"+
 			"<area></area>"+
 			"<floors></floors>"+
 			"<notes></notes>"+
-			"<owner></owner>" +
+			"<owner>"+fsupplier+"</owner>" +
 			"<owner_type exact='yes'>supplier</owner_type>"+
-			"<type></type>"+
+			"<type>"+ftype+"</type>"+
 			"</assets>";
 
 	/////////////////////////////////////////////////////////////////////////
@@ -12634,6 +12670,9 @@ function form140_ini()
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Description'>";
 					rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form140_"+id+"'>"+result.description+"</textarea>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Location'>";
+					rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form140_"+id+"'>"+result.location+"</textarea>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Notes'>";
 					rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form140_"+id+"'>"+result.notes+"</textarea>";

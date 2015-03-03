@@ -8,7 +8,6 @@
 					<th>Location </th>
 					<th>Area</th>
 					<th>Floors</th>
-					<th>Notes</th>
 					<th><input type="button" value='Add new' class='add_icon' form='form139_header' onclick="form139_add_item();">
 						<input type='button' form='form139_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form139_header' style='visibility: hidden;'>

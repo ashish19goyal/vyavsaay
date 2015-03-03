@@ -6,6 +6,7 @@
 					<th>Supplier <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form140_header'></th>
 					<th>Asset Type <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form140_header'></th>
 					<th>Description </th>
+					<th>Location <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form140_header'></th>
 					<th>Notes</th>
 					<th><input type="button" value='Add new' class='add_icon' form='form140_header' onclick="form140_add_item();">
 						<input type='button' form='form140_header' value='EXPORT' class='export_icon'>
