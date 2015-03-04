@@ -18,7 +18,7 @@
 	</div>
 
 	<div id='online_icon' class='menu_icon'>
-		<img title='Working online, click to switch to offline' src='./images/online.png' class='icon' onclick='switch_to_offline();'>
+		<img title='Working online, click to switch to offline' src='./images/online.png' class='icon' onclick='switch_to_offline();' >
 	</div>
 
 	<div id='feedback_icon' class='menu_icon'>

@@ -47,7 +47,7 @@ function switch_to_online()
  */
 function switch_to_offline()
 {
-	if(is_update_access('sync_mode'))
+	if(is_read_access('sync_mode'))
 	{
 		var domain=get_domain();
 		show_progress();
@@ -78,7 +78,7 @@ function switch_to_offline()
  */
 function sync_local_and_server()
 {
-	if(is_update_access('sync'))
+	if(is_read_access('sync'))
 	{
 		var domain=get_domain();
 		var username=get_username();
