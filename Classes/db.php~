@@ -24,7 +24,7 @@ class db_connect
 		$options=array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$this->conn = new \PDO($dsn, $dbuser, $dbpass, $options);		
 	}
-
+		
 	public function __destruct()
 	{
 		unset($this->conn);

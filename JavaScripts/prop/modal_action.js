@@ -2360,8 +2360,8 @@ function modal26_action(payment_id,func)
 		for(var k in payments)
 		{
 			fcustomer.value=payments[k].acc_name;
-			ftotal.value=payments[k].total_amount;
-			fpaid.value=payments[k].paid_amount;
+			ftotal.value=my_round(payments[k].total_amount,0);
+			fpaid.value=my_round(payments[k].paid_amount,0);
 			fdue_date.value=get_my_past_date(payments[k].due_date);
 			fmode.value=payments[k].mode;
 			fstatus.value=payments[k].status;

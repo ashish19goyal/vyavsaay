@@ -440,7 +440,7 @@ function show_all_activities()
 	activities_ini();
 }
 
-function element_display(fid,element_name,element2_name)
+function element_display(fid,element_name,elements)
 {
 	if(is_form_access(element_name))
 	{
@@ -451,14 +451,21 @@ function element_display(fid,element_name,element2_name)
 		$(element_link).click();
 		$(element_link).attr('data_id','');
 	}
-	else if(element2_name && is_form_access(element2_name))
+	else if(elements)
 	{
-		var element_link="#"+element2_name+"_link";
-		var function_link=$(element_link).parent().parent().parent().attr('id');
-		show_function("#"+function_link);
-		$(element_link).attr('data_id',fid);
-		$(element_link).click();
-		$(element_link).attr('data_id','');
+		for(var i=0;i<elements.length;i++)
+		{
+			if(is_form_access(elements[i]))
+			{
+				var element_link="#"+elements[i]+"_link";
+				var function_link=$(element_link).parent().parent().parent().attr('id');
+				show_function("#"+function_link);
+				$(element_link).attr('data_id',fid);
+				$(element_link).click();
+				$(element_link).attr('data_id','');
+				break;
+			}
+		}
 	}
 }
 

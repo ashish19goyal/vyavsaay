@@ -2755,7 +2755,7 @@ function form42_ini()
 			{
 				event.preventDefault();
 				if(result.type=='product')
-					element_display(result.id,'form12','form118');
+					element_display(result.id,'form12',['form118']);
 				else if(result.type=='service')
 					element_display(result.id,'form10');
 				else if(result.type=='both')
@@ -3637,7 +3637,7 @@ function form53_ini()
 			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();
-				element_display(result.id,'form21','form122');
+				element_display(result.id,'form21',['form122','form136']);
 			});
 		});
 
@@ -3668,7 +3668,7 @@ function form53_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[3];
+		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -7457,7 +7457,7 @@ function form92_ini()
 			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();
-				element_display(result.id,'form119','form91','form130');
+				element_display(result.id,'form119',['form91','form130']);
 			});
 		});
 
@@ -12206,16 +12206,15 @@ function form136_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Batch'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form136_"+id+"' value='"+result.batch+"'>";
-						rowsHTML+="<input type='hidden' form='form136_"+id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Quantity'>";
 						rowsHTML+="Bought: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.p_quantity+"' step='any'>";
-						rowsHTML+="</br>Free: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.f_quantity+"' step='any'>";
+						rowsHTML+="<br>Free: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.f_quantity+"' step='any'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Amount'>";
 						rowsHTML+="Unit Price: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.unit_price+"' step='any'>";
-						rowsHTML+="</br>Tax: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.tax+"' step='any'>";
-						rowsHTML+="</br>Total: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.amount+"' step='any'>";
+						rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.tax+"' step='any'>";
+						rowsHTML+="<br>Total: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.total+"' step='any'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Storage Area'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form136_"+id+"' value='"+result.storage+"'>";

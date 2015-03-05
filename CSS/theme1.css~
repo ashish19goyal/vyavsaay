@@ -545,6 +545,25 @@ tbody tr:hover{
 	margin: 2px 0px;
 }
 
+.modal_forms input[type="submit"]{
+	height: 25px;
+	width: auto;
+	cursor: pointer;
+	border: 2px solid #818060;
+	display: inline-block;
+	color: #FFF;
+	font-size: 1em;
+	text-align: center;
+	-webkit-appearance:none;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5s all;
+	background: #818060;
+	outline: none;
+	margin: 2px 0px;
+}
+
 .generic_head_icon{
 	height: 25px;
 	width: auto;
@@ -780,6 +799,10 @@ tbody tr:hover{
 	padding: 1% 5% 1% 5%;
 	float:left;
 	width:90%;
+}
+
+.all_activity_detail a{
+	cursor: pointer;
 }
 
 .all_activity_log{
