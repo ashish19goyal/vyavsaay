@@ -1,8 +1,8 @@
 <div id='form111' class='function_detail'>
 	<form id='form111_master'>
 		<fieldset>
-			<label>Report Name</br><input type='text' required></label>
-			<label>Description</br><textarea></textarea></label>
+			<label>Report Name<br><input type='text' required></label>
+			<label>Description<br><textarea></textarea></label>
 			<input type='hidden' name='report_id'>
 			<input type='submit' title='Save Report' class='save_icon'>
 			<input type='button' value='Generate' class='generic_icon' onclick="generate_report(document.getElementById('form111_master').elements[3].value);">

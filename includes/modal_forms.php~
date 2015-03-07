@@ -542,7 +542,7 @@
 				<label title='Reward product on fulfilment of tier criteria'>Reward Product: <input type="text"></label><br>
 				<label>Status: <input type="text" requried></label><br>
 				<label id='modal45_attributes'></label><br>
-				<input type="submit" value='Save'>
+				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>
@@ -558,7 +558,7 @@
 				<label title='Cashback per earned point'>Cashback: Rs. <input type="number" step='any'></label><br>
 				<label title='Reward product on fulfilment of tier criteria'>Reward Product: <input type="text"></label><br>
 				<label>Status: <input type="text" requried></label><br>
-				<input type="submit" value='Save'>
+				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>
@@ -571,7 +571,7 @@
 				<label>Reported By: <textarea required readonly="readonly"></textarea></label><br>
 				<label>Problem Type: <input type='text'></label><br>
 				<label>Problem Detail: <textarea required></textarea></label><br>
-				<input type="submit" value='Save'>
+				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>
@@ -581,7 +581,7 @@
 			<fieldset>
 				<label>Issue Id: <input type="text" readonly='readonly'></label><br>
 				<label>Solution Detail: <textarea required></textarea></label><br>
-				<input type="submit" value='Save'>
+				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>
@@ -592,7 +592,7 @@
 				<label>Issue Id: <input type="text" readonly='readonly'></label><br>
 				<label>Short Description: <textarea required></textarea></label><br>
 				<label>Detail: <textarea></textarea></label><br>
-				<input type="submit" value='Save'>
+				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>
@@ -620,6 +620,10 @@
 		</table>
 	</div>
 
+	<div id="modal55" title="Server Db backup">
+		
+	</div>
+
 	<div id="modal101" title="Update details">
 		<form id='modal101_form'>
 			<fieldset>
@@ -627,7 +631,7 @@
 				<label>Machine Type: <textarea></textarea></label><br>
 				<label>Problem Type: <input type='text' required></label><br>
 				<label>Problem Detail: <textarea required></textarea></label><br>
-				<input type="submit" value='Save'>
+				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>
@@ -637,7 +641,7 @@
 			<fieldset>
 				<label>Request Id: <input type='text' readonly="readonly"></label><br>
 				<label>Assignee: <input type='text' required></label><br>
-				<input type="submit" value='Save'>
+				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>
@@ -648,7 +652,7 @@
 				<label>Request Id: <input type='text' readonly="readonly"></label><br>
 				<label>Closing notes: <textarea required></textarea></label><br>
 				<label>Status: <input type='text' required></label><br>
-				<input type="submit" value='Save'>
+				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>
@@ -661,7 +665,7 @@
 				<label>Start Time: <input type='text' required></label><br>
 				<label>End Time: <input type='text' required></label><br>
 				<label>Status: <input type='text' required value='inactive'></label><br>
-				<input type="submit" value='Save'>
+				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>

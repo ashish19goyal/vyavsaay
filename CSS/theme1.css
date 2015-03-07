@@ -562,6 +562,7 @@ tbody tr:hover{
 	background: #818060;
 	outline: none;
 	margin: 2px 0px;
+	float:right;
 }
 
 .generic_head_icon{

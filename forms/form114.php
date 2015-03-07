@@ -1,9 +1,9 @@
 <div id='form114' class='function_detail'>
 	<form id='form114_master'>
 		<fieldset>	    
-		    <label>Supplier	<img src='./images/add_image.png' class='add_image' onclick='modal13_action();'></br>
+		    <label>Supplier	<img src='./images/add_image.png' class='add_image' id='form114_add_supplier'><br>
 			<input type='text' required></label>
-			<label>Date</br><input type='text' required></label>
+			<label>Date<br><input type='text' required></label>
 			<input type='button' class='save_icon'>
 			<input type='submit' class='submit_hidden'>
 		</fieldset>	

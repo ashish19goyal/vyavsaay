@@ -1,11 +1,11 @@
 <div id='form24' class='function_detail'>
 	<form id='form24_master'>
 		<fieldset>
-			<label>Supplier <img src='./images/add_image.png' class='add_image' title='Add new supplier' onclick='modal13_action();'></br>
+			<label>Supplier <img src='./images/add_image.png' class='add_image' title='Add new supplier' id='form24_add_supplier'><br>
 			<input type='text' required></label>
-			<label>Order Date</br><input type='text' required></label>
-			<label>Notes</br><textarea></textarea></label>
-			<label>Order Status</br><input type='text' required></label>
+			<label>Order Date<br><input type='text' required></label>
+			<label>Notes<br><textarea></textarea></label>
+			<label>Order Status<br><input type='text' required></label>
 			<input type='hidden' name='order_id' value=''>
 			<input type='button' title='Save order' class='save_icon'>
 			<input type='button' title='Print Bill' class='print_icon' onclick='form24_print_form();'>

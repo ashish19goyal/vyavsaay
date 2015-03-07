@@ -12,7 +12,7 @@ function form2_add_item()
 		rowsHTML+="<form id='form2_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' form='form2_"+id+"' required value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form2_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Offer Name'>";
 				rowsHTML+="<input type='text' form='form2_"+id+"' required value=''>";
@@ -40,6 +40,21 @@ function form2_add_item()
 		{
 			event.preventDefault();
 			form2_create_item(fields);
+		});
+
+		var add_product=document.getElementById('form2_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var products_data="<product_master>" +
+					"<name></name>" +
+					"</product_master>";			
+				set_my_value_list_func(products_data,names_filter,function () 
+				{
+					$(names_filter).focus();
+				});
+			});
 		});
 		
 		var products_data="<product_master>" +
@@ -94,11 +109,11 @@ function form10_add_item()
 		rowsHTML+="<form id='form10_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Service Name'>";
 				rowsHTML+="<input type='text' required form='form10_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' id='form10_add_service_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Person'>";
 				rowsHTML+="<input type='text' form='form10_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' id='form10_add_staff_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Additional Notes'>";
 				rowsHTML+="<textarea form='form10_"+id+"'></textarea>";
@@ -147,6 +162,21 @@ function form10_add_item()
 			event.preventDefault();
 			form10_add_item();
 		});
+
+		var add_service=document.getElementById('form10_add_service_'+id);
+		$(add_service).on('click',function()
+		{
+			modal20_action(function()
+			{	
+				var service_data="<services>" +
+						"<name></name>" +
+						"</services>";
+				set_my_value_list_func(service_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
 		
 		var service_data="<services>" +
 				"<name></name>" +
@@ -154,6 +184,19 @@ function form10_add_item()
 		set_my_value_list_func(service_data,name_filter,function () 
 		{
 			$(name_filter).focus();
+		});
+
+		var add_staff=document.getElementById('form10_add_staff_'+id);
+		$(add_staff).on('click',function()
+		{
+			modal16_action(function()
+			{	
+				var staff_data="<staff>" +
+					"<acc_name></acc_name>" +
+					"<status exact='yes'>active</status>" +
+					"</staff>";
+				set_my_value_list(staff_data,staff_filter);
+			});
 		});
 
 		var staff_data="<staff>" +
@@ -257,11 +300,11 @@ function form12_add_item()
 		rowsHTML+="<form id='form12_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form12_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form12_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form12_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form12_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form12_"+id+"' step='any'>";
@@ -314,6 +357,21 @@ function form12_add_item()
 			event.preventDefault();
 			form12_add_item();
 		});
+
+		var add_product=document.getElementById('form12_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
 				
 		var product_data="<product_master>" +
 				"<name></name>" +
@@ -323,6 +381,18 @@ function form12_add_item()
 			$(name_filter).focus();
 		});
 
+		var add_batch=document.getElementById('form12_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+						"<batch></batch>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
 		
 		$(name_filter).on('blur',function(event)
 		{
@@ -532,11 +602,11 @@ function form15_add_item()
 		rowsHTML+="<form id='form15_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form15_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form15_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form15_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form15_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
 				rowsHTML+="<textarea required form='form15_"+id+"'></textarea>";
@@ -595,8 +665,36 @@ function form15_add_item()
 			$(name_filter).focus();
 		});
 		
-		
-		$(name_filter).on('blur',function(event){
+		var add_product=document.getElementById('form15_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form15_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+						"<batch></batch>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
+
+		$(name_filter).on('blur',function(event)
+		{
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
 					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
@@ -722,11 +820,11 @@ function form19_add_item()
 		rowsHTML+="<form id='form19_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form19_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form19_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form19_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form19_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
 				rowsHTML+="<textarea form='form19_"+id+"'></textarea>";
@@ -773,7 +871,7 @@ function form19_add_item()
 			event.preventDefault();
 			form19_add_item();
 		});
-				
+
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
@@ -782,6 +880,33 @@ function form19_add_item()
 			$(name_filter).focus();
 		});
 
+		var add_product=document.getElementById('form19_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form19_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+						"<batch></batch>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
 		
 		$(name_filter).on('blur',function(event){
 			var batch_data="<product_instances>" +
@@ -880,7 +1005,7 @@ function form21_add_item()
 		rowsHTML+="<form id='form21_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form21_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form21_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="Bought: <input type='number' step='any' required form='form21_"+id+"'>";
@@ -895,11 +1020,11 @@ function form21_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form21_"+id+"'></br>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form21_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Storage Area'>";
 				rowsHTML+="<input type='text' form='form21_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' onclick='modal35_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' id='form21_add_storage_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form21_"+id+"' value='"+id+"'>";
@@ -944,6 +1069,47 @@ function form21_add_item()
 			$(name_filter).focus();
 		});
 		
+		var add_product=document.getElementById('form21_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form21_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+						"<batch></batch>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
+
+		var add_storage=document.getElementById('form21_add_storage_'+id);
+		$(add_storage).on('click',function()
+		{
+			modal35_action(function()
+			{	
+				var storage_data="<store_areas>" +
+							"<name></name>" +
+							"<area_type exact='yes'>storage</area_type>" +
+							"</store_areas>";
+				set_my_value_list(storage_data,storage_filter);
+			});
+		});
+
 		var storage_data="<store_areas>" +
 					"<name></name>" +
 					"<area_type exact='yes'>storage</area_type>" +
@@ -1013,7 +1179,7 @@ function form24_add_item()
 		rowsHTML+="<form id='form24_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form24_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form24_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form24_"+id+"' value='' step='any'>";
@@ -1061,6 +1227,21 @@ function form24_add_item()
 		{
 			$(name_filter).focus();
 		});
+		
+		var add_product=document.getElementById('form24_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});		
 				
 		$(name_filter).on('blur',function(event)
 		{
@@ -1104,15 +1285,15 @@ function form38_add_item()
 		rowsHTML+="<form id='form38_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' form='form38_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form38_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' form='form38_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form38_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Store Area'>";
 				rowsHTML+="<input type='text' form='form38_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' onclick='modal35_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' id='form38_add_storage_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form38_"+id+"' value='"+id+"'>";
@@ -1142,6 +1323,47 @@ function form38_add_item()
 			$(product_filter).focus();
 		});
 		
+		var add_product=document.getElementById('form38_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(products_data,product_filter,function () 
+				{
+					$(product_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form38_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+product_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
+
+		var add_storage=document.getElementById('form38_add_storage_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal35_action(function()
+			{	
+				var area_data="<store_areas>" +
+				"<name></name>" +
+				"<area_type exact='yes'>storage</area_type>" +
+				"</store_areas>";
+				set_my_value_list(area_data,area_filter);
+			});
+		});
+
 		$(product_filter).on('blur',function(event){
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
@@ -1178,7 +1400,7 @@ function form56_add_item()
 		rowsHTML+="<form id='form56_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Account'>";
 				rowsHTML+="<input type='text' required form='form56_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new account' onclick='modal12_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new account' id='form56_add_account_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Type'>";
 				rowsHTML+="<input type='text' required form='form56_"+id+"' value=''>";
@@ -1206,6 +1428,21 @@ function form56_add_item()
 			event.preventDefault();
 			form56_create_item(fields);
 		});
+			
+		var add_account=document.getElementById('form56_add_account_'+id);
+		$(add_account).on('click',function()
+		{
+			modal12_action(function()
+			{	
+				var account_data="<accounts>" +
+						"<acc_name></acc_name>" +
+						"</accounts>";
+				set_my_value_list_func(account_data,account_filter,function () 
+				{
+					$(account_filter).focus();
+				});
+			});
+		});
 				
 		var account_data="<accounts>" +
 				"<acc_name></acc_name>" +
@@ -1213,8 +1450,7 @@ function form56_add_item()
 		set_my_value_list_func(account_data,account_filter,function () 
 		{
 			$(account_filter).focus();
-		});
-		
+		});		
 		set_static_value_list('cash_register','type',type_filter);
 
 	}
@@ -1239,7 +1475,7 @@ function form58_add_item()
 		rowsHTML+="<form id='form58_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form58_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' id='form58_add_service_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Requisite Type'>";
 				rowsHTML+="<input type='text' form='form58_"+id+"' value=''>";
@@ -1277,6 +1513,21 @@ function form58_add_item()
 			$(service_filter).focus();
 		});
 		
+		var add_service=document.getElementById('form58_add_service_'+id);
+		$(add_service).on('click',function()
+		{
+			modal20_action(function()
+			{	
+				var service_data="<services>" +
+					"<name></name>" +
+					"</services>";
+				set_my_value_list_func(service_data,service_filter,function () 
+				{
+					$(service_filter).focus();
+				});		
+			});
+		});
+
 		set_static_value_list('pre_requisites','requisite_type',type_filter);
 		
 		$(type_filter).on('blur',function(event)
@@ -1327,7 +1578,7 @@ function form59_add_item()
 		rowsHTML+="<form id='form59_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form59_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Requisite Type'>";
 				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
@@ -1365,6 +1616,21 @@ function form59_add_item()
 			$(product_filter).focus();
 		});
 		
+		var add_product=document.getElementById('form59_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,product_filter,function () 
+				{
+					$(product_filter).focus();
+				});
+			});
+		});
+
 		set_static_value_list('pre_requisites','requisite_type',type_filter);
 		
 		$(type_filter).on('blur',function(event)
@@ -1408,7 +1674,7 @@ function form60_add_item()
 		rowsHTML+="<form id='form60_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form60_"+id+"' required>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form60_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
 				rowsHTML+="<input type='text' form='form60_"+id+"' required>";
@@ -1442,6 +1708,21 @@ function form60_add_item()
 			$(product_filter).focus();
 		});
 		
+		var add_product=document.getElementById('form60_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,product_filter,function () 
+				{
+					$(product_filter).focus();
+				});
+			});
+		});
+
 		var attribute_data="<attributes>" +
 				"<attribute></attribute>" +
 				"<type exact='yes'>product</type>" +
@@ -1469,7 +1750,7 @@ function form61_add_item()
 		rowsHTML+="<form id='form61_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form61_"+id+"' required>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' id='form61_add_service_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
 				rowsHTML+="<input type='text' form='form61_"+id+"' required>";
@@ -1502,6 +1783,21 @@ function form61_add_item()
 		{
 			$(service_filter).focus();
 		});
+
+		var add_service=document.getElementById('form61_add_service_'+id);
+		$(add_service).on('click',function()
+		{
+			modal20_action(function()
+			{	
+				var service_data="<services>" +
+						"<name></name>" +
+						"</services>";
+				set_my_value_list_func(service_data,service_filter,function () 
+				{
+					$(service_filter).focus();
+				});
+			});
+		});
 		
 		var attribute_data="<attributes>" +
 				"<attribute></attribute>" +
@@ -1530,11 +1826,11 @@ function form62_add_item()
 		rowsHTML+="<form id='form62_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form62_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form62_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Reviewer'>";
 				rowsHTML+="<input type='text' form='form62_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form62_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Detail'>";
 				rowsHTML+="<textarea form='form62_"+id+"'></textarea>";
@@ -1568,12 +1864,38 @@ function form62_add_item()
 		{
 			$(product_filter).focus();
 		});
-		
+				
 		var reviewer_data="<customers>" +
 				"<acc_name></acc_name>" +
 				"</customers>";
 		set_my_filter(reviewer_data,reviewer_filter);
-		
+
+		var add_product=document.getElementById('form62_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,product_filter,function () 
+				{
+					$(product_filter).focus();
+				});
+			});
+		});
+
+		var add_customer=document.getElementById('form62_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal11_action(function()
+			{	
+				var reviewer_data="<customers>" +
+					"<acc_name></acc_name>" +
+					"</customers>";
+				set_my_filter(reviewer_data,reviewer_filter);
+			});
+		});
 	}
 	else
 	{
@@ -1595,11 +1917,11 @@ function form63_add_item()
 		rowsHTML+="<form id='form63_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form63_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' id='form63_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Reviewer'>";
 				rowsHTML+="<input type='text' form='form63_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form63_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Detail'>";
 				rowsHTML+="<textarea form='form63_"+id+"'></textarea>";
@@ -1638,7 +1960,33 @@ function form63_add_item()
 				"<acc_name></acc_name>" +
 				"</customers>";
 		set_my_filter(reviewer_data,reviewer_filter);
-		
+
+		var add_service=document.getElementById('form63_add_service_'+id);
+		$(add_service).on('click',function()
+		{
+			modal20_action(function()
+			{	
+				var service_data="<services>" +
+						"<name></name>" +
+						"</services>";
+				set_my_value_list_func(service_data,service_filter,function () 
+				{
+					$(service_filter).focus();
+				});
+			});
+		});
+
+		var add_customer=document.getElementById('form63_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal11_action(function()
+			{	
+				var reviewer_data="<customers>" +
+					"<acc_name></acc_name>" +
+					"</customers>";
+				set_my_filter(reviewer_data,reviewer_filter);
+			});
+		});		
 	}
 	else
 	{
@@ -1661,7 +2009,7 @@ function form64_add_item()
 		rowsHTML+="<form id='form64_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form64_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' id='form64_add_service_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Type'>";
 				rowsHTML+="<input type='text' form='form64_"+id+"' value=''>";
@@ -1696,6 +2044,21 @@ function form64_add_item()
 			$(service_filter).focus();
 		});
 		
+		var add_service=document.getElementById('form64_add_service_'+id);
+		$(add_service).on('click',function()
+		{
+			modal20_action(function()
+			{	
+				var service_data="<services>" +
+						"<name></name>" +
+						"</services>";
+				set_my_value_list_func(service_data,service_filter,function () 
+				{
+					$(service_filter).focus();
+				});
+			});
+		});
+
 		set_static_value_list('cross_sells','type',type_filter);
 		
 		$(type_filter).on('blur',function(event)
@@ -1733,7 +2096,7 @@ function form66_add_item()
 		rowsHTML+="<form id='form66_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form66_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form66_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Type'>";
 				rowsHTML+="<input type='text' form='form66_"+id+"' value=''>";
@@ -1766,6 +2129,21 @@ function form66_add_item()
 		set_my_value_list_func(product_data,product_filter,function () 
 		{
 			$(product_filter).focus();
+		});
+
+		var add_product=document.getElementById('form66_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,product_filter,function () 
+				{
+					$(product_filter).focus();
+				});
+			});
 		});
 
 		set_static_value_list('cross_sells','type',type_filter);
@@ -1805,7 +2183,7 @@ function form69_add_item()
 		rowsHTML+="<form id='form69_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form69_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form69_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form69_"+id+"' value='' step='any'>";
@@ -1848,6 +2226,21 @@ function form69_add_item()
 		set_my_value_list_func(product_data,name_filter,function () 
 		{
 			$(name_filter).focus();
+		});
+
+		var add_product=document.getElementById('form69_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
 		});
 				
 		$(name_filter).on('blur',function(event)
@@ -1907,11 +2300,11 @@ function form72_add_product()
 		rowsHTML+="<form id='form72_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form72_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form72_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
@@ -1975,7 +2368,34 @@ function form72_add_product()
 			$(name_filter).focus();
 		});
 		
-		
+		var add_product=document.getElementById('form72_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form72_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+						"<batch></batch>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
+
 		$(name_filter).on('blur',function(event)
 		{
 			var batch_data="<product_instances>" +
@@ -2194,11 +2614,11 @@ function form72_add_service()
 		rowsHTML+="<form id='form72_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' id='form72_add_service_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Person'>";
 				rowsHTML+="<input type='text' form='form72_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' id='form72_add_staff_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
 				rowsHTML+="<textarea form='form72_"+id+"'></textarea>";
@@ -2261,13 +2681,40 @@ function form72_add_service()
 		{
 			$(name_filter).focus();
 		});
-		
-		
+				
 		var staff_data="<staff>" +
 				"<acc_name></acc_name>" +
 				"<status exact='yes'>active</status>" +
 				"</staff>";
 		set_my_value_list(staff_data,staff_filter);
+		
+		var add_service=document.getElementById('form72_add_service_'+id);
+		$(add_service).on('click',function()
+		{
+			modal20_action(function()
+			{	
+				var service_data="<services>" +
+						"<name></name>" +
+						"</services>";
+				set_my_value_list_func(service_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_staff=document.getElementById('form72_add_staff_'+id);
+		$(add_staff).on('click',function()
+		{
+			modal16_action(function()
+			{	
+				var staff_data="<staff>" +
+						"<acc_name></acc_name>" +
+						"<status exact='yes'>active</status>" +
+						"</staff>";
+				set_my_value_list(staff_data,staff_filter);
+			});
+		});
 		
 		$(name_filter).on('blur',function(event){
 			notes_filter.value="";
@@ -2503,7 +2950,7 @@ function form81_add_item()
 		rowsHTML+="<form id='form81_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
 				rowsHTML+="<input type='text' form='form81_"+id+"' required value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form81_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Details'>";
 				rowsHTML+="<textarea form='form81_"+id+"' class='dblclick_editable' required></textarea>";
@@ -2513,7 +2960,7 @@ function form81_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Identified By'>";
 				rowsHTML+="<input type='text' form='form81_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' id='form81_add_staff_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form81_"+id+"' value='"+id+"'>";
@@ -2551,6 +2998,33 @@ function form81_add_item()
 				"<acc_name></acc_name>" +
 				"</staff>";
 		set_my_value_list(staff_data,by_filter);
+
+		var add_customer=document.getElementById('form81_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal11_action(function()
+			{	
+				var customer_data="<customers>" +
+					"<acc_name></acc_name>" +
+					"</customers>";	
+				set_my_value_list_func(customer_data,customer_filter,function () 
+				{
+					$(customer_filter).focus();
+				});
+			});
+		});
+
+		var add_staff=document.getElementById('form81_add_staff_'+id);
+		$(add_staff).on('click',function()
+		{
+			modal16_action(function()
+			{	
+				var staff_data="<staff>" +
+						"<acc_name></acc_name>" +
+						"</staff>";
+				set_my_value_list(staff_data,by_filter);
+			});
+		});
 	}
 	else
 	{
@@ -2704,11 +3178,11 @@ function form84_add_item()
 		rowsHTML+="<form id='form84_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
 				rowsHTML+="<input type='text' form='form84_"+id+"' required value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form84_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Service'>";
 				rowsHTML+="<input type='text' form='form84_"+id+"' required>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' id='form84_add_service_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
 				rowsHTML+="<input type='text' class='dblclick_editable' form='form84_"+id+"' value='active'>";
@@ -2753,6 +3227,33 @@ function form84_add_item()
 			"</services>";
 		set_my_value_list(service_data,service_filter);
 		
+		var add_customer=document.getElementById('form84_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal11_action(function()
+			{	
+				var customer_data="<customers>" +
+					"<acc_name></acc_name>" +
+					"</customers>";
+				set_my_value_list_func(customer_data,customer_filter,function () 
+				{
+					$(customer_filter).focus();
+				});
+			});
+		});
+
+		var add_service=document.getElementById('form84_add_service_'+id);
+		$(add_service).on('click',function()
+		{
+			modal20_action(function()
+			{	
+				var service_data="<services>" +
+					"<name></name>" +
+					"</services>";
+				set_my_value_list(service_data,service_filter);
+			});
+		});
+
 		set_static_value_list('service_subscriptions','status',status_filter);
 	}
 	else
@@ -2776,7 +3277,7 @@ function form88_add_item()
 		rowsHTML+="<form id='form88_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product'>";
 				rowsHTML+="<input type='text' form='form88_"+id+"' required value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form88_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Process Notes'>";
 				rowsHTML+="<textarea form='form88_"+id+"'></textarea>";
@@ -2819,6 +3320,21 @@ function form88_add_item()
 		{
 			$(product_filter).focus();
 		});
+
+		var add_product=document.getElementById('form88_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var products_data="<product_master>" +
+					"<name></name>" +
+					"</product_master>";
+				set_my_value_list_func(product_data,product_filter,function () 
+				{
+					$(product_filter).focus();
+				});
+			});
+		});
 		
 		set_static_value_list('manufacturing_schedule','status',status_filter);
 		$(schedule_filter).datetimepicker();
@@ -2843,11 +3359,11 @@ function form89_add_item()
 		rowsHTML+="<form id='form89_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Customer'>";
 				rowsHTML+="<input type='text' required form='form89_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form89_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Assignee'>";
 				rowsHTML+="<input type='text' form='form89_"+id+"' value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' id='form89_add_staff_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Schedule'>";
 				rowsHTML+="<input type='text' required form='form89_"+id+"' value=''>";
@@ -2892,6 +3408,33 @@ function form89_add_item()
 				"<acc_name></acc_name>" +
 				"</staff>";
 		set_my_value_list(staff_data,assignee_filter);
+
+		var add_customer=document.getElementById('form89_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal11_action(function()
+			{	
+				var customer_data="<customers>" +
+						"<acc_name></acc_name>" +
+						"</customers>";
+				set_my_value_list_func(customer_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+		
+		var add_staff=document.getElementById('form89_add_staff_'+id);
+		$(add_staff).on('click',function()
+		{
+			modal16_action(function()
+			{	
+				var staff_data="<staff>" +
+						"<acc_name></acc_name>" +
+						"</staff>";
+				set_my_value_list(staff_data,assignee_filter);
+			});
+		});
 		
 		set_static_value_list('appointments','status',status_filter);
 		$(schedule_filter).datetimepicker();
@@ -2963,11 +3506,11 @@ function form91_add_item()
 		rowsHTML+="<form id='form91_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' required form='form91_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form91_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form91_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form91_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' min='0' required form='form91_"+id+"' step='any'>";
@@ -3029,7 +3572,34 @@ function form91_add_item()
 			$(name_filter).focus();
 		});
 
-		
+		var add_product=document.getElementById('form91_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form91_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+						"<batch></batch>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
+
 		$(name_filter).on('blur',function(event)
 		{
 			var batch_data="<product_instances>" +
@@ -3260,7 +3830,7 @@ function form96_add_item()
 		rowsHTML+="<form id='form96_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form96_"+id+"' required>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form96_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
 				rowsHTML+="<input type='text' form='form96_"+id+"' required>";
@@ -3293,6 +3863,21 @@ function form96_add_item()
 		{
 			$(customer_filter).focus();
 		});
+
+		var add_customer=document.getElementById('form96_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal11_action(function()
+			{	
+				var customer_data="<customers>" +
+						"<acc_name></acc_name>" +
+						"</customers>";
+				set_my_value_list_func(customer_data,customer_filter,function () 
+				{
+					$(customer_filter).focus();
+				});
+			});
+		});
 		
 		var attribute_data="<attributes>" +
 				"<attribute></attribute>" +
@@ -3320,7 +3905,7 @@ function form97_add_item()
 		rowsHTML+="<form id='form97_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form97_"+id+"' required>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new supplier' onclick='modal13_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new supplier' id='form97_add_supplier_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
 				rowsHTML+="<input type='text' form='form97_"+id+"' required>";
@@ -3354,6 +3939,21 @@ function form97_add_item()
 			$(supplier_filter).focus();
 		});
 		
+		var add_supplier=document.getElementById('form97_add_supplier_'+id);
+		$(add_supplier).on('click',function()
+		{
+			modal13_action(function()
+			{	
+				var supplier_data="<suppliers>" +
+						"<acc_name></acc_name>" +
+						"</suppliers>";
+				set_my_value_list_func(supplier_data,supplier_filter,function () 
+				{
+					$(supplier_filter).focus();
+				});
+			});
+		});
+
 		var attribute_data="<attributes>" +
 				"<attribute></attribute>" +
 				"<type exact='yes'>supplier</type>" +
@@ -3380,7 +3980,7 @@ function form98_add_item()
 		rowsHTML+="<form id='form98_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form98_"+id+"' required>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' id='form98_add_staff_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
 				rowsHTML+="<input type='text' form='form98_"+id+"' required>";
@@ -3414,6 +4014,21 @@ function form98_add_item()
 			$(staff_filter).focus();
 		});
 		
+		var add_staff=document.getElementById('form98_add_staff_'+id);
+		$(add_staff).on('click',function()
+		{
+			modal16_action(function()
+			{	
+				var staff_data="<staff>" +
+						"<acc_name></acc_name>" +
+						"</staff>";
+				set_my_value_list_func(staff_data,staff_filter,function () 
+				{
+					$(staff_filter).focus();
+				});
+			});
+		});
+
 		var attribute_data="<attributes>" +
 				"<attribute></attribute>" +
 				"<type exact='yes'>staff</type>" +
@@ -3496,7 +4111,7 @@ function form102_add_item()
 		rowsHTML+="<form id='form102_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Member'>";
 				rowsHTML+="<input type='text' form='form102_"+id+"' required value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' id='form102_add_staff_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Role'>";
 				rowsHTML+="<textarea form='form102_"+id+"'></textarea>";
@@ -3532,6 +4147,21 @@ function form102_add_item()
 		set_my_value_list_func(staff_data,member_filter,function () 
 		{
 			$(member_filter).focus();
+		});
+
+		var add_staff=document.getElementById('form102_add_staff_'+id);
+		$(add_staff).on('click',function()
+		{
+			modal16_action(function()
+			{	
+				var staff_data="<staff>" +
+					"<acc_name></acc_name>" +
+					"</staff>";
+				set_my_value_list_func(staff_data,member_filter,function () 
+				{
+					$(member_filter).focus();
+				});
+			});
 		});
 
 		set_static_value_list('project_team','status',status_filter);
@@ -3685,7 +4315,7 @@ function form109_add_item()
 		rowsHTML+="<form id='form109_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' form='form109_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new asset' onclick='modal10_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new asset' id='form109_add_asset_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Attribute'>";
 				rowsHTML+="<input type='text' form='form109_"+id+"' value=''>";
@@ -3717,6 +4347,21 @@ function form109_add_item()
 		set_my_value_list_func(asset_data,asset_filter,function () 
 		{
 			$(asset_filter).focus();
+		});
+
+		var add_asset=document.getElementById('form109_add_asset_'+id);
+		$(add_asset).on('click',function()
+		{
+			modal10_action(function()
+			{	
+				var asset_data="<assets>" +
+						"<name></name>" +
+						"</assets>";
+				set_my_value_list_func(asset_data,asset_filter,function () 
+				{
+					$(asset_filter).focus();
+				});
+			});
 		});
 		
 		var attribute_data="<attributes>" +
@@ -3832,11 +4477,11 @@ function form112_add_item()
 		rowsHTML+="<form id='form112_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' form='form112_"+id+"' required value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form112_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' form='form112_"+id+"' required value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add batch' id='form112_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' form='form112_"+id+"' required step='any'>";
@@ -3876,6 +4521,35 @@ function form112_add_item()
 			$(names_filter).focus();
 		});
 		
+		var add_product=document.getElementById('form112_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var products_data="<product_master>" +
+					"<name></name>" +
+					"</product_master>";
+				set_my_value_list_func(products_data,names_filter,function () 
+				{
+					$(names_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form112_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+names_filter.value+"</product_name>" +
+					"</product_instances>";
+					
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
+
 		$(names_filter).on('blur',function(event)
 		{
 			var batch_data="<product_instances>" +
@@ -3907,11 +4581,11 @@ function form114_add_item()
 		rowsHTML+="<form id='form114_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' form='form114_"+id+"' required value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form114_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' form='form114_"+id+"' required value=''>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add batch' id='form114_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' form='form114_"+id+"' required step='any'>";
@@ -3950,14 +4624,41 @@ function form114_add_item()
 		{
 			$(names_filter).focus();
 		});
-			
+		
+		var add_product=document.getElementById('form114_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var products_data="<product_master>" +
+					"<name></name>" +
+					"</product_master>";
+				set_my_value_list_func(products_data,names_filter,function () 
+				{
+					$(names_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form114_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+names_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
+	
 		$(names_filter).on('blur',function(event)
 		{
 			var batch_data="<product_instances>" +
 				"<batch></batch>" +
 				"<product_name exact='yes'>"+names_filter.value+"</product_name>" +
 				"</product_instances>";
-				
 			set_my_value_list(batch_data,batch_filter);
 		});
 	}
@@ -3982,11 +4683,11 @@ function form118_add_item()
 		rowsHTML+="<form id='form118_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' required form='form118_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form118_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form118_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form118_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' min='0' required form='form118_"+id+"' step='any'>";
@@ -4048,7 +4749,35 @@ function form118_add_item()
 		{
 			$(name_filter).focus();
 		});
-		
+	
+		var add_product=document.getElementById('form118_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form118_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
+	
 		$(name_filter).on('blur',function(event)
 		{
 			var batch_data="<product_instances>" +
@@ -4237,7 +4966,6 @@ function form118_add_item()
 	}
 }
 
-
 /**
  * @form Create Bill(wholesale)
  * @formNo 119
@@ -4256,11 +4984,11 @@ function form119_add_item()
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<label id='form119_product_make_"+id+"'></label>";
 				rowsHTML+="<br><input type='text' required form='form119_"+id+"' name='product_name'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form119_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form119_"+id+"' name='batch'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form119_add_batch_"+id+"'>";
 				rowsHTML+="<br><v1>Expiry: </v1><label id='form119_exp_"+id+"'></label>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
@@ -4314,6 +5042,34 @@ function form119_add_item()
 		set_my_value_list_func(product_data,name_filter,function () 
 		{
 			$(name_filter).focus();
+		});
+
+		var add_product=document.getElementById('form119_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form119_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
 		});
 
 		$(name_filter).on('keydown',function(e)
@@ -4676,7 +5432,7 @@ function form122_add_item()
 		rowsHTML+="<form id='form122_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form122_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form122_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="Bought: <input type='number' step='any' required form='form122_"+id+"'>";
@@ -4691,11 +5447,11 @@ function form122_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form122_"+id+"'></br>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form122_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Storage Area'>";
 				rowsHTML+="<input type='text' form='form122_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' onclick='modal35_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' id='form122_add_storage_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form122_"+id+"' value='"+id+"'>";
@@ -4740,7 +5496,48 @@ function form122_add_item()
 		{
 			$(name_filter).focus();
 		});
+
+		var add_product=document.getElementById('form122_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form122_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
 		
+		var add_storage=document.getElementById('form122_add_storage_'+id);
+		$(add_storage).on('click',function()
+		{
+			modal35_action(function()
+			{	
+				var storage_data="<store_areas>" +
+							"<name></name>" +
+							"<area_type exact='yes'>storage</area_type>" +
+							"</store_areas>";
+				set_my_value_list(storage_data,storage_filter);
+			});
+		});
+
 		var storage_data="<store_areas>" +
 					"<name></name>" +
 					"<area_type exact='yes'>storage</area_type>" +
@@ -4920,11 +5717,11 @@ function form130_add_product()
 		rowsHTML+="<form id='form130_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' required form='form130_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form130_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form130_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form130_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form130_"+id+"' step='any'>";
@@ -4986,6 +5783,34 @@ function form130_add_product()
 		set_my_value_list_func(product_data,name_filter,function () 
 		{
 			$(name_filter).focus();
+		});
+
+		var add_product=document.getElementById('form130_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form130_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
 		});
 		
 		$(name_filter).on('blur',function(event)
@@ -5208,11 +6033,11 @@ function form130_add_service()
 		rowsHTML+="<form id='form130_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Name'>";
 				rowsHTML+="<input type='text' required form='form130_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' onclick='modal20_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' id='form130_add_service_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Person'>";
 				rowsHTML+="<input type='text' form='form130_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' onclick='modal16_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' id='form130_add_staff_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
 				rowsHTML+="<textarea form='form130_"+id+"'></textarea>";
@@ -5281,6 +6106,34 @@ function form130_add_service()
 				"<status exact='yes'>active</status>" +
 				"</staff>";
 		set_my_value_list(staff_data,staff_filter);
+
+		var add_service=document.getElementById('form130_add_service_'+id);
+		$(add_service).on('click',function()
+		{
+			modal20_action(function()
+			{	
+				var service_data="<services>" +
+						"<name></name>" +
+						"</services>";
+				set_my_value_list_func(service_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_staff=document.getElementById('form130_add_staff_'+id);
+		$(add_staff).on('click',function()
+		{
+			modal16_action(function()
+			{	
+				var staff_data="<staff>" +
+						"<acc_name></acc_name>" +
+						"<status exact='yes'>active</status>" +
+						"</staff>";
+				set_my_value_list(staff_data,staff_filter);
+			});
+		});
 		
 		$(name_filter).on('blur',function(event){
 			notes_filter.value="";
@@ -5745,11 +6598,11 @@ function form136_add_item()
 		rowsHTML+="<form id='form136_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form136_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' onclick='modal14_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form136_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form136_"+id+"'></br>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' onclick='modal22_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form136_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="Bought: <input type='number' step='any' required form='form136_"+id+"'>";
@@ -5762,7 +6615,7 @@ function form136_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Storage Area'>";
 				rowsHTML+="<input type='text' form='form136_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' onclick='modal35_action();'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' id='form136_add_storage_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form136_"+id+"' value='"+id+"'>";
@@ -5805,6 +6658,47 @@ function form136_add_item()
 		set_my_value_list_func(product_data,name_filter,function () 
 		{
 			$(name_filter).focus();
+		});
+
+		var add_product=document.getElementById('form136_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form136_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
+
+		var add_storage=document.getElementById('form136_add_storage_'+id);
+		$(add_storage).on('click',function()
+		{
+			modal35_action(function()
+			{	
+				var storage_data="<store_areas>" +
+							"<name></name>" +
+							"<area_type exact='yes'>storage</area_type>" +
+							"</store_areas>";
+				set_my_value_list(storage_data,storage_filter);
+			});
 		});
 
 		var storage_data="<store_areas>" +

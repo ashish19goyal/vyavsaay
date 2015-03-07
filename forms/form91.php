@@ -1,7 +1,7 @@
 <div id='form91' class='function_detail'>
 	<form id='form91_master'>
 		<fieldset>
-			<label>Customer <img src='./images/add_image.png' class='add_image' onclick='modal11_action();'><br>
+			<label>Customer <img src='./images/add_image.png' class='add_image' id='form91_add_customer'><br>
 			<input type='text' required></label>
 			<label id='form91_customer_info'></label>
 			<label>Bill Type<br><input type='text' required></label>

@@ -1,9 +1,9 @@
 <div id='form19' class='function_detail'>
 	<form id='form19_master'>
 		<fieldset>
-			<label>Supplier <img src='./images/add_image.png' class='add_image' title='Add new supplier' onclick='modal13_action();'></br>
+			<label>Supplier <img src='./images/add_image.png' class='add_image' title='Add new supplier' id='form19_add_supplier'><br>
 			<input type='text' required></label>
-			<label>Return Date</br><input type='text' required></label>
+			<label>Return Date<br><input type='text' required></label>
 			<input type='hidden' name='id'>
 			<input type='hidden' name='transaction'>
 			<input type='button' title='Save Bill' class='save_icon'>

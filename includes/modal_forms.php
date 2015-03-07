@@ -620,6 +620,9 @@
 		</table>
 	</div>
 
+	<div id="modal55" title="Server Db backup">
+	</div>
+
 	<div id="modal101" title="Update details">
 		<form id='modal101_form'>
 			<fieldset>

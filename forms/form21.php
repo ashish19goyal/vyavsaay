@@ -1,12 +1,12 @@
 <div id='form21' class='function_detail'>
 	<form id='form21_master'>
 		<fieldset>
-			<label>Supplier <img src='./images/add_image.png' class='add_image' onclick='modal13_action();'></br>
+			<label>Supplier <img src='./images/add_image.png' class='add_image' id='form21_add_supplier'><br>
 			<input type='text' required></label>
-			<label>Bill Number</br><input type='text' required></label>
-			<label>Bill Date</br><input type='text' required></label>
-			<label>Entry Date</br><input type='text' required></label>
-			<label>Notes</br><textarea row='1'></textarea></label>
+			<label>Bill Number<br><input type='text' required></label>
+			<label>Bill Date<br><input type='text' required></label>
+			<label>Entry Date<br><input type='text' required></label>
+			<label>Notes<br><textarea row='1'></textarea></label>
 			<input type='hidden' value=''>
 			<input type='hidden' name='transaction'>
 			<input type='button' title='Save Bill' class='save_icon'>

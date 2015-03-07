@@ -367,7 +367,7 @@ function modal9_action()
  * @modal Add new asset
  * @param button
  */
-function modal10_action()
+function modal10_action(func)
 {
 	var form=document.getElementById('modal10_form');
 	var fname=form.elements[1];
@@ -422,11 +422,11 @@ function modal10_action()
 					"</activity>";
 		if(is_online())
 		{
-			server_create_row(data_xml,activity_xml);
+			server_create_row_func(data_xml,activity_xml,func);
 		}
 		else
 		{
-			local_create_row(data_xml,activity_xml);
+			local_create_row_func(data_xml,activity_xml,func);
 		}
 
 		var id=get_new_key();
@@ -468,7 +468,7 @@ function modal10_action()
  * @modal Add new customer
  * @param button
  */
-function modal11_action()
+function modal11_action(func)
 {
 	var form=document.getElementById('modal11_form');
 	
@@ -554,12 +554,12 @@ function modal11_action()
 						"</accounts>";
 			if(is_online())
 			{
-				server_create_row(data_xml,activity_xml);
+				server_create_row_func(data_xml,activity_xml,func);
 				server_create_simple(account_xml);
 			}
 			else
 			{
-				local_create_row(data_xml,activity_xml);
+				local_create_row_func(data_xml,activity_xml,func);
 				local_create_simple(account_xml);
 			}	
 			
@@ -606,7 +606,7 @@ function modal11_action()
  * @modal Add new account
  * @param button
  */
-function modal12_action()
+function modal12_action(func)
 {
 	var form=document.getElementById('modal12_form');
 	
@@ -660,11 +660,11 @@ function modal12_action()
 					"</activity>";
 		if(is_online())
 		{
-			server_create_row(data_xml,activity_xml);
+			server_create_row_func(data_xml,activity_xml,func);
 		}
 		else
 		{
-			local_create_row(data_xml,activity_xml);
+			local_create_row_func(data_xml,activity_xml,func);
 		}	
 		
 		var id=get_new_key();
@@ -705,7 +705,7 @@ function modal12_action()
  * @modal Add new supplier
  * @param button
  */
-function modal13_action()
+function modal13_action(func)
 {
 	var form=document.getElementById('modal13_form');
 	
@@ -791,12 +791,12 @@ function modal13_action()
 						"</accounts>";
 			if(is_online())
 			{
-				server_create_row(data_xml,activity_xml);
+				server_create_row_func(data_xml,activity_xml,func);
 				server_create_simple(account_xml);
 			}
 			else
 			{
-				local_create_row(data_xml,activity_xml);
+				local_create_row_func(data_xml,activity_xml,func);
 				local_create_simple(account_xml);
 			}	
 			
@@ -843,7 +843,7 @@ function modal13_action()
  * @modal Add new product
  * @param button
  */
-function modal14_action()
+function modal14_action(func)
 {
 	var form=document.getElementById('modal14_form');
 	
@@ -937,11 +937,11 @@ function modal14_action()
 						"</activity>";
 			if(is_online())
 			{
-				server_create_row(data_xml,activity_xml);
+				server_create_row_func(data_xml,activity_xml,func);
 			}
 			else
 			{
-				local_create_row(data_xml,activity_xml);
+				local_create_row_func(data_xml,activity_xml,func);
 			}	
 
 			var id=get_new_key();
@@ -1077,7 +1077,7 @@ function modal15_action()
  * @modal Add new staff
  * @param button
  */
-function modal16_action()
+function modal16_action(func)
 {
 	var form=document.getElementById('modal16_form');
 	var fusername=form.elements[2];
@@ -1165,12 +1165,12 @@ function modal16_action()
 						"</accounts>";
 			if(is_online())
 			{
-				server_create_row(data_xml,activity_xml);
+				server_create_row_func(data_xml,activity_xml,func);
 				server_create_simple(account_xml);
 			}
 			else
 			{
-				local_create_row(data_xml,activity_xml);
+				local_create_row_func(data_xml,activity_xml,func);
 				local_create_simple(account_xml);
 			}	
 			
@@ -1269,7 +1269,7 @@ function modal17_action(button)
  * @modal Add new task type
  * @param button
  */
-function modal18_action()
+function modal18_action(func)
 {
 	var form=document.getElementById('modal18_form');
 	
@@ -1328,11 +1328,11 @@ function modal18_action()
 					"</activity>";
 		if(is_online())
 		{
-			server_create_row(data_xml,activity_xml);
+			server_create_row_func(data_xml,activity_xml,func);
 		}
 		else
 		{
-			local_create_row(data_xml,activity_xml);
+			local_create_row_func(data_xml,activity_xml,func);
 		}
 		
 		var id=get_new_key();
@@ -1635,7 +1635,7 @@ function modal19_action(button)
  * @modal Add new service
  * @param button
  */
-function modal20_action()
+function modal20_action(func)
 {
 	var form=document.getElementById('modal20_form');
 	
@@ -1692,11 +1692,11 @@ function modal20_action()
 						"</activity>";
 			if(is_online())
 			{
-				server_create_row(data_xml,activity_xml);
+				server_create_row_func(data_xml,activity_xml,func);
 			}
 			else
 			{
-				local_create_row(data_xml,activity_xml);
+				local_create_row_func(data_xml,activity_xml,func);
 			}	
 			
 			var id=get_new_key();
@@ -1925,7 +1925,7 @@ function modal21_action()
  * @modalNo 22
  * @modal Add new batch
  */
-function modal22_action()
+function modal22_action(func)
 {
 	var form=document.getElementById('modal22_form');
 	
@@ -2038,11 +2038,11 @@ function modal22_action()
 						"</activity>";
 			if(is_online())
 			{
-				server_create_row(data_xml,activity_xml);
+				server_create_row_func(data_xml,activity_xml,func);
 			}
 			else
 			{
-				local_create_row(data_xml,activity_xml);
+				local_create_row_func(data_xml,activity_xml,func);
 			}
 			
 			var id=get_new_key();
@@ -3258,7 +3258,7 @@ function modal33_action(id)
  * @modal Add Store Area
  * @modalNo 35
  */
-function modal35_action()
+function modal35_action(func)
 {
 	var form=document.getElementById("modal35_form");
 	var area_type_filter=form.elements[2];

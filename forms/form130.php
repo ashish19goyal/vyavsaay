@@ -1,9 +1,9 @@
 <div id='form130' class='function_detail'>
 	<form id='form130_master'>
 		<fieldset>
-			<label>Customer <img src='./images/add_image.png' class='add_image' title='Add new customer' onclick='modal11_action();'></br>
+			<label>Customer <img src='./images/add_image.png' class='add_image' title='Add new customer' id='form130_add_customer'><br>
 			<input type='text' required></label>
-			<label>Bill Date</br><input type='text' required></label>
+			<label>Bill Date<br><input type='text' required></label>
 			<input type='hidden' name='bill_id'>
 			<input type='hidden' name='offer'>
 			<input type='hidden' name='transaction'>

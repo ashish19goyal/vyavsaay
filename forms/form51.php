@@ -1,8 +1,8 @@
 <div id='form51' class='function_detail'>
 	<form id='form51_master'>
 		<fieldset>
-			<label>User Name</br><input type='text'></label>
-			<label>Password</br><input type='password'></label>
+			<label>User Name<br><input type='text'></label>
+			<label>Password<br><input type='password'></label>
 			<input type='hidden' name='user_id'>
 			<input type='submit' class='submit_hidden'>
 			<input type='button' title="Save Access" class='save_icon'>

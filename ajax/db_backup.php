@@ -1,4 +1,8 @@
 <?php
+
+include_once '../Classes/file_reader.php';
+use RetailingEssentials\file_reader;
+
 	session_start();
 		
 	$domain=$_POST['domain'];
@@ -10,22 +14,20 @@
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['cr']==$cr_access)
 		{
 			$fr=new file_reader("../Config/config.prop");
-			$dbhost="localhost";
+			$dbhost=$fr->attributes["host"];
 			$dbname="re_user_".$domain;
 			$dbuser = $fr->attributes["user"];
 			$dbpass = $fr->attributes["password"];
 			
-			$backup_file = $dbname . date("Y-m-d-H-i-s") . '.gz';
-			$command = "mysqldump --opt -h $dbhost -u $dbuser -p $dbpass $dbname | gzip > $backup_file";
-			system($command,$retval);
-			if($retval!=false)
-			{
-				echo "success";
-			}
-			else 
-			{
-				echo "failed";
-			}
+			$backup_file = $domain.'.gz';
+			$command = "mysqldump --opt -h $dbhost -u $dbuser -p$dbpass $dbname";
+						
+			$mime = "application/octet-stream";
+			header( "Content-Type: " . $mime );
+			header( 'Content-Disposition: attachment; filename="' . $backup_file . '"' );			
+			
+			passthru($command);
+			exit(0);
 		}
 		else
 		{
@@ -36,5 +38,4 @@
 	{
 		echo "Invalid session";
 	}
-	
 ?>

@@ -310,6 +310,19 @@ function form10_header_ini()
 		"</customers>";
 	set_my_value_list(customers_data,customers_filter);
 	
+	var add_customer=document.getElementById('form10_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{	
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});
+
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';
@@ -393,6 +406,20 @@ function form12_header_ini()
 		event.preventDefault();
 		form12_add_item();
 	});
+
+	var add_customer=document.getElementById('form12_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{	
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});
+
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
@@ -586,7 +613,20 @@ function form15_header_ini()
 		"<acc_name></acc_name>" +
 		"</customers>";
 	set_my_value_list(customers_data,customers_filter);
-	
+
+	var add_customer=document.getElementById('form15_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});
+		
 	$(return_date).datepicker();
 	return_date.value=get_my_date();
 	customers_filter.value='';
@@ -690,6 +730,19 @@ function form19_header_ini()
 		"<acc_name></acc_name>" +
 		"</suppliers>";
 	set_my_value_list(suppliers_data,supplier_filter);
+
+	var add_supplier=document.getElementById('form19_add_supplier');
+	$(add_supplier).off('click');
+	$(add_supplier).on('click',function()
+	{
+		modal13_action(function()
+		{
+			var suppliers_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";
+			set_my_value_list(suppliers_data,supplier_filter);
+		});
+	});
 	
 	$(return_date).datepicker();
 	return_date.value=get_my_date();
@@ -743,6 +796,19 @@ function form21_header_ini()
 		"</suppliers>";
 	
 	set_my_value_list(suppliers_data,supplier_filter);
+
+	var add_supplier=document.getElementById('form21_add_supplier');
+	$(add_supplier).off('click');
+	$(add_supplier).on('click',function()
+	{
+		modal13_action(function()
+		{
+			var suppliers_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";
+			set_my_value_list(suppliers_data,supplier_filter);
+		});
+	});
 	
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
@@ -792,11 +858,25 @@ function form24_header_ini()
 		event.preventDefault();
 		form24_add_item();
 	});
+
+	var add_supplier=document.getElementById('form24_add_supplier');
+	$(add_supplier).off('click');
+	$(add_supplier).on('click',function()
+	{
+		modal13_action(function()
+		{
+			var supplier_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";	
+			set_my_value_list(supplier_data,supplier_filter);
+		});
+	});
+
 	var supplier_data="<suppliers>" +
 		"<acc_name></acc_name>" +
-		"</suppliers>";
-	
+		"</suppliers>";	
 	set_my_value_list(supplier_data,supplier_filter);
+	
 	$(order_date).datepicker();
 	order_date.value=get_my_date();
 	set_static_filter('purchase_orders','status',status_filter);
@@ -1633,8 +1713,21 @@ function form69_header_ini()
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
-	
 	set_my_value_list(customers_data,customers_filter);
+	
+	var add_customer=document.getElementById('form69_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";			
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});
+
 	$(order_date).datepicker();
 	order_date.value=get_my_date();
 	set_static_filter('sale_orders','status',status_filter);
@@ -1751,6 +1844,19 @@ function form72_header_ini()
 		"<acc_name></acc_name>" +
 		"</customers>";
 	set_my_filter(customers_data,customers_filter);
+
+	var add_customer=document.getElementById('form72_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";			
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});
 	
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
@@ -1984,6 +2090,19 @@ function form82_header_ini()
 		"<acc_name></acc_name>" +
 		"</customers>";
 	set_my_value_list(customers_data,customers_filter);
+
+	var add_customer=document.getElementById('form82_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";			
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});	
 	
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
@@ -2302,10 +2421,24 @@ function form91_header_ini()
 		event.preventDefault();
 		form91_add_item();
 	});
+	
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
 	set_my_value_list(customers_data,customers_filter);
+
+	var add_customer=document.getElementById('form91_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";			
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});	
 
 	var type_data="<bill_types>" +
 		"<name></name>" +
@@ -2905,6 +3038,20 @@ function form112_header_ini()
 		event.preventDefault();
 		form112_add_item();
 	});
+
+	var add_customer=document.getElementById('form112_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{	
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});
+
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
@@ -2986,6 +3133,20 @@ function form114_header_ini()
 		event.preventDefault();
 		form114_add_item();
 	});
+
+	var add_supplier=document.getElementById('form114_add_supplier');
+	$(add_supplier).off('click');
+	$(add_supplier).on('click',function()
+	{
+		modal13_action(function()
+		{	
+			var supplier_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";
+			set_my_value_list(supplier_data,supplier_filter);
+		});
+	});
+
 	var supplier_data="<suppliers>" +
 		"<acc_name></acc_name>" +
 		"</suppliers>";
@@ -3144,6 +3305,19 @@ function form118_header_ini()
 		},points_data);
 	});	
 
+	var add_customer=document.getElementById('form118_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{	
+				var customers_data="<customers>" +
+						"<acc_name></acc_name>" +
+						"</customers>";
+				set_my_value_list(customers_data,customers_filter);
+		});
+	});
+
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
@@ -3247,6 +3421,19 @@ function form119_header_ini()
 		form119_add_item();
 	});
 
+	var add_customer=document.getElementById('form119_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{	
+				var customers_data="<customers>" +
+						"<acc_name></acc_name>" +
+						"</customers>";
+				set_my_value_list(customers_data,customers_filter);
+		});
+	});
+	
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
@@ -3741,6 +3928,19 @@ function form122_header_ini()
 		form122_add_item();
 	});
 	
+	var add_supplier=document.getElementById('form122_add_supplier');
+	$(add_supplier).off('click');
+	$(add_supplier).on('click',function()
+	{
+		modal13_action(function()
+		{	
+			var suppliers_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";
+			set_my_value_list(suppliers_data,supplier_filter);
+		});
+	});
+
 	var suppliers_data="<suppliers>" +
 		"<acc_name></acc_name>" +
 		"</suppliers>";
@@ -4112,6 +4312,19 @@ function form130_header_ini()
 		"</customers>";
 	set_my_filter(customers_data,customers_filter);
 	
+	var add_customer=document.getElementById('form130_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{	
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});
+
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';
@@ -4484,6 +4697,19 @@ function form136_header_ini()
 	
 	set_my_value_list(suppliers_data,supplier_filter);
 	
+	var add_supplier=document.getElementById('form136_add_supplier');
+	$(add_supplier).off('click');
+	$(add_supplier).on('click',function()
+	{
+		modal13_action(function()
+		{	
+			var suppliers_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";			
+			set_my_value_list(suppliers_data,supplier_filter);
+		});
+	});
+
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 	

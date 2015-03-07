@@ -1,14 +1,14 @@
 <div id='form119' class='function_detail'>
 	<form id='form119_master'>
 		<fieldset>
-			<label>Customer <img src='./images/add_image.png' class='add_image' onclick='modal11_action();'></br>
+			<label>Customer <img src='./images/add_image.png' class='add_image' id='form119_add_customer'><br>
 			<input type='text' required></label>
 			<label id='form119_customer_info'></label>
-			<label>Bill Type</br><input type='text' required></label>
-			<label>Bill Date</br><input type='text' required></label>
+			<label>Bill Type<br><input type='text' required></label>
+			<label>Bill Date<br><input type='text' required></label>
 			<label>Bill #<br><input type='text' name='bill_num' readonly="readonly"></label>
 			<label id='form119_payment_info'></label>
-			<label>Unbilled Items</br><input readonly='readonly' type='number'></label>
+			<label>Unbilled Items<br><input readonly='readonly' type='number'></label>
 			<input type='hidden' name='bill_id'>
 			<input type='hidden' name='offer'>
 			<input type='hidden' name='transaction'>

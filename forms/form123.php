@@ -6,7 +6,7 @@
 					<th>Object <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form123_header'></th>
 					<th>Attribute <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form123_header'></th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form123_header'></th>
-					<th><input type="button" value='Add new category' form='form123_header' class='add_icon' onclick="form123_add_item();">
+					<th><input type="button" value='Add new Attribute' form='form123_header' class='add_icon' onclick="form123_add_item();">
 						<input type='button' form='form123_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form123_header' style='visibility: hidden;'>
 					</th>

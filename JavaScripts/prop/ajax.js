@@ -231,6 +231,26 @@ function server_create_row(data_xml,activity_xml)
 	});
 }
 
+function server_create_row_func(data_xml,activity_xml,func)
+{
+	show_loader();
+	var domain=get_domain();
+	var username=get_username();
+	var cr_access=get_session_var('cr');
+	ajax_with_custom_func("./ajax/create_row.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&data_xml="+data_xml+"&activity_xml="+activity_xml,function(e)
+	{
+		console.log(e.responseText);
+		hide_loader();
+		if(e.responseText=='duplicate record')
+		{
+			$("#modal5").dialog("open");
+		}
+		else
+		{
+			func();
+		}
+	});
+}
 
 function server_create_simple(data_xml)
 {

@@ -1,7 +1,7 @@
 <div id='form136' class='function_detail'>
 	<form id='form136_master'>
 		<fieldset>
-			<label>Supplier <img src='./images/add_image.png' class='add_image' onclick='modal13_action();'></br>
+			<label>Supplier <img src='./images/add_image.png' class='add_image' onclick='modal13_action();'><br>
 			<input type='text' required></label>
 			<label>Bill Number<br><input type='text' required></label>
 			<label>Bill Date<br><input type='text' required></label>

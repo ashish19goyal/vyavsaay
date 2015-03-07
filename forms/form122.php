@@ -1,13 +1,13 @@
 <div id='form122' class='function_detail'>
 	<form id='form122_master'>
 		<fieldset>
-			<label>Supplier <img src='./images/add_image.png' class='add_image' onclick='modal13_action();'></br>
+			<label>Supplier <img src='./images/add_image.png' class='add_image' id='form122_add_supplier'><br>
 			<input type='text' required></label>
-			<label>Bill Number</br><input type='text' required></label>
-			<label>Bill Date</br><input type='text' required></label>
-			<label>Entry Date</br><input type='text' required></label>
-			<label>Notes</br><textarea></textarea></label>
-			<label>Unbilled Items</br><input readonly='readonly' type='number'></label>
+			<label>Bill Number<br><input type='text' required></label>
+			<label>Bill Date<br><input type='text' required></label>
+			<label>Entry Date<br><input type='text' required></label>
+			<label>Notes<br><textarea></textarea></label>
+			<label>Unbilled Items<br><input readonly='readonly' type='number'></label>
 			<input type='hidden' value=''>
 			<input type='hidden' name='transaction'>
 			<input type='button' value='Select unbilled items' class='generic_icon'>

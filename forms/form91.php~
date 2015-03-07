@@ -6,6 +6,7 @@
 			<label id='form91_customer_info'></label>
 			<label>Bill Type<br><input type='text' required></label>
 			<label>Bill Date<br><input type='text' required></label>
+			<label>Bill #<br><input type='text' name='bill_num' readonly="readonly"></label>
 			<input type='hidden' name='bill_id'>
 			<input type='hidden' name='offer'>
 			<input type='hidden' name='transaction'>
