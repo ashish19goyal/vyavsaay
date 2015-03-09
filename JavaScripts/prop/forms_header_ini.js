@@ -2800,13 +2800,27 @@ function form101_header_ini()
 function form102_header_ini()
 {
 	var fields=document.getElementById('form102_master');
-	fields.elements[1].value="";
-	fields.elements[2].value=get_new_key();
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
+
+	var code_filter=fields.elements[1];
+	var id_filter=fields.elements[2];
+	
+	var name_data="<projects>" +
+			"<name></name>" +
+			"</projects>";
+	
+	set_my_value_list(name_data,code_filter);
+
+	id_filter.value="";
+	code_filter.value="";
+	
+	$(code_filter).off('blur');
+	$(code_filter).on('blur',function () 
 	{
-		event.preventDefault();
-		form102_create_form();
+		var id_data="<projects>"+
+					"<id></id>"+
+					"<name exact='yes'>"+code_filter.value+"</name>"+					
+					"</projects>";
+		set_my_value(id_data,id_filter);
 	});
 }
 
@@ -2817,13 +2831,27 @@ function form102_header_ini()
 function form103_header_ini()
 {
 	var fields=document.getElementById('form103_master');
-	fields.elements[1].value="";
-	fields.elements[2].value=get_new_key();
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
+
+	var code_filter=fields.elements[1];
+	var id_filter=fields.elements[2];
+	
+	var name_data="<projects>" +
+			"<name></name>" +
+			"</projects>";
+	
+	set_my_value_list(name_data,code_filter);
+
+	id_filter.value="";
+	code_filter.value="";
+	
+	$(code_filter).off('blur');
+	$(code_filter).on('blur',function () 
 	{
-		event.preventDefault();
-		form103_create_form();
+		var id_data="<projects>"+
+					"<id></id>"+
+					"<name exact='yes'>"+code_filter.value+"</name>"+					
+					"</projects>";
+		set_my_value(id_data,id_filter);
 	});
 }
 
@@ -2833,43 +2861,32 @@ function form103_header_ini()
  */
 function form104_header_ini()
 {
-	var project_id=$("#form104_link").attr('data_id');
-	if(project_id==null)
-		project_id="";	
+	var fields=document.getElementById('form104_master');
+
+	var code_filter=fields.elements[1];
+	var id_filter=fields.elements[2];
 	
-	$("#form104_body").parent().show();
-	$("#form104_calendar").hide();
+	var name_data="<projects>" +
+			"<name></name>" +
+			"</projects>";
 	
-	if(project_id!="")
+	set_my_value_list(name_data,code_filter);
+
+	id_filter.value="";
+	code_filter.value="";
+	
+	$(code_filter).off('blur');
+	$(code_filter).on('blur',function () 
 	{
-		var project_columns="<projects>" +
-				"<id exact='yes'>"+project_id+"</id>" +
-				"<name></name>" +
-				"</projects>";
-		
-		fetch_requested_data('',project_columns,function(project_results)
-		{
-			for (var i in project_results)
-			{
-				var filter_fields=document.getElementById('form104_master');
-				filter_fields.elements[1].value=project_results[i].name;
-				filter_fields.elements[2].value=project_results[i].id;
-				
-				$(filter_fields).off('submit');
-				$(filter_fields).on("submit", function(event)
-				{
-					event.preventDefault();
-					form104_create_form();
-				});
-				break;
-			}
-		});
+		var id_data="<projects>"+
+					"<id></id>"+
+					"<name exact='yes'>"+code_filter.value+"</name>"+					
+					"</projects>";
+		set_my_value(id_data,id_filter);
+	});
 	
-			
-		$("#form104_body").parent().hide();
-		$("#form104_calendar").show();
-		///initializing calendar
-	}
+	$("#form104_body").parent().hide();
+	$("#form104_calendar").show();
 }
 
 function form104_switch_view()
@@ -4727,14 +4744,28 @@ function form136_header_ini()
 function form137_header_ini()
 {
 	var fields=document.getElementById('form137_master');
-	fields.elements[1].value="";
-	fields.elements[2].value=get_new_key();
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
+
+	var code_filter=fields.elements[1];
+	var id_filter=fields.elements[2];
+	
+	var name_data="<projects>" +
+			"<name></name>" +
+			"</projects>";
+	
+	set_my_value_list(name_data,code_filter);
+
+	id_filter.value="";
+	code_filter.value="";
+	
+	$(code_filter).off('blur');
+	$(code_filter).on('blur',function () 
 	{
-		event.preventDefault();
-		form137_create_form();
-	});	
+		var id_data="<projects>"+
+					"<id></id>"+
+					"<name exact='yes'>"+code_filter.value+"</name>"+					
+					"</projects>";
+		set_my_value(id_data,id_filter);
+	});
 };
 
 /**

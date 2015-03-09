@@ -3875,7 +3875,7 @@ function report58_ini()
 						
 				$('#report58_body').append(rowsHTML);
 				
-				if(parseFloat(payments[i].paid_amount)>=0 && payments[i].paid_amount!='0')
+				if(parseFloat(payments[i].paid_amount)>0 && payments[i].paid_amount!='')
 				{
 					debit="-";
 					credit="-";
@@ -3919,6 +3919,6 @@ function report58_ini()
 		});
 	});
 	
-	var print_button=form.elements[3];
+	var print_button=form.elements[4];
 	print_tabular_report('report58','Ledger',print_button);
 };

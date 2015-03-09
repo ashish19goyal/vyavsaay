@@ -199,7 +199,7 @@ function modal_forms_ini()
 	   		}
 		});
 	}
-	for(var i=50;i<55;i++)
+	for(var i=50;i<57;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -215,7 +215,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=101;i<106;i++)
+	for(var i=101;i<110;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({

@@ -2,7 +2,7 @@
 <input type='button' value='Switch view' class='generic_icon' onclick='form104_switch_view();'>
 	<form id='form104_master'>
 		<fieldset>
-			<label>Project Name <input type='text' required></label>
+			<label>Project Name<input type='text' required></label>
 			<input type='hidden' name='project_id' form='form104_master'>
 			<input type='button' onclick='form104_ini();' value='Refresh' class='generic_icon'>
 			<input type='button' title='Print' class='print_icon' onclick='form104_print_form($(this));'>

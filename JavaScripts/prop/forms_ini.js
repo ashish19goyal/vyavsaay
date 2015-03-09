@@ -8435,6 +8435,17 @@ function form102_ini()
 	if(project_id==null)
 		project_id="";
 	$('#form102_body').html("");
+	
+	var fields=document.getElementById('form102_master');
+	if(project_id=="")
+	{	
+		project_id=fields.elements[2].value;
+	}
+	else
+	{
+		fields.elements[2].value=project_id;
+	}
+
 	if(project_id!="")
 	{
 		show_loader();
@@ -8579,6 +8590,18 @@ function form103_ini()
 	if(project_id==null)
 		project_id="";	
 	$('#form103_body').html("");
+	
+	var fields=document.getElementById('form103_master');
+	if(project_id=="")
+	{	
+		project_id=fields.elements[2].value;
+	}
+	else
+	{
+		fields.elements[2].value=project_id;
+	}
+	
+	
 	if(project_id!="")
 	{
 		show_loader();
@@ -8724,6 +8747,17 @@ function form104_ini()
 	if(project_id==null)
 		project_id="";	
 	$('#form104_body').html("");
+	
+	var fields=document.getElementById('form104_master');
+	if(project_id=="")
+	{	
+		project_id=fields.elements[2].value;
+	}
+	else
+	{
+		fields.elements[2].value=project_id;
+	}
+	
 	if(project_id!="")
 	{
 		$('#form104_calendar').fullCalendar('destroy');
@@ -12250,6 +12284,17 @@ function form137_ini()
 	if(project_id==null)
 		project_id="";
 	$('#form137_body').html("");
+
+	var fields=document.getElementById('form137_master');
+	if(project_id=="")
+	{	
+		project_id=fields.elements[2].value;
+	}
+	else
+	{
+		fields.elements[2].value=project_id;
+	}
+
 	if(project_id!="")
 	{
 		show_loader();
@@ -12402,7 +12447,6 @@ function form138_ini()
 	var fields=document.getElementById('form138_master');
 	if(project_id=="")
 	{	
-		console.log('setting value from form');
 		project_id=fields.elements[2].value;
 	}
 	else

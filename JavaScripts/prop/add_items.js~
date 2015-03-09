@@ -4124,7 +4124,7 @@ function form102_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form102_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='submit_hidden' form='form102_"+id+"' id='save_form102_"+id+"' >";	
+				rowsHTML+="<input type='submit' class='save_icon' form='form102_"+id+"' id='save_form102_"+id+"' >";	
 				rowsHTML+="<input type='button' class='delete_icon' form='form102_"+id+"' id='delete_form102_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
@@ -4201,7 +4201,7 @@ function form103_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form103_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='submit_hidden' form='form103_"+id+"' id='save_form103_"+id+"' >";	
+				rowsHTML+="<input type='submit' class='save_icon' form='form103_"+id+"' id='save_form103_"+id+"' >";	
 				rowsHTML+="<input type='button' class='delete_icon' form='form103_"+id+"' id='delete_form103_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
@@ -6774,7 +6774,7 @@ function form137_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form137_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='submit_hidden' form='form137_"+id+"' id='save_form137_"+id+"' >";	
+				rowsHTML+="<input type='submit' class='submit_icon' form='form137_"+id+"' id='save_form137_"+id+"' >";	
 				rowsHTML+="<input type='button' class='delete_icon' form='form137_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";

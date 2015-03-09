@@ -668,5 +668,17 @@
 			</fieldset>
 		</form>
 	</div>
+
+	<div id="modal106" title="Add Ledger Entry">
+		<form id='modal106_form'>
+			<fieldset>
+				<label>Account: <input type='text' required></label><br>
+				<label>Particulars: <textarea required></textarea></label><br>
+				<label>Type: <input type='text' required></label><br>
+				<label>Amount: <input type='number' step='2' required></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
 	
 </div>

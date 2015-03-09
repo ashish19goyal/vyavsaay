@@ -5396,7 +5396,6 @@ function modal103_action(button)
  */
 function modal105_action(project_id)
 {
-	console.log(project_id);
 	var form=document.getElementById('modal105_form');
 
 	var start_filter=form.elements[3];
@@ -5442,4 +5441,77 @@ function modal105_action(project_id)
 	});
 	
 	$("#modal105").dialog("open");
+}
+
+/**
+ * @modalNo 106
+ * @modal Add Ledger Entry
+ * @param button
+ */
+function modal106_action()
+{
+	var form=document.getElementById('modal106_form');
+
+	var account_filter=form.elements[1];
+	var type_filter=form.elements[3];
+
+	set_static_value_list('modal106','type',type_filter);
+	var account_data="<accounts>"+
+						"<acc_name></acc_name>"+
+						"</accounts>";	
+	set_my_value_list(account_data,account_filter);
+		
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		
+		var account=form.elements[1].value;
+		var particulars=form.elements[2].value;
+		var type='received';		
+		var receiver='master';
+		var giver=account;
+		if(form.elements[3].value=='debit')
+		{
+			type='paid';
+			receiver=account;
+			giver='master';
+		}		
+		var amount=form.elements[4].value;
+		var data_id=get_new_key();
+		var last_updated=get_my_time();
+		var data_xml="<payments>" +
+					"<id>"+data_id+"</id>" +
+					"<acc_name>"+account+"</acc_name>" +
+					"<type>"+type+"</type>" +
+					"<total_amount>"+amount+"</total_amount>" +
+					"<paid_amount>0</paid_amount>"+
+					"<status>pending</status>"+
+					"<date>"+last_updated+"</date>"+
+					"<transaction_id>"+data_id+"</transaction_id>"+
+					"<source_info>"+particulars+"</source_info>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</payments>";
+		var pt_xml="<transactions>" +
+						"<id>"+data_id+"</id>" +
+						"<trans_date>"+last_updated+"</trans_date>" +
+						"<amount>"+amount+"</amount>" +
+						"<receiver>"+receiver+"</receiver>" +
+						"<giver>"+giver+"</giver>" +
+						"<tax>0</tax>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</transactions>";
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+		
+		$("#modal106").dialog("close");
+	});
+	
+	$("#modal106").dialog("open");
 }

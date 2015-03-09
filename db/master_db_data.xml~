@@ -88,6 +88,22 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>modal106</tablename>
+			<listname>type</listname>
+			<name>debit</name>
+			<value>Debit</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>modal106</tablename>
+			<listname>type</listname>
+			<name>credit</name>
+			<value>Credit</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>warranty</tablename>
 			<listname>status</listname>
 			<name>In warranty</name>
