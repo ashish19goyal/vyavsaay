@@ -6269,8 +6269,8 @@ function form134_add_machine()
 			form134_create_machine(fields);
 		});
 				
-		set_static_value_list('service_request_machines','machine_type',type_filter);
-		set_static_value_list('service_request_machines','machine',machine_filter);
+		set_static_filter('service_request_machines','machine_type',type_filter);
+		set_static_filter('service_request_machines','machine',machine_filter);
 		set_static_value_list('service_request_machines','status',status_filter);
 
 		$(type_filter).focus();

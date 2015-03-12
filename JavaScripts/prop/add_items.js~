@@ -6269,8 +6269,8 @@ function form134_add_machine()
 			form134_create_machine(fields);
 		});
 				
-		set_static_value_list('service_request_machines','machine_type',type_filter);
-		set_static_value_list('service_request_machines','machine',machine_filter);
+		set_static_filter('service_request_machines','machine_type',type_filter);
+		set_static_filter('service_request_machines','machine',machine_filter);
 		set_static_value_list('service_request_machines','status',status_filter);
 
 		$(type_filter).focus();
@@ -6774,7 +6774,7 @@ function form137_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form137_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='submit_icon' form='form137_"+id+"' id='save_form137_"+id+"' >";	
+				rowsHTML+="<input type='submit' class='save_icon' form='form137_"+id+"' id='save_form137_"+id+"' >";	
 				rowsHTML+="<input type='button' class='delete_icon' form='form137_"+id+"' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
