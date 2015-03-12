@@ -11397,8 +11397,8 @@ function form129_ini()
 					});
 			
 					scrollPane.css("overflow","hidden");			
-					hide_loader();
 				},service_eng_data);
+				hide_loader();
 			});						
 		});			
 	}

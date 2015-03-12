@@ -11212,7 +11212,7 @@ function form129_ini()
 			zoom: 10
 		});
 	
-		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+		L.tileLayer('https://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
 	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap</a>',
 	        subdomains:'1234'
 	    }).addTo(map129);
@@ -11397,8 +11397,8 @@ function form129_ini()
 					});
 			
 					scrollPane.css("overflow","hidden");			
-					hide_loader();
 				},service_eng_data);
+				hide_loader();
 			});						
 		});			
 	}
