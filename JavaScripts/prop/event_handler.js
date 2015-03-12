@@ -97,6 +97,8 @@ function set_grid_items()
 	set_grid_item_28();
 	set_grid_item_29();
 	set_grid_item_30();
+	set_grid_item_31();
+	set_grid_item_32();
 }
 
 function deferred_execute(func)
