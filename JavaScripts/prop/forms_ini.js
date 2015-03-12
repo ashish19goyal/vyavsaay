@@ -11172,7 +11172,7 @@ function form128_ini()
 			}
 			
 			/////////////			
-			var export_button=filter_fields.elements[3];
+			var export_button=filter_fields.elements[4];
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
