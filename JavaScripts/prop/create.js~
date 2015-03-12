@@ -10328,7 +10328,6 @@ function form136_create_form()
 			var subform=document.getElementById(subform_id);
 			total+=parseFloat(subform.elements[6].value);
 			tax+=parseFloat(subform.elements[5].value);
-			amount+=parseFloat(subform.elements[5].value);
 		});
 		
 		var discount=0;

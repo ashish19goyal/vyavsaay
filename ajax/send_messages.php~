@@ -28,7 +28,10 @@
 */
 
 	session_start();
-		
+	
+	include_once "../Classes/db.php";
+	use RetailingEssentials\db_connect;
+	
 	$message_data=$_POST['message_data'];
 	$domain=$_POST['domain'];
 	$username=$_POST['username'];

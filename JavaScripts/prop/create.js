@@ -10451,7 +10451,7 @@ function form137_create_item(form)
 {
 	if(is_create_access('form137'))
 	{
-		var project_code=document.getElementById('form137_master').elements[2].value;
+		var project_id=document.getElementById('form137_master').elements[2].value;
 		var person=form.elements[0].value;
 		var amount=form.elements[1].value;
 		var details=form.elements[2].value;
@@ -10460,7 +10460,7 @@ function form137_create_item(form)
 		var last_updated=get_my_time();
 		var data_xml="<expenses>" +
 					"<id>"+data_id+"</id>" +
-					"<source_id>"+project_code+"</source_id>" +
+					"<source_id>"+project_id+"</source_id>" +
 					"<source>project</source>"+
 					"<status>"+status+"</status>" +
 					"<person>"+person+"</person>" +

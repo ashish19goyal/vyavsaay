@@ -4266,6 +4266,7 @@ function form128_header_ini()
 	var id_filter=filter_fields.elements[0];
 	var customer_filter=filter_fields.elements[1];
 	var status_filter=filter_fields.elements[2];
+	var add_button=filter_fields.elements[3];		
 	
 	var id_data="<service_requests>" +
 			"<id></id>" +
@@ -4279,6 +4280,12 @@ function form128_header_ini()
 	{
 		event.preventDefault();
 		form128_ini();
+	});
+
+	$(add_button).off('click');
+	$(add_button).on('click',function(event)
+	{
+		modal47_action(get_my_date());
 	});
 
 	set_my_filter(id_data,id_filter);

@@ -681,4 +681,17 @@
 		</form>
 	</div>
 	
+	<div id="modal107" title="Update Schedule">
+		<form id='modal107_form'>
+			<fieldset>
+				<label>Name: <input type='text'></label><br>
+				<label>Details: <textarea required></textarea></label><br>
+				<label>Start Time: <input type='text' required></label><br>
+				<label>End Time: <input type='text' required></label><br>
+				<label>Status: <input type='text' required></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

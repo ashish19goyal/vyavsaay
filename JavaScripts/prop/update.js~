@@ -6918,3 +6918,139 @@ function form136_update_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Project Expenses
+ * @formNo 137
+ * @param button
+ */
+function form137_update_item(form)
+{
+	if(is_update_access('form137'))
+	{
+		var project_id=document.getElementById('form137_master').elements[2].value;
+		var person=form.elements[0].value;
+		var amount=form.elements[1].value;
+		var details=form.elements[2].value;
+		var status=form.elements[3].value;		
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<expenses>" +
+					"<id>"+data_id+"</id>" +
+					"<source_id>"+project_id+"</source_id>" +
+					"<source>project</source>"+
+					"<status>"+status+"</status>" +
+					"<person>"+person+"</person>" +
+					"<amount>"+amount+"</amount>" +
+					"<detail>"+details+"</detail>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</expenses>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Customer profiling
+ * @formNo 139
+ * @param button
+ */
+function form139_update_item(form)
+{
+	if(is_update_access('form139'))
+	{
+		var owner=form.elements[0].value;
+		var facility=form.elements[1].value;
+		var location=form.elements[2].value;
+		var area=form.elements[3].value;
+		var floors=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<assets>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+facility+"</name>" +
+					"<type>facility</type>"+
+					"<owner>"+owner+"</owner>" +
+					"<owner_type>customer</owner_type>" +
+					"<location>"+location+"</location>" +
+					"<floors>"+floors+"</floors>"+
+					"<area>"+area+"</area>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</assets>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Supplier profiling
+ * @formNo 140
+ * @param button
+ */
+function form140_update_item(form)
+{
+	if(is_update_access('form140'))
+	{
+		var supplier=form.elements[0].value;
+		var asset_type=form.elements[1].value;
+		var desc=form.elements[2].value;
+		var location=form.elements[3].value;	
+		var notes=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<assets>" +
+					"<id>"+data_id+"</id>" +
+					"<type>"+asset_type+"</type>"+
+					"<description>"+desc+"</description>"+
+					"<owner>"+supplier+"</owner>" +
+					"<owner_type>supplier</owner_type>" +
+					"<location>"+location+"</location>"+
+					"<notes>"+notes+"</notes>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</assets>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

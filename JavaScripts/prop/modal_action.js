@@ -5391,7 +5391,7 @@ function modal103_action(button)
 
 /**
  * @modalNo 105
- * @modal close service request
+ * @modal Add project phase
  * @param button
  */
 function modal105_action(project_id)
@@ -5514,4 +5514,74 @@ function modal106_action()
 	});
 	
 	$("#modal106").dialog("open");
+}
+
+/**
+ * @modalNo 107
+ * @modal Update project phase
+ * @param button
+ */
+function modal107_action(data_id)
+{
+	var form=document.getElementById('modal107_form');
+
+	var start_filter=form.elements[3];
+	var due_filter=form.elements[4];
+	var status_filter=form.elements[5];
+
+	$(start_filter).datepicker();
+	$(due_filter).datepicker();
+	set_static_value_list('project_phases','status',status_filter);
+		
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		
+		var phase=form.elements[1].value;
+		var details=form.elements[2].value;
+		var start_date=get_raw_time(form.elements[3].value);
+		var due_date=get_raw_time(form.elements[4].value);
+		var status=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<project_phases>" +
+					"<id>"+data_id+"</id>" +
+					"<phase_name>"+phase+"</phase_name>" +
+					"<details>"+details+"</details>" +
+					"<start_date>"+start_date+"</start_date>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</project_phases>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		$("#modal107").dialog("close");
+	});
+
+	var phase_data="<project_phases count='1'>"+
+						"<id>"+data_id+"</id>"+
+						"<phase_name></phase_name>"+
+						"<details></details>"+
+						"<start_date></start_date>"+
+						"<due_date></due_date>"+
+						"<status></status>"+
+						"</project_phases>";
+	fetch_requested_data('',phase_data,function(phases)
+	{
+		phases.forEach(function(phase)
+		{
+			form.elements[1].value=phase.phase_name;
+			form.elements[2].value=phase.details;
+			form.elements[3].value=get_my_past_date(phase.start_date);
+			form.elements[4].value=get_my_past_date(phase.due_date);
+			form.elements[5].value=phase.status;
+		});
+		$("#modal107").dialog("open");
+	});
 }
