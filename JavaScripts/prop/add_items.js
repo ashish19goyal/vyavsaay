@@ -6245,7 +6245,7 @@ function form134_add_machine()
 				rowsHTML+="<textarea form='form134_machine_"+id+"' required></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Closing Notes'>";
-				rowsHTML+="<textarea form='form134_machine_"+id+"' required></textarea>";
+				rowsHTML+="<textarea form='form134_machine_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
 				rowsHTML+="<input type='text' form='form134_machine_"+id+"' value='open' required>";
