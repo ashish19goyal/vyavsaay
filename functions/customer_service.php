@@ -25,31 +25,4 @@
 			include "reports/report56.php";
 			include "reports/report57.php";
 	?>		
-	
-	<script>
-	!function(){
-		$("#customer_service_main").tabs(
-		{
-			show:"slide",
-			activate:function(e, ui) 
-		    {
-		    	e.currentTarget.blur();
-		    	$('#form131_calendar').fullCalendar('render');
-		    	$('#form132_calendar').fullCalendar('render');
-				if(typeof map129 != 'undefined')		    	
-			    	map129.invalidateSize(false);
-		    },
-		    beforeActivate:function(event,ui)
-		    {
-		    	$(document).off('keydown');
-			}
-		}).css(
-			{
-				'min-height': '570px',
-				'overflow': 'auto'
-			});
-		}();
-				
-	</script>
-
 </div>

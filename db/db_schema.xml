@@ -821,9 +821,10 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<ques_id index='yes' type="BIGINT NOT NULL"></ques_id>
 			<name index='yes' type="VARCHAR(100)"></name>
-			<display_name index='yes' type="VARCHAR(100)"></display_name>
+			<display_name index='yes' type="TEXT"></display_name>
 			<type index='yes' type="VARCHAR(30)"></type><!--text/textarea/number/value list-->
 			<fcol index='no' type='INT'></fcol>
+			<forder index='no' type='INT'></forder>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</ques_fields>
 	<ques_data>
@@ -844,4 +845,11 @@
 			<field_value index='yes' type="TEXT"></field_value>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</ques_fields_data>
+	<sms>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<receiver index='yes' type="VARCHAR(15)"></receiver>
+			<message index='yes' type="TEXT"></message>
+			<status index='yes' type="VARCHAR(25)"></status><!--pending/sent/cancelled-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</sms>
 </re_xml>

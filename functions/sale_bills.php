@@ -44,25 +44,4 @@
 			include "forms/form119.php";
 	?>
 	
-	<script>
-	!function(){
-		$("#sale_bills_main").tabs(
-		{
-			show:"slide",
-			activate:function(e,ui) 
-		    {
-		    	e.currentTarget.blur();
-		    	$('#form89_calendar').fullCalendar('render');
-		    },
-		    beforeActivate:function(event,ui)
-		    {
-		    	$(document).off('keydown');
-			}
-		}).css(
-			{
-				'min-height': '570px',
-				'overflow': 'auto'
-			});
-		}();
-	</script>
 </div>

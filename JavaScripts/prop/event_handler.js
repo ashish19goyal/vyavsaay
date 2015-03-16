@@ -22,39 +22,102 @@ function default_load()
 
 	if(is_set_session())
 	{
-		set_menu_shortcuts();
-		hide_unreadable_elements();
-		setup_grid_display();
-		date_formating();
-		modal_forms_ini();
-		print_setup();
-		Chart.defaults.global.responsive = true;
-		Chart.defaults.global.scaleFontSize= 10;
-		Chart.defaults.global.scaleFontColor="#000";
-		Chart.defaults.global.maintainAspectRatio=false;
-		$('textarea').autosize();
-		i18n_setup();
-		home_display();
-		setTimeout(function()
+		add_questionnaires(function()
 		{
-			start_workers();
-		},get_worker_delay());
-		deferred_execute(function()
-		{
-			activities_lane_ini();
+			init_functions();
+			set_menu_shortcuts();
+			hide_unreadable_elements();
+			setup_grid_display();
+			date_formating();
+			modal_forms_ini();
+			print_setup();
+			Chart.defaults.global.responsive = true;
+			Chart.defaults.global.scaleFontSize= 10;
+			Chart.defaults.global.scaleFontColor="#000";
+			Chart.defaults.global.maintainAspectRatio=false;
+			$('textarea').autosize();
+			i18n_setup();
+			home_display();
+			setTimeout(function()
+			{
+				start_workers();
+			},get_worker_delay());
+			deferred_execute(function()
+			{
+				activities_lane_ini();
+			});
+			//document.getElementById('master_title').innerHTML=get_session_var('title');		
+					
 		});
-		//document.getElementById('master_title').innerHTML=get_session_var('title');		
 	}
-
 	hide_loader();
+}
+
+function init_functions()
+{
+	var functions_array=['sale_bills','purchase','finances','products','services','customers','customer_service','projects','suppliers','staff','store','ecommerce','offers','maps','sale_reports','admin','settings'];
+	functions_array.forEach(function(func)
+	{
+		var function_main=$("#"+func+"_main");
+		$(function_main).tabs(
+		{
+			show:"slide",
+			activate:function(e, ui) 
+		    {
+		    	e.currentTarget.blur();
+				if(func=='customers')
+				{				
+					if(typeof map41 != 'undefined')
+					{
+					  	map41.invalidateSize(false);
+					}
+				}
+				else if(func=='customer_service')
+				{
+					$('#form131_calendar').fullCalendar('render');
+		    		$('#form132_calendar').fullCalendar('render');
+					if(typeof map129 != 'undefined')		    	
+			    		map129.invalidateSize(false);
+				}
+				else if(func=='projects')
+				{
+					$('#form104_calendar').fullCalendar('render');
+				}
+				else if(func=='sale_bills')
+				{
+					$('#form89_calendar').fullCalendar('render');
+				}
+				else if(func=='staff')
+				{
+					if(typeof map86 != 'undefined')		    	
+		    			map86.invalidateSize(false);
+		    		$('#form7_calendar').fullCalendar('render');
+		    		$('#form14_calendar').fullCalendar('render');
+				}
+				else if(func=='suppliers')
+				{
+					if(typeof map85 != 'undefined')		    	
+		    			map85.invalidateSize(false);
+				}
+		    },
+		    beforeActivate:function(event,ui)
+		    {
+		    	$(document).off('keydown');
+			}
+		}).css(
+		{
+			'min-height': '570px',
+			'overflow': 'auto'
+		});
+	});
 }
 
 function show_progress()
 {
 	$("#progress_ind").show();
 	$("#progress_bar").val(progress_value);
-   $('#progress_value').html(parseInt(progress_value) + '%');
-   progress_runner=setTimeout(show_progress,500);
+	$('#progress_value').html(parseInt(progress_value) + '%');
+	progress_runner=setTimeout(show_progress,500);
 }
 
 function hide_progress()
@@ -62,8 +125,58 @@ function hide_progress()
 	clearInterval(progress_runner);
 	$("#progress_ind").hide();
 	$("#progress_bar").val(0);
-   $('#progress_value').html('0 %');
-   progress_value=0;
+	$('#progress_value').html('0 %');
+	progress_value=0;
+}
+
+function add_questionnaires(func)
+{
+	var struct_data="<ques_struct>"+
+					"<id></id>"+
+					"<name></name>"+
+					"<display_name></display_name>"+
+					"<func></func>"+
+					"<status exact='yes'>active</status>"+										
+					"</ques_struct>";
+	fetch_requested_data('',struct_data,function(structs)
+	{
+		structs.forEach(function(struct)
+		{
+			var link="<li><a id='"+struct.name+"_link' href='#"+struct.name+"' onclick=\"initialize_questionnaires('"+struct.id+"','"+struct.name+"')\">"+struct.display_name+"</a></li>";	
+			var content="<div id='"+struct.name+"' class='function_detail'></div>";
+			var func_element=$("#"+struct.func+"_main");
+			//console.log(func_element);			
+			$("#"+struct.func+"_main").append(content);			
+			$("#"+struct.func+"_main").find('ul').first().append(link);
+		});
+		func();
+	});
+}
+
+function initialize_questionnaires(id,ques_name)
+{
+	var fields_data="<ques_fields>"+
+					"<id></id>"+
+					"<ques_id exact='yes'>"+id+"</ques_id>"+
+					"<name></name>"+
+					"<display_name></display_name>"+
+					"<type></type>"+
+					"<fcol></fcol>"+
+					"<forder></forder>"+
+					"</ques_fields>";
+	fetch_requested_data('',fields_data,function(fields)
+	{
+		///sort the results by forder
+		var content="<table>";
+		fields.forEach(function(field)
+		{
+			content+="<tr><td>";
+			content+=field.display_name+": <input type='"+field.type+"'>";
+			content+="</td></tr>";
+		});
+		content+="</table>";
+		$("#"+ques_name).append(content);
+	});
 }
 
 function set_grid_items()

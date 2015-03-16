@@ -54,9 +54,11 @@ function login_online(username,domain,pass)
 	ajax_with_custom_func("./ajax/login.php","domain="+domain+"&user="+username+"&pass="+pass,function(e)
 	{
 		login_status=e.responseText;
+		//console.log(login_status);
 		var session_xml=e.responseXML;
 		if(login_status=="failed_auth")
 		{
+			//console.log('failed because of db problem');					
 			document.getElementById("failed_auth").innerHTML="Login failed, try again!";
 			hide_loader();
 		}
@@ -72,7 +74,7 @@ function login_online(username,domain,pass)
 			}
 			ini_session(domain,username);
 			
-			console.log('setting session online');
+			//console.log('setting session online');
 			set_session_online(function()
 			{
 				set_session(session_vars);

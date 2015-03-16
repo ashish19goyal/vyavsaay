@@ -1,5 +1,4 @@
-<div id='customers_main' class='function_main'>
-		
+<div id='customers_main' class='function_main'>		
 		<ul>
 			<li><a id='form30_link' href='#form30' onclick='form30_header_ini(); form30_ini();' data-i18n='form.manage_customers'></a></li>
 			<li><a id='report5_link' href='#report5' onclick='report5_header_ini();' data-i18n='form.customer_account_balance'></a></li>
@@ -21,29 +20,4 @@
 			include "forms/form96.php";
 			include "forms/form125.php";		
 	?>		
-	
-	<script>
-	!function(){
-		$("#customers_main").tabs(
-		{
-			show:"slide",
-			activate:function(e, ui) 
-		    {
-		    	e.currentTarget.blur();
-				if(typeof map41 != 'undefined')
-				{
-				  	map41.invalidateSize(false);
-				}
-		    },
-		    beforeActivate:function(event,ui)
-		    {
-		    	$(document).off('keydown');
-			}
-		}).css(
-			{
-				'min-height': '570px',
-				'overflow': 'auto'
-			});
-		}();
-	</script>
 </div>

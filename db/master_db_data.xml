@@ -88,6 +88,86 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>ques_struct</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ques_struct</tablename>
+			<listname>status</listname>
+			<name>inactive</name>
+			<value>Inactive</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ques_struct</tablename>
+			<listname>status</listname>
+			<name>archived</name>
+			<value>Archived</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ques_fields</tablename>
+			<listname>type</listname>
+			<name>text</name>
+			<value>Text</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ques_fields</tablename>
+			<listname>type</listname>
+			<name>textarea</name>
+			<value>TextArea</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ques_fields</tablename>
+			<listname>type</listname>
+			<name>number</name>
+			<value>Number</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ques_fields</tablename>
+			<listname>type</listname>
+			<name>value list</name>
+			<value>Value list</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>sms</tablename>
+			<listname>status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>sms</tablename>
+			<listname>status</listname>
+			<name>sent</name>
+			<value>Sent</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>sms</tablename>
+			<listname>status</listname>
+			<name>cancelled</name>
+			<value>Cancelled</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>modal106</tablename>
 			<listname>type</listname>
 			<name>debit</name>

@@ -28,25 +28,4 @@
 			include "reports/report58.php";		
 	?>		
 	
-	<script>
-	!function(){
-		$("#finances_main").tabs(
-		{
-			show:"slide",
-			activate:function(e, ui) 
-		    {
-		    	e.currentTarget.blur();
-		    },
-		    beforeActivate:function(event,ui)
-		    {
-		    	$(document).off('keydown');
-			}
-		}).css(
-			{
-				'min-height': '570px',
-				'overflow': 'auto'
-			});
-		}();
-	</script>
-
 </div>

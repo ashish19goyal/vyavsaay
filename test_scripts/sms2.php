@@ -1,7 +1,7 @@
 <?php
 
-	$message_string="hi";
-	$to='9818005232';
+	$message_string=urlencode("kholuram ram ram!!");
+	$to='9643643785';
 //	$username=urlencode('ashish18goyal');
 //	$password=urlencode('FKXHD6');
 //	$sender_id=urlencode('VYAVSY');

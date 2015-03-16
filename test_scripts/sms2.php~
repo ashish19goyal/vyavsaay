@@ -1,7 +1,7 @@
 <?php
 
-	$message_string="hi";
-	$to='9818005232';
+	$message_string=urldecode("kholuram ram ram!!");
+	$to='9643643785';
 //	$username=urlencode('ashish18goyal');
 //	$password=urlencode('FKXHD6');
 //	$sender_id=urlencode('VYAVSY');
@@ -18,8 +18,6 @@
 	
 	curl_setopt($ch,CURLOPT_URL, $get_url);
 	curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-	//curl_setopt($ch,CURLOPT_POST,5);
-	//curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
 	
 	$result = curl_exec($ch);
 	curl_close($ch);
