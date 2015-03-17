@@ -822,9 +822,12 @@
 			<ques_id index='yes' type="BIGINT NOT NULL"></ques_id>
 			<name index='yes' type="VARCHAR(100)"></name>
 			<display_name index='yes' type="TEXT"></display_name>
+			<description index='no' type='TEXT'></description>
 			<type index='yes' type="VARCHAR(30)"></type><!--text/textarea/number/value list-->
+			<fvalues index='no' type="TEXT"></fvalues>
 			<fcol index='no' type='INT'></fcol>
 			<forder index='no' type='INT'></forder>
+			<freq index='yes' type='VARCHAR(15)'></freq><!--checked/unchecked-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</ques_fields>
 	<ques_data>

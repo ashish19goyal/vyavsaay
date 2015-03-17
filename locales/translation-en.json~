@@ -183,9 +183,9 @@
   	"delete_storage":"Delete Storage",
   	"selective_sync":"Selective Sync",
   	"manage_projects":"Manage Projects",
-  	"project_team":"Assign Project Team",
-  	"project_phases":"Create Project Phases",
-  	"project_tasks":"Assign Project Tasks",
+  	"project_team":"Project Team",
+  	"project_phases":"Project Phases",
+  	"project_tasks":"Project Tasks",
   	"data_access":"Manage Data Access",
   	"data_export":"Data Export",
   	"manage_sale_orders_multi_register":"Manage Sale Orders (multiple registers)",
@@ -231,6 +231,7 @@
   	"project_expenses":"Project Expenses",
   	"project_schedule":"Project Schedule",
   	"customer_profiling":"Customer Profiling",
-  	"supplier_profiling":"Supplier Profiling"
+  	"supplier_profiling":"Supplier Profiling",
+  	"",
   }
 }

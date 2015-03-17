@@ -812,9 +812,31 @@ function form139_import_template()
 * @formNo 140
 * @table expenses
 */
-function form139_import_template()
+function form140_import_template()
 {
 	var data_array=['id','name','type','owner','owner_type','description','location','area','floors','notes'];
 	my_array_to_csv(data_array);
 };
 
+/**
+* @form Create Questionnaire
+* @formNo 142
+* @table ques_fields
+*/
+function form142_import_template()
+{
+	var data_array=['id','ques_id','name','display_name','type','fvalues',
+	                'forder','freq','description'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage Questionnaire
+* @formNo 143
+* @table ques_struct
+*/
+function form143_import_template()
+{
+	var data_array=['id','name','display_name','func','description','status'];
+	my_array_to_csv(data_array);
+};

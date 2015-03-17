@@ -1920,6 +1920,17 @@
 			<tables>--suppliers--assets--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form141</name>
+			<display_name>manage_order</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--suppliers--assets--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>

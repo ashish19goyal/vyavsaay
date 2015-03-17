@@ -20,6 +20,7 @@
 			<li><a id='form112_link' href='#form112' onclick='form112_header_ini();' data-i18n='form.add_unbilled_items'></a></li>
 			<li><a id='form113_link' href='#form113' onclick='form113_header_ini(); form113_ini();' data-i18n='form.manage_unbilled_items'></a></li>
 			<li><a id='form118_link' href='#form118' onclick='form118_header_ini(); form118_ini();' data-i18n='form.create_bill'></a></li>
+			<li><a id='form141_link' href='#form141' onclick='form141_header_ini(); form141_ini();' data-i18n='form.manage_order'></a></li>
 		</ul>
 
 	<?php 
@@ -42,6 +43,7 @@
 			include "forms/form113.php";
 			include "forms/form118.php";
 			include "forms/form119.php";
+			include "forms/form141.php";
 	?>
 	
 </div>

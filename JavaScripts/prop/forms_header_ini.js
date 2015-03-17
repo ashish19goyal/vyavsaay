@@ -4865,3 +4865,84 @@ function form140_header_ini()
 		form140_ini();
 	});
 };
+
+/**
+ * @form Create Questionnaires
+ * @formNo 142
+ */
+function form142_header_ini()
+{
+	var fields=document.getElementById('form142_master');
+	
+	var name_filter=fields.elements[1];
+	var display_filter=fields.elements[2];
+	var grid_filter=fields.elements[3];
+	var status_filter=fields.elements[4];
+	fields.elements[5].value=get_new_key();
+	var save_button=fields.elements[6];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form142_create_form();
+	});
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form142_add_item();
+	});
+		
+	name_filter.value='';
+	display_filter.value='';
+	grid_filter.value='';
+	status_filter.value='active';
+	set_static_value_list('ques_struct','status',status_filter);
+	$(name_filter).focus();
+}
+
+
+/**
+ * @form Manage Questionnaire
+ * @formNo 143
+ */
+function form143_header_ini()
+{
+	var filter_fields=document.getElementById('form143_header');
+	var id_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	var display_filter=filter_fields.elements[2];
+	var status_filter=filter_fields.elements[3];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form143_ini();
+	});
+
+	var id_data="<ques_struct>" +
+			"<id></id>" +
+			"</ques_struct>";
+	var name_data="<ques_struct>" +
+			"<name></name>" +
+			"</ques_struct>";
+	var display_data="<ques_struct>" +
+			"<display_name></display_name>" +
+			"</ques_struct>";
+	
+	set_my_filter(id_data,id_filter);
+	set_my_filter(name_data,name_filter);
+	set_my_filter(display_data,display_filter);
+	set_static_filter('ques_data','status',status_filter);
+};

@@ -4447,3 +4447,38 @@ function form140_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create Questionnaire
+ * @param button
+ */
+function form142_delete_item(button)
+{
+	if(is_delete_access('form142'))
+	{
+		var ques_id=document.getElementById("form142_master").elements[5].value;
+		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[6].value;
+			
+		var data_xml="<ques_fields>" +
+				"<id>"+data_id+"</id>" +
+				"<ques_id>"+ques_id+"</ques_id>" +
+				"</ques_fields>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

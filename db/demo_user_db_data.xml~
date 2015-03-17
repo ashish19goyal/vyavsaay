@@ -1906,7 +1906,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--customers--facilities--</tables>
+			<tables>--customers--assets--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1918,6 +1918,39 @@
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--suppliers--assets--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form141</name>
+			<display_name>manage_order</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_orders--sale_order_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form142</name>
+			<display_name>create_questionnaire</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--ques_struct--ques_fields--ques_data--ques_fields_data</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form143</name>
+			<display_name>manage_questionnaire</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--ques_struct--ques_fields--ques_data--ques_fields_data</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -3587,6 +3620,39 @@
 			<username>master</username>
 			<element_id>form140</element_id>
 			<element_name>supplier_profiling</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form141</element_id>
+			<element_name>manage_order</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form142</element_id>
+			<element_name>create_questionnaires</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form143</element_id>
+			<element_name>manage_questionnaires</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

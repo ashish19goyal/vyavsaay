@@ -10636,3 +10636,127 @@ function form140_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create Questionnaire 
+ * @param button
+ */
+function form142_create_item(form)
+{
+	if(is_create_access('form142'))
+	{
+		var ques_id=document.getElementById("form142_master").elements[5].value;
+
+		var display_name=form.elements[0].value;
+		var description=form.elements[1].value;
+		var type=form.elements[2].value;
+		var values=form.elements[3].value;
+		var order=form.elements[4].value;
+		var name='field'+order;
+		var required='unchecked';
+		if(form.elements[5].checked)
+			required='checked';
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+					
+		var data_xml="<ques_fields>" +
+				"<id>"+data_id+"</id>" +
+				"<ques_id>"+ques_id+"</ques_id>" +
+				"<name>"+name+"</name>" +
+				"<display_name>"+display_name+"</display_name>" +
+				"<description>"+description+"</description>" +
+				"<type>"+type+"</type>" +
+				"<fvalues>"+values+"</fvalues>" +
+				"<forder>"+order+"</forder>" +
+				"<freq>"+required+"</freq>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</ques_fields>";	
+	
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}
+				
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[8];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form142_delete_item(del_button);
+		});
+
+		var save_button=form.elements[7];
+		$(save_button).off('click');
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Create questionnaire
+ * @param button
+ */
+function form142_create_form()
+{
+	if(is_create_access('form142'))
+	{
+		var master_form=document.getElementById("form142_master");
+		var name=master_form.elements[1].value;
+		var display_name=master_form.elements[2].value;
+		var func=master_form.elements[3].value;
+		var status=master_form.elements[4].value;
+		var data_id=master_form.elements[5].value;
+		var last_updated=get_my_time();
+					
+		var data_xml="<ques_struct>" +
+				"<id>"+data_id+"</id>" +
+				"<name>"+name+"</name>" +
+				"<display_name>"+display_name+"</display_name>" +
+				"<func>"+func+"</func>" +
+				"<status>"+status+"</status>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</ques_struct>";	
+		var activity_xml="<activity>" +
+				"<data_id>"+data_id+"</data_id>" +
+				"<tablename>ques_struct</tablename>" +
+				"<link_to>form143</link_to>" +
+				"<title>Created</title>" +
+				"<notes>Questionnaire "+display_name+"</notes>" +
+				"<updated_by>"+get_name()+"</updated_by>" +
+				"</activity>";
+
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}
+
+		var save_button=master_form.elements[6];
+		
+		$(save_button).off('click');
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form142_update_form();
+		});
+		
+		$("[id^='save_form142_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

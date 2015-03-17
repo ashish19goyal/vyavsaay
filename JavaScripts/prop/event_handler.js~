@@ -47,10 +47,9 @@ function default_load()
 				activities_lane_ini();
 			});
 			//document.getElementById('master_title').innerHTML=get_session_var('title');		
-					
+			hide_loader();					
 		});
 	}
-	hide_loader();
 }
 
 function init_functions()
@@ -155,30 +154,139 @@ function add_questionnaires(func)
 
 function initialize_questionnaires(id,ques_name)
 {
-		console.log('got here');
 	var fields_data="<ques_fields>"+
 					"<id></id>"+
 					"<ques_id exact='yes'>"+id+"</ques_id>"+
 					"<name></name>"+
 					"<display_name></display_name>"+
+					"<description></description>"+					
 					"<type></type>"+
+					"<fvalues></fvalues>"+
 					"<fcol></fcol>"+
 					"<forder></forder>"+
+					"<freq></freq>"+
 					"</ques_fields>";
 	fetch_requested_data('',fields_data,function(fields)
 	{
-		console.log('got here');
 		///sort the results by forder
-		var content="<table>";
+		var content="<form id='"+ques_name+"_ques_header'><fieldset>";
+		content+="<label><b>Questionnaire Id</b><br><input type='text' readonly='readonly'></label><label><b>Submitter</b><br><input type='text' readonly='readonly'></label><label><b>Submission Date</b><br><input type='text' readonly='readonly'></label>";
+		content+="<input type='button' value='See Previous Submissions' class='generic_icon' onclick='previous_questionnaires('"+id+"');'></fieldset></form><form class='questionnaire_form' id='"+ques_name+"_ques_main'><fieldset>";
+
+		fields.sort(function(a,b)
+		{
+			if(parseInt(a.forder)>parseInt(b.forder))
+			{	return 1;}
+			else 
+			{	return -1;}
+		});			
+				
 		fields.forEach(function(field)
 		{
-			content+="<tr><td>";
-			content+=field.display_name+": <input type='"+field.type+"'>";
-			content+="</td></tr>";
+			var required='';
+			if(field.freq=='checked')
+				required='required';			
+			var fcol=":";
+			content+="<br>";
+			var field_desc="";
+			if(field.description!="" && field.description!=null)
+			{
+				field_desc=" ("+field.description+")";
+			}
+
+			switch(field.type)
+			{
+				case 'text':content+="<label>"+field.display_name+field_desc+fcol+" <input id='field"+id+"_"+field.id+"' type='text' "+required+"></label>";
+							break;
+				case 'number':content+="<label>"+field.display_name+field_desc+fcol+" <input id='field"+id+"_"+field.id+"' type='number' step='any' "+required+"></label>";
+							break;
+				case 'value list':content+="<label>"+field.display_name+field_desc+fcol+" <select id='field"+id+"_"+field.id+"' "+required+">";
+								var values_array=field.fvalues.split(";");
+								values_array.forEach(function(fvalue)
+								{
+									content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+								});
+								content+="</select></label>";
+							break;
+				case 'textarea':content+="<label>"+field.display_name+field_desc+fcol+" <textarea id='field"+id+"_"+field.id+"' "+required+"></textarea></label>";
+							break;
+			}
+			content+="<br>";
 		});
-		content+="</table>";
-		$("#"+ques_name).append(content);
+		content+="<label><input type='submit' value='Submit' class='generic_icon'></label>";
+		content+="</fieldset></form>";
+		$("#"+ques_name).html(content);
+		
+		//function to submit the questionnaire
+		var ques_form=document.getElementById(ques_name+"_ques_main");
+		var ques_header=document.getElementById(ques_name+"_ques_header");
+		ques_header.elements[1].value=get_new_key();
+		ques_header.elements[2].value=get_name();
+		ques_header.elements[3].value=get_my_date();
+		
+		$(ques_form).off('submit');
+		$(ques_form).on('submit',function(event)
+		{
+			event.preventDefault();
+			
+			var data_id=ques_header.elements[1].value;
+			var submitter=ques_header.elements[2].value;
+			var sub_date=get_raw_time(ques_header.elements[3].value);
+			var last_updated=get_my_time();
+			
+			var ques_data="<ques_data>"+
+						"<id>"+data_id+"</id>"+
+						"<ques_struct_id>"+id+"</ques_struct_id>"+
+						"<submitter>"+submitter+"</submitter>"+
+						"<sub_date>"+sub_date+"</sub_date>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</ques_data>";
+			if(is_online())
+			{
+				server_create_simple(ques_data);
+			}
+			else
+			{
+				local_create_simple(ques_data);
+			}
+			
+			fields.forEach(function(field)
+			{
+				var field_value=document.getElementById("field"+id+"_"+field.id).value;
+				var field_data_id=get_new_key();
+				var field_data="<ques_fields_data>"+
+						"<id>"+field_data_id+"</id>"+
+						"<ques_id>"+data_id+"</ques_id>"+
+						"<field_id>"+field.id+"</field_id>"+
+						"<field_value>"+field_value+"</field_value>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</ques_fields_data>";
+				if(is_online())
+				{
+					server_create_simple(field_data);
+				}
+				else
+				{
+					local_create_simple(field_data);
+				}				
+			});
+			$(ques_form).off('submit');
+			$(ques_form).on('submit',function(event)
+			{
+				event.preventDefault();
+			});
+		});
 	});
+}
+
+function previous_questionnaires(id,ques_name)
+{
+	var ques_data="<ques_data>"+
+				"<id></id>"+
+				"<ques_struct_id exact='yes'>"+id+"</ques_struct_id>"+
+				"<submitter></submitter>"+
+				"<sub_date></sub_date>"+
+				"</ques_data>";
 }
 
 function set_grid_items()
@@ -902,6 +1010,12 @@ function import_data(form_name)
 		case 'form139':modal23_action(form139_import_template,form139_import);
 		break;
 		case 'form140':modal23_action(form140_import_template,form140_import);
+		break;
+		case 'form141':modal23_action(form141_import_template,form141_import);
+		break;
+		case 'form142':modal23_action(form142_import_template,form142_import);
+		break;
+		case 'form143':modal23_action(form143_import_template,form143_import);
 		break;
 	}
 }

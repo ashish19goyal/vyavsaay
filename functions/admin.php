@@ -13,6 +13,8 @@
 			<li><a id='form110_link' href='#form110' onclick='form110_header_ini(); form110_ini();' data-i18n='form.manage_reports'></a></li>
 			<li><a id='form111_link' href='#form111' onclick='form111_header_ini(); form111_ini();' data-i18n='form.create_reports'></a></li>
 			<li><a id='form123_link' href='#form123' onclick='form123_header_ini(); form123_ini();' data-i18n='form.mandatory_attributes'></a></li>
+			<li><a id='form142_link' href='#form142' onclick='form142_header_ini(); form142_ini();' data-i18n='form.create_questionnaire'></a></li>
+			<li><a id='form143_link' href='#form143' onclick='form143_header_ini(); form143_ini();' data-i18n='form.manage_questionnaire'></a></li>
 		</ul>
 
 	<?php 
@@ -27,6 +29,8 @@
 			include "forms/form105.php";
 			include "forms/form110.php";
 			include "forms/form111.php";
-			include "forms/form123.php";		
+			include "forms/form123.php";
+			include "forms/form142.php";
+			include "forms/form143.php";		
 	?>
 </div>

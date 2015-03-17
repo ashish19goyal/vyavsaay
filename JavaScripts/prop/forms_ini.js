@@ -5488,6 +5488,201 @@ function notifications_ini()
 }
 
 
+function initialize_questionnaires(id,ques_name)
+{
+	var fields_data="<ques_fields>"+
+					"<id></id>"+
+					"<ques_id exact='yes'>"+id+"</ques_id>"+
+					"<name></name>"+
+					"<display_name></display_name>"+
+					"<description></description>"+					
+					"<type></type>"+
+					"<fvalues></fvalues>"+
+					"<fcol></fcol>"+
+					"<forder></forder>"+
+					"<freq></freq>"+
+					"</ques_fields>";
+	fetch_requested_data('',fields_data,function(fields)
+	{
+		///sort the results by forder
+		var content="<form id='"+ques_name+"_ques_header'><fieldset>";
+		content+="<label><b>Questionnaire Id</b><br><input type='text' readonly='readonly'></label><label><b>Submitter</b><br><input type='text' readonly='readonly'></label><label><b>Submission Date</b><br><input type='text' readonly='readonly'></label>";
+		content+="<input type='button' value='Previous Submissions' class='generic_icon' onclick=\"previous_questionnaires('"+id+"','"+ques_name+"',0);\"></fieldset></form><form class='questionnaire_form' id='"+ques_name+"_ques_main'><fieldset>";
+
+		fields.sort(function(a,b)
+		{
+			if(parseInt(a.forder)>parseInt(b.forder))
+			{	return 1;}
+			else 
+			{	return -1;}
+		});			
+				
+		fields.forEach(function(field)
+		{
+			var required='';
+			if(field.freq=='checked')
+				required='required';			
+			var fcol=":";
+			content+="<br>";
+			var field_desc="";
+			if(field.description!="" && field.description!=null)
+			{
+				field_desc=" ("+field.description+")";
+			}
+
+			switch(field.type)
+			{
+				case 'text':content+="<label>"+field.display_name+field_desc+fcol+" <input id='field"+id+"_"+field.id+"' type='text' "+required+"></label>";
+							break;
+				case 'number':content+="<label>"+field.display_name+field_desc+fcol+" <input id='field"+id+"_"+field.id+"' type='number' step='any' "+required+"></label>";
+							break;
+				case 'value list':content+="<label>"+field.display_name+field_desc+fcol+" <select id='field"+id+"_"+field.id+"' "+required+">";
+								var values_array=field.fvalues.split(";");
+								values_array.forEach(function(fvalue)
+								{
+									content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+								});
+								content+="</select></label>";
+							break;
+				case 'textarea':content+="<label>"+field.display_name+field_desc+fcol+" <textarea id='field"+id+"_"+field.id+"' "+required+"></textarea></label>";
+							break;
+			}
+			content+="<br>";
+		});
+		content+="<label><input type='submit' value='Submit' class='generic_icon'></label>";
+		content+="</fieldset></form>";
+		$("#"+ques_name).html(content);
+		
+		//function to submit the questionnaire
+		var ques_form=document.getElementById(ques_name+"_ques_main");
+		var ques_header=document.getElementById(ques_name+"_ques_header");
+		ques_header.elements[1].value=get_new_key();
+		ques_header.elements[2].value=get_name();
+		ques_header.elements[3].value=get_my_date();
+		
+		$(ques_form).off('submit');
+		$(ques_form).on('submit',function(event)
+		{
+			event.preventDefault();
+			
+			var data_id=ques_header.elements[1].value;
+			var submitter=ques_header.elements[2].value;
+			var sub_date=get_raw_time(ques_header.elements[3].value);
+			var last_updated=get_my_time();
+			
+			var ques_data="<ques_data>"+
+						"<id>"+data_id+"</id>"+
+						"<ques_struct_id>"+id+"</ques_struct_id>"+
+						"<submitter>"+submitter+"</submitter>"+
+						"<sub_date>"+sub_date+"</sub_date>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</ques_data>";
+			if(is_online())
+			{
+				server_create_simple(ques_data);
+			}
+			else
+			{
+				local_create_simple(ques_data);
+			}
+			
+			fields.forEach(function(field)
+			{
+				var field_value=document.getElementById("field"+id+"_"+field.id).value;
+				var field_data_id=get_new_key();
+				var field_data="<ques_fields_data>"+
+						"<id>"+field_data_id+"</id>"+
+						"<ques_id>"+data_id+"</ques_id>"+
+						"<field_id>"+field.id+"</field_id>"+
+						"<field_value>"+field_value+"</field_value>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</ques_fields_data>";
+				if(is_online())
+				{
+					server_create_simple(field_data);
+				}
+				else
+				{
+					local_create_simple(field_data);
+				}				
+			});
+			$(ques_form).off('submit');
+			$(ques_form).on('submit',function(event)
+			{
+				event.preventDefault();
+			});
+		});
+	});
+}
+
+function previous_questionnaires(id,ques_name,start_index)
+{
+	show_loader();
+	var ques_data="<ques_data count='25' start_index='"+start_index+"'>"+
+				"<id></id>"+
+				"<ques_struct_id exact='yes'>"+id+"</ques_struct_id>"+
+				"<submitter></submitter>"+
+				"<sub_date></sub_date>"+
+				"</ques_data>";
+	fetch_requested_data('',ques_data,function(questionnaires)
+	{
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		var content="<table class='rwd-table'>"+
+					"<thead><tr>"+
+					"<th>Id</th>"+
+					"<th>Submitter</th>"+
+					"<th>Submission Date</th>"+
+					"</tr></thead><tbody id='"+ques_name+"_body'></tbody></table>"+
+					"<div class='form_nav'>"+
+					"<img src='./images/previous.png' id='"+ques_name+"_prev' class='prev_icon' onclick=onclick=\"previous_questionnaires('"+id+"','"+ques_name+"',"+prev_index+");\">"+
+					"<img src='./images/next.png' id='"+ques_name+"_next' class='next_icon' onclick=onclick=\"previous_questionnaires('"+id+"','"+ques_name+"',"+next_index+");\">"+
+					"</div>";
+
+		$("#"+ques_name).html(content);
+		var tbody=document.getElementById(ques_name+'_body');
+		var next_element=document.getElementById(ques_name+'_next');
+		var prev_element=document.getElementById(ques_name+'_prev');
+
+		if(questionnaires.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(start_index<1)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+				
+		questionnaires.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<form id='ques_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Id'>";
+						rowsHTML+=result.id;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Submitter'>";
+						rowsHTML+=result.submitter;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Submission Date'>";
+						rowsHTML+=get_my_past_date(result.sub_date);
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$(tbody).append(rowsHTML);
+		});
+		
+		hide_loader();
+	});
+}
+
 
 function activities_ini() 
 {
@@ -5979,8 +6174,7 @@ function form79_ini()
 	{
 		results.forEach(function(result)
 		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
+			var rowsHTML="<tr>";
 				rowsHTML+="<form id='form79_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Task'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form79_"+result.id+"' value='"+result.name+"'>";
@@ -12743,4 +12937,216 @@ function form140_ini()
 	
 		hide_loader();
 	});	
+}
+
+/**
+ * @form Create Questionnaire
+ * @formNo 142
+ * @Loading light
+ */
+function form142_ini()
+{
+	var data_id=$("#form142_link").attr('data_id');
+	if(data_id==null)
+		data_id="";	
+	
+	$('#form142_body').html("");
+	
+	if(data_id!="")
+	{
+		show_loader();
+		var struct_columns="<ques_struct>" +
+				"<id>"+data_id+"</id>" +
+				"<name></name>" +
+				"<display_name></display_name>" +
+				"<func></func>" +
+				"<description></description>" +
+				"<status></status>" +
+				"</ques_struct>";
+		var field_column="<ques_fields>" +
+				"<id></id>" +
+				"<ques_id exact='yes'>"+data_id+"</ques_id>" +
+				"<name></name>" +
+				"<display_name></display_name>"+
+				"<description></description>" +
+				"<type></type>" +
+				"<fvalues></fvalues>" +
+				"<fcol></fcol>" +
+				"<forder></forder>" +
+				"<freq></freq>" +
+				"</ques_fields>";
+	
+		fetch_requested_data('',struct_columns,function(struct_results)
+		{
+			var filter_fields=document.getElementById('form142_master');
+			
+			for (var i in struct_results)
+			{
+				filter_fields.elements[1].value=struct_results[i].name;
+				filter_fields.elements[2].value=struct_results[i].display_name;
+				filter_fields.elements[3].value=struct_results[i].func;
+				filter_fields.elements[4].value=struct_results[i].status;
+				filter_fields.elements[5].value=struct_results[i].id;
+				var save_button=filter_fields.elements[6];
+				
+				$(save_button).off('click');
+				$(save_button).on("click", function(event)
+				{
+					event.preventDefault();
+					form142_update_form();
+				});
+						
+				break;
+			}
+		
+			fetch_requested_data('',field_column,function(results)
+			{				
+				results.forEach(function(result)
+				{
+					var rowsHTML="";
+					var id=result.id;
+					rowsHTML+="<tr>";
+					rowsHTML+="<form id='form142_"+id+"'></form>";
+						rowsHTML+="<td data-th='Name'>";
+							rowsHTML+="<textarea readonly='readonly' form='form142_"+id+"'>"+result.display_name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Description'>";
+							rowsHTML+="<textarea readonly='readonly' form='form142_"+id+"'>"+result.description+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Type'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form142_"+id+"' value='"+result.type+"'>";
+							if(result.type=='value list')							
+								rowsHTML+="<br>Values: <input type='text' readonly='readonly' form='form142_"+id+"' value='"+result.fvalues+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Order'>";
+							rowsHTML+="<input type='number' readonly='readonly' form='form142_"+id+"' value='"+result.forder+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Required'>";
+							rowsHTML+="<input type='checkbox' readonly='readonly' form='form142_"+id+"' "+result.freq+">";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form142_"+id+"' value='"+id+"'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+				
+					$('#form142_body').append(rowsHTML);
+					$('textarea').autosize();
+				});				
+				hide_loader();
+			});
+		});
+	}
+}
+
+/**
+ * @form Manage Questionnaire
+ * @formNo 143
+ * @Loading light
+ */
+function form143_ini()
+{
+	show_loader();
+	var fid=$("#form143_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form143_header');
+	
+	//populating form 
+	if(fid==="")
+		fid=filter_fields.elements[0].value;
+	var fname=filter_fields.elements[1].value;
+	var fdisplay=filter_fields.elements[2].value;
+	var fstatus=filter_fields.elements[3].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form143_index');
+	var prev_element=document.getElementById('form143_prev');
+	var next_element=document.getElementById('form143_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<ques_struct count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<name>"+fname+"</name>" +
+			"<display_name>"+fdisplay+"</display_name>" +
+			"<status>"+fstatus+"</status>" +
+			"</ques_struct>";
+
+	$('#form143_body').html("");
+
+	fetch_requested_data('form143',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form143_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Id'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form143_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form143_"+result.id+"'>"+result.name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Display Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form143_"+result.id+"'>"+result.display_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form143_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='button' class='edit_icon' form='form143_"+result.id+"' title='View Questionnaire'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form143_"+result.id+"' title='Save'>";
+					rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+			
+			$('#form143_body').append(rowsHTML);
+			var fields=document.getElementById("form143_"+result.id);
+			var edit_button=fields.elements[4];
+			$(edit_button).on("click", function(event)
+			{
+				event.preventDefault();
+				element_display(result.id,'form142');
+			});
+			$(fields).on('submit',function(event)
+			{
+				event.preventDefault();
+				form143_update_item(fields);
+			});						
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		longPressEditable($('.dblclick_editable'));
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'questionnaires');
+		});
+		hide_loader();
+	});
 }

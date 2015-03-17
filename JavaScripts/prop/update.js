@@ -7054,3 +7054,53 @@ function form140_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create questionnaire
+ * @param button
+ */
+function form142_update_form()
+{
+	if(is_update_access('form142'))
+	{
+		var master_form=document.getElementById("form142_master");
+		var name=master_form.elements[1].value;
+		var display_name=master_form.elements[2].value;
+		var func=master_form.elements[3].value;
+		var status=master_form.elements[4].value;
+		var data_id=master_form.elements[5].value;
+		var last_updated=get_my_time();
+					
+		var data_xml="<ques_struct>" +
+				"<id>"+data_id+"</id>" +
+				"<name>"+name+"</name>" +
+				"<display_name>"+display_name+"</display_name>" +
+				"<func>"+func+"</func>" +
+				"<status>"+status+"</status>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</ques_struct>";	
+		var activity_xml="<activity>" +
+				"<data_id>"+data_id+"</data_id>" +
+				"<tablename>ques_struct</tablename>" +
+				"<link_to>form143</link_to>" +
+				"<title>Updated</title>" +
+				"<notes>Questionnaire "+display_name+"</notes>" +
+				"<updated_by>"+get_name()+"</updated_by>" +
+				"</activity>";
+
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		
+		$("[id^='save_form142_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

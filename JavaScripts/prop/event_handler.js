@@ -47,10 +47,9 @@ function default_load()
 				activities_lane_ini();
 			});
 			//document.getElementById('master_title').innerHTML=get_session_var('title');		
-					
+			hide_loader();					
 		});
 	}
-	hide_loader();
 }
 
 function init_functions()
@@ -153,31 +152,6 @@ function add_questionnaires(func)
 	});
 }
 
-function initialize_questionnaires(id,ques_name)
-{
-	var fields_data="<ques_fields>"+
-					"<id></id>"+
-					"<ques_id exact='yes'>"+id+"</ques_id>"+
-					"<name></name>"+
-					"<display_name></display_name>"+
-					"<type></type>"+
-					"<fcol></fcol>"+
-					"<forder></forder>"+
-					"</ques_fields>";
-	fetch_requested_data('',fields_data,function(fields)
-	{
-		///sort the results by forder
-		var content="<table>";
-		fields.forEach(function(field)
-		{
-			content+="<tr><td>";
-			content+=field.display_name+": <input type='"+field.type+"'>";
-			content+="</td></tr>";
-		});
-		content+="</table>";
-		$("#"+ques_name).append(content);
-	});
-}
 
 function set_grid_items()
 {
@@ -900,6 +874,12 @@ function import_data(form_name)
 		case 'form139':modal23_action(form139_import_template,form139_import);
 		break;
 		case 'form140':modal23_action(form140_import_template,form140_import);
+		break;
+		case 'form141':modal23_action(form141_import_template,form141_import);
+		break;
+		case 'form142':modal23_action(form142_import_template,form142_import);
+		break;
+		case 'form143':modal23_action(form143_import_template,form143_import);
 		break;
 	}
 }

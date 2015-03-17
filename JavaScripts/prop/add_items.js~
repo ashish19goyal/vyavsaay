@@ -6245,7 +6245,7 @@ function form134_add_machine()
 				rowsHTML+="<textarea form='form134_machine_"+id+"' required></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Closing Notes'>";
-				rowsHTML+="<textarea form='form134_machine_"+id+"' required></textarea>";
+				rowsHTML+="<textarea form='form134_machine_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
 				rowsHTML+="<input type='text' form='form134_machine_"+id+"' value='open' required>";
@@ -6918,6 +6918,85 @@ function form140_add_item()
 		});
 
 		set_static_value_list('assets','type',type_filter);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Questionnaire
+ * @formNo 142
+ */
+function form142_add_item()
+{
+	if(is_create_access('form142'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form142_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Name'>";
+				rowsHTML+="<input type='text' required form='form142_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Description'>";
+				rowsHTML+="<textarea form='form142_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Type'>";
+				rowsHTML+="<input type='text' required form='form142_"+id+"'>";
+				rowsHTML+="<br><label>Values: <textarea type='text' form='form142_"+id+"'></textarea></label>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Order'>";
+				rowsHTML+="<input type='number' required form='form142_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Required'>";
+				rowsHTML+="<input type='checkbox' form='form142_"+id+"'>";			
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form142_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form142_"+id+"' id='save_form142_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form142_"+id+"' id='delete_form142_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form142_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form142_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form142_"+id);
+		var name_filter=fields.elements[0];
+		var type_filter=fields.elements[2];
+		var values_filter=fields.elements[3];
+		var save_button=fields.elements[7];
+
+		$(name_filter).focus();
+		$(values_filter).hide();		
+				
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form142_create_item(fields);
+		});
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form142_add_item();
+		});			
+		
+		set_static_value_list('ques_fields','type',type_filter);
+				
+		$(type_filter).on('blur',function(event)
+		{
+			if(type_filter.value=='value list')
+			{
+				$(values_filter).show();
+			}
+			else
+			{
+				$(values_filter).hide();
+			}
+		});		
 	}
 	else
 	{
