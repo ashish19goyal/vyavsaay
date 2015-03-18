@@ -722,6 +722,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report60</name>
+			<display_name>trial_balance</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -3641,7 +3651,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form142</element_id>
-			<element_name>create_questionnaires</element_name>
+			<element_name>create_questionnaire</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3652,7 +3662,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form143</element_id>
-			<element_name>manage_questionnaires</element_name>
+			<element_name>manage_questionnaire</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

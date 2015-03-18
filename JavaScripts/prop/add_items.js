@@ -149,7 +149,7 @@ function form10_add_item()
 		var offer_filter=fields.elements[8];
 		var id_filter=fields.elements[9];
 		var free_service_filter=fields.elements[12];
-		var save_button=fields.elementd[10];
+		var save_button=fields.elements[10];
 		
 		$(save_button).on("click", function(event)
 		{

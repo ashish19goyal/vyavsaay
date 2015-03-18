@@ -1,8 +1,7 @@
-<div id='report58' class='function_detail'>
-	<form id='report58_header'>
+<div id='report60' class='function_detail'>
+	<form id='report60_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			<label>Account<br><input type='text' required></label>
 			<label>Start Date<br><input type='text' required></label>
 			<label>End Date<br><input type='text' required></label>
 			<input type='submit' value='Refresh' class='generic_icon'>
@@ -13,14 +12,14 @@
 	<table class='rwd-table'>
 		<thead>
 			<tr>
-				<th>Date</th>
+				<th>Account</th>
 				<th>Particulars</th>
 				<th>Debit</th>
 				<th>Credit</th>
 				<th>Balance</th>
 			</tr>
 		</thead>
-		<tbody id='report58_body'>
+		<tbody id='report60_body'>
 		</tbody>
 	</table>
 </div>

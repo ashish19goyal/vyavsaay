@@ -1112,8 +1112,8 @@ function report58_header_ini()
 {	
 	var form=document.getElementById('report58_header');
 	var account_filter=form.elements[1];
-//	var start_filter=form.elements[2];
-//	var end_filter=form.elements[3];
+	var start_filter=form.elements[2];
+	var end_filter=form.elements[3];
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -1127,10 +1127,32 @@ function report58_header_ini()
 			"</accounts>";
 	
 	set_my_filter(account_data,account_filter);
-/*		
+		
 	$(start_filter).datepicker();
 	$(start_filter).val(get_my_past_date((get_my_time()-86400000)));
 	$(end_filter).datepicker();
-	$(end_filter).val(get_my_past_date(get_my_time()));
-*/
+	$(end_filter).val(get_my_date());
+}
+
+/**
+ * @reportNo 60
+ * @report Trial Balance
+ */
+function report60_header_ini()
+{	
+	var form=document.getElementById('report60_header');
+	var start_filter=form.elements[1];
+	var end_filter=form.elements[2];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report60_ini();
+	});
+		
+	$(start_filter).datepicker();
+	$(start_filter).val(get_my_past_date((get_my_time()-86400000)));
+	$(end_filter).datepicker();
+	$(end_filter).val(get_my_date());
 }

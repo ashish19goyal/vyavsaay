@@ -232,6 +232,7 @@
   	"project_schedule":"Project Schedule",
   	"customer_profiling":"Customer Profiling",
   	"supplier_profiling":"Supplier Profiling",
-  	"",
+  	"create_questionnaire":"Create Questionnaire",
+  	"manage_questionnaire":"Manage Questionnaire"
   }
 }

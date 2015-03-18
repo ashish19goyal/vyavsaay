@@ -12,6 +12,7 @@
 			<li><a id='form93_link' href='#form93' onclick='form93_header_ini(); form93_ini();' data-i18n='form.manage_loans'></a></li>
 			<li><a id='report53_link' href='#report53' onclick='report53_header_ini();' data-i18n='form.sales_tax'></a></li>
 			<li><a id='report58_link' href='#report58' onclick='report58_header_ini();' data-i18n='form.ledger'></a></li>
+			<li><a id='report60_link' href='#report60' onclick='report60_header_ini();' data-i18n='form.trial_balance'></a></li>
 		</ul>
 
 	<?php 
@@ -25,7 +26,8 @@
 			include "forms/form71.php";
 			include "forms/form93.php";
 			include "reports/report53.php";
-			include "reports/report58.php";		
+			include "reports/report58.php";
+			include "reports/report60.php";		
 	?>		
 	
 </div>

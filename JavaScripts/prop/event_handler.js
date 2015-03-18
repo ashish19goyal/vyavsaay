@@ -50,6 +50,10 @@ function default_load()
 			hide_loader();					
 		});
 	}
+	else
+	{
+		hide_loader();
+	}
 }
 
 function init_functions()

@@ -5666,14 +5666,14 @@ function previous_questionnaires(id,ques_name,start_index)
 			var rowsHTML="<tr>";
 				rowsHTML+="<form id='ques_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Id'>";
-						rowsHTML+=result.id;
+						rowsHTML+="<a onclick=\"filled_questionnaires('"+id+"','"+ques_name+"','"+result.id+"','"+result.submitter+"','"+result.sub_date+"')\">"+result.id+"</a>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Submitter'>";
 						rowsHTML+=result.submitter;
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Submission Date'>";
 						rowsHTML+=get_my_past_date(result.sub_date);
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 			
 			$(tbody).append(rowsHTML);
@@ -5683,6 +5683,80 @@ function previous_questionnaires(id,ques_name,start_index)
 	});
 }
 
+function filled_questionnaires(struct_id,ques_name,ques_id,submitter,sub_date)
+{
+	var fields_data="<ques_fields>"+
+					"<id></id>"+
+					"<ques_id exact='yes'>"+struct_id+"</ques_id>"+
+					"<name></name>"+
+					"<display_name></display_name>"+
+					"<description></description>"+					
+					"<type></type>"+
+					"<fvalues></fvalues>"+
+					"<forder></forder>"+
+					"<freq></freq>"+
+					"</ques_fields>";
+	fetch_requested_data('',fields_data,function(fields)
+	{
+		var field_value_data="<ques_fields_data>"+
+							"<id></id>"+
+							"<ques_id exact='yes'>"+ques_id+"</ques_id>"+
+							"<field_id></field_id>"+
+							"<field_value></field_value>"+
+							"</ques_fields_data>";
+
+		fetch_requested_data('',field_value_data,function(field_values)
+		{
+			var content="<form id='"+ques_name+"_ques_header'><fieldset>";
+			content+="<label><b>Questionnaire Id</b><br><input type='text' value='"+ques_id+"' readonly='readonly'></label>"+
+					"<label><b>Submitter</b><br><input type='text' value='"+submitter+"' readonly='readonly'></label>"+
+					"<label><b>Submission Date</b><br><input type='text' value='"+get_my_past_date(sub_date)+"' readonly='readonly'></label>";
+			content+="<input type='button' value='Previous Submissions' class='generic_icon' onclick=\"previous_questionnaires('"+struct_id+"','"+ques_name+"',0);\"></fieldset></form><form class='questionnaire_form' id='"+ques_name+"_ques_main'><fieldset>";
+	
+			fields.sort(function(a,b)
+			{
+				if(parseInt(a.forder)>parseInt(b.forder))
+				{	return 1;}
+				else 
+				{	return -1;}
+			});
+	
+			fields.forEach(function(field)
+			{
+				var field_value="";
+				for(var i in field_values)
+				{
+					if(field_values[i].field_id==field.id)
+					{
+						field_value=field_values[i].field_value;
+						break;
+					}
+				}
+				var fcol=":";
+				content+="<br>";
+				var field_desc="";
+				if(field.description!="" && field.description!=null)
+				{
+					field_desc=" ("+field.description+")";
+				}
+				
+				switch(field.type)
+				{
+					case 'text':content+="<label>"+field.display_name+field_desc+fcol+" <input value='"+field_value+"' type='text' readonly='readonly'></label>";
+								break;
+					case 'number':content+="<label>"+field.display_name+field_desc+fcol+" <input value='"+field_value+"' type='number' readonly='readonly'></label>";
+								break;
+					case 'value list':content+="<label>"+field.display_name+field_desc+fcol+" <input type='text' value='"+field_value+"' readonly='readonly'></label>";
+								break;
+					case 'textarea':content+="<label>"+field.display_name+field_desc+fcol+" <textarea readonly='readonly'>"+field_value+"</textarea></label>";
+								break;
+				}
+			});
+			content+="</fieldset></form>";
+			$("#"+ques_name).html(content);			
+		});		
+	});
+}
 
 function activities_ini() 
 {

@@ -12,6 +12,7 @@
 			<li><a id='form93_link' href='#form93' onclick='form93_header_ini(); form93_ini();' data-i18n='form.manage_loans'></a></li>
 			<li><a id='report53_link' href='#report53' onclick='report53_header_ini();' data-i18n='form.sales_tax'></a></li>
 			<li><a id='report58_link' href='#report58' onclick='report58_header_ini();' data-i18n='form.ledger'></a></li>
+			<li><a id='report60_link' href='#report60' onclick='report60_header_ini();' data-i18n='form.trial_balance'></a></li>
 		</ul>
 
 	<?php 
@@ -28,25 +29,4 @@
 			include "reports/report58.php";		
 	?>		
 	
-	<script>
-	!function(){
-		$("#finances_main").tabs(
-		{
-			show:"slide",
-			activate:function(e, ui) 
-		    {
-		    	e.currentTarget.blur();
-		    },
-		    beforeActivate:function(event,ui)
-		    {
-		    	$(document).off('keydown');
-			}
-		}).css(
-			{
-				'min-height': '570px',
-				'overflow': 'auto'
-			});
-		}();
-	</script>
-
 </div>

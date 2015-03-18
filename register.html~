@@ -76,7 +76,7 @@
 							<option value="ca">CA or CA firm</option>
 							<option value="events">Event Management (Marriages,Parties,Performances)</option>
 							<option value="it">IT services & consulting</option>
-							<option value="manufacturing">Manufacturing</option>
+							<option value="manufacture">Manufacturing</option>
 						</select>
               		<button class="btn btn-info btn-lg btn--highlight" id="submit-btn" name="submit-btn" type="submit">Register</button>
 					</form>                
