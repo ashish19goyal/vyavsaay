@@ -6,13 +6,13 @@ function responsive_tabs()
 		{
 			tabsToAccordions();
 			hide_unreadable_elements();
-			setup_grid_display_accordion();
+			//setup_grid_display_accordion();
 		}
 		else 
 		{
 			accordionsToTabs();
 			hide_unreadable_elements();
-			setup_grid_display_tabs();
+			//setup_grid_display_tabs();
 		}
 	});
 	if($(window).width()<=550)
