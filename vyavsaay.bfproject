@@ -2,7 +2,8 @@ c2e.convert_special: 0
 e2c.convert_num: 0
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/responsive_menu.js:0:0:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/event_handler.js:1076:527:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/CSS/theme1.css:16832:16764:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/CSS/theme1.css:18095:17548:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/CSS/jquery-ui.css:4580:3996:1:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -14,7 +15,7 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/CSS
 wrap_text_default: 0
 bookmarks_filename_mode: 0
 ssearch_text: questionnaire
@@ -45,8 +46,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form100.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/responsive_menu.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/functions/admin.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/functions/customer_service.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/functions/customers.php
@@ -68,13 +67,15 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/functions/staf
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/functions/store.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/functions/suppliers.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/event_handler.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/grids.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/vyavsaay.appcache
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/appic/css/font-awesome.css
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/appic/css/style.css
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/CSS/theme1.css
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/header.html
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/index.html
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/grids.php
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/main.php
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/CSS/jquery-ui.css
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/CSS
 spell_check_default: 1
