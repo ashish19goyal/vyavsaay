@@ -6,7 +6,7 @@ CACHE MANIFEST
 #Avoid using a continually-updating timestamp or random string to force updates every time. 
 #The manifest is checked twice during an update,
 #once at the start and once after all cached files have been updated.
-#last updated on 15th Feb 2015
+#last updated on 20th March 2015
 #these files will be cached
 CACHE:
 case-studies.html
