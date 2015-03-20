@@ -2000,6 +2000,17 @@
 		</row>
 		<row>
 			<username>master</username>
+			<element_id>activities</element_id>
+			<element_name>activities</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
 			<element_id>report1</element_id>
 			<element_name>signage_changes</element_name>
 			<status>active</status>

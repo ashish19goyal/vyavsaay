@@ -3,37 +3,40 @@
  */
 function activities_lane_ini()
 {
-	var columns="<activities count='10'>" +
-		"<title></title>" +
-		"<link_to></link_to>" +
-		"<data_id></data_id>" +
-		"<notes></notes>" +
-		"<updated_by></updated_by>" +
-		"<user_display exact='yes'>yes</user_display>" +
-		"<last_updated></last_updated>" +
-		"</activities>";
-	
-	fetch_requested_data('',columns,function(activities)
+	if(is_create_access('activities'))
 	{
-		var result_html="";
-		for(var i in activities)
+		var columns="<activities count='10'>" +
+			"<title></title>" +
+			"<link_to></link_to>" +
+			"<data_id></data_id>" +
+			"<notes></notes>" +
+			"<updated_by></updated_by>" +
+			"<user_display exact='yes'>yes</user_display>" +
+			"<last_updated></last_updated>" +
+			"</activities>";
+		
+		fetch_requested_data('',columns,function(activities)
 		{
-			result_html+="<div class='activity_detail'>" +
-						activities[i].title +
-						"</br><a onclick=\"" +
-						"element_display('"+activities[i].data_id +
-						"','"+activities[i].link_to+
-						"');\">"+activities[i].notes+"</a>" +
-						"<div class='activity_log'>By:" +
-						activities[i].updated_by +
-						" @ " +
-						get_formatted_time(activities[i].last_updated) +
-						"</div>" +
-						"</div>";
-		}
-		$("#activity_lane").html(result_html);
-	});
-	setTimeout(activities_lane_ini,100000);	
+			var result_html="";
+			for(var i in activities)
+			{
+				result_html+="<div class='activity_detail'>" +
+							activities[i].title +
+							"</br><a onclick=\"" +
+							"element_display('"+activities[i].data_id +
+							"','"+activities[i].link_to+
+							"');\">"+activities[i].notes+"</a>" +
+							"<div class='activity_log'>By:" +
+							activities[i].updated_by +
+							" @ " +
+							get_formatted_time(activities[i].last_updated) +
+							"</div>" +
+							"</div>";
+			}
+			$("#activity_lane").html(result_html);
+		});
+		setTimeout(activities_lane_ini,100000);
+	}
 }
 
 /**

@@ -234,6 +234,7 @@
   	"supplier_profiling":"Supplier Profiling",
   	"create_questionnaire":"Create Questionnaire",
   	"manage_questionnaire":"Manage Questionnaire",
-  	"trial_balance":"Trial Balance"
+  	"trial_balance":"Trial Balance",
+  	"activities":"Activities"
   }
 }

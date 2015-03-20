@@ -5758,40 +5758,47 @@ function filled_questionnaires(struct_id,ques_name,ques_id,submitter,sub_date)
 	});
 }
 
-function activities_ini() 
+function activities_ini()
 {
-	show_loader();
-	var columns="<activities count='100'>" +
-		"<title></title>" +
-		"<link_to></link_to>" +
-		"<data_id></data_id>" +
-		"<notes></notes>" +
-		"<updated_by></updated_by>" +
-		"<user_display>yes</user_display>" +
-		"<last_updated></last_updated>" +
-		"</activities>";
-	
-	fetch_requested_data('',columns,function(activities)
+	if(is_create_access('activities'))
 	{
-		var result_html="";
-		for(var i in activities)
+		show_loader();
+		var columns="<activities count='100'>" +
+			"<title></title>" +
+			"<link_to></link_to>" +
+			"<data_id></data_id>" +
+			"<notes></notes>" +
+			"<updated_by></updated_by>" +
+			"<user_display>yes</user_display>" +
+			"<last_updated></last_updated>" +
+			"</activities>";
+		
+		fetch_requested_data('',columns,function(activities)
 		{
-			result_html+="<div class='all_activity_detail'><b>" +
-						activities[i].title +
-						"</b></br><a onclick=\"" +
-						"element_display('"+activities[i].data_id +
-						"','"+activities[i].link_to+
-						"');\">"+activities[i].notes+"</a>" +
-						"<div class='all_activity_log'>By:" +
-						activities[i].updated_by +
-						" @ " +
-						get_formatted_time(activities[i].last_updated) +
-						"</div>" +
-						"</div>";
-		}
-		$("#all_activity_lane").html(result_html);
-		hide_loader();
-	});
+			var result_html="";
+			for(var i in activities)
+			{
+				result_html+="<div class='all_activity_detail'><b>" +
+							activities[i].title +
+							"</b></br><a onclick=\"" +
+							"element_display('"+activities[i].data_id +
+							"','"+activities[i].link_to+
+							"');\">"+activities[i].notes+"</a>" +
+							"<div class='all_activity_log'>By:" +
+							activities[i].updated_by +
+							" @ " +
+							get_formatted_time(activities[i].last_updated) +
+							"</div>" +
+							"</div>";
+			}
+			$("#all_activity_lane").html(result_html);
+			hide_loader();
+		});
+	}
+	else 
+	{
+		$("#modal2").dialog("open");
+	}
 }
 
 function search_ini()
