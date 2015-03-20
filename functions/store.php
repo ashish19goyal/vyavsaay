@@ -1,4 +1,4 @@
-<div id='store_main' class='function_main'>
+<div id='store_main' class='tabs function_main'>
 	<ul>
 		<li><a id='form5_link' href='#form5' onclick='form5_header_ini(); form5_ini();' data-i18n='form.manage_assets'></a></li>
 		<li><a id='form109_link' href='#form109' onclick='form109_header_ini(); form109_ini();' data-i18n='form.asset_attributes'></a></li>

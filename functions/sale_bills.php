@@ -1,5 +1,5 @@
-<div id='sale_bills_main' class='function_main'>
-	
+<div id='sale_bills_main' class='function_main tabs'>
+
 		<ul>
 			<li><a id='form10_link' href='#form10' onclick='form10_header_ini(); form10_ini();' data-i18n='form.service_bill'></a></li>
 			<li><a id='form12_link' href='#form12' onclick='form12_header_ini(); form12_ini();' data-i18n='form.product_bill'></a></li>
@@ -29,6 +29,7 @@
 			include "forms/form72.php";
 			include "forms/form42.php";
 			include "forms/form91.php";
+			include "forms/form119.php";
 			include "forms/form92.php";
 			include "forms/form69.php";
 			include "forms/form70.php";		
@@ -42,8 +43,6 @@
 			include "forms/form112.php";
 			include "forms/form113.php";
 			include "forms/form118.php";
-			include "forms/form119.php";
 			include "forms/form141.php";
 	?>
-	
 </div>

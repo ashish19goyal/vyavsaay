@@ -26,7 +26,8 @@
 			include "forms/form71.php";
 			include "forms/form93.php";
 			include "reports/report53.php";
-			include "reports/report58.php";		
+			include "reports/report58.php";
+			include "reports/report60.php";		
 	?>		
 	
 </div>

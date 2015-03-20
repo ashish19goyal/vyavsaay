@@ -20,30 +20,4 @@
 			include "reports/report30.php";
 			include "forms/form98.php";
 	?>
-	
-	<script>
-	!function(){
-		$("#staff_main").tabs(
-		{
-			show:"slide",
-			activate:function(e, ui) 
-		    {
-		    	e.currentTarget.blur();
-				if(typeof map86 != 'undefined')		    	
-		    		map86.invalidateSize(false);
-		    	$('#form7_calendar').fullCalendar('render');
-		    	$('#form14_calendar').fullCalendar('render');
-		    },
-		    beforeActivate:function(event,ui)
-		    {
-		    	$(document).off('keydown');
-			}
-		}).css(
-			{
-				'min-height': '570px',
-				'overflow': 'auto'
-			});
-		}();
-	</script>
-
 </div>

@@ -1,4 +1,4 @@
-<div id='projects_main' class='function_main'>
+<div id='projects_main' class='tabs function_main'>
 		
 		<ul>
 			<li><a id='form101_link' href='#form101' onclick='form101_header_ini(); form101_ini();' data-i18n='form.manage_projects'></a></li>			

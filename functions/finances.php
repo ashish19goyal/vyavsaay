@@ -1,4 +1,4 @@
-<div id='finances_main' class='function_main'>
+<div id='finances_main' class='tabs function_main'>
 
 		<ul>
 			<li><a id='form124_link' href='#form124' onclick='form124_header_ini(); form124_ini();' data-i18n='form.receipts'></a></li>

@@ -38,6 +38,7 @@
 <script src='./JavaScripts/prop/print.js'></script>
 <script src='./JavaScripts/prop/reports_ini.js'></script>
 <script src='./JavaScripts/prop/reports_header_ini.js'></script>
+<script src='./JavaScripts/prop/responsive_menu.js'></script>
 <script src='./JavaScripts/prop/sessions.js'></script>
 <script src='./JavaScripts/prop/access.js'></script>
 <script src='./JavaScripts/prop/sync.js'></script>

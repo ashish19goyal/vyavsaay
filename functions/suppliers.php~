@@ -15,27 +15,4 @@
 			include "reports/report46.php";
 			include "forms/form97.php";
 	?>
-	
-	<script>
-	!function(){
-		$("#suppliers_main").tabs(
-		{
-			show:"slide",
-			activate:function(e, ui) 
-		    {
-		    	e.currentTarget.blur();
-				if(typeof map85 != 'undefined')		    	
-		    		map85.invalidateSize(false);
-		    },
-		    beforeActivate:function(event,ui)
-		    {
-		    	$(document).off('keydown');
-			}
-		}).css(
-			{
-				'min-height': '570px',
-				'overflow': 'auto'
-			});
-		}();
-	</script>
 </div>

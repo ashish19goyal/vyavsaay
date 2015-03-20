@@ -1,4 +1,4 @@
-<div id='suppliers_main' class='function_main'>
+<div id='suppliers_main' class='tabs function_main'>
 
 		<ul>
 			<li><a id='form40_link' href='#form40' onclick='form40_header_ini(); form40_ini();' data-i18n='form.manage_suppliers'></a></li>

@@ -1,0 +1,34 @@
+/* Tabs container */
+
+.r-tabs {
+position: relative;
+}
+/* Tab element */
+.r-tabs .r-tabs-nav .r-tabs-tab {
+position: relative;
+}
+/* Tab anchor */
+.r-tabs .r-tabs-nav .r-tabs-anchor {
+display: inline-block;
+padding: 10px 12px;
+}
+/* Disabled tab */
+.r-tabs .r-tabs-nav .r-tabs-state-disabled {
+opacity: 0.5;
+}
+/* Active state tab anchor */
+.r-tabs .r-tabs-accordion-title .r-tabs-anchor {
+display: block;
+padding: 10px;
+}
+/* Disabled accordion button */
+.r-tabs .r-tabs-accordion-title.r-tabs-state-disabled {
+opacity: 0.5;
+}
+
+.r-tabs-anchor{
+	width:100%;
+	height:50px;
+	background-color: #ff0000;
+	color:#000;
+}

@@ -1,13 +1,13 @@
 <?php 
 	include "includes/header.php";
-	
-	echo "<script type='text/javascript'>"
-			."history.pushState(null, null, 'main.php');"
-			."window.addEventListener('popstate', function(event) {"
-			."	history.pushState(null, null, 'main.php');"
-			."});"
-			."</script>";
-	
+?>	
+	<script type='text/javascript'>
+			history.pushState(null, null, 'main.php');
+			window.addEventListener('popstate', function(event) {
+				history.pushState(null, null, 'main.php');
+			});
+	</script>
+<?php	
 	include "includes/searchbar.php";
 	include "includes/modal_forms.php";
 	include "includes/print_templates.php";

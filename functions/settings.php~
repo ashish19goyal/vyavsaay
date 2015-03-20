@@ -12,26 +12,5 @@
 			include "forms/form54.php";
 			include "forms/form99.php";
 	?>
-	
-	<script>
-	!function(){
-		$("#settings_main").tabs(
-		{
-			show:"slide",
-			activate:function(e, ui) 
-		    {
-		    	e.currentTarget.blur();
-		    },
-		    beforeActivate:function(event,ui)
-		    {
-		    	$(document).off('keydown');
-			}
-		}).css(
-			{
-				'min-height': '570px',
-				'overflow': 'auto'
-			});
-		}();
-	</script>
 
 </div>

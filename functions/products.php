@@ -1,4 +1,4 @@
-<div id='products_main' class='function_main'>
+<div id='products_main' class='tabs function_main'>
 
 		<ul>
 			<li><a id='form87_link' href='#form87' onclick='form87_header_ini(); form87_ini();' data-i18n='form.manage_products'></a></li>

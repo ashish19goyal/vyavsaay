@@ -20,29 +20,4 @@
 			include "forms/form96.php";
 			include "forms/form125.php";		
 	?>		
-	
-	<script>
-	!function(){
-		$("#customers_main").tabs(
-		{
-			show:"slide",
-			activate:function(e, ui) 
-		    {
-		    	e.currentTarget.blur();
-				if(typeof map41 != 'undefined')
-				{
-				  	map41.invalidateSize(false);
-				}
-		    },
-		    beforeActivate:function(event,ui)
-		    {
-		    	$(document).off('keydown');
-			}
-		}).css(
-			{
-				'min-height': '570px',
-				'overflow': 'auto'
-			});
-		}();
-	</script>
 </div>

@@ -7,9 +7,9 @@
 	<meta name="description" content="Find industry standard and customizable automation solutions for your business. Setup is fast and easy. Includes Billing, Inventory, Accounting, PM, CRM.">
 	<meta name="msvalidate.01" content="087FEC7E032A681827421F0C55C1A22C" />
   	<meta name="keywords" content="ERP, Vyavsaay, Mobile, Cloud"> 								<!--Change content-->	
-   <meta name="author" content="Ashish" > 												<!--Change content-->						
+	<meta name="author" content="Ashish" > 												<!--Change content-->						
   	<title>Vyavsaay ERP</title>															<!--Change title-->
-   <link href="/appic/css/style_green.css?v=1" rel="stylesheet">    										<!-- Stylesheet -->    
+   <link href="/appic/css/style.css?v=1" rel="stylesheet">    										<!-- Stylesheet -->    
 </head>
 
 <body>

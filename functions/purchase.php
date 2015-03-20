@@ -1,4 +1,4 @@
-<div id='purchase_main' class='function_main'>
+<div id='purchase_main' class='tabs function_main'>
 	
 		<ul>
 			<li><a id='form21_link' href='#form21' onclick='form21_header_ini(); form21_ini();' data-i18n='form.enter_supplier_bill'></a></li>
