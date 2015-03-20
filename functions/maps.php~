@@ -1,4 +1,4 @@
-<div id='maps_main' class='vy_tabs function_main'>
+<div id='maps_main' class='tabs function_main'>
 
 		<ul>
 			<li><a id='report31_link' href='#report31' onclick='report31_header_ini();' data-i18n='form.customer_map_by_credit'></a></li>

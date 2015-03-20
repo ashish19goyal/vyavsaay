@@ -1,4 +1,4 @@
-<div id='services_main' class='vy_tabs function_main'>
+<div id='services_main' class='tabs function_main'>
 
 		<ul>
 			<li><a id='form57_link' href='#form57' onclick='form57_header_ini(); form57_ini();' data-i18n='form.manage_services'></a></li>

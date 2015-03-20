@@ -1,4 +1,4 @@
-<div id='customers_main' class='vy_tabs function_main'>		
+<div id='customers_main' class='tabs function_main'>		
 		<ul>
 			<li><a id='form30_link' href='#form30' onclick='form30_header_ini(); form30_ini();' data-i18n='form.manage_customers'></a></li>
 			<li><a id='report5_link' href='#report5' onclick='report5_header_ini();' data-i18n='form.customer_account_balance'></a></li>

@@ -1,4 +1,4 @@
-<div id='sale_reports_main' class='vy_tabs function_main'>
+<div id='sale_reports_main' class='tabs function_main'>
 
 		<ul>
 			<li><a id='report26_link' href='#report26' onclick='report26_header_ini();' data-i18n='form.sales_by_customers'></a></li>

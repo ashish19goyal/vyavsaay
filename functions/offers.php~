@@ -1,4 +1,4 @@
-<div id='offers_main' class='vy_tabs function_main'>
+<div id='offers_main' class='tabs function_main'>
 	
 		<ul>
 			<li><a id='form35_link' href='#form35' onclick='form35_header_ini(); form35_ini();' data-i18n='form.manage_offers'></a></li>

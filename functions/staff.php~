@@ -1,4 +1,4 @@
-<div id='staff_main' class='vy_tabs function_main'>
+<div id='staff_main' class='tabs function_main'>
 		<ul>
 			<li><a id='form8_link' href='#form8' onclick='form8_header_ini(); form8_ini();' data-i18n='form.manage_staff'></a></li>
 			<li><a id='form7_link' href='#form7' onclick='form7_header_ini(); form7_ini();' data-i18n='form.attendance'></a></li>

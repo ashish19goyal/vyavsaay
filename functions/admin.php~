@@ -1,4 +1,4 @@
-<div id='admin_main' class='vy_tabs function_main'>
+<div id='admin_main' class='tabs function_main'>
 	
 		<ul>
 			<li><a id='form46_link' href='#form46' onclick='form46_header_ini(); form46_ini();' data-i18n='form.set_defaults'></a></li>

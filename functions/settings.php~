@@ -1,4 +1,4 @@
-<div id='settings_main' class='vy_tabs function_main'>	
+<div id='settings_main' class='tabs function_main'>	
 		<ul>
 			<li><a id='form47_link' href='#form47' onclick='form47_header_ini();' data-i18n='form.change_password'></a></li>
 			<li><a id='form99_link' href='#form99' data-i18n='form.delete_storage'></a></li>
