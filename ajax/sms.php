@@ -17,6 +17,7 @@
 		{
 			$sms_instance=new send_sms();
 			$sms_instance->direct_send($message,$to);
+			$sms_instance->log_sms($domain,$message,$to);
 		}
 		else
 		{

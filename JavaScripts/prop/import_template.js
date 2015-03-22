@@ -818,6 +818,7 @@ function form140_import_template()
 	my_array_to_csv(data_array);
 };
 
+
 /**
 * @form Create Questionnaire
 * @formNo 142
@@ -838,5 +839,17 @@ function form142_import_template()
 function form143_import_template()
 {
 	var data_array=['id','name','display_name','func','description','status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Store Movement
+* @formNo 145
+* @table ques_fields
+*/
+function form145_import_template()
+{
+	var data_array=['id','item_name','batch','quantity','source','target',
+	                'status','dispatcher','receiver'];
 	my_array_to_csv(data_array);
 };

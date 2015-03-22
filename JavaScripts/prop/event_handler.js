@@ -415,6 +415,7 @@ function hide_all()
 	hide_menu_items();
 	
 	$("#home_grid").hide();
+	$('.filter').hide();
 	hide_loader();
 }
 
@@ -603,10 +604,7 @@ function set_non_editable(element)
  */
 function show_filter(element)
 {
-	$(element).parent().find('.filter').css('visibility','visible');
-	$(element).parent().find('.filter').css('opacity','1');
-	$(element).parent().find('.filter').css('background-color','#ffffff');
-	$(element).parent().find('.filter').css('color','#545453');
+	$(element).parent().find('.filter').toggle();
 	$(element).parent().find('.filter').focus();
 }
 
@@ -804,8 +802,6 @@ function import_data(form_name)
 		case 'form139':modal23_action(form139_import_template,form139_import);
 		break;
 		case 'form140':modal23_action(form140_import_template,form140_import);
-		break;
-		case 'form141':modal23_action(form141_import_template,form141_import);
 		break;
 		case 'form142':modal23_action(form142_import_template,form142_import);
 		break;

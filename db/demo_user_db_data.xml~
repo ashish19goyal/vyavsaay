@@ -1949,7 +1949,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--ques_struct--ques_fields--ques_data--ques_fields_data--</tables>
+			<tables>--ques_struct--ques_fields--ques_data--ques_fields_data</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1960,18 +1960,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--ques_struct--ques_fields--ques_data--ques_fields_data--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form145</name>
-			<display_name>store_movement</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--store_movement--</tables>
+			<tables>--ques_struct--ques_fields--ques_data--ques_fields_data</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -3673,7 +3662,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form141</element_id>
-			<element_name>manage_orders_app</element_name>
+			<element_name>manage_order</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3696,17 +3685,6 @@
 			<username>master</username>
 			<element_id>form143</element_id>
 			<element_name>manage_questionnaire</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form145</element_id>
-			<element_name>store_placement</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

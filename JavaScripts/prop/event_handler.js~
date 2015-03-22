@@ -306,20 +306,6 @@ function set_menu_username()
 	$('#menu_username').html(hello+" "+name);
 }
 
-function setup_grid_display_tabs()
-{
-	var functions_array=['sale_bills','purchase','finances','products','services','customers','customer_service','projects','suppliers','staff','store','ecommerce','offers','maps','sale_reports','admin'];
-	functions_array.forEach(function(func)
-	{
-		var function_main=$("#"+func+"_main").find('ul').find('li').length;
-		var hidden_function_main=$("#"+func+"_main").find('ul').find('li:hidden').length;
-		if(function_main===0 || function_main===hidden_function_main)
-		{
-			$("#"+func+"_link").hide();
-		}
-	});
-}
-
 function hide_unreadable_elements()
 {
 	var forms_array=[];

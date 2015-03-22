@@ -280,15 +280,14 @@ a div{
 	min-width:15px;
 }
 
+
 .filter{
-	visibility: hidden;
-	opacity: 0;
 	top: inherit;
 	left:inherit;
 	background-color: #ffffff;
 	border-width: 1px;
 	color: #545453;
-	width: inherit;
+	width: 100px;
 }
 
 #progress_ind

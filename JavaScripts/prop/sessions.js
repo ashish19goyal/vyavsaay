@@ -79,6 +79,17 @@ function get_username()
 }
 
 /**
+ * this function returns the acc_name for the current session
+ * @returns
+ */
+function get_account_name()
+{
+	var acc_name=localStorage.getItem('acc_name');
+	return acc_name;
+}
+
+
+/**
  * this function returns the name for the current session
  * @returns
  */

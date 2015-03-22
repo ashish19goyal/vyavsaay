@@ -4100,39 +4100,21 @@ function form134_delete_team(button)
 					"<notes>Assignee from service request id "+request_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var username_data="<accounts>"+
-							"<username></username>"+							
-							"<status exact='yes'>active</status>"+							
-							"<type exact='yes'>staff</type>"+							
-							"<acc_name exact='yes'>"+assignee+"</acc_name>"+							
-							"</accounts>";
-		get_single_column_data(function (usernames) 
-		{
-			if(usernames.length>0)
-			{
-				var access_xml="<data_access>" +
+		var access_xml="<data_access>" +
 					"<record_id>"+request_id+"</record_id>" +
 					"<tablename>service_requests</tablename>" +
-					"<user>"+usernames[0]+"</user>" +
+					"<user>"+assignee+"</user>" +
 					"</data_access>";
-				if(is_online())
-				{
-					server_delete_simple(access_xml);
-				}
-				else
-				{
-					local_delete_simple(access_xml);
-				}	
-			}
-		},username_data);
 
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(access_xml);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(access_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -4467,6 +4449,38 @@ function form142_delete_item(button)
 				"<id>"+data_id+"</id>" +
 				"<ques_id>"+ques_id+"</ques_id>" +
 				"</ques_fields>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Store movement
+ * @param button
+ */
+function form145_delete_item(button)
+{
+	if(is_delete_access('form145'))
+	{		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[6].value;
+			
+		var data_xml="<store_movement>" +
+				"<id>"+data_id+"</id>" +
+				"</store_movement>";	
 		if(is_online())
 		{
 			server_delete_simple(data_xml);

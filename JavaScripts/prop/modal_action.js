@@ -3145,7 +3145,7 @@ function modal32_action(date_initiated)
 					"<tablename>task_instances</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
-					"<user>"+get_username()+"</user>" +
+					"<user>"+get_account_name()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
 		if(is_online())
@@ -4267,7 +4267,7 @@ function modal43_action(date_initiated,project_id)
 						"<tablename>task_instances</tablename>" +
 						"<record_id>"+data_id+"</record_id>" +
 						"<access_type>all</access_type>" +
-						"<user>"+get_username()+"</user>" +
+						"<user>"+get_account_name()+"</user>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</data_access>";
 			if(is_online())
@@ -4727,63 +4727,7 @@ function modal47_action(service_date)
 			customer_filter.setAttribute('readonly','readonly');
 		}
 	},customer_data);
-/*
-	var assignee_data="<accounts>"+
-							"<username></username>"+
-							"<acc_name></acc_name>"+							
-							"<status exact='yes'>active</status>"+							
-							"<type exact='yes'>staff</type>"+							
-							"</accounts>";	
-	fetch_requested_data('',assignee_data,function(assignees)
-	{
-		var service_eng_data="<service_requests>"+
-									"<assignee></assignee>"+									
-									"<status exact='yes'>open</status>"+									
-									"</service_requests>";
-		get_single_column_data(function(service_engs)
-		{
-			for(var i in service_engs)
-			{
-				for(var j=0;j<assignees.length;j++)
-				{
-					if(assignees[j].acc_name==service_engs[i])
-					{
-						assignees.splice(j,1);
-						break;
-					}
-				}
-			}
-			if(assignees.length>0)
-			{
-				to_filter.value=assignees[0].acc_name;
-				assignee_username_filter.value=assignees[0].username;
-				to_filter.setAttribute('readonly','readonly');
-			}
-			else {
-				to_filter.value='Will be assigned shortly';
-				assignee_username_filter.value="";
-				
-				var assignee_data="<accounts>"+
-							"<acc_name></acc_name>"+							
-							"<status exact='yes'>active</status>"+							
-							"<type exact='yes'>staff</type>"+							
-							"</accounts>";	
-				set_my_value_list(assignee_data,to_filter);
-				$(to_filter).off('blur');
-				$(to_filter).on('blur',function(e)
-				{
-						var username_data="<accounts>"+
-							"<username></username>"+							
-							"<status exact='yes'>active</status>"+							
-							"<type exact='yes'>staff</type>"+							
-							"<acc_name exact='yes'>"+to_filter.value+"</acc_name>"+							
-							"</accounts>";
-						set_my_value(username_data,assignee_username_filter);
-				});
-			}
-		},service_eng_data);
-	});
-*/			
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -4821,29 +4765,18 @@ function modal47_action(service_date)
 					"<tablename>service_requests</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
-					"<user>"+get_username()+"</user>" +
+					"<user>"+get_account_name()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
-/*			var access2_xml="<data_access>" +
-					"<id>"+get_new_key()+"</id>" +
-					"<tablename>service_requests</tablename>" +
-					"<record_id>"+data_id+"</record_id>" +
-					"<access_type>all</access_type>" +
-					"<user>"+assignee_username_filter.value+"</user>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</data_access>";
-*/					
 			if(is_online())
 			{
 				server_create_row(data_xml,activity_xml);
 				server_create_simple(access1_xml);
-//				server_create_simple(access2_xml);
 			}
 			else
 			{
 				local_create_row(data_xml,activity_xml);
 				local_create_simple(access1_xml);
-//				local_create_simple(access2_xml);
 			}	
 		}
 		else

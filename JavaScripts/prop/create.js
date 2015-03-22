@@ -6424,7 +6424,7 @@ function form101_create_item(form)
 					"<tablename>projects</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
-					"<user>"+get_username()+"</user>" +
+					"<user>"+get_account_name()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
 		if(is_online())
@@ -6491,7 +6491,7 @@ function form102_create_item(form)
 					"<tablename>project_team</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
-					"<user>"+get_username()+"</user>" +
+					"<user>"+get_account_name()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
 		if(is_online())
@@ -6569,7 +6569,7 @@ function form103_create_item(form)
 					"<tablename>project_phases</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
-					"<user>"+get_username()+"</user>" +
+					"<user>"+get_account_name()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
 		if(is_online())
@@ -9872,43 +9872,24 @@ function form134_create_team(form)
 					"<notes>Assignee "+assignee+" to service request id "+request_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		
-		var username_data="<accounts>"+
-							"<username></username>"+							
-							"<status exact='yes'>active</status>"+							
-							"<type exact='yes'>staff</type>"+							
-							"<acc_name exact='yes'>"+assignee+"</acc_name>"+							
-							"</accounts>";
-		get_single_column_data(function (usernames) 
-		{
-			if(usernames.length>0)
-			{
-				var access_xml="<data_access>" +
+		var access_xml="<data_access>" +
 					"<id>"+get_new_key()+"</id>" +
 					"<tablename>service_requests</tablename>" +
 					"<record_id>"+request_id+"</record_id>" +
 					"<access_type>all</access_type>" +
-					"<user>"+usernames[0]+"</user>" +
+					"<user>"+assignee+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
-				if(is_online())
-				{
-					server_create_simple(access_xml);
-				}
-				else
-				{
-					local_create_simple(access_xml);
-				}	
-			}
-		},username_data);
 
 		if(is_online())
 		{
 			server_create_row(data_xml,activity_xml);
+			server_create_simple(access_xml);
 		}
 		else
 		{
 			local_create_row(data_xml,activity_xml);
+			local_create_simple(access_xml);
 		}
 		for(var i=0;i<3;i++)
 		{
@@ -10473,7 +10454,7 @@ function form137_create_item(form)
 					"<tablename>expenses</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
-					"<user>"+get_username()+"</user>" +
+					"<user>"+get_account_name()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
 		if(is_online())
@@ -10754,6 +10735,72 @@ function form142_create_form()
 		});
 		
 		$("[id^='save_form142_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Store Movement
+ * @param button
+ */
+function form145_create_item(form)
+{
+	if(is_create_access('form145'))
+	{
+		var product_name=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var source=form.elements[3].value;
+		var target=form.elements[4].value;
+		var status=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<store_movement>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+product_name+"</item_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<source>"+source+"</source>"+
+					"<target>"+target+"</target>"+
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</store_movement>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>store_movement</tablename>" +
+					"<link_to>form145</link_to>" +
+					"<title>New</title>" +
+					"<notes>Store movement initiated for item "+product_name+" from storage area "+source+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var save_button=form.elements[7];
+		$(save_button).hide();
+		var del_button=form.elements[8];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form145_delete_item(del_button);
+		});
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+		});
 	}
 	else
 	{

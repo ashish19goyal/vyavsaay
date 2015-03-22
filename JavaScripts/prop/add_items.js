@@ -4282,7 +4282,7 @@ function form105_add_item()
 		set_static_value_list('data_access','access_type',type_filter);
 		
 		var user_data="<accounts>" +
-				"<username></username>" +
+				"<acc_name></acc_name>" +
 				"</accounts>";
 		set_my_value_list(user_data,user_filter);
 		
@@ -6997,6 +6997,118 @@ function form142_add_item()
 				$(values_filter).parent().hide();
 			}
 		});		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Store movement
+ * @formNo 145
+ */
+function form145_add_item()
+{
+	if(is_create_access('form145'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form145_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Product'>";
+				rowsHTML+="<input type='text' required form='form145_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form145_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<input type='text' form='form145_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form145_add_batch_"+id+"'>";			
+				rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' required form='form145_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Store'>";
+				rowsHTML+="Source: <input type='text' required form='form145_"+id+"'>";
+				rowsHTML+="<br>Target: <input type='text' required form='form145_"+id+"'>";				
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' readonly='readonly' required form='form145_"+id+"' value='pending'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form145_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form145_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form145_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='button' class='generic_icon' form='form145_"+id+"' value='Dispatch' onclick='form145_dispatch_item($(this));'>";
+				rowsHTML+="<input type='button' class='generic_icon' form='form145_"+id+"' value='Receive' onclick='form145_receive_item($(this));'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form145_body').prepend(rowsHTML);
+		var fields=document.getElementById("form145_"+id);
+		var product_filter=fields.elements[0];
+		var batch_filter=fields.elements[1];
+		var source_filter=fields.elements[3];
+		var target_filter=fields.elements[4];
+		var status_filter=fields.elements[5];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form145_create_item(fields);
+		});
+				
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,product_filter,function () 
+		{
+			$(product_filter).focus();
+		});
+
+		var add_product=document.getElementById('form145_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,product_filter,function () 
+				{
+					$(product_filter).focus();
+				});
+			});
+		});
+
+		var add_batch=document.getElementById('form145_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal22_action(function()
+			{	
+				var batch_data="<product_instances>" +
+						"<batch></batch>" +
+						"<product_name exact='yes'>"+product_filter.value+"</product_name>" +
+						"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			});
+		});
+		
+		$(product_filter).on('blur',function(event)
+		{
+			var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+product_filter.value+"</product_name>" +
+					"</product_instances>";
+			set_my_value_list(batch_data,batch_filter);
+		});		
+		
+		var source_data="<store_areas>" +
+				"<name></name>" +
+				"<area_type exact='yes'>storage</area_type>" +
+				"</store_areas>";
+		set_my_value_list(source_data,source_filter);
+		set_my_value_list(source_data,target_filter);
+		set_static_value_list('store_movement','status',status_filter);	
 	}
 	else
 	{

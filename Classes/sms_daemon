@@ -12,7 +12,7 @@
 #. /etc/init.d/functions
  
 #startup values
-log=/var/log/sms_daemon.log
+log=./sms_daemon.log
  
 #verify that the executable exists
 test -x ./sms_daemon.php || exit 0RETVAL=0
@@ -39,7 +39,7 @@ start() {
  
 stop() {
 	echo -n $"Stopping $prog: "
-	pkill $bin
+	pkill sms_daemon
 	RETVAL=$?
 	[ $RETVAL -eq 0 ] && rm -f $proc
 	echo

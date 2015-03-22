@@ -7104,3 +7104,150 @@ function form142_update_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Store Movement
+ * @param button
+ */
+function form145_dispatch_item(button)
+{
+	if(is_update_access('form145'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+
+		var product_name=form.elements[0].value;
+		var source=form.elements[3].value;
+		form.elements[5].value='dispatched';
+		
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<store_movement>" +
+					"<id>"+data_id+"</id>" +
+					"<status>dispatched</status>"+					
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</store_movement>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>store_movement</tablename>" +
+					"<link_to>form145</link_to>" +
+					"<title>Dispatched</title>" +
+					"<notes>Product "+product_name+" from store "+source+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Store Movement
+ * @param button
+ */
+function form145_receive_item(button)
+{
+	if(is_update_access('form145'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+
+		var product_name=form.elements[0].value;
+		var target=form.elements[4].value;
+		form.elements[5].value='received';
+		
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<store_movement>" +
+					"<id>"+data_id+"</id>" +
+					"<status>received</status>"+					
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</store_movement>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>store_movement</tablename>" +
+					"<link_to>form145</link_to>" +
+					"<title>Received</title>" +
+					"<notes>Product "+product_name+" at store "+target+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Store Movement
+ * @param button
+ */
+function form145_cancel_item(button)
+{
+	if(is_update_access('form145'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+
+		var product_name=form.elements[0].value;
+		var source=form.elements[3].value;
+		form.elements[5].value='cancelled';
+		
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<store_movement>" +
+					"<id>"+data_id+"</id>" +
+					"<status>cancelled</status>"+					
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</store_movement>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>store_movement</tablename>" +
+					"<link_to>form145</link_to>" +
+					"<title>Cancelled</title>" +
+					"<notes>Movement of product "+product_name+" from store "+source+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

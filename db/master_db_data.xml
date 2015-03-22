@@ -88,6 +88,38 @@
 	</templates>
 	<values_list>
 		<row>
+			<tablename>store_movement</tablename>
+			<listname>status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>store_movement</tablename>
+			<listname>status</listname>
+			<name>dispatched</name>
+			<value>Dispatched</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>store_movement</tablename>
+			<listname>status</listname>
+			<name>received</name>
+			<value>Received</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>store_movement</tablename>
+			<listname>status</listname>
+			<name>cancelled</name>
+			<value>Cancelled</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>ques_struct</tablename>
 			<listname>status</listname>
 			<name>active</name>

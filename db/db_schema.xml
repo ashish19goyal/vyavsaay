@@ -448,6 +448,18 @@
 			<batch index='yes' type="VARCHAR(50)"></batch>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</area_utilization>
+	<store_movement>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<item_name index='yes' type="VARCHAR(90)"></item_name>
+			<batch index='yes' type="VARCHAR(50)"></batch>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<source index='yes' type="VARCHAR(25)"></source>			
+			<target index='yes' type="VARCHAR(25)"></target>
+			<status index='yes' type="VARCHAR(25)"></status><!--pending/dispatched/received/cancelled-->
+			<dispatcher index='no' type="VARCHAR(100)"></dispatcher>
+			<receiver index='no' type="VARCHAR(100)"></receiver>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</store_movement>
 	<store_areas>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(25)"></name>

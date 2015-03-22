@@ -1,6 +1,8 @@
 <?php
 
 	include_once "../Classes/db.php";
+	include_once "../Classes/sms.php";
+	use RetailingEssentials\send_sms;
 	use RetailingEssentials\db_connect;
 	
 	$status="failed_registration";
@@ -31,6 +33,11 @@
 
 		set_user_preferences($conn2,$industry);
 		set_user_profiles($conn2,$pass_hash,$name,$email,$phone);
+
+		$message="Congratulations!! Your vyavsaay account has been successfully setup.";
+		$sms_instance=new send_sms();		
+		//$sms_instance->direct_send($message,$phone);
+		$sms_instance->log_sms($username,$message,$phone);		
 		
 	}catch(PDOException $ex)
 	{

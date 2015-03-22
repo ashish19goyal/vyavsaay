@@ -235,8 +235,6 @@
   	"create_questionnaire":"Create Questionnaire",
   	"manage_questionnaire":"Manage Questionnaire",
   	"trial_balance":"Trial Balance",
-  	"activities":"Activities",
-  	"manage_orders_app":"Manage Orders from App",
-  	"store_movement":"Store Movement"
+  	"activities":"Activities"
   }
 }

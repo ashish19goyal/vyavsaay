@@ -4460,3 +4460,60 @@ function form143_import(data_array,import_type)
 		}
 	}
 };
+
+/**
+* @form Store Movement
+* @formNo 145
+*/
+function form145_import(data_array,import_type)
+{
+	var data_xml="<store_movement>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</store_movement><separator></separator><store_movement>";
+		}
+		counter+=1;
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<batch>"+row.batch+"</batch>"+
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<source>"+row.source+"</source>"+
+				"<target>"+row.target+"</target>"+
+				"<status>"+row.status+"</status>" +
+				"<dispatcher>"+row.dispatcher+"</dispatcher>" +
+				"<receiver>"+row.receiver+"</receiver>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";		
+	});
+	
+	data_xml+="</store_movement>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
