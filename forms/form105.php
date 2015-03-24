@@ -12,6 +12,7 @@
 			<tr>
 				<form id='form105_header'></form>
 					<th>Access Type</th>
+					<th>User Type</th>
 					<th>User</th>
 					<th>Criteria field</th>
 					<th>Criteria Value</th>

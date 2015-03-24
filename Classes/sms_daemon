@@ -8,7 +8,7 @@
 # description: Runs the sms daemon.
 # processname: sms_daemon
  
-# Source function library.
+	# Source function library.
 #. /etc/init.d/functions
  
 #startup values
@@ -21,7 +21,7 @@ test -x ./sms_daemon.php || exit 0RETVAL=0
 #	Set prog, proc and bin variables.
 #
 prog="sms_daemon"
-proc=/var/lock/sms_daemon
+proc=sms_daemon.lock
 bin=./sms_daemon.php
  
 start() {
@@ -31,7 +31,7 @@ start() {
 	    $bin --log=$log
 	    RETVAL=$?
 	    [ $RETVAL -eq 0 ] && touch $proc
-	    echo
+	    echo "Started"
 	fi
  
 	return $RETVAL
@@ -41,8 +41,8 @@ stop() {
 	echo -n $"Stopping $prog: "
 	pkill sms_daemon
 	RETVAL=$?
-	[ $RETVAL -eq 0 ] && rm -f $proc
-	echo
+	[ $RETVAL -eq 0 ] && /bin/rm $proc
+	echo "Stopped"
         return $RETVAL
 }
  

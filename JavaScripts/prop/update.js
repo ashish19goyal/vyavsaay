@@ -1681,7 +1681,6 @@ function form38_update_item(form)
 		var product_name=form.elements[0].value;
 		var batch=form.elements[1].value;
 		var name=form.elements[2].value;
-		var quantity=form.elements[3].value;
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var table='area_utilization';
@@ -1690,7 +1689,6 @@ function form38_update_item(form)
 					"<product_name>"+product_name+"</product_name>" +
 					"<batch>"+batch+"</batch>" +
 					"<name>"+name+"</name>" +
-					"<quantity>"+quantity+"</quantity>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table+">";	
 		var activity_xml="<activity>" +
@@ -3916,6 +3914,53 @@ function notifications_update(button,data_id,status)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Store Areas
+ * @param button
+ */
+function form83_update_item(form)
+{
+	if(is_update_access('form83'))
+	{
+		var name=form.elements[0].value;
+		var owner=form.elements[1].value;
+		var area_type=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<store_areas>" +
+					"<id>"+data_id+"</id>" +
+					"<owner>"+owner+"</owner>" +
+					"<area_type>"+area_type+"</area_type>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</store_areas>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>store_areas</tablename>" +
+					"<link_to>form83</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Owner for store area "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 /**
  * @form Manage Subscriptions
@@ -7147,6 +7192,7 @@ function form145_dispatch_item(button)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		$(button).hide();
 	}
 	else
 	{
@@ -7196,6 +7242,7 @@ function form145_receive_item(button)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		$(button).hide();
 	}
 	else
 	{
@@ -7245,6 +7292,7 @@ function form145_cancel_item(button)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		$(button).hide();
 	}
 	else
 	{

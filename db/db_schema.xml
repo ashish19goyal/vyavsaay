@@ -179,6 +179,7 @@
 			<refund_amount index='no' type="DECIMAL(12,2)"></refund_amount>
 			<saleable index='yes' type="VARCHAR(25)"></saleable><!--checked/unchecked-->
 			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<storage index='yes' type="VARCHAR(25)"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_return_items>
 	<transactions>
@@ -306,6 +307,7 @@
 			<staff index='yes' type="VARCHAR(100)"></staff>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<free_with index="no" type="VARCHAR(90)"></free_with>
+			<storage index='yes' type="VARCHAR(25)"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bill_items>
 	<customer_returns>
@@ -329,6 +331,7 @@
 			<refund_amount index='no' type="DECIMAL(12,2)"></refund_amount>
 			<exchange_batch index='yes' type="VARCHAR(50)"></exchange_batch>
 			<saleable index='yes' type="VARCHAR(25)"></saleable><!--checked/unchecked-->
+			<storage index='yes' type="VARCHAR(25)"></storage>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</customer_return_items>
@@ -389,6 +392,7 @@
 			<source index='yes' type="VARCHAR(25)"></source><!--Sale return/Purchase return-->
 			<source_link index='no' type="VARCHAR(25)"></source_link>
 			<source_id index='yes' type='BIGINT'></source_id>
+			<storage index='yes' type="VARCHAR(25)"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</discarded>
 	<product_master>
@@ -463,6 +467,7 @@
 	<store_areas>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(25)"></name>
+			<owner index='yes' type="VARCHAR(100)"></owner>
 			<area_type index='yes' type="VARCHAR(90)"></area_type><!-- storage/block/door/storey -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</store_areas>
@@ -573,6 +578,13 @@
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</values_list>
+	<user_fields_list>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<tablename index='yes' type="VARCHAR(50)"></tablename>
+			<field_name index='yes' type="VARCHAR(50)"></field_name>
+			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</user_fields_list>
 	<feedback>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<provider index='yes' type="VARCHAR(100)"></provider>
@@ -683,7 +695,9 @@
 			<tablename index='yes' type="VARCHAR(100)"></tablename>
 			<record_id index='yes' type="VARCHAR(20)"></record_id>
 			<access_type index='yes' type="VARCHAR(25)"></access_type><!--all/read/update/delete-->
+			<user_type index='yes' type="VARCHAR(25)"></user_type><!--user/field/role-->
 			<user index='yes' type="VARCHAR(100)"></user>
+			<user_field index='yes' type="VARCHAR(100)"></user_field>
 			<criteria_field index='yes' type="VARCHAR(100)"></criteria_field>
 			<criteria_value index='yes' type="TEXT"></criteria_value>
 			<last_updated index='yes' type="BIGINT"></last_updated>
@@ -713,6 +727,7 @@
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<sale_date index='yes' type="BIGINT"></sale_date>
 			<notes index='no' type='TEXT'></notes>
+			<storage index='yes' type="VARCHAR(25)"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</unbilled_sale_items>
 	<unbilled_purchase_items>
@@ -723,6 +738,7 @@
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<purchase_date index='yes' type="BIGINT"></purchase_date>
 			<notes index='no' type='TEXT'></notes>
+			<storage index='yes' type="VARCHAR(25)"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</unbilled_purchase_items>
 	<loyalty_programs>

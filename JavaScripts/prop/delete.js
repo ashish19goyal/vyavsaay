@@ -838,7 +838,7 @@ function form38_delete_item(button)
 		var product_name=form.elements[0].value;
 		var batch=form.elements[1].value;
 		var name=form.elements[2].value;
-		var data_id=form.elements[3].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<area_utilization>" +
 					"<id>"+data_id+"</id>" +
@@ -2240,7 +2240,7 @@ function form83_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var data_id=form.elements[2].value;
+		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
 		var data_xml="<store_areas>" +
 					"<id>"+data_id+"</id>" +
@@ -3167,8 +3167,7 @@ function form105_delete_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
+		var data_id=form.elements[6].value;
 		var data_xml="<data_access>" +
 					"<id>"+data_id+"</id>" +
 					"</data_access>";	
@@ -4311,7 +4310,7 @@ function form136_delete_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var data_id=form.elements[9].value;
+		var data_id=form.elements[8].value;
 		
 		var data_xml="<supplier_bill_items>" +
 					"<id>"+data_id+"</id>" +

@@ -2171,7 +2171,6 @@ function form38_ini()
 			"<batch>"+fbatch+"</batch>" +
 			"<item_name>"+fname+"</item_name>" +
 			"<name>"+farea+"</name>" +
-			"<last_updated></last_updated>" +
 			"</area_utilization>";
 
 	$('#form38_body').html("");
@@ -2192,6 +2191,9 @@ function form38_ini()
 					rowsHTML+="<td data-th='Store Area'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form38_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+="<input type='number' readonly='readonly' form='form38_"+result.id+"' value=''>";
+					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form38_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form38_"+result.id+"' title='Delete' onclick='form38_delete_item($(this));'>";	
@@ -2200,9 +2202,21 @@ function form38_ini()
 			
 			$('#form38_body').append(rowsHTML);
 			var fields=document.getElementById("form38_"+result.id);
+			var quantity=fields.elements[3];
+			var delete_button=fields.elements[5];
+			
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
+			});
+			
+			get_store_inventory(result.name,result.item_name,result.batch,function(inventory)
+			{
+				quantity.value=inventory;
+				if(parseFloat(inventory)!=0)
+				{
+					$(delete_button).hide();
+				}
 			});
 		});
 
@@ -6500,6 +6514,8 @@ function form83_ini()
 	
 	var filter_fields=document.getElementById('form83_header');
 	var fname=filter_fields.elements[0].value;
+	var fowner=filter_fields.elements[1].value;
+	var ftype=filter_fields.elements[2].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form83_index');
@@ -6511,14 +6527,15 @@ function form83_ini()
 	var columns="<store_areas count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
-			"<area_type></area_type>" +
+			"<owner>"+fowner+"</owner>"+
+			"<area_type>"+ftype+"</area_type>" +
 			"<last_updated></last_updated>" +
 			"</store_areas>";
 
 	$('#form83_body').html("");
 
 	fetch_requested_data('form83',columns,function(results)
-	{	
+	{
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -6527,23 +6544,34 @@ function form83_ini()
 					rowsHTML+="<td data-th='Name'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form83_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Owner'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form83_"+result.id+"' value='"+result.owner+"'>";
+					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Type'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form83_"+result.id+"' value='"+result.area_type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form83_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form83_"+result.id+"' title='Delete' onclick='form83_delete_item($(this));'>";	
+						rowsHTML+="<input type='button' class='delete_icon' form='form83_"+result.id+"' title='Delete' onclick='form83_delete_item($(this));'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form83_"+result.id+"' title='Save'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form83_body').append(rowsHTML);
 			var fields=document.getElementById("form83_"+result.id);
+			var owner_filter=fields.elements[1];
+			
+			var owner_data="<staff>"+
+							"<acc_name></acc_name>"+							
+							"</staff>";
+			set_my_value_list(owner_data,owner_filter);
+			
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
+				form83_update_item(fields);
 			});
 		});
-		
 
 		////indexing///
 		var next_index=parseInt(start_index)+25;
@@ -6569,8 +6597,9 @@ function form83_ini()
 		}
 		/////////////
 		$('textarea').autosize();
-		
-		var export_button=filter_fields.elements[2];
+		longPressEditable($('.dblclick_editable'));
+				
+		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -8596,7 +8625,7 @@ function form101_ini()
 							{
 								del=true;
 							}
-							else if(accessible_data[x].access_type=='delete')
+							else if(accessible_data[x].access_type=='update')
 							{
 								update=true;
 							}
@@ -8785,7 +8814,7 @@ function form102_ini()
 								{
 									del=true;
 								}
-								else if(accessible_data[x].access_type=='delete')
+								else if(accessible_data[x].access_type=='update')
 								{
 									update=true;
 								}
@@ -8941,7 +8970,7 @@ function form103_ini()
 								{
 									del=true;
 								}
-								else if(accessible_data[x].access_type=='delete')
+								else if(accessible_data[x].access_type=='update')
 								{
 									update=true;
 								}
@@ -9094,7 +9123,7 @@ function form104_ini()
 										{
 											del=true;
 										}
-										else if(accessible_data[x].access_type=='delete')
+										else if(accessible_data[x].access_type=='update')
 										{
 											update=true;
 										}
@@ -9218,7 +9247,7 @@ function form104_ini()
 								{
 									del=true;
 								}
-								else if(accessible_data[x].access_type=='delete')
+								else if(accessible_data[x].access_type=='update')
 								{
 									update=true;
 								}
@@ -9316,7 +9345,9 @@ function form105_ini()
 			"<tablename exact='yes'>"+ftablename+"</tablename>" +
 			"<record_id exact='yes'>"+frecord+"</record_id>" +
 			"<access_type></access_type>" +
+			"<user_type></user_type>" +
 			"<user></user>" +
+			"<user_field></user_field>" +
 			"<criteria_field></criteria_field>" +
 			"<criteria_value></criteria_value>" +
 			"<last_updated></last_updated>" +
@@ -9334,9 +9365,20 @@ function form105_ini()
 					rowsHTML+="<td data-th='Access Type'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form105_"+result.id+"' value='"+result.access_type+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='User'>";
-						rowsHTML+="<textarea readonly='readonly' form='form105_"+result.id+"'>"+result.user+"</textarea>";
+					rowsHTML+="<td data-th='User Type'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form105_"+result.id+"' value='"+result.user_type+"'>";
 					rowsHTML+="</td>";
+					if(result.user_type=='user')
+					{
+						rowsHTML+="<td data-th='User'>";
+					}
+					else if(result.user_type=='field')
+					{
+						rowsHTML+="<td data-th='User Field'>";
+					}
+							rowsHTML+="<textarea readonly='readonly' form='form105_"+result.id+"'>"+result.user+"</textarea>";
+							rowsHTML+="<input readonly='readonly' type='text' form='form105_"+result.id+"' value='"+result.user_field+"'>";
+						rowsHTML+="</td>";										
 					rowsHTML+="<td data-th='Criteria Field'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form105_"+result.id+"' value='"+result.criteria_field+"'>";
 					rowsHTML+="</td>";
@@ -9345,25 +9387,29 @@ function form105_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form105_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form105_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form105_"+result.id+"' title='Delete' onclick='form105_delete_item($(this));'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form105_body').append(rowsHTML);
 			var fields=document.getElementById("form105_"+result.id);
-						
-			$(fields).on("submit",function(event)
+			var user_filter=fields.elements[2];
+			var user_field_filter=fields.elements[3];
+			if(result.user_type=='user')
 			{
-				event.preventDefault();
-			});
+				$(user_field_filter).hide();
+			}
+			else 
+			{
+				$(user_filter).hide();				
+			}
+
 		});
 
 		$('textarea').autosize();
 		hide_loader();
 	});
 };
-
 
 /**
  * @form Manage Sale orders (multi-register)
@@ -11383,7 +11429,7 @@ function form128_ini()
 							{
 								del=true;
 							}
-							else if(accessible_data[x].access_type=='delete')
+							else if(accessible_data[x].access_type=='update')
 							{
 								update=true;
 							}
@@ -11593,7 +11639,7 @@ function form129_ini()
 									{
 										del=true;
 									}
-									else if(accessible_data[x].access_type=='delete')
+									else if(accessible_data[x].access_type=='update')
 									{
 										update=true;
 									}
@@ -11920,7 +11966,7 @@ function form131_ini()
 							{
 								del=true;
 							}
-							else if(accessible_data[x].access_type=='delete')
+							else if(accessible_data[x].access_type=='update')
 							{
 								update=true;
 							}
@@ -12637,7 +12683,7 @@ function form137_ini()
 								{
 									del=true;
 								}
-								else if(accessible_data[x].access_type=='delete')
+								else if(accessible_data[x].access_type=='update')
 								{
 									update=true;
 								}
@@ -12801,7 +12847,7 @@ function form138_ini()
 								{
 									del=true;
 								}
-								else if(accessible_data[x].access_type=='delete')
+								else if(accessible_data[x].access_type=='update')
 								{
 									update=true;
 								}
@@ -13403,77 +13449,124 @@ function form145_ini()
 
 	$('#form145_body').html("");
 
-	fetch_requested_data('form145',columns,function(results)
-	{	
-		results.forEach(function(result)
-		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
-				rowsHTML+="<form id='form145_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Product'>";
-						rowsHTML+="<textarea readonly='readonly' form='form145_"+result.id+"'>"+result.item_name+"</textarea>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Batch'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.batch+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Quantity'>";
-						rowsHTML+="<input type='number' readonly='readonly' form='form145_"+result.id+"' value='"+result.quantity+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Store'>";
-						rowsHTML+="Source: <input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.source+"'>";
-						rowsHTML+="<br>Target: <input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.target+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.status+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form145_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='button' class='generic_icon' form='form145_"+result.id+"' value='Cancel' onclick='form145_cancel_item($(this));'>";
-						rowsHTML+="<input type='button' class='generic_icon' form='form145_"+result.id+"' value='Dispatch' onclick='form145_dispatch_item($(this));'>";
-						rowsHTML+="<input type='button' class='generic_icon' form='form145_"+result.id+"' value='Receive' onclick='form145_receive_item($(this));'>";
-					rowsHTML+="</td>";			
-			rowsHTML+="</tr>";
-			
-			$('#form145_body').append(rowsHTML);
-			var fields=document.getElementById("form145_"+result.id);
-			$(fields).on("submit", function(event)
+	if_data_read_access('store_movement',function(accessible_data)
+	{
+		console.log(accessible_data);
+		fetch_requested_data('form145',columns,function(results)
+		{	
+			results.forEach(function(result)
 			{
-				event.preventDefault();
+				var read=false;
+				var update=false;
+				var del=false;
+				var access=false;
+				for(var x in accessible_data)
+				{
+					if(accessible_data[x].record_id===result.id || accessible_data[x].record_id=='all')
+					{
+						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || result[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
+						{
+							if(accessible_data[x].access_type=='all')
+							{
+								read=true;
+								update=true;
+								del=true;
+								access=true;
+								break;
+							}
+							else if(accessible_data[x].access_type=='read')
+							{
+								read=true;
+							}
+							else if(accessible_data[x].access_type=='delete')
+							{
+								del=true;
+							}
+							else if(accessible_data[x].access_type=='update')
+							{
+								update=true;
+							}
+						}
+					}
+				}
+
+				if(read)
+				{
+					var rowsHTML="";
+						rowsHTML+="<tr>";
+							rowsHTML+="<form id='form145_"+result.id+"'></form>";
+								rowsHTML+="<td data-th='Product'>";
+									rowsHTML+="<textarea readonly='readonly' form='form145_"+result.id+"'>"+result.item_name+"</textarea>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Batch'>";
+									rowsHTML+="<input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.batch+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Quantity'>";
+									rowsHTML+="<input type='number' readonly='readonly' form='form145_"+result.id+"' value='"+result.quantity+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Store'>";
+									rowsHTML+="Source: <input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.source+"'>";
+									rowsHTML+="<br>Target: <input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.target+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Status'>";
+									rowsHTML+="<input type='text' readonly='readonly' form='form145_"+result.id+"' value='"+result.status+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Action'>";
+									rowsHTML+="<input type='hidden' form='form145_"+result.id+"' value='"+result.id+"'>";
+							if(update)
+							{
+									if(result.status!='received')									
+										rowsHTML+="<input type='button' class='generic_icon' form='form145_"+result.id+"' value='Cancel' onclick='form145_cancel_item($(this));'>";
+									if(result.status=='pending')									
+										rowsHTML+="<input type='button' class='generic_icon' form='form145_"+result.id+"' value='Dispatch' onclick='form145_dispatch_item($(this));'>";
+									if(result.status=='dispatched')
+										rowsHTML+="<input type='button' class='generic_icon' form='form145_"+result.id+"' value='Receive' onclick='form145_receive_item($(this));'>";
+							}
+								rowsHTML+="</td>";											
+					rowsHTML+="</tr>";
+						
+					$('#form145_body').append(rowsHTML);
+					var fields=document.getElementById("form145_"+result.id);
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+					});
+				}
 			});
+	
+			////indexing///
+			var next_index=parseInt(start_index)+25;
+			var prev_index=parseInt(start_index)-25;
+			next_element.setAttribute('data-index',next_index);
+			prev_element.setAttribute('data-index',prev_index);
+			index_element.setAttribute('data-index','0');
+			if(results.length<25)
+			{
+				$(next_element).hide();
+			}
+			else
+			{
+				$(next_element).show();
+			}
+			if(prev_index<0)
+			{
+				$(prev_element).hide();
+			}
+			else
+			{
+				$(prev_element).show();
+			}
+			/////////////
+	
+			longPressEditable($('.dblclick_editable'));
+			
+			var export_button=filter_fields.elements[4];
+			$(export_button).off("click");
+			$(export_button).on("click", function(event)
+			{
+				my_obj_array_to_csv(results,'store_movement');
+			});
+			hide_loader();
 		});
-
-		////indexing///
-		var next_index=parseInt(start_index)+25;
-		var prev_index=parseInt(start_index)-25;
-		next_element.setAttribute('data-index',next_index);
-		prev_element.setAttribute('data-index',prev_index);
-		index_element.setAttribute('data-index','0');
-		if(results.length<25)
-		{
-			$(next_element).hide();
-		}
-		else
-		{
-			$(next_element).show();
-		}
-		if(prev_index<0)
-		{
-			$(prev_element).hide();
-		}
-		else
-		{
-			$(prev_element).show();
-		}
-		/////////////
-
-		longPressEditable($('.dblclick_editable'));
-		
-		var export_button=filter_fields.elements[4];
-		$(export_button).off("click");
-		$(export_button).on("click", function(event)
-		{
-			my_obj_array_to_csv(results,'store_movement');
-		});
-		hide_loader();
 	});
 };

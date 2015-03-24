@@ -125,14 +125,20 @@ function server_read_single_column(column,callback,results)
 	{
 		//console.log(column);
 		//console.log(e.responseText);
-		var row=e.responseXML.childNodes[0].childNodes;
-		for(var i=0; i<row.length; i++)
-		{
-			if(row[i].nodeName!="" && row[i].nodeName!="#text")
+		var parser=new DOMParser();
+		var dom_obj=parser.parseFromString(e.responseText, "text/xml");
+		if(dom_obj.documentElement.nodeName != "parsererror")
+		{			
+			var row=e.responseXML.childNodes[0].childNodes;
+			for(var i=0; i<row.length; i++)
 			{
-				results.push(row[i].innerHTML);
+				if(row[i].nodeName!="" && row[i].nodeName!="#text")
+				{
+					results.push(row[i].innerHTML);
+				}
 			}
 		}
+
 		callback(results);
 	});
 }
@@ -147,18 +153,23 @@ function server_read_multiple_column(columns,callback,results)
 	{
 		//console.log(columns);
 		//console.log(e.responseText);
-		var row=e.responseXML.childNodes[0].childNodes;
-		for(var i=0; i<row.length; i++)
+		var parser=new DOMParser();
+		var dom_obj=parser.parseFromString(e.responseText, "text/xml");
+		if(dom_obj.documentElement.nodeName != "parsererror")
 		{
-			if(row[i].nodeName!="" && row[i].nodeName!="#text")
+			var row=e.responseXML.childNodes[0].childNodes;
+			for(var i=0; i<row.length; i++)
 			{
-				var data=row[i].childNodes;
-				var row_data=[];
-				for(var j=0;j<data.length;j++)
+				if(row[i].nodeName!="" && row[i].nodeName!="#text")
 				{
-					row_data[data[j].nodeName]=data[j].innerHTML;
+					var data=row[i].childNodes;
+					var row_data=[];
+					for(var j=0;j<data.length;j++)
+					{
+						row_data[data[j].nodeName]=data[j].innerHTML;
+					}
+					results.push(row_data);
 				}
-				results.push(row_data);
 			}
 		}
 		callback(results);
@@ -413,6 +424,26 @@ function server_get_inventory(product,batch,callback)
 		}
 	});
 }
+
+function server_get_store_inventory(store,product,batch,callback)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var re_access=get_session_var('re');
+	ajax_with_custom_func("./ajax/get_store_inventory.php","domain="+domain+"&username="+username+"&re="+re_access+"&store="+store+"&product="+product+"&batch="+batch,function(e)
+	{
+		//console.log(e.responseText);
+		if(isNaN(e.responseText))
+		{
+			callback(0);
+		}
+		else
+		{
+			callback(e.responseText);
+		}
+	});
+}
+
 
 function server_generate_report(report_id,results,callback)
 {

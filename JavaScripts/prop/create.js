@@ -1735,9 +1735,8 @@ function form21_create_item(form)
 		var batch=form.elements[8].value;
 		var storage=form.elements[9].value;
 		var data_id=form.elements[10].value;
-		
 		var last_updated=get_my_time();
-			
+
 		var data_xml="<supplier_bill_items>" +
 				"<id>"+data_id+"</id>" +
 				"<product_name>"+name+"</product_name>" +
@@ -2097,7 +2096,7 @@ function form38_create_item(form)
 		var product_name=form.elements[0].value;
 		var batch=form.elements[1].value;
 		var name=form.elements[2].value;
-		var data_id=form.elements[3].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<area_utilization>" +
 					"<id>"+data_id+"</id>" +
@@ -2126,16 +2125,16 @@ function form38_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var save_button=form.elements[4];
+		var save_button=form.elements[5];
 		$(save_button).hide();
-		var del_button=form.elements[5];
+		var del_button=form.elements[6];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form38_delete_item(del_button);
 		});
+		
 		$(form).off('submit');
-
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
@@ -6628,17 +6627,21 @@ function form105_create_item(form)
 		var tablename=document.getElementById('form105_master').elements[1].value;
 		var record_id=document.getElementById('form105_master').elements[2].value;
 		var access_type=form.elements[0].value;
-		var user=form.elements[1].value;
-		var criteria_field=form.elements[2].value;
-		var criteria_value=form.elements[3].value;
-		var data_id=form.elements[4].value;
+		var user_type=form.elements[1].value;
+		var user=form.elements[2].value;
+		var user_field=form.elements[3].value;
+		var criteria_field=form.elements[4].value;
+		var criteria_value=form.elements[5].value;
+		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var data_xml="<data_access>" +
 					"<id>"+data_id+"</id>" +
 					"<tablename>"+tablename+"</tablename>" +
 					"<record_id>"+record_id+"</record_id>" +
 					"<access_type>"+access_type+"</access_type>" +
+					"<user_type>"+user_type+"</user_type>" +
 					"<user>"+user+"</user>" +
+					"<user_field>"+user_field+"</user_field>" +
 					"<criteria_field>"+criteria_field+"</criteria_field>" +
 					"<criteria_value>"+criteria_value+"</criteria_value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -6651,11 +6654,11 @@ function form105_create_item(form)
 		{
 			local_create_simple(data_xml);
 		}	
-		for(var i=0;i<5;i++)
+		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[6];
+		var del_button=form.elements[8];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
@@ -10757,6 +10760,8 @@ function form145_create_item(form)
 		var target=form.elements[4].value;
 		var status=form.elements[5].value;
 		var data_id=form.elements[6].value;
+		var receiver=form.elements[7].value;
+		//console.log(receiver);
 		var last_updated=get_my_time();
 		var data_xml="<store_movement>" +
 					"<id>"+data_id+"</id>" +
@@ -10766,6 +10771,8 @@ function form145_create_item(form)
 					"<source>"+source+"</source>"+
 					"<target>"+target+"</target>"+
 					"<status>"+status+"</status>"+
+					"<dispatcher>"+get_account_name()+"</dispatcher>"+
+					"<receiver>"+receiver+"</receiver>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</store_movement>";	
 		var activity_xml="<activity>" +
@@ -10788,18 +10795,42 @@ function form145_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var save_button=form.elements[7];
+		var save_button=form.elements[8];
 		$(save_button).hide();
-		var del_button=form.elements[8];
+		var del_button=form.elements[9];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form145_delete_item(del_button);
 		});
-		$(form).off('submit');
-		$(form).on('submit',function(event)
+		
+		///////////adding store placement////////
+		var storage_data="<area_utilization>" +
+				"<id></id>" +
+				"<name exact='yes'>"+target+"</name>" +
+				"<item_name exact='yes'>"+product_name+"</item_name>" +
+				"<batch exact='yes'>"+batch+"</batch>" +
+				"</area_utilization>";
+		fetch_requested_data('',storage_data,function(placements)
 		{
-			event.preventDefault();
+			if(placements.length===0 && target!="")
+			{
+				var storage_xml="<area_utilization>" +
+						"<id>"+get_new_key()+"</id>" +
+						"<name>"+target+"</name>" +
+						"<item_name>"+product_name+"</item_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</area_utilization>";
+				if(is_online())
+				{
+					server_create_simple(storage_xml);
+				}
+				else
+				{
+					local_create_simple(storage_xml);
+				}
+			}
 		});
 	}
 	else

@@ -855,7 +855,8 @@ function modal14_action(func)
 	var fbarcode=form.elements[7];
 	var auto_generate=form.elements[8];
 	
-	fbarcode.value="";
+	fbarcode.value=get_my_time();
+	auto_generate.checked=true;
 	
 	$(auto_generate).off('click');
 	$(auto_generate).on('click',function(event)
@@ -3261,7 +3262,13 @@ function modal33_action(id)
 function modal35_action(func)
 {
 	var form=document.getElementById("modal35_form");
-	var area_type_filter=form.elements[2];
+	var owner_filter=form.elements[2];
+	var area_type_filter=form.elements[3];
+
+	var owner_data="<staff>"+
+				"<acc_name></acc_name>"+
+				"</staff>";
+	set_my_value_list(owner_data,owner_filter);
 	
 	set_static_value_list('store_areas','area_type',area_type_filter);
 	
@@ -3294,11 +3301,13 @@ function modal35_action(func)
 		{
 			var data_id=get_new_key();
 			var name=form.elements[1].value;
-			var area_type=form.elements[2].value;
+			var owner=form.elements[2].value;
+			var area_type=form.elements[3].value;
 			var last_updated=get_my_time();
 			var data_xml="<store_areas>" +
 						"<id>"+data_id+"</id>" +
 						"<name unique='yes'>"+name+"</name>" +
+						"<owner>"+owner+"</owner>" +
 						"<area_type>"+area_type+"</area_type>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</store_areas>";
@@ -5516,5 +5525,189 @@ function modal107_action(data_id)
 			form.elements[5].value=phase.status;
 		});
 		$("#modal107").dialog("open");
+	});
+}
+
+/**
+ * @modalNo 108
+ * @modal Workflow Assignees (Record level)
+ * @param button
+ */
+function modal108_action(tablename,record_id)
+{
+	var form=document.getElementById('modal108_form');
+
+	var type_filter=form.elements[1];
+	var user_type_filter=form.elements[2];
+	var user_filter=form.elements[3];
+	var user_field_filter=form.elements[4];
+	var field_filter=form.elements[5];
+	var value_filter=form.elements[6];
+
+	$(user_type_filter).off('blur');
+	$(user_type_filter).on('blur',function()
+	{
+		$(user_filter).hide();
+		$(user_field_filter).hide();
+
+		if(user_type_filter.value=='user')
+		{
+			$(user_filter).show();
+		}
+		else if(user_type_filter.value=='field')
+		{
+			$(user_field_filter).show();
+		}
+	});
+
+	set_static_value_list('data_access','access_type',type_filter);
+	
+	var user_data="<accounts>" +
+			"<acc_name></acc_name>" +
+			"</accounts>";
+	set_my_value_list(user_data,user_filter);
+	
+	var field_data="<user_fields_list>"+
+				"<field_name></field_name>"+
+				"<tablename exact='yes'>"+tablename+"</tablename>"+
+				"</user_fields_list>";		
+	set_my_value_list(field_data,user_filter);
+	
+	var field_data="<data_access>" +
+			"<criteria_field></criteria_field>" +
+			"<tablename exact='yes'>"+tablename+"</tablename>" +
+			"</data_access>";
+	set_my_filter(field_data,field_filter);
+	
+	$(type_filter).focus();
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		
+		var access_type=form.elements[1].value;
+		var user_type=form.elements[2].value;
+		var user=form.elements[3].value;
+		var user_field=form.elements[4].value;
+		var criteria_field=form.elements[5].value;
+		var criteria_value=form.elements[6].value;
+		var data_id=get_new_key();
+		var last_updated=get_my_time();
+		var data_xml="<data_access>" +
+					"<id>"+data_id+"</id>" +
+					"<tablename>"+tablename+"</tablename>" +
+					"<record_id>"+record_id+"</record_id>" +
+					"<access_type>"+access_type+"</access_type>" +
+					"<user_type>"+user_type+"</user_type>" +
+					"<user>"+user+"</user>" +
+					"<user_field>"+user_field+"</user_field>" +
+					"<criteria_field>"+criteria_field+"</criteria_field>" +
+					"<criteria_value>"+criteria_value+"</criteria_value>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</data_access>";
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+	
+		$("#modal108").dialog("close");
+	});
+}
+
+/**
+ * @modalNo 109
+ * @modal Workflow Assignees
+ * @param button
+ */
+function modal109_action(tablename)
+{
+	var form=document.getElementById('modal109_form');
+
+	var type_filter=form.elements[1];
+	var user_type_filter=form.elements[2];
+	var user_filter=form.elements[3];
+	var user_field_filter=form.elements[4];
+	var field_filter=form.elements[5];
+	var value_filter=form.elements[6];
+
+	$(user_field_filter).parent().hide();
+
+	$(user_type_filter).off('blur');
+	$(user_type_filter).on('blur',function()
+	{
+		$(user_filter).parent().hide();
+		$(user_field_filter).parent().hide();
+
+		if(user_type_filter.value=='user')
+		{
+			$(user_filter).parent().show();
+		}
+		else if(user_type_filter.value=='field')
+		{
+			$(user_field_filter).parent().show();
+		}
+	});
+
+	set_static_value_list('data_access','access_type',type_filter);
+	
+	var user_data="<accounts>" +
+			"<acc_name></acc_name>" +
+			"</accounts>";
+	set_my_value_list(user_data,user_filter);
+	
+	var field_data="<user_fields_list>"+
+				"<field_name></field_name>"+
+				"<tablename exact='yes'>"+tablename+"</tablename>"+
+				"</user_fields_list>";		
+	set_my_value_list(field_data,user_filter);
+	
+	var field_data="<data_access>" +
+				"<criteria_field></criteria_field>" +
+				"<tablename exact='yes'>"+tablename+"</tablename>" +
+				"</data_access>";
+	set_my_filter(field_data,field_filter);
+	
+	$(type_filter).focus();
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		
+		var access_type=form.elements[1].value;
+		var user_type=form.elements[2].value;
+		var user=form.elements[3].value;
+		var user_field=form.elements[4].value;
+		var criteria_field=form.elements[5].value;
+		var criteria_value=form.elements[6].value;
+		var data_id=get_new_key();
+		var last_updated=get_my_time();
+		var data_xml="<data_access>" +
+					"<id>"+data_id+"</id>" +
+					"<tablename>"+tablename+"</tablename>" +
+					"<record_id>all</record_id>" +
+					"<access_type>"+access_type+"</access_type>" +
+					"<user_type>"+user_type+"</user_type>" +
+					"<user>"+user+"</user>" +
+					"<user_field>"+user_field+"</user_field>" +
+					"<criteria_field>"+criteria_field+"</criteria_field>" +
+					"<criteria_value>"+criteria_value+"</criteria_value>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</data_access>";
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+	
+		$("#modal109").dialog("close");
 	});
 }

@@ -4,7 +4,8 @@
 			<tr>
 				<form id='form83_header'></form>
 					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form83_header'></th>
-					<th>Type </th>
+					<th>Owner <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form83_header'></th>					
+					<th>Type <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form83_header'></th>
 					<th><input type='button' form='form83_header' value='Add item' class='add_icon' onclick='modal35_action();'>
 						<input type='button' form='form83_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form83_header' style='visibility: hidden;'>

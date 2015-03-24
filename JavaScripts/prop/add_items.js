@@ -1112,9 +1112,51 @@ function form21_add_item()
 
 		var storage_data="<store_areas>" +
 					"<name></name>" +
+					"<owner></owner>"+					
 					"<area_type exact='yes'>storage</area_type>" +
 					"</store_areas>";
-		set_my_value_list(storage_data,storage_filter);
+		fetch_requested_data('',storage_data,function(storages) 
+		{
+			var form=fields;
+			var datalist=document.createElement('datalist');
+			var element_array=[];
+			storages.forEach(function(d)
+			{
+				var option=document.createElement('option');
+				option.setAttribute('value',d.name);
+				element_array.push(d.name);
+				datalist.appendChild(option);
+				if(d.owner==get_account_name())
+				{
+					storage_filter.value=d.name;
+				}
+			});
+			
+			var list_id=storage_filter.getAttribute('list');
+			if(list_id=='' || list_id==null)
+			{
+				list_id="list_"+get_new_key();
+				storage_filter.setAttribute("list",list_id);
+			}
+			else
+			{
+				var oldlist=document.getElementById(list_id);
+				form.removeChild(oldlist);
+			}
+			
+			form.appendChild(datalist);
+			datalist.setAttribute('id',list_id);
+			
+			$(storage_filter).off("change");
+			$(storage_filter).on("change",function(event)
+			{
+				var found = $.inArray($(this).val(), element_array) > -1;
+				if(!found)
+				{
+		            $(this).val('');
+		        }
+			});
+		});
 
 		$(name_filter).on('blur',function(event)
 		{
@@ -1295,6 +1337,9 @@ function form38_add_item()
 				rowsHTML+="<input type='text' form='form38_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' id='form38_add_storage_"+id+"'>";
 			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' readonly='readonly' form='form38_"+id+"'>";
+			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form38_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form38_"+id+"' >";
@@ -1352,7 +1397,7 @@ function form38_add_item()
 		});
 
 		var add_storage=document.getElementById('form38_add_storage_'+id);
-		$(add_batch).on('click',function()
+		$(add_storage).on('click',function()
 		{
 			modal35_action(function()
 			{	
@@ -4247,8 +4292,12 @@ function form105_add_item()
 			rowsHTML+="<td data-th='Access Type'>";
 				rowsHTML+="<input type='text' form='form105_"+id+"' required>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='User'>";
+			rowsHTML+="<td data-th='User Type'>";
 				rowsHTML+="<input type='text' form='form105_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='User'>";
+				rowsHTML+="<input type='text' form='form105_"+id+"'>";
+				rowsHTML+="<input type='text' form='form105_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Criteria Field'>";
 				rowsHTML+="<input type='text' form='form105_"+id+"' title='Leave this blank for unconditional access'>";
@@ -4267,17 +4316,38 @@ function form105_add_item()
 		
 		var fields=document.getElementById("form105_"+id);
 		var type_filter=fields.elements[0];
-		var user_filter=fields.elements[1];
-		var field_filter=fields.elements[2];
+		var user_type_filter=fields.elements[1];
+		var user_filter=fields.elements[2];
+		var user_field_filter=fields.elements[3];
+		var field_filter=fields.elements[4];
 		
 		var master_fields=document.getElementById('form105_master');
-		var tablename=master_fields.elements[1];
+		var tablename=master_fields.elements[1].value;
 		
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
 			form105_create_item(fields);
 		});
+		set_static_value_list('data_access','user_type',user_type_filter);
+		$(user_field_filter).hide();
+		
+		$(user_type_filter).off('blur');
+		$(user_type_filter).on('blur',function()
+		{
+			$(user_filter).hide();
+			$(user_field_filter).hide();
+	
+			if(user_type_filter.value=='user')
+			{
+				$(user_filter).show();
+			}
+			else if(user_type_filter.value=='field')
+			{
+				$(user_field_filter).show();
+			}
+		});
+
 
 		set_static_value_list('data_access','access_type',type_filter);
 		
@@ -4285,6 +4355,12 @@ function form105_add_item()
 				"<acc_name></acc_name>" +
 				"</accounts>";
 		set_my_value_list(user_data,user_filter);
+				
+		var field_data="<user_fields_list>"+
+					"<field_name></field_name>"+
+					"<tablename exact='yes'>"+tablename+"</tablename>"+
+					"</user_fields_list>";		
+		set_my_value_list(field_data,user_field_filter);
 		
 		var field_data="<data_access>" +
 				"<criteria_field></criteria_field>" +
@@ -6622,6 +6698,7 @@ function form136_add_item()
 				rowsHTML+="<input type='button' class='submit_hidden' form='form136_"+id+"' id='save_form136_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form136_"+id+"' id='delete_form136_"+id+"' onclick='$(this).parent().parent().remove();'>";
 				rowsHTML+="<input type='hidden' form='form136_"+id+"' step='any'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form136_"+id+"'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 	
@@ -6660,6 +6737,7 @@ function form136_add_item()
 			$(name_filter).focus();
 		});
 
+		
 		var add_product=document.getElementById('form136_add_product_'+id);
 		$(add_product).on('click',function()
 		{
@@ -6703,9 +6781,61 @@ function form136_add_item()
 
 		var storage_data="<store_areas>" +
 					"<name></name>" +
+					"<owner></owner>"+					
 					"<area_type exact='yes'>storage</area_type>" +
 					"</store_areas>";
-		set_my_value_list(storage_data,storage_filter);
+		fetch_requested_data('',storage_data,function(storages) 
+		{
+			var form=fields;
+			var datalist=document.createElement('datalist');
+			var element_array=[];
+			storages.forEach(function(d)
+			{
+				var option=document.createElement('option');
+				option.setAttribute('value',d.name);
+				element_array.push(d.name);
+				datalist.appendChild(option);
+				if(d.owner==get_account_name())
+				{
+					storage_filter.value=d.name;
+				}
+			});
+			
+			var list_id=storage_filter.getAttribute('list');
+			if(list_id=='' || list_id==null)
+			{
+				list_id="list_"+get_new_key();
+				storage_filter.setAttribute("list",list_id);
+			}
+			else
+			{
+				var oldlist=document.getElementById(list_id);
+				form.removeChild(oldlist);
+			}
+			
+			form.appendChild(datalist);
+			datalist.setAttribute('id',list_id);
+			
+			$(storage_filter).off("change");
+			$(storage_filter).on("change",function(event)
+			{
+				var found = $.inArray($(this).val(), element_array) > -1;
+				if(!found)
+				{
+		            $(this).val('');
+		        }
+			});
+		});
+		
+		set_my_value_list_func(storage_data,storage_filter,function()
+		{
+			var store_value_data="<store_areas count='1'>" +
+				"<name></name>" +
+				"<owner>"+get_account_name()+"</owner>"+
+				"<area_type exact='yes'>storage</area_type>" +
+				"</store_areas>";
+			set_my_value(store_value_data,storage_filter);
+		});
 
 		$(name_filter).on('blur',function(event)
 		{
@@ -7036,10 +7166,10 @@ function form145_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form145_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form145_"+id+"' >";
+				rowsHTML+="<input type='hidden' form='form145_"+id+"' required name='receiver'>";
+				rowsHTML+="<input type='button' class='save_icon' form='form145_"+id+"'>";
 				rowsHTML+="<input type='button' class='delete_icon' form='form145_"+id+"' onclick='$(this).parent().parent().remove();'>";
 				rowsHTML+="<input type='button' class='generic_icon' form='form145_"+id+"' value='Dispatch' onclick='form145_dispatch_item($(this));'>";
-				rowsHTML+="<input type='button' class='generic_icon' form='form145_"+id+"' value='Receive' onclick='form145_receive_item($(this));'>";	
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -7050,8 +7180,10 @@ function form145_add_item()
 		var source_filter=fields.elements[3];
 		var target_filter=fields.elements[4];
 		var status_filter=fields.elements[5];
+		var receiver_filter=fields.elements[7];
+		var save_button=fields.elements[8];
 		
-		$(fields).on("submit", function(event)
+		$(save_button).on("click", function(event)
 		{
 			event.preventDefault();
 			form145_create_item(fields);
@@ -7104,11 +7236,30 @@ function form145_add_item()
 		
 		var source_data="<store_areas>" +
 				"<name></name>" +
+				"<owner>"+get_account_name()+"</owner>"+
 				"<area_type exact='yes'>storage</area_type>" +
 				"</store_areas>";
 		set_my_value_list(source_data,source_filter);
-		set_my_value_list(source_data,target_filter);
+
+		var target_data="<store_areas>" +
+				"<name></name>" +
+				"<area_type exact='yes'>storage</area_type>" +
+				"</store_areas>";
+		set_my_value_list(target_data,target_filter);
+
 		set_static_value_list('store_movement','status',status_filter);	
+		
+		$(target_filter).on('blur',function()
+		{
+			var receiver_data="<store_areas>" +
+				"<owner></owner>"+				
+				"<area_type exact='yes'>storage</area_type>" +
+				"<name exact='yes'>"+target_filter.value+"</name>" +
+				"</store_areas>";
+			//console.log(receiver_data);			
+			set_my_value(receiver_data,receiver_filter);			
+		});
+
 	}
 	else
 	{

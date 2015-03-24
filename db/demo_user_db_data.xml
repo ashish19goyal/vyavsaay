@@ -2,6 +2,56 @@
 <re_xml>
 	<user_preferences>
 		<row>
+			<name>purchase_store</name>
+			<display_name>Store for purchased items</display_name>
+			<status>active</status>
+			<value>Store 1</value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>sales_store</name>
+			<display_name>Store for sold items</display_name>
+			<status>active</status>
+			<value>Store 1</value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>purchase_return_store</name>
+			<display_name>Store store for purchase returns</display_name>
+			<status>active</status>
+			<value>Store 1</value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>sales_return_store</name>
+			<display_name>Store for sales returns</display_name>
+			<status>active</status>
+			<value>Store 1</value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>discard_items_store</name>
+			<display_name>Store for discarded items</display_name>
+			<status>active</status>
+			<value>Store 1</value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>bill_num</name>
 			<display_name>Next Bill series number</display_name>
 			<status>active</status>

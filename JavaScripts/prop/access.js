@@ -73,30 +73,108 @@ function if_data_read_access(tablename,func)
 			"<criteria_field></criteria_field>" +
 			"<criteria_value></criteria_value>" +
 			"<access_type></access_type>" +
+			"<user_type></user_type>"+
+			"<user></user>" +
+			"<user_field></user_field>"+
 			"<tablename exact='yes'>"+tablename+"</tablename>" +
-			"<user exact='yes'>"+acc_name+"</user>" +
 			"</data_access>";
-	fetch_requested_data('',access_data,function(data)
+	fetch_requested_data('',access_data,function(datas)
 	{
-		func(data);
+		var user_fields_array=[];
+		var final_array=[];
+		datas.forEach(function(data)
+		{
+			if(data.user_type=='field')
+			{
+				user_fields_array.push(data);
+			}
+			else if(data.user_type=='user' && data.user==acc_name)
+			{
+				final_array.push(data);
+			}
+		});
+
+		var count=user_fields_array.length;
+		user_fields_array.forEach(function (obj)
+		{
+			var access2_data="<"+tablename+">"+
+				"<id></id>"+
+				"<"+obj.user_field+">"+acc_name+"</"+obj.user_field+">"+
+				"</"+tablename+">";
+			fetch_requested_data('',access2_data,function (datas2) 
+			{
+				if(datas2.length>0)
+				{
+					final_array.push(obj);
+				}
+				count-=1;
+			});			
+		});
+		
+		var final_array_timer=setInterval(function()
+		{
+			if(count==0)
+			{
+  		   		clearInterval(final_array_timer);
+				func(final_array);
+  	   		}
+    	},100);				
 	});
 }
 
 function if_data_update_access(tablename,func)
-{
-	var acc_name=get_account_name();
-	
+{		
 	var access_data="<data_access>" +
-		"<record_id></record_id>" +
-		"<criteria_field></criteria_field>" +
-		"<criteria_value></criteria_value>" +
-		"<access_type array='yes'>--all--update--</access_type>" +
-		"<tablename exact='yes'>"+tablename+"</tablename>" +
-		"<user exact='yes'>"+acc_name+"</user>" +
-		"</data_access>";
-	fetch_requested_data('',access_data,function(data)
+			"<record_id></record_id>" +
+			"<criteria_field></criteria_field>" +
+			"<criteria_value></criteria_value>" +
+			"<access_type array='yes'>--all--update--</access_type>" +
+			"<user_type></user_type>"+
+			"<user></user>" +
+			"<user_field></user_field>"+
+			"<tablename exact='yes'>"+tablename+"</tablename>" +
+			"</data_access>";
+	fetch_requested_data('',access_data,function(datas)
 	{
-		func(data);
+		var user_fields_array=[];
+		var final_array=[];
+		datas.forEach(function(data)
+		{
+			if(data.user_type=='field')
+			{
+				user_fields_array.push(data);
+			}
+			else if(data.user_type=='user' && data.user==acc_name)
+			{
+				final_array.push(data);
+			}
+		});
+
+		var count=user_fields_array.length;
+		user_fields_array.forEach(function (obj)
+		{
+			var access2_data="<"+tablename+">"+
+				"<id></id>"+
+				"<"+obj.user_field+">"+acc_name+"</"+obj.user_field+">"+
+				"</"+tablename+">";
+			fetch_requested_data('',access2_data,function (datas2) 
+			{
+				if(datas2.length>0)
+				{
+					final_array.push(obj);
+				}
+				count-=1;
+			});			
+		});
+		
+		var final_array_timer=setInterval(function()
+		{
+			if(count==0)
+			{
+  		   		clearInterval(final_array_timer);
+				func(final_array);
+  	   		}
+    	},100);				
 	});
 }
 
@@ -105,33 +183,113 @@ function if_data_delete_access(tablename,func)
 	var acc_name=get_account_name();
 	
 	var access_data="<data_access>" +
-		"<record_id></record_id>" +
-		"<criteria_field></criteria_field>" +
-		"<criteria_value></criteria_value>" +
-		"<access_type array='yes'>--all--delete--</access_type>" +
-		"<tablename exact='yes'>"+tablename+"</tablename>" +
-		"<user exact='yes'>"+acc_name+"</user>" +
-		"</data_access>";
-	fetch_requested_data('',access_data,function(data)
+			"<record_id></record_id>" +
+			"<criteria_field></criteria_field>" +
+			"<criteria_value></criteria_value>" +
+			"<access_type array='yes'>--all--delete--</access_type>" +
+			"<user_type></user_type>"+
+			"<user></user>" +
+			"<user_field></user_field>"+
+			"<tablename exact='yes'>"+tablename+"</tablename>" +
+			"</data_access>";
+	fetch_requested_data('',access_data,function(datas)
 	{
-		func(data);
+		var user_fields_array=[];
+		var final_array=[];
+		datas.forEach(function(data)
+		{
+			if(data.user_type=='field')
+			{
+				user_fields_array.push(data);
+			}
+			else if(data.user_type=='user' && data.user==acc_name)
+			{
+				final_array.push(data);
+			}
+		});
+
+		var count=user_fields_array.length;
+		user_fields_array.forEach(function (obj)
+		{
+			var access2_data="<"+tablename+">"+
+				"<id></id>"+
+				"<"+obj.user_field+">"+acc_name+"</"+obj.user_field+">"+
+				"</"+tablename+">";
+			fetch_requested_data('',access2_data,function (datas2) 
+			{
+				if(datas2.length>0)
+				{
+					final_array.push(obj);
+				}
+				count-=1;
+			});			
+		});
+		
+		var final_array_timer=setInterval(function()
+		{
+			if(count==0)
+			{
+  		   		clearInterval(final_array_timer);
+				func(final_array);
+  	   		}
+    	},100);				
 	});
 }
 
 function if_data_all_access(tablename,record_id,func)
 {
 	var acc_name=get_account_name();
-	
+		
 	var access_data="<data_access>" +
-		"<record_id array='yes'>--"+record_id+"--all--</record_id>" +
-		"<criteria_field></criteria_field>" +
-		"<criteria_value></criteria_value>" +
-		"<access_type array='yes'>--all--delete--</access_type>" +
-		"<tablename exact='yes'>"+tablename+"</tablename>" +
-		"<user exact='yes'>"+acc_name+"</user>" +
-		"</data_access>";
-	fetch_requested_data('',access_data,function(data)
+			"<record_id array='yes'>--"+record_id+"--all--</record_id>" +
+			"<criteria_field></criteria_field>" +
+			"<criteria_value></criteria_value>" +
+			"<access_type array='yes'>--all--delete--</access_type>" +
+			"<user_type></user_type>"+
+			"<user></user>" +
+			"<user_field></user_field>"+
+			"<tablename exact='yes'>"+tablename+"</tablename>" +
+			"</data_access>";
+	fetch_requested_data('',access_data,function(datas)
 	{
-		func(data);
+		var user_fields_array=[];
+		var final_array=[];
+		datas.forEach(function(data)
+		{
+			if(data.user_type=='field')
+			{
+				user_fields_array.push(data);
+			}
+			else if(data.user_type=='user' && data.user==acc_name)
+			{
+				final_array.push(data);
+			}
+		});
+
+		var count=user_fields_array.length;
+		user_fields_array.forEach(function (obj)
+		{
+			var access2_data="<"+tablename+">"+
+				"<id></id>"+
+				"<"+obj.user_field+">"+acc_name+"</"+obj.user_field+">"+
+				"</"+tablename+">";
+			fetch_requested_data('',access2_data,function (datas2) 
+			{
+				if(datas2.length>0)
+				{
+					final_array.push(obj);
+				}
+				count-=1;
+			});			
+		});
+		
+		var final_array_timer=setInterval(function()
+		{
+			if(count==0)
+			{
+  		   		clearInterval(final_array_timer);
+				func(final_array);
+  	   		}
+    	},100);				
 	});
 }

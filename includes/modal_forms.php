@@ -407,6 +407,7 @@
 		<form id='modal35_form'>
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
+				<label>Owner: <input type='text'></label><br>
 				<label>Area Type: <input type="text" value='storage'></label><br>
 				<label id='modal35_attributes'></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
@@ -689,6 +690,34 @@
 				<label>Start Time: <input type='text' required></label><br>
 				<label>End Time: <input type='text' required></label><br>
 				<label>Status: <input type='text' required></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal108" title="Workflow Assignees (Record Level)">
+		<form id='modal108_form'>
+			<fieldset>
+				<label>Access Type: <input type='text' required></label><br>
+				<label>User Field: <input required type='text'></label><br>
+				<label>User: <input type='text'></label><br>
+				<label>User Field: <input type='text'></label><br>
+				<label>Criteria Field: <input type='text'></label><br>
+				<label>Criteria Value: <input type='text'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal109" title="Workflow Assignees">
+		<form id='modal109_form'>
+			<fieldset>
+				<label>Access Type: <input type='text' required></label><br>
+				<label>User Field: <input required type='text'></label><br>
+				<label>User: <input type='text'></label><br>
+				<label>User Field: <input type='text'></label><br>
+				<label>Criteria Field: <input type='text'></label><br>
+				<label>Criteria Value: <input type='text'></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>

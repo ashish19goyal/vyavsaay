@@ -2118,13 +2118,20 @@ function form83_header_ini()
 {
 	var filter_fields=document.getElementById('form83_header');
 	var name_filter=filter_fields.elements[0];
+	var owner_filter=filter_fields.elements[1];
+	var type_filter=filter_fields.elements[2];
 	
 	var area_data="<store_areas>" +
 			"<name></name>" +
-			"</store_areas>";
-	
+			"</store_areas>";	
 	set_my_filter(area_data,name_filter);
 	
+	var owner_data="<staff>"+
+					"<acc_name></acc_name>"+
+					"</staff>";
+	set_my_filter(owner_data,owner_filter);
+	set_static_filter('store_areas','type',type_filter);					
+				
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
@@ -2916,7 +2923,7 @@ function form105_header_ini()
 	var tables_data="<data_access>" +
 			"<tablename></tablename>" +
 			"</data_access>";
-	set_my_value_list(tables_data,table);
+	set_my_filter(tables_data,table);
 }
 
 

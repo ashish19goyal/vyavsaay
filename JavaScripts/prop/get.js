@@ -88,6 +88,18 @@ function get_inventory(product,batch,callback)
 	}
 }
 
+function get_store_inventory(store,product,batch,callback)
+{	
+	if(is_online())
+	{
+		server_get_store_inventory(store,product,batch,callback);
+	}
+	else
+	{
+		local_get_store_inventory(store,product,batch,callback);
+	}
+}
+
 
 /**
  * @returns {Array}
