@@ -64,7 +64,7 @@ function login_online(username,domain,pass)
 		}
 		else
 		{
-			console.log(e.responseText);
+			//console.log(e.responseText);
 			var session_var=session_xml.getElementsByTagName('session');
 			var session_vars=new Object();
 			var num_svar=session_var[0].childElementCount;

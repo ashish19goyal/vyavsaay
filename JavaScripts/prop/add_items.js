@@ -7181,6 +7181,7 @@ function form145_add_item()
 		var fields=document.getElementById("form145_"+id);
 		var product_filter=fields.elements[0];
 		var batch_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
 		var source_filter=fields.elements[3];
 		var target_filter=fields.elements[4];
 		var status_filter=fields.elements[5];
@@ -7244,6 +7245,14 @@ function form145_add_item()
 				"<area_type exact='yes'>storage</area_type>" +
 				"</store_areas>";
 		set_my_value_list(source_data,source_filter);
+
+		$(source_filter).on('blur',function () 
+		{
+			get_store_inventory(source_filter.value,product_filter.value,batch_filter.value,function(inventory)
+			{
+				$(quantity_filter).attr('max',inventory);
+			});
+		});
 
 		var target_data="<store_areas>" +
 				"<name></name>" +
