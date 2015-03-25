@@ -7266,3 +7266,85 @@ function form145_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manufacturing
+ * @formNo 146
+ */
+function form146_add_item()
+{
+	if(is_create_access('form146'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form146_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Product'>";
+				rowsHTML+="<input type='text' form='form146_"+id+"' required value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form146_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<textarea form='form146_"+id+"' required></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' form='form146_"+id+"' step='any' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Schedule'>";
+				rowsHTML+="<input type='text' form='form146_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' required form='form146_"+id+"' value='scheduled'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form146_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form146_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form146_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form146_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form146_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form146_"+id);
+		var product_filter=fields.elements[0];
+		var schedule_filter=fields.elements[3];
+		var status_filter=fields.elements[4];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form146_create_item(fields);
+		});
+					
+		var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+		set_my_value_list_func(product_data,product_filter,function () 
+		{
+			$(product_filter).focus();
+		});
+
+		var add_product=document.getElementById('form146_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal14_action(function()
+			{	
+				var products_data="<product_master>" +
+					"<name></name>" +
+					"</product_master>";
+				set_my_value_list_func(product_data,product_filter,function () 
+				{
+					$(product_filter).focus();
+				});
+			});
+		});
+		
+		set_static_value_list('manufacturing_schedule','status',status_filter);
+		$(schedule_filter).datetimepicker();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}

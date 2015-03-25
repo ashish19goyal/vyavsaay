@@ -4517,3 +4517,55 @@ function form145_import(data_array,import_type)
 		}
 	}
 };
+
+/**
+* @form Manufacturing
+* @formNo 146
+*/
+function form146_import(data_array,import_type)
+{
+	var data_xml="<manufacturing_schedule>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</manufacturing_schedule><separator></separator><manufacturing_schedule>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product>"+row.product+"</product>" +
+				"<batch>"+row.batch+"</batch>"+
+				"<quantity>"+row.quantity+"</quantity>"+
+				"<schedule>"+get_raw_time(row.schedule)+"</schedule>" +
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</manufacturing_schedule>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};

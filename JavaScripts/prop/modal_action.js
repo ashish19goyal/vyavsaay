@@ -5711,3 +5711,97 @@ function modal109_action(tablename)
 		$("#modal109").dialog("close");
 	});
 }
+
+/**
+ * @modalNo 110
+ * @modal Add to inventory
+ * @param button
+ */
+function modal110_action(button)
+{
+	var form_id=$(button).attr('form');
+	var master_form=document.getElementById(form_id);
+	var product_name=master_form.elements[0].value;
+	var batch=master_form.elements[1].value;
+	var quantity=master_form.elements[2].value;	
+	var data_id=master_form.elements[5].value;
+
+	var form=document.getElementById('modal110_form');
+
+	var manu_filter=form.elements[1];
+	var expiry_type_filter=form.elements[2];
+	var store_filter=form.elements[5];
+	
+	var store_data="<store_areas>"+
+					"<name></name>"+
+					"<area_type exact='yes'>storage</area_type>"+					
+					"</store_areas>";
+	set_my_value_list(store_data,store_filter);
+	
+	$(manu_filter).datetimepicker();
+	$(expiry_filter).datetimepicker();	
+	$(manu_filter).focus();
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		
+		master_form.elements[4].value='completed';
+		var last_updated=get_my_time();
+		var manu_date=get_raw_time(form.elements[1].value);
+		var expiry_date=get_raw_time(form.elements[2].value);
+		var cost_price=form.elements[3].value;
+		var sale_price=form.elements[4].value;
+		var store=form.elements[5].value;
+
+		var data_xml="<manufacturing_schedule>" +
+					"<id>"+data_id+"</id>" +
+					"<status>suspended</status>"+					
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</manufacturing_schedule>";
+		var inventory_xml="<inventory_adjust>"+
+					"<id>"+get_new_key()+"</id>"+						
+					"<product_name>"+product_name+"</product_name>"+
+					"<batch>"+batch+"</batch>"+
+					"<quantity>"+quantity+"</quantity>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</inventory_adjust>";		
+		var store_xml="<store_movement>"+
+					"<id>"+get_new_key()+"</id>"+
+					"<item_name>"+product_name+"</item_name>"+
+					"<batch>"+batch+"</batch>"+
+					"<quantity>"+quantity+"</quantity>"+
+					"<target>"+store+"</target>"+
+					"<status>received</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</store_movement>";		
+		var instances_xml="<product_instances>" +
+					"<id>"+get_new_key()+"</id>" +
+					"<product_name>"+product_name+"</product_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<expiry>"+expiry_date+"</expiry>" +
+					"<manufacture_date>"+manu_date+"</manufacture_date>" +
+					"<cost_price>"+cost_price+"</cost_price>" +
+					"<sale_price>"+sale_price+"</sale_price>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</product_instances>";
+
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+			server_create_simple(inventory_xml);
+			server_create_simple(store_xml);
+			server_create_simple(instances_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+			local_create_simple(inventory_xml);
+			local_create_simple(store_xml);
+			local_create_simple(instances_xml);
+		}	
+	
+		$("#modal110").dialog("close");
+	});
+}

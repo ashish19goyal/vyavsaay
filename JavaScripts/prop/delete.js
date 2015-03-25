@@ -4495,3 +4495,44 @@ function form145_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manufacturing
+ * @formNo 146
+ * @param button
+ */
+function form146_delete_item(button)
+{
+	if(is_delete_access('form146'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var product=form.elements[0].value;
+		var data_id=form.elements[5].value;
+		var data_xml="<manufacturing_schedule>" +
+					"<id>"+data_id+"</id>" +
+					"</manufacturing_schedule>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>manufacturing_schedule</tablename>" +
+					"<link_to>form146</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Manufacturing schedule for product "+product+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

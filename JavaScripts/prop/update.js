@@ -7299,3 +7299,105 @@ function form145_cancel_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manufacturing
+ * @formNo 146
+ * @param button
+ */
+function form146_update_item(form)
+{
+	if(is_update_access('form146'))
+	{
+		var product=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var schedule=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<manufacturing_schedule>" +
+					"<id>"+data_id+"</id>" +
+					"<product>"+product+"</product>" +
+					"<batch>"+batch+"</batch>" +
+					"<status>"+status+"</status>" +
+					"<schedule>"+schedule+"</schedule>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</manufacturing_schedule>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>manufacturing_schedule</tablename>" +
+					"<link_to>form146</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Manufacturing schedule for product "+product+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Manufacturing
+ * @param button
+ */
+function form146_suspend_item(button)
+{
+	if(is_update_access('form146'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+
+		var product_name=form.elements[0].value;
+		form.elements[4].value='suspended';
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<manufacturing_schedule>" +
+					"<id>"+data_id+"</id>" +
+					"<status>suspended</status>"+					
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</manufacturing_schedule>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>manufacturing_schedule</tablename>" +
+					"<link_to>form146</link_to>" +
+					"<title>Suspended</title>" +
+					"<notes>Manufacturing of product "+product_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		$(button).hide();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

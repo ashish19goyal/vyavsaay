@@ -57,7 +57,7 @@
   	"payments_due":"Payments due",
   	"payments_due_to_suppliers":"Payments due to Suppliers",
   	"payments_due_from_customers":"Payments Due From Customers",
-  	"update_inventory":"Update Inventory",
+  	"update_inventory":"Inventory",
   	"dispose_items":"Dispose items",
   	"inventory_predictions":"Inventory predictions",
   	"short_inventory":"Short Inventory",
@@ -237,6 +237,7 @@
   	"trial_balance":"Trial Balance",
   	"activities":"Activities",
   	"manage_orders_app":"Manage Orders from App",
-  	"store_movement":"Store Movement"
+  	"store_movement":"Store Movement",
+  	"manufacturing":"Manufacturing"
   }
 }

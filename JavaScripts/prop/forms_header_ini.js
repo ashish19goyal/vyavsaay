@@ -5015,3 +5015,34 @@ function form145_header_ini()
 	set_my_filter(batch_data,batch_filter);
 	set_static_filter('store_movement','status',status_filter);
 };
+
+/**
+ * @form Manufacturing
+ * @formNo 146
+ */
+function form146_header_ini()
+{
+	var filter_fields=document.getElementById('form146_header');
+	var product_filter=filter_fields.elements[0];
+	var batch_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var name_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";	
+	set_my_filter(name_data,product_filter);
+
+	var batch_data="<product_instances>" +
+			"<batch></batch>" +
+			"</product_instances>";	
+	set_my_filter(batch_data,batch_filter);
+	
+	set_static_filter('manufacturing_schedule','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form146_ini();
+	});
+};

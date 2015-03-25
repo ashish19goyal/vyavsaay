@@ -853,3 +853,13 @@ function form145_import_template()
 	                'status','dispatcher','receiver'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Manufacturing
+* @formNo 146
+*/
+function form146_import_template()
+{
+	var data_array=['id','product','batch','quantity','status','schedule'];
+	my_array_to_csv(data_array);
+};

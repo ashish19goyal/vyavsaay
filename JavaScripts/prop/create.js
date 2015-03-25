@@ -10838,3 +10838,70 @@ function form145_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manufacturing Schedule
+ * @formNo 146
+ */
+function form146_create_item(form)
+{
+	if(is_create_access('form146'))
+	{
+		var product=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var schedule=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;		
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<manufacturing_schedule>" +
+					"<id>"+data_id+"</id>" +
+					"<product>"+product+"</product>" +
+					"<batch>"+batch+"</batch>" +
+					"<status>"+status+"</status>" +
+					"<schedule>"+schedule+"</schedule>" +
+					"<quantity>"+quantity+"</quantity>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</manufacturing_schedule>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>manufacturing_schedule</tablename>" +
+					"<link_to>form146</link_to>" +
+					"<title>Scheduled</title>" +
+					"<notes>Manufacturing of product "+product+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+
+
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		var del_button=form.elements[7];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form146_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form146_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

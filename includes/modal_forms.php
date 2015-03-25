@@ -723,4 +723,17 @@
 		</form>
 	</div>
 
+	<div id="modal110" title="Add to Inventory">
+		<form id='modal110_form'>
+			<fieldset>
+				<label>Manufacturing Date: <input type='text'></label><br>
+				<label>Expiry Date: <input type='text'></label><br>
+				<label>Cost Price: <input type='text'></label><br>
+				<label>Sales Price: <input type='text'></label><br>
+				<label>Store: <input type='text'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>
