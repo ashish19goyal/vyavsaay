@@ -39,8 +39,8 @@
 					$query6="select sum(quantity) from store_movement where item_name=? and source=?";
 					$query61="select sum(quantity) from store_movement where item_name=? and target=?";
 					$query7="select sum(quantity) from discarded where product_name=? and storage=?";
-					$query8="select sum(quantity) from unbilled_sale_items where product_name=? and storage=?";
-					$query9="select sum(quantity) from unbilled_purchase_items where product_name=? and storage=?";
+					$query8="select sum(quantity) from unbilled_sale_items where item_name=? and storage=?";
+					$query9="select sum(quantity) from unbilled_purchase_items where item_name=? and storage=?";
 				}
 				
 				$db_name="re_user_".$domain;

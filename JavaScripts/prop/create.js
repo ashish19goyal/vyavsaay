@@ -6698,7 +6698,7 @@ function form108_bill(order_id,bill_type)
 	if(is_create_access('form108'))
 	{
 		show_loader();
-		var bill_type='product';
+		//var bill_type='product';
 		var bill_amount=0;
 		var bill_total=0;
 		var bill_offer="";
@@ -6735,7 +6735,6 @@ function form108_bill(order_id,bill_type)
 								"</product_instances>";
 						fetch_requested_data('',batch_data,function(batches)
 						{
-							console.log(batches);
 							var batch="";
 							var sale_price=0;
 							if(batches.length>0)
@@ -6761,7 +6760,7 @@ function form108_bill(order_id,bill_type)
 								var offer_data="<offers>" +
 										"<offer_type>product</offer_type>" +
 										"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
-										"<batch array='yes'>"+batch+"--all</batch>" +
+										"<batch array='yes'>--"+batch+"--all--</batch>" +
 										"<criteria_type></criteria_type>" +
 										"<criteria_amount></criteria_amount>" +
 										"<criteria_quantity></criteria_quantity>" +
@@ -6773,7 +6772,7 @@ function form108_bill(order_id,bill_type)
 										"<free_product_name></free_product_name>" +
 										"<free_product_quantity></free_product_quantity>" +
 										"<offer_detail></offer_detail>" +
-										"<status array='yes'>active--extended</status>" +
+										"<status array='yes'>--active--extended--</status>" +
 										"</offers>";
 								fetch_requested_data('',offer_data,function(offers)
 								{
@@ -6957,8 +6956,6 @@ function form108_bill(order_id,bill_type)
 											"</product_master>";
 									fetch_requested_data('',tax_data,function(taxes)
 									{
-										console.log(taxes);
-	
 										taxes.forEach(function(tax)
 										{
 											item_tax=parseFloat((parseFloat(tax.tax)*(item_amount-parseFloat(item_discount)))/100);
@@ -7133,35 +7130,12 @@ function form108_bill(order_id,bill_type)
 							break;
 						}
 						
-						console.log(sale_orders);
 						for(var z in sale_orders)
 						{
 							var sale_order_xml="<sale_orders>" +
 										"<id>"+order_id+"</id>" +
 										"<status>billed</status>" +
 										"</sale_orders>";
-							var bill_xml="<bills>" +
-										"<id>"+order_id+"</id>" +
-										"<customer_name>"+sale_orders[z].customer_name+"</customer_name>" +
-										"<bill_date>"+get_my_time()+"</bill_date>" +
-										"<billing_type>"+bill_type+"</billing_type>" +
-										"<amount>"+bill_amount+"</amount>" +
-										"<total>"+bill_total+"</total>" +
-										"<type>product</type>" +
-										"<offer>"+bill_offer+"</offer>" +
-										"<discount>"+bill_discount+"</discount>" +
-										"<tax>"+bill_tax+"</tax>" +
-										"<transaction_id>"+order_id+"</transaction_id>" +
-										"<last_updated>"+get_my_time()+"</last_updated>" +
-										"</bills>";
-							var activity_xml="<activity>" +
-										"<data_id>"+order_id+"</data_id>" +
-										"<tablename>bills</tablename>" +
-										"<link_to>form42</link_to>" +
-										"<title>Saved</title>" +
-										"<notes>Bill no "+order_id+"</notes>" +
-										"<updated_by>"+get_name()+"</updated_by>" +
-										"</activity>";
 							var transaction_xml="<transactions>" +
 										"<id>"+order_id+"</id>" +
 										"<trans_date>"+get_my_time()+"</trans_date>" +
@@ -7198,7 +7172,6 @@ function form108_bill(order_id,bill_type)
 							if(is_online())
 							{
 								server_update_simple(sale_order_xml);
-								server_create_row(bill_xml,activity_xml);
 								server_create_simple(transaction_xml);
 								server_create_simple(pt_xml);
 								server_create_simple(payment_xml);
@@ -7206,11 +7179,60 @@ function form108_bill(order_id,bill_type)
 							else
 							{
 								local_update_simple(sale_order_xml);
-								local_create_row(bill_xml,activity_xml);
 								local_create_simple(transaction_xml);
 								local_create_simple(pt_xml);
 								local_create_simple(payment_xml);
 							}
+							
+							var num_data="<user_preferences>"+
+										"<id></id>"+						
+										"<value></value>"+										
+										"<name exact='yes'>"+bill_type+"_bill_num</name>"+												
+										"</user_preferences>";
+							fetch_requested_data('',num_data,function (bill_num_ids)
+							{
+								if(bill_num_ids.length>0)
+								{
+									var num_xml="<user_preferences>"+
+											"<id>"+bill_num_ids[0].id+"</id>"+
+											"<value>"+(parseInt(bill_num_ids[0].value)+1)+"</value>"+
+											"</user_preferences>";
+									var bill_xml="<bills>" +
+										"<id>"+order_id+"</id>" +
+										"<bill_num>"+bill_num_ids[0].value+"</bill_num>"+										
+										"<customer_name>"+sale_orders[z].customer_name+"</customer_name>" +
+										"<bill_date>"+get_my_time()+"</bill_date>" +
+										"<billing_type>"+bill_type+"</billing_type>" +
+										"<amount>"+bill_amount+"</amount>" +
+										"<total>"+bill_total+"</total>" +
+										"<type>product</type>" +
+										"<offer>"+bill_offer+"</offer>" +
+										"<discount>"+bill_discount+"</discount>" +
+										"<tax>"+bill_tax+"</tax>" +
+										"<transaction_id>"+order_id+"</transaction_id>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</bills>";			
+									var activity_xml="<activity>" +
+										"<data_id>"+order_id+"</data_id>" +
+										"<tablename>bills</tablename>" +
+										"<link_to>form42</link_to>" +
+										"<title>Saved</title>" +
+										"<notes>Bill no "+order_id+"</notes>" +
+										"<updated_by>"+get_name()+"</updated_by>" +
+										"</activity>";
+							
+									if(is_online())
+									{
+										server_update_simple(num_xml);
+										server_create_row(bill_xml,activity_xml);
+									}
+									else 
+									{
+										local_update_simple(num_xml);
+										local_create_row(bill_xml,activity_xml);
+									}
+								}
+							});
 						}
 						hide_loader();
 					});
@@ -10803,6 +10825,9 @@ function form145_create_item(form)
 		{
 			form145_delete_item(del_button);
 		});
+		
+		var dispatch_button=fields.elements[10];
+		$(dispatch_button).show();
 		
 		///////////adding store placement////////
 		var storage_data="<area_utilization>" +

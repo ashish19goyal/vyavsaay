@@ -9472,7 +9472,7 @@ function form108_ini()
 						rowsHTML+="<input type='button' class='edit_icon' form='form108_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form69');\">";
 						rowsHTML+="<input type='submit' class='save_icon' form='form108_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form108_"+result.id+"' title='Delete order' onclick='form108_delete_item($(this));'>";
-						rowsHTML+="<br><input type='button' class='generic_icon' form='form108_"+result.id+"'>";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form108_"+result.id+"' value='Create Bill'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -9485,7 +9485,6 @@ function form108_ini()
 			
 			if(result.status=='pending')
 			{
-				$(bill_button).attr('value','Create Bill');
 				$(bill_button).on('click',function(event)
 				{
 					modal42_action(result.id);

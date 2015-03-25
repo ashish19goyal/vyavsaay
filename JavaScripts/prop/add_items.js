@@ -7187,6 +7187,9 @@ function form145_add_item()
 		var status_filter=fields.elements[5];
 		var receiver_filter=fields.elements[7];
 		var save_button=fields.elements[8];
+		var dispatch_button=fields.elements[10];
+		
+		$(dispatch_button).hide();
 		
 		$(fields).on("submit", function(event)
 		{

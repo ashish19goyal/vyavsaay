@@ -4183,8 +4183,7 @@ function modal42_action(order_id)
 			"<status exact='yes'>active</status>" +
 			"</bill_types>";
 	set_my_value_list(type_data,type_filter);
-	set_my_value(type_data,type_filter);
-	
+	set_my_value(type_data,type_filter);	
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -5771,16 +5770,7 @@ function modal110_action(button)
 					"<batch>"+batch+"</batch>"+
 					"<quantity>"+quantity+"</quantity>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</inventory_adjust>";		
-		var store_xml="<store_movement>"+
-					"<id>"+get_new_key()+"</id>"+
-					"<item_name>"+product_name+"</item_name>"+
-					"<batch>"+batch+"</batch>"+
-					"<quantity>"+quantity+"</quantity>"+
-					"<target>"+store+"</target>"+
-					"<status>received</status>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</store_movement>";		
+					"</inventory_adjust>";	
 		var area_xml="<area_utilization>"+
 					"<id>"+get_new_key()+"</id>"+
 					"<item_name>"+product_name+"</item_name>"+
@@ -5798,12 +5788,40 @@ function modal110_action(button)
 					"<sale_price>"+sale_price+"</sale_price>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</product_instances>";
+		var store_owner_xml="<store_areas>"+
+							"<owner></owner>"+
+							"<name exact='yes'>"+store+"</name>"+
+							"</store_areas>";
+		get_single_column_data(function(owners)
+		{
+			if(owners.length>0)
+			{
+				var store_xml="<store_movement>"+
+					"<id>"+get_new_key()+"</id>"+
+					"<item_name>"+product_name+"</item_name>"+
+					"<batch>"+batch+"</batch>"+
+					"<quantity>"+quantity+"</quantity>"+
+					"<target>"+store+"</target>"+
+					"<source>manufacturing</source>"+
+					"<receiver>"+owners[0]+"</receiver>"+
+					"<status>received</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</store_movement>";		
+				if(is_online())
+				{
+					server_create_simple(store_xml);
+				}
+				else
+				{
+					local_create_simple(store_xml);
+				}				
+			}		
+		},store_owner_xml);
 
 		if(is_online())
 		{
 			server_update_simple(data_xml);
 			server_create_simple(inventory_xml);
-			server_create_simple(store_xml);
 			server_create_simple(instances_xml);
 			server_create_simple(area_xml);
 		}
@@ -5811,7 +5829,6 @@ function modal110_action(button)
 		{
 			local_update_simple(data_xml);
 			local_create_simple(inventory_xml);
-			local_create_simple(store_xml);
 			local_create_simple(instances_xml);
 			local_create_simple(area_xml);
 		}	

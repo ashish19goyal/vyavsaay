@@ -36,8 +36,8 @@
 					//$query5="select sum(quantity) from customer_return_items where item_name=? and type=?";
 					$query6="select sum(quantity) from inventory_adjust where product_name=?";
 					$query7="select sum(quantity) from discarded where product_name=?";
-					$query8="select sum(quantity) from unbilled_sale_items where product_name=?";
-					$query9="select sum(quantity) from unbilled_purchase_items where product_name=?";
+					$query8="select sum(quantity) from unbilled_sale_items where item_name=?";
+					$query9="select sum(quantity) from unbilled_purchase_items where item_name=?";
 				}
 				
 				$db_name="re_user_".$domain;
