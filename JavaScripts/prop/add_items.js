@@ -7320,7 +7320,7 @@ function form146_add_item()
 		var products_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
-		set_my_value_list_func(product_data,product_filter,function () 
+		set_my_value_list_func(products_data,product_filter,function () 
 		{
 			$(product_filter).focus();
 		});

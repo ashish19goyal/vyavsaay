@@ -5617,6 +5617,8 @@ function modal108_action(tablename,record_id)
 	
 		$("#modal108").dialog("close");
 	});
+	$("#modal108").dialog("open");
+
 }
 
 /**
@@ -5710,6 +5712,9 @@ function modal109_action(tablename)
 	
 		$("#modal109").dialog("close");
 	});
+	
+	$("#modal109").dialog("open");
+
 }
 
 /**
@@ -5729,7 +5734,7 @@ function modal110_action(button)
 	var form=document.getElementById('modal110_form');
 
 	var manu_filter=form.elements[1];
-	var expiry_type_filter=form.elements[2];
+	var expiry_filter=form.elements[2];
 	var store_filter=form.elements[5];
 	
 	var store_data="<store_areas>"+
@@ -5738,8 +5743,8 @@ function modal110_action(button)
 					"</store_areas>";
 	set_my_value_list(store_data,store_filter);
 	
-	$(manu_filter).datetimepicker();
-	$(expiry_filter).datetimepicker();	
+	$(manu_filter).datepicker();
+	$(expiry_filter).datepicker();	
 	$(manu_filter).focus();
 
 	$(form).off("submit");
@@ -5776,6 +5781,13 @@ function modal110_action(button)
 					"<status>received</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</store_movement>";		
+		var area_xml="<area_utilization>"+
+					"<id>"+get_new_key()+"</id>"+
+					"<item_name>"+product_name+"</item_name>"+
+					"<batch>"+batch+"</batch>"+
+					"<name>"+store+"</name>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</area_utilization>";		
 		var instances_xml="<product_instances>" +
 					"<id>"+get_new_key()+"</id>" +
 					"<product_name>"+product_name+"</product_name>" +
@@ -5789,19 +5801,24 @@ function modal110_action(button)
 
 		if(is_online())
 		{
-			server_create_simple(data_xml);
+			server_update_simple(data_xml);
 			server_create_simple(inventory_xml);
 			server_create_simple(store_xml);
 			server_create_simple(instances_xml);
+			server_create_simple(area_xml);
 		}
 		else
 		{
-			local_create_simple(data_xml);
+			local_update_simple(data_xml);
 			local_create_simple(inventory_xml);
 			local_create_simple(store_xml);
 			local_create_simple(instances_xml);
+			local_create_simple(area_xml);
 		}	
 	
 		$("#modal110").dialog("close");
 	});
+
+	$("#modal110").dialog("open");
+	
 }
