@@ -5761,7 +5761,7 @@ function modal110_action(button)
 
 		var data_xml="<manufacturing_schedule>" +
 					"<id>"+data_id+"</id>" +
-					"<status>suspended</status>"+					
+					"<status>completed</status>"+					
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</manufacturing_schedule>";
 		var inventory_xml="<inventory_adjust>"+

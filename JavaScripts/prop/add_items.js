@@ -7311,7 +7311,7 @@ function form146_add_item()
 				rowsHTML+="<input type='text' form='form146_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' required form='form146_"+id+"' value='scheduled'>";
+				rowsHTML+="<input type='text' readonly='readonly' required form='form146_"+id+"' value='scheduled'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form146_"+id+"' value='"+id+"'>";
@@ -7320,7 +7320,7 @@ function form146_add_item()
 				rowsHTML+="<input type='hidden' form='form146_"+id+"'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
-	
+
 		$('#form146_body').prepend(rowsHTML);
 		longPressEditable($('.dblclick_editable'));
 		
@@ -7358,8 +7358,8 @@ function form146_add_item()
 			});
 		});
 		
-		set_static_value_list('manufacturing_schedule','status',status_filter);
-		$(schedule_filter).datetimepicker();
+		//set_static_value_list('manufacturing_schedule','status',status_filter);
+		$(schedule_filter).datepicker();
 	}
 	else
 	{
