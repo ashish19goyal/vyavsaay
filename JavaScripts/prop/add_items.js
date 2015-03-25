@@ -7171,7 +7171,7 @@ function form145_add_item()
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form145_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form145_"+id+"' required name='receiver'>";
-				rowsHTML+="<input type='button' class='save_icon' form='form145_"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form145_"+id+"'>";
 				rowsHTML+="<input type='button' class='delete_icon' form='form145_"+id+"' onclick='$(this).parent().parent().remove();'>";
 				rowsHTML+="<input type='button' class='generic_icon' form='form145_"+id+"' value='Dispatch' onclick='form145_dispatch_item($(this));'>";
 			rowsHTML+="</td>";			
@@ -7188,10 +7188,23 @@ function form145_add_item()
 		var receiver_filter=fields.elements[7];
 		var save_button=fields.elements[8];
 		
-		$(save_button).on("click", function(event)
+		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
-			form145_create_item(fields);
+			var receiver_data="<store_areas>" +
+				"<owner></owner>"+				
+				"<area_type exact='yes'>storage</area_type>" +
+				"<name exact='yes'>"+target_filter.value+"</name>" +
+				"</store_areas>";
+			//console.log(receiver_data);			
+			get_single_column_data(function(data)
+			{
+				if(data.length>0)
+				{
+					receiver_filter.value=data[0];
+				}
+				form145_create_item(fields);
+			},receiver_data);				
 		});
 				
 		var product_data="<product_master>" +
@@ -7261,17 +7274,6 @@ function form145_add_item()
 		set_my_value_list(target_data,target_filter);
 
 		set_static_value_list('store_movement','status',status_filter);	
-		
-		$(target_filter).on('blur',function()
-		{
-			var receiver_data="<store_areas>" +
-				"<owner></owner>"+				
-				"<area_type exact='yes'>storage</area_type>" +
-				"<name exact='yes'>"+target_filter.value+"</name>" +
-				"</store_areas>";
-			//console.log(receiver_data);			
-			set_my_value(receiver_data,receiver_filter);			
-		});
 
 	}
 	else
