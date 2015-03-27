@@ -504,7 +504,7 @@ tbody tr:hover{
 
 .export_icon{
 	height: 25px;
-	width: 60px;
+	width: auto;
 	cursor: pointer;
 	border: 2px solid #1A783B;
 	display: inline-block;
@@ -525,7 +525,7 @@ tbody tr:hover{
 
 .import_icon{
 	height: 25px;
-	width: 60px;
+	width: auto;
 	cursor: pointer;
 	border: 2px solid #8B0000;
 	display: inline-block;
