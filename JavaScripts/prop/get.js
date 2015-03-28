@@ -360,6 +360,12 @@ function set_my_value_list(filter_data,filter_element)
 		form.appendChild(datalist);
 		datalist.setAttribute('id',list_id);
 		
+		if(document.activeElement==filter_element)
+		{
+			$(filter_element).blur();
+			$(filter_element).focus();
+		}
+		
 		$(filter_element).off("change");
 		$(filter_element).on("change",function(event)
 		{
@@ -399,6 +405,12 @@ function set_my_value_list_func(filter_data,filter_element,func)
 		
 		form.appendChild(datalist);
 		datalist.setAttribute('id',list_id);
+
+		if(document.activeElement==filter_element)
+		{
+			$(filter_element).blur();
+			$(filter_element).focus();
+		}
 		
 		$(filter_element).off("change");
 		$(filter_element).on("change",function(event)
@@ -434,7 +446,12 @@ function set_multiple_value_list(filter_data_array,filter_element)
 	form.appendChild(datalist);
 	datalist.setAttribute('id',list_id);
 
-	
+	if(document.activeElement==filter_element)
+	{
+		$(filter_element).blur();
+		$(filter_element).focus();
+	}
+
 	$(filter_element).off("change");
 	$(filter_element).on("change",function(event)
 	{

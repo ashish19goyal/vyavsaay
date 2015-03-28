@@ -5193,10 +5193,6 @@ function form119_add_item()
 					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
-			set_my_value_list_func(batch_data,batch_filter,function () 
-			{
-				$(batch_filter).focus();
-			});
 			
 			var last_batch_data="<bill_items count='1'>" +
 					"<batch></batch>" +

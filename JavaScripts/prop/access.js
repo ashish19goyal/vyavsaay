@@ -103,10 +103,19 @@ function if_data_read_access(tablename,func)
 				"</"+tablename+">";
 			fetch_requested_data('',access2_data,function (datas2) 
 			{
-				if(datas2.length>0)
+				datas2.forEach(function(data2)
 				{
-					final_array.push(obj);
-				}
+					if(obj.record_id=='all')
+					{
+						var newObject = jQuery.extend({}, obj);
+						newObject.record_id=data2.id;
+						final_array.push(newObject);
+					}
+					else if(obj.record_id==data2.id)
+					{
+						final_array.push(obj);
+					}					
+				});
 				count-=1;
 			});			
 		});
@@ -159,10 +168,19 @@ function if_data_update_access(tablename,func)
 				"</"+tablename+">";
 			fetch_requested_data('',access2_data,function (datas2) 
 			{
-				if(datas2.length>0)
+				datas2.forEach(function(data2)
 				{
-					final_array.push(obj);
-				}
+					if(obj.record_id=='all')
+					{
+						var newObject = jQuery.extend({}, obj);
+						newObject.record_id=data2.id;
+						final_array.push(newObject);
+					}
+					else if(obj.record_id==data2.id)
+					{
+						final_array.push(obj);
+					}					
+				});
 				count-=1;
 			});			
 		});
@@ -217,10 +235,19 @@ function if_data_delete_access(tablename,func)
 				"</"+tablename+">";
 			fetch_requested_data('',access2_data,function (datas2) 
 			{
-				if(datas2.length>0)
+				datas2.forEach(function(data2)
 				{
-					final_array.push(obj);
-				}
+					if(obj.record_id=='all')
+					{
+						var newObject = jQuery.extend({}, obj);
+						newObject.record_id=data2.id;
+						final_array.push(newObject);
+					}
+					else if(obj.record_id==data2.id)
+					{
+						final_array.push(obj);
+					}					
+				});
 				count-=1;
 			});			
 		});
@@ -275,10 +302,19 @@ function if_data_all_access(tablename,record_id,func)
 				"</"+tablename+">";
 			fetch_requested_data('',access2_data,function (datas2) 
 			{
-				if(datas2.length>0)
+				datas2.forEach(function(data2)
 				{
-					final_array.push(obj);
-				}
+					if(obj.record_id=='all')
+					{
+						var newObject = jQuery.extend({}, obj);
+						newObject.record_id=data2.id;
+						final_array.push(newObject);
+					}
+					else if(obj.record_id==data2.id)
+					{
+						final_array.push(obj);
+					}					
+				});
 				count-=1;
 			});			
 		});

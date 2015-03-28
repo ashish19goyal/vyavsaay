@@ -56,6 +56,7 @@ function ajax_with_custom_func(url,kvp,func)
 								}
 								else
 								{
+									console.log(func);
 									var session_var=session_xml.getElementsByTagName('session');
 									var session_vars=new Object();
 									var num_svar=session_var[0].childElementCount;
