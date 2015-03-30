@@ -34,10 +34,10 @@
 					
 					try{
 						$db_conn->conn->exec($q_string);
-						echo "<b>adding table ".$table_name."</b>\n";
+						echo "adding table ".$table_name."<br>";
 					}catch(PDOException $ex)
 					{
-						echo "Could not create table $table_name: " .$ex->getMessage() ."</br>";
+						echo "Could not create table $table_name: " .$ex->getMessage() ."<br>";
 					}
 				}								
 				else
@@ -57,7 +57,7 @@
 							}
 							if($match==false)
 							{
-								echo "adding column ".$column->nodeName."to table $table_name<br>";
+								echo "adding column ".$column->nodeName." to table $table_name<br>";
 								$alter_query="alter table $table_name add ".$column->nodeName." ".$column->getAttribute('type');
 
 								try{

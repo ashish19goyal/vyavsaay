@@ -521,6 +521,7 @@
 			<notes index='no' type="TEXT"></notes>
 			<link_to index='no' type="VARCHAR(300)"></link_to>
 			<status index='yes' type="VARCHAR(20)"></status><!-- pending/reviewed/closed -->
+			<target_user index='no' type="TEXT"></target_user>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</notifications>
 	<sale_leads>  

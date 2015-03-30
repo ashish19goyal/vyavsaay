@@ -48,24 +48,53 @@ function count_notif()
 	var notif_data="<notifications>" +
 			"<id></id>" +
 			"<status exact='yes'>pending</status>" +
+			"<target_user></target_user>"+			
 			"</notifications>";
 
-	get_single_column_data(function(notifs)
+	if_data_read_access('notifications',function(accessible_data)
 	{
-		var num_res=notifs.length;
-		
-		if(num_res===0)
-		{	
-			$('#count_notif').html("");
-			$('#count_notif').hide();
-		}
-		else
-		{	
-			$('#count_notif').html(num_res);
-			$('#count_notif').show(); 
-		}
-	},notif_data);
-	
+		fetch_requested_data('',notif_data,function(notifs)
+		{
+			for(var i=0;i<notifs.length;i++)			
+			{
+				var read=false;
+				for(var x in accessible_data)
+				{
+					if(accessible_data[x].record_id==notifs[i].id || accessible_data[x].record_id=='all')
+					{
+						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || notifs[i][accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
+						{
+							if(accessible_data[x].access_type=='all' || accessible_data[x].access_type=='read')
+							{
+								read=true;
+								break;
+							}							
+						}
+					}
+				}
+				
+				var found=notifs[i].target_user.indexOf(get_account_name());
+				if(!(read || found>=0))
+				{
+					notifs.splice(i,1);
+					i--;
+				}
+			}
+
+			var num_res=notifs.length;
+			
+			if(num_res===0)
+			{	
+				$('#count_notif').html("");
+				$('#count_notif').hide();
+			}
+			else
+			{	
+				$('#count_notif').html(num_res);
+				$('#count_notif').show(); 
+			}
+		});
+	});	
 	clearInterval(count_notif_timer);
 	count_notif_timer=setTimeout(count_notif,get_worker_repeat());
 }
@@ -79,41 +108,70 @@ function show_notif()
 	var notif_data="<notifications>" +
 			"<id></id>" +
 			"<status exact='yes'>pending</status>" +
+			"<target_user></target_user>"+			
 			"</notifications>";
 
-	get_single_column_data(function(notifs)
+	if_data_read_access('notifications',function(accessible_data)
 	{
-		var num_res=notifs.length;
-				
-		if('Notification' in window && num_res>0)
-		{		
-			if(Notification.permission==='granted')
+		fetch_requested_data('',notif_data,function(notifs)
+		{
+			for(var i=0;i<notifs.length;i++)			
 			{
-				//console.log('permission is granted by default');
-				var notification=new Notification('Vyavsaay',
+				var read=false;
+				for(var x in accessible_data)
 				{
-					body: "You have "+num_res+" unseen notifications",
-					icon: "./images/favicon.png"
-				});
-			}
-			else
-			{
-				Notification.requestPermission(function(permission)
-				{
-					if(permission==='granted')
+					if(accessible_data[x].record_id==notifs[i].id || accessible_data[x].record_id=='all')
 					{
-						console.log('permission granted');
-						var notification=new Notification('Vyavsaay',
+						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || notifs[i][accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
 						{
-							body: "You have "+num_res+" unseen notifications",
-							icon: "./images/favicon.png"
-						});							 
+							if(accessible_data[x].access_type=='all' || accessible_data[x].access_type=='read')
+							{
+								read=true;
+								break;
+							}							
+						}
 					}
-		        });
+				}
+				
+				var found=notifs[i].target_user.indexOf(get_account_name());
+				if(!(read || found>=0))
+				{
+					notifs.splice(i,1);
+					i--;
+				}
 			}
-		}
-	},notif_data);
-	
+
+			var num_res=notifs.length;
+					
+			if('Notification' in window && num_res>0)
+			{		
+				if(Notification.permission==='granted')
+				{
+					//console.log('permission is granted by default');
+					var notification=new Notification('Vyavsaay',
+					{
+						body: "You have "+num_res+" unseen notifications",
+						icon: "./images/favicon.png"
+					});
+				}
+				else
+				{
+					Notification.requestPermission(function(permission)
+					{
+						if(permission==='granted')
+						{
+							console.log('permission granted');
+							var notification=new Notification('Vyavsaay',
+							{
+								body: "You have "+num_res+" unseen notifications",
+								icon: "./images/favicon.png"
+							});							 
+						}
+			        });
+				}
+			}
+		});
+	});	
 	clearInterval(show_notif_timer);
 	show_notif_timer=setTimeout(count_notif,get_worker_repeat());
 }

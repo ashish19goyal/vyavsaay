@@ -5429,7 +5429,6 @@ function form72_ini()
 	}
 }
 
-
 /**
  * Notifications screen
  */
@@ -5444,59 +5443,105 @@ function notifications_ini()
 			"<notes></notes>" +
 			"<t_generated></t_generated>" +
 			"<status exact='yes'>pending</status>" +
+			"<target_user></target_user>"+
 			"<last_updated></last_updated>" +
 			"</notifications>";
 
-	fetch_requested_data('',columns,function(notifs)
+	if_data_read_access('notifications',function(accessible_data)
 	{	
-		var result_html="";
-		notifs.forEach(function(notif)
-		{
-			result_html+="<div class='notification_detail'><b>" +
-					notif.title +
-					"</b></br><a onclick=\"" +
-					"element_display('"+notif.data_id +
-					"','"+notif.link_to+"');\">"+notif.notes+"</a>" +
-					"<div class='notification_status'>" +
-					" Generated @ " +
-					get_formatted_time(notif.t_generated) +
-					"</div><div>" +
-					"<input type='button' class='generic_icon' value='Seen' onclick=\"notifications_update($(this),'"+notif.id+"','reviewed')\">" +
-					"<input type='button' class='generic_icon' value='Close' onclick=\"notifications_update($(this),'"+notif.id+"','closed')\">" +
-					"</div>" +
-					"</div>";
-		});
-		
-		var columns2="<notifications count='100'>" +
-				"<id></id>" +
-				"<title></title>" +
-				"<link_to></link_to>" +
-				"<data_id></data_id>" +
-				"<notes></notes>" +
-				"<t_generated></t_generated>" +
-				"<status exact='yes'>reviewed</status>" +
-				"<last_updated></last_updated>" +
-				"</notifications>";
-		
-		fetch_requested_data('',columns2,function(notifs2)
+		fetch_requested_data('',columns,function(notifs)
 		{	
-			notifs2.forEach(function(notif2)
+			var result_html="";
+			
+			notifs.forEach(function(notif)
 			{
-				result_html+="<div class='notification_detail'><b>" +
-						notif2.title +
-						"</b></br><a onclick=\"" +
-						"element_display('"+notif2.data_id +
-						"','"+notif2.link_to+"');\">"+notif2.notes+"</a>" +
+				var read=false;
+				var update=false;
+				for(var x in accessible_data)
+				{
+					if(accessible_data[x].record_id==notif.id || accessible_data[x].record_id=='all')
+					{
+						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || notif[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
+						{
+							if(accessible_data[x].access_type=='all')
+							{
+								read=true;
+								update=true;
+								break;
+							}
+							if(accessible_data[x].access_type=='read')
+							{
+								read=true;
+							}
+							if(accessible_data[x].access_type=='update')
+							{
+								update=true;
+							}							
+						}
+					}
+				}
+
+				var found=notif.target_user.indexOf(get_account_name());
+				if(read || found>=0)
+				{
+					result_html+="<div class='notification_detail'><b>" +
+						notif.title +
+						"</b><br><a onclick=\"" +
+						"element_display('"+notif.data_id +
+						"','"+notif.link_to+"');\">"+notif.notes+"</a>" +
 						"<div class='notification_status'>" +
 						" Generated @ " +
-						get_formatted_time(notif2.t_generated) +
-						"</div><div>" +
-						"<input type='button' class='generic_icon' value='Close' onclick=\"notifications_update($(this),'"+notif2.id+"','closed')\">" +
-						"</div>" +
+						get_formatted_time(notif.t_generated) +
 						"</div>";
+						if(update || found>=0) 
+						{
+							result_html+="<div><input type='button' class='generic_icon' value='Seen' onclick=\"notifications_update($(this),'"+notif.id+"','reviewed')\">" +
+							"<input type='button' class='generic_icon' value='Close' onclick=\"notifications_update($(this),'"+notif.id+"','closed')\">" +
+							"</div>";
+						}
+					result_html+="</div>";
+				}
 			});
-			$("#notifications_detail").html(result_html);
-			hide_loader();
+			
+			var columns2="<notifications count='100'>" +
+					"<id></id>" +
+					"<title></title>" +
+					"<link_to></link_to>" +
+					"<data_id></data_id>" +
+					"<notes></notes>" +
+					"<t_generated></t_generated>" +
+					"<status exact='yes'>reviewed</status>" +
+					"<target_user></target_user>"+
+					"<last_updated></last_updated>" +
+					"</notifications>";
+			
+			fetch_requested_data('',columns2,function(notifs2)
+			{	
+				notifs2.forEach(function(notif2)
+				{
+					var found=notif.target_user.indexOf(get_account_name());
+					if(read || found>=0)
+					{
+						result_html+="<div class='notification_detail'><b>" +
+							notif2.title +
+							"</b><br><a onclick=\"" +
+							"element_display('"+notif2.data_id +
+							"','"+notif2.link_to+"');\">"+notif2.notes+"</a>" +
+							"<div class='notification_status'>" +
+							" Generated @ " +
+							get_formatted_time(notif2.t_generated) +
+							"</div>";
+						if(update || found>=0) 
+						{
+							result_html+="<div><input type='button' class='generic_icon' value='Close' onclick=\"notifications_update($(this),'"+notif2.id+"','closed')\">" +
+							"</div>";
+						}
+						result_html+="</div>";
+					}
+				});
+				$("#notifications_detail").html(result_html);
+				hide_loader();
+			});
 		});
 	});
 }
