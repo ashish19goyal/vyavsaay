@@ -359,13 +359,20 @@ function set_my_value_list(filter_data,filter_element)
 		
 		form.appendChild(datalist);
 		datalist.setAttribute('id',list_id);
-		
-		if(document.activeElement==filter_element)
+
+		var active_element=document.activeElement;
+				
+		if(active_element==filter_element)
 		{
 			$(filter_element).blur();
 			$(filter_element).focus();
 		}
-		
+/*		else 
+		{
+			$(filter_element).focus();
+			$(active_element).focus();
+		}		
+*/		
 		$(filter_element).off("change");
 		$(filter_element).on("change",function(event)
 		{

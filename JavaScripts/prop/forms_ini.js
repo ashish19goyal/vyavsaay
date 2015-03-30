@@ -5521,7 +5521,8 @@ function initialize_questionnaires(id,ques_name)
 		///sort the results by forder
 		var content="<form id='"+ques_name+"_ques_header'><fieldset>";
 		content+="<label><b>Questionnaire Id</b><br><input type='text' readonly='readonly'></label><label><b>Submitter</b><br><input type='text' readonly='readonly'></label><label><b>Submission Date</b><br><input type='text' readonly='readonly'></label>";
-		content+="<input type='button' value='Previous Submissions' class='generic_icon' onclick=\"previous_questionnaires('"+id+"','"+ques_name+"',0);\"></fieldset></form><form class='questionnaire_form' id='"+ques_name+"_ques_main'><fieldset>";
+		content+="<input type='button' value='Previous Submissions' class='generic_icon' onclick=\"previous_questionnaires('"+id+"','"+ques_name+"',0);\"></fieldset></form>"+
+				"<form class='questionnaire_form' id='"+ques_name+"_ques_main'><fieldset>";
 
 		fields.sort(function(a,b)
 		{
@@ -5530,6 +5531,9 @@ function initialize_questionnaires(id,ques_name)
 			else 
 			{	return -1;}
 		});			
+
+		content+="<input type='hidden'>";
+		content+="<input type='hidden'>";
 				
 		fields.forEach(function(field)
 		{
@@ -5569,6 +5573,23 @@ function initialize_questionnaires(id,ques_name)
 		
 		//function to submit the questionnaire
 		var ques_form=document.getElementById(ques_name+"_ques_main");
+		var reviewer_filter=ques_form.elements[1];
+		var approver_filter=ques_form.elements[2];
+		
+		var reviewer_data="<ques_struct count='1'>"+
+						"<id>"+id+"</id>"+
+						"<reviewer></reviewer>"+
+						"<approver></approver>"+
+						"</ques_struct>";
+		fetch_requested_data('',reviewer_data,function(people)
+		{
+			if(people.length>0)
+			{
+				reviewer_filter.value=people[0].reviewer;
+				approver_filter.value=people[0].approver;
+			}
+		});		
+		
 		var ques_header=document.getElementById(ques_name+"_ques_header");
 		ques_header.elements[1].value=get_new_key();
 		ques_header.elements[2].value=get_name();
@@ -5582,13 +5603,18 @@ function initialize_questionnaires(id,ques_name)
 			var data_id=ques_header.elements[1].value;
 			var submitter=ques_header.elements[2].value;
 			var sub_date=get_raw_time(ques_header.elements[3].value);
+			var reviewer=ques_form.elements[1].value;
+			var approver=ques_form.elements[2].value;
 			var last_updated=get_my_time();
 			
 			var ques_data="<ques_data>"+
 						"<id>"+data_id+"</id>"+
 						"<ques_struct_id>"+id+"</ques_struct_id>"+
 						"<submitter>"+submitter+"</submitter>"+
+						"<reviewer>"+reviewer+"</reviewer>"+
+						"<approver>"+approver+"</approver>"+
 						"<sub_date>"+sub_date+"</sub_date>"+
+						"<status>submitted</status>"+
 						"<last_updated>"+last_updated+"</last_updated>"+
 						"</ques_data>";
 			if(is_online())
@@ -5633,69 +5659,168 @@ function previous_questionnaires(id,ques_name,start_index)
 {
 	show_loader();
 	var ques_data="<ques_data count='25' start_index='"+start_index+"'>"+
-				"<id></id>"+
-				"<ques_struct_id exact='yes'>"+id+"</ques_struct_id>"+
-				"<submitter></submitter>"+
-				"<sub_date></sub_date>"+
-				"</ques_data>";
-	fetch_requested_data('',ques_data,function(questionnaires)
+					"<id></id>"+
+					"<ques_struct_id exact='yes'>"+id+"</ques_struct_id>"+
+					"<submitter></submitter>"+
+					"<status></status>"+
+					"<sub_date></sub_date>"+
+					"</ques_data>";
+
+	if_data_read_access('ques_data',function(accessible_data)
 	{
-		var next_index=parseInt(start_index)+25;
-		var prev_index=parseInt(start_index)-25;
-		var content="<table class='rwd-table'>"+
-					"<thead><tr>"+
-					"<th>Id</th>"+
-					"<th>Submitter</th>"+
-					"<th>Submission Date</th>"+
-					"</tr></thead><tbody id='"+ques_name+"_body'></tbody></table>"+
-					"<div class='form_nav'>"+
-					"<img src='./images/previous.png' id='"+ques_name+"_prev' class='prev_icon' onclick=onclick=\"previous_questionnaires('"+id+"','"+ques_name+"',"+prev_index+");\">"+
-					"<img src='./images/next.png' id='"+ques_name+"_next' class='next_icon' onclick=onclick=\"previous_questionnaires('"+id+"','"+ques_name+"',"+next_index+");\">"+
-					"</div>";
+		fetch_requested_data('',ques_data,function(questionnaires)
+		{
+			var next_index=parseInt(start_index)+25;
+			var prev_index=parseInt(start_index)-25;
+			var content="<table class='rwd-table'>"+
+						"<thead><tr>"+
+						"<th>Id</th>"+
+						"<th>Submitter</th>"+
+						"<th>Submission Date</th>"+
+						"<th>Status</th>"+
+						"<th>Action</th>"+
+						"</tr></thead><tbody id='"+ques_name+"_body'></tbody></table>"+
+						"<div class='form_nav'>"+
+						"<img src='./images/previous.png' id='"+ques_name+"_prev' class='prev_icon' onclick=onclick=\"previous_questionnaires('"+id+"','"+ques_name+"',"+prev_index+");\">"+
+						"<img src='./images/next.png' id='"+ques_name+"_next' class='next_icon' onclick=onclick=\"previous_questionnaires('"+id+"','"+ques_name+"',"+next_index+");\">"+
+						"</div>";
+	
+			$("#"+ques_name).html(content);
+			var tbody=document.getElementById(ques_name+'_body');
+			var next_element=document.getElementById(ques_name+'_next');
+			var prev_element=document.getElementById(ques_name+'_prev');
+	
+			if(questionnaires.length<25)
+			{
+				$(next_element).hide();
+			}
+			else
+			{
+				$(next_element).show();
+			}
+			if(start_index<1)
+			{
+				$(prev_element).hide();
+			}
+			else
+			{
+				$(prev_element).show();
+			}
 
-		$("#"+ques_name).html(content);
-		var tbody=document.getElementById(ques_name+'_body');
-		var next_element=document.getElementById(ques_name+'_next');
-		var prev_element=document.getElementById(ques_name+'_prev');
-
-		if(questionnaires.length<25)
-		{
-			$(next_element).hide();
-		}
-		else
-		{
-			$(next_element).show();
-		}
-		if(start_index<1)
-		{
-			$(prev_element).hide();
-		}
-		else
-		{
-			$(prev_element).show();
-		}
+			questionnaires.forEach(function(result)
+			{
+				var read=false;
+				var update=false;
+				var del=false;
+				var access=false;
+				for(var x in accessible_data)
+				{
+					if(accessible_data[x].record_id===result.id || accessible_data[x].record_id=='all')
+					{
+						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || result[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
+						{
+							if(accessible_data[x].access_type=='all')
+							{
+								read=true;
+								update=true;
+								del=true;
+								access=true;
+								break;
+							}
+							else if(accessible_data[x].access_type=='read')
+							{
+								read=true;
+							}
+							else if(accessible_data[x].access_type=='delete')
+							{
+								del=true;
+							}
+							else if(accessible_data[x].access_type=='update')
+							{
+								update=true;
+							}
+						}
+					}
+				}
 				
-		questionnaires.forEach(function(result)
-		{
-			var rowsHTML="<tr>";
-				rowsHTML+="<form id='ques_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Id'>";
-						rowsHTML+="<a onclick=\"filled_questionnaires('"+id+"','"+ques_name+"','"+result.id+"','"+result.submitter+"','"+result.sub_date+"')\">"+result.id+"</a>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Submitter'>";
-						rowsHTML+=result.submitter;
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Submission Date'>";
-						rowsHTML+=get_my_past_date(result.sub_date);
-					rowsHTML+="</td>";
-			rowsHTML+="</tr>";
-			
-			$(tbody).append(rowsHTML);
+				if(read)
+				{
+					var rowsHTML="<tr>";
+						rowsHTML+="<form id='ques_"+result.id+"'></form>";
+							rowsHTML+="<td data-th='Id'>";
+								rowsHTML+="<a onclick=\"filled_questionnaires('"+id+"','"+ques_name+"','"+result.id+"','"+result.submitter+"','"+result.sub_date+"')\">"+result.id+"</a>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Submitter'>";
+								rowsHTML+=result.submitter;
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Submission Date'>";
+								rowsHTML+=get_my_past_date(result.sub_date);
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Status' id='ques_status_"+result.id+"'>";
+								rowsHTML+=result.status;
+							rowsHTML+="</td>";
+							if(update)
+							{
+								rowsHTML+="<td data-th='Action'>";
+								if(result.status=='submitted')								
+									rowsHTML+="<input type='button' class='generic_icon' value='Review' onclick='questionnaire_reviewed("+result.id+");'>";
+								else if(result.status=='reviewed')								
+									rowsHTML+="<input type='button' class='generic_icon' value='Approve' onclick='questionnaire_approved("+result.id+");'>";
+								rowsHTML+="</td>";						
+							}
+					rowsHTML+="</tr>";
+					
+					$(tbody).append(rowsHTML);
+				}
+			});
+
+			hide_loader();
 		});
-		
-		hide_loader();
 	});
 }
+
+function questionnaire_reviewed(id)
+{
+	var last_updated=get_my_time();
+	var status_element=document.getElementById('ques_status_'+id);
+	status_element.innerHTML='reviewed';
+	var ques_xml="<ques_data>"+
+					"<id>"+id+"</id>"+
+					"<status>reviewed</status>"+
+					"<rev_date>"+last_updated+"</rev_date>"+
+					"<last_updated>"+last_updated+"</last_updated>"+
+					"</ques_data>";
+	if(is_online())
+	{
+		server_update_simple(ques_xml);
+	}
+	else
+	{
+		local_update_simple(ques_xml);
+	}		
+}
+
+function questionnaire_approved(id)
+{
+	var last_updated=get_my_time();
+	var status_element=document.getElementById('ques_status_'+id);
+	status_element.innerHTML='approved';
+	var ques_xml="<ques_data>"+
+					"<id>"+id+"</id>"+
+					"<status>approved</status>"+
+					"<rev_date>"+last_updated+"</rev_date>"+
+					"<last_updated>"+last_updated+"</last_updated>"+
+					"</ques_data>";
+	if(is_online())
+	{
+		server_update_simple(ques_xml);
+	}
+	else
+	{
+		local_update_simple(ques_xml);
+	}		
+}
+
 
 function filled_questionnaires(struct_id,ques_name,ques_id,submitter,sub_date)
 {
@@ -5725,7 +5850,8 @@ function filled_questionnaires(struct_id,ques_name,ques_id,submitter,sub_date)
 			content+="<label><b>Questionnaire Id</b><br><input type='text' value='"+ques_id+"' readonly='readonly'></label>"+
 					"<label><b>Submitter</b><br><input type='text' value='"+submitter+"' readonly='readonly'></label>"+
 					"<label><b>Submission Date</b><br><input type='text' value='"+get_my_past_date(sub_date)+"' readonly='readonly'></label>";
-			content+="<input type='button' value='Previous Submissions' class='generic_icon' onclick=\"previous_questionnaires('"+struct_id+"','"+ques_name+"',0);\"></fieldset></form><form class='questionnaire_form' id='"+ques_name+"_ques_main'><fieldset>";
+			content+="<input type='button' value='Previous Submissions' class='generic_icon' onclick=\"previous_questionnaires('"+struct_id+"','"+ques_name+"',0);\"></fieldset></form>"+
+					"<form class='questionnaire_form' id='"+ques_name+"_ques_main'><fieldset>";
 	
 			fields.sort(function(a,b)
 			{
@@ -13327,6 +13453,8 @@ function form143_ini()
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<display_name>"+fdisplay+"</display_name>" +
+			"<reviewer></reviewer>"+
+			"<approver></approver>"+
 			"<status>"+fstatus+"</status>" +
 			"</ques_struct>";
 
@@ -13346,7 +13474,11 @@ function form143_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form143_"+result.id+"'>"+result.name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Display Name'>";
-						rowsHTML+="<textarea readonly='readonly' form='form143_"+result.id+"'>"+result.display_name+"</textarea>";
+						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form143_"+result.id+"'>"+result.display_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Workflow'>";
+						rowsHTML+="Reviewer: <input type='text' readonly='readonly' class='dblclick_editable' form='form143_"+result.id+"' value='"+result.reviewer+"'>";
+						rowsHTML+="<br>Approver: <input type='text' readonly='readonly' class='dblclick_editable' form='form143_"+result.id+"' value='"+result.approver+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form143_"+result.id+"' value='"+result.status+"'>";
@@ -13356,10 +13488,19 @@ function form143_ini()
 						rowsHTML+="<input type='submit' class='save_icon' form='form143_"+result.id+"' title='Save'>";
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-			
+
 			$('#form143_body').append(rowsHTML);
 			var fields=document.getElementById("form143_"+result.id);
-			var edit_button=fields.elements[4];
+			var reviewer_filter=fields.elements[3];
+			var approver_filter=fields.elements[4];
+			var edit_button=fields.elements[6];
+
+			var staff_data="<staff>"+
+						"<acc_name></acc_name>"+
+						"</staff>";
+			set_my_value_list(staff_data,reviewer_filter);
+			set_my_value_list(staff_data,approver_filter);
+			
 			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();

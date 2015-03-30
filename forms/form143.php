@@ -6,6 +6,7 @@
 					<th>ID <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form143_header'></th>
 					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form143_header'></th>
 					<th>Display Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form143_header'></th>
+					<th>Workflow </th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form143_header'></th>
 					<th><input type='button' form='form143_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form143_header' style='visibility: hidden;'>

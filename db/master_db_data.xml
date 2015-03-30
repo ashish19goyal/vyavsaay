@@ -354,6 +354,30 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>ques_data</tablename>
+			<listname>status</listname>
+			<name>submitted</name>
+			<value>Submitted</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ques_data</tablename>
+			<listname>status</listname>
+			<name>reviewed</name>
+			<value>Reviewed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>ques_data</tablename>
+			<listname>status</listname>
+			<name>approved</name>
+			<value>Approved</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>store_movement</tablename>
 			<listname>status</listname>
 			<name>pending</name>

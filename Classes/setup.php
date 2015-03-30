@@ -65,7 +65,7 @@ class user_setup
 					$this->conn->conn->exec($q_string);
 				}catch(PDOException $ex)
 				{
-					echo "Could not create table $table_name: " .$ex->getMessage() ."</br>";
+					echo "Could not create table $table_name: " .$ex->getMessage() ."<br>";
 				}
 			}
 		}

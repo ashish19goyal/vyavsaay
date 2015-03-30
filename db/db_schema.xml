@@ -844,6 +844,8 @@
 			<display_name index='yes' type="VARCHAR(100)"></display_name>
 			<func index='yes' type="VARCHAR(100)"></func>
 			<description index='no' type='TEXT'></description>
+			<reviewer index='yes' type="VARCHAR(100)"></reviewer>
+			<approver index='yes' type="VARCHAR(100)"></approver>
 			<status index='yes' type='VARCHAR(25)'></status><!-- active/inactive/archived -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</ques_struct>
@@ -869,6 +871,7 @@
 			<sub_date index='yes' type='BIGINT'></sub_date>
 			<rev_date index='yes' type='BIGINT'></rev_date>
 			<app_date index='yes' type='BIGINT'></app_date>
+			<status index='yes' type='VARCHAR(25)'></status><!--submitted/approved/reviewed-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</ques_data>
 	<ques_fields_data>

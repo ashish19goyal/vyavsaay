@@ -7151,6 +7151,60 @@ function form142_update_form()
 }
 
 /**
+ * @form Manage questionnaire
+ * @param button
+ */
+function form143_update_item(form)
+{
+	if(is_update_access('form143'))
+	{
+		var id=form.elements[0].value;
+		var name=form.elements[1].value;
+		var display_name=form.elements[2].value;
+		var reviewer=form.elements[3].value;
+		var approver=form.elements[4].value;
+		var status=form.elements[5].value;
+		var last_updated=get_my_time();
+					
+		var data_xml="<ques_struct>" +
+				"<id>"+id+"</id>" +
+				"<name>"+name+"</name>" +
+				"<display_name>"+display_name+"</display_name>" +
+				"<status>"+status+"</status>"+
+				"<approver>"+approver+"</approver>"+
+				"<reviewer>"+reviewer+"</reviewer>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</ques_struct>";	
+		var activity_xml="<activity>" +
+				"<data_id>"+id+"</data_id>" +
+				"<tablename>ques_struct</tablename>" +
+				"<link_to>form143</link_to>" +
+				"<title>Updated</title>" +
+				"<notes>Questionnaire "+display_name+"</notes>" +
+				"<updated_by>"+get_name()+"</updated_by>" +
+				"</activity>";
+
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}		
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Store Movement
  * @param button
  */
