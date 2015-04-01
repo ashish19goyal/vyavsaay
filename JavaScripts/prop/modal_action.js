@@ -5758,28 +5758,28 @@ function modal110_action(button)
 		var cost_price=form.elements[3].value;
 		var sale_price=form.elements[4].value;
 		var store=form.elements[5].value;
-
+		var id=get_new_key();
 		var data_xml="<manufacturing_schedule>" +
 					"<id>"+data_id+"</id>" +
 					"<status>completed</status>"+					
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</manufacturing_schedule>";
 		var inventory_xml="<inventory_adjust>"+
-					"<id>"+get_new_key()+"</id>"+						
+					"<id>"+id+"</id>"+						
 					"<product_name>"+product_name+"</product_name>"+
 					"<batch>"+batch+"</batch>"+
 					"<quantity>"+quantity+"</quantity>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</inventory_adjust>";	
 		var area_xml="<area_utilization>"+
-					"<id>"+get_new_key()+"</id>"+
+					"<id>"+id+"</id>"+
 					"<item_name>"+product_name+"</item_name>"+
 					"<batch>"+batch+"</batch>"+
 					"<name>"+store+"</name>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</area_utilization>";		
 		var instances_xml="<product_instances>" +
-					"<id>"+get_new_key()+"</id>" +
+					"<id>"+id+"</id>" +
 					"<product_name>"+product_name+"</product_name>" +
 					"<batch>"+batch+"</batch>" +
 					"<expiry>"+expiry_date+"</expiry>" +
@@ -5818,6 +5818,37 @@ function modal110_action(button)
 			}		
 		},store_owner_xml);
 
+		////adding sale price fields for all billing types///////
+		var billing_type_data="<bill_types>" +
+			"<name></name>" +
+			"<status exact='yes'>active</status>" +
+			"</bill_types>";
+		get_single_column_data(function(bill_types)
+		{
+			var i=1;
+			bill_types.forEach(function (bill_type) 
+			{
+				i++;
+				var sale_price_xml="<sale_prices>" +
+						"<id>"+(id+i)+"</id>" +
+						"<product_name>"+product_name+"</product_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<sale_price>"+sale_price+"</sale_price>" +
+						"<pi_id>"+id+"</pi_id>" +
+						"<billing_type>"+bill_type+"</billing_type>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</sale_prices>";
+				if(is_online())
+				{
+					server_create_simple(sale_price_xml);
+				}
+				else
+				{
+					local_create_simple(sale_price_xml);
+				}
+			});
+		},billing_type_data);
+		
 		if(is_online())
 		{
 			server_update_simple(data_xml);

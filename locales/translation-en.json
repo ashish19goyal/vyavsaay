@@ -5,7 +5,8 @@
     "activities_log": "Activities Log",
     "search_results": "Search Results",
     "notifications":"Notifications",
-    "opportunities":"Opportunities"
+    "opportunities":"Opportunities",
+    "recent_activity":"Recent Activity"
   },
   "function": {
     "sale_bills": "Sale Bills",

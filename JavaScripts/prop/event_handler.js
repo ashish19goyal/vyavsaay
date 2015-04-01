@@ -172,6 +172,9 @@ function start_workers()
 					
 	deferred_execute(function()
 	{notifications7_add();});
+
+	deferred_execute(function()
+	{notifications8_add();});
 			
 	deferred_execute(function()
 	{sale_leads_add();});

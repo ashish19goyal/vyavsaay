@@ -219,6 +219,7 @@ function notifications1_add()
 					"<notes>"+notes+"</notes>" +
 					"<link_to>form11</link_to>" +
 					"<status>pending</status>" +
+					"<target_user>"+payment.acc_name+"</target_user>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</row>";
 		});
@@ -283,6 +284,7 @@ function notifications2_add()
 						"<title>Pending Task</title>" +
 						"<notes>"+notes+"</notes>" +
 						"<link_to>form14</link_to>" +
+						"<target_user>"+task.assignee+"</target_user>"+
 						"<status>pending</status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</row>";
@@ -350,6 +352,7 @@ function notifications3_add()
 					"<title>Sale Opportunity</title>" +
 					"<notes>"+notes+"</notes>" +
 					"<link_to>form81</link_to>" +
+					"<target_user>"+lead.customer+"--"+lead.identified_by+"</target_user>"+
 					"<status>pending</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</row>";
@@ -558,8 +561,6 @@ function notifications6_add()
 	setTimeout(notifications6_add,get_worker_repeat());
 }
 
-
-
 /**
  * This function checks for favourable scenarios to generate notifications in the background
  */
@@ -599,6 +600,7 @@ function notifications7_add()
 					"<notes>"+notes+"</notes>" +
 					"<link_to>form89</link_to>" +
 					"<status>pending</status>" +
+					"<target_user>"+app.customer+"--"+app.assignee+"</target_user>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</row>";
 		});
@@ -617,6 +619,66 @@ function notifications7_add()
 	///////////due appointments//////////
 
 	setTimeout(notifications7_add,get_worker_repeat());
+}
+
+
+/**
+ * This function generates notifications for store dispatches
+ */
+function notifications8_add()
+{
+	var last_updated=get_my_time();
+		
+	var dispatch_data="<store_movement>" +
+			"<id></id>" +
+			"<item_name></item_name>" +
+			"<batch></batch>" +
+			"<quantity></quantity>"+
+			"<target></target>"+
+			"<source></source>"+
+			"<receiver></receiver>"+
+			"<status exact='yes'>dispatched</status>" +
+			"</store_movement>";
+	
+	fetch_requested_data('',dispatch_data,function(dispatches)
+	{
+		var dispatch_xml="<notifications>";
+		var counter=1;
+		var id=parseFloat(get_new_key());
+		dispatches.forEach(function(dispatch)
+		{
+			if((counter%500)===0)
+			{
+				dispatch_xml+="</notifications><separator></separator><notifications>";
+			}
+			counter+=1;
+		
+			var notes=dispatch.quantity+" units of "+dispatch.item_name+" have been dispatched from store "+dispatch.source+" for store "+dispatch.target;
+			dispatch_xml+="<row>" +
+					"<id>"+(id+counter)+"</id>" +
+					"<t_generated>"+last_updated+"</t_generated>" +
+					"<data_id unique='yes'>"+dispatch.id+"</data_id>" +
+					"<title>Store Movement</title>" +
+					"<notes>"+notes+"</notes>" +
+					"<link_to>form145</link_to>" +
+					"<status>pending</status>" +
+					"<target_user>"+dispatch.receiver+"</target_user>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</row>";
+		});
+
+		dispatch_xml+="</notifications>";
+		if(is_online())
+		{
+			server_create_batch(dispatch_xml);
+		}
+		else
+		{
+			local_create_batch(dispatch_xml);
+		}
+	});
+	
+	setTimeout(notifications8_add,get_worker_repeat());
 }
 
 

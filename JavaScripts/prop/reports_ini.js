@@ -401,92 +401,163 @@ function report9_ini()
 	var rowsHTML="";
 	
 	var bills_data="<bills>" +
-			"<id></id>" +
-			"<customer_name>"+customer+"</customer_name>" +
-			"<bill_date lowerbound='yes'>"+get_raw_time(start_date)+"</bill_date>" +
-			"<bill_date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</bill_date>" +
-			"</bills>";
-	
+				"<id></id>" +
+				"<customer_name>"+customer+"</customer_name>" +
+				"<bill_date lowerbound='yes'>"+get_raw_time(start_date)+"</bill_date>" +
+				"<bill_date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</bill_date>" +
+				"</bills>";
+	var bill_return_data="<customer_returns>"+
+				"<id></id>"+
+				"<customer>"+customer+"</customer>"+
+				"<return_date lowerbound='yes'>"+get_raw_time(start_date)+"</return_date>" +
+				"<return_date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</return_date>" +
+				"</customer_returns>";	
 	fetch_requested_data('report9',bills_data,function(bills)
 	{
-		var bills_string="--";
-		for(var i in bills)
+		fetch_requested_data('report9',bill_return_data,function(bill_returns)
 		{
-			bills_string+=bills[i].id+"--";
-		}
-		
-		var bill_items_data="<bill_items>" +
-				"<bill_id array='yes'>"+bills_string+"</bill_id>" +
-				"<item_name>"+name+"</item_name>" +
-				"<quantity></quantity>" +
-				"<amount></amount>" +
-				"<last_updated lowerbound='yes'>"+get_raw_time(start_date)+"</last_updated>" +
-				"<last_updated upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</last_updated>" +
-				"</bill_items>";
-		
-		fetch_requested_data('report9',bill_items_data,function(bill_ids)
-		{
-			var product_string="--";
-			for(var j in bill_ids)
+			var bills_string="--";
+			for(var i in bills)
 			{
-				product_string+=bill_ids[j].item_name+"--";
+				bills_string+=bills[i].id+"--";
 			}
-			var make_data="<product_master>" +
-					"<name array='yes'>"+product_string+"</name>" +
-					"<make>"+make+"</make>" +
-					"</product_master>";
-
-			fetch_requested_data('report9',make_data,function(makes)
+			var returns_string="--";
+			for(var j in bill_returns)
 			{
-				var total_quantity=0;
-				var total_amount=0;
-				for(var k in bill_ids)
+				returns_string+=bill_returns[j].id+"--";
+			}
+			
+			var bill_items_data="<bill_items>" +
+					"<bill_id array='yes'>"+bills_string+"</bill_id>" +
+					"<item_name>"+name+"</item_name>" +
+					"<quantity></quantity>" +
+					"<amount></amount>" +
+					"<last_updated lowerbound='yes'>"+get_raw_time(start_date)+"</last_updated>" +
+					"<last_updated upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</last_updated>" +
+					"</bill_items>";
+			var return_items_data="<customer_return_items>" +
+					"<return_id array='yes'>"+returns_string+"</return_id>" +
+					"<item_name>"+name+"</item_name>" +
+					"<quantity></quantity>" +
+					"<refund_amount></refund_amount>" +
+					"<exchange_batch></exchange_batch>"+
+					"<last_updated lowerbound='yes'>"+get_raw_time(start_date)+"</last_updated>" +
+					"<last_updated upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</last_updated>" +
+					"</customer_return_items>";
+			
+			fetch_requested_data('report9',bill_items_data,function(bill_ids)
+			{
+				fetch_requested_data('report9',return_items_data,function(bill_return_ids)
 				{
-					for(var z in makes)
+					var product_string="--";
+					for(var j in bill_ids)
 					{
-						if(bill_ids[k].item_name==makes[z].name)
+						product_string+=bill_ids[j].item_name+"--";
+					}
+					for(var k in bill_return_ids)
+					{
+						product_string+=bill_return_ids[j].item_name+"--";
+					}
+					
+					var make_data="<product_master>" +
+							"<name array='yes'>"+product_string+"</name>" +
+							"<make>"+make+"</make>" +
+							"</product_master>";
+
+					fetch_requested_data('report9',make_data,function(makes)
+					{
+						var total_quantity=0;
+						var total_amount=0;
+						for(var k in bill_ids)
 						{
-							var customer_name="";
-							for(var m in bills)
+							for(var z in makes)
 							{
-								if(bills[m].id==bill_ids[k].bill_id)
+								if(bill_ids[k].item_name==makes[z].name)
 								{
-									customer_name=bills[m].customer_name;
+									var customer_name="";
+									for(var m in bills)
+									{
+										if(bills[m].id==bill_ids[k].bill_id)
+										{
+											customer_name=bills[m].customer_name;
+											break;
+										}
+									}
+									total_quantity+=parseFloat(bill_ids[k].quantity);
+									total_amount+=parseFloat(bill_ids[k].amount);
+									rowsHTML+="<tr>";
+										rowsHTML+="<td data-th='Product Name'>";
+											rowsHTML+=bill_ids[k].item_name;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Make'>";
+											rowsHTML+=makes[z].make;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Customer'>";
+											rowsHTML+=customer_name;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Quantity'>";
+											rowsHTML+=bill_ids[k].quantity;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Amount'>";
+											rowsHTML+="Rs. "+bill_ids[k].amount;
+										rowsHTML+="</td>";
+									rowsHTML+="</tr>";
 									break;
 								}
 							}
-							total_quantity+=parseFloat(bill_ids[k].quantity);
-							total_amount+=parseFloat(bill_ids[k].amount);
-							rowsHTML+="<tr>";
-								rowsHTML+="<td data-th='Product Name'>";
-									rowsHTML+=bill_ids[k].item_name;
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Make'>";
-									rowsHTML+=makes[z].make;
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Customer'>";
-									rowsHTML+=customer_name;
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Quantity'>";
-									rowsHTML+=bill_ids[k].quantity;
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Amount'>";
-									rowsHTML+=bill_ids[k].amount;
-								rowsHTML+="</td>";
-							rowsHTML+="</tr>";
-							break;
 						}
-					}
-				}
-				$('#report9_body').html(rowsHTML);
-				
-				var total_row="<tr><td colspan='3' data-th='Total'>Total</td><td data-th='Quantity'>"+total_quantity+"</td><td data-th='Amount'>"+Math.round(total_amount)+"</td></tr>";
-				$('#report9_foot').html(total_row);
-				
-				var print_button=form.elements[7];
-				print_tabular_report('report9','Product Sales Report',print_button);
-				
-				hide_loader();
+						for(var k in bill_return_ids)
+						{
+							if(bill_return_ids[k].exchange_batch=='null' || bill_return_ids[k].exchange_batch=='')
+							{
+								for(var z in makes)
+								{
+									if(bill_return_ids[k].item_name==makes[z].name)
+									{
+										var customer_name="";
+										for(var m in bill_returns)
+										{
+											if(bill_returns[m].id==bill_return_ids[k].return_id)
+											{
+												customer_name=bill_returns[m].customer;
+												break;
+											}
+										}
+										total_quantity-=parseFloat(bill_return_ids[k].quantity);
+										total_amount-=parseFloat(bill_return_ids[k].refund_amount);
+										rowsHTML+="<tr>";
+											rowsHTML+="<td data-th='Product Name'>";
+												rowsHTML+=bill_return_ids[k].item_name;
+											rowsHTML+="</td>";
+											rowsHTML+="<td data-th='Make'>";
+												rowsHTML+=makes[z].make;
+											rowsHTML+="</td>";
+											rowsHTML+="<td data-th='Customer'>";
+												rowsHTML+=customer_name;
+											rowsHTML+="</td>";
+											rowsHTML+="<td data-th='Quantity'>";
+												rowsHTML+="-"+bill_return_ids[k].quantity;
+											rowsHTML+="</td>";
+											rowsHTML+="<td data-th='Amount'>";
+												rowsHTML+="Rs. -"+ bill_return_ids[k].refund_amount;
+											rowsHTML+="</td>";
+										rowsHTML+="</tr>";
+										break;
+									}
+								}
+							}
+						}
+						$('#report9_body').html(rowsHTML);
+						
+						var total_row="<tr><td colspan='3' data-th='Total'>Total</td><td data-th='Quantity'>"+total_quantity+"</td><td data-th='Amount'>Rs. "+Math.round(total_amount)+"</td></tr>";
+						$('#report9_foot').html(total_row);
+						
+						var print_button=form.elements[7];
+						print_tabular_report('report9','Product Sales Report',print_button);
+						
+						hide_loader();
+					});
+				});
 			});
 		});
 	});
@@ -3208,86 +3279,151 @@ function report52_ini()
 			"<supplier>"+supplier+"</supplier>" +
 			"<entry_date lowerbound='yes'>"+get_raw_time(date)+"</entry_date>" +
 			"</supplier_bills>";
-	
+	var returns_data="<supplier_returns>"+
+					"<id></id>"+
+					"<return_date lowerbound='yes'>"+get_raw_time(date)+"</return_date>" +
+					"</supplier_returns>";
 	fetch_requested_data('report52',bills_data,function(bills)
 	{
-		var bills_string="--";
-		for(var i in bills)
+		fetch_requested_data('report52',returns_data,function(returns)
 		{
-			bills_string+=bills[i].id+"--";
-		}
-		
-		var bill_items_data="<supplier_bill_items>" +
-				"<bill_id array='yes'>"+bills_string+"</bill_id>" +
-				"<product_name>"+name+"</product_name>" +
-				"<quantity></quantity>" +
-				"<amount></amount>" +
-				"<last_updated lowerbound='yes'>"+get_raw_time(date)+"</last_updated>" +
-				"</supplier_bill_items>";
-		
-		fetch_requested_data('report52',bill_items_data,function(bill_ids)
-		{
-			var product_string="--";
-			for(var j in bill_ids)
+			var bills_string="--";
+			for(var i in bills)
 			{
-				product_string+=bill_ids[j].product_name+"--";
+				bills_string+=bills[i].id+"--";
 			}
-			var make_data="<product_master>" +
-					"<name array='yes'>"+product_string+"</name>" +
-					"<make>"+make+"</make>" +
-					"</product_master>";
-
-			fetch_requested_data('report52',make_data,function(makes)
+			var returns_string="--";
+			for(var j in returns)
 			{
-				var total_amount=0;
-				for(var k in bill_ids)
+				returns_string+=returns[j].id+"--";
+			}
+			
+			var bill_items_data="<supplier_bill_items>" +
+					"<bill_id array='yes'>"+bills_string+"</bill_id>" +
+					"<product_name>"+name+"</product_name>" +
+					"<quantity></quantity>" +
+					"<amount></amount>" +
+					"<last_updated lowerbound='yes'>"+get_raw_time(date)+"</last_updated>" +
+					"</supplier_bill_items>";
+			var return_items_data="<supplier_return_items>" +
+					"<return_id array='yes'>"+returns_string+"</return_id>" +
+					"<item_name>"+name+"</item_name>" +
+					"<quantity></quantity>" +
+					"<refund_amount></refund_amount>" +
+					"<last_updated lowerbound='yes'>"+get_raw_time(date)+"</last_updated>" +
+					"</supplier_return_items>";
+			
+			fetch_requested_data('report52',bill_items_data,function(bill_ids)
+			{
+				fetch_requested_data('report52',return_items_data,function(return_ids)
 				{
-					for(var z in makes)
+					var product_string="--";
+					for(var j in bill_ids)
 					{
-						if(bill_ids[k].product_name==makes[z].name)
+						product_string+=bill_ids[j].product_name+"--";
+					}
+					for(var k in return_ids)
+					{
+						product_string+=return_ids[j].item_name+"--";
+					}
+					
+					var make_data="<product_master>" +
+							"<name array='yes'>"+product_string+"</name>" +
+							"<make>"+make+"</make>" +
+							"</product_master>";
+		
+					fetch_requested_data('report52',make_data,function(makes)
+					{
+						var total_amount=0;
+						for(var k in bill_ids)
 						{
-							var supplier_name="";
-							for(var m in bills)
+							for(var z in makes)
 							{
-								if(bills[m].id==bill_ids[k].bill_id)
+								if(bill_ids[k].product_name==makes[z].name)
 								{
-									supplier_name=bills[m].supplier;
+									var supplier_name="";
+									for(var m in bills)
+									{
+										if(bills[m].id==bill_ids[k].bill_id)
+										{
+											supplier_name=bills[m].supplier;
+											break;
+										}
+									}
+									
+									total_amount+=parseFloat(bill_ids[k].amount);
+										
+									rowsHTML+="<tr>";
+										rowsHTML+="<td data-th='Product Name'>";
+											rowsHTML+=bill_ids[k].product_name;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Make'>";
+											rowsHTML+=makes[z].make;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Supplier'>";
+											rowsHTML+=supplier_name;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Quantity'>";
+											rowsHTML+=bill_ids[k].quantity;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Amount'>";
+											rowsHTML+="Rs. "+bill_ids[k].amount;
+										rowsHTML+="</td>";
+									rowsHTML+="</tr>";
 									break;
 								}
 							}
-							
-							total_amount+=parseFloat(bill_ids[k].amount);
-								
-							rowsHTML+="<tr>";
-								rowsHTML+="<td data-th='Product Name'>";
-									rowsHTML+=bill_ids[k].product_name;
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Make'>";
-									rowsHTML+=makes[z].make;
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Supplier'>";
-									rowsHTML+=supplier_name;
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Quantity'>";
-									rowsHTML+=bill_ids[k].quantity;
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Amount'>";
-									rowsHTML+=bill_ids[k].amount;
-								rowsHTML+="</td>";
-							rowsHTML+="</tr>";
-							break;
 						}
-					}
-				}
-				$('#report52_body').html(rowsHTML);
-				
-				var total_row="<tr><td colspan='4' data-th='Total'>Total</td><td data-th='Amount'>"+total_amount+"</td></tr>";
-				$('#report52_foot').html(total_row);
-				
-				var print_button=form.elements[6];
-				print_tabular_report('report52','Product Compare Report',print_button);
-				
-				hide_loader();
+						for(var k in return_ids)
+						{
+							for(var z in makes)
+							{
+								if(return_ids[k].item_name==makes[z].name)
+								{
+									var supplier_name="";
+									for(var m in returns)
+									{
+										if(returns[m].id==return_ids[k].return_id)
+										{
+											supplier_name=bills[m].supplier;
+											break;
+										}
+									}
+									
+									total_amount-=parseFloat(return_ids[k].refund_amount);
+										
+									rowsHTML+="<tr>";
+										rowsHTML+="<td data-th='Product Name'>";
+											rowsHTML+=return_ids[k].item_name;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Make'>";
+											rowsHTML+=makes[z].make;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Supplier'>";
+											rowsHTML+=supplier_name;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Quantity'>";
+											rowsHTML+="-"+return_ids[k].quantity;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Amount'>";
+											rowsHTML+="Rs. -"+return_ids[k].refund_amount;
+										rowsHTML+="</td>";
+									rowsHTML+="</tr>";
+									break;
+								}
+							}
+						}
+						$('#report52_body').html(rowsHTML);
+						
+						var total_row="<tr><td colspan='4' data-th='Total'>Total</td><td data-th='Amount'>Rs. "+total_amount+"</td></tr>";
+						$('#report52_foot').html(total_row);
+						
+						var print_button=form.elements[6];
+						print_tabular_report('report52','Product Compare Report',print_button);
+						
+						hide_loader();
+					});
+				});
 			});
 		});
 	});
