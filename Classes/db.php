@@ -12,7 +12,7 @@ class db_connect
 	
 	public function __construct($db_name)
 	{
-		$this->fr=new file_reader("../Config/config.prop");
+		$this->fr=new file_reader("../../Config/config.prop");
 		$dbhost=$this->fr->attributes["host"];
 		if($db_name===0)
 			$dbname= $this->fr->attributes["database"];
