@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet Quick Start Guide Example</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" type="text/css" href="../CSS/jquery-ui.css"/>
+	<link rel="stylesheet" type="text/css" href="../CSS/leaflet.css"/>
+	<link rel="stylesheet" type="text/css" href="../CSS/jquery.datetimepicker.css" media='print'/>
+	<link rel="stylesheet" type="text/css" href="../CSS/theme1.css"/>	
+	<link rel="stylesheet" type="text/css" href="../CSS/bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" href="../CSS/fullcalendar.css"/>
+	<link rel="stylesheet" type="text/css" href="../CSS/index_style.css"/>
+	
+</head>
+<body>
+	<div id='content_box'>
+		<div id='customers_main' class='function_main'>
+			<ul>				
+				<li><a id='form30_link' href='#form10' data-i18n='form.manage_customers'></a></li>
+				<li><a id='report5_link' href='#form41' data-i18n='form.customer_account_balance'></a></li>
+			</ul>
+			
+			
+			<div id='form41' class='function_detail'>
+				<div id="map" style="height: 380px"></div>
+			</div>
+		</div>
+	</div>
+		<script src='../JavaScripts/open/jquery-1.11.1.min.js'></script>
+		<script src='../JavaScripts/open/bcrypt.js'></script>
+		<script src='../JavaScripts/open/chart.js'></script>
+		<script src='../JavaScripts/open/indexeddb.js'></script>
+		<script src='../JavaScripts/open/jquery-ui.min.js'></script>
+		<script src='../JavaScripts/open/i18next-1.7.4.js'></script>
+		<script src='../JavaScripts/open/jQuery.print.js'></script>
+		<script src='../JavaScripts/open/jquery.autosize.min.js'></script>
+		<script src='../JavaScripts/open/leaflet.js'></script>
+		<script src='../JavaScripts/open/moment.min.js'></script>
+		<script src='../JavaScripts/open/fullcalendar.min.js'></script>
+		<script src='../JavaScripts/open/jquery.datetimepicker.js'></script>
+		
+		<script src='../JavaScripts/open/jquery.easing.min.js'></script>
+		<script src='../JavaScripts/open/move-top.js'></script>
+		
+		<script src='../JavaScripts/open/shortcuts.min.js'></script>
+		<script src='../JavaScripts/prop/add_items.js'></script>
+		<script src='../JavaScripts/prop/ajax.js'></script>
+		<script src='../JavaScripts/prop/create.js'></script>
+		<script src='../JavaScripts/prop/delete.js'></script>
+		<script src='../JavaScripts/prop/event_handler.js'></script>
+		<script src='../JavaScripts/prop/forms_header_ini.js'></script>
+		<script src='../JavaScripts/prop/forms_ini.js'></script>
+		<script src='../JavaScripts/prop/get.js'></script>
+		<script src='../JavaScripts/prop/grids.js'></script>
+		<script src='../JavaScripts/prop/import_template.js'></script>
+		<script src='../JavaScripts/prop/import.js'></script>
+		<script src='../JavaScripts/prop/local_db_handling.js'></script>
+		<script src='../JavaScripts/prop/login_helper.js'></script>
+		<script src='../JavaScripts/prop/modal_action.js'></script>
+		<script src='../JavaScripts/prop/my_chart.js'></script>
+		<script src='../JavaScripts/prop/print.js'></script>
+		<script src='../JavaScripts/prop/reports_ini.js'></script>
+		<script src='../JavaScripts/prop/reports_header_ini.js'></script>
+		<script src='../JavaScripts/prop/sessions.js'></script>
+		<script src='../JavaScripts/prop/access.js'></script>
+		<script src='../JavaScripts/prop/sync.js'></script>
+		<script src='../JavaScripts/prop/update.js'></script>
+		<script src='../JavaScripts/prop/time.js'></script>
+		<script src='../JavaScripts/prop/virtual_store.js'></script>
+		<script src='../JavaScripts/prop/worker.js'></script>
+	<script>
+	!function(){
+		$("#customers_main").tabs(
+		{
+			show:"slide",
+			activate:function(e, ui) 
+		    {
+		    	e.currentTarget.blur();
+		    	map.invalidateSize(false);
+		    },
+		    beforeActivate:function(event,ui)
+		    {
+		    	$(document).off('keydown');
+			}
+		}).css(
+			{
+				'min-height': '570px',
+				'overflow': 'auto'
+			});
+		}();
+
+		var map = L.map('map').setView([51.505, -0.09], 13);
+
+		var mqUrl='http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png';
+		L.tileLayer(mqUrl, 
+		{
+	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap contributors</a>',
+	        subdomains:'1234'
+    	}).addTo(map);
+
+		L.marker([51.5, -0.09]).addTo(map)
+			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+
+
+		var popup = L.popup();
+
+		function onMapClick(e) {
+			popup
+				.setLatLng(e.latlng)
+				.setContent("You clicked the map at " + e.latlng.toString())
+				.openOn(map);
+		}
+
+		map.on('click', onMapClick);
+
+	</script>
+</body>
+</html>
