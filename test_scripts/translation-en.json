@@ -1,0 +1,10 @@
+{
+  "app": {
+    "name": "i18next"
+  },
+  "nav": {
+    "home": "गह",
+    "page1": "Page परतम",
+    "page2": "Page Two"
+  }
+}

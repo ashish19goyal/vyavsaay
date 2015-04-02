@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Testing autocomplete</title>
+</head>
+<body>
+	<form id='myform'>
+		<input type='text' id='myfilter'>
+	</form>
+</body>
+<script>
+	!function()
+	{
+		var data=["first", "second", "third", "fourth"];
+		var form=document.getElementById('myform');
+		//console.log(form);
+		var datalist=document.createElement('datalist');
+		datalist.setAttribute('id','1234');
+		var input_el=form.elements[0];
+		input_el.setAttribute('list','1234');
+		form.appendChild(datalist);
+		data.forEach(function(d)
+		{
+			var option=document.createElement('option');
+			option.setAttribute('value',d);
+			datalist.appendChild(option);
+		});
+	}();
+</script>
+</html>
