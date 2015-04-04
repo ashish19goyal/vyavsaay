@@ -7362,3 +7362,111 @@ function form146_add_item()
 		$("#modal2").dialog("open");
 	}		
 }
+
+/**
+ * @form Manage Roles
+ * @formNo 147
+ */
+function form147_add_item()
+{
+	if(is_create_access('form147'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form147_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Role'>";
+				rowsHTML+="<input type='text' form='form147_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Description'>";
+				rowsHTML+="<textarea form='form147_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' required form='form147_"+id+"' value='active'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form147_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form147_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form147_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form147_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form147_"+id);
+		var status_filter=fields.elements[2];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form147_create_item(fields);
+		});
+					
+		set_static_value_list('roles','status',status_filter);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Assign Roles
+ * @formNo 149
+ */
+function form149_add_item()
+{
+	if(is_create_access('form149'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form149_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Role'>";
+				rowsHTML+="<input type='text' form='form149_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Username'>";
+				rowsHTML+="<input type='text' form='form149_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' required form='form149_"+id+"' value='active'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form149_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form149_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form149_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form149_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form149_"+id);
+		var role_filter=fields.elements[0];
+		var user_filter=fields.elements[1];
+		var status_filter=fields.elements[2];
+		
+		var role_data="<roles>"+
+						"<role_name></role_name>"+						
+						"</roles>";
+		set_my_value_list(role_data,role_filter);		
+		
+		var user_data="<accounts>"+
+						"<username></username>"+						
+						"</accounts>";
+		set_my_value_list(user_data,user_filter);		
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form149_create_item(fields);
+		});
+					
+		set_static_value_list('user_role_mapping','status',status_filter);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}

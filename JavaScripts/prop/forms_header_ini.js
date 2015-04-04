@@ -5046,3 +5046,97 @@ function form146_header_ini()
 		form146_ini();
 	});
 };
+
+/**
+ * @form Manage Roles
+ * @formNo 147
+ */
+function form147_header_ini()
+{
+	var filter_fields=document.getElementById('form147_header');
+	var role_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[1];
+	
+	var role_data="<roles>" +
+			"<role_name></role_name>" +
+			"</roles>";	
+	set_my_filter(role_data,role_filter);	
+	set_static_filter('roles','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form147_ini();
+	});
+};
+
+
+/**
+ * @form Create Roles
+ * @formNo 148
+ */
+function form148_header_ini()
+{
+	var fields=document.getElementById('form148_master');
+	var role_filter=fields.elements[1];
+	var save_button=fields.elements[3];
+	
+	var role_data="<roles>" +
+			"<role_name></role_name>" +
+			"</roles>";
+	set_my_value_list(role_data,role_filter);
+	
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form148_ini();
+	});
+	
+	$(save_button).off('click');
+	$(save_button).on('click',function(event)
+	{
+		event.preventDefault();
+		form148_update_form();
+	});
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if(event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+};
+
+/**
+ * @form Assign Roles
+ * @formNo 149
+ */
+function form149_header_ini()
+{
+	var filter_fields=document.getElementById('form149_header');
+	var role_filter=filter_fields.elements[0];
+	var username_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var role_data="<roles>" +
+			"<role_name></role_name>" +
+			"</roles>";	
+	set_my_filter(role_data,role_filter);
+
+	var user_data="<user_role_mapping>"+
+				"<username></username>"+
+				"</user_role_mapping>";
+	set_my_filter(user_data,username_filter);					
+		
+	set_static_filter('roles','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form149_ini();
+	});
+};

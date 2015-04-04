@@ -6,7 +6,7 @@
 			<label>Grid<br><input type='text' required></label>
 			<label>Status<br><input type='text' required></label>
 			<input type='hidden' name='id'>
-			<input type='button' title='Save Bill' class='save_icon'>
+			<input type='button' title='Save Questionnaire' class='save_icon'>
 			<input type='submit' class='submit_hidden'>
 		</fieldset>
 	</form>

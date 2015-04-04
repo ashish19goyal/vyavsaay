@@ -239,6 +239,9 @@
   	"activities":"Activities",
   	"manage_orders_app":"Manage Orders from App",
   	"store_movement":"Store Movement",
-  	"manufacturing":"Manufacturing"
+  	"manufacturing":"Manufacturing",
+  	"manage_roles":"Manage Roles",
+  	"create_roles":"Create Roles",
+  	"assign_roles":"Assign Roles"
   }
 }

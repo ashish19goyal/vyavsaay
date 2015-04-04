@@ -889,4 +889,18 @@
 			<status index='yes' type="VARCHAR(25)"></status><!--pending/sent/cancelled-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</sms>
+	<roles>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<role_name index='yes' type="VARCHAR(100)"></role_name>
+			<description index='no' type="TEXT"></description>
+			<status index='yes' type="VARCHAR(25)"></status><!--active/inactive-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</roles>
+	<user_role_mapping>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<role_name index='yes' type="VARCHAR(100)"></role_name>
+			<username index='yes' type='VARCHAR(50)'></username>
+			<status index='yes' type="VARCHAR(25)"></status><!--active/inactive-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</user_role_mapping>
 </re_xml>

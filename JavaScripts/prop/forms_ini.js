@@ -13878,3 +13878,355 @@ function form146_ini()
 		hide_loader();
 	});	
 };
+
+/**
+ * @form Manage Roles
+ * @formNo 147
+ * @Loading light
+ */
+function form147_ini()
+{
+	show_loader();
+	var fid=$("#form147_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form147_header');
+	var frole=filter_fields.elements[0].value;
+	var fstatus=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form147_index');
+	var prev_element=document.getElementById('form147_prev');
+	var next_element=document.getElementById('form147_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<roles count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<role_name>"+frole+"</role_name>" +
+			"<description></description>" +
+			"<status>"+fstatus+"</status>" +
+			"</roles>";
+
+	$('#form147_body').html("");
+
+	fetch_requested_data('form147',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form147_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Role'>";
+						rowsHTML+="<textarea readonly='readonly' form='form147_"+result.id+"'>"+result.role_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Description'>";
+						rowsHTML+="<textarea readonly='readonly' form='form147_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form147_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form147_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form147_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form147_"+result.id+"' title='Delete' onclick='form147_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+		
+			$('#form147_body').append(rowsHTML);
+
+			var fields=document.getElementById("form147_"+result.id);
+			
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form147_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'roles');
+		});
+		hide_loader();
+	});	
+};
+
+/**
+ * @form Create Roles
+ * @formNo 148
+ * @Loading light
+ */
+function form148_ini()
+{
+	var header_fields=document.getElementById('form148_master');
+	header_fields.elements[2].value="";
+	header_fields.elements[3].value='';
+	
+	$('#form148_body').html("");
+
+	var	fuser=header_fields.elements[1].value;
+	if(fuser!="")
+	{
+		show_loader();
+		var user_name_columns="<accounts>" +
+				"<id></id>" +
+				"<username exact='yes'>"+fuser+"</username>" +
+				"</accounts>";
+		get_single_column_data(function(user_results)
+		{
+			if(user_results.length>0)
+				header_fields.elements[4].value=user_results[0];
+		},user_name_columns);
+		
+		var columns="<access_control>" +
+				"<id></id>" +
+				"<username exact='yes'>"+fuser+"</username>" +
+				"<element_id></element_id>" +
+				"<element_name></element_name>" +
+				"<status>active</status>" +
+				"<re></re>" +
+				"<cr></cr>" +
+				"<up></up>" +
+				"<del></del>" +
+				"</access_control>";
+		
+		fetch_requested_data('form148',columns,function(results)
+		{
+			if(results.length==0)
+			{
+				//console.log('new user');
+				var elements_name="<access_control>" +
+							"<id></id>" +
+							"<element_id></element_id>"+
+							"<element_name></element_name>"+
+							"<status exact='yes'>active</status>"+
+							"<username exact='yes'>master</username>"+
+							"</access_control>";
+				
+				fetch_requested_data('form148',elements_name,function(elements)
+				{
+					//console.log('elements found for new user');
+					elements.forEach(function(element)
+					{
+						var data_id=get_new_key();
+						var rowsHTML="";
+						rowsHTML+="<tr>";
+							rowsHTML+="<form id='form148_"+data_id+"'></form>";
+								rowsHTML+="<td data-th='Name'>";
+									rowsHTML+="<textarea readonly='readonly' form='form148_"+data_id+"' data-i18n='form."+element.element_name+"'></textarea>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Read'>";
+									rowsHTML+="<input type='checkbox' form='form148_"+data_id+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Create'>";
+								rowsHTML+="<input type='checkbox' form='form148_"+data_id+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Update'>";
+									rowsHTML+="<input type='checkbox' form='form148_"+data_id+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Delete'>";
+									rowsHTML+="<input type='checkbox' form='form148_"+data_id+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Action'>";
+									rowsHTML+="<input type='hidden' form='form148_"+data_id+"' value='"+data_id+"'>";
+									rowsHTML+="<input type='hidden' form='form148_"+data_id+"' value='"+element.element_id+"'>";
+									rowsHTML+="<input type='submit' class='save_icon' id='save_form148_"+data_id+"' form='form148_"+data_id+"'>";	
+								rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+						
+						$('#form148_body').append(rowsHTML);
+						var fields=document.getElementById("form148_"+data_id);
+						$(fields).on("submit", function(event)
+						{
+							event.preventDefault();
+							form148_create_item(fields);
+						});
+
+					});
+					$('textarea').autosize();
+					
+					$('#form148_body').find('textarea').i18n();
+					hide_loader();
+				});
+			}
+			
+			results.forEach(function(result)
+			{
+				var rowsHTML="";
+				rowsHTML+="<tr>";
+					rowsHTML+="<form id='form148_"+result.id+"'></form>";
+						rowsHTML+="<td data-th='Name'>";
+							rowsHTML+="<textarea readonly='readonly' form='form148_"+result.id+"' data-i18n='form."+result.element_name+"'></textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Read'>";
+							rowsHTML+="<input type='checkbox' form='form148_"+result.id+"' "+result.re+">";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Create'>";
+						rowsHTML+="<input type='checkbox' form='form148_"+result.id+"' "+result.cr+">";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Update'>";
+							rowsHTML+="<input type='checkbox' form='form148_"+result.id+"' "+result.up+">";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Delete'>";
+							rowsHTML+="<input type='checkbox' form='form148_"+result.id+"' "+result.del+">";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form148_"+result.id+"' value='"+result.id+"'>";
+							rowsHTML+="<input type='hidden' form='form148_"+result.id+"' value='"+result.element_id+"'>";
+							rowsHTML+="<input type='submit' class='save_icon' id='save_form148_"+result.id+"' form='form148_"+result.id+"' value='saved'>";	
+						rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+				
+				$('#form148_body').append(rowsHTML);
+				var fields=document.getElementById("form148_"+result.id);
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form148_update_item(fields);
+				});
+				hide_loader();
+			});
+			$('textarea').autosize();
+			
+			$('#form148_body').find('textarea').i18n();
+		});
+	}
+	else
+	{
+		$('#form148_body').html("");
+	}
+};
+
+/**
+ * @form Assign Roles
+ * @formNo 149
+ * @Loading light
+ */
+function form149_ini()
+{
+	show_loader();
+	var fid=$("#form149_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form149_header');
+	var frole=filter_fields.elements[0].value;
+	var fuser=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form149_index');
+	var prev_element=document.getElementById('form149_prev');
+	var next_element=document.getElementById('form149_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<user_role_mapping count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<role_name>"+frole+"</role_name>" +
+			"<username>"+fuser+"</username>" +
+			"<status>"+fstatus+"</status>" +
+			"</user_role_mapping>";
+
+	$('#form149_body').html("");
+
+	fetch_requested_data('form149',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form149_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Role'>";
+						rowsHTML+="<textarea readonly='readonly' form='form149_"+result.id+"'>"+result.role_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Username'>";
+						rowsHTML+="<textarea readonly='readonly' form='form149_"+result.id+"'>"+result.username+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form149_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form149_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form149_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form149_"+result.id+"' title='Delete' onclick='form149_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+		
+			$('#form149_body').append(rowsHTML);
+
+			var fields=document.getElementById("form149_"+result.id);
+			
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form149_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'user_role_mapping');
+		});
+		hide_loader();
+	});	
+};

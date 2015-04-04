@@ -4536,3 +4536,98 @@ function form146_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Roles
+ * @formNo 147
+ * @param button
+ */
+function form147_delete_item(button)
+{
+	if(is_delete_access('form147'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var role=form.elements[0].value;
+		var desc=form.elements[1].value;
+		var status=form.elements[2].value;		
+		var data_id=form.elements[3].value;
+		var data_xml="<roles>" +
+					"<id>"+data_id+"</id>" +
+					"</roles>";
+		var mapping_xml="<user_role_mapping>"+
+						"<role_name>"+role+"</role_name>"+
+						"</user_role_mapping>";
+		var access_xml="<access_control>"+
+						"<username>"+role+"</username>"+
+						"</access_control>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>roles</tablename>" +
+					"<link_to>form147</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Role "+role+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(mapping_xml);
+			server_delete_simple(access_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(mapping_xml);
+			local_delete_simple(access_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Assign Roles
+ * @formNo 149
+ * @param button
+ */
+function form149_delete_item(button)
+{
+	if(is_delete_access('form149'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var role=form.elements[0].value;
+		var data_id=form.elements[3].value;
+		var data_xml="<user_role_mapping>" +
+					"<id>"+data_id+"</id>" +
+					"</user_role_mapping>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>user_role_mapping</tablename>" +
+					"<link_to>form149</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>User mapping for "+role+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+

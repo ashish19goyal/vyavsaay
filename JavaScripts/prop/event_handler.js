@@ -313,7 +313,7 @@ function hide_unreadable_elements()
 {
 	var forms_array=[];
 	var reports_array=[];
-	for (var i=1;i<147;i++)
+	for (var i=1;i<150;i++)
 	{
 		forms_array.push("form"+i);
 		reports_array.push("report"+i);
@@ -811,6 +811,10 @@ function import_data(form_name)
 		case 'form143':modal23_action(form143_import_template,form143_import);
 		break;
 		case 'form146':modal23_action(form146_import_template,form146_import);
+		break;
+		case 'form147':modal23_action(form147_import_template,form147_import);
+		break;
+		case 'form149':modal23_action(form149_import_template,form149_import);
 		break;
 	}
 }

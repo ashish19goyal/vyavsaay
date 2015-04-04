@@ -92,7 +92,6 @@ function login_online(username,domain,pass)
  */
 function set_session_variables(domain,username,pass)
 {
-	//console.log("2. inside set_session_variables()");
 	var db_name="re_local_"+domain;
 
 	var request = indexedDB.open(db_name);
@@ -172,42 +171,55 @@ function set_session_variables(domain,username,pass)
 							var cr='';
 							var up='';
 							var del='';
-							
-							static_local_db.transaction(['access_control'],"readonly").objectStore('access_control').index('username').openCursor(keyValue).onsuccess=function(e)
+
+							static_local_db.transaction(['user_role_mapping'],"readonly").objectStore('user_role_mapping').index('username').openCursor(keyValue).onsuccess=function(e)
 							{
-								var result3=e.target.result;
-								if(result3)
+								var result5=e.target.result;
+								if(result5)
 								{
-									var record3=result3.value;
-									
-									if(record3.status==='active')
-									{
-										if(record3.re==='checked')
-										{	
-											re+=record3.element_id+"-";
-										}
-										if(record3.cr==='checked')
-										{	
-											cr+=record3.element_id+"-";
-										}
-										if(record3.up==='checked')
-										{
-											up+=record3.element_id+"-";
-										}
-										if(record3.del==='checked')
-										{
-											del+=record3.element_id+"-";
-										}
-									}
-									result3.continue();
+									var record5=result5.value;
+									///set the keyvalue to include multiple values here
+									//keyValue=IDBKeyRange.bound([username,'0'],[username,'99999999']);
 								}
 								else
-								{
-									data.re=re;
-									data.cr=cr;
-									data.up=up;
-									data.del=del;
-									set_session(data);
+								{								
+									static_local_db.transaction(['access_control'],"readonly").objectStore('access_control').index('username').openCursor(keyValue).onsuccess=function(e)
+									{
+										var result3=e.target.result;
+										if(result3)
+										{
+											var record3=result3.value;
+											
+											if(record3.status==='active')
+											{
+												if(record3.re==='checked')
+												{	
+													re+=record3.element_id+"-";
+												}
+												if(record3.cr==='checked')
+												{	
+													cr+=record3.element_id+"-";
+												}
+												if(record3.up==='checked')
+												{
+													up+=record3.element_id+"-";
+												}
+												if(record3.del==='checked')
+												{
+													del+=record3.element_id+"-";
+												}
+											}
+											result3.continue();
+										}
+										else
+										{
+											data.re=re;
+											data.cr=cr;
+											data.up=up;
+											data.del=del;
+											set_session(data);
+										}
+									};
 								}
 							};
 						};

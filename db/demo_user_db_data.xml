@@ -2035,6 +2035,39 @@
 			<tables>--manufacturing_schedule--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form147</name>
+			<display_name>manage_roles</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--roles--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form148</name>
+			<display_name>create_roles</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--roles--access_control--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form149</name>
+			<display_name>assign_roles</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--roles--user_role_mapping--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3779,6 +3812,39 @@
 			<username>master</username>
 			<element_id>form146</element_id>
 			<element_name>manufacturing</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form147</element_id>
+			<element_name>manage_roles</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form148</element_id>
+			<element_name>create_roles</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form149</element_id>
+			<element_name>assign_roles</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

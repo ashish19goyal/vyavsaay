@@ -10930,3 +10930,194 @@ function form146_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Roles
+ * @formNo 147
+ */
+function form147_create_item(form)
+{
+	if(is_create_access('form147'))
+	{
+		var role=form.elements[0].value;
+		var desc=form.elements[1].value;
+		var status=form.elements[2].value;		
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<roles>" +
+					"<id>"+data_id+"</id>" +
+					"<role_name>"+role+"</role_name>" +
+					"<description>"+desc+"</description>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</roles>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>roles</tablename>" +
+					"<link_to>form147</link_to>" +
+					"<title>Created</title>" +
+					"<notes>Role "+role+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+
+
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		var del_button=form.elements[5];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form147_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form147_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Role
+ * @param button
+ */
+function form148_create_item(form)
+{
+	if(is_create_access('form148'))
+	{
+		var master_form=document.getElementById('form148_master');
+		var role=master_form.elements[1].value;
+			
+		var element_name=form.elements[0].getAttribute('data-i18n');
+		element_name=element_name.substr(element_name.indexOf('.')+1);
+		var re='unchecked';
+		if(form.elements[1].checked)
+			re='checked';
+		var cr='unchecked';
+		if(form.elements[2].checked)
+			cr='checked';
+		var up='unchecked';
+		if(form.elements[3].checked)
+			up='checked';
+		var del='unchecked';
+		if(form.elements[4].checked)
+			del='checked';
+		var data_id=form.elements[5].value;
+		var element_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<access_control>" +
+					"<id>"+data_id+"</id>" +
+					"<username>"+role+"</username>" +
+					"<element_id>"+element_id+"</element_id>" +
+					"<element_name>"+element_name+"</element_name>" +
+					"<re>"+re+"</re>" +
+					"<cr>"+cr+"</cr>" +
+					"<up>"+up+"</up>" +
+					"<del>"+del+"</del>" +
+					"<status>active</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</access_control>";	
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form148_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Assign Roles
+ * @formNo 149
+ */
+function form149_create_item(form)
+{
+	if(is_create_access('form149'))
+	{
+		var role=form.elements[0].value;
+		var user=form.elements[1].value;
+		var status=form.elements[2].value;		
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<user_role_mapping>" +
+					"<id>"+data_id+"</id>" +
+					"<role_name>"+role+"</role_name>" +
+					"<username>"+user+"</username>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</user_role_mapping>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>user_role_mapping</tablename>" +
+					"<link_to>form149</link_to>" +
+					"<title>Assigned</title>" +
+					"<notes>Role "+role+" to user "+user+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+
+
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		var del_button=form.elements[5];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form149_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form149_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

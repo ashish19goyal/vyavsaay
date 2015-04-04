@@ -15,6 +15,9 @@
 			<li><a id='form123_link' href='#form123' onclick='form123_header_ini(); form123_ini();' data-i18n='form.mandatory_attributes'></a></li>
 			<li><a id='form142_link' href='#form142' onclick='form142_header_ini(); form142_ini();' data-i18n='form.create_questionnaire'></a></li>
 			<li><a id='form143_link' href='#form143' onclick='form143_header_ini(); form143_ini();' data-i18n='form.manage_questionnaire'></a></li>
+			<li><a id='form147_link' href='#form147' onclick='form147_header_ini(); form147_ini();' data-i18n='form.manage_roles'></a></li>
+			<li><a id='form148_link' href='#form148' onclick='form148_header_ini(); form148_ini();' data-i18n='form.create_roles'></a></li>
+			<li><a id='form149_link' href='#form149' onclick='form149_header_ini(); form149_ini();' data-i18n='form.assign_roles'></a></li>
 		</ul>
 
 	<?php 
@@ -31,6 +34,9 @@
 			include "forms/form111.php";
 			include "forms/form123.php";
 			include "forms/form142.php";
-			include "forms/form143.php";		
+			include "forms/form143.php";
+			include "forms/form147.php";
+			include "forms/form148.php";
+			include "forms/form149.php";		
 	?>
 </div>

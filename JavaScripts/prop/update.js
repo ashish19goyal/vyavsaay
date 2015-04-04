@@ -2488,7 +2488,6 @@ function form51_update_form()
 	}
 }
 
-
 /**
  * @form Select print templates
  * @param button
@@ -7445,6 +7444,187 @@ function form146_suspend_item(button)
 			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		$(button).hide();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Roles
+ * @param button
+ */
+function form147_update_item(button)
+{
+	if(is_update_access('form147'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+
+		var role=form.elements[0].value;
+		var desc=form.elements[1].value;
+		var status=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<roles>" +
+					"<id>"+data_id+"</id>" +
+					"<role_name>"+role+"</role_name>" +
+					"<description>"+desc+"</description>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</roles>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>roles</tablename>" +
+					"<link_to>form147</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Role "+role+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		$(button).hide();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Create Role
+ * @param button
+ */
+function form148_update_item(form)
+{
+	if(is_update_access('form148'))
+	{
+		var master_form=document.getElementById('form148_master');
+		var username=master_form.elements[1].value;
+			
+		var element_name=form.elements[0].getAttribute('data-i18n');
+		element_name=element_name.substr(element_name.indexOf('.')+1);
+		var re='unchecked';
+		if(form.elements[1].checked)
+			re='checked';
+		var cr='unchecked';
+		if(form.elements[2].checked)
+			cr='checked';
+		var up='unchecked';
+		if(form.elements[3].checked)
+			up='checked';
+		var del='unchecked';
+		if(form.elements[4].checked)
+			del='checked';
+		var data_id=form.elements[5].value;
+		var element_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<access_control>" +
+					"<id>"+data_id+"</id>" +
+					"<username>"+username+"</username>" +
+					"<element_id>"+element_id+"</element_id>" +
+					"<element_name>"+element_name+"</element_name>" +
+					"<re>"+re+"</re>" +
+					"<cr>"+cr+"</cr>" +
+					"<up>"+up+"</up>" +
+					"<del>"+del+"</del>" +
+					"<status>active</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</access_control>";	
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 148
+ * form Create Role
+ * @param button
+ */
+function form148_update_form()
+{
+	if(is_update_access('form148'))
+	{
+		var form=document.getElementById("form148_master");		
+		$("[id^='save_form148_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Assign Roles
+ * @param button
+ */
+function form149_update_item(button)
+{
+	if(is_update_access('form149'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+
+		var role=form.elements[0].value;
+		var username=form.elements[1].value;
+		var status=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<roles>" +
+					"<id>"+data_id+"</id>" +
+					"<role_name>"+role+"</role_name>" +
+					"<username>"+username+"</username>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</roles>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>user_role_mapping</tablename>" +
+					"<link_to>form149</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Role mapping for "+username+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<3;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

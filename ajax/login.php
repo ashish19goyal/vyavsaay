@@ -16,11 +16,10 @@ use RetailingEssentials\db_connect;
 		$stmt=$conn->conn->prepare("select password from accounts where username=?");
 		$stmt->execute(array($user));
 		
-		//echo "this is domainname: $domain and password: $pass";
-		
 		if(!$stmt || $stmt->rowCount()!=1)
 		{
 			$status="failed_auth";
+			//echo "error1";
 		}
 		else
 		{
@@ -29,6 +28,7 @@ use RetailingEssentials\db_connect;
 			if(!password_verify($pass,$pass_hash))
 			{
 				$status="failed_auth";
+				//echo "error2";
 			}
 			else	
 			{
@@ -79,8 +79,8 @@ use RetailingEssentials\db_connect;
 				
 				/////////setting access control session variables
 				$read_access="";
-				$stmt1=$conn->conn->prepare("select element_id from access_control where username=? and re=? and status=?");
-				$stmt1->execute(array($user,'checked','active'));
+				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.re=? and c.status=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.re=? and b.status=?");
+				$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
 				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 				{
 					$read_access.=$row['element_id']."-";
@@ -90,8 +90,8 @@ use RetailingEssentials\db_connect;
 				$session_var.="</re>";
 				
 				$create_access="";
-				$stmt1=$conn->conn->prepare("select element_id from access_control where username=? and cr=? and status=?");
-				$stmt1->execute(array($user,'checked','active'));
+				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.cr=? and c.status=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.cr=? and b.status=?");
+				$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
 				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 				{
 					$create_access.=$row['element_id']."-";
@@ -101,8 +101,8 @@ use RetailingEssentials\db_connect;
 				$session_var.="</cr>";
 				
 				$update_access="";
-				$stmt1=$conn->conn->prepare("select element_id from access_control where username=? and up=? and status=?");
-				$stmt1->execute(array($user,'checked','active'));
+				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.up=? and c.status=? union select b.element_id from user_role_mapping a, access_control b where b.username=a.role_name and a.username=? and b.up=? and b.status=?");
+				$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
 				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 				{
 					$update_access.=$row['element_id']."-";
@@ -112,8 +112,8 @@ use RetailingEssentials\db_connect;
 				$session_var.="</up>";
 				
 				$del_access="";
-				$stmt1=$conn->conn->prepare("select element_id from access_control where username=? and del=? and status=?");
-				$stmt1->execute(array($user,'checked','active'));
+				$stmt1=$conn->conn->prepare("select c.element_id from access_control c where c.username=? and c.del=? and c.status=? union select b.element_id from user_role_mapping a,access_control b where b.username=a.role_name and a.username=? and b.del=? and b.status=?");
+				$stmt1->execute(array($user,'checked','active',$user,'checked','active'));
 				while ($row=$stmt1->fetch(PDO::FETCH_ASSOC))
 				{
 					$del_access.=$row['element_id']."-";
@@ -141,7 +141,6 @@ use RetailingEssentials\db_connect;
 				$session_var.=$row2['acc_name'];
 				$session_var.="</acc_name>";
 
-
 				$session_var.="</session>";
 				$status=$session_var;
 			}
@@ -150,6 +149,7 @@ use RetailingEssentials\db_connect;
 	catch(PDOException $ex)
 	{
 		$status="failed_auth";
+		//echo "error3";
 	}
 	header ("Content-Type:text/xml");
 	echo $status;
