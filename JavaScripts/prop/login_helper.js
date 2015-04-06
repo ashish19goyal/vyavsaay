@@ -171,18 +171,53 @@ function set_session_variables(domain,username,pass)
 							var cr='';
 							var up='';
 							var del='';
-
+							var access_control_count=1;
+							
 							static_local_db.transaction(['user_role_mapping'],"readonly").objectStore('user_role_mapping').index('username').openCursor(keyValue).onsuccess=function(e)
 							{
 								var result5=e.target.result;
 								if(result5)
 								{
 									var record5=result5.value;
-									///set the keyvalue to include multiple values here
-									//keyValue=IDBKeyRange.bound([username,'0'],[username,'99999999']);
+									access_control_count+=1;
+									keyValue=IDBKeyRange.bound([record5.role_name,'0'],[record5.role_name,'99999999']);
+									static_local_db.transaction(['access_control'],"readonly").objectStore('access_control').index('username').openCursor(keyValue).onsuccess=function(e)
+									{
+										var result3=e.target.result;
+										if(result3)
+										{
+											var record3=result3.value;
+											
+											if(record3.status==='active')
+											{
+												if(record3.re==='checked')
+												{	
+													re+=record3.element_id+"-";
+												}
+												if(record3.cr==='checked')
+												{	
+													cr+=record3.element_id+"-";
+												}
+												if(record3.up==='checked')
+												{
+													up+=record3.element_id+"-";
+												}
+												if(record3.del==='checked')
+												{
+													del+=record3.element_id+"-";
+												}
+											}
+											result3.continue();
+										}
+										else{
+											access_control_count-=1;
+										}
+									};
+									result5.continue();
 								}
 								else
-								{								
+								{
+									keyValue=IDBKeyRange.bound([username,'0'],[username,'99999999']);
 									static_local_db.transaction(['access_control'],"readonly").objectStore('access_control').index('username').openCursor(keyValue).onsuccess=function(e)
 									{
 										var result3=e.target.result;
@@ -213,15 +248,25 @@ function set_session_variables(domain,username,pass)
 										}
 										else
 										{
-											data.re=re;
-											data.cr=cr;
-											data.up=up;
-											data.del=del;
-											set_session(data);
+											access_control_count-=1;
 										}
 									};
 								}
 							};
+
+							var access_control_complete=setInterval(function()
+							{
+							   if(access_control_count===0)
+							   {
+							   		//console.log('access parameters set');
+									clearInterval(access_control_complete);
+									data.re=re;
+									data.cr=cr;
+									data.up=up;
+									data.del=del;
+									set_session(data);			  		
+							 	} 	
+							 },100);																					
 						};
 					};
 				}
