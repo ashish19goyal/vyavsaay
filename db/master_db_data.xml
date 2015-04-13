@@ -351,8 +351,100 @@
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<tablename>feed_likes</tablename>
+			<field_name>person</field_name>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feed_comments</tablename>
+			<field_name>person</field_name>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
 	</user_fields_list>
 	<values_list>
+		<row>
+			<tablename>feeds</tablename>
+			<listname>status</listname>
+			<name>visible</name>
+			<value>Visible</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feeds</tablename>
+			<listname>status</listname>
+			<name>hidden</name>
+			<value>Hidden</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feeds</tablename>
+			<listname>status</listname>
+			<name>archived</name>
+			<value>Archived</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feeds</tablename>
+			<listname>content_type</listname>
+			<name>text</name>
+			<value>Text</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feeds</tablename>
+			<listname>content_type</listname>
+			<name>image</name>
+			<value>Image</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feeds</tablename>
+			<listname>content_type</listname>
+			<name>url</name>
+			<value>URL</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feeds</tablename>
+			<listname>source</listname>
+			<name>service request</name>
+			<value>Service request</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feeds</tablename>
+			<listname>source</listname>
+			<name>project</name>
+			<value>Project</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feeds</tablename>
+			<listname>source</listname>
+			<name>project phase</name>
+			<value>Project phase</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>feeds</tablename>
+			<listname>source</listname>
+			<name>task instance</name>
+			<value>Task instance</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<tablename>roles</tablename>
 			<listname>status</listname>

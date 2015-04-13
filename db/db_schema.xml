@@ -101,8 +101,10 @@
 			<t_due index='yes' type="BIGINT"></t_due>
 			<status index='yes' type="VARCHAR(45)"></status><!-- pending/completed/cancelled -->
 			<assignee index='yes' type="VARCHAR(100)"></assignee>
-			<source index='yes' type="VARCHAR(50)"></source><!--service request-->
+			<source index='yes' type="VARCHAR(50)"></source><!--service request/project/project phase-->
 			<source_id index='yes' type="BIGINT"></source_id>
+			<est_expense index='no' type="DECIMAL(12,2)"></est_expense>
+			<expense index='no' type="DECIMAL(12,2)"></expense>
 			<task_hours index='no' type="DECIMAL(5,2)"></task_hours>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</task_instances>
@@ -679,6 +681,7 @@
 			<member index='yes' type="VARCHAR(100)"></member>
 			<notes index='no' type="TEXT"></notes>
 			<role index='no' type="TEXT"></role>
+			<access_type index='yes' type="VARCHAR(25)"></access_type><!--all/read/update/delete-->
 			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active/left -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</project_team>
@@ -903,4 +906,31 @@
 			<status index='yes' type="VARCHAR(25)"></status><!--active/inactive-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</user_role_mapping>
+	<feeds>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<status index='yes' type="VARCHAR(45)"></status><!-- visible/hidden/archived-->
+			<content_type index='yes' type='VARCHAR(30)'></content_type><!--text/image/url-->
+			<content_title index='yes' type='TEXT'></content_title>
+			<content_detail index='no' type='TEXT'></content_detail>
+			<content_blob index='no' type="MEDIUMBLOB"></content_blob>
+			<content_url index='no' type='TEXT'></content_url>
+			<source index='yes' type="VARCHAR(50)"></source><!-- service request/project/project phase/task instance -->
+			<source_id index='yes' type="BIGINT"></source_id>
+			<target_user index='no' type="TEXT"></target_user>
+			<owner index='yes' type="VARCHAR(100)"></owner>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</feeds>
+	<feed_likes>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<feed_id index='yes' type="BIGINT"></feed_id>
+			<person index='yes' type="VARCHAR(100)"></person>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</feed_likes>
+	<feed_comments>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<feed_id index='yes' type="BIGINT"></feed_id>
+			<person index='yes' type="VARCHAR(100)"></person>
+			<comment_text index='no' type='TEXT'></comment_text>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</feed_comments>
 </re_xml>

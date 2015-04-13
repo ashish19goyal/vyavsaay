@@ -242,6 +242,11 @@
   	"manufacturing":"Manufacturing",
   	"manage_roles":"Manage Roles",
   	"create_roles":"Create Roles",
-  	"assign_roles":"Assign Roles"
+  	"assign_roles":"Assign Roles",
+  	"project_budgeting":"Project Budgeting",
+  	"budgeting":"Budgeting",
+  	"project_feeds":"Project Feeds",
+  	"feeds":"Feeds",
+  	"schedule":"Schedule"
   }
 }

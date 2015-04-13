@@ -367,12 +367,7 @@ function set_my_value_list(filter_data,filter_element)
 			$(filter_element).blur();
 			$(filter_element).focus();
 		}
-/*		else 
-		{
-			$(filter_element).focus();
-			$(active_element).focus();
-		}		
-*/		
+
 		$(filter_element).off("change");
 		$(filter_element).on("change",function(event)
 		{
@@ -650,3 +645,158 @@ function array_unique(array)
         return index===arr.indexOf(el);
     });
 }
+
+function my_datalist_change(element,func)
+{
+	$(element).off('keyup');
+	$(element).on('keyup', function()
+	{
+		var list_id=element.getAttribute('list');
+    	var options = $('#'+list_id)[0].options;
+    	for (var i=0;i<options.length;i++)
+    	{
+	       	if (options[i].value == $(this).val()) 
+    	    {
+    	    	func();
+    	    	break;
+    	    }
+    	}
+	});
+}
+
+
+function like_feed(feed_id,element)
+{
+	var like_xml="<feed_likes>"+
+				"<id>"+get_new_key()+"</id>"+	
+				"<feed_id exact='yes'>"+feed_id+"</feed_id>"+
+				"<person exact='yes'>"+get_account_name()+"</person>"+
+				"<last_updated>"+get_my_time()+"</last_updated>"+						
+				"</feed_likes>";
+	if(is_online())
+	{
+		server_create_simple(like_xml);
+	}
+	else
+	{
+		local_create_simple(like_xml);
+	}
+	$(element).attr('src','../images/thumbs_up.png');
+	$(element).attr('title','Unlike this post');
+	$(element).attr("onclick",'');
+	$(element).off('click');	
+	$(element).on('click',function()
+	{
+		dislike_feed(feed_id,element);
+	});
+	var likes_count=parseInt($('#form150_likes_count_'+feed_id).html());
+	$('#form150_likes_count_'+feed_id).html(likes_count+1);
+}
+
+function dislike_feed(feed_id,element)
+{
+	var like_xml="<feed_likes>"+
+				"<feed_id>"+feed_id+"</feed_id>"+
+				"<person>"+get_account_name()+"</person>"+	
+				"</feed_likes>";
+	if(is_online())
+	{
+		server_delete_simple(like_xml);
+	}
+	else
+	{
+		local_delete_simple(like_xml);
+	}
+	$(element).attr('src','../images/thumbs_up_line.png');
+	$(element).attr('title','Like this post');
+	$(element).attr("onclick",'');
+	$(element).off('click');	
+	$(element).on('click',function()
+	{
+		like_feed(feed_id,element);
+	});
+	var likes_count=parseInt($('#form150_likes_count_'+feed_id).html());
+	$('#form150_likes_count_'+feed_id).html(likes_count-1);
+}
+
+function create_feed_comment(feed_id,element)
+{
+	var comment_text=element.value;
+	var account_name=get_account_name();
+	var data_id=get_new_key();
+	var comment_xml="<feed_comments>"+
+				"<id>"+data_id+"</id>"+	
+				"<feed_id exact='yes'>"+feed_id+"</feed_id>"+
+				"<person exact='yes'>"+account_name+"</person>"+
+				"<comment_text>"+comment_text+"</comment_text>"+
+				"<last_updated>"+get_my_time()+"</last_updated>"+						
+				"</feed_comments>";
+	if(is_online())
+	{
+		server_create_simple(comment_xml);
+	}
+	else
+	{
+		local_create_simple(comment_xml);
+	}
+	
+	
+	var comments_content="<label>"+account_name+": "+comment_text;
+	comments_content+=" <a class='small_cross_icon' onclick=\"delete_feed_comment('"+data_id+"',$(this));\" title='Delete comment'>&#10006;</a>";
+	comments_content+="</label><br>";
+	comments_content+="<label>"+account_name+": <textarea class='feed_comments' placeholder='comment..'></textarea></label>";
+	$(element).parent().parent().append(comments_content);
+	//$('#form150_comments_'+feed_id).append(comments_content);
+	$(element).parent().parent().find('label').find('textarea').on('keyup',function(e)
+	{
+		if (e.keyCode==13) 
+		{
+			create_feed_comment(feed_id,this);
+		}
+	});
+	$(element).parent().remove();
+}
+
+
+function delete_feed_comment(comment_id,element)
+{
+	var comment_xml="<feed_comments>"+
+					"<id>"+comment_id+"</id>"+
+					"</feed_comments>";
+	if(is_online())
+	{
+		server_delete_simple(comment_xml);
+	}
+	else
+	{
+		local_delete_simple(comment_xml);
+	}
+	$(element).parent().remove();
+}
+
+function delete_feed(feed_id,element)
+{
+	var feed_xml="<feeds>"+
+					"<id>"+feed_id+"</id>"+
+					"</feeds>";
+	var like_xml="<feed_likes>"+
+					"<feed_id>"+feed_id+"</feed_id>"+
+					"</feed_likes>";
+	var comment_xml="<feed_comments>"+
+					"<feed_id>"+feed_id+"</feed_id>"+
+					"</feed_comments>";
+	if(is_online())
+	{
+		server_delete_simple(feed_xml);
+		server_delete_simple(like_xml);
+		server_delete_simple(comment_xml);
+	}
+	else
+	{
+		local_delete_simple(feed_xml);
+		local_delete_simple(like_xml);
+		local_delete_simple(comment_xml);
+	}
+	$(element).parent().parent().remove();
+}
+

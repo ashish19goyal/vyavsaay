@@ -6826,6 +6826,95 @@ function form130_update_form()
 }
 
 /**
+ * @form Project Dashboard - Team
+ * @formNo 135
+ * @param button
+ */
+function form135_update_team(form)
+{
+	if(is_update_access('form135'))
+	{
+		var member=form.elements[0].value;
+		var role=form.elements[1].value;
+		var notes=form.elements[2].value;
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<project_team>" +
+					"<id>"+data_id+"</id>" +
+					"<member>"+member+"</member>" +
+					"<role>"+role+"</role>" +
+					"<notes>"+notes+"</notes>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</project_team>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Project Dashboard - Task
+ * @formNo 135
+ * @param button
+ */
+function form135_update_task(form)
+{
+	if(is_update_access('form135'))
+	{
+		var task=form.elements[0].value;
+		var description=form.elements[1].value;
+		var assignee=form.elements[2].value;
+		var due_by=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;				
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+				
+		var data_xml="<task_instances>" +
+					"<id>"+data_id+"</id>" +
+					"<assignee>"+assignee+"</assignee>" +
+					"<name>"+task+"</name>" +
+					"<description>"+description+"</description>" +
+					"<t_due>"+due_by+"</t_due>"+
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</task_instances>";	
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form Enter Supplier Bill (wholesale)
  * @param button
  */
@@ -7196,6 +7285,97 @@ function form143_update_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Project Budgeting - Cost of tasks
+ * @formNo 144
+ * @param button
+ */
+function form144_update_task(form)
+{
+	if(is_update_access('form144'))
+	{
+		var project_id=document.getElementById('form144_master').elements[5].value;
+		var task=form.elements[0].value;
+		var description=form.elements[1].value;
+		var estimate=form.elements[2].value;
+		var actual=form.elements[3].value;		
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<task_instances>" +
+					"<id>"+data_id+"</id>" +
+					"<status>"+status+"</status>" +
+					"<name>"+task+"</name>" +
+					"<est_expense>"+estimate+"</est_expense>" +
+					"<expense>"+actual+"</expense>" +
+					"<description>"+description+"</description>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</task_instances>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Project Budgeting - Expenses
+ * @formNo 144
+ * @param button
+ */
+function form144_update_expense(form)
+{
+	if(is_update_access('form144'))
+	{
+		var project_id=document.getElementById('form144_master').elements[5].value;
+		var person=form.elements[0].value;
+		var amount=form.elements[1].value;
+		var details=form.elements[2].value;
+		var status=form.elements[3].value;		
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<expenses>" +
+					"<id>"+data_id+"</id>" +
+					"<source_id>"+project_id+"</source_id>" +
+					"<source>project</source>"+
+					"<status>"+status+"</status>" +
+					"<person>"+person+"</person>" +
+					"<amount>"+amount+"</amount>" +
+					"<detail>"+details+"</detail>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</expenses>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
 	}
 	else
 	{

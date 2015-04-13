@@ -4627,6 +4627,13 @@ function form134_header_ini()
 	var customer_filter=fields.elements[2];
 	var status_filter=fields.elements[3];
 	var save_button=fields.elements[4];
+
+	$(fields).off('submit');
+	$(fields).on('submit',function (event) 
+	{
+		event.preventDefault();
+		form134_ini();
+	});	
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -4656,11 +4663,29 @@ function form134_header_ini()
 function form135_header_ini()
 {
 	var fields=document.getElementById('form135_master');
+	var project_id=$("#form135_link").attr('data_id');
 	
 	var name_filter=fields.elements[1];
 	var description_filter=fields.elements[2];
 	var status_filter=fields.elements[3];
-	var save_button=fields.elements[4];
+	var id_filter=fields.elements[4];
+	var save_button=fields.elements[5];
+	var add_button=fields.elements[6];
+	id_filter.value=project_id;
+
+	$(fields).off('submit');
+	$(fields).on('submit',function (event) 
+	{
+		event.preventDefault();
+		form135_ini();
+	});	
+	
+	$(add_button).off('click');
+	$(add_button).on('click',function()
+	{
+		console.log(id_filter.value);
+		modal105_action(id_filter.value);
+	});	
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -4681,6 +4706,20 @@ function form135_header_ini()
 	description_filter.value='';
 	status_filter.value='';
 	set_static_value_list('projects','status',status_filter);	
+
+	var project_data="<projects>"+
+					"<name></name>"+
+					"</projects>";
+	set_my_value_list(project_data,name_filter);
+	
+	my_datalist_change(name_filter,function () 
+	{
+		var project_id_data="<projects>"+
+							"<id></id>"+
+							"<name exact='yes'>"+name_filter.value+"</name>"+
+							"</projects>";
+		set_my_value(project_id_data,id_filter);
+	});
 }
 
 /**
@@ -4874,6 +4913,38 @@ function form140_header_ini()
 };
 
 /**
+ * @form Manage Orders (App)
+ * @formNo 141
+ */
+function form141_header_ini()
+{
+	var filter_fields=document.getElementById('form141_header');
+	var order_filter=filter_fields.elements[0];
+	var customer_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	var assignee_filter=filter_fields.elements[3];
+	
+/*
+	var order_data="<sale_orders>" +
+			"<id></id>" +
+			"</sale_orders>";
+	var cust_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_filter(order_data,order_filter);
+	set_my_filter(cust_data,name_filter);
+*/
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form141_ini();
+	});
+
+	set_static_filter('sale_orders','status',status_filter);
+};
+
+/**
  * @form Create Questionnaires
  * @formNo 142
  */
@@ -4954,37 +5025,68 @@ function form143_header_ini()
 	set_static_filter('ques_data','status',status_filter);
 };
 
+
 /**
- * @form Manage Orders (App)
- * @formNo 141
+ * @form Project Budgeting
+ * @formNo 144
  */
-function form141_header_ini()
+function form144_header_ini()
 {
-	var filter_fields=document.getElementById('form141_header');
-	var order_filter=filter_fields.elements[0];
-	var customer_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
-	var assignee_filter=filter_fields.elements[3];
+	var fields=document.getElementById('form144_master');
+	var project_id=$("#form144_link").attr('data_id');
 	
-/*
-	var order_data="<sale_orders>" +
-			"<id></id>" +
-			"</sale_orders>";
-	var cust_data="<customers>" +
-			"<acc_name></acc_name>" +
-			"</customers>";
-	set_my_filter(order_data,order_filter);
-	set_my_filter(cust_data,name_filter);
-*/
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
+	var name_filter=fields.elements[1];
+	var expense_estimate_filter=fields.elements[2];
+	var total_estimate_filter=fields.elements[3];
+	var total_budget_filter=fields.elements[4];
+	var project_id_filter=fields.elements[5];
+	var save_button=fields.elements[6];
+
+	project_id_filter.value=project_id;
+	
+	$(fields).off('submit');
+	$(fields).on('submit',function (event) 
 	{
 		event.preventDefault();
-		form141_ini();
+		form144_ini();
+	});	
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form144_update_form();
 	});
+		
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+	
+	name_filter.value='';
+	expense_estimate_filter.value='';
+	total_estimate_filter.value='';
+	total_budget_filter.value='';
+	
+	var project_data="<projects>"+
+					"<name></name>"+
+					"</projects>";	
+	set_my_value_list(project_data,name_filter);
+	
+	my_datalist_change(name_filter,function () 
+	{
+		console.log('changed');
+		var project_id_data="<projects>"+
+							"<id></id>"+
+							"<name exact='yes'>"+name_filter.value+"</name>"+
+							"</projects>";
+		set_my_value(project_id_data,project_id_filter);
+	});
+}
 
-	set_static_filter('sale_orders','status',status_filter);
-};
 
 /**
  * @form Store Movement
@@ -5138,5 +5240,31 @@ function form149_header_ini()
 	{
 		event.preventDefault();
 		form149_ini();
+	});
+};
+
+/**
+ * @form Project Feeds
+ * @formNo 150
+ */
+function form150_header_ini()
+{
+	var fields=document.getElementById('form150_master');
+	var project_filter=fields.elements[1];
+	var project_id_filter=fields.elements[3];
+	
+	var project_data="<projects>" +
+			"<name></name>" +
+			"</projects>";	
+	set_my_value_list(project_data,project_filter);
+	
+	$(project_filter).off('blur');
+	$(project_filter).on('blur',function (e)
+	{
+		var id_data="<projects>"+
+					"<id></id>"+
+					"<name exact='yes'>"+project_filter.value+"</name>"+
+					"</projects>";
+		set_my_value(id_data,project_id_filter);
 	});
 };

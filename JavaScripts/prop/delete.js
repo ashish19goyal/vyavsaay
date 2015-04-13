@@ -4298,6 +4298,146 @@ function form134_delete_expense(button)
 }
 
 /**
+ * formNo 135
+ * form Project Dashboard - team
+ * @param button
+ */
+function form135_delete_team(button)
+{
+	if(is_delete_access('form135'))
+	{
+		var master_fields=document.getElementById('form135_master');
+		var project_name=master_fields.elements[1].value;
+		var project_id=master_fields.elements[4].value;
+
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);		
+		var member=form.elements[0].value;
+		var data_id=form.elements[4].value;
+		var data_xml="<project_team>" +
+					"<id>"+data_id+"</id>" +
+					"</project_team>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>project_team</tablename>" +
+					"<link_to>form135</link_to>" +
+					"<title>Removed</title>" +
+					"<notes>"+member+" from project team of "+project_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var access_xml="<data_access>" +
+					"<record_id>"+project_id+"</record_id>" +
+					"<tablename>projects</tablename>" +
+					"<user>"+member+"</user>" +
+					"</data_access>";
+
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+			server_delete_simple(access_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+			local_delete_simple(access_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 135
+ * form Project Dashboard - document
+ * @param button
+ */
+function form135_delete_document(button)
+{
+	if(is_delete_access('form135'))
+	{
+		var master_fields=document.getElementById('form135_master');
+		var project_name=master_fields.elements[1].value;
+		var project_id=master_fields.elements[4].value;
+
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);		
+		var data_id=form.elements[2].value;
+		var data_xml="<documents>" +
+					"<id>"+data_id+"</id>" +
+					"<target_id>"+project_id+"</target_id>"+
+					"</documents>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>documents</tablename>" +
+					"<link_to>form135</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Document for project "+project_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 135
+ * form Project Dashboard - Task
+ * @param button
+ */
+function form135_delete_task(button)
+{
+	if(is_delete_access('form135'))
+	{
+		var master_fields=document.getElementById('form135_master');
+		var project_name=master_fields.elements[1].value;
+		var project_id=master_fields.elements[4].value;
+
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);		
+		var data_id=form.elements[5].value;
+		var data_xml="<task_instances>" +
+					"<id>"+data_id+"</id>" +
+					"</task_instances>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>task_instances</tablename>" +
+					"<link_to>form135</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Task for project "+project_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form Enter Supplier Bill (wholesale)
  * @param button
  */
@@ -4463,6 +4603,50 @@ function form142_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * formNo 144
+ * form Project Budgeting - Expense
+ * @param button
+ */
+function form144_delete_expense(button)
+{
+	if(is_delete_access('form144'))
+	{
+		var master_fields=document.getElementById('form144_master');
+		var project_name=master_fields.elements[1].value;
+		var project_id=master_fields.elements[5].value;
+
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);		
+		var data_id=form.elements[4].value;
+		var data_xml="<expenses>" +
+					"<id>"+data_id+"</id>" +
+					"</expenses>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>expenses</tablename>" +
+					"<link_to>form144</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Expense for project "+project_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 /**
  * @form Store movement

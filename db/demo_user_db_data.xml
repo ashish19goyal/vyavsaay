@@ -1599,7 +1599,7 @@
 			<name>form102</name>
 			<display_name>project_team</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1610,7 +1610,7 @@
 			<name>form103</name>
 			<display_name>project_phases</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1940,7 +1940,7 @@
 			<name>form137</name>
 			<display_name>project_expenses</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1951,33 +1951,11 @@
 			<name>form138</name>
 			<display_name>project_schedule</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--tasks--projects--project_phases--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form139</name>
-			<display_name>customer_profiling</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--customers--assets--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form140</name>
-			<display_name>supplier_profiling</display_name>
-			<status>active</status>
-			<value>checked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--suppliers--assets--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -2011,6 +1989,17 @@
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--ques_struct--ques_fields--ques_data--ques_fields_data--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form144</name>
+			<display_name>project_budgeting</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--projects--project_phases--task_instances--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -2066,6 +2055,17 @@
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--roles--user_role_mapping--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form150</name>
+			<display_name>project_feeds</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--projects--feeds--feed_likes--feed_comments--</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -3744,28 +3744,6 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>form139</element_id>
-			<element_name>customer_profiling</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form140</element_id>
-			<element_name>supplier_profiling</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
 			<element_id>form141</element_id>
 			<element_name>manage_orders_app</element_name>
 			<status>active</status>
@@ -3790,6 +3768,17 @@
 			<username>master</username>
 			<element_id>form143</element_id>
 			<element_name>manage_questionnaire</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form144</element_id>
+			<element_name>project_budgeting</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3845,6 +3834,17 @@
 			<username>master</username>
 			<element_id>form149</element_id>
 			<element_name>assign_roles</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form150</element_id>
+			<element_name>project_feeds</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

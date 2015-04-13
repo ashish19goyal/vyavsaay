@@ -74,8 +74,8 @@ db/db_schema.xml
 images/add_button.png
 images/add_image.png
 images/copy.png
-images/details.png
 images/delete.png
+images/details.png
 images/edit.png
 images/favicon.png
 images/favicon2.png
@@ -88,9 +88,8 @@ images/home.png
 images/loader.gif
 images/logo.png
 images/logout.png
-images/menu-icon.png
 images/menu.jpeg
-images/move-top.png
+images/menu-icon.png
 images/next.png
 images/notification.png
 images/offline.png
@@ -101,9 +100,10 @@ images/save.png
 images/search.png
 images/settings.png
 images/share.png
-images/sou.jpeg
 images/spacer.gif
 images/sync.png
+images/thumbs_up.png
+images/thumbs_up_line.png
 images/twitter.jpeg
 images/whatsapp.jpeg
 CSS/images/ui-bg_flat_0_aaaaaa_40x100.png

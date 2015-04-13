@@ -8831,16 +8831,10 @@ function form101_ini()
 								{
 									rowsHTML+="<input type='button' class='delete_icon' form='form101_"+result.id+"' title='Delete' onclick='form101_delete_item($(this));'>";
 								}
-								//if(access)
-								//{
-								//	rowsHTML+="<input type='button' class='generic_icon' form='form101_"+result.id+"' value='Access' onclick=\"access_display('projects','"+result.id+"');\">";
-								//}
 								if(result.status=='active')
 								{
-									rowsHTML+="<input type='button' class='generic_icon' form='form101_"+result.id+"' value='Team' onclick=\"element_display('"+result.id+"','form102');\">";
-									rowsHTML+="<input type='button' class='generic_icon' form='form101_"+result.id+"' value='Schedule' onclick=\"element_display('"+result.id+"','form138');\">";
-									rowsHTML+="<input type='button' class='generic_icon' form='form101_"+result.id+"' value='Tasks' onclick=\"element_display('"+result.id+"','form104');\">";
-									rowsHTML+="<input type='button' class='generic_icon' form='form101_"+result.id+"' value='Expenses' onclick=\"element_display('"+result.id+"','form137');\">";
+									rowsHTML+="<br><input type='button' class='generic_icon' form='form101_"+result.id+"' value='Budget' onclick=\"element_display('"+result.id+"','form144');\">";
+									rowsHTML+="<br><input type='button' class='generic_icon' form='form101_"+result.id+"' value='Schedule' onclick=\"element_display('"+result.id+"','form135');\">";
 								}
 							rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
@@ -12634,6 +12628,229 @@ function form134_ini()
 
 
 /**
+ * @form Project Dashboard
+ * @formNo 135
+ * @Loading light
+ */
+function form135_ini()
+{
+	var filter_fields=document.getElementById('form135_master');
+	var project_id=filter_fields.elements[4].value;	
+	
+	$('#form135_team_body').html("");
+	$('#form135_document_body').html("");
+	$('#form135_task_body').html("");
+	$('#form135_asset_body').html("");
+	
+	if(project_id!="")
+	{
+		show_loader();
+		var project_columns="<projects count='1'>" +
+				"<id>"+project_id+"</id>" +
+				"<name></name>"+
+				"<details></details>" +
+				"<start_date></start_date>" +
+				"<status></status>" +
+				"</projects>";
+	
+		fetch_requested_data('form135',project_columns,function(project_results)
+		{
+			var filter_fields=document.getElementById('form135_master');
+			
+			if(project_results.length>0)
+			{
+				filter_fields.elements[1].value=project_results[0].name;
+				filter_fields.elements[2].value=project_results[0].details;
+				filter_fields.elements[3].value=project_results[0].status;
+			}
+
+			///////////project schedule//////////////////////
+			var phase_columns="<project_phases>" +
+					"<id></id>" +
+					"<project_id exact='yes'>"+project_id+"</project_id>" +
+					"<phase_name></phase_name>" +
+					"<details></details>" +
+					"<start_date></start_date>" +
+					"<due_date></due_date>"+
+					"<percent_complete></percent_complete>"+
+					"<status></status>" +
+					"</project_phases>";
+		
+			fetch_requested_data('',phase_columns,function(results)
+			{
+				var source_array=[];
+				
+				results.sort(function(a,b)
+				{
+					if(parseFloat(a.start_date)>parseFloat(b.start_date))
+					{	return 1;}
+					else 
+					{	return -1;}
+				});	
+					
+				results.forEach(function(result)
+				{
+					var from_time = "/Date(" + result.start_date + ")/";
+					var to_time = "/Date(" + result.due_date + ")/";
+											
+					var source_item=new Object();
+					source_item.name=result.phase_name;
+					source_item.desc="";						
+					var value_item=new Object();
+					value_item.from=from_time;
+					value_item.to=to_time;
+					value_item.label=result.details;
+					value_item.desc=result.details;
+					value_item.dataObj=result.id;						
+					value_item.customClass="ganttRed";
+					if(result.status=='completed')
+						value_item.customClass="ganttGreen";
+					else if(result.status=='active')
+						value_item.customClass="ganttYellow";
+											
+					var values_array=[];
+					values_array.push(value_item);
+					source_item.values=values_array;
+					source_array.push(source_item);
+				
+				});
+								
+				$("#form135_gantt").gantt({
+					source: source_array,
+					scale: "days",
+					minScale: "hours",
+					maxScale:"months",
+					navigate: "scroll",
+					onItemClick: function(data) 
+					{
+						modal107_action(data);
+					},
+				});					
+			});		
+		
+			/////////////project team////////////////////////
+			var team_data="<project_team>"+
+									"<id></id>"+
+									"<project_id exact='yes'>"+project_id+"</project_id>"+
+									"<member></member>"+
+									"<role></role>"+
+									"<notes></notes>"+
+									"<status></status>"+
+									"</project_team>";
+			fetch_requested_data('',team_data,function(team_results)
+			{				
+				team_results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form135_team_"+id+"'></form>";
+						rowsHTML+="<td data-th='Member'>";
+							rowsHTML+="<textarea readonly='readonly' form='form135_team_"+id+"'>"+result.member+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Role'>";
+							rowsHTML+="<textarea readonly='readonly' form='form135_team_"+id+"'>"+result.role+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Notes'>";
+							rowsHTML+="<textarea readonly='readonly' form='form135_team_"+id+"'>"+result.notes+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form135_team_"+id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form135_team_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form135_team_"+id+"' >";
+							rowsHTML+="<input type='button' class='delete_icon' form='form135_team_"+id+"' id='delete_form135_team_"+id+"' onclick='form135_delete_team($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form135_team_body').append(rowsHTML);
+				});
+				longPressEditable($('.dblclick_editable'));
+			});
+			
+			/////////////service request document////////////////////
+			var document_data="<documents>"+
+								"<id></id>"+
+								"<doc_type exact='yes'>project</doc_type>"+
+								"<target_id exact='yes'>"+project_id+"</target_id>"+
+								"<doc_name></doc_name>"+
+								"<url></url>"+
+								"</documents>";
+			fetch_requested_data('',document_data,function(document_results)
+			{				
+				document_results.forEach(function(result)
+				{
+					var id=result.id;
+					var updated_url=result.url.replace(/ /g,"+");
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form135_document_"+id+"'></form>";
+						rowsHTML+="<td data-th='Document Name'>";
+							rowsHTML+="<textarea readonly='readonly' form='form135_document_"+id+"'>"+result.doc_name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='File'>";
+							rowsHTML+="<a href='"+updated_url+"' download='"+result.doc_name+"'><u>link</u></a>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form135_document_"+id+"'>";
+							rowsHTML+="<input type='hidden' form='form135_document_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form135_document_"+id+"' id='delete_form135_document_"+id+"' onclick='form135_delete_document($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form135_document_body').append(rowsHTML);
+				});				
+			});
+
+			/////////////project tasks////////////////////
+			var task_data="<task_instances>"+
+								"<id></id>"+
+								"<source exact='yes'>project</source>"+
+								"<source_id exact='yes'>"+project_id+"</source_id>"+
+								"<name></name>"+
+								"<assignee></assignee>"+
+								"<status></status>"+
+								"<t_due></t_due>"+
+								"<description></description>"+
+								"</task_instances>";
+			fetch_requested_data('',task_data,function(task_results)
+			{				
+				task_results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form135_task_"+id+"'></form>";
+						rowsHTML+="<td data-th='Task'>";
+							rowsHTML+="<textarea readonly='readonly' form='form135_task_"+id+"'>"+result.name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Description'>";
+							rowsHTML+="<textarea readonly='readonly' form='form135_task_"+id+"'>"+result.description+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Assignee'>";
+							rowsHTML+="<textarea readonly='readonly' form='form135_task_"+id+"'>"+result.assignee+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Due By'>";
+							rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form135_task_"+id+"' value='"+get_my_datetime(result.t_due)+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form135_task_"+id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form135_task_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form135_task_"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form135_task_"+id+"' id='delete_form135_task_"+id+"' onclick='form135_delete_task($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form135_task_body').append(rowsHTML);
+				});	
+				longPressEditable($('.dblclick_editable'));
+			});
+			
+			hide_loader();
+		});
+	}
+}
+
+
+
+/**
  * @form Enter Supplier Bill (wholesale)
  * @formNo 136
  * @Loading light
@@ -12952,7 +13169,7 @@ function form138_ini()
 				"<name></name>" +
 				"</projects>";
 	
-		var member_columns="<project_phases>" +
+		var phase_columns="<project_phases>" +
 				"<id></id>" +
 				"<project_id exact='yes'>"+project_id+"</project_id>" +
 				"<phase_name></phase_name>" +
@@ -12977,7 +13194,7 @@ function form138_ini()
 		
 		if_data_read_access('projects',function(accessible_data)
 		{
-			fetch_requested_data('',member_columns,function(results)
+			fetch_requested_data('',phase_columns,function(results)
 			{
 				var source_array=[];
 				
@@ -13593,6 +13810,154 @@ function form143_ini()
 		hide_loader();
 	});
 }
+
+
+/**
+ * @form Project Budgeting
+ * @formNo 144
+ * @Loading light
+ */
+function form144_ini()
+{
+	var filter_fields=document.getElementById('form144_master');
+	var project_id=filter_fields.elements[5].value;
+
+	$('#form144_task_body').html("");
+	$('#form144_expense_body').html("");
+	if(project_id!="")
+	{
+		show_loader();
+		var project_columns="<projects count='1'>" +
+				"<id>"+project_id+"</id>" +
+				"<name></name>"+
+				"<details></details>" +
+				"<start_date></start_date>" +
+				"<status></status>" +
+				"</projects>";
+		
+		fetch_requested_data('form144',project_columns,function(project_results)
+		{
+			if(project_results.length>0)
+			{
+				filter_fields.elements[1].value=project_results[0].name;
+				//filter_fields.elements[2].value=project_results[0].details;
+				//filter_fields.elements[3].value=project_results[0].status;								
+			}
+			/////////////project tasks////////////////////
+			
+			var budget_estimate_filter=filter_fields.elements[2];
+			var budget_actual_filter=filter_fields.elements[3];
+			budget_actual_filter.value=0;
+			
+			var task_data="<task_instances>"+
+						"<id></id>"+
+						"<source exact='yes'>project</source>"+
+						"<source_id exact='yes'>"+project_id+"</source_id>"+
+						"<name></name>"+
+						"<assignee></assignee>"+
+						"<status></status>"+
+						"<t_due></t_due>"+
+						"<est_expense></est_expense>"+
+						"<expense></expense>"+
+						"<description></description>"+
+						"</task_instances>";
+			fetch_requested_data('',task_data,function(task_results)
+			{		
+				var budget_estimate_value=0;
+				var	budget_actual_value=0;		
+				task_results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form144_task_"+id+"'></form>";
+						rowsHTML+="<td data-th='Phase'>";
+							rowsHTML+="<textarea readonly='readonly' form='form144_task_"+id+"'>"+result.name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Task'>";
+							rowsHTML+="<textarea readonly='readonly' form='form144_task_"+id+"'>"+result.description+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Amount'>";
+							rowsHTML+="Estimated: Rs. <input type='number' readonly='readonly' class='dblclick_editable' form='form144_task_"+id+"' value='"+result.est_expense+"'>";
+							rowsHTML+="<br>Actual: Rs. <input type='number' readonly='readonly' class='dblclick_editable' form='form144_task_"+id+"' value='"+result.expense+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form144_task_"+id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form144_task_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form144_task_"+id+"' >";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form144_task_body').append(rowsHTML);
+					
+					var fields=document.getElementById("form144_task_"+id);
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form144_update_task(fields);
+					});
+					budget_estimate_value+=parseFloat(result.est_expense);
+					budget_actual_value+=parseFloat(result.expense);
+				});
+				budget_estimate_filter.value=my_round(budget_estimate_value,2);
+				budget_actual_filter.value=parseFloat(budget_actual_filter.value)+my_round(budget_actual_value,2);
+				longPressEditable($('.dblclick_editable'));
+			});
+	
+			/////////////project expenses////////////////////
+			var expense_data="<expenses>"+
+								"<id></id>"+
+								"<source exact='yes'>project</source>"+
+								"<source_id exact='yes'>"+project_id+"</source_id>"+
+								"<person></person>"+
+								"<amount></amount>"+
+								"<status></status>"+
+								"<detail></detail>"+
+								"</expenses>";
+			fetch_requested_data('',expense_data,function(expense_results)
+			{		
+				var budget_actual_value=0;		
+				expense_results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form144_expense_"+id+"'></form>";
+						rowsHTML+="<td data-th='Person'>";
+							rowsHTML+="<textarea readonly='readonly' form='form144_expense_"+id+"'>"+result.person+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Amount'>";
+							rowsHTML+="Rs. <input type='number' readonly='readonly' form='form144_expense_"+id+"' value='"+result.amount+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Detail'>";
+							rowsHTML+="<textarea readonly='readonly' form='form144_expense_"+id+"'>"+result.detail+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form144_expense_"+id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form144_expense_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form144_expense_"+id+"' >";
+							rowsHTML+="<input type='button' class='delete_icon' form='form144_expense_"+id+"' id='delete_form144_expense_"+id+"' onclick='form144_delete_expense($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form144_expense_body').append(rowsHTML);
+					
+					var fields=document.getElementById("form144_expense_"+id);
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form144_update_expense(fields);
+					});
+					budget_actual_value+=parseFloat(result.amount);
+				});		
+				budget_actual_filter.value=parseFloat(budget_actual_filter.value)+my_round(budget_actual_value,2);		
+			});
+
+			hide_loader();
+		});
+	}
+}
+
 
 
 /**
@@ -14230,3 +14595,120 @@ function form149_ini()
 		hide_loader();
 	});	
 };
+
+/**
+ * @form Project Feeds
+ * @formNo 150
+ * @Loading light
+ */
+function form150_ini()
+{
+	$('#form150_body').html("");
+	
+	show_loader();
+	var account_name=get_account_name();	
+	var member_columns="<project_team>" +
+				"<project_id></project_id>"+
+				"<status exact='yes'>active</status>" +
+				"<member exact='yes'>"+account_name+"</member>"+
+				"</project_team>";
+	get_single_column_data(function(member_results)
+	{
+		var project_id_string="--";
+		for (var i in member_results) 
+		{
+			project_id_string+=member_results[i]+"--";
+		}
+		
+		var feed_columns="<feeds>"+
+						"<id></id>"+
+						"<content_type></content_type>"+
+						"<content_title></content_title>"+
+                        "<content_detail></content_detail>"+
+                        "<content_blob></content_blob>"+
+                        "<content_url></content_url>"+
+						"<status exact='yes'>visible</status>"+                        
+                        "<source exact='yes'>project</source>"+
+                        "<source_id array='yes'>"+project_id_string+"</source_id>"+
+                        "<target_user></target_user>"+
+                        "<owner></owner>"+
+						"</feeds>";
+		
+		fetch_requested_data('form150',feed_columns,function(feed_results)
+		{
+			feed_results.forEach(function (feed_result) 
+			{
+				var feed_content="<div class='feed_item'>"+
+								"<br><div class='feed_title'>"+feed_result.content_title+
+								" <a class='small_cross_icon' onclick=\"delete_feed('"+feed_result.id+"',$(this));\" title='Delete post'>&#10006;</a></div>"+
+								"<br><div class='feed_detail'>"+feed_result.content_detail+"</div>"+
+								"<br><div id='form150_likes_"+feed_result.id+"' class='feed_likes'></div>"+								
+								"<br><div id='form150_comments_"+feed_result.id+"' class='feed_comments'></div>"+
+								"</div>";
+												
+				$('#form150_body').append(feed_content);
+								
+				var like_columns="<feed_likes>"+
+								"<person></person>"+
+								"<feed_id exact='yes'>"+feed_result.id+"</feed_id>"+
+								"</feed_likes>";
+				get_single_column_data(function (like_results) 
+				{
+					var liked=false;
+					for(var i in like_results)
+					{
+						if(like_results[i]==account_name)
+						{	
+							liked=true;
+							break;
+						}
+					}
+					if(liked)
+					{
+						var likes_content="<img src='../images/thumbs_up.png' class='thumbs_icon' onclick=\"dislike_feed('"+feed_result.id+"',$(this))\"> <b id='form150_likes_count_"+feed_result.id+"'>"+like_results.length+"</b> likes";
+					}
+					else 
+					{
+						var likes_content="<img src='../images/thumbs_up_line.png' class='thumbs_icon' onclick=\"like_feed('"+feed_result.id+"',$(this))\"> <b id='form150_likes_count_"+feed_result.id+"'>"+like_results.length+"</b> likes";
+					}
+					$('#form150_likes_'+feed_result.id).html(likes_content);
+				},like_columns);
+
+				var comment_columns="<feed_comments>"+
+									"<id></id>"+
+									"<comment_text></comment_text>"+
+									"<person></person>"+
+									"<feed_id exact='yes'>"+feed_result.id+"</feed_id>"+
+									"</feed_comments>";
+
+				fetch_requested_data('form150',comment_columns,function(comment_results)
+				{					
+					var comments_content="";
+					for(var i in comment_results)
+					{
+						var delete_right=get_account_name();
+						var comments_content_item="<label>"+comment_results[i].person+": "+comment_results[i].comment_text;
+						if(feed_result.owner==delete_right || comment_results[i].person==delete_right)
+						{
+							comments_content_item+=" <a class='small_cross_icon' onclick=\"delete_feed_comment('"+comment_results[i].id+"',$(this));\" title='Delete comment'>&#10006;</a>";
+						}
+						comments_content_item+="</label><br>";
+						comments_content=comments_content_item+comments_content;
+					}
+					comments_content+="<label>"+account_name+": <textarea class='feed_comments' placeholder='comment..'></textarea></label>";
+					$('#form150_comments_'+feed_result.id).html(comments_content);
+					$('#form150_comments_'+feed_result.id).find('label').find('textarea').on('keyup',function(e)
+					{
+						if (e.keyCode==13) 
+						{
+							create_feed_comment(feed_result.id,this);
+						}
+					});
+				});
+			});
+
+			hide_loader();
+		});
+		
+	},member_columns);	
+}

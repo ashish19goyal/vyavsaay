@@ -4,8 +4,9 @@
 			<label>Request Id<br><input type='text' readonly="readonly"></label>
 			<label>Customer<br><input type='text' readonly="readonly"></label>
 			<label>Status<br><input type='text' readonly="readonly"></label>
-			<input type='submit' title='Save' class='save_icon'>
+			<input type='button' title='Save' class='save_icon'>
 			<input type='button' title='Print' class='print_icon' onclick='form134_print_form($(this));'>
+			<input type='submit' class='submit_hidden'>
 		</fieldset>
 	</form>
 

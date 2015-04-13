@@ -6423,6 +6423,7 @@ function form101_create_item(form)
 					"<tablename>projects</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
+					"<access_type>user</access_type>" +
 					"<user>"+get_account_name()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
@@ -6490,6 +6491,7 @@ function form102_create_item(form)
 					"<tablename>project_team</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
+					"<user_type>user</user_type>"+
 					"<user>"+get_account_name()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
@@ -6568,6 +6570,7 @@ function form103_create_item(form)
 					"<tablename>project_phases</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
+					"<user_type>user</user_type>"+
 					"<user>"+get_account_name()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
@@ -10020,7 +10023,7 @@ function form134_create_task(form)
 		var task=form.elements[0].value;
 		var description=form.elements[1].value;
 		var assignee=form.elements[2].value;
-		var due_by=form.elements[3].value;
+		var due_by=get_raw_time(form.elements[3].value);
 		var status=form.elements[4].value;				
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
@@ -10033,7 +10036,7 @@ function form134_create_task(form)
 					"<name>"+task+"</name>" +
 					"<description>"+description+"</description>" +
 					"<t_initiated>"+last_updated+"</t_initiated>"+
-					"<t_due>"+get_raw_time(due_by)+"</t_due>"+
+					"<t_due>"+due_by+"</t_due>"+
 					"<status>"+status+"</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</task_instances>";	
@@ -10208,6 +10211,229 @@ function form134_create_expense(form)
 		$("#modal2").dialog("open");
 	}
 };
+
+/**
+ * formNo 135
+ * form Project dashboard - task
+ * @param button
+ */
+function form135_create_task(form)
+{
+	if(is_create_access('form135'))
+	{
+		var master_fields=document.getElementById('form135_master');
+		var project_name=master_fields.elements[1].value;
+		var project_id=master_fields.elements[4].value;
+
+		var task=form.elements[0].value;
+		var description=form.elements[1].value;
+		var assignee=form.elements[2].value;
+		var due_by=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;				
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<task_instances>" +
+					"<id>"+data_id+"</id>" +
+					"<source_id>"+project_id+"</source_id>"+
+					"<source>project</source>"+
+					"<assignee>"+assignee+"</assignee>" +
+					"<name>"+task+"</name>" +
+					"<description>"+description+"</description>" +
+					"<t_initiated>"+last_updated+"</t_initiated>"+
+					"<t_due>"+due_by+"</t_due>"+
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</task_instances>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>task_instances</tablename>" +
+					"<link_to>form135</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Task "+task+" to project "+project_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[7];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form135_delete_task(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form135_update_task(form);
+		});	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+};
+
+
+/**
+ * formNo 135
+ * form Project dashboard - document
+ * @param button
+ */
+function form135_create_document(form)
+{
+	if(is_create_access('form135'))
+	{
+		var master_fields=document.getElementById('form135_master');
+		var project_name=master_fields.elements[1].value;
+		var project_id=master_fields.elements[4].value;
+
+		var doc_name=form.elements[0].value;
+		var data_id=form.elements[2].value;
+		var url_id="form135_document_url_"+data_id;
+		var docInfo=document.getElementById(url_id);
+		var url=$(docInfo).attr('href');
+		var last_updated=get_my_time();
+		
+		var data_xml="<documents>" +
+					"<id>"+data_id+"</id>" +
+					"<target_id>"+project_id+"</target_id>"+
+					"<url>"+url+"</url>"+
+					"<doc_name>"+doc_name+"</doc_name>" +
+					"<doc_type>project</doc_type>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</documents>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>documents</tablename>" +
+					"<link_to>form135</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Document "+doc_name+" for project "+project_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<2;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[4];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form135_delete_document(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+		});	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+};
+
+
+/**
+ * formNo 135
+ * form Project dashboard - team
+ * @param button
+ */
+function form135_create_team(form)
+{
+	if(is_create_access('form135'))
+	{
+		var master_fields=document.getElementById('form135_master');
+		var project_name=master_fields.elements[1].value;
+		var project_id=master_fields.elements[4].value;
+
+		var member=form.elements[0].value;
+		var role=form.elements[1].value;
+		var notes=form.elements[2].value;
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<project_team>" +
+					"<id>"+data_id+"</id>" +
+					"<project_id>"+project_id+"</project_id>"+
+					"<member>"+member+"</member>" +
+					"<role>"+role+"</role>" +
+					"<notes>"+notes+"</notes>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</project_team>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>project_team</tablename>" +
+					"<link_to>form135</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Member "+member+" to project team of "+project_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var access_xml="<data_access>" +
+					"<id>"+get_new_key()+"</id>" +
+					"<tablename>projects</tablename>" +
+					"<record_id>"+project_id+"</record_id>" +
+					"<access_type>read</access_type>" +
+					"<user>"+member+"</user>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</data_access>";
+
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+			server_create_simple(access_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+			local_create_simple(access_xml);
+		}
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[6];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form135_delete_team(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form135_update_team(form);
+		});	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+};
+
 
 /**
  * @form Enter Purchase Bill (wholesale)
@@ -10479,6 +10705,7 @@ function form137_create_item(form)
 					"<tablename>expenses</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
+					"<user_type>user</user_type>"+
 					"<user>"+get_account_name()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
@@ -10766,6 +10993,78 @@ function form142_create_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * formNo 144
+ * form Project Budgeting - expense
+ * @param button
+ */
+function form144_create_expense(form)
+{
+	if(is_create_access('form144'))
+	{
+		var master_fields=document.getElementById('form144_master');
+		var project_name=master_fields.elements[1].value;
+		var project_id=master_fields.elements[5].value;
+
+		var person=form.elements[0].value;
+		var amount=form.elements[1].value;
+		var detail=form.elements[2].value;
+		var status=form.elements[3].value;				
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<expenses>" +
+					"<id>"+data_id+"</id>" +
+					"<source_id>"+project_id+"</source_id>"+
+					"<source>project</source>"+
+					"<person>"+person+"</person>"+
+					"<amount>"+amount+"</amount>"+
+					"<detail>"+detail+"</detail>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</expenses>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>expenses</tablename>" +
+					"<link_to>form144</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Expense of Rs. "+amount+" for project "+project_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[6];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form144_delete_expense(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form144_update_expense(form);
+		});	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+};
+
+
 
 /**
  * @form Store Movement
@@ -11114,6 +11413,67 @@ function form149_create_item(form)
 		{
 			event.preventDefault();
 			form149_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+function form150_post_feed()
+{
+	if(is_create_access('form150'))
+	{
+		var form=document.getElementById('form150_master');
+		var title=form.elements[1].value;
+		var detail=form.elements[2].value;
+		var project_id=form.elements[3].value;
+		var owner=get_account_name();
+		var last_updated=get_my_time();
+		var data_id=get_new_key();
+		var data_xml="<feeds>" +
+					"<id>"+data_id+"</id>" +
+					"<content_type>text</content_type>"+
+					"<content_title>"+title+"</content_title>" +
+					"<content_detail>"+detail+"</content_detail>" +
+					"<source>project</source>"+
+					"<source_id>"+project_id+"</source_id>"+
+					"<status>visible</status>" +
+					"<owner>"+owner+"</owner>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</feeds>";
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}
+		
+		form.elements[1].value="";
+		form.elements[2].value="";
+		form.elements[3].value="";
+		
+		var feed_content="<div class='feed_item'>"+
+						"<br><div class='feed_title'>"+title+
+						" <a class='small_cross_icon' onclick=\"delete_feed('"+data_id+"',$(this));\" title='Delete post'>&#10006;</a></div>"+
+						"<br><div class='feed_detail'>"+detail+"</div>"+
+						"<br><div id='form150_likes_"+data_id+"' class='feed_likes'>"+
+						"<img src='../images/thumbs_up_line.png' class='thumbs_icon' onclick=\"like_feed('"+data_id+"',$(this))\" title='Like this post'> <b id='form150_likes_count_"+data_id+"'>0</b> likes"+
+						"</div>"+								
+						"<br><div id='form150_comments_"+data_id+"' class='feed_comments'>"+
+						"<label>"+owner+": <textarea class='feed_comments' placeholder='comment..'></textarea></label>"+
+						"</div>"+
+						"</div>";
+		$('#form150_body').prepend(feed_content);
+		$('#form150_comments_'+data_id).find('label').find('textarea').on('keyup',function(e)
+		{
+			if (e.keyCode==13) 
+			{
+				create_feed_comment(feed_id,this);
+			}
 		});
 	}
 	else

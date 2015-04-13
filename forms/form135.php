@@ -1,33 +1,36 @@
 <div id='form135' class='function_detail'>
 	<form id='form135_master'>
 		<fieldset>
-			<label>Project Name<br><input type='text' readonly="readonly"></label>
-			<label>Description<br><input type='text' readonly="readonly"></label>
+			<label>Project Name<br><input type='text'></label>
+			<label>Description<br><textarea readonly="readonly"></textarea></label>
 			<label>Status<br><input type='text' readonly="readonly"></label>
-			<input type='submit' title='Save' class='save_icon'>
-			<input type='button' title='Print' class='print_icon' onclick='form135_print_form($(this));'>
+			<input type='hidden' name='id'>
+			<input type='button' title='Save' class='save_icon'>
+			<input type='button' title='Add project phase' class='add_icon'>
+			<input type='submit' class='submit_hidden'>
 		</fieldset>
 	</form>
 
-	<div id='form135_gantt'>
-	</div>
-	
-	<br>	
+	<br>
+	<b>Tasks</b>
 	<table class='rwd-table'>
 		<thead>
 			<tr>
-				<form id='form135_team_header'></form>
-					<th>Assignee</th>
-					<th>Role</th>
-					<th>Status</th>
-					<th><input type='button' class='add_icon' form='form135_team_header' title='Add assignee' onclick='form135_add_team();'></th>
+				<form id='form135_task_header'></form>
+					<th>Phase</th>
+					<th>Task</th>
+					<th>Assignee </th>
+					<th>Due By </th>
+					<th>Status </th>
+					<th><input type='button' class='add_icon' form='form135_task_header' title='Add task' onclick='form135_add_task();'></th>
 			</tr>
 		</thead>
-		<tbody id='form135_team_body'>
+		<tbody id='form135_task_body'>
 		</tbody>
 	</table>
-
+	
 	<br>
+	<b>Documents</b>
 	<table class='rwd-table'>
 		<thead>
 			<tr>
@@ -42,52 +45,24 @@
 	</table>
 
 	<br>
+	<b>Team</b>	
 	<table class='rwd-table'>
 		<thead>
 			<tr>
-				<form id='form135_task_header'></form>
-					<th>Task</th>
-					<th>Description</th>
-					<th>Assignee </th>
-					<th>Due By </th>
-					<th>Status </th>
-					<th><input type='button' class='add_icon' form='form135_task_header' title='Add task' onclick='form135_add_task();'></th>
+				<form id='form135_team_header'></form>
+					<th>Member</th>
+					<th>Role</th>
+					<th>Notes</th>
+					<th>Status</th>
+					<th><input type='button' class='add_icon' form='form135_team_header' title='Add member' onclick='form135_add_team();'></th>
 			</tr>
 		</thead>
-		<tbody id='form135_task_body'>
+		<tbody id='form135_team_body'>
 		</tbody>
 	</table>
 
 	<br>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form135_asset_header'></form>
-					<th>Asset Name </th>
-					<th>Quantity </th>
-					<th>Owner </th>
-					<th>Status </th>
-					<th><input type='button' class='add_icon' form='form135_asset_header' title='Add item' onclick='form135_add_asset();'></th>
-			</tr>
-		</thead>
-		<tbody id='form135_asset_body'>
-		</tbody>
-	</table>
-
-	<br>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form135_expense_header'></form>
-					<th>Person </th>
-					<th>Amount </th>
-					<th>Detail </th>
-					<th>Status </th>
-					<th><input type='button' class='add_icon' form='form135_expense_header' title='Add expense' onclick='form135_add_expense();'></th>
-			</tr>
-		</thead>
-		<tbody id='form135_expense_body'>
-		</tbody>
-	</table>
+	<b>Schedule</b>
+	<div id='form135_gantt' style="height:400px;"></div>
 
 </div>
