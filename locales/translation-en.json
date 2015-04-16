@@ -226,8 +226,8 @@
   	"warranty_status":"Warranty Status",
   	"service_documents":"Service Documents",
   	"ledger":"Ledger",
-  	"project_dashboard":"Project Dashboard",
-  	"service_request_dashboard":"Service Request Dashboard",
+  	"project_dashboard":"Project details",
+  	"service_request_detail":"Service Request Details",
   	"enter_supplier_bill_wholesale":"Enter Supplier Bill (wholesasle)",
   	"project_expenses":"Project Expenses",
   	"project_schedule":"Project Schedule",
@@ -247,6 +247,12 @@
   	"budgeting":"Budgeting",
   	"project_feeds":"Project Feeds",
   	"feeds":"Feeds",
-  	"schedule":"Schedule"
+  	"schedule":"Schedule",
+  	"tasks":"Tasks",
+  	"manage_requests":"Manage Requests",
+  	"request_detail":"Request Detail",
+  	"report":"Report",
+  	"service_request_billing":"Service Request Billing",
+  	"billing":"Billing"
   }
 }

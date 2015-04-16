@@ -6492,9 +6492,6 @@ function form134_add_task()
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form134_task_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Task'>";
-				rowsHTML+="<input type='text' form='form134_task_"+id+"' required>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Description'>";
 				rowsHTML+="<textarea form='form134_task_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Assignee'>";
@@ -6515,10 +6512,10 @@ function form134_add_task()
 	
 		$('#form134_task_body').prepend(rowsHTML);
 		var fields=document.getElementById("form134_task_"+id);
-		var task_filter=fields.elements[0];
-		var assignee_filter=fields.elements[2];
-		var due_filter=fields.elements[3];
-		var status_filter=fields.elements[4];
+		var desc_filter=fields.elements[0];
+		var assignee_filter=fields.elements[1];
+		var due_filter=fields.elements[2];
+		var status_filter=fields.elements[3];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -6526,14 +6523,8 @@ function form134_add_task()
 			form134_create_task(fields);
 		});
 		
-		var task_data="<task_type>"+
-							"<name></name>"+
-							"</task_type>";
-		set_my_value_list_func(task_data,task_filter,function () 
-		{
-			$(task_filter).focus();
-		});
-							
+		$(desc_filter).focus();
+									
 		var assignee_data="<staff>"+
 							"<acc_name></acc_name>"+							
 							"</staff>";		
@@ -6547,118 +6538,6 @@ function form134_add_task()
 	}
 }
 
-/**
- * @form Service Dashboard - item
- * @formNo 134
- */
-function form134_add_item()
-{
-	if(is_create_access('form134'))
-	{
-		var id=get_new_key();
-		var rowsHTML="<tr>";
-		rowsHTML+="<form id='form134_item_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Item Name'>";
-				rowsHTML+="<input type='text' form='form134_item_"+id+"' required>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="<input type='number' form='form134_item_"+id+"' min='0' required>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' form='form134_item_"+id+"' value='requested'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form134_item_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form134_item_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form134_item_"+id+"' onclick='$(this).parent().parent().remove();'>";
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form134_item_body').prepend(rowsHTML);
-		var fields=document.getElementById("form134_item_"+id);
-		var item_filter=fields.elements[0];
-		var quantity_filter=fields.elements[1];
-		var amount_filter=fields.elements[2];
-		var status_filter=fields.elements[3];
-		
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form134_create_item(fields);
-		});
-		
-		var item_data="<product_master>"+
-							"<name></name>"+
-							"</product_master>";
-		set_my_value_list_func(item_data,item_filter,function () 
-		{
-			$(item_filter).focus();
-		});
-							
-		set_static_value_list('service_request_items','status',status_filter);
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-/**
- * @form Service Dashboard - expenses
- * @formNo 134
- */
-function form134_add_expense()
-{
-	if(is_create_access('form134'))
-	{
-		var id=get_new_key();
-		var rowsHTML="<tr>";
-		rowsHTML+="<form id='form134_expense_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Person'>";
-				rowsHTML+="<input type='text' form='form134_expense_"+id+"' required>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="Rs. <input type='number' form='form134_expense_"+id+"' min='0' step='any' required>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Detail'>";
-				rowsHTML+="<textarea form='form134_expense_"+id+"'></textarea>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' form='form134_expense_"+id+"' value='submitted'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form134_expense_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form134_expense_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form134_expense_"+id+"' onclick='$(this).parent().parent().remove();'>";
-			rowsHTML+="</td>";			
-		rowsHTML+="</tr>";
-	
-		$('#form134_expense_body').prepend(rowsHTML);
-		var fields=document.getElementById("form134_expense_"+id);
-		var person_filter=fields.elements[0];
-		var status_filter=fields.elements[3];
-		
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form134_create_expense(fields);
-		});
-		
-		var person_data="<staff>"+
-							"<acc_name></acc_name>"+
-							"</staff>";
-		set_my_value_list_func(person_data,person_filter,function () 
-		{
-			$(person_filter).focus();
-		});
-
-		set_static_value_list('expenses','status',status_filter);
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
 
 /**
  * @form Project Dashboard - task
@@ -7709,4 +7588,156 @@ function form149_add_item()
 	{
 		$("#modal2").dialog("open");
 	}		
+}
+
+
+/**
+ * @form Service Request billing - item
+ * @formNo 151
+ */
+function form151_add_item()
+{
+	if(is_create_access('form151'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form151_item_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item Name'>";
+				rowsHTML+="<input type='text' form='form151_item_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' form='form151_item_"+id+"' min='0' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+="Estimated Rs. <input type='number' form='form151_item_"+id+"' min='0' readonly='readonly'>";
+				rowsHTML+="<br>Actual Rs. <input type='number' form='form151_item_"+id+"' min='0'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form151_item_"+id+"' required value='requested'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form151_item_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form151_item_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form151_item_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form151_item_"+id+"' value='"+id+"' name='price'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form151_item_body').prepend(rowsHTML);
+		var fields=document.getElementById("form151_item_"+id);
+		var item_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var est_filter=fields.elements[2];
+		var amount_filter=fields.elements[3];
+		var status_filter=fields.elements[4];
+		var price_filter=fields.elements[8];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form151_create_item(fields);
+		});
+		
+		var item_data="<product_master>"+
+					"<name></name>"+
+					"</product_master>";
+		set_my_value_list_func(item_data,item_filter,function () 
+		{
+			$(item_filter).focus();
+		});
+		
+		$(item_filter).on('blur',function () 
+		{
+			var price_data="<product_instances>"+
+							"<sale_price></sale_price>"+
+							"<product_name exact='yes'>"+item_filter.value+"</product_name>"+
+							"</product_instances>";
+			get_single_column_data(function(prices)
+			{
+				if(prices.length>0)
+				{
+					prices.sort(function(a,b)
+					{
+						if(parseFloat(a)<parseFloat(b))
+						{	return 1;}
+						else 
+						{	return -1;}
+					});
+
+					price_filter.value=prices[0];
+					est_filter.value=my_round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
+					amount_filter.value=my_round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
+				}
+			},price_data);
+		});
+		
+		$(quantity_filter).on('blur',function()
+		{
+			est_filter.value=my_round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
+			amount_filter.value=my_round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
+		});
+							
+		set_static_value_list('service_request_items','status',status_filter);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service Request billing - expenses
+ * @formNo 151
+ */
+function form151_add_expense()
+{
+	if(is_create_access('form151'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form151_expense_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Person'>";
+				rowsHTML+="<input type='text' form='form151_expense_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+="Rs. <input type='number' form='form151_expense_"+id+"' min='0' step='any' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Detail'>";
+				rowsHTML+="<textarea form='form151_expense_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form151_expense_"+id+"' value='submitted'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form151_expense_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form151_expense_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form151_expense_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form151_expense_body').prepend(rowsHTML);
+		var fields=document.getElementById("form151_expense_"+id);
+		var person_filter=fields.elements[0];
+		var status_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form151_create_expense(fields);
+		});
+		
+		var person_data="<staff>"+
+					"<acc_name></acc_name>"+
+					"</staff>";
+		set_my_value_list_func(person_data,person_filter,function () 
+		{
+			$(person_filter).focus();
+		});
+
+		set_static_value_list('expenses','status',status_filter);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
 }

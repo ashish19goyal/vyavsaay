@@ -4204,17 +4204,17 @@ function modal43_action(date_initiated,project_id)
 {
 	var form=document.getElementById("modal43_form");
 	var task_filter=form.elements[1];
-	var staff_filter=form.elements[2];
-	var start_filter=form.elements[3];
+	var desc_filter=form.elements[2];
+	var staff_filter=form.elements[3];
 	var due_filter=form.elements[4];
 	var status_filter=form.elements[5];
-	var hours_filter=form.elements[6];
 	
 	start_filter.value=date_initiated;
 		
-	var task_data="<task_type>" +
-			"<name></name>" +
-			"</task_type>";
+	var task_data="<project_phases>" +
+			"<phase_name></phase_name>" +
+			"<project_id exact='yes'>"+project_id+"</project_id>"+
+			"</project_phases>";
 	set_my_value_list(task_data,task_filter);
 	
 	var staff_data="<staff>" +
@@ -4223,18 +4223,7 @@ function modal43_action(date_initiated,project_id)
 	set_my_value_list(staff_data,staff_filter);
 	
 	$(due_filter).datetimepicker();
-	$(start_filter).datetimepicker();
 	set_static_value_list('task_instances','status',status_filter);
-	
-	$(task_filter).off('blur');
-	$(task_filter).on('blur',function(event)
-	{
-		var hours_data="<task_type>" +
-				"<est_hours></est_hours>" +
-				"<name exact='yes'>"+task_filter.value+"</name>" +
-				"</task_type>";
-		set_my_value(hours_data,hours_filter);
-	});
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -4243,22 +4232,22 @@ function modal43_action(date_initiated,project_id)
 		if(is_create_access('form104'))
 		{
 			var name=form.elements[1].value;
-			var assignee=form.elements[2].value;
+			var description=form.elements[2].value;
+			var assignee=form.elements[3].value;
 			var t_due=get_raw_time(form.elements[4].value);
-			var t_initiated=get_raw_time(form.elements[3].value);
 			var status=form.elements[5].value;
-			var hours=form.elements[6].value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
 			var data_xml="<task_instances>" +
 						"<id>"+data_id+"</id>" +
 						"<name>"+name+"</name>" +
+						"<description>"+description+"</description>"+
 						"<assignee>"+assignee+"</assignee>" +
-						"<t_initiated>"+t_initiated+"</t_initiated>" +
+						"<t_initiated>"+last_updated+"</t_initiated>" +
 						"<t_due>"+t_due+"</t_due>" +
 						"<status>"+status+"</status>" +
 						"<task_hours>"+hours+"</task_hours>" +
-						"<source>projects</source>" +
+						"<source>project</source>" +
 						"<source_id>"+project_id+"</source_id>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</task_instances>";
@@ -4708,25 +4697,24 @@ function modal47_action(service_date)
 	var by_filter=form.elements[3];
 	var problem_type_filter=form.elements[4];
 	var problem_filter=form.elements[5];
-//	var assignee_username_filter=form.elements[6];
 	id_filter.value=get_my_time();
-	by_filter.value=get_name();
+	by_filter.value=get_account_name();
 	
 	var customers_list_data="<customers>"+
-									"<acc_name></acc_name>"+									
-									"</customers>";	
+							"<acc_name></acc_name>"+									
+							"</customers>";	
 	set_my_value_list(customers_list_data,customer_filter);
 	
 	var problem_type_data="<service_requests>"+
-								"<problem_type></problem_type>"+								
-								"</service_requests>";	
+						"<problem_type></problem_type>"+								
+						"</service_requests>";	
 	set_my_filter(problem_type_data,problem_type_filter);
 		
 	var customer_data="<accounts count='1'>"+
-							"<acc_name></acc_name>"+
-							"<type exact='yes'>customer</type>"+							
-							"<username>"+get_username()+"</username>"+
-							"</accounts>";	
+					"<acc_name></acc_name>"+
+					"<type exact='yes'>customer</type>"+							
+					"<username>"+get_username()+"</username>"+
+					"</accounts>";	
 	get_single_column_data(function(customer_names)
 	{
 		if(customer_names.length>0)
@@ -4761,30 +4749,20 @@ function modal47_action(service_date)
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</service_requests>";
 			var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>service_requests</tablename>" +
-					"<link_to>form128</link_to>" +
-					"<title>Added</title>" +
-					"<notes>Service request from customer "+customer+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-			var access1_xml="<data_access>" +
-					"<id>"+get_new_key()+"</id>" +
-					"<tablename>service_requests</tablename>" +
-					"<record_id>"+data_id+"</record_id>" +
-					"<access_type>all</access_type>" +
-					"<user>"+get_account_name()+"</user>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</data_access>";
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>service_requests</tablename>" +
+						"<link_to>form128</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Service request from customer "+customer+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
 			if(is_online())
 			{
 				server_create_row(data_xml,activity_xml);
-				server_create_simple(access1_xml);
 			}
 			else
 			{
 				local_create_row(data_xml,activity_xml);
-				local_create_simple(access1_xml);
 			}	
 		}
 		else
@@ -5327,6 +5305,69 @@ function modal103_action(button)
 	});
 	
 	$("#modal103").dialog("open");
+}
+
+/**
+ * @modalNo 104
+ * @modal close machine service
+ * @param button
+ */
+function modal104_action(button)
+{
+	var form_id=$(button).attr('form');
+	var father_form=document.getElementById(form_id);
+
+	var machine_name=father_form.elements[1].value;
+	var data_id=father_form.elements[5].value;
+
+	var form=document.getElementById('modal104_form');
+	form.elements[1].value=machine_name;
+	var closing_filter=form.elements[2];
+	var status_filter=form.elements[3];
+
+	set_static_value_list('service_request_machines','status',status_filter);
+	var request_data="<service_request_machines count='1'>"+
+						"<id>"+data_id+"</id>"+
+						"<closing_notes></closing_notes>"+
+						"<status></status>"+
+						"</service_request_machines>";
+	fetch_requested_data('',request_data,function(requests)
+	{
+		if(requests.length>0)
+		{
+			closing_filter.value=requests[0].closing_notes;
+			status_filter.value=requests[0].status;
+		}
+	});
+		
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		var closing_notes=closing_filter.value;
+		var status=status_filter.value;
+		var last_updated=get_my_time();
+		father_form.elements[4].value=status;
+		father_form.elements[3].value=closing_notes;
+		
+		var request_xml="<service_request_machines>" +
+					"<id>"+data_id+"</id>" +
+					"<closing_notes>"+closing_notes+"</closing_notes>"+
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</service_request_machines>";
+		if(is_online())
+		{
+			server_update_simple(request_xml);
+		}
+		else
+		{
+			local_update_simple(request_xml);
+		}
+		$("#modal104").dialog("close");
+	});
+
+	$("#modal104").dialog("open");
 }
 
 

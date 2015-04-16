@@ -1,11 +1,9 @@
 <div id='form134' class='function_detail'>
 	<form id='form134_master'>
 		<fieldset>
-			<label>Request Id<br><input type='text' readonly="readonly"></label>
-			<label>Customer<br><input type='text' readonly="readonly"></label>
+			<label>Request Id<br><input type='text'></label>
+			<label>Customer<br><textarea readonly="readonly"></textarea></label>
 			<label>Status<br><input type='text' readonly="readonly"></label>
-			<input type='button' title='Save' class='save_icon'>
-			<input type='button' title='Print' class='print_icon' onclick='form134_print_form($(this));'>
 			<input type='submit' class='submit_hidden'>
 		</fieldset>
 	</form>
@@ -19,10 +17,26 @@
 					<th>Problem Type</th>
 					<th>Problem </th>
 					<th>Closing Notes </th>
-					<th></th>
 			</tr>
 		</thead>
 		<tbody id='form134_detail_body'>
+		</tbody>
+	</table>
+
+	<br>
+	<b>Assigned tasks</b>
+	<table class='rwd-table'>
+		<thead>
+			<tr>
+				<form id='form134_task_header'></form>
+					<th>Task</th>
+					<th>Assignee </th>
+					<th>Due By </th>
+					<th>Status </th>
+					<th><input type='button' class='add_icon' form='form134_task_header' title='Add task' onclick='form134_add_task();'></th>
+			</tr>
+		</thead>
+		<tbody id='form134_task_body'>
 		</tbody>
 	</table>
 
@@ -45,22 +59,6 @@
 	</table>
 
 	<br>
-	<b>Servicing Team</b>		
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form134_team_header'></form>
-					<th>Assignee</th>
-					<th>Phone</th>
-					<th>Email</th>
-					<th><input type='button' class='add_icon' form='form134_team_header' title='Add assignee' onclick='form134_add_team();'></th>
-			</tr>
-		</thead>
-		<tbody id='form134_team_body'>
-		</tbody>
-	</table>
-
-	<br>
 	<b>Servicing Documentation</b>	
 	<table class='rwd-table'>
 		<thead>
@@ -76,54 +74,19 @@
 	</table>
 
 	<br>
-	<b>Assigned tasks</b>
+	<b>Servicing Team</b>		
 	<table class='rwd-table'>
 		<thead>
 			<tr>
-				<form id='form134_task_header'></form>
-					<th>Task</th>
-					<th>Description</th>
-					<th>Assignee </th>
-					<th>Due By </th>
-					<th>Status </th>
-					<th><input type='button' class='add_icon' form='form134_task_header' title='Add task' onclick='form134_add_task();'></th>
+				<form id='form134_team_header'></form>
+					<th>Assignee</th>
+					<th>Phone</th>
+					<th>Email</th>
+					<th><input type='button' class='add_icon' form='form134_team_header' title='Add assignee' onclick='form134_add_team();'></th>
 			</tr>
 		</thead>
-		<tbody id='form134_task_body'>
+		<tbody id='form134_team_body'>
 		</tbody>
 	</table>
-
-	<br>
-	<b>Service components</b>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form134_item_header'></form>
-					<th>Item Name </th>
-					<th>Quantity </th>
-					<th>Status </th>
-					<th><input type='button' class='add_icon' form='form134_item_header' title='Add item' onclick='form134_add_item();'></th>
-			</tr>
-		</thead>
-		<tbody id='form134_item_body'>
-		</tbody>
-	</table>
-
-	<br>
-	<b>Other Expenses</b>
-	<table class='rwd-table'>
-		<thead>
-			<tr>
-				<form id='form134_expense_header'></form>
-					<th>Person </th>
-					<th>Amount </th>
-					<th>Detail </th>
-					<th>Status </th>
-					<th><input type='button' class='add_icon' form='form134_expense_header' title='Add expense' onclick='form134_add_expense();'></th>
-			</tr>
-		</thead>
-		<tbody id='form134_expense_body'>
-		</tbody>
-	</table>
-
+	
 </div>

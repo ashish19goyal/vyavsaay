@@ -60,17 +60,6 @@
 			<access_type>update</access_type>
 			<user_type>field</user_type>
 			<user></user>
-			<user_field>submitter</user_field>
-			<criteria_field>status</criteria_field>
-			<criteria_value>submitted</criteria_value>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>ques_data</tablename>
-			<record_id>all</record_id>
-			<access_type>update</access_type>
-			<user_type>field</user_type>
-			<user></user>
 			<user_field>reviewer</user_field>
 			<criteria_field>status</criteria_field>
 			<criteria_value>submitted</criteria_value>
@@ -129,6 +118,50 @@
 			<user_field>receiver</user_field>
 			<criteria_field>status</criteria_field>
 			<criteria_value>dispatched</criteria_value>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>task_instances</tablename>
+			<record_id>all</record_id>
+			<access_type>update</access_type>
+			<user_type>field</user_type>
+			<user></user>
+			<user_field>assignee</user_field>
+			<criteria_field>status</criteria_field>
+			<criteria_value>pending</criteria_value>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>task_instances</tablename>
+			<record_id>all</record_id>
+			<access_type>read</access_type>
+			<user_type>field</user_type>
+			<user></user>
+			<user_field>assignee</user_field>
+			<criteria_field></criteria_field>
+			<criteria_value></criteria_value>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>service_requests</tablename>
+			<record_id>all</record_id>
+			<access_type>read</access_type>
+			<user_type>field</user_type>
+			<user></user>
+			<user_field>customer</user_field>
+			<criteria_field></criteria_field>
+			<criteria_value></criteria_value>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>service_requests</tablename>
+			<record_id>all</record_id>
+			<access_type>read</access_type>
+			<user_type>field</user_type>
+			<user></user>
+			<user_field>reported_by</user_field>
+			<criteria_field></criteria_field>
+			<criteria_value></criteria_value>
 			<last_updated>1</last_updated>
 		</row>
 	</data_access>

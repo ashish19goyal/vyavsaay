@@ -19,7 +19,8 @@ function default_load()
 	count_notif_timer=0;
 	show_notif_timer=0;
 	progress_value=0;
-
+	modal_forms_ini();
+			
 	if(is_set_session())
 	{
 		add_questionnaires(function()
@@ -27,7 +28,6 @@ function default_load()
 			responsive_tabs();
 			set_menu_shortcuts();
 			date_formating();
-			modal_forms_ini();
 			print_setup();
 			Chart.defaults.global.responsive = true;
 			Chart.defaults.global.scaleFontSize= 10;

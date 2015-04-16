@@ -316,6 +316,12 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<tablename>service_requests</tablename>
+			<field_name>reported_by</field_name>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>service_request_team</tablename>
 			<field_name>assignee</field_name>
 			<status>active</status>

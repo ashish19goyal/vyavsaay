@@ -27,7 +27,7 @@ input{
 	outline:  none !important;
 	background-color: #ffffff;
 	color: #000000;
-	border: 2px solid #dadada;
+	border: 1px solid #dadada;
 	width: auto;
 }
 
@@ -66,6 +66,7 @@ td input[type="text"]
 {
 	float:right;	
 	width: 300px;
+	border: 1px solid #dadada; 
 }
 
 .rwd-table td{
@@ -857,7 +858,9 @@ canvas{
 	display:none;
 }
 
-
+.modal_forms input, .modal_forms textarea{
+	border: 1px solid #dadada;
+}
 
 @media screen and (min-width: 1300px) {
 	#content_box{

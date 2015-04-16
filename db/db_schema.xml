@@ -832,6 +832,8 @@
 			<request_id index='yes' type="BIGINT NOT NULL"></request_id>
 			<item_name index='yes' type="VARCHAR(90)"></item_name>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<est_amount index='no' type="DECIMAL(12,2)"></est_amount>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<status index='yes' type='VARCHAR(25)'></status><!-- requested/approved/dispatched/used -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</service_request_items>

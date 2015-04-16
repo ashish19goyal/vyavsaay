@@ -2879,11 +2879,17 @@ function form104_header_ini()
 	
 	set_my_value_list(name_data,code_filter);
 
+	$(fields).off('submit');
+	$(fields).on('submit',function (event) 
+	{
+		event.preventDefault();
+		form104_ini();
+	});
+	
 	id_filter.value="";
 	code_filter.value="";
 	
-	$(code_filter).off('blur');
-	$(code_filter).on('blur',function () 
+	my_datalist_change(code_filter,function () 
 	{
 		var id_data="<projects>"+
 					"<id></id>"+
@@ -4392,6 +4398,7 @@ function form131_header_ini()
 	        		"<id></id>" +
 	        		"<name></name>" +
 	        		"<description></description>" +
+	        		"<source exact='yes'>service request</source>"+
 	        		"<t_initiated lowerbound='yes'>"+start_time+"</t_initiated>" +
 	        		"<t_initiated upperbound='yes'>"+end_time+"</t_initiated>" +
 	        		"<t_due></t_due>" +
@@ -4622,25 +4629,18 @@ function form133_header_ini()
 function form134_header_ini()
 {
 	var fields=document.getElementById('form134_master');
+	var request_id=$("#form134_link").attr('data_id');
 	
 	var id_filter=fields.elements[1];
 	var customer_filter=fields.elements[2];
 	var status_filter=fields.elements[3];
-	var save_button=fields.elements[4];
-
+	
 	$(fields).off('submit');
 	$(fields).on('submit',function (event) 
 	{
 		event.preventDefault();
 		form134_ini();
 	});	
-	
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form134_update_form();
-	});
 		
 	$(document).off('keydown');
 	$(document).on('keydown', function(event) {
@@ -4650,10 +4650,15 @@ function form134_header_ini()
 	    }
 	});
 	
-	id_filter.value='';
+	id_filter.value=request_id;
 	customer_filter.value='';
 	status_filter.value='';
 	set_static_value_list('service_requests','status',status_filter);	
+	
+	var id_data="<service_requests>"+
+				"<id></id>"+
+				"</service_requests>";
+	set_my_value_list(id_data,id_filter);
 }
 
 /**
@@ -5268,3 +5273,39 @@ function form150_header_ini()
 		set_my_value(id_data,project_id_filter);
 	});
 };
+
+/**
+ * @form Service Request Billing
+ * @formNo 151
+ */
+function form151_header_ini()
+{
+	var fields=document.getElementById('form151_master');
+	var request_id=$("#form151_link").attr('data_id');
+	
+	var id_filter=fields.elements[1];
+	var customer_filter=fields.elements[2];
+	
+	$(fields).off('submit');
+	$(fields).on('submit',function (event) 
+	{
+		event.preventDefault();
+		form151_ini();
+	});	
+			
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+	
+	id_filter.value=request_id;
+	customer_filter.value='';
+	
+	var id_data="<service_requests>"+
+				"<id></id>"+
+				"</service_requests>";
+	set_my_value_list(id_data,id_filter);
+}

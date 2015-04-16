@@ -9832,7 +9832,7 @@ function form134_create_machine(form)
 					"<tablename>service_request_machines</tablename>" +
 					"<link_to>form134</link_to>" +
 					"<title>Added</title>" +
-					"<notes>Machine "+machine+" to service request id "+request_id+"</notes>" +
+					"<notes>Machine "+machine+" to SR# "+request_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -9858,6 +9858,7 @@ function form134_create_machine(form)
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
+			form134_update_machine(form);
 		});	
 	}
 	else
@@ -9897,7 +9898,7 @@ function form134_create_team(form)
 					"<tablename>service_request_team</tablename>" +
 					"<link_to>form134</link_to>" +
 					"<title>Added</title>" +
-					"<notes>Assignee "+assignee+" to service request id "+request_id+"</notes>" +
+					"<notes>Assignee "+assignee+" to SR# "+request_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var access_xml="<data_access>" +
@@ -9934,6 +9935,7 @@ function form134_create_team(form)
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
+			form134_update_team(form);
 		});	
 	}
 	else
@@ -9974,7 +9976,7 @@ function form134_create_document(form)
 					"<tablename>documents</tablename>" +
 					"<link_to>form134</link_to>" +
 					"<title>Added</title>" +
-					"<notes>Document "+doc_name+" for service request id "+request_id+"</notes>" +
+					"<notes>Document "+doc_name+" for SR# "+request_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -10020,12 +10022,11 @@ function form134_create_task(form)
 		var master_fields=document.getElementById('form134_master');
 		var request_id=master_fields.elements[1].value;
 
-		var task=form.elements[0].value;
-		var description=form.elements[1].value;
-		var assignee=form.elements[2].value;
-		var due_by=get_raw_time(form.elements[3].value);
-		var status=form.elements[4].value;				
-		var data_id=form.elements[5].value;
+		var description=form.elements[0].value;
+		var assignee=form.elements[1].value;
+		var due_by=get_raw_time(form.elements[2].value);
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<task_instances>" +
@@ -10033,7 +10034,7 @@ function form134_create_task(form)
 					"<source_id>"+request_id+"</source_id>"+
 					"<source>service request</source>"+
 					"<assignee>"+assignee+"</assignee>" +
-					"<name>"+task+"</name>" +
+					"<name>SR #"+request_id+"</name>" +
 					"<description>"+description+"</description>" +
 					"<t_initiated>"+last_updated+"</t_initiated>"+
 					"<t_due>"+due_by+"</t_due>"+
@@ -10045,7 +10046,7 @@ function form134_create_task(form)
 					"<tablename>task_instances</tablename>" +
 					"<link_to>form134</link_to>" +
 					"<title>Added</title>" +
-					"<notes>Task "+task+" to service request id "+request_id+"</notes>" +
+					"<notes>Task for SR# "+request_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -10060,7 +10061,7 @@ function form134_create_task(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[7];
+		var del_button=form.elements[6];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
@@ -10071,6 +10072,7 @@ function form134_create_task(form)
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
+			form134_update_task(form);
 		});	
 	}
 	else
@@ -10079,138 +10081,6 @@ function form134_create_task(form)
 	}
 };
 
-/**
- * formNo 134
- * form Service dashboard - item
- * @param button
- */
-function form134_create_item(form)
-{
-	if(is_create_access('form134'))
-	{
-		var master_fields=document.getElementById('form134_master');
-		var request_id=master_fields.elements[1].value;
-
-		var item=form.elements[0].value;
-		var quantity=form.elements[1].value;
-		var status=form.elements[2].value;				
-		var data_id=form.elements[3].value;
-		var last_updated=get_my_time();
-		
-		var data_xml="<service_request_items>" +
-					"<id>"+data_id+"</id>" +
-					"<request_id>"+request_id+"</request_id>"+
-					"<item_name>"+item+"</item_name>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<status>"+status+"</status>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</service_request_items>";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>service_request_items</tablename>" +
-					"<link_to>form134</link_to>" +
-					"<title>Requested</title>" +
-					"<notes>Item "+item+" for service request id "+request_id+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<3;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		var del_button=form.elements[5];
-		del_button.removeAttribute("onclick");
-		$(del_button).on('click',function(event)
-		{
-			form134_delete_item(del_button);
-		});
-		
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-		});	
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-};
-
-/**
- * formNo 134
- * form Service dashboard - expense
- * @param button
- */
-function form134_create_expense(form)
-{
-	if(is_create_access('form134'))
-	{
-		var master_fields=document.getElementById('form134_master');
-		var request_id=master_fields.elements[1].value;
-
-		var person=form.elements[0].value;
-		var amount=form.elements[1].value;
-		var detail=form.elements[2].value;
-		var status=form.elements[3].value;				
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
-		
-		var data_xml="<expenses>" +
-					"<id>"+data_id+"</id>" +
-					"<source_id>"+request_id+"</source_id>"+
-					"<source>service request</source>"+
-					"<person>"+person+"</person>"+
-					"<amount>"+amount+"</amount>"+
-					"<detail>"+detail+"</detail>" +
-					"<status>"+status+"</status>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</expenses>";	
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>expenses</tablename>" +
-					"<link_to>form134</link_to>" +
-					"<title>Added</title>" +
-					"<notes>Expense of Rs. "+amount+" for service request id "+request_id+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}	
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-		var del_button=form.elements[6];
-		del_button.removeAttribute("onclick");
-		$(del_button).on('click',function(event)
-		{
-			form134_delete_expense(del_button);
-		});
-		
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-		});	
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-};
 
 /**
  * formNo 135
@@ -11481,3 +11351,143 @@ function form150_post_feed()
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * formNo 151
+ * form Service dashboard - item
+ * @param button
+ */
+function form151_create_item(form)
+{
+	if(is_create_access('form151'))
+	{
+		var master_fields=document.getElementById('form151_master');
+		var request_id=master_fields.elements[1].value;
+
+		var item=form.elements[0].value;
+		var quantity=form.elements[1].value;
+		var est_amount=form.elements[2].value;
+		var amount=form.elements[3].value;
+		var status=form.elements[4].value;				
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<service_request_items>" +
+					"<id>"+data_id+"</id>" +
+					"<request_id>"+request_id+"</request_id>"+
+					"<item_name>"+item+"</item_name>" +
+					"<est_amount>"+est_amount+"</est_amount>"+
+					"<amount>"+amount+"</amount>"+
+					"<quantity>"+quantity+"</quantity>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</service_request_items>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>service_request_items</tablename>" +
+					"<link_to>form151</link_to>" +
+					"<title>Requested</title>" +
+					"<notes>Item "+item+" for SR# "+request_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[7];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form151_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form151_update_item(form);
+		});	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+};
+
+/**
+ * formNo 151
+ * form Service dashboard - expense
+ * @param button
+ */
+function form151_create_expense(form)
+{
+	if(is_create_access('form151'))
+	{
+		var master_fields=document.getElementById('form151_master');
+		var request_id=master_fields.elements[1].value;
+
+		var person=form.elements[0].value;
+		var amount=form.elements[1].value;
+		var detail=form.elements[2].value;
+		var status=form.elements[3].value;				
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<expenses>" +
+					"<id>"+data_id+"</id>" +
+					"<source_id>"+request_id+"</source_id>"+
+					"<source>service request</source>"+
+					"<person>"+person+"</person>"+
+					"<amount>"+amount+"</amount>"+
+					"<detail>"+detail+"</detail>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</expenses>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>expenses</tablename>" +
+					"<link_to>form151</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Expense of Rs. "+amount+" for SR# "+request_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		var del_button=form.elements[6];
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form151_delete_expense(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form151_update_expense(form);
+		});	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+};

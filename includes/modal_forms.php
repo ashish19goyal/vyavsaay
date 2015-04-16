@@ -506,12 +506,11 @@
 	<div id="modal43" title="Add task">
 		<form id='modal43_form'>
 			<fieldset>
-				<label>Task: <input type='text' required></label><br>
+				<label>Phase: <input type='text' required></label><br>
+				<label>Task: <input type="text"></label><br>
 				<label>Assignee: <input type="text"></label><br>
-				<label>Start time: <input type="text"></label><br>
 				<label>Due time: <input type="text"></label><br>
 				<label>Status: <input type="text" required value='pending'></label><br>
-				<input type='hidden'>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
@@ -650,6 +649,17 @@
 		<form id='modal103_form'>
 			<fieldset>
 				<label>Request Id: <input type='text' readonly="readonly"></label><br>
+				<label>Closing notes: <textarea required></textarea></label><br>
+				<label>Status: <input type='text' required></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal104" title="Close machine service">
+		<form id='modal104_form'>
+			<fieldset>
+				<label>Machine: <input type='text' readonly="readonly"></label><br>
 				<label>Closing notes: <textarea required></textarea></label><br>
 				<label>Status: <input type='text' required></label><br>
 				<input type="submit" value='Save' class='modal_submit'>

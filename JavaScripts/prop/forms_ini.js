@@ -5519,7 +5519,33 @@ function notifications_ini()
 			{	
 				notifs2.forEach(function(notif2)
 				{
-					var found=notif.target_user.indexOf(get_account_name());
+					var read=false;
+					var update=false;
+					for(var x in accessible_data)
+					{
+						if(accessible_data[x].record_id==notif2.id || accessible_data[x].record_id=='all')
+						{
+							if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || notif2[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
+							{
+								if(accessible_data[x].access_type=='all')
+								{
+									read=true;
+									update=true;
+									break;
+								}
+								if(accessible_data[x].access_type=='read')
+								{
+									read=true;
+								}
+								if(accessible_data[x].access_type=='update')
+								{
+									update=true;
+								}							
+							}
+						}
+					}
+					
+					var found=notif2.target_user.indexOf(get_account_name());
 					if(read || found>=0)
 					{
 						result_html+="<div class='notification_detail'><b>" +
@@ -5637,7 +5663,7 @@ function initialize_questionnaires(id,ques_name)
 		
 		var ques_header=document.getElementById(ques_name+"_ques_header");
 		ques_header.elements[1].value=get_new_key();
-		ques_header.elements[2].value=get_name();
+		ques_header.elements[2].value=get_account_name();
 		ques_header.elements[3].value=get_my_date();
 		
 		$(ques_form).off('submit');
@@ -9250,7 +9276,7 @@ function form104_ini()
 		        		"<status></status>" +
 		        		"<assignee></assignee>" +
 		        		"<task_hours></task_hours>" +
-		        		"<source exact='yes'>projects</source>" +
+		        		"<source exact='yes'>project</source>" +
 		        		"<source_id exact='yes'>"+project_id+"</source_id>" +
 						"</task_instances>";
 
@@ -9259,7 +9285,6 @@ function form104_ini()
 			        fetch_requested_data('form104',tasks_data,function(tasks)
 			        {
 			        	var events=[];
-			        	
 			        	tasks.forEach(function(task)
 			        	{
 							var read=false;
@@ -9298,6 +9323,7 @@ function form104_ini()
 							
 							if(read)
 							{
+								console.log('task found');
 			        			var color="yellow";
 			        			if(task.status=='cancelled')
 			        			{
@@ -9312,9 +9338,9 @@ function form104_ini()
 			        				color='#00ff00';
 			        			}
 				        		events.push({
-				        			title: "\n"+task.name+"\nAssigned to: "+task.assignee+"\nDue time: "+get_formatted_time(task.t_due),
+				        			title: task.description+"\nAssigned to: "+task.assignee+"\nDue time: "+get_formatted_time(task.t_due),
 				        			start:get_iso_time(task.t_initiated),
-				        			end:get_iso_time(parseFloat(task.t_initiated)+(parseFloat(task.task_hours)*3600000)),
+				        			end:get_iso_time(parseFloat(task.t_initiated)+(3600000)),
 				        			color: color,
 				        			textColor:"#333",
 				        			id: task.id,
@@ -9375,7 +9401,7 @@ function form104_ini()
 				"<t_initiated></t_initiated>" +
 				"<task_hours></task_hours>" +
 				"<status></status>" +
-				"<source exact='yes'>projects</source>" +
+				"<source exact='yes'>project</source>" +
 				"<source_id exact='yes'>"+project_id+"</source_id>" +
 				"<last_updated></last_updated>" +
 				"</task_instances>";
@@ -9424,19 +9450,19 @@ function form104_ini()
 					{
 						result.t_due=get_my_datetime(result.t_due);
 						result.t_initiated=get_my_datetime(result.t_initiated);
-						var message_string="Due time: "+result.t_due+"\nTask: "+result.name+"\nAssignee:"+result.assignee;
+						var message_string="Due time: "+result.t_due+"\nTask: "+result.description+"\nAssignee:"+result.assignee;
 						message_string=encodeURIComponent(message_string);
 						var rowsHTML="";
 						rowsHTML+="<tr>";
 							rowsHTML+="<form id='form104_"+result.id+"'></form>";
-								rowsHTML+="<td data-th='Task Name'>";
+								rowsHTML+="<td data-th='Phase'>";
 									rowsHTML+="<input type='text' readonly='readonly' form='form104_"+result.id+"' value='"+result.name+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Task'>";
+									rowsHTML+="<textarea readonly='readonly' form='form104_"+result.id+"'>"+result.description+"</textarea>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Assignee'>";
 									rowsHTML+="<input type='text' readonly='readonly' form='form104_"+result.id+"' class='dblclick_editable' value='"+result.assignee+"'>";
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Start Time'>";
-									rowsHTML+="<input type='text' readonly='readonly' form='form104_"+result.id+"' class='dblclick_editable' value='"+result.t_initiated+"'>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Due Time'>";
 									rowsHTML+="<input type='text' readonly='readonly' form='form104_"+result.id+"' class='dblclick_editable' value='"+result.t_due+"'>";
@@ -9450,9 +9476,7 @@ function form104_ini()
 									rowsHTML+="<input type='submit' class='save_icon' form='form104_"+result.id+"' title='Save'>";
 								if(del)
 									rowsHTML+="<input type='button' class='delete_icon' form='form104_"+result.id+"' title='Delete' onclick='form104_delete_item($(this));'>";
-									rowsHTML+="<a id='form104_whatsapp_"+result.id+"' href='whatsapp://send?text="+message_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form104_"+result.id+"' title='Send details through WhatsApp'></a>";
-								if(access)
-									rowsHTML+="<input type='button' class='generic_icon' form='form104_"+result.id+"' value='Access' onclick=\"access_display('task_instances','"+result.id+"');\">";
+								rowsHTML+="<a id='form104_whatsapp_"+result.id+"' href='whatsapp://send?text="+message_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form104_"+result.id+"' title='Send details through WhatsApp'></a>";
 								rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 						
@@ -9465,8 +9489,7 @@ function form104_ini()
 						});
 						
 						var name_filter=fields.elements[0];
-						var assignee_filter=fields.elements[1];
-						var start_filter=fields.elements[2];
+						var assignee_filter=fields.elements[2];
 						var due_filter=fields.elements[3];
 						var status_filter=fields.elements[4];
 									
@@ -9477,7 +9500,6 @@ function form104_ini()
 						
 						set_static_value_list('task_instances','status',status_filter);
 						$(due_filter).datetimepicker();
-						$(start_filter).datetimepicker();
 					}
 				});
 				
@@ -11624,7 +11646,8 @@ function form128_ini()
 							rowsHTML+="<input type='hidden' form='form128_"+result.id+"' value='"+result.id+"'>";
 							if(del)								
 								rowsHTML+="<input type='button' class='delete_icon' form='form128_"+result.id+"' title='Delete' onclick='form128_delete_item($(this));'>";
-							rowsHTML+="<input type='button' class='edit_icon' title='Service Request Details' form='form128_"+result.id+"' onclick=\"element_display('"+result.id+"','form134')\">";
+							rowsHTML+="<input type='button' class='generic_icon' value='Details' title='Service Request Details' form='form128_"+result.id+"' onclick=\"element_display('"+result.id+"','form134')\">";
+							rowsHTML+="<input type='button' class='generic_icon' value='Billing' title='Billing Details' form='form128_"+result.id+"' onclick=\"element_display('"+result.id+"','form151')\">";
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 				
@@ -12094,7 +12117,8 @@ function form131_ini()
 			"<task_hours></task_hours>" +
 			"<status>"+fstatus+"</status>" +
 			"<last_updated></last_updated>" +
-			"</task_instances>";
+			"<source exact='yes'>service request</source>"+
+	        "</task_instances>";
 
 	$('#form131_body').html("");
 
@@ -12344,16 +12368,14 @@ function form133_ini()
  */
 function form134_ini()
 {
-	var request_id=$("#form134_link").attr('data_id');
-	if(request_id==null)
-		request_id="";	
+	var filter_fields=document.getElementById('form134_master');
+	var request_id=filter_fields.elements[1].value;
+	
 	$('#form134_detail_body').html("");
 	$('#form134_machine_body').html("");
 	$('#form134_team_body').html("");
 	$('#form134_document_body').html("");
 	$('#form134_task_body').html("");
-	$('#form134_item_body').html("");
-	$('#form134_expense_body').html("");	
 	
 	if(request_id!="")
 	{
@@ -12403,7 +12425,7 @@ function form134_ini()
 			/////////////service request machines////////////////////////
 			var machines_data="<service_request_machines>"+
 									"<id></id>"+
-									"<request_id exact='yes'>"+request_results[0].id+"</request_id>"+
+									"<request_id exact='yes'>"+request_id+"</request_id>"+
 									"<machine_type></machine_type>"+
 									"<machine></machine>"+
 									"<problem_type></problem_type>"+
@@ -12435,18 +12457,28 @@ function form134_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form134_machine_"+id+"' value='"+id+"'>";
-							rowsHTML+="<input type='button' class='generic_icon' value='Close' form='form134_machine_"+id+"' onclick=\"modal104_action('"+id+"')\">";
+							rowsHTML+="<input type='button' class='generic_icon' value='Close' form='form134_machine_"+id+"' onclick='modal104_action($(this))'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form134_machine_"+id+"' id='delete_form134_machine_"+id+"' onclick='form134_delete_machine($(this));'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form134_machine_"+id+"' >";
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";				
 					$('#form134_machine_body').append(rowsHTML);
-				});				
+					
+					var fields=document.getElementById("form134_machine_"+id);
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form134_update_machine(fields);
+					});
+
+				});	
+				longPressEditable($('.dblclick_editable'));		
 			});
 
 			/////////////service request team////////////////////////
 			var team_data="<service_request_team>"+
 									"<id></id>"+
-									"<request_id exact='yes'>"+request_results[0].id+"</request_id>"+
+									"<request_id exact='yes'>"+request_id+"</request_id>"+
 									"<assignee></assignee>"+
 									"<phone></phone>"+
 									"<email></email>"+
@@ -12473,14 +12505,15 @@ function form134_ini()
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";				
 					$('#form134_team_body').append(rowsHTML);
-				});				
+				});		
+				longPressEditable($('.dblclick_editable'));		
 			});
 			
 			/////////////service request document////////////////////
 			var document_data="<documents>"+
 								"<id></id>"+
 								"<doc_type exact='yes'>service request</doc_type>"+
-								"<target_id exact='yes'>"+request_results[0].id+"</target_id>"+
+								"<target_id exact='yes'>"+request_id+"</target_id>"+
 								"<doc_name></doc_name>"+
 								"<url></url>"+
 								"</documents>";
@@ -12512,7 +12545,7 @@ function form134_ini()
 			var task_data="<task_instances>"+
 								"<id></id>"+
 								"<source exact='yes'>service request</source>"+
-								"<source_id exact='yes'>"+request_results[0].id+"</source_id>"+
+								"<source_id exact='yes'>"+request_id+"</source_id>"+
 								"<name></name>"+
 								"<assignee></assignee>"+
 								"<status></status>"+
@@ -12527,9 +12560,6 @@ function form134_ini()
 					var rowsHTML="<tr>";
 					rowsHTML+="<form id='form134_task_"+id+"'></form>";
 						rowsHTML+="<td data-th='Task'>";
-							rowsHTML+="<textarea readonly='readonly' form='form134_task_"+id+"'>"+result.name+"</textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Description'>";
 							rowsHTML+="<textarea readonly='readonly' form='form134_task_"+id+"'>"+result.description+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Assignee'>";
@@ -12544,83 +12574,20 @@ function form134_ini()
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form134_task_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form134_task_"+id+"' id='delete_form134_task_"+id+"' onclick='form134_delete_task($(this));'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form134_task_"+id+"' >";
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";				
 					$('#form134_task_body').append(rowsHTML);
-				});				
+					var fields=document.getElementById("form134_task_"+id);
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form134_update_task(fields);
+					});
+				});	
+				longPressEditable($('.dblclick_editable'));			
 			});
-
-			/////////////service request items////////////////////
-			var item_data="<service_request_items>"+
-								"<id></id>"+
-								"<request_id exact='yes'>"+request_results[0].id+"</request_id>"+
-								"<item_name></item_name>"+
-								"<quantity></quantity>"+
-								"<status></status>"+
-								"</service_request_items>";
-			fetch_requested_data('',item_data,function(item_results)
-			{				
-				item_results.forEach(function(result)
-				{
-					var id=result.id;
-					var rowsHTML="<tr>";
-					rowsHTML+="<form id='form134_item_"+id+"'></form>";
-						rowsHTML+="<td data-th='Item Name'>";
-							rowsHTML+="<textarea readonly='readonly' form='form134_item_"+id+"'>"+result.item_name+"</textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+="<input type='number' readonly='readonly' form='form134_item_"+id+"' value='"+result.quantity+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Status'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form134_item_"+id+"' value='"+result.status+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='hidden' form='form134_item_"+id+"' value='"+id+"'>";
-							rowsHTML+="<input type='button' class='delete_icon' form='form134_item_"+id+"' id='delete_form134_item_"+id+"' onclick='form134_delete_item($(this));'>";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";				
-					$('#form134_item_body').append(rowsHTML);
-				});				
-			});
-
-			/////////////service request expenses////////////////////
-			var expense_data="<expenses>"+
-								"<id></id>"+
-								"<source exact='yes'>service request</source>"+
-								"<source_id exact='yes'>"+request_results[0].id+"</source_id>"+
-								"<person></person>"+
-								"<amount></amount>"+
-								"<status></status>"+
-								"<detail></detail>"+
-								"</expenses>";
-			fetch_requested_data('',expense_data,function(expense_results)
-			{				
-				expense_results.forEach(function(result)
-				{
-					var id=result.id;
-					var rowsHTML="<tr>";
-					rowsHTML+="<form id='form134_expense_"+id+"'></form>";
-						rowsHTML+="<td data-th='Person'>";
-							rowsHTML+="<textarea readonly='readonly' form='form134_expense_"+id+"'>"+result.person+"</textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Amount'>";
-							rowsHTML+="Rs. <input type='number' readonly='readonly' form='form134_expense_"+id+"' value='"+result.amount+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Detail'>";
-							rowsHTML+="<textarea readonly='readonly' form='form134_expense_"+id+"'>"+result.detail+"</textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Status'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form134_expense_"+id+"' value='"+result.status+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='hidden' form='form134_expense_"+id+"' value='"+id+"'>";
-							rowsHTML+="<input type='button' class='delete_icon' form='form134_expense_"+id+"' id='delete_form134_expense_"+id+"' onclick='form134_delete_expense($(this));'>";
-						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";				
-					$('#form134_expense_body').append(rowsHTML);
-				});				
-			});
-			
+					
 			hide_loader();
 		});
 	}
@@ -12763,6 +12730,12 @@ function form135_ini()
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";				
 					$('#form135_team_body').append(rowsHTML);
+					var fields=document.getElementById("form135_team_"+id);
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form135_update_team(fields);
+					});
 				});
 				longPressEditable($('.dblclick_editable'));
 			});
@@ -12839,6 +12812,12 @@ function form135_ini()
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";				
 					$('#form135_task_body').append(rowsHTML);
+					var fields=document.getElementById("form135_task_"+id);
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form135_update_task(fields);
+					});
 				});	
 				longPressEditable($('.dblclick_editable'));
 			});
@@ -14711,4 +14690,209 @@ function form150_ini()
 		});
 		
 	},member_columns);	
+}
+
+
+/**
+ * @form Service Request - Billing
+ * @formNo 151
+ * @Loading light
+ */
+function form151_ini()
+{
+	var filter_fields=document.getElementById('form151_master');
+	var request_id=filter_fields.elements[1].value;
+	
+	$('#form151_task_body').html("");
+	$('#form151_item_body').html("");
+	$('#form151_expense_body').html("");	
+	
+	if(request_id!="")
+	{
+		show_loader();
+		var request_columns="<service_requests>" +
+				"<id>"+request_id+"</id>" +
+				"<customer></customer>"+
+				"<reported_by></reported_by>" +
+				"<notes></notes>" +
+				"<problem_type></problem_type>" +
+				"<closing_notes></closing_notes>" +
+				"<reported_time></reported_time>" +
+				"<status></status>" +
+				"</service_requests>";
+	
+		fetch_requested_data('form151',request_columns,function(request_results)
+		{
+			var filter_fields=document.getElementById('form151_master');
+			filter_fields.elements[3].value="0";
+			filter_fields.elements[4].value="0";
+
+			if(request_results.length>0)
+			{
+				filter_fields.elements[1].value=request_results[0].id;
+				filter_fields.elements[2].value=request_results[0].customer;
+			}
+			
+			/////////////service request tasks////////////////////
+			var task_data="<task_instances>"+
+								"<id></id>"+
+								"<source exact='yes'>service request</source>"+
+								"<source_id exact='yes'>"+request_id+"</source_id>"+
+								"<name></name>"+
+								"<assignee></assignee>"+
+								"<status></status>"+
+								"<t_due></t_due>"+
+								"<est_expense></est_expense>"+
+								"<expense></expense>"+
+								"<description></description>"+
+								"</task_instances>";
+
+			fetch_requested_data('',task_data,function(task_results)
+			{
+				var est_amount=0;
+				var amount=0;
+				task_results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form151_task_"+id+"'></form>";
+						rowsHTML+="<td data-th='Task'>";
+							rowsHTML+="<textarea readonly='readonly' form='form151_task_"+id+"'>"+result.description+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Est. Amount'>";
+							rowsHTML+="Rs. <input type='number' readonly='readonly' class='dblclick_editable' form='form151_task_"+id+"' value='"+result.est_expense+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Actual Amount'>";
+							rowsHTML+="Rs. <input type='number' readonly='readonly' class='dblclick_editable' form='form151_task_"+id+"' value='"+result.expense+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form151_task_"+id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form151_task_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form151_task_"+id+"' id='delete_form151_task_"+id+"' onclick='form151_delete_task($(this));'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form151_task_"+id+"' >";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+					$('#form151_task_body').append(rowsHTML);
+					est_amount+=parseFloat(result.est_expense);
+					amount+=parseFloat(result.expense);
+					var fields=document.getElementById("form151_task_"+id);
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form151_update_task(fields);
+					});
+				});
+				longPressEditable($('.dblclick_editable'));
+				filter_fields.elements[3].value=parseFloat(filter_fields.elements[3].value)+est_amount;
+				filter_fields.elements[4].value=parseFloat(filter_fields.elements[4].value)+amount;
+			});
+
+
+			/////////////service request items////////////////////
+			var item_data="<service_request_items>"+
+								"<id></id>"+
+								"<request_id exact='yes'>"+request_id+"</request_id>"+
+								"<item_name></item_name>"+
+								"<est_amount></est_amount>"+
+								"<amount></amount>"+
+								"<quantity></quantity>"+
+								"<status></status>"+
+								"</service_request_items>";
+			fetch_requested_data('',item_data,function(item_results)
+			{
+				var est_amount=0;
+				var amount=0;
+				item_results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form151_item_"+id+"'></form>";
+						rowsHTML+="<td data-th='Item Name'>";
+							rowsHTML+="<textarea readonly='readonly' form='form151_item_"+id+"'>"+result.item_name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' readonly='readonly' form='form151_item_"+id+"' value='"+result.quantity+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Amount'>";
+							rowsHTML+="Estimated: Rs. <input type='number' readonly='readonly' form='form151_item_"+id+"' value='"+result.est_amount+"'>";
+							rowsHTML+="<br>Actual: Rs. <input type='number' readonly='readonly' class='dblclick_editable' form='form151_item_"+id+"' value='"+result.amount+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form151_item_"+id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form151_item_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form151_item_"+id+"' id='delete_form151_item_"+id+"' onclick='form151_delete_item($(this));'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form151_item_"+id+"'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form151_item_body').append(rowsHTML);
+					est_amount+=parseFloat(result.est_amount);
+					amount+=parseFloat(result.amount);
+					var fields=document.getElementById("form151_item_"+id);
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form151_update_item(fields);
+					});
+				});				
+				longPressEditable($('.dblclick_editable'));
+				filter_fields.elements[3].value=parseFloat(filter_fields.elements[3].value)+est_amount;
+				filter_fields.elements[4].value=parseFloat(filter_fields.elements[4].value)+amount;
+			});
+			
+
+			/////////////service request expenses////////////////////
+			var expense_data="<expenses>"+
+								"<id></id>"+
+								"<source exact='yes'>service request</source>"+
+								"<source_id exact='yes'>"+request_id+"</source_id>"+
+								"<person></person>"+
+								"<amount></amount>"+
+								"<status></status>"+
+								"<detail></detail>"+
+								"</expenses>";
+			fetch_requested_data('',expense_data,function(expense_results)
+			{	
+				var amount=0;			
+				expense_results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form151_expense_"+id+"'></form>";
+						rowsHTML+="<td data-th='Person'>";
+							rowsHTML+="<textarea readonly='readonly' form='form151_expense_"+id+"'>"+result.person+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Amount'>";
+							rowsHTML+="Rs. <input type='number' readonly='readonly' form='form151_expense_"+id+"' value='"+result.amount+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Detail'>";
+							rowsHTML+="<textarea readonly='readonly' form='form151_expense_"+id+"'>"+result.detail+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form151_expense_"+id+"' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form151_expense_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form151_expense_"+id+"' id='delete_form151_expense_"+id+"' onclick='form151_delete_expense($(this));'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form151_expense_"+id+"'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";				
+					$('#form151_expense_body').append(rowsHTML);
+					amount+=parseFloat(result.amount);
+					var fields=document.getElementById("form151_expense_"+id);
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form151_update_expense(fields);
+					});
+				});
+				longPressEditable($('.dblclick_editable'));
+				filter_fields.elements[4].value=parseFloat(filter_fields.elements[4].value)+amount;
+			});			
+			hide_loader();
+		});
+	}
 }

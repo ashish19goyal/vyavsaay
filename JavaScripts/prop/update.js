@@ -6826,6 +6826,138 @@ function form130_update_form()
 }
 
 /**
+ * @form Service Request Details - Team
+ * @formNo 134
+ * @param button
+ */
+function form134_update_machine(form)
+{
+	if(is_update_access('form134'))
+	{
+		var type=form.elements[0].value;
+		var machine=form.elements[1].value;
+		var problem=form.elements[2].value;
+		var closing_notes=form.elements[3].value;
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<service_request_machines>" +
+					"<id>"+data_id+"</id>" +
+					"<machine_type>"+type+"</machine_type>" +
+					"<machine>"+machine+"</machine>" +
+					"<problem>"+problem+"</problem>" +
+					"<closing_notes>"+closing_notes+"</closing_notes>"+					
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</service_request_machines>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service Request Details - Team
+ * @formNo 134
+ * @param button
+ */
+function form134_update_team(form)
+{
+	if(is_update_access('form134'))
+	{
+		var assignee=form.elements[0].value;
+		var phone=form.elements[1].value;
+		var email=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<service_request_team>" +
+					"<id>"+data_id+"</id>" +
+					"<assignee>"+assignee+"</assignee>" +
+					"<phone>"+phone+"</phone>" +
+					"<email>"+email+"</email>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</service_request_team>";	
+		
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Service Request Detail - Task
+ * @formNo 134
+ * @param button
+ */
+function form134_update_task(form)
+{
+	if(is_update_access('form134'))
+	{
+		var description=form.elements[0].value;
+		var assignee=form.elements[1].value;
+		var due_by=get_raw_time(form.elements[2].value);
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<task_instances>" +
+					"<id>"+data_id+"</id>" +
+					"<assignee>"+assignee+"</assignee>" +
+					"<description>"+description+"</description>" +
+					"<t_due>"+due_by+"</t_due>"+
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</task_instances>";	
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form Project Dashboard - Team
  * @formNo 135
  * @param button
@@ -7809,6 +7941,139 @@ function form149_update_item(button)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		$(button).hide();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service Request Billing - Task
+ * @formNo 151
+ * @param button
+ */
+function form151_update_task(form)
+{
+	if(is_update_access('form151'))
+	{
+		var description=form.elements[0].value;
+		var est_expense=form.elements[1].value;
+		var expense=form.elements[2].value;
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<task_instances>" +
+					"<id>"+data_id+"</id>" +
+					"<est_expense>"+est_expense+"</est_expense>" +
+					"<description>"+description+"</description>" +
+					"<expense>"+expense+"</expense>"+
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</task_instances>";	
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service Request Billing - Task
+ * @formNo 151
+ * @param button
+ */
+function form151_update_item(form)
+{
+	if(is_update_access('form151'))
+	{
+		var item=form.elements[0].value;
+		var quantity=form.elements[1].value;
+		var est_amount=form.elements[2].value;
+		var amount=form.elements[3].value;
+		var status=form.elements[4].value;				
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<service_request_items>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+item+"</item_name>" +
+					"<est_amount>"+est_amount+"</est_amount>"+
+					"<amount>"+amount+"</amount>"+
+					"<quantity>"+quantity+"</quantity>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</service_request_items>";	
+
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Service Request Billing - Expense
+ * @formNo 151
+ * @param button
+ */
+function form151_update_expense(form)
+{
+	if(is_update_access('form151'))
+	{
+		var person=form.elements[0].value;
+		var amount=form.elements[1].value;
+		var detail=form.elements[2].value;
+		var status=form.elements[3].value;				
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<expenses>" +
+					"<id>"+data_id+"</id>" +
+					"<person>"+person+"</person>"+
+					"<amount>"+amount+"</amount>"+
+					"<detail>"+detail+"</detail>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</expenses>";	
+
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
 	}
 	else
 	{

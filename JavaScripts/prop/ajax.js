@@ -24,7 +24,7 @@ function ajax_with_custom_func(url,kvp,func)
 
 	xmlhttp.open("POST",url,true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
+	
 	xmlhttp.onreadystatechange=function()
 	{
 		if(xmlhttp.readyState===4)
@@ -37,6 +37,7 @@ function ajax_with_custom_func(url,kvp,func)
 					hide_loader();
 					var user=get_username();
 					var domain=get_domain();
+					
 					$("#modal1").dialog(
 					{
 						close:function(e,ui)
@@ -56,7 +57,6 @@ function ajax_with_custom_func(url,kvp,func)
 								}
 								else
 								{
-									console.log(func);
 									var session_var=session_xml.getElementsByTagName('session');
 									var session_vars=new Object();
 									var num_svar=session_var[0].childElementCount;
@@ -100,12 +100,10 @@ function ajax_with_custom_func(url,kvp,func)
 	try
 	{
 		number_active_ajax+=1;
-		//console.log(number_active_ajax);
 		xmlhttp.send(kvp);
 	}catch(e)
 	{
 		number_active_ajax-=1;
-//		console.log(number_active_ajax);
 		hide_loader();
 	}			
 };
