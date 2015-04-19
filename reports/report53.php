@@ -2,11 +2,13 @@
 	<form id='report53_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
-			<label>Product</br><input type='text'></label>
-			<label>Start date</br><input type='text' required></label>
-			<label>End date</br><input type='text' required></label>
-			<input type='submit' value='Refresh' class='generic_icon'>
-			<input type='button' title='Print' class='print_icon'>
+			<label>Product<br><input type='text'></label>
+			<label>Start date<br><input type='text' required></label>
+			<label>End date<br><input type='text' required></label>
+			<label>
+				<input type='submit' value='Refresh' class='generic_icon'>
+				<input type='button' title='Print' class='print_icon'>
+			</label>	
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

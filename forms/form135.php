@@ -4,10 +4,12 @@
 			<label>Project Name<br><input type='text'></label>
 			<label>Description<br><textarea readonly="readonly"></textarea></label>
 			<label>Status<br><input type='text' readonly="readonly"></label>
-			<input type='hidden' name='id'>
-			<input type='button' title='Save' class='save_icon'>
-			<input type='button' title='Add project phase' class='add_icon'>
-			<input type='submit' class='submit_hidden'>
+			<label>
+				<input type='hidden' name='id'>
+				<input type='button' title='Save' class='save_icon'>
+				<input type='button' title='Add project phase' class='add_icon'>
+				<input type='submit' class='submit_hidden'>
+			</label>
 		</fieldset>
 	</form>
 

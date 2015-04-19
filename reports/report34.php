@@ -5,8 +5,10 @@
 			<label>Start date</br><input type='text' required title='Period start date for determination of effective margin'></label>
 			<label>End date</br><input type='text' required title='Period end date for determination of effective margin'></label>
 			<label>Effective Margin</br><input type="text" id="report34_margin" readonly='readonly'></label>
-			<input type='submit' value='Refresh' class='generic_icon'>
-			<input type='button' title='Print' class='print_icon'>
+			<label>
+				<input type='submit' value='Refresh' class='generic_icon'>
+				<input type='button' title='Print' class='print_icon'>
+			</label>	
 		</fieldset>
 	</form>
 	</br>

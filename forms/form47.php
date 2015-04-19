@@ -5,7 +5,7 @@
 				New Password: <input type="password" form='form47_master'><br>
 				Retype Password: <input type="password" form='form47_master' onkeyup="form47_verify_password($(this))">
 				<br><label class="form47_verify"></label><br>
-				<input type="button" title="Save" class='save_icon' onclick="form47_update_form()" form='form47_master' disabled='true'>
+				<label><input type="button" title="Save" class='save_icon' onclick="form47_update_form()" form='form47_master' disabled='true'></label>
 		</fieldset>
 	</form>
 	<script>

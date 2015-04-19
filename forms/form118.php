@@ -12,10 +12,12 @@
 			<label>Loyalty Program<br><input type='text' name='loyalty_program'></label>
 			<label>Loyalty Points<br><input type='number' name='loyalty_points' step='any'></label>
 			<label>Redeem Points<br><input type='checkbox' name='redeem'></label>
-			<input type='button' title='Save Bill' class='save_icon'>
-			<input type='button' title='Print Bill' class='print_icon' onclick='form118_print_form();'>
-			<input type='button' id='form118_share' class='share_icon' style='display:none;'>
-			<input type='submit' class='submit_hidden'>
+			<label>
+				<input type='button' title='Save Bill' class='save_icon'>
+				<input type='button' title='Print Bill' class='print_icon' onclick='form118_print_form();'>
+				<input type='button' id='form118_share' class='share_icon' style='display:none;'>
+				<input type='submit' class='submit_hidden'>
+			</label>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

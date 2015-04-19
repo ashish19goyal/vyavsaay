@@ -4,9 +4,11 @@
 			<label>Project Name<br><input type='text' required></label>
 			<label>Budget Estimate<br>Rs. <input type='number' readonly='readonly'></label>
 			<label>Budget Actuals<br>Rs. <input type='number' readonly='readonly'></label>
-			<input type='hidden' name='project_id'>
-			<input type='button' title='Save' class='save_icon'>
-			<input type='submit' class='submit_hidden'>
+			<label>
+				<input type='hidden' name='project_id'>
+				<input type='button' title='Save' class='save_icon'>
+				<input type='submit' class='submit_hidden'>
+			</label>	
 		</fieldset>
 	</form>
 

@@ -2,9 +2,11 @@
 	<form id='form102_master'>
 		<fieldset>
 			<label>Project Name<br><input type='text' required></label>
-			<input type='hidden' name='project_id' form='form102_master'>
-			<input type='button' onclick='form102_ini();' value='Refresh' class='generic_icon'>
-			<input type='button' title='Print' class='print_icon' onclick='form102_print_form($(this));'>
+			<label>			
+				<input type='hidden' name='project_id' form='form102_master'>
+				<input type='button' onclick='form102_ini();' value='Refresh' class='generic_icon'>
+				<input type='button' title='Print' class='print_icon' onclick='form102_print_form($(this));'>
+			</label>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

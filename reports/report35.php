@@ -3,7 +3,7 @@
 		<fieldset>
 			<legend>Select customers by:</legend>
 			<label>Product bought <input type='text' required></label>
-			<input type='submit' value='Refresh' class='generic_icon'>
+			<label><input type='submit' value='Refresh' class='generic_icon'></label>
 		</fieldset>
 	</form>
 	</br>

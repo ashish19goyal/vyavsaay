@@ -6,8 +6,10 @@
 			<label>Product</br><input type='text' title='If this field is blank, all applicable products will be shown'></label>
 			<label>Margin</br><input type='text' name='margin' readonly='readonly'></label>
 			<div style="width: auto;margin:10px;" id="report50_slider"></div>
-			<input type='submit' value='Refresh' class='generic_icon'>
-			<input type='button' title='Print' class='print_icon'>
+			<label>
+				<input type='submit' value='Refresh' class='generic_icon'>
+				<input type='button' title='Print' class='print_icon'>
+			</label>	
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

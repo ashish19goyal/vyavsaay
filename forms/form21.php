@@ -7,11 +7,13 @@
 			<label>Bill Date<br><input type='text' required></label>
 			<label>Entry Date<br><input type='text' required></label>
 			<label>Notes<br><textarea row='1'></textarea></label>
-			<input type='hidden' value=''>
-			<input type='hidden' name='transaction'>
-			<input type='button' title='Save Bill' class='save_icon'>
-			<input type='button' title='Print Bill' class='print_icon' onclick='form21_print_form();'>
-			<input type='submit' class='submit_hidden'>
+			<label>
+				<input type='hidden' value=''>
+				<input type='hidden' name='transaction'>
+				<input type='button' title='Save Bill' class='save_icon'>
+				<input type='button' title='Print Bill' class='print_icon' onclick='form21_print_form();'>
+				<input type='submit' class='submit_hidden'>
+			</label>	
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

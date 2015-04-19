@@ -3,8 +3,8 @@
 	<form id='form104_master'>
 		<fieldset>
 			<label>Project Name <input type='text' required></label>
-			<input type='hidden' name='project_id'>
-			<input type='submit' class='submit_hidden'>
+				<input type='hidden' name='project_id'>
+				<input type='submit' class='submit_hidden'>
 		</fieldset>
 	</form>
 	<div id="form104_calendar" style="max-width: 900px;margin:20px auto;"></div>

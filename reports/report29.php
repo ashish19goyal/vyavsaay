@@ -3,8 +3,10 @@
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Product Name <input type='text' title='If this field is left blank, pre-requisites for all products will be shown'></label>
-			<input type='submit' value='Refresh' class='generic_icon'>
-			<input type='button' title='Print' class='print_icon'>
+			<label>
+				<input type='submit' value='Refresh' class='generic_icon'>
+				<input type='button' title='Print' class='print_icon'>
+			</label>	
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

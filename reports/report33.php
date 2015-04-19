@@ -4,7 +4,7 @@
 			<legend>Select suppliers by:</legend>
 			<label>Dedit</br><input type='text' name='credit' readonly='readonly'></label>
 			<div style="width: auto;margin:10px;" id="report33_slider"></div>
-			<input type='submit' value='Refresh' class='generic_icon'>
+			<label><input type='submit' value='Refresh' class='generic_icon'></label>
 		</fieldset>
 	</form>
 	</br>

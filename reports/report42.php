@@ -5,8 +5,10 @@
 			<label>Feedback Type</br><input type='text' title='If this field is left blank, both types of feedback will be shown'></label>
 			<label>Start Date</br><input type='text' required></label>
 			<label>End Date</br><input type='text' required></label>
-			<input type='submit' value='Refresh' class='generic_icon'>
-			<input type='button' title='Print' class='print_icon'>
+			<label>
+				<input type='submit' value='Refresh' class='generic_icon'>
+				<input type='button' title='Print' class='print_icon'>
+			</label>	
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

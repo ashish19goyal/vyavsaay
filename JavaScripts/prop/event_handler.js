@@ -208,7 +208,7 @@ function modal_forms_ini()
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
 	   		modal: true,
-	   		width: 300,
+	   		width: 400,
 	   		show: "slide",
 	   		closeOnEscape: true,
 	       	buttons:{ OK:function(){$(this).dialog("close");}}
@@ -224,7 +224,7 @@ function modal_forms_ini()
 		var j=i;
 		$("#modal"+i).dialog({
 	   		autoOpen: false,
-	   		width: 300,
+	   		width: 400,
 	   		modal: true,
 	   		show: "slide",
 	   		closeOnEscape: true,
@@ -240,7 +240,7 @@ function modal_forms_ini()
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
 	   		modal: true,
-	   		width: 300,
+	   		width: 400,
 	   		show: "slide",
 	   		closeOnEscape: true,
 	       	buttons:{ OK:function(){$(this).dialog("close");}}
@@ -256,7 +256,7 @@ function modal_forms_ini()
 		var j=i;
 		$("#modal"+i).dialog({
 	   		autoOpen: false,
-	   		width: 300,
+	   		width: 400,
 	   		modal: true,
 	   		show: "slide",
 	   		closeOnEscape: true,

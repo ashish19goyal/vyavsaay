@@ -4,12 +4,14 @@
 			<label>Customer	<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form15_add_customer'><br>
 			<input type='text' required></label>
 			<label>Return Date</br><input type='text' required></label>
-			<input type='hidden' name='bill_id'>
-			<input type='hidden' name='transaction'>
-			<input type='button' title='Save Bill' class='save_icon'>
-			<input type='button' title='Print Bill' class='print_icon' onclick='form15_print_form();'>
-			<input type='button' id='form15_share' class='share_icon' style='display:none;'>
-			<input type='submit' class='submit_hidden'>
+			<label>
+				<input type='hidden' name='bill_id'>
+				<input type='hidden' name='transaction'>
+				<input type='button' title='Save Bill' class='save_icon'>
+				<input type='button' title='Print Bill' class='print_icon' onclick='form15_print_form();'>
+				<input type='button' id='form15_share' class='share_icon' style='display:none;'>
+				<input type='submit' class='submit_hidden'>
+			</label>	
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

@@ -4,7 +4,7 @@
 			<label>Request Id<br><input type='text'></label>
 			<label>Customer<br><textarea readonly="readonly"></textarea></label>
 			<label>Status<br><input type='text' readonly="readonly"></label>
-			<input type='submit' class='submit_hidden'>
+			<label><input type='submit' class='submit_hidden'></label>
 		</fieldset>
 	</form>
 

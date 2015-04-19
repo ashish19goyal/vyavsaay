@@ -3,8 +3,8 @@
 	<div id="form7_calendar" style="max-width: 900px;margin:20px auto;"></div>
 		<form id='form7_master'>
 			<fieldset>
-				Select Date: <input type='text' required onchange='form7_ini();'>
-				<input type='submit' value="Save All">
+				<label>Select Date: <input type='text' required onchange='form7_ini();'></label>
+				<label><input type='submit' value="Save All"></label>
 			</fieldset>
 		</form>
 		<table class='rwd-table'>

@@ -4,8 +4,10 @@
 			<legend>Select Filters</legend>
 			<label>Customer<input type='text'></label>
 			<label>Warranty<input type='text'></label>
-			<input type='submit' value='Refresh' class='generic_icon'>
-			<input type='button' title='Print' class='print_icon'>
+			<label>
+				<input type='submit' value='Refresh' class='generic_icon'>
+				<input type='button' title='Print' class='print_icon'>
+			</label>	
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

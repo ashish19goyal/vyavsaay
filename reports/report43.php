@@ -9,9 +9,10 @@
 			<label>Period 2</br>
 			<label>Start Date</br><input type='text' required></label></br>
 			<label>End Date</br><input type='text' required></label></label>
-			<input type='submit' value='Refresh' class='generic_icon'>
-			<input type='button' title='Print' class='print_icon'>
-			
+			<label>
+				<input type='submit' value='Refresh' class='generic_icon'>
+				<input type='button' title='Print' class='print_icon'>
+			</label>
 		</fieldset>
 	</form>
 </br>

@@ -19,8 +19,8 @@ textarea{
 	outline:  none !important;
 	background-color: #ffffff;
 	width: 100px;
-	border-width: 1px;
 	vertical-align:top;
+	border: 1px solid #dadada;
 }
 
 input{
@@ -1104,16 +1104,16 @@ canvas{
 	}	
 	
 	.rwd-table td:before {
-	  width: 200px;
+	  width: 170px;
   	}
   	
-	.export_icon, .generic_icon, .import_icon{
+	.export_icon, .generic_icon, .import_icon,.modal_submit{
 		height:30px;
 		font-size: 20px;
 	}
 	
 	.function_detail{
-		width:480px;
+		width:475px;
 		padding: 5px;
 		text-align: center;
 	}
@@ -1131,8 +1131,13 @@ canvas{
 		font-size: 20px;
 	}
 	
-	input,textarea,select{
+	input[type='text'],textarea,select{
 		min-width: 225px;
+		margin: 2px;
+	}
+	input[type='number']{
+		min-width: 150px;
+		margin: 2px;
 	}
 	
 	.submit_hidden{
@@ -1148,5 +1153,19 @@ canvas{
 	
 	.rwd-table td{
 		margin: 10px 5px;
+	}
+	
+	.modal_forms input,.modal_forms textarea,.modal_forms select{
+		min-width: 200px;
+		width:200px;
+	}
+	
+	#search_box{
+		height: 25px;
+		font-size: 20px;
+	}
+	
+	v2{
+		margin-left: 175px;
 	}
 }

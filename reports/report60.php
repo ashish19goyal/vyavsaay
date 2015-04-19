@@ -4,9 +4,11 @@
 			<legend>Select Filters</legend>
 			<label>Start Date<br><input type='text' required></label>
 			<label>End Date<br><input type='text' required></label>
-			<input type='submit' value='Refresh' class='generic_icon'>
-			<input type='button' title='Add ledger entry' class='generic_icon' value='Add Ledger Entry' onclick='modal106_action();'>
-			<input type='button' title='Print' class='print_icon'>
+			<label>	
+				<input type='submit' value='Refresh' class='generic_icon'>
+				<input type='button' title='Add ledger entry' class='generic_icon' value='Add Ledger Entry' onclick='modal106_action();'>
+				<input type='button' title='Print' class='print_icon'>
+			</label>	
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

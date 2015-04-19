@@ -4,8 +4,10 @@
 			<legend>Select Filters</legend>
 			<label>Due date</br><input type='text' required></label>
 			<label>Supplier</br><input type='text' title='If this field is left blank, top 10 suppliers will be shown'></label>
-			<input type='submit' value='Refresh' class='generic_icon'>
-			<input type='button' title='Print' class='print_icon'>
+			<label>
+				<input type='submit' value='Refresh' class='generic_icon'>
+				<input type='button' title='Print' class='print_icon'>
+			</label>	
 		</fieldset>
 	</form>
 	</br>

@@ -2,9 +2,11 @@
 	<form id='form2_master'>
 		<fieldset>
 			<label>Pamphlet Name<br><input type='text' required></label>
-			<input type='hidden' name='pamphlet_id' form='form2_master' value=''>
-			<input type='submit' title='Save' class='save_icon'>
-			<input type='button' title='Print' class='print_icon' onclick='form2_print_form($(this));'>
+			<label>
+				<input type='hidden' name='pamphlet_id' form='form2_master' value=''>
+				<input type='submit' title='Save' class='save_icon'>
+				<input type='button' title='Print' class='print_icon' onclick='form2_print_form($(this));'>
+			</label>	
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

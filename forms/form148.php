@@ -2,9 +2,11 @@
 	<form id='form148_master'>
 		<fieldset>
 			<label>Role<br><input type='text' required></label>
-			<input type='hidden' name='id'>
-			<input type='button' title='Save Role' class='save_icon'>
-			<input type='submit' class='submit_hidden'>
+			<label>
+				<input type='hidden' name='id'>
+				<input type='button' title='Save Role' class='save_icon'>
+				<input type='submit' class='submit_hidden'>
+			</label>	
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

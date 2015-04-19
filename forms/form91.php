@@ -7,13 +7,15 @@
 			<label>Bill Type<br><input type='text' required></label>
 			<label>Bill Date<br><input type='text' required></label>
 			<label>Bill #<br><input type='text' name='bill_num' readonly="readonly"></label>
-			<input type='hidden' name='bill_id'>
-			<input type='hidden' name='offer'>
-			<input type='hidden' name='transaction'>
-			<input type='button' title='Save Bill' class='save_icon'>
-			<input type='button' title='Print Bill' class='print_icon' onclick='form91_print_form();'>
-			<input type='button' id='form91_share' class='share_icon' style='display:none;'>
-			<input type='submit' class='submit_hidden'>
+			<label>
+				<input type='hidden' name='bill_id'>
+				<input type='hidden' name='offer'>
+				<input type='hidden' name='transaction'>
+				<input type='button' title='Save Bill' class='save_icon'>
+				<input type='button' title='Print Bill' class='print_icon' onclick='form91_print_form();'>
+				<input type='button' id='form91_share' class='share_icon' style='display:none;'>
+				<input type='submit' class='submit_hidden'>
+			</label>	
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

@@ -9,14 +9,16 @@
 			<label>Bill #<br><input type='text' name='bill_num' readonly="readonly"></label>
 			<label id='form119_payment_info'></label>
 			<label>Unbilled Items<br><input readonly='readonly' type='number'></label>
-			<input type='hidden' name='bill_id'>
-			<input type='hidden' name='offer'>
-			<input type='hidden' name='transaction'>
-			<input type='button' value='Select unbilled items' class='generic_icon'>
-			<input type='button' title='Save Bill' class='save_icon'>
-			<input type='button' title='Print Bill' class='print_icon' onclick='form119_print_form();'>
-			<input type='button' id='form119_share' class='share_icon' style='display:none;'>
-			<input type='submit' class='submit_hidden'>
+			<label>
+				<input type='hidden' name='bill_id'>
+				<input type='hidden' name='offer'>
+				<input type='hidden' name='transaction'>
+				<input type='button' value='Select unbilled items' class='generic_icon'>
+				<input type='button' title='Save Bill' class='save_icon'>
+				<input type='button' title='Print Bill' class='print_icon' onclick='form119_print_form();'>
+				<input type='button' id='form119_share' class='share_icon' style='display:none;'>
+				<input type='submit' class='submit_hidden'>
+			</label>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>
