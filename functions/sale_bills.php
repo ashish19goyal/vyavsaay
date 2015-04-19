@@ -1,5 +1,4 @@
 <div id='sale_bills_main' class='vy_tabs function_main'>
-
 		<ul>
 			<li><a id='form10_link' href='#form10' onclick='form10_header_ini(); form10_ini();' data-i18n='form.service_bill'></a></li>
 			<li><a id='form12_link' href='#form12' onclick='form12_header_ini(); form12_ini();' data-i18n='form.product_bill'></a></li>

@@ -74,7 +74,7 @@ td input[type="text"]
  /*   white-space: nowrap;*/
 }
 
-td>input[type="number"],input[type="number"]
+input[type="number"]
 {
 	width:75px;
 	transition: width 0.25s;
@@ -412,7 +412,6 @@ Table formatting for responsive functionality
 	margin: 1em 0;
 	min-width: 300px;
 	background: #EAF2D3;
-	border-radius: .4em;
 	overflow: hidden;
 }
 .rwd-table tr {
@@ -1008,6 +1007,7 @@ canvas{
 	}
 }
 
+/*this is applicable for mobile screens*/
 @media screen and (max-width: 550px) 
 {	
 	#home_grid{
@@ -1094,5 +1094,59 @@ canvas{
 	.vy_accordion>h3{
 		height:50px;
 		width:87%;
+	}
+	
+	/**content size in the grids*/
+	.rwd-table{
+		font-size: 20px;
+		margin: 0px;
+		padding:2px;
+	}	
+	
+	.rwd-table td:before {
+	  width: 200px;
+  	}
+  	
+	.export_icon, .generic_icon, .import_icon{
+		height:30px;
+		font-size: 20px;
+	}
+	
+	.function_detail{
+		width:480px;
+		padding: 5px;
+		text-align: center;
+	}
+	
+	canvas{
+		position:relative;
+	}
+	
+	label{
+		min-width:300px;
+		font-size: 20px;
+	}
+	
+	input,textarea,select,button{
+		font-size: 20px;
+	}
+	
+	input,textarea,select{
+		min-width: 225px;
+	}
+	
+	.submit_hidden{
+		min-width:1px;
+	}
+	
+	.save_icon,.delete_icon,.share_icon,.edit_icon,.copy_icon,.add_icon,.add_image,.print_icon{
+		min-width:40px;		
+		height:40px;
+		width:40px;
+		background-size: 40px 40px;
+	}
+	
+	.rwd-table td{
+		margin: 10px 5px;
 	}
 }
