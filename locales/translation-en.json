@@ -253,6 +253,8 @@
   	"request_detail":"Request Detail",
   	"report":"Report",
   	"service_request_billing":"Service Request Billing",
-  	"billing":"Billing"
+  	"billing":"Billing",
+  	"location_tracking":"Geo Tracking",
+  	"staff_geo_tracking":"Staff Geo Tracking"
   }
 }

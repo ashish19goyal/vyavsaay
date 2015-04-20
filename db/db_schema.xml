@@ -57,6 +57,15 @@
 			<shipping index='yes' type="BOOL"></shipping>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</staff>
+	<location_history>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<acc_name index='yes' type='VARCHAR(100)' unique='yes'></acc_name>
+			<lat index='no' type="DECIMAL(14,10)"></lat>
+			<lng index='no' type="DECIMAL(14,10)"></lng>
+			<location index='no' type='TEXT'></location>
+			<log_time index='yes' type='BIGINT'></log_time>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</location_history>
 	<accounts>
 			<id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
 			<username index='yes' type="VARCHAR(50)" unique='yes'></username>

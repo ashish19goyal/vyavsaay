@@ -2174,6 +2174,33 @@ function form84_header_ini()
 };
 
 /**
+ * @form Staff geo tracking
+ * @formNo 86
+ */
+function form86_header_ini()
+{
+	var filter_fields=document.getElementById('form86_master');
+	var date_filter=filter_fields.elements[2];
+	var name_filter=filter_fields.elements[1];
+	
+	var name_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	
+	set_my_filter(name_data,name_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form86_ini();
+	});
+	
+	$(date_filter).datepicker();
+	date_filter.value=get_my_date();
+};
+
+/**
  * @form Manage Products
  * @formNo 87
  */

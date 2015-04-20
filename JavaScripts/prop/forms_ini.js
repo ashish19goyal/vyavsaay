@@ -7104,8 +7104,6 @@ function form86_ini()
 		var re_access=get_session_var('re');
 		ajax_with_custom_func("./ajax/geoCode.php","domain="+domain+"&username="+username+"&type=staff&re="+re_access,function(e)
 		{
-			console.log(e.responseText);
-
 			$('#form86_header').html("");
 		
 			var lat=get_session_var('lat');
@@ -7124,104 +7122,46 @@ function form86_ini()
 		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap</a>',
 		        subdomains:'1234'
 		    }).addTo(map86);
-			
-			//////////changeable master coordinates/////////
-			
-			var mlatlng=L.latLng(lat,lng);
-			var mmarker=L.marker(mlatlng,{draggable:true}).addTo(map86).bindPopup(title);
-			mmarker.on('dragend',function(event){
-				var m=event.target;
-				var latlng=m.getLatLng();
-				var form=document.getElementById('form86_master');
-				form.elements[1].value=latlng.lat;
-				form.elements[2].value=latlng.lng;
-				var save_button=form.elements[3];
-				$(save_button).show();
-			});
-			
-			var rowsHTML="<div class='customers_content_item'>" +
-					"<form id='form86_master'>" +
-					"Name: <textarea style='height:40px;width:100px' readonly='readonly'>"+title+"</textarea></br>" +
-					"Latitude: <textarea style='height:20px;width:100px' readonly='readonly'>"+lat+"</textarea></br>" +
-					"Longitude: <textarea style='height:20px;width:100px' readonly='readonly'>"+lng+"</textarea></br>" +
-					"<input type='button' class='export_icon' value='Confirm' style='display:none;' form='form86_master'>" +
-					"</form>" +
-					"</div>";
-			
-			$('#form86_header').append(rowsHTML);
-			var fields=document.getElementById("form86_master");
-			var save_button=fields.elements[3];
-			$(save_button).on("click", function(event)
-			{
-				event.preventDefault();
-				form86_update_master(fields);
-			});
-			$(fields).parent().on('click',function(event)
-			{
-				//console.log('clicked on master');
-				mmarker.openPopup();
-			});
-		
+					
 			/////////////////////////////////////////////////
-			
-			var staff_data="<staff>" +
+			var master_form=document.getElementById("form86_master");
+			var acc_name=master_form.elements[1].value;
+			var date=get_raw_time(master_form.elements[2].value);
+			var staff_data="<location_history>" +
 					"<id></id>" +
-					"<name></name>" +
 					"<lat></lat>" +
 					"<lng></lng>" +
-					"<acc_name></acc_name>" +
-					"<address_status exact='yes'>unconfirmed</address_status>" +
-					"<address></address>" +
-					"<pincode></pincode>" +
-					"<city></city>" +
-					"<state></state>" +
-					"<country></country>" +
-					"</staff>";
+					"<acc_name exact='yes'>"+acc_name+"</acc_name>" +
+					"<log_time upperbound='yes'>"+(date+86400000)+"</log_time>"+
+					"<log_time lowerbound='yes'>"+date+"</log_time>"+
+					"<location></location>"+
+					"</location_history>";
 			fetch_requested_data('form86',staff_data,function(staffs)
 			{
+				staffs.sort(function(a,b)
+				{
+					if(parseFloat(a.log_time)<parseFloat(b.log_time))
+					{	return 1;}
+					else 
+					{	return -1;}
+				});	
+
 				staffs.forEach(function(staff)
 				{
-					if(staff.lat=='')
-					{
-						staff.lat=lat;
-					}
-					if(staff.lng=='')
-					{
-						staff.lng=lng;
-					}
 					var latlng=L.latLng(staff.lat,staff.lng);
-					var marker=L.marker(latlng,{draggable:true}).addTo(map86).bindPopup(staff.name);
-					marker.on('dragend',function(event){
-						var m=event.target;
-						var latlng=m.getLatLng();
-						var form=document.getElementById('form86_'+staff.id);
-						form.elements[1].value=latlng.lat;
-						form.elements[2].value=latlng.lng;
-						var save_button=form.elements[4];
-						$(save_button).show();
-					});
+					var my_time=get_my_datetime(staff.log_time).split(" ");
+					var marker=L.marker(latlng,{}).addTo(map86).bindPopup("<b>"+staff.location+"</b><br>At "+my_time[1]);
 					
-					var rowsHTML="<div class='customers_content_item'>" +
-							"<form id='form86_"+staff.id+"'>" +
-							"Name: <textarea style='height:40px;width:100px' readonly='readonly'>"+staff.acc_name+"</textarea></br>" +
-							"Latitude: <textarea style='height:20px;width:100px' readonly='readonly'>"+staff.lat+"</textarea></br>" +
-							"Longitude: <textarea style='height:20px;width:100px' readonly='readonly'>"+staff.lng+"</textarea></br>" +
-							"<input type='hidden' value='"+staff.id+"'>" +
-							"<input type='button' class='export_icon' value='Confirm' form='form86_"+staff.id+"'>" +
-							"</form>" +
+					var rowsHTML="<div class='customers_content_item' id='form86_"+staff.id+"'>" +
+							"Location: "+staff.location+"<br><br>" +
+							"Time: At "+my_time[1]+
 							"</div>";
 					
 					$('#form86_header').append(rowsHTML);
 					var fields=document.getElementById("form86_"+staff.id);
-					var save_button=fields.elements[4];
-					$(save_button).on("click", function(event)
+					
+					$(fields).on('click',function(event)
 					{
-						event.preventDefault();
-						form86_update_item(fields);
-					});
-					$(fields).parent().on('click',function(event)
-					{
-						//console.log('clicked on customer');
 						marker.openPopup();
 					});
 				});
@@ -7229,6 +7169,7 @@ function form86_ini()
 				var scrollPane=$(".customers_pane");
 				var scrollContent=$(".customers_content");
 				scrollContent.css('width',(Math.round(225*staffs.length)+225)+"px");
+				//scrollContent.css('height',"100px");
 				$(".customers_bar").slider({
 					slide: function(event,ui) {
 						if (scrollContent.width()>scrollPane.width()){
@@ -11719,7 +11660,11 @@ function form129_ini()
 			center: [lat,lng], 
 			zoom: 10
 		});
-	
+		
+/*		var googleLayer=new L.Google('ROADMAP');
+		console.log(googleLayer);		
+		map129.addLayer(googleLayer);
+*/		
 		L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
 	        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenstreetMap</a>',
 	        subdomains:'1234'
@@ -11780,133 +11725,114 @@ function form129_ini()
 		{
 			fetch_requested_data('form129',staff_data,function(staffs)
 			{
-				var service_eng_data="<service_requests>"+
-											"<assignee></assignee>"+									
-											"<status exact='yes'>open</status>"+									
-											"</service_requests>";
-				get_single_column_data(function(service_engs)
-				{	
-					for(var i in service_engs)
+				staffs.forEach(function(staff)
+				{
+					var read=false;
+					var update=false;
+					var del=false;
+					var access=false;
+					for(var x in accessible_data)
 					{
-						for(var j=0;j<staffs.length;j++)
+						if(accessible_data[x].record_id===staff.id || accessible_data[x].record_id=='all')
 						{
-							if(staffs[j].acc_name==service_engs[i])
+							if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || staff[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
 							{
-								staffs.splice(j,1);
-								break;
+								if(accessible_data[x].access_type=='all')
+								{
+									read=true;
+									update=true;
+									del=true;
+									access=true;
+									break;
+								}
+								else if(accessible_data[x].access_type=='read')
+								{
+									read=true;
+								}
+								else if(accessible_data[x].access_type=='delete')
+								{
+									del=true;
+								}
+								else if(accessible_data[x].access_type=='update')
+								{
+									update=true;
+								}
 							}
 						}
 					}
-								
-					staffs.forEach(function(staff)
+
+					if(read)
 					{
-						var read=false;
-						var update=false;
-						var del=false;
-						var access=false;
-						for(var x in accessible_data)
+						if(staff.lat=='')
 						{
-							if(accessible_data[x].record_id===staff.id || accessible_data[x].record_id=='all')
-							{
-								if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || staff[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
-								{
-									if(accessible_data[x].access_type=='all')
-									{
-										read=true;
-										update=true;
-										del=true;
-										access=true;
-										break;
-									}
-									else if(accessible_data[x].access_type=='read')
-									{
-										read=true;
-									}
-									else if(accessible_data[x].access_type=='delete')
-									{
-										del=true;
-									}
-									else if(accessible_data[x].access_type=='update')
-									{
-										update=true;
-									}
-								}
-							}
+							staff.lat=lat;
 						}
-	
-						if(read)
+						if(staff.lng=='')
 						{
-							if(staff.lat=='')
-							{
-								staff.lat=lat;
-							}
-							if(staff.lng=='')
-							{
-								staff.lng=lng;
-							}
-							var latlng=L.latLng(staff.lat,staff.lng);
-							var marker=L.marker(latlng,{draggable:true}).addTo(map129).bindPopup(staff.name);
-							marker.on('dragend',function(event){
-								var m=event.target;
-								var latlng=m.getLatLng();
-								var form=document.getElementById('form129_'+staff.id);
-								form.elements[1].value=latlng.lat;
-								form.elements[2].value=latlng.lng;
-								if(update)
-								{							
-									var save_button=form.elements[4];
-									$(save_button).show();
-								}
-							});
-							
-							var rowsHTML="<div class='customers_content_item'>" +
-									"<form id='form129_"+staff.id+"'>" +
-									"Name: <textarea style='height:40px;width:100px' readonly='readonly'>"+staff.acc_name+"</textarea></br>" +
-									"Latitude: <textarea style='height:20px;width:100px' readonly='readonly'>"+staff.lat+"</textarea></br>" +
-									"Longitude: <textarea style='height:20px;width:100px' readonly='readonly'>"+staff.lng+"</textarea></br>" +
-									"<input type='hidden' value='"+staff.id+"'>" +
-									"<input type='button' class='export_icon' value='Confirm' form='form129_"+staff.id+"'>" +
-									"</form>" +
-									"</div>";
-							
-							$('#form129_header').append(rowsHTML);
-							var fields=document.getElementById("form129_"+staff.id);
+							staff.lng=lng;
+						}
+						var latlng=L.latLng(staff.lat,staff.lng);
+						var marker=L.marker(latlng,{draggable:true}).addTo(map129).bindPopup(staff.name);
+						marker.on('dragend',function(event){
+							var m=event.target;
+							var latlng=m.getLatLng();
+							var form=document.getElementById('form129_'+staff.id);
+							form.elements[1].value=latlng.lat;
+							form.elements[2].value=latlng.lng;
 							if(update)
-							{
-								var save_button=fields.elements[4];
-								$(save_button).on("click", function(event)
-								{
-									event.preventDefault();
-									form129_update_item(fields);
-								});
+							{							
+								var save_button=form.elements[4];
+								$(save_button).show();
 							}
-							$(fields).parent().on('click',function(event)
+						});
+						
+						var rowsHTML="<div class='customers_content_item'>" +
+								"<form id='form129_"+staff.id+"'>" +
+								"Name: <textarea style='height:40px;width:100px' readonly='readonly'>"+staff.acc_name+"</textarea></br>" +
+								"Latitude: <textarea style='height:20px;width:100px' readonly='readonly'>"+staff.lat+"</textarea></br>" +
+								"Longitude: <textarea style='height:20px;width:100px' readonly='readonly'>"+staff.lng+"</textarea></br>" +
+								"<input type='hidden' value='"+staff.id+"'>" +
+								"<input type='button' class='export_icon' value='Confirm' form='form129_"+staff.id+"'>" +
+								"</form>" +
+								"</div>";
+						
+						$('#form129_header').append(rowsHTML);
+						var fields=document.getElementById("form129_"+staff.id);
+						if(update)
+						{
+							var save_button=fields.elements[4];
+							$(save_button).on("click", function(event)
 							{
-								marker.openPopup();
+								event.preventDefault();
+								form129_update_item(fields);
 							});
 						}
-					});
-					
-					var scrollPane=$(".customers_pane");
-					var scrollContent=$(".customers_content");
-					scrollContent.css('width',(Math.round(225*staffs.length)+225)+"px");
-					$(".customers_bar").slider({
-						slide: function(event,ui)
+						$(fields).parent().on('click',function(event)
 						{
-							if(scrollContent.width()>scrollPane.width())
-							{
-								scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
-							}
-							else
-							{
-								scrollContent.css("margin-left",0);
-							}
+							marker.openPopup();
+						});
+					}
+				});
+				
+				var scrollPane=$(".customers_pane");
+				var scrollContent=$(".customers_content");
+				scrollContent.css('width',(Math.round(225*staffs.length)+225)+"px");
+				$(".customers_bar").slider({
+					slide: function(event,ui)
+					{
+						if(scrollContent.width()>scrollPane.width())
+						{
+							scrollContent.css( "margin-left", Math.round(ui.value/100*(scrollPane.width()-scrollContent.width()))+"px");
 						}
-					});
-			
-					scrollPane.css("overflow","hidden");			
-				},service_eng_data);
-				hide_loader();
+						else
+						{
+							scrollContent.css("margin-left",0);
+						}
+					}
+				});
+		
+				scrollPane.css("overflow","hidden");			
+			hide_loader();
 			});						
 		});			
 	}

@@ -1421,13 +1421,13 @@
 		</row>
 		<row>
 			<name>form86</name>
-			<display_name>verify_staff_addresses</display_name>
+			<display_name>staff_geo_tracking</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--staff--</tables>
+			<tables>--staff--location_history--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -3217,7 +3217,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form86</element_id>
-			<element_name>verify_staff_addresses</element_name>
+			<element_name>staff_geo_tracking</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
