@@ -5908,6 +5908,74 @@ function modal110_action(button)
 		$("#modal110").dialog("close");
 	});
 
-	$("#modal110").dialog("open");
-	
+	$("#modal110").dialog("open");	
+}
+
+/**
+ * @modalNo 111
+ * @modal Log Location
+ * @param button
+ */
+function modal111_action()
+{
+	if (navigator && navigator.geolocation)
+	{
+		show_loader();		
+		navigator.geolocation.getCurrentPosition(function(position)
+		{
+			var form=document.getElementById('modal111_form');
+			var flocation=form.elements[1];
+			var fname=form.elements[2];
+			var ftime=form.elements[3];
+			var flat=form.elements[4];
+			var flng=form.elements[5];
+			
+			ftime.value=get_my_datetime();
+			fname.value=get_account_name();
+			flat.value=position.coords.latitude;
+			flng.value=position.coords.longitude;
+							
+			$(form).off("submit");
+			$(form).on("submit",function(event)
+			{
+				event.preventDefault();
+				
+				var data_id=get_new_key();
+				var last_updated=get_my_time();
+				var data_xml="<location_history>" +
+							"<id>"+data_id+"</id>" +
+							"<acc_name>"+fname.value+"</acc_name>" +
+							"<lat>"+flat.value+"</lat>" +
+							"<lng>"+flng.value+"</lng>" +
+							"<location>"+flocation.value+"</location>" +
+							"<log_time>"+get_raw_time(ftime.value)+"</log_time>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</location_history>";	
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>location_history</tablename>" +
+							"<link_to>form86</link_to>" +
+							"<title>Logged</title>" +
+							"<notes>Location for user "+fname.value+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				if(is_online())
+				{
+					server_create_row(data_xml,activity_xml);
+				}
+				else
+				{
+					local_create_row(data_xml,activity_xml);
+				}	
+				
+				$("#modal111").dialog("close");
+			});
+			hide_loader();
+			$("#modal111").dialog("open");
+		},function()
+		{
+			console.log('error in getting geo-location');
+			hide_loader();
+		});
+	}
 }

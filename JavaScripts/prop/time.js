@@ -89,21 +89,44 @@ function get_my_time()
 	return seconds;
 }
 
-function get_my_date()
+function get_my_date(raw_time)
 {
-	var d= new Date();
-	var year = d.getFullYear();
-	var month =d.getMonth()+1;
-	if (month < 10) {
-	    month = "0" + month;
+	if(!raw_time)
+	{
+		var d=new Date();
+		var year = d.getFullYear();
+		var month =d.getMonth()+1;
+		if (month < 10) {
+		    month = "0" + month;
+		}
+		var date = d.getDate();
+		if (date < 10) {
+		    date = "0" + date;
+		}
+	
+		var time=date+"/"+month+"/"+year;
+		return time;
 	}
-	var date = d.getDate();
-	if (date < 10) {
-	    date = "0" + date;
+	else if(raw_time=='')
+	{
+		return "";
 	}
-
-	var time=date+"/"+month+"/"+year;
-	return time;
+	else
+	{
+		var d= new Date(parseFloat(raw_time));
+		var year = d.getFullYear();
+		var month =d.getMonth()+1;
+		if (month < 10) {
+		    month = "0" + month;
+		}
+		var date = d.getDate();
+		if (date < 10) {
+		    date = "0" + date;
+		}
+	
+		var time=date+"/"+month+"/"+year;
+		return time;
+	}
 }
 
 function get_my_past_date(raw_time)
@@ -132,7 +155,30 @@ function get_my_past_date(raw_time)
 
 function get_my_datetime(raw_time)
 {
-	if(raw_time=='')
+	if(!raw_time)
+	{
+		var d=new Date();
+		var year = d.getFullYear();
+		var month =d.getMonth()+1;
+		if (month < 10) {
+		    month = "0" + month;
+		}
+		var date = d.getDate();
+		if (date < 10) {
+		    date = "0" + date;
+		}
+		var hour=d.getHours();
+		if (hour < 10) {
+		    hour = "0" + hour;
+		}
+		var minutes=d.getMinutes();
+		if (minutes < 10) {
+		    minutes = "0" + minutes;
+		}	
+		var time=date+"/"+month+"/"+year+" "+hour+":"+minutes;
+		return time;
+	}
+	else if(raw_time=="")	
 	{
 		return "";
 	}

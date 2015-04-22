@@ -202,10 +202,10 @@ templates/service_bill/default_service_sale_bill.css
 
 NETWROK:
 *
-http://otile1.mqcdn.com/tiles/1.0.0/osm/
-http://otile2.mqcdn.com/tiles/1.0.0/osm/
-http://otile3.mqcdn.com/tiles/1.0.0/osm/
-http://otile4.mqcdn.com/tiles/1.0.0/osm/
+http://otile1.mqcdn.com/tiles/1.0.0/osm/*
+http://otile2.mqcdn.com/tiles/1.0.0/osm/*
+http://otile3.mqcdn.com/tiles/1.0.0/osm/*
+http://otile4.mqcdn.com/*
 #
 #optional section specifying fallback pages if a resource is inaccessible. 
 #FALLBACK:

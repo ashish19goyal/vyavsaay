@@ -434,3 +434,109 @@ function form130_print_form()
 {
 	print_tabular_form('form130','Job Order');
 }
+
+/**
+ * @form Service Request - budgeting
+ */
+function form151_print_form()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bill_message=document.createElement('div');
+	var signature=document.createElement('div');
+	var footer=document.createElement('div');
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	signature.innerHTML="<div style='float:right;text-align:left;display:block;width:30%;font-size:"+font_size+"em'><b>Signature: </b></div>";
+	bill_message.innerHTML="<div style='float:left;text-align:left;display:block;width:60%;font-size:"+font_size+"em'><textarea style='border:none;width:100%;height:100px;'>"+get_session_var('bill_message')+"</textarea></div>";
+	title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.2em;margin:2px;'><b>Service Request Bill</b></div>";
+	
+	business_title.innerHTML="<div style='display:block;font-size:1.5em;float:left;'><b>"+bt+"</b><br>" +
+							"<div style='font-size:"+font_size+"em;padding:5px'>VAT #: "+get_session_var('vat')+"<br>" +
+							"TIN #: "+get_session_var('tin')+"</div></div>"+
+							"<div style='display:block;float:right;'><div>Contact No: "+get_session_var('phone') +
+							"<br>Address: "+get_session_var('address')+"</div></div>";
+	business_title.setAttribute('style',"height:80px;padding:1%;border:2px solid black;border-bottom:none;font-size:"+font_size+"em");
+	
+	var form_master="form151_master";
+	var header_element=document.getElementById(form_master);
+	$(header_element).find("textarea").each(function(index)
+	{
+		$(this).attr('value',$(this).val());
+	});	
+
+	var header_copy=header_element.cloneNode(true);
+	$(header_copy).find("a").remove();
+	$(header_copy).find("input[type=hidden],input[type=button],input[type=submit],img").remove();
+	$(header_copy).find("input").each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+	$(header_copy).find("textarea").each(function(index)
+	{
+		$(this).replaceWith($(this).attr('value'));
+	});
+	
+	var table_task_element=document.getElementById('form151_task_body').parentNode;
+	var table_item_element=document.getElementById('form151_item_body').parentNode;
+	var table_expense_element=document.getElementById('form151_expense_body').parentNode;
+	table_task_copy=table_task_element.cloneNode(true);
+	table_item_copy=table_item_element.cloneNode(true);
+	table_expense_copy=table_expense_element.cloneNode(true);
+	
+	table_task_copy.removeAttribute('class');
+	table_item_copy.removeAttribute('class');
+	table_expense_copy.removeAttribute('class');
+	
+	$(table_task_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,v1").remove();
+	$(table_item_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,v1").remove();
+	$(table_expense_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,v1").remove();
+	
+	$(table_task_copy).find('input,textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+	$(table_item_copy).find('input,textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+	$(table_expense_copy).find('input,textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+	
+	$(table_task_copy).find('label').each(function(index)
+	{
+		$(this).replaceWith($(this).html());
+	});
+	$(table_item_copy).find('label').each(function(index)
+	{
+		$(this).replaceWith($(this).html());
+	});
+	$(table_expense_copy).find('label').each(function(index)
+	{
+		$(this).replaceWith($(this).html());
+	});
+	
+	$(table_task_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	$(table_item_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	$(table_expense_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	header_copy.setAttribute('style',"padding:1%;font-size:"+font_size+"em;border:2px solid black;");
+
+	var line_break1=document.createElement('br');
+	var line_break2=document.createElement('br');
+		
+	container.appendChild(title);
+	container.appendChild(business_title);
+	container.appendChild(header_copy);
+	container.appendChild(table_task_copy);
+	container.appendChild(line_break1);	
+	container.appendChild(table_item_copy);
+	container.appendChild(line_break2);
+	container.appendChild(table_expense_copy);
+	footer.appendChild(bill_message);
+	footer.appendChild(signature);
+	container.appendChild(footer);
+	$.print(container);
+}

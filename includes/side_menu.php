@@ -21,14 +21,13 @@
 		<img title='Working online, click to switch to offline' src='./images/online.png' class='icon' onclick='switch_to_offline();'>
 	</div>
 
-	<div id='feedback_icon' class='menu_icon'>
-		<img title='Feedback' src='./images/feedback.png' class="icon" onclick='modal15_action();'>
+	<div id='location_icon' class='menu_icon'>
+		<img title='Log location' src='./images/location.png' class="icon" onclick='modal111_action();'>
 	</div>
 	
 	<div id='settings_icon' class='menu_icon'>
 		<img title='Settings' src='./images/settings.png' class="icon" onclick='show_settings();'>
-	</div>
-	
+	</div>	
 	
 	<div id='logout_icon' class='menu_icon'>
 			<img title='Logout' src='./images/logout.png' class="icon" onclick='delete_session();'>

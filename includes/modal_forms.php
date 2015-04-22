@@ -746,4 +746,17 @@
 		</form>
 	</div>
 	
+	<div id="modal111" title="Log location">
+		<form id='modal111_form'>
+			<fieldset>
+				<label>Location: <textarea></textarea></label><br>
+				<label>Name: <textarea readonly='readonly'></textarea></label><br>
+				<label>Time: <input type="text" readonly='readonly'></label><br>
+				<label>Latitude: <input type="text" readonly='readonly'></label><br>
+				<label>Longitude: <input type="text" readonly='readonly'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

@@ -2563,7 +2563,7 @@ function form41_ini()
 				zoom: 10
 			});
 			
-			var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+			//var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 			var mqUrl='http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png';
 			L.tileLayer(mqUrl, 
 				{
