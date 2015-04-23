@@ -5918,7 +5918,7 @@ function modal110_action(button)
  */
 function modal111_action()
 {
-	if (navigator && navigator.geolocation)
+	if(navigator && navigator.geolocation)
 	{
 		show_loader();		
 		navigator.geolocation.getCurrentPosition(function(position)
@@ -5974,6 +5974,7 @@ function modal111_action()
 			$("#modal111").dialog("open");
 		},function()
 		{
+			$("#modal56").dialog("open");
 			console.log('error in getting geo-location');
 			hide_loader();
 		});

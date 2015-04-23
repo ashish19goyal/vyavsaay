@@ -1078,7 +1078,8 @@ canvas{
 	}
 	.icon{
 		border-radius: 2px;
-		width: 100%;
+		/*width: 100%;*/
+		height: 60px;
 	}
 	#content_box{
 		width: auto;

@@ -623,6 +623,10 @@
 	<div id="modal55" title="Server Db backup">
 	</div>
 
+	<div id="modal56" title="Location not available">
+		oops! your location can't be determined at the moment. Please try in a few moments.
+	</div>
+
 	<div id="modal101" title="Update details">
 		<form id='modal101_form'>
 			<fieldset>
