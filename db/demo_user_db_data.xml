@@ -753,7 +753,7 @@
 		</row>
 		<row>
 			<name>report57</name>
-			<display_name>warranty_status</display_name>
+			<display_name>subscription_status</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
@@ -2546,7 +2546,7 @@
 		<row>
 			<username>master</username>
 			<element_id>report57</element_id>
-			<element_name>warranty_status</element_name>
+			<element_name>subscription_status</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

@@ -223,7 +223,7 @@
 			<fieldset>
 				<label>Name: <input type="text" required></label><br>
 				<label>Description: <textarea></textarea></label><br>
-				<label>Tax (%): <input type="number"></label><br>
+				<label>Tax (%): <input type="number" step='any'></label><br>
 				<label>Price: <input type="number"></label><br>
 				<label id='modal20_attributes'></label><br>
 				<input type="submit" value='Save' class='modal_submit'>

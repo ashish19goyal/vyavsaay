@@ -3,7 +3,7 @@
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Customer<input type='text'></label>
-			<label>Warranty<input type='text'></label>
+			<label>Subscription<input type='text'></label>
 			<label>
 				<input type='submit' value='Refresh' class='generic_icon'>
 				<input type='button' title='Print' class='print_icon'>

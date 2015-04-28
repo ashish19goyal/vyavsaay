@@ -223,7 +223,7 @@
   	"create_service_request":"Create Service Request",
   	"check_tasks":"Tasks",
   	"service_requests_report":"Service Requests report",
-  	"warranty_status":"Warranty Status",
+  	"subscription_status":"Subscription Status",
   	"service_documents":"Service Documents",
   	"ledger":"Ledger",
   	"project_dashboard":"Project details",

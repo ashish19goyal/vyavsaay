@@ -5114,8 +5114,6 @@ function form84_bills()
 							
 								});
 							}
-
-							
 							break;
 						}
 						else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=item_amount)
@@ -5213,95 +5211,127 @@ function form84_bills()
 					item_tax=parseFloat((parseFloat(services[0].tax)*(item_amount-parseFloat(item_discount)))/100);
 					item_total=parseFloat(item_amount)+parseFloat(item_tax)-parseFloat(item_discount);
 					
-					/////saving to bill item
-					var bill_item_id=get_new_key();
-	                var data_xml="<bill_items>" +
-								"<id>"+bill_item_id+"</id>" +
-								"<item_name>"+subscription.service+"</item_name>" +
-								"<batch></batch>" +
-								"<unit_price>"+services[0].price+"</unit_price>" +
-								"<quantity>1</quantity>" +
-								"<amount>"+item_amount+"</amount>" +
-								"<total>"+item_total+"</total>" +
-								"<discount>"+item_discount+"</discount>" +
-								"<offer>"+item_offer+"</offer>" +
-								"<type>bought</type>" +
-								"<tax>"+item_tax+"</tax>" +
-								"<bill_id>"+order_id+"</bill_id>" +
-								"<free_with></free_with>" +
-								"<last_updated>"+get_my_time()+"</last_updated>" +
-								"</bill_items>";	
-	                var bill_xml="<bills>" +
-								"<id>"+order_id+"</id>" +
-								"<customer_name>"+subscription.customer+"</customer_name>" +
-								"<bill_date>"+get_my_time()+"</bill_date>" +
-								"<amount>"+item_amount+"</amount>" +
-								"<total>"+item_total+"</total>" +
-								"<type>service</type>" +
-								"<offer></offer>" +
-								"<discount>"+item_discount+"</discount>" +
-								"<tax>"+item_tax+"</tax>" +
-								"<transaction_id>"+order_id+"</transaction_id>" +
-								"<last_updated>"+get_my_time()+"</last_updated>" +
-								"</bills>";
-					var activity_xml="<activity>" +
-								"<data_id>"+order_id+"</data_id>" +
-								"<tablename>bills</tablename>" +
-								"<link_to>form42</link_to>" +
-								"<title>Saved</title>" +
-								"<notes>Bill no "+order_id+"</notes>" +
-								"<updated_by>"+get_name()+"</updated_by>" +
-								"</activity>";
-					var transaction_xml="<transactions>" +
-								"<id>"+order_id+"</id>" +
-								"<trans_date>"+get_my_time()+"</trans_date>" +
-								"<amount>"+item_total+"</amount>" +
-								"<receiver>"+subscription.customer+"</receiver>" +
-								"<giver>master</giver>" +
-								"<tax>"+item_tax+"</tax>" +
-								"<last_updated>"+get_my_time()+"</last_updated>" +
-								"</transactions>";
-					var pt_tran_id=get_new_key();
-					var payment_xml="<payments>" +
-								"<id>"+pt_tran_id+"</id>" +
-								"<status>pending</status>" +
-								"<type>received</type>" +
-								"<date>"+get_my_time()+"</date>" +
-								"<total_amount>"+item_total+"</total_amount>" +
-								"<paid_amount>0</paid_amount>" +
-								"<acc_name>"+subscription.customer+"</acc_name>" +
-								"<due_date>"+get_credit_period()+"</due_date>" +
-								"<mode>"+get_payment_mode()+"</mode>" +
-								"<transaction_id>"+pt_tran_id+"</transaction_id>" +
-								"<bill_id>"+order_id+"</bill_id>" +
-								"<last_updated>"+get_my_time()+"</last_updated>" +
-								"</payments>";
-					var pt_xml="<transactions>" +
-								"<id>"+pt_tran_id+"</id>" +
-								"<trans_date>"+get_my_time()+"</trans_date>" +
-								"<amount>"+item_total+"</amount>" +
-								"<receiver>master</receiver>" +
-								"<giver>"+subscription.customer+"</giver>" +
-								"<tax>0</tax>" +
-								"<last_updated>"+get_my_time()+"</last_updated>" +
-								"</transactions>";
-					if(is_online())
+					var bill_num_data="<user_preferences count='1'>"+
+							"<value></value>"+
+							"<name exact='yes'>bill_num</name>"+
+							"</user_preferences>";
+					get_single_column_data(function(bill_nums)
 					{
-						server_create_simple(data_xml);
-						server_create_row(bill_xml,activity_xml);
-						server_create_simple(transaction_xml);
-						server_create_simple(pt_xml);
-						server_create_simple(payment_xml);
-					}
-					else
-					{
-						local_create_simple(data_xml);
-						local_create_row(bill_xml,activity_xml);
-						local_create_simple(transaction_xml);
-						local_create_simple(pt_xml);
-						local_create_simple(payment_xml);
-					}
+						var bill_num=bill_nums[0];
+						/////saving to bill item
+						var bill_item_id=get_new_key();
+		                var data_xml="<bill_items>" +
+									"<id>"+bill_item_id+"</id>" +
+									"<item_name>"+subscription.service+"</item_name>" +
+									"<batch></batch>" +
+									"<unit_price>"+services[0].price+"</unit_price>" +
+									"<quantity>1</quantity>" +
+									"<amount>"+item_amount+"</amount>" +
+									"<total>"+item_total+"</total>" +
+									"<discount>"+item_discount+"</discount>" +
+									"<offer>"+item_offer+"</offer>" +
+									"<type>bought</type>" +
+									"<tax>"+item_tax+"</tax>" +
+									"<bill_id>"+order_id+"</bill_id>" +
+									"<free_with></free_with>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</bill_items>";	
+		                var bill_xml="<bills>" +
+									"<id>"+order_id+"</id>" +
+									"<bill_num>"+bill_num+"</bill_num>"+								
+									"<customer_name>"+subscription.customer+"</customer_name>" +
+									"<bill_date>"+get_my_time()+"</bill_date>" +
+									"<amount>"+item_amount+"</amount>" +
+									"<total>"+item_total+"</total>" +
+									"<type>service</type>" +
+									"<offer></offer>" +
+									"<discount>"+item_discount+"</discount>" +
+									"<tax>"+item_tax+"</tax>" +
+									"<transaction_id>"+order_id+"</transaction_id>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</bills>";
+						var activity_xml="<activity>" +
+									"<data_id>"+order_id+"</data_id>" +
+									"<tablename>bills</tablename>" +
+									"<link_to>form42</link_to>" +
+									"<title>Saved</title>" +
+									"<notes>Bill no "+order_id+"</notes>" +
+									"<updated_by>"+get_name()+"</updated_by>" +
+									"</activity>";
+						var transaction_xml="<transactions>" +
+									"<id>"+order_id+"</id>" +
+									"<trans_date>"+get_my_time()+"</trans_date>" +
+									"<amount>"+item_total+"</amount>" +
+									"<receiver>"+subscription.customer+"</receiver>" +
+									"<giver>master</giver>" +
+									"<tax>"+item_tax+"</tax>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</transactions>";
+						var pt_tran_id=get_new_key();
+						var payment_xml="<payments>" +
+									"<id>"+pt_tran_id+"</id>" +
+									"<status>pending</status>" +
+									"<type>received</type>" +
+									"<date>"+get_my_time()+"</date>" +
+									"<total_amount>"+item_total+"</total_amount>" +
+									"<paid_amount>0</paid_amount>" +
+									"<acc_name>"+subscription.customer+"</acc_name>" +
+									"<due_date>"+get_credit_period()+"</due_date>" +
+									"<mode>"+get_payment_mode()+"</mode>" +
+									"<transaction_id>"+pt_tran_id+"</transaction_id>" +
+									"<bill_id>"+order_id+"</bill_id>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</payments>";
+						var pt_xml="<transactions>" +
+									"<id>"+pt_tran_id+"</id>" +
+									"<trans_date>"+get_my_time()+"</trans_date>" +
+									"<amount>"+item_total+"</amount>" +
+									"<receiver>master</receiver>" +
+									"<giver>"+subscription.customer+"</giver>" +
+									"<tax>0</tax>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</transactions>";
+						if(is_online())
+						{
+							server_create_simple(data_xml);
+							server_create_row(bill_xml,activity_xml);
+							server_create_simple(transaction_xml);
+							server_create_simple(pt_xml);
+							server_create_simple(payment_xml);
+						}
+						else
+						{
+							local_create_simple(data_xml);
+							local_create_row(bill_xml,activity_xml);
+							local_create_simple(transaction_xml);
+							local_create_simple(pt_xml);
+							local_create_simple(payment_xml);
+						}
 					
+						var num_data="<user_preferences>"+
+							"<id></id>"+						
+							"<name exact='yes'>bill_num</name>"+												
+							"</user_preferences>";
+						get_single_column_data(function (bill_num_ids)
+						{
+							if(bill_num_ids.length>0)
+							{
+								var num_xml="<user_preferences>"+
+												"<id>"+bill_num_ids[0]+"</id>"+
+												"<value>"+(parseInt(bill_num)+1)+"</value>"+
+												"</user_preferences>";
+								if(is_online())
+								{
+									server_update_simple(num_xml);
+								}
+								else 
+								{
+									local_update_simple(num_xml);
+								}
+							}
+						},num_data);
+						
+					},bill_num_data);	
 					////adding pre-requisite tasks
 					
 					var pre_requisite_data="<pre_requisites>" +
@@ -5367,13 +5397,15 @@ function form84_bills()
 							var year=date.getFullYear();
 							var next_due_date="";
 							var period_value=parseInt(periods[0].value.substring(0,2));
-							if(periods[0].value.search('month'))
+							console.log(periods[0].value);							
+							console.log(periods[0].value.search('month'));							
+							if(periods[0].value.search('month')!=-1)
 							{
 								month+=period_value;
 								year+=parseInt(month/12);
 								month=parseInt(month%12);
 							}
-							else if(periods[0].value.search('day'))
+							else if(periods[0].value.search('day')!=-1)
 							{
 								day+=period_value;
 								month+=parseInt(day/30);
@@ -5382,7 +5414,7 @@ function form84_bills()
 								month=parseInt(month%12);
 								
 							}
-							else if(periods[0].value.search('year'))
+							else if(periods[0].value.search('year')!=-1)
 							{
 								year+=period_value;
 							}
@@ -9797,6 +9829,104 @@ function form130_create_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * formNo 134
+ * form Service dashboard - Add issue
+ * @param button
+ */
+function form134_add_issue(button,problem_type,problem_detail,solution)
+{
+	if(is_create_access('form126'))
+	{
+		var issue_xml="<issues>"+
+					"<id></id>"+
+					"<detail>"+problem_detail+"</detail>"+
+					"</issues>";
+		get_single_column_data(function(problems)
+		{
+			var last_updated=get_my_time();
+			var data_id=get_new_key();
+					
+			if(problems.length==0)
+			{		
+				var data_xml="<issues>" +
+							"<id>"+data_id+"</id>" +
+							"<short_desc>"+problem_type+"</short_desc>"+
+							"<detail>"+problem_detail+"</detail>"+					
+							"<status>active</status>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</issues>";	
+				var solution_xml="<solutions>" +
+							"<id>"+data_id+"</id>" +
+							"<issue_id>"+data_id+"</issue_id>"+
+							"<detail>"+solution+"</detail>"+					
+							"<status>active</status>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</solutions>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>issues</tablename>" +
+							"<link_to>form126</link_to>" +
+							"<title>Added</title>" +
+							"<notes>Issue to repository</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				if(is_online())
+				{
+					server_create_row(data_xml,activity_xml);
+					if(solution!="")					
+						server_create_simple(solution_xml);
+				}
+				else
+				{
+					local_create_row(data_xml,activity_xml);
+					if(solution!="")					
+						local_create_simple(solution_xml);
+				}
+			}
+			else if(solution!="")
+			{
+				var issue_id=problems[0];
+				var solution_xml="<solutions>"+
+							"<id></id>"+
+							"<issue_id exact='yes'>"+issue_id+"</issue_id>"+
+							"<detail exact='yes'>"+solution+"</detail>"+
+							"</solutions>";
+				get_single_column_data(function(solutions)
+				{
+					if(solutions.length==0)
+					{
+						var solution_xml="<solutions>" +
+						"<id>"+get_new_key()+"</id>" +
+						"<issue_id>"+issue_id+"</issue_id>"+
+						"<detail>"+solution+"</detail>"+					
+						"<status>active</status>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</solutions>";
+						
+						if(is_online())
+						{
+							server_create_simple(solution_xml);
+						}
+						else
+						{
+							local_create_simple(solution_xml);
+						}
+					}
+				},solution_xml);
+			}				
+		},issue_xml);
+
+		$(button).attr("onclick",'');
+		$(button).attr('value','Added to Repo');	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+};
+
 
 /**
  * formNo 134

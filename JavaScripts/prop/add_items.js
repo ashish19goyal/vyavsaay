@@ -7613,7 +7613,7 @@ function form151_add_item()
 				rowsHTML+="<br>Actual Rs. <input type='number' form='form151_item_"+id+"' min='0'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' form='form151_item_"+id+"' required value='requested'>";
+				rowsHTML+="<input type='text' form='form151_item_"+id+"' readonly='readonly' value='requested'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form151_item_"+id+"' value='"+id+"'>";
@@ -7677,7 +7677,7 @@ function form151_add_item()
 			amount_filter.value=my_round(parseFloat(price_filter.value)*parseFloat(quantity_filter.value),2);
 		});
 							
-		set_static_value_list('service_request_items','status',status_filter);
+		//set_static_value_list('service_request_items','status',status_filter);
 	}
 	else
 	{

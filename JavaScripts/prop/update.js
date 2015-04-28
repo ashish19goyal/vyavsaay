@@ -7975,3 +7975,44 @@ function form151_update_expense(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Service Request Billing - Task
+ * @formNo 151
+ * @param button
+ */
+function form151_approve_item(button)
+{
+	if(is_update_access('form151'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var status=form.elements[4].value;				
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var new_status='used';		
+		if(status=='requested')
+			new_status='approved';
+		form.elements[4].value=new_status;
+					
+		var data_xml="<service_request_items>" +
+					"<id>"+data_id+"</id>" +
+					"<status>"+new_status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</service_request_items>";	
+
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

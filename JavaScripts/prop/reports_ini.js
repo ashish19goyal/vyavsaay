@@ -3840,23 +3840,23 @@ function report56_ini()
 
 /**
  * @reportNo 57
- * @report Warranty Status
+ * @report Subscription Status
  */
 function report57_ini()
 {
 	var form=document.getElementById('report57_header');
 	var customer=form.elements[1].value;
-	var status=form.elements[2].value;
+	var subscription=form.elements[2].value;
 	
 	show_loader();
 	$('#report57_body').html('');
 	
-	var warranty_data="<warranty>" +
+	var warranty_data="<service_subscriptions>" +
 			"<id></id>"+
 			"<customer>"+customer+"</customer>" +
-			"<status>"+status+"</status>" +
-			"<end_time></end_time>"+
-			"</warranty>";
+			"<service>"+subscription+"</service>" +
+			"<next_due_date></next_due_date>"+
+			"</service_subscriptions>";
 	
 	fetch_requested_data('report57',warranty_data,function(warranties)
 	{
@@ -3867,10 +3867,10 @@ function report57_ini()
 				rowsHTML+=warranties[i].customer;
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+=warranties[i].status;
+				rowsHTML+=warranties[i].service;
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='End Date'>";
-				rowsHTML+=get_my_past_date(warranties[i].end_time);
+				rowsHTML+=get_my_past_date(warranties[i].next_due_date);
 			rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 					
@@ -3880,7 +3880,7 @@ function report57_ini()
 	});
 	
 	var print_button=form.elements[4];
-	print_tabular_report('report57','Warranty Report',print_button);
+	print_tabular_report('report57','Subscription Report',print_button);
 };
 
 /**

@@ -13,10 +13,10 @@
 			<tr>
 				<form id='form134_detail_header'></form>
 					<th>Reported By</th>
-					<th>Reported Time</th>
 					<th>Problem Type</th>
 					<th>Problem </th>
 					<th>Closing Notes </th>
+					<th></th>
 			</tr>
 		</thead>
 		<tbody id='form134_detail_body'>

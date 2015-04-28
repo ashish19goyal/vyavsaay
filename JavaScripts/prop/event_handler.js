@@ -203,12 +203,18 @@ function show_function(function_id)
 
 function modal_forms_ini()
 {
+	var width=300;
+	if($(document).width<=550)
+	{
+		width=400;
+	}
+	
 	for(var i=1;i<8;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
 	   		modal: true,
-	   		width: 400,
+	   		width: width,
 	   		show: "slide",
 	   		closeOnEscape: true,
 	       	buttons:{ OK:function(){$(this).dialog("close");}}
@@ -224,7 +230,7 @@ function modal_forms_ini()
 		var j=i;
 		$("#modal"+i).dialog({
 	   		autoOpen: false,
-	   		width: 400,
+	   		width: width,
 	   		modal: true,
 	   		show: "slide",
 	   		closeOnEscape: true,
@@ -240,7 +246,7 @@ function modal_forms_ini()
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
 	   		modal: true,
-	   		width: 400,
+	   		width: width,
 	   		show: "slide",
 	   		closeOnEscape: true,
 	       	buttons:{ OK:function(){$(this).dialog("close");}}
@@ -256,7 +262,7 @@ function modal_forms_ini()
 		var j=i;
 		$("#modal"+i).dialog({
 	   		autoOpen: false,
-	   		width: 400,
+	   		width: width,
 	   		modal: true,
 	   		show: "slide",
 	   		closeOnEscape: true,
@@ -267,7 +273,6 @@ function modal_forms_ini()
 	   		}
 		});
 	}
-
 }
 
 function print_setup()

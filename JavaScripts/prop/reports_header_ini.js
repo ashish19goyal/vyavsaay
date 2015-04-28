@@ -1081,13 +1081,13 @@ function report56_header_ini()
 
 /**
  * @reportNo 57
- * @report Warranty Status
+ * @report Subscription Status
  */
 function report57_header_ini()
 {	
 	var form=document.getElementById('report57_header');
 	var customer_filter=form.elements[1];
-	var warranty_filter=form.elements[2];
+	var subscription_filter=form.elements[2];
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -1099,9 +1099,12 @@ function report57_header_ini()
 	var customer_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
+	set_my_filter(customer_data,customer_filter);
 	
-	set_my_filter(customer_data,customer_filter);	
-	set_static_filter('warranty','status',warranty_filter);
+	var sub_data="<service_subscriptions>"+
+				"<service></service>"+
+				"</service_subscriptions>";	
+	set_my_filter(sub_data,subscription_filter);
 }
 
 /**

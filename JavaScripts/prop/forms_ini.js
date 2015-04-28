@@ -4373,7 +4373,7 @@ function form61_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form61_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Attribute'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form61_"+result.id+"' value='"+result.attribute+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form61_"+result.id+"'>"+result.attribute+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Value'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form61_"+result.id+"' value='"+result.value+"'>";
@@ -6857,7 +6857,7 @@ function form84_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form84_"+result.id+"'>"+result.customer+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Service'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form84_"+result.id+"' value='"+result.service+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form84_"+result.id+"'>"+result.service+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form84_"+result.id+"' value='"+result.status+"'>";
@@ -7852,7 +7852,7 @@ function form92_ini()
 			"<customer_name>"+fname+"</customer_name>" +
 			"<bill_date></bill_date>" +
 			"<total></total>" +
-			"<type></type>" +
+			"<type exact='yes'>product</type>" +
 			"<transaction_id></transaction_id>" +
 			"<billing_type>"+ftype+"</billing_type>" +
 			"<last_updated></last_updated>" +
@@ -12303,7 +12303,7 @@ function form134_ini()
 	$('#form134_document_body').html("");
 	$('#form134_task_body').html("");
 	
-	if(request_id!="")
+	if(request_id!="" && request_id!="undefined")
 	{
 		show_loader();
 		var request_columns="<service_requests>" +
@@ -12329,9 +12329,7 @@ function form134_ini()
 				var id=request_results.id;
 				var rowsHTML="<tr>";
 					rowsHTML+="<td data-th='Reported By'>";
-						rowsHTML+=request_results[0].reported_by;
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Reported Time'>";
+						rowsHTML+=request_results[0].reported_by+"<br>At: ";
 						rowsHTML+=get_my_datetime(request_results[0].reported_time);
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Problem Type'>";
@@ -12342,7 +12340,10 @@ function form134_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Closing Notes'>";
 						rowsHTML+=request_results[0].closing_notes;
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='button' value='Add to Repo' class='generic_icon' onclick=\"form134_add_issue($(this),'"+request_results[0].problem_type+"','"+request_results[0].notes+"','"+request_results[0].closing_notes+"')\">";
+					rowsHTML+="</td>";								
 				rowsHTML+="</tr>";
 			
 				$('#form134_detail_body').append(rowsHTML);				
@@ -14750,10 +14751,15 @@ function form151_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form151_item_"+id+"' value='"+id+"'>";
-							rowsHTML+="<input type='button' class='delete_icon' form='form151_item_"+id+"' id='delete_form151_item_"+id+"' onclick='form151_delete_item($(this));'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form151_item_"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form151_item_"+id+"' id='delete_form151_item_"+id+"' onclick='form151_delete_item($(this));'>";
+						if(result.status=='requested')							
+							rowsHTML+="<br><input type='button' class='generic_icon' value='Approve' form='form151_item_"+id+"' id='approve_form151_item_"+id+"' onclick=\"form151_approve_item($(this));\">";
+						if(result.status=='approved')
+							rowsHTML+="<br><input type='button' class='generic_icon' value='Use' form='form151_item_"+id+"' id='approve_form151_item_"+id+"' onclick=\"form151_approve_item($(this));\">";
 						rowsHTML+="</td>";			
-					rowsHTML+="</tr>";				
+					rowsHTML+="</tr>";
+
 					$('#form151_item_body').append(rowsHTML);
 					est_amount+=parseFloat(result.est_amount);
 					amount+=parseFloat(result.amount);

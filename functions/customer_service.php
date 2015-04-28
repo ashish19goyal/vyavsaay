@@ -10,7 +10,7 @@
 			<li><a id='form126_link' href='#form126' onclick='form126_header_ini(); form126_ini();' data-i18n='form.issues_list'></a></li>
 			<li><a id='form133_link' href='#form133' onclick='form133_header_ini(); form133_ini();' data-i18n='form.service_documents'></a></li>
 			<li><a id='report56_link' href='#report56' onclick='report56_header_ini();' data-i18n='form.report'></a></li>
-			<li><a id='report57_link' href='#report57' onclick='report57_header_ini();' data-i18n='form.warranty_status'></a></li>
+			<li><a id='report57_link' href='#report57' onclick='report57_header_ini();' data-i18n='form.subscription_status'></a></li>
 		</ul>
 
 	<?php 

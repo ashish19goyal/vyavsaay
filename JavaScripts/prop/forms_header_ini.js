@@ -4677,7 +4677,8 @@ function form134_header_ini()
 	    }
 	});
 	
-	id_filter.value=request_id;
+	if(request_id!='undefined')
+		id_filter.value=request_id;
 	customer_filter.value='';
 	status_filter.value='';
 	set_static_value_list('service_requests','status',status_filter);	
