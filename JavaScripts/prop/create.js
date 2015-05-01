@@ -725,6 +725,8 @@ function form12_create_item(form)
 		var data_id=form.elements[9].value;
 		var free_product_name=form.elements[12].value;
 		var free_product_quantity=form.elements[13].value;
+
+		var storage=get_session_var('sales_store');		
 		
 		var last_updated=get_my_time();
 		
@@ -742,6 +744,7 @@ function form12_create_item(form)
 				"<tax>"+tax+"</tax>" +
 				"<bill_id>"+bill_id+"</bill_id>" +
 				"<free_with></free_with>" +
+				"<storage>"+storage+"</storage>"+				
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</bill_items>";	
 	
@@ -820,6 +823,7 @@ function form12_create_item(form)
 									"<tax>0</tax>" +
 									"<bill_id>"+bill_id+"</bill_id>" +
 									"<free_with>"+name+"</free_with>" +
+									"<storage>"+storage+"</storage>"+				
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</bill_items>";	
 						if(is_online())
@@ -873,6 +877,7 @@ function form12_create_form()
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
 		var bill_num=form.elements[3].value;
+		var storage=get_session_var('sales_store');		
 		
 		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
@@ -1011,6 +1016,7 @@ function form12_create_form()
 											"<tax>0</tax>" +
 											"<bill_id>"+data_id+"</bill_id>" +
 											"<free_with>bill</free_with>" +
+											"<storage>"+storage+"</storage>"+				
 											"<last_updated>"+last_updated+"</last_updated>" +
 											"</bill_items>";	
 								
@@ -1267,6 +1273,8 @@ function form15_create_item(form)
 		var tax=form.elements[7].value;
 		var data_id=form.elements[8].value;
 		
+		var storage=get_session_var('sales_return_store');
+		
 		var last_updated=get_my_time();
 					
 		var data_xml="<customer_return_items>" +
@@ -1287,6 +1295,7 @@ function form15_create_item(form)
 			data_xml+="<exchange_batch>"+total_batch+"</exchange_batch>";
 		}
 		data_xml+="<tax>"+tax+"</tax>" +
+				"<storage>"+storage+"</storage>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</customer_return_items>";	
 	
@@ -1356,7 +1365,6 @@ function form15_create_form()
 		
 		var customer=form.elements[1].value;
 		var return_date=get_raw_time(form.elements[2].value);
-		
 		var message_string="Returns Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
 		var tax=0;
