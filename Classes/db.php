@@ -20,7 +20,7 @@ class db_connect
 			$dbname=$db_name;
 		$dbuser = $this->fr->attributes["user"];
 		$dbpass = $this->fr->attributes["password"];
-		$dsn="mysql:host=$dbhost;dbname=$dbname;charset=utf8";
+		$dsn="mysql:host=".$dbhost.";dbname=".$dbname.";charset=utf8";
 		$options=array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		$this->conn = new \PDO($dsn, $dbuser, $dbpass, $options);		
 	}

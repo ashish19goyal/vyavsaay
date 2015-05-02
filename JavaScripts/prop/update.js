@@ -3270,6 +3270,7 @@ function form72_update_form()
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
 		var bill_num=form.elements[3].value;
+		var storage=get_session_var('sales_store');		
 		
 		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		var mail_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
@@ -3452,6 +3453,7 @@ function form72_update_form()
 											"<tax>0</tax>" +
 											"<bill_id>"+data_id+"</bill_id>" +
 											"<free_with>bill</free_with>" +
+											"<storage>"+storage+"</storage>"+
 											"<last_updated>"+last_updated+"</last_updated>" +
 											"</bill_items>";	
 								
@@ -3532,6 +3534,7 @@ function form72_update_form()
 									"<tax>0</tax>" +
 									"<bill_id>"+data_id+"</bill_id>" +
 									"<free_with>bill</free_with>" +
+									"<storage>"+storage+"</storage>"+
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</bill_items>";	
 						

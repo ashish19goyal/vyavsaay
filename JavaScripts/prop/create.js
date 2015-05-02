@@ -1505,7 +1505,7 @@ function form19_create_item(form)
 	if(is_create_access('form19'))
 	{
 		var return_id=document.getElementById("form19_master").elements[3].value;
-		
+		var storage=get_session_var('purchase_return_store');
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
 		var notes=form.elements[2].value;
@@ -1528,6 +1528,7 @@ function form19_create_item(form)
 				"<saleable>"+saleable+"</saleable>" +
 				"<refund_amount>"+total+"</refund_amount>" +
 				"<tax>"+tax+"</tax>" +
+				"<storage>"+storage+"</storage>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</supplier_return_items>";	
 	
@@ -1551,6 +1552,7 @@ function form19_create_item(form)
 					"<source>purchase return</source>" +
 					"<source_link>form19</source_link>" +
 					"<quantity>"+(-quantity)+"</quantity>" +
+					"<storage>"+storage+"</storage>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</discarded>";
 			if(is_online())
@@ -1731,7 +1733,6 @@ function form21_create_item(form)
 	if(is_create_access('form21'))
 	{
 		var bill_id=document.getElementById("form21_master").elements[6].value;
-		
 		var name=form.elements[0].value;
 		var pquantity=form.elements[1].value;
 		var fquantity=form.elements[2].value;
@@ -2962,7 +2963,6 @@ function form70_bill(order_id)
 {
 	if(is_create_access('form70'))
 	{
-		console.log('creating bill');
 		show_loader();
 		var bill_type='product';
 		var bill_amount=0;
@@ -2971,6 +2971,7 @@ function form70_bill(order_id)
 		var bill_discount=0;
 		var bill_tax=0;
 		var pending_items_count=0;
+		var storage=get_session_var('sales_store');		
 		///////selecting all ordered items////
 		var order_item_data="<sale_order_items>" +
 				"<id></id>" +
@@ -3111,6 +3112,7 @@ function form70_bill(order_id)
 																	"<tax>0</tax>" +
 																	"<bill_id>"+order_id+"</bill_id>" +
 																	"<free_with>"+order_item.item_name+"</free_with>" +
+																	"<storage>"+storage+"</storage>"+
 																	"<last_updated>"+get_my_time()+"</last_updated>" +
 																	"</bill_items>";	
 														
@@ -3188,6 +3190,7 @@ function form70_bill(order_id)
 																	"<tax>0</tax>" +
 																	"<bill_id>"+order_id+"</bill_id>" +
 																	"<free_with>"+order_item.item_name+"</free_with>" +
+																	"<storage>"+storage+"</storage>"+
 																	"<last_updated>"+last_updated+"</last_updated>" +
 																	"</bill_items>";	
 														
@@ -3238,6 +3241,7 @@ function form70_bill(order_id)
 											"<tax>"+item_tax+"</tax>" +
 											"<bill_id>"+order_id+"</bill_id>" +
 											"<free_with></free_with>" +
+											"<storage>"+storage+"</storage>"+
 											"<last_updated>"+get_my_time()+"</last_updated>" +
 											"</bill_items>";	
 									bill_amount+=item_amount;
@@ -3367,6 +3371,7 @@ function form70_bill(order_id)
 														"<tax>0</tax>" +
 														"<bill_id>"+order_id+"</bill_id>" +
 														"<free_with>bill</free_with>" +
+														"<storage></storage>"+
 														"<last_updated>"+last_updated+"</last_updated>" +
 														"</bill_items>";	
 											
@@ -3487,7 +3492,7 @@ function form72_create_item(form)
 	if(is_create_access('form72'))
 	{
 		var bill_id=document.getElementById("form72_master").elements[4].value;
-		
+		var storage=get_session_var('sales_store');
 		var name=form.elements[0].value;
 		var batch="";
 		var staff="";
@@ -3539,6 +3544,7 @@ function form72_create_item(form)
 						"<type>bought</type>" +
 						"<tax>"+tax+"</tax>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
+						"<storage>"+storage+"</storage>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</bill_items>";		
 				if(is_online())
@@ -3602,6 +3608,7 @@ function form72_create_item(form)
 					"<tax>"+tax+"</tax>" +
 					"<bill_id>"+bill_id+"</bill_id>" +
 					"<free_with></free_with>" +
+					"<storage>"+storage+"</storage>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bill_items>";	
 		
@@ -3665,6 +3672,7 @@ function form72_create_item(form)
 						"<tax>0</tax>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
 						"<free_with>"+name+"</free_with>" +
+						"<storage>"+storage+"</storage>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</bill_items>";
 			if(is_online())
@@ -3746,6 +3754,7 @@ function form72_create_item(form)
 									"<tax>0</tax>" +
 									"<bill_id>"+bill_id+"</bill_id>" +
 									"<free_with>"+name+"</free_with>" +
+									"<storage>"+storage+"</storage>"+
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</bill_items>";	
 						if(is_online())
@@ -3799,7 +3808,8 @@ function form72_create_form()
 		var customer=form.elements[1].value;
 		var bill_date=get_raw_time(form.elements[2].value);
 		var bill_date=form.elements[3].value;
-		
+		var storage=get_session_var('sales_store');
+
 		var message_string="Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
 		
 		var amount=0;
@@ -3940,6 +3950,7 @@ function form72_create_form()
 											"<tax>0</tax>" +
 											"<bill_id>"+data_id+"</bill_id>" +
 											"<free_with>bill</free_with>" +
+											"<storage>"+storage+"</storage>"+
 											"<last_updated>"+last_updated+"</last_updated>" +
 											"</bill_items>";	
 								
@@ -4020,6 +4031,7 @@ function form72_create_form()
 									"<tax>0</tax>" +
 									"<bill_id>"+data_id+"</bill_id>" +
 									"<free_with>bill</free_with>" +
+									"<storage>"+storage+"</storage>"+
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</bill_items>";	
 						
