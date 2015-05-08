@@ -883,3 +883,46 @@ function form149_import_template()
 	var data_array=['id','role_name','username','status'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Update Inventory (DLM)
+* @formNo 155
+*/
+function form155_import_template()
+{
+	var data_array=['id','product_name','cost_price','sale_price','manufacture_date','mrp','actual_quantity'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Store Placement (DLM)
+* @formNo 156
+*/
+function form156_import_template()
+{
+	var data_array=['id','item_name','name'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Store Movement (DLM)
+* @formNo 157
+*/
+function form157_import_template()
+{
+	var data_array=['id','item_name','quantity','source','target',
+	                'status','dispatcher','receiver'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Enter Purchase bill (DLM)
+* @formNo 158
+* @table supplier_bill_items
+*/
+function form158_import_template()
+{
+	var data_array=['id','p_quantity','f_quantity','quantity','product_name',
+	               'bill_id','unit_price','amount','tax','total','storage'];
+	my_array_to_csv(data_array);
+};

@@ -7741,3 +7741,970 @@ function form151_add_expense()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Prepare Quotation
+ * @formNo 153
+ */
+function form153_add_item()
+{
+	var filter_fields=document.getElementById('form153_master');
+	var bill_type=filter_fields.elements[2].value;
+	if(is_create_access('form153'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form153_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' required form='form153_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form153_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' min='0' required form='form153_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Unit Price'>";
+				rowsHTML+="<input type='number' required form='form153_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Total'>";
+				rowsHTML+="<input type='number' required readonly='readonly' form='form153_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form153_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form153_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form153_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form153_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form153_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form153_"+id+"' id='save_form153_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form153_"+id+"' id='delete_form153_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form153_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form153_"+id+"'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form153_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form153_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form153_"+id);
+		var name_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var price_filter=fields.elements[2];
+		var total_filter=fields.elements[3];
+		var amount_filter=fields.elements[4];
+		var discount_filter=fields.elements[5];
+		var tax_filter=fields.elements[6];
+		var offer_filter=fields.elements[7];
+		var id_filter=fields.elements[8];
+		var save_button=fields.elements[9];
+		var free_product_filter=fields.elements[11];
+		var free_product_quantity=fields.elements[12];
+		
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form153_create_item(fields);
+		});
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form153_add_item();
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		var add_product=document.getElementById('form153_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal112_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+
+		$(name_filter).on('blur',function(event)
+		{					
+			if(bill_type=='undefined')
+			{
+				var price_data="<product_instances count='1'>" +
+					"<sale_price></sale_price>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value(price_data,price_filter);
+			}
+			else
+			{
+				var price_data="<sale_prices count='1'>" +
+						"<sale_price></sale_price>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"<billing_type>"+bill_type+"</billing_type>" +
+						"</sale_prices>";
+				set_my_value(price_data,price_filter);
+			}	
+			get_inventory(name_filter.value,'',function(quantity)
+			{
+				$(quantity_filter).attr('placeholder',quantity);
+			});
+
+			quantity_filter.value="";
+			total_filter.value=0;
+			amount_filter.value=0;
+			discount_filter.value=0;
+			tax_filter.value=0;
+			offer_filter.value="";
+			free_product_filter.value="";
+			free_product_quantity.value="";
+		});
+
+
+		$(quantity_filter,price_filter).on('blur',function(event)
+		{
+			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			amount_filter.value=amount;
+			var offer_data="<offers>" +
+					"<offer_type>product</offer_type>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"<criteria_type></criteria_type>" +
+					"<criteria_amount></criteria_amount>" +
+					"<criteria_quantity></criteria_quantity>" +
+					"<result_type></result_type>" +
+					"<discount_percent></discount_percent>" +
+					"<discount_amount></discount_amount>" +
+					"<quantity_add_percent></quantity_add_percent>" +
+					"<quantity_add_amount></quantity_add_amount>" +
+					"<free_product_name></free_product_name>" +
+					"<free_product_quantity></free_product_quantity>" +
+					"<offer_detail></offer_detail>" +
+					"<status array='yes'>active--extended</status>" +
+					"</offers>";
+			fetch_requested_data('',offer_data,function(offers)
+			{
+				offers.sort(function(a,b)
+				{
+					if(a.criteria_amount<b.criteria_amount)
+					{	return 1;}
+					else if(a.criteria_quantity<b.criteria_quantity)
+					{	return 1;}
+					else 
+					{	return -1;}
+				});
+						
+				for(var i in offers)
+				{
+					offer_filter.value=offers[i].offer_detail;
+					if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=parseFloat(quantity_filter.value))
+					{
+						if(offers[i].result_type=='discount')
+						{
+							if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+							{
+								discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+							}
+							else 
+							{
+								discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
+							}
+						}
+						else if(offers[i].result_type=='quantity addition')
+						{
+							if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+							}
+							else 
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity))));
+							}
+						}
+						else if(offers[i].result_type=='product free')
+						{
+							free_product_filter.value=offers[i].free_product_name;
+							free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
+						}
+						break;
+					}
+					else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=amount)
+					{
+						if(offers[i].result_type=='discount')
+						{
+							if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+							{
+								discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+							}
+							else 
+							{
+								discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+							}
+						}
+						else if(offers[i].result_type=='quantity addition')
+						{
+							if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+							}
+							else 
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount))));
+							}
+						}
+						else if(offers[i].result_type=='product free')
+						{
+							free_product_filter.value=offers[i].free_product_name;
+							free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+						}
+						break;
+					}
+				}
+				
+				var tax_data="<product_master>" +
+						"<name exact='yes'>"+name_filter.value+"</name>" +
+						"<tax></tax>" +
+						"</product_master>";
+				fetch_requested_data('',tax_data,function(taxes)
+				{
+					taxes.forEach(function(tax)
+					{
+						tax_filter.value=parseFloat((parseFloat(tax.tax)*(amount-parseFloat(discount_filter.value)))/100);
+					});
+					
+					total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value));
+				});
+				
+			});
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Bill (DLM)
+ * @formNo 154
+ */
+function form154_add_item()
+{
+	var filter_fields=document.getElementById('form154_master');
+	var bill_type=filter_fields.elements[2].value;
+	if(is_create_access('form154'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form154_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' required form='form154_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form154_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' min='0' required form='form154_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Unit Price'>";
+				rowsHTML+="<input type='number' required readonly='readonly' form='form154_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Total'>";
+				rowsHTML+="<input type='number' required readonly='readonly' form='form154_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form154_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form154_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form154_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form154_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form154_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form154_"+id+"' id='save_form154_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form154_"+id+"' id='delete_form154_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form154_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form154_"+id+"'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form154_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form154_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form154_"+id);
+		var name_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var price_filter=fields.elements[2];
+		var total_filter=fields.elements[3];
+		var amount_filter=fields.elements[4];
+		var discount_filter=fields.elements[5];
+		var tax_filter=fields.elements[6];
+		var offer_filter=fields.elements[7];
+		var id_filter=fields.elements[8];
+		var save_button=fields.elements[9];
+		var free_product_filter=fields.elements[11];
+		var free_product_quantity=fields.elements[12];
+		
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form154_create_item(fields);
+		});
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form154_add_item();
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		var add_product=document.getElementById('form154_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal112_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		$(name_filter).on('blur',function(event)
+		{
+			if(bill_type=='undefined')
+			{
+				var price_data="<product_instances count='1'>" +
+					"<sale_price></sale_price>" +
+					"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value(price_data,price_filter);
+			}
+			else
+			{
+				var price_data="<sale_prices count='1'>" +
+						"<sale_price></sale_price>" +
+						"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"<billing_type>"+bill_type+"</billing_type>" +
+						"</sale_prices>";
+				set_my_value(price_data,price_filter);
+			}	
+			get_inventory(name_filter.value,batch_filter.value,function(quantity)
+			{
+				$(quantity_filter).attr('placeholder',quantity);
+			});
+			
+			quantity_filter.value="";
+			total_filter.value=0;
+			amount_filter.value=0;
+			discount_filter.value=0;
+			tax_filter.value=0;
+			offer_filter.value="";
+			free_product_filter.value="";
+			free_product_quantity.value="";
+		});
+		
+		
+		$(quantity_filter).on('blur',function(event)
+		{
+			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			amount_filter.value=amount;
+			var offer_data="<offers>" +
+					"<offer_type>product</offer_type>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"<criteria_type></criteria_type>" +
+					"<criteria_amount></criteria_amount>" +
+					"<criteria_quantity></criteria_quantity>" +
+					"<result_type></result_type>" +
+					"<discount_percent></discount_percent>" +
+					"<discount_amount></discount_amount>" +
+					"<quantity_add_percent></quantity_add_percent>" +
+					"<quantity_add_amount></quantity_add_amount>" +
+					"<free_product_name></free_product_name>" +
+					"<free_product_quantity></free_product_quantity>" +
+					"<offer_detail></offer_detail>" +
+					"<status array='yes'>active--extended</status>" +
+					"</offers>";
+			fetch_requested_data('',offer_data,function(offers)
+			{
+				offers.sort(function(a,b)
+				{
+					if(a.criteria_amount<b.criteria_amount)
+					{	return 1;}
+					else if(a.criteria_quantity<b.criteria_quantity)
+					{	return 1;}
+					else 
+					{	return -1;}
+				});
+						
+				for(var i in offers)
+				{
+					offer_filter.value=offers[i].offer_detail;
+					if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=parseFloat(quantity_filter.value))
+					{
+						if(offers[i].result_type=='discount')
+						{
+							if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+							{
+								discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+							}
+							else 
+							{
+								discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
+							}
+						}
+						else if(offers[i].result_type=='quantity addition')
+						{
+							if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+							}
+							else 
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity))));
+							}
+						}
+						else if(offers[i].result_type=='product free')
+						{
+							free_product_filter.value=offers[i].free_product_name;
+							free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
+						}
+						break;
+					}
+					else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=amount)
+					{
+						if(offers[i].result_type=='discount')
+						{
+							if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+							{
+								discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
+							}
+							else 
+							{
+								discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+							}
+						}
+						else if(offers[i].result_type=='quantity addition')
+						{
+							if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
+							}
+							else 
+							{
+								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount))));
+							}
+						}
+						else if(offers[i].result_type=='product free')
+						{
+							free_product_filter.value=offers[i].free_product_name;
+							free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
+						}
+						break;
+					}
+				}
+				
+				var tax_data="<product_master>" +
+						"<name exact='yes'>"+name_filter.value+"</name>" +
+						"<tax></tax>" +
+						"</product_master>";
+				fetch_requested_data('',tax_data,function(taxes)
+				{
+					taxes.forEach(function(tax)
+					{
+						tax_filter.value=parseFloat((parseFloat(tax.tax)*(amount-parseFloat(discount_filter.value)))/100);
+					});
+					
+					total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value));
+				});
+				
+			});
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Store Placement (DLM)
+ * @formNo 156
+ */
+function form156_add_item()
+{
+	if(is_create_access('form156'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form156_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item Name'>";
+				rowsHTML+="<input type='text' form='form156_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form156_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Store Area'>";
+				rowsHTML+="<input type='text' form='form156_"+id+"' value=''>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' id='form156_add_storage_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' readonly='readonly' form='form156_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form156_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form156_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form156_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form156_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form156_"+id);
+		var product_filter=fields.elements[0];
+		var area_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form156_create_item(fields);
+		});		
+			
+		var products_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(products_data,product_filter,function () 
+		{
+			$(product_filter).focus();
+		});
+		
+		var add_product=document.getElementById('form156_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal112_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(products_data,product_filter,function () 
+				{
+					$(product_filter).focus();
+				});
+			});
+		});
+
+
+		var add_storage=document.getElementById('form156_add_storage_'+id);
+		$(add_storage).on('click',function()
+		{
+			modal35_action(function()
+			{	
+				var area_data="<store_areas>" +
+				"<name></name>" +
+				"<area_type exact='yes'>storage</area_type>" +
+				"</store_areas>";
+				set_my_value_list(area_data,area_filter);
+			});
+		});
+		
+		var area_data="<store_areas>" +
+				"<name></name>" +
+				"<area_type exact='yes'>storage</area_type>" +
+				"</store_areas>";
+		
+		set_my_value_list(area_data,area_filter);
+
+		$(product_filter).on('blur',function () 
+		{
+			get_store_inventory(area_filter.value,product_filter.value,'',function(inventory)
+			{
+				$(quantity_filter).attr('max',inventory);
+			});
+		});
+		
+		$(area_filter).on('blur',function () 
+		{
+			get_store_inventory(area_filter.value,product_filter.value,'',function(inventory)
+			{
+				$(quantity_filter).attr('max',inventory);
+			});
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Store movement (DLM)
+ * @formNo 157
+ */
+function form157_add_item()
+{
+	if(is_create_access('form157'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form157_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Product'>";
+				rowsHTML+="<input type='text' required form='form157_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form157_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' required form='form157_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Store'>";
+				rowsHTML+="Source: <input type='text' required form='form157_"+id+"'>";
+				rowsHTML+="<br>Target: <input type='text' required form='form157_"+id+"'>";				
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' readonly='readonly' required form='form157_"+id+"' value='pending'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form157_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form157_"+id+"' required name='receiver'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form157_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form157_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='button' class='generic_icon' form='form157_"+id+"' value='Dispatch' onclick='form157_dispatch_item($(this));'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form157_body').prepend(rowsHTML);
+		var fields=document.getElementById("form157_"+id);
+		var product_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var source_filter=fields.elements[2];
+		var target_filter=fields.elements[3];
+		var status_filter=fields.elements[4];
+		var receiver_filter=fields.elements[6];
+		var save_button=fields.elements[7];
+		var dispatch_button=fields.elements[9];
+		
+		$(dispatch_button).hide();
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			var receiver_data="<store_areas>" +
+				"<owner></owner>"+				
+				"<area_type exact='yes'>storage</area_type>" +
+				"<name exact='yes'>"+target_filter.value+"</name>" +
+				"</store_areas>";
+			//console.log(receiver_data);			
+			get_single_column_data(function(data)
+			{
+				if(data.length>0)
+				{
+					receiver_filter.value=data[0];
+				}
+				form157_create_item(fields);
+			},receiver_data);				
+		});
+				
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,product_filter,function () 
+		{
+			$(product_filter).focus();
+		});
+
+		var add_product=document.getElementById('form157_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal112_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,product_filter,function () 
+				{
+					$(product_filter).focus();
+				});
+			});
+		});
+
+		var source_data="<store_areas>" +
+				"<name></name>" +
+				"<owner>"+get_account_name()+"</owner>"+
+				"<area_type exact='yes'>storage</area_type>" +
+				"</store_areas>";
+		set_my_value_list(source_data,source_filter);
+
+		$(source_filter).on('blur',function () 
+		{
+			get_store_inventory(source_filter.value,product_filter.value,batch_filter.value,function(inventory)
+			{
+				$(quantity_filter).attr('max',inventory);
+			});
+		});
+
+		var target_data="<store_areas>" +
+				"<name></name>" +
+				"<area_type exact='yes'>storage</area_type>" +
+				"</store_areas>";
+		set_my_value_list(target_data,target_filter);
+
+		set_static_value_list('store_movement','status',status_filter);	
+
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Enter Purchase Bill (DLM)
+ * @formNo 158
+ */
+function form158_add_item()
+{
+	if(is_create_access('form158'))
+	{
+		var filter_fields=document.getElementById('form158_master');
+		var imported=filter_fields.elements[5].checked;
+		
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form158_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Product Name'>";
+				rowsHTML+="<input type='text' required form='form158_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form158_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="Bought: <input type='number' step='any' required form='form158_"+id+"'>";
+				rowsHTML+="<br>Free: <input type='number' step='any' required form='form158_"+id+"' value='0'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Pricing Conversion'>";
+			if(imported)
+			{
+				rowsHTML+="Euro rate: <input type='number' class='dblclick_editable' form='form158_"+id+"' step='any'>";
+				rowsHTML+="<br>Rs/Euro: <input type='number' class='dblclick_editable' form='form158_"+id+"' step='any'>";
+			}
+			else
+			{
+				rowsHTML+="Not Applicable";
+			}					
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+="Unit Price: <input type='number' form='form158_"+id+"' step='any'>";
+				rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form158_"+id+"' value='' step='any'>";
+				rowsHTML+="<br>Total: <input type='number' readonly='readonly' required form='form158_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Storage Area'>";
+				rowsHTML+="<input type='text' form='form158_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' id='form158_add_storage_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form158_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form158_"+id+"' id='save_form158_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form158_"+id+"' id='delete_form158_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form158_"+id+"' step='any'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form158_"+id+"'>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form158_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form158_"+id);
+		var name_filter=fields.elements[0];
+		var pquantity_filter=fields.elements[1];
+		var fquantity_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var tax_filter=fields.elements[4];
+		var total_filter=fields.elements[5];
+		var storage_filter=fields.elements[6];
+		var id_filter=fields.elements[7];
+		var save_button=fields.elements[8];
+		var tax_unit_filter=fields.elements[10];
+		
+		if(imported)
+		{
+			euro_filter=fields.elements[3];
+			euro_rate_filter=fields.elements[4];
+			price_filter=fields.elements[5];
+			tax_filter=fields.elements[6];
+			total_filter=fields.elements[7];
+			storage_filter=fields.elements[8];
+			id_filter=fields.elements[9];
+			save_button=fields.elements[10];
+			tax_unit_filter=fields.elements[12];		
+		}		
+		
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form158_create_item(fields);
+		});
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form158_add_item();
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		var add_product=document.getElementById('form158_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal112_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+
+		var add_storage=document.getElementById('form158_add_storage_'+id);
+		$(add_storage).on('click',function()
+		{
+			modal35_action(function()
+			{	
+				var storage_data="<store_areas>" +
+							"<name></name>" +
+							"<area_type exact='yes'>storage</area_type>" +
+							"</store_areas>";
+				set_my_value_list(storage_data,storage_filter);
+			});
+		});
+
+		var storage_data="<store_areas>" +
+					"<name></name>" +
+					"<owner></owner>"+					
+					"<area_type exact='yes'>storage</area_type>" +
+					"</store_areas>";
+		fetch_requested_data('',storage_data,function(storages) 
+		{
+			var form=fields;
+			var datalist=document.createElement('datalist');
+			var element_array=[];
+			storages.forEach(function(d)
+			{
+				var option=document.createElement('option');
+				option.setAttribute('value',d.name);
+				element_array.push(d.name);
+				datalist.appendChild(option);
+				if(d.owner==get_account_name())
+				{
+					storage_filter.value=d.name;
+				}
+			});
+			
+			var list_id=storage_filter.getAttribute('list');
+			if(list_id=='' || list_id==null)
+			{
+				list_id="list_"+get_new_key();
+				storage_filter.setAttribute("list",list_id);
+			}
+			else
+			{
+				var oldlist=document.getElementById(list_id);
+				form.removeChild(oldlist);
+			}
+			
+			form.appendChild(datalist);
+			datalist.setAttribute('id',list_id);
+			
+			$(storage_filter).off("change");
+			$(storage_filter).on("change",function(event)
+			{
+				var found = $.inArray($(this).val(), element_array) > -1;
+				if(!found)
+				{
+		            $(this).val('');
+		        }
+			});
+		});
+		
+		set_my_value_list_func(storage_data,storage_filter,function()
+		{
+			var store_value_data="<store_areas count='1'>" +
+				"<name></name>" +
+				"<owner>"+get_account_name()+"</owner>"+
+				"<area_type exact='yes'>storage</area_type>" +
+				"</store_areas>";
+			set_my_value(store_value_data,storage_filter);
+		});
+
+		$(name_filter).on('blur',function(event)
+		{			
+			var price_data="<supplier_bill_items count='1'>" +
+					"<unit_price></unit_price>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</supplier_bill_items>";
+			set_my_value(price_data,price_filter);
+			
+			var tax_data="<product_master>"+
+						"<tax></tax>"+
+						"<name exact='yes'>"+name_filter.value+"</name>"+						
+						"</product_master>";			
+			set_my_value(tax_data,tax_unit_filter);			
+		});
+		
+		$(pquantity_filter).on('blur',function(event)
+		{
+			tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(pquantity_filter.value)*parseFloat(price_filter.value)/100),2);
+			var total=(parseFloat(price_filter.value)*parseFloat(pquantity_filter.value))+parseFloat(tax_filter.value);
+			total_filter.value=my_round(total,2);
+		});
+		$(price_filter).on('blur',function(event)
+		{
+			tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(pquantity_filter.value)*parseFloat(price_filter.value)/100),2);
+			var total=(parseFloat(price_filter.value)*parseFloat(pquantity_filter.value))+parseFloat(tax_filter.value);
+			total_filter.value=my_round(total,2);
+		});
+		
+		if(imported)
+		{
+			$(euro_filter).on('blur',function()
+			{
+				price_filter.value=my_round(parseFloat(euro_filter.value)*parseFloat(euro_rate_filter.value),2);
+				tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(pquantity_filter.value)*parseFloat(price_filter.value)/100),2);
+				var total=(parseFloat(price_filter.value)*parseFloat(pquantity_filter.value))+parseFloat(tax_filter.value);
+				total_filter.value=my_round(total,2);
+			});
+			$(euro_rate_filter).on('blur',function()
+			{
+				price_filter.value=my_round(parseFloat(euro_filter.value)*parseFloat(euro_rate_filter.value),2);
+				tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(pquantity_filter.value)*parseFloat(price_filter.value)/100),2);
+				var total=(parseFloat(price_filter.value)*parseFloat(pquantity_filter.value))+parseFloat(tax_filter.value);
+				total_filter.value=my_round(total,2);
+			});
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

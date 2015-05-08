@@ -5337,3 +5337,399 @@ function form151_header_ini()
 				"</service_requests>";
 	set_my_value_list(id_data,id_filter);
 }
+
+/**
+ * @form Manage Quotations
+ * @formNo 152
+ */
+function form152_header_ini()
+{
+	var filter_fields=document.getElementById('form152_header');
+	var id_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var customer_filter=filter_fields.elements[2];
+	
+	var id_data="<quotation>" +
+			"<id></id>" +
+			"</quotation>";
+	var type_data="<bill_types>" +
+			"<name></name>" +
+			"</bill_types>";
+	var cust_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	set_my_filter(id_data,id_filter);
+	set_my_filter(type_data,type_filter);
+	set_my_filter(cust_data,customer_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form152_ini();
+	});
+};
+
+/**
+ * @form Manage Quotations
+ * @formNo 153
+ */
+function form153_header_ini()
+{
+	var fields=document.getElementById('form153_master');
+	
+	var customers_filter=fields.elements[1];
+	var quot_type=fields.elements[2];
+	var date=fields.elements[3];
+	fields.elements[4].value=get_new_key();
+	fields.elements[5].value="";
+	var save_button=fields.elements[6];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form153_create_form();
+	});
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form153_add_item();
+	});
+	
+	var customers_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	set_my_value_list(customers_data,customers_filter);
+
+	var add_customer=document.getElementById('form153_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";			
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});	
+
+	var type_data="<bill_types>" +
+		"<name></name>" +
+		"<status exact='yes'>active</status>" +
+		"</bill_types>";
+	set_my_value_list(type_data,quot_type);
+	
+	var bill_id=$("#form153_link").attr('data_id');
+	
+	$(customers_filter).off('blur');
+	$(customers_filter).on('blur',function(e)
+	{
+		var address_data="<customers>" +
+				"<address></address>" +
+				"<city></city>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
+				"</customers>";
+		fetch_requested_data('',address_data,function(addresses)
+		{
+			var address_string="";
+			if(addresses.length>0)
+			{
+				address_string+=addresses[0].address+", "+addresses[0].city;
+				document.getElementById('form153_customer_info').innerHTML="Address<br>"+address_string;
+			}
+			else
+			{
+				document.getElementById('form153_customer_info').innerHTML="";
+			}
+		});
+	});
+
+	$(date).datepicker();
+	$(date).val(get_my_date());
+	customers_filter.value='';
+	$(customers_filter).focus();
+}
+
+/**
+ * @form Create Bill (DLM)
+ * @formNo 154
+ */
+function form154_header_ini()
+{
+	var fields=document.getElementById('form154_master');
+	
+	var customers_filter=fields.elements[1];
+	var bill_type=fields.elements[2];
+	var bill_date=fields.elements[3];
+	var bill_num=fields.elements[4];	
+	fields.elements[5].value=get_new_key();
+	fields.elements[6].value="";
+	fields.elements[7].value=fields.elements[5].value;
+	var save_button=fields.elements[8];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form154_create_form();
+	});
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form154_add_item();
+	});
+	
+	var customers_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	set_my_value_list(customers_data,customers_filter);
+
+	var add_customer=document.getElementById('form154_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";			
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});	
+
+	var type_data="<bill_types>" +
+		"<name></name>" +
+		"<status exact='yes'>active</status>" +
+		"</bill_types>";
+	set_my_value_list(type_data,bill_type);
+	
+	var bill_id=$("#form154_link").attr('data_id');
+	if(bill_id==null || bill_id=='')
+	{	
+		get_single_column_data(function (bill_types) 
+		{
+			if(bill_types.length>0)
+			{
+				bill_type.value=bill_types[0];
+				var bill_num_data="<user_preferences count='1'>"+
+							"<value></value>"+
+							"<name exact='yes'>"+bill_type.value+"_bill_num</name>"+
+							"</user_preferences>";
+				set_my_value(bill_num_data,bill_num);	
+			}
+			else 
+			{
+				var bill_num_data="<user_preferences count='1'>"+
+							"<value></value>"+
+							"<name exact='yes'>bill_num</name>"+
+							"</user_preferences>";
+				set_my_value(bill_num_data,bill_num);	
+			}
+		},type_data);
+	}
+
+	$(bill_type).off('blur');
+	$(bill_type).on('blur',function (e) 
+	{
+		var bill_num_data="<user_preferences count='1'>"+
+						"<value></value>"+
+						"<name exact='yes'>"+bill_type.value+"_bill_num</name>"+
+						"</user_preferences>";
+		set_my_value(bill_num_data,bill_num);	
+	});	
+	
+	$(customers_filter).off('blur');
+	$(customers_filter).on('blur',function(e)
+	{
+		var address_data="<customers>" +
+				"<address></address>" +
+				"<city></city>" +
+				"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>" +
+				"</customers>";
+		fetch_requested_data('',address_data,function(addresses)
+		{
+			var address_string="";
+			if(addresses.length>0)
+			{
+				address_string+=addresses[0].address+", "+addresses[0].city;
+				document.getElementById('form154_customer_info').innerHTML="Address<br>"+address_string;
+			}
+			else
+			{
+				document.getElementById('form154_customer_info').innerHTML="";
+			}
+		});
+	});
+
+	$(bill_date).datepicker();
+	$(bill_date).val(get_my_date());
+	customers_filter.value='';
+	$(customers_filter).focus();
+}
+
+/**
+ * @form Update Inventory (DLM)
+ * @formNo 155
+ */
+function form155_header_ini()
+{
+	var filter_fields=document.getElementById('form155_header');	
+	var names_filter=filter_fields.elements[0];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form155_ini();
+	});
+
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";	
+	set_my_filter(products_data,names_filter);
+};
+
+/**
+ * @form Store Placement (DLM)
+ * @formNo 156
+ */
+function form156_header_ini()
+{
+	var filter_fields=document.getElementById('form156_header');
+	var name_filter=filter_fields.elements[0];
+	var area_filter=filter_fields.elements[1];
+	
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var area_data="<store_areas>" +
+			"<name></name>" +
+			"</store_areas>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form156_ini();
+	});
+
+	set_my_filter(products_data,name_filter);
+	set_my_filter(area_data,area_filter);	
+};
+
+
+/**
+ * @form Store Movement (DLM)
+ * @formNo 157
+ */
+function form157_header_ini()
+{
+	var filter_fields=document.getElementById('form157_header');
+	var product_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[2];
+	
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form157_ini();
+	});
+
+	set_my_filter(products_data,product_filter);
+	set_static_filter('store_movement','status',status_filter);
+};
+
+/**
+ * @form Enter Supplier bills(DLM)
+ * @formNo 158
+ */
+function form158_header_ini()
+{
+	var fields=document.getElementById('form158_master');
+	
+	var supplier_filter=fields.elements[1];
+	fields.elements[2].value="";
+	var bill_date=fields.elements[3];
+	var entry_date=fields.elements[4];
+	fields.elements[5].checked=false;
+	fields.elements[6].value=get_new_key();
+	fields.elements[7].value=fields.elements[6].value;
+	var save_button=fields.elements[8];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form158_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form158_add_item();
+	});
+	
+	var suppliers_data="<suppliers>" +
+		"<acc_name></acc_name>" +
+		"</suppliers>";
+	
+	set_my_value_list(suppliers_data,supplier_filter);
+	
+	var add_supplier=document.getElementById('form158_add_supplier');
+	$(add_supplier).off('click');
+	$(add_supplier).on('click',function()
+	{
+		modal13_action(function()
+		{	
+			var suppliers_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";			
+			set_my_value_list(suppliers_data,supplier_filter);
+		});
+	});
+
+	$(bill_date).datepicker();
+	$(bill_date).val(get_my_date());
+	
+	$(entry_date).datepicker();
+	$(entry_date).val(get_my_date());
+
+	supplier_filter.value='';
+	$(supplier_filter).focus();
+}

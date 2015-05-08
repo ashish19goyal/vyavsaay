@@ -5980,3 +5980,158 @@ function modal111_action()
 		});
 	}
 }
+
+
+/**
+ * @modalNo 112
+ * @modal Add new product
+ * @param button
+ */
+function modal112_action(func)
+{
+	var form=document.getElementById('modal112_form');
+	
+	var fname=form.elements[1];
+	var fmake=form.elements[2];
+	var fdescription=form.elements[3];
+	var fpictureinfo=form.elements[4];
+	var fpicture=form.elements[5];
+		
+	var make_data="<product_master>" +
+		"<make></make>" +
+		"</product_master>";
+	set_my_filter(make_data,fmake);
+	
+	fpicture.addEventListener('change',function(evt)
+	{
+		select_picture(evt,fpictureinfo,function(dataURL)
+		{
+			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
+		});
+	},false);
+	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal112_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status exact='yes'>active</status>" +
+			"<object exact='yes'>product</object>" +
+			"</mandatory_attributes>";
+	get_single_column_data(function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			var attr_label=document.createElement('label');
+			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
+			attribute_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			attribute_label.appendChild(line_break);
+		});
+	},attributes_data);
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form39'))
+		{
+			var name=form.elements[1].value;
+			var make=form.elements[2].value;
+			var description=form.elements[3].value;
+			var tax=form.elements[6].value;
+			var data_id=get_new_key();
+			var pic_id=get_new_key();
+			var url=$(fpictureinfo).find('div').find('img').attr('src');
+			var last_updated=get_my_time();
+			var data_xml="<product_master>" +
+						"<id>"+data_id+"</id>" +
+						"<make>"+make+"</make>" +
+						"<name>"+name+"</name>" +
+						"<description>"+description+"</description>" +
+						"<tax>"+tax+"</tax>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</product_master>";	
+			var instance_xml="<product_instances>"+
+							"<id>"+data_id+"</id>"+
+							"<product_name>"+name+"</product_name>"+
+							"<batch>"+name+"</batch>"+
+							"<cost_price></cost_price>"+
+							"<sale_price></sale_price>"+
+							"<mrp></mrp>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</product_instances>";			
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>product_master</tablename>" +
+						"<link_to>form39</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Product "+name+" to inventory</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_create_row_func(data_xml,activity_xml,func);
+				server_create_simple(instance_xml);
+			}
+			else
+			{
+				local_create_row_func(data_xml,activity_xml,func);
+				local_create_simple(instance_xml);
+			}	
+
+			var id=get_new_key();
+			$("#modal112_attributes").find('input').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				if(value!="")
+				{
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+name+"</name>" +
+							"<type>product</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					if(is_online())
+					{
+						server_create_simple(attribute_xml);
+					}
+					else
+					{
+						local_create_simple(attribute_xml);
+					}
+				}
+			});
+
+			if(url!="")
+			{
+				var pic_xml="<documents>" +
+							"<id>"+pic_id+"</id>" +
+							"<url>"+url+"</url>" +
+							"<doc_type>product_master</doc_type>" +
+							"<target_id>"+data_id+"</target_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</documents>";
+				if(is_online())
+				{
+					server_create_simple(pic_xml);
+				}
+				else
+				{
+					local_create_simple(pic_xml);
+				}	
+			}
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal112").dialog("close");
+	});
+	
+	$("#modal112").dialog("open");
+}

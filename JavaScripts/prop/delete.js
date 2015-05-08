@@ -4809,3 +4809,251 @@ function form151_delete_expense(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Quotations
+ * @formNo 152
+ * @param button
+ */
+function form152_delete_item(button)
+{
+	if(is_delete_access('form152'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[0].value;
+		var customer=form.elements[2].value;
+		var bill_xml="<quotation>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"</quotation>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>quotation</tablename>" +
+					"<link_to>form152</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Quotation id "+data_id+" for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+
+		if(is_online())
+		{
+			server_delete_row(bill_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(bill_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+
+		
+		var items_data="<quotation_items>" +
+				"<id></id>" +
+				"<quot_id exact='yes'>"+data_id+"</quot_id>" +
+				"</quotation_items>";
+					
+		if(is_online())
+		{
+			server_delete_simple(items_data);
+		}
+		else
+		{
+			local_delete_simple(items_data);
+		}
+				
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Prepare Quotation
+ * @formNo 153
+ * @param button
+ */
+function form153_delete_item(button)
+{
+	if(is_delete_access('form153'))
+	{
+		var quot_id=document.getElementById("form153_master").elements[4].value;
+		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		var data_id=form.elements[8].value;
+				
+		var data_xml="<quotation_items>" +
+					"<id>"+data_id+"</id>" +
+					"<quot_id>"+quot_id+"</quot_id>" +
+					"</quotation_items>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}
+				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Bills (DLM)
+ * @formNo 154
+ * @param button
+ */
+function form154_delete_item(button)
+{
+	if(is_delete_access('form154'))
+	{
+		var bill_id=document.getElementById("form154_master").elements[5].value;
+		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		var data_id=form.elements[8].value;
+				
+		var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"</bill_items>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}
+				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Store Placement (DLM)
+ * @formNo 156
+ */
+function form156_delete_item(button)
+{
+	if(is_delete_access('form156'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var product_name=form.elements[0].value;
+		var name=form.elements[1].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<area_utilization>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+product_name+"</item_name>" +
+					"<name>"+name+"</name>" +
+					"</area_utilization>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>area_utilization</tablename>" +
+					"<link_to>form156</link_to>" +
+					"<title>Removed</title>" +
+					"<notes>Item "+product_name+" from storage area "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_delete_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_delete_row(data_xml,activity_xml);
+		}	
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Store movement (DLM)
+ * @formNo form157
+ */
+function form157_delete_item(button)
+{
+	if(is_delete_access('form157'))
+	{		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[5].value;
+			
+		var data_xml="<store_movement>" +
+				"<id>"+data_id+"</id>" +
+				"</store_movement>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Enter Purchase Bill (DLM)
+ * @formNo form158
+ */
+function form158_delete_item(button)
+{
+	if(is_delete_access('form158'))
+	{
+		var master_form=document.getElementById("form158_master");
+		var bill_id=master_form.elements[6].value;
+		var imported=filter_fields.elements[5].checked;
+				
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var data_id=form.elements[7].value;
+		if (imported) 
+		{
+			data_id=form.elements[9].value;
+		}
+		var data_xml="<supplier_bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"</supplier_bill_items>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}
+				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

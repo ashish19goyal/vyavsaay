@@ -4,6 +4,7 @@
 			<li><a id='form21_link' href='#form21' onclick='form21_header_ini(); form21_ini();' data-i18n='form.enter_supplier_bill'></a></li>
 			<li><a id='form136_link' href='#form136' onclick='form136_header_ini(); form136_ini();' data-i18n='form.enter_supplier_bill'></a></li>
 			<li><a id='form122_link' href='#form122' onclick='form122_header_ini(); form122_ini();' data-i18n='form.enter_supplier_bill'></a></li>
+			<li><a id='form158_link' href='#form158' onclick='form158_header_ini(); form158_ini();' data-i18n='form.enter_supplier_bill'></a></li>
 			<li><a id='form53_link' href='#form53' onclick='form53_header_ini(); form53_ini();' data-i18n='form.manage_supplier_bills'></a></li>
 			<li><a id='form24_link' href='#form24' onclick='form24_header_ini(); form24_ini();' data-i18n='form.create_purchase_order'></a></li>
 			<li><a id='form43_link' href='#form43' onclick='form43_header_ini(); form43_ini();' data-i18n='form.manage_purchase_orders'></a></li>

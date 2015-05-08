@@ -4669,3 +4669,250 @@ function form149_import(data_array,import_type)
 		}
 	}
 };
+
+/**
+* @form Update Inventory (DLM)
+* @formNo 155
+*/
+function form155_import(data_array,import_type)
+{
+	var data_xml="<product_instances>";
+	var counter=1;
+	var new_id=parseFloat(get_new_key());
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</product_instances><separator></separator><product_instances>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.product_name+"</product_name>" +
+				"<batch>"+row.product_name+"</batch>" +
+				"<cost_price>"+row.cost_price+"</cost_price>" +
+				"<sale_price>"+row.sale_price+"</sale_price>" +
+				"<manufacture_date>"+get_raw_time(row.manufacture_date)+"</manufacture_date>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+		if(row.actual_quantity!="")
+		{
+			get_inventory(row.product_name,row.batch,function(quantity)
+			{
+				if(parseFloat(quantity)!==parseFloat(row.actual_quantity))
+				{
+					var new_quantity=parseFloat(row.actual_quantity)-parseFloat(quantity);
+					var adjust_xml="<inventory_adjust>" +
+							"<id>"+(new_id+counter)+"</id>" +
+							"<product_name>"+row.product_name+"</product_name>" +
+							"<batch>"+row.product_name+"</batch>" +
+							"<quantity>"+new_quantity+"</quantity>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</inventory_adjust>";
+					if(is_online())
+					{
+						server_create_simple_no_warning(adjust_xml);
+					}
+					else
+					{
+						local_create_simple_no_warning(adjust_xml);
+					}
+				}
+			});
+		}
+	});
+
+	data_xml+="</product_instances>";
+	
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+}
+
+/**
+* @form Store Placement (DLM)
+* @formNo 156
+*/
+function form156_import(data_array,import_type)
+{
+	var data_xml="<area_utilization>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</area_utilization><separator></separator><area_utilization>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<batch>"+row.item_name+"</batch>" +
+				"<name>"+row.name+"</name>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</area_utilization>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Store Movement (DLM)
+* @formNo 157
+*/
+function form157_import(data_array,import_type)
+{
+	var data_xml="<store_movement>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</store_movement><separator></separator><store_movement>";
+		}
+		counter+=1;
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<batch>"+row.item_name+"</batch>"+
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<source>"+row.source+"</source>"+
+				"<target>"+row.target+"</target>"+
+				"<status>"+row.status+"</status>" +
+				"<dispatcher>"+row.dispatcher+"</dispatcher>" +
+				"<receiver>"+row.receiver+"</receiver>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";		
+	});
+	
+	data_xml+="</store_movement>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Enter Purchase bill (DLM)
+* @formNo 158
+*/
+function form158_import(data_array,import_type)
+{
+	var data_xml="<supplier_bill_items>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</supplier_bill_items><separator></separator><supplier_bill_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.product_name+"</product_name>" +
+				"<p_quantity>"+row.p_quantity+"</p_quantity>" +
+				"<f_quantity>"+row.f_quantity+"</f_quantity>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<batch>"+row.product_name+"</batch>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<total>"+row.total+"</total>" +
+				"<storage>"+row.storage+"</storage>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</supplier_bill_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};

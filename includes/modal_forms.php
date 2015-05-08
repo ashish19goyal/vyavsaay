@@ -763,4 +763,19 @@
 		</form>
 	</div>
 
+	<div id="modal112" title="Add new product">
+		<form id='modal112_form'>
+			<fieldset>
+				<label>Name: <input type="text" required></label><br>
+				<label>Make: <input type="text"></label><br>
+				<label>Description: <textarea></textarea></label><br>
+				<label>Picture: <output></output>
+								<input type="file"></label><br>
+				<label>Tax (%): <input type="number" step='any'></label><br>
+				<label id='modal112_attributes'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

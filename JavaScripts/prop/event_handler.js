@@ -29,6 +29,7 @@ function default_load()
 			set_menu_shortcuts();
 			date_formating();
 			print_setup();
+			set_footer_message();
 			Chart.defaults.global.responsive = true;
 			Chart.defaults.global.scaleFontSize= 10;
 			Chart.defaults.global.scaleFontColor="#000";
@@ -257,7 +258,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=101;i<112;i++)
+	for(var i=101;i<113;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({
@@ -821,5 +822,21 @@ function import_data(form_name)
 		break;
 		case 'form149':modal23_action(form149_import_template,form149_import);
 		break;
+		case 'form155':modal23_action(form155_import_template,form155_import);
+		break;
+		case 'form156':modal23_action(form156_import_template,form156_import);
+		break;
+		case 'form157':modal23_action(form157_import_template,form157_import);
+		break;
+		case 'form158':modal23_action(form158_import_template,form158_import);
+		break;
 	}
+}
+
+
+function set_footer_message()
+{
+	var message=get_session_var('footer_message');
+	if(message!="" && message!=null && message!='undefined')
+		document.getElementById('footer_message').innerHTML=get_session_var('footer_message');
 }

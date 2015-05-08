@@ -152,6 +152,7 @@
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
+			<imported index='yes' type='VARCHAR(25)'></imported><!--yes/no-->
 			<notes index='yes' type="TEXT"></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_bills>
@@ -168,6 +169,8 @@
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<storage index='yes' type="VARCHAR(25)"></storage>
+			<raw_price index='no' type="DECIMAL(12,2)"></raw_price>
+			<conversion_rate index='no' type="DECIMAL(12,2)"></conversion_rate>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_bill_items>
 	<supplier_returns>
@@ -937,4 +940,37 @@
 			<comment_text index='no' type='TEXT'></comment_text>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</feed_comments>
+	<quotation>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<customer index='yes' type="VARCHAR(100)"></customer>
+			<date index='yes' type="BIGINT"></date>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<total index='yes' type="DECIMAL(12,2)"></total>
+			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
+			<billing_type index="yes" type="VARCHAR(20)"></billing_type>
+			<offer index='no' type="TEXT"></offer>
+			<discount index='no' type="DECIMAL(12,2)"></discount>
+			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<status index='yes' type="VARCHAR(25)"></status><!--generated/approved-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</quotation>
+	<quotation_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<quotation_id index='yes' type="BIGINT"></quotation_id>
+			<item_name index='yes' type="VARCHAR(90)"></item_name>
+			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<p_quantity index='no' type="DECIMAL(12,2)"></p_quantity>
+			<f_quantity index='no' type="DECIMAL(12,2)"></f_quantity>
+			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
+			<mrp index='no' type="DECIMAL(12,2)"></mrp>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<total index='no' type="DECIMAL(12,2)"></total>
+			<discount index='no' type="DECIMAL(12,2)"></discount>
+			<offer index='no' type="TEXT"></offer>
+			<type index='yes' type="VARCHAR(10)"></type><!-- free/bought -->	
+			<notes index='no' type="TEXT"></notes>
+			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<free_with index="no" type="VARCHAR(90)"></free_with>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</quotation_items>
 </re_xml>

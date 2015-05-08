@@ -3,6 +3,7 @@
 			<li><a id='form10_link' href='#form10' onclick='form10_header_ini(); form10_ini();' data-i18n='form.service_bill'></a></li>
 			<li><a id='form12_link' href='#form12' onclick='form12_header_ini(); form12_ini();' data-i18n='form.product_bill'></a></li>
 			<li><a id='form72_link' href='#form72' onclick='form72_header_ini(); form72_ini();' data-i18n='form.create_bill'></a></li>
+			<li><a id='form154_link' href='#form154' onclick='form154_header_ini(); form154_ini();' data-i18n='form.create_bill'></a></li>
 			<li><a id='form42_link' href='#form42' onclick='form42_header_ini(); form42_ini();' data-i18n='form.manage_bills'></a></li>
 			<li><a id='form91_link' href='#form91' onclick='form91_header_ini(); form91_ini();' data-i18n='form.create_bill'></a></li>
 			<li><a id='form119_link' href='#form119' onclick='form119_header_ini(); form119_ini();' data-i18n='form.create_bill'></a></li>
@@ -10,6 +11,8 @@
 			<li><a id='form69_link' href='#form69' onclick='form69_header_ini(); form69_ini();' data-i18n='form.create_order'></a></li>
 			<li><a id='form70_link' href='#form70' onclick='form70_header_ini(); form70_ini();' data-i18n='form.manage_order'></a></li>
 			<li><a id='form108_link' href='#form108' onclick='form108_header_ini(); form108_ini();' data-i18n='form.manage_order'></a></li>
+			<li><a id='form152_link' href='#form152' onclick='form152_header_ini(); form152_ini();' data-i18n='form.manage_quotations'></a></li>
+			<li><a id='form153_link' href='#form153' onclick='form153_header_ini(); form153_ini();' data-i18n='form.prepare_quotation'></a></li>
 			<li><a id='form15_link' href='#form15' onclick='form15_header_ini(); form15_ini();' data-i18n='form.enter_returns'></a></li>
 			<li><a id='form16_link' href='#form16' onclick='form16_header_ini(); form16_ini();' data-i18n='form.manage_returns'></a></li>
 			<li><a id='form81_link' href='#form81' onclick='form81_header_ini(); form81_ini();' data-i18n='form.sale_leads'></a></li>
@@ -26,6 +29,7 @@
 			include "forms/form10.php";
 			include "forms/form12.php";
 			include "forms/form72.php";
+			include "forms/form154.php";
 			include "forms/form42.php";
 			include "forms/form91.php";
 			include "forms/form119.php";
@@ -33,6 +37,8 @@
 			include "forms/form69.php";
 			include "forms/form70.php";		
 			include "forms/form108.php";		
+			include "forms/form152.php";		
+			include "forms/form153.php";
 			include "forms/form15.php";		
 			include "forms/form16.php";
 			include "forms/form81.php";		

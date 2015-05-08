@@ -122,6 +122,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>footer_message</name>
+			<display_name>footer_message</display_name>
+			<status>active</status>
+			<value>&copy; 2015 Vyavsaay.com</value>
+			<type>hidden</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>bill_message</name>
 			<display_name>bill_message</display_name>
 			<status>active</status>
@@ -2079,6 +2089,83 @@
 			<tables>--service_requests--service_request_items--expenses--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form152</name>
+			<display_name>manage_quotations</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--quotation--quotation_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form153</name>
+			<display_name>prepare_quotation</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--quotation--quotation_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form154</name>
+			<display_name>create_bill_dlm</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bills--bill_items--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form155</name>
+			<display_name>manage_inventory_dlm</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_instances--inventory_adjust--bill_items--supplier_bill_items--supplier_return_items--customer_return_items--sale_prices--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form156</name>
+			<display_name>store_placement_dlm</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--area_utilization--store_areas--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form157</name>
+			<display_name>store_movement_dlm</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--store_movement--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form158</name>
+			<display_name>enter_purchases_dlm</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_bills--supplier_bill_items--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3867,6 +3954,83 @@
 			<username>master</username>
 			<element_id>form151</element_id>
 			<element_name>service_request_billing</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form152</element_id>
+			<element_name>manage_quotations</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form153</element_id>
+			<element_name>prepare_quotations</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form154</element_id>
+			<element_name>create_bill_dlm</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form155</element_id>
+			<element_name>manage_inventory_dlm</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form156</element_id>
+			<element_name>store_placement_dlm</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form157</element_id>
+			<element_name>store_movement_dlm</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form158</element_id>
+			<element_name>enter_purchases_dlm</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

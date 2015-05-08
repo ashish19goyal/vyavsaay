@@ -369,8 +369,86 @@
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<tablename>quotation</tablename>
+			<field_name>customer</field_name>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
 	</user_fields_list>
 	<values_list>
+		<row>
+			<tablename>supplier_bills</tablename>
+			<listname>imported</listname>
+			<name>yes</name>
+			<value>Yes</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>supplier_bills</tablename>
+			<listname>imported</listname>
+			<name>no</name>
+			<value>No</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>quotation</tablename>
+			<listname>status</listname>
+			<name>generated</name>
+			<value>Generated</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>quotation</tablename>
+			<listname>status</listname>
+			<name>approved</name>
+			<value>Approved</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>quotation</tablename>
+			<listname>type</listname>
+			<name>product</name>
+			<value>Product</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>quotation</tablename>
+			<listname>type</listname>
+			<name>service</name>
+			<value>Service</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>quotation</tablename>
+			<listname>type</listname>
+			<name>both</name>
+			<value>Both</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>quotation_items</tablename>
+			<listname>type</listname>
+			<name>free</name>
+			<value>free</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>quotation_items</tablename>
+			<listname>type</listname>
+			<name>bought</name>
+			<value>Bought</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<tablename>feeds</tablename>
 			<listname>status</listname>
