@@ -11,11 +11,11 @@
 			<label>
 				<input type='hidden' value=''>
 				<input type='hidden' name='transaction'>
-				<input type='button' value='Select unbilled items' class='generic_icon'>
-				<input type='button' title='Save Bill' class='save_icon'>
-				<input type='button' title='Print Bill' class='print_icon' onclick='form122_print_form();'>
-				<input type='submit' class='submit_hidden'>
 			</label>
+			<label>	<input type='button' value='Select unbilled items' class='generic_icon'></label>
+			<label>	<input type='button' title='Save Bill' class='save_icon'></label>
+			<label> <input type='button' title='Print Bill' class='print_icon' onclick='form122_print_form();'></label>
+			<label>	<input type='submit' class='submit_hidden'>	</label>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

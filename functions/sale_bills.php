@@ -15,7 +15,6 @@
 			<li><a id='form153_link' href='#form153' onclick='form153_header_ini(); form153_ini();' data-i18n='form.prepare_quotation'></a></li>
 			<li><a id='form15_link' href='#form15' onclick='form15_header_ini(); form15_ini();' data-i18n='form.enter_returns'></a></li>
 			<li><a id='form16_link' href='#form16' onclick='form16_header_ini(); form16_ini();' data-i18n='form.manage_returns'></a></li>
-			<li><a id='form81_link' href='#form81' onclick='form81_header_ini(); form81_ini();' data-i18n='form.sale_leads'></a></li>
 			<li><a id='form82_link' href='#form82' onclick='form82_header_ini();' data-i18n='form.scan_items'></a></li>
 			<li><a id='form89_link' href='#form89' onclick='form89_header_ini();' data-i18n='form.appointments'></a></li>
 			<li><a id='form90_link' href='#form90' onclick='form90_header_ini(); form90_ini();' data-i18n='form.billing_types'></a></li>
@@ -41,7 +40,6 @@
 			include "forms/form153.php";
 			include "forms/form15.php";		
 			include "forms/form16.php";
-			include "forms/form81.php";		
 			include "forms/form82.php";		
 			include "forms/form89.php";
 			include "forms/form90.php";

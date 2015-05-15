@@ -177,7 +177,7 @@ function show_notif()
 }
 
 /**
- * This function checks for favourable scenarios to generate notifications in the background
+ * Overdue payments
  */
 function notifications1_add()
 {
@@ -227,7 +227,7 @@ function notifications1_add()
 		
 		if(is_online())
 		{
-			server_create_batch(not_pay_xml);
+			server_create_batch_noloader(not_pay_xml);
 		}
 		else
 		{
@@ -240,7 +240,7 @@ function notifications1_add()
 }
 
 /**
- * This function checks for favourable scenarios to generate notifications in the background
+ * Overdue tasks
  */
 function notifications2_add()
 {
@@ -295,7 +295,7 @@ function notifications2_add()
 		
 		if(is_online())
 		{
-			server_create_batch(task_xml);
+			server_create_batch_noloader(task_xml);
 		}
 		else
 		{
@@ -310,7 +310,7 @@ function notifications2_add()
 
 
 /**
- * This function checks for favourable scenarios to generate notifications in the background
+ * Overdue sale leads
  */
 function notifications3_add()
 {
@@ -360,7 +360,7 @@ function notifications3_add()
 		leads_xml+="</notifications>";
 		if(is_online())
 		{
-			server_create_batch(leads_xml);
+			server_create_batch_noloader(leads_xml);
 		}
 		else
 		{
@@ -374,7 +374,7 @@ function notifications3_add()
 
 
 /**
- * This function checks for favourable scenarios to generate notifications in the background
+ * Insufficient stock for sale orders
  */
 function notifications4_add()
 {
@@ -455,7 +455,7 @@ function notifications4_add()
 
 
 /**
- * This function checks for favourable scenarios to generate notifications in the background
+ * Out of stock manufactured products, schedule manufacturing
  */
 function notifications5_add()
 {
@@ -504,7 +504,7 @@ function notifications5_add()
 
 
 /**
- * This function checks for favourable scenarios to generate notifications in the background
+ * Scheduled manufacturing is due
  */
 function notifications6_add()
 {
@@ -548,7 +548,7 @@ function notifications6_add()
 		schedule_xml+="</notifications>";
 		if(is_online())
 		{
-			server_create_batch(schedule_xml);
+			server_create_batch_noloader(schedule_xml);
 		}
 		else
 		{
@@ -562,7 +562,7 @@ function notifications6_add()
 }
 
 /**
- * This function checks for favourable scenarios to generate notifications in the background
+ * Appointments due
  */
 function notifications7_add()
 {
@@ -608,7 +608,7 @@ function notifications7_add()
 		app_xml+="</notifications>";
 		if(is_online())
 		{
-			server_create_batch(app_xml);
+			server_create_batch_noloader(app_xml);
 		}
 		else
 		{
@@ -623,7 +623,7 @@ function notifications7_add()
 
 
 /**
- * This function generates notifications for store dispatches
+ * Store movement
  */
 function notifications8_add()
 {
@@ -652,7 +652,13 @@ function notifications8_add()
 				dispatch_xml+="</notifications><separator></separator><notifications>";
 			}
 			counter+=1;
-		
+
+			var link_to='form145';
+			if(is_read_access('form157'))
+			{
+				link_to='form157';
+			}
+			
 			var notes=dispatch.quantity+" units of "+dispatch.item_name+" have been dispatched from store "+dispatch.source+" for store "+dispatch.target;
 			dispatch_xml+="<row>" +
 					"<id>"+(id+counter)+"</id>" +
@@ -660,7 +666,7 @@ function notifications8_add()
 					"<data_id unique='yes'>"+dispatch.id+"</data_id>" +
 					"<title>Store Movement</title>" +
 					"<notes>"+notes+"</notes>" +
-					"<link_to>form145</link_to>" +
+					"<link_to>"+link_to+"</link_to>" +
 					"<status>pending</status>" +
 					"<target_user>"+dispatch.receiver+"</target_user>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -670,7 +676,7 @@ function notifications8_add()
 		dispatch_xml+="</notifications>";
 		if(is_online())
 		{
-			server_create_batch(dispatch_xml);
+			server_create_batch_noloader(dispatch_xml);
 		}
 		else
 		{

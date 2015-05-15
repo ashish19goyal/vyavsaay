@@ -540,3 +540,120 @@ function form151_print_form()
 	container.appendChild(footer);
 	$.print(container);
 }
+
+
+/**
+ * @form Prepare Quotation
+ * @formNo 153
+ */
+function form153_print_form()
+{
+	var form_id='form153';
+	
+////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_intro=document.createElement('div');
+		var business_contact=document.createElement('div');
+
+	var customer_info=document.createElement('div');
+	
+	var quotation_intro=document.createElement('div');
+		var subject=document.createElement('div');
+		var intro=document.createElement('div');
+
+	var table_container=document.createElement('div');
+	
+	var total_container=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var tandc=document.createElement('div');
+		var signature=document.createElement('div');
+
+////////////setting styles for containers/////////////////////////
+
+	//business_title.setAttribute('style',"height:80px;padding:1%;border:2px solid black;border-bottom:none;font-size:"+font_size+"em");
+
+	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
+	business_intro.setAttribute('style','width:100%;text-align:center');
+	business_contact.setAttribute('style','width:100%;text-align:center');
+	customer_info.setAttribute('style','width:100%;height:60px');
+	quotation_intro.setAttribute('style','width:100%;min-height:60px');
+	footer.setAttribute('style','width:100%;min-height:200px');
+
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	var logo_image=get_session_var('logo');
+	var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+
+	var master_form=document.getElementById('form153_master');
+	var customer_name=master_form.elements[1].value;
+	var customer_address1=document.getElementById('form153_customer_info').innerHTML;
+	var customer_address=customer_address1.replace("Address<br>","");
+	var date=master_form.elements[3].value;	
+	
+	var subject_text="Subject: Quotation for supply of light and sound equipment";
+	var intro_text=master_form.elements[4].value;
+	
+	var tandc_text=get_session_var('bill_message');
+	var signature_text="<br>Thanking You.<br><br><br>Yours faithfully,<br>"+bt;
+	
+////////////////filling in the content into the containers/////////////////////////////////////
+
+	logo.innerHTML="<img src='./images/"+logo_image+"'>";
+	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text+"<hr style='border: 1px solid #000;'>";
+	business_contact.innerHTML=business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website+"<hr style='border: 1px solid #000;'>";
+	
+	customer_info.innerHTML="<div style='width:70%;float:left;'>To<br>"+customer_name+"<br>"+customer_address+"</div><div style='width:30%;float:right;'>Date: "+date+"</div>";
+	
+	subject.innerHTML="<br>"+subject_text;
+	intro.innerHTML=intro_text+"<br><br>";	
+	
+	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
+	signature.innerHTML=signature_text;
+	
+		
+	var table_element=document.getElementById('form153_body').parentNode;
+	table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,v1").remove();
+	$(table_copy).find('input,textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+	$(table_copy).find('label').each(function(index)
+	{
+		$(this).replaceWith($(this).html());
+	});
+	
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	
+/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	container.appendChild(header);
+	container.appendChild(customer_info);
+	container.appendChild(quotation_intro);
+	container.appendChild(table_copy);
+	//container.appendChild(total_container);
+	container.appendChild(footer);
+	
+	header.appendChild(logo);
+	header.appendChild(business_intro);
+	header.appendChild(business_contact);
+	
+	quotation_intro.appendChild(subject);
+	quotation_intro.appendChild(intro);
+	
+	footer.appendChild(tandc);
+	footer.appendChild(signature);
+	
+	$.print(container);
+}

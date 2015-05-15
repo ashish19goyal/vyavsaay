@@ -59,7 +59,7 @@ function form1_delete_item(button)
 }
 
 /**
- * @form Create Pamphlets
+ * @form Create Newsletter
  * @param button
  */
 function form2_delete_item(button)
@@ -69,10 +69,10 @@ function form2_delete_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var data_id=form.elements[3].value;
-		var data_xml="<pamphlet_items>" +
+		var data_id=form.elements[6].value;
+		var data_xml="<newsletter_items>" +
 					"<id>"+data_id+"</id>" +
-					"</pamphlet_items>";	
+					"</newsletter_items>";	
 		if(is_online())
 		{
 			server_delete_simple(data_xml);
@@ -1212,23 +1212,23 @@ function form44_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var data_id=form.elements[1].value;
+		var data_id=form.elements[2].value;
 		var last_updated=get_my_time();
-		var data_xml="<pamphlets>" +
+		var data_xml="<newsletter>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
-					"</pamphlets>";	
+					"</newsletter>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>pamphlets</tablename>" +
+					"<tablename>newsletter</tablename>" +
 					"<link_to>form44</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Pamphlet "+name+"</notes>" +
+					"<notes>NewsLetter "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var other_delete="<pamphlet_items>" +
-				"<pamphlet_id>"+data_id+"</pamphlet_id>" +
-				"</pamphlet_items>";
+		var other_delete="<newsletter_items>" +
+				"<nl_id>"+data_id+"</nl_id>" +
+				"</newsletter_items>";
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
@@ -4850,7 +4850,7 @@ function form152_delete_item(button)
 		
 		var items_data="<quotation_items>" +
 				"<id></id>" +
-				"<quot_id exact='yes'>"+data_id+"</quot_id>" +
+				"<quotation_id exact='yes'>"+data_id+"</quotation_id>" +
 				"</quotation_items>";
 					
 		if(is_online())
@@ -4878,15 +4878,15 @@ function form153_delete_item(button)
 {
 	if(is_delete_access('form153'))
 	{
-		var quot_id=document.getElementById("form153_master").elements[4].value;
+		var quot_id=document.getElementById("form153_master").elements[5].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
-		var data_id=form.elements[8].value;
+		var data_id=form.elements[9].value;
 				
 		var data_xml="<quotation_items>" +
 					"<id>"+data_id+"</id>" +
-					"<quot_id>"+quot_id+"</quot_id>" +
+					"<quotation_id>"+quot_id+"</quotation_id>" +
 					"</quotation_items>";	
 		if(is_online())
 		{

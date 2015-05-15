@@ -219,7 +219,10 @@ function server_delete_simple_func(data_xml,func)
 	ajax_with_custom_func("./ajax/delete_simple.php","domain="+domain+"&username="+username+"&del="+del_access+"&data_xml="+data_xml,function(e)
 	{
 		console.log(e.responseText);
-		func();
+		if(typeof func!="undefined")
+		{
+			func();
+		}
 	});
 }
 
@@ -257,7 +260,10 @@ function server_create_row_func(data_xml,activity_xml,func)
 		}
 		else
 		{
-			func();
+			if(typeof func!="undefined")
+			{
+				func();
+			}
 		}
 	});
 }
@@ -291,7 +297,10 @@ function server_create_simple_func(data_xml,func)
 		}
 		else
 		{
-			func();
+			if(typeof func!="undefined")
+			{
+				func();
+			}
 		}
 	});
 }
@@ -320,6 +329,23 @@ function server_create_batch(data_xml)
 		   hide_loader();
 	   }
     },1000);		
+}
+
+
+function server_create_batch_noloader(data_xml)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var cr_access=get_session_var('cr');
+	
+	var data_xml_array=data_xml.split("<separator></separator>");
+	data_xml_array.forEach(function(data_chunk)
+	{
+		ajax_with_custom_func("./ajax/create_batch.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&data_xml="+data_chunk,function(e)
+		{
+			//console.log(e.responseText);
+		});
+	});	
 }
 
 
@@ -372,7 +398,10 @@ function server_update_simple_func(data_xml,func)
 	ajax_with_custom_func("./ajax/update_simple.php","domain="+domain+"&username="+username+"&up="+up_access+"&data_xml="+data_xml,function(e)
 	{
 		//console.log(e.responseText);
-		func();
+		if(typeof func!="undefined")
+		{
+			func();
+		}
 	});
 }
 
@@ -471,6 +500,16 @@ function server_generate_report(report_id,results,callback)
 	});
 }
 
+function server_send_sms(to,message,type)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var read_access=get_session_var('re');
+	ajax_with_custom_func("./ajax/sms.php","domain="+domain+"&username="+username+"&re="+read_access+"&message="+message+"&type="+type+"&to="+to,function(e)
+	{
+		console.log("sms sent");
+	});
+}
 
 function ajax_for_app(url,kvp,func)
 {

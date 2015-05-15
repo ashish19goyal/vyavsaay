@@ -15,6 +15,7 @@ function get_single_column_data(callback,request_data)
 	}
 }
 
+
 /**
  * @returns {Array}
  */
@@ -501,6 +502,19 @@ function set_my_value(filter_data,filter_element)
 	},filter_data);
 }
 
+function set_my_value_func(filter_data,filter_element,func)
+{
+	get_single_column_data(function(data)
+	{
+		if(data.length>0)
+		{
+			filter_element.value=data[0];
+		}
+		func();
+	},filter_data);
+}
+
+
 function set_my_max_value(filter_data,filter_element)
 {
 	get_single_column_data(function(data)
@@ -800,3 +814,25 @@ function delete_feed(feed_id,element)
 	$(element).parent().parent().remove();
 }
 
+function send_sms(to,message,type)
+{
+	var sms_enabled=get_session_var('sms_enabled');
+	if(sms_enabled=='yes')
+	{
+		if(is_online())
+		{
+			server_send_sms(to,message,type);
+		}
+		else
+		{
+			var sms_data="<sms>"+
+						"<id>"+get_new_key()+"</id>"+
+						"<receiver>"+to+"</receiver>"+
+						"<message>"+message+"</message>"+
+						"<status>pending</status>"+
+						"<type>"+type+"</type>"+
+						"</sms>";
+			server_create_simple(sms_data);			
+		}
+	}
+}

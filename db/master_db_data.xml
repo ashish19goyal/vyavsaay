@@ -50,14 +50,14 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>Default Pamphlet template</name>
+			<name>Default newsletter template</name>
 			<header>Vyavsaay.com</header>
 			<footer>2014</footer>
 			<row></row>
 			<header_fields>1</header_fields>
 			<footer_fields>1</footer_fields>
 			<row_fields>5</row_fields>
-			<type>pamphlet</type>
+			<type>newsletter</type>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
@@ -378,6 +378,62 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>newsletter_items</tablename>
+			<listname>item_type</listname>
+			<name>product</name>
+			<value>Product</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>newsletter_items</tablename>
+			<listname>item_type</listname>
+			<name>service</name>
+			<value>Service</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>newsletter_items</tablename>
+			<listname>item_type</listname>
+			<name>news</name>
+			<value>News</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>newsletter_items</tablename>
+			<listname>item_type</listname>
+			<name>blog</name>
+			<value>Blog</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>newsletter_items</tablename>
+			<listname>item_type</listname>
+			<name>offer</name>
+			<value>Offer</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>newsletter_items</tablename>
+			<listname>item_type</listname>
+			<name>header</name>
+			<value>Header</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>newsletter_items</tablename>
+			<listname>item_type</listname>
+			<name>footer</name>
+			<value>Footer</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>supplier_bills</tablename>
 			<listname>imported</listname>
 			<name>yes</name>
@@ -411,6 +467,14 @@
 		</row>
 		<row>
 			<tablename>quotation</tablename>
+			<listname>status</listname>
+			<name>rejected</name>
+			<value>Rejected</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>quotation</tablename>
 			<listname>type</listname>
 			<name>product</name>
 			<value>Product</value>
@@ -436,16 +500,16 @@
 		<row>
 			<tablename>quotation_items</tablename>
 			<listname>type</listname>
-			<name>free</name>
-			<value>free</value>
+			<name>product</name>
+			<value>Product</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<tablename>quotation_items</tablename>
 			<listname>type</listname>
-			<name>bought</name>
-			<value>Bought</value>
+			<name>service</name>
+			<value>Service</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
@@ -670,6 +734,22 @@
 			<listname>type</listname>
 			<name>value list</name>
 			<value>Value list</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>sms</tablename>
+			<listname>type</listname>
+			<name>promotion</name>
+			<value>Promotion</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>sms</tablename>
+			<listname>type</listname>
+			<name>transaction</name>
+			<value>Transaction</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
@@ -1587,9 +1667,9 @@
 		</row>
 		<row>
 			<tablename>template</tablename>
-			<listname>pamphlet</listname>
-			<name>default_pamphlet</name>
-			<value>default_pamphlet</value>
+			<listname>newsletter</listname>
+			<name>default_newsletter</name>
+			<value>default_newsletter</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
@@ -3452,8 +3532,8 @@
 		<row>
 			<tablename>templates</tablename>
 			<listname>type</listname>
-			<name>pamphlet</name>
-			<value>Pamphlet</value>
+			<name>newsletter</name>
+			<value>Newsletter</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
@@ -3479,7 +3559,7 @@
 			<object>product</object>
 			<tablename>product_master</tablename>
 			<keycolumn>name</keycolumn>
-			<references_value>bill_items--item_name;product_instances--product_name;supplier_bill_items--product_name;purchase_order_items--product_name;supplier_return_items--item_name;offers--product_name;offers--free_product_name;sale_order_items--item_name;bill_items--item_name;bill_items--free_with;customer_return_items--item_name;attributes--item_name;cross_sells--name;cross_sells--cross_name;reviews--name;pre_requisites--name;pre_requisites--requisite_name;area_utilization--product_name;pamphlet_items--item_name</references_value>
+			<references_value>bill_items--item_name;product_instances--product_name;supplier_bill_items--product_name;purchase_order_items--product_name;supplier_return_items--item_name;offers--product_name;offers--free_product_name;sale_order_items--item_name;bill_items--item_name;bill_items--free_with;customer_return_items--item_name;attributes--item_name;cross_sells--name;cross_sells--cross_name;reviews--name;pre_requisites--name;pre_requisites--requisite_name;area_utilization--product_name;newsletter_items--item_name</references_value>
 			<references_id></references_id>
 			<last_updated>1</last_updated>
 		</row>
@@ -3487,7 +3567,7 @@
 			<object>service</object>
 			<tablename>services</tablename>
 			<keycolumn>name</keycolumn>
-			<references_value>bill_items--item_name;offers--service;offers--free_service_name;sale_order_items--item_name;bill_items--item_name;bill_items--free_with;service_instances--service_name;attributes--item_name;cross_sells--name;cross_sells--cross_name;reviews--name;pre_requisites--name;pre_requisites--requisite_name;area_utilization--service_name;pamphlet_items--item_name</references_value>
+			<references_value>bill_items--item_name;offers--service;offers--free_service_name;sale_order_items--item_name;bill_items--item_name;bill_items--free_with;service_instances--service_name;attributes--item_name;cross_sells--name;cross_sells--cross_name;reviews--name;pre_requisites--name;pre_requisites--requisite_name;area_utilization--service_name;newsletter_items--item_name</references_value>
 			<references_id>task_instances--source_id</references_id>
 			<last_updated>1</last_updated>
 		</row>
@@ -3527,7 +3607,7 @@
 			<object>offer</object>
 			<tablename>offers</tablename>
 			<keycolumn>name</keycolumn>
-			<references_value>bills--offer;bill_items--offer;pamphlet_items--offer_name</references_value>
+			<references_value>bills--offer;bill_items--offer;newsletter_items--offer_name</references_value>
 			<references_id></references_id>
 			<last_updated>1</last_updated>
 		</row>

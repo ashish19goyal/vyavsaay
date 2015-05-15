@@ -74,21 +74,22 @@ function form2_update_form()
 	if(is_update_access('form2'))
 	{
 		var form=document.getElementById("form2_master");
-
-		var p_name=form.elements[1].value;
-		var data_id=form.elements[2].value;
+		var name=form.elements[1].value;
+		var description=form.elements[2].value;
+		var data_id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var data_xml="<pamphlets>" +
+		var data_xml="<newsletter>" +
 					"<id>"+data_id+"</id>" +
-					"<name unique='yes'>"+p_name+"</name>" +
+					"<name>"+name+"</name>" +
+					"<description>"+description+"</description>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</pamphlets>";
+					"</newsletter>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>pamphlets</tablename>" +
+					"<tablename>newsletter</tablename>" +
 					"<link_to>form2</link_to>" +
 					"<title>Updated</title>" +
-					"<notes>Pamphlet "+p_name+"</notes>" +
+					"<notes>NewsLetter "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -101,7 +102,6 @@ function form2_update_form()
 		}
 	
 		$("[id^='save_form2_']").click();
-		//$("#modal3").dialog("open");
 	}
 	else
 	{
@@ -7990,6 +7990,91 @@ function form151_approve_item(button)
 }
 
 /**
+ * @form Manage Quotations
+ * @formNo 152
+ * @param button
+ */
+function form152_approve_item(button)
+{
+	if(is_update_access('form152'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+
+		var data_id=form.elements[0].value;
+		var status='approved';
+		var last_updated=get_my_time();
+		var reject_button=form.elements[8];
+		var approve_button=form.elements[7];
+		$(reject_button).hide();
+		approve_button.value='Approved';		
+		approve_button.removeAttribute("onclick");
+
+		var data_xml="<quotation>" +
+					"<id>"+data_id+"</id>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</quotation>";	
+
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Quotations
+ * @formNo 152
+ * @param button
+ */
+function form152_reject_item(button)
+{
+	if(is_update_access('form152'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+
+		var data_id=form.elements[0].value;
+		var status='rejected';
+		var last_updated=get_my_time();
+		var approve_button=form.elements[7];
+		var reject_button=form.elements[8];
+		$(approve_button).hide();
+		reject_button.value='Rejected';
+		reject_button.removeAttribute("onclick");
+		
+		var data_xml="<quotation>" +
+					"<id>"+data_id+"</id>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</quotation>";	
+
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form Prepare Quotation
  * @formNo 153
  * @param button
@@ -8003,6 +8088,7 @@ function form153_update_form()
 		var customer=form.elements[1].value;
 		var quot_type=form.elements[2].value;
 		var quot_date=get_raw_time(form.elements[3].value);
+		var intro_notes=form.elements[4].value;
 		
 		var message_string="Quotation from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
 		
@@ -8015,208 +8101,75 @@ function form153_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			total+=parseFloat(subform.elements[3].value);
-			amount+=parseFloat(subform.elements[4].value);
-			discount+=parseFloat(subform.elements[5].value);
-			tax+=parseFloat(subform.elements[6].value);
+			total+=parseFloat(subform.elements[6].value);
+			amount+=parseFloat(subform.elements[5].value);
+			discount+=parseFloat(subform.elements[7].value);
+			tax+=parseFloat(subform.elements[8].value);
 			
 			message_string+="\nItem: "+subform.elements[0].value;
 			message_string+=" Quantity: "+subform.elements[2].value;
-			message_string+=" Total: "+subform.elements[3].value;
+			message_string+=" Amount: "+subform.elements[5].value;
 		});
 		
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
-		var offer_detail="";
+		discount+=parseFloat(document.getElementById('form153_discount').value);
+		tax-=(discount*0.125);
+		total=my_round(amount-discount+tax,0);
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();		
 		
-		/////deleting existing free products
-		var items_data="<quotation_items>" +
-				"<quot_id>"+data_id+"</quot_id>" +
-				"<free_with>bill</free_with>" +
-				"<last_updated upperbound='yes'>"+last_updated+"</last_updated>" +
-				"</quotation_items>";
-
+		var data_xml="<quotation>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<date>"+quot_date+"</date>" +
+					"<amount>"+amount+"</amount>" +
+					"<total>"+total+"</total>" +
+					"<billing_type>"+quot_type+"</billing_type>" +
+					"<discount>"+discount+"</discount>" +
+					"<tax>"+tax+"</tax>" +
+					"<intro_notes>"+intro_notes+"</intro_notes>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</quotation>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>quotation</tablename>" +
+					"<link_to>form152</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Quotation Id "+data_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
 		if(is_online())
 		{
-			server_delete_simple(items_data);
+			server_update_row(data_xml,activity_xml);
 		}
 		else
 		{
-			local_delete_simple(items_data);
+			local_update_row(data_xml,activity_xml);
 		}
-		///////////////////////////////////
 		
-		var offer_data="<offers>" +
-				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
-				"<offer_type exact='yes'>bill</offer_type>" +
-				"<result_type></result_type>" +
-				"<discount_percent></discount_percent>" +
-				"<discount_amount></discount_amount>" +
-				"<quantity_add_percent></quantity_add_percent>" +
-				"<quantity_add_amount></quantity_add_amount>" +
-				"<free_product_name></free_product_name>" +
-				"<free_product_quantity></free_product_quantity>" +
-				"<offer_detail></offer_detail>" +
-				"<status array='yes'>active--extended</status>" +
-				"</offers>";
-		fetch_requested_data('',offer_data,function(offers)
+		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
+					"Rs. "+tax+"</br>" +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+		$('#form153_foot').html(total_row);
+		longPressEditable($('.dblclick_editable'));
+
+		message_string+="\nAmount: "+amount;
+		message_string+="\ndiscount: "+discount;
+		message_string+="\nTax: "+tax;
+		message_string+="\nTotal: "+total;
+
+		var subject="Quotation from "+get_session_var('title');
+		$('#form153_share').show();
+		$('#form153_share').off('click');
+		$('#form153_share').on('click',function()
 		{
-			offers.sort(function(a,b)
-			{
-				if(a.criteria_amount<b.criteria_amount)
-				{	return 1;}
-				else 
-				{	return -1;}
-			});
-			
-			for(var i in offers)
-			{
-				if(offers[i].result_type=='discount')
-				{
-					if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
-					{
-						var dis=parseFloat(((amount-discount)*parseInt(offers[i].discount_percent))/100);
-						tax-=(tax*(dis/(amount-discount)));
-						discount+=dis;
-						total=amount-discount+tax;
-					}
-					else 
-					{
-						var dis=parseFloat(offers[i].discount_amount)*(Math.floor((amount-discount)/parseFloat(offers[i].criteria_amount)));
-						tax-=(tax*(dis/(amount-discount)));
-						discount+=dis;
-						total=amount-discount+tax;
-					}
-				}
-				else if(offers[i].result_type=='product free')
-				{
-					var free_product_name=offers[i].free_product_name;
-					var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(amount-discount)/parseFloat(offers[i].criteria_amount)));
-					
-					get_inventory(free_product_name,'',function(free_quantities)
-					{
-						if(free_quantities>=free_product_quantity)
-						{
-							var id=get_new_key();
-							rowsHTML="<tr>";
-								rowsHTML+="<form id='form153_"+id+"'></form>";
-				                	rowsHTML+="<td data-th='Item'>";
-				                    	rowsHTML+="<input type='text' readonly='readonly' form='form153_"+id+"' value='"+free_product_name+"'>";
-			                        rowsHTML+="</td>";
-			                        rowsHTML+="<td data-th='Quantity'>";
-			                                rowsHTML+="<input type='number' readonly='readonly' required form='form153_"+id+"' value='0'>";
-			                        rowsHTML+="</td>";
-			                        rowsHTML+="<td data-th='Unit Price'>";
-			                                rowsHTML+="<input type='number' readonly='readonly' required form='form153_"+id+"' value='"+free_product_quantity+"'>";
-			                        rowsHTML+="</td>";
-			                        rowsHTML+="<td data-th='Total'>";
-			                                rowsHTML+="<input type='number' readonly='readonly' required form='form153_"+id+"' value='0'>";
-			                        rowsHTML+="</td>";
-			                        rowsHTML+="<td data-th='Action'>";
-			                                rowsHTML+="<input type='hidden' form='form153_"+id+"' value='0'>";
-			                                rowsHTML+="<input type='hidden' form='form153_"+id+"' value='0'>";
-			                                rowsHTML+="<input type='hidden' form='form153_"+id+"' value='0'>";
-			                                rowsHTML+="<input type='hidden' form='form153_"+id+"' value='free on the bill amount'>";
-			                                rowsHTML+="<input type='hidden' form='form153_"+id+"' value='"+id+"'>";
-			                                rowsHTML+="<input type='submit' class='save_icon' form='form153_"+id+"' id='save_form153_"+id+"' >";
-			                                rowsHTML+="<input type='button' class='delete_icon' form='form153_"+id+"' id='delete_form153_"+id+"' onclick='form153_delete_item($(this));'>";
-			                                rowsHTML+="<input type='hidden' form='form153_"+id+"' value=''>";
-			                                rowsHTML+="<input type='hidden' form='form153_"+id+"' value=''>";
-			                        rowsHTML+="</td>";
-			                rowsHTML+="</tr>";
-
-			                $('#form153_body').prepend(rowsHTML);
-			                
-			            	var bill_item_id=get_new_key();
-							var free_xml="<quotation_items>" +
-										"<id>"+bill_item_id+"</id>" +
-										"<item_name>"+free_product_name+"</item_name>" +
-										"<unit_price>0</unit_price>" +
-										"<quantity>"+free_product_quantity+"</quantity>" +
-										"<amount>0</amount>" +
-										"<total>0</total>" +
-										"<discount>0</discount>" +
-										"<offer></offer>" +
-										"<type>free</type>" +
-										"<tax>0</tax>" +
-										"<quot_id>"+data_id+"</quot_id>" +
-										"<free_with>bill</free_with>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</quotation_items>";	
-							
-							if(is_online())
-							{
-								server_create_simple(free_xml);
-							}
-							else
-							{
-								local_create_simple(free_xml);
-							}
-						}
-						else
-						{
-							$("#modal7").dialog("open");
-						}
-					});
-				}
-				offer_detail=offers[i].offer_detail;
-				break;
-			}
-			
-			var data_xml="<quotation>" +
-						"<id>"+data_id+"</id>" +
-						"<customer>"+customer+"</customer>" +
-						"<date>"+quot_date+"</date>" +
-						"<amount>"+amount+"</amount>" +
-						"<total>"+total+"</total>" +
-						"<type>product</type>" +
-						"<billing_type>"+bill_type+"</billing_type>" +
-						"<offer>"+offer_detail+"</offer>" +
-						"<discount>"+discount+"</discount>" +
-						"<tax>"+tax+"</tax>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</quotation>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>quotation</tablename>" +
-						"<link_to>form152</link_to>" +
-						"<title>Updated</title>" +
-						"<notes>Quotation Id "+data_id+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			if(is_online())
-			{
-				server_update_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_update_row(data_xml,activity_xml);
-			}
-			
-			var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-						"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-						"<td>Rs. "+amount+"</br>" +
-						"Rs. "+discount+"</br>" +
-						"Rs. "+tax+"</br>" +
-						"Rs. "+total+"</td>" +
-						"<td></td>" +
-						"</tr>";
-			$('#form153_foot').html(total_row);
-
-			message_string+="\nAmount: "+amount;
-			message_string+="\ndiscount: "+discount;
-			message_string+="\nTax: "+tax;
-			message_string+="\nTotal: "+total;
-
-			var subject="Quotation from "+get_session_var('title');
-			$('#form153_share').show();
-			$('#form153_share').off('click');
-			$('#form153_share').on('click',function()
-			{
-				modal44_action(customer,subject,message_string);
-			});
+			modal44_action(customer,subject,message_string);
 		});
+		
 		$("[id^='save_form153_']").click();
 	}
 	else
@@ -8696,7 +8649,7 @@ function form157_receive_item(button)
 		var target=form.elements[3].value;
 		form.elements[4].value='received';
 		
-		var data_id=form.elements[6].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var data_xml="<store_movement>" +
 					"<id>"+data_id+"</id>" +
@@ -8746,7 +8699,7 @@ function form157_cancel_item(button)
 		var source=form.elements[2].value;
 		form.elements[4].value='cancelled';
 		
-		var data_id=form.elements[6].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		var data_xml="<store_movement>" +
 					"<id>"+data_id+"</id>" +
@@ -8784,6 +8737,89 @@ function form157_cancel_item(button)
 
 /**
  * @form Enter Purchase Bill (DLM)
+ * @formNo 158
+ * @param button
+ */
+function form158_update_item(form)
+{
+	if(is_update_access('form158'))
+	{
+		var master_form=document.getElementById("form158_master");
+		
+		var imported=master_form.elements[5].checked;
+		var bill_id=master_form.elements[6].value;
+		
+		var name=form.elements[0].value;
+		var pquantity=form.elements[1].value;
+		var fquantity=form.elements[2].value;
+		var quantity=parseFloat(pquantity)+parseFloat(fquantity);
+		var price=form.elements[3].value;
+		var tax=form.elements[4].value;
+		var total=form.elements[5].value;
+		var amount=total-tax;		
+		var storage=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		var save_button=form.elements[8];
+		var del_button=form.elements[9];
+		var last_updated=get_my_time();
+		var raw_price='';
+		var conversion_rate='';		
+		
+		if(imported)
+		{
+			raw_price=form.elements[3].value;
+			conversion_rate=form.elements[4].value;		
+			price=form.elements[5].value;
+			tax=form.elements[6].value;
+			total=form.elements[7].value;
+			amount=total-tax;		
+			storage=form.elements[8].value;
+			data_id=form.elements[9].value;
+			save_button=form.elements[10];
+			del_button=form.elements[11];
+		}
+			
+		var data_xml="<supplier_bill_items>" +
+				"<id>"+data_id+"</id>" +
+				"<product_name>"+name+"</product_name>" +
+				"<batch>"+name+"</batch>" +
+				"<quantity>"+quantity+"</quantity>" +
+				"<p_quantity>"+pquantity+"</p_quantity>" +
+				"<f_quantity>"+fquantity+"</f_quantity>" +
+				"<total>"+total+"</total>" +
+				"<tax>"+tax+"</tax>" +
+				"<amount>"+amount+"</amount>" +
+				"<unit_price>"+price+"</unit_price>" +
+				"<bill_id>"+bill_id+"</bill_id>" +
+				"<storage>"+storage+"</storage>" +
+				"<raw_price>"+raw_price+"</raw_price>"+
+				"<conversion_rate>"+conversion_rate+"</conversion_rate>"+				
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</supplier_bill_items>";	
+	
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+				
+		for(var i=0;i<8;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Enter Purchase Bill (DLM)
  * @param button
  */
 function form158_update_form()
@@ -8797,8 +8833,12 @@ function form158_update_form()
 		var bill_date=get_raw_time(form.elements[3].value);
 		var entry_date=get_raw_time(form.elements[4].value);
 		var imported='no';
+		var ntoes="Local Purchase";
 		if(form.elements[5].checked)
+		{
 			imported='yes';
+			notes='Imported';
+		}
 		var total=0;
 		var tax=0;
 		var amount=0;
@@ -8847,7 +8887,8 @@ function form158_update_form()
 					"<amount>"+amount+"</amount>" +
 					"<tax>"+tax+"</tax>" +
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
-					"<imported>"+imported+"</imported>" +					
+					"<imported>"+imported+"</imported>" +
+					"<notes>"+notes+"</notes>"+					
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</supplier_bills>";
 		var activity_xml="<activity>" +

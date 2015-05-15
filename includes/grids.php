@@ -95,10 +95,10 @@
 		</li>
 
 		<li id="offers_link" onclick="grid_click('offers');" style='background-color:#2a78ba'>
-			<a><div style='background-color:#085698'><b data-i18n="function.offers"></b></div></a>		
+			<a><div style='background-color:#085698'><b data-i18n="function.promotion"></b></div></a>		
 			<ul>
 				<li>Latest offer: <a class='grid_item' id='grid_item_22'></a></li>
-				<li># Active offers: <a class='grid_item' id='grid_item_23'>0</a></li>
+				<li># Sale Leads: <a class='grid_item' id='grid_item_23'>0</a></li>
 			</ul>
 		</li>
 

@@ -1,6 +1,7 @@
 <div id='offers_main' class='vy_tabs function_main'>
 	
 		<ul>
+			<li><a id='form81_link' href='#form81' onclick='form81_header_ini(); form81_ini();' data-i18n='form.sale_leads'></a></li>
 			<li><a id='form35_link' href='#form35' onclick='form35_header_ini(); form35_ini();' data-i18n='form.manage_offers'></a></li>
 			<li><a id='form2_link' href='#form2' onclick='form2_header_ini(); form2_ini();' data-i18n='form.create_pamphlet'></a></li>
 			<li><a id='form44_link' href='#form44' onclick='form44_header_ini(); form44_ini();' data-i18n='form.manage_pamphlets'></a></li>
@@ -11,6 +12,7 @@
 		</ul>
 
 	<?php 
+			include "forms/form81.php";		
 			include "forms/form35.php";
 			include "forms/form2.php";
 			include "forms/form44.php";

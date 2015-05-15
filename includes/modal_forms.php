@@ -627,6 +627,18 @@
 		oops! your location can't be determined at the moment. Please try in a few moments.
 	</div>
 
+	<div id="modal57" title="Pricing History">
+		Previous Bills
+		<table id='modal57_bill_table'>
+		</table>
+		<br>
+		Previous Quotations
+		<table id='modal57_quot_table'>
+		</table>
+		
+	</div>
+
+
 	<div id="modal101" title="Update details">
 		<form id='modal101_form'>
 			<fieldset>
@@ -772,6 +784,8 @@
 				<label>Picture: <output></output>
 								<input type="file"></label><br>
 				<label>Tax (%): <input type="number" step='any'></label><br>
+				<label>Cost Price: <input type="number" step='any'></label><br>
+				<label>Sale Price: <input type="number" step='any'></label><br>
 				<label id='modal112_attributes'></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>

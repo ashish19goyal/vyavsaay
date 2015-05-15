@@ -26,7 +26,10 @@ function create_local_db(domain,func)
 			{
 				var db=e.target.result;
 				db.close();
-				func();
+				if(typeof func!="undefined")
+				{					
+					func();
+				}
 			};
 			
 			request.onerror=function(ev)
@@ -79,7 +82,10 @@ function open_local_db(func)
 	request.onsuccess=function(e)
 	{
 		static_local_db=e.target.result;
-		func();
+		if(typeof func!="undefined")
+		{					
+			func();
+		}
 	};
 	request.onerror=function(e)
 	{
@@ -874,7 +880,10 @@ function local_update_simple_func(data_xml,func)
 					static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 					{
 						localdb_open_requests-=1;
-						func();
+						if(typeof func!="undefined")
+						{					
+							func();
+						}
 					};
 				};
 			}
@@ -1075,7 +1084,10 @@ function local_create_row_func(data_xml,activity_xml,func)
 				static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 				{
 					localdb_open_requests-=1;
-					func();
+					if(typeof func!="undefined")
+					{					
+						func();
+					}
 					hide_loader();
 				};
 			};
@@ -1115,7 +1127,11 @@ function local_create_row_func(data_xml,activity_xml,func)
 						static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 						{
 							localdb_open_requests-=1;
-							func();
+									
+							if(typeof func!="undefined")
+							{					
+								func();
+							}
 							hide_loader();
 						};
 					};
@@ -1398,6 +1414,152 @@ function local_create_batch(data_xml)
 }
 
 
+/**
+ * this function saves multiple records to local db
+ * @param data_xml
+ * @param activity_xml
+ * @returns
+ */
+function local_create_batch_noloader(data_xml)
+{
+	if(typeof static_local_db=='undefined')
+	{
+		open_local_db(function()
+		{
+			local_create_batch(data_xml);
+		});
+	}
+	else
+	{
+		var parser=new DOMParser();
+		var data_xml_array=data_xml.split("<separator></separator>");
+		var rows=[];
+		var table="";
+		data_xml_array.forEach(function(data_chunk)
+		{
+			var data=parser.parseFromString(data_chunk,"text/xml");
+			table=data.childNodes[0].nodeName;
+			var rows_data=data.childNodes[0].childNodes;
+			
+			for(var x=0;x<rows_data.length;x++)
+			{
+				rows.push(rows_data[x]);
+			}
+		});
+		
+		var unique=new Array();
+		
+		if(rows.length>0)
+		{
+			var first_col=rows[0].childNodes;
+			for(var j=0;j<first_col.length;j++)
+			{
+				if(first_col[j].innerHTML!=null && first_col[j].innerHTML!="")
+				{
+					if(first_col[j].hasAttribute('unique'))
+					{
+						var fil=new Object();
+						fil.name=first_col[j].nodeName;
+						fil.value=first_col[j].innerHTML;
+						unique.push(fil);
+					}
+				}
+			}
+		}
+
+		var transaction=static_local_db.transaction([table,'activities'],"readwrite");
+		var os1=transaction.objectStore(table);
+		var os2=transaction.objectStore('activities');
+		var activity_id=parseFloat(get_new_key());
+		
+		var i=0;
+		var m=0;
+		
+		function create_records()
+		{
+			if(i<rows.length)
+			{
+				var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
+				var cols=rows[i].childNodes;
+				
+				var data_row=new Object();
+				
+				for(var j=0;j<cols.length;j++)
+				{
+					data_row[cols[j].nodeName]=cols[j].innerHTML;
+				}
+				
+				localdb_open_requests+=1;
+				
+				if(unique.length>0)
+				{
+					var kv=IDBKeyRange.bound([data_row[unique[0].name],'0'],[data_row[unique[0].name],'99999999']);
+					os1.index(unique[0].name).get(kv).onsuccess=function(e)
+					{
+						var data_record=e.target.result;
+						if(data_record)
+						{
+							i+=1;
+							localdb_open_requests-=1;
+							create_records();
+						}
+						else
+						{
+							os1.put(data_row).onsuccess=function(e)
+							{
+								var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
+								var row_data_xml="<"+table+">"+rows[i].innerHTML+"</"+table+">";
+								var act_row={id:""+(activity_id+i),
+										type:'create',
+										status:'unsynced',
+										data_xml:row_data_xml,
+										user_display:'no',
+										data_id:data_id,
+										tablename:table,
+										link_to:'',
+										last_updated:""+get_my_time()};
+								
+								os2.put(act_row).onsuccess=function(e)
+								{
+									i+=1;
+									localdb_open_requests-=1;
+									create_records();
+								};
+							};
+						}
+					};
+				}
+				else
+				{
+					os1.put(data_row).onsuccess=function(e)
+					{
+						var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
+						var row_data_xml="<"+table+">"+rows[i].innerHTML+"</"+table+">";
+						var act_row={id:""+(activity_id+i),
+								type:'create',
+								status:'unsynced',
+								data_xml:row_data_xml,
+								user_display:'no',
+								data_id:data_id,
+								tablename:table,
+								link_to:'',
+								last_updated:""+get_my_time()};
+						
+						os2.put(act_row).onsuccess=function(e)
+						{
+							i+=1;
+							localdb_open_requests-=1;
+							create_records();
+						};
+					};
+				}
+			}
+		};
+
+		create_records();
+	}
+}
+
 
 function local_create_simple_func(data_xml,func)
 {
@@ -1459,7 +1621,10 @@ function local_create_simple_func(data_xml,func)
 				static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 				{
 					localdb_open_requests-=1;
-					func();
+					if(typeof func!="undefined")
+					{					
+						func();
+					}
 				};
 			};
 		}
@@ -1497,7 +1662,10 @@ function local_create_simple_func(data_xml,func)
 						static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 						{
 							localdb_open_requests-=1;
-							func();
+							if(typeof func!="undefined")
+							{					
+								func();
+							}
 						};
 					};
 				}
@@ -2060,7 +2228,10 @@ function local_delete_simple_func(data_xml,func)
 							static_local_db.transaction(['activities'],"readwrite").objectStore('activities').put(act_row).onsuccess=function(e)
 							{
 								localdb_open_requests-=1;
-								func();
+								if(typeof func!="undefined")
+								{					
+									func();
+								}
 							};
 						};
 					}
@@ -2156,7 +2327,10 @@ function local_delete_simple_func(data_xml,func)
 		   if(localdb_open_requests===0)
 		   {
 			   clearInterval(local_delete_complete);
-			   func();
+			   if(typeof func!="undefined")
+				{					
+					func();
+				}
 		   }
         },2000);
 	}

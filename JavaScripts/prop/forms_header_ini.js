@@ -29,20 +29,32 @@ function form1_header_ini()
 
 
 /**
- * @form Create Pamphlets
+ * @form Create Newsletter
  * @formNo 2
  */
 function form2_header_ini()
 {
 	var fields=document.getElementById('form2_master');
-	fields.elements[1].value="";
-	fields.elements[2].value=get_new_key();
+	var name_filter=fields.elements[1];
+	fields.elements[2].value="";
+	var id_filter=fields.elements[3];
+	id_filter.value=get_new_key();
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
 	{
 		event.preventDefault();
+		form2_add_item();
+	});
+	
+	var save_button=fields.elements[4];	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
 		form2_create_form();
 	});
+					
+	name_filter.value="";	
 }
 
 
@@ -994,6 +1006,20 @@ function form39_header_ini()
 	var filter_fields=document.getElementById('form39_header');
 	var name_filter=filter_fields.elements[0];
 	var make_filter=filter_fields.elements[1];
+	var add_button=filter_fields.elements[2];
+
+	$(add_button).off('click');
+	$(add_button).on('click',function()
+	{
+		if(is_read_access('form1'))
+		{
+			modal14_action();
+		}
+		else 
+		{
+			modal112_action();
+		}
+	});
 	
 	var make_data="<product_master>" +
 			"<make></make>" +
@@ -1112,7 +1138,7 @@ function form43_header_ini()
 
 
 /**
- * @form Manage Pamphlets
+ * @form Manage Newsletter
  * @formNo 44
  */
 function form44_header_ini()
@@ -1120,9 +1146,9 @@ function form44_header_ini()
 	var filter_fields=document.getElementById('form44_header');
 	var name_filter=filter_fields.elements[0];
 	
-	var name_data="<pamphlets>" +
+	var name_data="<newsletter>" +
 			"<name></name>" +
-			"</pamphlets>";
+			"</newsletter>";
 	
 	set_my_filter(name_data,name_filter);
 
@@ -1908,9 +1934,9 @@ function form78_header_ini()
 	name_filter.value="";
 	fields.elements[2].value="";
 	
-	var name_data="<pamphlets>" +
+	var name_data="<newsletter>" +
 			"<name></name>" +
-			"</pamphlets>";
+			"</newsletter>";
 	set_my_value_list(name_data,name_filter);
 	
 	$(fields).off('submit');
@@ -5382,9 +5408,16 @@ function form153_header_ini()
 	var customers_filter=fields.elements[1];
 	var quot_type=fields.elements[2];
 	var date=fields.elements[3];
-	fields.elements[4].value=get_new_key();
-	fields.elements[5].value="";
-	var save_button=fields.elements[6];
+	fields.elements[5].value=get_new_key();
+	fields.elements[6].value="";
+	var save_button=fields.elements[7];
+	var print_button=fields.elements[8];
+	
+	$(print_button).off('click');
+	$(print_button).on('click',function()
+	{
+		form153_print_form();
+	});
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -5405,7 +5438,7 @@ function form153_header_ini()
 	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
-		form153_add_item();
+		form153_add_product();
 	});
 	
 	var customers_data="<customers>" +

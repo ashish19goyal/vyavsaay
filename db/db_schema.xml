@@ -498,21 +498,24 @@
 			<owner index='yes' type="VARCHAR(100)"></owner>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</assets>
-	<pamphlets>
+	<newsletter>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(50)" unique='yes'></name>
+			<description index='no' type="TEXT"></description>
 			<count_items index='no' type="INT"></count_items>
 			<valid_until index='yes' type="BIGINT"></valid_until>
 			<last_updated index='yes' type="BIGINT"></last_updated>
-	</pamphlets>
-	<pamphlet_items>
+	</newsletter>
+	<newsletter_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<pamphlet_id index='yes' type="BIGINT"></pamphlet_id>
+			<nl_id index='yes' type="BIGINT"></nl_id>
+			<item_type index='yes' type='VARCHAR(25)'></item_type><!--product/service/news/blog/offer/header/footer-->
 			<item_name index='yes' type="VARCHAR(90)"></item_name>
-			<offer_name index='yes' type='VARCHAR(30)'></offer_name>
-			<offer index='no' type="TEXT"></offer>
+			<item_detail index='no' type="TEXT"></item_detail>
+			<data_blob index='no' type="MEDIUMBLOB"></data_blob>
+			<url index='no' type="TEXT"></url>
 			<last_updated index='yes' type="BIGINT"></last_updated>
-	</pamphlet_items>
+	</newsletter_items>
 	<activities>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<title index='yes' type="VARCHAR(300)"></title>
@@ -897,6 +900,7 @@
 			<receiver index='yes' type="VARCHAR(15)"></receiver>
 			<message index='yes' type="TEXT"></message>
 			<status index='yes' type="VARCHAR(25)"></status><!--pending/sent/cancelled-->
+			<type index='yes' type='VARCHAR(25)'></type><!--transaction/promotion-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</sms>
 	<roles>
@@ -946,18 +950,20 @@
 			<date index='yes' type="BIGINT"></date>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<total index='yes' type="DECIMAL(12,2)"></total>
-			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
 			<billing_type index="yes" type="VARCHAR(20)"></billing_type>
 			<offer index='no' type="TEXT"></offer>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
-			<status index='yes' type="VARCHAR(25)"></status><!--generated/approved-->
+			<intro_notes index='no' type="TEXT"></intro_notes>
+			<status index='yes' type="VARCHAR(25)"></status><!--generated/approved/rejected-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</quotation>
 	<quotation_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<quotation_id index='yes' type="BIGINT"></quotation_id>
 			<item_name index='yes' type="VARCHAR(90)"></item_name>
+			<description index='no' type='TEXT'></description>
+			<unit index='no' type='VARCHAR(30)'></unit>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<p_quantity index='no' type="DECIMAL(12,2)"></p_quantity>
 			<f_quantity index='no' type="DECIMAL(12,2)"></f_quantity>
@@ -967,10 +973,9 @@
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<offer index='no' type="TEXT"></offer>
-			<type index='yes' type="VARCHAR(10)"></type><!-- free/bought -->	
+			<type index='yes' type="VARCHAR(10)"></type><!-- service/product -->	
 			<notes index='no' type="TEXT"></notes>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
-			<free_with index="no" type="VARCHAR(90)"></free_with>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</quotation_items>
 </re_xml>

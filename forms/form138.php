@@ -2,11 +2,9 @@
 	<form id='form138_master'>
 		<fieldset>
 			<label>Project Name: <input type='text' required></label>
-			<label>
-				<input type='hidden' name='project_id' form='form138_master'>
-				<input type='button' onclick='form138_ini();' title='Display Gantt chart' class='generic_icon' value='Refresh'>
-				<input type='button' title='Add Schedule' class='add_icon'>
-			</label>
+			<label>	<input type='hidden' name='project_id' form='form138_master'></label>
+			<label>	<input type='button' onclick='form138_ini();' title='Display Gantt chart' class='generic_icon' value='Refresh'></label>
+			<label>	<input type='button' title='Add Schedule' class='add_icon'>	</label>
 		</fieldset>
 	</form>
 	<br><br>

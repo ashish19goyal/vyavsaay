@@ -471,15 +471,14 @@ function set_grid_item_22()
 };
 
 /**
- * @item # active offers
+ * @item # Sale leads
  * @itemNo 23
  */
 function set_grid_item_23()
 {
-	var columns="<offers>" +
+	var columns="<sale_leads>" +
 		"<id></id>" +
-		"<status exact='yes'>active</status>" +
-		"</offers>";
+		"</sale_leads>";
 	get_single_column_data(function(results)
 	{
 		document.getElementById('grid_item_23').innerHTML=results.length;

@@ -25,7 +25,8 @@
     "sale_reports": "Sale Reports",
     "ecommerce":"E-Commerce",
     "projects":"Projects",
-    "admin":"Admin"
+    "admin":"Admin",
+    "promotion":"Promotion"
   },
   "general":{
   	"hello": "Hello"
@@ -73,9 +74,9 @@
   	"staff_map":"Staff Map",
   	"supplier_map_by_debit":"Supplier Map by debit",
   	"supplier_map_by_products":"Supplier Map by products",
-  	"create_pamphlet":"Create pamphlet",
+  	"create_pamphlet":"Create News Letter",
   	"manage_offers":"Manage Offers",
-  	"manage_pamphlets":"Manage Pamphlets",
+  	"manage_pamphlets":"Manage News Letters",
   	"manage_products":"Manage Products",
   	"manage_pre_requisites":"Manage Pre-requisites",
   	"pre_requisites_report":"Pre-requisites report",
@@ -100,7 +101,8 @@
   	"purchase_order_print_template":"Purchase Order print template",
   	"payment_receipt_print_template": "Payment receipt print template",
   	"credit_note_print_template": "Credit note print template",
-  	"pamphlet_print_template": "Pamphlet print template",
+  	"pamphlet_print_template": "New Letter print template",
+  	"newsletter_print_template": "New Letter print template",
   	"service_bill_print_template": "Service bill print template",
   	"product_bill_print_template": "Product bill print template",
   	"supplier_return_print_template":"Purchase return print template",
@@ -108,6 +110,8 @@
   	"sync_data": "Sync data",
   	"official_address": "Official Address",
   	"phone_no": "Phone No",
+  	"website":"Website",
+  	"business_intro":"Business Introduction",
   	"email":"Email",
   	"longitude":"Longitude",
   	"latitude":"Latitude",
@@ -263,6 +267,7 @@
   	"store_placement_dlm":"Store Placement (DLM)",
   	"store_movement_dlm":"Store Movement (DLM)",
   	"enter_purchases_dlm":"Enter Purchases (DLM)",
-  	"footer_message":"Footer Message"
+  	"footer_message":"Footer Message",
+  	"sms_enabled":"Enable SMS service (this is separately billed)"
   }
 }

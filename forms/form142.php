@@ -5,11 +5,9 @@
 			<label>Display Name<br><input type='text' required></label>
 			<label>Grid<br><input type='text' required></label>
 			<label>Status<br><input type='text' required></label>
-			<label>
-				<input type='hidden' name='id'>
-				<input type='button' title='Save Questionnaire' class='save_icon'>
-				<input type='submit' class='submit_hidden'>
-			</label>
+			<label>	<input type='hidden' name='id'></label>
+			<label>	<input type='button' title='Save Questionnaire' class='save_icon'></label>
+			<label>	<input type='submit' class='submit_hidden'>	</label>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

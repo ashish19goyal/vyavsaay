@@ -563,6 +563,10 @@ function modal11_action(func)
 				local_create_simple(account_xml);
 			}	
 			
+			var business_title=get_session_var('title');
+			var sms_message="Hi "+name+", thanks for being a valuable customer of "+business_title+". Please visit again.";
+			//send_sms(phone,sms_message,'transaction');			
+			
 			var id=get_new_key();
 			$("#modal11_attributes").find('input').each(function()
 			{
@@ -3536,15 +3540,14 @@ function modal37_action(id)
  * @modalNo 38
  * @modal Update sale price
  */
-function modal38_action(father_id)
+function modal38_action(father_id,sale_price_value)
 {
-	var father_form=document.getElementById("form1_"+father_id);
 	var form=document.getElementById('modal38_form');	
 	var fsale_price=form.elements[1];
 	var billing_label=document.getElementById('modal38_billings');
 	$(billing_label).html("");
-		
-	fsale_price.value=father_form.elements[3].value;
+
+	fsale_price.value=sale_price_value;
 	////adding sale price fields for all billing types///////
 	var billing_type_data="<sale_prices>" +
 			"<id></id>" +
@@ -4878,25 +4881,28 @@ function modal50_action()
 {
 	show_loader();
 	var form=document.getElementById("form78_master");
-	var pamphlet_name=form.elements[1].value;
-	var pamphlet_id=form.elements[2].value;
-	//console.log(pamphlet_id);
-	var pamphlet_items_data="<pamphlet_items>" +
+	var newsletter_name=form.elements[1].value;
+	var newsletter_id=form.elements[2].value;
+	//console.log(newsletter_id);
+	var newsletter_items_data="<newsletter_items>" +
 				"<item_name></item_name>" +
-				"<offer></offer>" +
-				"<pamphlet_id exact='yes'>"+pamphlet_id+"</pamphlet_id>" +
-				"</pamphlet_items>";
+				"<item_type></item_type>" +
+				"<item_detail></item_detail>"+
+				"<data_blob></data_blob>"+
+				"<nl_id exact='yes'>"+newsletter_id+"</nl_id>" +
+				"</newsletter_items>";
 			
-	fetch_requested_data('',pamphlet_items_data,function(results)
+	fetch_requested_data('',newsletter_items_data,function(results)
 	{
-		var email_data_string="Exciting offers from: " +get_session_var('title')+
-		"\nTo avail visit us at: "+get_session_var('address')+"\n";
+		var business_title=get_session_var('title');
+		var email_data_string="New Letter from: " +business_title+
+		"\nVisit us at: "+get_session_var('address')+"\n";
 		
 		for(var i in results)
 		{
 			email_data_string+="\n"+
 					"Item: "+results[i].item_name+
-					" Offer: "+results[i].offer;
+					" Detail: "+results[i].item_detail;
 		}	
 		
 		var email_id_string="";
@@ -4913,7 +4919,7 @@ function modal50_action()
 		});
 		
 		email_data_string=encodeURIComponent(email_data_string);
-		var mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su="+encodeURIComponent(pamphlet_name)+"&to="+get_session_var('email')+"&bcc="+email_id_string+"&body="+email_data_string;
+		var mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su="+encodeURIComponent(business_title+" - "+newsletter_name)+"&to="+get_session_var('email')+"&bcc="+email_id_string+"&body="+email_data_string;
 		hide_loader();
 		window.open(mail_string,'_blank');
 	});		
@@ -5138,6 +5144,86 @@ function modal54_action(item_name)
 		
 	$("#modal54").dialog("open");
 }
+
+/**
+ * @modalNo 57
+ * @modal Pricing History
+ */
+function modal57_action(item_name,customer)
+{
+	var bills_data="<bills>" +
+			"<id></id>" +
+			"<customer_name exact='yes'>"+customer+"</customer_name>" +
+			"</bills>";
+	get_single_column_data(function(bills)
+	{
+		var bill_id_string="--";
+		for(var i in bills)
+		{
+			bill_id_string+=bills[i]+"--";
+		}
+		
+		var bill_items_data="<bill_items count='5'>" +
+				"<id></id>" +
+				"<item_name exact='yes'>"+item_name+"</item_name>" +
+				"<quantity></quantity>" +
+				"<total></total>" +
+				"<bill_id array='yes'>"+bill_id_string+"</bill_id>" +
+				"</bill_items>";
+		fetch_requested_data('',bill_items_data,function(bill_items)
+		{
+			var item_table=document.getElementById("modal57_bill_table");
+			item_table.innerHTML="";
+			var item_head=document.createElement('tr');
+			item_head.innerHTML="<th>Quantity</th><th>Total</th>";
+			item_table.appendChild(item_head);
+			bill_items.forEach(function(bill_item)
+			{
+				var item_row=document.createElement('tr');
+				item_row.innerHTML="<td>"+bill_item.quantity+"</td><td>"+bill_item.total+"</td>";
+				item_table.appendChild(item_row);
+			});
+		});
+	},bills_data);
+	
+	var quot_data="<quotation>" +
+			"<id></id>" +
+			"<customer exact='yes'>"+customer+"</customer>" +
+			"</quotation>";
+	get_single_column_data(function(quots)
+	{
+		var quot_id_string="--";
+		for(var i in quots)
+		{
+			quot_id_string+=quots[i]+"--";
+		}
+		
+		var quot_items_data="<quotation_items count='5'>" +
+				"<id></id>" +
+				"<item_name exact='yes'>"+item_name+"</item_name>" +
+				"<quantity></quantity>" +
+				"<total></total>" +
+				"<quotation_id array='yes'>"+quot_id_string+"</quotation_id>" +
+				"</quotation_items>";
+		fetch_requested_data('',quot_items_data,function(quot_items)
+		{
+			var item_table=document.getElementById("modal57_quot_table");
+			item_table.innerHTML="";
+			var item_head=document.createElement('tr');
+			item_head.innerHTML="<th>Quantity</th><th>Total</th>";
+			item_table.appendChild(item_head);
+			quot_items.forEach(function(quot_item)
+			{
+				var item_row=document.createElement('tr');
+				item_row.innerHTML="<td>"+quot_item.quantity+"</td><td>"+quot_item.total+"</td>";
+				item_table.appendChild(item_row);
+			});
+		});
+	},quot_data);
+	
+	$("#modal57").dialog("open");
+}
+
 
 /**
  * @modalNo 101
@@ -6042,33 +6128,34 @@ function modal112_action(func)
 			var tax=form.elements[6].value;
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
+			var cost_price=form.elements[7].value;
+			var sale_price=form.elements[8].value;
 			var url=$(fpictureinfo).find('div').find('img').attr('src');
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
-						"<id>"+data_id+"</id>" +
-						"<make>"+make+"</make>" +
-						"<name>"+name+"</name>" +
-						"<description>"+description+"</description>" +
-						"<tax>"+tax+"</tax>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</product_master>";	
+							"<id>"+data_id+"</id>" +
+							"<make>"+make+"</make>" +
+							"<name>"+name+"</name>" +
+							"<description>"+description+"</description>" +
+							"<tax>"+tax+"</tax>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</product_master>";	
 			var instance_xml="<product_instances>"+
 							"<id>"+data_id+"</id>"+
 							"<product_name>"+name+"</product_name>"+
 							"<batch>"+name+"</batch>"+
-							"<cost_price></cost_price>"+
-							"<sale_price></sale_price>"+
-							"<mrp></mrp>"+
+							"<cost_price>"+cost_price+"</cost_price>"+
+							"<sale_price>"+sale_price+"</sale_price>"+
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</product_instances>";			
 			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>product_master</tablename>" +
-						"<link_to>form39</link_to>" +
-						"<title>Added</title>" +
-						"<notes>Product "+name+" to inventory</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>product_master</tablename>" +
+							"<link_to>form39</link_to>" +
+							"<title>Added</title>" +
+							"<notes>Product "+name+" to inventory</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
 			if(is_online())
 			{
 				server_create_row_func(data_xml,activity_xml,func);
@@ -6080,6 +6167,37 @@ function modal112_action(func)
 				local_create_simple(instance_xml);
 			}	
 
+			////adding sale price fields for all billing types///////
+			var billing_type_data="<bill_types>" +
+					"<name></name>" +
+					"<status exact='yes'>active</status>" +
+					"</bill_types>";
+			get_single_column_data(function(bill_types)
+			{
+				bill_types.forEach(function(bill_type)
+				{				
+					var id=get_new_key();
+					var sale_price_xml="<sale_prices>" +
+							"<id>"+id+"</id>" +
+							"<product_name>"+name+"</product_name>" +
+							"<batch>"+name+"</batch>" +
+							"<sale_price>"+sale_price+"</sale_price>" +
+							"<pi_id>"+data_id+"</pi_id>" +
+							"<billing_type>"+bill_type+"</billing_type>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</sale_prices>";
+					if(is_online())
+					{
+						server_create_simple(sale_price_xml);
+					}
+					else
+					{
+						local_create_simple(sale_price_xml);
+					}
+				});
+			},billing_type_data);
+			////////////////////////////////////////////////
+	
 			var id=get_new_key();
 			$("#modal112_attributes").find('input').each(function()
 			{

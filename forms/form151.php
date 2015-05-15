@@ -5,10 +5,8 @@
 			<label>Customer<br><textarea readonly="readonly"></textarea></label>
 			<label>Expense Estimate<br>Rs. <input type='number' value='0' readonly="readonly"></label>
 			<label>Total Expense<br>Rs. <input type='number' value='0' readonly="readonly"></label>
-			<label>
-				<input type='button' title='Print' class='print_icon' onclick='form151_print_form($(this));'>
-				<input type='submit' class='submit_hidden'>
-			</label>	
+			<label><input type='button' title='Print' class='print_icon' onclick='form151_print_form($(this));'></label>
+			<label>	<input type='submit' class='submit_hidden'>	</label>	
 		</fieldset>
 	</form>
 

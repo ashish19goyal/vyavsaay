@@ -3,11 +3,9 @@
 		<fieldset>
 			<label>User Name<br><input type='text'></label>
 			<label>Password<br><input type='password'></label>
-			<label>			
-				<input type='hidden' name='user_id'>
-				<input type='submit' class='submit_hidden'>
-				<input type='button' title="Save Access" class='save_icon'>
-			</label>	
+			<label>	<input type='hidden' name='user_id'></label>
+			<label>	<input type='submit' class='submit_hidden'></label>
+			<label>	<input type='button' title="Save Access" class='save_icon'></label>	
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

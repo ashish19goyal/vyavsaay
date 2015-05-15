@@ -132,6 +132,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>sms_enabled</name>
+			<display_name>sms_enabled</display_name>
+			<status>active</status>
+			<value>no</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>bill_message</name>
 			<display_name>bill_message</display_name>
 			<status>active</status>
@@ -155,7 +165,7 @@
 			<name>worker_delay</name>
 			<display_name>worker_delay</display_name>
 			<status>active</status>
-			<value>6000</value>
+			<value>25</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -226,6 +236,26 @@
 			<display_name>phone_no</display_name>
 			<status>active</status>
 			<value>9818005232</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>website</name>
+			<display_name>website</display_name>
+			<status>active</status>
+			<value>vyavsaay.com</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>business_intro</name>
+			<display_name>business_intro</display_name>
+			<status>active</status>
+			<value>ERP solution provider</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -332,10 +362,10 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>pamphlet</name>
-			<display_name>pamphlet_print_template</display_name>
+			<name>newsletter</name>
+			<display_name>newsletter_print_template</display_name>
 			<status>active</status>
-			<value>default_pamphlet</value>
+			<value>default_newsletter</value>
 			<type>template</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -810,7 +840,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--pamphlets--pamphlet_items--</tables>
+			<tables>--newsletter--newsletter_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1052,7 +1082,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--pamphlets--pamphlet_items--</tables>
+			<tables>--newsletter--newsletter_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1349,7 +1379,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--pamphlets--pamphlet_items--</tables>
+			<tables>--newsletter--newsletter_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -3975,7 +4005,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form153</element_id>
-			<element_name>prepare_quotations</element_name>
+			<element_name>prepare_quotation</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

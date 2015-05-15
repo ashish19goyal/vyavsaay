@@ -72,10 +72,12 @@ appic/images/page_title/home-photo.jpg
 appic/images/components/pattern-grid-light.png
 db/db_schema.xml
 images/add_button.png
+images/add_red_button.png
 images/add_image.png
 images/copy.png
 images/delete.png
 images/details.png
+images/dlmc.png
 images/edit.png
 images/favicon.png
 images/favicon2.png
@@ -203,10 +205,7 @@ templates/service_bill/default_service_sale_bill.css
 
 NETWROK:
 *
-http://otile1.mqcdn.com/tiles/1.0.0/osm/*
-http://otile2.mqcdn.com/tiles/1.0.0/osm/*
-http://otile3.mqcdn.com/tiles/1.0.0/osm/*
-http://otile4.mqcdn.com/*
+
 #
 #optional section specifying fallback pages if a resource is inaccessible. 
 #FALLBACK:

@@ -4,10 +4,8 @@
 		    <label>Supplier	<img src='./images/add_image.png' class='add_image' id='form114_add_supplier'><br>
 			<input type='text' required></label>
 			<label>Date<br><input type='text' required></label>
-			<label>
-				<input type='button' class='save_icon'>
-				<input type='submit' class='submit_hidden'>
-			</label>
+			<label>	<input type='button' class='save_icon'></label>
+			<label>	<input type='submit' class='submit_hidden'></label>
 		</fieldset>	
 	</form>
 	<table class='rwd-table'>
