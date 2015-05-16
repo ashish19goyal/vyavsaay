@@ -4881,29 +4881,13 @@ function modal50_action()
 {
 	show_loader();
 	var form=document.getElementById("form78_master");
-	var newsletter_name=form.elements[1].value;
-	var newsletter_id=form.elements[2].value;
-	//console.log(newsletter_id);
-	var newsletter_items_data="<newsletter_items>" +
-				"<item_name></item_name>" +
-				"<item_type></item_type>" +
-				"<item_detail></item_detail>"+
-				"<data_blob></data_blob>"+
-				"<nl_id exact='yes'>"+newsletter_id+"</nl_id>" +
-				"</newsletter_items>";
-			
-	fetch_requested_data('',newsletter_items_data,function(results)
+	var nl_name=form.elements[1].value;
+	var nl_id=form.elements[2].value;
+
+	print_newsletter(nl_name,nl_id,function(container)
 	{
 		var business_title=get_session_var('title');
-		var email_data_string="New Letter from: " +business_title+
-		"\nVisit us at: "+get_session_var('address')+"\n";
-		
-		for(var i in results)
-		{
-			email_data_string+="\n"+
-					"Item: "+results[i].item_name+
-					" Detail: "+results[i].item_detail;
-		}	
+		var subject=nl_name+" - " +business_title;
 		
 		var email_id_string="";
 		
@@ -4918,10 +4902,23 @@ function modal50_action()
 			}
 		});
 		
-		email_data_string=encodeURIComponent(email_data_string);
-		var mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su="+encodeURIComponent(business_title+" - "+newsletter_name)+"&to="+get_session_var('email')+"&bcc="+email_id_string+"&body="+email_data_string;
-		hide_loader();
-		window.open(mail_string,'_blank');
+		//console.log(container.innerHTML);
+		var message=encodeURIComponent(container.innerHTML);
+		//var mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su="+encodeURIComponent(subject_string)+"&to="+get_session_var('email')+"&bcc="+email_id_string+"&body="+email_data_string;
+		//hide_loader();
+		//window.open(mail_string,'_blank');
+		
+		var to=email_id_string;
+		var from=get_session_var('email');
+		var domain=get_domain();
+		var username=get_username();
+		var read_access=get_session_var('re');
+		ajax_with_custom_func("./ajax/email.php","domain="+domain+"&username="+username+"&re="+read_access+"&to="+to+"&from="+from+"&message="+message+"&subject="+subject+"&type=transaction",function(e)
+		{
+			hide_loader();
+			console.log(e.responseText);
+			console.log('mails sent');
+		});
 	});		
 }
 

@@ -11,18 +11,17 @@ function form2_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form2_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Type'>";
-				rowsHTML+="<input type='text' form='form2_"+id+"' required value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Item Name'>";
-				rowsHTML+="<input type='text' form='form2_"+id+"' required value=''>";
+				rowsHTML+="Type: <input type='text' form='form2_"+id+"' required value=''>";
+				rowsHTML+="<br>Name: <input type='text' form='form2_"+id+"' required value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Detail'>";
-				rowsHTML+="<textarea form='form2_"+id+"' required></textarea>";
+				rowsHTML+="Detail: <textarea class='widebox' form='form2_"+id+"' required></textarea>";
+				rowsHTML+="<br>Link: <textarea class='widebox' form='form2_"+id+"'></textarea>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Link'>";
-				rowsHTML+="<textarea form='form2_"+id+"'></textarea>";
+			rowsHTML+="<td data-th='Image'>";
 				rowsHTML+="<br><output form='form2_"+id+"'></output>";
 				rowsHTML+="<input type='file' form='form2_"+id+"'>";
+				rowsHTML+="<br>Size: <input type='number' value='2' required form='form2_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form2_"+id+"' value='"+id+"'>";
@@ -105,7 +104,9 @@ function form2_add_item()
 								});
 								break;				
 			}
-		});		
+		});	
+		
+		$('textarea').autosize();			
 	}
 	else
 	{

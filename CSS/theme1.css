@@ -23,6 +23,10 @@ textarea{
 	border: 1px solid #dadada;
 }
 
+textarea.widebox{
+	width:225px;
+}
+
 input{
 	outline:  none !important;
 	background-color: #ffffff;

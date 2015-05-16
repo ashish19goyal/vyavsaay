@@ -122,84 +122,159 @@ function print_tabular_form(form_id,form_title,table_copy)
 }
 
 /**
- * @form Create pamphlets
+* This function prepares the printing template for the newsletter
+*/
+function print_newsletter(nl_name,nl_id,func)
+{
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_intro=document.createElement('div');
+	
+	var nl_content=document.createElement('div');
+	
+	var footer=document.createElement('div');
+		var business_contact=document.createElement('div');
+		//var tandc=document.createElement('div');
+	
+////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
+		business_intro.setAttribute('style','width:100%;text-align:center');
+	
+	nl_content.setAttribute('style','display:block;width:100%;min-height:60px');
+
+	footer.setAttribute('style','display:block;width:100%;min-height:200px');
+		business_contact.setAttribute('style','display:block;width:100%;text-align:center');
+	
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var logo_image=get_session_var('logo');
+	var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+	var tandc_text=get_session_var('bill_message');
+	
+////////////////filling in the content into the containers/////////////////////////////////////
+
+	logo.innerHTML="<img src='./images/"+logo_image+"'>";
+	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text+"<hr style='border: 1px solid #000;'>";
+		
+	business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;	
+	
+/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	container.appendChild(header);
+	container.appendChild(nl_content);
+	container.appendChild(footer);
+	
+	header.appendChild(logo);
+	header.appendChild(business_intro);
+	
+	footer.appendChild(business_contact);
+
+/////////////////populating the content section with newsletter items//////////////////////////
+	var newsletter_items_data="<newsletter_items>" +
+			"<item_type></item_type>" +
+			"<item_name></item_name>" +
+			"<item_detail></item_detail>" +
+			"<data_blob></data_blob>" +
+			"<url></url>"+
+			"<column_size></column_size>"+
+			"<nl_id exact='yes'>"+nl_id+"</nl_id>" +
+			"</newsletter_items>";
+	
+	fetch_requested_data('',newsletter_items_data,function(results)
+	{
+		var right=false;
+		results.forEach(function(result)
+		{
+			var nl_item=document.createElement('div');
+			var nl_item_heading=document.createElement('div');
+			var nl_item_pic=document.createElement('div');
+			var nl_item_detail=document.createElement('div');
+			var nl_item_link=document.createElement('a');
+			//var nl_item_link=document.createElement('div');
+			
+			var type=result.item_type;
+			var name=result.item_name;
+			var detail=result.item_detail;
+			var blob=result.data_blob.replace(/ /g,"+");
+							
+			var url=result.url;
+			var size=result.column_size;
+			
+			nl_item.style.display='block';
+			nl_item.style.margin='2px';
+			nl_item.style.padding='2px';
+			nl_item.style.border='1px solid #444';
+			nl_item.style.backgroundColor='#9977ff';
+			nl_item.style.minHeight='100px';
+			
+			nl_item_link.style.textDecoration='none';
+			
+			if(size=='2')
+			{
+				nl_item.style.width='98%';
+			}
+			else 
+			{
+				nl_item.style.width='48%';
+				if(right)
+				{
+					nl_item.style.float='right';
+					right=false;
+				}
+				else{
+					nl_item.style.float='left';
+					right=true;
+				}
+			}
+			
+			nl_item_heading.setAttribute('style','display:block;background-color:#1199ff;margin:2px;padding:2px;width:100%');
+			
+			nl_item_pic.setAttribute('style','float:left;margin:2px;padding:2px;');
+			if(url!="")
+			{
+				nl_item_link.setAttribute('href',url);
+			}			
+			
+			nl_item_heading.innerHTML="<b>"+name+"</b>";
+			nl_item_detail.innerHTML=detail;
+			if(blob!='undefined')
+			{
+				nl_item_pic.innerHTML="<img src='"+blob+"'>";				
+			}
+			
+			nl_content.appendChild(nl_item);
+			nl_item.appendChild(nl_item_link);
+			nl_item_link.appendChild(nl_item_heading);
+			nl_item_link.appendChild(nl_item_pic);
+			nl_item_link.appendChild(nl_item_detail);						
+		});
+		func(container);
+	});
+	
+}
+
+/**
+ * @form Create NewsLetter
  * @formNo 2
  */
 function form2_print_form()
 {	
 	var form=document.getElementById("form2_master");
-	var pamphlet_name=form.elements[1].value;
-	var pamphlet_id=form.elements[2].value;
-	
-	var container=document.getElementById('print_container');
-	
-	var print_pamphlet=document.createElement('div');
-		print_pamphlet.setAttribute('class','print_pamphlet');
-	var header=document.createElement('div');
-		header.setAttribute('class','header');
-	var logo=document.createElement('div');
-		logo.setAttribute('class','logo');
-		//logo.innerHTML="<img src='./images/feedback.jpeg'>";
-	var title=document.createElement('div');
-		title.setAttribute('class','title');
-		title.textContent='Vyavsaay.com';
-	var seller_info=document.createElement('div');
-		seller_info.setAttribute('class','seller_info');
-	var seller_phone=document.createElement('div');
-		seller_phone.setAttribute('class','seller_phone');
-		seller_phone.textContent='Contact No: 9818005232';
-	var seller_address=document.createElement('div');
-		seller_address.setAttribute('class','seller_address');
-		seller_address.textContent="Office: R.S.D. colony, Sirsa";
-	var content=document.createElement('div');
-		content.setAttribute('class','content');
-	var pamphlet_header=document.createElement('div');
-		pamphlet_header.setAttribute('class','pamphlet_header');
-	var pamphlet_time=document.createElement('div');
-		pamphlet_time.setAttribute('class','pamphlate_time');
-		pamphlet_time.textContent='hurry up! Offers limited';
-	var offers=document.createElement('div');
-		offers.setAttribute('class','offers');
-	
-		container.appendChild(print_pamphlet);
-		print_pamphlet.appendChild(header);
-		print_pamphlet.appendChild(content);
-		//header.appendChild(logo);
-		header.appendChild(title);
-		header.appendChild(seller_info);
-		seller_info.appendChild(seller_phone);
-		seller_info.appendChild(seller_address);
-		content.appendChild(pamphlet_header);
-		pamphlet_header.appendChild(pamphlet_time);
-		content.appendChild(offers);
-	
-	var pamphlet_items_data="<pamphlet_items>" +
-			"<item_name></item_name>" +
-			"<offer></offer>" +
-			"<pamphlet_id>"+pamphlet_id+"</pamphlet_id>" +
-			"</pamphlet_items>";
-	
-	fetch_requested_data('form44',pamphlet_items_data,function(results)
-	{
-		for(var i in results)
-		{
-			var offer_item=document.createElement('div');
-				offer_item.setAttribute('class','offer_item');
-			var product_name=document.createElement('div');
-				product_name.setAttribute('class','product_name');
-				product_name.textContent=results[i].item_name;
-			var offer_detail=document.createElement('div');
-				offer_detail.setAttribute('class','offer_detail');
-				offer_detail.textContent=results[i].offer;
-				
-				offers.appendChild(offer_item);
-				offer_item.appendChild(product_name);
-				offer_item.appendChild(offer_detail);
-		}	
+	var newsletter_name=form.elements[1].value;
+	var newsletter_id=form.elements[3].value;
 		
+	print_newsletter(newsletter_name,newsletter_id,function(container)
+	{
 		$.print(container);
-		container.removeChild(print_pamphlet);
-	});		
+		container.innerHTML="";	
+	});	
 }
 
 
@@ -564,16 +639,12 @@ function form153_print_form()
 		var intro=document.createElement('div');
 
 	var table_container=document.createElement('div');
-	
-	var total_container=document.createElement('div');
 
 	var footer=document.createElement('div');
 		var tandc=document.createElement('div');
 		var signature=document.createElement('div');
 
 ////////////setting styles for containers/////////////////////////
-
-	//business_title.setAttribute('style',"height:80px;padding:1%;border:2px solid black;border-bottom:none;font-size:"+font_size+"em");
 
 	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
 	business_intro.setAttribute('style','width:100%;text-align:center');
@@ -642,7 +713,6 @@ function form153_print_form()
 	container.appendChild(customer_info);
 	container.appendChild(quotation_intro);
 	container.appendChild(table_copy);
-	//container.appendChild(total_container);
 	container.appendChild(footer);
 	
 	header.appendChild(logo);

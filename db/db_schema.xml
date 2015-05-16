@@ -514,6 +514,7 @@
 			<item_detail index='no' type="TEXT"></item_detail>
 			<data_blob index='no' type="MEDIUMBLOB"></data_blob>
 			<url index='no' type="TEXT"></url>
+			<column_size index='no' type="INT"></column_size>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</newsletter_items>
 	<activities>  
@@ -898,11 +899,21 @@
 	<sms>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<receiver index='yes' type="VARCHAR(15)"></receiver>
-			<message index='yes' type="TEXT"></message>
+			<message index='no' type="TEXT"></message>
 			<status index='yes' type="VARCHAR(25)"></status><!--pending/sent/cancelled-->
 			<type index='yes' type='VARCHAR(25)'></type><!--transaction/promotion-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</sms>
+	<emails>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<receivers index='yes' type="TEXT"></receivers>
+			<sender index='yes' type="TEXT"></sender>
+			<subject index='no' type="TEXT"></subject>
+			<message index='no' type="TEXT"></message>
+			<status index='yes' type="VARCHAR(25)"></status><!--pending/sent/cancelled-->
+			<type index='yes' type='VARCHAR(25)'></type><!--transaction/promotion-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</emails>
 	<roles>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<role_name index='yes' type="VARCHAR(100)"></role_name>

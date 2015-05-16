@@ -125,7 +125,7 @@
 			<name>footer_message</name>
 			<display_name>footer_message</display_name>
 			<status>active</status>
-			<value>&copy; 2015 Vyavsaay.com</value>
+			<value>2015 Vyavsaay.com</value>
 			<type>hidden</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>

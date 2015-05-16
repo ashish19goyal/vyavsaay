@@ -1,5 +1,5 @@
 /**
- * @form Create Pamphlets
+ * @form Create Newsletter
  * @param button
  */
 function form2_create_item(form)
@@ -11,8 +11,10 @@ function form2_create_item(form)
 		var name=form.elements[1].value;
 		var detail=form.elements[2].value;
 		var url=form.elements[3].value;
-		var data_id=form.elements[6].value;
+		var column_size=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		var blob=$("#img_form2_"+data_id).attr('src');
+		var del_button=form.elements[9];
 		var last_updated=get_my_time();
 		var data_xml="<newsletter_items>" +
 					"<id>"+data_id+"</id>" +
@@ -22,6 +24,7 @@ function form2_create_item(form)
 					"<nl_id>"+nl_id+"</nl_id>" +
 					"<url>"+url+"</url>"+
 					"<data_blob>"+blob+"</data_blob>"+
+					"<column_size>"+column_size+"</column_size>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</newsletter_items>";
 		if(is_online())
@@ -32,11 +35,10 @@ function form2_create_item(form)
 		{
 			local_create_simple(data_xml);
 		}	
-		for(var i=0;i<6;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[8];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
@@ -57,7 +59,7 @@ function form2_create_item(form)
 
 
 /**
- * @form Create Pamphlets
+ * @form Create NewsLetter
  * @param button
  */
 function form2_create_form()
@@ -69,6 +71,8 @@ function form2_create_form()
 		var name=form.elements[1].value;
 		var description=form.elements[2].value;
 		var data_id=form.elements[3].value;
+		var save_button=form.elements[4];	
+
 		var last_updated=get_my_time();
 		var data_xml="<newsletter>" +
 					"<id>"+data_id+"</id>" +
@@ -93,8 +97,8 @@ function form2_create_form()
 			local_create_row(data_xml,activity_xml);
 		}
 	
-		$(form).off('submit');
-		$(form).on('submit',function(event)
+		$(save_button).off('click');
+		$(save_button).on('click',function(event)
 		{
 			event.preventDefault();
 			form2_update_form();

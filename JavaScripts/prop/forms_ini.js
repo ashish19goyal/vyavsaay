@@ -150,6 +150,7 @@ function form2_ini()
 				"<item_name></item_name>" +
 				"<item_detail></item_detail>" +
 				"<data_blob></data_blob>" +
+				"<column_size></column_size>"+
 				"<url></url>"+
 				"</newsletter_items>";
 	
@@ -161,9 +162,9 @@ function form2_ini()
 				filter_fields.elements[1].value=newsletter_results[i].name;
 				filter_fields.elements[2].value=newsletter_results[i].description;
 				filter_fields.elements[3].value=newsletter_id;
-				
-				$(filter_fields).off('submit');
-				$(filter_fields).on("submit", function(event)
+				var save_button=filter_fields.elements[4];
+				$(save_button).off('click');
+				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form2_update_form();
@@ -181,18 +182,17 @@ function form2_ini()
 				var updated_blob=result.data_blob.replace(/ /g,"+");
 				var rowsHTML="<tr>";
 				rowsHTML+="<form id='form2_"+id+"'></form>";
-					rowsHTML+="<td data-th='Item Type'>";
+					rowsHTML+="<td data-th='Item'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form2_"+id+"' value='"+result.item_type+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Item Name'>";
-						rowsHTML+="<textarea readonly='readonly' form='form2_"+id+"'>"+result.item_name+"</textarea>";
+						rowsHTML+="<br><b><textarea readonly='readonly' form='form2_"+id+"'>"+result.item_name+"</textarea></b>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Detail'>";
-						rowsHTML+="<textarea readonly='readonly' form='form2_"+id+"'>"+result.item_detail+"</textarea>";
+						rowsHTML+="Detail: <textarea readonly='readonly' class='widebox' form='form2_"+id+"'>"+result.item_detail+"</textarea>";
+						rowsHTML+="<br>Link: <textarea readonly='readonly' class='widebox' form='form2_"+id+"'>"+result.url+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Link'>";
-						rowsHTML+="<textarea readonly='readonly' form='form2_"+id+"'>"+result.url+"</textarea>";
-						rowsHTML+="<output><div class='figure'><img src='"+updated_blob+"'></div></output>";
+					rowsHTML+="<td data-th='Image'>";
+						rowsHTML+="<output form='form2_"+id+"'><div class='figure'><img src='"+updated_blob+"'></div></output>";
+						rowsHTML+="<br>Size: <input type='number' form='form2_"+id+"' readonly='readonly' value='"+result.column_size+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form2_"+id+"'>";					
@@ -210,6 +210,7 @@ function form2_ini()
 					event.preventDefault();
 				});
 			});
+			$('textarea').autosize();
 			hide_loader();
 		});
 	}
@@ -2985,7 +2986,7 @@ function form44_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form44_"+result.id+"'>"+result.name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Description'>";
-						rowsHTML+="<textarea readonly='readonly' form='form44_"+result.id+"'>"+result.description+"</textarea>";
+						rowsHTML+="<textarea readonly='readonly' class='widebox' form='form44_"+result.id+"'>"+result.description+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' readonly='readonly' form='form44_"+result.id+"' value='"+result.id+"'>";
@@ -3077,7 +3078,7 @@ function form46_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form46_"+result.id+"' data-i18n='form."+result.display_name+"'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Value'>";
-						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form46_"+result.id+"'>"+result.value+"</textarea>";
+						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable widebox' form='form46_"+result.id+"'>"+result.value+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form46_"+result.id+"' value='"+result.id+"'>";
@@ -6407,84 +6408,38 @@ function form78_ini()
 				break;
 			}
 			/////////////////////////////////////////////////////////////////////////
-			var newsletter_item_columns="<newsletter_items>" +
-				"<id></id>" +
-				"<nl_id exact='yes'>"+newsletter_id+"</nl_id>" +
-				"<item_name></item_name>" +
-				"<item_type></item_type>" +
-				"<item_detail></item_detail>" +
-				"<url></url>"+
-				"<data_blob></data_blob>"+
-				"</newsletter_items>";
-
 			
-			fetch_requested_data('',newsletter_item_columns,function(newsletter_items)
-			{
-				var items_string="--";
-				for(var j in newsletter_items)
-				{
-					items_string+=newsletter_items[j].item_name+"--";
-				}
-				
-				//optimise this query
-				var bill_items_columns="<bill_items>" +
-						"<bill_id></bill_id>" +
-						"<item_name array='yes'>"+items_string+"</item_name>" +
-						"</bill_items>";
-				fetch_requested_data('',bill_items_columns,function(bill_items)
-				{
-					var bill_id_string="--";
-					for(var k in bill_items)
-					{
-						bill_id_string+=bill_items[k].bill_id+"--";
-					}
-					
-					//optimise this query
-					var bills_columns="<bills>" +
-							"<customer_name></customer_name>" +
-							"<id array='yes'>"+bill_id_string+"</id>" +
-							"</bills>";
-					fetch_requested_data('',bills_columns,function(bills)
-					{
-						var customer_string="--";
-						for(var l in bills)
-						{
-							customer_string+=bills[l].customer_name+"--";
-						}
 						
-						var customer_columns="<customers>" +
-								"<id></id>" +
-								"<name></name>" +
-								"<email></email>" +
-								"<acc_name array='yes'>"+customer_string+"</acc_name>" +
-								"</customers>";
-						fetch_requested_data('',customer_columns,function(results)
-						{
-							results.forEach(function(result)
-							{
-								var rowsHTML="";
-								var id=result.id;
-								rowsHTML+="<tr>";
-								rowsHTML+="<form id='row_form78_"+id+"'></form>";
-									rowsHTML+="<td data-th='Customer Name'>";
-										rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'>"+result.acc_name+"</textarea>";
-									rowsHTML+="</td>";
-									rowsHTML+="<td data-th='Email'>";
-										rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'>"+result.email+"</textarea>";
-									rowsHTML+="</td>";
-									rowsHTML+="<td data-th='Select for mailing'>";
-										rowsHTML+="<input type='checkbox' form='row_form78_"+id+"' checked>";
-										rowsHTML+="<input type='hidden' form='row_form78_"+id+"' value='"+result.name+"'>";
-									rowsHTML+="</td>";
-								rowsHTML+="</tr>";
-							
-								$('#form78_body').append(rowsHTML);				
-							});
-							$('textarea').autosize();
-							hide_loader();
-						});
-					});
+			var customer_columns="<customers>" +
+					"<id></id>" +
+					"<name></name>" +
+					"<email></email>" +
+					"<acc_name></acc_name>" +
+					"</customers>";
+			fetch_requested_data('',customer_columns,function(results)
+			{
+				results.forEach(function(result)
+				{
+					var rowsHTML="";
+					var id=result.id;
+					rowsHTML+="<tr>";
+					rowsHTML+="<form id='row_form78_"+id+"'></form>";
+						rowsHTML+="<td data-th='Customer Name'>";
+							rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'>"+result.acc_name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Email'>";
+							rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'>"+result.email+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Select for mailing'>";
+							rowsHTML+="<input type='checkbox' form='row_form78_"+id+"' checked>";
+							rowsHTML+="<input type='hidden' form='row_form78_"+id+"' value='"+result.name+"'>";
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+				
+					$('#form78_body').append(rowsHTML);				
 				});
+				$('textarea').autosize();
+				hide_loader();
 			});
 		});
 	}
@@ -8298,7 +8253,7 @@ function form95_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form95_"+result.id+"' value='"+result.name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Form Name'>";
-						rowsHTML+="<textarea readonly='readonly' form='form95_"+result.id+"' data-i18n='form."+result.display_name+"'></textarea>";
+						rowsHTML+="<textarea readonly='readonly' class='widebox' form='form95_"+result.id+"' data-i18n='form."+result.display_name+"'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Import'>";
 						rowsHTML+="<input type='hidden' form='form95_"+result.id+"' value='"+result.id+"'>";

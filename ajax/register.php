@@ -36,8 +36,8 @@
 
 		$message="Congratulations!! Your vyavsaay account has been successfully setup.";
 		$sms_instance=new send_sms();		
-		//$sms_instance->direct_send($message,$phone);
-		$sms_instance->log_sms($username,$message,$phone);		
+		$sms_instance->direct_send($message,$phone,'transaction');
+		$sms_instance->log_sms($username,$message,$phone,'transaction');		
 		
 	}catch(PDOException $ex)
 	{

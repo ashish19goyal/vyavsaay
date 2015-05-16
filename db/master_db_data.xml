@@ -380,6 +380,30 @@
 		<row>
 			<tablename>newsletter_items</tablename>
 			<listname>item_type</listname>
+			<name>offer</name>
+			<value>Offer</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>newsletter_items</tablename>
+			<listname>item_type</listname>
+			<name>header</name>
+			<value>Header</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>newsletter_items</tablename>
+			<listname>item_type</listname>
+			<name>footer</name>
+			<value>Footer</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>newsletter_items</tablename>
+			<listname>item_type</listname>
 			<name>product</name>
 			<value>Product</value>
 			<status>active</status>
@@ -412,24 +436,8 @@
 		<row>
 			<tablename>newsletter_items</tablename>
 			<listname>item_type</listname>
-			<name>offer</name>
-			<value>Offer</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>newsletter_items</tablename>
-			<listname>item_type</listname>
-			<name>header</name>
-			<value>Header</value>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<tablename>newsletter_items</tablename>
-			<listname>item_type</listname>
-			<name>footer</name>
-			<value>Footer</value>
+			<name>article</name>
+			<value>Article</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
