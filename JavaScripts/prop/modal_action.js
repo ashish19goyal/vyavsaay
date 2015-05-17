@@ -4917,7 +4917,6 @@ function modal50_action()
 		{
 			hide_loader();
 			console.log(e.responseText);
-			console.log('mails sent');
 		});
 	});		
 }

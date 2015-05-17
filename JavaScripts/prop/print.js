@@ -197,12 +197,11 @@ function print_newsletter(nl_name,nl_id,func)
 			var nl_item_pic=document.createElement('div');
 			var nl_item_detail=document.createElement('div');
 			var nl_item_link=document.createElement('a');
-			//var nl_item_link=document.createElement('div');
 			
 			var type=result.item_type;
 			var name=result.item_name;
 			var detail=result.item_detail;
-			var blob=result.data_blob.replace(/ /g,"+");
+			var blob=result.data_blob;
 							
 			var url=result.url;
 			var size=result.column_size;
@@ -211,7 +210,6 @@ function print_newsletter(nl_name,nl_id,func)
 			nl_item.style.margin='2px';
 			nl_item.style.padding='2px';
 			nl_item.style.border='1px solid #444';
-			nl_item.style.backgroundColor='#9977ff';
 			nl_item.style.minHeight='100px';
 			
 			nl_item_link.style.textDecoration='none';
@@ -234,7 +232,7 @@ function print_newsletter(nl_name,nl_id,func)
 				}
 			}
 			
-			nl_item_heading.setAttribute('style','display:block;background-color:#1199ff;margin:2px;padding:2px;width:100%');
+			nl_item_heading.setAttribute('style','display:block;margin:2px;padding:2px;width:98%');
 			
 			nl_item_pic.setAttribute('style','float:left;margin:2px;padding:2px;');
 			if(url!="")
@@ -244,9 +242,9 @@ function print_newsletter(nl_name,nl_id,func)
 			
 			nl_item_heading.innerHTML="<b>"+name+"</b>";
 			nl_item_detail.innerHTML=detail;
-			if(blob!='undefined')
+			if(blob!='undefined' && blob!="")
 			{
-				nl_item_pic.innerHTML="<img src='"+blob+"'>";				
+				nl_item_pic.innerHTML="<img src='./"+blob+"'>";				
 			}
 			
 			nl_content.appendChild(nl_item);
@@ -678,7 +676,7 @@ function form153_print_form()
 	
 ////////////////filling in the content into the containers/////////////////////////////////////
 
-	logo.innerHTML="<img src='./images/"+logo_image+"'>";
+	logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
 	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text+"<hr style='border: 1px solid #000;'>";
 	business_contact.innerHTML=business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website+"<hr style='border: 1px solid #000;'>";
 	
