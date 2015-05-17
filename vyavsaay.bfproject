@@ -3,11 +3,9 @@ e2c.convert_num: 0
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:6654:5697:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/CSS/theme1.css:7613:7340:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:135504:134340:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:9093:8645:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/save_image.php:233:0:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:1021:227:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js:3283:2586:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/vyavsaay.appcache:2836:2394:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:6773:6188:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/vyavsaay.appcache:2876:1936:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php:633:0:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -19,7 +17,7 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax
 wrap_text_default: 0
 bookmarks_filename_mode: 0
 ssearch_text: todata
@@ -78,15 +76,15 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form78.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/sms.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/send_messages.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/ajax.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/save_image.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/vyavsaay.appcache
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php
 snr_replacetype: 0
-savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
+savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax
 spell_check_default: 1
 spell_insert_entities: 0
 last_filefilter: 

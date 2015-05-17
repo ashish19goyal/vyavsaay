@@ -135,7 +135,6 @@ function print_newsletter(nl_name,nl_id,func)
 	
 	var footer=document.createElement('div');
 		var business_contact=document.createElement('div');
-		//var tandc=document.createElement('div');
 	
 ////////////setting styles for containers/////////////////////////
 
@@ -160,7 +159,7 @@ function print_newsletter(nl_name,nl_id,func)
 	
 ////////////////filling in the content into the containers/////////////////////////////////////
 
-	logo.innerHTML="<img src='./images/"+logo_image+"'>";
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text+"<hr style='border: 1px solid #000;'>";
 		
 	business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;	
@@ -244,7 +243,7 @@ function print_newsletter(nl_name,nl_id,func)
 			nl_item_detail.innerHTML=detail;
 			if(blob!='undefined' && blob!="")
 			{
-				nl_item_pic.innerHTML="<img src='./"+blob+"'>";				
+				nl_item_pic.innerHTML="<img src='https://vyavsaay.com/"+blob+"'>";				
 			}
 			
 			nl_content.appendChild(nl_item);
@@ -255,7 +254,6 @@ function print_newsletter(nl_name,nl_id,func)
 		});
 		func(container);
 	});
-	
 }
 
 /**
