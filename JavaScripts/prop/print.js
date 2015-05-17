@@ -143,7 +143,7 @@ function print_newsletter(nl_name,nl_id,func)
 	
 	nl_content.setAttribute('style','display:block;width:100%;min-height:60px');
 
-	footer.setAttribute('style','display:block;width:100%;min-height:200px');
+	footer.setAttribute('style','display:block;width:100%;min-height:60px');
 		business_contact.setAttribute('style','display:block;width:100%;text-align:center');
 	
 ///////////////getting the content////////////////////////////////////////
@@ -181,6 +181,7 @@ function print_newsletter(nl_name,nl_id,func)
 			"<item_name></item_name>" +
 			"<item_detail></item_detail>" +
 			"<data_blob></data_blob>" +
+			"<pic_url></pic_url>"+
 			"<url></url>"+
 			"<column_size></column_size>"+
 			"<nl_id exact='yes'>"+nl_id+"</nl_id>" +
@@ -201,6 +202,7 @@ function print_newsletter(nl_name,nl_id,func)
 			var name=result.item_name;
 			var detail=result.item_detail;
 			var blob=result.data_blob;
+			var pic_url=result.pic_url;
 							
 			var url=result.url;
 			var size=result.column_size;
@@ -243,7 +245,7 @@ function print_newsletter(nl_name,nl_id,func)
 			nl_item_detail.innerHTML=detail;
 			if(blob!='undefined' && blob!="")
 			{
-				nl_item_pic.innerHTML="<img src='https://vyavsaay.com/"+blob+"'>";				
+				nl_item_pic.innerHTML="<img src='https://vyavsaay.com/"+pic_url+"'>";				
 			}
 			
 			nl_content.appendChild(nl_item);

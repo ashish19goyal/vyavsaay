@@ -150,6 +150,7 @@ function form2_ini()
 				"<item_name></item_name>" +
 				"<item_detail></item_detail>" +
 				"<data_blob></data_blob>" +
+				"<pic_url></pic_url>"+
 				"<column_size></column_size>"+
 				"<url></url>"+
 				"</newsletter_items>";
@@ -179,6 +180,7 @@ function form2_ini()
 			results.forEach(function(result)
 			{
 				var id=result.id;
+				var updated_blob=result.data_blob.replace(/ /g,"+");
 				var rowsHTML="<tr>";
 				rowsHTML+="<form id='form2_"+id+"'></form>";
 					rowsHTML+="<td data-th='Item'>";
@@ -190,7 +192,7 @@ function form2_ini()
 						rowsHTML+="<br>Link: <textarea readonly='readonly' class='widebox' form='form2_"+id+"'>"+result.url+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Image'>";
-						rowsHTML+="<output form='form2_"+id+"'><div class='figure'><img src='./"+result.data_blob+"'></div></output>";
+						rowsHTML+="<output form='form2_"+id+"'><div class='figure'><img src='"+updated_blob+"'></div></output>";
 						rowsHTML+="<br>Size: <input type='number' form='form2_"+id+"' readonly='readonly' value='"+result.column_size+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
@@ -6419,6 +6421,7 @@ function form78_ini()
 			{
 				results.forEach(function(result)
 				{
+					if(result.email!="" && result.email!="undefined")
 					var rowsHTML="";
 					var id=result.id;
 					rowsHTML+="<tr>";

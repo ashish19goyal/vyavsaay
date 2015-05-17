@@ -6,62 +6,65 @@ function form2_create_item(form)
 {
 	if(is_create_access('form2'))
 	{
-		var nl_id=document.getElementById('form2_master').elements[3].value;
-		var type=form.elements[0].value;
-		var name=form.elements[1].value;
-		var detail=form.elements[2].value;
-		var url=form.elements[3].value;
-		var column_size=form.elements[6].value;
-		var data_id=form.elements[7].value;
-		var blob=$("#img_form2_"+data_id).attr('src');
-		var blob_name="client_images/"+data_id+".jpeg";
-		var del_button=form.elements[9];
-		var last_updated=get_my_time();
-		var data_xml="<newsletter_items>" +
-					"<id>"+data_id+"</id>" +
-					"<item_name>"+name+"</item_name>" +
-					"<item_type>"+type+"</item_type>" +
-					"<item_detail>"+detail+"</item_detail>" +
-					"<nl_id>"+nl_id+"</nl_id>" +
-					"<url>"+url+"</url>"+
-					"<data_blob>"+blob_name+"</data_blob>"+
-					"<column_size>"+column_size+"</column_size>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</newsletter_items>";
-					
-		$.ajax
-		({
-			type: "POST",
-			url: "./ajax/save_image.php",
-			data: {
-				blob: blob,
-				name:blob_name
-			}
-		});
-		
 		if(is_online())
 		{
+			var nl_id=document.getElementById('form2_master').elements[3].value;
+			var type=form.elements[0].value;
+			var name=form.elements[1].value;
+			var detail=form.elements[2].value;
+			var url=form.elements[3].value;
+			var column_size=form.elements[6].value;
+			var data_id=form.elements[7].value;
+			var blob=$("#img_form2_"+data_id).attr('src');
+			var blob_name="client_images/"+data_id+".jpeg";
+			var del_button=form.elements[9];
+			var last_updated=get_my_time();
+			var data_xml="<newsletter_items>" +
+						"<id>"+data_id+"</id>" +
+						"<item_name>"+name+"</item_name>" +
+						"<item_type>"+type+"</item_type>" +
+						"<item_detail>"+detail+"</item_detail>" +
+						"<nl_id>"+nl_id+"</nl_id>" +
+						"<url>"+url+"</url>"+
+						"<data_blob>"+blob+"</data_blob>"+
+						"<pic_url>"+blob_name+"</pic_url>"+
+						"<column_size>"+column_size+"</column_size>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</newsletter_items>";
+						
+			
+			$.ajax
+			({
+				type: "POST",
+				url: "./ajax/save_image.php",
+				data: {
+					blob: blob,
+					name:blob_name
+				}
+			});
+		
 			server_create_simple(data_xml);
+			
+			for(var i=0;i<7;i++)
+			{
+				$(form.elements[i]).attr('readonly','readonly');
+			}
+			del_button.removeAttribute("onclick");
+			$(del_button).on('click',function(event)
+			{
+				form2_delete_item(del_button);
+			});
+			
+			$(form).off('submit');
+			$(form).on('submit',function(event)
+			{
+				event.preventDefault();
+			});
 		}
 		else
 		{
-			local_create_simple(data_xml);
-		}	
-		for(var i=0;i<7;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
+			$("#modal6").dialog("open");		
 		}
-		del_button.removeAttribute("onclick");
-		$(del_button).on('click',function(event)
-		{
-			form2_delete_item(del_button);
-		});
-		
-		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-		});
 	}
 	else
 	{

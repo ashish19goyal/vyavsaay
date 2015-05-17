@@ -513,6 +513,7 @@
 			<item_name index='yes' type="VARCHAR(90)"></item_name>
 			<item_detail index='no' type="TEXT"></item_detail>
 			<data_blob index='no' type="MEDIUMBLOB"></data_blob>
+			<pic_url index='no' type="TEXT"></pic_url>
 			<url index='no' type="TEXT"></url>
 			<column_size index='no' type="INT"></column_size>
 			<last_updated index='yes' type="BIGINT"></last_updated>

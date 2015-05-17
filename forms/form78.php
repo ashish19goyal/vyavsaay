@@ -4,7 +4,6 @@
 			<label>Newsletter: <input type='text' required></label>
 			<label>	<input type='hidden' name='nl_id' form='form78_master' value=''></label>
 			<label>	<input type='button' value='Send Mails' class='generic_icon' onclick="modal50_action();"></label>	
-			<label>	<input type='button' value='Add another customer' class='generic_icon' onclick='form78_add_item();'></label>
 			<label>	<input type='submit' style='visibility: hidden;'></label>	
 		</fieldset>
 	</form>

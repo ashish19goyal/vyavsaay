@@ -269,7 +269,7 @@ function set_static_filter(table,list,filter_element)
 	}
 }
 
-function set_static_value_list(table,list,filter_element)
+function set_static_value_list(table,list,filter_element,func)
 {
 	var list_id='datalist-'+table+list;
 	filter_element.setAttribute("list",list_id);
@@ -311,6 +311,11 @@ function set_static_value_list(table,list,filter_element)
 		            filter_element.value="";
 		        }
 			});
+			
+			if(typeof func!='undefined')
+			{
+				func();
+			}
 		},list_data);
 	}
 	else
