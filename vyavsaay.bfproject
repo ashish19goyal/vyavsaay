@@ -1,12 +1,12 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:5064:4552:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:6807:6050:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/CSS/theme1.css:7613:7340:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:135504:134340:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:23663:22514:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/vyavsaay.appcache:2876:1936:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php:633:0:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:92114:92112:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:9125:8401:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:1639:1207:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php:881:600:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/create_row.php:2350:1587:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -18,10 +18,10 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: form2_
+ssearch_text: func
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -54,8 +54,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/functions/offers.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/local_db_handling.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/event_handler.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/grids.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/grids.js
@@ -78,14 +76,16 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/sms.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/send_messages.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/ajax.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/save_image.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/vyavsaay.appcache
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form78.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/create_row.php
 snr_replacetype: 0
-savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
+savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax
 spell_check_default: 1
 spell_insert_entities: 0
 last_filefilter: 
@@ -95,12 +95,6 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: pamphlet
-searchlist: diaply
-searchlist: display
-searchlist: color
-searchlist: 78_
-searchlist: 50_
 searchlist: 2
 searchlist: base
 searchlist: todata
@@ -110,6 +104,12 @@ searchlist: f2_
 searchlist: fo2_
 searchlist: for2_
 searchlist: form2_
+searchlist: blob
+searchlist: replace
+searchlist: (/ /g,"+");
+searchlist: replace
+searchlist: set_static
+searchlist: func
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0

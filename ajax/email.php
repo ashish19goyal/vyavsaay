@@ -2,6 +2,9 @@
 
 	session_start();
 
+	include_once "../Classes/db.php";
+	use RetailingEssentials\db_connect;
+
 	$domain=$_POST['domain'];
 	$user=$_POST['username'];
 	$read_access=$_POST['re'];
@@ -19,11 +22,20 @@
 			$headers .= "Reply-To: ". strip_tags($from) . "\r\n";
 			$headers .= "MIME-Version: 1.0\r\n";
 			$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-
-			if(mail($to,$subject,$message,$headers))
+			$headers .= 'Bcc: '.strip_tags($to) . "\r\n";
+			
+			if(mail($from,$subject,$message,$headers))
 			{
 				echo "mail accepted";
-			}
+				$db_name="re_user_".$domain;
+				$conn=new db_connect($db_name);
+				
+				$query2="insert into emails(receivers,sender,subject,message,status,type,last_updated) values(?,?,?,?,?,?,?)";
+								
+				$stmt2=$conn->conn->prepare($query2);
+				$data_array=array($to,$from,$subject,$message,'sent',$type,1000*time());
+				$stmt2->execute($data_array);
+			}			
 		}
 		else
 		{
