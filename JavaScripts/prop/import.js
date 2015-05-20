@@ -4878,8 +4878,6 @@ function form158_import(data_array,import_type)
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
-				"<p_quantity>"+row.p_quantity+"</p_quantity>" +
-				"<f_quantity>"+row.f_quantity+"</f_quantity>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<batch>"+row.product_name+"</batch>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +

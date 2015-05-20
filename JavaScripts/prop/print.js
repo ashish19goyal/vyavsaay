@@ -124,7 +124,7 @@ function print_tabular_form(form_id,form_title,table_copy)
 /**
 * This function prepares the printing template for the newsletter
 */
-function print_newsletter(nl_name,nl_id,func)
+function print_newsletter(nl_name,nl_id,print_type,func)
 {
 	var container=document.createElement('div');
 	var header=document.createElement('div');
@@ -138,13 +138,13 @@ function print_newsletter(nl_name,nl_id,func)
 	
 ////////////setting styles for containers/////////////////////////
 
-	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
-		business_intro.setAttribute('style','width:100%;text-align:center');
+	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
+		business_intro.setAttribute('style','width:98%;text-align:center');
 	
-	nl_content.setAttribute('style','display:block;width:100%;min-height:60px');
+	nl_content.setAttribute('style','display:block;width:98%;min-height:60px');
 
-	footer.setAttribute('style','display:block;width:100%;min-height:60px');
-		business_contact.setAttribute('style','display:block;width:100%;text-align:center');
+	footer.setAttribute('style','display:block;width:98%;');
+		business_contact.setAttribute('style','display:block;width:98%;text-align:center');
 	
 ///////////////getting the content////////////////////////////////////////
 
@@ -201,7 +201,7 @@ function print_newsletter(nl_name,nl_id,func)
 			var type=result.item_type;
 			var name=result.item_name;
 			var detail=result.item_detail;
-			var blob=result.data_blob;
+			var blob=result.data_blob.replace(/ /g,"+");
 			var pic_url=result.pic_url;
 							
 			var url=result.url;
@@ -211,13 +211,15 @@ function print_newsletter(nl_name,nl_id,func)
 			nl_item.style.margin='2px';
 			nl_item.style.padding='2px';
 			nl_item.style.border='1px solid #444';
-			nl_item.style.minHeight='100px';
+			nl_item.style.minHeight='150px';
 			
 			nl_item_link.style.textDecoration='none';
+			nl_item_pic.width='90%';			
 			
 			if(size=='2')
 			{
 				nl_item.style.width='98%';
+				nl_item.style.float='left';
 			}
 			else 
 			{
@@ -243,17 +245,32 @@ function print_newsletter(nl_name,nl_id,func)
 			
 			nl_item_heading.innerHTML="<b>"+name+"</b>";
 			nl_item_detail.innerHTML=detail;
-			if(blob!='undefined' && blob!="")
+			
+			if(print_type=='mail')
 			{
-				nl_item_pic.innerHTML="<img src='https://vyavsaay.com/"+pic_url+"'>";				
+				nl_item_pic.innerHTML="<img src='https://vyavsaay.com/"+pic_url+"'>";
+			}			
+			else if(blob!='undefined' && blob!="")
+			{
+				nl_item_pic.innerHTML="<img src='"+blob+"'>";				
 			}
 			
 			nl_content.appendChild(nl_item);
 			nl_item.appendChild(nl_item_link);
 			nl_item_link.appendChild(nl_item_heading);
 			nl_item_link.appendChild(nl_item_pic);
-			nl_item_link.appendChild(nl_item_detail);						
+			nl_item_link.appendChild(nl_item_detail);
+			
+			var item_clear_div=document.createElement('div');
+			item_clear_div.setAttribute('style','clear:both;');
+			nl_item.appendChild(item_clear_div);
+						
 		});
+		
+		var clear_div=document.createElement('div');
+		clear_div.setAttribute('style','clear:both;');
+		nl_content.appendChild(clear_div);
+		
 		func(container);
 	});
 }
@@ -268,7 +285,7 @@ function form2_print_form()
 	var newsletter_name=form.elements[1].value;
 	var newsletter_id=form.elements[3].value;
 		
-	print_newsletter(newsletter_name,newsletter_id,function(container)
+	print_newsletter(newsletter_name,newsletter_id,'paper',function(container)
 	{
 		$.print(container);
 		container.innerHTML="";	
@@ -649,7 +666,7 @@ function form153_print_form()
 	business_contact.setAttribute('style','width:100%;text-align:center');
 	customer_info.setAttribute('style','width:100%;height:60px');
 	quotation_intro.setAttribute('style','width:100%;min-height:60px');
-	footer.setAttribute('style','width:100%;min-height:200px');
+	footer.setAttribute('style','width:100%;min-height:100px');
 
 ///////////////getting the content////////////////////////////////////////
 
@@ -671,7 +688,7 @@ function form153_print_form()
 	var subject_text="Subject: Quotation for supply of light and sound equipment";
 	var intro_text=master_form.elements[4].value;
 	
-	var tandc_text=get_session_var('bill_message');
+	var tandc_text=get_session_var('quot_message');
 	var signature_text="<br>Thanking You.<br><br><br>Yours faithfully,<br>"+bt;
 	
 ////////////////filling in the content into the containers/////////////////////////////////////
@@ -719,6 +736,164 @@ function form153_print_form()
 	
 	quotation_intro.appendChild(subject);
 	quotation_intro.appendChild(intro);
+	
+	footer.appendChild(tandc);
+	footer.appendChild(signature);
+	
+	$.print(container);
+}
+
+
+/**
+ * @form Create Bill (DLM)
+ * @formNo 154
+ */
+function form154_print_form()
+{
+	var form_id='form154';
+	
+////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_intro=document.createElement('div');
+		var business_contact=document.createElement('div');
+	
+	var invoice_line=document.createElement('div');
+	
+	var info_section=document.createElement('div');	
+		var customer_info=document.createElement('div');
+		var business_info=document.createElement('div');
+
+	var table_container=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var tandc=document.createElement('div');
+		var signature=document.createElement('div');
+
+////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
+		business_intro.setAttribute('style','width:100%;text-align:center');
+		business_contact.setAttribute('style','width:100%;text-align:center');
+	info_section.setAttribute('style','width:100%;min-height:60px');
+		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:60px;border: 1px solid #00f;border-radius:5px;');
+		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:60px;border: 1px solid #00f;border-radius:5px;');
+	footer.setAttribute('style','width:100%;min-height:100px');
+		tandc.setAttribute('style','float:left;width:60%;min-height:50px');
+		signature.setAttribute('style','float:right;width:30%;min-height:60px');
+
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	var logo_image=get_session_var('logo');
+	var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+
+	var master_form=document.getElementById('form154_master');
+	var customer_name=master_form.elements[1].value;
+	var customer_address1=document.getElementById('form154_customer_info').innerHTML;
+	var customer_address=customer_address1.replace("Address<br>","");
+	var date=master_form.elements[3].value;	
+	var invoice_no=master_form.elements[4].value;
+	var pan_no=get_session_var('pan');
+	var sales_tax_no=get_session_var('sales_tax_no');	
+	var hiring=false
+	if(master_form.elements[2].value=='Hiring')
+		hiring=true;	
+		
+	var tandc_text=get_session_var('bill_message');
+	var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
+	
+	////////////////filling in the content into the containers//////////////////////////
+
+	logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
+	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text;
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;
+	
+	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Invoice</b></div><hr style='border: 1px solid #00f;'>";
+	
+	customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address;
+	business_info.innerHTML="Pan No: "+pan_no+"<br>Sales Tax No: "+sales_tax_no+"<br>Date: "+date+"<br>Invoice No: "+invoice_no;
+	
+	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
+	signature.innerHTML=signature_text;
+
+	var table_element=document.getElementById('form154_body').parentNode;
+	table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form").remove();
+	$(table_copy).find('input,textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+	
+	$(table_copy).find('label').each(function(index)
+	{
+		$(this).replaceWith($(this).html());
+	});
+		
+	if(hiring)
+	{
+		var head_html="<tr><form id='form154_header'></form>"+
+					"<th>Item</th>"+
+					"<th>Quantity</th>"+
+					"<th>From</th>"+
+					"<th>To</th>"+
+					"<th>Days</th>"+
+					"<th>Rate</th>"+
+					"<th>Amount</th>"+
+					"</tr>";
+		$(table_copy).find('thead').html(head_html);
+		var body_html=$(table_copy).find('tbody').html();
+		new_body_html=body_html.replace(/f1/g,'td');
+		new_body_html=new_body_html.replace(/<td data-th=\"Date\">From:/g,"");
+		new_body_html=new_body_html.replace(/<br>To:/g,"");
+		new_body_html=new_body_html.replace(/<\/td><\/td>/g,"</td>");
+		
+		$(table_copy).find('tbody').html(new_body_html);
+		$(table_copy).find('tfoot > tr > td:first').attr('colspan','5');
+	}
+
+	$(table_copy).find('tbody').attr('style','height:400px;');
+	$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
+	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
+
+	$(table_copy).find("tbody>tr").attr('style','flex:1;height:30px');
+	
+	//console.log($(table_copy).find("tbody").html());
+	if(hiring)
+	{
+		$(table_copy).find("th:first, td:first").css('width','200px');
+		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
+
+	}
+	else{
+		$(table_copy).find("th:first, td:first").css('width','300px');
+		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
+	}	
+	
+	/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	container.appendChild(header);
+	container.appendChild(invoice_line);
+	container.appendChild(info_section);
+	
+	container.appendChild(table_copy);
+	container.appendChild(footer);
+	
+	header.appendChild(logo);
+	header.appendChild(business_intro);
+	header.appendChild(business_contact);
+	
+	info_section.appendChild(customer_info);
+	info_section.appendChild(business_info);
 	
 	footer.appendChild(tandc);
 	footer.appendChild(signature);

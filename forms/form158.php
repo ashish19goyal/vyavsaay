@@ -22,7 +22,6 @@
 				<form id='form158_header'></form>
 					<th>Product Name</th>
 					<th>Quantity</th>
-					<th>Pricing Conversion</th>
 					<th>Amount</th>					
 					<th>Storage Area</th>
 					<th><input type='button' form='form158_header' title='Add item' class='add_icon' onclick='form158_add_item();'></th>

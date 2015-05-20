@@ -5507,11 +5507,14 @@ function form154_header_ini()
 	var customers_filter=fields.elements[1];
 	var bill_type=fields.elements[2];
 	var bill_date=fields.elements[3];
-	var bill_num=fields.elements[4];	
-	fields.elements[5].value=get_new_key();
-	fields.elements[6].value="";
-	fields.elements[7].value=fields.elements[5].value;
+	var bill_num=fields.elements[4];
+	var store_filter=fields.elements[5];	
+	fields.elements[6].value=get_new_key();
+	fields.elements[7].value=fields.elements[6].value;
 	var save_button=fields.elements[8];
+	
+	bill_type.removeAttribute('readonly');
+	store_filter.removeAttribute('readonly');
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -5532,8 +5535,13 @@ function form154_header_ini()
 	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
-		form154_add_item();
+		form154_add_product();
 	});
+	
+	var store_data="<store_areas>"+
+				"<name></name>"+
+				"</store_areas>";
+	set_my_value_list(store_data,store_filter);	
 	
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
@@ -5587,6 +5595,48 @@ function form154_header_ini()
 	$(bill_type).off('blur');
 	$(bill_type).on('blur',function (e) 
 	{
+		if(bill_type.value=='Retail')
+		{
+			var headHTML="<tr><form id='form154_header'></form>"+
+					"<th>Item</th>"+
+					"<th>Quantity</th>"+
+					"<th>Rate</th>"+
+					"<th>Amount</th>"+
+					"<th><input type='button' title='Add Product' class='add_icon' onclick='form154_add_product();'></th>"+
+					"</tr>";
+		}
+		else if(bill_type.value=='Hiring')
+		{
+			headHTML="<tr><form id='form154_header'></form>"+
+					"<th>Item</th>"+
+					"<th>Quantity</th>"+
+					"<th>Date</th>"+
+					"<th>Rate</th>"+
+					"<th>Amount</th>"+
+					"<th><input type='button' title='Add Product' class='add_icon' onclick='form154_add_product();'>"+
+					"</th>"+
+					"</tr>";
+		}
+		else
+		{
+			headHTML="<tr><form id='form154_header'></form>"+
+					"<th>Item</th>"+
+					"<th>Quantity</th>"+
+					"<th>Rate</th>"+
+					"<th>Amount</th>"+
+					"<th><input type='button' title='Add Service' class='add_icon' onclick='form154_add_service();'>"+
+					"</th>"+
+					"</tr>";
+			$(fields).off('submit');
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form154_add_service();
+			});
+		}
+		
+		$('#form154_head').html(headHTML);
+		
 		var bill_num_data="<user_preferences count='1'>"+
 						"<value></value>"+
 						"<name exact='yes'>"+bill_type.value+"_bill_num</name>"+

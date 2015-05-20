@@ -88,7 +88,8 @@ function if_data_read_access(tablename,func)
 			{
 				user_fields_array.push(data);
 			}
-			else if(data.user_type=='user' && data.user==acc_name)
+			
+			if(data.user_type=='user' && data.user==acc_name)
 			{
 				final_array.push(data);
 			}
@@ -117,16 +118,16 @@ function if_data_read_access(tablename,func)
 					}					
 				});
 				count-=1;
-			});			
+			});
 		});
-		
+
 		var final_array_timer=setInterval(function()
 		{
 			if(count==0)
 			{
   		   		clearInterval(final_array_timer);
 				func(final_array);
-  	   		}
+			}
     	},100);				
 	});
 }

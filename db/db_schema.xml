@@ -298,8 +298,10 @@
 			<billing_type index="yes" type="VARCHAR(20)"></billing_type>
 			<offer index='no' type="TEXT"></offer>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
+			<cartage index='no' type="DECIMAL(12,2)"></cartage>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
+			<storage index='yes' type="VARCHAR(25)"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bills>
 	<bill_items>
@@ -320,8 +322,11 @@
 			<notes index='no' type="TEXT"></notes>
 			<staff index='yes' type="VARCHAR(100)"></staff>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<from_date index='yes' type="BIGINT"></from_date>
+			<to_date index='yes' type="BIGINT"></to_date>
 			<free_with index="no" type="VARCHAR(90)"></free_with>
 			<storage index='yes' type="VARCHAR(25)"></storage>
+			<hired index='yes' type="VARCHAR(25)"></hired><!--yes/no-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bill_items>
 	<customer_returns>

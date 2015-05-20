@@ -1,4 +1,12 @@
 <?php
+/*	input data format: 
+ * 			<table_name type='add/sub'>
+ *				<column1>value1</column1>
+ *				<column2>value2</column2>
+ *				<column3></column3>
+ *				<column(n)>value(n)</column(n)>
+ *			</table_name>
+*/
 
 	session_start();
 	include_once "../Classes/db.php";
@@ -9,12 +17,87 @@
 		$read_access=$_POST['re'];
 		$product=$_POST['product'];
 		$batch=$_POST['batch'];
+		$columns=$_POST['data_array'];
+		$input_xml=new DOMDocument();
+		$input_xml->loadXML($columns);
+		$input=$input_xml->documentElement;
 		
 		//echo $columns;
 		if(isset($_SESSION['session']))
 		{
 			if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['re']==$read_access)
 			{
+				$table=$input->nodeName;
+				$columns_array=array();
+				$values_array=array();
+				$query="select sum(quantity) from $table where ";
+				
+				$add_sub_type='';
+				if($input->hasAttribute('type'))
+				{
+					$add_sub_type=$input->getAttribute('type');
+				}
+
+				foreach($input->childNodes as $col)
+				{
+					$columns_array[]=$col->nodeName;
+					
+					if($col->nodeValue!="")
+					{
+						if($col->hasAttribute('upperbound'))
+						{
+							$query.=$col->nodeName." <= ? and ";
+							$values_array[]=$col->nodeValue;
+						}
+						
+						if($col->hasAttribute('lowerbound'))
+						{
+							$query.=$col->nodeName." >= ? and ";
+							$values_array[]=$col->nodeValue;
+						}
+						
+						if($col->hasAttribute('array'))
+						{
+							$query.=$col->nodeName." in (";
+							$string=rtrim($col->nodeValue,"-");
+							$exploded_values=explode("--",$string);
+							foreach($exploded_values as $value)
+							{
+								$query.="?,";
+								$values_array[]=$value;
+							}
+							$query=rtrim($query,",");
+							$query.=") and ";
+						}
+						else if(!($col->hasAttributes()))
+						{
+							if($col->nodeName=='id')
+							{
+								$query.=$col->nodeName." = ? and ";
+								$values_array[]=$col->nodeValue;
+							}
+							else 
+							{	
+								$query.=$col->nodeName." like ? and ";
+								$values_array[]="%".$col->nodeValue."%";
+							}
+						}
+					}
+					if($col->hasAttribute('exact'))
+					{
+						$query.=$col->nodeName." = ? and ";
+						$values_array[]=$col->nodeValue;
+					}
+				}
+				$query=rtrim($query,"and ");
+				
+				if(count($values_array)===0)
+				{
+					$query="select sum(quantity) from $table";
+				}
+				
+				
+				//////////////////////////////////////////////////
 				$values=array($product,$batch);
 				$query1_values=array($product,$batch,'yes');
 				$query1="select sum(quantity) from bill_items where item_name=? and batch=? and hired!=?";
@@ -43,8 +126,14 @@
 				}
 				
 				$db_name="re_user_".$domain;
-				
 				$conn=new db_connect($db_name);
+				
+				$stmt=$conn->conn->prepare($query);
+				$stmt->execute($values_array);
+				$res=$stmt->fetch(PDO::FETCH_NUM);
+				$custom_items=$res[0];				
+				if($add_sub_type=='sub')
+					$custom_items=-$custom_items;			
 				
 				$stmt1=$conn->conn->prepare($query1);
 				$stmt1->execute($query1_values);
@@ -106,7 +195,7 @@
 				$res9=$stmt9->fetch(PDO::FETCH_NUM);
 				$ub_purchase=$res9[0];
 				
-				$response=$supplier_bill_items+$customer_return_items+$inventory_adjust-$bill_items-$supplier_return_items-$customer_exchange_items-$discarded-$ub_sale+$ub_purchase;
+				$response=$custom_items+$supplier_bill_items+$customer_return_items+$inventory_adjust-$bill_items-$supplier_return_items-$customer_exchange_items-$discarded-$ub_sale+$ub_purchase;
 				
 				echo $response;
 			}

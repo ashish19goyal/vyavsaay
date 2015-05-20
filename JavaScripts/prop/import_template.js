@@ -922,7 +922,7 @@ function form157_import_template()
 */
 function form158_import_template()
 {
-	var data_array=['id','p_quantity','f_quantity','quantity','product_name',
+	var data_array=['id','quantity','product_name',
 	               'bill_id','unit_price','amount','tax','total','storage'];
 	my_array_to_csv(data_array);
 };

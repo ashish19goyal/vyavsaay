@@ -473,6 +473,25 @@ function server_get_store_inventory(store,product,batch,callback)
 }
 
 
+function server_get_available_inventory(product,batch,data_array,callback)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var re_access=get_session_var('re');
+	ajax_with_custom_func("./ajax/get_available_inventory.php","domain="+domain+"&username="+username+"&re="+re_access+"&data_array="+data_array+"&product="+product+"&batch="+batch,function(e)
+	{
+		if(isNaN(e.responseText))
+		{
+			callback(0);
+		}
+		else
+		{
+			callback(e.responseText);
+		}
+	});
+}
+
+
 function server_generate_report(report_id,results,callback)
 {
 	var domain=get_domain();

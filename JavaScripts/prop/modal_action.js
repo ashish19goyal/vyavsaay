@@ -4884,7 +4884,7 @@ function modal50_action()
 	var nl_name=form.elements[1].value;
 	var nl_id=form.elements[2].value;
 
-	print_newsletter(nl_name,nl_id,function(container)
+	print_newsletter(nl_name,nl_id,'mail',function(container)
 	{
 		var business_title=get_session_var('title');
 		var subject=nl_name+" - " +business_title;

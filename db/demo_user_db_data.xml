@@ -82,6 +82,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>sales_tax_no</name>
+			<display_name>Sales Tax #</display_name>
+			<status>active</status>
+			<value></value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>pan</name>
 			<display_name>PAN #</display_name>
 			<status>active</status>
@@ -144,6 +154,16 @@
 		<row>
 			<name>bill_message</name>
 			<display_name>bill_message</display_name>
+			<status>active</status>
+			<value>E.O.E.</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>quot_message</name>
+			<display_name>quot_message</display_name>
 			<status>active</status>
 			<value>E.O.E.</value>
 			<type>other</type>

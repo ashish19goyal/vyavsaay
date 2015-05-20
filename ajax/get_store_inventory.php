@@ -17,7 +17,8 @@
 			if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['re']==$read_access)
 			{
 				$values=array($product,$batch,$store);
-				$query1="select sum(quantity) from bill_items where item_name=? and batch=? and storage=?";
+				$query1_values=array($product,$batch,$store,'yes');
+				$query1="select sum(quantity) from bill_items where item_name=? and batch=? and storage=? and hired!=?";
 				$query2="select sum(quantity) from supplier_bill_items where product_name=? and batch=? and storage=?";
 				$query3="select sum(quantity) from customer_return_items where item_name=? and batch=? and storage=?";
 				$query4="select sum(quantity) from supplier_return_items where item_name=? and batch=? and storage=?";
@@ -31,7 +32,8 @@
 				if($batch=="")
 				{
 					$values=array($product,$store);
-					$query1="select sum(quantity) from bill_items where item_name=? and storage=?";
+					$query1_values=array($product,$store,'yes');
+					$query1="select sum(quantity) from bill_items where item_name=? and storage=? and hired!=?";
 					$query2="select sum(quantity) from supplier_bill_items where product_name=? and storage=?";
 					$query3="select sum(quantity) from customer_return_items where item_name=? and type=? and storage=?";
 					$query4="select sum(quantity) from supplier_return_items where item_name=? and storage=?";
@@ -48,7 +50,7 @@
 				$conn=new db_connect($db_name);
 				
 				$stmt1=$conn->conn->prepare($query1);
-				$stmt1->execute($values);
+				$stmt1->execute($query1_values);
 				$res1=$stmt1->fetch(PDO::FETCH_NUM);
 				$bill_items=$res1[0];
 				

@@ -89,6 +89,7 @@ function get_inventory(product,batch,callback)
 	}
 }
 
+
 function get_store_inventory(store,product,batch,callback)
 {	
 	if(is_online())
@@ -101,6 +102,17 @@ function get_store_inventory(store,product,batch,callback)
 	}
 }
 
+function get_available_inventory(product,batch,data_array,callback)
+{	
+	if(is_online())
+	{
+		server_get_available_inventory(product,batch,data_array,callback);
+	}
+	else
+	{
+		local_get_available_inventory(product,batch,data_array,callback);
+	}
+}
 
 /**
  * @returns {Array}
@@ -334,6 +346,10 @@ function set_static_value_list(table,list,filter_element,func)
 	            filter_element.value="";
 	        }
 		});
+		if(typeof func!='undefined')
+		{
+			func();
+		}
 	}
 }
 

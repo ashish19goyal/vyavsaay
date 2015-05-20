@@ -4914,11 +4914,47 @@ function form154_delete_item(button)
 {
 	if(is_delete_access('form154'))
 	{
-		var bill_id=document.getElementById("form154_master").elements[5].value;
+		var bill_id=document.getElementById("form154_master").elements[6].value;
 		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
-		var data_id=form.elements[8].value;
+		var data_id=form.elements[7].value;
+				
+		var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"</bill_items>";	
+		if(is_online())
+		{
+			server_delete_simple(data_xml);
+		}
+		else
+		{
+			local_delete_simple(data_xml);
+		}
+				
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Bills (DLM)
+ * @formNo 154
+ * @param button
+ */
+function form154_delete_hiring_item(button)
+{
+	if(is_delete_access('form154'))
+	{
+		var bill_id=document.getElementById("form154_master").elements[6].value;
+		
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		var data_id=form.elements[10].value;
 				
 		var data_xml="<bill_items>" +
 					"<id>"+data_id+"</id>" +
@@ -5032,11 +5068,8 @@ function form158_delete_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var data_id=form.elements[7].value;
-		if (imported) 
-		{
-			data_id=form.elements[9].value;
-		}
+		var data_id=form.elements[6].value;
+		
 		var data_xml="<supplier_bill_items>" +
 					"<id>"+data_id+"</id>" +
 					"<bill_id>"+bill_id+"</bill_id>" +

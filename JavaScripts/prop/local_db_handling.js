@@ -2365,7 +2365,7 @@ function local_get_inventory(product,batch,callback)
 			if(bi_result)
 			{
 				var bi_record=bi_result.value;
-				if(bi_record['batch']==batch || batch=='' || batch===null)
+				if((bi_record['batch']==batch || batch=='' || batch===null) && bi_record['hired']!='yes')
 				{
 					result-=parseFloat(bi_record['quantity']);
 				}
@@ -2525,7 +2525,7 @@ function local_get_store_inventory(store,product,batch,callback)
 			if(bi_result)
 			{
 				var bi_record=bi_result.value;
-				if(bi_record['storage']==store && (bi_record['batch']==batch || batch=='' || batch===null))
+				if(bi_record['storage']==store && bi_record['hiring']!='yes' && (bi_record['batch']==batch || batch=='' || batch===null))
 				{
 					result-=parseFloat(bi_record['quantity']);
 				}
@@ -2658,6 +2658,321 @@ function local_get_store_inventory(store,product,batch,callback)
 		};		
 	}
 }
+
+/**
+ * This function calculates the current inventory levels for a product
+ * @param product
+ * @param batch
+ * @param callback
+ * @returns
+ */
+function local_get_available_inventory(product,batch,data_array,callback)
+{
+	if(typeof static_local_db=='undefined')
+	{
+		open_local_db(function()
+		{
+			local_get_available_inventory(product,batch,data_array,callback);
+		});
+	}
+	else
+	{
+		var sort_order='prev';
+		var result=0;
+		var transaction=static_local_db.transaction(['bill_items','supplier_bill_items','supplier_return_items','inventory_adjust','customer_return_items','discarded','unbilled_sale_items','unbilled_purchase_items'],"readonly");
+		
+		var keyValue=IDBKeyRange.bound([product,'0'],[product,'99999999']);
+		transaction.objectStore('bill_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+		{
+			var bi_result=e.target.result;
+			if(bi_result)
+			{
+				var bi_record=bi_result.value;
+				if((bi_record['batch']==batch || batch=='' || batch===null) && bi_record['hired']!='yes')
+				{
+					result-=parseFloat(bi_record['quantity']);
+				}
+				bi_result.continue();
+			}
+			else
+			{
+				transaction.objectStore('supplier_bill_items').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+				{
+					var si_result=e.target.result;
+					if(si_result)
+					{
+						var si_record=si_result.value;
+						if(si_record['batch']==batch || batch=='' || batch===null)
+						{
+							result+=parseFloat(si_record['quantity']);
+						}
+						si_result.continue();
+					}
+					else
+					{
+						transaction.objectStore('supplier_return_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+						{
+							var sr_result=e.target.result;
+							if(sr_result)
+							{
+								var sr_record=sr_result.value;
+								if(sr_record['batch']==batch || batch=='' || batch===null)
+								{
+									result-=parseFloat(sr_record['quantity']);
+								}
+								sr_result.continue();
+							}
+							else
+							{
+								transaction.objectStore('inventory_adjust').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+								{
+									var ia_result=e.target.result;
+									if(ia_result)
+									{
+										var ia_record=ia_result.value;
+										if(ia_record['batch']==batch || batch=='' || batch===null)
+										{
+											result+=parseFloat(ia_record['quantity']);
+										}
+										ia_result.continue();
+									}
+									else
+									{
+										transaction.objectStore('customer_return_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+										{
+											var cr_result=e.target.result;
+											if(cr_result)
+											{
+												var cr_record=cr_result.value;
+												if(cr_record['batch']==batch || batch=='' || batch===null)
+												{
+													result+=parseFloat(cr_record['quantity']);
+												}
+												if(cr_record['exchange_batch']==batch || batch=='' || batch===null)
+												{
+													result-=parseFloat(cr_record['quantity']);
+												}
+												cr_result.continue();
+											}
+											else
+											{
+												transaction.objectStore('discarded').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+												{
+													var di_result=e.target.result;
+													if(di_result)
+													{
+														var di_record=di_result.value;
+														if(di_record['batch']==batch || batch=='' || batch===null)
+														{
+															result-=parseFloat(di_record['quantity']);
+														}
+														di_result.continue();
+													}
+													else
+													{
+														transaction.objectStore('unbilled_sale_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+														{
+															var us_result=e.target.result;
+															if(us_result)
+															{
+																var us_record=us_result.value;
+																if(us_record['batch']==batch || batch=='' || batch===null)
+																{
+																	result-=parseFloat(us_record['quantity']);
+																}
+																us_result.continue();
+															}
+															else
+															{
+																transaction.objectStore('unbilled_purchase_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+																{
+																	var up_result=e.target.result;
+																	if(up_result)
+																	{
+																		var up_record=up_result.value;
+																		if(up_record['batch']==batch || batch=='' || batch===null)
+																		{
+																			result+=parseFloat(up_record['quantity']);
+																		}
+																		up_result.continue();
+																	}
+																	else
+																	{
+																	//////////////////////////////////////////////////////	
+																		var parser=new DOMParser();
+																		var data=parser.parseFromString(data_array,"text/xml");
+																		var table=data.childNodes[0].nodeName;
+																		var tcols=data.childNodes[0].childNodes;
+																		
+																		if(tcols.length>0)
+																		{
+																			var add_sub_type="";
+																			if(data.childNodes[0].hasAttribute('type'))
+																			{
+																				add_sub_type=data.childNodes[0].getAttribute('type');
+																			}
+																			
+																			var lowerbound=['0','0'];
+																			var upperbound=['9999999999','9999999999'];
+																			
+																			var bound_count=0;
+																			var filter=new Array();
+																			
+																			for(var j=0; j<tcols.length;j++)
+																			{
+																				if(tcols[j].innerHTML!=null && tcols[j].innerHTML!="")
+																				{
+																					var fil=new Object();
+																					fil.name=tcols[j].nodeName;
+																					
+																					if(tcols[j].hasAttribute('lowerbound'))
+																					{
+																						fil.value=tcols[j].innerHTML;
+																						fil.type='lowerbound';
+																						filter.push(fil);
+																						lowerbound=[fil.value,'0'];
+																						sort_index=tcols[j].nodeName;
+																						
+																						if(bound_count==0)
+																						{
+																							upperbound=['9999999999','9999999999'];
+																						}
+																						bound_count+=1;
+																					}
+																					if(tcols[j].hasAttribute('upperbound'))
+																					{
+																						fil.value=tcols[j].innerHTML;
+																						fil.type='upperbound';
+																						filter.push(fil);
+																						upperbound=[fil.value,'999999999999'];
+																						sort_index=tcols[j].nodeName;
+																						
+																						if(bound_count==0)
+																						{
+																							lowerbound=['0','0'];
+																						}
+																						bound_count+=1;
+																					}
+																					
+																					if(tcols[j].hasAttribute('array'))
+																					{
+																						fil.value=tcols[j].innerHTML;
+																						fil.type='array';
+																						filter.push(fil);
+																					}
+																					else if(!(tcols[j].hasAttributes()))
+																					{
+																						fil.value=tcols[j].innerHTML;
+																						fil.type='';
+																						filter.push(fil);
+																					}
+																				}
+																				if(tcols[j].hasAttribute('exact'))
+																				{
+																					var fil=new Object();
+																					fil.name=tcols[j].nodeName;
+																					fil.value=tcols[j].innerHTML;
+																					fil.type='exact';
+																					filter.push(fil);
+																					sort_index=tcols[j].nodeName;
+																					lowerbound=[fil.value,'0'];
+																					upperbound=[fil.value,'99999999'];
+																					bound_count=0;
+																				}
+																			}
+																			
+																			var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
+																			
+																			var read_request=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order);
+																			read_request.onsuccess=function(e)
+																			{
+																				var iresult=e.target.result;
+																				if(iresult)
+																				{
+																					var record=iresult.value;
+																					var match=true;
+																					
+																					for(var i=0;i<filter.length;i++)
+																					{
+																						var string=record[filter[i].name].toString().toLowerCase();
+																						var search=filter[i].value.toString().toLowerCase();
+																						var found=0;
+																						
+																						if(filter[i].type=='')
+																						{
+																							found=string.indexOf(search);
+																						}
+																						else if(filter[i].type=='exact')
+																						{
+																							if(search!==string)
+																							{
+																								match=false;
+																								break;
+																							}
+																						}
+																						else if(filter[i].type=='array')
+																						{
+																							found=search.indexOf("-"+string+"-");
+																						}
+																						else if(filter[i].type=='upperbound') 
+																						{
+																							if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
+																							{
+																								match=false;
+																								break;
+																							}
+																						}
+																						else if(filter[i].type=='lowerbound') 
+																						{
+																							if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
+																							{
+																								match=false;
+																								break;
+																							}
+																						}
+																						
+																						if(found==-1)
+																						{
+																							match=false;
+																							break;
+																						}
+																					}
+																					
+																					if(match===true)
+																					{
+																						if(add_sub_type=='add')
+																							result+=record['quantity'];
+																						else
+																							result-=record['quantity'];
+																					}
+																					
+																					iresult.continue();
+																				}
+																				else
+																				{
+																					callback(result);
+																				}
+																			};
+																		}
+																	}
+																};
+															}
+														};
+													}
+												};
+											}
+										};
+									}
+								};
+							}
+						};
+					}
+				};			
+			}
+		};		
+	}
+}
+
 
 
 /**

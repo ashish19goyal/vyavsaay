@@ -8090,8 +8090,6 @@ function form153_update_form()
 		var quot_date=get_raw_time(form.elements[3].value);
 		var intro_notes=form.elements[4].value;
 		
-		var message_string="Quotation from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
-		
 		var amount=0;
 		var discount=0;
 		var tax=0;
@@ -8105,10 +8103,6 @@ function form153_update_form()
 			amount+=parseFloat(subform.elements[5].value);
 			discount+=parseFloat(subform.elements[7].value);
 			tax+=parseFloat(subform.elements[8].value);
-			
-			message_string+="\nItem: "+subform.elements[0].value;
-			message_string+=" Quantity: "+subform.elements[2].value;
-			message_string+=" Amount: "+subform.elements[5].value;
 		});
 		
 		discount+=parseFloat(document.getElementById('form153_discount').value);
@@ -8157,19 +8151,6 @@ function form153_update_form()
 		$('#form153_foot').html(total_row);
 		longPressEditable($('.dblclick_editable'));
 
-		message_string+="\nAmount: "+amount;
-		message_string+="\ndiscount: "+discount;
-		message_string+="\nTax: "+tax;
-		message_string+="\nTotal: "+total;
-
-		var subject="Quotation from "+get_session_var('title');
-		$('#form153_share').show();
-		$('#form153_share').off('click');
-		$('#form153_share').on('click',function()
-		{
-			modal44_action(customer,subject,message_string);
-		});
-		
 		$("[id^='save_form153_']").click();
 	}
 	else
@@ -8193,278 +8174,157 @@ function form154_update_form()
 		var bill_type=form.elements[2].value;
 		var bill_date=get_raw_time(form.elements[3].value);
 		var bill_num=form.elements[4].value;
-		
-		var message_string="Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var storage=form.elements[5].value;
 		
 		var amount=0;
 		var discount=0;
 		var tax=0;
 		var total=0;
+		var cartage=0;
+		
+		var hiring=false;
+		if(bill_type=='Hiring')
+			hiring=true;
 		
 		$("[id^='save_form154']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			total+=parseFloat(subform.elements[3].value);
-			amount+=parseFloat(subform.elements[4].value);
-			discount+=parseFloat(subform.elements[5].value);
-			tax+=parseFloat(subform.elements[6].value);
-			
-			message_string+="\nItem: "+subform.elements[0].value;
-			message_string+=" Quantity: "+subform.elements[2].value;
-			message_string+=" Total: "+subform.elements[3].value;
+			if(hiring)
+			{
+				amount+=parseFloat(subform.elements[6].value);
+				total+=parseFloat(subform.elements[7].value);
+				discount+=parseFloat(subform.elements[8].value);
+				tax+=parseFloat(subform.elements[9].value);
+			}
+			else
+			{			
+				amount+=parseFloat(subform.elements[3].value);
+				total+=parseFloat(subform.elements[4].value);
+				discount+=parseFloat(subform.elements[5].value);
+				tax+=parseFloat(subform.elements[6].value);
+			}			
 		});
 		
-		var data_id=form.elements[5].value;
-		var transaction_id=form.elements[7].value;
-		var last_updated=get_my_time();
-		var offer_detail="";
+		discount+=parseFloat(document.getElementById('form154_discount').value);
+		cartage=parseFloat(document.getElementById('form154_cartage').value);
+		tax-=(discount*0.125);
+		total=my_round(amount-discount+tax+cartage,0);
 		
-		/////deleting existing free products
-		var items_data="<bill_items>" +
-				"<bill_id>"+data_id+"</bill_id>" +
-				"<free_with>bill</free_with>" +
-				"<last_updated upperbound='yes'>"+last_updated+"</last_updated>" +
-				"</bill_items>";
-
+		var data_id=form.elements[6].value;
+		var transaction_id=form.elements[7].value;
+		var last_updated=get_my_time();		
+		
+		var data_xml="<bills>" +
+					"<id>"+data_id+"</id>" +
+					"<customer_name>"+customer+"</customer_name>" +
+					"<bill_date>"+bill_date+"</bill_date>" +
+					"<amount>"+amount+"</amount>" +
+					"<total>"+total+"</total>" +
+					"<billing_type>"+bill_type+"</billing_type>" +
+					"<discount>"+discount+"</discount>" +
+					"<cartage>"+cartage+"</cartage>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"<transaction_id>"+transaction_id+"</transaction_id>" +
+					"</bills>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bills</tablename>" +
+					"<link_to>form92</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Bill no "+bill_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var transaction_xml="<transactions>" +
+					"<id>"+transaction_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>"+customer+"</receiver>" +
+					"<giver>master</giver>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
 		if(is_online())
 		{
-			server_delete_simple(items_data);
+			server_update_row(data_xml,activity_xml);
+			server_update_simple(transaction_xml);
 		}
 		else
 		{
-			local_delete_simple(items_data);
+			local_update_row(data_xml,activity_xml);
+			local_update_simple(transaction_xml);
 		}
-		///////////////////////////////////
 		
-		var offer_data="<offers>" +
-				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
-				"<offer_type exact='yes'>bill</offer_type>" +
-				"<result_type></result_type>" +
-				"<discount_percent></discount_percent>" +
-				"<discount_amount></discount_amount>" +
-				"<quantity_add_percent></quantity_add_percent>" +
-				"<quantity_add_amount></quantity_add_amount>" +
-				"<free_product_name></free_product_name>" +
-				"<free_product_quantity></free_product_quantity>" +
-				"<offer_detail></offer_detail>" +
-				"<status array='yes'>active--extended</status>" +
-				"</offers>";
-		fetch_requested_data('',offer_data,function(offers)
+		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+					"<td>Amount:</br>Discount: </br>Tax: </br>Cartage: </br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br>" +
+					"Rs. "+tax+"</br>" +
+					"Rs. <input type='number' value='"+cartage+"' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+		if(hiring)
 		{
-			offers.sort(function(a,b)
-			{
-				if(a.criteria_amount<b.criteria_amount)
-				{	return 1;}
-				else 
-				{	return -1;}
-			});
-			
-			for(var i in offers)
-			{
-				if(offers[i].result_type=='discount')
-				{
-					if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
-					{
-						var dis=parseFloat(((amount-discount)*parseInt(offers[i].discount_percent))/100);
-						tax-=(tax*(dis/(amount-discount)));
-						discount+=dis;
-						total=amount-discount+tax;
-					}
-					else 
-					{
-						var dis=parseFloat(offers[i].discount_amount)*(Math.floor((amount-discount)/parseFloat(offers[i].criteria_amount)));
-						tax-=(tax*(dis/(amount-discount)));
-						discount+=dis;
-						total=amount-discount+tax;
-					}
-				}
-				else if(offers[i].result_type=='product free')
-				{
-					var free_product_name=offers[i].free_product_name;
-					var free_product_quantity=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(amount-discount)/parseFloat(offers[i].criteria_amount)));
-					
-					get_inventory(free_product_name,'',function(free_quantities)
-					{
-						if(free_quantities>=free_product_quantity)
-						{
-							var id=get_new_key();
-							rowsHTML="<tr>";
-								rowsHTML+="<form id='form154_"+id+"'></form>";
-				                	rowsHTML+="<td data-th='Item'>";
-				                    	rowsHTML+="<input type='text' readonly='readonly' form='form154_"+id+"' value='"+free_product_name+"'>";
-			                        rowsHTML+="</td>";
-			                        rowsHTML+="<td data-th='Quantity'>";
-			                                rowsHTML+="<input type='number' readonly='readonly' required form='form154_"+id+"' value='0'>";
-			                        rowsHTML+="</td>";
-			                        rowsHTML+="<td data-th='Unit Price'>";
-			                                rowsHTML+="<input type='number' readonly='readonly' required form='form154_"+id+"' value='"+free_product_quantity+"'>";
-			                        rowsHTML+="</td>";
-			                        rowsHTML+="<td data-th='Total'>";
-			                                rowsHTML+="<input type='number' readonly='readonly' required form='form154_"+id+"' value='0'>";
-			                        rowsHTML+="</td>";
-			                        rowsHTML+="<td data-th='Action'>";
-			                                rowsHTML+="<input type='hidden' form='form154_"+id+"' value='0'>";
-			                                rowsHTML+="<input type='hidden' form='form154_"+id+"' value='0'>";
-			                                rowsHTML+="<input type='hidden' form='form154_"+id+"' value='0'>";
-			                                rowsHTML+="<input type='hidden' form='form154_"+id+"' value='free on the bill amount'>";
-			                                rowsHTML+="<input type='hidden' form='form154_"+id+"' value='"+id+"'>";
-			                                rowsHTML+="<input type='submit' class='save_icon' form='form154_"+id+"' id='save_form154_"+id+"' >";
-			                                rowsHTML+="<input type='button' class='delete_icon' form='form154_"+id+"' id='delete_form154_"+id+"' onclick='form154_delete_item($(this));'>";
-			                                rowsHTML+="<input type='hidden' form='form154_"+id+"' value=''>";
-			                                rowsHTML+="<input type='hidden' form='form154_"+id+"' value=''>";
-			                        rowsHTML+="</td>";
-			                rowsHTML+="</tr>";
+			total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+					"<td>Amount:</br>Discount: </br>Tax: </br>Cartage: </br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br>" +
+					"Rs. "+tax+"</br>" +
+					"Rs. <input type='number' value='"+cartage+"' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
 
-			                $('#form154_body').prepend(rowsHTML);
-			                
-			          		var bill_item_id=get_new_key();
-							var free_xml="<bill_items>" +
-										"<id>"+bill_item_id+"</id>" +
-										"<item_name>"+free_product_name+"</item_name>" +
-										"<batch>"+free_product_name+"</batch>" +
-										"<unit_price>0</unit_price>" +
-										"<quantity>"+free_product_quantity+"</quantity>" +
-										"<amount>0</amount>" +
-										"<total>0</total>" +
-										"<discount>0</discount>" +
-										"<offer></offer>" +
-										"<type>free</type>" +
-										"<tax>0</tax>" +
-										"<bill_id>"+data_id+"</bill_id>" +
-										"<free_with>bill</free_with>" +
-										"<last_updated>"+last_updated+"</last_updated>" +
-										"</bill_items>";	
-							
-							if(is_online())
-							{
-								server_create_simple(free_xml);
-							}
-							else
-							{
-								local_create_simple(free_xml);
-							}
-						}
-						else
-						{
-							$("#modal7").dialog("open");
-						}
+		}
+		
+		$('#form154_foot').html(total_row);
+		longPressEditable($('.dblclick_editable'));
+
+		var payment_data="<payments>" +
+				"<id></id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"</payments>";
+		get_single_column_data(function(payments)
+		{
+			for(var y in payments)
+			{
+				var payment_xml="<payments>" +
+							"<id>"+payments[y]+"</id>" +
+							"<type>received</type>" +
+							"<total_amount>"+total+"</total_amount>" +
+							"<acc_name>"+customer+"</acc_name>" +
+							"<transaction_id>"+payments[y]+"</transaction_id>" +
+							"<bill_id>"+data_id+"</bill_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</payments>";
+				var pt_xml="<transactions>" +
+							"<id>"+payments[y]+"</id>" +
+							"<amount>"+total+"</amount>" +
+							"<receiver>master</receiver>" +
+							"<giver>"+customer+"</giver>" +
+							"<tax>0</tax>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</transactions>";
+				if(is_online())
+				{
+					server_update_simple_func(payment_xml,function()
+					{
+						//modal26_action(payments[y]);
 					});
 				}
-				offer_detail=offers[i].offer_detail;
+				else
+				{
+					local_update_simple_func(payment_xml,function()
+					{
+						//modal26_action(payments[y]);
+					});
+				}
 				break;
 			}
-			
-			var data_xml="<bills>" +
-						"<id>"+data_id+"</id>" +
-						"<customer_name>"+customer+"</customer_name>" +
-						"<bill_date>"+bill_date+"</bill_date>" +
-						"<amount>"+amount+"</amount>" +
-						"<total>"+total+"</total>" +
-						"<type>product</type>" +
-						"<billing_type>"+bill_type+"</billing_type>" +
-						"<offer>"+offer_detail+"</offer>" +
-						"<discount>"+discount+"</discount>" +
-						"<tax>"+tax+"</tax>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"<transaction_id>"+transaction_id+"</transaction_id>" +
-						"</bills>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>bills</tablename>" +
-						"<link_to>form92</link_to>" +
-						"<title>Updated</title>" +
-						"<notes>Bill no "+bill_num+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var transaction_xml="<transactions>" +
-						"<id>"+transaction_id+"</id>" +
-						"<trans_date>"+get_my_time()+"</trans_date>" +
-						"<amount>"+total+"</amount>" +
-						"<receiver>"+customer+"</receiver>" +
-						"<giver>master</giver>" +
-						"<tax>"+tax+"</tax>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</transactions>";
-			if(is_online())
-			{
-				server_update_row(data_xml,activity_xml);
-				server_update_simple(transaction_xml);
-			}
-			else
-			{
-				local_update_row(data_xml,activity_xml);
-				local_update_simple(transaction_xml);
-			}
-			
-			var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-						"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-						"<td>Rs. "+amount+"</br>" +
-						"Rs. "+discount+"</br>" +
-						"Rs. "+tax+"</br>" +
-						"Rs. "+total+"</td>" +
-						"<td></td>" +
-						"</tr>";
-			$('#form154_foot').html(total_row);
-
-			message_string+="\nAmount: "+amount;
-			message_string+="\ndiscount: "+discount;
-			message_string+="\nTax: "+tax;
-			message_string+="\nTotal: "+total;
-
-			var subject="Bill from "+get_session_var('title');
-			$('#form154_share').show();
-			$('#form154_share').off('click');
-			$('#form154_share').on('click',function()
-			{
-				modal44_action(customer,subject,message_string);
-			});
-
-			var payment_data="<payments>" +
-					"<id></id>" +
-					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
-					"</payments>";
-			get_single_column_data(function(payments)
-			{
-				for(var y in payments)
-				{
-					var payment_xml="<payments>" +
-								"<id>"+payments[y]+"</id>" +
-								"<type>received</type>" +
-								"<total_amount>"+total+"</total_amount>" +
-								"<acc_name>"+customer+"</acc_name>" +
-								"<transaction_id>"+payments[y]+"</transaction_id>" +
-								"<bill_id>"+data_id+"</bill_id>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</payments>";
-					var pt_xml="<transactions>" +
-								"<id>"+payments[y]+"</id>" +
-								"<amount>"+total+"</amount>" +
-								"<receiver>master</receiver>" +
-								"<giver>"+customer+"</giver>" +
-								"<tax>0</tax>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</transactions>";
-					if(is_online())
-					{
-						server_update_simple_func(payment_xml,function()
-						{
-							modal26_action(payments[y]);
-						});
-					}
-					else
-					{
-						local_update_simple_func(payment_xml,function()
-						{
-							modal26_action(payments[y]);
-						});
-					}
-					break;
-				}
-			},payment_data);
-			
-		});
+		},payment_data);
+	
 		$("[id^='save_form154_']").click();
 	}
 	else
@@ -8676,6 +8536,36 @@ function form157_receive_item(button)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		
+		///////////adding store placement////////
+		var storage_data="<area_utilization>" +
+				"<id></id>" +
+				"<name exact='yes'>"+target+"</name>" +
+				"<item_name exact='yes'>"+product_name+"</item_name>" +
+				"<batch exact='yes'>"+product_name+"</batch>" +
+				"</area_utilization>";
+		fetch_requested_data('',storage_data,function(placements)
+		{
+			if(placements.length===0 && target!="")
+			{
+				var storage_xml="<area_utilization>" +
+						"<id>"+get_new_key()+"</id>" +
+						"<name>"+target+"</name>" +
+						"<item_name>"+product_name+"</item_name>" +
+						"<batch>"+product_name+"</batch>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</area_utilization>";
+				if(is_online())
+				{
+					server_create_simple(storage_xml);
+				}
+				else
+				{
+					local_create_simple(storage_xml);
+				}
+			}
+		});		
+		
 		$(button).hide();
 	}
 	else
@@ -8737,89 +8627,6 @@ function form157_cancel_item(button)
 
 /**
  * @form Enter Purchase Bill (DLM)
- * @formNo 158
- * @param button
- */
-function form158_update_item(form)
-{
-	if(is_update_access('form158'))
-	{
-		var master_form=document.getElementById("form158_master");
-		
-		var imported=master_form.elements[5].checked;
-		var bill_id=master_form.elements[6].value;
-		
-		var name=form.elements[0].value;
-		var pquantity=form.elements[1].value;
-		var fquantity=form.elements[2].value;
-		var quantity=parseFloat(pquantity)+parseFloat(fquantity);
-		var price=form.elements[3].value;
-		var tax=form.elements[4].value;
-		var total=form.elements[5].value;
-		var amount=total-tax;		
-		var storage=form.elements[6].value;
-		var data_id=form.elements[7].value;
-		var save_button=form.elements[8];
-		var del_button=form.elements[9];
-		var last_updated=get_my_time();
-		var raw_price='';
-		var conversion_rate='';		
-		
-		if(imported)
-		{
-			raw_price=form.elements[3].value;
-			conversion_rate=form.elements[4].value;		
-			price=form.elements[5].value;
-			tax=form.elements[6].value;
-			total=form.elements[7].value;
-			amount=total-tax;		
-			storage=form.elements[8].value;
-			data_id=form.elements[9].value;
-			save_button=form.elements[10];
-			del_button=form.elements[11];
-		}
-			
-		var data_xml="<supplier_bill_items>" +
-				"<id>"+data_id+"</id>" +
-				"<product_name>"+name+"</product_name>" +
-				"<batch>"+name+"</batch>" +
-				"<quantity>"+quantity+"</quantity>" +
-				"<p_quantity>"+pquantity+"</p_quantity>" +
-				"<f_quantity>"+fquantity+"</f_quantity>" +
-				"<total>"+total+"</total>" +
-				"<tax>"+tax+"</tax>" +
-				"<amount>"+amount+"</amount>" +
-				"<unit_price>"+price+"</unit_price>" +
-				"<bill_id>"+bill_id+"</bill_id>" +
-				"<storage>"+storage+"</storage>" +
-				"<raw_price>"+raw_price+"</raw_price>"+
-				"<conversion_rate>"+conversion_rate+"</conversion_rate>"+				
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</supplier_bill_items>";	
-	
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}
-				
-		for(var i=0;i<8;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
-
-/**
- * @form Enter Purchase Bill (DLM)
  * @param button
  */
 function form158_update_form()
@@ -8847,22 +8654,14 @@ function form158_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			if(imported=='no')
-			{
-				total+=parseFloat(subform.elements[5].value);
-				tax+=parseFloat(subform.elements[4].value);
-			}
-			else 
-			{
-				total+=parseFloat(subform.elements[7].value);
-				tax+=parseFloat(subform.elements[6].value);
-			}
+			total+=parseFloat(subform.elements[4].value);
+			tax+=parseFloat(subform.elements[3].value);
 		});
 
 		var discount=0;
 		amount=total-tax;
 		
-		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"Rs. "+discount+"</br>" +
@@ -8948,14 +8747,14 @@ function form158_update_form()
 				{
 					server_update_simple_func(payment_xml,function()
 					{
-						modal28_action(payments[y]);
+						//modal28_action(payments[y]);
 					});
 				}
 				else
 				{
 					local_update_simple_func(payment_xml,function()
 					{
-						modal28_action(payments[y]);
+						//modal28_action(payments[y]);
 					});
 				}
 				break;
