@@ -4916,6 +4916,7 @@ function modal50_action()
 		ajax_with_custom_func("./ajax/email.php","domain="+domain+"&username="+username+"&re="+read_access+"&to="+to+"&from="+from+"&message="+message+"&subject="+subject+"&type=transaction",function(e)
 		{
 			hide_loader();
+			$("#modal58").dialog("open");
 			console.log(e.responseText);
 		});
 	});		
