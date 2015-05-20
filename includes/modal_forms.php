@@ -638,6 +638,10 @@
 		
 	</div>
 
+	<div id="modal58" title="Mails Sent">
+		The news Letter has been sent to all the selected customers on their email-ids. Thanks.
+	</div>
+
 
 	<div id="modal101" title="Update details">
 		<form id='modal101_form'>
