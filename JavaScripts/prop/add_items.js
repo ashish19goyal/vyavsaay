@@ -3036,6 +3036,8 @@ function form81_add_item()
 				set_my_value_list(staff_data,by_filter);
 			});
 		});
+		
+		$('textarea').autosize();
 	}
 	else
 	{
