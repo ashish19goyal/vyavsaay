@@ -4315,7 +4315,10 @@ function form105_add_item()
 		});
 
 
-		set_static_value_list('data_access','access_type',type_filter);
+		set_static_value_list('data_access','access_type',type_filter,function()
+		{
+			$(type_filter).focus();
+		});
 		
 		var user_data="<accounts>" +
 				"<acc_name></acc_name>" +
@@ -4332,9 +4335,7 @@ function form105_add_item()
 				"<criteria_field></criteria_field>" +
 				"<tablename exact='yes'>"+tablename+"</tablename>" +
 				"</data_access>";
-		set_my_filter(field_data,field_filter);
-		
-		$(type_filter).focus();
+		set_my_filter(field_data,field_filter);		
 	}
 	else
 	{
@@ -6921,13 +6922,13 @@ function form137_add_item()
 				rowsHTML+="<input type='text' form='form137_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="<input type='number' step='any' form='form137_"+id+"' required>";
+				rowsHTML+="Rs. <input type='number' step='any' form='form137_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Details'>";
 				rowsHTML+="<textarea form='form137_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' form='form137_"+id+"' value='submitted'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form137_"+id+"' value='submitted'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form137_"+id+"' value='"+id+"'>";
@@ -6948,15 +6949,22 @@ function form137_add_item()
 			form137_create_item(fields);
 		});
 		
-		var person_data="<staff>"+
-						"<acc_name></acc_name>"+
-						"</staff>";
-		set_my_value_list_func(person_data,person_filter,function () 
+		if(is_update_access('form137'))
 		{
-			$(person_filter).focus();
-		});
-
-		set_static_value_list('expenses','status',status_filter);
+			var person_data="<staff>"+
+							"<acc_name></acc_name>"+
+							"</staff>";
+			set_my_value_list_func(person_data,person_filter,function () 
+			{
+				$(person_filter).focus();
+			});
+		}
+		else
+		{
+			person_filter.value=get_account_name();
+			person_filter.setAttribute('readonly','readonly');
+			$(amount_filter).focus();
+		}
 	}
 	else
 	{
@@ -8167,8 +8175,8 @@ function form154_add_product()
 				discount_filter.value=0;
 				tax_filter.value=0;
 			});
-	
-			$(from_filter).add(to_filter).add(price_filter).add(quantity_filter).on('blur',function()
+
+			$(from_filter).add(to_filter).add(price_filter).add(quantity_filter).on('change',function()
 			{
 				var days=0;
 				if(to_filter!="" && from_filter!="" && parseFloat(to_filter.value)>=parseFloat(from_filter.value))

@@ -4358,6 +4358,7 @@ function form81_create_item(form)
 		var customer_data="<customers>"+
 						"<name></name>"+
 						"<phone></phone>"+
+						"<email></email>"+
 						"<acc_name exact='yes'>"+customer+"</acc_name>"+
 						"</customers>";
 		fetch_requested_data('',customer_data,function(customers)
@@ -4365,12 +4366,34 @@ function form81_create_item(form)
 			var customer_name=customers[0].name;
 			var customer_phone=customers[0].phone;
 			var business_title=get_session_var('title');
-			var message="Hi "+customer_name+", "+business_title+" has captured your request. We will get in touch with you soon.";
-			send_sms(customer_phone,message,'transaction');
+			var sms_content=get_session_var('sms_content');			
+			var message=sms_content.replace(/customer_name/g,customer_name);
+			message=message.replace(/business_title/g,business_title);
 			
-			//console.log(customer_name+"-    -"+customer_phone);
+			send_sms(customer_phone,message,'transaction');
+			///////////////////////////////////////////////////////////////////////////////
+
+			var nl_name=get_session_var('default_newsletter');
+			var nl_id_xml="<newsletter>"+
+						"<id></id>"+
+						"<name exact='yes'>"+nl_name+"</name>"+
+						"</newsletter>";			
+
+			get_single_column_data(function(nls)
+			{		
+				var subject=nl_name+" - " +business_title;
+				var nl_id=nls[0];	
+				print_newsletter(nl_name,nl_id,'mail',function(container)
+				{
+					var message=encodeURIComponent(container.innerHTML);
+					var to=customers[0].email;
+					var from=get_session_var('email');
+					send_email(to,from,subject,message,'promotion',function(){});
+				});
+			},nl_id_xml);		
+			//////////////////////////////////////////////////////////////////////////////		
 		});
-		
+				
 		var del_button=form.elements[6];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
@@ -10763,24 +10786,13 @@ function form137_create_item(form)
 					"<detail>"+details+"</detail>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</expenses>";
-		var access_xml="<data_access>" +
-					"<id>"+get_new_key()+"</id>" +
-					"<tablename>expenses</tablename>" +
-					"<record_id>"+data_id+"</record_id>" +
-					"<access_type>all</access_type>" +
-					"<user_type>user</user_type>"+
-					"<user>"+get_account_name()+"</user>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</data_access>";
 		if(is_online())
 		{
 			server_create_simple(data_xml);
-			server_create_simple(access_xml);
 		}
 		else
 		{
 			local_create_simple(data_xml);
-			local_create_simple(access_xml);
 		}	
 		for(var i=0;i<4;i++)
 		{
@@ -10794,11 +10806,6 @@ function form137_create_item(form)
 		});
 		
 		$(form).off('submit');
-		$(form).on('submit',function(event)
-		{
-			event.preventDefault();
-			form137_update_item(form);
-		});		
 	}
 	else
 	{

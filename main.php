@@ -29,10 +29,11 @@
 		include "functions/purchase.php";
 		include "functions/store.php";
 		//include "functions/inventory.php";
-		include "functions/customers.php";
+		//include "functions/customers.php";
 		include "functions/customer_service.php";
-		include "functions/staff.php";
-		include "functions/suppliers.php";
+		//include "functions/staff.php";
+		//include "functions/suppliers.php";
+		include "functions/people.php";
 		include "functions/offers.php";
 		include "functions/finances.php";
 		include "functions/ecommerce.php";

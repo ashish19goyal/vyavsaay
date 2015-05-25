@@ -6405,7 +6405,7 @@ function form78_ini()
 				newsletter_id=newsletter_results[i].id;
 				var filter_fields=document.getElementById('form78_master');
 				filter_fields.elements[1].value=newsletter_results[i].name;
-				filter_fields.elements[2].value=newsletter_results[i].id;
+				filter_fields.elements[3].value=newsletter_results[i].id;
 				break;
 			}
 			/////////////////////////////////////////////////////////////////////////
@@ -6415,6 +6415,7 @@ function form78_ini()
 					"<id></id>" +
 					"<name></name>" +
 					"<email></email>" +
+					"<phone></phone>"+
 					"<acc_name></acc_name>" +
 					"</customers>";
 			fetch_requested_data('',customer_columns,function(results)
@@ -6432,7 +6433,10 @@ function form78_ini()
 						rowsHTML+="<td data-th='Email'>";
 							rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'>"+result.email+"</textarea>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Select for mailing'>";
+						rowsHTML+="<td data-th='Phone'>";
+							rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'>"+result.phone+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Select'>";
 							rowsHTML+="<input type='checkbox' form='row_form78_"+id+"' checked>";
 							rowsHTML+="<input type='hidden' form='row_form78_"+id+"' value='"+result.name+"'>";
 						rowsHTML+="</td>";
@@ -8817,7 +8821,7 @@ function form101_ini()
 								}
 								if(result.status=='active')
 								{
-									rowsHTML+="<br><input type='button' class='generic_icon' form='form101_"+result.id+"' value='Budget' onclick=\"element_display('"+result.id+"','form144');\">";
+									rowsHTML+="<br><input type='button' class='generic_icon' form='form101_"+result.id+"' value='Budget' onclick=\"element_display('"+result.id+"','form144',['form137']);\">";
 									rowsHTML+="<br><input type='button' class='generic_icon' form='form101_"+result.id+"' value='Schedule' onclick=\"element_display('"+result.id+"','form135');\">";
 								}
 							rowsHTML+="</td>";			
@@ -12961,10 +12965,8 @@ function form137_ini()
 		
 		if_data_read_access('expenses',function(accessible_data)
 		{
-			//console.log(accessible_data);
 			fetch_requested_data('',member_columns,function(results)
 			{
-				//console.log(results);
 				results.forEach(function(result)
 				{
 					var read=false;
@@ -13003,7 +13005,6 @@ function form137_ini()
 					
 					if(read)
 					{
-						//console.log('yes read access');
 						var id=result.id;
 						var rowsHTML="<tr>";
 						rowsHTML+="<form id='form137_"+id+"'></form>";
@@ -13011,48 +13012,32 @@ function form137_ini()
 								rowsHTML+="<textarea readonly='readonly' form='form137_"+id+"'>"+result.person+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Amount'>";
-								rowsHTML+="<input type='number' readonly='readonly' form='form137_"+id+"' value='"+result.amount+"' step='any'>";
+								rowsHTML+="Rs. <input type='number' readonly='readonly' form='form137_"+id+"' value='"+result.amount+"' step='any'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
-								rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form137_"+id+"' value='"+result.detail+"'>";
+								rowsHTML+="<textarea readonly='readonly' form='form137_"+id+"'>"+result.detail+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Status'>";
-								rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form137_"+id+"' value='"+result.status+"'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form137_"+id+"' value='"+result.status+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form137_"+id+"' value='"+id+"'>";
-							if(update)
+							if(update && result.status=='submitted')
 							{
-								rowsHTML+="<input type='submit' class='submit_hidden' form='form137_"+id+"' id='save_form137_"+id+"'>";
+								rowsHTML+="<input type='button' class='generic_icon' value='Approve' form='form137_"+id+"' onclick='form137_approve_item($(this))'>";
+								rowsHTML+="<input type='button' class='generic_icon' value='Reject' form='form137_"+id+"' onclick='form137_reject_item($(this))'>";
 							}
 							if(del)
 							{
 								rowsHTML+="<input type='button' class='delete_icon' form='form137_"+id+"' id='delete_form137_"+id+"' onclick='form137_delete_item($(this));'>";
 							}
-							if(access)
-							{
-								rowsHTML+="<input type='button' class='generic_icon' form='form137_"+result.id+"' value='Access' onclick=\"access_display('project_team','"+result.id+"');\">";
-							}
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 
 						$('#form137_body').append(rowsHTML);
-						
-						var fields=document.getElementById("form137_"+id);
-						var status_filter=fields.elements[3];
-						set_static_value_list('projects','status',status_filter);
-						
-						$(fields).on("submit", function(event)
-						{
-							event.preventDefault();
-							form137_update_item(fields);
-						});
 					}
 				});
-				
-				longPressEditable($('.dblclick_editable'));
-				$('textarea').autosize();
-				
+				$('textarea').autosize();				
 				hide_loader();
 			});
 		});

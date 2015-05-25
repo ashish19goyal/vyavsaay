@@ -852,8 +852,35 @@ function send_sms(to,message,type)
 						"<message>"+message+"</message>"+
 						"<status>pending</status>"+
 						"<type>"+type+"</type>"+
+						"<last_updated>"+get_my_time()+"</last_updated>"+
 						"</sms>";
 			server_create_simple(sms_data);			
+		}
+	}
+}
+
+function send_email(to,from,subject,message,type,func)
+{
+	var email_enabled=get_session_var('email_enabled');
+	if(email_enabled=='yes')
+	{
+		if(is_online())
+		{
+			server_send_email(to,from,subject,message,type,func);
+		}
+		else
+		{
+			var email_data="<emails>"+
+						"<id>"+get_new_key()+"</id>"+
+						"<receivers>"+to+"</receivers>"+
+						"<sender>"+from+"</sender>"+
+						"<subject>"+subject+"</subject>"+
+						"<message>"+message+"</message>"+
+						"<status>pending</status>"+
+						"<type>"+type+"</type>"+
+						"<last_updated>"+get_my_time()+"</last_updated>"+
+						"</emails>";
+			server_create_simple(email_data);			
 		}
 	}
 }

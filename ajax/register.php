@@ -33,11 +33,6 @@
 
 		set_user_preferences($conn2,$industry);
 		set_user_profiles($conn2,$pass_hash,$name,$email,$phone);
-
-		$message="Congratulations!! Your vyavsaay account has been successfully setup.";
-		$sms_instance=new send_sms();		
-		$sms_instance->direct_send($message,$phone,'transaction');
-		$sms_instance->log_sms($username,$message,$phone,'transaction');		
 		
 	}catch(PDOException $ex)
 	{
@@ -46,6 +41,10 @@
 	}
 			
 	echo $status;
+	$message="Congratulations!! Your vyavsaay account has been successfully setup.";
+	$sms_instance=new send_sms();		
+	$sms_instance->direct_send($message,$phone,'transaction');
+	$sms_instance->log_sms($username,$message,$phone,'transaction');		
 
 	function set_user_preferences($conn2,$industry)
 	{

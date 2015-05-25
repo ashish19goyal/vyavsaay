@@ -638,8 +638,8 @@
 		
 	</div>
 
-	<div id="modal58" title="Mails Sent">
-		The news Letter has been sent to all the selected customers on their email-ids. Thanks.
+	<div id="modal58" title="Promotions Sent">
+		All selected customers have been sent the news Letter and SMS on their email-ids and phone numbers respectively.
 	</div>
 
 

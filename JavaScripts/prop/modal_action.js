@@ -4882,7 +4882,8 @@ function modal50_action()
 	show_loader();
 	var form=document.getElementById("form78_master");
 	var nl_name=form.elements[1].value;
-	var nl_id=form.elements[2].value;
+	var nl_id=form.elements[3].value;
+	var sms_content=form.elements[2].value;			
 
 	print_newsletter(nl_name,nl_id,'mail',function(container)
 	{
@@ -4896,28 +4897,26 @@ function modal50_action()
 			var form_id=$(this).attr('id');
 			var form=document.getElementById(form_id);
 			
-			if(form.elements[2].checked)
+			if(form.elements[3].checked)
 			{
 				email_id_string+=form.elements[1].value+";";
+				var customer_name=form.elements[4].value;
+				var customer_phone=form.elements[2].value;
+				var message=sms_content.replace(/customer_name/g,customer_name);
+				message=message.replace(/business_title/g,business_title);
+			
+				send_sms(customer_phone,message,'transaction');
 			}
-		});
-		
-		//console.log(container.innerHTML);
+		});	
+
 		var message=encodeURIComponent(container.innerHTML);
-		//var mail_string="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su="+encodeURIComponent(subject_string)+"&to="+get_session_var('email')+"&bcc="+email_id_string+"&body="+email_data_string;
-		//hide_loader();
-		//window.open(mail_string,'_blank');
 		
 		var to=email_id_string;
 		var from=get_session_var('email');
-		var domain=get_domain();
-		var username=get_username();
-		var read_access=get_session_var('re');
-		ajax_with_custom_func("./ajax/email.php","domain="+domain+"&username="+username+"&re="+read_access+"&to="+to+"&from="+from+"&message="+message+"&subject="+subject+"&type=transaction",function(e)
+		send_email(to,from,subject,message,'promotion',function()
 		{
-			hide_loader();
 			$("#modal58").dialog("open");
-			console.log(e.responseText);
+			hide_loader();			
 		});
 	});		
 }

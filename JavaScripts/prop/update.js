@@ -7056,25 +7056,21 @@ function form136_update_form()
  * @formNo 137
  * @param button
  */
-function form137_update_item(form)
+function form137_approve_item(button)
 {
 	if(is_update_access('form137'))
 	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);	
+		
 		var project_id=document.getElementById('form137_master').elements[2].value;
-		var person=form.elements[0].value;
-		var amount=form.elements[1].value;
-		var details=form.elements[2].value;
-		var status=form.elements[3].value;		
+		form.elements[4].value='approved';		
+		var status='approved';
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<expenses>" +
 					"<id>"+data_id+"</id>" +
-					"<source_id>"+project_id+"</source_id>" +
-					"<source>project</source>"+
 					"<status>"+status+"</status>" +
-					"<person>"+person+"</person>" +
-					"<amount>"+amount+"</amount>" +
-					"<detail>"+details+"</detail>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</expenses>";
 		if(is_online())
@@ -7084,11 +7080,46 @@ function form137_update_item(form)
 		else
 		{
 			local_update_simple(data_xml);
-		}	
-		for(var i=0;i<4;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
 		}
+		$(button).hide();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Project Expenses
+ * @formNo 137
+ * @param button
+ */
+function form137_reject_item(button)
+{
+	if(is_update_access('form137'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);	
+		
+		var project_id=document.getElementById('form137_master').elements[2].value;
+		form.elements[4].value='rejected';		
+		var status='rejected';
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<expenses>" +
+					"<id>"+data_id+"</id>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</expenses>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+		$(button).hide();
 	}
 	else
 	{

@@ -2796,24 +2796,24 @@
 		<row>
 			<tablename>store_areas</tablename>
 			<listname>area_type</listname>
-			<name>storey</name>
-			<value>Storey</value>
+			<name>office</name>
+			<value>Office</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<tablename>store_areas</tablename>
 			<listname>area_type</listname>
-			<name>block</name>
-			<value>Block</value>
+			<name>bin</name>
+			<value>Bin</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
 			<tablename>store_areas</tablename>
 			<listname>area_type</listname>
-			<name>door</name>
-			<value>Door</value>
+			<name>rack</name>
+			<value>Rack</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>
@@ -2822,6 +2822,22 @@
 			<listname>area_type</listname>
 			<name>storage</name>
 			<value>Storage</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>store_areas</tablename>
+			<listname>area_type</listname>
+			<name>row</name>
+			<value>Row</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>store_areas</tablename>
+			<listname>area_type</listname>
+			<name>store</name>
+			<value>Store</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

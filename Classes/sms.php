@@ -22,6 +22,11 @@ class send_sms
 		$this->url='http://sms99.co.in/pushsms.php';
 	}
 	
+	public function sender_id($sender_id)
+	{
+		$this->sender_id=urlencode($sender_id);
+	}
+	
 	//send sms
 	public function direct_send($message,$to,$type)
 	{

@@ -152,6 +152,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>email_enabled</name>
+			<display_name>email_enabled</display_name>
+			<status>active</status>
+			<value>no</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>bill_message</name>
 			<display_name>bill_message</display_name>
 			<status>active</status>
@@ -336,6 +346,36 @@
 			<display_name>language</display_name>
 			<status>active</status>
 			<value>english</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>sms_content</name>
+			<display_name>sms_content</display_name>
+			<status>active</status>
+			<value>Hello, customer_name. Thanks for contacting.</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>sms_sender_id</name>
+			<display_name>sms_sender_id</display_name>
+			<status>active</status>
+			<value>VYAVSY</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>default_newsletter</name>
+			<display_name>default_newsletter</display_name>
+			<status>active</status>
+			<value>May Newsletter</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -834,6 +874,56 @@
 		<row>
 			<name>report60</name>
 			<display_name>trial_balance</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report61</name>
+			<display_name>expiring_inventory</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report62</name>
+			<display_name>inventory_prediction</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report63</name>
+			<display_name>item_picklist</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report64</name>
+			<display_name>packing_instructions</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report65</name>
+			<display_name>pricing_update_report</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
@@ -1348,39 +1438,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>form74</name>
-			<display_name>completed_sale_orders</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--sale_orders--sale_order_items--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form75</name>
-			<display_name>pending_sale_orders</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--sale_orders--sale_order_items--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>form76</name>
-			<display_name>track_payments</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--payments--transactions--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>form77</name>
 			<display_name>set_shortcuts</display_name>
 			<status>active</status>
@@ -1393,7 +1450,7 @@
 		</row>
 		<row>
 			<name>form78</name>
-			<display_name>promotion_mails</display_name>
+			<display_name>promotions</display_name>
 			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
@@ -2216,6 +2273,105 @@
 			<tables>--supplier_bills--supplier_bill_items--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form159</name>
+			<display_name>issue_grn</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_bills--supplier_bill_items--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form160</name>
+			<display_name>manage_grn</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_bills--supplier_bill_items--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form161</name>
+			<display_name>checklist_items</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--checklist_items--checklist_mapping--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form162</name>
+			<display_name>product_checklist</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--checklist_items--checklist_mapping--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form163</name>
+			<display_name>product_dimensions</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_master--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form164</name>
+			<display_name>storage_dimensions</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--store_areas--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form165</name>
+			<display_name>put_away_suggestions</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_bill_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form166</name>
+			<display_name>manage_sale_prices</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_prices--product_master--product_instances--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form167</name>
+			<display_name>storage_structure</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--store_areas--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -2706,6 +2862,61 @@
 			<username>master</username>
 			<element_id>report60</element_id>
 			<element_name>trial_balance</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report61</element_id>
+			<element_name>expiring_inventory</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report62</element_id>
+			<element_name>inventory_prediction</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report63</element_id>
+			<element_name>item_picklist</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report64</element_id>
+			<element_name>packing_instructions</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report65</element_id>
+			<element_name>pricing_update_report</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -3221,39 +3432,6 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>form74</element_id>
-			<element_name>completed_sale_orders</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form75</element_id>
-			<element_name>pending_sale_orders</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
-			<element_id>form76</element_id>
-			<element_name>track_payments</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
 			<element_id>form77</element_id>
 			<element_name>set_shortcuts</element_name>
 			<status>active</status>
@@ -3266,7 +3444,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form78</element_id>
-			<element_name>promotion_mails</element_name>
+			<element_name>promotions</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -4081,6 +4259,105 @@
 			<username>master</username>
 			<element_id>form158</element_id>
 			<element_name>enter_purchases_dlm</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form159</element_id>
+			<element_name>issue_grn</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form160</element_id>
+			<element_name>manage_grn</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form161</element_id>
+			<element_name>checklist_items</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form162</element_id>
+			<element_name>product_checklist</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form163</element_id>
+			<element_name>product_dimensions</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form164</element_id>
+			<element_name>storage_dimensions</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form165</element_id>
+			<element_name>put_away_suggestions</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form166</element_id>
+			<element_name>manage_sale_prices</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form167</element_id>
+			<element_name>storage_structure</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

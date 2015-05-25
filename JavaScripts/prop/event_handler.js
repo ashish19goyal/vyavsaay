@@ -28,7 +28,7 @@ function default_load()
 			responsive_tabs();
 			set_menu_shortcuts();
 			date_formating();
-			print_setup();
+			//print_setup();
 			set_footer_message();
 			Chart.defaults.global.responsive = true;
 			Chart.defaults.global.scaleFontSize= 10;
@@ -114,8 +114,8 @@ function set_grid_items()
 	set_grid_item_12();
 	set_grid_item_13();
 	set_grid_item_14();
-	set_grid_item_15();
-	set_grid_item_16();
+//	set_grid_item_15();
+//	set_grid_item_16();
 	set_grid_item_17();
 	set_grid_item_18();
 	set_grid_item_19();
@@ -276,6 +276,7 @@ function modal_forms_ini()
 	}
 }
 
+/*
 function print_setup()
 {
 //	print_template_setup('sale_bill');
@@ -299,6 +300,7 @@ function print_css_setup(name)
 		link.setAttribute("href", "./templates/"+name+"/"+template_name+".css");
 	document.head.appendChild(link);
 }
+*/
 
 function home_display()
 {
@@ -411,11 +413,12 @@ function hide_all()
 	//$("#inventory_main").hide();
 	$("#finances_main").hide();
 	$("#ecommerce_main").hide();
-	$("#customers_main").hide();
+	$("#people_main").hide();
+	//$("#customers_main").hide();
 	$("#customer_service_main").hide();
 	$("#projects_main").hide();
-	$("#suppliers_main").hide();
-	$("#staff_main").hide();
+	//$("#suppliers_main").hide();
+	//$("#staff_main").hide();
 	$("#store_main").hide();
 	$("#offers_main").hide();
 	$("#sale_reports_main").hide();

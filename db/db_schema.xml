@@ -171,6 +171,7 @@
 			<storage index='yes' type="VARCHAR(25)"></storage>
 			<raw_price index='no' type="DECIMAL(12,2)"></raw_price>
 			<conversion_rate index='no' type="DECIMAL(12,2)"></conversion_rate>
+			<put_away index='yes' type="TEXT"></put_away>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_bill_items>
 	<supplier_returns>
@@ -421,6 +422,9 @@
 			<description index='no' type="TEXT"></description>
 			<make index='yes' type="VARCHAR(45)"></make>
 			<tax index='no' type="DECIMAL(12,4)"></tax>
+			<length index='no' type="DECIMAL(12,4)"></length>
+			<breadth index='no' type="DECIMAL(12,4)"></breadth>
+			<height index='no' type="DECIMAL(12,4)"></height>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</product_master>
 	<attributes>
@@ -487,7 +491,10 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(25)"></name>
 			<owner index='yes' type="VARCHAR(100)"></owner>
-			<area_type index='yes' type="VARCHAR(90)"></area_type><!-- storage/block/door/storey -->
+			<area_type index='yes' type="VARCHAR(90)"></area_type><!-- storage/office/bin/rack/row/store -->
+			<length index='no' type="DECIMAL(12,4)"></length>
+			<breadth index='no' type="DECIMAL(12,4)"></breadth>
+			<height index='no' type="DECIMAL(12,4)"></height>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</store_areas>
 	<assets>
@@ -995,4 +1002,17 @@
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</quotation_items>
+	<checklist_mapping>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<item index='yes' type="VARCHAR(100)"></item>
+			<check_point index='yes' type="TEXT"></check_point>
+			<threshold_value index='no' type='TEXT'></threshold_value>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</checklist_mapping>
+	<checklist_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<check_point index='yes' type="TEXT"></check_point>
+			<threshold_value index='no' type='TEXT'></threshold_value>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</checklist_items>
 </re_xml>

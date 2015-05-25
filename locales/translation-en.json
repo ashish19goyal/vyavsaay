@@ -26,7 +26,8 @@
     "ecommerce":"E-Commerce",
     "projects":"Projects",
     "admin":"Admin",
-    "promotion":"Promotion"
+    "promotion":"Promotion",
+    "people":"People"
   },
   "general":{
   	"hello": "Hello"
@@ -61,7 +62,7 @@
   	"payments_due_from_customers":"Payments Due From Customers",
   	"update_inventory":"Inventory",
   	"dispose_items":"Dispose items",
-  	"inventory_predictions":"Inventory predictions",
+  	"inventory_prediction":"Inventory prediction",
   	"short_inventory":"Short Inventory",
   	"surplus_inventory":"Surplus Inventory",
   	"expiring_inventory":"Expiring Inventory",
@@ -148,7 +149,7 @@
   	"promotion_mails":"Promotion Mails",
   	"manage_task_types":"Manage Task Types",
   	"de-duplication_mapping":"De-duplication",
-  	"whatsapp_promotion":"Whatsapp Promotion",
+  	"promotions":"Promotions",
   	"get_messages":"Get Messages",
   	"find_locations":"Find Locations",
   	"place_orders":"Place Orders",
@@ -269,6 +270,22 @@
   	"store_movement_dlm":"Store Movement (DLM)",
   	"enter_purchases_dlm":"Enter Purchases (DLM)",
   	"footer_message":"Footer Message",
-  	"sms_enabled":"Enable SMS service (this is separately billed)"
+  	"sms_enabled":"Enable SMS service (this is separately billed)",
+  	"email_enabled":"Enable email service",
+  	"item_picklist":"Item pick-list",
+  	"packing_instructions":"Packing Instructions",
+  	"pricing_update_report":"Pricing update report",
+  	"issue_grn":"Issue GRN",
+  	"manage_grn":"Manage GRN",
+  	"checklist_items":"Checklist Items",
+  	"product_checklist":"Product checklist",
+  	"product_dimensions":"Product dimensions",
+  	"storage_dimensions":"Storage dimensions",
+  	"put_away_suggestions":"Put-away suggestions",
+  	"manage_sale_prices":"Manage Sale prices",
+  	"storage_structure":"Storage Structure",
+  	"sms_content":"SMS content",
+  	"default_newsletter":"Default New Letter",
+  	"sms_sender_id":"SMS Sender Id"
   }
 }

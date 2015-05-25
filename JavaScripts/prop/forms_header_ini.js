@@ -1931,9 +1931,11 @@ function form78_header_ini()
 {
 	var fields=document.getElementById('form78_master');
 	var name_filter=fields.elements[1];
+	var sms_filter=fields.elements[2];
 	name_filter.value="";
-	fields.elements[2].value="";
+	fields.elements[3].value="";
 	
+	sms_filter.value=get_session_var('sms_content');
 	var name_data="<newsletter>" +
 			"<name></name>" +
 			"</newsletter>";
@@ -1945,6 +1947,8 @@ function form78_header_ini()
 		event.preventDefault();
 		form78_ini();
 	});
+	
+	$('textarea').autosize();
 }
 
 /**
@@ -4869,15 +4873,22 @@ function form137_header_ini()
 	id_filter.value="";
 	code_filter.value="";
 	
-	$(code_filter).off('blur');
-	$(code_filter).on('blur',function () 
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form137_ini();
+	});
+		
+
+	my_datalist_change(code_filter,function () 
 	{
 		var id_data="<projects>"+
 					"<id></id>"+
 					"<name exact='yes'>"+code_filter.value+"</name>"+					
 					"</projects>";
 		set_my_value(id_data,id_filter);
-	});
+	});	
 };
 
 /**
@@ -5137,7 +5148,6 @@ function form144_header_ini()
 	
 	my_datalist_change(name_filter,function () 
 	{
-		console.log('changed');
 		var project_id_data="<projects>"+
 							"<id></id>"+
 							"<name exact='yes'>"+name_filter.value+"</name>"+

@@ -39,15 +39,13 @@
 				<li># Services Offered: <a class='grid_item' id='grid_item_9'>0</a></li>
 			</ul>
 		</li>
-		
+		<!--
 		<li id="customers_link" onclick="grid_click('customers');" style='background-color:#dae545'>
 			<a><div style='background-color:#a7b212'><b data-i18n="function.customers"></b></div></a>		
 			<ul>
-				<li>Today's unique customers: <a class='grid_item' id='grid_item_13'>0</a></li>
-				<li>Last customer: <a class='grid_item' id='grid_item_14'></a></li>
 			</ul>
 		</li>
-
+-->
 		<li id="customer_service_link" onclick="grid_click('customer_service');" style='background-color:#314264'>
 			<a><div style='background-color:#0f2042'><b data-i18n="function.customer_service"></b></div></a>		
 			<ul>
@@ -56,19 +54,13 @@
 			</ul>
 		</li>
 
-		<li id="suppliers_link" onclick="grid_click('suppliers');" style='background-color:#ff265e'>
-			<a><div style='background-color:#ed043c'><b data-i18n="function.suppliers"></b></div></a>		
+		
+		<li id="people_link" onclick="grid_click('people');" style='background-color:#74dfc5'>
+			<a><div style='background-color:#52bda3'><b data-i18n="function.people"></b></div></a>		
 			<ul>
-				<li>Last supplier: <a class='grid_item' id='grid_item_15'>TBD</a></li>
-				<li>Payments due to suppliers: <a class='grid_item' id='grid_item_16'>0</a></li>
-			</ul>
-		</li>
-
-		<li id="staff_link" onclick="grid_click('staff');" style='background-color:#74dfc5'>
-			<a><div style='background-color:#52bda3'><b data-i18n="function.staff"></b></div></a>		
-			<ul>
+				<li>Today's unique customers: <a class='grid_item' id='grid_item_13'>0</a></li>
+				<li>Last customer: <a class='grid_item' id='grid_item_14'></a></li>
 				<li># Staff present: <a class='grid_item' id='grid_item_17'>0</a></li>
-				<li># Pending tasks: <a class='grid_item' id='grid_item_18'>0</a></li>
 			</ul>
 		</li>
 
@@ -77,6 +69,7 @@
 			<ul>
 				<li># Active projects: <a class='grid_item' id='grid_item_27'>0</a></li>
 				<li># Completed projects: <a class='grid_item' id='grid_item_28'>0</a></li>
+				<li># Pending tasks: <a class='grid_item' id='grid_item_18'>0</a></li>
 			</ul>
 		</li>
 

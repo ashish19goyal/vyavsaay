@@ -524,9 +524,22 @@ function server_send_sms(to,message,type)
 	var domain=get_domain();
 	var username=get_username();
 	var read_access=get_session_var('re');
-	ajax_with_custom_func("./ajax/sms.php","domain="+domain+"&username="+username+"&re="+read_access+"&message="+message+"&type="+type+"&to="+to,function(e)
+	var sender_id=get_session_var('sms_sender_id');
+	ajax_with_custom_func("./ajax/sms.php","sender_id="+sender_id+"domain="+domain+"&username="+username+"&re="+read_access+"&message="+message+"&type="+type+"&to="+to,function(e)
 	{
 		console.log("sms sent");
+	});
+}
+
+function server_send_email(to,from,subject,message,type,func)
+{
+	var domain=get_domain();
+	var username=get_username();
+	var read_access=get_session_var('re');
+	ajax_with_custom_func("./ajax/email.php","domain="+domain+"&username="+username+"&re="+read_access+"&to="+to+"&from="+from+"&message="+message+"&subject="+subject+"&type="+type,function(e)
+	{
+		console.log(e.responseText);
+		func();
 	});
 }
 
