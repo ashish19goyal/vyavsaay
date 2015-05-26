@@ -5,8 +5,7 @@
 				<form id='form1_header'></form>
 					<th>Product Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form1_header'></th>
 					<th>Batch <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form1_header'></th>
-					<th>Cost Price (in Rs)</th>
-					<th>Sale Price (in Rs)</th>
+					<th>Manufacturing</th>
 					<th>Expiry</th>
 					<th>Quantity</th>
 					<th><input type='button' form='form1_header' value='Add Product' class='generic_head_icon' onclick='modal14_action();'>

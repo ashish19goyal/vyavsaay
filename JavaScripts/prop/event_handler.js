@@ -379,6 +379,9 @@ function i18n_setup()
 function hide_menu_items()
 {
 	//console.log("hiding menu items");
+	var loc=get_session_var('capture_location');
+	if(loc=='no')
+		$('#location_icon').hide();
 	var offline=get_session_var('offline');
 	if(offline=="online")
 	{

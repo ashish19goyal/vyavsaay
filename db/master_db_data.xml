@@ -988,6 +988,14 @@
 		<row>
 			<tablename>mandatory_attributes</tablename>
 			<listname>status</listname>
+			<name>required</name>
+			<value>Required</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>mandatory_attributes</tablename>
+			<listname>status</listname>
 			<name>active</name>
 			<value>Active</value>
 			<status>active</status>

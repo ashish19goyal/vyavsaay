@@ -4,9 +4,9 @@
 			<tr>
 				<form id='form8_header'></form>
 					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form8_header'></th>
-					<th>Phone <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form8_header'></th>
-					<th>Email <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form8_header'></th>
+					<th>Contact </th>
 					<th>Address </th>
+					<th>Details </th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form8_header'></th>
 					<th><input type='button' form='form8_header' value='Add new staff' class='add_icon' onclick='modal16_action();'>
 						<input type='button' form='form8_header' value='EXPORT' class='export_icon'>

@@ -5655,6 +5655,9 @@ function form123_add_item()
 			rowsHTML+="<td data-th='Attribute'>";
 				rowsHTML+="<input type='text' form='form123_"+id+"' required>";
 			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Attribute'>";
+				rowsHTML+="<textarea form='form123_"+id+"' title='Specify a list separated by semicolon(;). Or leave blank if any text is applicable'></textarea>";
+			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
 				rowsHTML+="<input type='text' form='form123_"+id+"' required>";
 			rowsHTML+="</td>";
@@ -5669,7 +5672,7 @@ function form123_add_item()
 		var fields=document.getElementById("form123_"+id);
 		var object_filter=fields.elements[0];
 		var attribute_filter=fields.elements[1];
-		var status_filter=fields.elements[2];
+		var status_filter=fields.elements[3];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -5677,10 +5680,12 @@ function form123_add_item()
 			form123_create_item(fields);
 		});
 				
-		set_static_value_list('mandatory_attributes','object',object_filter);
+		set_static_value_list('mandatory_attributes','object',object_filter,function()
+		{
+			$(object_filter).focus();		
+		});
 		set_static_value_list('mandatory_attributes','status',status_filter);
-
-		$(object_filter).focus();
+		$('textarea').autosize();
 	}
 	else
 	{

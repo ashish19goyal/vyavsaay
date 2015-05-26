@@ -19,11 +19,8 @@ function form1_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
 				"<batch>"+row.batch+"</batch>" +
-				"<cost_price>"+row.cost_price+"</cost_price>" +
-				"<sale_price>"+row.sale_price+"</sale_price>" +
 				"<expiry>"+get_raw_time(row.expiry)+"</expiry>" +
 				"<manufacture_date>"+get_raw_time(row.manufacture_date)+"</manufacture_date>" +
-				"<mrp>"+row.mrp+"</mrp>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 		if(row.actual_quantity!="")
@@ -3991,6 +3988,7 @@ function form123_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<object>"+row.object+"</object>" +
 				"<attribute>"+row.attribute+"</attribute>" +
+				"<values>"+row.values+"</values>"+
 				"<status>"+row.status+"</status>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
@@ -4914,3 +4912,57 @@ function form158_import(data_array,import_type)
 		}
 	}
 };
+
+/**
+* @form Manage sale prices
+* @formNo 166
+*/
+function form166_import(data_array,import_type)
+{
+	var data_xml="<product_instances>";
+	var counter=1;
+	var new_id=parseFloat(get_new_key());
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</product_instances><separator></separator><product_instances>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.product_name+"</product_name>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<sale_price>"+row.sale_price+"</sale_price>" +
+				"<cost_price>"+row.cost_price+"</cost_price>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+
+	data_xml+="</product_instances>";
+	
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+}

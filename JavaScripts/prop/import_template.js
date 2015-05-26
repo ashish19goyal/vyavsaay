@@ -4,7 +4,7 @@
 */
 function form1_import_template()
 {
-	var data_array=['id','product_name','batch','cost_price','sale_price','expiry','manufacture_date','mrp','actual_quantity'];
+	var data_array=['id','product_name','batch','expiry','manufacture_date','actual_quantity'];
 	my_array_to_csv(data_array);
 };
 
@@ -747,7 +747,7 @@ function form122_import_template()
 */
 function form123_import_template()
 {
-	var data_array=['id','object','attribute','status'];
+	var data_array=['id','object','attribute','values','status'];
 	my_array_to_csv(data_array);
 };
 
@@ -924,5 +924,15 @@ function form158_import_template()
 {
 	var data_array=['id','quantity','product_name',
 	               'bill_id','unit_price','amount','tax','total','storage'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage sale prices
+* @formNo 166
+*/
+function form166_import_template()
+{
+	var data_array=['id','product_name','batch','cost_price','sales_price','mrp'];
 	my_array_to_csv(data_array);
 };

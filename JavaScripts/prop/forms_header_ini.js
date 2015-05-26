@@ -241,18 +241,10 @@ function form8_header_ini()
 {
 	var filter_fields=document.getElementById('form8_header');
 	var name_filter=filter_fields.elements[0];
-	var phone_filter=filter_fields.elements[1];
-	var email_filter=filter_fields.elements[2];
-	var status_filter=filter_fields.elements[3];
+	var status_filter=filter_fields.elements[1];
 	
 	var name_data="<staff>" +
 		"<name></name>" +
-		"</staff>";
-	var phone_data="<staff>" +
-		"<phone></phone>" +
-		"</staff>";
-	var email_data="<staff>" +
-		"<email></email>" +
 		"</staff>";
 
 	$(filter_fields).off('submit');
@@ -263,10 +255,7 @@ function form8_header_ini()
 	});
 
 	set_my_filter(name_data,name_filter);	
-	set_my_filter(phone_data,phone_filter);	
-	set_my_filter(email_data,email_filter);
-	set_static_filter('staff','status',status_filter);
-	
+	set_static_filter('staff','status',status_filter);	
 };
 
 
@@ -905,10 +894,7 @@ function form30_header_ini()
 {
 	var filter_fields=document.getElementById('form30_header');
 	var name_filter=filter_fields.elements[0];
-	var contact_filter=filter_fields.elements[1];
-	var email_filter=filter_fields.elements[2];
-	var status_filter=filter_fields.elements[3];
-
+	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
@@ -919,18 +905,8 @@ function form30_header_ini()
 	var name_data="<customers>" +
 			"<name></name>" +
 			"</customers>";
-	var contact_data="<customers>" +
-			"<phone></phone>" +
-			"</customers>";
-	var email_data="<customers>" +
-			"<email></email>" +
-			"</customers>";
 	
 	set_my_filter(name_data,name_filter);
-	set_my_filter(contact_data,contact_filter);
-	set_my_filter(email_data,email_filter);
-	set_static_filter('customers','status',status_filter);
-	
 };
 
 /**
@@ -1049,19 +1025,11 @@ function form40_header_ini()
 {
 	var filter_fields=document.getElementById('form40_header');
 	var name_filter=filter_fields.elements[0];
-	var phone_filter=filter_fields.elements[1];
-	var email_filter=filter_fields.elements[2];
 	
 	var name_data="<suppliers>" +
 			"<name></name>" +
 			"</suppliers>";
-	var phone_data="<suppliers>" +
-			"<phone></phone>" +
-			"</suppliers>";
-	var email_data="<suppliers>" +
-			"<email></email>" +
-			"</suppliers>";
-
+	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
@@ -1070,9 +1038,6 @@ function form40_header_ini()
 	});
 
 	set_my_filter(name_data,name_filter);
-	set_my_filter(phone_data,phone_filter);
-	set_my_filter(email_data,email_filter);
-	
 };
 
 
@@ -5826,3 +5791,32 @@ function form158_header_ini()
 	supplier_filter.value='';
 	$(supplier_filter).focus();
 }
+
+/**
+ * @form Manage sale prices
+ * @formNo 166
+ */
+function form166_header_ini()
+{
+	var filter_fields=document.getElementById('form166_header');	
+	var names_filter=filter_fields.elements[0];
+	var batches_filter=filter_fields.elements[1];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form166_ini();
+	});
+	//setting autocompletes 
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	var batch_data="<product_instances>" +
+			"<batch></batch>" +
+			"</product_instances>";
+
+	set_my_filter(products_data,names_filter);
+	set_my_filter(batch_data,batches_filter);
+};

@@ -10,16 +10,10 @@ function form1_delete_item(button)
 		var form=document.getElementById(form_id);
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var cost_price=form.elements[2].value;
-		var expiry=get_raw_time(form.elements[4].value);
-		var data_id=form.elements[7].value;
+		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var data_xml="<product_instances>" +
 					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<expiry>"+expiry+"</expiry>" +
-					"<cost_price>"+cost_price+"</cost_price>" +
 					"</product_instances>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -148,6 +142,7 @@ function form8_delete_item(button)
 		
 		var name=form.elements[0].value;
 		var data_id=form.elements[5].value;
+		var acc_name=form.elements[14].value;
 		var last_updated=get_my_time();
 		var data_xml="<staff>" +
 					"<id>"+data_id+"</id>" +
@@ -165,15 +160,22 @@ function form8_delete_item(button)
 					"<id>"+data_id+"</id>" +
 					"<type>staff</type>" +
 					"</accounts>";
+		var attribute_xml="<attributes>" +
+					"<name>"+acc_name+"</name>" +
+					"<type>staff</type>" +
+					"</attributes>";
+					
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
 			server_delete_simple(account_xml);
+			server_delete_simple(attribute_xml);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
 			local_delete_simple(account_xml);
+			local_delete_simple(attribute_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -718,30 +720,10 @@ function form30_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var phone=form.elements[1].value;
-		var email=form.elements[2].value;
-		var status=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var address=form.elements[8].value;
-		var pincode=form.elements[9].value;
-		var city=form.elements[10].value;
-		var state=form.elements[11].value;
-		var country=form.elements[12].value;
-		var address_status=form.elements[13].value;
-		var last_updated=get_my_time();
+		var acc_name=form.elements[13].value;
+		var data_id=form.elements[4].value;
 		var data_xml="<customers>" +
 					"<id>"+data_id+"</id>" +
-					"<name>"+name+"</name>" +
-					"<phone>"+phone+"</phone>" +
-					"<email>"+email+"</email>" +
-					"<acc_name>"+name+" ("+phone+")</acc_name>" +
-					"<status>"+status+"</status>" +
-					"<address>"+address+"</address>" +
-					"<pincode>"+pincode+"</pincode>" +
-					"<city>"+city+"</city>" +
-					"<state>"+state+"</state>" +
-					"<country>"+country+"</country>" +
-					"<address_status>"+address_status+"</address_status>" +
 					"</customers>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -753,18 +735,23 @@ function form30_delete_item(button)
 					"</activity>";
 		var account_xml="<accounts>" +
 					"<id>"+data_id+"</id>" +
-					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<type>customer</type>" +
 					"</accounts>";
+		var attribute_xml="<attributes>" +
+					"<name>"+acc_name+"</name>" +
+					"<type>customer</type>" +
+					"</attributes>";
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
 			server_delete_simple(account_xml);
+			server_delete_simple(attribute_xml);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
 			local_delete_simple(account_xml);
+			local_delete_simple(attribute_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -967,32 +954,10 @@ function form40_delete_item(button)
 		var form=document.getElementById(form_id);
 		
 		var name=form.elements[0].value;
-		var phone=form.elements[1].value;
-		var email=form.elements[2].value;
-		var address=form.elements[3].value;
-		var notes=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var address=form.elements[8].value;
-		var pincode=form.elements[9].value;
-		var city=form.elements[10].value;
-		var state=form.elements[11].value;
-		var country=form.elements[12].value;
-		var address_status=form.elements[13].value;
-		var last_updated=get_my_time();
+		var data_id=form.elements[4].value;
+		var acc_name=form.elements[13].value;
 		var data_xml="<suppliers>" +
 					"<id>"+data_id+"</id>" +
-					"<name>"+name+"</name>" +
-					"<address>"+address+"</address>" +
-					"<phone>"+phone+"</phone>" +
-					"<notes>"+notes+"</notes>" +
-					"<acc_name>"+name+" ("+phone+")</acc_name>" +
-					"<email>"+email+"</email>" +
-					"<address>"+address+"</address>" +
-					"<pincode>"+pincode+"</pincode>" +
-					"<city>"+city+"</city>" +
-					"<state>"+state+"</state>" +
-					"<country>"+country+"</country>" +
-					"<address_status>"+address_status+"</address_status>" +
 					"</suppliers>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
@@ -1004,18 +969,24 @@ function form40_delete_item(button)
 					"</activity>";
 		var account_xml="<accounts>" +
 					"<id>"+data_id+"</id>" +
-					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<type>supplier</type>" +
 					"</accounts>";
+		var attribute_xml="<attributes>" +
+					"<name>"+acc_name+"</name>" +
+					"<type>supplier</type>" +
+					"</attributes>";
+					
 		if(is_online())
 		{
 			server_delete_row(data_xml,activity_xml);
 			server_delete_simple(account_xml);
+			server_delete_simple(attribute_xml);
 		}
 		else
 		{
 			local_delete_row(data_xml,activity_xml);
 			local_delete_simple(account_xml);
+			local_delete_simple(attribute_xml);
 		}	
 		$(button).parent().parent().remove();
 	}
@@ -3695,7 +3666,7 @@ function form123_delete_item(button)
 		
 		var object=form.elements[0].value;
 		var attribute=form.elements[1].value;
-		var data_id=form.elements[3].value;
+		var data_id=form.elements[4].value;
 		var data_xml="<mandatory_attributes>" +
 					"<id>"+data_id+"</id>" +
 					"</mandatory_attributes>";	

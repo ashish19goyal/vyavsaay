@@ -1,5 +1,5 @@
 /**
- * @form Update Inventory
+ * @form Update inventory
  * @param button
  */
 function form1_update_item(form)
@@ -8,53 +8,35 @@ function form1_update_item(form)
 	{
 		var name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var cost_price=form.elements[2].value;
-		var expiry=get_raw_time(form.elements[4].value);
-		var system_quantity=form.elements[5].value;
-		var actual_quantity=form.elements[6].value;
-		var quantity=parseFloat(actual_quantity)-parseFloat(system_quantity);
-		var data_id=form.elements[7].value;
+		var manufacturing=get_raw_time(form.elements[2].value);
+		var expiry=get_raw_time(form.elements[3].value);
+		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var data_xml="<product_instances>" +
 					"<id>"+data_id+"</id>" +
 					"<product_name>"+name+"</product_name>" +
 					"<batch>"+batch+"</batch>" +
+					"<manufacture_date>"+manufacturing+"</manufacture_date>"+
 					"<expiry>"+expiry+"</expiry>" +
-					"<cost_price>"+cost_price+"</cost_price>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</product_instances>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>product_instances</tablename>" +
-					"<link_to>form1</link_to>" +
+					"<link_to>form166</link_to>" +
 					"<title>Updated</title>" +
-					"<notes>Inventory for batch number "+batch+" of "+name+"</notes>" +
+					"<notes>Costing for batch number "+batch+" of "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var adjust_xml="<inventory_adjust>" +
-					"<id>"+get_new_key()+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</inventory_adjust>";	
 		if(is_online())
 		{
 			server_update_row(data_xml,activity_xml);
-			if(quantity!==0)
-			{
-				server_create_simple(adjust_xml);
-			}
 		}
 		else
 		{
 			local_update_row(data_xml,activity_xml);
-			if(quantity!==0)
-			{
-				local_create_simple(adjust_xml);
-			}
 		}
-		for(var i=0;i<7;i++)
+		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -64,6 +46,7 @@ function form1_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
 
 /**
  * @form Create Pamphlets
@@ -233,26 +216,13 @@ function form8_update_item(form)
 		var email=form.elements[2].value;
 		var status=form.elements[4].value;
 		var data_id=form.elements[5].value;
-		var address=form.elements[8].value;
-		var pincode=form.elements[9].value;
-		var city=form.elements[10].value;
-		var state=form.elements[11].value;
-		var country=form.elements[12].value;
-		var add_status=form.elements[13].value;
 		var last_updated=get_my_time();
 		var data_xml="<staff>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
 					"<phone>"+phone+"</phone>" +
 					"<email>"+email+"</email>" +
-					"<acc_name>"+name+" ("+phone+")</acc_name>" +
 					"<status>"+status+"</status>" +
-					"<address>"+address+"</address>" +
-					"<pincode>"+pincode+"</pincode>" +
-					"<city>"+city+"</city>" +
-					"<state>"+state+"</state>" +
-					"<country>"+country+"</country>" +
-					"<address_status>"+add_status+"</address_status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</staff>";	
 		var activity_xml="<activity>" +
@@ -1553,28 +1523,13 @@ function form30_update_item(form)
 		var name=form.elements[0].value;
 		var phone=form.elements[1].value;
 		var email=form.elements[2].value;
-		var status=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var address=form.elements[8].value;
-		var pincode=form.elements[9].value;
-		var city=form.elements[10].value;
-		var state=form.elements[11].value;
-		var country=form.elements[12].value;
-		var address_status=form.elements[13].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<customers>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
 					"<phone>"+phone+"</phone>" +
 					"<email>"+email+"</email>" +
-					"<acc_name>"+name+" ("+phone+")</acc_name>" +
-					"<status>"+status+"</status>" +
-					"<address>"+address+"</address>" +
-					"<pincode>"+pincode+"</pincode>" +
-					"<city>"+city+"</city>" +
-					"<state>"+state+"</state>" +
-					"<country>"+country+"</country>" +
-					"<address_status>"+address_status+"</address_status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</customers>";	
 		var activity_xml="<activity>" +
@@ -1582,26 +1537,18 @@ function form30_update_item(form)
 					"<tablename>customers</tablename>" +
 					"<link_to>form30</link_to>" +
 					"<title>Updated</title>" +
-					"<notes>Customer profile "+name+"</notes>" +
+					"<notes>Contact details of customer "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var account_xml="<accounts>" +
-					"<id>"+data_id+"</id>" +
-					"<acc_name>"+name+" ("+phone+")</acc_name>" +
-					"<type>customer</type>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</accounts>";
 		if(is_online())
 		{
 			server_update_row(data_xml,activity_xml);
-			server_update_simple(account_xml);
 		}
 		else
 		{
 			local_update_row(data_xml,activity_xml);
-			local_update_simple(account_xml);
 		}
-		for(var i=0;i<6;i++)
+		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -1783,30 +1730,13 @@ function form40_update_item(form)
 		var name=form.elements[0].value;
 		var phone=form.elements[1].value;
 		var email=form.elements[2].value;
-		var address=form.elements[3].value;
-		var notes=form.elements[4].value;
-		var data_id=form.elements[5].value;
-		var address=form.elements[8].value;
-		var pincode=form.elements[9].value;
-		var city=form.elements[10].value;
-		var state=form.elements[11].value;
-		var country=form.elements[12].value;
-		var address_status=form.elements[13].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<suppliers>" +
 				"<id>"+data_id+"</id>" +
 				"<name>"+name+"</name>" +
-				"<address>"+address+"</address>" +
 				"<phone>"+phone+"</phone>" +
-				"<notes>"+notes+"</notes>" +
-				"<acc_name>"+name+" ("+phone+")</acc_name>" +
 				"<email>"+email+"</email>" +
-				"<address>"+address+"</address>" +
-				"<pincode>"+pincode+"</pincode>" +
-				"<city>"+city+"</city>" +
-				"<state>"+state+"</state>" +
-				"<country>"+country+"</country>" +
-				"<address_status>"+address_status+"</address_status>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</suppliers>";	
 		var activity_xml="<activity>" +
@@ -1814,26 +1744,18 @@ function form40_update_item(form)
 				"<tablename>suppliers</tablename>" +
 				"<link_to>form40</link_to>" +
 				"<title>Updated</title>" +
-				"<notes>Supplier profile "+name+"</notes>" +
+				"<notes>Contact details of supplier "+name+"</notes>" +
 				"<updated_by>"+get_name()+"</updated_by>" +
 				"</activity>";
-		var account_xml="<accounts>" +
-				"<id>"+data_id+"</id>" +
-				"<acc_name>"+name+" ("+phone+")</acc_name>" +
-				"<type>supplier</type>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</accounts>";
 		if(is_online())
 		{
 			server_update_row(data_xml,activity_xml);
-			server_update_simple(account_xml);
 		}
 		else
 		{
 			local_update_row(data_xml,activity_xml);
-			local_update_simple(account_xml);
 		}	
-		for(var i=0;i<6;i++)
+		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -6158,13 +6080,15 @@ function form123_update_item(form)
 	{
 		var object=form.elements[0].value;
 		var attribute=form.elements[1].value;
-		var status=form.elements[2].value;
-		var data_id=form.elements[3].value;
+		var values=form.elements[2].value;
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<mandatory_attributes>" +
 					"<id>"+data_id+"</id>" +
 					"<object>"+object+"</object>" +
 					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+values+"</value>"+
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</mandatory_attributes>";	
@@ -6184,7 +6108,7 @@ function form123_update_item(form)
 		{
 			local_update_row(data_xml,activity_xml);
 		}	
-		for(var i=0;i<3;i++)
+		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -8793,6 +8717,55 @@ function form158_update_form()
 		},payment_data);
 			
 		$("[id^='save_form158_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage sale prices
+ * @param button
+ */
+function form166_update_item(form)
+{
+	if(is_update_access('form166'))
+	{
+		var name=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var mrp=form.elements[2].value;
+		var cost_price=form.elements[3].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<product_instances>" +
+					"<id>"+data_id+"</id>" +
+					"<product_name>"+name+"</product_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<mrp>"+mrp+"</mrp>"+
+					"<cost_price>"+cost_price+"</cost_price>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</product_instances>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>product_instances</tablename>" +
+					"<link_to>form166</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Costing for batch number "+batch+" of "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
 	}
 	else
 	{

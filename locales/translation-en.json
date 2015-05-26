@@ -286,6 +286,7 @@
   	"storage_structure":"Storage Structure",
   	"sms_content":"SMS content",
   	"default_newsletter":"Default New Letter",
-  	"sms_sender_id":"SMS Sender Id"
+  	"sms_sender_id":"SMS Sender Id",
+  	"capture_location":"Capture Location"
   }
 }

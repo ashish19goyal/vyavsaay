@@ -8,7 +8,7 @@ function form1_ini()
 	show_loader();
 	var fid=$("#form1_link").attr('data_id');
 	if(fid==null)
-		fid="";	
+		fid="";
 	
 	var filter_fields=document.getElementById('form1_header');
 	
@@ -26,8 +26,7 @@ function form1_ini()
 		"<id>"+fid+"</id>" +
 		"<batch>"+fbatch+"</batch>" +
 		"<product_name>"+fname+"</product_name>" +
-		"<cost_price></cost_price>" +
-		"<sale_price></sale_price>" +
+		"<manufacture_date></manufacture_date>"+
 		"<expiry></expiry>" +
 		"</product_instances>";
 
@@ -46,12 +45,8 @@ function form1_ini()
 					rowsHTML+="<td data-th='Batch'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' value='"+result.batch+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Cost price'>";
-						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form1_"+result.id+"' class='dblclick_editable' value='"+result.cost_price+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Sale price'>";
-						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form1_"+result.id+"' value='"+result.sale_price+"'>";
-						rowsHTML+="<img src='./images/edit.png' class='edit_icon' onclick=\"modal38_action('"+result.id+"','"+result.sale_price+"');\">";
+					rowsHTML+="<td data-th='Manufacturing'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.manufacture_date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Expiry'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form1_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.expiry)+"'>";
@@ -62,7 +57,7 @@ function form1_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form1_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' title='Update and adjust' form='form1_"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form1_"+result.id+"'>";					
 						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form1_"+result.id+"' onclick='form1_delete_item($(this));'>";
 						rowsHTML+="<input type='button' class='generic_icon' value='Purchase' form='form1_"+result.id+"' onclick=\"modal27_action('"+result.product_name+"');\">";
 					rowsHTML+="</td>";			
@@ -70,13 +65,18 @@ function form1_ini()
 			
 			$('#form1_body').append(rowsHTML);
 			var fields=document.getElementById("form1_"+result.id);
-			var sys_inventory=fields.elements[5];
-			var actual_inventory=fields.elements[6];
+			var manufacturing=fields.elements[2];
+			var expiry=fields.elements[3];
+			var sys_inventory=fields.elements[4];
+			var actual_inventory=fields.elements[5];
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
 				form1_update_item(fields);
 			});
+			
+			$(manufacturing).datepicker();
+			$(expiry).datepicker();
 			
 			get_inventory(result.product_name,result.batch,function(inventory)
 			{
@@ -457,9 +457,7 @@ function form8_ini()
 	var filter_fields=document.getElementById('form8_header');
 	
 	var fname=filter_fields.elements[0].value;
-	var fcontact=filter_fields.elements[1].value;
-	var femail=filter_fields.elements[2].value;
-	var fstatus=filter_fields.elements[3].value;
+	var fstatus=filter_fields.elements[1].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form8_index');
@@ -471,8 +469,8 @@ function form8_ini()
 	var columns="<staff count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
-			"<phone>"+fcontact+"</phone>" +
-			"<email>"+femail+"</email>" +
+			"<phone></phone>" +
+			"<email></email>" +
 			"<status>"+fstatus+"</status>" +
 			"<acc_name></acc_name>" +
 			"<address></address>" +
@@ -494,15 +492,15 @@ function form8_ini()
 					rowsHTML+="<td data-th='Name'>";
 						rowsHTML+="<textarea readonly='readonly' form='form8_"+result.id+"'>"+result.name+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Phone'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' value='"+result.phone+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Email'>";
-						rowsHTML+="<textarea readonly='readonly' form='form8_"+result.id+"' class='dblclick_editable'>"+result.email+"</textarea>";
+					rowsHTML+="<td data-th='Contact'>";
+						rowsHTML+="Phone: <input type='text' readonly='readonly' form='form8_"+result.id+"' value='"+result.phone+"'>";
+						rowsHTML+="<br>Email: <textarea readonly='readonly' form='form8_"+result.id+"' class='dblclick_editable'>"+result.email+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
 						rowsHTML+="<textarea wrap='soft' readonly='readonly' form='form8_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
 						rowsHTML+="<img class='edit_icon' wrap='virtual' src='images/edit.png' form='form8_"+result.id+"' onclick='modal17_action($(this));'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details' id='form8_"+result.id+"_details'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form8_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
@@ -517,21 +515,38 @@ function form8_ini()
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.state+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.country+"'>";
 						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.address_status+"'>";
+						rowsHTML+="<input type='hidden' form='form8_"+result.id+"' value='"+result.acc_name+"'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form8_body').append(rowsHTML);
 			
 			var fields=document.getElementById("form8_"+result.id);
-			var fstatus=fields.elements[5];
+			var fstatus=fields.elements[4];
 			
 			set_static_value_list('staff','status',fstatus);
 			
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
-				console.log('saving staff details');
 				form8_update_item(fields);
+			});
+			
+			var attributes_data="<attributes>"+
+								"<name exact='yes'>"+result.acc_name+"</name>" +
+								"<type exact='yes'>staff</type>" +
+								"<attribute></attribute>" +
+								"<value></value>" +
+								"</attributes>";
+			fetch_requested_data('',attributes_data,function(attributes)
+			{
+				var attribute_content="";
+				attributes.forEach(function(attribute)
+				{
+					attribute_content+=attribute.attribute+": "+attribute.value+"<br>";
+				});
+				var td_elem=document.getElementById('form8_'+result.id+'_details');
+				td_elem.innerHTML=attribute_content;
 			});
 		});
 		
@@ -562,7 +577,7 @@ function form8_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 
-		var export_button=filter_fields.elements[5];
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -1899,9 +1914,6 @@ function form30_ini()
 	var filter_fields=document.getElementById('form30_header');
 	
 	var fname=filter_fields.elements[0].value;
-	var fcontact=filter_fields.elements[1].value;
-	var femail=filter_fields.elements[2].value;
-	var fstatus=filter_fields.elements[3].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form30_index');
@@ -1913,10 +1925,10 @@ function form30_ini()
 	var columns="<customers count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
-			"<phone>"+fcontact+"</phone>" +
-			"<email>"+femail+"</email>" +
-			"<status>"+fstatus+"</status>" +
-			"<acc_name></acc_name>" +
+			"<acc_name></acc_name>"+
+			"<phone></phone>" +
+			"<email></email>" +
+			"<status></status>" +
 			"<notes></notes>" +
 			"<address></address>" +
 			"<pincode></pincode>" +
@@ -1939,43 +1951,54 @@ function form30_ini()
 					rowsHTML+="<td data-th='Name'>";
 						rowsHTML+="<textarea readonly='readonly' required form='form30_"+result.id+"'>"+result.name+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Phone'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' value='"+result.phone+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Email'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable' value='"+result.email+"'>";
+					rowsHTML+="<td data-th='Contact'>";
+						rowsHTML+="Phone: <input type='text' readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable' value='"+result.phone+"'>";
+						rowsHTML+="<br>Email: <input type='text' readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable' value='"+result.email+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
 						rowsHTML+="<textarea readonly='readonly' form='form30_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
 						rowsHTML+="<img class='edit_icon' src='images/edit.png' form='form30_"+result.id+"' onclick='modal24_action($(this));'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
+					rowsHTML+="<td data-th='Details' id='form30_"+result.id+"_details'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form30_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form30_"+result.id+"' value='saved' onclick='form30_delete_item($(this));'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form30_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form30_"+result.id+"' title='Delete' onclick='form30_delete_item($(this));'>";
 						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.address+"'>";
 						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.pincode+"'>";
 						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.city+"'>";
 						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.state+"'>";
 						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.country+"'>";
 						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.address_status+"'>";
+						rowsHTML+="<input type='hidden' form='form30_"+result.id+"' value='"+result.acc_name+"'>";
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 			
 			$('#form30_body').append(rowsHTML);
 			var fields=document.getElementById("form30_"+result.id);
-			var fstatus=fields.elements[4];
-			
-			set_static_value_list('customers','status',fstatus);
-			
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
 				form30_update_item(fields);
 			});
+			
+			var attributes_data="<attributes>"+
+								"<name exact='yes'>"+result.acc_name+"</name>" +
+								"<type exact='yes'>customer</type>" +
+								"<attribute></attribute>" +
+								"<value></value>" +
+								"</attributes>";
+			fetch_requested_data('',attributes_data,function(attributes)
+			{
+				var attribute_content="";
+				attributes.forEach(function(attribute)
+				{
+					attribute_content+=attribute.attribute+": "+attribute.value+"<br>";
+				});
+				var td_elem=document.getElementById('form30_'+result.id+'_details');
+				td_elem.innerHTML=attribute_content;
+			});					
 		});
 		
 		////indexing///
@@ -2005,7 +2028,7 @@ function form30_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[5];
+		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -2433,8 +2456,6 @@ function form40_ini()
 	var filter_fields=document.getElementById('form40_header');
 
 	var fname=filter_fields.elements[0].value;
-	var fcontact=filter_fields.elements[1].value;
-	var femail=filter_fields.elements[2].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form40_index');
@@ -2447,8 +2468,8 @@ function form40_ini()
 			"<id>"+fid+"</id>" +
 			"<notes></notes>" +
 			"<name>"+fname+"</name>" +
-			"<phone>"+fcontact+"</phone>" +
-			"<email>"+femail+"</email>" +
+			"<phone></phone>" +
+			"<email></email>" +
 			"<acc_name></acc_name>" +
 			"<address></address>" +
 			"<pincode></pincode>" +
@@ -2471,18 +2492,15 @@ function form40_ini()
 					rowsHTML+="<td data-th='Name'>";
 						rowsHTML+="<textarea readonly='readonly' required form='form40_"+result.id+"'>"+result.name+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Phone'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form40_"+result.id+"' class='dblclick_editable' value='"+result.phone+"'>";
-					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Email'>";
-						rowsHTML+="<textarea readonly='readonly' form='form40_"+result.id+"' class='dblclick_editable'>"+result.email+"</textarea>";
+					rowsHTML+="<td data-th='Contact'>";
+						rowsHTML+="Phone: <input type='text' readonly='readonly' form='form40_"+result.id+"' class='dblclick_editable' value='"+result.phone+"'>";
+						rowsHTML+="<br>Email: <textarea readonly='readonly' form='form40_"+result.id+"' class='dblclick_editable'>"+result.email+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
 						rowsHTML+="<textarea readonly='readonly' form='form40_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
 						rowsHTML+="<img class='edit_icon' src='images/edit.png' form='form40_"+result.id+"' onclick='modal25_action($(this));'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Notes'>";
-						rowsHTML+="<textarea readonly='readonly' form='form40_"+result.id+"' class='dblclick_editable'>"+result.notes+"</textarea>";
+					rowsHTML+="<td data-th='Details' id='form40_"+result.id+"_details'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.id+"'>";
@@ -2494,6 +2512,7 @@ function form40_ini()
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.state+"'>";
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.country+"'>";
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.address_status+"'>";
+						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.acc_name+"'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -2504,6 +2523,23 @@ function form40_ini()
 				event.preventDefault();
 				form40_update_item(fields);
 			});
+			
+			var attributes_data="<attributes>"+
+								"<name exact='yes'>"+result.acc_name+"</name>" +
+								"<type exact='yes'>supplier</type>" +
+								"<attribute></attribute>" +
+								"<value></value>" +
+								"</attributes>";
+			fetch_requested_data('',attributes_data,function(attributes)
+			{
+				var attribute_content="";
+				attributes.forEach(function(attribute)
+				{
+					attribute_content+=attribute.attribute+": "+attribute.value+"<br>";
+				});
+				var td_elem=document.getElementById('form40_'+result.id+'_details');
+				td_elem.innerHTML=attribute_content;
+			});	
 		});
 		
 		////indexing///
@@ -2533,7 +2569,7 @@ function form40_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[4];
+		var export_button=filter_fields.elements[2];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -11105,6 +11141,7 @@ function form123_ini()
 			"<id>"+fid+"</id>" +
 			"<object>"+fobject+"</object>" +
 			"<attribute>"+fattribute+"</attribute>" +
+			"<value></value>"+			
 			"<status>"+fstatus+"</status>" +
 			"</mandatory_attributes>";
 
@@ -11122,6 +11159,9 @@ function form123_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Attribute'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form123_"+result.id+"' value='"+result.attribute+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Values'>";
+						rowsHTML+="<textarea readonly='readonly' form='form123_"+result.id+"' class='dblclick_editable' title='Specify a list separated by semicolon(;). Or leave blank if any text is applicable'>"+result.value+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form123_"+result.id+"' value='"+result.status+"'>";
@@ -15942,3 +15982,115 @@ function form158_ini()
 		});
 	}
 }
+
+
+/**
+ * @form Manage Sale prices
+ * @formNo 166
+ * @Loading light
+ */
+function form166_ini()
+{
+	show_loader();
+	var fid=$("#form166_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form166_header');
+	
+	var fname=filter_fields.elements[0].value;
+	var fbatch=filter_fields.elements[1].value;
+
+	////indexing///
+	var index_element=document.getElementById('form166_index');
+	var prev_element=document.getElementById('form166_prev');
+	var next_element=document.getElementById('form166_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	
+	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
+		"<id>"+fid+"</id>" +
+		"<batch>"+fbatch+"</batch>" +
+		"<product_name>"+fname+"</product_name>" +
+		"<cost_price></cost_price>" +
+		"<sale_price></sale_price>" +
+		"<mrp></mrp>"+
+		"</product_instances>";
+
+	$('#form166_body').html("");
+	
+	fetch_requested_data('form166',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form166_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form166_"+result.id+"'>"+result.product_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Batch'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form166_"+result.id+"' value='"+result.batch+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='MRP'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form166_"+result.id+"' class='dblclick_editable' value='"+result.mrp+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Cost price'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form166_"+result.id+"' class='dblclick_editable' value='"+result.cost_price+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Sale price'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form166_"+result.id+"' value='"+result.sale_price+"'>";
+						rowsHTML+="<img src='./images/edit.png' class='edit_icon' onclick=\"modal38_action('"+result.id+"','"+result.sale_price+"');\">";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form166_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form166_"+result.id+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form166_body').append(rowsHTML);
+			var fields=document.getElementById("form166_"+result.id);
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form166_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'sale_prices');
+		});
+		
+		hide_loader();
+	});
+};

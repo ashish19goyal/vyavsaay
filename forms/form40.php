@@ -4,10 +4,9 @@
 			<tr>
 				<form id='form40_header'></form>
 					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form40_header'></th>
-					<th>Phone <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form40_header'></th>
-					<th>Email <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form40_header'></th>
+					<th>Contact </th>
 					<th>Address</th>
-					<th>Notes</th>
+					<th>Details</th>
 					<th><input type='button' form='form40_header' value='Add new supplier' class='add_icon' onclick='modal13_action();'>
 						<input type='button' form='form40_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form40_header' style='visibility: hidden;'>

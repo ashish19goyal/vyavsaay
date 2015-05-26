@@ -9086,13 +9086,16 @@ function form123_create_item(form)
 	{
 		var object=form.elements[0].value;
 		var attribute=form.elements[1].value;
-		var status=form.elements[2].value;
-		var data_id=form.elements[3].value;
+		var values=form.elements[2].value;
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var del_button=form.elements[6];
 		var last_updated=get_my_time();
 		var data_xml="<mandatory_attributes>" +
 					"<id>"+data_id+"</id>" +
 					"<object>"+object+"</object>" +
 					"<attribute>"+attribute+"</attribute>" +
+					"<value>"+values+"</value>"+
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</mandatory_attributes>";	
@@ -9112,11 +9115,10 @@ function form123_create_item(form)
 		{
 			local_create_row(data_xml,activity_xml);
 		}	
-		for(var i=0;i<3;i++)
+		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[5];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{

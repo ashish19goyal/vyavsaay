@@ -379,20 +379,41 @@ function modal10_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
-			"<status exact='yes'>active</status>" +
+			"<status></status>" +
+			"<value></value>"+
 			"<object exact='yes'>asset</object>" +
 			"</mandatory_attributes>";
-	get_single_column_data(function(attributes)
+	fetch_requested_data('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
-			attribute_label.appendChild(attr_label);
-			var line_break=document.createElement('br');
-			attribute_label.appendChild(line_break);
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
 		});
-	},attributes_data);
+	});
 	
 	set_static_value_list('assets','type',ftype);
 		
@@ -430,7 +451,7 @@ function modal10_action(func)
 		}
 
 		var id=get_new_key();
-		$("#modal10_attributes").find('input').each(function()
+		$("#modal10_attributes").find('input, select').each(function()
 		{
 			id++;
 			var value=$(this).val();
@@ -487,20 +508,41 @@ function modal11_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
-			"<status exact='yes'>active</status>" +
+			"<status></status>" +
+			"<value></value>"+
 			"<object exact='yes'>customer</object>" +
 			"</mandatory_attributes>";
-	get_single_column_data(function(attributes)
+	fetch_requested_data('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
-			attribute_label.appendChild(attr_label);
-			var line_break=document.createElement('br');
-			attribute_label.appendChild(line_break);
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
 		});
-	},attributes_data);
+	});
 	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -568,7 +610,7 @@ function modal11_action(func)
 			//send_sms(phone,sms_message,'transaction');			
 			
 			var id=get_new_key();
-			$("#modal11_attributes").find('input').each(function()
+			$("#modal11_attributes").find('input, select').each(function()
 			{
 				id++;
 				var value=$(this).val();
@@ -623,20 +665,41 @@ function modal12_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
-			"<status exact='yes'>active</status>" +
+			"<status></status>" +
+			"<value></value>"+
 			"<object exact='yes'>account</object>" +
 			"</mandatory_attributes>";
-	get_single_column_data(function(attributes)
+	fetch_requested_data('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
-			attribute_label.appendChild(attr_label);
-			var line_break=document.createElement('br');
-			attribute_label.appendChild(line_break);
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
 		});
-	},attributes_data);
+	});
 	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -672,7 +735,7 @@ function modal12_action(func)
 		}	
 		
 		var id=get_new_key();
-		$("#modal12_attributes").find('input').each(function()
+		$("#modal12_attributes").find('input, select').each(function()
 		{
 			id++;
 			var value=$(this).val();
@@ -728,20 +791,41 @@ function modal13_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
-			"<status exact='yes'>active</status>" +
+			"<status></status>" +
+			"<value></value>"+
 			"<object exact='yes'>supplier</object>" +
 			"</mandatory_attributes>";
-	get_single_column_data(function(attributes)
+	fetch_requested_data('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
-			attribute_label.appendChild(attr_label);
-			var line_break=document.createElement('br');
-			attribute_label.appendChild(line_break);
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
 		});
-	},attributes_data);
+	});
 	
 	
 	$(form).off("submit");
@@ -805,7 +889,7 @@ function modal13_action(func)
 			}	
 			
 			var id=get_new_key();
-			$("#modal13_attributes").find('input').each(function()
+			$("#modal13_attributes").find('input, select').each(function()
 			{
 				id++;
 				var value=$(this).val();
@@ -893,20 +977,41 @@ function modal14_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
-			"<status exact='yes'>active</status>" +
+			"<status></status>" +
+			"<value></value>"+
 			"<object exact='yes'>product</object>" +
 			"</mandatory_attributes>";
-	get_single_column_data(function(attributes)
+	fetch_requested_data('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
-			attribute_label.appendChild(attr_label);
-			var line_break=document.createElement('br');
-			attribute_label.appendChild(line_break);
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
 		});
-	},attributes_data);
+	});
 	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -950,7 +1055,7 @@ function modal14_action(func)
 			}	
 
 			var id=get_new_key();
-			$("#modal14_attributes").find('input').each(function()
+			$("#modal14_attributes").find('input, select').each(function()
 			{
 				id++;
 				var value=$(this).val();
@@ -1101,20 +1206,41 @@ function modal16_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
-			"<status exact='yes'>active</status>" +
+			"<status></status>" +
+			"<value></value>"+
 			"<object exact='yes'>staff</object>" +
 			"</mandatory_attributes>";
-	get_single_column_data(function(attributes)
+	fetch_requested_data('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
-			attribute_label.appendChild(attr_label);
-			var line_break=document.createElement('br');
-			attribute_label.appendChild(line_break);
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}	
 		});
-	},attributes_data);
+	});
 	
 	
 	$(form).off("submit");
@@ -1180,7 +1306,7 @@ function modal16_action(func)
 			}	
 			
 			var id=get_new_key();
-			$("#modal16_attributes").find('input').each(function()
+			$("#modal16_attributes").find('input, select').each(function()
 			{
 				id++;
 				var value=$(this).val();
@@ -1230,6 +1356,7 @@ function modal17_action(button)
 	var father_form=document.getElementById(form_id);
 	var faddress_detail=father_form.elements[3];
 	var fdata_id=father_form.elements[5];
+	var data_id=father_form.elements[5].value;
 	
 	var faddress=father_form.elements[8];
 	var fpincode=father_form.elements[9];
@@ -1261,9 +1388,28 @@ function modal17_action(button)
 		fstate.value=state;
 		fcountry.value=country;
 		faddress_status.value='pending analysis';
+
+		var data_xml="<staff>" +
+				"<id>"+data_id+"</id>" +
+				"<address>"+address+"</address>" +
+				"<pincode>"+pincode+"</pincode>" +
+				"<city>"+city+"</city>" +
+				"<state>"+state+"</state>" +
+				"<country>"+country+"</country>" +
+				"<address_status>pending analysis</address_status>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</staff>";
+
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}				
 		
 		$("#modal17").dialog("close");
-		$(father_form).submit();
 	});
 	
 	$("#modal17").dialog("open");
@@ -1291,20 +1437,41 @@ function modal18_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
-			"<status exact='yes'>active</status>" +
+			"<status></status>" +
+			"<value></value>"+
 			"<object exact='yes'>task</object>" +
 			"</mandatory_attributes>";
-	get_single_column_data(function(attributes)
+	fetch_requested_data('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
-			attribute_label.appendChild(attr_label);
-			var line_break=document.createElement('br');
-			attribute_label.appendChild(line_break);
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
 		});
-	},attributes_data);
+	});
 	
 	
 	$(form).off("submit");
@@ -1341,7 +1508,7 @@ function modal18_action(func)
 		}
 		
 		var id=get_new_key();
-		$("#modal18_attributes").find('input').each(function()
+		$("#modal18_attributes").find('input, select').each(function()
 		{
 			id++;
 			var value=$(this).val();
@@ -1652,20 +1819,41 @@ function modal20_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
-			"<status exact='yes'>active</status>" +
+			"<status></status>" +
+			"<value></value>"+
 			"<object exact='yes'>service</object>" +
 			"</mandatory_attributes>";
-	get_single_column_data(function(attributes)
+	fetch_requested_data('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
-			attribute_label.appendChild(attr_label);
-			var line_break=document.createElement('br');
-			attribute_label.appendChild(line_break);
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
 		});
-	},attributes_data);
+	});
 	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -1705,7 +1893,7 @@ function modal20_action(func)
 			}	
 			
 			var id=get_new_key();
-			$("#modal20_attributes").find('input').each(function()
+			$("#modal20_attributes").find('input, select').each(function()
 			{
 				id++;
 				var value=$(this).val();
@@ -2180,12 +2368,13 @@ function modal24_action(button)
 	var form_id=$(button).attr('form');
 	var father_form=document.getElementById(form_id);
 	var faddress_detail=father_form.elements[3];
-	var faddress=father_form.elements[8];
-	var fpincode=father_form.elements[9];
-	var fcity=father_form.elements[10];
-	var fstate=father_form.elements[11];
-	var fcountry=father_form.elements[12];
-	var faddress_status=father_form.elements[13];
+	var data_id=father_form.elements[4].value;
+	var faddress=father_form.elements[7];
+	var fpincode=father_form.elements[8];
+	var fcity=father_form.elements[9];
+	var fstate=father_form.elements[10];
+	var fcountry=father_form.elements[11];
+	var faddress_status=father_form.elements[12];
 		
 	form.elements[1].value=faddress.value;
 	form.elements[2].value=fpincode.value;
@@ -2211,9 +2400,28 @@ function modal24_action(button)
 		fstate.value=state;
 		fcountry.value=country;
 		faddress_status.value="pending analysis";
-	
+
+		var data_xml="<customers>" +
+				"<id>"+data_id+"</id>" +
+				"<address>"+address+"</address>" +
+				"<pincode>"+pincode+"</pincode>" +
+				"<city>"+city+"</city>" +
+				"<state>"+state+"</state>" +
+				"<country>"+country+"</country>" +
+				"<address_status>pending analysis</address_status>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</customers>";
+
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+					
 		$("#modal24").dialog("close");
-		$(father_form).submit();
 	});
 	
 	$("#modal24").dialog("open");
@@ -2231,12 +2439,13 @@ function modal25_action(button)
 	var form_id=$(button).attr('form');
 	var father_form=document.getElementById(form_id);
 	var faddress_detail=father_form.elements[3];
-	var faddress=father_form.elements[8];
-	var fpincode=father_form.elements[9];
-	var fcity=father_form.elements[10];
-	var fstate=father_form.elements[11];
-	var fcountry=father_form.elements[12];
-	var faddress_status=father_form.elements[13];
+	var data_id=father_form.elements[4].value;
+	var faddress=father_form.elements[7];
+	var fpincode=father_form.elements[8];
+	var fcity=father_form.elements[9];
+	var fstate=father_form.elements[10];
+	var fcountry=father_form.elements[11];
+	var faddress_status=father_form.elements[1];
 	
 	form.elements[1].value=faddress.value;
 	form.elements[2].value=fpincode.value;
@@ -2263,8 +2472,27 @@ function modal25_action(button)
 		fcountry.value=country;
 		faddress_status.value="pending analysis";
 	
+		var data_xml="<suppliers>" +
+				"<id>"+data_id+"</id>" +
+				"<address>"+address+"</address>" +
+				"<pincode>"+pincode+"</pincode>" +
+				"<city>"+city+"</city>" +
+				"<state>"+state+"</state>" +
+				"<country>"+country+"</country>" +
+				"<address_status>pending analysis</address_status>" +
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</suppliers>";
+
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+		
 		$("#modal25").dialog("close");
-		$(father_form).submit();
 	});
 	
 	$("#modal25").dialog("open");
@@ -3281,20 +3509,41 @@ function modal35_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
-			"<status exact='yes'>active</status>" +
+			"<status></status>" +
+			"<value></value>"+
 			"<object exact='yes'>storage</object>" +
 			"</mandatory_attributes>";
-	get_single_column_data(function(attributes)
+	fetch_requested_data('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
-			attribute_label.appendChild(attr_label);
-			var line_break=document.createElement('br');
-			attribute_label.appendChild(line_break);
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
 		});
-	},attributes_data);
+	});
 	
 	
 	$(form).off('submit');
@@ -3333,7 +3582,7 @@ function modal35_action(func)
 			}
 			
 			var id=get_new_key();
-			$("#modal35_attributes").find('input').each(function()
+			$("#modal35_attributes").find('input, select').each(function()
 			{
 				id++;
 				var value=$(this).val();
@@ -3588,7 +3837,7 @@ function modal38_action(father_id,sale_price_value)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form1'))
+		if(is_create_access('form166'))
 		{
 			var sale_price=fsale_price.value;
 			var last_updated=get_my_time();
@@ -3700,20 +3949,41 @@ function modal39_action(schedule_date)
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
-			"<status exact='yes'>active</status>" +
+			"<status></status>" +
+			"<value></value>"+
 			"<object exact='yes'>loan</object>" +
 			"</mandatory_attributes>";
-	get_single_column_data(function(attributes)
+	fetch_requested_data('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
-			attribute_label.appendChild(attr_label);
-			var line_break=document.createElement('br');
-			attribute_label.appendChild(line_break);
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
 		});
-	},attributes_data);
+	});
 	
 	
 	$(form).off('submit');
@@ -3827,7 +4097,7 @@ function modal39_action(schedule_date)
 			}
 			
 			var id=get_new_key();
-			$("#modal39_attributes").find('input').each(function()
+			$("#modal39_attributes").find('input, select').each(function()
 			{
 				id++;
 				var value=$(this).val();
@@ -4422,20 +4692,41 @@ function modal45_action()
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
-			"<status exact='yes'>active</status>" +
+			"<status></status>" +
+			"<value></value>"+
 			"<object exact='yes'>loyalty program</object>" +
 			"</mandatory_attributes>";
-	get_single_column_data(function(attributes)
+	fetch_requested_data('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
-			attribute_label.appendChild(attr_label);
-			var line_break=document.createElement('br');
-			attribute_label.appendChild(line_break);
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
 		});
-	},attributes_data);
+	});
 	
 	
 	$(form).off("submit");
@@ -4491,7 +4782,7 @@ function modal45_action()
 			}
 			
 			var id=get_new_key();
-			$("#modal45_attributes").find('input').each(function()
+			$("#modal45_attributes").find('input, select').each(function()
 			{
 				id++;
 				var value=$(this).val();
@@ -6097,20 +6388,41 @@ function modal112_action(func)
 	attribute_label.innerHTML="";
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
-			"<status exact='yes'>active</status>" +
+			"<status></status>" +
+			"<value></value>"+
 			"<object exact='yes'>product</object>" +
 			"</mandatory_attributes>";
-	get_single_column_data(function(attributes)
+	fetch_requested_data('',attributes_data,function(attributes)
 	{
 		attributes.forEach(function(attribute)
 		{
-			var attr_label=document.createElement('label');
-			attr_label.innerHTML=attribute+" <input type='text' name='"+attribute+"'>";
-			attribute_label.appendChild(attr_label);
-			var line_break=document.createElement('br');
-			attribute_label.appendChild(line_break);
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
 		});
-	},attributes_data);
+	});
 	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
@@ -6195,7 +6507,7 @@ function modal112_action(func)
 			////////////////////////////////////////////////
 	
 			var id=get_new_key();
-			$("#modal112_attributes").find('input').each(function()
+			$("#modal112_attributes").find('input, select').each(function()
 			{
 				id++;
 				var value=$(this).val();
