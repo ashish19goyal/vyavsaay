@@ -10,8 +10,8 @@ openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:63641:61814:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:43742:43639:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import.js:18783:18477:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:7328:6946:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php:536:0:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:7415:6594:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php:530:0:1:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -23,10 +23,10 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/locales
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: form24_
+ssearch_text: send_email
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -60,7 +60,6 @@ e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/Classes/sms.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/ajax.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form1.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form166.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form123.php
@@ -86,11 +85,12 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import_template.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/demo_user_db_data.xml
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/locales/translation-en.json
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/ajax.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/locales/translation-en.json
 snr_replacetype: 0
-savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax
+savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/locales
 spell_check_default: 1
 spell_insert_entities: 0
 last_filefilter: 
@@ -100,7 +100,6 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: attribute
 searchlist: 43_
 searchlist: 4_
 searchlist: 2_
@@ -115,6 +114,7 @@ searchlist: form2_
 searchlist: form43_
 searchlist: form4_
 searchlist: form24_
+searchlist: send_email
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0
