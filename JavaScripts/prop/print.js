@@ -256,10 +256,14 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 			if(print_type=='mail')
 			{
 				nl_item_pic.innerHTML="<img src='https://vyavsaay.com/"+pic_url+"'>";
-			}			
+			}
 			else if(blob!='undefined' && blob!="")
 			{
 				nl_item_pic.innerHTML="<img src='"+blob+"'>";
+			}
+
+			if(blob!='undefined' && blob!="")
+			{
 				nl_item_link.appendChild(nl_item_pic);				
 			}
 			
