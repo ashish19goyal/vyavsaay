@@ -168,7 +168,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 	business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;	
 
 	if(powered_by_text!="")	
-		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: "+powered_by_text;	
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='mailto:contact@riseconsulting.co.in'>Powered By: "+powered_by_text+"</a>";	
 	
 /////////////placing the containers //////////////////////////////////////////////////////	
 	

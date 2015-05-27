@@ -19,7 +19,7 @@
 	{
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$user && $_SESSION['re']==$read_access)
 		{
-			$headers= "From:  "+business_title+"<delhilightsandmusic@vyavsaay.com> \r\n";
+			$headers= "From:"+business_title+"<info@vyavsaay.com> \r\n";
 			$headers .= "Reply-To: ". strip_tags($from) . "\r\n";
 			$headers .= "MIME-Version: 1.0\r\n";
 			$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
