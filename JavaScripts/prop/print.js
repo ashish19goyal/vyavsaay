@@ -259,13 +259,13 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 			}			
 			else if(blob!='undefined' && blob!="")
 			{
-				nl_item_pic.innerHTML="<img src='"+blob+"'>";				
+				nl_item_pic.innerHTML="<img src='"+blob+"'>";
+				nl_item_link.appendChild(nl_item_pic);				
 			}
 			
 			nl_content.appendChild(nl_item);
 			nl_item.appendChild(nl_item_link);
-			nl_item_link.appendChild(nl_item_heading);
-			nl_item_link.appendChild(nl_item_pic);
+			nl_item_link.appendChild(nl_item_heading);			
 			nl_item_link.appendChild(nl_item_detail);
 			
 			var item_clear_div=document.createElement('div');
