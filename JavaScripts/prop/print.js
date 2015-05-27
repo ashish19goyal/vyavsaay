@@ -253,6 +253,13 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 			nl_item_heading.innerHTML="<b>"+name+"</b>";
 			nl_item_detail.innerHTML=detail;
 			
+			nl_content.appendChild(nl_item);
+			nl_item.appendChild(nl_item_link);
+			nl_item_link.appendChild(nl_item_heading);			
+			
+			var item_clear_div=document.createElement('div');
+			item_clear_div.setAttribute('style','clear:both;');
+			nl_item.appendChild(item_clear_div);			
 			
 			if(blob!='undefined' && blob!="")
 			{
@@ -267,14 +274,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 				nl_item_link.appendChild(nl_item_pic);				
 			}
 			
-			nl_content.appendChild(nl_item);
-			nl_item.appendChild(nl_item_link);
-			nl_item_link.appendChild(nl_item_heading);			
 			nl_item_link.appendChild(nl_item_detail);
-			
-			var item_clear_div=document.createElement('div');
-			item_clear_div.setAttribute('style','clear:both;');
-			nl_item.appendChild(item_clear_div);
 						
 		});
 		
