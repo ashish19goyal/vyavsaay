@@ -839,6 +839,7 @@ function form24_import(data_array,import_type)
 				"<make>"+row.make+"</make>" +
 				"<order_id>"+row.order_id+"</order_id>" +
 				"<price>"+row.price+"</price>" +
+				"<mrp>"+row.mrp+"</mrp>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
