@@ -62,6 +62,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>po_num</name>
+			<display_name>Next Purchase order series number</display_name>
+			<status>active</status>
+			<value>1</value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>tin</name>
 			<display_name>TIN #</display_name>
 			<status>active</status>
@@ -146,6 +156,16 @@
 			<display_name>capture_location</display_name>
 			<status>active</status>
 			<value>no</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>powered_by</name>
+			<display_name>powered_by</display_name>
+			<status>active</status>
+			<value>Vyavsaay.com</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>

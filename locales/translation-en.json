@@ -287,6 +287,7 @@
   	"sms_content":"SMS content",
   	"default_newsletter":"Default New Letter",
   	"sms_sender_id":"SMS Sender Id",
-  	"capture_location":"Capture Location"
+  	"capture_location":"Capture Location",
+  	"powered_by":"Powered-by text"
   }
 }

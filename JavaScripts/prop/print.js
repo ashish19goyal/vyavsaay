@@ -135,6 +135,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 	
 	var footer=document.createElement('div');
 		var business_contact=document.createElement('div');
+		var powered_by=document.createElement('div');
 	
 ////////////setting styles for containers/////////////////////////
 
@@ -145,6 +146,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 
 	footer.setAttribute('style','display:block;width:98%;');
 		business_contact.setAttribute('style','display:block;width:98%;text-align:center');
+		powered_by.setAttribute('style','display:block;width:98%;text-align:center');
 	
 ///////////////getting the content////////////////////////////////////////
 
@@ -156,6 +158,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 	var business_email=get_session_var('email');
 	var business_website=get_session_var('website');
 	var tandc_text=get_session_var('bill_message');
+	var powered_by_text=get_session_var('powered_by');	
 	
 ////////////////filling in the content into the containers/////////////////////////////////////
 
@@ -163,6 +166,9 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text+"<hr style='border: 1px solid #000;'>";
 		
 	business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;	
+
+	if(powered_by_text!="")	
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'>Powered By: "+powered_by_text;	
 	
 /////////////placing the containers //////////////////////////////////////////////////////	
 	
@@ -174,6 +180,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 	header.appendChild(business_intro);
 	
 	footer.appendChild(business_contact);
+	footer.appendChild(powered_by);
 
 /////////////////populating the content section with newsletter items//////////////////////////
 	var newsletter_items_data="<newsletter_items>" +

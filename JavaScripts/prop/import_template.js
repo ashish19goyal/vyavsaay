@@ -145,7 +145,7 @@ function form21_import_template()
 */
 function form24_import_template()
 {
-	var data_array=['id','order_id','product_name','quantity','make','price'];
+	var data_array=['id','order_id','item_name','quantity','make','mrp','price'];
 	my_array_to_csv(data_array);
 };
 
@@ -227,7 +227,7 @@ function form42_import_template()
 */
 function form43_import_template()
 {
-	var data_array=['id','order_date','supplier','status','notes'];
+	var data_array=['id','order_num','order_date','supplier','status'];
 	my_array_to_csv(data_array);
 };
 

@@ -1798,23 +1798,24 @@ function form24_ini()
 		order_id="";	
 	
 	$('#form24_body').html("");
-	$('#form24_whatsapp').hide();
+	
 	if(order_id!="")
 	{
 		show_loader();
 		var order_columns="<purchase_orders>" +
 				"<id>"+order_id+"</id>" +
+				"<order_num></order_num>"+
 				"<supplier></supplier>" +
 				"<order_date></order_date>" +
 				"<status></status>" +
-				"<notes></notes>" +
 				"</purchase_orders>";
 		var order_items_column="<purchase_order_items>" +
 				"<id></id>" +
-				"<product_name></product_name>" +
+				"<item_name></item_name>" +
 				"<quantity></quantity>" +
 				"<order_id exact='yes'>"+order_id+"</order_id>" +
 				"<make></make>" +
+				"<mrp></mrp>"+
 				"<price></price>" +
 				"</purchase_order_items>";
 	
@@ -1827,7 +1828,7 @@ function form24_ini()
 			{
 				filter_fields.elements[1].value=order_results[i].supplier;
 				filter_fields.elements[2].value=get_my_past_date(order_results[i].order_date);
-				filter_fields.elements[3].value=order_results[i].notes;
+				filter_fields.elements[3].value=order_results[i].order_num;
 				filter_fields.elements[4].value=order_results[i].status;
 				filter_fields.elements[5].value=order_id;
 				
@@ -1845,50 +1846,39 @@ function form24_ini()
 		
 			fetch_requested_data('',order_items_column,function(results)
 			{
-				var message_string="Order from: "+get_session_var('title')+"\nAddress: "+get_session_var('address');
-				
 				results.forEach(function(result)
 				{
-					message_string+="\nProduct: "+result.product_name;
-					message_string+="Quantity: "+result.quantity;
-					
 					var rowsHTML="";
 					var id=result.id;
 					rowsHTML+="<tr>";
 					rowsHTML+="<form id='form24_"+id+"'></form>";
-						rowsHTML+="<td data-th='Product Name'>";
-							rowsHTML+="<textarea readonly='readonly' required form='form24_"+id+"'>"+result.product_name+"</textarea>";
+						rowsHTML+="<td data-th='Item Name'>";
+							rowsHTML+="<textarea readonly='readonly' required form='form24_"+id+"'>"+result.item_name+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+="<input type='number' class='dblclick_editable' readonly='readonly' required form='form24_"+id+"' value='"+result.quantity+"'>";
+							rowsHTML+="<input type='number' readonly='readonly' required form='form24_"+id+"' value='"+result.quantity+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Make'>";
 							rowsHTML+="<textarea readonly='readonly' required form='form24_"+id+"'>"+result.make+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Price'>";
-							rowsHTML+="<input type='number'readonly='readonly' required form='form24_"+id+"' value='"+result.price+"' step='any'>";
+							rowsHTML+="MRP: <input type='number'readonly='readonly' required form='form24_"+id+"' value='"+result.mrp+"' step='any'>";
+							rowsHTML+="<br>Price: <input type='number'readonly='readonly' required form='form24_"+id+"' value='"+result.price+"' step='any'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form24_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form24_"+id+"' id='save_form24_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form24_"+id+"' id='delete_form24_"+id+"' onclick='form24_delete_item($(this));'>";
-						rowsHTML+="</td>";			
+						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 				
 					$('#form24_body').append(rowsHTML);
-					
-					var fields=document.getElementById("form24_"+id);
-					var name_filter=fields.elements[0];
 				});
 				
-				message_string+="\nOrder Date: "+filter_fields.elements[2].value;
-				message_string+="\nNotes: "+filter_fields.elements[3].value;
-				
-				var subject="Purchase Order from: "+get_session_var('title');
 				$('#form24_share').show();
 				$('#form24_share').click(function()
 				{
-					modal44_action(filter_fields.elements[1].value,subject,message_string);
+					modal101_action('purchase_order',order_results[i].supplier,order_results[i].order_num);
 				});
 				
 				hide_loader();
@@ -1896,8 +1886,6 @@ function form24_ini()
 		});
 	}
 }
-
-
 
 /**
  * @form Manage Customers
@@ -2875,8 +2863,7 @@ function form43_ini()
 	var filter_fields=document.getElementById('form43_header');
 	
 	//populating form 
-	if(fid==="")
-		fid=filter_fields.elements[0].value;
+	var fnum=filter_fields.elements[0].value;
 	var fname=filter_fields.elements[1].value;
 	var fstatus=filter_fields.elements[2].value;
 	
@@ -2889,10 +2876,10 @@ function form43_ini()
 
 	var columns="<purchase_orders count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
+			"<order_num>"+fnum+"</order_num>"+
 			"<supplier>"+fname+"</supplier>" +
 			"<order_date></order_date>" +
 			"<status>"+fstatus+"</status>" +
-			"<notes></notes>" +
 			"<last_updated></last_updated>" +
 			"</purchase_orders>";
 
@@ -2905,8 +2892,8 @@ function form43_ini()
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form43_"+result.id+"'></form>";
-					rowsHTML+="<td data-th='Order No.'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="<td data-th='Order #'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+result.order_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Supplier'>";
 						rowsHTML+="<textarea readonly='readonly' form='form43_"+result.id+"'>"+result.supplier+"</textarea>";
@@ -2914,13 +2901,11 @@ function form43_ini()
 					rowsHTML+="<td data-th='Order Date'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form43_"+result.id+"' value='"+get_my_past_date(result.order_date)+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Notes'>";
-						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form43_"+result.id+"'>"+result.notes+"</textarea>";
-					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form43_"+result.id+"' value='"+result.status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form43_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='edit_icon' form='form43_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form24');\">";
 						rowsHTML+="<input type='submit' class='save_icon' form='form43_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form43_"+result.id+"' title='Delete order' onclick='form43_delete_item($(this));'>";

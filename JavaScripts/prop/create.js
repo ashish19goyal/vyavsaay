@@ -1995,15 +1995,19 @@ function form24_create_item(form)
 		var name=form.elements[0].value;
 		var quantity=form.elements[1].value;
 		var make=form.elements[2].value;
-		var price=form.elements[3].value;
-		var data_id=form.elements[4].value;
+		var mrp=form.elements[3].value;
+		var price=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var del_button=form.elements[7];
+		var save_button=form.elements[6];
 		var last_updated=get_my_time();
 		var data_xml="<purchase_order_items>" +
 				"<id>"+data_id+"</id>" +
-				"<product_name>"+name+"</product_name>" +
+				"<item_name>"+name+"</item_name>" +
 				"<quantity>"+quantity+"</quantity>" +
 				"<order_id>"+order_id+"</order_id>" +
 				"<make>"+make+"</make>" +
+				"<mrp>"+mrp+"</mrp>" +
 				"<price>"+price+"</price>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</purchase_order_items>";	
@@ -2022,14 +2026,12 @@ function form24_create_item(form)
 			$(form.elements[i]).attr('readonly','readonly');
 		}
 		
-		var del_button=form.elements[6];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form24_delete_item(del_button);
 		});
 		
-		var save_button=form.elements[10];
 		$(save_button).off('click');
 	}
 	else
@@ -2049,28 +2051,15 @@ function form24_create_form()
 		var form=document.getElementById("form24_master");
 		var supplier=form.elements[1].value;
 		var order_date=get_raw_time(form.elements[2].value);		
-		var notes=form.elements[3].value;
+		var order_num=form.elements[3].value;
 		var status=form.elements[4].value;
 		var data_id=form.elements[5].value;
+		var save_button=form.elements[6];
 		
-		var message_string="Order from: "+ get_session_var('title')+"\nAddress: "+get_session_var('address');
-		
-		$("[id^='save_form24']").each(function(index)
-		{
-			var subform_id=$(this).attr('form');
-			var subform=document.getElementById(subform_id);
-			message_string+="\nProduct: "+subform.elements[0].value;
-			message_string+="Quantity: "+subform.elements[1].value;
-		});
-	
-		message_string+="\nOrder Date: "+form.elements[2].value;
-		message_string+="\nNotes: "+form.elements[3].value;
-		
-		var subject="Purchase Order from: "+get_session_var('title');
 		$('#form24_share').show();
 		$('#form24_share').click(function()
 		{
-			modal44_action(supplier,subject,message_string);
+			modal101_action('purchase_order',supplier,order_num);
 		});
 				
 		var last_updated=get_my_time();		
@@ -2079,7 +2068,7 @@ function form24_create_form()
 					"<supplier>"+supplier+"</supplier>" +
 					"<order_date>"+order_date+"</order_date>" +
 					"<status>"+status+"</status>" +
-					"<notes>"+notes+"</notes>" +
+					"<order_num>"+order_num+"</order_num>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_orders>";
 		var activity_xml="<activity>" +
@@ -2087,7 +2076,7 @@ function form24_create_form()
 					"<tablename>purchase_orders</tablename>" +
 					"<link_to>form43</link_to>" +
 					"<title>Created</title>" +
-					"<notes>Purchase order no "+data_id+"</notes>" +
+					"<notes>Purchase order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		if(is_online())
@@ -2099,7 +2088,29 @@ function form24_create_form()
 			local_create_row(data_xml,activity_xml);
 		}
 
-		var save_button=form.elements[6];
+		var num_data="<user_preferences>"+
+						"<id></id>"+						
+						"<name exact='yes'>po_num</name>"+												
+						"</user_preferences>";
+		get_single_column_data(function (bill_num_ids)
+		{
+			if(bill_num_ids.length>0)
+			{
+				var num_xml="<user_preferences>"+
+							"<id>"+bill_num_ids[0]+"</id>"+
+							"<value>"+(parseInt(order_num)+1)+"</value>"+
+							"</user_preferences>";
+				if(is_online())
+				{
+					server_update_simple(num_xml);
+				}
+				else 
+				{
+					local_update_simple(num_xml);
+				}
+			}
+		},num_data);
+			
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
 		{

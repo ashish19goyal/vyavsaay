@@ -832,11 +832,20 @@ function form24_header_ini()
 	
 	var supplier_filter=fields.elements[1];
 	var order_date=fields.elements[2];
-	fields.elements[3].value="";
+	var order_num=fields.elements[3];
 	var status_filter=fields.elements[4];
 	fields.elements[5].value=get_new_key();
-	
 	var save_button=fields.elements[6];
+	
+	var po_id=$("#form24_link").attr('data_id');
+	if(po_id==null || po_id=='')
+	{
+		var po_num_data="<user_preferences count='1'>"+
+							"<value></value>"+
+							"<name exact='yes'>po_num</name>"+
+							"</user_preferences>";
+		set_my_value(po_num_data,order_num);
+	}
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -1083,7 +1092,7 @@ function form43_header_ini()
 	var status_filter=filter_fields.elements[2];
 	
 	var order_data="<purchase_orders>" +
-			"<id></id>" +
+			"<order_num></order_num>" +
 			"</purchase_orders>";
 	var name_data="<suppliers>" +
 			"<acc_name></acc_name>" +

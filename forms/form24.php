@@ -4,11 +4,10 @@
 			<label>Supplier <img src='./images/add_image.png' class='add_image' title='Add new supplier' id='form24_add_supplier'><br>
 			<input type='text' required></label>
 			<label>Order Date<br><input type='text' required></label>
-			<label>Notes<br><textarea></textarea></label>
+			<label>Order #<br><input type='text' required></label>
 			<label>Order Status<br><input type='text' required></label>
 			<label>	<input type='hidden' name='order_id' value=''></label>
-			<label>	<input type='button' title='Save order' class='save_icon'></label>
-			<label>	<input type='button' title='Print Bill' class='print_icon' onclick='form24_print_form();'></label>
+			<label>	<input type='button' title='Save' class='save_icon'></label>
 			<label>	<input type='button' id='form24_share' class='share_icon' style='display:none;'></label>
 			<label>	<input type='submit' class='submit_hidden'>	</label>	
 		</fieldset>

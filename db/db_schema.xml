@@ -129,16 +129,17 @@
 			<order_date index='yes' type="BIGINT"></order_date>
 			<supplier index='yes' type="TEXT"></supplier>
 			<status index='yes' type="VARCHAR(25)"></status><!-- cancelled/order placed/draft -->
-			<notes index='yes' type="TEXT"></notes>
+			<order_num index='yes' type="TEXT"></order_num>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</purchase_orders>
 	<purchase_order_items>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<order_id index='yes' type="BIGINT"></order_id>
-			<product_name index='yes' type="TEXT"></product_name>
+			<item_name index='yes' type="TEXT"></item_name>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<make index='yes' type='TEXT'></make>
 			<price index='no' type='DECIMAL(12,2)'></price>
+			<mrp index='no' type='DECIMAL(12,2)'></mrp>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</purchase_order_items>
 	<supplier_bills>

@@ -536,7 +536,8 @@ function server_send_email(to,from,subject,message,type,func)
 	var domain=get_domain();
 	var username=get_username();
 	var read_access=get_session_var('re');
-	ajax_with_custom_func("./ajax/email.php","domain="+domain+"&username="+username+"&re="+read_access+"&to="+to+"&from="+from+"&message="+message+"&subject="+subject+"&type="+type,function(e)
+	var business_title=get_session_var('title');
+	ajax_with_custom_func("./ajax/email.php","title="+business_title+"&domain="+domain+"&username="+username+"&re="+read_access+"&to="+to+"&from="+from+"&message="+message+"&subject="+subject+"&type="+type,function(e)
 	{
 		console.log(e.responseText);
 		func();

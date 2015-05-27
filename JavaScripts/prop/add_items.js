@@ -1241,7 +1241,7 @@ function form24_add_item()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form24_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Product Name'>";
+			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' required form='form24_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form24_add_product_"+id+"'>";
 			rowsHTML+="</td>";
@@ -1252,7 +1252,8 @@ function form24_add_item()
 				rowsHTML+="<textarea form='form24_"+id+"' readonly='readonly'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Price'>";
-				rowsHTML+="<input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly'>";
+				rowsHTML+="MRP: <input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly'>";
+				rowsHTML+="Price: <input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly' class='dblclick_editable'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form24_"+id+"' value='"+id+"'>";
@@ -1263,14 +1264,18 @@ function form24_add_item()
 		rowsHTML+="</tr>";
 	
 		$('#form24_body').prepend(rowsHTML);
+
+		var master_form=document.getElementById("form24_master");		
+		var supplier_name=master_form.elements[1].value;
 		
 		var fields=document.getElementById("form24_"+id);
 		var name_filter=fields.elements[0];
 		var quantity_filter=fields.elements[1];
 		var make_filter=fields.elements[2];
-		var price_filter=fields.elements[3];
-		var id_filter=fields.elements[4];
-		var save_button=fields.elements[5];
+		var mrp_filter=fields.elements[3];
+		var price_filter=fields.elements[4];
+		var id_filter=fields.elements[5];
+		var save_button=fields.elements[6];
 				
 		$(save_button).on("click", function(event)
 		{
@@ -1315,18 +1320,22 @@ function form24_add_item()
 					"</product_master>";
 			set_my_value(make_data,make_filter);
 			
-			var price_data="<product_instances>" +
-						"<cost_price></cost_price>" +
-						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-						"</product_instances>";
-			get_single_column_data(function(prices)
+			var margin_data="<attributes>" +
+						"<value></value>"+
+						"<type exact='yes'>supplier</type>"+
+						"<attribute exact='yes'>Margin</attribute>" +
+						"<name exact='yes'>"+supplier_name+"</name>" +
+						"</attributes>";
+			get_single_column_data(function(margins)
 			{
-				var min_value=Math.min.apply(null,prices);
-				price_filter.value=min_value;
-			},price_data);
+				if(margins.length>0)
+					price_filter.value=my_round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0]))/100),2);
+			},margin_data);
 			
 			quantity_filter.value="";
 		});
+		
+		longPressEditable($('.dblclick_editable'));		
 	}
 	else
 	{

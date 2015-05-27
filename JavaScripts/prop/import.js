@@ -834,7 +834,7 @@ function form24_import(data_array,import_type)
 		counter+=1;
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
-				"<product_name>"+row.product_name+"</product_name>" +
+				"<item_name>"+row.item_name+"</item_name>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<make>"+row.make+"</make>" +
 				"<order_id>"+row.order_id+"</order_id>" +
@@ -1285,7 +1285,7 @@ function form43_import(data_array,import_type)
 				"<supplier>"+row.supplier+"</supplier>" +
 				"<order_date>"+get_raw_time(row.order_date)+"</order_date>" +
 				"<status>"+row.status+"</status>" +
-				"<notes>"+row.notes+"</notes>" +
+				"<order_num>"+row.order_num+"</order_num>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});

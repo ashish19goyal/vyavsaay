@@ -672,24 +672,12 @@ function form24_delete_item(button)
 {
 	if(is_delete_access('form24'))
 	{
-		var order_id=document.getElementById("form24_master").elements[5].value;
-		
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var name=form.elements[0].value;
-		var quantity=form.elements[1].value;
-		var make=form.elements[2].value;
-		var price=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var last_updated=get_my_time();
+		var data_id=form.elements[5].value;
 		var data_xml="<purchase_order_items>" +
 					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<make>"+make+"</make>" +
-					"<price>"+price+"</price>" +
-					"<order_id>"+order_id+"</order_id>" +
 					"</purchase_order_items>";	
 		if(is_online())
 		{
@@ -1131,21 +1119,19 @@ function form43_delete_item(button)
 		var form_id=$(button).attr('form');
 		var form=document.getElementById(form_id);
 		
-		var data_id=form.elements[0].value;
+		var order_num=form.elements[0].value;
 		var supplier_name=form.elements[1].value;
-		var status=form.elements[4].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<purchase_orders>" +
 					"<id>"+data_id+"</id>" +
-					"<supplier>"+supplier_name+"</supplier>" +
-					"<status>"+status+"</status>" +
 					"</purchase_orders>";	
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>purchase_orders</tablename>" +
 					"<link_to>form43</link_to>" +
 					"<title>Deleted</title>" +
-					"<notes>Purchase order no "+data_id+" for supplier "+supplier_name+"</notes>" +
+					"<notes>Purchase order no "+order_num+" for supplier "+supplier_name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var other_delete="<purchase_order_items>" +
