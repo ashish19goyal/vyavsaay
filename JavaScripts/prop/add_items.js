@@ -2973,7 +2973,7 @@ function form81_add_item()
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new customer' id='form81_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Details'>";
-				rowsHTML+="<textarea form='form81_"+id+"' class='dblclick_editable' required></textarea>";
+				rowsHTML+="<textarea form='form81_"+id+"' class='dblclick_editable'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Due Date'>";
 				rowsHTML+="<input type='text' class='dblclick_editable' form='form81_"+id+"'>";
@@ -3013,6 +3013,7 @@ function form81_add_item()
 		});
 		
 		$(due_filter).datepicker();
+		due_filter.value=get_my_past_date(parseFloat(get_my_time())+86400000);
 		
 		var staff_data="<staff>" +
 				"<acc_name></acc_name>" +

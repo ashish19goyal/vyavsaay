@@ -239,6 +239,7 @@ function modal_forms_ini()
 	   		{
 	   			var form_id="modal"+j+"_form";
 	   			document.getElementById(form_id).reset();
+	   			//$("#modal"+j+"_form").trigger('reset');
 	   		}
 		});
 	}

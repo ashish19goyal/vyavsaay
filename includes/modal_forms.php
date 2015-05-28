@@ -87,7 +87,7 @@
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
 				<label>Phone: <input type="tel"></label><br>
-				<label>Email: <input type="email"></label><br>
+				<label>Email: <input type="text"></label><br>
 				<label>Address: <textarea></textarea></label><br>
 				<label>Pincode: <input type="number"></label><br>
 				<label>City: <input type="text"></label><br>

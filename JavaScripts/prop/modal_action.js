@@ -503,6 +503,17 @@ function modal11_action(func)
 	var fcountry=form.elements[8];
 	var fnotes=form.elements[9];
 	
+	///////////////////////////
+	fname.value="";
+	fphone.value="";
+	femail.value="";
+	faddress.value="";
+	fpincode.value="";
+	fcity.value="";
+	fstate.value="";
+	fcountry.value="";
+	fnotes.value="";
+	
 	////adding attribute fields///////
 	var attribute_label=document.getElementById('modal11_attributes');
 	attribute_label.innerHTML="";

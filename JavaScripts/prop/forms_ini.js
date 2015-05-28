@@ -6675,7 +6675,7 @@ function form81_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form81_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Customer'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form81_"+result.id+"' value='"+result.customer+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form81_"+result.id+"'>"+result.customer+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Details'>";
 						rowsHTML+="<textarea readonly='readonly' form='form81_"+result.id+"' class='dblclick_editable'>"+result.detail+"</textarea>";
