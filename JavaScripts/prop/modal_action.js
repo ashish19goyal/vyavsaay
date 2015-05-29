@@ -5201,7 +5201,7 @@ function modal50_action()
 			
 			if(form.elements[3].checked)
 			{
-				email_id_string+=form.elements[1].value+";";
+				email_id_string+=form.elements[1].value+",";
 				var customer_name=form.elements[4].value;
 				var customer_phone=form.elements[2].value;
 				var message=sms_content.replace(/customer_name/g,customer_name);
