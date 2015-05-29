@@ -5212,7 +5212,11 @@ function modal50_action()
 		});	
 
 		var message=encodeURIComponent(container.innerHTML);
-		
+		for(var i=0;i<25;i++)
+		{		
+			email_id_string=email_id_string.replace(/\,\,/g,"\,");
+		}
+		console.log(email_id_string);
 		var to=email_id_string;
 		var from=get_session_var('email');
 		send_email(to,from,subject,message,'promotion',function()

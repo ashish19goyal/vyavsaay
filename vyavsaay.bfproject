@@ -3,13 +3,14 @@ e2c.convert_num: 0
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form24.php:370:0:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form43.php:1484:0:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_header_ini.js:21503:20819:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:210879:211489:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:143169:142342:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:96945:96348:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:212037:211489:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:143289:142480:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:96965:96348:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js:26603:26536:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:137839:137158:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:10286:9513:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php:3354:2740:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php:0:99:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -21,10 +22,10 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: form81_
+ssearch_text: 50_
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -60,7 +61,6 @@ charmap_block: 1
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form40.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form8.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/side_menu.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/event_handler.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form24.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form43.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_header_ini.js
@@ -74,7 +74,6 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/demo_user_db_data.xml
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/ajax.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/locales/translation-en.json
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import_template.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import.js
@@ -87,6 +86,8 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/appic/css/styl
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/appic/css/font-awesome.css
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/footer.html
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/event_handler.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/email.php
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 spell_check_default: 1
@@ -98,9 +99,6 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: 81_
-searchlist: form23
-searchlist: form24
 searchlist: form43
 searchlist: form24
 searchlist: fa-fa
@@ -113,6 +111,9 @@ searchlist: mail
 searchlist: 101
 searchlist: email
 searchlist: form81_
+searchlist: modal
+searchlist: add new cus
+searchlist: 50_
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0
