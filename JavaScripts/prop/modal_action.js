@@ -5193,6 +5193,8 @@ function modal50_action()
 		var subject=nl_name+" - " +business_title;
 		
 		var email_id_string="";
+		var email_message=encodeURIComponent(container.innerHTML);
+		var from=get_session_var('email');
 		
 		$("[id^='row_form78_']").each(function(index)
 		{
@@ -5208,22 +5210,24 @@ function modal50_action()
 				message=message.replace(/business_title/g,business_title);
 			
 				send_sms(customer_phone,message,'transaction');
+
+				var to=form.elements[1].value;
+				
+				send_email(to,from,subject,email_message,'promotion',function()
+				{
+				});				
 			}
 		});	
 
-		var message=encodeURIComponent(container.innerHTML);
-		for(var i=0;i<25;i++)
+		$("#modal58").dialog("open");
+		hide_loader();			
+
+/*		for(var i=0;i<25;i++)
 		{		
 			email_id_string=email_id_string.replace(/\,\,/g,"\,");
 		}
 		console.log(email_id_string);
-		var to=email_id_string;
-		var from=get_session_var('email');
-		send_email(to,from,subject,message,'promotion',function()
-		{
-			$("#modal58").dialog("open");
-			hide_loader();			
-		});
+*/
 	});		
 }
 
