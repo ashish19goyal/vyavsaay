@@ -1253,7 +1253,7 @@ function form24_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Price'>";
 				rowsHTML+="MRP: <input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly'>";
-				rowsHTML+="Price: <input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly' class='dblclick_editable'>";
+				rowsHTML+="<br>Price: <input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly' class='dblclick_editable'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form24_"+id+"' value='"+id+"'>";
@@ -1320,19 +1320,31 @@ function form24_add_item()
 					"</product_master>";
 			set_my_value(make_data,make_filter);
 			
-			var margin_data="<attributes>" +
-						"<value></value>"+
-						"<type exact='yes'>supplier</type>"+
-						"<attribute exact='yes'>Margin</attribute>" +
-						"<name exact='yes'>"+supplier_name+"</name>" +
-						"</attributes>";
-			get_single_column_data(function(margins)
+			var mrp_data="<product_instances>"+
+						"<mrp></mrp>"+
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>"+
+						"</product_instances>";
+			get_single_column_data(function(mrps)
 			{
-				if(margins.length>0)
-					price_filter.value=my_round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0]))/100),2);
-			},margin_data);
-			
-			quantity_filter.value="";
+				if(mrps.length>0)
+				{
+					mrp_filter.value=mrps[0];
+				}
+				else{
+					mrp_filter.value=0;
+				}
+				var margin_data="<attributes>" +
+							"<value></value>"+
+							"<type exact='yes'>supplier</type>"+
+							"<attribute exact='yes'>Margin</attribute>" +
+							"<name exact='yes'>"+supplier_name+"</name>" +
+							"</attributes>";
+				get_single_column_data(function(margins)
+				{
+					if(margins.length>0)
+						price_filter.value=my_round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0]))/100),2);
+				},margin_data);					
+			},mrp_data);
 		});
 		
 		longPressEditable($('.dblclick_editable'));		
@@ -1748,7 +1760,7 @@ function form60_add_item()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form60_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Name'>";
+			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' form='form60_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form60_add_product_"+id+"'>";
 			rowsHTML+="</td>";
@@ -1756,7 +1768,7 @@ function form60_add_item()
 				rowsHTML+="<input type='text' form='form60_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Value'>";
-				rowsHTML+="<input type='text' form='form60_"+id+"' required>";
+				rowsHTML+="<textarea form='form60_"+id+"' required></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form60_"+id+"' value='"+id+"'>";
@@ -1804,7 +1816,8 @@ function form60_add_item()
 				"<type exact='yes'>product</type>" +
 				"</attributes>";
 		set_my_filter(attribute_data,attribute_filter);
-
+		
+		$('textarea').autosize();
 	}
 	else
 	{
@@ -7256,7 +7269,7 @@ function form145_add_item()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form145_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Product'>";
+			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' required form='form145_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form145_add_product_"+id+"'>";
 			rowsHTML+="</td>";
@@ -7360,11 +7373,13 @@ function form145_add_item()
 					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
 		});		
-		
+
+		var storage_level=get_session_var('storage_level');
+				
 		var source_data="<store_areas>" +
 				"<name></name>" +
 				"<owner>"+get_account_name()+"</owner>"+
-				"<area_type exact='yes'>storage</area_type>" +
+				"<area_type exact='yes'>"+storage_level+"</area_type>" +
 				"</store_areas>";
 		set_my_value_list(source_data,source_filter);
 
@@ -7378,12 +7393,11 @@ function form145_add_item()
 
 		var target_data="<store_areas>" +
 				"<name></name>" +
-				"<area_type exact='yes'>storage</area_type>" +
+				"<area_type exact='yes'>"+storage_level+"</area_type>" +
 				"</store_areas>";
 		set_my_value_list(target_data,target_filter);
 
-		set_static_value_list('store_movement','status',status_filter);	
-
+		set_static_value_list('store_movement','status',status_filter);
 	}
 	else
 	{
@@ -8885,6 +8899,70 @@ function form158_add_item()
 			var total=(parseFloat(price_filter.value)*parseFloat(quantity_filter.value))+parseFloat(tax_filter.value);
 			total_filter.value=my_round(total,2);
 		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Storage Structure
+ * @formNo 167
+ */
+function form167_add_item()
+{
+	if(is_create_access('form167'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form167_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Type'>";
+				rowsHTML+="<input type='text' required form='form167_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Parent'>";
+				rowsHTML+="<input type='text' form='form167_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Default Dimensions'>";
+				rowsHTML+="Length: <input type='number' step='any' form='form167_"+id+"'>";
+				rowsHTML+="<br>Breadth: <input type='number' step='any' form='form167_"+id+"'>";
+				rowsHTML+="<br>Height: <input type='number' step='any' form='form167_"+id+"'>";				
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Unit'>";
+				rowsHTML+="<input type='text' required value='m' form='form167_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form167_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form167_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form167_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form167_body').prepend(rowsHTML);
+		var fields=document.getElementById("form167_"+id);
+		var type_filter=fields.elements[0];
+		var parent_filter=fields.elements[1];
+		var length_filter=fields.elements[2];
+		var breadth_filter=fields.elements[3];
+		var height_filter=fields.elements[4];
+		var unit_filter=fields.elements[5];
+		var save_button=fields.elements[7];
+				
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form167_create_item(fields);
+		});
+				
+		$(type_filter).focus();
+		
+		var parent_data="<storage_structure>" +
+				"<name></name>" +
+				"</storage_structure>";
+		set_my_value_list(parent_data,parent_filter);
+
+		set_static_value_list('dimensions','unit',unit_filter);	
 	}
 	else
 	{

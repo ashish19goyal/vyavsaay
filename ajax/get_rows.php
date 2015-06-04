@@ -135,11 +135,18 @@
 				for($i=0;$i<count($struct_res);$i++)
 				{
 					$xmlresponse.="<row>";
-						for($k=0;$k<count($columns_array);$k++)
+					/*	for($k=0;$k<count($columns_array);$k++)
 						{
 							$xmlresponse.="<".$columns_array[$k].">";
 							$xmlresponse.=$struct_res[$i][$columns_array[$k]];
 							$xmlresponse.="</".$columns_array[$k].">";
+						}
+					*/	
+						foreach($struct_res[$i] as $key => $value)
+						{
+							$xmlresponse.="<".$key.">";
+							$xmlresponse.=$value;
+							$xmlresponse.="</".$key.">";
 						}
 					$xmlresponse.="</row>";
 				}

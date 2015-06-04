@@ -3,10 +3,10 @@
 		<thead>
 			<tr>
 				<form id='form60_header'></form>
-					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form60_header'></th>
+					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form60_header'></th>
 					<th>Attribute <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form60_header'></th>
 					<th>Value</th>
-					<th><input type="button" value='Add new category' form='form60_header' class='add_icon' onclick="form60_add_item();">
+					<th><input type="button" value='Add new attribute' form='form60_header' class='add_icon' onclick="form60_add_item();">
 						<input type='button' form='form60_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form60_header' style='visibility: hidden;'>
 					</th>

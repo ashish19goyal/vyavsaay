@@ -5184,9 +5184,9 @@ function modal50_action()
 	show_loader();
 	var form=document.getElementById("form78_master");
 	var nl_name=form.elements[1].value;
-	var nl_id=form.elements[3].value;
 	var sms_content=form.elements[2].value;			
-
+	var nl_id=form.elements[3].value;
+	
 	print_newsletter(nl_name,nl_id,'mail',function(container)
 	{
 		var business_title=get_session_var('title');
@@ -5203,31 +5203,28 @@ function modal50_action()
 			
 			if(form.elements[3].checked)
 			{
-				email_id_string+=form.elements[1].value+",";
+				email_id_string+=form.elements[1].value;
 				var customer_name=form.elements[4].value;
 				var customer_phone=form.elements[2].value;
 				var message=sms_content.replace(/customer_name/g,customer_name);
 				message=message.replace(/business_title/g,business_title);
-			
-				send_sms(customer_phone,message,'transaction');
+				
+				send_sms(customer_phone,message,'promotion');
 
 				var to=form.elements[1].value;
-				
-				send_email(to,from,subject,email_message,'promotion',function()
+				if(to!="")
 				{
-				});				
+					email_id_string+=",";				
+				}				
 			}
 		});	
 
-		$("#modal58").dialog("open");
-		hide_loader();			
-
-/*		for(var i=0;i<25;i++)
-		{		
-			email_id_string=email_id_string.replace(/\,\,/g,"\,");
-		}
-		console.log(email_id_string);
-*/
+		var to=email_id_string;
+		send_email(to,from,subject,email_message,'promotion',function()
+		{
+			$("#modal58").dialog("open");
+			hide_loader();			
+		});
 	});		
 }
 
@@ -5532,64 +5529,52 @@ function modal57_action(item_name,customer)
 
 
 /**
+ * @modal Email documents
  * @modalNo 101
- * @modal Update service request details
- * @param button
  */
-function modal101_action(request_id)
+function modal101_action(doc_type,person,order_num)
 {
+	show_loader();
 	var form=document.getElementById('modal101_form');
 	
-	var request_id=form.elements[1];
-	var machine_filter=form.elements[2];
-	var problem_type_filter=form.elements[3];
-	var problem_filter=form.elements[4];
-
-	var request_data="<service_requests count='1'>"+
-						"<id>"+request_id+"</id>"+						
-						"<machine_type></machine_type>"+
-						"<problem_type></problem_type>"+
-						"<notes></notes>"+
-						"</service_requests>";	
-	fetch_requested_data('',request_data,function(requests)
+	print_po(order_num,function(container)
 	{
-		if(requests.length>0)
-		{
-			machine_filter.value=requests[0].machine_type;
-			problem_type_filter.value=requests[0].problem_type;
-			problem_filter.value=requests[0].notes;
-		}
-	});
+		var business_title=get_session_var('title');
+		var subject=doc_type+" - " +business_title;
 		
-	$(form).off("submit");
-	$(form).on("submit",function(event)
-	{
-		event.preventDefault();
-		var machine=machine_filter.value;
-		var problem_type=problem_type_filter.value;
-		var problem=problem_filter.value;
-		var last_updated=get_my_time();
+		var email_message=encodeURIComponent(container.innerHTML);
+		var from=get_session_var('email');
 
-		var request_xml="<service_requests>" +
-					"<id>"+request_id+"</id>" +
-					"<machine_type>"+machine+"</machine_type>" +
-					"<problem_type>"+problem_type+"</problem_type>" +
-					"<notes>"+problem+"</notes>"+						
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</service_requests>";
-		if(is_online())
+		var email_id_xml="<suppliers>"+
+					"<email></email>"+
+					"<acc_name exact='yes'>"+person+"</acc_name>"+
+					"</suppliers>";
+		get_single_column_data(function(emails)
 		{
-			server_update_simple(request_xml);
-		}
-		else
-		{
-			local_update_simple(request_xml);
-		}	
+			form.elements[1].value=person;
+			form.elements[2].value=emails[0];
+			form.elements[3].value=subject;
+
+			$("#modal101").dialog("open");
+			hide_loader();			
+		},email_id_xml);				
 		
-		$("#modal101").dialog("close");
+		$(form).off("submit");
+		$(form).on("submit",function(event)
+		{
+			event.preventDefault();
+			show_loader();			
+			var receiver=form.elements[2].value;
+			var sub=form.elements[3].value;
+			
+			send_email(receiver,from,sub,email_message,'transaction',function()
+			{
+				hide_loader();
+			});
+
+			$("#modal101").dialog("close");
+		});
 	});
-	
-	$("#modal101").dialog("open");
 }
 
 /**
@@ -6579,4 +6564,184 @@ function modal112_action(func)
 	});
 	
 	$("#modal112").dialog("open");
+}
+
+/**
+ * @modal Add Store Area (Nikki)
+ * @modalNo 113
+ */
+function modal113_action(func)
+{
+	var form=document.getElementById("modal113_form");
+	var area_type_filter=form.elements[2];
+	var parent_filter=form.elements[3];
+	var owner_filter=form.elements[4];
+	var length_filter=form.elements[5];
+	var breadth_filter=form.elements[6];
+	var height_filter=form.elements[7];
+	var unit_filter=form.elements[8];
+
+	var owner_data="<staff>"+
+				"<acc_name></acc_name>"+
+				"</staff>";
+	set_my_value_list(owner_data,owner_filter);
+
+	var type_data="<storage_structure>"+
+				"<name></name>"+
+				"</storage_structure>";	
+	set_my_value_list(type_data,area_type_filter);
+
+	set_static_value_list('dimensions','unit',unit_filter);
+	
+	$(area_type_filter).off('blur');
+	$(area_type_filter).on('blur',function () 
+	{
+		var storage_parent="<storage_structure>"+
+						"<parent></parent>"+
+						"<name exact='yes'>"+area_type_filter.value+"</name>"+
+						"<length></length>"+
+						"<breadth></breadth>"+
+						"<height></height>"+
+						"<unit></unit>"+
+						"</storage_structure>";
+		fetch_requested_data('',storage_parent,function(parents)
+		{
+			if(parents.length>0)
+			{
+				var parent_data="<store_areas>"+
+						"<name></name>"+
+						"<area_type exact='yes'>"+parents[0].parent+"</area_type>"+
+						"</store_areas>";
+				set_my_value_list(parent_data,parent_filter);
+				
+				length_filter.value=parents[0].length;
+				breadth_filter.value=parents[0].breadth;
+				height_filter.value=parents[0].height;
+				unit_filter.value=parents[0].unit;
+			}
+		},storage_parent);		
+	});
+	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal113_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status></status>" +
+			"<value></value>"+
+			"<object exact='yes'>storage</object>" +
+			"</mandatory_attributes>";
+	fetch_requested_data('',attributes_data,function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
+		});
+	});
+	
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form170'))
+		{
+			var data_id=get_new_key();
+			var name=form.elements[1].value;
+			var area_type=form.elements[2].value;
+			var parent=form.elements[3].value;
+			var owner=form.elements[4].value;
+			var length=form.elements[5].value;
+			var breadth=form.elements[6].value;
+			var height=form.elements[7].value;
+			var unit=form.elements[8].value;
+			var last_updated=get_my_time();
+			var data_xml="<store_areas>" +
+						"<id>"+data_id+"</id>" +
+						"<name unique='yes'>"+name+"</name>" +
+						"<owner>"+owner+"</owner>" +
+						"<area_type>"+area_type+"</area_type>" +
+						"<parent>"+parent+"</parent>"+
+						"<length>"+length+"</length>"+
+						"<breadth>"+breadth+"</breadth>"+
+						"<height>"+height+"</height>"+
+						"<unit>"+unit+"</unit>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</store_areas>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>store_areas</tablename>" +
+						"<link_to>form170</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Storage area "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_create_row_func(data_xml,activity_xml,func);
+			}
+			else
+			{
+				local_create_row_func(data_xml,activity_xml,func);
+			}
+			
+			var id=get_new_key();
+			$("#modal113_attributes").find('input, select').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				if(value!="")
+				{
+					var attribute=$(this).attr('name');
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+name+"</name>" +
+							"<type>storage</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					if(is_online())
+					{
+						server_create_simple(attribute_xml);
+					}
+					else
+					{
+						local_create_simple(attribute_xml);
+					}
+				}
+			});
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal113").dialog("close");		
+	});
+	
+	$("#modal113").dialog("open");
 }

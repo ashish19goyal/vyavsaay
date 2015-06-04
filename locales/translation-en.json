@@ -212,6 +212,7 @@
   	"enter_supplier_bill_unbilled_items":"Enter Purchase Bill (Unbilled Items)",
   	"worker_delay":"Background processing delay from login(in seconds)",
   	"worker_repeat":"Background processing repeat after(in seconds)",
+  	"po_message":"Message on the Purchase Orders",
   	"bill_message":"Message on the Bill",
   	"quot_message":"Message on the Quotation",
   	"bill_print_items":"Max number of items on 1 printed bill",
@@ -280,14 +281,19 @@
   	"checklist_items":"Checklist Items",
   	"product_checklist":"Product checklist",
   	"product_dimensions":"Product dimensions",
-  	"storage_dimensions":"Storage dimensions",
   	"put_away_suggestions":"Put-away suggestions",
+  	"put_away":"Put-away",
   	"manage_sale_prices":"Manage Sale prices",
   	"storage_structure":"Storage Structure",
   	"sms_content":"SMS content",
   	"default_newsletter":"Default News Letter",
   	"sms_sender_id":"SMS Sender Id",
   	"capture_location":"Capture Location",
-  	"powered_by":"Powered-by text"
+  	"powered_by":"Powered-by text",
+  	"inventory_level_store":"Inventory Levels (by Store)",
+  	"manage_products_nikki":"Manage Products (nikki)",
+  	"store_areas_nikki":"Store Areas (nikki)",
+  	"storage_level":"Storage level for items",
+  	"inventory":"Inventory"
   }
 }

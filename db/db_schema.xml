@@ -172,7 +172,7 @@
 			<storage index='yes' type="VARCHAR(25)"></storage>
 			<raw_price index='no' type="DECIMAL(12,2)"></raw_price>
 			<conversion_rate index='no' type="DECIMAL(12,2)"></conversion_rate>
-			<put_away index='yes' type="TEXT"></put_away>
+			<put_away_status index='yes' type="TEXT"></put_away_status><!--pending/completed-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_bill_items>
 	<supplier_returns>
@@ -492,13 +492,25 @@
 	<store_areas>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(25)"></name>
+			<parent index='yes' type="TEXT"></parent>
 			<owner index='yes' type="TEXT"></owner>
 			<area_type index='yes' type="TEXT"></area_type><!-- storage/office/bin/rack/row/store -->
 			<length index='no' type="DECIMAL(12,4)"></length>
 			<breadth index='no' type="DECIMAL(12,4)"></breadth>
 			<height index='no' type="DECIMAL(12,4)"></height>
+			<unit index='no' type="VARCHAR(50)"></unit><!--cm/m/mm/km/in/ft-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</store_areas>
+	<storage_structure>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="VARCHAR(25)"></name>
+			<parent index='yes' type="TEXT"></parent>
+			<length index='no' type="DECIMAL(12,4)"></length>
+			<breadth index='no' type="DECIMAL(12,4)"></breadth>
+			<height index='no' type="DECIMAL(12,4)"></height>
+			<unit index='no' type="VARCHAR(50)"></unit><!--cm/m/mm/km/in/ft-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</storage_structure>
 	<assets>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT" unique='yes'></name>

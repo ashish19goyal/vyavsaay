@@ -152,20 +152,30 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>capture_location</name>
-			<display_name>capture_location</display_name>
+			<name>powered_by</name>
+			<display_name>powered_by</display_name>
 			<status>active</status>
-			<value>no</value>
-			<type>other</type>
+			<value>Vyavsaay.com</value>
+			<type>hidden</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>powered_by</name>
-			<display_name>powered_by</display_name>
+			<name>powered_by_link</name>
+			<display_name>powered_by_link</display_name>
 			<status>active</status>
-			<value>Vyavsaay.com</value>
+			<value>mailto:info@vyavsaay.com</value>
+			<type>hidden</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>capture_location</name>
+			<display_name>capture_location</display_name>
+			<status>active</status>
+			<value>no</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -186,6 +196,16 @@
 			<display_name>email_enabled</display_name>
 			<status>active</status>
 			<value>no</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>po_message</name>
+			<display_name>po_message</display_name>
+			<status>active</status>
+			<value></value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -406,6 +426,16 @@
 			<display_name>default_newsletter</display_name>
 			<status>active</status>
 			<value>May Newsletter</value>
+			<type>other</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>storage_level</name>
+			<display_name>storage_level</display_name>
+			<status>active</status>
+			<value>Rack</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -954,6 +984,16 @@
 		<row>
 			<name>report65</name>
 			<display_name>pricing_update_report</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report66</name>
+			<display_name>inventory_level_store</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>report</type>
@@ -2359,17 +2399,6 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>form164</name>
-			<display_name>storage_dimensions</display_name>
-			<status>active</status>
-			<value>unchecked</value>
-			<type>form</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<tables>--store_areas--</tables>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>form165</name>
 			<display_name>put_away_suggestions</display_name>
 			<status>active</status>
@@ -2377,7 +2406,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--supplier_bill_items--</tables>
+			<tables>--supplier_bill_items--store_areas--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -2399,7 +2428,29 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--store_areas--</tables>
+			<tables>--storage_structure--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form169</name>
+			<display_name>manage_products_nikki</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_master--documents--attributes--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form170</name>
+			<display_name>store_areas_nikki</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--store_areas--storage_structure--</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -2954,6 +3005,17 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<username>master</username>
+			<element_id>report66</element_id>
+			<element_name>inventory_level_store</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>		
 		<row>
 			<username>master</username>
 			<element_id>form1</element_id>
@@ -4353,17 +4415,6 @@
 		</row>
 		<row>
 			<username>master</username>
-			<element_id>form164</element_id>
-			<element_name>storage_dimensions</element_name>
-			<status>active</status>
-			<re>checked</re>
-			<cr>checked</cr>
-			<up>checked</up>
-			<del>checked</del>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<username>master</username>
 			<element_id>form165</element_id>
 			<element_name>put_away_suggestions</element_name>
 			<status>active</status>
@@ -4395,5 +4446,27 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<username>master</username>
+			<element_id>form169</element_id>
+			<element_name>manage_products_nikki</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form170</element_id>
+			<element_name>store_areas_nikki</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>		
 	</access_control>
 </re_xml>

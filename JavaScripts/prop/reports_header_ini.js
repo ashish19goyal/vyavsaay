@@ -1159,3 +1159,44 @@ function report60_header_ini()
 	$(end_filter).datepicker();
 	$(end_filter).val(get_my_date());
 }
+
+/**
+ * @reportNo 66
+ * @report Inventory Status (by store)
+ */
+function report66_header_ini()
+{	
+	var form=document.getElementById('report66_header');
+	var type_filter=form.elements[1];
+	var storage_filter=form.elements[2];
+	var item_filter=form.elements[3];
+	var batch_filter=form.elements[4];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report66_ini();
+	});
+	
+	var type_data="<storage_structure>"+
+				"<name></name>"+
+				"</storage_structure>";
+	set_my_value_list(type_data,type_filter);
+	
+	var storage_data="<store_areas>"+
+				"<name></name>"+
+				"</store_areas>";
+	set_my_filter(storage_data,storage_filter);
+	
+	var item_data="<product_master>"+
+				"<name></name>"+
+				"</product_master>";
+	set_my_filter(item_data,item_filter);
+	
+	var batch_data="<product_instances>"+
+				"<batch></batch>"+
+				"</product_instances>";
+	set_my_filter(batch_data,batch_filter);
+				
+}

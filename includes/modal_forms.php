@@ -642,15 +642,13 @@
 		All selected customers have been sent the news Letter and SMS on their email-ids and phone numbers respectively.
 	</div>
 
-
-	<div id="modal101" title="Update details">
+	<div id="modal101" title="Email Document">
 		<form id='modal101_form'>
 			<fieldset>
-				<label>Request Id: <input type='text' readonly="readonly"></label><br>
-				<label>Machine Type: <textarea></textarea></label><br>
-				<label>Problem Type: <input type='text' required></label><br>
-				<label>Problem Detail: <textarea required></textarea></label><br>
-				<input type="submit" value='Save' class='modal_submit'>
+				<label>To: <input type='text' readonly="readonly"></label><br>
+				<label>Email: <textarea required></textarea></label><br>
+				<label>Subject: <textarea></textarea></label><br>
+				<input type="submit" value='Send' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>
@@ -791,6 +789,23 @@
 				<label>Cost Price: <input type="number" step='any'></label><br>
 				<label>Sale Price: <input type="number" step='any'></label><br>
 				<label id='modal112_attributes'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal113" title="Add Store Area">
+		<form id='modal113_form'>
+			<fieldset>
+				<label>Name: <input type='text' required></label><br>
+				<label>Type: <input type='text' required></label><br>
+				<label>Parent: <input type="text"></label><br>
+				<label>Owner: <input type="text"></label><br>
+				<label>Length: <input type="number"></label><br>
+				<label>Breadth: <input type="number"></label><br>
+				<label>Height: <input type="number"></label><br>
+				<label>Unit: <input type="text"></label><br>
+				<label id='modal113_attributes'></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>

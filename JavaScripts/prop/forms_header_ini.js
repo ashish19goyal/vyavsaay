@@ -836,6 +836,9 @@ function form24_header_ini()
 	var status_filter=fields.elements[4];
 	fields.elements[5].value=get_new_key();
 	var save_button=fields.elements[6];
+	var share_button=fields.elements[7];	
+	
+	$(share_button).hide();
 	
 	var po_id=$("#form24_link").attr('data_id');
 	if(po_id==null || po_id=='')
@@ -5802,6 +5805,42 @@ function form158_header_ini()
 }
 
 /**
+ * @form Put-away Suggestions
+ * @formNo 165
+ */
+function form165_header_ini()
+{
+	var filter_fields=document.getElementById('form165_header');
+	var product_filter=filter_fields.elements[0];
+	var batch_filter=filter_fields.elements[1];
+	var storage_filter=filter_fields.elements[2];
+	var storage_level=get_session_var('storage_level');
+	
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var batch_data="<product_instances>" +
+			"<batch></batch>" +
+			"</product_instances>";
+	var storage_data="<store_areas>"+
+			"<name></name>"+
+			"<area_type exact='yes'>"+storage_level+"</area_type>"+
+			"</store_areas>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form165_ini();
+	});
+
+	set_my_filter(products_data,product_filter);
+	set_my_filter(batch_data,batch_filter);
+	set_my_filter(storage_data,storage_filter);
+};
+
+
+/**
  * @form Manage sale prices
  * @formNo 166
  */
@@ -5829,3 +5868,67 @@ function form166_header_ini()
 	set_my_filter(products_data,names_filter);
 	set_my_filter(batch_data,batches_filter);
 };
+
+/**
+ * @form Storage Structure
+ * @formNo 167
+ */
+function form167_header_ini()
+{
+	var filter_fields=document.getElementById('form167_header');	
+	var type_filter=filter_fields.elements[0];
+	var parent_filter=filter_fields.elements[1];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form167_ini();
+	});
+	//setting autocompletes 
+	var type_data="<storage_structure>" +
+			"<name></name>" +
+			"</storage_structure>";
+	
+	var parent_data="<storage_structure>" +
+			"<parent></parent>" +
+			"</storage_structure>";
+
+	set_my_filter(type_data,type_filter);
+	set_my_filter(parent_data,parent_filter);
+};
+
+/**
+ * @form Storage Areas (Nikki)
+ * @formNo 170
+ */
+function form170_header_ini()
+{
+	var filter_fields=document.getElementById('form170_header');
+	var name_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var parent_filter=filter_fields.elements[2];
+	
+	var area_data="<store_areas>" +
+			"<name></name>" +
+			"</store_areas>";	
+	set_my_filter(area_data,name_filter);
+	
+	var type_data="<storage_structure>"+
+					"<name></name>"+
+					"</storage_structure>";
+	set_my_filter(type_data,type_filter);
+	
+	var parent_data="<store_areas>"+
+			"<parent></parent>"+
+			"</store_areas>";
+	set_my_filter(parent_data,parent_filter);
+			
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form170_ini();
+	});
+};
+

@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<form id='form39_header'></form>
-					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form39_header'></th>
+					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form39_header'></th>
 					<th>Make <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form39_header'></th>
 					<th>Description</th>
 					<th>Picture</th>

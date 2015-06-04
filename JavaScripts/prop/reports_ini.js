@@ -4292,3 +4292,161 @@ function report60_ini()
 	var print_button=form.elements[5];
 	print_tabular_report('report60','Trial Balance',print_button);
 };
+
+
+/**
+ * @reportNo 66
+ * @report Inventory level (by store)
+ */
+function report66_ini()
+{
+	var form=document.getElementById('report66_header');
+	var type_filter=form.elements[1].value;
+	var storage_filter=form.elements[2].value;
+	var item_filter=form.elements[2].value;
+	var batch_filter=form.elements[2].value;
+	
+	show_loader();
+	
+	var total_calls=0;
+	$('#report66_body').html('');
+		
+	var area_data="<store_areas>" +
+			"<id></id>"+
+			"<name>"+storage_filter+"</name>"+
+			"<area_type exact='yes'>"+type_filter+"</area_type>" +
+			"</store_areas>";
+	total_calls+=1;
+	fetch_requested_data('report66',area_data,function(areas)
+	{
+		//console.log(areas);
+		total_calls-=1;
+		areas.forEach(function(area)
+		{	
+			var storage_array=[];
+			storage_array.push(area.name);
+			var tracker=0;
+			get_all_child_storage(area.name,storage_array,tracker);			
+			
+			total_calls+=1;
+			
+			var areas_complete=setInterval(function()
+			{
+				if(tracker===0)
+				{
+					//console.log(storage_array);
+					clearInterval(areas_complete);
+
+					total_calls-=1;
+					var storage_string="--";
+					for(var i in storage_array)
+					{
+						storage_string+=storage_array[i]+"--";
+					}
+	
+					var item_data="<area_utilization>"+
+								"<name array='yes'>"+storage_string+"</name>"+
+								"<item_name>"+item_filter+"</item_name>"+
+								"<batch>"+batch_filter+"</batch>"+
+								"</area_utilization>";	
+					total_calls+=1;				
+					fetch_requested_data('',item_data,function(items)
+					{
+						console.log(items);
+						total_calls-=1;
+						for(var i=0;i<items.length;i++)
+						{
+							for(var j=i+1;j<items.length;j++)
+							{
+								if(items[i].item_name==items[j].item_name && items[i].batch==items[j].batch)
+								{
+									items.splice(j,1);
+									j--;
+								}
+							}
+						}
+						
+						items.forEach(function(item)
+						{
+							var total_quantity=0;
+							var count=storage_array.length;
+							storage_array.forEach(function(storage_area)
+							{
+								total_calls+=1;
+								get_store_inventory(storage_area,item.item_name,item.batch,function(quantity)
+								{
+									total_quantity+=parseFloat(quantity);
+									count--;
+									total_calls-=1;
+								});
+							});						
+							
+							var inventory_complete=setInterval(function()
+							{
+								if(count===0)
+								{
+						  	   		clearInterval(inventory_complete);
+									if(parseFloat(total_quantity)>0)
+									{
+										var rowsHTML="<tr>";
+										rowsHTML+="<td data-th='Storage'>";
+											rowsHTML+=area.name;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Item'>";
+											rowsHTML+=item.item_name;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Batch'>";
+											rowsHTML+=item.batch;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Quantity'>";
+											rowsHTML+=total_quantity;
+										rowsHTML+="</td>";
+										rowsHTML+="</tr>";
+										
+										$('#report66_body').append(rowsHTML);
+									}
+								}
+						     },100);
+						});					
+					});
+				}
+			},100);
+		});
+		
+		var report_complete=setInterval(function()
+		{
+			if(total_calls==0)
+			{
+				hide_loader();
+				clearInterval(report_complete);
+			}
+		},100);
+	});
+	
+	function get_all_child_storage(store_area,area_array,tracker)
+	{
+		var child_data="<store_areas>"+
+						"<name></name>"+
+						"<parent exact='yes'>"+store_area+"</parent>" +
+						"</store_areas>";
+		tracker+=1;
+		fetch_requested_data('',child_data,function(children)
+		{
+			tracker-=1;
+			if(children.length>0)
+			{
+				children.forEach(function(child)
+				{
+					area_array.push(child.name);
+					get_all_child_storage(child.name,area_array);
+				});
+			}
+		});
+	}
+	
+	
+	var print_button=form.elements[6];
+	print_tabular_report('report66','Inventory Level (by store)',print_button);
+};
+
+

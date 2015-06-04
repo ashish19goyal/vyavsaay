@@ -88,6 +88,12 @@
 	</templates>
 	<user_fields_list>
 		<row>
+			<tablename>store_areas</tablename>
+			<field_name>owner</field_name>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>customers</tablename>
 			<field_name>acc_name</field_name>
 			<status>active</status>
@@ -377,6 +383,70 @@
 		</row>
 	</user_fields_list>
 	<values_list>
+		<row>
+			<tablename>supplier_bill_items</tablename>
+			<listname>put_away_status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>supplier_bill_items</tablename>
+			<listname>put_away_status</listname>
+			<name>completed</name>
+			<value>Completed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>dimensions</tablename>
+			<listname>unit</listname>
+			<name>m</name>
+			<value>meter</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>dimensions</tablename>
+			<listname>unit</listname>
+			<name>cm</name>
+			<value>centimeter</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>dimensions</tablename>
+			<listname>unit</listname>
+			<name>mm</name>
+			<value>milimeter</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>dimensions</tablename>
+			<listname>unit</listname>
+			<name>km</name>
+			<value>kilometer</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>dimensions</tablename>
+			<listname>unit</listname>
+			<name>in</name>
+			<value>inch</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>dimensions</tablename>
+			<listname>unit</listname>
+			<name>ft</name>
+			<value>foot</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<tablename>newsletter_items</tablename>
 			<listname>item_type</listname>

@@ -1455,12 +1455,6 @@ function form24_update_form()
 		var order_num=form.elements[3].value;		
 		var status=form.elements[4].value;		
 		var data_id=form.elements[5].value;
-		
-		$('#form24_share').show();
-		$('#form24_share').click(function()
-		{
-			modal101_action('purchase_order',supplier,order_num);
-		});
 				
 		var last_updated=get_my_time();
 		
@@ -8710,6 +8704,74 @@ function form158_update_form()
 }
 
 /**
+ * @form Put-away suggestions
+ * @param button
+ */
+function form165_place_item(form)
+{
+	if(is_update_access('form165'))
+	{
+		var item=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var storage=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<supplier_bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<storage>"+storage+"</storage>"+
+					"<put_away_status>completed</put_away_status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</supplier_bill_items>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		
+		///////////adding store placement////////
+		var storage_data="<area_utilization>" +
+				"<id></id>" +
+				"<name exact='yes'>"+storage+"</name>" +
+				"<item_name exact='yes'>"+item+"</item_name>" +
+				"<batch exact='yes'>"+batch+"</batch>" +
+				"</area_utilization>";
+		fetch_requested_data('',storage_data,function(placements)
+		{
+			if(placements.length===0 && storage!="")
+			{
+				var storage_xml="<area_utilization>" +
+						"<id>"+get_new_key()+"</id>" +
+						"<name>"+storage+"</name>" +
+						"<item_name>"+item+"</item_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</area_utilization>";
+				if(is_online())
+				{
+					server_create_simple(storage_xml);
+				}
+				else
+				{
+					local_create_simple(storage_xml);
+				}
+			}
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form Manage sale prices
  * @param button
  */
@@ -8748,6 +8810,113 @@ function form166_update_item(form)
 			local_update_row(data_xml,activity_xml);
 		}
 		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Storage Structure
+ * @param button
+ */
+function form167_update_item(form)
+{
+	if(is_update_access('form167'))
+	{
+		var name=form.elements[0].value;
+		var parent=form.elements[1].value;
+		var length=form.elements[2].value;
+		var breadth=form.elements[3].value;
+		var height=form.elements[4].value;
+		var unit=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<storage_structure>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<parent>"+parent+"</parent>" +
+					"<length>"+length+"</length>"+
+					"<breadth>"+breadth+"</breadth>" +
+					"<height>"+height+"</height>" +
+					"<unit>"+unit+"</unit>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</storage_structure>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>storage_structure</tablename>" +
+					"<link_to>form167</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Storage type of "+name+" structure</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Store Areas (Nikki)
+ * @param button
+ */
+function form170_update_item(form)
+{
+	if(is_update_access('form170'))
+	{
+		var name=form.elements[0].value;
+		var area_type=form.elements[1].value;
+		var parent=form.elements[2].value;
+		var owner=form.elements[3].value;
+		var length=form.elements[4].value;
+		var breadth=form.elements[5].value;
+		var height=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		var last_updated=get_my_time();
+		var data_xml="<store_areas>" +
+					"<id>"+data_id+"</id>" +
+					"<owner>"+owner+"</owner>" +
+					"<parent>"+parent+"</parent>"+
+					"<area_type>"+area_type+"</area_type>" +
+					"<length>"+length+"</length>"+
+					"<breadth>"+breadth+"</breadth>"+
+					"<height>"+height+"</height>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</store_areas>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>store_areas</tablename>" +
+					"<link_to>form170</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Storage "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

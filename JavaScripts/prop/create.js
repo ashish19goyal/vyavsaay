@@ -2059,7 +2059,7 @@ function form24_create_form()
 		$('#form24_share').show();
 		$('#form24_share').click(function()
 		{
-			modal101_action('purchase_order',supplier,order_num);
+			modal101_action('Purchase Order',supplier,order_num);
 		});
 				
 		var last_updated=get_my_time();		
@@ -12602,3 +12602,74 @@ function form158_create_form()
 	}
 }
 
+/**
+ * @form Storage Structure
+ * @formNo 167
+ * @param button
+ */
+function form167_create_item(form)
+{
+	if(is_create_access('form167'))
+	{
+		var name=form.elements[0].value;
+		var parent=form.elements[1].value;
+		var length=form.elements[2].value;
+		var breadth=form.elements[3].value;
+		var height=form.elements[4].value;
+		var unit=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var save_button=form.elements[7];
+		var del_button=form.elements[8];
+		var last_updated=get_my_time();
+			
+		var data_xml="<storage_structure>" +
+				"<id>"+data_id+"</id>" +
+				"<name>"+name+"</name>" +
+				"<parent>"+parent+"</parent>" +
+				"<length>"+length+"</length>" +
+				"<breadth>"+breadth+"</breadth>" +
+				"<height>"+height+"</height>" +
+				"<unit>"+unit+"</unit>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</storage_structure>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>storage_structure</tablename>" +
+					"<link_to>form167</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Storage type of "+name+" to structure</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}
+				
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form167_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form167_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

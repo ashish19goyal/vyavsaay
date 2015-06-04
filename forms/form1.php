@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<form id='form1_header'></form>
-					<th>Product Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form1_header'></th>
+					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form1_header'></th>
 					<th>Batch <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form1_header'></th>
 					<th>Manufacturing</th>
 					<th>Expiry</th>

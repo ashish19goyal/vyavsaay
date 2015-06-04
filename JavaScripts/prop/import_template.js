@@ -936,3 +936,24 @@ function form166_import_template()
 	var data_array=['id','product_name','batch','cost_price','sales_price','mrp'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Storage Structure
+* @formNo 167
+* @table storage_structure
+*/
+function form167_import_template()
+{
+	var data_array=['id','name','parent','length','breadth','height','unit'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Store Areas (Nikki)
+* @formNo 170
+*/
+function form170_import_template()
+{
+	var data_array=['id','name','parent','owner','area_type','height','breadth','length','unit'];
+	my_array_to_csv(data_array);
+};

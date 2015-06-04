@@ -104,16 +104,27 @@ function if_data_read_access(tablename,func)
 				"</"+tablename+">";
 			fetch_requested_data('',access2_data,function (datas2) 
 			{
+				//console.log(datas2);
 				datas2.forEach(function(data2)
 				{
 					if(obj.record_id=='all')
 					{
 						var newObject = jQuery.extend({}, obj);
 						newObject.record_id=data2.id;
+						
+						for (var key in data2) 
+						{
+			        		newObject[key] = data2[key];
+				    	}
+				    	
 						final_array.push(newObject);
 					}
 					else if(obj.record_id==data2.id)
 					{
+						for (var key in data2) 
+						{
+			        		obj[key] = data2[key];
+				    	}
 						final_array.push(obj);
 					}					
 				});

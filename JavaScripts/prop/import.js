@@ -4967,3 +4967,114 @@ function form166_import(data_array,import_type)
 		}
 	}
 }
+
+/**
+* @form Storage Structure
+* @formNo 167
+*/
+function form167_import(data_array,import_type)
+{
+	var data_xml="<storage_structure>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</storage_structure><separator></separator><storage_structure>";
+		}
+		counter+=1;
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<parent>"+row.parent+"</parent>" +
+				"<length>"+row.length+"</length>" +
+				"<breadth>"+row.breadth+"</breadth>" +
+				"<height>"+row.height+"</height>" +
+				"<unit>"+row.unit+"</unit>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</storage_structure>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Store Areas (Nikki)
+* @formNo 170
+*/
+function form170_import(data_array,import_type)
+{
+	var data_xml="<store_areas>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</store_areas><separator></separator><store_areas>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<parent>"+row.parent+"</parent>" +
+				"<owner>"+row.owner+"</owner>"+
+				"<area_type>"+row.area_type+"</area_type>" +
+				"<height>"+row.length+"</height>" +
+				"<breadth>"+row.breadth+"</breadth>" +
+				"<length>"+row.length+"</length>" +
+				"<unit>"+row.unit+"</unit>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</store_areas>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+				
+};
