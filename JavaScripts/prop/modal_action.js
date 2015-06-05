@@ -6961,3 +6961,28 @@ function modal114_action(func)
 	
 	$("#modal114").dialog("open");
 }
+
+/**
+ * @modalNo 115
+ * @modal Delete Confirmation
+ * @param button
+ */
+function modal115_action(func)
+{
+	var form=document.getElementById('modal115_form');
+	var yes_button=form.elements[1];
+	var no_button=form.elements[2];
+	
+	$(yes_button).on('click',function()
+	{
+		$("#modal115").dialog("close");
+		func();
+	});
+		
+	$(no_button).on('click',function()
+	{
+		$("#modal115").dialog("close");
+	});
+
+	$("#modal115").dialog("open");
+}

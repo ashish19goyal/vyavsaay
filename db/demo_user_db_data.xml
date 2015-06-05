@@ -532,6 +532,17 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>activities</name>
+			<display_name>activties</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--activities--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>report1</name>
 			<display_name>signage_changes</display_name>
 			<status>active</status>

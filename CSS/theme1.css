@@ -566,7 +566,7 @@ tbody tr:hover{
 	-o-transition: 0.5s all;
 	background: #818060;
 	outline: none;
-	margin: 2px 0px;
+	margin: 2px 5px;
 	float:right;
 }
 

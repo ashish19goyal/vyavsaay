@@ -836,4 +836,17 @@
 		</form>
 	</div>
 
+	<div id="modal115" title="Delete Confirmation">
+		Are you sure, you want to delete this record?
+		<br>
+		<br>
+		<br>		
+		<form id='modal115_form'>
+			<fieldset>
+				<input type="button" value='Yes' class='modal_submit'>
+				<input type="button" value='No' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

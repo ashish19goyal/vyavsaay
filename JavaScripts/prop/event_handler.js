@@ -259,7 +259,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=101;i<115;i++)
+	for(var i=101;i<116;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({
