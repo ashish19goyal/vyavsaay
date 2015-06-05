@@ -198,14 +198,14 @@
   	"asset_attributes":"Asset Attributes",
   	"manage_reports":"Manage Reports",
   	"create_reports":"Create Reports",
-  	"add_unbilled_sale_items":"Add Unbilled Items(Sales)",
-  	"manage_unbilled_sale_items":"Manage Unbilled Items(Sales)",
-  	"add_unbilled_purchase_items":"Add Unbilled Items(Purchase)",
-  	"manage_unbilled_purchase_items":"Manage Unbilled Items(Purchase)",
+  	"add_unbilled_sale_items":"Add Challan Items(Sales)",
+  	"manage_unbilled_sale_items":"Manage Challan Items(Sales)",
+  	"add_unbilled_purchase_items":"Add Challan Items(Purchase)",
+  	"manage_unbilled_purchase_items":"Manage Challan Items(Purchase)",
   	"manage_loyalty_programs":"Manage Loyalty Programs",
   	"create_bills_loyalty":"Create Bills (Loyalty Program)",
-  	"manage_unbilled_items":"Manage Unbilled Items",
-  	"add_unbilled_items":"Add Unbilled Items",
+  	"manage_unbilled_items":"Manage Challan",
+  	"add_unbilled_items":"Add Challan",
   	"create_bills_multi_register_unbilled":"Create Bills (multiple registers and unbilled items)",
   	"manage_loyalty_customers":"Manage customers (loyalty programs)",
   	"adjust_loyalty_points":"Adjust loyalty points",
@@ -294,6 +294,10 @@
   	"manage_products_nikki":"Manage Products (nikki)",
   	"store_areas_nikki":"Store Areas (nikki)",
   	"storage_level":"Storage level for items",
-  	"inventory":"Inventory"
+  	"inventory":"Inventory",
+  	"manage_channels":"Manage Channels",
+  	"pricing_sheet":"Pricing Sheet",
+  	"sku_mapping":"SKU Mappings",
+  	"pickup_charges":"Pickup Charges"
   }
 }

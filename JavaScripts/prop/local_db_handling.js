@@ -1426,7 +1426,7 @@ function local_create_batch_noloader(data_xml)
 	{
 		open_local_db(function()
 		{
-			local_create_batch(data_xml);
+			local_create_batch_noloader(data_xml);
 		});
 	}
 	else

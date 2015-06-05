@@ -384,6 +384,22 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>channel_prices</tablename>
+			<listname>latest</listname>
+			<name>yes</name>
+			<value>Yes</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>channel_prices</tablename>
+			<listname>latest</listname>
+			<name>no</name>
+			<value>No</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>supplier_bill_items</tablename>
 			<listname>put_away_status</listname>
 			<name>pending</name>

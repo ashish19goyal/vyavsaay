@@ -2453,6 +2453,50 @@
 			<tables>--store_areas--storage_structure--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form171</name>
+			<display_name>manage_channels</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_channels--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form172</name>
+			<display_name>pricing_sheet</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_prices--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form173</name>
+			<display_name>sku_mapping</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sku_mapping--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form174</name>
+			<display_name>pickup_charges</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--pickup_charges--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -4468,5 +4512,49 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>		
+		<row>
+			<username>master</username>
+			<element_id>form171</element_id>
+			<element_name>manage_channels</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>		
+		<row>
+			<username>master</username>
+			<element_id>form172</element_id>
+			<element_name>pricing_sheet</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>		
+		<row>
+			<username>master</username>
+			<element_id>form173</element_id>
+			<element_name>sku_mapping</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form174</element_id>
+			<element_name>pickup_charges</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
 	</access_control>
 </re_xml>

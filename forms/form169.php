@@ -4,10 +4,10 @@
 			<tr>
 				<form id='form169_header'></form>
 					<th>SKU <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form169_header'></th>
-					<th>Item Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form169_header'></th>
+					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form169_header'></th>
 					<th>Brand <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form169_header'></th>
 					<th>Picture</th>
-					<th>Details</th>
+					<th>Tax</th>
 					<th><input type='button' form='form169_header' title='Add new product' class='add_icon'>
 						<input type='button' form='form169_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form169_header' style='visibility: hidden;'>

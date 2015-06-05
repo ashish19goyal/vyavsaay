@@ -231,7 +231,7 @@ function notifications1_add()
 		}
 		else
 		{
-			local_create_batch(not_pay_xml);
+			local_create_batch_noloader(not_pay_xml);
 		}
 	});
 	//////////overdue payments end//////
@@ -299,7 +299,7 @@ function notifications2_add()
 		}
 		else
 		{
-			local_create_batch(task_xml);
+			local_create_batch_noloader(task_xml);
 		}
 	});
 	
@@ -364,7 +364,7 @@ function notifications3_add()
 		}
 		else
 		{
-			local_create_batch(leads_xml);
+			local_create_batch_noloader(leads_xml);
 		}
 	});
 	
@@ -552,7 +552,7 @@ function notifications6_add()
 		}
 		else
 		{
-			local_create_batch(schedule_xml);
+			local_create_batch_noloader(schedule_xml);
 		}
 	});
 	
@@ -612,7 +612,7 @@ function notifications7_add()
 		}
 		else
 		{
-			local_create_batch(app_xml);
+			local_create_batch_noloader(app_xml);
 		}
 	});
 	
@@ -680,7 +680,7 @@ function notifications8_add()
 		}
 		else
 		{
-			local_create_batch(dispatch_xml);
+			local_create_batch_noloader(dispatch_xml);
 		}
 	});
 	

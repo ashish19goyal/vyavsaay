@@ -8704,6 +8704,54 @@ function form158_update_form()
 }
 
 /**
+ * @form Product Dimensions
+ * @param button
+ */
+function form163_update_item(form)
+{
+	if(is_update_access('form163'))
+	{
+		var item=form.elements[0].value;
+		var length=form.elements[1].value;
+		var breadth=form.elements[2].value;
+		var height=form.elements[3].value;
+		var volume=form.elements[4].value;
+		var weight=form.elements[5].value;
+		var packing=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		var last_updated=get_my_time();
+		var data_xml="<product_master>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+item+"</name>" +
+					"<length>"+length+"</length>" +
+					"<breadth>"+breadth+"</breadth>" +
+					"<height>"+height+"</height>" +
+					"<volume>"+volume+"</volume>" +
+					"<weight>"+weight+"</weight>"+
+					"<packing>"+packing+"</packing>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</product_master>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form Put-away suggestions
  * @param button
  */
@@ -8872,6 +8920,68 @@ function form167_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Products (Nikki)
+ * @param button
+ */
+function form169_update_item(form)
+{
+	if(is_update_access('form169'))
+	{
+		var name=form.elements[0].value;
+		var description=form.elements[1].value;
+		var make=form.elements[2].value;
+		var tax=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var pic_id=$("#img_form169_"+data_id).parent().attr('name');
+		var url=$("#img_form169_"+data_id).attr('src');
+		
+		var data_xml="<product_master>" +
+					"<id>"+data_id+"</id>" +
+					"<make>"+make+"</make>" +
+					"<name>"+name+"</name>" +
+					"<description>"+description+"</description>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</product_master>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>product_master</tablename>" +
+					"<link_to>form169</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Product "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var pic_xml="<documents>" +
+					"<id>"+pic_id+"</id>" +
+					"<url>"+url+"</url>" +
+					"<doc_type>product_master</doc_type>" +
+					"<target_id>"+data_id+"</target_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</documents>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+			server_update_simple(pic_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+			local_update_simple(pic_xml);
+		}	
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 /**
  * @form Store Areas (Nikki)

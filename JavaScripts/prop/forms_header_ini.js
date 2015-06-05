@@ -2644,7 +2644,6 @@ function form94_header_ini()
 		event.preventDefault();
 		form94_ini();
 	});
-
 };
 
 /**
@@ -5805,6 +5804,31 @@ function form158_header_ini()
 }
 
 /**
+ * @form Product Dimensions
+ * @formNo 163
+ */
+function form163_header_ini()
+{
+	var filter_fields=document.getElementById('form163_header');	
+	var names_filter=filter_fields.elements[0];
+	
+	//setting autocompletes 
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(products_data,names_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form163_ini();
+	});
+};
+
+
+/**
  * @form Put-away Suggestions
  * @formNo 165
  */
@@ -5899,6 +5923,48 @@ function form167_header_ini()
 };
 
 /**
+ * @form Manage Products (Nikki)
+ * @formNo 169
+ */
+function form169_header_ini()
+{
+	var filter_fields=document.getElementById('form169_header');
+	var name_filter=filter_fields.elements[0];
+	var desc_filter=filter_fields.elements[1];
+	var make_filter=filter_fields.elements[2];
+	var add_button=filter_fields.elements[3];
+
+	$(add_button).off('click');
+	$(add_button).on('click',function()
+	{
+		modal114_action();
+	});
+	
+	var make_data="<product_master>" +
+			"<make></make>" +
+			"</product_master>";
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var desc_data="<product_master>" +
+			"<description></description>" +
+			"</product_master>";
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form169_ini();
+	});
+
+	set_my_filter(make_data,make_filter);
+	set_my_filter(products_data,name_filter);
+	set_my_filter(desc_data,desc_filter);
+	
+};
+
+
+/**
  * @form Storage Areas (Nikki)
  * @formNo 170
  */
@@ -5932,3 +5998,93 @@ function form170_header_ini()
 	});
 };
 
+/**
+ * @form Manage Channels
+ * @formNo 171
+ */
+function form171_header_ini()
+{
+	var filter_fields=document.getElementById('form171_header');
+	var name_filter=filter_fields.elements[0];
+	
+	var name_data="<sale_channels>" +
+			"<name></name>" +
+			"</sale_channels>";
+	
+	set_my_filter(name_data,name_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form171_ini();
+	});
+
+};
+
+/**
+ * @form Pricing Sheet
+ * @formNo 172
+ */
+function form172_header_ini()
+{
+	var filter_fields=document.getElementById('form172_header');
+	var channel_filter=filter_fields.elements[0];
+	var sku_filter=filter_fields.elements[1];
+	
+	var channel_data="<sale_channels>" +
+			"<name></name>" +
+			"</sale_channels>";
+	var sku_data="<product_master>"+
+				"<name></name>"+
+				"</product_master>";		
+	
+	set_my_filter(channel_data,channel_filter);
+	set_my_filter(sku_data,sku_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form172_ini();
+	});
+
+};
+
+/**
+ * @form SKU mapping
+ * @formNo 173
+ */
+function form173_header_ini()
+{
+	var filter_fields=document.getElementById('form173_header');
+	var channel_filter=filter_fields.elements[0];
+	var channel_sku_filter=filter_fields.elements[1];
+	var business_sku_filter=filter_fields.elements[2];
+	var system_sku_filter=filter_fields.elements[3];
+
+	var channel_data="<sale_channels>" +
+			"<name></name>" +
+			"</sale_channels>";
+	var channel_sku_data="<sku_mapping>" +
+			"<channel_sku></channel_sku>" +
+			"</sku_mapping>";
+	var business_sku_data="<sku_mapping>" +
+			"<channel_sysmte_sku></channel_sysmte_sku>" +
+			"</sku_mapping>";
+	var system_sku_data="<sku_mapping>" +
+			"<system_sku></system_sku>" +
+			"</sku_mapping>";
+	
+	set_my_filter(channel_data,channel_filter);
+	set_my_filter(channel_sku_data,channel_sku_filter);
+	set_my_filter(business_sku_data,business_sku_filter);
+	set_my_filter(system_sku_data,system_sku_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form173_ini();
+	});
+};

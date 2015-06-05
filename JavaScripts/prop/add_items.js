@@ -8969,3 +8969,172 @@ function form167_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Channels
+ * @formNo 171
+ */
+function form171_add_item()
+{
+	if(is_create_access('form171'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form171_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Name'>";
+				rowsHTML+="<input type='text' form='form171_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<textarea form='form171_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Dead Weight Factor'>";
+				rowsHTML+="<input type='number' step='any' form='form171_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form171_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form171_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form171_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form171_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form171_"+id);
+		var name_filter=fields.elements[0];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form171_create_item(fields);
+		});
+					
+		$(name_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Pricing Sheet
+ * @formNo 172
+ */
+function form172_add_item()
+{
+	if(is_create_access('form172'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form172_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Channel'>";
+				rowsHTML+="<input type='text' form='form172_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='SKU'>";
+				rowsHTML+="<textarea form='form172_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Price'>";
+				rowsHTML+="<input type='number' step='any' form='form172_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form172_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form172_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form172_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form172_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form172_"+id);
+		var name_filter=fields.elements[0];
+		var sku_filter=fields.elements[1];
+		
+		var channel_data="<sale_channels>"+
+						"<name></name>"+
+						"</sale_channels>";
+		set_my_value_list(channel_data,name_filter);
+		
+		var sku_data="<product_master>"+
+					"<name></name>"+
+					"</product_master>";
+		set_my_value_list(sku_data,sku_filter);
+					
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form172_create_item(fields);
+		});
+					
+		$(name_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form SKU Mapping
+ * @formNo 173
+ */
+function form173_add_item()
+{
+	if(is_create_access('form173'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form173_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Channel'>";
+				rowsHTML+="<input type='text' form='form173_"+id+"' required value=''>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Channel SKU'>";
+				rowsHTML+="<textarea form='form173_"+id+"' required></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Channel-Business SKU'>";
+				rowsHTML+="<textarea form='form173_"+id+"' required></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='System SKU'>";
+				rowsHTML+="<input type='text' form='form173_"+id+"' required>";
+			rowsHTML+="</td>";			
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form173_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form173_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form173_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form173_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form173_"+id);
+		var name_filter=fields.elements[0];
+		var ssku_filter=fields.elements[3];
+		
+		var channel_data="<sale_channels>"+
+						"<name></name>"+
+						"</sale_channels>";
+		set_my_value_list(channel_data,name_filter);
+		
+		var sku_data="<product_master>"+
+					"<name></name>"+
+					"</product_master>";
+		set_my_value_list(sku_data,sku_filter);
+					
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form173_create_item(fields);
+		});
+					
+		$(name_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}

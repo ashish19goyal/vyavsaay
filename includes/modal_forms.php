@@ -477,6 +477,7 @@
 				<label>Item: <input type='text' required></label><br>
 				<label>Batch: <input type="text" required></label><br>
 				<label>Quantity: <input type='number' required></label><br>
+				<label>Storage: <input type='text'></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
@@ -806,6 +807,30 @@
 				<label>Height: <input type="number"></label><br>
 				<label>Unit: <input type="text"></label><br>
 				<label id='modal113_attributes'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div id="modal114" title="Add new product">
+		<form id='modal114_form'>
+			<fieldset>
+				<label>SKU: <input type="text" required></label><br>
+				<label>Name: <textarea></textarea></label><br>
+				<label>Make: <textarea></textarea></label><br>
+				<label>Picture: <output></output>
+								<input type="file"></label><br>
+				<label>Tax (%): <input type="number" step='any'></label><br>
+				<label>Length: <input type="number" step='any'></label><br>
+				<label>Breadth: <input type="number" step='any'></label><br>
+				<label>Height: <input type="number" step='any'></label><br>
+				<label>Volume: <input type="number" step='any'></label><br>
+				<label>Unit: <input type="text"></label><br>
+				<label>Weight(in gms): <input type="number" step='any'></label><br>
+				<label>Packing: <textarea></textarea></label><br>
+				<label>Bar Code: <input type="text" required></label>
+				<label><input type='checkbox'>Auto generate</label><br>
+				<label id='modal114_attributes'></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>

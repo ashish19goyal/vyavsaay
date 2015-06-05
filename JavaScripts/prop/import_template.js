@@ -531,7 +531,7 @@ function form93_import_template()
 */
 function form94_import_template()
 {
-	var data_array=['id','product_name','batch','quantity'];
+	var data_array=['id','product_name','batch','quantity','storage'];
 	my_array_to_csv(data_array);
 };
 
@@ -949,11 +949,62 @@ function form167_import_template()
 };
 
 /**
+* @form Manage Products (Nikki)
+* @formNo 169
+*/
+function form169_import_template()
+{
+	var data_array=['id','sku','name','brand','tax','bar_code','length','breadth','height','volume','unit','weight','packing'];
+	my_array_to_csv(data_array);
+};
+
+
+/**
 * @form Store Areas (Nikki)
 * @formNo 170
 */
 function form170_import_template()
 {
 	var data_array=['id','name','parent','owner','area_type','height','breadth','length','unit'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage Channels
+* @formNo 171
+*/
+function form171_import_template()
+{
+	var data_array=['id','name','details','dead_weight_factor'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Pricing Sheet
+* @formNo 172
+*/
+function form172_import_template()
+{
+	var data_array=['id','channel','sku','price','from_time','to_time'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form SKU mapping
+* @formNo 173
+*/
+function form173_import_template()
+{
+	var data_array=['id','channel','channel_sku','channel_business_sku','system_sku'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Pickup Charges
+* @formNo 174
+*/
+function form174_import_template()
+{
+	var data_array=['id','channel','pincode','minimum','maximum','weight_rate'];
 	my_array_to_csv(data_array);
 };

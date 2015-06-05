@@ -2907,6 +2907,7 @@ function form94_import(data_array,import_type)
 				"<product_name>"+row.product_name+"</product_name>" +
 				"<batch>"+row.batch+"</batch>" +
 				"<quantity>"+row.quantity+"</quantity>" +
+				"<storage>"+row.storage+"</storage>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
@@ -5024,6 +5025,67 @@ function form167_import(data_array,import_type)
 };
 
 /**
+* @form Manage Products (Nikki)
+* @formNo 169
+*/
+function form169_import(data_array,import_type)
+{
+	var data_xml="<product_master>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</product_master><separator></separator><product_master>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name unique='yes'>"+row.sku+"</name>" +
+				"<make>"+row.brand+"</make>" +
+				"<description>"+row.name+"</description>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<bar_code>"+row.bar_code+"</bar_code>" +
+				"<length>"+length+"</length>"+
+				"<breadth>"+breadth+"</breadth>"+
+				"<height>"+height+"</height>"+
+				"<volume>"+volume+"</volume>"+
+				"<unit>"+unit+"</unit>"+
+				"<weight>"+weight+"</weight>"+
+				"<packing>"+packing+"</packing>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</product_master>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+
+/**
 * @form Store Areas (Nikki)
 * @formNo 170
 */
@@ -5077,4 +5139,213 @@ function form170_import(data_array,import_type)
 		}
 	}
 				
+};
+
+/**
+* @form Manage Channels
+* @formNo 171
+*/
+function form171_import(data_array,import_type)
+{
+	var data_xml="<sale_channels>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</sale_channels><separator></separator><sale_channels>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<details>"+row.details+"</details>" +
+				"<dead_weight_factor>"+row.dead_weight_factor+"</dead_weight_factor>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</sale_channels>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+				
+};
+
+
+/**
+* @form Pricing Sheet
+* @formNo 172
+*/
+function form172_import(data_array,import_type)
+{
+	var data_xml="<channel_prices>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</channel_prices><separator></separator><channel_prices>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<channel>"+row.channel+"</channel>" +
+				"<item>"+row.sku+"</item>" +
+				"<sale_price>"+row.price+"</sale_price>"+
+				"<from_time>"+get_raw_time(row.from_time)+"</from_time>" +
+				"<to_time>"+get_raw_time(row.to_time)+"</to_time>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</channel_prices>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+				
+};
+
+/**
+* @form SKU mapping
+* @formNo 173
+*/
+function form173_import(data_array,import_type)
+{
+	var data_xml="<sku_mapping>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</sku_mapping><separator></separator><sku_mapping>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<channel>"+row.channel+"</channel>" +
+				"<channel_sku>"+row.channel_sku+"</channel_sku>" +
+				"<system_sku>"+row.system_sku+"</system_sku>"+
+				"<channel_system_sku>"+row.channel_system_sku+"</channel_system_sku>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</sku_mapping>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+				
+};
+
+/**
+* @form Pickup Charges
+* @formNo 174
+*/
+function form174_import(data_array,import_type)
+{
+	var data_xml="<pickup_charges>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</pickup_charges><separator></separator><pickup_charges>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<channel>"+row.channel+"</channel>" +
+				"<pincode>"+row.pincode+"</pincode>" +
+				"<minimum>"+row.minimum+"</minimum>"+
+				"<maximum>"+row.maximum+"</maximum>" +
+				"<weight_rate>"+row.weight_rate+"</weight_rate>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</pickup_charges>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}			
 };

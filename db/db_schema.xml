@@ -392,9 +392,19 @@
 			<batch index='yes' type="TEXT"></batch>
 			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
 			<pi_id index='yes' type="BIGINT"></pi_id>
-			<billing_type index='yes' type='VARCHAR(25)'></billing_type>
+			<billing_type index='yes' type='TEXT'></billing_type>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</sale_prices>
+	<channel_prices>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<item index='yes' type="TEXT"></item>
+			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
+			<channel index='yes' type='TEXT'></channel>
+			<latest index='yes' type='VARCHAR(5)'></latest><!--yes/no-->
+			<from_time index='yes' type="BIGINT"></from_time>
+			<to_time index='yes' type="BIGINT"></to_time>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</channel_prices>
 	<inventory_adjust>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<batch index='yes' type="TEXT"></batch>
@@ -426,6 +436,10 @@
 			<length index='no' type="DECIMAL(12,4)"></length>
 			<breadth index='no' type="DECIMAL(12,4)"></breadth>
 			<height index='no' type="DECIMAL(12,4)"></height>
+			<volume index='no' type="DECIMAL(12,4)"></volume>
+			<unit index='no' type="VARCHAR(50)"></unit><!--cm/m/mm/km/in/ft-->
+			<packing index='no' type="TEXT"></packing>
+			<weight index='no' type="DECIMAL(12,4)"></weight><!--in grams-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</product_master>
 	<attributes>
@@ -686,11 +700,26 @@
 	</appointments>
 	<bill_types>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<name index='yes' type="VARCHAR(25)"></name>
+			<name index='yes' type="TEXT"></name>
 			<notes index='no' type="TEXT"></notes>
 			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bill_types>
+	<sale_channels>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="TEXT"></name>
+			<details index='no' type="TEXT"></details>
+			<dead_weight_factor index='no' type="TEXT"></dead_weight_factor>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</sale_channels>
+	<sku_mapping>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<channel index='yes' type="TEXT"></channel>
+			<system_sku index='yes' type="TEXT"></system_sku>
+			<channel_sku index='yes' type="TEXT"></channel_sku>
+			<channel_system_sku index='yes' type="TEXT"></channel_system_sku>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</sku_mapping>
 	<loans>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<type index='yes' type="VARCHAR(45)"></type><!-- taken/given -->

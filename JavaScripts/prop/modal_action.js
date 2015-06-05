@@ -4156,6 +4156,7 @@ function modal40_action(product,batch)
 	var item_filter=form.elements[1];
 	var batch_filter=form.elements[2];
 	var quantity_filter=form.elements[3];
+	var storage_filter=form.elements[4];
 	
 	item_filter.value=product;
 	batch_filter.value=batch;
@@ -4165,6 +4166,12 @@ function modal40_action(product,batch)
 			"</product_master>";
 	set_my_value_list(item_data,item_filter);
 	
+	var storage_data="<store_areas>"+
+					"<name></name>"+
+					"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+					"</store_areas>";
+	set_my_value_list(storage_data,storage_filter);	
+		
 	$(item_filter).off('blur');
 	$(item_filter).on('blur',function(event)
 	{
@@ -4184,6 +4191,7 @@ function modal40_action(product,batch)
 			var item=form.elements[1].value;
 			var batch=form.elements[2].value;
 			var quantity=form.elements[3].value;
+			var storage=form.elements[4].value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
 			var data_xml="<discarded>" +
@@ -4191,14 +4199,15 @@ function modal40_action(product,batch)
 						"<product_name>"+item+"</product_name>" +
 						"<batch>"+batch+"</batch>" +
 						"<quantity>"+quantity+"</quantity>" +
+						"<storage>"+storage+"</storage>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</discarded>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>discarded</tablename>" +
 						"<link_to>form94</link_to>" +
-						"<title>Added</title>" +
-						"<notes>Batch number "+batch+" of product "+name+" to discarded list</notes>" +
+						"<title>Discarded</title>" +
+						"<notes>"+quantity+" of Batch number "+batch+" of item "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			if(is_online())
@@ -6744,4 +6753,211 @@ function modal113_action(func)
 	});
 	
 	$("#modal113").dialog("open");
+}
+
+/**
+ * @modalNo 114
+ * @modal Add new product
+ * @param button
+ */
+function modal114_action(func)
+{
+	var form=document.getElementById('modal114_form');
+	
+	var fname=form.elements[1];
+	var fmake=form.elements[2];
+	var fdescription=form.elements[3];
+	var fpictureinfo=form.elements[4];
+	var fpicture=form.elements[5];
+	var flength=form.elements[7];
+	var fbreadth=form.elements[8];
+	var fheight=form.elements[9];
+	var fvolume=form.elements[10];
+	var funit=form.elements[11];
+	var fweight=form.elements[12];
+	var fpacking=form.elements[13];
+	var fbarcode=form.elements[14];
+	var auto_generate=form.elements[15];
+	
+	fbarcode.value=get_my_time();
+	auto_generate.checked=true;
+	
+	$(auto_generate).off('click');
+	$(auto_generate).on('click',function(event)
+	{
+		if(auto_generate.checked)
+		{
+			fbarcode.value=get_my_time();
+		}
+		else
+		{
+			fbarcode.value="";
+		}
+	});
+	
+	set_static_value_list('dimensions','unit',funit);
+	
+	var make_data="<product_master>" +
+		"<make></make>" +
+		"</product_master>";
+	set_my_filter(make_data,fmake);
+	
+	fpicture.addEventListener('change',function(evt)
+	{
+		select_picture(evt,fpictureinfo,function(dataURL)
+		{
+			fpictureinfo.innerHTML="<div class='figure'><img src='"+dataURL+"'/></div>";			
+		});
+	},false);
+	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal114_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status></status>" +
+			"<value></value>"+
+			"<object exact='yes'>product</object>" +
+			"</mandatory_attributes>";
+	fetch_requested_data('',attributes_data,function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}				
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
+		});
+	});
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form39'))
+		{
+			var name=form.elements[1].value;
+			var description=form.elements[2].value;
+			var make=form.elements[3].value;
+			var tax=form.elements[6].value;
+			var data_id=get_new_key();
+			var pic_id=get_new_key();
+			var url=$(fpictureinfo).find('div').find('img').attr('src');
+			var length=form.elements[7].value;
+			var breadth=form.elements[8].value;
+			var height=form.elements[9].value;
+			var volume=form.elements[10].value;
+			var unit=form.elements[11].value;
+			var weight=form.elements[12].value;
+			var packing=form.elements[13].value;
+			var barcode=form.elements[14].value;
+			var last_updated=get_my_time();
+			var data_xml="<product_master>" +
+						"<id>"+data_id+"</id>" +
+						"<make>"+make+"</make>" +
+						"<name>"+name+"</name>" +
+						"<description>"+description+"</description>" +
+						"<tax>"+tax+"</tax>" +
+						"<length>"+length+"</length>"+
+						"<breadth>"+breadth+"</breadth>"+
+						"<height>"+height+"</height>"+
+						"<volume>"+volume+"</volume>"+
+						"<unit>"+unit+"</unit>"+
+						"<weight>"+weight+"</weight>"+
+						"<packing>"+packing+"</packing>"+
+						"<bar_code unique='yes'>"+barcode+"</bar_code>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</product_master>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>product_master</tablename>" +
+						"<link_to>form39</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Product "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_create_row_func(data_xml,activity_xml,func);
+			}
+			else
+			{
+				local_create_row_func(data_xml,activity_xml,func);
+			}	
+
+			var id=get_new_key();
+			$("#modal114_attributes").find('input, select').each(function()
+			{
+				id++;
+				var value=$(this).val();
+				var attribute=$(this).attr('name');
+				if(value!="")
+				{
+					var attribute_xml="<attributes>" +
+							"<id>"+id+"</id>" +
+							"<name>"+name+"</name>" +
+							"<type>product</type>" +
+							"<attribute>"+attribute+"</attribute>" +
+							"<value>"+value+"</value>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</attributes>";
+					if(is_online())
+					{
+						server_create_simple(attribute_xml);
+					}
+					else
+					{
+						local_create_simple(attribute_xml);
+					}
+				}
+			});
+
+			if(url!="")
+			{
+				var pic_xml="<documents>" +
+							"<id>"+pic_id+"</id>" +
+							"<url>"+url+"</url>" +
+							"<doc_type>product_master</doc_type>" +
+							"<target_id>"+data_id+"</target_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</documents>";
+				if(is_online())
+				{
+					server_create_simple(pic_xml);
+				}
+				else
+				{
+					local_create_simple(pic_xml);
+				}	
+			}
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal114").dialog("close");
+	});
+	
+	$("#modal114").dialog("open");
 }
