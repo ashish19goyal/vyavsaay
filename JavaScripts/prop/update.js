@@ -9036,3 +9036,52 @@ function form170_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Sale channels
+ * @formNo 171
+ * @param button
+ */
+function form171_update_item(form)
+{
+	if(is_update_access('form171'))
+	{
+		var name=form.elements[0].value;
+		var details=form.elements[1].value;
+		var dead_weight_factor=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_channels>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<details>"+details+"</details>" +
+					"<dead_weight_factor>"+dead_weight_factor+"</dead_weight_factor>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_channels>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_channels</tablename>" +
+					"<link_to>form171</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Sale channel "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

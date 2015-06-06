@@ -75,6 +75,7 @@ client_images/dlmc.png
 images/add_button.png
 images/add_red_button.png
 images/add_image.png
+images/barcode.png
 images/copy.png
 images/delete.png
 images/details.png
@@ -151,6 +152,8 @@ JavaScripts/open/i18next-1.7.4.js
 JavaScripts/open/indexeddb.js
 JavaScripts/open/jquery-1.11.1.min.js
 JavaScripts/open/jquery-ui.min.js
+JavaScripts/open/JsBarcode.all.min.js
+JavaScripts/open/JsBarcode.js
 JavaScripts/open/jquery.autosize.min.js
 JavaScripts/open/jquery.cookie.js
 JavaScripts/open/jquery.datetimepicker.js

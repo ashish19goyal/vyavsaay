@@ -259,7 +259,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=101;i<116;i++)
+	for(var i=101;i<117;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({
@@ -349,7 +349,18 @@ function hide_unreadable_elements()
 function grid_click(func)
 {
 	show_function("#"+func+"_main");
-	$("#"+func+"_main").find('ul').find('li:visible').find('a').first().click();
+
+	$(window).resize(function(e)
+	{
+		if($(window).width()>550)
+		{
+			$("#"+func+"_main").find('ul').find('li:visible').find('a').first().click();
+		}
+	});
+	if($(window).width()>550)
+	{
+		$("#"+func+"_main").find('ul').find('li:visible').find('a').first().click();
+	}	
 }
 
 

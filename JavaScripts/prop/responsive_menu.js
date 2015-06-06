@@ -65,7 +65,11 @@ function tabsToAccordions()
 		var t=new Array;
 		$(this).find(">ul>li").each(function()
 		{
-			t.push("<h3>"+$(this).html()+"</h3>");
+			//console.log($(this).find("a").attr('onclick'));
+			var a_tag=$(this).find('a');
+			var onclick=$(a_tag).attr('onclick');
+			$(a_tag).attr('onclick',"");			
+			t.push("<h3 onclick='"+onclick+"'>"+$(this).html()+"</h3>");
 		});
 		var n=new Array;
 		$(this).find(">div").each(function()
@@ -90,6 +94,9 @@ function accordionsToTabs()
 		var n=$("<ul>");
 		$(this).find(">h3").each(function()
 		{
+			var a_tag=$(this).find('a');
+			var onclick=$(this).attr('onclick');
+			$(a_tag).attr('onclick',onclick);			
 			n.append("<li>"+$(this).html()+"</li>");
 		});
 		var r=$("");
@@ -176,6 +183,7 @@ function init_functions_accordion()
 		{
 			collapsible:true,
 			animate:500,
+			active:false,
 			activate:function(e, ui) 
 		    {
 		    	//e.currentTarget.blur();

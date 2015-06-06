@@ -6986,3 +6986,31 @@ function modal115_action(func)
 
 	$("#modal115").dialog("open");
 }
+
+/**
+ * @modalNo 116
+ * @modal Print Barcode
+ * @param button
+ */
+function modal116_action(string)
+{
+	var print_button=document.getElementById('modal116_print');
+	
+	$(print_button).off('click');
+	$(print_button).on('click',function()
+	{
+		var container=document.getElementById('modal116_div');
+		$("#modal116").dialog("close");
+		$.print(container);
+	});
+	
+	var image_element=document.getElementById('modal116_img');
+	//var string_element=document.getElementById('modal116_string');
+	//string_element.innerHTML=string;
+
+	//$(image_element).JsBarcode(string,{format:"EAN",displayValue:true,fontSize:16});
+
+	$(image_element).JsBarcode(string,{displayValue:true,fontSize:16});
+	
+	$("#modal116").dialog("open");
+}

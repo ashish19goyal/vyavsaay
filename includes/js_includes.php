@@ -19,6 +19,7 @@
 <script src='./JavaScripts/open/dataHours.js'></script>
 <script src='./JavaScripts/open/jquery.cookie.js'></script>
 <script src='./JavaScripts/open/jquery.fn.gantt.min.js'></script>
+<script src='./JavaScripts/open/JsBarcode.all.min.js'></script>
 
 <script src='./JavaScripts/prop/add_items.js'></script>
 <script src='./JavaScripts/prop/ajax.js'></script>

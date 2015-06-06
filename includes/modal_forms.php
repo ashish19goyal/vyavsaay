@@ -643,6 +643,7 @@
 		All selected customers have been sent the news Letter and SMS on their email-ids and phone numbers respectively.
 	</div>
 
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form'>
 			<fieldset>
@@ -847,6 +848,15 @@
 				<input type="button" value='No' class='modal_submit'>
 			</fieldset>
 		</form>
+	</div>
+	
+	<div id="modal116" title="Print Barcode">
+		<div id='modal116_div' style='width:200px;height:100px'>
+			<img style='width:200px;' id='modal116_img'>
+		</div>
+		<br>
+		<form id='modal116_form'></form>
+		<input type="button" id='modal116_print' value='Print' class='modal_submit'>
 	</div>
 
 </div>

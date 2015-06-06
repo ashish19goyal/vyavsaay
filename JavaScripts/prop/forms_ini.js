@@ -7870,6 +7870,7 @@ function form91_ini()
  */
 function form92_ini()
 {
+	console.log('form92');
 	show_loader();
 	var fid=$("#form92_link").attr('data_id');
 	if(fid==null)
@@ -16549,6 +16550,7 @@ function form169_ini()
 					rowsHTML+="<form id='form169_"+result.id+"'></form>";
 						rowsHTML+="<td data-th='SKU'>";
 							rowsHTML+="<textarea readonly='readonly' form='form169_"+result.id+"'>"+result.name+"</textarea>";
+							rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode' onclick=\"modal116_action('"+result.bar_code+"');\">";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Name'>";
 							rowsHTML+="<textarea readonly='readonly' form='form169_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
@@ -16566,7 +16568,7 @@ function form169_ini()
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form169_"+result.id+"' value='"+result.id+"'>";
 							rowsHTML+="<input type='submit' class='save_icon' form='form169_"+result.id+"'>";
-							rowsHTML+="<input type='button' class='delete_icon' form='form169_"+result.id+"' onclick='form169_delete_item($(this));'>";	
+							rowsHTML+="<input type='button' class='delete_icon' form='form169_"+result.id+"' onclick='form169_delete_item($(this));'>";
 						rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 			
@@ -17018,7 +17020,7 @@ function form173_ini()
 					rowsHTML+="<td data-th='Channel SKU'>";
 						rowsHTML+="<textarea readonly='readonly' form='form173_"+result.id+"'>"+result.channel_sku+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Channel-Business SKU'>";
+					rowsHTML+="<td data-th='Vendor SKU'>";
 						rowsHTML+="<textarea readonly='readonly' form='form173_"+result.id+"'>"+result.channel_system_sku+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='System SKU'>";

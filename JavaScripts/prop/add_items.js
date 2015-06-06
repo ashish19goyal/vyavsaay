@@ -9095,7 +9095,7 @@ function form173_add_item()
 			rowsHTML+="<td data-th='Channel SKU'>";
 				rowsHTML+="<textarea form='form173_"+id+"' required></textarea>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Channel-Business SKU'>";
+			rowsHTML+="<td data-th='Vendor SKU'>";
 				rowsHTML+="<textarea form='form173_"+id+"' required></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='System SKU'>";

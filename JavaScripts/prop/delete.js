@@ -5532,3 +5532,69 @@ function form170_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Sale channels
+ * @formNo 171
+ * @param button
+ */
+function form171_delete_item(button)
+{
+	if(is_delete_access('form171'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var name=form.elements[0].value;
+			var data_id=form.elements[3].value;
+			var data_xml="<sale_channels>" +
+						"<id>"+data_id+"</id>" +
+						"<name>"+name+"</name>" +
+						"</sale_channels>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>sale_channels</tablename>" +
+						"<link_to>form171</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Sale channel "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var pickup_xml="<pickup_charges>" +
+						"<channel exact='yes'>"+name+"</channel>" +
+						"</pickup_charges>";
+			var sku_xml="<sku_mapping>" +
+						"<channel exact='yes'>"+name+"</channel>" +
+						"</sku_mapping>";
+			var channel_prices_xml="<channel_prices>" +
+						"<channel exact='yes'>"+name+"</channel>" +
+						"</channel_prices>";
+			var category_xml="<channel_categories>" +
+						"<channel exact='yes'>"+name+"</channel>" +
+						"</channel_categories>";
+			
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+				server_delete_simple(pickup_xml);
+				server_delete_simple(sku_xml);
+				server_delete_simple(channel_prices_xml);
+				server_delete_simple(category_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+				local_delete_simple(pickup_xml);
+				local_delete_simple(sku_xml);
+				local_delete_simple(channel_prices_xml);
+				local_delete_simple(category_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

@@ -395,16 +395,6 @@
 			<billing_type index='yes' type='TEXT'></billing_type>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</sale_prices>
-	<channel_prices>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<item index='yes' type="TEXT"></item>
-			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
-			<channel index='yes' type='TEXT'></channel>
-			<latest index='yes' type='VARCHAR(5)'></latest><!--yes/no-->
-			<from_time index='yes' type="BIGINT"></from_time>
-			<to_time index='yes' type="BIGINT"></to_time>
-			<last_updated index='yes' type="BIGINT"></last_updated>
-	</channel_prices>
 	<inventory_adjust>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<batch index='yes' type="TEXT"></batch>
@@ -720,6 +710,16 @@
 			<channel_system_sku index='yes' type="TEXT"></channel_system_sku>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</sku_mapping>
+	<channel_prices>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<item index='yes' type="TEXT"></item>
+			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
+			<channel index='yes' type='TEXT'></channel>
+			<latest index='yes' type='VARCHAR(5)'></latest><!--yes/no-->
+			<from_time index='yes' type="BIGINT"></from_time>
+			<to_time index='yes' type="BIGINT"></to_time>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</channel_prices>
 	<loans>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<type index='yes' type="VARCHAR(45)"></type><!-- taken/given -->

@@ -12673,3 +12673,126 @@ function form167_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Channels
+ * @formNo 171
+ */
+function form171_create_item(form)
+{
+	if(is_create_access('form171'))
+	{
+		show_loader();
+
+		var name=form.elements[0].value;
+		var details=form.elements[1].value;
+		var dead_weight_factor=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var del_button=form.elements[5];
+		var last_updated=get_my_time();
+		var data_xml="<sale_channels>" +
+					"<id>"+data_id+"</id>" +
+					"<name unique='yes'>"+name+"</name>" +
+					"<details>"+details+"</details>" +
+					"<dead_weight_factor>"+dead_weight_factor+"</dead_weight_factor>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_channels>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_channels</tablename>" +
+					"<link_to>form171</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Sale channel "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}
+
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form171_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form171_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form SKU mapping
+ * @formNo 173
+ */
+function form173_create_item(form)
+{
+	if(is_create_access('form173'))
+	{
+		show_loader();
+
+		var channel=form.elements[0].value;
+		var channel_sku=form.elements[1].value;
+		var vendor_sku=form.elements[2].value;
+		var system_sku=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var del_button=form.elements[6];
+		var last_updated=get_my_time();
+		var data_xml="<sku_mapping>" +
+					"<id>"+data_id+"</id>" +
+					"<name unique='yes'>"+name+"</name>" +
+					"<details>"+details+"</details>" +
+					"<dead_weight_factor>"+dead_weight_factor+"</dead_weight_factor>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sku_mapping>";
+
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}
+
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form173_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form173_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
