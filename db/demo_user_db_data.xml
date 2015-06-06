@@ -2512,6 +2512,17 @@
 	<access_control>
 		<row>
 			<username>master</username>
+			<element_id>db_backup</element_id>
+			<element_name>db_backup</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
 			<element_id>sync</element_id>
 			<element_name>sync_data</element_name>
 			<status>active</status>

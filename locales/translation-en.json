@@ -298,6 +298,7 @@
   	"manage_channels":"Manage Channels",
   	"pricing_sheet":"Pricing Sheet",
   	"sku_mapping":"SKU Mappings",
-  	"pickup_charges":"Pickup Charges"
+  	"pickup_charges":"Pickup Charges",
+  	"db_backup":"Take DB backup"
   }
 }
