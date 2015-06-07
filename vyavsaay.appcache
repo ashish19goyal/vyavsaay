@@ -153,7 +153,6 @@ JavaScripts/open/indexeddb.js
 JavaScripts/open/jquery-1.11.1.min.js
 JavaScripts/open/jquery-ui.min.js
 JavaScripts/open/JsBarcode.all.min.js
-JavaScripts/open/JsBarcode.js
 JavaScripts/open/jquery.autosize.min.js
 JavaScripts/open/jquery.cookie.js
 JavaScripts/open/jquery.datetimepicker.js
