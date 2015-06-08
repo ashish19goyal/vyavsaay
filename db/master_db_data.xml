@@ -384,6 +384,38 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>channel_category</tablename>
+			<listname>type</listname>
+			<name>category</name>
+			<value>Category</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>channel_category</tablename>
+			<listname>type</listname>
+			<name>sub-category</name>
+			<value>Sub-Category</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>category_sku_mapping</tablename>
+			<listname>cat_type</listname>
+			<name>category</name>
+			<value>Category</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>category_sky_mapping</tablename>
+			<listname>cat_type</listname>
+			<name>sub-category</name>
+			<value>Sub-Category</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>channel_prices</tablename>
 			<listname>latest</listname>
 			<name>yes</name>

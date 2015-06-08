@@ -299,6 +299,9 @@
   	"pricing_sheet":"Pricing Sheet",
   	"sku_mapping":"SKU Mappings",
   	"pickup_charges":"Pickup Charges",
-  	"db_backup":"Take DB backup"
+  	"db_backup":"Take DB backup",
+  	"channel_category":"Channel Categories",
+  	"categories":"Categories",
+  	"category_sku_mapping":"Category Item mapping"
   }
 }

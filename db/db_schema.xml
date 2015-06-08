@@ -720,6 +720,32 @@
 			<to_time index='yes' type="BIGINT"></to_time>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</channel_prices>
+	<pickup_charges>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<channel index='yes' type="TEXT"></channel>
+			<rate index='no' type="DECIMAL(12,2)"></rate><!--Rs./per gram-->
+			<min_charges index='no' type="DECIMAL(12,2)"></min_charges>
+			<max_charges index='no' type="DECIMAL(12,2)"></max_charges>
+			<pincode index='yes' type='TEXT'></pincode>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</pickup_charges>
+	<channel_category>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<channel index='yes' type="TEXT"></channel>
+			<type index='yes' type='VARCHAR(25)'></type><!--category/sub-category-->
+			<name index='yes' type='TEXT'></name>
+			<parent index='yes' type='TEXT'></parent>
+			<commission index='no' type='DECIMAL(12,2)'></commission>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</channel_category>
+	<category_sku_mapping>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<channel index='yes' type="TEXT"></channel>
+			<cat_type index='yes' type='VARCHAR(25)'></cat_type><!--category/sub-category-->
+			<cat_name index='yes' type='TEXT'></cat_name>
+			<sku index='yes' type='TEXT'></sku>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</category_sku_mapping>
 	<loans>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<type index='yes' type="VARCHAR(45)"></type><!-- taken/given -->

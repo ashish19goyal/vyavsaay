@@ -519,6 +519,7 @@ function get_last_sync_time(func)
 			{
 				last_sync_time=data['value'];
 			}
+			//console.log(last_sync_time);
 			func(last_sync_time);	
 		};
 		req.onerror=function(e)

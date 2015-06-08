@@ -6088,3 +6088,101 @@ function form173_header_ini()
 		form173_ini();
 	});
 };
+
+/**
+ * @form Pickup Charges
+ * @formNo 174
+ */
+function form174_header_ini()
+{
+	var filter_fields=document.getElementById('form174_header');
+	var channel_filter=filter_fields.elements[0];
+	var pincode_filter=filter_fields.elements[1];
+	
+	var channel_data="<sale_channels>" +
+			"<name></name>" +
+			"</sale_channels>";
+	var pincode_data="<pickup_charges>" +
+			"<pincode></pincode>" +
+			"</pickup_charges>";
+	
+	set_my_filter(channel_data,channel_filter);
+	set_my_filter(pincode_data,pincode_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form174_ini();
+	});
+};
+
+/**
+ * @form Channel Category
+ * @formNo 175
+ */
+function form175_header_ini()
+{
+	var filter_fields=document.getElementById('form175_header');
+	var channel_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var name_filter=filter_fields.elements[2];
+	var parent_filter=filter_fields.elements[3];
+	
+	var channel_data="<sale_channels>" +
+			"<name></name>" +
+			"</sale_channels>";
+	var name_data="<channel_category>" +
+			"<name></name>" +
+			"</channel_category>";
+	var parent_data="<channel_category>" +
+			"<parent></parent>" +
+			"</channel_category>";
+	
+	set_my_filter(channel_data,channel_filter);
+	set_my_filter(name_data,name_filter);
+	set_my_filter(parent_data,parent_filter);
+	set_static_filter('channel_category','type',type_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form175_ini();
+	});
+};
+
+/**
+ * @form Category item mapping
+ * @formNo 176
+ */
+function form176_header_ini()
+{
+	var filter_fields=document.getElementById('form176_header');
+	var channel_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var category_filter=filter_fields.elements[2];
+	var item_filter=filter_fields.elements[3];
+	
+	var channel_data="<sale_channels>" +
+			"<name></name>" +
+			"</sale_channels>";
+	var name_data="<channel_category>" +
+			"<name></name>" +
+			"</channel_category>";
+	var item_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(channel_data,channel_filter);
+	set_my_filter(name_data,category_filter);
+	set_my_filter(item_data,item_filter);
+	set_static_filter('category_sku_mapping','cat_type',type_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form176_ini();
+	});
+};

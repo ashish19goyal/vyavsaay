@@ -2999,6 +2999,7 @@ function form44_ini()
 
 	fetch_requested_data('form44',columns,function(results)
 	{
+		//console.log(results);
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
@@ -17081,3 +17082,226 @@ function form173_ini()
 	});	
 };
 
+/**
+ * @form Pickup Charges
+ * @formNo 174
+ * @Loading light
+ */
+function form174_ini()
+{
+	show_loader();
+	var fid=$("#form174_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form174_header');
+	
+	var fchannel=filter_fields.elements[0].value;
+	var fpincode=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form174_index');
+	var prev_element=document.getElementById('form174_prev');
+	var next_element=document.getElementById('form174_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<pickup_charges count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<channel>"+fname+"</channel>" +
+			"<pincode>"+fcsku+"</pincode>" +
+			"<rate></rate>"+
+			"<min_charges></min_charges>"+
+			"<max_charges></max_charges>"+
+			"</pickup_charges>";
+
+	$('#form174_body').html("");
+
+	fetch_requested_data('form174',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form174_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Channel'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form174_"+result.id+"' value='"+result.channel+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Pincode'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form174_"+result.id+"' value='"+result.pincode+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Minimum'>";
+						rowsHTML+="Rs. <input type='number' min='0' step='any' class='dblclick_editable' value='0' readonly='readonly' form='form174_"+result.id+"' value='"+result.min_charges+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Maximum'>";
+						rowsHTML+="Rs. <input type='number' min='0' step='any' class='dblclick_editable' value='0' readonly='readonly' form='form174_"+result.id+"' value='"+result.max_charges+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Weight Factor'>";
+						rowsHTML+="Rs. <input type='number' min='0' step='any' class='dblclick_editable' value='0' readonly='readonly' form='form174_"+result.id+"' value='"+result.rate+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form174_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form174_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form174_"+result.id+"' title='Delete'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+
+			$('#form174_body').append(rowsHTML);
+
+			var fields=document.getElementById("form174_"+result.id);
+
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form174_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'pickup_charges');
+		});
+		hide_loader();
+	});	
+};
+
+/**
+ * @form Channel Categories
+ * @formNo 175
+ * @Loading light
+ */
+function form175_ini()
+{
+	show_loader();
+	var fid=$("#form175_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form175_header');
+	
+	var fchannel=filter_fields.elements[0].value;
+	var fpincode=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form175_index');
+	var prev_element=document.getElementById('form175_prev');
+	var next_element=document.getElementById('form175_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<pickup_charges count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<channel>"+fname+"</channel>" +
+			"<pincode>"+fcsku+"</pincode>" +
+			"<rate></rate>"+
+			"<min_charges></min_charges>"+
+			"<max_charges></max_charges>"+
+			"</pickup_charges>";
+
+	$('#form175_body').html("");
+
+	fetch_requested_data('form175',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form175_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Channel'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form175_"+result.id+"' value='"+result.channel+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Pincode'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form175_"+result.id+"' value='"+result.pincode+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Minimum'>";
+						rowsHTML+="Rs. <input type='number' min='0' step='any' class='dblclick_editable' value='0' readonly='readonly' form='form175_"+result.id+"' value='"+result.min_charges+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Maximum'>";
+						rowsHTML+="Rs. <input type='number' min='0' step='any' class='dblclick_editable' value='0' readonly='readonly' form='form175_"+result.id+"' value='"+result.max_charges+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Weight Factor'>";
+						rowsHTML+="Rs. <input type='number' min='0' step='any' class='dblclick_editable' value='0' readonly='readonly' form='form175_"+result.id+"' value='"+result.rate+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form175_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form175_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form175_"+result.id+"' title='Delete'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+
+			$('#form175_body').append(rowsHTML);
+
+			var fields=document.getElementById("form175_"+result.id);
+
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form175_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			my_obj_array_to_csv(results,'pickup_charges');
+		});
+		hide_loader();
+	});	
+};

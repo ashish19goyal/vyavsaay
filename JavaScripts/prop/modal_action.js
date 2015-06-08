@@ -3848,7 +3848,7 @@ function modal38_action(father_id,sale_price_value)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form166'))
+		if(is_update_access('form166') || is_update_access('form155'))
 		{
 			var sale_price=fsale_price.value;
 			var last_updated=get_my_time();

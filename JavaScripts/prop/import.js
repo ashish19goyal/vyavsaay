@@ -5349,3 +5349,106 @@ function form174_import(data_array,import_type)
 		}
 	}			
 };
+
+/**
+* @form Channel Categories
+* @formNo 175
+*/
+function form175_import(data_array,import_type)
+{
+	var data_xml="<channel_category>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</channel_category><separator></separator><channel_category>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<channel>"+row.channel+"</channel>" +
+				"<type>"+row.type+"</type>" +
+				"<name>"+row.name+"</name>"+
+				"<parent>"+row.parent+"</parent>" +
+				"<commission>"+row.commission+"</commission>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</channel_category>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}			
+};
+
+/**
+* @form Category Item mapping
+* @formNo 176
+*/
+function form176_import(data_array,import_type)
+{
+	var data_xml="<category_sku_mapping>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</category_sku_mapping><separator></separator><category_sku_mapping>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<channel>"+row.channel+"</channel>" +
+				"<cat_type>"+row.cat_type+"</cat_type>" +
+				"<cat_name>"+row.cat_name+"</cat_name>"+
+				"<sku>"+row.sku+"</sku>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</category_sku_mapping>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}			
+};

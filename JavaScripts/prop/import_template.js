@@ -1008,3 +1008,23 @@ function form174_import_template()
 	var data_array=['id','channel','pincode','minimum','maximum','weight_rate'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Channel Categories
+* @formNo 175
+*/
+function form175_import_template()
+{
+	var data_array=['id','channel','type','name','parent','commission'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Category Item mapping
+* @formNo 176
+*/
+function form176_import_template()
+{
+	var data_array=['id','channel','cat_type','cat_name','sku'];
+	my_array_to_csv(data_array);
+};
