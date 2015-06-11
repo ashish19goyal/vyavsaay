@@ -262,7 +262,10 @@
 	<div id="modal23" title="Data Import">
 		<form id='modal23_form'>
 			<fieldset>
-				<input type="button" value='Download import template'><br>
+				<input type="button" value='Download import template' class='modal_submit'>
+				<br>
+				<br>
+				<br>
 				<b>Import pre-filled template</b><br>
 				<label><input type="radio" name='upload_option' value='new'>Create New Records</label><br>
 				<label><input type="radio" name='upload_option' value='existing' checked>Update existing Records</label><br>
@@ -858,5 +861,5 @@
 		<form id='modal116_form'></form>
 		<input type="button" id='modal116_print' value='Print' class='modal_submit'>
 	</div>
-
+	
 </div>

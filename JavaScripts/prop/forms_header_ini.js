@@ -5492,12 +5492,17 @@ function form154_header_ini()
 	
 	var customers_filter=fields.elements[1];
 	var bill_type=fields.elements[2];
-	var bill_date=fields.elements[3];
-	var bill_num=fields.elements[4];
-	var store_filter=fields.elements[5];	
-	fields.elements[6].value=get_new_key();
-	fields.elements[7].value=fields.elements[6].value;
-	var save_button=fields.elements[8];
+	var a1_job=document.getElementById('form154_1job');
+	var bill_date=fields.elements[4];
+	var bill_num=fields.elements[5];
+	var store_filter=fields.elements[6];	
+	fields.elements[7].value=get_new_key();
+	fields.elements[8].value=fields.elements[7].value;
+	var save_button=fields.elements[9];
+	var cst_filter=fields.elements[12];
+	var tin_filter=fields.elements[13];
+	
+	$(a1_job).hide();
 	
 	bill_type.removeAttribute('readonly');
 	store_filter.removeAttribute('readonly');
@@ -5581,7 +5586,7 @@ function form154_header_ini()
 	$(bill_type).off('blur');
 	$(bill_type).on('blur',function (e) 
 	{
-		if(bill_type.value=='Retail')
+		if(bill_type.value=='Retail' || bill_type.value=='Tax')
 		{
 			var headHTML="<tr><form id='form154_header'></form>"+
 					"<th>Item</th>"+
@@ -5602,6 +5607,7 @@ function form154_header_ini()
 					"<th><input type='button' title='Add Product' class='add_icon' onclick='form154_add_product();'>"+
 					"</th>"+
 					"</tr>";
+			$(a1_job).show();		
 		}
 		else
 		{
@@ -5651,6 +5657,22 @@ function form154_header_ini()
 				document.getElementById('form154_customer_info').innerHTML="";
 			}
 		});
+		
+		var cst_data="<attributes>"+
+					"<value></value>"+
+					"<type exact='yes'>customer</type>"+
+					"<attribute exact='yes'>CST#</attribute>"+
+					"<name exact='yes'>"+customers_filter.value+"</name>"+
+					"</attributes>";
+		set_my_value(cst_data,cst_filter);
+
+		var tin_data="<attributes>"+
+					"<value></value>"+
+					"<type exact='yes'>customer</type>"+
+					"<attribute exact='yes'>TIN#</attribute>"+
+					"<name exact='yes'>"+customers_filter.value+"</name>"+
+					"</attributes>";
+		set_my_value(tin_data,tin_filter);
 	});
 
 	$(bill_date).datepicker();
@@ -5802,6 +5824,62 @@ function form158_header_ini()
 	supplier_filter.value='';
 	$(supplier_filter).focus();
 }
+
+/**
+ * @form Checklist Items
+ * @formNo 161
+ */
+function form161_header_ini()
+{
+	var filter_fields=document.getElementById('form161_header');	
+	var cp_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[1];
+	
+	var cp_data="<checklist_items>" +
+			"<checkpoint></checkpoint>" +
+			"</checklist_items>";
+	
+	set_my_filter(cp_data,cp_filter);
+	set_static_filter('checklist_items','status',status_filter);	
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form161_ini();
+	});
+};
+
+/**
+ * @form Product checklist
+ * @formNo 162
+ */
+function form162_header_ini()
+{
+	var filter_fields=document.getElementById('form162_header');	
+	var item_filter=filter_fields.elements[0];
+	var cp_filter=filter_fields.elements[1];
+	
+	//setting autocompletes 
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";	
+	set_my_filter(products_data,item_filter);
+
+	var cp_data="<checklist_items>" +
+			"<checkpoint></checkpoint>" +
+			"</checklist_items>";
+	
+	set_my_filter(cp_data,cp_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form162_ini();
+	});
+};
+
 
 /**
  * @form Product Dimensions

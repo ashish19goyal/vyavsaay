@@ -12,7 +12,6 @@
 				<input type='hidden' name='transaction'>
 			</label>
 			<label>	<input type='button' title='Save Bill' class='save_icon'></label>
-			<label>	<input type='button' title='Print Bill' class='print_icon' onclick='form158_print_form();'></label>
 			<label>	<input type='submit' class='submit_hidden'></label>
 		</fieldset>
 	</form>

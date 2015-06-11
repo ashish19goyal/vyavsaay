@@ -277,32 +277,6 @@ function modal_forms_ini()
 	}
 }
 
-/*
-function print_setup()
-{
-//	print_template_setup('sale_bill');
-	print_css_setup('sale_bill');
-	print_css_setup('purchase_order');
-	print_css_setup('payment_receipt');
-	print_css_setup('credit_note');
-	print_css_setup('pamphlet');
-	print_css_setup('service_bill');
-	print_css_setup('product_bill');
-	print_css_setup('return_receipt');
-	print_css_setup('supplier_return');
-}
-
-function print_css_setup(name)
-{
-	var template_name=get_session_var(name);
-	var link = document.createElement('link');
-		link.setAttribute("rel", "stylesheet");
-		link.setAttribute("type", "text/css");
-		link.setAttribute("href", "./templates/"+name+"/"+template_name+".css");
-	document.head.appendChild(link);
-}
-*/
-
 function home_display()
 {
 	$(document).off('keydown');

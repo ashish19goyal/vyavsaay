@@ -102,6 +102,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>service_tax_no</name>
+			<display_name>Service Tax #</display_name>
+			<status>active</status>
+			<value></value>
+			<type>accounting</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>pan</name>
 			<display_name>PAN #</display_name>
 			<status>active</status>
@@ -1295,7 +1305,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--user_profiles--</tables>
+			<tables>--user_profiles--user_preferences--values_list--templates--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>

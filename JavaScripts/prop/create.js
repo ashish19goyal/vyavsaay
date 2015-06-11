@@ -11877,7 +11877,7 @@ function form153_create_form()
  * @formNo 154
  * @param button
  */
-function form154_create_item(form)
+function form154_create_product(form)
 {
 	if(is_create_access('form154'))
 	{
@@ -11945,6 +11945,77 @@ function form154_create_item(form)
  * @formNo 154
  * @param button
  */
+function form154_create_service(form)
+{
+	if(is_create_access('form154'))
+	{
+		var storage=document.getElementById("form154_master").elements[5].value;
+		var bill_id=document.getElementById("form154_master").elements[6].value;
+		
+		var name=form.elements[0].value;
+		var desc=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var price=form.elements[3].value;
+		var amount=form.elements[4].value;
+		var total=form.elements[5].value;
+		var discount=form.elements[6].value;
+		var tax=form.elements[7].value;
+		var data_id=form.elements[8].value;
+		var save_button=form.elements[9];
+		var del_button=form.elements[10];
+		
+		var last_updated=get_my_time();
+		
+		var data_xml="<bill_items>" +
+				"<id>"+data_id+"</id>" +
+				"<item_name>"+name+"</item_name>" +
+				"<item_desc>"+desc+"</item_desc>" +
+				"<batch>"+name+"</batch>" +
+				"<unit_price>"+price+"</unit_price>" +
+				"<quantity>"+quantity+"</quantity>" +
+				"<amount>"+amount+"</amount>" +
+				"<total>"+total+"</total>" +
+				"<discount>"+discount+"</discount>" +
+				"<type>bought</type>" +
+				"<tax>"+tax+"</tax>" +
+				"<bill_id>"+bill_id+"</bill_id>" +
+				"<storage>"+storage+"</storage>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</bill_items>";	
+	
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}
+
+		for(var i=0;i<8;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form154_delete_service_item(del_button);
+		});
+
+		$(save_button).off('click');
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Create Bill(DLM)
+ * @formNo 154
+ * @param button
+ */
 function form154_create_hiring_item(form)
 {
 	if(is_create_access('form154'))
@@ -11953,17 +12024,22 @@ function form154_create_hiring_item(form)
 		var bill_id=document.getElementById("form154_master").elements[6].value;
 		
 		var name=form.elements[0].value;
-		var quantity=form.elements[1].value;
-		var from_date=get_raw_time(form.elements[2].value);
-		var to_date=get_raw_time(form.elements[3].value);
-		var price=form.elements[5].value;
-		var amount=form.elements[6].value;
-		var total=form.elements[7].value;
-		var discount=form.elements[8].value;
-		var tax=form.elements[9].value;
-		var data_id=form.elements[10].value;
-		var save_button=form.elements[11];
-		var del_button=form.elements[12];
+		var fresh='no';
+		if(form.elements[1].checked)
+		{
+			fresh='yes';
+		}
+		var quantity=form.elements[2].value;
+		var from_date=get_raw_time(form.elements[3].value);
+		var to_date=get_raw_time(form.elements[4].value);
+		var price=form.elements[6].value;
+		var amount=form.elements[7].value;
+		var total=form.elements[8].value;
+		var discount=form.elements[9].value;
+		var tax=form.elements[10].value;
+		var data_id=form.elements[11].value;
+		var save_button=form.elements[12];
+		var del_button=form.elements[13];
 		
 		var last_updated=get_my_time();
 		
@@ -11984,6 +12060,7 @@ function form154_create_hiring_item(form)
 				"<to_date>"+to_date+"</to_date>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"<hired>yes</hired>"+
+				"<fresh>"+fresh+"</fresh>"+
 				"</bill_items>";	
 	
 		if(is_online())
@@ -11995,7 +12072,7 @@ function form154_create_hiring_item(form)
 			local_create_simple(data_xml);
 		}
 
-		for(var i=0;i<10;i++)
+		for(var i=0;i<11;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -12026,9 +12103,12 @@ function form154_create_form()
 		
 		var customer=form.elements[1].value;
 		var bill_type=form.elements[2].value;
-		var bill_date=get_raw_time(form.elements[3].value);
-		var bill_num=form.elements[4].value;
-		var storage=form.elements[5].value;		
+		var print_1_job='no';
+		if(form.elements[2].checked)
+			print_1_job='yes';
+		var bill_date=get_raw_time(form.elements[4].value);
+		var bill_num=form.elements[5].value;
+		var storage=form.elements[6].value;		
 		
 		var hiring=false;
 		if(bill_type=='Hiring')
@@ -12059,9 +12139,9 @@ function form154_create_form()
 			}
 		});
 
-		var data_id=form.elements[6].value;
-		var transaction_id=form.elements[7].value;
-		var save_button=form.elements[8];
+		var data_id=form.elements[7].value;
+		var transaction_id=form.elements[8].value;
+		var save_button=form.elements[9];
 		var last_updated=get_my_time();
 		
 		var data_xml="<bills>" +
@@ -12077,6 +12157,7 @@ function form154_create_form()
 					"<tax>"+tax+"</tax>" +
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<storage>"+storage+"</storage>"+
+					"<print_1_job>"+print_1_job+"</print_1_job>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bills>";
 		var activity_xml="<activity>" +
@@ -12166,9 +12247,9 @@ function form154_create_form()
 		}
 		
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-					"<td>Amount:</br>Discount: </br>Tax: </br>Cartage: </br>Total: </td>" +
+					"<td>Amount:<disc><br>Discount: </disc><br>Tax: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
-					"Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br>" +
+					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
 					"Rs. "+tax+"</br>" +
 					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
@@ -12177,9 +12258,9 @@ function form154_create_form()
 		if(hiring)
 		{
 			total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-					"<td>Amount:</br>Discount: </br>Tax: </br>Cartage: </br>Total: </td>" +
+					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
-					"Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br>" +
+					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br><disc_amount>" +
 					"Rs. "+tax+"</br>" +
 					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
@@ -12187,6 +12268,19 @@ function form154_create_form()
 					"</tr>";
 
 		}
+		else if(bill_type=='Service')
+		{
+			total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
+					"Rs. "+tax+"</br>" +
+					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+		}
+
 		$('#form154_foot').html(total_row);
 		longPressEditable($('.dblclick_editable'));
 
@@ -12603,6 +12697,130 @@ function form158_create_form()
 }
 
 /**
+ * @form Checklist Items
+ * @formNo 161
+ * @param button
+ */
+function form161_create_item(form)
+{
+	if(is_create_access('form161'))
+	{
+		var cp=form.elements[0].value;
+		var desired_result=form.elements[1].value;
+		var status=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var save_button=form.elements[4];
+		var del_button=form.elements[5];
+		var last_updated=get_my_time();
+			
+		var data_xml="<checklist_items>" +
+				"<id>"+data_id+"</id>" +
+				"<checkpoint unique='yes'>"+cp+"</checkpoint>" +
+				"<desired_result>"+desired_result+"</desired_result>" +
+				"<status>"+status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</checklist_items>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>checklist_items</tablename>" +
+					"<link_to>form161</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Item Checkpoint "+cp+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}
+				
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form161_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form161_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Product Checklist
+ * @formNo 162
+ * @param button
+ */
+function form162_create_item(form)
+{
+	if(is_create_access('form162'))
+	{
+		var item=form.elements[0].value;
+		var cp=form.elements[1].value;
+		var desired_result=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var save_button=form.elements[4];
+		var del_button=form.elements[5];
+		var last_updated=get_my_time();
+			
+		var data_xml="<checklist_mapping>" +
+				"<id>"+data_id+"</id>" +
+				"<item>"+item+"</item>"+
+				"<checkpoint>"+cp+"</checkpoint>" +
+				"<desired_result>"+desired_result+"</desired_result>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</checklist_mapping>";
+
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}
+				
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form162_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form162_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Storage Structure
  * @formNo 167
  * @param button
@@ -12705,15 +12923,72 @@ function form171_create_item(form)
 					"<notes>Sale channel "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var pickup_xml="<pickup_charges>" +
+					"<id>"+get_new_key()+"</id>" +
+					"<channel>"+name+"</channel>" +
+					"<pincode>all</pincode>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</pickup_charges>";
 
 		if(is_online())
 		{
 			server_create_row(data_xml,activity_xml);
+			server_create_simple(pickup_xml);
 		}
 		else
 		{
 			local_create_row(data_xml,activity_xml);
+			local_create_simple(pickup_xml);
 		}
+
+		var product_data="<product_master>" +
+					"<id></id>" +
+					"<name></name>" +
+					"</product_master>";
+		fetch_requested_data('',product_data,function(items)
+		{
+			var sku_mapping_xml="<sku_mapping>";
+			var cat_sku_mapping_xml="<category_sku_mapping>";
+			var id=parseFloat(get_new_key());
+			var counter=0;
+			var last_updated=get_my_time();
+			items.forEach(function(item)
+			{
+				if(counter==500)
+				{
+					counter=0;
+					sku_mapping_xml+="</sku_mapping><separator></separator><sku_mapping>";
+					cat_sku_mapping_xml+="</category_sku_mapping><separator></separator><category_sku_mapping>";
+				}
+				sku_mapping_xml+="<row>" +
+						"<id>"+id+"</id>" +
+						"<channel>"+name+"</channel>"+
+						"<system_sku>"+item.name+"</system_sku>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</row>";
+				cat_sku_mapping_xml+="<row>" +
+						"<id>"+id+"</id>" +
+						"<channel>"+name+"</channel>" +
+						"<sku>"+item.name+"</sku>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</row>";
+				id+=1;
+				counter+=1;
+			});
+			sku_mapping_xml+="</sku_mapping>";
+			cat_sku_mapping_xml+="</category_sku_mapping>";
+			
+			if(is_online())
+			{
+				server_create_batch(sku_mapping_xml);
+				server_create_batch(cat_sku_mapping_xml);
+			}
+			else
+			{
+				local_create_batch(sku_mapping_xml);
+				local_create_batch(cat_sku_mapping_xml);
+			}
+		});
 
 		for(var i=0;i<3;i++)
 		{
@@ -12740,29 +13015,32 @@ function form171_create_item(form)
 }
 
 /**
- * @form SKU mapping
- * @formNo 173
+ * @form Pickup Charges
+ * @formNo 174
  */
-function form173_create_item(form)
+function form174_create_item(form)
 {
-	if(is_create_access('form173'))
+	if(is_create_access('form174'))
 	{
 		show_loader();
 
 		var channel=form.elements[0].value;
-		var channel_sku=form.elements[1].value;
-		var vendor_sku=form.elements[2].value;
-		var system_sku=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var del_button=form.elements[6];
+		var pincode=form.elements[1].value;
+		var minimum=form.elements[2].value;
+		var maximum=form.elements[3].value;
+		var rate=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var del_button=form.elements[7];
 		var last_updated=get_my_time();
-		var data_xml="<sku_mapping>" +
+		var data_xml="<pickup_charges>" +
 					"<id>"+data_id+"</id>" +
-					"<name unique='yes'>"+name+"</name>" +
-					"<details>"+details+"</details>" +
-					"<dead_weight_factor>"+dead_weight_factor+"</dead_weight_factor>" +
+					"<channel>"+channel+"</channel>" +
+					"<pincode>"+pincode+"</pincode>" +
+					"<min_charges>"+minimum+"</min_charges>" +
+					"<max_charges>"+maximum+"</max_charges>" +
+					"<rate>"+rate+"</rate>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</sku_mapping>";
+					"</pickup_charges>";
 
 		if(is_online())
 		{
@@ -12773,7 +13051,7 @@ function form173_create_item(form)
 			local_create_row(data_xml,activity_xml);
 		}
 
-		for(var i=0;i<3;i++)
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -12781,14 +13059,75 @@ function form173_create_item(form)
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
-			form173_delete_item(del_button);
+			form174_delete_item(del_button);
 		});
 		
 		$(form).off('submit');
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
-			form173_update_item(form);
+			form174_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Channel Category
+ * @formNo 175
+ */
+function form175_create_item(form)
+{
+	if(is_create_access('form175'))
+	{
+		show_loader();
+
+		var channel=form.elements[0].value;
+		var type=form.elements[1].value;
+		var name=form.elements[2].value;
+		var parent=form.elements[3].value;
+		var commission=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var del_button=form.elements[7];
+		var last_updated=get_my_time();
+		var data_xml="<channel_category>" +
+					"<id>"+data_id+"</id>" +
+					"<channel>"+channel+"</channel>" +
+					"<type>"+type+"</type>" +
+					"<name>"+name+"</name>" +
+					"<parent>"+parent+"</parent>" +
+					"<commission>"+commission+"</commission>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</channel_category>";
+
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}
+
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form175_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form175_update_item(form);
 		});
 	}
 	else

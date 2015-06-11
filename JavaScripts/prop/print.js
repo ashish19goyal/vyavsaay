@@ -786,7 +786,7 @@ function form153_print_form()
 	var customer_info=document.createElement('div');
 	
 	var quotation_intro=document.createElement('div');
-		var subject=document.createElement('div');
+		//var subject=document.createElement('div');
 		var intro=document.createElement('div');
 
 	var table_container=document.createElement('div');
@@ -821,7 +821,7 @@ function form153_print_form()
 	var customer_address=customer_address1.replace("Address<br>","");
 	var date=master_form.elements[3].value;	
 	
-	var subject_text="Subject: Quotation for supply of light and sound equipment";
+	//var subject_text="Subject: Quotation for supply of light and sound equipment";
 	var intro_text=master_form.elements[4].value;
 	
 	var tandc_text=get_session_var('quot_message');
@@ -835,8 +835,9 @@ function form153_print_form()
 	
 	customer_info.innerHTML="<div style='width:70%;float:left;'>To<br>"+customer_name+"<br>"+customer_address+"</div><div style='width:30%;float:right;'>Date: "+date+"</div>";
 	
-	subject.innerHTML="<br>"+subject_text;
-	intro.innerHTML=intro_text+"<br><br>";	
+	//subject.innerHTML="<br>"+subject_text;
+	var new_intro_text=intro_text.replace(/\n/g,"<br>");
+	intro.innerHTML=new_intro_text+"<br><br>";	
 	
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
@@ -870,7 +871,7 @@ function form153_print_form()
 	header.appendChild(business_intro);
 	header.appendChild(business_contact);
 	
-	quotation_intro.appendChild(subject);
+	//quotation_intro.appendChild(subject);
 	quotation_intro.appendChild(intro);
 	
 	footer.appendChild(tandc);
@@ -910,11 +911,11 @@ function form154_print_form()
 ////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
-		business_intro.setAttribute('style','width:100%;text-align:center');
-		business_contact.setAttribute('style','width:100%;text-align:center');
+		business_intro.setAttribute('style','width:100%;text-align:center;');
+		business_contact.setAttribute('style','width:100%;text-align:center;');
 	info_section.setAttribute('style','width:100%;min-height:60px');
-		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:60px;border: 1px solid #00f;border-radius:5px;');
-		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:60px;border: 1px solid #00f;border-radius:5px;');
+		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:90px;border: 1px solid #000;border-radius:5px;');
+		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:90px;border: 1px solid #000;border-radius:5px;');
 	footer.setAttribute('style','width:100%;min-height:100px');
 		tandc.setAttribute('style','float:left;width:60%;min-height:50px');
 		signature.setAttribute('style','float:right;width:30%;min-height:60px');
@@ -936,25 +937,52 @@ function form154_print_form()
 	var customer_address=customer_address1.replace("Address<br>","");
 	var date=master_form.elements[3].value;	
 	var invoice_no=master_form.elements[4].value;
-	var pan_no=get_session_var('pan');
+	var customer_cst=master_form.elements[11].value;	
+	var customer_tin=master_form.elements[12].value;
+	var tin_no=get_session_var('tin');
 	var sales_tax_no=get_session_var('sales_tax_no');	
+	var service_tax_no=get_session_var('service_tax_no');	
+	var tax_text="Sales Tax No: "+sales_tax_no;
 	var hiring=false
-	if(master_form.elements[2].value=='Hiring')
-		hiring=true;	
 		
+	var invoice_text="Invoice";
+	if(master_form.elements[2].value=='Retail')
+	{
+		invoice_text="Retail Invoice";
+	}
+	else if(master_form.elements[2].value=='Tax')
+	{
+		invoice_text="Tax Invoice";
+	}
+	else if(master_form.elements[2].value=='Hiring')
+	{
+		hiring=true;	
+	}
+	else if(master_form.elements[2].value=='Service')
+	{
+		tax_text="Service Tax no: "+service_tax_no;
+	}
 	var tandc_text=get_session_var('bill_message');
 	var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
 	
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
-	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text;
-	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;
+	business_intro.innerHTML="<hr style='border: 1px solid #000;margin:2px;'>"+business_intro_text;
+	business_contact.innerHTML="<hr style='border: 1px solid #000;margin:2px;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;
 	
-	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Invoice</b></div><hr style='border: 1px solid #00f;'>";
+	invoice_line.innerHTML="<hr style='border: 1px solid #000;margin:2px'><div style='text-align:center;'><b style='text-size:1.2em'>"+invoice_text+"</b></div><br>";
 	
-	customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address;
-	business_info.innerHTML="Pan No: "+pan_no+"<br>Sales Tax No: "+sales_tax_no+"<br>Date: "+date+"<br>Invoice No: "+invoice_no;
+	if(master_form.elements[2].value=='Tax' || master_form.elements[2].value=='Retail')
+	{
+		customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address+"<br>CST#: "+customer_cst+"<br>TIN#: "+customer_tin;
+	}
+	else
+	{		
+		customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address;
+	}
+
+	business_info.innerHTML="Tin No: "+tin_no+"<br>"+tax_text+"<br>Date: "+date+"<br>Invoice No: "+invoice_no;
 	
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
@@ -963,6 +991,16 @@ function form154_print_form()
 	table_copy=table_element.cloneNode(true);
 	
 	table_copy.removeAttribute('class');
+	
+	var discount_amount=parseFloat(document.getElementById('form154_discount').value);
+	if(discount_amount==0)
+	{
+		var disc_nodes=table_copy.getElementsByTagName('disc');
+		var disc_amount_nodes=table_copy.getElementsByTagName('disc_amount');
+		disc_nodes[0].parentNode.removeChild(disc_nodes[0]);
+		disc_amount_nodes[0].parentNode.removeChild(disc_amount_nodes[0]);
+	}
+
 	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form").remove();
 	$(table_copy).find('input,textarea').each(function(index)
 	{

@@ -384,6 +384,30 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>checklist_items</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>checklist_items</tablename>
+			<listname>status</listname>
+			<name>inactive</name>
+			<value>Inactive</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>checklist_items</tablename>
+			<listname>status</listname>
+			<name>required</name>
+			<value>Required</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>channel_category</tablename>
 			<listname>type</listname>
 			<name>category</name>
@@ -2708,6 +2732,38 @@
 			<listname>type</listname>
 			<name>bought</name>
 			<value>Bought</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>bill_items</tablename>
+			<listname>fresh</listname>
+			<name>yes</name>
+			<value>Yes</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>bill_items</tablename>
+			<listname>fresh</listname>
+			<name>no</name>
+			<value>No</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>bill_items</tablename>
+			<listname>hired</listname>
+			<name>yes</name>
+			<value>Yes</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>bill_items</tablename>
+			<listname>hired</listname>
+			<name>no</name>
+			<value>No</value>
 			<status>active</status>
 			<last_updated>1</last_updated>
 		</row>

@@ -5164,11 +5164,50 @@ function form154_delete_item(button)
 	{
 		modal115_action(function()
 		{
-			var bill_id=document.getElementById("form154_master").elements[6].value;
+			var bill_id=document.getElementById("form154_master").elements[7].value;
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			var data_id=form.elements[7].value;
+					
+			var data_xml="<bill_items>" +
+						"<id>"+data_id+"</id>" +
+						"<bill_id>"+bill_id+"</bill_id>" +
+						"</bill_items>";	
+			if(is_online())
+			{
+				server_delete_simple(data_xml);
+			}
+			else
+			{
+				local_delete_simple(data_xml);
+			}
+					
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Bills (DLM)
+ * @formNo 154
+ * @param button
+ */
+function form154_delete_service_item(button)
+{
+	if(is_delete_access('form154'))
+	{
+		modal115_action(function()
+		{
+			var bill_id=document.getElementById("form154_master").elements[7].value;
+			
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var data_id=form.elements[8].value;
 					
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
@@ -5203,11 +5242,11 @@ function form154_delete_hiring_item(button)
 	{
 		modal115_action(function()
 		{
-			var bill_id=document.getElementById("form154_master").elements[6].value;
+			var bill_id=document.getElementById("form154_master").elements[7].value;
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var data_id=form.elements[10].value;
+			var data_id=form.elements[11].value;
 					
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
@@ -5345,6 +5384,100 @@ function form158_delete_item(button)
 				local_delete_simple(data_xml);
 			}
 					
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Checklist items
+ * @formNo form161
+ */
+function form161_delete_item(button)
+{
+	if(is_delete_access('form161'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var cp=form.elements[0].value;
+			var data_id=form.elements[3].value;
+			
+			var data_xml="<checklist_items>" +
+						"<id>"+data_id+"</id>" +
+						"</checklist_items>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>checklist_items</tablename>" +
+						"<link_to>form161</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Checkpoint "+cp+" for products</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var mapping_xml="<checklist_mapping>"+
+							"<checkpoint exact='yes'>"+cp+"</checkpoint>"+
+							"</checklist_mapping>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+			}				
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Checklist mapping
+ * @formNo form162
+ */
+function form162_delete_item(button)
+{
+	if(is_delete_access('form162'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var item=form.elements[0].value;
+			var cp=form.elements[1].value;
+			var data_id=form.elements[3].value;
+			
+			var data_xml="<checklist_mapping>" +
+						"<id>"+data_id+"</id>" +
+						"</checklist_mapping>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>checklist_mapping</tablename>" +
+						"<link_to>form162</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Checkpoint "+cp+" for product "+item+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+			}				
+			
 			$(button).parent().parent().remove();
 		});
 	}
@@ -5561,18 +5694,21 @@ function form171_delete_item(button)
 						"<notes>Sale channel "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			var pickup_xml="<pickup_charges>" +
-						"<channel exact='yes'>"+name+"</channel>" +
-						"</pickup_charges>";
 			var sku_xml="<sku_mapping>" +
 						"<channel exact='yes'>"+name+"</channel>" +
 						"</sku_mapping>";
 			var channel_prices_xml="<channel_prices>" +
 						"<channel exact='yes'>"+name+"</channel>" +
 						"</channel_prices>";
-			var category_xml="<channel_categories>" +
+			var pickup_xml="<pickup_charges>" +
 						"<channel exact='yes'>"+name+"</channel>" +
-						"</channel_categories>";
+						"</pickup_charges>";
+			var category_xml="<channel_category>" +
+						"<channel exact='yes'>"+name+"</channel>" +
+						"</channel_category>";
+			var cat_sku_xml="<category_sku_mapping>" +
+						"<channel exact='yes'>"+name+"</channel>" +
+						"</category_sku_mapping>";
 			
 			if(is_online())
 			{
@@ -5581,6 +5717,7 @@ function form171_delete_item(button)
 				server_delete_simple(sku_xml);
 				server_delete_simple(channel_prices_xml);
 				server_delete_simple(category_xml);
+				server_delete_simple(cat_sku_xml);
 			}
 			else
 			{
@@ -5589,6 +5726,97 @@ function form171_delete_item(button)
 				local_delete_simple(sku_xml);
 				local_delete_simple(channel_prices_xml);
 				local_delete_simple(category_xml);
+				local_delete_simple(cat_sku_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Pickup Charges
+ * @param button
+ */
+function form174_delete_item(button)
+{
+	if(is_delete_access('form174'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var channel=form.elements[0].value;
+			var pincode=form.elements[1].value;
+			var data_id=form.elements[5].value;
+			var last_updated=get_my_time();
+			var data_xml="<pickup_charges>" +
+						"<id>"+data_id+"</id>" +
+						"</pickup_charges>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>pickup_charges</tablename>" +
+						"<link_to>form174</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Pickup charges record for pincode "+pincode+" for channel "+channel+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Channel Category
+ * @param button
+ */
+function form175_delete_item(button)
+{
+	if(is_delete_access('form175'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var channel=form.elements[0].value;
+			var name=form.elements[2].value;
+			var data_id=form.elements[5].value;
+			var last_updated=get_my_time();
+			var data_xml="<channel_category>" +
+						"<id>"+data_id+"</id>" +
+						"</channel_category>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>channel_category</tablename>" +
+						"<link_to>form175</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Category "+name+" for channel "+channel+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
 			}	
 			$(button).parent().parent().remove();
 		});

@@ -6,7 +6,8 @@
 			<label id='form153_customer_info'></label>
 			<label>Type<br><input type='text' required></label>
 			<label>Date<br><input type='text' required></label>
-			<label>Introductory Notes<br><textarea></textarea></label>
+			<br>
+			<label>Introductory Notes<br><textarea style='width:300px'></textarea></label>
 			<label>
 				<input type='hidden' name='quot_id'>
 				<input type='hidden' name='offer'>

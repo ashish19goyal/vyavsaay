@@ -6933,6 +6933,36 @@ function modal114_action(func)
 				}
 			});
 
+			///ADDING ACTIVE AND REQUIRED CHECKLIST ITEMS
+			var cid=get_new_key();
+			var checklist_items_xml="<checklist_items>"+
+									"<checkpoint></checkpoint>"+
+									"<desired_result></desired_result>"+
+									"<status array='yes'>--active--required--</status>"+
+									"</checklist_items>";
+			fetch_requested_data('',checklist_items_xml,function(checklists)
+			{
+				cid++;
+				checklists.forEach(function(checklist)
+				{
+					var checklist_xml="<checklist_mapping>" +
+							"<id>"+cid+"</id>" +
+							"<item>"+name+"</item>" +
+							"<checkpoint>"+checklist.checkpoint+"</checkpoint>" +
+							"<desired_result>"+checklist.desired_result+"</desired_result>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</checklist_mapping>";
+					if(is_online())
+					{
+						server_create_simple(checklist_xml);
+					}
+					else
+					{
+						local_create_simple(checklist_xml);
+					}
+				});
+			});
+
 			if(url!="")
 			{
 				var pic_xml="<documents>" +
@@ -6969,9 +6999,9 @@ function modal114_action(func)
  */
 function modal115_action(func)
 {
-	var form=document.getElementById('modal115_form');
-	var yes_button=form.elements[1];
-	var no_button=form.elements[2];
+	var form115=document.getElementById('modal115_form');
+	var yes_button=form115.elements[1];
+	var no_button=form115.elements[2];
 	
 	$(yes_button).on('click',function()
 	{
@@ -7005,11 +7035,6 @@ function modal116_action(string)
 	});
 	
 	var image_element=document.getElementById('modal116_img');
-	//var string_element=document.getElementById('modal116_string');
-	//string_element.innerHTML=string;
-
-	//$(image_element).JsBarcode(string,{format:"EAN",displayValue:true,fontSize:16});
-
 	$(image_element).JsBarcode(string,{displayValue:true,fontSize:16});
 	
 	$("#modal116").dialog("open");

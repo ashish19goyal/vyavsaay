@@ -4916,6 +4916,111 @@ function form158_import(data_array,import_type)
 };
 
 /**
+* @form Checklist items
+* @formNo 161
+*/
+function form161_import(data_array,import_type)
+{
+	var data_xml="<checklist_items>";
+	var counter=1;
+	var new_id=parseFloat(get_new_key());
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</checklist_items><separator></separator><checklist_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<checkpoint>"+row.checkpoint+"</checkpoint>" +
+				"<desired_result>"+row.desired_result+"</desired_result>" +
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+
+	data_xml+="</checklist_items>";
+	
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+}
+
+/**
+* @form Product Checklist
+* @formNo 162
+*/
+function form162_import(data_array,import_type)
+{
+	var data_xml="<checklist_mapping>";
+	var counter=1;
+	var new_id=parseFloat(get_new_key());
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</checklist_mapping><separator></separator><checklist_mapping>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<checkpoint>"+row.checkpoint+"</checkpoint>" +
+				"<desired_result>"+row.desired_result+"</desired_result>" +
+				"<item>"+row.item+"</item>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+
+	data_xml+="</checklist_mapping>";
+	
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+}
+
+
+/**
 * @form Manage sale prices
 * @formNo 166
 */

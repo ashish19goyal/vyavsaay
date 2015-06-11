@@ -1998,7 +1998,7 @@ function form47_update_form()
 			{
 				if(currenthash.substring(3)===results[i].password.substring(3))
 				{
-					console.log(newhash);
+					//console.log(newhash);
 					var bcrypt = new bCrypt();
 					bcrypt.hashpw(new_pass, salt_22, function(newhash)
 					{
@@ -8106,9 +8106,13 @@ function form154_update_form()
 		
 		var customer=form.elements[1].value;
 		var bill_type=form.elements[2].value;
-		var bill_date=get_raw_time(form.elements[3].value);
-		var bill_num=form.elements[4].value;
-		var storage=form.elements[5].value;
+		var print_1_job='no';
+		if(form.elements[2].checked)
+			print_1_job='yes';
+
+		var bill_date=get_raw_time(form.elements[4].value);
+		var bill_num=form.elements[5].value;
+		var storage=form.elements[6].value;
 		
 		var amount=0;
 		var discount=0;
@@ -8145,8 +8149,8 @@ function form154_update_form()
 		tax-=(discount*0.125);
 		total=my_round(amount-discount+tax+cartage,0);
 		
-		var data_id=form.elements[6].value;
-		var transaction_id=form.elements[7].value;
+		var data_id=form.elements[7].value;
+		var transaction_id=form.elements[8].value;
 		var last_updated=get_my_time();		
 		
 		var data_xml="<bills>" +
@@ -8160,6 +8164,7 @@ function form154_update_form()
 					"<cartage>"+cartage+"</cartage>" +
 					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
+					"<print_1_job>"+print_1_job+"</print_1_job>"+
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"</bills>";
 		var activity_xml="<activity>" +
@@ -8191,9 +8196,9 @@ function form154_update_form()
 		}
 		
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-					"<td>Amount:</br>Discount: </br>Tax: </br>Cartage: </br>Total: </td>" +
+					"<td>Amount:<disc><br>Discount:</disc><br>Tax: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
-					"Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br>" +
+					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
 					"Rs. "+tax+"</br>" +
 					"Rs. <input type='number' value='"+cartage+"' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
@@ -8202,16 +8207,28 @@ function form154_update_form()
 		if(hiring)
 		{
 			total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-					"<td>Amount:</br>Discount: </br>Tax: </br>Cartage: </br>Total: </td>" +
+					"<td>Amount:<disc><br>Discount:</disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
-					"Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br>" +
-					"Rs. "+tax+"</br>" +
-					"Rs. <input type='number' value='"+cartage+"' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
+					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
+					"Rs. "+tax+"<br>" +
+					"Rs. <input type='number' value='"+cartage+"' step='any' id='form154_cartage' class='dblclick_editable'><br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
 					"</tr>";
-
 		}
+		else if(bill_type=='Service')
+		{
+			total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
+					"Rs. "+tax+"</br>" +
+					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+		}
+
 		
 		$('#form154_foot').html(total_row);
 		longPressEditable($('.dblclick_editable'));
@@ -8704,6 +8721,84 @@ function form158_update_form()
 }
 
 /**
+ * @form Checklist Items
+ * @param button
+ */
+function form161_update_item(form)
+{
+	if(is_update_access('form161'))
+	{
+		var cp=form.elements[0].value;
+		var desired_result=form.elements[1].value;
+		var status=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<checklist_items>" +
+					"<id>"+data_id+"</id>" +
+					"<checkpoint>"+cp+"</checkpoint>" +
+					"<desired_result>"+desired_result+"</desired_result>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</checklist_items>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Product Checklist
+ * @param button
+ */
+function form162_update_item(form)
+{
+	if(is_update_access('form162'))
+	{
+		var item=form.elements[0].value;
+		var cp=form.elements[1].value;
+		var desired_result=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<checklist_mapping>" +
+					"<id>"+data_id+"</id>" +
+					"<checkpoint>"+cp+"</checkpoint>" +
+					"<desired_result>"+desired_result+"</desired_result>" +
+					"<item>"+item+"</item>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</checklist_mapping>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Product Dimensions
  * @param button
  */
@@ -9076,6 +9171,207 @@ function form171_update_item(form)
 		}	
 		
 		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Sku mapping
+ * @formNo 173
+ * @param button
+ */
+function form173_update_item(form)
+{
+	if(is_update_access('form173'))
+	{
+		var channel=form.elements[0].value;
+		var channel_sku=form.elements[1].value;
+		var vendor_sku=form.elements[2].value;
+		var system_sku=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<sku_mapping>" +
+					"<id>"+data_id+"</id>" +
+					"<channel>"+channel+"</channel>" +
+					"<channel_sku>"+channel_sku+"</channel_sku>" +
+					"<channel_system_sku>"+channel_system_sku+"</channel_system_sku>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sku_mapping>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sku_mapping</tablename>" +
+					"<link_to>form173</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>SKU mapping for "+system_sku+" for channel "+channel+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Pickup Charges
+ * @formNo 174
+ * @param button
+ */
+function form174_update_item(form)
+{
+	if(is_update_access('form174'))
+	{
+		var channel=form.elements[0].value;
+		var pincode=form.elements[1].value;
+		var min_charges=form.elements[2].value;
+		var max_charges=form.elements[3].value;
+		var rate=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<pickup_charges>" +
+					"<id>"+data_id+"</id>" +
+					"<channel>"+channel+"</channel>" +
+					"<pincode>"+pincode+"</pincode>" +
+					"<min_charges>"+min_charges+"</min_charges>"+
+					"<max_charges>"+max_charges+"</max_charges>"+
+					"<rate>"+rate+"</rate>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</pickup_charges>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>pickup_charges</tablename>" +
+					"<link_to>form174</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Pickup charges for pincode "+pincode+" for channel "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Channel Category
+ * @formNo 175
+ * @param button
+ */
+function form175_update_item(form)
+{
+	if(is_update_access('form175'))
+	{
+		var channel=form.elements[0].value;
+		var name=form.elements[2].value;
+		var commission=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<channel_category>" +
+					"<id>"+data_id+"</id>" +
+					"<channel>"+channel+"</channel>" +
+					"<commission>"+commission+"</commission>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</channel_category>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>channel_category</tablename>" +
+					"<link_to>form175</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Commission for category "+name+" for channel "+channel+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Category Item mapping
+ * @formNo 176
+ * @param button
+ */
+function form176_update_item(form)
+{
+	if(is_update_access('form176'))
+	{
+		var channel=form.elements[0].value;
+		var type=form.elements[1].value;
+		var category=form.elements[2].value;
+		var desc=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<category_sku_mapping>" +
+					"<id>"+data_id+"</id>" +
+					"<type>"+type+"</type>" +
+					"<category>"+category+"</category>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</category_sku_mapping>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>category_sku_mapping</tablename>" +
+					"<link_to>form176</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Item to category mapping of  "+desc+" for channel "+channel+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

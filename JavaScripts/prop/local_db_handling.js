@@ -42,11 +42,14 @@ function create_local_db(domain,func)
 				var db=ev.target.result;
 				var tables=e.responseXML.childNodes[0].childNodes;
 				
+				//console.log(tables);
+				
 				for(var k=0;k<tables.length;k++)
 				{
 					if(tables[k].nodeName!="" && tables[k].nodeName!="#text" && tables[k].nodeName!="#comment")
 					{	
-						table=db.createObjectStore(tables[k].nodeName,{keyPath:'id'});
+						//console.log(tables[k].nodeName);
+						var table=db.createObjectStore(tables[k].nodeName,{keyPath:'id'});
 					
 						for(var i=0;i<tables[k].childNodes.length;i++)
 						{	

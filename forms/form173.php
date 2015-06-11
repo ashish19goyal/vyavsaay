@@ -7,8 +7,7 @@
 					<th>Channel SKU <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form173_header'></th>
 					<th>Vendor SKU (on channel) <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form173_header'></th>
 					<th>System SKU <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form173_header'></th>
-					<th><input type='button' form='form173_header' title='Add new mapping' class='add_icon' onclick='form173_add_item();'>
-						<input type='button' form='form173_header' value='EXPORT' class='export_icon'>
+					<th><input type='button' form='form173_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form173_header' style='visibility: hidden;'>
 					</th>
 			</tr>

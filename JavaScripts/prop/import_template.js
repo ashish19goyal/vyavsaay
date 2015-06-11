@@ -928,6 +928,26 @@ function form158_import_template()
 };
 
 /**
+* @form Checklist items
+* @formNo 161
+*/
+function form161_import_template()
+{
+	var data_array=['id','checkpoint','desired_result','status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Checklist mapping
+* @formNo 162
+*/
+function form162_import_template()
+{
+	var data_array=['id','checkpoint','desired_result','item'];
+	my_array_to_csv(data_array);
+};
+
+/**
 * @form Manage sale prices
 * @formNo 166
 */

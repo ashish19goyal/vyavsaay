@@ -8086,6 +8086,7 @@ function form154_add_product()
 			rowsHTML+="<form id='form154_"+id+"' autocomplete='off'></form>";
 				rowsHTML+="<td data-th='Item'>";
 					rowsHTML+="<input type='text' required form='form154_"+id+"'>";
+					rowsHTML+="<fresh><br>Fresh: <input type='checkbox' form='form154_"+id+"'></fresh>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Quantity'>";
 					rowsHTML+="<input type='number' min='0' required form='form154_"+id+"' step='any'>";
@@ -8274,7 +8275,7 @@ function form154_add_product()
 			$(save_button).on("click", function(event)
 			{
 				event.preventDefault();
-				form154_create_item(fields);
+				form154_create_product(fields);
 			});
 			
 			$(fields).on("submit", function(event)
@@ -8378,6 +8379,7 @@ function form154_add_service()
 		rowsHTML+="<form id='form154_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' required form='form154_"+id+"'>";
+				rowsHTML+="<br>Details: <textarea form='form154_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' readonly='readonly' value='1' required form='form154_"+id+"'>";
@@ -8421,7 +8423,7 @@ function form154_add_service()
 		$(save_button).on("click", function(event)
 		{
 			event.preventDefault();
-			form154_create_item(fields);
+			form154_create_service(fields);
 		});
 		
 		$(fields).on("submit", function(event)
@@ -8907,6 +8909,117 @@ function form158_add_item()
 }
 
 /**
+ * @form checklist Items
+ * @formNo 161
+ */
+function form161_add_item()
+{
+	if(is_create_access('form161'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form161_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Checkpoint'>";
+				rowsHTML+="<input type='text' form='form161_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Desired Result'>";
+				rowsHTML+="<textarea form='form161_"+id+"' class='dblclick_editable' required></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form161_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form161_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form161_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form161_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form161_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form161_"+id);
+		var cp_filter=fields.elements[0];
+		var status_filter=fields.elements[2];
+		
+		$(cp_filter).focus();
+		set_static_value_list('checklist_items','status',status_filter);		
+							
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form161_create_item(fields);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Product checklist
+ * @formNo 162
+ */
+function form162_add_item()
+{
+	if(is_create_access('form162'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form162_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' form='form162_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Checkpoint'>";
+				rowsHTML+="<input type='text' form='form162_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Desired Result'>";
+				rowsHTML+="<textarea form='form162_"+id+"' class='dblclick_editable' required></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form162_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form162_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form162_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form162_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form162_"+id);
+		var item_filter=fields.elements[0];
+		var cp_filter=fields.elements[1];
+		var result_filter=fields.elements[2];
+		
+		var item_data="<product_master>"+
+					"<name></name>"+
+					"</product_master>";
+		set_my_value_list_func(item_data,item_filter,function () 
+		{
+			$(item_filter).focus();
+		});
+
+		var cp_data="<checklist_items>"+
+					"<checkpoint></checkpoint>"+
+					"</checklist_items>";
+		set_my_value_list_func(cp_data,cp_filter); 
+							
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form162_create_item(fields);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
  * @form Storage Structure
  * @formNo 167
  */
@@ -9078,57 +9191,137 @@ function form172_add_item()
 }
 
 /**
- * @form SKU Mapping
- * @formNo 173
+ * @form Pickup Charges
+ * @formNo 174
  */
-function form173_add_item()
+function form174_add_item()
 {
-	if(is_create_access('form173'))
+	if(is_create_access('form174'))
 	{
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form173_"+id+"' autocomplete='off'></form>";
+		rowsHTML+="<form id='form174_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Channel'>";
-				rowsHTML+="<input type='text' form='form173_"+id+"' required value=''>";
+				rowsHTML+="<input type='text' form='form174_"+id+"' required>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Channel SKU'>";
-				rowsHTML+="<textarea form='form173_"+id+"' required></textarea>";
+			rowsHTML+="<td data-th='Pincode'>";
+				rowsHTML+="<input type='number' form='form174_"+id+"' required>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Vendor SKU'>";
-				rowsHTML+="<textarea form='form173_"+id+"' required></textarea>";
+			rowsHTML+="<td data-th='Minimum'>";
+				rowsHTML+="<input type='number' step='2' min='0' value='0' form='form174_"+id+"' required>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='System SKU'>";
-				rowsHTML+="<input type='text' form='form173_"+id+"' required>";
+			rowsHTML+="<td data-th='Maximum'>";
+				rowsHTML+="<input type='number' step='2' min='0' value='0' form='form174_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Weight Factor'>";
+				rowsHTML+="<input type='number' step='2' form='form174_"+id+"' value='0' required>Rs./gm";
 			rowsHTML+="</td>";			
 			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form173_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form173_"+id+"' title='Save'>";	
-				rowsHTML+="<input type='button' class='delete_icon' form='form173_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form174_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form174_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form174_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
-		$('#form173_body').prepend(rowsHTML);
+		$('#form174_body').prepend(rowsHTML);
 		longPressEditable($('.dblclick_editable'));
 		
-		var fields=document.getElementById("form173_"+id);
-		var name_filter=fields.elements[0];
-		var ssku_filter=fields.elements[3];
+		var fields=document.getElementById("form174_"+id);
+		var channel_filter=fields.elements[0];
+		var pincode_filter=fields.elements[3];
 		
 		var channel_data="<sale_channels>"+
 						"<name></name>"+
 						"</sale_channels>";
-		set_my_value_list(channel_data,name_filter);
-		
-		var sku_data="<product_master>"+
-					"<name></name>"+
-					"</product_master>";
-		set_my_value_list(sku_data,sku_filter);
-					
+		set_my_value_list_func(channel_data,channel_filter,function () 
+		{
+			$(channel_filter).focus();
+		});
+							
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
-			form173_create_item(fields);
+			form174_create_item(fields);
+		});
+
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Channel Category
+ * @formNo 175
+ */
+function form175_add_item()
+{
+	if(is_create_access('form175'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form175_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Channel'>";
+				rowsHTML+="<input type='text' form='form175_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Type'>";
+				rowsHTML+="<input type='text' form='form175_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Name'>";
+				rowsHTML+="<input type='text' form='form175_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Parent'>";
+				rowsHTML+="<input type='text' form='form175_"+id+"'>";
+			rowsHTML+="</td>";			
+			rowsHTML+="<td data-th='Commission'>";
+				rowsHTML+="<input type='number' step='2' form='form175_"+id+"' required>";
+			rowsHTML+="</td>";			
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form175_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form175_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form175_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form175_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form175_"+id);
+		var channel_filter=fields.elements[0];
+		var type_filter=fields.elements[1];
+		var name_filter=fields.elements[2];
+		var parent_filter=fields.elements[3];
+		var commission_filter=fields.elements[4];
+		
+		var channel_data="<sale_channels>"+
+						"<name></name>"+
+						"</sale_channels>";
+		set_my_value_list(channel_data,channel_filter);
+		set_static_value_list('channel_category','type',type_filter);
+		
+		var parent_data="<channel_category>"+
+					"<name></name>"+
+					"<type exact='yes'>category</type>"+
+					"</channel_category>";
+		set_my_value_list(parent_data,parent_filter);
+
+		$(parent_filter).on('blur',function()
+		{
+			var commission_data="<channel_category>"+
+								"<commission></commission>"+
+								"<name exact='yes'>"+parent_filter.value+"</name>"+
+								"<channel exact='yes'>"+channel_filter.value+"</channel>"+
+								"</channel_category>";
+			set_my_value(commission_data,commission_filter);
+		});
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form175_create_item(fields);
 		});
 					
 		$(name_filter).focus();

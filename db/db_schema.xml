@@ -205,6 +205,7 @@
 			<receiver index='yes' type="TEXT"></receiver>
 			<giver index='yes' type="TEXT"></giver>
 			<tax index='yes' type="DECIMAL(12,2)"></tax>
+			<service_tax index='yes' type="DECIMAL(12,2)"></service_tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</transactions>
 	<cash_register>
@@ -302,14 +303,17 @@
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<cartage index='no' type="DECIMAL(12,2)"></cartage>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<service_tax index='no' type="DECIMAL(12,2)"></service_tax>
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
 			<storage index='yes' type="VARCHAR(25)"></storage>
+			<print_1_job index='yes' type="VARCHAR(25)"></print_1_job><!--yes/no-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bills>
 	<bill_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<bill_id index='yes' type="BIGINT"></bill_id>
 			<item_name index='yes' type="TEXT"></item_name>
+			<item_desc index='no' type="TEXT"></item_desc>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<p_quantity index='no' type="DECIMAL(12,2)"></p_quantity>
 			<f_quantity index='no' type="DECIMAL(12,2)"></f_quantity>
@@ -324,11 +328,13 @@
 			<notes index='no' type="TEXT"></notes>
 			<staff index='yes' type="TEXT"></staff>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<service_tax index='no' type="DECIMAL(12,2)"></service_tax>
 			<from_date index='yes' type="BIGINT"></from_date>
 			<to_date index='yes' type="BIGINT"></to_date>
 			<free_with index="no" type="TEXT"></free_with>
 			<storage index='yes' type="VARCHAR(25)"></storage>
 			<hired index='yes' type="VARCHAR(25)"></hired><!--yes/no-->
+			<fresh index='yes' type="VARCHAR(25)"></fresh><!--yes/no-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bill_items>
 	<customer_returns>
@@ -746,6 +752,20 @@
 			<sku index='yes' type='TEXT'></sku>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</category_sku_mapping>
+	<checklist_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<checkpoint index='yes' type="TEXT"></checkpoint>
+			<desired_result index='no' type='TEXT'></desired_result>
+			<status index='yes' type='VARCHAR(25)'></status><!--active/inactive/required-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</checklist_items>
+	<checklist_mapping>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<item index='yes' type="TEXT"></item>
+			<checkpoint index='yes' type="TEXT"></checkpoint>
+			<desired_result index='no' type='TEXT'></desired_result>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</checklist_mapping>
 	<loans>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<type index='yes' type="VARCHAR(45)"></type><!-- taken/given -->
@@ -1071,17 +1091,4 @@
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</quotation_items>
-	<checklist_mapping>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<item index='yes' type="TEXT"></item>
-			<check_point index='yes' type="TEXT"></check_point>
-			<threshold_value index='no' type='TEXT'></threshold_value>
-			<last_updated index='yes' type="BIGINT"></last_updated>
-	</checklist_mapping>
-	<checklist_items>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<check_point index='yes' type="TEXT"></check_point>
-			<threshold_value index='no' type='TEXT'></threshold_value>
-			<last_updated index='yes' type="BIGINT"></last_updated>
-	</checklist_items>
 </re_xml>
