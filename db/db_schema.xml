@@ -307,6 +307,7 @@
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
 			<storage index='yes' type="VARCHAR(25)"></storage>
 			<print_1_job index='yes' type="VARCHAR(25)"></print_1_job><!--yes/no-->
+			<notes index='no' type="TEXT"></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bills>
 	<bill_items>

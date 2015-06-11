@@ -13,7 +13,7 @@ function switch_to_online()
 		var del_access=get_session_var('del');
 		var re_access=get_session_var('re');
 		
-		ajax_with_custom_func("./ajax/connection_testing.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&up="+up_access+"&del="+del_access+"&re="+re_access,function(e)
+		ajax_with_custom_func("./ajax/connection_testing.php",{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,re:re_access},function(e)
 		{
 			if(e.responseText==='connected')
 			{
@@ -87,7 +87,7 @@ function sync_local_and_server()
 		var del_access=get_session_var('del');
 		var re_access=get_session_var('re');
 		
-		ajax_with_custom_func("./ajax/connection_testing.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&up="+up_access+"&del="+del_access+"&re="+re_access,function(e)
+		ajax_with_custom_func("./ajax/connection_testing.php",{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,re:re_access},function(e)
 		{
 			if(e.responseText==='connected')
 			{
@@ -164,7 +164,7 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 	var re_access=get_session_var('re');
 	var db_name="re_local_" + domain;
 	
-	ajax_with_custom_func("./ajax/sync_download.php","domain="+domain+"&username="+username+"&re="+re_access+"&start_table="+start_table+"&start_offset="+start_offset+"&last_sync_time="+last_sync_time,function(e)
+	ajax_with_custom_func("./ajax/sync_download.php",{domain:domain,username:username,re:re_access,start_table:start_table,start_offset:start_offset,last_sync_time:last_sync_time},function(e)
 	{
 		var response=e.responseXML;
 		//console.log(e.responseText);
@@ -288,7 +288,7 @@ function sync_local_to_server(func)
 			log_data_array.forEach(function(log_data_chunk)
 			{
 				log_data_chunk="<activities>"+log_data_chunk+"</activities>";
-				ajax_with_custom_func("./ajax/sync_upload.php","domain="+domain+"&username="+username+"&cr="+cr_access+"&up="+up_access+"&del="+del_access+"&data="+log_data_chunk+"&last_sync="+last_sync_time,function(e)
+				ajax_with_custom_func("./ajax/sync_upload.php",{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,data:log_data_chunk,last_sync:last_sync_time},function(e)
 				{
 					var response=e.responseXML;
 					//console.log(e.responseText);

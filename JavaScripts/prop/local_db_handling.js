@@ -157,7 +157,7 @@ function backup_server_db()
 		var username=get_username();
 		var cr_access=get_session_var('cr');
 		show_loader();
-		ajax_with_custom_func("./ajax/db_backup.php","domain="+domain+"&username="+username+"&cr="+cr_access,function(e)
+		ajax_with_custom_func("./ajax/db_backup.php",{domain:domain,username:username,cr:cr_access},function(e)
 		{
 			var response=e.responseText;
 			
@@ -205,6 +205,13 @@ function local_read_single_column(columns,callback,results)
 		var data=parser.parseFromString(columns,"text/xml");
 		var table=data.childNodes[0].nodeName;
 		var tcols=data.childNodes[0].childNodes;
+		var sum=false;
+		if(data.childNodes[0].hasAttribute('sum'))
+		{
+			sum=true;
+		}
+		
+		var sum_result=0;
 		
 		if(tcols.length>0)
 		{
@@ -345,15 +352,25 @@ function local_read_single_column(columns,callback,results)
 					
 					if(match===true)
 					{
-						results.push(record[result_column_name]);
-						if(results.length===count)
+						if(sum)
 						{
-							localdb_open_requests-=1;
-							callback(results);
+							sum_result+=parseFloat(record[result_column_name]);
+							result.continue();
 						}
 						else
 						{
-							result.continue();
+							results.push(record[result_column_name]);
+						
+							if(results.length===count)
+							{
+								localdb_open_requests-=1;
+								results=array_unique(results);								
+								callback(results);
+							}
+							else
+							{
+								result.continue();
+							}
 						}
 					}
 					else
@@ -364,8 +381,16 @@ function local_read_single_column(columns,callback,results)
 				else
 				{
 					localdb_open_requests-=1;
-					results=array_unique(results);
-					callback(results);
+					
+					if(sum)
+					{
+						callback([sum_result]);
+					}
+					else
+					{
+						results=array_unique(results);
+						callback(results);
+					}
 				}
 			};
 		}

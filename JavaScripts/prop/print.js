@@ -935,16 +935,19 @@ function form154_print_form()
 	var customer_name=master_form.elements[1].value;
 	var customer_address1=document.getElementById('form154_customer_info').innerHTML;
 	var customer_address=customer_address1.replace("Address<br>","");
-	var date=master_form.elements[3].value;	
-	var invoice_no=master_form.elements[4].value;
-	var customer_cst=master_form.elements[11].value;	
-	var customer_tin=master_form.elements[12].value;
+	var date=master_form.elements[4].value;
+	var invoice_no=master_form.elements[7].value;
+	var customer_cst=master_form.elements[13].value;	
+	var customer_tin=master_form.elements[14].value;
 	var tin_no=get_session_var('tin');
 	var sales_tax_no=get_session_var('sales_tax_no');	
 	var service_tax_no=get_session_var('service_tax_no');	
 	var tax_text="Sales Tax No: "+sales_tax_no;
-	var hiring=false
-		
+	var hiring=false;
+	var a1_job=false;
+	if(master_form.elements[6].checked)
+		a1_job=true;
+
 	var invoice_text="Invoice";
 	if(master_form.elements[2].value=='Retail')
 	{
@@ -1001,7 +1004,7 @@ function form154_print_form()
 		disc_amount_nodes[0].parentNode.removeChild(disc_amount_nodes[0]);
 	}
 
-	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form").remove();
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh").remove();
 	$(table_copy).find('input,textarea').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
@@ -1029,19 +1032,38 @@ function form154_print_form()
 		new_body_html=new_body_html.replace(/<td data-th=\"Date\">From:/g,"");
 		new_body_html=new_body_html.replace(/<br>To:/g,"");
 		new_body_html=new_body_html.replace(/<\/td><\/td>/g,"</td>");
+		//new_body_html=new_body_html.replace(/Fresh:/g,"");
 		
 		$(table_copy).find('tbody').html(new_body_html);
 		$(table_copy).find('tfoot > tr > td:first').attr('colspan','5');
 	}
+	
+	if(a1_job)
+	{
+		var new_table_row="<tr><td>";
+		var new_from_date="";
+		var new_to_date="";		
+		var new_days="";
+		var new_amount=0;
 
-	$(table_copy).find('tbody').attr('style','height:400px;');
+		$(table_copy).find('tbody>tr').each(function()
+		{
+			new_table_row+=$(this).find('td:first').html()+" "+$(this).find('td:nth-child(2)').html()+" NOS., ";
+			new_from_date=$(this).find('td:nth-child(3)').html();
+			new_to_date=$(this).find('td:nth-child(4)').html();
+			new_days=$(this).find('td:nth-child(5)').html();
+			new_amount+=parseFloat($(this).find('td:nth-child(7)').html());
+		});
+		new_table_row+="</td><td>1 job</td><td>"+new_from_date+"</td><td>"+new_to_date+"</td><td>"+new_days+"</td><td></td><td>"+new_amount+"</td></tr>";
+		$(table_copy).find('tbody').html(new_table_row);
+	}
+
+	$(table_copy).find('tbody').attr('style','height:400px;min-height:400px;');
 	$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
-
 	$(table_copy).find("tbody>tr").attr('style','flex:1;height:30px');
 	
-	//console.log($(table_copy).find("tbody").html());
 	if(hiring)
 	{
 		$(table_copy).find("th:first, td:first").css('width','200px');

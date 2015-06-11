@@ -8106,13 +8106,17 @@ function form154_update_form()
 		
 		var customer=form.elements[1].value;
 		var bill_type=form.elements[2].value;
-		var print_1_job='no';
-		if(form.elements[2].checked)
-			print_1_job='yes';
-
+		var storage=form.elements[3].value;		
 		var bill_date=get_raw_time(form.elements[4].value);
-		var bill_num=form.elements[5].value;
-		var storage=form.elements[6].value;
+		var narration=form.elements[5].value;		
+		var print_1_job='no';
+		if(form.elements[6].checked)
+			print_1_job='yes';
+		var bill_num=form.elements[7].value;
+		
+		var hiring=false;
+		if(bill_type=='Hiring')
+			hiring=true;
 		
 		var amount=0;
 		var discount=0;
@@ -8130,10 +8134,10 @@ function form154_update_form()
 			var subform=document.getElementById(subform_id);
 			if(hiring)
 			{
-				amount+=parseFloat(subform.elements[6].value);
-				total+=parseFloat(subform.elements[7].value);
-				discount+=parseFloat(subform.elements[8].value);
-				tax+=parseFloat(subform.elements[9].value);
+				amount+=parseFloat(subform.elements[7].value);
+				total+=parseFloat(subform.elements[8].value);
+				discount+=parseFloat(subform.elements[9].value);
+				tax+=parseFloat(subform.elements[10].value);
 			}
 			else
 			{			
@@ -8149,8 +8153,8 @@ function form154_update_form()
 		tax-=(discount*0.125);
 		total=my_round(amount-discount+tax+cartage,0);
 		
-		var data_id=form.elements[7].value;
-		var transaction_id=form.elements[8].value;
+		var data_id=form.elements[8].value;
+		var transaction_id=form.elements[9].value;
 		var last_updated=get_my_time();		
 		
 		var data_xml="<bills>" +
@@ -8294,10 +8298,10 @@ function form155_update_item(form)
 	{
 		var name=form.elements[0].value;
 		var cost_price=form.elements[1].value;
-		var system_quantity=form.elements[3].value;
-		var actual_quantity=form.elements[4].value;
-		var quantity=parseFloat(actual_quantity)-parseFloat(system_quantity);
-		var data_id=form.elements[5].value;
+		var fresh_quantity=form.elements[3].value;
+		var hireable_quantity=form.elements[4].value;
+		var hired_quantity=form.elements[5].value;
+		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var data_xml="<product_instances>" +
 					"<id>"+data_id+"</id>" +
@@ -8314,30 +8318,15 @@ function form155_update_item(form)
 					"<notes>Inventory for product "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var adjust_xml="<inventory_adjust>" +
-					"<id>"+get_new_key()+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+name+"</batch>" +
-					"<quantity>"+quantity+"</quantity>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</inventory_adjust>";	
 		if(is_online())
 		{
 			server_update_row(data_xml,activity_xml);
-			if(quantity!==0)
-			{
-				server_create_simple(adjust_xml);
-			}
 		}
 		else
 		{
 			local_update_row(data_xml,activity_xml);
-			if(quantity!==0)
-			{
-				local_create_simple(adjust_xml);
-			}
 		}
-		for(var i=0;i<5;i++)
+		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

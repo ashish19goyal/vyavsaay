@@ -7003,6 +7003,7 @@ function modal115_action(func)
 	var yes_button=form115.elements[1];
 	var no_button=form115.elements[2];
 	
+	$(yes_button).off('click');
 	$(yes_button).on('click',function()
 	{
 		$("#modal115").dialog("close");

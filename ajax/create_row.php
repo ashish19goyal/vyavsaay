@@ -27,6 +27,11 @@
 	$data_xml=$_POST['data_xml'];
 	$activity_xml=$_POST['activity_xml'];
 	
+//	$data_xml=htmlspecialchars($data_xml);
+//	$activity_xml=htmlspecialchars($activity_xml);
+	
+//	echo $data_xml;
+			
 	$input_xml=new DOMDocument();
 	$input_xml->loadXML($data_xml);
 	$data_input=$input_xml->documentElement;

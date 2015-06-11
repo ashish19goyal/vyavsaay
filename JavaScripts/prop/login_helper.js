@@ -51,7 +51,7 @@ function login_action()
 
 function login_online(username,domain,pass)
 {
-	ajax_with_custom_func("./ajax/login.php","domain="+domain+"&user="+username+"&pass="+pass,function(e)
+	ajax_with_custom_func("./ajax/login.php",{domain:domain,user:username,pass:pass},function(e)
 	{
 		login_status=e.responseText;
 		//console.log(login_status);
@@ -397,14 +397,14 @@ function register_click()
 	else	
 	{
 		show_loader();
-		var post_data="userid="+userid+
-						"&email="+email+
-						"&name="+name+
-						"&pass="+pass+
-						"&industry="+industry+
-						"&phone="+phone;
+		var post_data={userid:userid,
+						email:email,
+						name:name,
+						pass:pass,
+						industry:industry,
+						phone:phone};
 
-		ajax_with_custom_func("./ajax/user_db_creation.php","userid="+userid+"&industry="+industry,function(e2)
+		ajax_with_custom_func("./ajax/user_db_creation.php",{userid:userid,industry:industry},function(e2)
 		{
 			if(e2.responseText=="")
 			{
@@ -451,7 +451,7 @@ function userid_validation(userid)
 		}
 		else
 		{
-			ajax_with_custom_func("./ajax/verify_id.php","userid="+userid,function(e)
+			ajax_with_custom_func("./ajax/verify_id.php",{userid:userid},function(e)
 			{
 				status=e.responseText;
 				//console.log(status);
@@ -478,7 +478,7 @@ function emailid_validation(emailid)
 {
 	if(emailid!="")
 	{
-		ajax_with_custom_func("./ajax/verify_id.php","&email="+emailid,function(e)
+		ajax_with_custom_func("./ajax/verify_id.php",{email:emailid},function(e)
 		{
 			status=e.responseText;
 			//console.log(status);
@@ -520,10 +520,10 @@ function reseller_register_click()
 	else	
 	{
 		show_loader();
-		var post_data="userid="+userid+
-						"&email="+email+
-						"&name="+name+
-						"&phone="+phone;
+		var post_data={userid:userid,
+						email:email,
+						name:name,
+						phone:phone};
 
 		ajax_with_custom_func("./ajax/reseller_register.php",post_data,function(e)
 		{
@@ -558,7 +558,7 @@ function reseller_id_validation(userid)
 		}
 		else
 		{
-			ajax_with_custom_func("./ajax/reseller_verify_id.php","userid="+userid,function(e)
+			ajax_with_custom_func("./ajax/reseller_verify_id.php",{userid:userid},function(e)
 			{
 				status=e.responseText;
 				if(status=="match")
@@ -584,7 +584,7 @@ function reseller_emailid_validation(emailid)
 {
 	if(emailid!="")
 	{
-		ajax_with_custom_func("./ajax/reseller_verify_id.php","&email="+emailid,function(e)
+		ajax_with_custom_func("./ajax/reseller_verify_id.php",{email:emailid},function(e)
 		{
 			status=e.responseText;
 			//console.log(status);

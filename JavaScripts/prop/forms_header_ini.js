@@ -5492,16 +5492,18 @@ function form154_header_ini()
 	
 	var customers_filter=fields.elements[1];
 	var bill_type=fields.elements[2];
-	var a1_job=document.getElementById('form154_1job');
+	var store_filter=fields.elements[3];	
 	var bill_date=fields.elements[4];
-	var bill_num=fields.elements[5];
-	var store_filter=fields.elements[6];	
-	fields.elements[7].value=get_new_key();
-	fields.elements[8].value=fields.elements[7].value;
-	var save_button=fields.elements[9];
-	var cst_filter=fields.elements[12];
-	var tin_filter=fields.elements[13];
+	var narration=fields.elements[5];
+	var a1_job=document.getElementById('form154_1job');
+	var bill_num=fields.elements[7];
+	fields.elements[8].value=get_new_key();
+	fields.elements[9].value=fields.elements[8].value;
+	var save_button=fields.elements[10];
+	var cst_filter=fields.elements[13];
+	var tin_filter=fields.elements[14];
 	
+	narration.value="";
 	$(a1_job).hide();
 	
 	bill_type.removeAttribute('readonly');

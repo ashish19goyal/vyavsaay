@@ -32,11 +32,12 @@ function form2_create_item(form)
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</newsletter_items>";
 			
-			$.ajax
-			({
+			$.ajax(
+			{
 				type: "POST",
 				url: "./ajax/save_image.php",
-				data: {
+				data: 
+				{
 					blob: blob,
 					name:blob_name
 				}
@@ -11881,8 +11882,8 @@ function form154_create_product(form)
 {
 	if(is_create_access('form154'))
 	{
-		var storage=document.getElementById("form154_master").elements[5].value;
-		var bill_id=document.getElementById("form154_master").elements[6].value;
+		var storage=document.getElementById("form154_master").elements[3].value;
+		var bill_id=document.getElementById("form154_master").elements[8].value;
 		
 		var name=form.elements[0].value;
 		var quantity=form.elements[1].value;
@@ -11949,8 +11950,8 @@ function form154_create_service(form)
 {
 	if(is_create_access('form154'))
 	{
-		var storage=document.getElementById("form154_master").elements[5].value;
-		var bill_id=document.getElementById("form154_master").elements[6].value;
+		var storage=document.getElementById("form154_master").elements[3].value;
+		var bill_id=document.getElementById("form154_master").elements[8].value;
 		
 		var name=form.elements[0].value;
 		var desc=form.elements[1].value;
@@ -12020,8 +12021,8 @@ function form154_create_hiring_item(form)
 {
 	if(is_create_access('form154'))
 	{
-		var storage=document.getElementById("form154_master").elements[5].value;
-		var bill_id=document.getElementById("form154_master").elements[6].value;
+		var storage=document.getElementById("form154_master").elements[3].value;
+		var bill_id=document.getElementById("form154_master").elements[8].value;
 		
 		var name=form.elements[0].value;
 		var fresh='no';
@@ -12103,12 +12104,13 @@ function form154_create_form()
 		
 		var customer=form.elements[1].value;
 		var bill_type=form.elements[2].value;
-		var print_1_job='no';
-		if(form.elements[2].checked)
-			print_1_job='yes';
+		var storage=form.elements[3].value;		
 		var bill_date=get_raw_time(form.elements[4].value);
-		var bill_num=form.elements[5].value;
-		var storage=form.elements[6].value;		
+		var narration=form.elements[5].value;		
+		var print_1_job='no';
+		if(form.elements[6].checked)
+			print_1_job='yes';
+		var bill_num=form.elements[7].value;
 		
 		var hiring=false;
 		if(bill_type=='Hiring')
@@ -12125,10 +12127,10 @@ function form154_create_form()
 			var subform=document.getElementById(subform_id);
 			if(hiring)
 			{
-				amount+=parseFloat(subform.elements[6].value);
-				total+=parseFloat(subform.elements[7].value);
-				discount+=parseFloat(subform.elements[8].value);
-				tax+=parseFloat(subform.elements[9].value);
+				amount+=parseFloat(subform.elements[7].value);
+				total+=parseFloat(subform.elements[8].value);
+				discount+=parseFloat(subform.elements[9].value);
+				tax+=parseFloat(subform.elements[10].value);
 			}
 			else
 			{			
@@ -12139,9 +12141,9 @@ function form154_create_form()
 			}
 		});
 
-		var data_id=form.elements[7].value;
-		var transaction_id=form.elements[8].value;
-		var save_button=form.elements[9];
+		var data_id=form.elements[8].value;
+		var transaction_id=form.elements[9].value;
+		var save_button=form.elements[10];
 		var last_updated=get_my_time();
 		
 		var data_xml="<bills>" +
@@ -12158,6 +12160,7 @@ function form154_create_form()
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<storage>"+storage+"</storage>"+
 					"<print_1_job>"+print_1_job+"</print_1_job>"+
+					"<notes>"+narration+"</notes>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bills>";
 		var activity_xml="<activity>" +

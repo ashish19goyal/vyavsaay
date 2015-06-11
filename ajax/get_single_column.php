@@ -34,7 +34,17 @@
 				$columns_array=array();
 				$values_array=array();
 				$result_column=$input->childNodes->item(0)->nodeName;
+				$sum=false;
+				if($input->hasAttribute('sum'))
+				{
+					$sum=true;
+				}
+				
 				$query="select distinct $result_column from $table where ";
+				if($sum)
+				{
+					$query="select sum(".$result_column.") from $table where ";
+				}
 				$order_by=" ORDER BY last_updated DESC, ";
 				
 				$limit=" limit ?,?";
@@ -92,7 +102,12 @@
 				if(count($values_array)===0)
 				{
 					$query="select distinct $result_column from $table";
+					if($sum)
+					{
+						$query="select sum(".$result_column.") from $table";
+					}
 				}
+		
 				$query.=$order_by."id DESC";
 				
 				if($limit_count!==0)
@@ -113,7 +128,14 @@
 				for($i=0;$i<count($struct_res);$i++)
 				{
 					$xmlresponse.="<row>";
-					$xmlresponse.=$struct_res[$i][0];
+					if($struct_res[$i][0]==null || $struct_res[$i][0]=="null")
+					{
+						$xmlresponse.="0";
+					}
+					else 
+					{
+						$xmlresponse.=$struct_res[$i][0];
+					}
 					$xmlresponse.="</row>";
 				}
 				
@@ -130,5 +152,4 @@
 		{
 			echo "Invalid session";
 		}
-
 ?>

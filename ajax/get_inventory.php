@@ -17,7 +17,7 @@
 			{
 				$values=array($product,$batch);
 				$query1_values=array($product,$batch,'yes');
-				$query1="select sum(quantity) from bill_items where item_name=? and batch=? and hired!=?";
+				$query1="select sum(quantity) from bill_items where item_name=? and batch=? and (hired <> ? or hired is null)";
 				$query2="select sum(quantity) from supplier_bill_items where product_name=? and batch=?";
 				$query3="select sum(quantity) from customer_return_items where item_name=? and batch=?";
 				$query4="select sum(quantity) from supplier_return_items where item_name=? and batch=?";
@@ -31,7 +31,7 @@
 				{
 					$values=array($product);
 					$query1_values=array($product,'yes');
-					$query1="select sum(quantity) from bill_items where item_name=? and hired!=?";
+					$query1="select sum(quantity) from bill_items where item_name=? and (hired <> ? or hired is null)";
 					$query2="select sum(quantity) from supplier_bill_items where product_name=?";
 					$query3="select sum(quantity) from customer_return_items where item_name=? and type=?";
 					$query4="select sum(quantity) from supplier_return_items where item_name=?";

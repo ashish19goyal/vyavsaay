@@ -15,7 +15,6 @@ function get_single_column_data(callback,request_data)
 	}
 }
 
-
 /**
  * @returns {Array}
  */
@@ -353,7 +352,6 @@ function set_static_value_list(table,list,filter_element,func)
 	}
 }
 
-
 function set_my_value_list(filter_data,filter_element)
 {	
 	get_single_column_data(function(data)
@@ -534,7 +532,6 @@ function set_my_value_func(filter_data,filter_element,func)
 		func();
 	},filter_data);
 }
-
 
 function set_my_max_value(filter_data,filter_element)
 {

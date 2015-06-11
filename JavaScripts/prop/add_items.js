@@ -8074,7 +8074,7 @@ function form154_add_product()
 	var customer_name=filter_fields.elements[1].value;
 	
 	var hiring=false;
-	if(filter_fields.elements[2].value=='Hiring')
+	if(bill_type=='Hiring')
 	{	hiring=true;  }
 				
 	if(is_create_access('form154'))
@@ -8123,18 +8123,18 @@ function form154_add_product()
 	
 			var fields=document.getElementById("form154_"+id);
 			var name_filter=fields.elements[0];
-			var quantity_filter=fields.elements[1];
-			var from_filter=fields.elements[2];
-			var to_filter=fields.elements[3];
-			var days_filter=fields.elements[4];
-			var price_filter=fields.elements[5];
-			var amount_filter=fields.elements[6];
-			var total_filter=fields.elements[7];
-			var discount_filter=fields.elements[8];
-			var tax_filter=fields.elements[9];
-			var id_filter=fields.elements[10];
-			var save_button=fields.elements[11];
-			var tax_unit_filter=fields.elements[15];
+			var quantity_filter=fields.elements[2];
+			var from_filter=fields.elements[3];
+			var to_filter=fields.elements[4];
+			var days_filter=fields.elements[5];
+			var price_filter=fields.elements[6];
+			var amount_filter=fields.elements[7];
+			var total_filter=fields.elements[8];
+			var discount_filter=fields.elements[9];
+			var tax_filter=fields.elements[10];
+			var id_filter=fields.elements[11];
+			var save_button=fields.elements[12];
+			var tax_unit_filter=fields.elements[16];
 			
 			$(from_filter).datepicker();
 			$(to_filter).datepicker();

@@ -2579,7 +2579,7 @@ function form41_ini()
 		var domain=get_domain();
 		var username=get_username();
 		var re_access=get_session_var('re');
-		ajax_with_custom_func("./ajax/geoCode.php","domain="+domain+"&username="+username+"&type=customers&re="+re_access,function(e)
+		ajax_with_custom_func("./ajax/geoCode.php",{domain:domain,username:username,type:'customers',re:re_access},function(e)
 		{
 			//console.log(e.responseText);
 
@@ -6983,7 +6983,7 @@ function form85_ini()
 		var domain=get_domain();
 		var username=get_username();
 		var re_access=get_session_var('re');
-		ajax_with_custom_func("./ajax/geoCode.php","domain="+domain+"&username="+username+"&type=suppliers&re="+re_access,function(e)
+		ajax_with_custom_func("./ajax/geoCode.php",{domain:domain,username:username,type:'suppliers',re:re_access},function(e)
 		{
 			console.log(e.responseText);
 
@@ -7146,7 +7146,7 @@ function form86_ini()
 		var domain=get_domain();
 		var username=get_username();
 		var re_access=get_session_var('re');
-		ajax_with_custom_func("./ajax/geoCode.php","domain="+domain+"&username="+username+"&type=staff&re="+re_access,function(e)
+		ajax_with_custom_func("./ajax/geoCode.php",{domain:domain,username:username,type:'staff',re:re_access},function(e)
 		{
 			$('#form86_header').html("");
 		
@@ -15207,6 +15207,7 @@ function form154_ini()
 				"<transaction_id></transaction_id>" +
 				"<storage></storage>"+
 				"<print_1_job></print_1_job>"+
+				"<notes></notes>"+
 				"</bills>";
 		var bill_items_column="<bill_items>" +
 				"<id></id>" +
@@ -15230,31 +15231,33 @@ function form154_ini()
 		{
 			var filter_fields=document.getElementById('form154_master');
 			var hiring=false;
-				
+			var a1_job=document.getElementById('form154_1job');
+
 			for (var i in bill_results)
 			{
 				filter_fields.elements[1].value=bill_results[i].customer_name;
 				filter_fields.elements[2].value=bill_results[i].billing_type;
+				filter_fields.elements[3].value=bill_results[i].storage;
+				filter_fields.elements[4].value=get_my_past_date(bill_results[i].bill_date);
+				filter_fields.elements[5].value=bill_results[i].notes;
+				
 				if(bill_results[i].print_1_job=='yes')
 				{
-					filter_fields.elements[2].checked=true;
+					filter_fields.elements[6].checked=true;
 				}			
 				else 
 				{
-					filter_fields.elements[2].checked=false;
+					filter_fields.elements[6].checked=false;
 				}
-	
-				filter_fields.elements[2].value=bill_results[i].billing_type;
-				filter_fields.elements[4].value=get_my_past_date(bill_results[i].bill_date);
-				filter_fields.elements[5].value=bill_results[i].bill_num;
-				filter_fields.elements[6].value=bill_results[i].storage;
-				filter_fields.elements[7].value=bill_id;				
-				filter_fields.elements[8].value=bill_results[i].transaction_id;
-				var save_button=filter_fields.elements[9];
+
+				filter_fields.elements[7].value=bill_results[i].bill_num;
+				filter_fields.elements[8].value=bill_id;				
+				filter_fields.elements[9].value=bill_results[i].transaction_id;
+				var save_button=filter_fields.elements[10];
 				filter_fields.elements[2].setAttribute('readonly','readonly');
-				filter_fields.elements[6].setAttribute('readonly','readonly');
-				var cst_filter=filter_fields.elements[12];
-				var tin_filter=filter_fields.elements[13];
+				filter_fields.elements[3].setAttribute('readonly','readonly');
+				var cst_filter=filter_fields.elements[13];
+				var tin_filter=filter_fields.elements[14];
 				
 				if(filter_fields.elements[2].value=='Hiring')
 				{
@@ -15341,7 +15344,7 @@ function form154_ini()
 							"<th>Amount</th>"+
 							"<th><input type='button' title='Add Product' class='add_icon' onclick='form154_add_product();'></th>"+
 							"</tr>";
-								
+					$(a1_job).show();				
 				}
 				else if(filter_fields.elements[2].value=='Retail' || filter_fields.elements[2].value=='Tax')
 				{
@@ -15519,40 +15522,49 @@ function form155_ini()
 						rowsHTML+="<img src='./images/edit.png' class='edit_icon' onclick=\"modal38_action('"+result.id+"','"+result.sale_price+"');\">";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Quantity'>";
-						rowsHTML+="System: <input type='number' step='any' readonly='readonly' form='form155_"+result.id+"'>";
-						rowsHTML+="</br>Available: <input type='number' step='any' readonly='readonly' form='form155_"+result.id+"' class='dblclick_editable'>";
+						rowsHTML+="Fresh: <input type='number' step='any' readonly='readonly' form='form155_"+result.id+"'>";
+						rowsHTML+="<br>Hireable: <input type='number' step='any' readonly='readonly' form='form155_"+result.id+"'>";
+						rowsHTML+="<br>Hired: <input type='number' step='any' readonly='readonly' form='form155_"+result.id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form155_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' title='Update and adjust' form='form155_"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' title='Update' form='form155_"+result.id+"'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form155_body').append(rowsHTML);
 			var fields=document.getElementById("form155_"+result.id);
-			var sys_inventory=fields.elements[3];
-			var actual_inventory=fields.elements[4];
+			var fresh_inventory=fields.elements[3];
+			var hireable_inventory=fields.elements[4];
+			var hired_inventory=fields.elements[5];
+
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
 				form155_update_item(fields);
 			});
-			
-			get_inventory(result.product_name,'',function(inventory)
+
+			var hired_data="<bill_items sum='yes'>"+
+							"<quantity></quantity>"+
+							"<hired exact='yes'>yes</hired>"+
+							"<from_date upperbound='yes'>"+get_my_time()+"</from_date>"+
+							"<to_date lowerbound='yes'>"+(parseFloat(get_my_time())+86400000)+"</to_date>"+
+							"<item_name exact='yes'>"+result.product_name+"</item_name>"+
+							"</bill_items>";
+			set_my_value(hired_data,hired_inventory);
+
+			var hireable_data="<bill_items sum='yes'>"+
+							"<quantity></quantity>"+
+							"<hired exact='yes'>yes</hired>"+
+							"<fresh exact='yes'>yes</fresh>"+
+							"<item_name exact='yes'>"+result.product_name+"</item_name>"+
+							"</bill_items>";
+			set_my_value_func(hireable_data,hireable_inventory,function()
 			{
-				sys_inventory.value=inventory;
-			});
-			
-			var inventory_data="<bill_items type='sub'>"+
-								"<quantity></quantity>"+
-								"<hired exact='yes'>yes</hired>"+
-								"<from_date upperbound='yes'>"+get_my_time()+"</from_date>"+
-								"<to_date lowerbound='yes'>"+(parseFloat(get_my_time())+86400000)+"</to_date>"+
-								"<item_name exact='yes'>"+result.product_name+"</item_name>"+
-								"</bill_items>";
-			get_available_inventory(result.product_name,'',inventory_data,function(inventory)
-			{
-				actual_inventory.value=inventory;
+				get_inventory(result.product_name,'',function(inventory)
+				{
+					fresh_inventory.value=parseFloat(inventory)-parseFloat(hireable_inventory.value);
+				});
 			});
 		});
 
