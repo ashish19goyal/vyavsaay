@@ -943,7 +943,7 @@ function form154_print_form()
 	var tin_no=get_session_var('tin');
 	var sales_tax_no=get_session_var('sales_tax_no');	
 	var service_tax_no=get_session_var('service_tax_no');	
-	var tax_text="Sales Tax No: "+sales_tax_no;
+	var tax_text="Tin No: "+tin_no;
 	var hiring=false;
 	var a1_job=false;
 	if(master_form.elements[6].checked)
@@ -960,14 +960,15 @@ function form154_print_form()
 	}
 	else if(master_form.elements[2].value=='Hiring')
 	{
-		hiring=true;	
+		hiring=true;
+		tax_text="Service Tax no: "+service_tax_no;	
 	}
 	else if(master_form.elements[2].value=='Service')
 	{
-		tax_text="Service Tax no: "+service_tax_no;
+		tax_text="<br>Service Tax no: "+service_tax_no;
 	}
 	var tandc_text=get_session_var('bill_message');
-	var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
+	var signature_text="<br>For "+bt+"<br><br><br>Auth. Signatory<br>";
 	
 	////////////////filling in the content into the containers//////////////////////////
 
@@ -986,7 +987,7 @@ function form154_print_form()
 		customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address;
 	}
 
-	business_info.innerHTML="Tin No: "+tin_no+"<br>"+tax_text+"<br>Date: "+date+"<br>Invoice No: "+invoice_no+"<br>Narration: "+narration;
+	business_info.innerHTML=tax_text+"<br>Date: "+date+"<br>Invoice No: "+invoice_no+"<br>Narration: "+narration;
 	
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
@@ -1036,7 +1037,8 @@ function form154_print_form()
 		//new_body_html=new_body_html.replace(/Fresh:/g,"");
 		
 		$(table_copy).find('tbody').html(new_body_html);
-		$(table_copy).find('tfoot > tr > td:first').attr('colspan','5');
+		$(table_copy).find('tfoot > tr > td:first').attr('colspan','4');
+		$(table_copy).find('tfoot > tr > td:nth-child(2)').attr('colspan','2');
 	}
 	
 	if(a1_job)
@@ -1059,7 +1061,7 @@ function form154_print_form()
 		$(table_copy).find('tbody').html(new_table_row);
 	}
 
-	$(table_copy).find('tbody').attr('style','height:400px;min-height:400px;');
+	$(table_copy).find('tbody').attr('style','height:500px;min-height:500px;');
 	$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
