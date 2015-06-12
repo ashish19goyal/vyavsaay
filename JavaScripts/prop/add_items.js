@@ -8123,6 +8123,7 @@ function form154_add_product()
 	
 			var fields=document.getElementById("form154_"+id);
 			var name_filter=fields.elements[0];
+			var fresh=fields.elements[1];
 			var quantity_filter=fields.elements[2];
 			var from_filter=fields.elements[3];
 			var to_filter=fields.elements[4];
@@ -8154,7 +8155,7 @@ function form154_add_product()
 			var product_data="<product_master>" +
 					"<name></name>" +
 					"</product_master>";
-					
+
 			set_my_value_list_func(product_data,name_filter,function () 
 			{
 				$(name_filter).focus();
@@ -8169,6 +8170,64 @@ function form154_add_product()
 				}
 			});
 	
+			$(fresh).on('blur',function()
+			{
+				if(fresh.checked)
+				{
+					var hireable_data="<bill_items sum='yes'>"+
+									"<quantity></quantity>"+
+									"<hired exact='yes'>yes</hired>"+
+									"<fresh exact='yes'>yes</fresh>"+
+									"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+									"</bill_items>";
+					get_single_column_data(function(data)
+					{
+						var hireable_quantity=0;
+						if(data.length>0)
+						{
+							hireable_quantity=parseFloat(data[0]);
+						}
+						get_inventory(name_filter.value,'',function(inventory)
+						{
+							$(quantity_filter).attr('placeholder',(parseFloat(inventory)-hireable_quantity));
+						});
+					},hireable_data);
+				}
+				else 
+				{
+					var hireable_data="<bill_items sum='yes'>"+
+									"<quantity></quantity>"+
+									"<hired exact='yes'>yes</hired>"+
+									"<fresh exact='yes'>yes</fresh>"+
+									"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+									"</bill_items>";
+					get_single_column_data(function(data)
+					{
+						var hireable_quantity=0;
+						if(data.length>0)
+						{
+							hireable_quantity=parseFloat(data[0]);
+						}
+						var hired_data="<bill_items sum='yes'>"+
+									"<quantity></quantity>"+
+									"<hired exact='yes'>yes</hired>"+
+									"<from_date upperbound='yes'>"+get_my_time()+"</from_date>"+
+									"<to_date lowerbound='yes'>"+(parseFloat(get_my_time())+86400000)+"</to_date>"+
+									"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+									"</bill_items>";
+						get_single_column_data(function(data2)
+						{
+							var hired_quantity=0;
+							if(data2.length>0)
+							{
+								hired_quantity=parseFloat(data[0]);
+							}
+							$(quantity_filter).attr('placeholder',(hireable_quantity-hired_quantity));
+						},hired_data);
+					},hireable_data);
+				}
+			});
+			
 			$(name_filter).on('blur',function(event)
 			{
 				if(bill_type=='undefined' || bill_type=='')
@@ -8189,11 +8248,61 @@ function form154_add_product()
 					set_my_value(price_data,price_filter);
 				}
 				
-				get_inventory(name_filter.value,'',function(quantity)
+				if(fresh.checked)
 				{
-					$(quantity_filter).attr('placeholder',quantity);
-				});
-	
+					var hireable_data="<bill_items sum='yes'>"+
+									"<quantity></quantity>"+
+									"<hired exact='yes'>yes</hired>"+
+									"<fresh exact='yes'>yes</fresh>"+
+									"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+									"</bill_items>";
+					get_single_column_data(function(data)
+					{
+						var hireable_quantity=0;
+						if(data.length>0)
+						{
+							hireable_quantity=parseFloat(data[0]);
+						}
+						get_inventory(name_filter.value,'',function(inventory)
+						{
+							$(quantity_filter).attr('placeholder',(parseFloat(inventory)-hireable_quantity));
+						});
+					},hireable_data);
+				}
+				else 
+				{
+					var hireable_data="<bill_items sum='yes'>"+
+									"<quantity></quantity>"+
+									"<hired exact='yes'>yes</hired>"+
+									"<fresh exact='yes'>yes</fresh>"+
+									"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+									"</bill_items>";
+					get_single_column_data(function(data)
+					{
+						var hireable_quantity=0;
+						if(data.length>0)
+						{
+							hireable_quantity=parseFloat(data[0]);
+						}
+						var hired_data="<bill_items sum='yes'>"+
+									"<quantity></quantity>"+
+									"<hired exact='yes'>yes</hired>"+
+									"<from_date upperbound='yes'>"+get_my_time()+"</from_date>"+
+									"<to_date lowerbound='yes'>"+(parseFloat(get_my_time())+86400000)+"</to_date>"+
+									"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+									"</bill_items>";
+						get_single_column_data(function(data2)
+						{
+							var hired_quantity=0;
+							if(data2.length>0)
+							{
+								hired_quantity=parseFloat(data[0]);
+							}
+							$(quantity_filter).attr('placeholder',(hireable_quantity-hired_quantity));
+						},hired_data);
+					},hireable_data);
+				}
+
 				var tax_data="<attributes>" +
 						"<value></value>"+						
 						"<attribute exact='yes'>hiring tax rate</attribute>" +
@@ -8323,11 +8432,25 @@ function form154_add_product()
 					set_my_value(price_data,price_filter);
 				}
 					
-				get_inventory(name_filter.value,'',function(quantity)
+				var hireable_data="<bill_items sum='yes'>"+
+								"<quantity></quantity>"+
+								"<hired exact='yes'>yes</hired>"+
+								"<fresh exact='yes'>yes</fresh>"+
+								"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+								"</bill_items>";
+				get_single_column_data(function(data)
 				{
-					$(quantity_filter).attr('placeholder',quantity);
-				});
-	
+					var hireable_quantity=0;
+					if(data.length>0)
+					{
+						hireable_quantity=parseFloat(data[0]);
+					}
+					get_inventory(name_filter.value,'',function(inventory)
+					{
+						$(quantity_filter).attr('placeholder',(parseFloat(inventory)-hireable_quantity));
+					});
+				},hireable_data);
+
 				var tax_data="<product_master>" +
 						"<tax></tax>" +
 						"<name exact='yes'>"+name_filter.value+"</name>" +

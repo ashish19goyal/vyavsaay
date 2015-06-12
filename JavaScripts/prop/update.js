@@ -8139,6 +8139,13 @@ function form154_update_form()
 				discount+=parseFloat(subform.elements[9].value);
 				tax+=parseFloat(subform.elements[10].value);
 			}
+			else if(bill_type=='Service')
+			{			
+				amount+=parseFloat(subform.elements[4].value);
+				total+=parseFloat(subform.elements[5].value);
+				discount+=parseFloat(subform.elements[6].value);
+				tax+=parseFloat(subform.elements[7].value);
+			}
 			else
 			{			
 				amount+=parseFloat(subform.elements[3].value);
