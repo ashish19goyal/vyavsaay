@@ -4539,7 +4539,7 @@ function modal43_action(date_initiated,project_id)
 						"<t_initiated>"+get_raw_time(date_initiated)+"</t_initiated>" +
 						"<t_due>"+t_due+"</t_due>" +
 						"<status>"+status+"</status>" +
-						"<task_hours>"+hours+"</task_hours>" +
+						"<task_hours>1</task_hours>" +
 						"<source>project</source>" +
 						"<source_id>"+project_id+"</source_id>" +
 						"<last_updated>"+last_updated+"</last_updated>" +

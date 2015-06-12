@@ -293,7 +293,8 @@
 	<bills>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer_name index='yes' type="TEXT"></customer_name>
-			<bill_num index='yes' type="VARCHAR(10)"></bill_num>
+			<bill_num index='yes' type="VARCHAR(20)"></bill_num>
+			<order_id index='yes' type="VARCHAR(20)"></order_id>
 			<bill_date index='yes' type="BIGINT"></bill_date>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<total index='yes' type="DECIMAL(12,2)"></total>
@@ -336,6 +337,7 @@
 			<storage index='yes' type="VARCHAR(25)"></storage>
 			<hired index='yes' type="VARCHAR(25)"></hired><!--yes/no-->
 			<fresh index='yes' type="VARCHAR(25)"></fresh><!--yes/no-->
+			<picked_status index='yes' type="VARCHAR(25)"></picked_status><!--pending/picked-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bill_items>
 	<customer_returns>
@@ -427,7 +429,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<bar_code index='yes' type="TEXT"></bar_code>
 			<name index='yes' type="TEXT" unique='yes'></name>
-			<description index='no' type="TEXT"></description>
+			<description index='yes' type="TEXT"></description>
 			<make index='yes' type="TEXT"></make>
 			<tax index='no' type="DECIMAL(12,4)"></tax>
 			<length index='no' type="DECIMAL(12,4)"></length>

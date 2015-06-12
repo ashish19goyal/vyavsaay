@@ -1161,6 +1161,71 @@ function report60_header_ini()
 }
 
 /**
+ * @reportNo 63
+ * @report Item Picklist
+ */
+function report63_header_ini()
+{	
+	var form=document.getElementById('report63_header');
+	var type_filter=form.elements[1];
+	var sku_filter=form.elements[2];
+	var item_name_filter=form.elements[3];
+	var order_filter=form.elements[4];
+	var invoice_filter=form.elements[5];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report63_ini();
+	});
+
+	$(order_filter).show();
+	$(invoice_filter).show();			
+	$(sku_filter).show();
+	$(item_name_filter).show();
+		
+	set_static_value_list('item_picklist','pick_type',type_filter);
+	
+	$(type_filter).off('blur');
+	$(type_filter).on('blur',function () 
+	{
+		if(type_filter.value=='aggregated')
+		{
+			var sku_data="<product_master>"+
+				"<name></name>"+
+				"</product_master>";
+			set_my_filter(sku_data,sku_filter);	
+
+			var name_data="<product_master>"+
+				"<description></description>"+
+				"</product_master>";
+			set_my_filter(name_data,item_name_filter);
+			
+			$(sku_filter).show();
+			$(item_name_filter).show();
+		}
+		else
+		{
+			var order_data="<bills>"+
+				"<order_id></order_id>"+
+				"</bills>";
+			set_my_filter(order_data,order_filter);	
+
+			var invoice_data="<bills>"+
+				"<bill_num></bill_num>"+
+				"</bills>";
+			set_my_filter(invoice_data,invoice_filter);
+			
+			$(order_filter).show();
+			$(invoice_filter).show();			
+		}
+	});
+	
+				
+}
+
+/**
  * @reportNo 66
  * @report Inventory Status (by store)
  */
@@ -1197,6 +1262,5 @@ function report66_header_ini()
 	var batch_data="<product_instances>"+
 				"<batch></batch>"+
 				"</product_instances>";
-	set_my_filter(batch_data,batch_filter);
-				
+	set_my_filter(batch_data,batch_filter);				
 }

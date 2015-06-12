@@ -9237,6 +9237,7 @@ function form104_ini()
 	
 	if(project_id!="")
 	{
+		console.log('form104');
 		$('#form104_calendar').fullCalendar('destroy');
 		$('#form104_calendar').fullCalendar({
 			header: {
