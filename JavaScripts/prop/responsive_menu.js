@@ -10,6 +10,7 @@ function responsive_tabs()
 		}
 		else 
 		{
+			console.log('resized');
 			accordionsToTabs();
 			hide_unreadable_elements();
 			//setup_grid_display_tabs();
@@ -150,7 +151,9 @@ function init_functions_tabs()
 				else if(func=='staff')
 				{
 					if(typeof map86 != 'undefined')		    	
+		    		{	
 		    			map86.invalidateSize(false);
+		    		}
 		    		$('#form7_calendar').fullCalendar('render');
 		    		$('#form14_calendar').fullCalendar('render');
 				}

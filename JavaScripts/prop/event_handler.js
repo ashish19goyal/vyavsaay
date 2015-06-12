@@ -324,13 +324,6 @@ function grid_click(func)
 {
 	show_function("#"+func+"_main");
 
-	$(window).resize(function(e)
-	{
-		if($(window).width()>550)
-		{
-			$("#"+func+"_main").find('ul').find('li:visible').find('a').first().click();
-		}
-	});
 	if($(window).width()>550)
 	{
 		$("#"+func+"_main").find('ul').find('li:visible').find('a').first().click();

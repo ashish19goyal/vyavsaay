@@ -4502,8 +4502,8 @@ function modal43_action(date_initiated,project_id)
 	var due_filter=form.elements[4];
 	var status_filter=form.elements[5];
 	
-	start_filter.value=date_initiated;
-		
+	//start_filter.value=date_initiated;
+
 	var task_data="<project_phases>" +
 			"<phase_name></phase_name>" +
 			"<project_id exact='yes'>"+project_id+"</project_id>"+
@@ -4536,7 +4536,7 @@ function modal43_action(date_initiated,project_id)
 						"<name>"+name+"</name>" +
 						"<description>"+description+"</description>"+
 						"<assignee>"+assignee+"</assignee>" +
-						"<t_initiated>"+last_updated+"</t_initiated>" +
+						"<t_initiated>"+get_raw_time(date_initiated)+"</t_initiated>" +
 						"<t_due>"+t_due+"</t_due>" +
 						"<status>"+status+"</status>" +
 						"<task_hours>"+hours+"</task_hours>" +

@@ -2387,6 +2387,8 @@ function form89_header_ini()
 		form89_ini();
 	});
 
+	$(next_element).hide();
+	$(prev_element).hide();	
 };
 
 /**

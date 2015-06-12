@@ -1,11 +1,6 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:37034:36036:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:268360:267249:1:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:376810:376256:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:506075:505549:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:228900:228148:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js:11052:10582:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:37034:36036:1:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -17,7 +12,7 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code
 wrap_text_default: 0
 bookmarks_filename_mode: 0
 ssearch_text: set_my_value
@@ -53,7 +48,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/sync.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/time.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/virtual_store.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/worker.js
@@ -83,8 +77,9 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/prices.html
 snr_replacetype: 0
-savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
+savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code
 spell_check_default: 1
 spell_insert_entities: 0
 last_filefilter: 
