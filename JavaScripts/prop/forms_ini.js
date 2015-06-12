@@ -15425,7 +15425,7 @@ function form154_ini()
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 					
-						$('#form154_body').append(rowsHTML);
+						$('#form154_body').prepend(rowsHTML);
 					});
 				}
 				else
@@ -15461,7 +15461,7 @@ function form154_ini()
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 					
-						$('#form154_body').append(rowsHTML);
+						$('#form154_body').prepend(rowsHTML);
 						
 					});
 				}	

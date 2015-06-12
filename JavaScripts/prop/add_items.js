@@ -8410,15 +8410,15 @@ function form154_add_service()
 
 		var fields=document.getElementById("form154_"+id);
 		var name_filter=fields.elements[0];
-		var quantity_filter=fields.elements[1];
-		var price_filter=fields.elements[2];
-		var amount_filter=fields.elements[3];
-		var total_filter=fields.elements[4];
-		var discount_filter=fields.elements[5];
-		var tax_filter=fields.elements[6];
-		var id_filter=fields.elements[7];
-		var save_button=fields.elements[8];
-		var tax_unit_filter=fields.elements[12];
+		var quantity_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var amount_filter=fields.elements[4];
+		var total_filter=fields.elements[5];
+		var discount_filter=fields.elements[6];
+		var tax_filter=fields.elements[7];
+		var id_filter=fields.elements[8];
+		var save_button=fields.elements[9];
+		var tax_unit_filter=fields.elements[13];
 		
 		$(save_button).on("click", function(event)
 		{

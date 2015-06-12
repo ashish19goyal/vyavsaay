@@ -965,7 +965,7 @@ function form154_print_form()
 	}
 	else if(master_form.elements[2].value=='Service')
 	{
-		tax_text="<br>Service Tax no: "+service_tax_no;
+		tax_text="Service Tax no: "+service_tax_no;
 	}
 	var tandc_text=get_session_var('bill_message');
 	var signature_text="<br>For "+bt+"<br><br><br>Auth. Signatory<br>";
