@@ -8167,9 +8167,10 @@ function form154_update_form()
 					"<discount>"+discount+"</discount>" +
 					"<cartage>"+cartage+"</cartage>" +
 					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
 					"<print_1_job>"+print_1_job+"</print_1_job>"+
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
+					"<notes>"+narration+"</notes>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bills>";
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +

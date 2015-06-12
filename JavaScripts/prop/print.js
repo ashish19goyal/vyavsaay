@@ -936,6 +936,7 @@ function form154_print_form()
 	var customer_address1=document.getElementById('form154_customer_info').innerHTML;
 	var customer_address=customer_address1.replace("Address<br>","");
 	var date=master_form.elements[4].value;
+	var narration=master_form.elements[5].value;
 	var invoice_no=master_form.elements[7].value;
 	var customer_cst=master_form.elements[13].value;	
 	var customer_tin=master_form.elements[14].value;
@@ -985,7 +986,7 @@ function form154_print_form()
 		customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address;
 	}
 
-	business_info.innerHTML="Tin No: "+tin_no+"<br>"+tax_text+"<br>Date: "+date+"<br>Invoice No: "+invoice_no;
+	business_info.innerHTML="Tin No: "+tin_no+"<br>"+tax_text+"<br>Date: "+date+"<br>Invoice No: "+invoice_no+"<br>Narration: "+narration;
 	
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
