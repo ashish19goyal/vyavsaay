@@ -99,6 +99,10 @@ td:nth-child(2) input[type="text"]{
 	width:150px;
 }
 
+td:nth-child(2) textarea{
+	width:150px;
+}
+
 .rwd-table td:nth-child(2), .rwd-table th:nth-child(2){
 	width:180px;
 }

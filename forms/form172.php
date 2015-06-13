@@ -4,9 +4,10 @@
 			<tr>
 				<form id='form172_header'></form>
 					<th>Channel <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form172_header'></th>
-					<th>SKU <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form172_header'></th>
+					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form172_header'></th>
 					<th>Price</th>
-					<th><input type='button' form='form172_header' title='Add new channel' class='add_icon' onclick='form172_add_item();'>
+					<th>Profit</th>
+					<th>
 						<input type='button' form='form172_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form172_header' style='visibility: hidden;'>
 					</th>

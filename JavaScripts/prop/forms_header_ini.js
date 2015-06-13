@@ -3079,7 +3079,6 @@ function form112_header_ini()
 	
 	var customers_filter=fields.elements[1];
 	var sale_date=fields.elements[2];
-	
 	var save_button=fields.elements[3];
 	
 	$(save_button).off('click');
@@ -3140,17 +3139,15 @@ function form113_header_ini()
 	var filter_fields=document.getElementById('form113_header');
 	var customer_filter=filter_fields.elements[0];
 	var item_filter=filter_fields.elements[1];
-	var batch_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var cust_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
 	
 	var item_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
-	var batch_data="<product_instances>" +
-			"<batch></batch>" +
-			"</product_instances>";
-	var cust_data="<customers>" +
-			"<acc_name></acc_name>" +
-			"</customers>";
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -3161,11 +3158,11 @@ function form113_header_ini()
 
 	set_my_filter(cust_data,customer_filter);
 	set_my_filter(item_data,item_filter);
-	set_my_filter(batch_data,batch_filter);
+	set_static_filter('unbilled_sale_items','bill_status',status_filter);
 };
 
 /**
- * @form Add Unbilled Purchase Items
+ * @form Add Purchase challan
  * @formNo 114
  */
 function form114_header_ini()
@@ -3174,7 +3171,6 @@ function form114_header_ini()
 	
 	var supplier_filter=fields.elements[1];
 	var purchase_date=fields.elements[2];
-	
 	var save_button=fields.elements[3];
 	
 	$(save_button).off('click');
@@ -3227,7 +3223,7 @@ function form114_header_ini()
 }
 
 /**
- * @form Manage Unbilled purchase Items
+ * @form Manage purchase challan
  * @formNo 115
  */
 function form115_header_ini()
@@ -3235,17 +3231,14 @@ function form115_header_ini()
 	var filter_fields=document.getElementById('form115_header');
 	var supplier_filter=filter_fields.elements[0];
 	var item_filter=filter_fields.elements[1];
-	var batch_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
 	
-	var item_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-	var batch_data="<product_instances>" +
-			"<batch></batch>" +
-			"</product_instances>";
 	var supplier_data="<suppliers>" +
 		"<acc_name></acc_name>" +
 		"</suppliers>";
+	var item_data="<product_master>" +
+		"<name></name>" +
+		"</product_master>";
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -3256,7 +3249,7 @@ function form115_header_ini()
 
 	set_my_filter(supplier_data,supplier_filter);
 	set_my_filter(item_data,item_filter);
-	set_my_filter(batch_data,batch_filter);
+	set_static_filter('unbilled_purchase_items','bill_status',status_filter);
 };
 
 
@@ -6130,7 +6123,6 @@ function form172_header_ini()
 		event.preventDefault();
 		form172_ini();
 	});
-
 };
 
 /**

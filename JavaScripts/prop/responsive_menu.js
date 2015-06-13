@@ -6,14 +6,12 @@ function responsive_tabs()
 		{
 			tabsToAccordions();
 			hide_unreadable_elements();
-			//setup_grid_display_accordion();
 		}
 		else 
 		{
-			console.log('resized');
+			//console.log('resized');
 			accordionsToTabs();
 			hide_unreadable_elements();
-			//setup_grid_display_tabs();
 		}
 	});
 	if($(window).width()<=550)

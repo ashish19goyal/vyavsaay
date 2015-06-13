@@ -1180,12 +1180,15 @@ function report63_header_ini()
 		report63_ini();
 	});
 
-	$(order_filter).show();
-	$(invoice_filter).show();			
-	$(sku_filter).show();
-	$(item_name_filter).show();
+	$(order_filter).parent().hide();
+	$(invoice_filter).parent().hide();			
+	$(sku_filter).parent().hide();
+	$(item_name_filter).parent().hide();
 		
-	set_static_value_list('item_picklist','pick_type',type_filter);
+	set_static_value_list('item_picklist','pick_type',type_filter,function ()
+	{
+		$(type_filter).focus();
+	});
 	
 	$(type_filter).off('blur');
 	$(type_filter).on('blur',function () 
@@ -1202,8 +1205,10 @@ function report63_header_ini()
 				"</product_master>";
 			set_my_filter(name_data,item_name_filter);
 			
-			$(sku_filter).show();
-			$(item_name_filter).show();
+			$(order_filter).parent().hide();
+			$(invoice_filter).parent().hide();			
+			$(sku_filter).parent().show();
+			$(item_name_filter).parent().show();
 		}
 		else
 		{
@@ -1217,12 +1222,12 @@ function report63_header_ini()
 				"</bills>";
 			set_my_filter(invoice_data,invoice_filter);
 			
-			$(order_filter).show();
-			$(invoice_filter).show();			
+			$(sku_filter).parent().hide();
+			$(item_name_filter).parent().hide();
+			$(order_filter).parent().show();
+			$(invoice_filter).parent().show();			
 		}
-	});
-	
-				
+	});				
 }
 
 /**

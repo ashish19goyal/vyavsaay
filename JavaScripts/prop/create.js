@@ -7566,17 +7566,36 @@ function form112_create_item(form)
 	{
 		var customer=document.getElementById('form112_master').elements[1].value;
 		var sale_date=get_raw_time(document.getElementById('form112_master').elements[2].value);
-		var item_name=form.elements[0].value;
-		var batch=form.elements[1].value;
-		var quantity=form.elements[2].value;
-		var data_id=form.elements[3].value;
+		var item_name=form.elements[1].value;
+		var item_desc=form.elements[2].value;
+		var batch=form.elements[3].value;
+		var quantity=form.elements[4].value;
+		var unit_price=form.elements[5].value;
+		var mrp=form.elements[6].value;
+		var amount=form.elements[7].value;
+		var tax=form.elements[8].value;
+		var total=parseFloat(amount)+parseFloat(tax);
+		var storage=form.elements[9].value;
+		var data_id=form.elements[10].value;
+		var save_button=form.elements[11];
+		var del_button=form.elements[12];
+		
 		var last_updated=get_my_time();
 		var data_xml="<unbilled_sale_items>" +
 					"<id>"+data_id+"</id>" +
 					"<customer>"+customer+"</customer>" +
 					"<item_name>"+item_name+"</item_name>" +
+					"<item_desc>"+item_desc+"</item_desc>"+
 					"<batch>"+batch+"</batch>" +
 					"<quantity>"+quantity+"</quantity>" +
+					"<unit_price>"+unit_price+"</unit_price>"+
+					"<amount>"+amount+"</amount>"+
+					"<mrp>"+mrp+"</mrp>"+
+					"<tax>"+tax+"</tax>"+
+					"<total>"+total+"</total>"+
+					"<storage>"+storage+"</storage>"+
+					"<bill_status>pending</bill_status>"+
+					"<picked_status>pending</picked_status>"+
 					"<sale_date>"+sale_date+"</sale_date>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</unbilled_sale_items>";
@@ -7588,20 +7607,16 @@ function form112_create_item(form)
 		{
 			local_create_simple(data_xml);
 		}	
-		for(var i=0;i<4;i++)
+		for(var i=0;i<10;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[5];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form112_delete_item(del_button);
-		});
-		
-		var save_button=form.elements[4];
+		});	
 		$(save_button).off('click');
-
 	}
 	else
 	{
@@ -7637,18 +7652,35 @@ function form114_create_item(form)
 	{
 		var supplier=document.getElementById('form114_master').elements[1].value;
 		var purchase_date=get_raw_time(document.getElementById('form114_master').elements[2].value);
-		var item_name=form.elements[0].value;
-		var batch=form.elements[1].value;
-		var quantity=form.elements[2].value;
-		var data_id=form.elements[3].value;
+		var item_name=form.elements[1].value;
+		var item_desc=form.elements[2].value;
+		var batch=form.elements[3].value;
+		var quantity=form.elements[4].value;
+		var unit_price=form.elements[5].value;
+		var amount=form.elements[6].value;
+		var tax=form.elements[7].value;
+		var total=parseFloat(amount)+parseFloat(tax);
+		var storage=form.elements[8].value;
+		var data_id=form.elements[9].value;
+		var save_button=form.elements[10];
+		var del_button=form.elements[11];
+		
 		var last_updated=get_my_time();
 		var data_xml="<unbilled_purchase_items>" +
 					"<id>"+data_id+"</id>" +
 					"<supplier>"+supplier+"</supplier>" +
 					"<item_name>"+item_name+"</item_name>" +
+					"<item_desc>"+item_desc+"</item_desc>"+
 					"<batch>"+batch+"</batch>" +
 					"<quantity>"+quantity+"</quantity>" +
 					"<purchase_date>"+purchase_date+"</purchase_date>" +
+					"<unit_price>"+unit_price+"</unit_price>"+
+					"<amount>"+amount+"</amount>"+
+					"<tax>"+tax+"</tax>"+
+					"<total>"+total+"</total>"+
+					"<storage>"+storage+"</storage>"+
+					"<bill_status>pending</bill_status>"+
+					"<put_away_status>pending</put_away_status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</unbilled_purchase_items>";
 		if(is_online())
@@ -7659,20 +7691,17 @@ function form114_create_item(form)
 		{
 			local_create_simple(data_xml);
 		}	
-		for(var i=0;i<4;i++)
+		for(var i=0;i<9;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[5];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form114_delete_item(del_button);
 		});
 		
-		var save_button=form.elements[4];
 		$(save_button).off('click');
-
 	}
 	else
 	{
@@ -12960,6 +12989,7 @@ function form171_create_item(form)
 		{
 			var sku_mapping_xml="<sku_mapping>";
 			var cat_sku_mapping_xml="<category_sku_mapping>";
+			var channel_price_xml="<channel_prices>";
 			var id=parseFloat(get_new_key());
 			var counter=0;
 			var last_updated=get_my_time();
@@ -12970,6 +13000,7 @@ function form171_create_item(form)
 					counter=0;
 					sku_mapping_xml+="</sku_mapping><separator></separator><sku_mapping>";
 					cat_sku_mapping_xml+="</category_sku_mapping><separator></separator><category_sku_mapping>";
+					channel_price_xml+="</channel_prices><separator></separator><channel_prices>";
 				}
 				sku_mapping_xml+="<row>" +
 						"<id>"+id+"</id>" +
@@ -12983,21 +13014,32 @@ function form171_create_item(form)
 						"<sku>"+item.name+"</sku>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</row>";
+				channel_price_xml+="<row>" +
+						"<id>"+id+"</id>" +
+						"<channel>"+name+"</channel>" +
+						"<item>"+item.name+"</item>" +
+						"<latest>yes</latest>"+
+						"<from_time>"+last_updated+"</from_time>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</row>";
 				id+=1;
 				counter+=1;
 			});
 			sku_mapping_xml+="</sku_mapping>";
 			cat_sku_mapping_xml+="</category_sku_mapping>";
+			channel_price_xml+="</channel_prices>";
 			
 			if(is_online())
 			{
 				server_create_batch(sku_mapping_xml);
 				server_create_batch(cat_sku_mapping_xml);
+				server_create_batch(channel_price_xml);
 			}
 			else
 			{
 				local_create_batch(sku_mapping_xml);
 				local_create_batch(cat_sku_mapping_xml);
+				local_create_batch(channel_price_xml);
 			}
 		});
 
@@ -13024,6 +13066,75 @@ function form171_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Pricing Sheet
+ * @formNo 172
+ */
+function form172_create_item(fields)
+{
+	if(is_create_access('form172'))
+	{
+		show_loader();
+
+		var channel=fields.elements[0].value;
+		var sku=fields.elements[1].value;
+		var desc=fields.elements[2].value;
+		var mrp=fields.elements[3].value;
+		var discount_customer=fields.elements[4].value;
+		var sale_price=fields.elements[5].value;
+		var freight=fields.elements[6].value;
+		var pickup=fields.elements[8].value;
+		var service_tax=fields.elements[9].value;
+		var profit=fields.elements[11].value;
+		var profit_mrp=fields.elements[12].value;
+		var profit_sp=fields.elements[13].value;
+		var commission_charges=fields.elements[16].value;
+		var total_charges=fields.elements[17].value;
+	
+		var last_updated=get_my_time();
+		var data_xml="<channel_prices>" +
+				"<id>"+get_new_key()+"</id>" +
+				"<channel>"+channel+"</channel>" +
+				"<item>"+sku+"</item>" +
+				"<sale_price>"+sale_price+"</sale_price>"+
+				"<freight>"+freight+"</freight>"+
+				"<discount_customer>"+discount_customer+"</discount_customer>"+
+				"<gateway_charges>0</gateway_charges>"+
+				"<storage_charges>0</storage_charges>"+
+				"<total_charges>"+(parseFloat(pickup)+parseFloat(commission_charges))+"</total_charges>"+
+				"<service_tax>"+service_tax+"</service_tax>"+
+				"<total_payable>"+total_charges+"</total_payable>"+
+				"<total_receivable>"+(parseFloat(sale_price)+parseFloat(freight)-parseFloat(total_charges))+"</total_receivable>"+
+				"<profit_mrp>"+profit_mrp+"</profit_mrp>"+
+				"<profit_sp>"+profit_sp+"</profit_sp>"+
+				"<profit>"+profit+"</profit>"+
+				"<latest>yes</latest>"+				
+				"<from_time>"+last_updated+"</from_time>" +
+				"<to_time></to_time>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</channel_prices>";
+
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}
+
+		for(var i=0;i<14;i++)
+		{
+			$(fields.elements[i]).attr('readonly','readonly');
+		}		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 /**
  * @form Pickup Charges
@@ -13055,11 +13166,11 @@ function form174_create_item(form)
 
 		if(is_online())
 		{
-			server_create_row(data_xml,activity_xml);
+			server_create_simple(data_xml);
 		}
 		else
 		{
-			local_create_row(data_xml,activity_xml);
+			local_create_simple(data_xml);
 		}
 
 		for(var i=0;i<5;i++)
@@ -13116,11 +13227,11 @@ function form175_create_item(form)
 
 		if(is_online())
 		{
-			server_create_row(data_xml,activity_xml);
+			server_create_simple(data_xml);
 		}
 		else
 		{
-			local_create_row(data_xml,activity_xml);
+			local_create_simple(data_xml);
 		}
 
 		for(var i=0;i<5;i++)

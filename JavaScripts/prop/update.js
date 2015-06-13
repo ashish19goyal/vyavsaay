@@ -1,4 +1,56 @@
 /**
+ * @report Item Picklist
+ * @param form
+ */
+function report63_update(form)
+{
+	if(is_update_access('report63'))
+	{
+		var storage=form.elements[0].value;
+		var data_ids=form.elements[1].value;
+		var last_updated=get_my_time();
+		var ids=data_ids.split("--");
+
+		var data_xml="<bill_items>";
+		var counter=1;
+
+		ids.forEach(function(id)
+		{
+			if((counter%500)===0)
+			{
+				data_xml+="</bill_items><separator></separator><bill_items>";
+			}
+			data_xml+="<row>" +
+					"<id>"+id+"</id>" +
+					"<picked_status>picked</picked_status>" +
+					"<storage>"+storage+"</storage>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</row>";
+		});
+	
+		data_xml+="</bill_items>";
+		
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}		
+		
+		for(var i=0;i<2;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Update inventory
  * @param button
  */
@@ -46,7 +98,6 @@ function form1_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
-
 
 /**
  * @form Create Pamphlets
@@ -9179,6 +9230,38 @@ function form171_update_item(form)
 }
 
 /**
+ * @form Pricing Sheet
+ * @formNo 172
+ * @param button
+ */
+function form172_update_item(form)
+{
+	if(is_update_access('form172'))
+	{
+		var data_id=form.elements[14].value;
+		var last_updated=get_my_time();
+		var data_xml="<channel_prices>" +
+					"<id>"+data_id+"</id>" +
+					"<latest>no</latest>" +
+					"<to_time>"+last_updated+"</to_time>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</channel_prices>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Sku mapping
  * @formNo 173
  * @param button
@@ -9347,8 +9430,8 @@ function form176_update_item(form)
 		var last_updated=get_my_time();
 		var data_xml="<category_sku_mapping>" +
 					"<id>"+data_id+"</id>" +
-					"<type>"+type+"</type>" +
-					"<category>"+category+"</category>" +
+					"<cat_type>"+type+"</cat_type>" +
+					"<cat_name>"+category+"</cat_name>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</category_sku_mapping>";
 		var activity_xml="<activity>" +

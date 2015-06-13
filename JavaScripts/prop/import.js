@@ -3415,7 +3415,7 @@ function form109_import(data_array,import_type)
 
 
 /**
-* @form Add unbilled sale items
+* @form Add sale challans
 * @formNo 112
 */
 function form112_import(data_array,import_type)
@@ -3434,8 +3434,17 @@ function form112_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<customer>"+row.customer+"</customer>" +
 				"<item_name>"+row.item_name+"</item_name>" +
+				"<item_desc>"+row.item_desc+"</item_desc>" +
 				"<batch>"+row.batch+"</batch>" +
 				"<quantity>"+row.quantity+"</quantity>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<total>"+row.total+"</total>" +
+				"<storage>"+row.storage+"</storage>" +
+				"<bill_status>"+row.bill_status+"</bill_status>" +
+				"<picked_status>"+row.picked_status+"</picked_status>" +
 				"<sale_date>"+get_raw_time(row.sale_date)+"</sale_date>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
@@ -3466,7 +3475,7 @@ function form112_import(data_array,import_type)
 };
 
 /**
-* @form Manage unbilled sale items
+* @form Manage sale challans
 * @formNo 113
 */
 function form113_import(data_array,import_type)
@@ -3485,8 +3494,17 @@ function form113_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<customer>"+row.customer+"</customer>" +
 				"<item_name>"+row.item_name+"</item_name>" +
+				"<item_desc>"+row.item_desc+"</item_desc>" +
 				"<batch>"+row.batch+"</batch>" +
 				"<quantity>"+row.quantity+"</quantity>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<total>"+row.total+"</total>" +
+				"<storage>"+row.storage+"</storage>" +
+				"<bill_status>"+row.bill_status+"</bill_status>" +
+				"<picked_status>"+row.picked_status+"</picked_status>" +
 				"<sale_date>"+get_raw_time(row.sale_date)+"</sale_date>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
@@ -3537,8 +3555,16 @@ function form114_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<supplier>"+row.supplier+"</supplier>" +
 				"<item_name>"+row.item_name+"</item_name>" +
+				"<item_desc>"+row.item_desc+"</item_desc>" +
 				"<batch>"+row.batch+"</batch>" +
 				"<quantity>"+row.quantity+"</quantity>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<total>"+row.total+"</total>" +
+				"<storage>"+row.storage+"</storage>" +
+				"<put_away_status>"+row.put_away_status+"</put_away_status>" +
+				"<bill_status>"+row.bill_status+"</bill_status>" +
 				"<purchase_date>"+get_raw_time(row.purchase_date)+"</purchase_date>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
@@ -3588,8 +3614,16 @@ function form115_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<supplier>"+row.supplier+"</supplier>" +
 				"<item_name>"+row.item_name+"</item_name>" +
+				"<item_desc>"+row.item_desc+"</item_desc>" +
 				"<batch>"+row.batch+"</batch>" +
 				"<quantity>"+row.quantity+"</quantity>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<total>"+row.total+"</total>" +
+				"<storage>"+row.storage+"</storage>" +
+				"<put_away_status>"+row.put_away_status+"</put_away_status>" +
+				"<bill_status>"+row.bill_status+"</bill_status>" +
 				"<purchase_date>"+get_raw_time(row.purchase_date)+"</purchase_date>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
@@ -5320,6 +5354,18 @@ function form172_import(data_array,import_type)
 				"<channel>"+row.channel+"</channel>" +
 				"<item>"+row.sku+"</item>" +
 				"<sale_price>"+row.price+"</sale_price>"+
+				"<freight>"+row.freight+"</freight>"+
+				"<discount_customer>"+row.discount_customer+"</discount_customer>"+
+				"<gateway_charges>"+row.gateway_charges+"</gateway_charges>"+
+				"<storage_charges>"+row.storage_charges+"</storage_charges>"+
+				"<total_charges>"+row.total_charges+"</total_charges>"+
+				"<service_tax>"+row.service_tax+"</service_tax>"+
+				"<total_payable>"+row.total_payable+"</total_payable>"+
+				"<total_receivable>"+row.total_receivable+"</total_receivable>"+
+				"<profit_mrp>"+row.profit_mrp+"</profit_mrp>"+
+				"<profit_sp>"+row.profit_sp+"</profit_sp>"+
+				"<profit>"+row.profit+"</profit>"+
+				"<latest>"+row.latest+"</latest>"+				
 				"<from_time>"+get_raw_time(row.from_time)+"</from_time>" +
 				"<to_time>"+get_raw_time(row.to_time)+"</to_time>" +
 				"<last_updated>"+last_updated+"</last_updated>" +

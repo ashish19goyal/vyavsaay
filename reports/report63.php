@@ -14,7 +14,7 @@
 		</fieldset>
 	</form>
 	<table class='rwd-table'>
-		<thead>
+		<thead id='report63_head'>
 			<tr>
 				<th>Item</th>
 				<th>Batch</th>

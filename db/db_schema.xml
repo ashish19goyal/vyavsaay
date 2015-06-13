@@ -170,8 +170,6 @@
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<storage index='yes' type="VARCHAR(25)"></storage>
-			<raw_price index='no' type="DECIMAL(12,2)"></raw_price>
-			<conversion_rate index='no' type="DECIMAL(12,2)"></conversion_rate>
 			<put_away_status index='yes' type="TEXT"></put_away_status><!--pending/completed-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_bill_items>
@@ -300,6 +298,7 @@
 			<total index='yes' type="DECIMAL(12,2)"></total>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
 			<billing_type index="yes" type="VARCHAR(20)"></billing_type>
+			<channel index="yes" type="TEXT"></channel>
 			<offer index='no' type="TEXT"></offer>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<cartage index='no' type="DECIMAL(12,2)"></cartage>
@@ -721,9 +720,20 @@
 	</sku_mapping>
 	<channel_prices>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<channel index='yes' type='TEXT'></channel>
 			<item index='yes' type="TEXT"></item>
 			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
-			<channel index='yes' type='TEXT'></channel>
+			<freight index='no' type="DECIMAL(12,2)"></freight>
+			<discount_customer index='no' type="DECIMAL(12,2)"></discount_customer>
+			<profit_mrp index='no' type="DECIMAL(5,2)"></profit_mrp>
+			<profit_sp index='no' type="DECIMAL(5,2)"></profit_sp>
+			<profit index='no' type="DECIMAL(12,2)"></profit>
+			<gateway_charges index='no' type="DECIMAL(12,2)"></gateway_charges>
+			<storage_charges index='no' type="DECIMAL(12,2)"></storage_charges>
+			<total_charges index='no' type="DECIMAL(12,2)"></total_charges>
+			<service_tax index='no' type="DECIMAL(12,2)"></service_tax>
+			<total_payable index='no' type="DECIMAL(12,2)"></total_payable>
+			<total_receivable index='no' type="DECIMAL(12,2)"></total_receivable>
 			<latest index='yes' type='VARCHAR(5)'></latest><!--yes/no-->
 			<from_time index='yes' type="BIGINT"></from_time>
 			<to_time index='yes' type="BIGINT"></to_time>
@@ -850,22 +860,38 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer index='yes' type="TEXT"></customer>
 			<item_name index='yes' type="TEXT"></item_name>
+			<item_desc index='yes' type="TEXT"></item_desc>
 			<batch index='yes' type="TEXT"></batch>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
+			<mrp index='no' type="DECIMAL(12,2)"></mrp>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<total index='no' type="DECIMAL(12,2)"></total>
+			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<sale_date index='yes' type="BIGINT"></sale_date>
 			<notes index='no' type='TEXT'></notes>
 			<storage index='yes' type="VARCHAR(25)"></storage>
+			<bill_status index='yes' type="VARCHAR(25)"></bill_status><!--pending/completed-->
+			<picked_status index='yes' type="VARCHAR(25)"></picked_status><!--pending/picked-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</unbilled_sale_items>
 	<unbilled_purchase_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<supplier index='yes' type="TEXT"></supplier>
 			<item_name index='yes' type="TEXT"></item_name>
+			<item_desc index='yes' type="TEXT"></item_desc>
 			<batch index='yes' type="TEXT"></batch>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<purchase_date index='yes' type="BIGINT"></purchase_date>
 			<notes index='no' type='TEXT'></notes>
-			<storage index='yes' type="VARCHAR(25)"></storage>
+			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<total index='no' type="DECIMAL(12,2)"></total>
+			<storage index='yes' type="TEXT"></storage>
+			<put_away_status index='yes' type="VARCHAR(25)"></put_away_status><!--pending/completed-->
+			<bill_status index='yes' type="VARCHAR(25)"></bill_status><!--pending/completed-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</unbilled_purchase_items>
 	<loyalty_programs>

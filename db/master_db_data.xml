@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+ <?xml version="1.0" encoding="UTF-8"?>
 <re_xml>
 	<templates>
 		<row>
@@ -383,6 +383,54 @@
 		</row>
 	</user_fields_list>
 	<values_list>
+		<row>
+			<tablename>unbilled_purchase_items</tablename>
+			<listname>put_away_status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>unbilled_purchase_items</tablename>
+			<listname>put_away_status</listname>
+			<name>completed</name>
+			<value>Completed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>unbilled_purchase_items</tablename>
+			<listname>bill_status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>unbilled_purchase_items</tablename>
+			<listname>bill_status</listname>
+			<name>completed</name>
+			<value>Completed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>unbilled_sale_items</tablename>
+			<listname>bill_status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>unbilled_sale_items</tablename>
+			<listname>bill_status</listname>
+			<name>completed</name>
+			<value>Completed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<tablename>item_picklist</tablename>
 			<listname>pick_type</listname>

@@ -631,42 +631,42 @@ function form109_import_template()
 };
 
 /**
-* @form Add unbilled sale items
+* @form Add sale challans
 * @formNo 112
 */
 function form112_import_template()
 {
-	var data_array=['id','customer','item_name','batch','quantity','sale_date','notes'];
+	var data_array=['id','customer','item_name','item_desc','batch','quantity','sale_date','mrp','unit_price','amount','tax','total','storage','bill_status','picked_status'];
 	my_array_to_csv(data_array);
 };
 
 /**
-* @form Manage unbilled sale items
+* @form Manage sale challans
 * @formNo 113
 */
 function form113_import_template()
 {
-	var data_array=['id','customer','item_name','batch','quantity','sale_date','notes'];
+	var data_array=['id','customer','item_name','item_desc','batch','quantity','sale_date','mrp','unit_price','amount','tax','total','storage','bill_status','picked_status'];
 	my_array_to_csv(data_array);
 };
 
 /**
-* @form Add unbilled purchase items
+* @form Add purchase challans
 * @formNo 114
 */
 function form114_import_template()
 {
-	var data_array=['id','supplier','item_name','batch','quantity','purchase_date','notes'];
+	var data_array=['id','supplier','item_name','item_desc','batch','quantity','purchase_date','unit_price','amount','tax','total','storage','put_away_status','bill_status'];
 	my_array_to_csv(data_array);
 };
 
 /**
-* @form Manage unbilled purchase items
+* @form Manage purchase challans
 * @formNo 115
 */
 function form115_import_template()
 {
-	var data_array=['id','supplier','item_name','batch','quantity','purchase_date','notes'];
+	var data_array=['id','supplier','item_name','item_desc','batch','quantity','purchase_date','unit_price','amount','tax','total','storage','put_away_status','bill_status'];
 	my_array_to_csv(data_array);
 };
 
@@ -1005,7 +1005,7 @@ function form171_import_template()
 */
 function form172_import_template()
 {
-	var data_array=['id','channel','sku','price','from_time','to_time'];
+	var data_array=['id','channel','item','sale_price','freight','discount_customer','gateway_charges','storage_charges','total_charges','service_tax','total_payable','total_receivable','profit_mrp','profit_sp','profit','from_time','to_time','latest'];
 	my_array_to_csv(data_array);
 };
 

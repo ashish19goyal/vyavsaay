@@ -3517,7 +3517,7 @@ function form112_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[3].value;
+			var data_id=form.elements[10].value;
 			var data_xml="<unbilled_sale_items>" +
 						"<id>"+data_id+"</id>" +
 						"</unbilled_sale_items>";
@@ -3551,7 +3551,7 @@ function form113_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[5].value;
+			var data_id=form.elements[6].value;
 			var data_xml="<unbilled_sale_items>" +
 						"<id>"+data_id+"</id>" +
 						"</unbilled_sale_items>";
@@ -3585,7 +3585,7 @@ function form114_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[3].value;
+			var data_id=form.elements[9].value;
 			var data_xml="<unbilled_purchase_items>" +
 						"<id>"+data_id+"</id>" +
 						"</unbilled_purchase_items>";
@@ -3619,7 +3619,7 @@ function form115_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[5].value;
+			var data_id=form.elements[6].value;
 			var data_xml="<unbilled_purchase_items>" +
 						"<id>"+data_id+"</id>" +
 						"</unbilled_purchase_items>";

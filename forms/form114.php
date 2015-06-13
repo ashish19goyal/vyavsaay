@@ -12,9 +12,11 @@
 		<thead>
 			<tr>
 				<form id='form114_header'></form>
-					<th>Item Name</th>
+					<th>Item</th>
 					<th>Batch</th>
 					<th>Quantity</th>
+					<th>Amount</th>
+					<th>Storage</th>
 					<th><input type='button' class='add_icon' form='form114_header' title='Add item' onclick='form114_add_item();'></th>
 			</tr>
 		</thead>

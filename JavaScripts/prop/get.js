@@ -352,7 +352,7 @@ function set_static_value_list(table,list,filter_element,func)
 	}
 }
 
-function set_my_value_list(filter_data,filter_element)
+function set_my_value_list(filter_data,filter_element,func)
 {	
 	get_single_column_data(function(data)
 	{
@@ -397,6 +397,10 @@ function set_my_value_list(filter_data,filter_element)
 	            $(this).val('');
 	        }
 		});
+		if(typeof func!='undefined')
+		{
+			func();
+		}
 	},filter_data);
 }
 
@@ -443,7 +447,10 @@ function set_my_value_list_func(filter_data,filter_element,func)
 	            $(this).val('');
 	        }
 		});
-		func();
+		if(typeof func!='undefined')
+		{
+			func();
+		}
 	},filter_data);
 }
 
@@ -510,13 +517,17 @@ function set_multiple_value_list(filter_data_array,filter_element)
 	});
 }
 
-function set_my_value(filter_data,filter_element)
+function set_my_value(filter_data,filter_element,func)
 {
 	get_single_column_data(function(data)
 	{
 		if(data.length>0)
 		{
 			filter_element.value=data[0];
+		}
+		if(typeof func!='undefined')
+		{
+			func();
 		}
 	},filter_data);
 }
@@ -529,7 +540,10 @@ function set_my_value_func(filter_data,filter_element,func)
 		{
 			filter_element.value=data[0];
 		}
-		func();
+		if(typeof func!='undefined')
+		{
+			func();
+		}
 	},filter_data);
 }
 

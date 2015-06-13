@@ -4295,6 +4295,198 @@ function report60_ini()
 
 
 /**
+ * @reportNo 63
+ * @report Item picklist
+ */
+function report63_ini()
+{
+	var form=document.getElementById('report63_header');
+	var type=form.elements[1].value;
+	var sku=form.elements[2].value;
+	var item=form.elements[3].value;
+	var order_id=form.elements[4].value;
+	var invoice=form.elements[5].value;
+	
+	show_loader();
+	$('#report63_head').html('');
+	$('#report63_body').html('');
+	
+	if(type=='aggregated')
+	{
+		var headHTML="<tr>"+
+					"<th>Item</th>"+
+					"<th>Batch</th>"+
+					"<th>Quantity</th>"+
+					"<th>Storage</th>"+
+					"<th>Action</th>"+
+					"</tr>";
+		$('#report63_head').append(headHTML);
+				
+		var items_data="<bill_items>" +
+			"<id></id>"+
+			"<item_name>"+sku+"</item_name>" +
+			"<item_desc>"+item+"</item_desc>"+
+			"<batch></batch>" +
+			"<quantity></quantity>"+
+			"<storage></storage>"+
+			"<picked_status exact='yes'>pending</picked_status>"+
+			"</bill_items>";
+	
+		fetch_requested_data('report63',items_data,function(items)
+		{
+			for(var i=0;i<items.length;i++)
+			{
+				for(var j=i+1;j<items.length;j++)
+				{
+					if(items[i].item_name==items[j].item_name && items[i].batch==items[j].batch && items[i].storage==items[i].storage)
+					{
+						items[i].quantity=parseFloat(items[i].quantity)+parseFloat(items[j].quantity);
+						items[i].id=items[i].id+"--"+items[j].id;						
+						items.splice(j,1);
+						j--;
+					}
+				}
+			}			
+			
+			items.forEach(function(item)
+			{
+				var rowsHTML="<tr>";
+				rowsHTML+="<form id='report63_"+item.id+"'></form>";
+				rowsHTML+="<td data-th='Item'>";
+					rowsHTML+=item.item_name+"<br>"+item.item_desc;
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Batch'>";
+					rowsHTML+=item.batch;
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Quantity'>";
+					rowsHTML+=item.quantity;
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Storage'>";
+					rowsHTML+="<input type='text' form='report63_"+item.id+"' value='"+item.storage+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Action'>";
+					rowsHTML+="<input type='hidden' form='report63_"+item.id+"' value='"+item.id+"'>";
+					rowsHTML+="<input type='submit' form='report63_"+item.id+"' class='generic_icon' value='Picked'>";
+				rowsHTML+="</td>";
+				rowsHTML+="</tr>";
+						
+				$('#report63_body').append(rowsHTML);
+				var report63_form=document.getElementById('report63_'+item.id);
+				var storage_filter=report63_form.elements[0];
+				
+				var storage_data="<store_areas>"+
+								"<name></name>"+
+								"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+								"</store_areas>";
+				set_my_value_list(storage_data,storage_filter);
+					
+				$(storage_filter).on('click',function()
+				{
+					this.select();
+				});
+
+				$(report63_form).on('submit',function(event)
+				{
+					event.preventDefault();
+					report63_update(report63_form);
+				});
+			});
+			hide_loader();
+		});
+	}
+	else 
+	{
+		var headHTML="<tr>"+
+					"<th>Order</th>"+
+					"<th>Item</th>"+
+					"<th>Batch</th>"+
+					"<th>Quantity</th>"+
+					"<th>Storage</th>"+
+					"<th>Action</th>"+
+					"</tr>";
+		$('#report63_head').append(headHTML);
+				
+		var bills_data="<bills>"+
+						"<id></id>"+
+						"<bill_num>"+invoice+"</bill_num>"+
+						"<order_id>"+order_id+"</order_id>"+
+						"<billing_type></billing_type>"+
+						"</bills>";
+		fetch_requested_data('report63',bills_data,function(bills)
+		{
+			bills.forEach(function(bill)
+			{
+				var items_data="<bill_items>" +
+					"<id></id>"+
+					"<item_name></item_name>" +
+					"<item_desc></item_desc>"+
+					"<batch></batch>" +
+					"<quantity></quantity>"+
+					"<storage></storage>"+
+					"<picked_status exact='yes'>pending</picked_status>"+
+					"<bill_id exact='yes'>"+bill.id+"</bill_id>"+
+					"</bill_items>";
+			
+				fetch_requested_data('report63',items_data,function(items)
+				{
+					items.forEach(function(item)
+					{
+						var rowsHTML="<tr>";
+						rowsHTML+="<form id='report63_"+item.id+"'></form>";
+						rowsHTML+="<td data-th='Order'>";
+							rowsHTML+=bill.channel+" Order id: "+bill.order_id+"<br>"+bill.billing_type+" Invoice #: "+bill.bill_num;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Item'>";
+							rowsHTML+=item.item_name+"<br>"+item.item_desc;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Batch'>";
+							rowsHTML+=item.batch;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+=item.quantity;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Storage'>";
+							rowsHTML+="<input type='text' form='report63_"+item.id+"' value='"+item.storage+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='report63_"+item.id+"' value='"+item.id+"'>";
+							rowsHTML+="<input type='submit' form='report63_"+item.id+"' class='generic_icon' value='Picked'>";
+						rowsHTML+="</td>";
+						rowsHTML+="</tr>";
+								
+						$('#report63_body').append(rowsHTML);
+						var report63_form=document.getElementById('report63_'+item.id);
+						
+						var storage_filter=report63_form.elements[0];
+						var storage_data="<store_areas>"+
+										"<name></name>"+
+										"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+										"</store_areas>";
+						set_my_value_list(storage_data,storage_filter);
+							
+						$(storage_filter).on('click',function()
+						{
+							this.select();
+						});
+
+						$(report63_form).on('submit',function(event)
+						{
+							event.preventDefault();
+							report63_update(report63_form);
+						});
+					});
+					hide_loader();
+				});
+			});	
+		});
+	}
+	
+	var print_button=form.elements[7];
+	print_tabular_report('report63','Item Picklist',print_button);
+};
+
+
+/**
  * @reportNo 66
  * @report Inventory level (by store)
  */
