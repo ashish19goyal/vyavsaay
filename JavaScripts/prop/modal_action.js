@@ -6779,7 +6779,7 @@ function modal114_action(func)
 	var fbarcode=form.elements[14];
 	var auto_generate=form.elements[15];
 	
-	fbarcode.value=get_my_time();
+	fbarcode.value=get_my_time()*10+Math.round(Math.random()*10);
 	auto_generate.checked=true;
 	
 	$(auto_generate).off('click');
@@ -6787,7 +6787,7 @@ function modal114_action(func)
 	{
 		if(auto_generate.checked)
 		{
-			fbarcode.value=get_my_time();
+			fbarcode.value=get_my_time()*10+Math.round(Math.random()*10);
 		}
 		else
 		{
@@ -6876,7 +6876,7 @@ function modal114_action(func)
 			var data_xml="<product_master>" +
 						"<id>"+data_id+"</id>" +
 						"<make>"+make+"</make>" +
-						"<name>"+name+"</name>" +
+						"<name unique='yes'>"+name+"</name>" +
 						"<description>"+description+"</description>" +
 						"<tax>"+tax+"</tax>" +
 						"<length>"+length+"</length>"+
@@ -6886,7 +6886,7 @@ function modal114_action(func)
 						"<unit>"+unit+"</unit>"+
 						"<weight>"+weight+"</weight>"+
 						"<packing>"+packing+"</packing>"+
-						"<bar_code unique='yes'>"+barcode+"</bar_code>" +
+						"<bar_code>"+barcode+"</bar_code>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</product_master>";	
 			var activity_xml="<activity>" +
