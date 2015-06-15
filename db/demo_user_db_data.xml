@@ -5,7 +5,7 @@
 			<name>purchase_store</name>
 			<display_name>Store for purchased items</display_name>
 			<status>active</status>
-			<value>Store 1</value>
+			<value></value>
 			<type>accounting</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -15,7 +15,7 @@
 			<name>sales_store</name>
 			<display_name>Store for sold items</display_name>
 			<status>active</status>
-			<value>Store 1</value>
+			<value></value>
 			<type>accounting</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -25,7 +25,7 @@
 			<name>purchase_return_store</name>
 			<display_name>Store store for purchase returns</display_name>
 			<status>active</status>
-			<value>Store 1</value>
+			<value></value>
 			<type>accounting</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -35,7 +35,7 @@
 			<name>sales_return_store</name>
 			<display_name>Store for sales returns</display_name>
 			<status>active</status>
-			<value>Store 1</value>
+			<value></value>
 			<type>accounting</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -45,7 +45,7 @@
 			<name>discard_items_store</name>
 			<display_name>Store for discarded items</display_name>
 			<status>active</status>
-			<value>Store 1</value>
+			<value></value>
 			<type>accounting</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -103,7 +103,7 @@
 		</row>
 		<row>
 			<name>service_tax_no</name>
-			<display_name>Service Tax #</display_name>
+			<display_name>	</display_name>
 			<status>active</status>
 			<value></value>
 			<type>accounting</type>
@@ -265,7 +265,7 @@
 			<name>worker_repeat</name>
 			<display_name>worker_repeat</display_name>
 			<status>active</status>
-			<value>3600</value>
+			<value>60</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -285,7 +285,7 @@
 			<name>address</name>
 			<display_name>official_address</display_name>
 			<status>active</status>
-			<value>business_complex, sirsa</value>
+			<value>business_complex, Delhi</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -355,7 +355,7 @@
 			<name>email</name>
 			<display_name>email</display_name>
 			<status>active</status>
-			<value>vyavsaayindia@gmail.com</value>
+			<value>info@vyavsaay.com</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -365,7 +365,7 @@
 			<name>logo</name>
 			<display_name>logo</display_name>
 			<status>active</status>
-			<value>logo.jpeg</value>
+			<value>logo.png</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -415,7 +415,7 @@
 			<name>sms_content</name>
 			<display_name>sms_content</display_name>
 			<status>active</status>
-			<value>Hello, customer_name. Thanks for contacting.</value>
+			<value>Hello, customer_name. Thanks for contacting business_title.</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -435,7 +435,7 @@
 			<name>default_newsletter</name>
 			<display_name>default_newsletter</display_name>
 			<status>active</status>
-			<value>May Newsletter</value>
+			<value>Newsletter</value>
 			<type>other</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -452,98 +452,8 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
-			<name>sale_bill</name>
-			<display_name>sale_bill_print_template</display_name>
-			<status>active</status>
-			<value>default_sale_bill</value>
-			<type>template</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>purchase_order</name>
-			<display_name>purchase_order_print_template</display_name>
-			<status>active</status>
-			<value>default_purchase_order</value>
-			<type>template</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>payment_receipt</name>
-			<display_name>payment_receipt_print_template</display_name>
-			<status>active</status>
-			<value>default_payment_receipt</value>
-			<type>template</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>credit_note</name>
-			<display_name>credit_note_print_template</display_name>
-			<status>active</status>
-			<value>default_credit_note</value>
-			<type>template</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>newsletter</name>
-			<display_name>newsletter_print_template</display_name>
-			<status>active</status>
-			<value>default_newsletter</value>
-			<type>template</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>service_bill</name>
-			<display_name>service_bill_print_template</display_name>
-			<status>active</status>
-			<value>default_service_sale_bill</value>
-			<type>template</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>product_bill</name>
-			<display_name>product_bill_print_template</display_name>
-			<status>active</status>
-			<value>default_product_sale_bill</value>
-			<type>template</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>return_receipt</name>
-			<display_name>return_receipt_print_template</display_name>
-			<status>active</status>
-			<value>default_return_receipt</value>
-			<type>template</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>supplier_return</name>
-			<display_name>supplier_return_print_template</display_name>
-			<status>active</status>
-			<value>default_supplier_return</value>
-			<type>template</type>
-			<shortcut></shortcut>
-			<sync>checked</sync>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
 			<name>activities</name>
-			<display_name>activties</display_name>
+			<display_name>activities</display_name>
 			<status>active</status>
 			<value>checked</value>
 			<type>form</type>
@@ -1023,6 +933,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report67</name>
+			<display_name>channel_collections</display_name>
+			<status>active</status>
+			<value>checked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -1228,7 +1148,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--product_master--documents</tables>
+			<tables>--product_master--documents--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -3114,6 +3034,17 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>		
+		<row>
+			<username>master</username>
+			<element_id>report67</element_id>
+			<element_name>channel_collections</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form1</element_id>

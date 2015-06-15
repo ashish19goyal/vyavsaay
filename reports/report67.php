@@ -1,9 +1,11 @@
-<div id='report65' class='function_detail'>
-	<form id='report65_header'>
+<div id='report67' class='function_detail'>
+	<form id='report67_header'>
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Channel<br><input type='text'></label>
-			<label>Item<br><input type='text'></label>
+			<label>Customer<br><input type='text'></label>
+			<label>From Date<br><input type='text'></label>
+			<label>To Date<br><input type='text'></label>
 			<label>	
 				<input type='submit' value='Refresh' class='generic_icon'>
 				<input type='button' title='Print' class='print_icon'>
@@ -14,12 +16,12 @@
 		<thead>
 			<tr>
 				<th>Channel</th>
-				<th>Item</th>
-				<th>Price</th>
-				<th>Time</th>
+				<th>Date</th>
+				<th>Customer</th>
+				<th>Total</th>
 			</tr>
 		</thead>
-		<tbody id='report65_body'>
+		<tbody id='report67_body'>
 		</tbody>
 	</table>
 </div>

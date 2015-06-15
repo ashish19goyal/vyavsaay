@@ -1231,6 +1231,34 @@ function report63_header_ini()
 }
 
 /**
+ * @reportNo 65
+ * @report Pricing Update timestamps
+ */
+function report65_header_ini()
+{	
+	var form=document.getElementById('report65_header');
+	var channel_filter=form.elements[1];
+	var item_filter=form.elements[2];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report65_ini();
+	});
+	
+	var item_data="<product_master>"+
+				"<name></name>"+
+				"</product_master>";
+	set_my_filter(item_data,item_filter);
+	
+	var channel_data="<sale_channels>"+
+				"<name></name>"+
+				"</sale_channels>";
+	set_my_filter(channel_data,channel_filter);				
+}
+
+/**
  * @reportNo 66
  * @report Inventory Status (by store)
  */
@@ -1268,4 +1296,37 @@ function report66_header_ini()
 				"<batch></batch>"+
 				"</product_instances>";
 	set_my_filter(batch_data,batch_filter);				
+}
+
+/**
+ * @reportNo 67
+ * @report Channel Collections
+ */
+function report67_header_ini()
+{	
+	var form=document.getElementById('report67_header');
+	var channel_filter=form.elements[1];
+	var customer_filter=form.elements[2];
+	var from_filter=form.elements[3];
+	var to_filter=form.elements[4];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report67_ini();
+	});
+	
+	var customer_data="<customers>"+
+				"<acc_name></acc_name>"+
+				"</customers>";
+	set_my_filter(customer_data,customer_filter);
+	
+	var channel_data="<sale_channels>"+
+				"<name></name>"+
+				"</sale_channels>";
+	set_my_filter(channel_data,channel_filter);
+	
+	$(from_date).datepicker();
+	$(to_date).datepicker();					
 }

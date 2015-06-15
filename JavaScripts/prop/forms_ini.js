@@ -6735,7 +6735,8 @@ function form81_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'sale_leads');
+			get_export_data(columns,'sale_leads');
+			//my_obj_array_to_csv(results,'sale_leads');
 		});
 		hide_loader();
 	});

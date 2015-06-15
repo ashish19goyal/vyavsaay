@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Configure forms</title>
+		<script id='tbp'></script>
+		<script>
+			function load_virtual_functions() 
+			{
+				var virtual_function="function virtual_function(){ alert('it works');}";
+				var script_tag=document.getElementById('tbp');
+				script_tag.innerHTML=virtual_function;
+			}
+		</script>
+	</head>
+	<body onload='load_virtual_functions();'>
+		<div id='body_div'></div>
+		<input id='my_input' type='button' onclick='virtual_function();'>
+	</body>
+</html>

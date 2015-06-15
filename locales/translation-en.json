@@ -302,6 +302,7 @@
   	"db_backup":"Take DB backup",
   	"channel_category":"Channel Categories",
   	"categories":"Categories",
-  	"category_sku_mapping":"Category Item mapping"
+  	"category_sku_mapping":"Category Item mapping",
+  	"channel_collections":"Channel Collections"
   }
 }
