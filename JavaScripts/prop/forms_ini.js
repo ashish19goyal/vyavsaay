@@ -116,7 +116,7 @@ function form1_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'inventory');
+			get_export_data(columns,'inventory');
 		});
 		
 		hide_loader();
@@ -315,7 +315,7 @@ function form5_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'assets');
+			get_export_data(columns,'assets');
 		});
 		hide_loader();
 	});
@@ -581,7 +581,7 @@ function form8_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'staff');
+			get_export_data(columns,'staff');
 		});
 		hide_loader();
 	});
@@ -877,7 +877,7 @@ function form11_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'payments');
+			get_export_data(columns,'payments');
 		});
 		hide_loader();
 	});
@@ -1159,7 +1159,7 @@ function form14_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'tasks');
+			get_export_data(columns,'tasks');
 		});
 		hide_loader();
 	});
@@ -1413,7 +1413,7 @@ function form16_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'customer_returns');
+			get_export_data(columns,'customer_returns');
 		});
 		hide_loader();
 	});
@@ -1523,7 +1523,7 @@ function form17_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'supplier_returns');
+			get_export_data(columns,'supplier_returns');
 		});
 		hide_loader();
 	});
@@ -2020,7 +2020,7 @@ function form30_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'customers');
+			get_export_data(columns,'customers');
 		});
 		hide_loader();
 	});
@@ -2155,7 +2155,7 @@ function form35_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'offers');
+			get_export_data(columns,'offers');
 		});
 		hide_loader();
 	});
@@ -2271,7 +2271,7 @@ function form38_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'store_placement');
+			get_export_data(columns,'store_placement');
 		});
 		hide_loader();
 	});
@@ -2422,7 +2422,7 @@ function form39_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'products');
+			get_export_data(columns,'products');
 		});
 		hide_loader();
 	});	
@@ -2561,7 +2561,7 @@ function form40_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'suppliers');
+			get_export_data(columns,'suppliers');
 		});
 		hide_loader();
 	});
@@ -2841,7 +2841,7 @@ function form42_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'bills');
+			get_export_data(columns,'bills');
 		});
 		hide_loader();
 	});
@@ -2957,7 +2957,7 @@ function form43_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'purchase_orders');
+			get_export_data(columns,'purchase_orders');
 		});
 		hide_loader();
 	});
@@ -3050,7 +3050,7 @@ function form44_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'NewsLetters');
+			get_export_data(columns,'NewsLetters');
 		});
 		hide_loader();
 	});
@@ -3154,7 +3154,7 @@ function form46_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'system_defaults');
+			get_export_data(columns,'system_defaults');
 		});
 		hide_loader();
 	});
@@ -3256,7 +3256,7 @@ function form48_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'reports');
+			get_export_data(columns,'reports');
 		});
 		hide_loader();
 	});
@@ -3355,7 +3355,7 @@ function form49_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'forms');
+			get_export_data(columns,'forms');
 		});
 		hide_loader();
 	});
@@ -3457,7 +3457,7 @@ function form50_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'accounting');
+			get_export_data(columns,'accounting');
 		});
 		hide_loader();
 	});
@@ -3720,7 +3720,7 @@ function form53_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'supplier_bills');
+			get_export_data(columns,'supplier_bills');
 		});
 		hide_loader();
 	});
@@ -3821,7 +3821,7 @@ function form54_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'printing_templates');
+			get_export_data(columns,'printing_templates');
 		});
 		hide_loader();
 	});
@@ -3929,7 +3929,7 @@ function form56_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'expenses');
+			get_export_data(columns,'expenses');
 		});
 		hide_loader();
 	});
@@ -4036,7 +4036,7 @@ function form57_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'services');
+			get_export_data(columns,'services');
 		});
 		hide_loader();
 	});
@@ -4144,7 +4144,7 @@ function form58_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'service_pre_requisites');
+			get_export_data(columns,'service_pre_requisites');
 		});
 		hide_loader();
 	});
@@ -4253,7 +4253,7 @@ function form59_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'product_pre_requisites');
+			get_export_data(columns,'product_pre_requisites');
 		});
 		hide_loader();
 	});
@@ -4359,7 +4359,7 @@ function form60_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'item_attributes');
+			get_export_data(columns,'item_attributes');
 		});
 		hide_loader();
 	});
@@ -4463,7 +4463,7 @@ function form61_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'service_attributes');
+			get_export_data(columns,'service_attributes');
 		});
 		hide_loader();
 	});
@@ -4572,7 +4572,7 @@ function form62_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'product_reviews');
+			get_export_data(columns,'product_reviews');
 		});
 		hide_loader();
 	});
@@ -4681,7 +4681,7 @@ function form63_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'service_reviews');
+			get_export_data(columns,'service_reviews');
 		});
 		hide_loader();
 	});
@@ -4786,7 +4786,7 @@ function form64_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'service_cross_sells');
+			get_export_data(columns,'service_cross_sells');
 		});
 		hide_loader();
 	});
@@ -4892,7 +4892,7 @@ function form66_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'product_cross_sells');
+			get_export_data(columns,'product_cross_sells');
 		});
 		hide_loader();
 	});
@@ -5137,7 +5137,7 @@ function form70_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'sale_orders');
+			get_export_data(columns,'sale_orders');
 		});
 		hide_loader();
 	});
@@ -5295,7 +5295,7 @@ function form71_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				my_obj_array_to_csv(results,'accounts');
+				get_export_data(columns,'accounts');
 			});
 			hide_loader();
 		});
@@ -6392,7 +6392,7 @@ function form77_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'shortcuts');
+			get_export_data(columns,'shortcuts');
 		});
 		hide_loader();
 	});
@@ -6569,7 +6569,7 @@ function form79_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'task_types');
+			get_export_data(columns,'task_types');
 		});
 		hide_loader();
 	});
@@ -6736,7 +6736,6 @@ function form81_ini()
 		$(export_button).on("click", function(event)
 		{
 			get_export_data(columns,'sale_leads');
-			//my_obj_array_to_csv(results,'sale_leads');
 		});
 		hide_loader();
 	});
@@ -6845,7 +6844,7 @@ function form83_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'store_areas');
+			get_export_data(columns,'store_areas');
 		});
 		hide_loader();
 	});
@@ -6964,7 +6963,7 @@ function form84_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'subscriptions');
+			get_export_data(columns,'subscriptions');
 		});
 		hide_loader();
 	});
@@ -7343,7 +7342,7 @@ function form87_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'products');
+			get_export_data(columns,'products');
 		});
 		hide_loader();
 	});	
@@ -7462,7 +7461,7 @@ function form88_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'manufacturing_schedule');
+			get_export_data(columns,'manufacturing_schedule');
 		});
 		hide_loader();
 	});	
@@ -7591,7 +7590,7 @@ function form89_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'appointments');
+			get_export_data(columns,'appointments');
 		});
 		hide_loader();
 	});
@@ -7691,7 +7690,7 @@ function form90_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'billing_types');
+			get_export_data(columns,'billing_types');
 		});
 		hide_loader();
 	});	
@@ -7980,7 +7979,7 @@ function form92_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'bills');
+			get_export_data(columns,'bills');
 		});
 		hide_loader();
 	});
@@ -8126,7 +8125,7 @@ function form93_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'loans');
+			get_export_data(columns,'loans');
 		});
 		hide_loader();
 	});	
@@ -8235,7 +8234,7 @@ function form94_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'discarded_items');
+			get_export_data(columns,'discarded_items');
 		});
 		hide_loader();
 	});
@@ -8434,7 +8433,7 @@ function form96_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'customer_attributes');
+			get_export_data(columns,'customer_attributes');
 		});
 		hide_loader();
 	});
@@ -8538,7 +8537,7 @@ function form97_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'supplier_attributes');
+			get_export_data(columns,'supplier_attributes');
 		});
 		hide_loader();
 	});
@@ -8642,7 +8641,7 @@ function form98_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'staff_attributes');
+			get_export_data(columns,'staff_attributes');
 		});
 		hide_loader();
 	});
@@ -8898,7 +8897,7 @@ function form101_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				my_obj_array_to_csv(results,'projects');
+				get_export_data(columns,'projects');
 			});
 			hide_loader();
 		});
@@ -9711,7 +9710,7 @@ function form108_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'sale_orders');
+			get_export_data(columns,'sale_orders');
 		});
 		hide_loader();
 	});
@@ -9814,7 +9813,7 @@ function form109_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'product_attributes');
+			get_export_data(columns,'product_attributes');
 		});
 		hide_loader();
 	});
@@ -10104,7 +10103,7 @@ function form113_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'sale_challans');
+			get_export_data(columns,'sale_challans');
 		});
 		hide_loader();
 	});
@@ -10214,7 +10213,7 @@ function form115_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'purchase_challans');
+			get_export_data(columns,'purchase_challans');
 		});
 		hide_loader();
 	});
@@ -10347,7 +10346,7 @@ function form116_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'loyalty_programs');
+			get_export_data(columns,'loyalty_programs');
 		});
 		hide_loader();
 	});
@@ -10867,7 +10866,7 @@ function form120_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'loyalty_customers');
+			get_export_data(columns,'loyalty_customers');
 		});
 		hide_loader();
 	});
@@ -10969,7 +10968,7 @@ function form121_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'loyalty_points');
+			get_export_data(columns,'loyalty_points');
 		});
 		hide_loader();
 	});
@@ -11217,7 +11216,7 @@ function form123_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'mandatory_attributes');
+			get_export_data(columns,'mandatory_attributes');
 		});
 		hide_loader();
 	});
@@ -11317,7 +11316,7 @@ function form124_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'receipts');
+			get_export_data(columns,'receipts');
 		});
 		hide_loader();
 	});
@@ -11427,7 +11426,7 @@ function form125_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'customer_accounts');
+			get_export_data(columns,'customer_accounts');
 		});
 		hide_loader();
 	});
@@ -11541,7 +11540,7 @@ function form126_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'issues');
+			get_export_data(columns,'issues');
 		});
 		hide_loader();
 	});
@@ -11691,7 +11690,7 @@ function form128_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				my_obj_array_to_csv(results,'service_requests');
+				get_export_data(columns,'service_requests');
 			});
 			hide_loader();
 		});
@@ -12240,7 +12239,7 @@ function form131_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				my_obj_array_to_csv(results,'tasks');
+				get_export_data(columns,'tasks');
 			});
 			hide_loader();
 		});
@@ -13530,7 +13529,7 @@ function form141_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'sale_orders');
+			get_export_data(columns,'sale_orders');
 		});
 		hide_loader();
 	});
@@ -13758,7 +13757,7 @@ function form143_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'questionnaires');
+			get_export_data(columns,'questionnaires');
 		});
 		hide_loader();
 	});
@@ -14067,7 +14066,7 @@ function form145_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				my_obj_array_to_csv(results,'store_movement');
+				get_export_data(columns,'store_movement');
 			});
 			hide_loader();
 		});
@@ -14191,7 +14190,7 @@ function form146_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'manufacturing_schedule');
+			get_export_data(columns,'manufacturing_schedule');
 		});
 		hide_loader();
 	});	
@@ -14294,7 +14293,7 @@ function form147_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'roles');
+			get_export_data(columns,'roles');
 		});
 		hide_loader();
 	});	
@@ -14543,7 +14542,7 @@ function form149_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'user_role_mapping');
+			get_export_data(columns,'user_role_mapping');
 		});
 		hide_loader();
 	});	
@@ -15030,7 +15029,7 @@ function form152_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				my_obj_array_to_csv(results,'Quotations');
+				get_export_data(columns,'Quotations');
 			});
 			hide_loader();
 		});
@@ -15617,7 +15616,7 @@ function form155_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'inventory');
+			get_export_data(columns,'inventory');
 		});
 		
 		hide_loader();
@@ -15771,7 +15770,7 @@ function form156_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				my_obj_array_to_csv(results,'store_placement');
+				get_export_data(columns,'store_placement');
 			});
 			hide_loader();
 		});
@@ -15925,7 +15924,7 @@ function form157_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				my_obj_array_to_csv(results,'store_movement');
+				get_export_data(columns,'store_movement');
 			});
 			hide_loader();
 		});
@@ -16157,7 +16156,7 @@ function form161_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'checklist_items');
+			get_export_data(columns,'checklist_items');
 		});
 		hide_loader();
 	});
@@ -16260,7 +16259,7 @@ function form162_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'product_checklist');
+			get_export_data(columns,'product_checklist');
 		});
 		hide_loader();
 	});
@@ -16415,7 +16414,7 @@ function form163_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'product_dimensions');
+			get_export_data(columns,'product_dimensions');
 		});
 		hide_loader();
 	});
@@ -16576,7 +16575,7 @@ function form165_ini()
 			$(export_button).off("click");
 			$(export_button).on("click", function(event)
 			{
-				my_obj_array_to_csv(results,'put_away_suggestions');
+				get_export_data(columns,'put_away_suggestions');
 			});
 			hide_loader();
 		});
@@ -16688,7 +16687,7 @@ function form166_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'sale_prices');
+			get_export_data(columns,'sale_prices');
 		});
 		
 		hide_loader();
@@ -16800,7 +16799,7 @@ function form167_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'storage_structure');
+			get_export_data(columns,'storage_structure');
 		});
 		
 		hide_loader();
@@ -16952,7 +16951,7 @@ function form169_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'products');
+			get_export_data(columns,'products');
 		});
 		hide_loader();
 	});	
@@ -17080,7 +17079,7 @@ function form170_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'store_areas');
+			get_export_data(columns,'store_areas');
 		});
 		hide_loader();
 	});
@@ -17185,7 +17184,7 @@ function form171_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'sale_channels');
+			get_export_data(columns,'sale_channels');
 		});
 		hide_loader();
 	});	
@@ -17413,7 +17412,7 @@ function form172_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'pricing_sheet');
+			get_export_data(columns,'pricing_sheet');
 		});
 		hide_loader();
 	});	
@@ -17522,7 +17521,7 @@ function form173_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'sku_mapping');
+			get_export_data(columns,'sku_mapping');
 		});
 		hide_loader();
 	});	
@@ -17634,7 +17633,7 @@ function form174_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'pickup_charges');
+			get_export_data(columns,'pickup_charges');
 		});
 		hide_loader();
 	});	
@@ -17748,7 +17747,7 @@ function form175_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'channel_categories');
+			get_export_data(columns,'channel_categories');
 		});
 		hide_loader();
 	});	
@@ -17879,7 +17878,7 @@ function form176_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			my_obj_array_to_csv(results,'category_sku_mapping');
+			get_export_data(columns,'category_sku_mapping');
 		});
 		hide_loader();
 	});	

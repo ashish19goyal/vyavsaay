@@ -1,3 +1,15 @@
+function is_grid_access(grid_id)
+{
+	var grids=get_session_var('grids');
+	var found=form.search(grid_id+"-");
+	if(found===-1)
+	{
+		return false;
+	}
+	else
+		return true;
+}
+
 function is_form_access(form_id)
 {
 	var form=get_session_var('forms');

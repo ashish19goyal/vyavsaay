@@ -580,7 +580,9 @@ function my_array_to_csv(data_array)
 	a.click();
 }
 
-
+/*
+* Fetches all records for a specified form and exports them to a csv
+*/
 function get_export_data(columns,filename)
 {
 	var new_columns=columns.replace(" count='25'","");
