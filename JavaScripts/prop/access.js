@@ -1,15 +1,3 @@
-function is_grid_access(grid_id)
-{
-	var grids=get_session_var('grids');
-	var found=form.search(grid_id+"-");
-	if(found===-1)
-	{
-		return false;
-	}
-	else
-		return true;
-}
-
 function is_form_access(form_id)
 {
 	var form=get_session_var('forms');
@@ -41,8 +29,8 @@ function is_read_access(form_id)
 
 function is_create_access(form_id)
 {
-	var re=get_session_var('cr');
-	var found=re.search(form_id+"-");
+	var cr=get_session_var('cr');
+	var found=cr.search(form_id+"-");
 	if(found===-1)
 	{
 		return false;
@@ -53,8 +41,8 @@ function is_create_access(form_id)
 
 function is_update_access(form_id)
 {
-	var re=get_session_var('up');
-	var found=re.search(form_id+"-");
+	var up=get_session_var('up');
+	var found=up.search(form_id+"-");
 	if(found===-1)
 	{
 		return false;
@@ -65,8 +53,8 @@ function is_update_access(form_id)
 
 function is_delete_access(form_id)
 {
-	var re=get_session_var('del');
-	var found=re.search(form_id+"-");
+	var del=get_session_var('del');
+	var found=del.search(form_id+"-");
 	if(found===-1)
 	{
 		return false;

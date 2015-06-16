@@ -8378,6 +8378,8 @@ function form154_add_product()
 			var id=get_new_key();
 			var rowsHTML="<tr>";
 			rowsHTML+="<form id='form154_"+id+"' autocomplete='off'></form>";
+				rowsHTML+="<td data-th='S.No.'>";
+				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Item'>";
 					rowsHTML+="<input type='text' required form='form154_"+id+"'>";
 					rowsHTML+="<fresh><br>Fresh: <input type='checkbox' form='form154_"+id+"'></fresh>";
@@ -8403,7 +8405,7 @@ function form154_add_product()
 					rowsHTML+="<input type='hidden' form='form154_"+id+"' value='0'>";
 					rowsHTML+="<input type='hidden' form='form154_"+id+"' value='"+id+"'>";
 					rowsHTML+="<input type='button' class='submit_hidden' form='form154_"+id+"' id='save_form154_"+id+"' >";
-					rowsHTML+="<input type='button' class='delete_icon' form='form154_"+id+"' id='delete_form154_"+id+"' onclick='$(this).parent().parent().remove();'>";
+					rowsHTML+="<input type='button' class='delete_icon' form='form154_"+id+"' id='delete_form154_"+id+"' onclick='$(this).parent().parent().remove();form154_update_serial_numbers();'>";
 					rowsHTML+="<input type='submit' class='submit_hidden' form='form154_"+id+"'>";
 					rowsHTML+="<input type='hidden' form='form154_"+id+"' value='product'>";
 					rowsHTML+="<input type='hidden' form='form154_"+id+"' name='tax_unit'>";
@@ -8633,6 +8635,8 @@ function form154_add_product()
 			var id=get_new_key();
 			var rowsHTML="<tr>";
 			rowsHTML+="<form id='form154_"+id+"' autocomplete='off'></form>";
+				rowsHTML+="<td data-th='S.No.'>";
+				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Item'>";
 					rowsHTML+="<input type='text' required form='form154_"+id+"'>";
 				rowsHTML+="</td>";
@@ -8651,7 +8655,7 @@ function form154_add_product()
 					rowsHTML+="<input type='hidden' form='form154_"+id+"' value='0'>";
 					rowsHTML+="<input type='hidden' form='form154_"+id+"' value='"+id+"'>";
 					rowsHTML+="<input type='button' class='submit_hidden' form='form154_"+id+"' id='save_form154_"+id+"' >";
-					rowsHTML+="<input type='button' class='delete_icon' form='form154_"+id+"' id='delete_form154_"+id+"' onclick='$(this).parent().parent().remove();'>";
+					rowsHTML+="<input type='button' class='delete_icon' form='form154_"+id+"' id='delete_form154_"+id+"' onclick='$(this).parent().parent().remove();form154_update_serial_numbers();'>";
 					rowsHTML+="<input type='submit' class='submit_hidden' form='form154_"+id+"'>";
 					rowsHTML+="<input type='hidden' form='form154_"+id+"' value='product'>";
 					rowsHTML+="<input type='hidden' form='form154_"+id+"' name='tax_unit'>";
@@ -8767,6 +8771,7 @@ function form154_add_product()
 				total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value));
 			});
 		}	
+		form154_update_serial_numbers();
 	}
 	else
 	{
@@ -8786,17 +8791,16 @@ function form154_add_service()
 	var customer_name=filter_fields.elements[1].value;
 	
 	var hiring=false;
-	if(bill_type=='Hiring')
-	{	hiring=true;  }
 				
 	if(is_create_access('form154'))
 	{
 		var id=get_new_key();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form154_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='S.No.'>";
+			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' required form='form154_"+id+"'>";
-				rowsHTML+="<br>Details: <textarea form='form154_"+id+"'></textarea>";
+				rowsHTML+="<textarea form='form154_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' readonly='readonly' value='1' required form='form154_"+id+"'>";
@@ -8813,10 +8817,10 @@ function form154_add_service()
 				rowsHTML+="<input type='hidden' form='form154_"+id+"' value='0'>";
 				rowsHTML+="<input type='hidden' form='form154_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form154_"+id+"' id='save_form154_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form154_"+id+"' id='delete_form154_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form154_"+id+"' id='delete_form154_"+id+"' onclick='$(this).parent().parent().remove();form154_update_serial_numbers();'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form154_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form154_"+id+"' value='service'>";
-				rowsHTML+="<input type='hidden' form='form154_"+id+"' name='tax_unit'>";
+				rowsHTML+="<input type='hidden' form='form154_"+id+"' name='tax_unit' value='0.14'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -8827,15 +8831,15 @@ function form154_add_service()
 
 		var fields=document.getElementById("form154_"+id);
 		var name_filter=fields.elements[0];
-		var quantity_filter=fields.elements[2];
-		var price_filter=fields.elements[3];
-		var amount_filter=fields.elements[4];
-		var total_filter=fields.elements[5];
-		var discount_filter=fields.elements[6];
-		var tax_filter=fields.elements[7];
-		var id_filter=fields.elements[8];
-		var save_button=fields.elements[9];
-		var tax_unit_filter=fields.elements[13];
+		var quantity_filter=fields.elements[1];
+		var price_filter=fields.elements[2];
+		var amount_filter=fields.elements[3];
+		var total_filter=fields.elements[4];
+		var discount_filter=fields.elements[5];
+		var tax_filter=fields.elements[6];
+		var id_filter=fields.elements[7];
+		var save_button=fields.elements[8];
+		var tax_unit_filter=fields.elements[12];
 		
 		$(save_button).on("click", function(event)
 		{
@@ -8849,58 +8853,16 @@ function form154_add_service()
 			form154_add_service();
 		});
 		
-		var service_data="<services>" +
-				"<name></name>" +
-				"</services>";
-				
-		set_my_value_list_func(service_data,name_filter,function () 
-		{
-			$(name_filter).focus();
-		});
-
-		$(name_filter).on('keydown',function(e)
-		{
-			if(e.keyCode==118)
-			{
-				e.preventDefault();
-				modal57_action(name_filter.value,customer_name);
-			}
-		});
-
-		$(name_filter).on('blur',function(event)
-		{
-			var price_data="<services>" +
-				"<price></price>" +
-				"<tax></tax>"+
-				"<name exact='yes'>"+name_filter.value+"</name>" +
-				"</services>";
-			fetch_requested_data('',price_data,function(prices)
-			{
-				if(prices.length>0)
-				{
-					price_filter.value=prices[0].price;
-					amount_filter.value=prices[0].price;					
-					tax_filter.value=parseFloat((parseFloat(prices[0].tax)*(prices[0].price))/100);
-					total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
-				}	
-			});
-			
-			var tax_data="<services>" +
-					"<tax></tax>" +
-					"<name exact='yes'>"+name_filter.value+"</name>" +
-					"</services>";
-			set_my_value(tax_data,tax_unit_filter);			
-		});
-
+		$(name_filter).focus();
+		
 		$(price_filter).on('blur',function(event)
 		{
 			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
 			amount_filter.value=amount;
-				
-			tax_filter.value=parseFloat((parseFloat(tax_unit_filter.value)*amount)/100);
-				
+			tax_filter.value=my_round(parseFloat((parseFloat(tax_unit_filter.value)*amount)),2);
 			total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
 		});
+		form154_update_serial_numbers();
 	}
 	else
 	{

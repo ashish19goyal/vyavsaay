@@ -908,3 +908,13 @@ function send_email(to,from,subject,message,type,func)
 		}
 	}
 }
+
+function htmlentities(str)
+{
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function revert_htmlentities(str)
+{
+    return String(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+}

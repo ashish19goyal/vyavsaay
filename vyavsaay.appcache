@@ -173,7 +173,6 @@ JavaScripts/prop/faq_main.js
 JavaScripts/prop/forms_header_ini.js
 JavaScripts/prop/forms_ini.js
 JavaScripts/prop/get.js
-JavaScripts/prop/grids.js
 JavaScripts/prop/import_template.js
 JavaScripts/prop/import.js
 JavaScripts/prop/local_db_handling.js

@@ -30,8 +30,7 @@ function form2_create_item(form)
 						"<pic_url>"+blob_name+"</pic_url>"+
 						"<column_size>"+column_size+"</column_size>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</newsletter_items>";
-			
+						"</newsletter_items>";			
 			$.ajax(
 			{
 				type: "POST",
@@ -11983,23 +11982,22 @@ function form154_create_service(form)
 		var bill_id=document.getElementById("form154_master").elements[8].value;
 		
 		var name=form.elements[0].value;
-		var desc=form.elements[1].value;
-		var quantity=form.elements[2].value;
-		var price=form.elements[3].value;
-		var amount=form.elements[4].value;
-		var total=form.elements[5].value;
-		var discount=form.elements[6].value;
-		var tax=form.elements[7].value;
-		var data_id=form.elements[8].value;
-		var save_button=form.elements[9];
-		var del_button=form.elements[10];
+		var quantity=form.elements[1].value;
+		var price=form.elements[2].value;
+		var amount=form.elements[3].value;
+		var total=form.elements[4].value;
+		var discount=form.elements[5].value;
+		var tax=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		var save_button=form.elements[8];
+		var del_button=form.elements[9];
 		
 		var last_updated=get_my_time();
 		
 		var data_xml="<bill_items>" +
 				"<id>"+data_id+"</id>" +
 				"<item_name>"+name+"</item_name>" +
-				"<item_desc>"+desc+"</item_desc>" +
+				"<item_desc></item_desc>" +
 				"<batch>"+name+"</batch>" +
 				"<unit_price>"+price+"</unit_price>" +
 				"<quantity>"+quantity+"</quantity>" +
@@ -12022,7 +12020,7 @@ function form154_create_service(form)
 			local_create_simple(data_xml);
 		}
 
-		for(var i=0;i<8;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -12161,12 +12159,12 @@ function form154_create_form()
 				discount+=parseFloat(subform.elements[9].value);
 				tax+=parseFloat(subform.elements[10].value);
 			}
-			else if(bill_type=='Service')
+			else if(bill_type=='Installation' || bill_type=='Repair')
 			{			
-				amount+=parseFloat(subform.elements[4].value);
-				total+=parseFloat(subform.elements[5].value);
-				discount+=parseFloat(subform.elements[6].value);
-				tax+=parseFloat(subform.elements[7].value);
+				amount+=parseFloat(subform.elements[3].value);
+				total+=parseFloat(subform.elements[4].value);
+				discount+=parseFloat(subform.elements[5].value);
+				tax+=parseFloat(subform.elements[6].value);
 			}
 			else
 			{			
@@ -12286,7 +12284,7 @@ function form154_create_form()
 			});
 		}
 		
-		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 					"<td>Amount:<disc><br>Discount: </disc><br>Tax: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
@@ -12297,7 +12295,7 @@ function form154_create_form()
 					"</tr>";
 		if(hiring)
 		{
-			total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+			total_row="<tr><td colspan='4' data-th='Total'>Total</td>" +
 					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br><disc_amount>" +
@@ -12310,7 +12308,7 @@ function form154_create_form()
 		}
 		else if(bill_type=='Service')
 		{
-			total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+			total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +

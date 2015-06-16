@@ -98,7 +98,7 @@
 						foreach ($stmt_res[$i] as $key => $value)
 						{
 							$xmlresponse.="<".$key.">";
-							$xmlresponse.=$value;
+							$xmlresponse.=htmlentities($value);
 							$xmlresponse.="</".$key.">";
 						}
 						$xmlresponse.="</row>";

@@ -13,11 +13,6 @@ function set_grid_item_1()
 		if(results.length>0)
 		{
 			var grid_item=document.getElementById('grid_item_1');
-			$(grid_item).off('click');
-			$(grid_item).on('click',function(ev)
-			{
-				element_display(results[0].id,'form92','form42');
-			});
 			grid_item.innerHTML=results[0];
 		}
 	},columns);
@@ -171,7 +166,7 @@ function set_grid_item_8()
 			"<id></id>" +
 			"<item_name></item_name>" +
 			"<total></total>" +
-			"<bill_date lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</bill_date>" +
+			"<last_updated lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</last_updated>" +
 			"</bill_items>";
 	fetch_requested_data('',columns,function(results)
 	{
@@ -637,4 +632,3 @@ function set_grid_item_32()
 		document.getElementById('grid_item_32').innerHTML=results.length;
 	},columns);
 };
-

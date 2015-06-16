@@ -62,7 +62,6 @@
 				$stmt2=$conn->conn->prepare($query2);
 				$stmt2->execute(array($id));
 				
-				
 				$link_to=$activity_input->getElementsByTagName('link_to')->item(0)->nodeValue;
 				$title=$activity_input->getElementsByTagName('title')->item(0)->nodeValue;
 				$notes=$activity_input->getElementsByTagName('notes')->item(0)->nodeValue;

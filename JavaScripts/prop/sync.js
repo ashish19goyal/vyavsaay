@@ -369,7 +369,7 @@ function get_data_from_log_table(func)
 							for(var field in record)
 							{
 								log_data+="<"+field+">";
-									log_data+=record[field];
+									log_data+=htmlentities(record[field]);
 								log_data+="</"+field+">";
 							}
 							log_data+="</row>";
@@ -427,7 +427,7 @@ function set_activities_to_synced(response)
 			{
 				if(delete_index<delete_ids.length)
 				{
-/////remove parseint from here
+					/////remove parseint from here
 					var record_id=delete_ids[delete_index].innerHTML;
 					delete_index+=1;
 					var delete_request=objectStore.delete(record_id);

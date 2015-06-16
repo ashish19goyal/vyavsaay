@@ -7904,6 +7904,7 @@ function form92_ini()
 			"<transaction_id></transaction_id>" +
 			"<billing_type>"+ftype+"</billing_type>" +
 			"<last_updated></last_updated>" +
+			"<status></status>"+
 			"</bills>";
 
 	$('#form92_body').html("");
@@ -7913,7 +7914,12 @@ function form92_ini()
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
-			rowsHTML+="<tr>";
+			var cancelled_bill="";
+			if(result.status=='cancelled')
+			{
+				cancelled_bill="style='opacity:0.5' title='This bill was cancelled'";
+			}	
+			rowsHTML+="<tr "+cancelled_bill+">";
 				rowsHTML+="<form id='form92_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Bill No.'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form92_"+result.id+"' value='"+result.bill_num+"'>";
@@ -7932,8 +7938,11 @@ function form92_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form92_"+result.id+"' value='"+result.id+"'>";
+					if(result.status!='cancelled')
+					{					
 						rowsHTML+="<input type='button' class='edit_icon' form='form92_"+result.id+"' title='Edit Bill'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form92_"+result.id+"' title='Delete Bill' onclick='form92_delete_item($(this));'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form92_"+result.id+"' title='Cancel Bill' onclick='form92_delete_item($(this));'>";
+					}					
 						rowsHTML+="<input type='hidden' form='form92_"+result.id+"' value='"+result.transaction_id+"'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
@@ -15323,7 +15332,7 @@ function form154_ini()
 					form154_update_form();
 				});
 
-				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 							"<td>Amount:<disc><br>Discount: </disc><br>Tax: <br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+bill_results[i].amount+"</br>" +
 							"<disc_amount>Rs. <input type='number' value='"+bill_results[i].discount+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
@@ -15334,8 +15343,9 @@ function form154_ini()
 							"</tr>";
 				
 				var headHTML="<tr><form id='form154_header'></form>"+
-							"<th>Item</th>"+
-							"<th>Quantity</th>"+
+							"<th style='width:50px'>S.No.</th>"+
+							"<th style='min-width:200px'>Item</th>"+
+							"<th>Qty.</th>"+
 							"<th>Rate</th>"+
 							"<th>Amount</th>"+
 							"<th><input type='button' title='Add Service' class='add_icon' onclick='form154_add_service();'></th>"+
@@ -15343,7 +15353,7 @@ function form154_ini()
 					
 				if(hiring)
 				{				
-					total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+					total_row="<tr><td colspan='4' data-th='Total'>Total</td>" +
 							"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+bill_results[i].amount+"</br>" +
 							"<disc_amount>Rs. <input type='number' value='"+bill_results[i].discount+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
@@ -15354,8 +15364,9 @@ function form154_ini()
 							"</tr>";
 							
 					headHTML="<tr><form id='form154_header'></form>"+
-							"<th>Item</th>"+
-							"<th>Quantity</th>"+
+							"<th style='width:50px'>S.No.</th>"+
+							"<th style='min-width:200px'>Item</th>"+
+							"<th>Qty.</th>"+
 							"<th>Date</th>"+
 							"<th>Rate</th>"+
 							"<th>Amount</th>"+
@@ -15366,8 +15377,9 @@ function form154_ini()
 				else if(filter_fields.elements[2].value=='Retail' || filter_fields.elements[2].value=='Tax')
 				{
 					headHTML="<tr><form id='form154_header'></form>"+
-							"<th>Item</th>"+
-							"<th>Quantity</th>"+
+							"<th style='width:50px'>S.No.</th>"+
+							"<th style='min-width:200px'>Item</th>"+
+							"<th>Qty.</th>"+
 							"<th>Rate</th>"+
 							"<th>Amount</th>"+
 							"<th><input type='button' title='Add Product' class='add_icon' onclick='form154_add_product();'></th>"+
@@ -15375,7 +15387,7 @@ function form154_ini()
 				}
 				else
 				{
-					total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+					total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 							"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+bill_results[i].amount+"</br>" +
 							"<disc_amount>Rs. <input type='number' value='"+bill_results[i].discount+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
@@ -15411,6 +15423,8 @@ function form154_ini()
 						var days=((parseFloat(result.to_date)-parseFloat(result.from_date))/86400000)+1;
 						var rowsHTML="<tr>";
 						rowsHTML+="<form id='form154_"+id+"'></form>";
+							rowsHTML+="<td data-th='S.No.'>";
+							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Item'>";
 								rowsHTML+="<textarea readonly='readonly' form='form154_"+id+"'>"+result.item_name+"</textarea>";
 							if(result.fresh=='yes')							
@@ -15452,6 +15466,8 @@ function form154_ini()
 						var id=result.id;
 						var rowsHTML="<tr>";
 						rowsHTML+="<form id='form154_"+id+"'></form>";
+							rowsHTML+="<td data-th='S.No.'>";
+							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Item'>";
 								rowsHTML+="<textarea readonly='readonly' form='form154_"+id+"'>"+result.item_name+"</textarea>";
 								if(result.item_desc!='undefined' || result.item_desc!="")
@@ -15482,6 +15498,7 @@ function form154_ini()
 						
 					});
 				}	
+				form154_update_serial_numbers();
 				$('textarea').autosize();
 				hide_loader();
 			});

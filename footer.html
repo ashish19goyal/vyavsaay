@@ -103,12 +103,13 @@
 		}); // end submit
 		
 
-	function createErrTult(text, $elem) {
-		$('<p />', {
-			'class':'form__tooltip',
-			'text':text,
-		}).css({'top':$elem.position().top,"left":$elem.position().left})
-		.appendTo($elem.addClass('form__field--invalid').parent()) 
-		.delay(3000).fadeOut(300, function(){$(this).remove()});
-	}
+		function createErrTult(text, $elem) 
+		{
+			$('<p />', {
+				'class':'form__tooltip',
+				'text':text,
+			}).css({'top':$elem.position().top,"left":$elem.position().left})
+			.appendTo($elem.addClass('form__field--invalid').parent()) 
+			.delay(3000).fadeOut(300, function(){$(this).remove()});
+		}
 	</script>

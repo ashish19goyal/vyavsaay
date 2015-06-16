@@ -2695,35 +2695,40 @@ function form92_delete_item(button)
 			var customer_name=form.elements[2].value;
 			var data_id=form.elements[5].value;
 			var transaction_id=form.elements[8].value;
+			var edit_button=form.elements[6];			
 			var last_updated=get_my_time();
 			var bill_xml="<bills>" +
 						"<id>"+data_id+"</id>" +
-						"<customer_name>"+customer_name+"</customer_name>" +
+						"<status>cancelled</status>" +
+						"<last_updated>"+get_my_time()+"</last_updated>"+
 						"</bills>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>bills</tablename>" +
 						"<link_to>form92</link_to>" +
-						"<title>Deleted</title>" +
+						"<title>Cancelled</title>" +
 						"<notes>Bill no "+bill_num+" for customer "+customer_name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			var transaction_xml="<transactions>" +
-					"<id>"+transaction_id+"</id>" +
-					"</transactions>";
-	
+						"<id>"+transaction_id+"</id>" +
+						"</transactions>";
+		
 			if(is_online())
 			{
-				server_delete_row(bill_xml,activity_xml);
+				server_update_row(bill_xml,activity_xml);
 				server_delete_simple(transaction_xml);
 			}
 			else
 			{
-				local_delete_row(bill_xml,activity_xml);
+				local_update_row(bill_xml,activity_xml);
 				local_delete_simple(transaction_xml);
 			}	
-			$(button).parent().parent().remove();
-	
+			$(button).parent().parent().attr('style','opacity:0.5');
+			$(button).parent().parent().attr('title','This bill was cancelled');
+			$(button).hide();
+			$(edit_button).hide();
+			
 			var payment_xml="<payments>" +
 					"<id></id>" +
 					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
@@ -2760,34 +2765,15 @@ function form92_delete_item(button)
 					"<id></id>" +
 					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"</bill_items>";
-			fetch_requested_data('',items_data,function(bill_items)
+			if(is_online())
 			{
-				bill_items.forEach(function(bill_item)
-				{
-					var task_xml="<task_instances>" +
-							"<source_id>"+bill_item.id+"</source_id>" +
-							"<source>service</source>" +
-							"</task_instances>";
-	
-					if(is_online())
-					{
-						server_delete_simple(task_xml);
-					}
-					else
-					{
-						local_delete_simple(task_xml);
-					}
-				});	
+				server_delete_simple(items_data);
+			}
+			else
+			{
+				local_delete_simple(items_data);
+			}
 				
-				if(is_online())
-				{
-					server_delete_simple(items_data);
-				}
-				else
-				{
-					local_delete_simple(items_data);
-				}
-			});		
 		});
 	}
 	else
@@ -5184,6 +5170,7 @@ function form154_delete_item(button)
 			}
 					
 			$(button).parent().parent().remove();
+			form154_update_serial_numbers();
 		});
 	}
 	else
@@ -5207,7 +5194,7 @@ function form154_delete_service_item(button)
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var data_id=form.elements[8].value;
+			var data_id=form.elements[7].value;
 					
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
@@ -5223,6 +5210,7 @@ function form154_delete_service_item(button)
 			}
 					
 			$(button).parent().parent().remove();
+			form154_update_serial_numbers();
 		});
 	}
 	else

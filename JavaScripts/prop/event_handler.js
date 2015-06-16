@@ -30,6 +30,8 @@ function default_load()
 			date_formating();
 			//print_setup();
 			set_footer_message();
+			add_grid_metrics();
+			
 			Chart.defaults.global.responsive = true;
 			Chart.defaults.global.scaleFontSize= 10;
 			Chart.defaults.global.scaleFontColor="#000";
@@ -97,40 +99,61 @@ function add_questionnaires(func)
 	});
 }
 
-
-function set_grid_items()
+function add_grid_metrics(func)
 {
-	console.log('setting grid items');
-	set_grid_item_1();
-	set_grid_item_2();
-	set_grid_item_3();
-	set_grid_item_4();
-	set_grid_item_5();
-	set_grid_item_6();
-	set_grid_item_7();
-//		set_grid_item_8();
-	set_grid_item_9();
-	set_grid_item_11();
-	set_grid_item_12();
-	set_grid_item_13();
-	set_grid_item_14();
-//	set_grid_item_15();
-//	set_grid_item_16();
-	set_grid_item_17();
-	set_grid_item_18();
-	set_grid_item_19();
-	set_grid_item_20();
-	set_grid_item_22();
-	set_grid_item_23();
-	set_grid_item_24();
-	set_grid_item_25();
-	set_grid_item_26();
-	set_grid_item_27();
-	set_grid_item_28();
-	set_grid_item_29();
-	set_grid_item_30();
-	set_grid_item_31();
-	set_grid_item_32();
+	var grid_xml="<system_grid_metrics>"+
+				"<id></id>"+
+				"<metric_id></metric_id>"+
+				"<display_name></display_name>"+
+				"<grid></grid>"+
+				"<function_name></function_name>"+
+				"<function_def></function_def>"+
+				"<status exact='yes'>active</status>"+
+				"</system_grid_metrics>";
+				
+	fetch_requested_data('',grid_xml,function(metrics)
+	{
+		//console.log(metrics);
+		$('#script_grid_metrics').html("");
+	
+		var metric_by_grid=[];
+		var script_content="";
+		var function_names="";
+		metrics.forEach(function(metric)
+		{
+			var new_grid=true;
+			script_content+=revert_htmlentities(metric.function_def);
+			function_names+=revert_htmlentities(metric.function_name);
+			
+			for(var i in metric_by_grid)
+			{
+				if(metric_by_grid[i].grid==metric.grid)
+				{
+					metric_by_grid[i].html=metric_by_grid[i].html+"<li>"+metric.display_name+": <a class='grid_item' id='"+metric.metric_id+"'></a></li>";
+					new_grid=false;
+					break;
+				}
+			}
+			
+			if(new_grid)
+			{
+				var new_object=new Object();
+				new_object.grid=metric.grid;
+				new_object.html="<li>"+metric.display_name+": <a class='grid_item' id='"+metric.metric_id+"'></a></li>";
+				metric_by_grid.push(new_object);
+			}
+		});
+
+		metric_by_grid.forEach(function(grid)
+		{
+			$('#'+grid.grid+'_link').find('ul').html(grid.html);
+		});
+
+		//to start auto-executing of all these functions		
+		script_content+="(function () {deferred_execute(function(){"+function_names+"});}());";
+
+		$('#script_grid_metrics').html(script_content);
+	});
 }
 
 function deferred_execute(func)
@@ -149,10 +172,7 @@ function deferred_execute(func)
 }
 
 function start_workers()
-{
-	deferred_execute(function()
-	{set_grid_items();});
-		
+{	
 	deferred_execute(function()
 	{notifications1_add();});
 	
@@ -319,6 +339,7 @@ function hide_unreadable_elements()
 		}
 	});
 }
+
 
 function grid_click(func)
 {

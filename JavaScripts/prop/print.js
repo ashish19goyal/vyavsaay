@@ -963,7 +963,7 @@ function form154_print_form()
 		hiring=true;
 		tax_text="Service Tax no: "+service_tax_no;	
 	}
-	else if(master_form.elements[2].value=='Service')
+	else
 	{
 		tax_text="Service Tax no: "+service_tax_no;
 	}
@@ -1020,8 +1020,9 @@ function form154_print_form()
 	if(hiring)
 	{
 		var head_html="<tr><form id='form154_header'></form>"+
-					"<th>Item</th>"+
-					"<th>Quantity</th>"+
+					"<th style='width:50px'>S.No.</th>"+
+					"<th style='width:200px'>Item</th>"+
+					"<th>Qty.</th>"+
 					"<th>From</th>"+
 					"<th>To</th>"+
 					"<th>Days</th>"+
@@ -1034,16 +1035,21 @@ function form154_print_form()
 		new_body_html=new_body_html.replace(/<td data-th=\"Date\">From:/g,"");
 		new_body_html=new_body_html.replace(/<br>To:/g,"");
 		new_body_html=new_body_html.replace(/<\/td><\/td>/g,"</td>");
-		//new_body_html=new_body_html.replace(/Fresh:/g,"");
 		
 		$(table_copy).find('tbody').html(new_body_html);
 		$(table_copy).find('tfoot > tr > td:first').attr('colspan','4');
+		$(table_copy).find('tfoot > tr > td:nth-child(2)').attr('colspan','2');
+		$(table_copy).find('tfoot > tr > td:nth-child(3)').attr('colspan','2');
+	}
+	else 
+	{
+		$(table_copy).find('tfoot > tr > td:first').attr('colspan','2');
 		$(table_copy).find('tfoot > tr > td:nth-child(2)').attr('colspan','2');
 	}
 	
 	if(a1_job)
 	{
-		var new_table_row="<tr><td>";
+		var new_table_row="<tr><td>1</td><td>";
 		var new_from_date="";
 		var new_to_date="";		
 		var new_days="";
@@ -1051,11 +1057,11 @@ function form154_print_form()
 
 		$(table_copy).find('tbody>tr').each(function()
 		{
-			new_table_row+=$(this).find('td:first').html()+" "+$(this).find('td:nth-child(2)').html()+" NOS., ";
-			new_from_date=$(this).find('td:nth-child(3)').html();
-			new_to_date=$(this).find('td:nth-child(4)').html();
-			new_days=$(this).find('td:nth-child(5)').html();
-			new_amount+=parseFloat($(this).find('td:nth-child(7)').html());
+			new_table_row+=$(this).find('td:nth-child(2)').html()+" "+$(this).find('td:nth-child(3)').html()+" NOS., ";
+			new_from_date=$(this).find('td:nth-child(4)').html();
+			new_to_date=$(this).find('td:nth-child(5)').html();
+			new_days=$(this).find('td:nth-child(6)').html();
+			new_amount+=parseFloat($(this).find('td:nth-child(8)').html());
 		});
 		new_table_row+="</td><td>1 job</td><td>"+new_from_date+"</td><td>"+new_to_date+"</td><td>"+new_days+"</td><td></td><td>"+new_amount+"</td></tr>";
 		$(table_copy).find('tbody').html(new_table_row);
@@ -1069,13 +1075,13 @@ function form154_print_form()
 	
 	if(hiring)
 	{
-		$(table_copy).find("th:first, td:first").css('width','200px');
-		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
-
+		$(table_copy).find("th:nth-child(3), td:nth-child(3)").css('width','200px');
+		$(table_copy).find("th:first, td:first").css('width','50px');
+		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;min-height:5px;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
 	}
 	else{
-		$(table_copy).find("th:first, td:first").css('width','300px');
-		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
+		$(table_copy).find("th:nth-child(2), td:nth-child(2)").css('width','300px');
+		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;min-height:5px;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
 	}	
 	
 	/////////////placing the containers //////////////////////////////////////////////////////	

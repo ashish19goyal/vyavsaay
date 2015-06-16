@@ -134,7 +134,7 @@
 					}
 					else 
 					{
-						$xmlresponse.=$struct_res[$i][0];
+						$xmlresponse.=htmlentities($struct_res[$i][0]);
 					}
 					$xmlresponse.="</row>";
 				}

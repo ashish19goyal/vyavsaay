@@ -5586,8 +5586,9 @@ function form154_header_ini()
 		if(bill_type.value=='Retail' || bill_type.value=='Tax')
 		{
 			var headHTML="<tr><form id='form154_header'></form>"+
-					"<th>Item</th>"+
-					"<th>Quantity</th>"+
+					"<th style='width:50px'>S.No.</th>"+
+					"<th style='min-width:200px'>Item</th>"+
+					"<th>Qty.</th>"+
 					"<th>Rate</th>"+
 					"<th>Amount</th>"+
 					"<th><input type='button' title='Add Product' class='add_icon' onclick='form154_add_product();'></th>"+
@@ -5596,8 +5597,9 @@ function form154_header_ini()
 		else if(bill_type.value=='Hiring')
 		{
 			headHTML="<tr><form id='form154_header'></form>"+
-					"<th>Item</th>"+
-					"<th>Quantity</th>"+
+					"<th style='width:50px'>S.No.</th>"+
+					"<th style='min-width:200px'>Item</th>"+
+					"<th>Qty.</th>"+
 					"<th>Date</th>"+
 					"<th>Rate</th>"+
 					"<th>Amount</th>"+
@@ -5609,8 +5611,9 @@ function form154_header_ini()
 		else
 		{
 			headHTML="<tr><form id='form154_header'></form>"+
-					"<th>Item</th>"+
-					"<th>Quantity</th>"+
+					"<th style='width:50px'>S.No.</th>"+
+					"<th style='min-width:200px'>Item</th>"+
+					"<th>Qty.</th>"+
 					"<th>Rate</th>"+
 					"<th>Amount</th>"+
 					"<th><input type='button' title='Add Service' class='add_icon' onclick='form154_add_service();'>"+

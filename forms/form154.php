@@ -28,8 +28,9 @@
 		<thead id='form154_head'>
 			<tr>
 				<form id='form154_header'></form>
-				<th>Item</th>
-				<th>Quantity</th>
+				<th style='width:50px'>S.No</th>
+				<th style='min-width:200px'>Item</th>
+				<th>Qty.</th>
 				<th>Rate</th>
 				<th>Amount</th>
 				<th><input type='button' title='Add Product' class='add_icon' onclick='form154_add_product();'></th>

@@ -18,9 +18,10 @@ class user_setup
 		unset($this->conn);
 		$this->conn=new db_connect($this->dbname);
 		$this->setup();
-		$this->get_master_data();
-		$this->get_user_data($industry);
-		$this->get_demo_data();
+		$this->get_data_from_xml('master_db_data.xml');
+		$this->get_data_from_xml('demo_user_db_data.xml');
+		$this->get_data_from_xml('user_demo_data.xml');
+		$this->get_data_from_xml('grid_metrics.xml');
 	}
 
 	public function __destruct()
@@ -71,117 +72,11 @@ class user_setup
 		}
 	}
 	
-	private function get_user_data($industry)
+	
+	public function get_data_from_xml($filename)
 	{
 		$db_schema_xml=new \DOMDocument();
-		$db_schema_xml->load("../db/demo_user_db_data.xml");
-		$db_schema=$db_schema_xml->documentElement;
-			
-		foreach($db_schema->childNodes as $table)
-		{
-			$table_name=$table->nodeName;
-			if($table_name!='#text')
-			{
-				foreach($table->childNodes as $row)
-				{
-					$data_array=Array();
-					$q_string="insert into $table_name(";
-		
-					if($row->nodeName!='#text')
-					{		
-						foreach($row->childNodes as $column)
-						{
-							if($column->nodeName!='#text' && $column->nodeName!='#comment')
-							{	
-								$q_string.=$column->nodeName.",";
-							}
-						}
-						
-						$q_string=rtrim($q_string,",");
-						$q_string.=") values(";
-						foreach($row->childNodes as $column)
-						{
-							if($column->nodeName!='#text' && $column->nodeName!='#comment')
-							{
-								$q_string.="?,";
-								$data_array[]=$column->nodeValue;
-							}
-						}
-						$q_string=rtrim($q_string,",");
-						$q_string.=");";
-			
-						try{
-							$stmt=$this->conn->conn->prepare($q_string);
-							$stmt->execute($data_array);
-						}catch(PDOException $ex)
-						{
-							echo "Could not setup table $table_name: " .$ex->getMessage() ."</br>";
-						}
-					}
-				}
-			}
-		}
-				
-	}
-
-	private function get_demo_data()
-	{
-		$db_schema_xml=new \DOMDocument();
-		$db_schema_xml->load("../db/user_demo_data.xml");
-		$db_schema=$db_schema_xml->documentElement;
-			
-		foreach($db_schema->childNodes as $table)
-		{
-			$table_name=$table->nodeName;
-			if($table_name!='#text')
-			{
-				foreach($table->childNodes as $row)
-				{
-					$data_array=Array();
-					$q_string="insert into $table_name(";
-	
-					if($row->nodeName!='#text')
-					{
-						foreach($row->childNodes as $column)
-						{
-							if($column->nodeName!='#text' && $column->nodeName!='#comment')
-							{
-								$q_string.=$column->nodeName.",";
-							}
-						}
-	
-						$q_string=rtrim($q_string,",");
-						$q_string.=") values(";
-						foreach($row->childNodes as $column)
-						{
-							if($column->nodeName!='#text' && $column->nodeName!='#comment')
-							{
-								$q_string.="?,";
-								$data_array[]=$column->nodeValue;
-							}
-						}
-						$q_string=rtrim($q_string,",");
-						$q_string.=");";
-							
-						try{
-							$stmt=$this->conn->conn->prepare($q_string);
-							$stmt->execute($data_array);
-						}catch(PDOException $ex)
-						{
-							echo "Could not setup table $table_name: " .$ex->getMessage() ."</br>";
-						}
-						}
-					}
-				}
-			}
-	
-	}
-	
-	
-	private function get_master_data()
-	{
-		$db_schema_xml=new \DOMDocument();
-		$db_schema_xml->load("../db/master_db_data.xml");
+		$db_schema_xml->load("../db/".$filename);
 		$db_schema=$db_schema_xml->documentElement;
 		
 		foreach($db_schema->childNodes as $table)
@@ -230,7 +125,6 @@ class user_setup
 			}
 		}
 	}
-
 }
 
 class master_setup
@@ -241,7 +135,6 @@ class master_setup
 	{
 		$this->conn=new db_connect(0);
 		$this->setup();
-		//$this->get_master_data();
 	}
 
 	public function __destruct()
@@ -279,60 +172,6 @@ class master_setup
 				echo "Table $table_name created successfully</br>";
 			}
 		}
-	}
-	
-	private function get_master_data()
-	{
-		$db_schema_xml=new \DOMDocument();
-		$db_schema_xml->load("../db/master_db_data.xml");
-		$db_schema=$db_schema_xml->documentElement;
-		
-		foreach($db_schema->childNodes as $table)
-		{
-			$table_name=$table->nodeName;
-			if($table_name!='#text')
-			{
-				foreach($table->childNodes as $row)
-				{
-					$data_array=Array();
-					$q_string="insert into $table_name(";
-					if($row->nodeName!='#text')
-					{
-						foreach($row->childNodes as $column)
-						{
-							if($column->nodeName!='#text' && $column->nodeName!='#comment')
-							{	
-								$q_string.=$column->nodeName.",";
-							}
-						}
-						
-						$q_string=rtrim($q_string,",");
-						$q_string.=") values(";
-						foreach($row->childNodes as $column)
-						{
-							if($column->nodeName!='#text' && $column->nodeName!='#comment')
-							{
-								$q_string.="?,";
-								$data_array[]=$column->nodeValue;
-								
-							}
-						}
-						$q_string=rtrim($q_string,",");
-						$q_string.=");";
-			
-						try{
-							$stmt=$this->conn->conn->prepare($q_string);
-							$stmt->execute($data_array);
-						}catch(PDOException $ex)
-						{
-							echo "Could not setup table $table_name: " .$ex->getMessage() ."</br>";
-						}
-						
-					}
-				}
-			}
-		}
-		echo "Data added to tables";
 	}
 }
 

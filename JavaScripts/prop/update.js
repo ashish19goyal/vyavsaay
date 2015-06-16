@@ -8144,6 +8144,14 @@ function form153_update_form()
 	}
 }
 
+function form154_update_serial_numbers()
+{
+	$('#form154_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+}
+
 /**
  * @form Create Bill(DLM)
  * @formNo 154
@@ -8190,12 +8198,12 @@ function form154_update_form()
 				discount+=parseFloat(subform.elements[9].value);
 				tax+=parseFloat(subform.elements[10].value);
 			}
-			else if(bill_type=='Service')
+			else if(bill_type=='Installation' || bill_type=='Repair')
 			{			
-				amount+=parseFloat(subform.elements[4].value);
-				total+=parseFloat(subform.elements[5].value);
-				discount+=parseFloat(subform.elements[6].value);
-				tax+=parseFloat(subform.elements[7].value);
+				amount+=parseFloat(subform.elements[3].value);
+				total+=parseFloat(subform.elements[4].value);
+				discount+=parseFloat(subform.elements[5].value);
+				tax+=parseFloat(subform.elements[6].value);
 			}
 			else
 			{			
@@ -8258,7 +8266,7 @@ function form154_update_form()
 			local_update_simple(transaction_xml);
 		}
 		
-		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 					"<td>Amount:<disc><br>Discount:</disc><br>Tax: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
@@ -8269,7 +8277,7 @@ function form154_update_form()
 					"</tr>";
 		if(hiring)
 		{
-			total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+			total_row="<tr><td colspan='4' data-th='Total'>Total</td>" +
 					"<td>Amount:<disc><br>Discount:</disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
@@ -8281,7 +8289,7 @@ function form154_update_form()
 		}
 		else if(bill_type=='Service')
 		{
-			total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+			total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
