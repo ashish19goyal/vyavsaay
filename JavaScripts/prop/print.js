@@ -1066,7 +1066,9 @@ function form154_print_form()
 		new_table_row+="</td><td>1 job</td><td>"+new_from_date+"</td><td>"+new_to_date+"</td><td>"+new_days+"</td><td></td><td>"+new_amount+"</td></tr>";
 		$(table_copy).find('tbody').html(new_table_row);
 	}
-
+	
+	//table_copy.removeAttribute('class');
+	//$(table_copy).attr('style','min-height:600px;');
 	$(table_copy).find('tbody').attr('style','height:500px;min-height:500px;');
 	$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
@@ -1077,13 +1079,24 @@ function form154_print_form()
 	{
 		$(table_copy).find("th:nth-child(3), td:nth-child(3)").css('width','200px');
 		$(table_copy).find("th:first, td:first").css('width','50px');
-		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
+		var row_count=$(table_copy).find('tbody>tr').length;
+		var rows_to_add=15-row_count;
+		for(var i=0;i<rows_to_add;i++)
+		{		
+			$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
+		}
 	}
-	else{
+	else
+	{
 		$(table_copy).find("th:nth-child(2), td:nth-child(2)").css('width','300px');
-		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
-	}	
-	
+		var row_count=$(table_copy).find('tbody>tr').length;
+		var rows_to_add=15-row_count;
+		for(var i=0;i<rows_to_add;i++)
+		{
+			$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
+		}
+	}
+		
 	/////////////placing the containers //////////////////////////////////////////////////////	
 	
 	container.appendChild(header);
