@@ -15629,10 +15629,11 @@ function form155_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 
-		var export_button=filter_fields.elements[3];
+		var export_button=filter_fields.elements[1];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
+			console.log(columns);
 			get_export_data(columns,'inventory');
 		});
 		
