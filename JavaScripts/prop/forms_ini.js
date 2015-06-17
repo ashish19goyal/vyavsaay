@@ -15633,7 +15633,6 @@ function form155_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			console.log(columns);
 			get_export_data(columns,'inventory');
 		});
 		
