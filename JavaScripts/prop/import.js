@@ -4739,7 +4739,7 @@ function form155_import(data_array,import_type)
 				{
 					var new_quantity=parseFloat(row.actual_quantity)-parseFloat(quantity);
 					var adjust_xml="<inventory_adjust>" +
-							"<id>"+(new_id+counter)+"</id>" +
+							"<id>"+(parseFloat(get_new_key())+Math.round(Math.random()*100))+"</id>" +
 							"<product_name>"+row.product_name+"</product_name>" +
 							"<batch>"+row.product_name+"</batch>" +
 							"<quantity>"+new_quantity+"</quantity>" +

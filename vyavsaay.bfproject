@@ -7,7 +7,8 @@ openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:275555:268863:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form154.php:1566:301:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_header_ini.js:139619:139213:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:37626:36711:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:38659:36524:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts/chrome_print.html:118:0:1:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -19,7 +20,7 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts
 wrap_text_default: 0
 bookmarks_filename_mode: 0
 ssearch_text: 154_
@@ -55,8 +56,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/test_data.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/update_batch.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/update_row.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/update_simple.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/upload_docs.php
@@ -85,6 +84,8 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form154.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts/chrome_print.html
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/test_scripts/configurable.html
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 spell_check_default: 1
