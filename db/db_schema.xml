@@ -169,7 +169,7 @@
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
-			<storage index='yes' type="VARCHAR(25)"></storage>
+			<storage index='yes' type="TEXT"></storage>
 			<put_away_status index='yes' type="TEXT"></put_away_status><!--pending/completed-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_bill_items>
@@ -193,7 +193,7 @@
 			<refund_amount index='no' type="DECIMAL(12,2)"></refund_amount>
 			<saleable index='yes' type="VARCHAR(25)"></saleable><!--checked/unchecked-->
 			<tax index='no' type="DECIMAL(12,2)"></tax>
-			<storage index='yes' type="VARCHAR(25)"></storage>
+			<storage index='yes' type="TEXT"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_return_items>
 	<transactions>
@@ -315,7 +315,7 @@
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<service_tax index='no' type="DECIMAL(12,2)"></service_tax>
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
-			<storage index='yes' type="VARCHAR(25)"></storage>
+			<storage index='yes' type="TEXT"></storage>
 			<print_1_job index='yes' type="VARCHAR(25)"></print_1_job><!--yes/no-->
 			<notes index='no' type="TEXT"></notes>
 			<status index='no' type="VARCHAR(30)"></status><!--cancelled-->
@@ -344,7 +344,7 @@
 			<from_date index='yes' type="BIGINT"></from_date>
 			<to_date index='yes' type="BIGINT"></to_date>
 			<free_with index="no" type="TEXT"></free_with>
-			<storage index='yes' type="VARCHAR(25)"></storage>
+			<storage index='yes' type="TEXT"></storage>
 			<hired index='yes' type="VARCHAR(25)"></hired><!--yes/no-->
 			<fresh index='yes' type="VARCHAR(25)"></fresh><!--yes/no-->
 			<picked_status index='yes' type="VARCHAR(25)"></picked_status><!--pending/picked-->
@@ -371,7 +371,7 @@
 			<refund_amount index='no' type="DECIMAL(12,2)"></refund_amount>
 			<exchange_batch index='yes' type="TEXT"></exchange_batch>
 			<saleable index='yes' type="VARCHAR(25)"></saleable><!--checked/unchecked-->
-			<storage index='yes' type="VARCHAR(25)"></storage>
+			<storage index='yes' type="TEXT"></storage>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</customer_return_items>
@@ -421,6 +421,7 @@
 			<product_name index='yes' type="TEXT"></product_name>
 			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale_return-->
 			<source_id index='yes' type="BIGINT"></source_id>
+			<storage index='yes' type="TEXT"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</inventory_adjust>
 	<discarded>
@@ -432,7 +433,7 @@
 			<source index='yes' type="VARCHAR(25)"></source><!--Sale return/Purchase return-->
 			<source_link index='no' type="VARCHAR(25)"></source_link>
 			<source_id index='yes' type='BIGINT'></source_id>
-			<storage index='yes' type="VARCHAR(25)"></storage>
+			<storage index='yes' type="TEXT"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</discarded>
 	<product_master>
@@ -882,7 +883,7 @@
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<sale_date index='yes' type="BIGINT"></sale_date>
 			<notes index='no' type='TEXT'></notes>
-			<storage index='yes' type="VARCHAR(25)"></storage>
+			<storage index='yes' type="TEXT"></storage>
 			<bill_status index='yes' type="VARCHAR(25)"></bill_status><!--pending/completed-->
 			<picked_status index='yes' type="VARCHAR(25)"></picked_status><!--pending/picked-->
 			<last_updated index='yes' type="BIGINT"></last_updated>

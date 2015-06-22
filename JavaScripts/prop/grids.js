@@ -5,7 +5,7 @@
 function set_grid_item_1()
 {
 	var columns="<bills count='1'>" +
-		"<id></id>" +
+		"<bill_num></bill_num>" +
 		"</bills>";
 	
 	get_single_column_data(function(results)

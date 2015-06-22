@@ -5,7 +5,7 @@
 			<metric_id>grid_item_1</metric_id>
 			<display_name>Last Sale Bill Id</display_name>
 			<grid>sale_bills</grid>
-			<function_def>function set_grid_item_1(){var columns=&quot;&lt;bills count='1'&gt;&lt;id&gt;&lt;/id&gt;&lt;/bills&gt;&quot;;get_single_column_data(function(results){if(results.length&gt;0){var grid_item=document.getElementById('grid_item_1');grid_item.innerHTML=results[0];}},columns);setTimeout(set_grid_item_1,600000);};</function_def>
+			<function_def>function set_grid_item_1(){var columns=&quot;&lt;bills count='1'&gt;&lt;bill_num&gt;&lt;/bill_num&gt;&lt;/bills&gt;&quot;;get_single_column_data(function(results){if(results.length&gt;0){var grid_item=document.getElementById('grid_item_1');grid_item.innerHTML=results[0];}},columns);setTimeout(set_grid_item_1,600000);};</function_def>
 			<function_name>set_grid_item_1();</function_name>
 			<status>active</status>
 			<last_updated>1</last_updated>

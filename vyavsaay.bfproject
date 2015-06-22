@@ -1,14 +1,6 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:121473:120303:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_header_ini.js:162189:161034:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:16173:15801:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:407893:407332:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:1317:937:1:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form192.php:412:0:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:329104:328933:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js:146442:145718:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/reports_ini.js:137487:137319:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/grids.js:129:0:1:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -56,7 +48,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/open/angular.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/js_includes.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/vyavsaay.appcache
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php
@@ -86,6 +77,7 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report5.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/reports_ini.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/grids.js
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 spell_check_default: 1
