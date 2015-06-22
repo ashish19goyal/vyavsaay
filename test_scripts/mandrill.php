@@ -34,10 +34,6 @@
 	                )
 	            )
 	        ),
-	        'tags' => array('password-resets'),
-	        'subaccount' => 'customer-123',
-	        'google_analytics_domains' => array('vyavsaay.com'),
-	        'google_analytics_campaign' => 'info@vyavsaay.com',
 	        'metadata' => array('website' => 'www.vyavsaay.com'),
 	        'attachments' => array(
 	            array(
