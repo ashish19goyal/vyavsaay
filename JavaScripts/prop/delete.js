@@ -209,32 +209,24 @@ function form10_delete_item(button)
 		modal115_action(function()
 		{
 			//console.log('deleting form10_item');
-			var bill_id=document.getElementById("form10_master").elements[4].value;
+			var bill_id=document.getElementById("form10_master").elements[5].value;
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var data_id=form.elements[9].value;
+			var data_id=form.elements[8].value;
 			
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";
-			var task_xml="<task_instances>" +
-						"<source_id>"+data_id+"</source_id>" +
-						"<source>service</source>" +
-						"</task_instances>";
-	
+						"</bill_items>";	
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
-				server_delete_simple(task_xml);
 			}
 			else
 			{
 				local_delete_simple(data_xml);
-				local_delete_simple(task_xml);
-			}
-			
+			}			
 			$(button).parent().parent().remove();
 		});
 	}
@@ -242,7 +234,6 @@ function form10_delete_item(button)
 	{
 		$("#modal2").dialog("open");
 	}
-
 }
 
 
@@ -1056,40 +1047,45 @@ function form42_delete_item(button)
 			var amount=form.elements[3].value;
 			var data_id=form.elements[4].value;
 			var transaction_id=form.elements[7].value;
+			var edit_button=form.elements[5];
 			var last_updated=get_my_time();
 			var bill_xml="<bills>" +
 						"<id>"+data_id+"</id>" +
-						"<customer_name>"+customer_name+"</customer_name>" +
-						"<amount>"+amount+"</amount>" +
-						"</bills>";	
+						"<status>cancelled</status>"+						
+						"</bills>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>bills</tablename>" +
 						"<link_to>form42</link_to>" +
-						"<title>Deleted</title>" +
+						"<title>Cancelled</title>" +
 						"<notes>Bill no "+bill_num+" for customer "+customer_name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			var transaction_xml="<transactions>" +
-					"<id>"+transaction_id+"</id>" +
-					"</transactions>";
+						"<id>"+transaction_id+"</id>" +
+						"</transactions>";
 			var points_xml="<loyalty_points>" +
 						"<source>sale</source>"+
 						"<source_id>"+data_id+"</source_id>" +
 						"</loyalty_points>";	
+			
+			$(button).parent().parent().attr('style','opacity:0.5');
+			$(button).parent().parent().attr('title','This bill was cancelled');
+			$(button).hide();
+			$(edit_button).hide();
+
 			if(is_online())
 			{
-				server_delete_row(bill_xml,activity_xml);
+				server_update_row(bill_xml,activity_xml);
 				server_delete_simple(transaction_xml);
 				server_delete_simple(points_xml);
 			}
 			else
 			{
-				local_delete_row(bill_xml,activity_xml);
+				local_update_row(bill_xml,activity_xml);
 				local_delete_simple(transaction_xml);
 				local_delete_simple(points_xml);
 			}	
-			$(button).parent().parent().remove();
 	
 			var payment_xml="<payments>" +
 					"<id></id>" +
@@ -1128,34 +1124,16 @@ function form42_delete_item(button)
 					"<id></id>" +
 					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"</bill_items>";
-			fetch_requested_data('',items_data,function(bill_items)
+			
+			if(is_online())
 			{
-				bill_items.forEach(function(bill_item)
-				{
-					var task_xml="<task_instances>" +
-							"<source_id>"+bill_item.id+"</source_id>" +
-							"<source>service</source>" +
-							"</task_instances>";
-	
-					if(is_online())
-					{
-						server_delete_simple(task_xml);
-					}
-					else
-					{
-						local_delete_simple(task_xml);
-					}
-				});	
+				server_delete_simple(items_data);
+			}
+			else
+			{
+				local_delete_simple(items_data);
+			}
 				
-				if(is_online())
-				{
-					server_delete_simple(items_data);
-				}
-				else
-				{
-					local_delete_simple(items_data);
-				}
-			});		
 		});
 	}
 	else
@@ -1163,7 +1141,6 @@ function form42_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
-
 
 /**
  * @form Manage Purchase Orders
@@ -2723,7 +2700,7 @@ function form92_delete_item(button)
 			{
 				local_update_row(bill_xml,activity_xml);
 				local_delete_simple(transaction_xml);
-			}	
+			}
 			$(button).parent().parent().attr('style','opacity:0.5');
 			$(button).parent().parent().attr('title','This bill was cancelled');
 			$(button).hide();
@@ -5806,6 +5783,451 @@ function form175_delete_item(button)
 			{
 				local_delete_row(data_xml,activity_xml);
 			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Prioritization Parameters
+ * @param button
+ */
+function form177_delete_item(button)
+{
+	if(is_delete_access('form177'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var type=form.elements[0].value;
+			var name=form.elements[1].value;
+			var data_id=form.elements[4].value;
+			var last_updated=get_my_time();
+			var data_xml="<prioritization_parameters>" +
+						"<id>"+data_id+"</id>" +
+						"</prioritization_parameters>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>prioritization_parameters</tablename>" +
+						"<link_to>form177</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>"+name+" parameter for prioritization of "+type+"s</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Production Steps
+ * @param button
+ */
+function form184_delete_item(button)
+{
+	if(is_delete_access('form184'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var name=form.elements[1].value;
+			var data_id=form.elements[6].value;
+			var last_updated=get_my_time();
+			var data_xml="<business_processes>" +
+						"<id>"+data_id+"</id>" +
+						"</business_processes>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>business_processes</tablename>" +
+						"<link_to>form184</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>"+name+" from production process steps</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Track Production
+ * @param button
+ */
+function form185_delete_item(button)
+{
+	if(is_delete_access('form185'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var name=form.elements[0].value;
+			var data_id=form.elements[5].value;
+			var last_updated=get_my_time();
+			var data_xml="<task_instances>" +
+						"<id>"+data_id+"</id>" +
+						"</task_instances>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>task_instances</tablename>" +
+						"<link_to>form185</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>"+name+" task</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create production plan
+ * @param button
+ */
+function form186_delete_item(button)
+{
+	if(is_delete_access('form186'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[6].value;
+			var last_updated=get_my_time();
+			var data_xml="<production_plan_items>" +
+						"<id>"+data_id+"</id>" +
+						"</production_plan_items>";	
+			var task_xml="<task_instances>" +
+						"<source_id exact='yes'>"+data_id+"</source_id>" +
+						"</task_instances>";	
+			if(is_online())
+			{
+				server_delete_simple(data_xml);
+				server_delete_simple(task_xml);
+			}
+			else
+			{
+				local_delete_simple(data_xml);
+				local_delete_simple(task_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Testing Steps
+ * @param button
+ */
+function form187_delete_item(button)
+{
+	if(is_delete_access('form187'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var name=form.elements[1].value;
+			var data_id=form.elements[6].value;
+			var last_updated=get_my_time();
+			var data_xml="<business_processes>" +
+						"<id>"+data_id+"</id>" +
+						"</business_processes>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>business_processes</tablename>" +
+						"<link_to>form187</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>"+name+" from testing process steps</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Track Testing
+ * @param button
+ */
+function form188_delete_item(button)
+{
+	if(is_delete_access('form188'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var name=form.elements[0].value;
+			var data_id=form.elements[5].value;
+			var data_xml="<task_instances>" +
+						"<id>"+data_id+"</id>" +
+						"</task_instances>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>task_instances</tablename>" +
+						"<link_to>form188</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>"+name+" task</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage production plan
+ * @param button
+ */
+function form189_delete_item(button)
+{
+	if(is_delete_access('form189'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[5].value;
+			var last_updated=get_my_time();
+			var data_xml="<production_plan>" +
+						"<id>"+data_id+"</id>" +
+						"</production_plan>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>production_plan</tablename>" +
+						"<link_to>form189</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>"+name+" production plan</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+			}	
+			
+			var items_xml="<production_plan_items>" +
+						"<id></id>"+						
+						"<plan_id exact='yes'>"+data_id+"</plan_id>" +
+						"</production_plan_items>";	
+			get_single_column_data(function (items) 
+			{
+				items.forEach(function (item) 
+				{
+					var item_xml="<production_plan_items>" +
+						"<id>"+item.id+"</id>" +
+						"</production_plan_items>";
+					var task_xml="<task_instances>" +
+						"<source_id exact='yes'>"+item.id+"</source_id>" +
+						"</task_instances>";
+					if(is_online())
+					{
+						server_delete_simple(item_xml);
+						server_delete_simple(task_xml);
+					}
+					else
+					{
+						local_delete_simple(item_xml);
+						local_delete_simple(task_xml);
+					}	
+				});				
+			},items_xml);
+
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Orders (laundry)
+ * @param button
+ */
+function form190_delete_item(button)
+{
+	if(is_delete_access('form190'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var customer_name=form.elements[0].value;
+			var data_id=form.elements[5].value;
+			var data_xml="<sale_orders>" +
+						"<id>"+data_id+"</id>" +
+						"</sale_orders>";		
+			var task_xml="<task_instances>" +
+						"<id>"+data_id+"</id>" +
+						"</task_instances>";
+			if(is_online())
+			{
+				server_delete_simple(data_xml);
+				server_delete_simple(task_xml);
+			}
+			else
+			{
+				local_delete_simple(data_xml);
+				local_delete_simple(task_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Values List
+ * @param button
+ */
+function form191_delete_item(button)
+{
+	if(is_delete_access('form191'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[4].value;
+			var data_xml="<values_list>" +
+						"<id>"+data_id+"</id>" +
+						"</values_list>";		
+			if(is_online())
+			{
+				server_delete_simple(data_xml);
+			}
+			else
+			{
+				local_delete_simple(data_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Enter Purchase Bill (Laundry)
+ * @formNo form192
+ */
+function form192_delete_item(button)
+{
+	if(is_delete_access('form192'))
+	{
+		modal115_action(function()
+		{
+			var master_form=document.getElementById("form192_master");
+			var bill_id=master_form.elements[5].value;
+					
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var data_id=form.elements[6].value;
+			
+			var data_xml="<supplier_bill_items>" +
+						"<id>"+data_id+"</id>" +
+						"<bill_id>"+bill_id+"</bill_id>" +
+						"</supplier_bill_items>";	
+			if(is_online())
+			{
+				server_delete_simple(data_xml);
+			}
+			else
+			{
+				local_delete_simple(data_xml);
+			}
+					
 			$(button).parent().parent().remove();
 		});
 	}

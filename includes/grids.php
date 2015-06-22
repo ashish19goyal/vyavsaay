@@ -67,6 +67,12 @@
 			</ul>
 		</li>
 
+		<li id="manufacturing_link" onclick="grid_click('manufacturing');" style='background-color:#2a78ba'>
+			<a><div style='background-color:#085698'><b data-i18n="function.manufacturing"></b></div></a>		
+			<ul>
+			</ul>
+		</li>
+
 		<li id="maps_link" onclick="grid_click('maps');" style='background-color:#b2a0cf'>
 			<a><div style='background-color:#946bba'><b data-i18n="function.maps"></b></div></a>		
 			<ul>

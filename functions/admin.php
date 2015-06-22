@@ -18,6 +18,8 @@
 			<li><a id='form147_link' href='#form147' onclick='form147_header_ini(); form147_ini();' data-i18n='form.manage_roles'></a></li>
 			<li><a id='form148_link' href='#form148' onclick='form148_header_ini(); form148_ini();' data-i18n='form.create_roles'></a></li>
 			<li><a id='form149_link' href='#form149' onclick='form149_header_ini(); form149_ini();' data-i18n='form.assign_roles'></a></li>
+			<li><a id='form177_link' href='#form177' onclick='form177_header_ini(); form177_ini();' data-i18n='form.prioritization_parameters'></a></li>
+			<li><a id='form191_link' href='#form191' onclick='form191_header_ini(); form191_ini();' data-i18n='form.manage_values_lists'></a></li>
 		</ul>
 
 	<?php 
@@ -38,5 +40,7 @@
 			include "forms/form147.php";
 			include "forms/form148.php";
 			include "forms/form149.php";		
+			include "forms/form177.php";		
+			include "forms/form191.php";		
 	?>
 </div>

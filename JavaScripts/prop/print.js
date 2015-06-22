@@ -1118,3 +1118,12 @@ function form154_print_form()
 	
 	$.print(container);
 }
+
+/**
+ * @form Create Production Plan
+ * @formNo 186
+ */
+function form186_print_form()
+{
+	print_tabular_form('form186','Production Plan');
+}

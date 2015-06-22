@@ -271,5 +271,29 @@
 			<status>active</status>    
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<metric_id>grid_item_33</metric_id>
+			<display_name>Active Production Plans</display_name>
+			<grid>manufacturing</grid>
+			<function_name>set_grid_item_33();</function_name>
+			<function_def></function_def>
+			<status>inactive</status>
+		</row>
+		<row>
+			<metric_id>grid_item_34</metric_id>
+			<display_name>Today's pending tasks</display_name>
+			<grid>manufacturing</grid>
+			<function_name>set_grid_item_34();</function_name>
+			<function_def></function_def>
+			<status>inactive</status>
+		</row>
+		<row>
+			<metric_id>grid_item_35</metric_id>
+			<display_name># items under production</display_name>
+			<grid>manufacturing</grid>
+			<function_name>set_grid_item_35();</function_name>
+			<function_def></function_def>
+			<status>inactive</status>
+		</row>
 	</system_grid_metrics>
 </re_xml>

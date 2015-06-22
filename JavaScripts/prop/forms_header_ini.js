@@ -268,12 +268,14 @@ function form10_header_ini()
 	var fields=document.getElementById('form10_master');
 	
 	var customers_filter=fields.elements[1];
-	var bill_date=fields.elements[2];
+	var order_num=fields.elements[2];
 	var bill_num=fields.elements[3];
-	fields.elements[4].value=get_new_key();
-	fields.elements[5].value="";
-	fields.elements[6].value=fields.elements[4].value;
-	var save_button=fields.elements[7];
+	var bill_date=fields.elements[4];
+	fields.elements[5].value=get_new_key();
+	var order_id_filter=fields.elements[6];
+	order_id_filter.value="";
+	fields.elements[7].value=fields.elements[5].value;
+	var save_button=fields.elements[8];
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -306,6 +308,7 @@ function form10_header_ini()
 		event.preventDefault();
 		form10_add_item();
 	});
+
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
@@ -324,10 +327,30 @@ function form10_header_ini()
 		});
 	});
 
+	$(order_num).off('blur');
+	$(order_num).on('blur',function () 
+	{
+		var order_data="<sale_orders>"+
+			"<id></id>"+
+			"<customer_name></customer_name>"+
+			"<order_num exact='yes'>"+order_num.value+"</order_num>"+
+			"</sale_orders>";
+		fetch_requested_data('',order_data,function (orders) 
+		{
+			if(orders.length>0)
+			{
+				customers_filter.value=orders[0].customer_name;
+				order_id_filter.value=orders[0].id;				
+			}
+		});		
+		set_my_value(order_data,customers_filter);
+	});	
+	
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';
-	
+	order_num.value="";
+		
 	$(customers_filter).focus();
 }
 
@@ -6263,3 +6286,317 @@ function form176_header_ini()
 		form176_ini();
 	});
 };
+
+/**
+ * @form Prioritization Parameters
+ * @formNo 177
+ */
+function form177_header_ini()
+{
+	var filter_fields=document.getElementById('form177_header');
+	var type_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	
+	var name_data="<prioritization_parameters>" +
+			"<name></name>" +
+			"</prioritization_parameters>";
+	
+	set_my_filter(name_data,name_filter);
+	set_static_filter('prioritization_parameters','type',type_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form177_ini();
+	});
+};
+
+/**
+ * @form Production Steps
+ * @formNo 184
+ */
+function form184_header_ini()
+{
+	var filter_fields=document.getElementById('form184_header');
+	var name_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[1];
+	
+	var name_data="<business_processes>" +
+			"<name></name>" +
+			"<type exact='yes'>production</type>"+
+			"</business_processes>";
+	
+	set_my_filter(name_data,name_filter);
+	set_static_filter('business_processes','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form184_ini();
+	});
+};
+
+/**
+ * @form Track Manufacturing
+ * @formNo 185
+ */
+function form185_header_ini()
+{
+	$("#form185_body").parent().hide();
+	$("#form185_nav").hide();
+	$("#form185_calendar").show();
+}
+
+function form185_switch_view()
+{
+	$("#form185_body").parent().toggle();
+	$("#form185_nav").toggle();
+	$("#form185_calendar").toggle();
+}
+
+/**
+ * @form Create Production Plan
+ * @formNo 186
+ */
+function form186_header_ini()
+{
+	var fields=document.getElementById('form186_master');
+	
+	var plan_filter=fields.elements[1];
+	var from_filter=fields.elements[2];
+	var to_filter=fields.elements[3];
+	var status_filter=fields.elements[4];
+	fields.elements[5].value=get_new_key();
+	var save_button=fields.elements[6];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form186_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form186_add_item();
+	});
+	
+	$(from_filter).datepicker();
+	$(from_filter).val(get_my_date());
+	
+	$(to_filter).datepicker();
+	$(to_filter).val(get_my_date());
+
+	plan_filter.value="";
+	$(plan_filter).focus();
+}
+
+/**
+ * @form Testing Steps
+ * @formNo 187
+ */
+function form187_header_ini()
+{
+	var filter_fields=document.getElementById('form187_header');
+	var name_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[1];
+	
+	var name_data="<business_processes>" +
+			"<name></name>" +
+			"<type exact='yes'>testing</type>"+
+			"</business_processes>";
+	
+	set_my_filter(name_data,name_filter);
+	set_static_filter('business_processes','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form187_ini();
+	});
+};
+
+/**
+ * @form Track Testing
+ * @formNo 188
+ */
+function form188_header_ini()
+{
+	$("#form188_body").parent().hide();
+	$("#form188_nav").hide();
+	$("#form188_calendar").show();
+}
+
+function form188_switch_view()
+{
+	$("#form188_body").parent().toggle();
+	$("#form188_nav").toggle();
+	$("#form188_calendar").toggle();
+}
+
+/**
+ * @form Manage Production Plans
+ * @formNo 189
+ */
+function form189_header_ini()
+{
+	var filter_fields=document.getElementById('form189_header');
+	var name_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[1];
+	
+	var name_data="<production_plan>" +
+			"<name></name>" +
+			"</production_plan>";
+	
+	set_my_filter(name_data,name_filter);
+	set_static_filter('production_plan','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form189_ini();
+	});
+};
+
+/**
+ * @form Orders (laundry)
+ * @formNo 190
+ */
+function form190_header_ini()
+{
+	var filter_fields=document.getElementById('form190_header');
+	var name_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[1];
+	
+	var name_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	set_my_filter(name_data,name_filter);
+	set_static_filter('sale_orders','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form190_ini();
+	});
+};
+
+/**
+ * @form Manage Values lists
+ * @formNo 191
+ */
+function form191_header_ini()
+{
+	var filter_fields=document.getElementById('form191_header');
+	var table_filter=filter_fields.elements[0];
+	var list_filter=filter_fields.elements[1];
+	var value_filter=filter_fields.elements[2];
+	var status_filter=filter_fields.elements[3];
+	
+	var table_data="<values_list>" +
+			"<tablename></tablename>" +
+			"</values_list>";
+	set_my_filter(table_data,table_filter);
+	
+	var list_data="<values_list>" +
+			"<listname></listname>" +
+			"</values_list>";
+	set_my_filter(list_data,list_filter);
+	
+	var value_data="<values_list>" +
+			"<name></name>" +
+			"</values_list>";
+	set_my_filter(value_data,value_filter);
+
+	set_static_filter('values_list','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form191_ini();
+	});
+};
+
+/**
+ * @form Enter Supplier bills(Laundry)
+ * @formNo 192
+ */
+function form192_header_ini()
+{
+	var fields=document.getElementById('form192_master');
+	
+	var supplier_filter=fields.elements[1];
+	fields.elements[2].value="";
+	var bill_date=fields.elements[3];
+	var entry_date=fields.elements[4];
+	fields.elements[5].value=get_new_key();
+	fields.elements[6].value=fields.elements[5].value;
+	var save_button=fields.elements[7];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form192_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form192_add_item();
+	});
+	
+	var suppliers_data="<suppliers>" +
+		"<acc_name></acc_name>" +
+		"</suppliers>";
+	
+	set_my_value_list(suppliers_data,supplier_filter);
+	
+	var add_supplier=document.getElementById('form192_add_supplier');
+	$(add_supplier).off('click');
+	$(add_supplier).on('click',function()
+	{
+		modal13_action(function()
+		{	
+			var suppliers_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";			
+			set_my_value_list(suppliers_data,supplier_filter);
+		});
+	});
+
+	$(bill_date).datepicker();
+	$(bill_date).val(get_my_date());
+	
+	$(entry_date).datepicker();
+	$(entry_date).val(get_my_date());
+
+	supplier_filter.value='';
+	$(supplier_filter).focus();
+}

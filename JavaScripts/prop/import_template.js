@@ -1048,3 +1048,54 @@ function form176_import_template()
 	var data_array=['id','channel','cat_type','cat_name','sku'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Prioritization Parameters
+* @formNo 177
+*/
+function form177_import_template()
+{
+	var data_array=['id','name','type','values','threshold'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Production Steps
+* @formNo 184
+*/
+function form184_import_template()
+{
+	var data_array=['id','name','details','time_estimate','default_assignee','order_no','status'];
+	my_array_to_csv(data_array);
+};
+
+
+/**
+* @form Testing Steps
+* @formNo 187
+*/
+function form187_import_template()
+{
+	var data_array=['id','name','details','time_estimate','default_assignee','order_no','status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Orders (laundry)
+* @formNo 190
+*/
+function form190_import_template()
+{
+	var data_array=['id','customer_name','notes','order_date','assignee','status','address'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Manage Values List
+* @formNo 191
+*/
+function form191_import_template()
+{
+	var data_array=['id','tablename','listname','name','status'];
+	my_array_to_csv(data_array);
+};

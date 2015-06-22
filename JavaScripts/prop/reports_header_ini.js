@@ -1330,3 +1330,29 @@ function report67_header_ini()
 	$(from_date).datepicker();
 	$(to_date).datepicker();					
 }
+
+/**
+ * @reportNo 72
+ * @report Pickup and deliveries
+ */
+function report72_header_ini()
+{	
+	var form=document.getElementById('report72_header');
+	var customer_filter=form.elements[1];
+	var addess_filter=form.elements[2];
+	var status_filter=form.elements[3];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report72_ini();
+	});
+	
+	var customer_data="<customers>"+
+				"<acc_name></acc_name>"+
+				"</customers>";
+	set_my_filter(customer_data,customer_filter);
+	
+	set_static_filter('sale_orders','status',status_filter);	
+}

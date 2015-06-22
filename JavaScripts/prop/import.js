@@ -5603,3 +5603,233 @@ function form176_import(data_array,import_type)
 		}
 	}			
 };
+
+/**
+* @form Prioritization Parameters
+* @formNo 177
+*/
+function form177_import(data_array,import_type)
+{
+	var data_xml="<prioritization_parameters>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</prioritization_parameters><separator></separator><prioritization_parameters>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<type>"+row.type+"</type>" +
+				"<values>"+row.values+"</values>"+
+				"<threshold>"+row.threshold+"</threshold>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</prioritization_parameters>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}			
+};
+
+/**
+* @form Production Steps
+* @formNo 184
+*/
+function form184_import(data_array,import_type)
+{
+	var data_xml="<business_processes>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</business_processes><separator></separator><business_processes>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<order_no>"+row.order_no+"</order_no>" +
+				"<name>"+row.name+"</name>" +
+				"<details>"+row.details+"</details>" +
+				"<type>production</type>"+
+				"<time_estimate>"+row.time_estimate+"</time_estimate>"+
+				"<default_assignee>"+row.default_assignee+"</default_assignee>"+
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</business_processes>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}			
+};
+
+/**
+* @form Testing Steps
+* @formNo 187
+*/
+function form187_import(data_array,import_type)
+{
+	var data_xml="<business_processes>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</business_processes><separator></separator><business_processes>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<order_no>"+row.order_no+"</order_no>" +
+				"<name>"+row.name+"</name>" +
+				"<details>"+row.details+"</details>" +
+				"<type>testing</type>"+
+				"<time_estimate>"+row.time_estimate+"</time_estimate>"+
+				"<default_assignee>"+row.default_assignee+"</default_assignee>"+
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</business_processes>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}			
+};
+
+/**
+* @form Testing Steps
+* @formNo 190
+*/
+function form190_import(data_array,import_type)
+{
+	var data_xml="<sale_orders>";
+	var task_xml="<task_instances>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</sale_orders><separator></separator><sale_orders>";
+			task_xml+="</task_instances><separator></separator><task_instances>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<customer_name>"+row.customer_name+"</customer_name>" +
+				"<notes>"+row.notes+"</notes>" +
+				"<order_date>"+get_raw_time(row.order_date)+"</order_date>"+
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+		task_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>Pickup for customer "+row.customer_name+"</name>" +
+				"<description>Address: "+row.address+"</description>"+
+				"<t_initiated>"+last_updated+"</t_initiated>" +
+				"<t_due>"+(parseFloat(last_updated)+(4*3600000))+"</t_due>"+
+				"<status>pending</status>" +
+				"<assignee>"+row.assignee+"</assignee>"+
+				"<source>sale order</source>"+
+				"<source_id>"+row.id+"</source_id>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</sale_orders>";
+	task_xml+="</task_instances>";
+	
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+			server_create_batch(task_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+			local_create_batch(task_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+			server_update_batch(task_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+			local_update_batch(task_xml);
+		}
+	}			
+};

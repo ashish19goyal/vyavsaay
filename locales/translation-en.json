@@ -27,7 +27,8 @@
     "projects":"Projects",
     "admin":"Admin",
     "promotion":"Promotion",
-    "people":"People"
+    "people":"People",
+    "manufacturing":"Manufacturing"
   },
   "general":{
   	"hello": "Hello"
@@ -300,9 +301,30 @@
   	"sku_mapping":"SKU Mappings",
   	"pickup_charges":"Pickup Charges",
   	"db_backup":"Take DB backup",
-  	"channel_category":"Channel Categories",
+  	"channel_categories":"Channel Categories",
   	"categories":"Categories",
   	"category_sku_mapping":"Category Item mapping",
-  	"channel_collections":"Channel Collections"
+  	"channel_collections":"Channel Collections",
+  	"project_prioritization":"Project Prioritization",
+  	"inventory_shortage":"Inventory Shortage",
+  	"ordered_inventory":"Ordered Inventory",
+  	"prioritization_parameters":"Prioritization Parameters",
+  	"create_purchase_order_cps":"Create Purchase Order(CPS)",
+	"manage_purchase_order_cps":"Manage Purchase Order(CPS)",
+	"create_sale_order_cps":"Create Sale Order(CPS)",
+	"manage_sale_order_cps":"Manage Sale Order(CPS)",
+	"sale_leads_cps":"Sale Leads(CPS)",
+	"inventory_cps":"Inventory(CPS)",
+	"manufacturing_processes":"Production Steps",
+	"track_manufacturing":"Track Production",
+	"production_plan":"Create Production Plan",
+	"testing_processes":"Testing Steps",
+	"track_testing":"Track Testing",
+	"manage_production_plans":"Manage Production Plans",
+	"orders_laundry":"Orders (laundry)",
+	"orders":"Orders",
+	"manage_values_lists":"Manage Values Lists",
+	"pickup_deliveries":"Pickup & Deliveries",
+	"enter_purchases_laundry":"Enter Purchases(laundry)"
   }
 }

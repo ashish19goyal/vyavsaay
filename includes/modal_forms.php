@@ -862,4 +862,42 @@
 		<input type="button" id='modal116_print' value='Print' class='modal_submit'>
 	</div>
 	
+	<div id="modal117" title="Add task">
+		<form id='modal117_form'>
+			<fieldset>
+				<label>Task: <input type='text' required></label><br>
+				<label>Details: <textarea></textarea></label><br>
+				<label>Assignee: <input type="text"></label><br>
+				<label>Due time: <input type="text"></label><br>
+				<label>Status: <input type="text" required value='pending'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal118" title="New order">
+		<form id='modal118_form'>
+			<fieldset>
+				<label>Phone: <input type='text' required></label><br>
+				<label>Name: <input type='text' required></label><br>
+				<label>Credit: Rs. <input type="number" step='any' readonly="readonly"></label><br>
+				<label>Address: <textarea></textarea></label><br>
+				<label>Notes: <textarea></textarea></label><br>
+				<input type='hidden' name='new_old'>
+				<input type='hidden' name='acc_name'>
+				<input type='hidden' name='customer_id'>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal119" title="Assignee">
+		<form id='modal119_form'>
+			<fieldset>
+				<label>Name: <input type='text' required></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

@@ -1,91 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <re_xml>
-	<templates>
-		<row>
-			<name>Default Sale Bill template</name>
-			<header>Vyavsaay.com</header>
-			<footer>2014</footer>
-			<row></row>
-			<header_fields>1</header_fields>
-			<footer_fields>1</footer_fields>
-			<row_fields>5</row_fields>
-			<type>sale bill</type>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>Default Purchase Order template</name>
-			<header>Vyavsaay.com</header>
-			<footer>2014</footer>
-			<row></row>
-			<header_fields>1</header_fields>
-			<footer_fields>1</footer_fields>
-			<row_fields>5</row_fields>
-			<type>purchase order</type>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>Default Payment Receipt template</name>
-			<header>Vyavsaay.com</header>
-			<footer>2014</footer>
-			<row></row>
-			<header_fields>1</header_fields>
-			<footer_fields>1</footer_fields>
-			<row_fields>5</row_fields>
-			<type>payment receipt</type>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>Default Credit Note template</name>
-			<header>Vyavsaay.com</header>
-			<footer>2014</footer>
-			<row></row>
-			<header_fields>1</header_fields>
-			<footer_fields>1</footer_fields>
-			<row_fields>5</row_fields>
-			<type>credit note</type>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>Default newsletter template</name>
-			<header>Vyavsaay.com</header>
-			<footer>2014</footer>
-			<row></row>
-			<header_fields>1</header_fields>
-			<footer_fields>1</footer_fields>
-			<row_fields>5</row_fields>
-			<type>newsletter</type>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>Default Service Receipt template</name>
-			<header>Vyavsaay.com</header>
-			<footer>2014</footer>
-			<row></row>
-			<header_fields>1</header_fields>
-			<footer_fields>1</footer_fields>
-			<row_fields>5</row_fields>
-			<type>service receipt</type>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-		<row>
-			<name>Default Return Receipt template</name>
-			<header>Vyavsaay.com</header>
-			<footer>2014</footer>
-			<row></row>
-			<header_fields>1</header_fields>
-			<footer_fields>1</footer_fields>
-			<row_fields>5</row_fields>
-			<type>return receipt</type>
-			<status>active</status>
-			<last_updated>1</last_updated>
-		</row>
-	</templates>
 	<user_fields_list>
 		<row>
 			<tablename>store_areas</tablename>
@@ -383,6 +297,142 @@
 		</row>
 	</user_fields_list>
 	<values_list>
+		<row>
+			<tablename>production_plan_items</tablename>
+			<listname>status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>production_plan_items</tablename>
+			<listname>status</listname>
+			<name>completed</name>
+			<value>Completed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>production_plan_items</tablename>
+			<listname>status</listname>
+			<name>overdue</name>
+			<value>Overdue</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>prioritization_parameters</tablename>
+			<listname>type</listname>
+			<name>project</name>
+			<value>Project</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>prioritization_parameters</tablename>
+			<listname>type</listname>
+			<name>supplier</name>
+			<value>Supplier</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>prioritization_parameters</tablename>
+			<listname>type</listname>
+			<name>purchase order</name>
+			<value>Purchase Order</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>business_processes</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>business_processes</tablename>
+			<listname>status</listname>
+			<name>inactive</name>
+			<value>Inactive</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>business_processes</tablename>
+			<listname>status</listname>
+			<name>required</name>
+			<value>Required</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>business_processes</tablename>
+			<listname>type</listname>
+			<name>production</name>
+			<value>Production</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>business_processes</tablename>
+			<listname>type</listname>
+			<name>testing</name>
+			<value>Testing</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>production_plan</tablename>
+			<listname>status</listname>
+			<name>draft</name>
+			<value>Draft</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>production_plan</tablename>
+			<listname>status</listname>
+			<name>submitted</name>
+			<value>Submitted</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>production_plan</tablename>
+			<listname>status</listname>
+			<name>approved</name>
+			<value>Approved</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>production_plan</tablename>
+			<listname>status</listname>
+			<name>rejected</name>
+			<value>Rejected</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>production_plan</tablename>
+			<listname>status</listname>
+			<name>completed</name>
+			<value>Completed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>production_plan</tablename>
+			<listname>status</listname>
+			<name>overdue</name>
+			<value>Overdue</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<tablename>unbilled_purchase_items</tablename>
 			<listname>put_away_status</listname>

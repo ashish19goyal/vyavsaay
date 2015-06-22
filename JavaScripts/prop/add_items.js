@@ -129,31 +129,29 @@ function form10_add_item()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form10_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Service Name'>";
+			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' required form='form10_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' id='form10_add_service_"+id+"'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Person'>";
-				rowsHTML+="<input type='text' form='form10_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' id='form10_add_staff_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Additional Notes'>";
+			rowsHTML+="<td data-th='Notes'>";
 				rowsHTML+="<textarea form='form10_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' step='1' form='form10_"+id+"' value='1'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Price'>";
 				rowsHTML+="<input type='number' required form='form10_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form10_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form10_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form10_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form10_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form10_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form10_"+id+"' name='total'>";
+				rowsHTML+="<input type='hidden' form='form10_"+id+"' name='amount'>";
+				rowsHTML+="<input type='hidden' form='form10_"+id+"' name='discount'>";
+				rowsHTML+="<input type='hidden' form='form10_"+id+"' name='tax'>";
 				rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form10_"+id+"' id='save_form10_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form10_"+id+"' id='delete_form10_"+id+"' onclick='$(this).parent().parent().remove();'>";
-				rowsHTML+="<input type='hidden' form='form10_"+id+"'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form10_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form10_"+id+"' name='tax_unit'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -161,17 +159,16 @@ function form10_add_item()
 		
 		var fields=document.getElementById("form10_"+id);
 		var name_filter=fields.elements[0];
-		var staff_filter=fields.elements[1];
-		var notes_filter=fields.elements[2];
+		var notes_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
 		var price_filter=fields.elements[3];
 		var total_filter=fields.elements[4];
 		var amount_filter=fields.elements[5];
 		var discount_filter=fields.elements[6];
 		var tax_filter=fields.elements[7];
-		var offer_filter=fields.elements[8];
-		var id_filter=fields.elements[9];
-		var free_service_filter=fields.elements[12];
-		var save_button=fields.elements[10];
+		var id_filter=fields.elements[8];
+		var save_button=fields.elements[9];
+		var tax_unit_filter=fields.elements[12];
 		
 		$(save_button).on("click", function(event)
 		{
@@ -207,35 +204,16 @@ function form10_add_item()
 		{
 			$(name_filter).focus();
 		});
-
-		var add_staff=document.getElementById('form10_add_staff_'+id);
-		$(add_staff).on('click',function()
-		{
-			modal16_action(function()
-			{	
-				var staff_data="<staff>" +
-					"<acc_name></acc_name>" +
-					"<status exact='yes'>active</status>" +
-					"</staff>";
-				set_my_value_list(staff_data,staff_filter);
-			});
-		});
-
-		var staff_data="<staff>" +
-				"<acc_name></acc_name>" +
-				"<status exact='yes'>active</status>" +
-				"</staff>";
-		set_my_value_list(staff_data,staff_filter);
 				
-		$(name_filter).on('blur',function(event){
+		$(name_filter).on('blur',function(event)
+		{
 			notes_filter.value="";
 			price_filter.value=0;
 			total_filter.value=0;
 			amount_filter.value=0;
 			discount_filter.value=0;
 			tax_filter.value=0;
-			offer_filter.value="";
-			free_service_filter.value="";
+			tax_unit_filter.value=0;
 			
 			var price_data="<services>" +
 					"<price></price>" +
@@ -245,60 +223,23 @@ function form10_add_item()
 			
 			fetch_requested_data('',price_data,function(prices)
 			{
-				for(var a in prices)
+				if(prices.length>0)
 				{
-					price_filter.value=prices[a].price;
-					var amount=parseFloat(prices[a].price);
+					price_filter.value=prices[0].price;
+					tax_unit_filter.value=prices[0].tax;
+					var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
 					amount_filter.value=amount;
-					var offer_data="<offers>" +
-							"<offer_type exact='yes'>service</offer_type>" +
-							"<criteria_type>min amount crossed</criteria_type>" +
-							"<criteria_amount upperbound='yes'>"+amount+"</criteria_amount>" +
-							"<service exact='yes'>"+name_filter.value+"</service>" +
-							"<result_type></result_type>" +
-							"<discount_percent></discount_percent>" +
-							"<discount_amount></discount_amount>" +
-							"<offer_detail></offer_detail>" +
-							"<free_service_name></free_service_name>" +
-							"<status array='yes'>active--extended</status>" +
-							"</offers>";
-					fetch_requested_data('',offer_data,function(offers)
-					{
-						offers.sort(function(a,b)
-						{
-							if(a.criteria_amount<b.criteria_amount)
-							{	return 1;}
-							else 
-							{	return -1;}
-						});
-								
-						for(var i in offers)
-						{
-							offer_filter.value=offers[i].offer_detail;	
-							if(offers[i].result_type=='discount')
-							{
-								if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
-								{
-									discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
-								}
-								else 
-								{
-									discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
-								}
-							}
-							else if(offers[i].result_type=='service free')
-							{
-								free_service_filter.value=offers[i].free_service_name;
-							}		
-							break;
-						}
-					});
-
-					tax_filter.value=parseFloat((parseFloat(prices[a].tax)*(amount-parseFloat(discount_filter.value)))/100);
-					break;
+					tax_filter.value=parseFloat((parseFloat(tax_unit_filter.value)*(amount-parseFloat(discount_filter.value)))/100);
 				}
 				total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
 			});					
+		});
+		$(quantity_filter).on('blur',function () 
+		{
+			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			amount_filter.value=amount;
+			tax_filter.value=parseFloat((parseFloat(tax_unit_filter.value)*(amount-parseFloat(discount_filter.value)))/100);
+			total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);			
 		});
 	}
 	else
@@ -306,7 +247,6 @@ function form10_add_item()
 		$("#modal2").dialog("open");
 	}
 }
-
 
 /**
  * @form Create product Bill
@@ -9140,7 +9080,7 @@ function form158_add_item()
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 	
-		$('#form158_body').prepend(rowsHTML);
+		$('#form158_body').append(rowsHTML);
 		
 		var fields=document.getElementById("form158_"+id);
 		var name_filter=fields.elements[0];
@@ -9278,7 +9218,7 @@ function form158_add_item()
 		{
 			tax_filter.value=my_round((parseFloat(tax_unit_filter.value)*parseFloat(quantity_filter.value)*parseFloat(price_filter.value)/100),2);
 			var total=(parseFloat(price_filter.value)*parseFloat(quantity_filter.value))+parseFloat(tax_filter.value);
-			total_filter.value=my_round(total,2);
+			total_filter.value=my_round(total,0);
 		});
 	}
 	else
@@ -9709,4 +9649,444 @@ function form175_add_item()
 	{
 		$("#modal2").dialog("open");
 	}		
+}
+
+/**
+ * @form Prioritization Parameters
+ * @formNo 177
+ */
+function form177_add_item()
+{
+	if(is_create_access('form177'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form177_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Type'>";
+				rowsHTML+="<input type='text' form='form177_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Parameter'>";
+				rowsHTML+="<input type='text' form='form177_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Values'>";
+				rowsHTML+="<textarea title='Use ; to differentiate values' form='form177_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Threshold'>";
+				rowsHTML+="<input type='number' step='any' form='form177_"+id+"'>";
+			rowsHTML+="</td>";	
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form177_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form177_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form177_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form177_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form177_"+id);
+		var type_filter=fields.elements[0];
+		var name_filter=fields.elements[1];
+		
+		set_static_value_list('prioritization_parameters','type',type_filter);
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form177_create_item(fields);
+		});
+					
+		$(name_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Production Steps
+ * @formNo 184
+ */
+function form184_add_item()
+{
+	if(is_create_access('form184'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form184_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Order'>";
+				rowsHTML+="<input type='text' form='form184_"+id+"' required readonly='readonly'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Step'>";
+				rowsHTML+="<textarea form='form184_"+id+"' required></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="Time Estimate: <input type='number' step='any' class='dblclick_editable' title='Estimate of hours spent per piece of item production' form='form184_"+id+"'>";
+				rowsHTML+="<br>Default Assignee: <input type='text' class='dblclick_editable'  form='form184_"+id+"'>";
+				rowsHTML+="<br>Notes: <textarea class='dblclick_editable' form='form184_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form184_"+id+"' required value='active'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form184_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form184_"+id+"' title='Save' id='save_form184_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form184_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form184_body').append(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form184_"+id);
+		var step_filter=fields.elements[1];
+		var assignee_filter=fields.elements[3];
+		var status_filter=fields.elements[5];
+			
+		var assignee_data="<staff>"+
+							"<acc_name></acc_name>"+
+							"<status exact='yes'>active</status>"+
+							"</staff>";
+		set_my_value_list(assignee_data,assignee_filter);
+		
+		set_static_value_list('business_processes','status',status_filter);
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form184_create_item(fields);
+		});
+					
+		$(step_filter).focus();
+		form184_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Production Plan Items
+ * @formNo 186
+ */
+function form186_add_item()
+{
+	if(is_create_access('form186'))
+	{
+		var filter_fields=document.getElementById('form186_master');
+		
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form186_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Order'>";
+				rowsHTML+="<input type='number' form='form186_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' required form='form186_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' required form='form186_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Schedule'>";
+				rowsHTML+="From: <input type='text' form='form186_"+id+"'>";
+				rowsHTML+="<br>To: <input type='text' form='form186_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form186_"+id+"' required value='pending'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form186_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='save_icon' form='form186_"+id+"' id='save_form186_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form186_"+id+"' id='delete_form186_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form186_"+id+"'>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form186_body').append(rowsHTML);
+		
+		var fields=document.getElementById("form186_"+id);
+		var order_filter=fields.elements[0];
+		var item_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
+		var from_filter=fields.elements[3];
+		var to_filter=fields.elements[4];
+		var status_filter=fields.elements[5];
+		var id_filter=fields.elements[6];
+		var save_button=fields.elements[7];
+		
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form186_create_item(fields);
+		});
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form186_add_item();
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,item_filter,function () 
+		{
+			$(item_filter).focus();
+		});
+		
+		$(from_filter).datepicker();
+		$(to_filter).datepicker();
+		set_static_value_list('production_plan_items','status',status_filter);
+		form186_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Testing Steps
+ * @formNo 187
+ */
+function form187_add_item()
+{
+	if(is_create_access('form187'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form187_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Order'>";
+				rowsHTML+="<input type='text' form='form187_"+id+"' required readonly='readonly'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Step'>";
+				rowsHTML+="<textarea form='form187_"+id+"' required></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="Time Estimate: <input type='number' step='any' class='dblclick_editable' title='Estimate of hours spent per piece of item testing' form='form187_"+id+"'>";
+				rowsHTML+="<br>Default Assignee: <input type='text' class='dblclick_editable'  form='form187_"+id+"'>";
+				rowsHTML+="<br>Notes: <textarea class='dblclick_editable' form='form187_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form187_"+id+"' required value='active'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form187_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form187_"+id+"' title='Save' id='save_form187_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form187_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form187_body').append(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form187_"+id);
+		var step_filter=fields.elements[1];
+		var assignee_filter=fields.elements[3];
+		var status_filter=fields.elements[5];
+			
+		var assignee_data="<staff>"+
+							"<acc_name></acc_name>"+
+							"<status exact='yes'>active</status>"+
+							"</staff>";
+		set_my_value_list(assignee_data,assignee_filter);
+			
+		set_static_value_list('business_processes','status',status_filter);
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form187_create_item(fields);
+		});
+					
+		$(step_filter).focus();
+		form187_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Manage Values Lists
+ * @formNo 191
+ */
+function form191_add_item()
+{
+	if(is_create_access('form191'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form191_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Table'>";
+				rowsHTML+="<input type='text' form='form191_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='List'>";
+				rowsHTML+="<input type='text' form='form191_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Value'>";
+				rowsHTML+="<textarea class='dblclick_editable' form='form191_"+id+"' required></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form191_"+id+"' required value='active'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form191_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form191_"+id+"' title='Save' id='save_form191_"+id+"'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form191_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form191_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form191_"+id);
+		var table_filter=fields.elements[0];
+		var list_filter=fields.elements[1];
+		var status_filter=fields.elements[3];
+			
+		var table_data="<values_list>"+
+					"<tablename></tablename>"+
+					"</values_list>";
+		set_my_filter(table_data,table_filter);
+
+		var list_data="<values_list>"+
+					"<listname></listname>"+
+					"</values_list>";
+		set_my_filter(list_data,list_filter);
+			
+		set_static_value_list('values_list','status',status_filter);
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form191_create_item(fields);
+		});
+	
+		$(table_filter).focus();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+/**
+ * @form Enter Purchase Bill (Laundry)
+ * @formNo 192
+ */
+function form192_add_item()
+{
+	if(is_create_access('form192'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form192_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' required form='form192_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form192_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' step='any' required form='form192_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Price'>";
+				rowsHTML+="<input type='number' form='form192_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+="Amount: <input type='number' readonly='readonly' form='form192_"+id+"' value='' step='any'>";
+				rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form192_"+id+"' value='' step='any'>";
+				rowsHTML+="<br>Total: <input type='number' readonly='readonly' required form='form192_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form192_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form192_"+id+"' id='save_form192_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form192_"+id+"' id='delete_form192_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form192_"+id+"'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form192_"+id+"'>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form192_body').append(rowsHTML);
+		
+		var fields=document.getElementById("form192_"+id);
+		var name_filter=fields.elements[0];
+		var quantity_filter=fields.elements[1];
+		var price_filter=fields.elements[2];
+		var amount_filter=fields.elements[3];
+		var tax_filter=fields.elements[4];
+		var total_filter=fields.elements[5];
+		var id_filter=fields.elements[6];
+		var save_button=fields.elements[7];
+		var tax_unit_filter=fields.elements[9];
+		
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form192_create_item(fields);
+		});
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form192_add_item();
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		var add_product=document.getElementById('form192_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal112_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,name_filter,function () 
+				{
+					$(name_filter).focus();
+				});
+			});
+		});
+		
+		$(name_filter).on('blur',function(event)
+		{			
+			var price_data="<supplier_bill_items count='1'>" +
+					"<unit_price></unit_price>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</supplier_bill_items>";
+			set_my_value(price_data,price_filter);
+			
+			var tax_data="<product_master>"+
+						"<tax></tax>"+
+						"<name exact='yes'>"+name_filter.value+"</name>"+						
+						"</product_master>";			
+			set_my_value(tax_data,tax_unit_filter);			
+		});
+		
+		$(quantity_filter).add(price_filter).on('blur',function(event)
+		{
+			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(price_filter.value)),2);
+			tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+			var total=parseFloat(amount_filter.value)+parseFloat(tax_filter.value);
+			total_filter.value=my_round(total,0);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
 }

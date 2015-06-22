@@ -142,6 +142,7 @@ JavaScripts/open/css/prettify.css
 JavaScripts/open/img/grid.png
 JavaScripts/open/img/icon_sprite.png
 JavaScripts/open/img/slider_handle.png
+JavaScripts/open/angular.js
 JavaScripts/open/bcrypt.js
 JavaScripts/open/chart.js
 JavaScripts/open/dataDaysEnh.js

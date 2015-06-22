@@ -20,7 +20,7 @@ function default_load()
 	show_notif_timer=0;
 	progress_value=0;
 	modal_forms_ini();
-			
+
 	if(is_set_session())
 	{
 		add_questionnaires(function()
@@ -31,7 +31,8 @@ function default_load()
 			//print_setup();
 			set_footer_message();
 			add_grid_metrics();
-			
+			my_sortable_tables();
+						
 			Chart.defaults.global.responsive = true;
 			Chart.defaults.global.scaleFontSize= 10;
 			Chart.defaults.global.scaleFontColor="#000";
@@ -216,6 +217,30 @@ function start_workers()
 	{show_notif();});
 }
 
+function my_sortable_tables()
+{
+	jQuery(function($)
+	{
+		$('table.sortable>tbody').sortable(
+		{
+			axis: "y",
+			stop: function(event, ui) 
+			{
+				ui.item.effect('highlight');
+			},
+			update: function(event, ui) 
+			{
+				//ui.item.parent().trigger('dblclick');
+				ui.item.parent().find('tr').each(function(index)
+				{
+					$(this).find('td:nth-child(2)>input').attr('value',index+1);
+				});
+			}
+		});
+	});
+}
+
+
 function show_function(function_id)
 {
 	hide_all();
@@ -279,7 +304,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=101;i<117;i++)
+	for(var i=101;i<120;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({
@@ -424,8 +449,9 @@ function hide_all()
 	//$("#staff_main").hide();
 	$("#store_main").hide();
 	$("#offers_main").hide();
-	$("#sale_reports_main").hide();
 	$("#maps_main").hide();
+	$("#manufacturing_main").hide();
+	$("#sale_reports_main").hide();
 	$("#admin_main").hide();
 	hide_menu_items();
 	
@@ -558,7 +584,6 @@ function show_notifications()
 	$("#notifications_box").show();
 	notifications_ini();
 }
-
 
 /**
  * this function shows the settigns screen
@@ -867,6 +892,20 @@ function import_data(form_name)
 		case 'form173':modal23_action(form173_import_template,form173_import);
 		break;
 		case 'form174':modal23_action(form174_import_template,form174_import);
+		break;
+		case 'form175':modal23_action(form175_import_template,form175_import);
+		break;
+		case 'form176':modal23_action(form176_import_template,form176_import);
+		break;
+		case 'form177':modal23_action(form177_import_template,form177_import);
+		break;
+		case 'form184':modal23_action(form184_import_template,form184_import);
+		break;
+		case 'form187':modal23_action(form187_import_template,form187_import);
+		break;
+		case 'form190':modal23_action(form190_import_template,form190_import);
+		break;
+		case 'form191':modal23_action(form191_import_template,form191_import);
 		break;
 	}
 }

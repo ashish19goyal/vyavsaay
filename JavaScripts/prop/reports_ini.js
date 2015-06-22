@@ -2808,7 +2808,7 @@ function report46_ini()
 				{
 					if(payment.acc_name==result.acc_name)
 					{
-						bill_ids_string+="<u title='Amount Rs:"+payment.total_amount+"'>"+payment.bill_id+"</u>"+", ";
+						bill_ids_string+="<u title='Amount Rs:"+payment.total_amount+"' onclick=\"element_display('"+payment.bill_id+"','form21',['form122','form136','form158','form192']);\">"+payment.bill_id+"</u>"+", ";
 						if(payment.type=='received')
 						{
 							balance_amount-=parseFloat(payment.total_amount);
@@ -4797,3 +4797,111 @@ function report66_ini()
 };
 
 
+/**
+ * @reportNo 72
+ * @report Pickup and Deliveries
+ */
+function report72_ini()
+{
+	var form=document.getElementById('report72_header');
+	var customer=form.elements[1].value;
+	var address=form.elements[2].value;
+	var status=form.elements[3].value;
+	
+	show_loader();
+	$('#report72_body').html('');	
+			
+	var orders_data="<sale_orders>" +
+		"<id></id>"+
+		"<customer_name>"+customer+"</customer_name>" +
+		"<address>"+address+"</address>"+
+		"<notes></notes>"+
+		"<order_num></order_num>"+
+		"<order_date></order_date>"+
+		"<type></type>"+
+		"<pickup_assignee></pickup_assignee>"+
+		"<delivery_assignee></delivery_assignee>"+
+		"<amount></amount>" +
+		"<tax></tax>"+
+		"<total></total>"+
+		"<status>"+status+"</status>"+
+		"</sale_orders>";
+
+	fetch_requested_data('report72',orders_data,function(items)
+	{	
+		var button_value="Pick";
+		items.forEach(function(item)
+		{
+			var assignee="";
+			if(item.status=='pending')
+			{
+				button_value="Pick";
+			}
+			else if(item.status=='picking')
+			{
+				assignee="Pickup by: "+item.pickup_assignee;
+				button_value="Picked";
+			}
+			else if(item.status=='picked')
+			{
+				button_value="Process";
+			}
+			else if(item.status=='processing')
+			{
+				button_value="Processed";
+			}
+			else if(item.status=='ready for delivery')
+			{
+				button_value="Deliver";
+			}
+			else if(item.status=='out for delivery')
+			{
+				assignee="Delivery by: "+item.delivery_assignee;
+				button_value="Delivered";
+			}
+			
+			var rowsHTML="<tr>";
+			rowsHTML+="<form id='report72_"+item.id+"'></form>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+=item.customer_name;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="Order #"+item.order_num+"<br>"+assignee;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount' title='Amount: Rs. "+item.amount+"\nTax: Rs. "+item.tax+"'>";
+				rowsHTML+="Rs. "+item.total;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Address'>";
+				rowsHTML+=item.address;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='report72_"+item.id+"' readonly='readonly' value='"+item.status+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='report72_"+item.id+"' value='"+item.id+"'>";
+			if(item.status!='delivered')
+			{
+				rowsHTML+="<input type='button' form='report72_"+item.id+"' class='generic_icon' value='"+button_value+"'>";
+			}
+			rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+					
+			$('#report72_body').append(rowsHTML);
+
+			if(item.status!='delivered')
+			{			
+				var report72_form=document.getElementById('report72_'+item.id);				
+				var update_button=report72_form.elements[2];
+				$(update_button).on('click',function(event)
+				{
+					event.preventDefault();
+					report72_update(report72_form);
+				});
+			}
+		});
+		hide_loader();
+	});
+	
+	var print_button=form.elements[5];
+	print_tabular_report('report72','Orders',print_button);
+};

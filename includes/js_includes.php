@@ -13,6 +13,7 @@
 <script src='./JavaScripts/open/jquery.easing.min.js'></script>
 <script src='./JavaScripts/open/move-top.js'></script>
 <script src='./JavaScripts/open/shortcuts.min.js'></script>
+<script src='./JavaScripts/open/angular.js'></script>
 
 <script src='./JavaScripts/open/dataDays.js'></script>
 <script src='./JavaScripts/open/dataDaysEnh.js'></script>

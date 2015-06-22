@@ -10,6 +10,8 @@
 			<li><a id='form144_link' href='#form144' onclick='form144_header_ini(); form144_ini();' data-i18n='form.budgeting'></a></li>
 			<li><a id='form104_link' href='#form104' onclick='form104_header_ini(); form104_ini();' data-i18n='form.tasks'></a></li>
 			<li><a id='form150_link' href='#form150' onclick='form150_header_ini(); form150_ini();' data-i18n='form.feeds'></a></li>
+			<li><a id='report68_link' href='#report68' onclick='report68_header_ini();' data-i18n='form.project_prioritization'></a></li>
+			<li><a id='report69_link' href='#report69' onclick='report69_header_ini();' data-i18n='form.project_expenses'></a></li>
 		</ul>
 
 	<?php 
@@ -22,6 +24,8 @@
 			include "forms/form144.php";
 			include "forms/form104.php";
 			include "forms/form150.php";
+			include "reports/report68.php";
+			include "reports/report69.php";
 	?>		
 	
 </div>

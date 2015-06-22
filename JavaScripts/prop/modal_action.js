@@ -7040,3 +7040,353 @@ function modal116_action(string)
 	
 	$("#modal116").dialog("open");
 }
+
+/**
+ * @modal Add Task
+ * @modalNo 117
+ */
+function modal117_action(source,date_initiated)
+{
+	var form=document.getElementById("modal117_form");
+	var task_filter=form.elements[1];
+	var desc_filter=form.elements[2];
+	var staff_filter=form.elements[3];
+	var due_filter=form.elements[4];
+	var status_filter=form.elements[5];
+	
+	//start_filter.value=date_initiated;
+
+	var step_data="<business_processes>" +
+			"<name></name>" +
+			"<type exact='yes'>"+source+"</type>"+
+			"</business_processes>";
+	set_my_value_list(step_data,task_filter);
+	
+	var staff_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	set_my_value_list(staff_data,staff_filter);
+	
+	$(due_filter).datetimepicker();
+	set_static_value_list('task_instances','status',status_filter);
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form185') || is_create_access('form188'))
+		{
+			var name=form.elements[1].value;
+			var description=form.elements[2].value;
+			var assignee=form.elements[3].value;
+			var t_due=get_raw_time(form.elements[4].value);
+			var status=form.elements[5].value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<task_instances>" +
+						"<id>"+data_id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<description>"+description+"</description>"+
+						"<assignee>"+assignee+"</assignee>" +
+						"<t_initiated>"+get_raw_time(date_initiated)+"</t_initiated>" +
+						"<t_due>"+t_due+"</t_due>" +
+						"<status>"+status+"</status>" +
+						"<task_hours>1</task_hours>" +
+						"<source>"+source+"</source>" +
+						"<source_id></source_id>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</task_instances>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>task_instances</tablename>" +
+						"<link_to>form185</link_to>" +
+						"<title>Added</title>" +
+						"<notes>Task "+name+" assigned to "+assignee+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_create_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_create_row(data_xml,activity_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal117").dialog("close");
+	});
+	
+	$("#modal117").dialog("open");
+}
+
+/**
+ * @modal New Order
+ * @modalNo 118
+ */
+function modal118_action()
+{
+	var form=document.getElementById("modal118_form");
+	var phone_filter=form.elements[1];
+	var name_filter=form.elements[2];
+	var credit_filter=form.elements[3];
+	var address_filter=form.elements[4];
+	var notes_filter=form.elements[5];
+	var new_filter=form.elements[6];
+	var acc_name_filter=form.elements[7];
+	var id_filter=form.elements[8];
+	
+	var phone_data="<customers>" +
+			"<phone></phone>" +
+			"</customers>";
+	set_my_filter(phone_data,phone_filter);
+	
+	var name_data="<customers>" +
+			"<name></name>" +
+			"</customers>";
+	set_my_filter(name_data,name_filter);
+		
+	$(phone_filter).off('blur');
+	$(phone_filter).on('blur',function()
+	{
+		var customers_data="<customers>"+
+						"<id></id>"+
+						"<name></name>"+
+						"<acc_name></acc_name>"+
+						"<address></address>"+
+						"<phone exact='yes'>"+phone_filter.value+"</phone>"+
+						"</customers>";
+		fetch_requested_data('',customers_data,function(customers)
+		{
+			if(customers.length>0)
+			{
+				var payments_data="<payments>" +
+						"<id></id>" +
+						"<type></type>" +
+						"<total_amount></total_amount>" +
+						"<paid_amount></paid_amount>" +
+						"<status exact='yes'>pending</status>" +
+						"<acc_name exact='yes'>"+customers[0].acc_name+"</acc_name>" +
+						"</payments>";
+				fetch_requested_data('',payments_data,function(payments)
+				{
+					var balance_amount=0;
+					payments.forEach(function(payment)
+					{
+						if(payment.type=='received')
+						{
+							balance_amount+=parseFloat(payment.total_amount);
+							balance_amount-=parseFloat(payment.paid_amount);
+						}
+						else if(payment.type=='paid')
+						{
+							balance_amount-=parseFloat(payment.total_amount);
+							balance_amount+=parseFloat(payment.paid_amount);
+						}
+					});
+					credit_filter.value=balance_amount;
+				});	
+				name_filter.value=customers[0].name;
+				address_filter.value=customers[0].address;
+				acc_name_filter.value=customers[0].acc_name;
+				new_filter.value='no';
+				id_filter.value=customers[0].id;
+				name_filter.setAttribute('readonly','readonly');
+				$(notes_filter).focus();				
+			}
+			else 
+			{
+				name_filter.value="";
+				address_filter.value="";
+				id_filter.value="";
+				name_filter.removeAttribute('readonly');
+				new_filter.value='yes';
+				credit_filter.value=0;
+				acc_name_filter.value=name_filter.value+" ("+phone_filter.value+")";
+			}
+		});
+	});
+	
+	$(name_filter).off('blur');
+	$(name_filter).on('blur',function()
+	{
+		acc_name_filter.value=name_filter.value+" ("+phone_filter.value+")";
+	});
+		
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form190'))
+		{
+			var phone=form.elements[1].value;
+			var name=form.elements[2].value;
+			var credit=form.elements[3].value;
+			var address=form.elements[4].value;
+			var notes=form.elements[5].value;
+			var new_old=form.elements[6].value;
+			var acc_name=form.elements[7].value;
+			var old_id=form.elements[8].value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+
+			if(new_old=='yes')
+			{
+				var customer_xml="<customers>"+
+								"<id>"+data_id+"</id>"+
+								"<name>"+name+"</name>"+
+								"<phone>"+phone+"</phone>"+
+								"<acc_name>"+acc_name+"</acc_name>"+
+                        		"<status>active</status>"+
+                        		"<address>"+address+"</address>"+
+								"<last_updated>"+last_updated+"</last_updated>" +
+                        		"</customers>";
+				var account_xml="<accounts>" +
+								"<id>"+data_id+"</id>" +
+								"<acc_name unique='yes'>"+acc_name+"</acc_name>" +
+								"<type>customer</type>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</accounts>";
+			        		
+                if(is_online())
+				{
+					server_create_simple(customer_xml);
+					server_create_simple(account_xml);
+				}
+				else
+				{
+					local_create_simple(customer_xml);
+					local_create_simple(account_xml);
+				} 		
+			}
+			else 
+			{
+				var customer_xml="<customers>"+
+								"<id>"+old_id+"</id>"+
+								"<address>"+address+"</address>"+
+								"<last_updated>"+last_updated+"</last_updated>" +
+                        		"</customers>";
+                if(is_online())
+				{
+					server_update_simple(customer_xml);
+				}
+				else
+				{
+					local_update_simple(customer_xml);
+				}
+			}
+			
+			var order_num_xml="<user_preferences>"+
+							"<id></id>"+							
+							"<value></value>"+
+							"<type exact='yes'>accounting</type>"+
+							"<name exact='yes'>so_num</name>"+							
+							"</user_preferences>";
+			fetch_requested_data('',order_num_xml,function (order_nums) 
+			{
+				if(order_nums.length>0)
+				{
+					var data_xml="<sale_orders>" +
+								"<id>"+data_id+"</id>" +
+								"<order_num>"+order_nums[0].value+"</order_num>"+
+								"<customer_name>"+acc_name+"</customer_name>"+
+		                        "<address>"+address+"</address>"+
+		                        "<notes>"+notes+"</notes>"+
+		                        "<order_date>"+last_updated+"</order_date>"+
+		                        "<status>pending</status>"+
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</sale_orders>";
+					var activity_xml="<activity>" +
+								"<data_id>"+data_id+"</data_id>" +
+								"<tablename>sale_orders</tablename>" +
+								"<link_to>form190</link_to>" +
+								"<title>New Order</title>" +
+								"<notes>From "+name+"</notes>" +
+								"<updated_by>"+get_name()+"</updated_by>" +
+								"</activity>";
+					var order_num_data="<user_preferences>"+
+								"<id>"+order_nums[0].id+"</id>"+
+								"<value>"+(parseFloat(order_nums[0].value)+1)+"</value>"+
+								"<last_updated>"+last_updated+"</last_updated>"+
+								"</user_preferences>";		
+					if(is_online())
+					{
+						server_create_row(data_xml,activity_xml);
+						server_update_simple(order_num_data);
+					}
+					else
+					{
+						local_create_row(data_xml,activity_xml);
+						local_update_simple(order_num_data);
+					}	
+				}
+			});				
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal118").dialog("close");
+	});
+	
+	$("#modal118").dialog("open");
+}
+
+/**
+ * @modal Select Assignee
+ * @modalNo 119
+ */
+function modal119_action(data_id,type)
+{
+	var form=document.getElementById("modal119_form");
+	var name_filter=form.elements[1];
+		
+	var name_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	set_my_filter(name_data,name_filter);		
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form190'))
+		{
+			var name=form.elements[1].value;
+			var last_updated=get_my_time();
+			
+			var data_xml="<sale_orders>" +
+						"<id>"+data_id+"</id>"+
+						"<pickup_assignee>"+name+"</pickup_assignee>"+
+                        "<last_updated>"+last_updated+"</last_updated>" +
+						"</sale_orders>";
+			
+			if(type=='delivery')
+			{
+				var data_xml="<sale_orders>" +
+						"<id>"+data_id+"</id>"+
+						"<delivery_assignee>"+name+"</delivery_assignee>"+
+                        "<last_updated>"+last_updated+"</last_updated>" +
+						"</sale_orders>";
+			}			
+			if(is_online())
+			{
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal119").dialog("close");
+	});
+	
+	$("#modal119").dialog("open");
+}

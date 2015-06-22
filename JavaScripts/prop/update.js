@@ -51,6 +51,77 @@ function report63_update(form)
 }
 
 /**
+ * @report Pickup & Deliveries
+ * @param form
+ */
+function report72_update(form)
+{
+	if(is_update_access('report72'))
+	{
+		var status_filter=form.elements[0];
+		var status=form.elements[0].value;
+		var id=form.elements[1].value;
+		var button_filter=form.elements[2];
+		var last_updated=get_my_time();
+		var new_status="";
+
+		if(status=='pending')
+		{
+			new_status="picking";
+			button_filter.value="Picked";
+			modal119_action(id,'pickup');
+		}
+		else if(status=='picking')
+		{
+			new_status="picked";
+			button_filter.value="Process";
+		}		
+		if(status=='picked')
+		{
+			new_status="processing";
+			button_filter.value="Processed";
+		}
+		else if(status=='processing')
+		{
+			new_status="ready for delivery";
+			button_filter.value="Deliver";
+		}
+		else if(status=='ready for delivery')
+		{
+			modal119_action(id,'delivery');
+			new_status="out for delivery";
+			button_filter.value="Delivered";
+		}
+		else if(status=='out for delivery')
+		{
+			new_status="delivered";
+			$(button_filter).hide();
+		}
+
+		status_filter.value=new_status;
+		
+		var data_xml="<sale_orders>" +
+					"<id>"+id+"</id>" +
+					"<status>"+new_status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_orders>";
+
+		if(is_online())
+		{	
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Update inventory
  * @param button
  */
@@ -314,11 +385,9 @@ function form10_update_form()
 		var form=document.getElementById("form10_master");
 		
 		var customer=form.elements[1].value;
-		var bill_date=get_raw_time(form.elements[2].value);
 		var bill_num=form.elements[3].value;
-		
-		var message_string="Bill from: "+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		
+		var bill_date=get_raw_time(form.elements[4].value);
+				
 		var amount=0;
 		var discount=0;
 		var tax=0;
@@ -331,295 +400,117 @@ function form10_update_form()
 			total+=parseFloat(subform.elements[4].value);
 			amount+=parseFloat(subform.elements[5].value);
 			discount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[7].value);
-			
-			message_string+="\nItem: "+subform.elements[0].value;
-			message_string+=" Price: "+subform.elements[3].value;
+			tax+=parseFloat(subform.elements[7].value);			
 		});
 		
-		var data_id=form.elements[4].value;
-		var transaction_id=form.elements[6].value;
+		var data_id=form.elements[5].value;
+		var order_id=form.elements[6].value;
+		var transaction_id=form.elements[7].value;
 		var last_updated=get_my_time();
-		var offer_detail="";
-				
-		/////deleting existing free services
-		////optimise this query....it will not delete the desired records
-		////deleting these records may be problematic
-		var items_data="<bill_items>" +
-				"<bill_id>"+data_id+"</bill_id>" +
-				"<free_with>bill</free_with>" +
-				"<last_updated upperbound='yes'>"+last_updated+"</last_updated>" +
-				"</bill_items>";
-		
+
+		var data_xml="<bills>" +
+					"<id>"+data_id+"</id>" +
+					"<customer_name>"+customer+"</customer_name>" +
+					"<bill_date>"+bill_date+"</bill_date>" +
+					"<amount>"+amount+"</amount>" +
+					"<total>"+total+"</total>" +
+					"<type>service</type>" +
+					"<discount>"+discount+"</discount>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"<transaction_id>"+transaction_id+"</transaction_id>" +
+					"</bills>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bills</tablename>" +
+					"<link_to>form42</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Bill no "+bill_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var sale_order_xml="<sale_orders>" +
+					"<id>"+order_id+"</id>" +
+					"<bill_id>"+data_id+"</bill_id>"+
+					"<amount>"+amount+"</amount>" +
+					"<total>"+total+"</total>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_orders>";
+		var transaction_xml="<transactions>" +
+					"<id>"+transaction_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>"+customer+"</receiver>" +
+					"<giver>master</giver>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
 		if(is_online())
 		{
-			server_delete_simple(items_data);
+			server_update_row(data_xml,activity_xml);
+			server_update_simple(transaction_xml);
+			server_update_simple(sale_order_xml);
 		}
 		else
 		{
-			local_delete_simple(items_data);
+			local_update_row(data_xml,activity_xml);
+			local_update_simple(transaction_xml);
+			local_update_simple(sale_order_xml);
 		}
-		///////////////////////////////////
 		
-		var offer_data="<offers>" +
-				"<criteria_type>min amount crossed</criteria_type>" +
-				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
-				"<offer_type exact='yes'>bill</offer_type>" +
-				"<result_type></result_type>" +
-				"<discount_percent></discount_percent>" +
-				"<discount_amount></discount_amount>" +
-				"<free_service_name></free_service_name>" +
-				"<offer_detail></offer_detail>" +
-				"<status array='yes'>--active--extended--</status>" +
-				"</offers>";
-		fetch_requested_data('',offer_data,function(offers)
+		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. "+discount+"</br>" +
+					"Rs. "+tax+"</br>" +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+		$('#form10_foot').html(total_row);
+
+		var payment_data="<payments>" +
+				"<id></id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"</payments>";
+		get_single_column_data(function(payments)
 		{
-			offers.sort(function(a,b)
+			for(var y in payments)
 			{
-				if(a.criteria_amount<b.criteria_amount)
-				{	return 1;}
-				else 
-				{	return -1;}
-			});
-			
-			for(var i in offers)
-			{
-				if(offers[i].result_type=='discount')
+				var payment_xml="<payments>" +
+							"<id>"+payments[y]+"</id>" +
+							"<type>received</type>" +
+							"<total_amount>"+total+"</total_amount>" +
+							"<acc_name>"+customer+"</acc_name>" +
+							"<transaction_id>"+payments[y]+"</transaction_id>" +
+							"<bill_id>"+data_id+"</bill_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</payments>";
+				var pt_xml="<transactions>" +
+							"<id>"+payments[y]+"</id>" +
+							"<amount>"+total+"</amount>" +
+							"<receiver>master</receiver>" +
+							"<giver>"+customer+"</giver>" +
+							"<tax>0</tax>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</transactions>";
+				if(is_online())
 				{
-					if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
+					server_update_simple_func(payment_xml,function()
 					{
-						var dis=parseFloat(((amount-discount)*parseInt(offers[i].discount_percent))/100);
-						tax-=(tax*(dis/(amount-discount)));
-						discount+=dis;
-						total=amount-discount+tax;
-					}
-					else 
-					{
-						var dis=parseFloat(offers[i].discount_amount)*(Math.floor((amount-discount)/parseFloat(offers[i].criteria_amount)));
-						tax-=(tax*(dis/(amount-discount)));
-						discount+=dis;
-						total=amount-discount+tax;
-					}
-				
-				}
-				else if(offers[i].result_type=='service free')
-				{
-					var free_service_name=offers[i].free_service_name;	
-					var id=get_new_key();
-					rowsHTML="<tr>";
-						rowsHTML+="<form id='form10_"+id+"'></form>";
-		                	rowsHTML+="<td>";
-		                    	rowsHTML+="<input type='text' readonly='readonly' form='form10_"+id+"' value='"+free_service_name+"'>";
-	                        rowsHTML+="</td>";
-	                        rowsHTML+="<td>";
-	                                rowsHTML+="<input type='text' readonly='readonly' required form='form10_"+id+"'>";
-	                        rowsHTML+="</td>";
-	                        rowsHTML+="<td>";
-	                                rowsHTML+="<textarea readonly='readonly' required form='form10_"+id+"'>free service</textarea>";
-	                        rowsHTML+="</td>";
-	                        rowsHTML+="<td>";
-	                        	rowsHTML+="<input type='number' readonly='readonly' required form='form10_"+id+"' value='0'>";
-	                        rowsHTML+="</td>";
-	                        rowsHTML+="<td>";
-	                                rowsHTML+="<input type='number' readonly='readonly' required form='form10_"+id+"' value='0'>";
-	                        rowsHTML+="</td>";
-	                        rowsHTML+="<td>";
-	                                rowsHTML+="<input type='hidden' form='form10_"+id+"' value='0'>";
-	                                rowsHTML+="<input type='hidden' form='form10_"+id+"' value='0'>";
-	                                rowsHTML+="<input type='hidden' form='form10_"+id+"' value='0'>";
-	                                rowsHTML+="<input type='hidden' form='form10_"+id+"' value='free on the bill amount'>";
-	                                rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+id+"'>";
-	                                rowsHTML+="<input type='submit' class='save_icon' form='form10_"+id+"' id='save_form10_"+id+"' >";
-	                                rowsHTML+="<input type='button' class='delete_icon' form='form10_"+id+"' id='delete_form10_"+id+"' onclick='form10_delete_item($(this));'>";
-	                                rowsHTML+="<input type='hidden' form='form10_"+id+"' value=''>";
-	                                rowsHTML+="<input type='hidden' form='form10_"+id+"' value=''>";
-	                        rowsHTML+="</td>";
-	                rowsHTML+="</tr>";
-
-               $('#form10_body').prepend(rowsHTML);
-
-               var free_pre_requisite_data="<pre_requisites>" +
-							"<type exact='yes'>service</type>" +
-							"<requisite_type exact='yes'>task</requisite_type>" +
-							"<name exact='yes'>"+free_service_name+"</name>" +
-							"<requisite_name></requisite_name>" +
-							"<quantity></quantity>" +
-							"</pre_requisites>";
-					fetch_requested_data('',free_pre_requisite_data,function(free_pre_requisites)
-					{
-		                var free_xml="<bill_items>" +
-									"<id>"+id+"</id>" +
-									"<item_name>"+free_service_name+"</item_name>" +
-									"<staff></staff>" +
-									"<notes>free service</notes>" +
-									"<unit_price>0</unit_price>" +
-									"<amount>0</amount>" +
-									"<total>0</total>" +
-									"<discount>0</discount>" +
-									"<offer></offer>" +
-									"<type>free</type>" +
-									"<tax>0</tax>" +
-									"<bill_id>"+data_id+"</bill_id>" +
-									"<free_with>bill</free_with>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</bill_items>";	
-						
-						if(is_online())
-						{
-							server_create_simple(free_xml);
-						}
-						else
-						{
-							local_create_simple(free_xml);
-						}
-						
-						free_pre_requisites.forEach(function(free_pre_requisite)
-						{
-							var task_id=get_new_key();
-							var task_xml="<task_instances>" +
-									"<id>"+task_id+"</id>" +
-									"<name>"+free_pre_requisite.name+"</name>" +
-									"<assignee></assignee>" +
-									"<t_initiated>"+get_my_time()+"</t_initiated>" +
-									"<t_due>"+get_task_due_period()+"</t_due>" +
-									"<status>pending</status>" +
-									"<task_hours>"+free_pre_requisite.quantity+"</task_hours>" +
-									"<source>service</source>" +
-									"<source_id>"+id+"</source_id>" +
-									"<last_updated>"+last_updated+"</last_updated>" +
-									"</task_instances>";
-							var activity_xml="<activity>" +
-									"<data_id>"+task_id+"</data_id>" +
-									"<tablename>task_instances</tablename>" +
-									"<link_to>form14</link_to>" +
-									"<title>Added</title>" +
-									"<notes>Task "+free_pre_requisite.name+"</notes>" +
-									"<updated_by>"+get_name()+"</updated_by>" +
-									"</activity>";
-					
-							if(is_online())
-							{
-								server_create_row(task_xml,activity_xml);
-							}
-							else
-							{
-								local_create_row(task_xml,activity_xml);
-							}		
-						});
-				
+						modal26_action(payments[y]);
 					});
 				}
-				offer_detail=offers[i].offer_detail;
+				else
+				{
+					local_update_simple_func(payment_xml,function()
+					{
+						modal26_action(payments[y]);
+					});
+				}
 				break;
 			}
-			
-			var data_xml="<bills>" +
-						"<id>"+data_id+"</id>" +
-						"<customer_name>"+customer+"</customer_name>" +
-						"<bill_date>"+bill_date+"</bill_date>" +
-						"<amount>"+amount+"</amount>" +
-						"<total>"+total+"</total>" +
-						"<type>service</type>" +
-						"<offer>"+offer_detail+"</offer>" +
-						"<discount>"+discount+"</discount>" +
-						"<tax>"+tax+"</tax>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"<transaction_id>"+transaction_id+"</transaction_id>" +
-						"</bills>";
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>bills</tablename>" +
-						"<link_to>form42</link_to>" +
-						"<title>Updated</title>" +
-						"<notes>Bill no "+bill_num+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			var transaction_xml="<transactions>" +
-						"<id>"+transaction_id+"</id>" +
-						"<trans_date>"+get_my_time()+"</trans_date>" +
-						"<amount>"+total+"</amount>" +
-						"<receiver>"+customer+"</receiver>" +
-						"<giver>master</giver>" +
-						"<tax>"+tax+"</tax>" +
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</transactions>";
-			if(is_online())
-			{
-				server_update_row(data_xml,activity_xml);
-				server_update_simple(transaction_xml);
-			}
-			else
-			{
-				local_update_row(data_xml,activity_xml);
-				local_update_simple(transaction_xml);
-			}
-			
-			message_string+="\nAmount: "+amount;
-			message_string+="\ndiscount: "+discount;
-			message_string+="\nTax: "+tax;
-			message_string+="\nTotal: "+total;
-			
-			var subject="Bill from "+get_session_var('title');
-			$('#form10_share').show();
-			$('#form10_share').click(function()
-			{
-				modal44_action(customer,subject,message_string);
-			});
-
-			var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-						"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-						"<td>Rs. "+amount+"</br>" +
-						"Rs. "+discount+"</br>" +
-						"Rs. "+tax+"</br>" +
-						"Rs. "+total+"</td>" +
-						"<td></td>" +
-						"</tr>";
-			$('#form10_foot').html(total_row);
-
-			var payment_data="<payments>" +
-					"<id></id>" +
-					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
-					"</payments>";
-			get_single_column_data(function(payments)
-			{
-				for(var y in payments)
-				{
-					var payment_xml="<payments>" +
-								"<id>"+payments[y]+"</id>" +
-								"<type>received</type>" +
-								"<total_amount>"+total+"</total_amount>" +
-								"<acc_name>"+customer+"</acc_name>" +
-								"<transaction_id>"+payments[y]+"</transaction_id>" +
-								"<bill_id>"+data_id+"</bill_id>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</payments>";
-					var pt_xml="<transactions>" +
-								"<id>"+payments[y]+"</id>" +
-								"<amount>"+total+"</amount>" +
-								"<receiver>master</receiver>" +
-								"<giver>"+customer+"</giver>" +
-								"<tax>0</tax>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</transactions>";
-					if(is_online())
-					{
-						server_update_simple_func(payment_xml,function()
-						{
-							modal26_action(payments[y]);
-						});
-					}
-					else
-					{
-						local_update_simple_func(payment_xml,function()
-						{
-							modal26_action(payments[y]);
-						});
-					}
-					break;
-				}
-			},payment_data);
-			
-		});
+		},payment_data);
+		
 		$("[id^='save_form10_']").click();
 	}
 	else
@@ -7018,7 +6909,7 @@ function form137_approve_item(button)
 		var form=document.getElementById(form_id);	
 		
 		var project_id=document.getElementById('form137_master').elements[2].value;
-		form.elements[4].value='approved';		
+		form.elements[3].value='approved';		
 		var status='approved';
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
@@ -7056,7 +6947,7 @@ function form137_reject_item(button)
 		var form=document.getElementById(form_id);	
 		
 		var project_id=document.getElementById('form137_master').elements[2].value;
-		form.elements[4].value='rejected';		
+		form.elements[3].value='rejected';		
 		var status='rejected';
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
@@ -8647,7 +8538,7 @@ function form158_update_form()
 		var bill_date=get_raw_time(form.elements[3].value);
 		var entry_date=get_raw_time(form.elements[4].value);
 		var imported='no';
-		var ntoes="Local Purchase";
+		var notes="Local Purchase";
 		if(form.elements[5].checked)
 		{
 			imported='yes';
@@ -9463,6 +9354,534 @@ function form176_update_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Prioritization Parameters
+ * @formNo 177
+ * @param button
+ */
+function form177_update_item(form)
+{
+	if(is_update_access('form177'))
+	{
+		var type=form.elements[0].value;
+		var name=form.elements[1].value;
+		var values=form.elements[2].value;
+		var threshold=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<prioritization_parameters>" +
+					"<id>"+data_id+"</id>" +
+					"<type>"+type+"</type>" +
+					"<name>"+name+"</name>" +
+					"<values>"+values+"</values>"+
+					"<threshold>"+threshold+"</threshold>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</prioritization_parameters>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Production Steps
+ * @formNo 184
+ * @param button
+ */
+function form184_update_item(form)
+{
+	if(is_update_access('form184'))
+	{
+		var order_no=form.elements[0].value;
+		var name=form.elements[1].value;
+		var time=form.elements[2].value;
+		var assignee=form.elements[3].value;
+		var details=form.elements[4].value;
+		var status=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<business_processes>" +
+					"<id>"+data_id+"</id>" +
+					"<order_no>"+order_no+"</order_no>" +
+					"<name>"+name+"</name>" +
+					"<details>"+details+"</details>" +
+					"<time_estimate>"+time+"</time_estimate>"+
+					"<default_assignee>"+assignee+"</default_assignee>"+
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</business_processes>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+function form184_update_serial_numbers()
+{
+	$('#form184_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)>input').attr('value',index+1);
+	});
+}
+
+/**
+ * @form Create production plan
+ * @formNo 186
+ * @param button
+ */
+function form186_update_item(form)
+{
+	if(is_update_access('form186'))
+	{
+		var master_form=document.getElementById("form186_master");		
+
+		var order=form.elements[0].value;
+		var item=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var from=get_raw_time(form.elements[3].value);
+		var to=get_raw_time(form.elements[4].value);
+		var status=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+			
+		var data_xml="<production_plan_items>" +
+				"<id>"+data_id+"</id>" +
+				"<order_no>"+order+"</order_no>" +
+				"<item>"+item+"</item>" +
+				"<quantity>"+quantity+"</quantity>" +
+				"<from_time>"+from+"</from_time>" +
+				"<to_time>"+to+"</to_time>" +
+				"<status>"+status+"</status>" +
+				"<plan_id>"+plan_id+"</plan_id>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</production_plan_items>";
+	
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+				
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Create Production Plan
+ * @param button
+ */
+function form186_update_form()
+{
+	if(is_update_access('form186'))
+	{
+		var form=document.getElementById("form186_master");
+		
+		var name=form.elements[1].value;
+		var from=get_raw_time(form.elements[2].value);
+		var to=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var save_button=form.elements[6];
+		var last_updated=get_my_time();
+		
+		var data_xml="<production_plan>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<from_time>"+from+"</from_time>" +
+					"<to_time>"+to+"</to_time>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</production_plan>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>production_plan</tablename>" +
+					"<link_to>form189</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Production Plan "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+			
+		$("[id^='save_form186_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+function form186_update_serial_numbers()
+{
+	$('#form186_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)>input').attr('value',index+1);
+	});
+}
+
+/**
+ * @form Testing Steps
+ * @formNo 187
+ * @param button
+ */
+function form187_update_item(form)
+{
+	if(is_update_access('form187'))
+	{
+		var order_no=form.elements[0].value;
+		var name=form.elements[1].value;
+		var time=form.elements[2].value;
+		var assignee=form.elements[3].value;
+		var details=form.elements[4].value;
+		var status=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		var data_xml="<business_processes>" +
+					"<id>"+data_id+"</id>" +
+					"<order_no>"+order_no+"</order_no>" +
+					"<name>"+name+"</name>" +
+					"<details>"+details+"</details>" +
+					"<time_estimate>"+time+"</time_estimate>"+
+					"<default_assignee>"+assignee+"</default_assignee>"+
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</business_processes>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+function form187_update_serial_numbers()
+{
+	$('#form187_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)>input').attr('value',index+1);
+	});
+}
+
+/**
+ * @form Manage Production Plans
+ * @formNo 189
+ * @param button
+ */
+function form189_update_item(form)
+{
+	if(is_update_access('form189'))
+	{
+		var name=form.elements[1].value;
+		var details=form.elements[2].value;
+		var from=get_raw_time(form.elements[3].value);
+		var to=get_raw_time(form.elements[4].value);
+		var status=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<production_plan>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<details>"+details+"</details>" +
+					"<from_time>"+from+"</from_time>" +
+					"<to_time>"+to+"</to_time>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</production_plan>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Order (laundry)
+ * @formNo 190
+ * @param button
+ */
+function form190_update_item(form)
+{
+	if(is_update_access('form190'))
+	{
+		var customer=form.elements[0].value;
+		var details=form.elements[1].value;
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<sale_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<customer_name>"+customer+"</customer_name>" +
+					"<notes>"+details+"</notes>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_orders>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Values list
+ * @formNo 191
+ * @param button
+ */
+function form191_update_item(form)
+{
+	if(is_update_access('form191'))
+	{
+		var value=form.elements[2].value;
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<values_list>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+value+"</name>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</values_list>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Enter Purchase Bill (Laundry)
+ * @param button
+ */
+function form192_update_form()
+{
+	if(is_update_access('form192'))
+	{
+		var form=document.getElementById("form192_master");
+		
+		var supplier=form.elements[1].value;
+		var bill_id=form.elements[2].value;
+		var bill_date=get_raw_time(form.elements[3].value);
+		var entry_date=get_raw_time(form.elements[4].value);
+		var total=0;
+		var tax=0;
+		var amount=0;
+		
+		$("[id^='save_form192']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			total+=parseFloat(subform.elements[5].value);
+			tax+=parseFloat(subform.elements[4].value);
+		});
+
+		var discount=0;
+		amount=total-tax;
+		
+		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+				"<td>Rs. "+amount+"</br>" +
+				"Rs. "+discount+"</br>" +
+				"Rs. "+tax+"</br>" +
+				"Rs. "+total+"</td>" +
+				"<td></td>" +
+				"</tr>";
+		$('#form192_foot').html(total_row);
+
+		var data_id=form.elements[5].value;
+		var transaction_id=form.elements[6].value;
+		var last_updated=get_my_time();
+								
+		var data_xml="<supplier_bills>" +
+					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<bill_date>"+bill_date+"</bill_date>" +
+					"<entry_date>"+entry_date+"</entry_date>" +
+					"<total>"+total+"</total>" +
+					"<discount>"+discount+"</discount>" +
+					"<amount>"+amount+"</amount>" +
+					"<tax>"+tax+"</tax>" +
+					"<transaction_id>"+transaction_id+"</transaction_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</supplier_bills>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>supplier_bills</tablename>" +
+					"<link_to>form53</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Supplier Bill no "+data_id+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var transaction_xml="<transactions>" +
+					"<id>"+transaction_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>master</receiver>" +
+					"<giver>"+supplier+"</giver>" +
+					"<tax>"+(-tax)+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+			server_update_simple(transaction_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+			local_update_simple(transaction_xml);
+		}
+		
+		var payment_data="<payments>" +
+				"<id></id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"</payments>";
+		get_single_column_data(function(payments)
+		{
+			for(var y in payments)
+			{
+				var payment_xml="<payments>" +
+							"<id>"+payments[y]+"</id>" +
+							"<type>paid</type>" +
+							"<total_amount>"+total+"</total_amount>" +
+							"<acc_name>"+supplier+"</acc_name>" +
+							"<transaction_id>"+payments[y]+"</transaction_id>" +
+							"<bill_id>"+data_id+"</bill_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</payments>";
+				var pt_xml="<transactions>" +
+							"<id>"+payments[y]+"</id>" +
+							"<amount>"+total+"</amount>" +
+							"<receiver>"+supplier+"</receiver>" +
+							"<giver>master</giver>" +
+							"<tax>0</tax>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</transactions>";
+				if(is_online())
+				{
+					server_update_simple_func(payment_xml,function()
+					{
+						modal28_action(payments[y]);
+					});
+				}
+				else
+				{
+					local_update_simple_func(payment_xml,function()
+					{
+						modal28_action(payments[y]);
+					});
+				}
+				break;
+			}
+		},payment_data);
+			
+		$("[id^='save_form192_']").click();
 	}
 	else
 	{

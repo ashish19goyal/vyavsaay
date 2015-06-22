@@ -34,12 +34,13 @@
 		//include "functions/staff.php";
 		//include "functions/suppliers.php";
 		include "functions/people.php";
+		include "functions/projects.php";
 		include "functions/offers.php";
 		include "functions/finances.php";
 		include "functions/ecommerce.php";
+		include "functions/manufacturing.php";
 		include "functions/sale_reports.php";
 		include "functions/maps.php";
-		include "functions/projects.php";
 		include "functions/admin.php";
 		//display for settings
 		include "functions/settings.php";
