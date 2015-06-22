@@ -2587,87 +2587,103 @@ function local_get_store_inventory(store,product,batch,callback)
 								}
 								sr_result.continue();
 							}
-							else
+							else 
 							{
-								transaction.objectStore('store_movement').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+								transaction.objectStore('inventory_adjust').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 								{
-									var sm_result=e.target.result;
-									if(sm_result)
+									var ia_result=e.target.result;
+									if(ia_result)
 									{
-										var sm_record=sm_result.value;
-										if(sm_record['source']==store && (sm_record['batch']==batch || batch=='' || batch===null))
+										var ia_record=ia_result.value;
+										if(ia_record['storage']==store && (ia_record['batch']==batch || batch=='' || batch===null))
 										{
-											result-=parseFloat(sm_record['quantity']);
+											result+=parseFloat(ia_record['quantity']);
 										}
-										if(sm_record['target']==store && (sm_record['batch']==batch || batch=='' || batch===null))
-										{
-											result+=parseFloat(sm_record['quantity']);
-										}
-										sm_result.continue();
+										ia_result.continue();
 									}
 									else
 									{
-										transaction.objectStore('customer_return_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+										transaction.objectStore('store_movement').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 										{
-											var cr_result=e.target.result;
-											if(cr_result)
+											var sm_result=e.target.result;
+											if(sm_result)
 											{
-												var cr_record=cr_result.value;
-												if(cr_record['storage']==store && (cr_record['batch']==batch || batch=='' || batch===null))
+												var sm_record=sm_result.value;
+												if(sm_record['source']==store && (sm_record['batch']==batch || batch=='' || batch===null))
 												{
-													result+=parseFloat(cr_record['quantity']);
+													result-=parseFloat(sm_record['quantity']);
 												}
-												if(cr_record['storage']==store && (cr_record['exchange_batch']==batch || batch=='' || batch===null))
+												if(sm_record['target']==store && (sm_record['batch']==batch || batch=='' || batch===null))
 												{
-													result-=parseFloat(cr_record['quantity']);
+													result+=parseFloat(sm_record['quantity']);
 												}
-												cr_result.continue();
+												sm_result.continue();
 											}
 											else
 											{
-												transaction.objectStore('discarded').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+												transaction.objectStore('customer_return_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 												{
-													var di_result=e.target.result;
-													if(di_result)
+													var cr_result=e.target.result;
+													if(cr_result)
 													{
-														var di_record=di_result.value;
-														if(di_record['storage']==store && (di_record['batch']==batch || batch=='' || batch===null))
+														var cr_record=cr_result.value;
+														if(cr_record['storage']==store && (cr_record['batch']==batch || batch=='' || batch===null))
 														{
-															result-=parseFloat(di_record['quantity']);
+															result+=parseFloat(cr_record['quantity']);
 														}
-														di_result.continue();
+														if(cr_record['storage']==store && (cr_record['exchange_batch']==batch || batch=='' || batch===null))
+														{
+															result-=parseFloat(cr_record['quantity']);
+														}
+														cr_result.continue();
 													}
 													else
 													{
-														transaction.objectStore('unbilled_sale_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+														transaction.objectStore('discarded').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 														{
-															var us_result=e.target.result;
-															if(us_result)
+															var di_result=e.target.result;
+															if(di_result)
 															{
-																var us_record=us_result.value;
-																if(us_record['storage']==store && (us_record['batch']==batch || batch=='' || batch===null))
+																var di_record=di_result.value;
+																if(di_record['storage']==store && (di_record['batch']==batch || batch=='' || batch===null))
 																{
-																	result-=parseFloat(us_record['quantity']);
+																	result-=parseFloat(di_record['quantity']);
 																}
-																us_result.continue();
+																di_result.continue();
 															}
 															else
 															{
-																transaction.objectStore('unbilled_purchase_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+																transaction.objectStore('unbilled_sale_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 																{
-																	var up_result=e.target.result;
-																	if(up_result)
+																	var us_result=e.target.result;
+																	if(us_result)
 																	{
-																		var up_record=up_result.value;
-																		if(up_record['storage']==store && (up_record['batch']==batch || batch=='' || batch===null))
+																		var us_record=us_result.value;
+																		if(us_record['storage']==store && (us_record['batch']==batch || batch=='' || batch===null))
 																		{
-																			result+=parseFloat(up_record['quantity']);
+																			result-=parseFloat(us_record['quantity']);
 																		}
-																		up_result.continue();
+																		us_result.continue();
 																	}
 																	else
 																	{
-																		callback(result);
+																		transaction.objectStore('unbilled_purchase_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
+																		{
+																			var up_result=e.target.result;
+																			if(up_result)
+																			{
+																				var up_record=up_result.value;
+																				if(up_record['storage']==store && (up_record['batch']==batch || batch=='' || batch===null))
+																				{
+																					result+=parseFloat(up_record['quantity']);
+																				}
+																				up_result.continue();
+																			}
+																			else
+																			{
+																				callback(result);
+																			}
+																		};
 																	}
 																};
 															}
