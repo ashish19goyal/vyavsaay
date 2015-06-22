@@ -28,6 +28,7 @@
 				$query7="select sum(quantity) from discarded where product_name=? and batch=? and storage=?";
 				$query8="select sum(quantity) from unbilled_sale_items where item_name=? and batch=? and storage=?";
 				$query9="select sum(quantity) from unbilled_purchase_items where item_name=? and batch=? and storage=?";
+				$query10="select sum(quantity) from inventory_adjust where product_name=? and batch=? and storage=?";
 				
 				if($batch=="")
 				{
@@ -43,6 +44,7 @@
 					$query7="select sum(quantity) from discarded where product_name=? and storage=?";
 					$query8="select sum(quantity) from unbilled_sale_items where item_name=? and storage=?";
 					$query9="select sum(quantity) from unbilled_purchase_items where item_name=? and storage=?";
+					$query10="select sum(quantity) from inventory_adjust where product_name=? and storage=?";
 				}
 				
 				$db_name="re_user_".$domain;
@@ -114,7 +116,12 @@
 				$res9=$stmt9->fetch(PDO::FETCH_NUM);
 				$ub_purchase=$res9[0];
 				
-				$response=$supplier_bill_items+$customer_return_items+$store_target-$store_source-$bill_items-$supplier_return_items-$customer_exchange_items-$discarded-$ub_sale+$ub_purchase;
+				$stmt10=$conn->conn->prepare($query10);
+				$stmt10->execute($values);
+				$res10=$stmt10->fetch(PDO::FETCH_NUM);
+				$inventory_adjust=$res10[0];
+				
+				$response=$inventory_adjust+$supplier_bill_items+$customer_return_items+$store_target-$store_source-$bill_items-$supplier_return_items-$customer_exchange_items-$discarded-$ub_sale+$ub_purchase;
 				
 				echo $response;
 			}
