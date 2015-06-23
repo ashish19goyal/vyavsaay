@@ -4084,7 +4084,7 @@ function form81_create_item(form)
 				var nl_id=nls[0];	
 				print_newsletter(nl_name,nl_id,'mail',function(container)
 				{
-					var message=encodeURIComponent(container.innerHTML);
+					var message=container.innerHTML;
 					var to=customer_name+":"+customers[0].email;
 					var from=get_session_var('email');
 					send_email(to,from,business_title,subject,message,function(){});

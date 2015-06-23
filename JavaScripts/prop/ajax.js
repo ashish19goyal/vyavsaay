@@ -517,7 +517,7 @@ function server_send_sms(to,message,type)
 	var sender_id=get_session_var('sms_sender_id');
 	ajax_with_custom_func("./ajax/sms.php",{sender_id:sender_id,domain:domain,username:username,re:read_access,message:message,type:type,to:to},function(e)
 	{
-		console.log("sms sent");
+		console.log(e.responseText);
 		hide_loader();
 	});
 }

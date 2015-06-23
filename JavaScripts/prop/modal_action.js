@@ -5219,7 +5219,7 @@ function modal50_action()
 				var message=sms_content.replace(/customer_name/g,customer_name);
 				message=message.replace(/business_title/g,business_title);
 				
-				send_sms(customer_phone,message,'promotion');
+				send_sms(customer_phone,message,'transaction');
 				if(to!="")
 				{
 					email_id_string+=";";				
@@ -5549,7 +5549,7 @@ function modal101_action(doc_type,person,order_num)
 		var business_title=get_session_var('title');
 		var subject=doc_type;
 		
-		var email_message=encodeURIComponent(container.innerHTML);
+		var email_message=container.innerHTML;
 		var from=get_session_var('email');
 
 		var email_id_xml="<suppliers>"+

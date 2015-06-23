@@ -22,6 +22,7 @@
 				$sms_instance->sender_id($sender_id);
 			$sms_instance->direct_send($message,$to,$type);
 			$sms_instance->log_sms($domain,$message,$to,$type);
+			echo $sender_id;
 		}
 		else
 		{
