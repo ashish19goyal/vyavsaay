@@ -5199,10 +5199,10 @@ function modal50_action()
 	print_newsletter(nl_name,nl_id,'mail',function(container)
 	{
 		var business_title=get_session_var('title');
-		var subject=nl_name+" - " +business_title;
+		var subject=nl_name;
 		
 		var email_id_string="";
-		var email_message=encodeURIComponent(container.innerHTML);
+		var email_message=container.innerHTML;
 		var from=get_session_var('email');
 		
 		$("[id^='row_form78_']").each(function(index)
@@ -5212,31 +5212,29 @@ function modal50_action()
 			
 			if(form.elements[3].checked)
 			{
-				email_id_string+=form.elements[1].value;
-				var customer_name=form.elements[4].value;
+				var to=form.elements[1].value;
 				var customer_phone=form.elements[2].value;
+				var customer_name=form.elements[4].value;
+				email_id_string+=customer_name+":"+to;
 				var message=sms_content.replace(/customer_name/g,customer_name);
 				message=message.replace(/business_title/g,business_title);
 				
 				send_sms(customer_phone,message,'promotion');
-
-				var to=form.elements[1].value;
 				if(to!="")
 				{
-					email_id_string+=",";				
+					email_id_string+=";";				
 				}				
 			}
 		});	
 
-		var to=email_id_string;
-		send_email(to,from,subject,email_message,'promotion',function()
+		var email_to=email_id_string;
+		send_email(email_to,from,business_title,subject,email_message,function()
 		{
 			$("#modal58").dialog("open");
 			hide_loader();			
 		});
 	});		
 }
-
 
 
 /**
@@ -5549,34 +5547,36 @@ function modal101_action(doc_type,person,order_num)
 	print_po(order_num,function(container)
 	{
 		var business_title=get_session_var('title');
-		var subject=doc_type+" - " +business_title;
+		var subject=doc_type;
 		
 		var email_message=encodeURIComponent(container.innerHTML);
 		var from=get_session_var('email');
 
 		var email_id_xml="<suppliers>"+
 					"<email></email>"+
+					"<name></name>"+
 					"<acc_name exact='yes'>"+person+"</acc_name>"+
 					"</suppliers>";
-		get_single_column_data(function(emails)
+		fetch_requested_data('',email_id_xml,function(emails)
 		{
 			form.elements[1].value=person;
-			form.elements[2].value=emails[0];
+			form.elements[2].value=emails[0].email;
 			form.elements[3].value=subject;
+			form.elements[4].value=emails[0].name;
 
 			$("#modal101").dialog("open");
 			hide_loader();			
-		},email_id_xml);				
+		});				
 		
 		$(form).off("submit");
 		$(form).on("submit",function(event)
 		{
 			event.preventDefault();
-			show_loader();			
-			var receiver=form.elements[2].value;
+			show_loader();
+			var receiver=form.elements[4].value+":"+form.elements[2].value;
 			var sub=form.elements[3].value;
 			
-			send_email(receiver,from,sub,email_message,'transaction',function()
+			send_email(receiver,from,business_title,sub,email_message,function()
 			{
 				hide_loader();
 			});

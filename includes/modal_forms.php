@@ -653,6 +653,7 @@
 				<label>To: <input type='text' readonly="readonly"></label><br>
 				<label>Email: <textarea required></textarea></label><br>
 				<label>Subject: <textarea></textarea></label><br>
+				<input type='hidden'>
 				<input type="submit" value='Send' class='modal_submit'>
 			</fieldset>
 		</form>

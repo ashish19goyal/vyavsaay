@@ -472,8 +472,8 @@ function form10_print_form()
 
 	var master_form=document.getElementById('form10_master');
 	var customer_name=master_form.elements[1].value;
-	var customer_address=;
-	var customer_phone=;
+	var customer_address="";
+	var customer_phone="";
 	var date=master_form.elements[4].value;
 	var invoice_no=master_form.elements[3].value;
 	var service_tax_no=get_session_var('service_tax_no');	

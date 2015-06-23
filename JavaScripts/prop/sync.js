@@ -285,13 +285,21 @@ function sync_local_to_server(func)
 		{
 			var log_data_array=log_data.split("<separator></separator>");
 			console.log(log_data_array.length);
+			var log_data_counter=0;
 			log_data_array.forEach(function(log_data_chunk)
 			{
-				log_data_chunk="<activities>"+log_data_chunk+"</activities>";
-				ajax_with_custom_func("./ajax/sync_upload.php",{domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,data:log_data_chunk,last_sync:last_sync_time},function(e)
+				log_data_counter+=1;
+				var run_daemons='no';
+				if(log_data_counter==log_data_array.length)
 				{
-					var response=e.responseXML;
+					run_daemons='yes';
+				}
+				//console.log(log_data_chunk);
+				log_data_chunk="<activities>"+log_data_chunk+"</activities>";
+				ajax_with_custom_func("./ajax/sync_upload.php",{run_daemons:run_daemons,domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,data:log_data_chunk,last_sync:last_sync_time},function(e)
+				{
 					//console.log(e.responseText);
+					var response=e.responseXML;
 					set_activities_to_synced(e);
 				});
 			});
@@ -369,7 +377,7 @@ function get_data_from_log_table(func)
 							for(var field in record)
 							{
 								log_data+="<"+field+">";
-									log_data+=htmlentities(record[field]);
+								log_data+=record[field];
 								log_data+="</"+field+">";
 							}
 							log_data+="</row>";

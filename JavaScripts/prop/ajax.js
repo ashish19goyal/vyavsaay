@@ -518,16 +518,16 @@ function server_send_sms(to,message,type)
 	ajax_with_custom_func("./ajax/sms.php",{sender_id:sender_id,domain:domain,username:username,re:read_access,message:message,type:type,to:to},function(e)
 	{
 		console.log("sms sent");
+		hide_loader();
 	});
 }
 
-function server_send_email(to,from,subject,message,type,func)
+function server_send_email(to,from,from_name,subject,message,func)
 {
 	var domain=get_domain();
 	var username=get_username();
 	var read_access=get_session_var('re');
-	var business_title=get_session_var('title');
-	ajax_with_custom_func("./ajax/email.php",{title:business_title,domain:domain,username:username,re:read_access,to:to,from:from,message:message,subject:subject,type:type},function(e)
+	ajax_with_custom_func("./ajax/email.php",{domain:domain,username:username,re:read_access,to:to,from:from,message:message,subject:subject,from_name:from_name},function(e)
 	{
 		console.log(e.responseText);
 		func();

@@ -1,22 +1,19 @@
 <?php
+
+	include_once "../Classes/mailer.php";
+	use RetailingEssentials\send_mailer;
 	
-	ini_set('display_errors',1);
-	$email_to = "vyavsaayindia@gmail.com";
+	//ini_set('display_errors',1);
+	$to = "Ashish:info@vyavsaay.com";
 	$email = $_POST["input-email"];
-	echo $email;
-	$text = "Email: $email";
 
-	$headers = "From: info@vyavsaay.com \r\n";
-	$headers .= "Reply-To: $email \r\n";
-	$headers .= "MIME-Version: 1.0\r\n";
-	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-
-	$mail_status=mail($email_to, "Vyavsaay Inquiry", $text, $headers);
-	if($mail_status)
-	{
-		echo "mail success";
-	}
-	else{
-		echo "mail failed";
-	}
+	$from= "vyavsaayindia@gmail.com";
+	$from_name="Vyavsaay";
+	
+	$subject="New customer for newsletter";
+	$message="Email: $email";
+	$email_instance=new send_mailer();
+	$email_instance->direct_send($subject,$message,$to,$from,$from_name);
+	echo "mail success";
+	
 ?>

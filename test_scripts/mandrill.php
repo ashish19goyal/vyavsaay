@@ -34,18 +34,10 @@
 	                )
 	            )
 	        ),
-	        'metadata' => array('website' => 'www.vyavsaay.com'),
 	        'attachments' => array(
 	            array(
 	                'type' => 'text/plain',
 	                'name' => 'myfile.txt',
-	                'content' => 'ZXhhbXBsZSBmaWxl'
-	            )
-	        ),
-	        'images' => array(
-	            array(
-	                'type' => 'image/png',
-	                'name' => 'IMAGECID',
 	                'content' => 'ZXhhbXBsZSBmaWxl'
 	            )
 	        )

@@ -862,6 +862,7 @@ function delete_feed(feed_id,element)
 function send_sms(to,message,type)
 {
 	var sms_enabled=get_session_var('sms_enabled');
+	console.log(sms_enabled);
 	if(sms_enabled=='yes')
 	{
 		if(is_online())
@@ -873,38 +874,40 @@ function send_sms(to,message,type)
 			var sms_data="<sms>"+
 						"<id>"+get_new_key()+"</id>"+
 						"<receiver>"+to+"</receiver>"+
-						"<message>"+message+"</message>"+
+						"<message>"+htmlentities(message)+"</message>"+
 						"<status>pending</status>"+
 						"<type>"+type+"</type>"+
 						"<last_updated>"+get_my_time()+"</last_updated>"+
 						"</sms>";
-			server_create_simple(sms_data);			
+			local_create_simple(sms_data);	
+			hide_loader();		
 		}
 	}
 }
 
-function send_email(to,from,subject,message,type,func)
+function send_email(to,from,from_name,subject,message,func)
 {
 	var email_enabled=get_session_var('email_enabled');
 	if(email_enabled=='yes')
 	{
 		if(is_online())
 		{
-			server_send_email(to,from,subject,message,type,func);
+			server_send_email(to,from,from_name,subject,message,func);
 		}
 		else
 		{
 			var email_data="<emails>"+
 						"<id>"+get_new_key()+"</id>"+
+						"<subject>"+subject+"</subject>"+
+						"<message>"+htmlentities(message)+"</message>"+
 						"<receivers>"+to+"</receivers>"+
 						"<sender>"+from+"</sender>"+
-						"<subject>"+subject+"</subject>"+
-						"<message>"+message+"</message>"+
+						"<sender_name>"+from_name+"</sender_name>"+
 						"<status>pending</status>"+
-						"<type>"+type+"</type>"+
 						"<last_updated>"+get_my_time()+"</last_updated>"+
 						"</emails>";
-			server_create_simple(email_data);			
+			local_create_simple(email_data);			
+			hide_loader();
 		}
 	}
 }

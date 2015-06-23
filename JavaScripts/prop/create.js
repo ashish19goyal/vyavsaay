@@ -4077,23 +4077,21 @@ function form81_create_item(form)
 			var nl_id_xml="<newsletter>"+
 						"<id></id>"+
 						"<name exact='yes'>"+nl_name+"</name>"+
-						"</newsletter>";			
-
+						"</newsletter>";
 			get_single_column_data(function(nls)
-			{		
-				var subject=nl_name+" - " +business_title;
+			{
+				var subject=nl_name;
 				var nl_id=nls[0];	
 				print_newsletter(nl_name,nl_id,'mail',function(container)
 				{
 					var message=encodeURIComponent(container.innerHTML);
-					var to=customers[0].email;
+					var to=customer_name+":"+customers[0].email;
 					var from=get_session_var('email');
-					send_email(to,from,subject,message,'promotion',function(){});
+					send_email(to,from,business_title,subject,message,function(){});
 				});
-			},nl_id_xml);		
-			//////////////////////////////////////////////////////////////////////////////		
+			},nl_id_xml);
 		});
-				
+
 		var del_button=form.elements[6];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)

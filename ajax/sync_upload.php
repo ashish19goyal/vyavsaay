@@ -1,9 +1,14 @@
 <?php
 
 	session_start();
-	
+
+	include_once "../Classes/sms.php";
+	include_once "../Classes/mailer.php";	
 	include_once "../Classes/db.php";
+
+	use RetailingEssentials\send_mailer;
 	use RetailingEssentials\db_connect;
+	use RetailingEssentials\send_sms;
 	
 	//username required to identify the database
 	$domain=$_POST['domain'];
@@ -11,6 +16,7 @@
 	$username=$_POST['username'];
 	$up_access=$_POST['up'];
 	$cr_access=$_POST['cr'];
+	$run_daemons=$_POST['run_daemons'];
 	
 	$post_data=$_POST['data'];
 	$post_data=preg_replace('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u',' ',$post_data);
@@ -75,7 +81,6 @@
 										break;
 						}
 					}
-					
 					try{
 						if($user_display=='yes')
 							$stmt->execute(array($id,$table_name,$type,$data_id,$xmlresponse_xml->saveXML($data_xml),$last_updated,'synced',$link_to,$user_display,$title,$notes,$updated_by));
@@ -117,6 +122,7 @@
 									{
 										$q_string2.="?,";
 										$data_array[]=$column->nodeValue;
+										//echo $column->nodeValue;
 									}
 								}
 								$q_string2=rtrim($q_string2,",");
@@ -127,13 +133,6 @@
 								}
 								catch(PDOException $e)
 								{
-								/*	echo $e;
-									foreach ($data_array as $data_key => $data_array_value)
-									{
-										echo $data_key."=".$data_array_value."\n";
-									}
-									continue;
-								*/
 								}
 								break;
 							case 'update': 
@@ -172,15 +171,23 @@
 						}	
 					}
 					
-					if($user_display=='yes')
-					{
+					//if($user_display=='yes')
+					//{
 						$ids_for_update.="<id>$id</id>";
-					}
-					else
-					{
-						$ids_for_delete.="<id>$id</id>";
-					}
+					//}
+					//else
+					//{
+					//	$ids_for_delete.="<id>$id</id>";
+					//}
 				}
+			}
+			
+			if($run_daemons=='yes')
+			{
+				$sms_instance=new send_sms();
+				$sms_instance->send_stored_sms($domain);
+				$email_instance=new send_mailer();
+				$email_instance->send_stored_mailer($domain);
 			}
 			
 			$ids_for_delete.="</delete_id>";

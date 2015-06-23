@@ -1527,7 +1527,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--newsletter--newsletter_items--</tables>
+			<tables>--newsletter--newsletter_items--sms--emails--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -1560,7 +1560,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--sale_leads--</tables>
+			<tables>--sale_leads--sms--emails--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>

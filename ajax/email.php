@@ -1,42 +1,29 @@
 <?php
 
-	session_start();
+	include_once "../Classes/mailer.php";
+	use RetailingEssentials\send_mailer;
 
-	include_once "../Classes/db.php";
-	use RetailingEssentials\db_connect;
+	session_start();
 
 	$domain=$_POST['domain'];
 	$user=$_POST['username'];
 	$read_access=$_POST['re'];
+
+	$subject=$_POST['subject'];
+	$message=$_POST['message'];
 	$to=$_POST['to'];
 	$from=$_POST['from'];
-	$message=$_POST['message'];
-	$type=$_POST['type'];
-	$subject=$_POST['subject'];
-	$business_title=$_POST['title'];
+	$from_name=$_POST['from_name'];
 	
 	if(isset($_SESSION['session']))
 	{
 		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$user && $_SESSION['re']==$read_access)
 		{
-			$headers= "From: info@vyavsaay.com \r\n";
-			$headers .= "Reply-To: ". strip_tags($from) . "\r\n";
-			$headers .= "MIME-Version: 1.0\r\n";
-			$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-			$headers .= 'Bcc: '.strip_tags($to) . "\r\n";
-			
-			if(mail($from,$subject,$message,$headers))
-			{
-				echo "mail accepted";
-				$db_name="re_user_".$domain;
-				$conn=new db_connect($db_name);
-				
-				$query2="insert into emails(receivers,sender,subject,message,status,type,last_updated) values(?,?,?,?,?,?,?)";
-								
-				$stmt2=$conn->conn->prepare($query2);
-				$data_array=array($to,$from,$subject,$message,'sent',$type,1000*time());
-				$stmt2->execute($data_array);
-			}			
+			$email_instance=new send_mailer();
+			$email_instance->direct_send($subject,$message,$to,$from,$from_name);
+			$email_instance->log_mailer($domain,$subject,$message,$to,$from,$from_name);
+		
+			echo "mail accepted";
 		}
 		else
 		{
@@ -47,4 +34,4 @@
 	{
 		echo "Invalid session";
 	}
-?>	
+?>
