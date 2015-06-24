@@ -291,7 +291,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 /**
 * This function prepares the printing template for the documents like bills and purchase orders
 */
-function print_po(order_num,func)
+function print_form24(func)
 {
 	////////////setting up containers///////////////////////	
 	var container=document.createElement('div');
@@ -423,12 +423,25 @@ function form2_print_form()
 	});	
 }
 
+/**
+ * @form Create Service bills
+ * @formNo 10
+ */
+function form10_print_form()
+{
+	print_form10(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	});	
+}
+
 
 /**
  * @form Create service bills
  * @formNo 10
  */
-function form10_print_form()
+function print_form10(func)
 {
 	var form_id='form10';
 	
@@ -449,17 +462,18 @@ function form10_print_form()
 		var tandc=document.createElement('div');
 		var address=document.createElement('div');
 
-////////////setting styles for containers/////////////////////////
+	////////////setting styles for containers/////////////////////////
 
-	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
-		business_title.setAttribute('style','width:100%;text-align:center;');
-	info_section.setAttribute('style','width:100%;min-height:60px');
-		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:90px;border: 1px solid #000;border-radius:5px;');
+	header.setAttribute('style','width:100%;min-height:100px;');
+		business_title.setAttribute('style','float:right;width:50%;text-align:right;');
+	invoice_line.setAttribute('style','width:100%;min-height:60px;background-color:#bbbbbb;');
+	info_section.setAttribute('style','width:100%;min-height:60px;text-align:left;');
+		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:100%;height:90px;');
 	footer.setAttribute('style','width:100%;min-height:100px');
-		tandc.setAttribute('style','float:left;width:60%;min-height:50px');
-		address.setAttribute('style','float:right;width:30%;min-height:60px');
+		tandc.setAttribute('style','width:100%;min-height:50px;background-color:#bbbbbb;');
+		address.setAttribute('style','width:100%;min-height:50px;text-align:center;');
 
-///////////////getting the content////////////////////////////////////////
+	///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
 	var font_size=get_session_var('print_size');
@@ -472,45 +486,32 @@ function form10_print_form()
 
 	var master_form=document.getElementById('form10_master');
 	var customer_name=master_form.elements[1].value;
-	var customer_address="";
-	var customer_phone="";
+	var customer_address=master_form.elements['customer_address'].value;
 	var date=master_form.elements[4].value;
 	var invoice_no=master_form.elements[3].value;
 	var service_tax_no=get_session_var('service_tax_no');	
 	var tax_text="Service Tax No: "+service_tax_no;
 
-	var invoice_text="Invoice";
 	var tandc_text=get_session_var('bill_message');
 	
 	////////////////filling in the content into the containers//////////////////////////
 
 	logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
-	business_intro.innerHTML="<hr style='border: 1px solid #000;margin:2px;'>"+business_intro_text;
-	business_contact.innerHTML="<hr style='border: 1px solid #000;margin:2px;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;
+	business_title.innerHTML=bt;
+	invoice_line.innerHTML="<div style='float:left;width:50%'>Invoice #: "+invoice_no+"</div><div style='float:right;text-align:right;width:50%'>Invoice Date: "+date+"</div>";
 	
-	invoice_line.innerHTML="<hr style='border: 1px solid #000;margin:2px'><div style='text-align:center;'><b style='text-size:1.2em'>"+invoice_text+"</b></div><br>";
+	//invoice_line.innerHTML="<hr style='border: 1px solid #000;margin:2px'><div style='text-align:center;'><b style='text-size:1.2em'>"+invoice_text+"</b></div><br>";
 	
-	customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address;
+	customer_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Customer</b><br>"+customer_name+"<br>"+customer_address+"<hr style='border: 1px solid #000;margin:2px'>";
+	
+	tandc.innerHTML=tandc_text;
+	address.innerHTML=tax_text+" | Address: "+business_address;
 
-	business_info.innerHTML=tax_text+"<br>Date: "+date+"<br>Invoice No: "+invoice_no+"<br>Narration: "+narration;
-	
-	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
-	signature.innerHTML=signature_text;
-
-	var table_element=document.getElementById('form154_body').parentNode;
+	var table_element=document.getElementById('form10_body').parentNode;
 	table_copy=table_element.cloneNode(true);
 	
 	table_copy.removeAttribute('class');
-	
-	var discount_amount=parseFloat(document.getElementById('form154_discount').value);
-	if(discount_amount==0)
-	{
-		var disc_nodes=table_copy.getElementsByTagName('disc');
-		var disc_amount_nodes=table_copy.getElementsByTagName('disc_amount');
-		disc_nodes[0].parentNode.removeChild(disc_nodes[0]);
-		disc_amount_nodes[0].parentNode.removeChild(disc_amount_nodes[0]);
-	}
-
+	table_copy.setAttribute('width','1000px');
 	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh").remove();
 	$(table_copy).find('input,textarea').each(function(index)
 	{
@@ -522,7 +523,7 @@ function form10_print_form()
 		$(this).replaceWith($(this).html());
 	});
 		
-	$(table_copy).find('tfoot > tr > td:first').attr('colspan','2');
+	$(table_copy).find('tfoot > tr > td:first').attr('colspan','1');
 	$(table_copy).find('tfoot > tr > td:nth-child(2)').attr('colspan','2');
 	
 	
@@ -534,36 +535,33 @@ function form10_print_form()
 	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
 	$(table_copy).find("tbody>tr").attr('style','flex:1;height:30px');
 	
-	$(table_copy).find("th:nth-child(2), td:nth-child(2)").css('width','300px');
+	$(table_copy).find("th:first, td:first").css('width','300px');
 	var row_count=$(table_copy).find('tbody>tr').length;
 	var rows_to_add=15-row_count;
 	for(var i=0;i<rows_to_add;i++)
 	{
-		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
+		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
 	}
 	
 	/////////////placing the containers //////////////////////////////////////////////////////	
-	
+
 	container.appendChild(header);
 	container.appendChild(invoice_line);
 	container.appendChild(info_section);
-	
+
 	container.appendChild(table_copy);
 	container.appendChild(footer);
-	
-	header.appendChild(logo);
-	header.appendChild(business_intro);
-	header.appendChild(business_contact);
-	
-	info_section.appendChild(customer_info);
-	info_section.appendChild(business_info);
-	
-	footer.appendChild(tandc);
-	footer.appendChild(signature);
-	
-	$.print(container);
-}
 
+	header.appendChild(logo);
+	header.appendChild(business_title);
+
+	info_section.appendChild(customer_info);
+
+	footer.appendChild(tandc);
+	footer.appendChild(address);
+
+	func(container);
+}
 
 /**
  * @form Create Product bills
@@ -610,8 +608,7 @@ function form21_print_form()
  */
 function form24_print_form()
 {	
-	var order_num="";		
-	print_po(order_num,function(container)
+	print_form24(function(container)
 	{
 		$.print(container);
 		container.innerHTML="";	

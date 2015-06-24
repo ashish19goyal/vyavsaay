@@ -257,6 +257,15 @@ function form10_create_form()
 		var bill_num=form.elements[3].value;
 		var bill_date=get_raw_time(form.elements[4].value);
 		
+		$('#form10_share').show();
+		$('#form10_share').click(function()
+		{
+			modal101_action('Sale Bill',customer,'customer',function (func) 
+			{
+				print_form10(func);
+			});
+		});
+
 		var amount=0;
 		var discount=0;
 		var tax=0;
@@ -1748,7 +1757,10 @@ function form24_create_form()
 		$('#form24_share').show();
 		$('#form24_share').click(function()
 		{
-			modal101_action('Purchase Order',supplier,order_num);
+			modal101_action('Purchase Order',supplier,'supplier',function (func) 
+			{
+				print_form24(func);
+			});
 		});
 				
 		var last_updated=get_my_time();		

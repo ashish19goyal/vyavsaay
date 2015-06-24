@@ -276,6 +276,8 @@ function form10_header_ini()
 	order_id_filter.value="";
 	fields.elements[7].value=fields.elements[5].value;
 	var save_button=fields.elements[8];
+	var address_filter=fields.elements['customer_address'];
+	address_filter.value="";
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -325,6 +327,22 @@ function form10_header_ini()
 				"</customers>";
 			set_my_value_list(customers_data,customers_filter);
 		});
+	});
+
+	$(customers_filter).off('blur');
+	$(customers_filter).on('blur',function () 
+	{
+		var address_data="<customers count='1'>"+
+						"<address></address>"+
+						"<city></city>"+
+						"<pincode></pincode>"+
+						"<acc_name exact='yes'>"+customers_filter.value+"</acc_name>"+
+						"</customers>";
+		fetch_requested_data('',address_data,function(addresses)
+		{
+			if(addresses.length>0)
+				address_filter.value=addresses[0].address+', '+addresses[0].city+"-"+addresses[0].pincode;
+		});				
 	});
 
 	$(order_num).off('blur');

@@ -5539,12 +5539,12 @@ function modal57_action(item_name,customer)
  * @modal Email documents
  * @modalNo 101
  */
-function modal101_action(doc_type,person,order_num)
+function modal101_action(doc_type,person,person_type,func)
 {
 	show_loader();
 	var form=document.getElementById('modal101_form');
 	
-	print_po(order_num,function(container)
+	func(function(container)
 	{
 		var business_title=get_session_var('title');
 		var subject=doc_type;
@@ -5557,6 +5557,23 @@ function modal101_action(doc_type,person,order_num)
 					"<name></name>"+
 					"<acc_name exact='yes'>"+person+"</acc_name>"+
 					"</suppliers>";
+		if(person_type=='customer')			
+		{
+			email_id_xml="<customers>"+
+					"<email></email>"+
+					"<name></name>"+
+					"<acc_name exact='yes'>"+person+"</acc_name>"+
+					"</customers>";
+		}
+		else if(person_type=='staff')			
+		{
+			email_id_xml="<staff>"+
+					"<email></email>"+
+					"<name></name>"+
+					"<acc_name exact='yes'>"+person+"</acc_name>"+
+					"</staff>";
+		}
+
 		fetch_requested_data('',email_id_xml,function(emails)
 		{
 			form.elements[1].value=person;
@@ -5566,7 +5583,12 @@ function modal101_action(doc_type,person,order_num)
 
 			$("#modal101").dialog("open");
 			hide_loader();			
-		});				
+		});
+		
+		if(person="")
+		{
+			
+		}	
 		
 		$(form).off("submit");
 		$(form).on("submit",function(event)

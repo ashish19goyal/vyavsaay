@@ -647,6 +647,7 @@ function form10_ini()
 				filter_fields.elements[6].value=bill_results[i].order_id;
 				filter_fields.elements[7].value=bill_results[i].transaction_id;
 				var save_button=filter_fields.elements[8];
+				var address_filter=filter_fields.elements['customer_address'];
 				
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
@@ -654,7 +655,7 @@ function form10_ini()
 					event.preventDefault();
 					form10_update_form();
 				});
-				
+
 				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 							"<td>Rs. "+bill_results[i].amount+"</br>" +
@@ -664,12 +665,23 @@ function form10_ini()
 							"<td></td>" +
 							"</tr>";
 				$('#form10_foot').html(total_row);
-				
+
+				var address_data="<customers count='1'>"+
+								"<address></address>"+
+								"<city></city>"+
+								"<pincode></pincode>"+
+								"<acc_name exact='yes'>"+bill_results[i].customer_name+"</acc_name>"+
+								"</customers>";
+				fetch_requested_data('',address_data,function(addresses)
+				{
+					if(addresses.length>0)
+						address_filter.value=addresses[0].address+', '+addresses[0].city+"-"+addresses[0].pincode;
+				});				
 				break;
 			}
-		
+
 			/////////////////////////////////////////////////////////////////////////
-				
+
 			fetch_requested_data('',bill_items_column,function(results)
 			{
 				results.forEach(function(result)
@@ -700,15 +712,24 @@ function form10_ini()
 							rowsHTML+="<input type='button' class='delete_icon' form='form10_"+id+"' id='delete_form10_"+id+"' onclick='form10_delete_item($(this));'>";
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
-				
+
 					$('#form10_body').append(rowsHTML);
-				});				
+				});
+				
+				$('#form10_share').show();
+				$('#form10_share').click(function()
+				{
+					modal101_action('Sale Bill',filter_fields.elements[1].value,'customer',function (func) 
+					{
+						print_form10(func);
+					});
+				});
+
 				hide_loader();
 			});
 		});
 	}
 }
-
 
 /**
  * @form Manage Payments
@@ -1860,7 +1881,10 @@ function form24_ini()
 				$('#form24_share').show();
 				$('#form24_share').click(function()
 				{
-					modal101_action('Purchase Order',order_results[i].supplier,order_results[i].order_num);
+					modal101_action('Purchase Order',order_results[i].supplier,'supplier',function (func) 
+					{
+						print_form24(func);
+					});
 				});
 				
 				hide_loader();
@@ -18537,7 +18561,17 @@ function form186_ini()
 						event.preventDefault();
 						form186_update_item(fields);
 					});
-				});			
+				});
+
+				$('#form186_share').show();
+				$('#form186_share').click(function()
+				{
+					modal101_action('Production Plan','','staff',function (func) 
+					{
+						print_form186(func);
+					});
+				});
+
 				hide_loader();
 			});
 		});

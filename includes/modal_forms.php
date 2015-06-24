@@ -646,6 +646,13 @@
 		All selected customers have been sent the news Letter and SMS on their email-ids and phone numbers respectively.
 	</div>
 
+	<div id="modal59" title="Emails disabled">
+		Emails are disabled for this account.
+	</div>
+
+	<div id="modal60" title="SMS Disabled">
+		SMS are disabled for this account.
+	</div>
 
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form'>

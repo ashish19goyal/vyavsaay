@@ -14,7 +14,9 @@
 			<label><input type='button' title='Save Bill' class='save_icon'></label>
 			<label><input type='button' title='Print Bill' class='print_icon' onclick='form10_print_form();'></label>
 			<label><input type='button' id='form10_share' class='share_icon' style='display:none;'><label>
-			<label><input type='submit' class='submit_hidden'>	</label>
+			<label><input type='submit' class='submit_hidden'>
+					<input type='hidden' name='customer_address'>
+			</label>
 			</fieldset>
 	</form>
 	<table class='rwd-table'>

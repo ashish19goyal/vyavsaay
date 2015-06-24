@@ -23,14 +23,12 @@ class send_mailer
 	//send mailer
 	public function direct_send($subject,$message,$receivers,$from,$from_name)
 	{
-		echo $message;
 		$merge_vars=array();
 	    $to=array();    
 		$receivers_array=explode(';',$receivers);		
 
 		foreach($receivers_array as $r_item)
 		{
-			echo $r_item;
 			$receiver_var=explode(':',$r_item);
 			if($r_item!=';' && count($receiver_var)>1)
 			{

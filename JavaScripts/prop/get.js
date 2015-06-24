@@ -862,7 +862,6 @@ function delete_feed(feed_id,element)
 function send_sms(to,message,type)
 {
 	var sms_enabled=get_session_var('sms_enabled');
-	console.log(sms_enabled);
 	if(sms_enabled=='yes')
 	{
 		if(is_online())
@@ -882,6 +881,10 @@ function send_sms(to,message,type)
 			local_create_simple(sms_data);	
 			hide_loader();		
 		}
+	}
+	else 
+	{
+		$("#modal60").dialog("open");
 	}
 }
 
@@ -907,8 +910,13 @@ function send_email(to,from,from_name,subject,message,func)
 						"<last_updated>"+get_my_time()+"</last_updated>"+
 						"</emails>";
 			local_create_simple(email_data);			
-			hide_loader();
+			func();
 		}
+	}
+	else
+	{
+		hide_loader();
+		$("#modal59").dialog("open");
 	}
 }
 
