@@ -1726,13 +1726,18 @@ function form69_header_ini()
 {
 	var fields=document.getElementById('form69_master');
 	
-	var customers_filter=fields.elements[1];
-	var order_date=fields.elements[2];
-	var status_filter=fields.elements[3];
-	fields.elements[4].value=get_new_key();
+	var customers_filter=fields.elements['customer'];
+	var order_date=fields.elements['order_date'];
+	var status_filter=fields.elements['status'];
+	var order_num_filter=fields.elements['order_num'];
+	var channel_filter=fields.elements['channel'];
+
+	fields.elements['order_id'].value=get_new_key();
+	order_num_filter.value="";
+	channel_filter.value="";
 	
-	var save_button=fields.elements[5];
-	
+	var save_button=fields.elements['save'];
+
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
 	{
@@ -1754,6 +1759,12 @@ function form69_header_ini()
 		event.preventDefault();
 		form69_add_item();
 	});
+	
+	var channel_data="<sale_channels>" +
+		"<name></name>" +
+		"</sale_channels>";
+	set_my_value_list(channel_data,channel_filter);
+
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
@@ -1771,6 +1782,12 @@ function form69_header_ini()
 			set_my_value_list(customers_data,customers_filter);
 		});
 	});
+	
+	var order_num_data="<user_preferences count='1'>"+
+				"<value></value>"+
+				"<name exact='yes'>so_num</name>"+
+				"</user_preferences>";
+	set_my_value(order_num_data,order_num_filter);
 
 	$(order_date).datepicker();
 	order_date.value=get_my_date();
@@ -3995,15 +4012,23 @@ function form122_header_ini()
 {
 	var fields=document.getElementById('form122_master');
 	
-	var supplier_filter=fields.elements[1];
-	fields.elements[2].value="";
-	var bill_date=fields.elements[3];
-	var entry_date=fields.elements[4];
-	fields.elements[5].value="";
-	fields.elements[7].value=get_new_key();
-	fields.elements[8].value=fields.elements[7].value;
-	var unbilled_button=fields.elements[9];
-	var save_button=fields.elements[10];
+	var supplier_filter=fields.elements['supplier'];
+	var order_num_filter=fields.elements['po_num'];
+	var bill_num_filter=fields.elements['bill_num'];
+	var unbilled_filter=fields.elements['unbilled'];
+	var order_id_filter=fields.elements['order_id'];
+	var bill_id_filter=fields.elements['bill_id'];
+	var t_id_filter=fields.elements['t_id'];
+	var bill_date=fields.elements['bill_date'];
+	var entry_date=fields.elements['entry_date'];
+	var unbilled_button=fields.elements['unbilled_button'];
+	var save_button=fields.elements['save'];
+	bill_num_filter.value="";
+	order_num_filter.value="";
+	order_id_filter.value="";
+	unbilled_filter.value="";
+	bill_id_filter.value=get_new_key();
+	t_id_filter.value=bill_id_filter.value;
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -4069,132 +4094,70 @@ function form122_header_ini()
 		var unbilled_data="<unbilled_purchase_items>" +
 				"<id></id>" +
 				"<item_name></item_name>" +
+				"<item_desc></item_desc>" +
 				"<batch></batch>" +
 				"<quantity></quantity>" +
 				"<supplier exact='yes'>"+supplier_filter.value+"</supplier>" +
+				"<item_desc></item_desc>"+
+				"<batch></batch>"+
+				"<unit_price></unit_price>"+
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+
+				"<storage></storage>"+
+				"<bill_status exact='yes'>pending</bill_status>"+
 				"</unbilled_purchase_items>";
-		fetch_requested_data('form122',unbilled_data,function(unbilled_items)
+				
+		fetch_requested_data('form122',unbilled_data,function(ub_items)
 		{
-			var ub_items=new Array();
-			for(var i=0; i<unbilled_items.length;i++)
-			{
-				var new_obj=new Object();
-				new_obj.item_name=unbilled_items[i].item_name;
-				new_obj.batch=unbilled_items[i].batch;
-				new_obj.quantity=parseFloat(unbilled_items[i].quantity);
-				for(var j=i+1;j<unbilled_items.length;j++)
-				{
-					if(unbilled_items[j].item_name==new_obj.item_name && unbilled_items[j].batch==new_obj.batch)
-					{
-						new_obj.quantity+=parseFloat(unbilled_items[j].quantity);
-						unbilled_items.splice(j,1);
-						j-=1;
-					}
-				}
-				ub_items.push(new_obj);
-			}
-			
 			ub_items.forEach(function(ub_item)
 			{
 				///////////////////////////////////////////////////////////
 				if(is_create_access('form122'))
 				{
-					var rowsHTML="";
 					var id=get_new_key();
-					rowsHTML+="<tr>";
-					rowsHTML+="<form id='form122_"+id+"'></form>";
-						rowsHTML+="<td data-th='Product Name'>";
-							rowsHTML+="<input type='text' readonly='readonly' required form='form122_"+id+"' value='"+ub_item.item_name+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+="Bought: <input type='number' step='any' required form='form122_"+id+"' value='"+ub_item.quantity+"'>";
-							rowsHTML+="</br>Free: <input type='number' step='any' required form='form122_"+id+"' value='0'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Amount'>";
-							rowsHTML+="Total: <input type='number' required form='form122_"+id+"' step='any'></br>";
-							rowsHTML+="</br>Tax: <input type='number' form='form122_"+id+"' value='' step='any'></br>";
-							rowsHTML+="</br>Amount: <input type='number' readonly='readonly' form='form122_"+id+"' value='' step='any'></br>";
-							rowsHTML+="</br>Unit Price: <input type='number' readonly='readonly' form='form122_"+id+"' step='any'>";
-							rowsHTML+="</br>Previous Price: <input type='number' readonly='readonly' form='form122_"+id+"' value='' step='any'>";
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form122_"+id+"' autocomplete='off'></form>";
+						rowsHTML+="<td data-th='Item'>";
+							rowsHTML+="<input type='text' form='form122_"+id+"' readonly='readonly'>";
+							rowsHTML+="<br>SKU: <input type='text' form='form122_"+id+"' value='"+ub_item.item_name+"' required readonly='readonly'>";
+							rowsHTML+="<br>Name: <input type='text' readonly='readonly' form='form122_"+id+"' value='"+ub_item.item_desc+"' readonly='readonly'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Batch'>";
-							rowsHTML+="<input type='text' required readonly='readonly' form='form122_"+id+"' value='"+ub_item.batch+"'></br>";
+							rowsHTML+="<input type='text' form='form122_"+id+"' value='"+ub_item.batch+"' required readonly='readonly'>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Storage Area'>";
-							rowsHTML+="<input type='text' form='form122_"+id+"'>";
-							rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' onclick='modal35_action();'>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' form='form122_"+id+"' value='"+ub_item.quantity+"' required step='any' readonly='readonly'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Amount'>";
+							rowsHTML+="Unit Price: Rs. <input type='number' form='form122_"+id+"' value='"+ub_item.unit_price+"' required step='any' readonly='readonly'>";
+							rowsHTML+="<br>Amount: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' value='"+ub_item.amount+"' required step='any' readonly='readonly'>";
+							rowsHTML+="<br>Tax: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' value='"+ub_item.tax+"' required step='any' readonly='readonly'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Storage'>";
+							rowsHTML+="<input type='text' form='form122_"+id+"' value='"+ub_item.storage+"' readonly='readonly'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form122_"+id+"' value='"+id+"'>";
-							rowsHTML+="<input type='button' class='submit_hidden' form='form122_"+id+"' id='save_form122_"+id+"' >";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form122_"+id+"' id='save_form122_"+id+"' >";	
 							rowsHTML+="<input type='button' class='delete_icon' form='form122_"+id+"' id='delete_form122_"+id+"' onclick='$(this).parent().parent().remove();'>";
-							rowsHTML+="<input type='hidden' form='form122_"+id+"' name='unbilled' value='yes'>";
 							rowsHTML+="<input type='submit' class='submit_hidden' form='form122_"+id+"'>";
+							rowsHTML+="<input type='hidden' form='form122_"+id+"' name='tax_unit'>";
+							rowsHTML+="<input type='hidden' form='form122_"+id+"' name='unbilled' value='yes'>";
+							rowsHTML+="<input type='hidden' form='form122_"+id+"' name='unbilled_id' value='"+ub_item.id+"'>";
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 				
 					$('#form122_body').prepend(rowsHTML);
 					
 					var fields=document.getElementById("form122_"+id);
-					var name_filter=fields.elements[0];
-					var pquantity_filter=fields.elements[1];
-					var fquantity_filter=fields.elements[2];
-					var total_filter=fields.elements[3];
-					var tax_filter=fields.elements[4];
-					var amount_filter=fields.elements[5];
-					var price_filter=fields.elements[6];
-					var previous_price_filter=fields.elements[7];
-					var batch_filter=fields.elements[8];
-					var storage_filter=fields.elements[9];
-					var id_filter=fields.elements[10];
-					var save_button=fields.elements[11];
-					
-					$(name_filter).focus();
-					
-					$(fields).on("submit", function(event)
-					{
-						event.preventDefault();
-						form122_add_item();
-					});
+					var save_button=fields.elements[10];
 					
 					$(save_button).on("click", function(event)
 					{
 						event.preventDefault();
 						form122_create_item(fields);
-					});
-							
-					var storage_data="<store_areas>" +
-								"<name></name>" +
-								"<area_type exact='yes'>storage</area_type>" +
-								"</store_areas>";
-					set_my_value_list(storage_data,storage_filter);
-
-					var price_data="<supplier_bill_items count='1'>" +
-							"<unit_price></unit_price>" +
-							"<product_name>"+name_filter.value+"</product_name>" +
-							"</supplier_bill_items>";
-					set_my_value(price_data,previous_price_filter);
-					
-					$(pquantity_filter).on('blur',function(event)
-					{
-						var price=parseFloat(amount_filter.value)/parseFloat(pquantity_filter.value);
-						price_filter.value=Math.round(price*100)/100;
-					});
-					$(total_filter).on('blur',function(event)
-					{
-						var amount=parseFloat(total_filter.value)-parseFloat(tax_filter.value);
-						amount_filter.value=amount;
-						var price=parseFloat(amount_filter.value)/parseFloat(pquantity_filter.value);
-						price_filter.value=Math.round(price*100)/100;
-						
-					});
-					$(tax_filter).on('blur',function(event)
-					{
-						var amount=parseFloat(total_filter.value)-parseFloat(tax_filter.value);
-						amount_filter.value=amount;
-						var price=parseFloat(amount_filter.value)/parseFloat(pquantity_filter.value);
-						price_filter.value=Math.round(price*100)/100;
-					});
+					});					
 				}
 				else
 				{

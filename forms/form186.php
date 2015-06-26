@@ -7,7 +7,7 @@
 			<label>Status<br><input type='text' required value='draft'></label>
 			<label>	<input type='hidden' name='plan_id' form='form186_master'></label>
 			<label>	<input type='button' value='Save' class='save_icon'></label>
-			<label>	<input type='button' class='print_icon' onclick='form186_print();'></label>
+			<label>	<input type='button' class='print_icon' onclick='form186_print_form();'></label>
 			<label><input type='button' id='form186_share' class='share_icon' style='display:none;'><label>
 			<label>	<input type='submit' class='submit_hidden'></label>
 		</fieldset>

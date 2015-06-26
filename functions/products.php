@@ -23,7 +23,6 @@
 			<li><a id='report47_link' href='#report47' onclick='report47_header_ini();' data-i18n='form.inventory_value'></a></li>		
 			<li><a id='report61_link' href='#report61' onclick='report61_header_ini();' data-i18n='form.expiring_inventory'></a></li>		
 			<li><a id='report62_link' href='#report62' onclick='report62_header_ini();' data-i18n='form.inventory_prediction'></a></li>		
-			<li><a id='report65_link' href='#report65' onclick='report65_header_ini();' data-i18n='form.pricing_update_report'></a></li>		
 			<li><a id='form161_link' href='#form161' onclick='form161_header_ini(); form161_ini();' data-i18n='form.checklist_items'></a></li>		
 			<li><a id='form162_link' href='#form162' onclick='form162_header_ini(); form162_ini();' data-i18n='form.product_checklist'></a></li>		
 			<li><a id='form163_link' href='#form163' onclick='form163_header_ini(); form163_ini();' data-i18n='form.product_dimensions'></a></li>		
@@ -55,7 +54,6 @@
 			include "reports/report47.php";	
 			include "reports/report61.php";	
 			include "reports/report62.php";	
-			include "reports/report65.php";	
 			include "forms/form161.php";
 			include "forms/form162.php";
 			include "forms/form163.php";

@@ -352,7 +352,7 @@ function form66_import_template()
 */
 function form69_import_template()
 {
-	var data_array=['id','order_id','item_name','quantity','notes'];
+	var data_array=['id','order_id','item_name','item_desc','channel_sku','vendor_sku','quantity','notes'];
 	my_array_to_csv(data_array);
 };
 
@@ -616,7 +616,7 @@ function form104_import_template()
 */
 function form108_import_template()
 {
-	var data_array=['id','customer_name','order_date','type','status'];
+	var data_array=['id','order_num','customer_name','order_date','channel','status'];
 	my_array_to_csv(data_array);
 };
 
@@ -735,8 +735,8 @@ function form121_import_template()
 */
 function form122_import_template()
 {
-	var data_array=['id','p_quantity','f_quantity','quantity','product_name','batch',
-		               'bill_id','unit_price','amount','tax','total','storage'];
+	var data_array=['id','quantity','product_name','item_desc','batch','bill_id','unit_price',
+					'amount','tax','total','storage','put_away_status'];
 	my_array_to_csv(data_array);
 };
 
@@ -1015,7 +1015,7 @@ function form172_import_template()
 */
 function form173_import_template()
 {
-	var data_array=['id','channel','channel_sku','channel_business_sku','system_sku'];
+	var data_array=['id','channel','channel_sku','vendor_sku','system_sku','item_desc'];
 	my_array_to_csv(data_array);
 };
 

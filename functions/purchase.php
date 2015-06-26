@@ -12,7 +12,7 @@
 			<li><a id='form178_link' href='#form178' onclick='form178_header_ini(); form178_ini();' data-i18n='form.create_purchase_order'></a></li>
 			<li><a id='form179_link' href='#form179' onclick='form179_header_ini(); form179_ini();' data-i18n='form.manage_purchase_order'></a></li>
 			<li><a id='form159_link' href='#form159' onclick='form159_header_ini(); form159_ini();' data-i18n='form.issue_grn'></a></li>
-			<li><a id='form160_link' href='#form160' onclick='form160_header_ini(); form160_ini();' data-i18n='form.manage_grn'></a></li>
+			<li><a id='form160_link' href='#form160' onclick='form160_header_ini(); form160_ini();' data-i18n='form.manage_supplier_bills'></a></li>
 			<li><a id='form17_link' href='#form17' onclick='form17_header_ini(); form17_ini();' data-i18n='form.manage_returns'></a></li>
 			<li><a id='form19_link' href='#form19' onclick='form19_header_ini(); form19_ini();' data-i18n='form.enter_returns'></a></li>			
 			<li><a id='report52_link' href='#report52' onclick='report52_header_ini();' data-i18n='form.product_purchase_report'></a></li>		

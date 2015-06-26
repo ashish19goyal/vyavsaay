@@ -908,4 +908,25 @@
 		</form>
 	</div>
 
+	<div id="modal120" title="Add new batch">
+		<form id='modal120_form'>
+			<fieldset>
+				<label>Item: <input type="text" required></label><br>
+				<label>Batch: <input type='text' required></label><br>
+				<label>Expiry: <input type="text"></label><br>
+				<label>MRP: Rs. <input type="number" step='any'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div id="modal121" title="Offline Storage Deletion">
+		Any unsynced data will be lost if you delete offline storage. Please re-enter your password to continue.
+		<br>
+		<form id='modal121_form'>
+			<input type="password" name='pass' required>
+			<input type="submit" class='modal_submit' value='Delete'>
+		</form>
+	</div>
+
 </div>

@@ -1231,6 +1231,117 @@ function report63_header_ini()
 }
 
 /**
+ * @reportNo 64
+ * @report Packing Instructions
+ */
+function report64_header_ini()
+{	
+	var master_form=document.getElementById('report64_header');
+	var item_filter=master_form.elements[1];
+	
+	$('#report64_image').html('');
+	$('#report64_packing').html('');
+	$('#report64_invoice').html('');
+
+	$(item_filter).focus();
+
+	$(master_form).off('submit');
+	$(master_form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report64_ini();
+	});
+	
+	var form=document.getElementById('report64_form');
+	var reject_button=form.elements['reject'];
+	var accept_button=form.elements['accept'];
+	var print_button=form.elements['print'];
+	
+	$(reject_button).off('click');
+	$(accept_button).off('click');
+	$(print_button).off('click');
+	
+	$(reject_button).hide();
+	$(accept_button).hide();
+	$(print_button).hide();
+	
+	$(reject_button).on('click',function () 
+	{
+		var columns="<product_master count='1'>" +
+			"<id></id>" +
+			"<name></name>"+
+			"<bar_code exact='yes'>"+item_filter.value+"</bar_code>" +
+			"</product_master>";
+		fetch_requested_data('',columns,function (products) 
+		{
+			var bill_items="<bill_items count='1'>"+
+					"<id></id>"+
+					"<item_name exact='yes'>"+products[0].name+"</item_name>"+
+					"<picked_status exact='yes'>picked</picked_status>"+
+					"<packing_status exact='yes'>pending</packing_status>"+
+					"</bill_items>";
+			fetch_requested_data('',bill_items,function (items) 
+			{
+				var items_xml="<bill_items>"+
+						"<id>"+items[0].id+"</id>"+					
+						"<picked_status exact='yes'>pending</picked_status>"+
+						"<packing_status exact='yes'>pending</packing_status>"+
+						"<last_updated>"+get_my_time()+"</last_updated>"+						
+						"</bill_items>";
+				if(is_online())
+				{
+					server_update_simple(items_xml);
+				}
+				else 
+				{
+					local_update_simple(items_xml);
+				}		
+			});		
+		});
+	});
+
+	$(accept_button).on('click',function () 
+	{
+		var columns="<product_master count='1'>" +
+			"<id></id>" +
+			"<name></name>"+
+			"<bar_code exact='yes'>"+item_filter.value+"</bar_code>" +
+			"</product_master>";
+		fetch_requested_data('',columns,function (products) 
+		{
+			var bill_items="<bill_items count='1'>"+
+					"<id></id>"+					
+					"<item_name exact='yes'>"+products[0].name+"</item_name>"+
+					"<picked_status exact='yes'>picked</picked_status>"+
+					"<packing_status exact='yes'>pending</packing_status>"+
+					"</bill_items>";
+			fetch_requested_data('',bill_items,function (items) 
+			{
+				var items_xml="<bill_items>"+
+						"<id>"+items[0].id+"</id>"+					
+						"<packing_status exact='yes'>packed</packing_status>"+
+						"<last_updated>"+get_my_time()+"</last_updated>"+						
+						"</bill_items>";
+				if(is_online())
+				{
+					server_update_simple(items_xml);
+				}
+				else 
+				{
+					local_update_simple(items_xml);
+				}				
+			});		
+		});
+	});
+
+	$(print_button).on('click',function () 
+	{
+		var container=document.getElementById('report64_invoice');
+		$.print(container);
+	});
+}
+
+/**
  * @reportNo 65
  * @report Pricing Update timestamps
  */
@@ -1246,16 +1357,17 @@ function report65_header_ini()
 		event.preventDefault();
 		report65_ini();
 	});
-	
+
 	var item_data="<product_master>"+
 				"<name></name>"+
 				"</product_master>";
 	set_my_filter(item_data,item_filter);
-	
+
 	var channel_data="<sale_channels>"+
 				"<name></name>"+
 				"</sale_channels>";
-	set_my_filter(channel_data,channel_filter);				
+	set_my_filter(channel_data,channel_filter);
+	
 }
 
 /**
@@ -1326,9 +1438,11 @@ function report67_header_ini()
 				"<name></name>"+
 				"</sale_channels>";
 	set_my_filter(channel_data,channel_filter);
-	
-	$(from_date).datepicker();
-	$(to_date).datepicker();					
+
+	$(from_filter).datepicker();
+	$(to_filter).datepicker();
+	from_filter.value=get_my_past_date((get_my_time()-86400000));
+	to_filter.value=get_my_date();
 }
 
 /**

@@ -4,8 +4,8 @@
 			<legend>Select Filters</legend>
 			<label>Channel<br><input type='text'></label>
 			<label>Customer<br><input type='text'></label>
-			<label>From Date<br><input type='text'></label>
-			<label>To Date<br><input type='text'></label>
+			<label>From Date<br><input type='text' required></label>
+			<label>To Date<br><input type='text' required></label>
 			<label>	
 				<input type='submit' value='Refresh' class='generic_icon'>
 				<input type='button' title='Print' class='print_icon'>
@@ -16,9 +16,9 @@
 		<thead>
 			<tr>
 				<th>Channel</th>
-				<th>Date</th>
 				<th>Customer</th>
 				<th>Total</th>
+				<th>Date</th>
 			</tr>
 		</thead>
 		<tbody id='report67_body'>

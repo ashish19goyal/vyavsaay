@@ -8,7 +8,7 @@
 					<th>Manufacturing</th>
 					<th>Expiry</th>
 					<th>Quantity</th>
-					<th><input type='button' form='form1_header' value='Add Batch' class='add_icon' onclick='modal22_action();'>
+					<th><input type='button' form='form1_header' value='Add Batch' class='add_icon' onclick='modal120_action();'>
 						<input type='button' form='form1_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form1_header' style='display:none;visibility: hidden;'>
 					</th>

@@ -5547,47 +5547,89 @@ function modal101_action(doc_type,person,person_type,func)
 	func(function(container)
 	{
 		var business_title=get_session_var('title');
-		var subject=doc_type;
 		
 		var email_message=container.innerHTML;
 		var from=get_session_var('email');
 
-		var email_id_xml="<suppliers>"+
+		var person_filter=form.elements[1];
+		$(person_filter).off('blur');
+		form.elements[3].value=doc_type;
+					
+		if(person!="")
+		{
+			var email_id_xml="<suppliers>"+
 					"<email></email>"+
 					"<name></name>"+
 					"<acc_name exact='yes'>"+person+"</acc_name>"+
 					"</suppliers>";
-		if(person_type=='customer')			
-		{
-			email_id_xml="<customers>"+
-					"<email></email>"+
-					"<name></name>"+
-					"<acc_name exact='yes'>"+person+"</acc_name>"+
-					"</customers>";
-		}
-		else if(person_type=='staff')			
-		{
-			email_id_xml="<staff>"+
-					"<email></email>"+
-					"<name></name>"+
-					"<acc_name exact='yes'>"+person+"</acc_name>"+
-					"</staff>";
-		}
-
-		fetch_requested_data('',email_id_xml,function(emails)
-		{
-			form.elements[1].value=person;
-			form.elements[2].value=emails[0].email;
-			form.elements[3].value=subject;
-			form.elements[4].value=emails[0].name;
-
-			$("#modal101").dialog("open");
-			hide_loader();			
-		});
-		
-		if(person="")
+			if(person_type=='customer')			
+			{
+				email_id_xml="<customers>"+
+						"<email></email>"+
+						"<name></name>"+
+						"<acc_name exact='yes'>"+person+"</acc_name>"+
+						"</customers>";
+			}
+			else if(person_type=='staff')			
+			{
+				email_id_xml="<staff>"+
+						"<email></email>"+
+						"<name></name>"+
+						"<acc_name exact='yes'>"+person+"</acc_name>"+
+						"</staff>";
+			}
+	
+			fetch_requested_data('',email_id_xml,function(emails)
+			{
+				form.elements[1].value=person;
+				form.elements[2].value=emails[0].email;
+				form.elements[4].value=emails[0].name;
+	
+				$("#modal101").dialog("open");
+				hide_loader();			
+			});
+		}		
+		else
 		{
 			
+			var person_xml="<suppliers>"+
+						"<acc_name></acc_name>"+
+						"</suppliers>";
+			set_my_value_list(person_xml,person_filter);
+			
+			$(person_filter).on('blur',function () 
+			{
+				var email_id_xml="<suppliers count='1'>"+
+					"<email></email>"+
+					"<name></name>"+
+					"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
+					"</suppliers>";
+				
+				if(person_type=='customer')			
+				{
+					email_id_xml="<customers>"+
+							"<email></email>"+
+							"<name></name>"+
+							"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
+							"</customers>";
+				}
+				else if(person_type=='staff')			
+				{
+					email_id_xml="<staff>"+
+							"<email></email>"+
+							"<name></name>"+
+							"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
+							"</staff>";
+				}
+				fetch_requested_data('',email_id_xml,function(emails)
+				{
+					form.elements[2].value=emails[0].email;
+					form.elements[4].value=emails[0].name;
+		
+					$("#modal101").dialog("open");
+					hide_loader();			
+				});
+			});
 		}	
 		
 		$(form).off("submit");
@@ -7003,6 +7045,70 @@ function modal114_action(func)
 					local_create_simple(pic_xml);
 				}	
 			}
+			
+			var channel_data="<sale_channels>" +
+					"<id></id>" +
+					"<name></name>" +
+					"</sale_channels>";
+			fetch_requested_data('',channel_data,function(channels)
+			{
+				var sku_mapping_xml="<sku_mapping>";
+				var cat_sku_mapping_xml="<category_sku_mapping>";
+				var channel_price_xml="<channel_prices>";
+				var id=parseFloat(get_new_key());
+				var counter=0;
+				var last_updated=get_my_time();
+				channels.forEach(function(channel)
+				{
+					if(counter==500)
+					{
+						counter=0;
+						sku_mapping_xml+="</sku_mapping><separator></separator><sku_mapping>";
+						cat_sku_mapping_xml+="</category_sku_mapping><separator></separator><category_sku_mapping>";
+						channel_price_xml+="</channel_prices><separator></separator><channel_prices>";
+					}
+					sku_mapping_xml+="<row>" +
+							"<id>"+id+"</id>" +
+							"<channel>"+channel.name+"</channel>"+
+							"<system_sku>"+name+"</system_sku>"+
+							"<item_desc>"+description+"</item_desc>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+					cat_sku_mapping_xml+="<row>" +
+							"<id>"+id+"</id>" +
+							"<channel>"+channelname+"</channel>" +
+							"<sku>"+name+"</sku>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+					channel_price_xml+="<row>" +
+							"<id>"+id+"</id>" +
+							"<channel>"+channel.name+"</channel>" +
+							"<item>"+name+"</item>" +
+							"<latest>yes</latest>"+
+							"<from_time>"+last_updated+"</from_time>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+					id+=1;
+					counter+=1;
+				});
+				sku_mapping_xml+="</sku_mapping>";
+				cat_sku_mapping_xml+="</category_sku_mapping>";
+				channel_price_xml+="</channel_prices>";
+				
+				if(is_online())
+				{
+					server_create_batch(sku_mapping_xml);
+					server_create_batch(cat_sku_mapping_xml);
+					server_create_batch(channel_price_xml);
+				}
+				else
+				{
+					local_create_batch(sku_mapping_xml);
+					local_create_batch(cat_sku_mapping_xml);
+					local_create_batch(channel_price_xml);
+				}
+			});
+
 		}
 		else
 		{
@@ -7049,18 +7155,18 @@ function modal116_action(string)
 {
 	var print_button=document.getElementById('modal116_print');
 	
-	$(print_button).off('click');
-	$(print_button).on('click',function()
-	{
+//	$(print_button).off('click');
+//	$(print_button).on('click',function()
+//	{
 		var container=document.getElementById('modal116_div');
-		$("#modal116").dialog("close");
+		//$("#modal116").dialog("close");
+//	});
+	
+		var image_element=document.getElementById('modal116_img');
+		$(image_element).JsBarcode(string,{displayValue:true,fontSize:16});
 		$.print(container);
-	});
 	
-	var image_element=document.getElementById('modal116_img');
-	$(image_element).JsBarcode(string,{displayValue:true,fontSize:16});
-	
-	$("#modal116").dialog("open");
+	//$("#modal116").dialog("open");
 }
 
 /**
@@ -7411,4 +7517,132 @@ function modal119_action(data_id,type)
 	});
 	
 	$("#modal119").dialog("open");
+}
+
+
+/**
+ * @modalNo 120
+ * @modal Add new batch
+ */
+function modal120_action(func)
+{
+	var form=document.getElementById('modal120_form');
+	
+	var fname=form.elements[1];
+	var fbatch=form.elements[2];
+	var fexpiry=form.elements[3];
+	var fmrp=form.elements[4];
+	
+	$(fexpiry).datepicker();
+	
+	var name_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	set_my_value_list(name_data,fname);
+	
+	$(fname).off('blur');
+	$(fname).on('blur',function(event)
+	{
+		var batch_data="<product_instances>" +
+				"<batch></batch>" +
+				"<product_name exact='yes'>"+fname.value+"</product_name>" +
+				"</product_instances>";
+		get_single_column_data(function(batches)
+		{
+			$(fbatch).off('blur');
+			$(fbatch).on('blur',function(event)
+			{
+				var found = $.inArray($(this).val(), batches) > -1;
+				if(found)
+				{
+		            $(this).val('');
+		        }
+			});
+		},batch_data);
+	});		
+		
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form1'))
+		{
+			var name=fname.value;
+			var batch=fbatch.value;
+			var expiry=get_raw_time(fexpiry.value);
+			var mrp=fmrp.value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<product_instances>" +
+						"<id>"+data_id+"</id>" +
+						"<product_name>"+name+"</product_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<expiry>"+expiry+"</expiry>" +
+						"<mrp>"+mrp+"</mrp>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</product_instances>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>product_instances</tablename>" +
+						"<link_to>form1</link_to>" +
+						"<title>Added</title>" +
+						"<notes>New batch "+batch+" for item "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_create_row_func(data_xml,activity_xml,func);
+			}
+			else
+			{
+				local_create_row_func(data_xml,activity_xml,func);
+			}			
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal120").dialog("close");
+	});
+	
+	$("#modal120").dialog("open");
+}
+
+/**
+ * @modalNo 121
+ * @modal Offline Storage Deletion 
+ */
+function modal121_action()
+{
+	var form=document.getElementById('modal121_form');
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		var pass=document.getElementById("modal121_form").elements['pass'].value;
+		var user=get_username();
+		var domain=get_domain();
+				
+		var user_kvp={domain:domain,user:user,pass:pass};
+		ajax_with_custom_func("./ajax/login.php",user_kvp,function(e)
+		{
+			login_status=e.responseText;
+			if(login_status=="failed_auth")
+			{
+				alert('Wrong password! aborting operation');								
+				hide_loader();
+			}
+			else 
+			{
+				hide_loader();
+				delete_local_db();
+			}
+		});
+		
+		$("#modal121").dialog("close");
+	});
+	
+	$("#modal121").dialog("open");
 }

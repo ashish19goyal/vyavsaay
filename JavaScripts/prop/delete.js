@@ -1946,39 +1946,22 @@ function form69_delete_item(button)
 	if(is_delete_access('form69'))
 	{
 		modal115_action(function()
-		{
-			var order_id=document.getElementById("form69_master").elements[4].value;
-			
+		{			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var name=form.elements[0].value;
-			var quantity=form.elements[1].value;
-			var notes=form.elements[2].value;
-			var data_id=form.elements[3].value;
+			var data_id=form.elements[6].value;
 			var last_updated=get_my_time();
 			var data_xml="<sale_order_items>" +
 						"<id>"+data_id+"</id>" +
-						"<item_name>"+name+"</item_name>" +
-						"<quantity>"+quantity+"</quantity>" +
-						"<notes>"+notes+"</notes>" +
-						"<order_id>"+order_id+"</order_id>" +
 						"</sale_order_items>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>sale_order_items</tablename>" +
-						"<link_to>form69</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Product "+name+" from order no. "+order_id+"</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
 			if(is_online())
 			{
-				server_delete_row(data_xml,activity_xml);
+				server_delete_simple(data_xml);
 			}
 			else
 			{
-				local_delete_row(data_xml,activity_xml);
+				local_delete_simple(data_xml);
 			}	
 			$(button).parent().parent().remove();
 		});
@@ -3290,23 +3273,18 @@ function form108_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[0].value;
-			var customer_name=form.elements[1].value;
-			var order_date=get_raw_time(form.elements[2].value);
-			var status=form.elements[3].value;
+			var data_id=form.elements['id'].value;
+			var customer_name=form.elements[2].value;
 			var last_updated=get_my_time();
 			var data_xml="<sale_orders>" +
 						"<id>"+data_id+"</id>" +
-						"<customer_name>"+customer_name+"</customer_name>" +
-						"<order_date>"+order_date+"</order_date>" +
-						"<status>"+status+"</status>" +
 						"</sale_orders>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>sale_orders</tablename>" +
 						"<link_to>form108</link_to>" +
 						"<title>Deleted</title>" +
-						"<notes>Sale Order no "+data_id+" for customer "+customer_name+"</notes>" +
+						"<notes>Sale Order # "+data_id+" for customer "+customer_name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			var other_delete="<sale_order_items>" +
@@ -3779,18 +3757,13 @@ function form122_delete_item(button)
 	{
 		modal115_action(function()
 		{
-			var bill_id=document.getElementById("form21_master").elements[7].value;
-			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[10].value;
-			var last_updated=get_my_time();
-			
+			var data_id=form.elements[9].value;
 			var data_xml="<supplier_bill_items>" +
 						"<id>"+data_id+"</id>" +
-						"<bill_id>"+bill_id+"</bill_id>" +
-						"</supplier_bill_items>";	
+						"</supplier_bill_items>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
@@ -3798,8 +3771,7 @@ function form122_delete_item(button)
 			else
 			{
 				local_delete_simple(data_xml);
-			}
-					
+			}	
 			$(button).parent().parent().remove();
 		});
 	}

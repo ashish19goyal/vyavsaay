@@ -1285,7 +1285,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--user_profiles--user_preferences--values_list--templates--system_grid_metrics--</tables>
+			<tables>--user_profiles--user_preferences--values_list--templates--system_grid_metrics--accounts--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>

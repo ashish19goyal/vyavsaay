@@ -19,7 +19,6 @@ use RetailingEssentials\db_connect;
 		if(!$stmt || $stmt->rowCount()!=1)
 		{
 			$status="failed_auth";
-			//echo "error1";
 		}
 		else
 		{
@@ -28,7 +27,6 @@ use RetailingEssentials\db_connect;
 			if(!password_verify($pass,$pass_hash))
 			{
 				$status="failed_auth";
-				//echo "error2";
 			}
 			else	
 			{
@@ -149,9 +147,11 @@ use RetailingEssentials\db_connect;
 	catch(PDOException $ex)
 	{
 		$status="failed_auth";
-		//echo "error3";
 	}
-	header ("Content-Type:text/xml");
+	if($status!="failed_auth")
+	{
+		header ("Content-Type:text/xml");
+	}
 	echo $status;
 
 ?>

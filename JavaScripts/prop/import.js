@@ -1996,6 +1996,9 @@ function form69_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<order_id>"+row.order_id+"</order_id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
+				"<item_desc>"+row.item_desc+"</item_desc>" +
+				"<channel_sku>"+row.channel_sku+"</channel_sku>" +
+				"<vendor_sku>"+row.vendor_sku+"</vendor_sku>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<notes>"+row.notes+"</notes>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
@@ -3330,7 +3333,8 @@ function form108_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<customer_name>"+row.customer_name+"</customer_name>" +
 				"<order_date>"+get_raw_time(row.order_date)+"</order_date>" +
-				"<type>"+row.type+"</type>" +
+				"<order_num>"+row.order_num+"</order_num>" +
+				"<channel>"+row.channel+"</channel>"+
 				"<status>"+row.status+"</status>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
@@ -3964,8 +3968,7 @@ function form122_import(data_array,import_type)
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
-				"<p_quantity>"+row.p_quantity+"</p_quantity>" +
-				"<f_quantity>"+row.f_quantity+"</f_quantity>" +
+				"<item_desc>"+row.item_desc+"</item_desc>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<batch>"+row.batch+"</batch>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
@@ -3974,6 +3977,7 @@ function form122_import(data_array,import_type)
 				"<tax>"+row.tax+"</tax>" +
 				"<total>"+row.total+"</total>" +
 				"<storage>"+row.storage+"</storage>" +
+				"<put_away_status>"+row.put_away_status+"</put_away_status>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
@@ -5418,8 +5422,9 @@ function form173_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<channel>"+row.channel+"</channel>" +
 				"<channel_sku>"+row.channel_sku+"</channel_sku>" +
+				"<channel_system_sku>"+row.vendor_sku+"</channel_system_sku>" +
 				"<system_sku>"+row.system_sku+"</system_sku>"+
-				"<channel_system_sku>"+row.channel_system_sku+"</channel_system_sku>" +
+				"<item_desc>"+row.item_desc+"</item_desc>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});

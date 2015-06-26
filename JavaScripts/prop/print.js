@@ -293,6 +293,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 */
 function print_form24(func)
 {
+	var form_id='form24';
 	////////////setting up containers///////////////////////	
 	var container=document.createElement('div');
 	var header=document.createElement('div');
@@ -335,7 +336,7 @@ function print_form24(func)
 	var business_email=get_session_var('email');
 	//var business_website=get_session_var('website');
 
-	var master_form=document.getElementById('form24_master');
+	var master_form=document.getElementById(form_id+'_master');
 	var supplier_name=master_form.elements[1].value;
 	var date=master_form.elements[2].value;	
 	var order_no=master_form.elements[3].value;
@@ -358,7 +359,7 @@ function print_form24(func)
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
 
-	var table_element=document.getElementById('form24_body').parentNode;
+	var table_element=document.getElementById(form_id+'_body').parentNode;
 	table_copy=table_element.cloneNode(true);
 	
 	table_copy.removeAttribute('class');
@@ -484,7 +485,7 @@ function print_form10(func)
 	var business_email=get_session_var('email');
 	var business_website=get_session_var('website');
 
-	var master_form=document.getElementById('form10_master');
+	var master_form=document.getElementById(form_id+'_master');
 	var customer_name=master_form.elements[1].value;
 	var customer_address=master_form.elements['customer_address'].value;
 	var date=master_form.elements[4].value;
@@ -507,7 +508,7 @@ function print_form10(func)
 	tandc.innerHTML=tandc_text;
 	address.innerHTML=tax_text+" | Address: "+business_address;
 
-	var table_element=document.getElementById('form10_body').parentNode;
+	var table_element=document.getElementById(form_id+'_body').parentNode;
 	table_copy=table_element.cloneNode(true);
 	
 	table_copy.removeAttribute('class');
@@ -613,6 +614,124 @@ function form24_print_form()
 		$.print(container);
 		container.innerHTML="";	
 	});	
+}
+
+/**
+* This function prepares the printing template for the documents like bills and purchase orders
+*/
+function print_form24(func)
+{
+	var form_id='form24';
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_intro=document.createElement('div');
+		var business_contact=document.createElement('div');
+	
+	var invoice_line=document.createElement('div');
+	
+	var info_section=document.createElement('div');	
+		var customer_info=document.createElement('div');
+		var business_info=document.createElement('div');
+
+	var table_container=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var tandc=document.createElement('div');
+		var signature=document.createElement('div');
+
+////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
+		business_intro.setAttribute('style','width:100%;text-align:center');
+		business_contact.setAttribute('style','width:100%;text-align:center');
+	info_section.setAttribute('style','width:100%;min-height:60px');
+		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:60px;border: 1px solid #00f;border-radius:5px;');
+		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:60px;border: 1px solid #00f;border-radius:5px;');
+	footer.setAttribute('style','width:100%;min-height:100px');
+		tandc.setAttribute('style','float:left;width:60%;min-height:50px');
+		signature.setAttribute('style','float:right;width:30%;min-height:60px');
+
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	var logo_image=get_session_var('logo');
+	//var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	//var business_website=get_session_var('website');
+
+	var master_form=document.getElementById(form_id+'_master');
+	var supplier_name=master_form.elements[1].value;
+	var date=master_form.elements[2].value;	
+	var order_no=master_form.elements[3].value;
+	var vat_no=get_session_var('vat');
+		
+	var tandc_text=get_session_var('po_message');
+	var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
+	
+	////////////////filling in the content into the containers//////////////////////////
+
+	logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
+	//business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text;
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
+	
+	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Purchase Order</b></div><hr style='border: 1px solid #00f;'>";
+	
+	customer_info.innerHTML="<b>To</b><br>"+supplier_name;
+	business_info.innerHTML="VAT #: "+vat_no+"<br>Date: "+date+"<br>Order No: "+order_no;
+	
+	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
+	signature.innerHTML=signature_text;
+
+	var table_element=document.getElementById(form_id+'_body').parentNode;
+	table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form").remove();
+	$(table_copy).find('input,textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+	
+	$(table_copy).find('label').each(function(index)
+	{
+		$(this).replaceWith($(this).html());
+	});
+
+	$(table_copy).find('tbody').attr('style','height:400px;');
+	$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
+	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
+
+	$(table_copy).find("tbody>tr").attr('style','flex:1;height:30px');
+	
+	$(table_copy).find("th:first, td:first").css('width','300px');
+	$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
+	
+	/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	container.appendChild(header);
+	container.appendChild(invoice_line);
+	container.appendChild(info_section);
+	
+	container.appendChild(table_copy);
+	container.appendChild(footer);
+	
+	header.appendChild(logo);
+	//header.appendChild(business_intro);
+	header.appendChild(business_contact);
+	
+	info_section.appendChild(customer_info);
+	info_section.appendChild(business_info);
+	
+	footer.appendChild(tandc);
+	footer.appendChild(signature);
+	
+	func(container);
 }
 
 
@@ -1248,10 +1367,117 @@ function form154_print_form()
 }
 
 /**
- * @form Create Production Plan
+ * @form Production Plan
  * @formNo 186
  */
 function form186_print_form()
 {
-	print_tabular_form('form186','Production Plan');
+	print_form186(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	});	
+}
+
+/**
+ * @form Create Production Plan
+ * @formNo 186
+ */
+function print_form186(func)
+{
+	var form_id='form186';
+	
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_title=document.createElement('div');
+	
+	var plan_line=document.createElement('div');
+	
+	var info_section=document.createElement('div');	
+		var plan_info=document.createElement('div');
+
+	var table_container=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var address=document.createElement('div');
+
+	////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:100%;min-height:100px;');
+		business_title.setAttribute('style','float:right;width:50%;text-align:right;');
+	plan_line.setAttribute('style','width:100%;min-height:60px;background-color:#bbbbbb;');
+	info_section.setAttribute('style','width:100%;min-height:60px;text-align:left;');
+		plan_info.setAttribute('style','padding:5px;margin:5px;float:left;width:100%;height:90px;');
+	footer.setAttribute('style','width:100%;min-height:100px');
+		address.setAttribute('style','width:100%;min-height:50px;text-align:center;');
+
+	///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	var logo_image=get_session_var('logo');
+	var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+
+	var master_form=document.getElementById(form_id+'_master');
+	var plan_name=master_form.elements[1].value;
+	var from_date=master_form.elements[2].value;
+	var to_date=master_form.elements[3].value;
+	var plan_status=master_form.elements[4].value;
+		
+	////////////////filling in the content into the containers//////////////////////////
+
+	logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
+	business_title.innerHTML=bt;
+	plan_line.innerHTML="<div style='float:left;width:50%'>From: "+from_date+"</div><div style='float:right;text-align:right;width:50%'>To: "+to_date+"</div>";	
+	plan_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Plan Name: </b>"+plan_name+"<br>Plan Status: "+plan_status+"<hr style='border: 1px solid #000;margin:2px'>";
+	
+	address.innerHTML="Address: "+business_address;
+
+	var table_element=document.getElementById(form_id+'_body').parentNode;
+	table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	table_copy.setAttribute('width','1000px');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh").remove();
+	$(table_copy).find('input,textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+	
+	$(table_copy).find('label').each(function(index)
+	{
+		$(this).replaceWith($(this).html());
+	});	
+	
+	$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
+	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
+	$(table_copy).find("tbody>tr").attr('style','flex:1;height:30px');
+
+	$(table_copy).find("th:first, td:first").css('width','60px');
+	$(table_copy).find("th:nth-child(2), td:nth-child(2)").css('width','300px');
+	
+	/////////////placing the containers //////////////////////////////////////////////////////	
+
+	container.appendChild(header);
+	container.appendChild(plan_line);
+	container.appendChild(info_section);
+
+	container.appendChild(table_copy);
+	container.appendChild(footer);
+
+	header.appendChild(logo);
+	header.appendChild(business_title);
+
+	info_section.appendChild(plan_info);
+
+	footer.appendChild(address);
+
+	func(container);
 }

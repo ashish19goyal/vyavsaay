@@ -486,10 +486,10 @@ function report9_ini()
 									total_quantity+=parseFloat(bill_ids[k].quantity);
 									total_amount+=parseFloat(bill_ids[k].amount);
 									rowsHTML+="<tr>";
-										rowsHTML+="<td data-th='Product Name'>";
+										rowsHTML+="<td data-th='Item'>";
 											rowsHTML+=bill_ids[k].item_name;
 										rowsHTML+="</td>";
-										rowsHTML+="<td data-th='Make'>";
+										rowsHTML+="<td data-th='Brand'>";
 											rowsHTML+=makes[z].make;
 										rowsHTML+="</td>";
 										rowsHTML+="<td data-th='Customer'>";
@@ -526,10 +526,10 @@ function report9_ini()
 										total_quantity-=parseFloat(bill_return_ids[k].quantity);
 										total_amount-=parseFloat(bill_return_ids[k].refund_amount);
 										rowsHTML+="<tr>";
-											rowsHTML+="<td data-th='Product Name'>";
+											rowsHTML+="<td data-th='Item'>";
 												rowsHTML+=bill_return_ids[k].item_name;
 											rowsHTML+="</td>";
-											rowsHTML+="<td data-th='Make'>";
+											rowsHTML+="<td data-th='Brand'>";
 												rowsHTML+=makes[z].make;
 											rowsHTML+="</td>";
 											rowsHTML+="<td data-th='Customer'>";
@@ -4486,6 +4486,205 @@ function report63_ini()
 };
 
 /**
+ * @reportNo 64
+ * @report Packing Instructions
+ */
+function report64_ini()
+{
+	var master_form=document.getElementById('report64_header');
+	var item_filter=master_form.elements[1];
+	
+	var form=document.getElementById('report64_form');
+	var reject_button=form.elements['reject'];
+	var accept_button=form.elements['accept'];
+	var print_button=form.elements['print'];
+
+	show_loader();
+
+	var columns="<product_master count='1'>" +
+			"<id></id>" +
+			"<name></name>"+
+			"<bar_code exact='yes'>"+item_filter.value+"</bar_code>" +
+			"<packing></packing>"+
+			"</product_master>";
+	fetch_requested_data('',columns,function (products) 
+	{
+		if(products.length>0)
+		{
+			/////////get product image////////////
+			var picture_column="<documents>" +
+					"<id></id>" +
+					"<url></url>" +
+					"<doc_type exact='yes'>product_master</doc_type>" +
+					"<target_id exact='yes'>"+products[0].id+"</target_id>" +
+					"</documents>";
+			fetch_requested_data('',picture_column,function(pic_results)
+			{
+				var pic_results_url="";
+				var pic_results_id="";
+				if(pic_results.length>0)
+				{
+					pic_results_id=pic_results[0].id;
+					pic_results_url=pic_results[0].url;
+				}
+				updated_url=pic_results_url.replace(/ /g,"+");
+				var imgHTML="<img src='"+updated_url+"'>";
+				
+				$('#report64_image').html(imgHTML);	
+				
+				$('#report64_form').show();			
+				hide_loader();
+				
+				$(accept_button).show();			
+				$(reject_button).show();			
+
+			});
+			
+			////////populate packing instructions and invoice template///////
+			$('#report64_packing').html("<b>"+products[0].packing+"</b>");
+			
+			//////////provide a preview of the invoice//////////////////////
+			var bill_items="<bill_items count='1'>"+
+					"<id></id>"+
+					"<bill_id></bill_id>"+		
+					"<item_name exact='yes'>"+products[0].name+"</item_name>"+
+					"<item_desc></item_desc>"+
+					"<quantity></quantity>"+
+					"<total></total>"+
+					"<picked_status exact='yes'>picked</picked_status>"+
+					"<packing_status exact='yes'>pending</packing_status>"+
+					"</bill_items>";
+			fetch_requested_data('',bill_items,function (items) 
+			{
+				if(items.length>0)
+				{				
+					var bills_xml="<bills>"+
+								"<id>"+items[0].bill_id+"</id>"+
+								"<customer_name></customer_name>"+
+	                        	"<bill_num></bill_num>"+
+	                       		"<order_num></order_num>"+
+	                        	"<bill_date></bill_date>"+
+	                        	"</bills>";
+	                fetch_requested_data('',bills_xml,function (bills) 
+					{        	
+							////////////setting up containers///////////////////////	
+						var container=document.getElementById('report64_invoice');
+						var header=document.createElement('div');
+							var logo=document.createElement('div');
+							var business_title=document.createElement('div');
+						
+						var invoice_line=document.createElement('div');
+						
+						var info_section=document.createElement('div');	
+							var customer_info=document.createElement('div');
+					
+						var table_container=document.createElement('div');
+					
+						var footer=document.createElement('div');
+							var tandc=document.createElement('div');
+							var address=document.createElement('div');
+					
+						////////////setting styles for containers/////////////////////////
+					
+						header.setAttribute('style','width:100%;min-height:60px;');
+							logo.setAttribute('style','float:left;width:49%;');
+							business_title.setAttribute('style','float:right;width:49%;text-align:right;');
+						invoice_line.setAttribute('style','width:98%;min-height:50px;background-color:#bbbbbb;');
+						info_section.setAttribute('style','width:98%;min-height:50px;text-align:left;');
+							customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:98%;height:50px;');
+						footer.setAttribute('style','width:100%;min-height:50px');
+							tandc.setAttribute('style','width:100%;min-height:50px;background-color:#bbbbbb;');
+							address.setAttribute('style','width:100%;min-height:50px;text-align:center;');
+					
+						///////////////getting the content////////////////////////////////////////
+					
+						var bt=get_session_var('title');
+						var font_size=get_session_var('print_size');
+						var logo_image=get_session_var('logo');
+						var business_intro_text=get_session_var('business_intro');
+						var business_address=get_session_var('address');
+						var business_phone=get_session_var('phone');
+						var business_email=get_session_var('email');
+						var business_website=get_session_var('website');
+					
+										
+						var customer_name=bills[0].customer_name;
+						var date=get_my_past_date(bills[0].bill_date);				
+						var invoice_no=bills[0].bill_num;
+						var order_no=bills[0].order_num;
+						
+						var tin=get_session_var('tin');	
+						var tax_text="Tax No: "+tin;
+					
+						var tandc_text=get_session_var('bill_message');
+						
+						////////////////filling in the content into the containers//////////////////////////
+					
+						logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
+						business_title.innerHTML=bt;
+						invoice_line.innerHTML="<div style='float:left;width:50%'>Invoice #: "+invoice_no+"<br>Order #: "+order_no+"</div><div style='float:right;text-align:right;width:50%'>Invoice Date: "+date+"</div>";
+						
+						customer_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Customer</b><br>"+customer_name+"<hr style='border: 1px solid #000;margin:2px'>";
+						
+						tandc.innerHTML=tandc_text;
+						address.innerHTML=tax_text+" | Address: "+business_address;
+					
+						var table_copy=document.createElement('table');
+						
+						table_copy.setAttribute('width','100%');
+						table_copy.setAttribute('height','100px');
+						$(table_copy).append("<tr><th>Item</th><th>Quantity</th><th>Total</th></tr>");
+		
+						items.forEach(function (item) 
+						{
+							$(table_copy).append("<tr><th>"+item.item_desc+"</th><th>"+item.quantity+"</th><th>"+item.total+"</th></tr>");	
+						});
+								
+						$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+						$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
+						$(table_copy).find("tr").attr('style','flex:1;height:30px');
+						
+					/*	$(table_copy).find("th:first, td:first").css('width','300px');
+						var row_count=$(table_copy).find('tbody>tr').length;
+						var rows_to_add=5-row_count;
+						for(var i=0;i<rows_to_add;i++)
+						{
+							$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
+						}
+					*/	
+						/////////////placing the containers //////////////////////////////////////////////////////	
+					
+						container.appendChild(header);
+						container.appendChild(invoice_line);
+						container.appendChild(info_section);
+					
+						container.appendChild(table_copy);
+						container.appendChild(footer);
+					
+						header.appendChild(logo);
+						header.appendChild(business_title);
+					
+						info_section.appendChild(customer_info);
+					
+						footer.appendChild(tandc);
+						footer.appendChild(address);
+						
+						$(print_button).show();			
+	
+					});
+				}
+				else 
+				{
+					var container=document.getElementById('report64_invoice');
+					container.innerHTML='<b>This item is not pending for packing. Put it back in the warehouse.<b>';	
+				}
+			});
+			////////////////////////////////////////////////////////////////
+		}		
+	});		
+};
+
+/**
  * @reportNo 65
  * @report Pricing Update Timestamps
  */
@@ -4494,152 +4693,70 @@ function report65_ini()
 	var form=document.getElementById('report65_header');
 	var channel_filter=form.elements[1].value;
 	var item_filter=form.elements[2].value;
+	var latest='no'
+	if(form.elements[3].checked)
+		latest='yes';
 	
 	show_loader();
-	
-	var total_calls=0;
 	$('#report65_body').html('');
 		
-	var area_data="<channel_prices>" +
+	var prices_data="<channel_prices>" +
 			"<id></id>"+
-			"<channel>"+storage_filter+"</name>"+
-			"<area_type exact='yes'>"+type_filter+"</area_type>" +
+			"<channel>"+channel_filter+"</channel>"+
+			"<item>"+item_filter+"</item>" +
+			"<sale_price></sale_price>"+
+			"<freight></freight>"+
+			"<discount_customer></discount_customer>"+
+			"<profit_mrp></profit_mrp>"+
+			"<profit_sp></profit_sp>"+
+			"<profit></profit>"+
+			"<gateway_charges></gateway_charges>"+
+			"<storage_charges></storage_charges>"+
+			"<total_charges></total_charges>"+
+			"<service_tax></service_tax>"+
+			"<total_payable></total_payable>"+
+			"<total_receivable></total_receivable>"+
+			"<latest>"+latest+"</latest>"+
+			"<from_time></from_time>"+
+			"<to_time></to_time>"+
 			"</channel_prices>";
-	total_calls+=1;
-	fetch_requested_data('report65',area_data,function(areas)
-	{
-		//console.log(areas);
-		total_calls-=1;
-		areas.forEach(function(area)
-		{	
-			var storage_array=[];
-			storage_array.push(area.name);
-			var tracker=0;
-			get_all_child_storage(area.name,storage_array,tracker);			
-			
-			total_calls+=1;
-			
-			var areas_complete=setInterval(function()
-			{
-				if(tracker===0)
-				{
-					//console.log(storage_array);
-					clearInterval(areas_complete);
 
-					total_calls-=1;
-					var storage_string="--";
-					for(var i in storage_array)
-					{
-						storage_string+=storage_array[i]+"--";
-					}
-	
-					var item_data="<area_utilization>"+
-								"<name array='yes'>"+storage_string+"</name>"+
-								"<item_name>"+item_filter+"</item_name>"+
-								"<batch>"+batch_filter+"</batch>"+
-								"</area_utilization>";	
-					total_calls+=1;				
-					fetch_requested_data('',item_data,function(items)
-					{
-						console.log(items);
-						total_calls-=1;
-						for(var i=0;i<items.length;i++)
-						{
-							for(var j=i+1;j<items.length;j++)
-							{
-								if(items[i].item_name==items[j].item_name && items[i].batch==items[j].batch)
-								{
-									items.splice(j,1);
-									j--;
-								}
-							}
-						}
-						
-						items.forEach(function(item)
-						{
-							var total_quantity=0;
-							var count=storage_array.length;
-							storage_array.forEach(function(storage_area)
-							{
-								total_calls+=1;
-								get_store_inventory(storage_area,item.item_name,item.batch,function(quantity)
-								{
-									total_quantity+=parseFloat(quantity);
-									count--;
-									total_calls-=1;
-								});
-							});						
-							
-							var inventory_complete=setInterval(function()
-							{
-								if(count===0)
-								{
-						  	   		clearInterval(inventory_complete);
-									if(parseFloat(total_quantity)>0)
-									{
-										var rowsHTML="<tr>";
-										rowsHTML+="<td data-th='Storage'>";
-											rowsHTML+=area.name;
-										rowsHTML+="</td>";
-										rowsHTML+="<td data-th='Item'>";
-											rowsHTML+=item.item_name;
-										rowsHTML+="</td>";
-										rowsHTML+="<td data-th='Batch'>";
-											rowsHTML+=item.batch;
-										rowsHTML+="</td>";
-										rowsHTML+="<td data-th='Quantity'>";
-											rowsHTML+=total_quantity;
-										rowsHTML+="</td>";
-										rowsHTML+="</tr>";
-										
-										$('#report65_body').append(rowsHTML);
-									}
-								}
-						     },100);
-						});					
-					});
-				}
-			},100);
-		});
-		
-		var report_complete=setInterval(function()
+	fetch_requested_data('report65',prices_data,function(prices)
+	{
+		prices.forEach(function(price)
 		{
-			if(total_calls==0)
+			var to_string=get_my_datetime(price.to_time);
+			if(price.to_time=='0' || price.to_time=="")
 			{
-				hide_loader();
-				clearInterval(report_complete);
+				to_string=get_my_datetime();				
 			}
-		},100);
+			var rowsHTML="<tr>";
+			rowsHTML+="<td data-th='Channel'>";
+				rowsHTML+=price.channel;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+=price.item;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Price'>";
+				rowsHTML+="Discount: Rs."+price.discount_customer;
+				rowsHTML+="<br>SP: Rs."+price.sale_price;
+				rowsHTML+="<br>Freight: Rs."+price.freight;
+				rowsHTML+="<br>To channel: Rs."+my_round((parseFloat(price.total_charges)+parseFloat(price.service_tax)),2);
+				rowsHTML+="<br>Profit: Rs."+price.profit;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Time'>";
+				rowsHTML+=get_my_datetime(price.from_time);
+				rowsHTML+="<br>"+to_string;
+			rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+			$('#report65_body').append(rowsHTML);
+		});
+		hide_loader();				
 	});
-	
-	function get_all_child_storage(store_area,area_array,tracker)
-	{
-		var child_data="<store_areas>"+
-						"<name></name>"+
-						"<parent exact='yes'>"+store_area+"</parent>" +
-						"</store_areas>";
-		tracker+=1;
-		fetch_requested_data('',child_data,function(children)
-		{
-			tracker-=1;
-			if(children.length>0)
-			{
-				children.forEach(function(child)
-				{
-					area_array.push(child.name);
-					get_all_child_storage(child.name,area_array);
-				});
-			}
-		});
-	}
-	
-	
-	var print_button=form.elements[6];
-	print_tabular_report('report65','Inventory Level (by store)',print_button);
+			
+	var print_button=form.elements[3];
+	print_tabular_report('report65','Pricing Timestamps',print_button);
 };
-
-
-
 
 /**
  * @reportNo 66
@@ -4794,6 +4911,68 @@ function report66_ini()
 	
 	var print_button=form.elements[6];
 	print_tabular_report('report66','Inventory Level (by store)',print_button);
+};
+
+/**
+ * @reportNo 67
+ * @report Channel Collections
+ */
+function report67_ini()
+{
+	var form=document.getElementById('report67_header');
+	var channel_filter=form.elements[1].value;
+	var customer_filter=form.elements[2].value;
+	var from_filter=get_raw_time(form.elements[3].value);
+	var to_filter=get_raw_time(form.elements[4].value);
+	
+	show_loader();
+	$('#report67_body').html('');
+		
+	var prices_data="<bills>" +
+			"<id></id>"+
+			"<channel>"+channel_filter+"</channel>"+
+			"<customer_name>"+customer_filter+"</customer_name>" +
+			"<bill_date lowerbound='yes'>"+from_filter+"</bill_date>" +
+			"<bill_date upperbound='yes'>"+(to_filter+86400000)+"</bill_date>" +
+			"<channel_charges></channel_charges>"+
+			"<channel_tax></channel_tax>"+
+			"<channel_payable></channel_payable>"+
+			"<total></total>"+
+			"</bills>";
+
+	fetch_requested_data('report67',prices_data,function(prices)
+	{
+		prices.forEach(function(price)
+		{
+			var to_string=get_my_datetime(price.to_time);
+			if(price.to_time=='0' || price.to_time=="")
+			{
+				to_string=get_my_datetime();				
+			}
+			var rowsHTML="<tr>";
+			rowsHTML+="<td data-th='Channel'>";
+				rowsHTML+=price.channel;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+=price.customer_name;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Total'>";
+				rowsHTML+="Bill Total: Rs."+price.total;
+				rowsHTML+="<br>Channel Charges: Rs."+price.channel_charges;
+				rowsHTML+="<br>S.Tax: Rs."+price.channel_tax;
+				rowsHTML+="<br>Payable to Channel: Rs."+price.channel_payable;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date'>";
+				rowsHTML+=get_my_past_date(price.bill_date);
+			rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+			$('#report67_body').append(rowsHTML);
+		});
+		hide_loader();				
+	});
+
+	var print_button=form.elements[4];
+	print_tabular_report('report67','Channel Collections',print_button);
 };
 
 
