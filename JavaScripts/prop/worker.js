@@ -1,4 +1,24 @@
 /**
+* This function updates the status of orders to picked and packed etc
+*/
+function worker_update_orders_status()
+{
+	if(is_update_access('form108'))
+	{
+		show_loader();
+		
+		///////////handling orders where status is picking///////		
+		var picking_orders="";
+		
+		hide_loader();
+	}
+	else 
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * This function displays updated activities in the side lane
  */
 function activities_lane_ini()

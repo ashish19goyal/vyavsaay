@@ -333,27 +333,19 @@ function form15_delete_item(button)
 	{
 		modal115_action(function()
 		{
-			var return_id=document.getElementById("form15_master").elements[3].value;
+			var return_id=document.getElementById("form15_master").elements['return_id'].value;
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var name=form.elements[0].value;
-			var batch=form.elements[1].value;
-			var notes=form.elements[2].value;
-			var quantity=form.elements[3].value;
-			var type=form.elements[5].value;
-			var total_batch=form.elements[6].value;
-			var tax=form.elements[7].value;
-			var data_id=form.elements[8].value;
+			var name=form.elements[1].value;
+			var batch=form.elements[3].value;
+			var data_id=form.elements[9].value;
 			var last_updated=get_my_time();
 				
 			var data_xml="<customer_return_items>" +
 					"<id>"+data_id+"</id>" +
 					"<return_id>"+return_id+"</return_id>" +
-					"<item_name>"+name+"</item_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<tax>"+tax+"</tax>" +
 					"</customer_return_items>";	
 			var discard_xml="<discarded>" +
 					"<product_name>"+name+"</product_name>" +

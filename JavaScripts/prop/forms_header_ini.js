@@ -3060,6 +3060,14 @@ function form108_header_ini()
 	var name_filter=filter_fields.elements[1];
 	var status_filter=filter_fields.elements[2];
 	
+	var update_order_button=filter_fields.elements['update_orders'];
+	$(update_order_button).off('click');	
+	$(update_order_button).on('click',function () 
+	{
+		$("#modal61").dialog("open");
+		worker_update_orders_status();
+	});
+	
 	var order_data="<sale_orders>" +
 			"<id></id>" +
 			"</sale_orders>";

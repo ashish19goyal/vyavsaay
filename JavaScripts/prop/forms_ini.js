@@ -1191,13 +1191,17 @@ function form15_ini()
 				"<total></total>" +
 				"<return_date></return_date>" +
 				"<tax></tax>" +
-				"<type>product</type>" +
+				"<order_id></order_id>"+
+				"<order_num></order_num>"+
+				"<channel></channel>"+
 				"<transaction_id></transaction_id>" +
+				"<status></status>"+
 				"</customer_returns>";
 		var return_items_column="<customer_return_items>" +
 				"<id></id>" +
 				"<return_id exact='yes'>"+data_id+"</return_id>" +
 				"<item_name></item_name>" +
+				"<item_desc></item_desc>" +
 				"<batch></batch>" +
 				"<notes></notes>" +
 				"<quantity></quantity>" +
@@ -1205,6 +1209,7 @@ function form15_ini()
 				"<refund_amount></refund_amount>" +
 				"<exchange_batch></exchange_batch>" +
 				"<saleable></saleable>" +
+				"<storage></storage>"+
 				"<tax></tax>" +
 				"</customer_return_items>";
 	
@@ -1215,11 +1220,14 @@ function form15_ini()
 			
 			for (var i in return_results)
 			{
-				filter_fields.elements[1].value=return_results[i].customer;
-				filter_fields.elements[2].value=get_my_past_date(return_results[i].return_date);
-				filter_fields.elements[3].value=data_id;
-				filter_fields.elements[4].value=return_results[i].transaction_id;
-				var save_button=filter_fields.elements[5];
+				filter_fields.elements['customer'].value=return_results[i].customer;
+				filter_fields.elements['date'].value=get_my_past_date(return_results[i].return_date);
+				filter_fields.elements['return_id'].value=data_id;
+				filter_fields.elements['t_id'].value=return_results[i].transaction_id;
+				filter_fields.elements['order_id'].value=return_results[i].order_id;
+				filter_fields.elements['order_num'].value=return_results[i].order_num;
+				filter_fields.elements['channel'].value=return_results[i].channel;				
+				var save_button=filter_fields.elements['save'];
 				
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
@@ -1240,41 +1248,34 @@ function form15_ini()
 		
 			fetch_requested_data('',return_items_column,function(results)
 			{
-				var message_string="Returns Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
-				
 				results.forEach(function(result)
 				{
-					message_string+="\nItem: "+result.item_name;
-					message_string+=" Quantity: "+result.quantity;
-					
-					var rowsHTML="";
 					var id=result.id;
-					rowsHTML+="<tr>";
+					var rowsHTML="<tr>";
 					rowsHTML+="<form id='form15_"+id+"'></form>";
-						rowsHTML+="<td data-th='Product Name'>";
-							rowsHTML+="<textarea readonly='readonly' form='form15_"+id+"'>"+result.item_name+"</textarea>";
+						rowsHTML+="<td data-th='Item'>";
+							rowsHTML+="<input type='hidden' form='form15_"+id+"'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.item_name+"'>";
+							rowsHTML+="<br><textarea readonly='readonly' form='form15_"+id+"'>"+result.item_desc+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Batch'>";
 							rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.batch+"'>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Notes'>";
-							rowsHTML+="<textarea readonly='readonly' form='form15_"+id+"'>"+result.notes+"</textarea>";
-						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
 							rowsHTML+="<input type='number' readonly='readonly' form='form15_"+id+"' value='"+result.quantity+"' step='any'>";
-							rowsHTML+="</br>Saleable: <input type='checkbox' readonly='readonly' form='form15_"+id+"' "+result.saleable+">";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Type'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.type+"'></br>";
+							rowsHTML+="Saleable: <input type='checkbox' readonly='readonly' form='form15_"+id+"' "+result.saleable+">";
+							rowsHTML+="<br>Type: <input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.type+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Details'>";
 							if(result.type=='refund')
 							{
 								rowsHTML+="Amount <input type='number' readonly='readonly' step='any' form='form15_"+id+"' value='"+result.refund_amount+"'>";
-								message_string+=" Refund Rs: "+result.refund_amount;
 							}
 							else
 							{
 								rowsHTML+="Batch <input type='text' readonly='readonly' form='form15_"+id+"' value='"+result.exchange_batch+"'>";
-								message_string+=" Exchanged";
 							}
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
@@ -1293,17 +1294,6 @@ function form15_ini()
 						event.preventDefault();
 					});
 				});
-				
-				message_string+="\nTotal: "+filter_fields.elements[3].value;
-				message_string=encodeURIComponent(message_string);
-				
-				var subject="Returns Bill from "+get_session_var('title');
-				$('#form15_share').show();
-				$('#form15_share').click(function()
-				{
-					modal44_action(filter_fields.elements[1].value,subject,message_string);
-				});
-				
 				hide_loader();
 			});
 		});
@@ -4361,7 +4351,7 @@ function form60_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form60_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Item'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form60_"+result.id+"' value='"+result.name+"'>";
+						rowsHTML+="<textarea readonly='readonly' form='form60_"+result.id+"'>"+result.name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Attribute'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form60_"+result.id+"' value='"+result.attribute+"'>";

@@ -501,6 +501,7 @@ function form15_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<return_id>"+row.return_id+"</return_id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
+				"<item_desc>"+row.item_desc+"</item_desc>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<refund_amount>"+row.refund_amount+"</refund_amount>" +
 				"<exchange_batch>"+row.exchange_batch+"</exchange_batch>" +

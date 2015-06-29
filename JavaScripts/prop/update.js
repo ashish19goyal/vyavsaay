@@ -970,11 +970,9 @@ function form15_update_form()
 	{
 		var form=document.getElementById("form15_master");
 		
-		var customer=form.elements[1].value;
-		var return_date=get_raw_time(form.elements[2].value);
-		
-		var message_string="Returns Bill from:"+get_session_var('title')+"\nAddress: "+get_session_var('address');
-		
+		var customer=form.elements['custoemr'].value;
+		var return_date=get_raw_time(form.elements['date'].value);
+				
 		var tax=0;
 		var total=0;
 		
@@ -983,31 +981,13 @@ function form15_update_form()
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
 			
-			message_string+="\nItem: "+subform.elements[0].value;
-			message_string+=" Quantity: "+subform.elements[3].value;
-			
 			if(subform.elements[5].value=='refund')
 			{	
-				total+=parseFloat(subform.elements[6].value);
-				message_string+=" Refund Rs: "+subform.elements[6].value;
+				total+=parseFloat(subform.elements[7].value);
+				tax+=parseFloat(subform.elements[8].value);		
 			}
-			else
-			{
-				message_string+=" Exchanged";
-			}
-			tax+=parseFloat(subform.elements[7].value);
-			
 		});
-		
-		message_string+="\nTotal: "+total;
-		
-		var subject="Returns Bill from: "+get_session_var('title');
-		$('#form15_share').show();
-		$('#form15_share').click(function()
-		{
-			modal44_action(customer,subject,message_string);
-		});
-		
+				
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 					"<td>Refund:</td>" +
 					"<td>Rs. "+total+"</td>" +
@@ -1015,8 +995,11 @@ function form15_update_form()
 					"</tr>";
 		$('#form15_foot').html(total_row);
 
-		var data_id=form.elements[3].value;
-		var transaction_id=form.elements[4].value;
+		var data_id=form.elements['return_id'].value;
+		var order_id=form.elements['order_id'].value;
+		var order_num=form.elements['order_num'].value;
+		var channel=form.elements['channel'].value;
+		var transaction_id=form.elements['t_id'].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<customer_returns>" +
@@ -1024,7 +1007,9 @@ function form15_update_form()
 					"<customer>"+customer+"</customer>" +
 					"<return_date>"+return_date+"</return_date>" +
 					"<total>"+total+"</total>" +
-					"<type>product</type>" +
+					"<order_id>"+order_id+"</order_id>" +
+					"<order_num>"+order_num+"</order_num>" +
+					"<channel>"+channel+"</channel>" +
 					"<tax>"+tax+"</tax>" +
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -1034,7 +1019,7 @@ function form15_update_form()
 					"<tablename>customer_returns</tablename>" +
 					"<link_to>form16</link_to>" +
 					"<title>Updated</title>" +
-					"<notes>Returns from customer "+customer+"</notes>" +
+					"<notes>Returns for order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var transaction_xml="<transactions>" +
@@ -1085,14 +1070,14 @@ function form15_update_form()
 				{
 					server_update_simple_func(payment_xml,function()
 					{
-						modal28_action(payments[y]);
+						//modal28_action(payments[y]);
 					});
 				}
 				else
 				{
 					local_update_simple_func(payment_xml,function()
 					{
-						modal28_action(payments[y]);
+						//modal28_action(payments[y]);
 					});
 				}
 				break;

@@ -387,6 +387,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<return_id index='yes' type='BIGINT'></return_id>
 			<item_name index='yes' type="TEXT"></item_name>
+			<item_desc index='yes' type="TEXT"></item_desc>
 			<batch index='yes' type="TEXT"></batch>
 			<notes index='yes' type="TEXT"></notes>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>

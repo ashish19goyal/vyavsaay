@@ -980,19 +980,21 @@ function form15_create_item(form)
 {
 	if(is_create_access('form15'))
 	{
-		var return_id=document.getElementById("form15_master").elements[3].value;
+		var return_id=document.getElementById("form15_master").elements['return_id'].value;
 		
-		var name=form.elements[0].value;
-		var batch=form.elements[1].value;
-		var notes=form.elements[2].value;
-		var quantity=form.elements[3].value;
+		var name=form.elements[1].value;
+		var desc=form.elements[2].value;
+		var batch=form.elements[3].value;
+		var quantity=form.elements[4].value;
 		var saleable='unchecked';
-		if(form.elements[4].checked)
+		if(form.elements[5].checked)
 			saleable='checked';
-		var type=form.elements[5].value;
-		var total_batch=form.elements[6].value;
-		var tax=form.elements[7].value;
-		var data_id=form.elements[8].value;
+		var type=form.elements[6].value;
+		var total_batch=form.elements[7].value;
+		var tax=form.elements[8].value;
+		var data_id=form.elements[9].value;
+		var save_button=form.elements[12];
+		var del_button=form.elements[13];
 		
 		var storage=get_session_var('sales_return_store');
 		
@@ -1002,6 +1004,7 @@ function form15_create_item(form)
 				"<id>"+data_id+"</id>" +
 				"<return_id>"+return_id+"</return_id>" +
 				"<item_name>"+name+"</item_name>" +
+				"<item_desc>"+desc+"</item_desc>" +
 				"<notes>"+notes+"</notes>" +
 				"<batch>"+batch+"</batch>" +
 				"<quantity>"+quantity+"</quantity>" +
@@ -1040,6 +1043,7 @@ function form15_create_item(form)
 					"<source>sale return</source>" +
 					"<source_link>form15</source_link>" +
 					"<quantity>"+quantity+"</quantity>" +
+					"<storage>"+storage+"</storage>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</discarded>";
 			if(is_online())
@@ -1052,18 +1056,16 @@ function form15_create_item(form)
 			}
 		}
 		
-		for(var i=0;i<8;i++)
+		for(var i=0;i<9;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[12];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form15_delete_item(del_button);
 		});
 
-		var save_button=form.elements[11];
 		$(save_button).off('click');
 
 	}
@@ -1084,9 +1086,8 @@ function form15_create_form()
 	{
 		var form=document.getElementById("form15_master");
 		
-		var customer=form.elements[1].value;
-		var return_date=get_raw_time(form.elements[2].value);
-		var message_string="Returns Bill from:"+encodeURIComponent(get_session_var('title'))+"\nAddress: "+get_session_var('address');
+		var customer=form.elements['customer'].value;
+		var return_date=get_raw_time(form.elements['date'].value);
 		
 		var tax=0;
 		var total=0;
@@ -1095,30 +1096,14 @@ function form15_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			
-			message_string+="\nItem: "+subform.elements[0].value;
-			message_string+=" Quantity: "+subform.elements[3].value;
-			
+				
 			if(subform.elements[5].value=='refund')
 			{	
-				total+=parseFloat(subform.elements[6].value);
-				message_string+=" Refund Rs: "+subform.elements[6].value;
-			}
-			else
-			{
-				message_string+=" Exchanged";
-			}
-			tax+=parseFloat(subform.elements[7].value);
+				total+=parseFloat(subform.elements[7].value);
+				tax+=parseFloat(subform.elements[8].value);
+			}			
 		});
-		
-		message_string+="\nTotal: "+total;
-		var subject="Returns Bill from "+get_session_var('title');
-		$('#form15_share').show();
-		$('#form15_share').click(function()
-		{
-			modal44_action(customer,subject,message_string);
-		});
-				
+						
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 			"<td>Refund:</td>" +
 			"<td>Rs. "+total+"</td>" +
@@ -1126,8 +1111,12 @@ function form15_create_form()
 			"</tr>";
 		$('#form15_foot').html(total_row);
 		
-		var data_id=form.elements[3].value;
-		var transaction_id=form.elements[4].value;
+		var data_id=form.elements['return_id'].value;
+		var order_id=form.elements['order_id'].value;
+		var order_num=form.elements['order_num'].value;
+		var channel=form.elements['channel'].value;
+		var transaction_id=form.elements['t_id'].value;
+		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
 		
 		var data_xml="<customer_returns>" +
@@ -1135,8 +1124,10 @@ function form15_create_form()
 					"<customer>"+customer+"</customer>" +
 					"<return_date>"+return_date+"</return_date>" +
 					"<total>"+total+"</total>" +
-					"<type>product</type>" +
 					"<tax>"+tax+"</tax>" +
+					"<order_id>"+order_id+"</order_id>" +
+					"<order_num>"+order_num+"</order_num>" +
+					"<channel>"+channel+"</channel>" +
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</customer_returns>";
@@ -1145,7 +1136,7 @@ function form15_create_form()
 					"<tablename>customer_returns</tablename>" +
 					"<link_to>form16</link_to>" +
 					"<title>Saved</title>" +
-					"<notes>Returns from customer "+customer+"</notes>" +
+					"<notes>Returns for order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var transaction_xml="<transactions>" +
@@ -1188,7 +1179,7 @@ function form15_create_form()
 			server_create_simple(pt_xml);
 			server_create_simple_func(payment_xml,function()
 			{
-				modal28_action(pt_tran_id);
+				//modal28_action(pt_tran_id);
 			});
 		}
 		else
@@ -1198,11 +1189,10 @@ function form15_create_form()
 			local_create_simple(pt_xml);
 			local_create_simple_func(payment_xml,function()
 			{
-				modal28_action(pt_tran_id);
+				//modal28_action(pt_tran_id);
 			});
 		}
 		
-		var save_button=form.elements[5];
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
 		{

@@ -654,6 +654,10 @@
 		SMS are disabled for this account.
 	</div>
 
+	<div id="modal61" title="Updating Order Status">
+		Please wait while we update the status of the processed orders.
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form'>
 			<fieldset>

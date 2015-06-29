@@ -86,8 +86,8 @@ function form14_import_template()
 */
 function form15_import_template()
 {
-	var data_array=['id','return_id','item_name','quantity','refund_amount','exchange_batch',
-	                'saleable','type','batch','notes','tax'];
+	var data_array=['id','return_id','item_name','item_desc','quantity','refund_amount','exchange_batch',
+	                'saleable','type','batch','tax'];
 	my_array_to_csv(data_array);
 };
 
