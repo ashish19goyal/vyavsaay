@@ -1304,7 +1304,7 @@ function form154_print_form()
 
 		$(table_copy).find('tbody>tr').each(function()
 		{
-			new_table_row+=$(this).find('td:nth-child(2)').html()+" "+$(this).find('td:nth-child(3)').html()+" NOS., ";
+			new_table_row+=$(this).find('td:nth-child(2)').html()+" "+$(this).find('td:nth-child(3)').html()+", ";
 			new_from_date=$(this).find('td:nth-child(4)').html();
 			new_to_date=$(this).find('td:nth-child(5)').html();
 			new_days=$(this).find('td:nth-child(6)').html();
