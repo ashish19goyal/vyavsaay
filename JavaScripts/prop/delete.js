@@ -5305,7 +5305,7 @@ function form158_delete_item(button)
 		{
 			var master_form=document.getElementById("form158_master");
 			var bill_id=master_form.elements['bill_id'].value;
-			var imported=filter_fields.elements['imported'].checked;
+			var imported=master_form.elements['imported'].checked;
 
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
