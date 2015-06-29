@@ -4367,7 +4367,7 @@ function form60_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form60_"+result.id+"' value='"+result.attribute+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Value'>";
-						rowsHTML+="<textarea readonly='readonly' form='form60_"+result.id+"'>"+result.value+"</textarea>";
+						rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form60_"+result.id+"'>"+result.value+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form60_"+result.id+"' value='"+result.id+"'>";
