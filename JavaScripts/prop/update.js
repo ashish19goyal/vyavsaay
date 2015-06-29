@@ -7813,10 +7813,10 @@ function form153_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			total+=Math.round(parseFloat(subform.elements[6].value));
-			amount+=Math.round(parseFloat(subform.elements[5].value));
-			discount+=parseFloat(subform.elements[7].value);
-			tax+=parseFloat(subform.elements[8].value);
+			tax+=parseFloat(subform.elements[5].value);
+			amount+=Math.round(parseFloat(subform.elements[6].value));
+			total+=Math.round(parseFloat(subform.elements[7].value));
+			discount+=parseFloat(subform.elements[8].value);
 		});
 		
 		discount+=parseFloat(document.getElementById('form153_discount').value);
@@ -7922,30 +7922,30 @@ function form154_update_form()
 			var subform=document.getElementById(subform_id);
 			if(hiring)
 			{
-				amount+=Math.round(parseFloat(subform.elements[7].value));
-				total+=Math.round(parseFloat(subform.elements[8].value));
-				discount+=parseFloat(subform.elements[9].value);
-				tax+=parseFloat(subform.elements[10].value);
+				tax+=parseFloat(subform.elements[7].value);
+				amount+=Math.round(parseFloat(subform.elements[8].value));
+				total+=Math.round(parseFloat(subform.elements[9].value));
+				discount+=parseFloat(subform.elements[10].value);
 			}
 			else if(bill_type=='Installation' || bill_type=='Repair')
 			{			
-				amount+=Math.round(parseFloat(subform.elements[3].value));
-				total+=Math.round(parseFloat(subform.elements[4].value));
-				discount+=parseFloat(subform.elements[5].value);
-				tax+=parseFloat(subform.elements[6].value);
+				tax+=parseFloat(subform.elements[3].value);
+				amount+=Math.round(parseFloat(subform.elements[4].value));
+				total+=Math.round(parseFloat(subform.elements[5].value));
+				discount+=parseFloat(subform.elements[6].value);
 			}
 			else
 			{			
-				amount+=Math.round(parseFloat(subform.elements[3].value));
-				total+=Math.round(parseFloat(subform.elements[4].value));
-				discount+=parseFloat(subform.elements[5].value);
-				tax+=parseFloat(subform.elements[6].value);
+				tax+=parseFloat(subform.elements[3].value);
+				amount+=Math.round(parseFloat(subform.elements[4].value));
+				total+=Math.round(parseFloat(subform.elements[5].value));
+				discount+=parseFloat(subform.elements[6].value);
 			}			
 		});
 		
-		discount+=parseFloat(document.getElementById('form154_discount').value);
+		discount=parseFloat(document.getElementById('form154_discount').value);
 		cartage=parseFloat(document.getElementById('form154_cartage').value);
-		tax-=(discount*0.125);
+		//tax-=(discount*0.125);
 		total=Math.round(amount-discount+tax+cartage);
 		
 		var data_id=form.elements[8].value;
