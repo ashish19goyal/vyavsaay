@@ -4816,7 +4816,7 @@ function report66_ini()
 					total_calls+=1;				
 					fetch_requested_data('',item_data,function(items)
 					{
-						console.log(items);
+						//console.log(items);
 						total_calls-=1;
 						for(var i=0;i<items.length;i++)
 						{

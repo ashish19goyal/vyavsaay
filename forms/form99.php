@@ -1,5 +1,5 @@
 <div id='form99' class='function_detail'>
-	<form id='form99_master'>
+	<form id='form99_master' autocomplete="off">
 		<fieldset>
 				<input type="button" value="Delete Offline Storage" class='generic_icon' onclick="modal121_action();">
 				<input type="button" value="Server Db backup" class='generic_icon' onclick="backup_server_db();">

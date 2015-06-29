@@ -1,5 +1,5 @@
 <div id='form144' class='function_detail'>
-	<form id='form144_master'>
+	<form id='form144_master' autocomplete="off">
 		<fieldset>
 			<label>Project Name<br><input type='text' required></label>
 			<label>Budget Estimate<br>Rs. <input type='number' readonly='readonly'></label>

@@ -98,7 +98,7 @@ function form15_import_template()
 */
 function form16_import_template()
 {
-	var data_array=['id','customer','return_date','total','type','tax','transaction_id'];
+	var data_array=['id','order_num','order_id','channel','customer','return_date','total','tax','transaction_id','status'];
 	my_array_to_csv(data_array);
 };
 
@@ -495,9 +495,8 @@ function form90_import_template()
 */
 function form91_import_template()
 {
-	var data_array=['id','bill_id','item_name','quantity','unit_price','mrp','amount',
-	                'total','discount','offer','type','batch','notes',
-	                'staff','tax','free_with'];
+	var data_array=['id','bill_id','item_name','item_desc','quantity','unit_price','mrp','amount',
+	                'total','freight','batch','tax','storage'];
 	my_array_to_csv(data_array);
 };
 

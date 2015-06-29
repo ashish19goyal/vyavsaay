@@ -1,5 +1,5 @@
 <div id='form51' class='function_detail'>
-	<form id='form51_master'>
+	<form id='form51_master' autocomplete="off">
 		<fieldset>
 			<label>User Name<br><input type='text'></label>
 			<label>Password<br><input type='password'></label>

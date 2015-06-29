@@ -1,5 +1,5 @@
 <div id='form80' class='function_detail'>
-	<form id='form80_master'>
+	<form id='form80_master' autocomplete="off">
 		<fieldset>
 			<label>Object type: <input type='text' required></label>
 			<label>

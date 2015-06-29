@@ -578,10 +578,13 @@ function form16_import(data_array,import_type)
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
+				"<order_num>"+row.order_num+"</order_num>" +
+				"<order_id>"+row.order_id+"</order_id>" +
+				"<channel>"+row.channel+"</channel>" +
 				"<customer>"+row.customer+"</customer>" +
 				"<return_date>"+get_raw_time(row.return_date)+"</return_date>" +
 				"<total>"+row.total+"</total>" +
-				"<type>"+row.type+"</type>" +
+				"<status>"+row.status+"</status>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
@@ -2707,19 +2710,16 @@ function form91_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
+				"<item_desc>"+row.item_desc+"</item_desc>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<unit_price>"+row.unit_price+"</unit_price>" +
 				"<mrp>"+row.mrp+"</mrp>" +
 				"<amount>"+row.amount+"</amount>" +
 				"<total>"+row.total+"</total>" +
-				"<discount>"+row.discount+"</discount>" +
-				"<offer>"+row.offer+"</offer>" +
-				"<type>"+row.type+"</type>" +
+				"<freight>"+row.freight+"</freight>" +
 				"<batch>"+row.batch+"</batch>" +
-				"<notes>"+row.notes+"</notes>" +
-				"<staff>"+row.staff+"</staff>" +
 				"<tax>"+row.tax+"</tax>" +
-				"<free_with>"+row.free_with+"</free_with>" +
+				"<storage>"+row.storage+"</storage>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});

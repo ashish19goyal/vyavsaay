@@ -325,6 +325,7 @@
 	"orders":"Orders",
 	"manage_values_lists":"Manage Values Lists",
 	"pickup_deliveries":"Pickup & Deliveries",
-	"enter_purchases_laundry":"Enter Purchases(laundry)"
+	"enter_purchases_laundry":"Enter Purchases(laundry)",
+	"adjust_inventory":"Adjust Inventory"
   }
 }

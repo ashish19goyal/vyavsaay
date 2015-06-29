@@ -1,5 +1,5 @@
 <div id='form148' class='function_detail'>
-	<form id='form148_master'>
+	<form id='form148_master' autocomplete="off">
 		<fieldset>
 			<label>Role<br><input type='text' required></label>
 			<label>	<input type='hidden' name='id'></label>

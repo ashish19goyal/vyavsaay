@@ -465,8 +465,8 @@ function hide_all()
  */
 function show_loader()
 {
-		$("#loading_icon").show();
-		$("#transparent_layer").show();
+	$("#loading_icon").show();
+	$("#transparent_layer").show();
 }
 
 /**

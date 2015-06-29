@@ -1,5 +1,5 @@
 <div id='form114' class='function_detail'>
-	<form id='form114_master'>
+	<form id='form114_master' autocomplete="off">
 		<fieldset>	    
 		    <label>Supplier	<img src='./images/add_image.png' class='add_image' id='form114_add_supplier'><br>
 			<input type='text' required></label>

@@ -1,6 +1,6 @@
 <div id='form150' class='function_detail'>
 	<div class='feed_item'>
-		<form id='form150_master'>
+		<form id='form150_master' autocomplete="off">
 			<fieldset>
 				<input style='width:80%' type='text' required placeholder='Select Project'><br>
 				<textarea required placeholder='details...' class='feed_detail'></textarea><br>

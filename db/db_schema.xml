@@ -164,6 +164,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<bill_id index='yes' type="BIGINT"></bill_id>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<unit index='no' type='VARCHAR(30)'></unit>
 			<p_quantity index='no' type="DECIMAL(12,2)"></p_quantity>
 			<f_quantity index='no' type="DECIMAL(12,2)"></f_quantity>
 			<product_name index='yes' type="TEXT"></product_name>
@@ -280,6 +281,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<order_num index='yes' type="VARCHAR(20)"></order_num>
 			<bill_id index='yes' type="BIGINT"></bill_id>
+			<return_id index='yes' type="BIGINT"></return_id>
 			<channel index='yes' type="TEXT"></channel>
 			<customer_name index='yes' type="TEXT"></customer_name>
 			<pincode index='yes' type="TEXT"></pincode>
@@ -321,6 +323,7 @@
 			<offer index='no' type="TEXT"></offer>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<cartage index='no' type="DECIMAL(12,2)"></cartage>
+			<freight index='no' type="DECIMAL(12,2)"></freight>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<service_tax index='no' type="DECIMAL(12,2)"></service_tax>
 			<channel_charges index='no' type="DECIMAL(12,2)"></channel_charges>
@@ -339,6 +342,7 @@
 			<item_name index='yes' type="TEXT"></item_name>
 			<item_desc index='no' type="TEXT"></item_desc>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<unit index='no' type='VARCHAR(30)'></unit>
 			<p_quantity index='no' type="DECIMAL(12,2)"></p_quantity>
 			<f_quantity index='no' type="DECIMAL(12,2)"></f_quantity>
 			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
@@ -371,7 +375,11 @@
 			<return_date index='yes' type="BIGINT"></return_date>
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
+			<status index="yes" type="VARCHAR(10)"></status><!-- cancelled -->
 			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<order_id index='yes' type="BIGINT"></order_id>
+			<order_num index='yes' type="TEXT"></order_num>
+			<channel index='yes' type="TEXT"></channel>
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</customer_returns>
@@ -434,7 +442,7 @@
 			<batch index='yes' type="TEXT"></batch>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<product_name index='yes' type="TEXT"></product_name>
-			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale_return-->
+			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale_return/manual-->
 			<source_id index='yes' type="BIGINT"></source_id>
 			<storage index='yes' type="TEXT"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>

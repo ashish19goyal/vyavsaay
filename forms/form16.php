@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<form id='form16_header'></form>
-					<th>Return ID <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form16_header'></th>
+					<th>Order # <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form16_header'></th>
 					<th>Customer <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form16_header'></th>
 					<th>Return Date</th>
 					<th>Return Amount</th>

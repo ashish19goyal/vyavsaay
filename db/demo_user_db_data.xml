@@ -2696,6 +2696,17 @@
 			<tables>--supplier_bills--supplier_bill_items--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form193</name>
+			<display_name>adjust_inventory</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--inventory_adjust--temp_inventory_adjust--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -5018,11 +5029,22 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form192</element_id>
 			<element_name>enter_purchases_laundry</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form193</element_id>
+			<element_name>adjust_inventory</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

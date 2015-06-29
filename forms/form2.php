@@ -1,5 +1,5 @@
 <div id='form2' class='function_detail'>
-	<form id='form2_master'>
+	<form id='form2_master' autocomplete="off">
 		<fieldset>
 			<label>Name<br><input type='text' required></label>
 			<label>Description<br><textarea class='widebox'></textarea></label>

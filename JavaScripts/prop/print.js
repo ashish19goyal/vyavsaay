@@ -1253,7 +1253,7 @@ function form154_print_form()
 		disc_amount_nodes[0].parentNode.removeChild(disc_amount_nodes[0]);
 	}
 
-	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh").remove();
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh,v1").remove();
 	$(table_copy).find('input,textarea').each(function(index)
 	{
 		$(this).replaceWith($(this).val());

@@ -1,5 +1,5 @@
 <div id='form186' class='function_detail'>
-	<form id='form186_master'>
+	<form id='form186_master' autocomplete="off">
 		<fieldset>
 			<label>Production Plan<br><input type='text' required></label>
 			<label>From<br><input type='text' required></label>

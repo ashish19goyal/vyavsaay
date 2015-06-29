@@ -1,6 +1,6 @@
 <div id='form104' class='function_detail'>
 <input type='button' value='Switch view' class='generic_icon' onclick='form104_switch_view();'>
-	<form id='form104_master'>
+	<form id='form104_master' autocomplete="off">
 		<fieldset>
 			<label>Project Name <input type='text' required></label>
 				<input type='hidden' name='project_id'>

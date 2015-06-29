@@ -1,5 +1,5 @@
 <div id='form111' class='function_detail'>
-	<form id='form111_master'>
+	<form id='form111_master' autocomplete="off">
 		<fieldset>
 			<label>Report Name<br><input type='text' required></label>
 			<label>Description<br><textarea></textarea></label>

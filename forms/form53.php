@@ -6,7 +6,7 @@
 					<th>Bill Number <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form53_header'></th>
 					<th>Supplier <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form53_header'></th>
 					<th>Bill Date</th>
-					<th>Total (in Rs.)</th>
+					<th>Total</th>
 					<th>Notes</th>
 					<th>
 						<input type='button' form='form53_header' value='EXPORT' class='export_icon'>

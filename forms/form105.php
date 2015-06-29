@@ -1,5 +1,5 @@
 <div id='form105' class='function_detail'>
-	<form id='form105_master'>
+	<form id='form105_master' autocomplete="off">
 		<fieldset>
 			<label>Table Name<br><input type='text' required></label>
 			<label>Record ID<br><input type='text' required value='all'></label>

@@ -298,6 +298,14 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>customer_returns</tablename>
+			<listname>status</listname>
+			<name>cancelled</name>
+			<value>Cancelled</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>production_plan_items</tablename>
 			<listname>status</listname>
 			<name>pending</name>

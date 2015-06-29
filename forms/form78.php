@@ -1,5 +1,5 @@
 <div id='form78' class='function_detail'>
-	<form id='form78_master'>
+	<form id='form78_master' autocomplete="off">
 		<fieldset>
 			<label>Newsletter: <input type='text' required></label>
 			<label>SMS content: <textarea required></textarea></label>

@@ -396,22 +396,23 @@ function form16_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[0].value;
-			var customer=form.elements[1].value;
-			var total=form.elements[3].value;
-			var transaction_id=form.elements[6].value;
+			var order_num=form.elements[0].value;
+			var customer=form.elements[2].value;
+			var data_id=form.elements[5].value;
+			var transaction_id=form.elements[8].value;
+			var edit_button=form.elements[6].value;
+
 			var last_updated=get_my_time();
 			var return_xml="<customer_returns>" +
 						"<id>"+data_id+"</id>" +
-						"<customer>"+customer+"</customer>" +
-						"<total>"+total+"</total>" +
-						"</customer_returns>";	
+						"<status>cancelled</status>" +
+						"</customer_returns>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>customer_returns</tablename>" +
 						"<link_to>form16</link_to>" +
-						"<title>Deleted</title>" +
-						"<notes>Return no "+data_id+" for customer "+customer+"</notes>" +
+						"<title>Cancelled</title>" +
+						"<notes>Return for order # "+order_num+" for customer "+customer+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
 			var transaction_xml="<transactions>" +
@@ -420,15 +421,18 @@ function form16_delete_item(button)
 	
 			if(is_online())
 			{
-				server_delete_row(return_xml,activity_xml);
+				server_update_row(return_xml,activity_xml);
 				server_delete_simple(transaction_xml);
 			}
 			else
 			{
-				local_delete_row(return_xml,activity_xml);
+				local_update_row(return_xml,activity_xml);
 				local_delete_simple(transaction_xml);
 			}	
-			$(button).parent().parent().remove();
+			$(button).parent().parent().attr('style','opacity:0.5');
+			$(button).parent().parent().attr('title','This bill was cancelled');
+			$(button).hide();
+			$(edit_button).hide();			
 	
 			var payment_xml="<payments>" +
 					"<id></id>" +
@@ -2608,11 +2612,11 @@ function form91_delete_item(button)
 	{
 		modal115_action(function()
 		{
-			var bill_id=document.getElementById("form91_master").elements[5].value;
+			var bill_id=document.getElementById("form91_master").elements['bill_id'].value;
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var data_id=form.elements[9].value;
+			var data_id=form.elements[11].value;
 					
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
@@ -5300,9 +5304,9 @@ function form158_delete_item(button)
 		modal115_action(function()
 		{
 			var master_form=document.getElementById("form158_master");
-			var bill_id=master_form.elements[6].value;
-			var imported=filter_fields.elements[5].checked;
-					
+			var bill_id=master_form.elements['bill_id'].value;
+			var imported=filter_fields.elements['imported'].checked;
+
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			

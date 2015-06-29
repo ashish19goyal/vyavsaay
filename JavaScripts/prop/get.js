@@ -212,7 +212,7 @@ function get_new_key()
 }
 
 
-function set_my_filter(filter_data,filter_element)
+function set_my_filter(filter_data,filter_element,func)
 {
 	get_single_column_data(function(data)
 	{
@@ -240,6 +240,10 @@ function set_my_filter(filter_data,filter_element)
 		form.appendChild(datalist);
 		datalist.setAttribute('id',list_id);
 		
+		if(typeof func!='undefined')
+		{
+			func();
+		}
 	},filter_data);		
 }
 

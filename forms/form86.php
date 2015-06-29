@@ -1,5 +1,5 @@
 <div id='form86' class='function_detail'>
-	<form id='form86_master'>
+	<form id='form86_master' autocomplete="off">
 		<fieldset>
 			<label>Staff Name<br><input type='text' required></label>
 			<label>Date<br><input type='text' required></label>
