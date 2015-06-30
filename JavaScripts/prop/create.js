@@ -11052,14 +11052,14 @@ function form153_create_item(form)
 		var quantity=form.elements[2].value;
 		var unit=form.elements[3].value;
 		var price=form.elements[4].value;
-		var tax=form.elements[5].value;
-		var amount=form.elements[6].value;
-		var total=form.elements[7].value;
-		var discount=form.elements[8].value;
-		var data_id=form.elements[9].value;		
-		var save_button=form.elements[10];
-		var del_button=form.elements[11];
-		var type=form.elements[12];
+		//var tax=form.elements[5].value;
+		var amount=form.elements[5].value;
+		//var total=form.elements[7].value;
+		//var discount=form.elements[8].value;
+		var data_id=form.elements[6].value;		
+		var save_button=form.elements[7];
+		var del_button=form.elements[8];
+		var type=form.elements[9];
 		var last_updated=get_my_time();
 		
 		var data_xml="<quotation_items>" +
@@ -11070,10 +11070,10 @@ function form153_create_item(form)
 				"<unit_price>"+price+"</unit_price>" +
 				"<quantity>"+quantity+"</quantity>" +
 				"<amount>"+amount+"</amount>" +
-				"<total>"+total+"</total>" +
-				"<discount>"+discount+"</discount>" +
+				//"<total>"+total+"</total>" +
+				//"<discount>"+discount+"</discount>" +
 				"<type>"+type+"</type>" +
-				"<tax>"+tax+"</tax>" +
+				//"<tax>"+tax+"</tax>" +
 				"<quotation_id>"+quot_id+"</quotation_id>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</quotation_items>";	
@@ -11088,7 +11088,7 @@ function form153_create_item(form)
 		}
 
 		
-		for(var i=0;i<9;i++)
+		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -11113,30 +11113,38 @@ function form153_get_totals()
 	var amount=0;
 	var discount=0;
 	var tax=0;
-	var total=0;
-		
+
+	if(document.getElementById('form153_discount'))
+	{
+		discount=parseFloat(document.getElementById('form153_discount').value);
+		tax=parseFloat(document.getElementById('form153_tax').value);
+	}
+
 	$("[id^='save_form153']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
-		tax+=parseFloat(subform.elements[5].value);
+		//tax+=parseFloat(subform.elements[5].value);
 		
-		if(isNaN(parseFloat(subform.elements[6].value)))
+		if(isNaN(parseFloat(subform.elements[5].value)))
 			amount+=0;
 		else
-			amount+=Math.round(parseFloat(subform.elements[6].value));
-		total+=Math.round(parseFloat(subform.elements[7].value));
-		discount+=parseFloat(subform.elements[8].value);
+			amount+=Math.round(parseFloat(subform.elements[5].value));	
+		//total+=Math.round(parseFloat(subform.elements[7].value));
+		//discount+=parseFloat(subform.elements[8].value);
 	});
 
+	var total=Math.round(amount+tax-discount);
+
 	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-				"<td>Rs. "+amount+"</br>" +
-				"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
-				"Rs. "+tax+"</br>" +
-				"Rs. "+total+"</td>" +
-				"<td></td>" +
-				"</tr>";
+					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
+					"Rs. <input type='number' value='"+tax+"' step='any' id='form153_tax' class='dblclick_editable'></br>" +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+
 	$('#form153_foot').html(total_row);
 	longPressEditable($('.dblclick_editable'));
 }
@@ -11161,17 +11169,24 @@ function form153_create_form()
 		var amount=0;
 		var discount=0;
 		var tax=0;
-		var total=0;
-		
+	
+		if(document.getElementById('form153_discount'))
+		{
+			discount=parseFloat(document.getElementById('form153_discount').value);
+			tax=parseFloat(document.getElementById('form153_tax').value);
+		}
+
 		$("[id^='save_form153']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			tax+=parseFloat(subform.elements[5].value);
-			amount+=Math.round(parseFloat(subform.elements[6].value));
-			total+=Math.round(parseFloat(subform.elements[7].value));
-			discount+=parseFloat(subform.elements[8].value);
+			//tax+=parseFloat(subform.elements[5].value);
+			amount+=Math.round(parseFloat(subform.elements[5].value));
+			//total+=Math.round(parseFloat(subform.elements[7].value));
+			//discount+=parseFloat(subform.elements[8].value);
 		});
+
+		var total=Math.round(amount+tax-discount);
 
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
@@ -11211,7 +11226,7 @@ function form153_create_form()
 					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
-					"Rs. "+tax+"</br>" +
+					"Rs. <input type='number' value='"+tax+"' step='any' id='form153_tax' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
 					"</tr>";
@@ -11250,13 +11265,13 @@ function form154_create_product(form)
 		var name=form.elements[0].value;
 		var quantity=form.elements[1].value;
 		var price=form.elements[2].value;
-		var tax=form.elements[3].value;
-		var amount=form.elements[4].value;
-		var total=form.elements[5].value;
-		var discount=form.elements[6].value;
-		var data_id=form.elements[7].value;
-		var save_button=form.elements[8];
-		var del_button=form.elements[9];
+		//var tax=form.elements[3].value;
+		var amount=form.elements[3].value;
+		//var total=form.elements[5].value;
+		//var discount=form.elements[6].value;
+		var data_id=form.elements[4].value;
+		var save_button=form.elements[5];
+		var del_button=form.elements[6];
 		
 		var unit=$('#form154_unit_'+data_id).html();
 		var last_updated=get_my_time();
@@ -11269,10 +11284,10 @@ function form154_create_product(form)
 				"<quantity>"+quantity+"</quantity>" +
 				"<unit>"+unit+"</unit>"+				
 				"<amount>"+amount+"</amount>" +
-				"<total>"+total+"</total>" +
-				"<discount>"+discount+"</discount>" +
+				//"<total>"+total+"</total>" +
+				//"<discount>"+discount+"</discount>" +
 				"<type>bought</type>" +
-				"<tax>"+tax+"</tax>" +
+				//"<tax>"+tax+"</tax>" +
 				"<bill_id>"+bill_id+"</bill_id>" +
 				"<storage>"+storage+"</storage>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
@@ -11287,7 +11302,7 @@ function form154_create_product(form)
 			local_create_simple(data_xml);
 		}
 
-		for(var i=0;i<7;i++)
+		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -11320,13 +11335,13 @@ function form154_create_service(form)
 		var name=form.elements[0].value;
 		var quantity=form.elements[1].value;
 		var price=form.elements[2].value;
-		var tax=form.elements[3].value;
-		var amount=form.elements[4].value;
-		var total=form.elements[5].value;
-		var discount=form.elements[6].value;
-		var data_id=form.elements[7].value;
-		var save_button=form.elements[8];
-		var del_button=form.elements[9];
+		//var tax=form.elements[3].value;
+		var amount=form.elements[3].value;
+		//var total=form.elements[5].value;
+		//var discount=form.elements[6].value;
+		var data_id=form.elements[4].value;
+		var save_button=form.elements[5];
+		var del_button=form.elements[6];
 		
 		var unit=$('#form154_unit_'+data_id).html();
 
@@ -11341,10 +11356,10 @@ function form154_create_service(form)
 				"<quantity>"+quantity+"</quantity>" +
 				"<unit>"+unit+"</unit>"+				
 				"<amount>"+amount+"</amount>" +
-				"<total>"+total+"</total>" +
-				"<discount>"+discount+"</discount>" +
+				//"<total>"+total+"</total>" +
+				//"<discount>"+discount+"</discount>" +
 				"<type>bought</type>" +
-				"<tax>"+tax+"</tax>" +
+				//"<tax>"+tax+"</tax>" +
 				"<bill_id>"+bill_id+"</bill_id>" +
 				"<storage>"+storage+"</storage>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
@@ -11359,7 +11374,7 @@ function form154_create_service(form)
 			local_create_simple(data_xml);
 		}
 
-		for(var i=0;i<7;i++)
+		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -11400,13 +11415,13 @@ function form154_create_hiring_item(form)
 		var from_date=get_raw_time(form.elements[3].value);
 		var to_date=get_raw_time(form.elements[4].value);
 		var price=form.elements[6].value;
-		var tax=form.elements[7].value;
-		var amount=form.elements[8].value;
-		var total=form.elements[9].value;
-		var discount=form.elements[10].value;
-		var data_id=form.elements[11].value;
-		var save_button=form.elements[12];
-		var del_button=form.elements[13];
+		//var tax=form.elements[7].value;
+		var amount=form.elements[7].value;
+		//var total=form.elements[9].value;
+		//var discount=form.elements[10].value;
+		var data_id=form.elements[8].value;
+		var save_button=form.elements[9];
+		var del_button=form.elements[10];
 
 		var unit=$('#form154_unit_'+data_id).html();
 
@@ -11420,9 +11435,9 @@ function form154_create_hiring_item(form)
 				"<quantity>"+quantity+"</quantity>" +
 				"<unit>"+unit+"</unit>"+				
 				"<amount>"+amount+"</amount>" +
-				"<total>"+total+"</total>" +
-				"<discount>"+discount+"</discount>" +
-				"<tax>"+tax+"</tax>" +
+				//"<total>"+total+"</total>" +
+				//"<discount>"+discount+"</discount>" +
+				//"<tax>"+tax+"</tax>" +
 				"<bill_id>"+bill_id+"</bill_id>" +
 				"<storage>"+storage+"</storage>"+
 				"<from_date>"+from_date+"</from_date>"+
@@ -11441,7 +11456,7 @@ function form154_create_hiring_item(form)
 			local_create_simple(data_xml);
 		}
 
-		for(var i=0;i<11;i++)
+		for(var i=0;i<8;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -11472,7 +11487,14 @@ function form154_get_totals()
 	var amount=0;
 	var discount=0;
 	var tax=0;
-	var total=0;
+	var cartage=0;
+	
+	if(document.getElementById('form154_discount'))
+	{
+		discount=parseFloat(document.getElementById('form154_discount').value);
+		tax=parseFloat(document.getElementById('form154_tax').value);
+		cartage=parseFloat(document.getElementById('form154_cartage').value);
+	}
 	
 	$("[id^='save_form154']").each(function(index)
 	{
@@ -11480,41 +11502,43 @@ function form154_get_totals()
 		var subform=document.getElementById(subform_id);
 		if(hiring)
 		{
-			tax+=parseFloat(subform.elements[7].value);
-			if(isNaN(parseFloat(subform.elements[8].value)))
+			//tax+=parseFloat(subform.elements[7].value);
+			if(isNaN(parseFloat(subform.elements[7].value)))
 				amount+=0;
 			else
-				amount+=Math.round(parseFloat(subform.elements[8].value));
-			total+=Math.round(parseFloat(subform.elements[9].value));
-			discount+=parseFloat(subform.elements[10].value);
+				amount+=Math.round(parseFloat(subform.elements[7].value));
+			//total+=Math.round(parseFloat(subform.elements[9].value));
+			//discount+=parseFloat(subform.elements[10].value);
 		}
 		else if(bill_type=='Installation' || bill_type=='Repair')
 		{			
-			tax+=parseFloat(subform.elements[3].value);
-			if(isNaN(parseFloat(subform.elements[4].value)))
+			//tax+=parseFloat(subform.elements[3].value);
+			if(isNaN(parseFloat(subform.elements[3].value)))
 				amount+=0;
 			else
-				amount+=Math.round(parseFloat(subform.elements[4].value));
-			total+=Math.round(parseFloat(subform.elements[5].value));
-			discount+=parseFloat(subform.elements[6].value);
+				amount+=Math.round(parseFloat(subform.elements[3].value));
+			//total+=Math.round(parseFloat(subform.elements[5].value));
+			//discount+=parseFloat(subform.elements[6].value);
 		}
 		else
 		{			
-			tax+=parseFloat(subform.elements[3].value);
-			if(isNaN(parseFloat(subform.elements[4].value)))
+			//tax+=parseFloat(subform.elements[3].value);
+			if(isNaN(parseFloat(subform.elements[3].value)))
 				amount+=0;
 			else
-				amount+=Math.round(parseFloat(subform.elements[4].value));
-			total+=Math.round(parseFloat(subform.elements[5].value));
-			discount+=parseFloat(subform.elements[6].value);
+				amount+=Math.round(parseFloat(subform.elements[3].value));
+			//total+=Math.round(parseFloat(subform.elements[5].value));
+			//discount+=parseFloat(subform.elements[6].value);
 		}
 	});
 	
+	var total=Math.round(amount+tax-discount+cartage);
+
 	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:<disc><br>Discount: </disc><br>Tax: <br>Cartage: <br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-				"Rs. "+tax+"</br>" +
+				"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
 				"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 				"Rs. "+total+"</td>" +
 				"<td></td>" +
@@ -11525,7 +11549,7 @@ function form154_get_totals()
 				"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br><disc_amount>" +
-				"Rs. "+tax+"</br>" +
+				"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
 				"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 				"Rs. "+total+"</td>" +
 				"<td></td>" +
@@ -11538,7 +11562,7 @@ function form154_get_totals()
 				"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-				"Rs. "+tax+"</br>" +
+				"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
 				"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 				"Rs. "+total+"</td>" +
 				"<td></td>" +
@@ -11577,7 +11601,14 @@ function form154_create_form()
 		var amount=0;
 		var discount=0;
 		var tax=0;
-		var total=0;
+		var cartage=0;
+		
+		if(document.getElementById('form154_discount'))
+		{
+			discount=parseFloat(document.getElementById('form154_discount').value);
+			tax=parseFloat(document.getElementById('form154_tax').value);
+			cartage=parseFloat(document.getElementById('form154_cartage').value);
+		}
 		
 		$("[id^='save_form154']").each(function(index)
 		{
@@ -11585,26 +11616,37 @@ function form154_create_form()
 			var subform=document.getElementById(subform_id);
 			if(hiring)
 			{
-				tax+=parseFloat(subform.elements[7].value);
-				amount+=Math.round(parseFloat(subform.elements[8].value));
-				total+=Math.round(parseFloat(subform.elements[9].value));
-				discount+=parseFloat(subform.elements[10].value);
+				//tax+=parseFloat(subform.elements[7].value);
+				if(isNaN(parseFloat(subform.elements[7].value)))
+					amount+=0;
+				else
+					amount+=Math.round(parseFloat(subform.elements[7].value));
+				//total+=Math.round(parseFloat(subform.elements[9].value));
+				//discount+=parseFloat(subform.elements[10].value);
 			}
 			else if(bill_type=='Installation' || bill_type=='Repair')
 			{			
-				tax+=parseFloat(subform.elements[3].value);
-				amount+=Math.round(parseFloat(subform.elements[4].value));
-				total+=Math.round(parseFloat(subform.elements[5].value));
-				discount+=parseFloat(subform.elements[6].value);
+				//tax+=parseFloat(subform.elements[3].value);
+				if(isNaN(parseFloat(subform.elements[3].value)))
+					amount+=0;
+				else
+					amount+=Math.round(parseFloat(subform.elements[3].value));
+				//total+=Math.round(parseFloat(subform.elements[5].value));
+				//discount+=parseFloat(subform.elements[6].value);
 			}
 			else
 			{			
-				tax+=parseFloat(subform.elements[3].value);
-				amount+=Math.round(parseFloat(subform.elements[4].value));
-				total+=Math.round(parseFloat(subform.elements[5].value));
-				discount+=parseFloat(subform.elements[6].value);
+				//tax+=parseFloat(subform.elements[3].value);
+				if(isNaN(parseFloat(subform.elements[3].value)))
+					amount+=0;
+				else
+					amount+=Math.round(parseFloat(subform.elements[3].value));
+				//total+=Math.round(parseFloat(subform.elements[5].value));
+				//discount+=parseFloat(subform.elements[6].value);
 			}
 		});
+
+		var total=Math.round(amount+tax-discount+cartage);
 
 		var data_id=form.elements[8].value;
 		var transaction_id=form.elements[9].value;
@@ -11718,7 +11760,7 @@ function form154_create_form()
 					"<td>Amount:<disc><br>Discount: </disc><br>Tax: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-					"Rs. "+tax+"</br>" +
+					"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
 					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -11729,7 +11771,7 @@ function form154_create_form()
 					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br><disc_amount>" +
-					"Rs. "+tax+"</br>" +
+					"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
 					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -11742,7 +11784,7 @@ function form154_create_form()
 					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-					"Rs. "+tax+"</br>" +
+					"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
 					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -11939,13 +11981,12 @@ function form158_create_item(form)
 		var name=form.elements[0].value;
 		var quantity=form.elements[1].value;
 		var price=form.elements[2].value;
-		var tax=form.elements[3].value;
-		var total=form.elements[4].value;
-		var amount=total-tax;		
-		var storage=form.elements[5].value;
-		var data_id=form.elements[6].value;
-		var save_button=form.elements[7];
-		var del_button=form.elements[8];
+		var amount=form.elements[3].value;
+		//var amount=total-tax;
+		var storage=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var save_button=form.elements[6];
+		var del_button=form.elements[7];
 		var last_updated=get_my_time();
 		var unit=$('#form158_unit_'+data_id).html();
 	
@@ -11955,8 +11996,8 @@ function form158_create_item(form)
 				"<batch>"+name+"</batch>" +
 				"<quantity>"+quantity+"</quantity>" +
 				"<unit>"+unit+"</unit>"+				
-				"<total>"+total+"</total>" +
-				"<tax>"+tax+"</tax>" +
+				//"<total>"+total+"</total>" +
+				//"<tax>"+tax+"</tax>" +
 				"<amount>"+amount+"</amount>" +
 				"<unit_price>"+price+"</unit_price>" +
 				"<bill_id>"+bill_id+"</bill_id>" +
@@ -11973,7 +12014,7 @@ function form158_create_item(form)
 			local_create_simple(data_xml);
 		}
 				
-		for(var i=0;i<6;i++)
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -12023,8 +12064,6 @@ function form158_create_item(form)
 
 function form158_get_totals()
 {
-	var total=0;
-	var tax=0;
 	var amount=0;
 	
 	$("[id^='save_form158']").each(function(index)
@@ -12032,22 +12071,36 @@ function form158_get_totals()
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
 		
-		tax+=parseFloat(subform.elements[3].value);
-		total+=Math.round(parseFloat(subform.elements[4].value));
-	});
-	
-	var discount=0;
-	amount=Math.round(total-tax);
+		if(isNaN(parseFloat(subform.elements[3].value)))
+			amount+=0;
+		else	
+			amount+=parseFloat(subform.elements[3].value);
 		
+	});
+	var discount=0;
+	var tax=0;
+	var cartage=0;
+	
+	if(document.getElementById('form158_discount'))
+	{
+		discount=parseFloat(document.getElementById('form158_discount').value);
+		tax=parseFloat(document.getElementById('form158_tax').value);
+		cartage=parseFloat(document.getElementById('form158_cartage').value);
+	}
+	var total=Math.round(amount+tax-discount+cartage);
+	
 	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-				"<td>Rs. "+amount+"</br>" +
-				"Rs. "+discount+"</br>" +
-				"Rs. "+tax+"</br>" +
-				"Rs. "+total+"</td>" +
-				"<td></td>" +
-				"</tr>";
+							"<td>Amount:<br>Discount: <br>Tax: <br>Cartage: <br>Total: </td>" +
+							"<td>Rs. "+Math.round(amount)+"</br>" +
+							"<disc_amount>Rs. <input type='number' value='"+Math.round(discount)+"' step='any' id='form158_discount' class='dblclick_editable'><br></disc_amount>" +
+							"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form158_tax' class='dblclick_editable'><br>" +
+							"Rs. <input type='number' value='"+Math.round(cartage)+"' step='any' id='form158_cartage' class='dblclick_editable'><br>" +
+							"Rs. "+Math.round(total)+"</td>" +
+							"<td></td>" +
+							"</tr>";
+					
 	$('#form158_foot').html(total_row);
+	longPressEditable($('.dblclick_editable'));
 }
 
 /**
@@ -12070,8 +12123,7 @@ function form158_create_form()
 			imported='yes';
 			notes='Imported';
 		}
-		var total=0;
-		var tax=0;
+		
 		var amount=0;
 		
 		$("[id^='save_form158']").each(function(index)
@@ -12079,22 +12131,29 @@ function form158_create_form()
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
 			
-			tax+=parseFloat(subform.elements[3].value);
-			total+=Math.round(parseFloat(subform.elements[4].value));
+			if(isNaN(parseFloat(subform.elements[3].value)))
+				amount+=0;
+			else	
+				amount+=parseFloat(subform.elements[3].value);
 		});
-		
-		var discount=0;
-		amount=Math.round(total-tax);
-		
+
+		var discount=parseFloat(document.getElementById('form158_discount').value);
+		var tax=parseFloat(document.getElementById('form158_tax').value);
+		var cartage=parseFloat(document.getElementById('form158_cartage').value);
+		var total=Math.round(amount+tax-discount+cartage);
+
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-				"<td>Rs. "+amount+"</br>" +
-				"Rs. "+discount+"</br>" +
-				"Rs. "+tax+"</br>" +
-				"Rs. "+total+"</td>" +
-				"<td></td>" +
-				"</tr>";
+							"<td>Amount:<br>Discount: <br>Tax: <br>Cartage: <br>Total: </td>" +
+							"<td>Rs. "+Math.round(amount)+"</br>" +
+							"<disc_amount>Rs. <input type='number' value='"+Math.round(discount)+"' step='any' id='form158_discount' class='dblclick_editable'><br></disc_amount>" +
+							"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form158_tax' class='dblclick_editable'><br>" +
+							"Rs. <input type='number' value='"+Math.round(cartage)+"' step='any' id='form158_cartage' class='dblclick_editable'><br>" +
+							"Rs. "+Math.round(total)+"</td>" +
+							"<td></td>" +
+							"</tr>";
+					
 		$('#form158_foot').html(total_row);
+		longPressEditable($('.dblclick_editable'));
 
 		var data_id=form.elements['bill_id'].value;
 		var transaction_id=form.elements['t_id'].value;
@@ -12109,6 +12168,7 @@ function form158_create_form()
 					"<total>"+total+"</total>" +
 					"<discount>"+discount+"</discount>" +
 					"<amount>"+amount+"</amount>" +
+					"<cartage>"+cartage+"</cartage>"+
 					"<tax>"+tax+"</tax>" +
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<imported>"+imported+"</imported>" +

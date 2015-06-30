@@ -9,7 +9,7 @@
 			<br>
 			<label>Narration<br><textarea style='width:200px;'></textarea></label>
 			<label id='form154_1job'>Print as 1 job <input type='checkbox'></label>
-			<label>Invoice #<br><input type='text' name='bill_num' readonly="readonly"></label>
+			<label>Invoice #<br><input type='text' name='bill_num'></label>
 			<label id='form154_customer_info'></label>
 			<label>
 				<input type='hidden' name='bill_id'>

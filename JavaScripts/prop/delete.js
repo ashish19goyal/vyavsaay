@@ -5060,7 +5060,7 @@ function form153_delete_item(button)
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var data_id=form.elements[9].value;
+			var data_id=form.elements[6].value;
 					
 			var data_xml="<quotation_items>" +
 						"<id>"+data_id+"</id>" +
@@ -5099,7 +5099,7 @@ function form154_delete_item(button)
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var data_id=form.elements[7].value;
+			var data_id=form.elements[4].value;
 					
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
@@ -5139,7 +5139,7 @@ function form154_delete_service_item(button)
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var data_id=form.elements[7].value;
+			var data_id=form.elements[4].value;
 					
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
@@ -5179,7 +5179,7 @@ function form154_delete_hiring_item(button)
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var data_id=form.elements[11].value;
+			var data_id=form.elements[8].value;
 					
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
@@ -5302,7 +5302,7 @@ function form158_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[6].value;
+			var data_id=form.elements[5].value;
 			
 			var data_xml="<supplier_bill_items>" +
 						"<id>"+data_id+"</id>" +

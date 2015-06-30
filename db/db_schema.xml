@@ -154,6 +154,7 @@
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<cartage index='no' type="DECIMAL(12,2)"></cartage>
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
 			<imported index='yes' type='VARCHAR(25)'></imported><!--yes/no-->

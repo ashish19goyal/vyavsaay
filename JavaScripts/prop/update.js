@@ -7792,21 +7792,25 @@ function form153_update_form()
 		var amount=0;
 		var discount=0;
 		var tax=0;
-		var total=0;
-		
+	
+		if(document.getElementById('form153_discount'))
+		{
+			discount=parseFloat(document.getElementById('form153_discount').value);
+			tax=parseFloat(document.getElementById('form153_tax').value);
+		}
+
 		$("[id^='save_form153']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			tax+=parseFloat(subform.elements[5].value);
-			amount+=Math.round(parseFloat(subform.elements[6].value));
-			total+=Math.round(parseFloat(subform.elements[7].value));
-			discount+=parseFloat(subform.elements[8].value);
+			//tax+=parseFloat(subform.elements[5].value);
+			amount+=Math.round(parseFloat(subform.elements[5].value));
+			//total+=Math.round(parseFloat(subform.elements[7].value));
+			//discount+=parseFloat(subform.elements[8].value);
 		});
-		
-		discount+=parseFloat(document.getElementById('form153_discount').value);
-		tax-=(discount*0.125);
-		total=my_round(amount-discount+tax,0);
+
+		var total=Math.round(amount+tax-discount);
+
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();		
 		
@@ -7843,11 +7847,12 @@ function form153_update_form()
 					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
-					"Rs. "+tax+"</br>" +
+					"Rs. <input type='number' value='"+tax+"' step='any' id='form153_tax' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
 					"</tr>";
 		$('#form153_foot').html(total_row);
+
 		longPressEditable($('.dblclick_editable'));
 
 		$("[id^='save_form153_']").click();
@@ -7891,15 +7896,22 @@ function form154_update_form()
 		if(bill_type=='Hiring')
 			hiring=true;
 		
-		var amount=0;
-		var discount=0;
-		var tax=0;
-		var total=0;
-		var cartage=0;
 		
 		var hiring=false;
 		if(bill_type=='Hiring')
 			hiring=true;
+		
+		var amount=0;
+		var discount=0;
+		var tax=0;
+		var cartage=0;
+		
+		if(document.getElementById('form154_discount'))
+		{
+			discount=parseFloat(document.getElementById('form154_discount').value);
+			tax=parseFloat(document.getElementById('form154_tax').value);
+			cartage=parseFloat(document.getElementById('form154_cartage').value);
+		}
 		
 		$("[id^='save_form154']").each(function(index)
 		{
@@ -7907,32 +7919,38 @@ function form154_update_form()
 			var subform=document.getElementById(subform_id);
 			if(hiring)
 			{
-				tax+=parseFloat(subform.elements[7].value);
-				amount+=Math.round(parseFloat(subform.elements[8].value));
-				total+=Math.round(parseFloat(subform.elements[9].value));
-				discount+=parseFloat(subform.elements[10].value);
+				//tax+=parseFloat(subform.elements[7].value);
+				if(isNaN(parseFloat(subform.elements[7].value)))
+					amount+=0;
+				else
+					amount+=Math.round(parseFloat(subform.elements[7].value));
+				//total+=Math.round(parseFloat(subform.elements[9].value));
+				//discount+=parseFloat(subform.elements[10].value);
 			}
 			else if(bill_type=='Installation' || bill_type=='Repair')
 			{			
-				tax+=parseFloat(subform.elements[3].value);
-				amount+=Math.round(parseFloat(subform.elements[4].value));
-				total+=Math.round(parseFloat(subform.elements[5].value));
-				discount+=parseFloat(subform.elements[6].value);
+				//tax+=parseFloat(subform.elements[3].value);
+				if(isNaN(parseFloat(subform.elements[3].value)))
+					amount+=0;
+				else
+					amount+=Math.round(parseFloat(subform.elements[3].value));
+				//total+=Math.round(parseFloat(subform.elements[5].value));
+				//discount+=parseFloat(subform.elements[6].value);
 			}
 			else
 			{			
-				tax+=parseFloat(subform.elements[3].value);
-				amount+=Math.round(parseFloat(subform.elements[4].value));
-				total+=Math.round(parseFloat(subform.elements[5].value));
-				discount+=parseFloat(subform.elements[6].value);
-			}			
+				//tax+=parseFloat(subform.elements[3].value);
+				if(isNaN(parseFloat(subform.elements[3].value)))
+					amount+=0;
+				else
+					amount+=Math.round(parseFloat(subform.elements[3].value));
+				//total+=Math.round(parseFloat(subform.elements[5].value));
+				//discount+=parseFloat(subform.elements[6].value);
+			}
 		});
-		
-		discount=parseFloat(document.getElementById('form154_discount').value);
-		cartage=parseFloat(document.getElementById('form154_cartage').value);
-		//tax-=(discount*0.125);
-		total=Math.round(amount-discount+tax+cartage);
-		
+
+		var total=Math.round(amount+tax-discount+cartage);
+
 		var data_id=form.elements[8].value;
 		var transaction_id=form.elements[9].value;
 		var last_updated=get_my_time();		
@@ -7984,7 +8002,7 @@ function form154_update_form()
 					"<td>Amount:<disc><br>Discount:</disc><br>Tax: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
-					"Rs. "+tax+"</br>" +
+					"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
 					"Rs. <input type='number' value='"+cartage+"' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -7995,7 +8013,7 @@ function form154_update_form()
 					"<td>Amount:<disc><br>Discount:</disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
-					"Rs. "+tax+"<br>" +
+					"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
 					"Rs. <input type='number' value='"+cartage+"' step='any' id='form154_cartage' class='dblclick_editable'><br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -8007,7 +8025,7 @@ function form154_update_form()
 					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-					"Rs. "+tax+"</br>" +
+					"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
 					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -8366,30 +8384,37 @@ function form158_update_form()
 			imported='yes';
 			notes='Imported';
 		}
-		var total=0;
-		var tax=0;
+
+		var discount=parseFloat(document.getElementById('form158_discount').value);
+		var tax=parseFloat(document.getElementById('form158_tax').value);
+		var cartage=parseFloat(document.getElementById('form158_cartage').value);
 		var amount=0;
-		
+	
 		$("[id^='save_form158']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			total+=Math.round(parseFloat(subform.elements[4].value));
-			tax+=parseFloat(subform.elements[3].value);
+			
+			if(isNaN(parseFloat(subform.elements[3].value)))
+				amount+=0;
+			else	
+				amount+=parseFloat(subform.elements[3].value);			
 		});
+	
+		total=Math.round(amount+tax-discount+cartage);
 
-		var discount=0;
-		amount=Math.round(total-tax);
-		
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-				"<td>Rs. "+amount+"</br>" +
-				"Rs. "+discount+"</br>" +
-				"Rs. "+tax+"</br>" +
-				"Rs. "+total+"</td>" +
-				"<td></td>" +
-				"</tr>";
+								"<td>Amount:<br>Discount: <br>Tax: <br>Cartage: <br>Total: </td>" +
+								"<td>Rs. "+Math.round(amount)+"</br>" +
+								"<disc_amount>Rs. <input type='number' value='"+Math.round(discount)+"' step='any' id='form158_discount' class='dblclick_editable'><br></disc_amount>" +
+								"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form158_tax' class='dblclick_editable'><br>" +
+								"Rs. <input type='number' value='"+Math.round(cartage)+"' step='any' id='form158_cartage' class='dblclick_editable'><br>" +
+								"Rs. "+Math.round(total)+"</td>" +
+								"<td></td>" +
+								"</tr>";
+						
 		$('#form158_foot').html(total_row);
+		longPressEditable($('.dblclick_editable'));
 
 		var data_id=form.elements['bill_id'].value;
 		var transaction_id=form.elements['t_id'].value;
@@ -8404,6 +8429,7 @@ function form158_update_form()
 					"<discount>"+discount+"</discount>" +
 					"<amount>"+amount+"</amount>" +
 					"<tax>"+tax+"</tax>" +
+					"<cartage>"+cartage+"</cartage>"+
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<imported>"+imported+"</imported>" +
 					"<notes>"+notes+"</notes>"+					
@@ -8414,7 +8440,7 @@ function form158_update_form()
 					"<tablename>supplier_bills</tablename>" +
 					"<link_to>form53</link_to>" +
 					"<title>Updated</title>" +
-					"<notes>Supplier Bill no "+data_id+"</notes>" +
+					"<notes>Supplier Bill # "+data_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var transaction_xml="<transactions>" +
