@@ -18,7 +18,7 @@
 			{
 				$values=array($product,$batch,$store);
 				$query1_values=array($product,$batch,$store,'yes');
-				$query1="select sum(quantity) from bill_items where item_name=? and batch=? and storage=? and hired!=?";
+				$query1="select sum(quantity) from bill_items where item_name=? and batch=? and storage=? and (hired <> ? or hired is null)";
 				$query2="select sum(quantity) from supplier_bill_items where product_name=? and batch=? and storage=?";
 				$query3="select sum(quantity) from customer_return_items where item_name=? and batch=? and storage=?";
 				$query4="select sum(quantity) from supplier_return_items where item_name=? and batch=? and storage=?";
@@ -34,7 +34,7 @@
 				{
 					$values=array($product,$store);
 					$query1_values=array($product,$store,'yes');
-					$query1="select sum(quantity) from bill_items where item_name=? and storage=? and hired!=?";
+					$query1="select sum(quantity) from bill_items where item_name=? and storage=? and (hired <> ? or hired is null)";
 					$query2="select sum(quantity) from supplier_bill_items where product_name=? and storage=?";
 					$query3="select sum(quantity) from customer_return_items where item_name=? and type=? and storage=?";
 					$query4="select sum(quantity) from supplier_return_items where item_name=? and storage=?";
@@ -65,7 +65,7 @@
 				if($batch=="")
 				{
 					$stmt3=$conn->conn->prepare($query3);
-					$stmt3->execute(array($product,'refund'));
+					$stmt3->execute(array($product,$store,'refund'));
 					$res3=$stmt3->fetch(PDO::FETCH_NUM);
 					$customer_return_items=$res3[0];
 				}

@@ -15767,7 +15767,9 @@ function form156_ini()
 								rowsHTML+="<input type='text' readonly='readonly' form='form156_"+result.id+"' value='"+result.name+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Quantity'>";
-								rowsHTML+="<input type='number' readonly='readonly' form='form156_"+result.id+"' value=''>";
+								rowsHTML+="Fresh: <input type='number' step='any' readonly='readonly' form='form156_"+result.id+"'>";
+								rowsHTML+="<br>Hireable: <input type='number' step='any' readonly='readonly' form='form156_"+result.id+"'>";
+								rowsHTML+="<br>Hired: <input type='number' step='any' readonly='readonly' form='form156_"+result.id+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form156_"+result.id+"' value='"+result.id+"'>";
@@ -15778,23 +15780,36 @@ function form156_ini()
 					
 					$('#form156_body').append(rowsHTML);
 					var fields=document.getElementById("form156_"+result.id);
-					var quantity=fields.elements[2];
+					var fresh_inventory=fields.elements[2];
+					var hireable_inventory=fields.elements[3];
+					var hired_inventory=fields.elements[4];
 					var delete_button="";
 					if(del)					
-						delete_button=fields.elements[4];
+						delete_button=fields.elements[6];
 					
-					$(fields).on("submit", function(event)
+					var hired_data="<bill_items sum='yes'>"+
+									"<quantity></quantity>"+
+									"<hired exact='yes'>yes</hired>"+
+									"<from_date upperbound='yes'>"+get_my_time()+"</from_date>"+
+									"<to_date lowerbound='yes'>"+(parseFloat(get_my_time())+86400000)+"</to_date>"+
+									"<item_name exact='yes'>"+result.item_name+"</item_name>"+
+									"<storage exact='yes'>"+result.name+"</storage>"+
+									"</bill_items>";
+					set_my_value(hired_data,hired_inventory);
+		
+					var hireable_data="<bill_items sum='yes'>"+
+									"<quantity></quantity>"+
+									"<hired exact='yes'>yes</hired>"+
+									"<fresh exact='yes'>yes</fresh>"+
+									"<item_name exact='yes'>"+result.item_name+"</item_name>"+
+									"<storage exact='yes'>"+result.name+"</storage>"+
+									"</bill_items>";
+					set_my_value_func(hireable_data,hireable_inventory,function()
 					{
-						event.preventDefault();
-					});
-					
-					get_store_inventory(result.name,result.item_name,result.item_name,function(inventory)
-					{
-						quantity.value=inventory;
-						if(parseFloat(inventory)!=0)
+						get_store_inventory(result.name,result.item_name,'',function(inventory)
 						{
-							$(delete_button).hide();
-						}
+							fresh_inventory.value=parseFloat(inventory)-parseFloat(hireable_inventory.value);
+						});
 					});
 				}
 			});

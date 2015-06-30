@@ -8046,6 +8046,28 @@ function form153_add_product()
 				set_my_value(price_data,price_filter);
 			}
 			
+			if(bill_type=='Retail' || bill_type=='Tax')
+			{
+				var hireable_data="<bill_items sum='yes'>"+
+								"<quantity></quantity>"+
+								"<hired exact='yes'>yes</hired>"+
+								"<fresh exact='yes'>yes</fresh>"+
+								"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+								"</bill_items>";
+				get_single_column_data(function(hireable_inventory)
+				{
+					var hi=0;
+					if(hireable_inventory.length>0)
+					{
+						hi=hireable_inventory[0];
+					}
+					get_inventory(name_filter.value,'',function(inventory)
+					{
+						$(quantity_filter).attr('placeholder',(parseFloat(inventory)-parseFloat(hi)));
+					});
+				},hireable_data);
+			}
+			
 			get_inventory(name_filter.value,'',function(quantity)
 			{
 				$(quantity_filter).attr('placeholder',quantity);
@@ -8390,6 +8412,7 @@ function form154_add_product()
 				}
 				else 
 				{
+					console.log('fresh not checked');
 					var hireable_data="<bill_items sum='yes'>"+
 									"<quantity></quantity>"+
 									"<hired exact='yes'>yes</hired>"+
@@ -8398,6 +8421,7 @@ function form154_add_product()
 									"</bill_items>";
 					get_single_column_data(function(data)
 					{
+						console.log(data);
 						var hireable_quantity=0;
 						if(data.length>0)
 						{
@@ -8412,10 +8436,12 @@ function form154_add_product()
 									"</bill_items>";
 						get_single_column_data(function(data2)
 						{
+							console.log(data2);
+
 							var hired_quantity=0;
 							if(data2.length>0)
 							{
-								hired_quantity=parseFloat(data[0]);
+								hired_quantity=parseFloat(data2[0]);
 							}
 							$(quantity_filter).attr('placeholder',(hireable_quantity-hired_quantity));
 						},hired_data);
@@ -8693,12 +8719,13 @@ function form154_add_product()
 					});
 				},hireable_data);
 
+/*
 				var tax_data="<product_master>" +
 						"<tax></tax>" +
 						"<name exact='yes'>"+name_filter.value+"</name>" +
 						"</product_master>";
 				set_my_value(tax_data,tax_unit_filter);
-				
+*/				
 				quantity_filter.value="";
 				//total_filter.value=0;
 				amount_filter.value=0;
@@ -8790,7 +8817,7 @@ function form154_add_service()
 		//var discount_filter=fields.elements[6];
 		var id_filter=fields.elements[4];
 		var save_button=fields.elements[5];
-		var tax_unit_filter=fields.elements[9];
+		//var tax_unit_filter=fields.elements[9];
 		
 		$(save_button).on("click", function(event)
 		{
@@ -9038,7 +9065,7 @@ function form157_add_item()
 
 		$(source_filter).on('blur',function () 
 		{
-			get_store_inventory(source_filter.value,product_filter.value,product_filter.value,function(inventory)
+			get_store_inventory(source_filter.value,product_filter.value,'',function(inventory)
 			{
 				$(quantity_filter).attr('max',inventory);
 			});
