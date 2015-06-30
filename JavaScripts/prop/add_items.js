@@ -10189,13 +10189,25 @@ function form193_add_item()
 						"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
 
-			$("[id^='193form193_']").each(function () 
+			var rows_length=$('#form193_body').find('tr').length;
+			
+			$("[id^='193form193_']").each(function (index)
 			{
-				if(this.elements[1].value==name_filter.value)
+				if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value)
 				{
 					batch_filter.value=this.elements[3].value;
+					if(batch_filter.value=="")
+					{
+						$(batch_filter).focus();
+					}
+					else
+					{
+						form193_add_item();				
+					}
+					return false;
 				}
 			});
+
 		});
 		
 		$(barcode_filter).on('keydown',function (event) 
@@ -10203,42 +10215,49 @@ function form193_add_item()
 			if(event.keyCode == 13 ) 
 			{
 				event.preventDefault();
-				var item_data="<product_master>"+
+				var item_data="<product_master count='1'>"+
 							"<name></name>"+
+							"<description></description>"+
 							"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
 							"</product_master>";
-				set_my_value(item_data,name_filter,function () 
+				fetch_requested_data('',item_data,function (products) 
 				{
-					var desc_data="<product_master>"+
-								"<description></description>"+
-								"<name exact='yes'>"+name_filter.value+"</name>"+						
-								"</product_master>";			
-					set_my_value(desc_data,desc_filter);			
-		
-					var batch_data="<product_instances>"+
-								"<batch></batch>"+
-								"<product_name exact='yes'>"+name_filter.value+"</product_name>"+						
-								"</product_instances>";
-					set_my_value_list(batch_data,batch_filter);
-					
-					var rows_length=$('#form193_body').find('tr').length;
-					
-					$("[id^='193form193_']").each(function (index)
+					if(products.length>0)
 					{
-						if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value)
+						desc_filter.value=products[0].description;
+						name_filter.value=products[0].name;
+					
+		
+						var batch_data="<product_instances>"+
+									"<batch></batch>"+
+									"<product_name exact='yes'>"+name_filter.value+"</product_name>"+						
+									"</product_instances>";
+						set_my_value_list(batch_data,batch_filter);
+						
+						var rows_length=$('#form193_body').find('tr').length;
+						
+						$("[id^='193form193_']").each(function (index)
 						{
-							batch_filter.value=this.elements[3].value;
-							if(batch_filter.value=="")
+							if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value)
 							{
-								$(batch_filter).focus();
+								batch_filter.value=this.elements[3].value;
+								if(batch_filter.value=="")
+								{
+									$(batch_filter).focus();
+								}
+								else
+								{
+									form193_add_item();				
+								}
+								return false;
 							}
-							else
-							{
-								form193_add_item();				
-							}
-							return false;
-						}
-					});
+						});
+					}
+					else
+					{
+						modal116_action(barcode_filter.value);
+						barcode_filter.value="";
+					}
 				});
 			}
 		});

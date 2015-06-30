@@ -7151,7 +7151,7 @@ function modal115_action(func)
  * @modal Print Barcode
  * @param button
  */
-function modal116_action(string)
+/*function modal116_action(string)
 {
 	var print_button=document.getElementById('modal116_print');
 	
@@ -7168,6 +7168,84 @@ function modal116_action(string)
 	
 	//$("#modal116").dialog("open");
 }
+*/
+
+/**
+ * @modal Map Barcode
+ * @modalNo 116
+ */
+function modal116_action(barcode)
+{
+	var form=document.getElementById("modal116_form");
+	var barcode_filter=form.elements['barcode'];
+	var sku_filter=form.elements['sku'];
+	var name_filter=form.elements['name'];
+	var id_filter=form.elements['id'];
+	
+	barcode_filter.value=barcode;	
+	sku_filter.value="";
+	name_filter.value="";
+	id_filter.value="";
+	
+	var sku_data="<product_master>" +
+			"<name></name>" +
+			"<bar_code exact='yes'></bar_code>"+
+			"</product_master>";
+	set_my_value_list_func(sku_data,sku_filter,function()
+	{
+		$(sku_filter).focus();
+	});
+	
+	$(sku_filter).off('blur');
+	$(sku_filter).on('blur',function () 
+	{
+		var product_data="<product_master count='1'>"+
+						"<id></id>"+
+						"<description></description>"+
+						"<name exact='yes'>"+sku_filter.value+"</name>"+
+						"</product_master>";
+		fetch_requested_data('',product_data,function (products) 
+		{
+			if(products.length>0)
+			{
+				name_filter.value=products[0].description;
+				id_filter.value=products[0].id;				
+			}
+		});				
+	});
+	
+		
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		
+		var id=id_filter.value;
+		var barcode=barcode_filter.value;
+		console.log(id);
+		console.log(barcode);
+		
+		var last_updated=get_my_time();
+		var data_xml="<product_master>" +
+					"<id>"+id+"</id>" +
+					"<bar_code>"+barcode+"</bar_code>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</product_master>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		
+		$("#modal116").dialog("close");
+	});
+	
+	$("#modal116").dialog("open");
+}
+
 
 /**
  * @modal Add Task

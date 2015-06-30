@@ -33,7 +33,7 @@
 	</div>
 	
 	<div id="modal8" title="Add new Offer">
-		<form id='modal8_form'>
+		<form id='modal8_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
 				<label>End Date: <input type='text'></label><br>
@@ -59,7 +59,7 @@
 	</div>
 
 	<div id="modal9" title="Add document">
-		<form id='modal9_form'>
+		<form id='modal9_form' autocomplete="off">
 			<fieldset>
 				<label>Request Id: <input type="text" required></label><br>
 				<label>Document Name: <input type="text"></label><br>
@@ -71,7 +71,7 @@
 	</div>
 	
 	<div id="modal10" title="Add new asset">
-		<form id='modal10_form'>
+		<form id='modal10_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
 				<label>Type: <input type='text' required></label><br>
@@ -83,7 +83,7 @@
 	</div>
 	
 	<div id="modal11" title="Add new customer">
-		<form id='modal11_form'>
+		<form id='modal11_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
 				<label>Phone: <input type="tel"></label><br>
@@ -101,7 +101,7 @@
 	</div>
 	
 	<div id="modal12" title="Add new account">
-		<form id='modal12_form'>
+		<form id='modal12_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
 				<label>Description: <textarea></textarea></label><br>
@@ -112,7 +112,7 @@
 	</div>
 	
 	<div id="modal13" title="Add new supplier">
-		<form id='modal13_form'>
+		<form id='modal13_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
 				<label>Phone: <input type="text"></label><br>
@@ -130,7 +130,7 @@
 	</div>
 	
 	<div id="modal14" title="Add new product">
-		<form id='modal14_form'>
+		<form id='modal14_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type="text" required></label><br>
 				<label>Make: <input type="text"></label><br>
@@ -147,7 +147,7 @@
 	</div>
 	
 	<div id="modal15" title="Provide feedback">
-		<form id='modal15_form'>
+		<form id='modal15_form' autocomplete="off">
 			<fieldset>
 				<label>Feedback provider: <input type='text' required></label><br>
 				<label>Detail: <textarea></textarea></label><br>
@@ -160,7 +160,7 @@
 	</div>
 	
 	<div id="modal16" title="Add new staff">
-		<form id='modal16_form'>
+		<form id='modal16_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
 				<label>UserName: <input type='text' required title='only alphanumeric characters'></label><br>
@@ -178,7 +178,7 @@
 	</div>
 	
 	<div id="modal17" title="Add staff details">
-		<form id='modal17_form'>
+		<form id='modal17_form' autocomplete="off">
 			<fieldset>
 				<label>Address: <input type="text"></label><br>
 				<label>Pincode: <input type="number"></label><br>
@@ -191,7 +191,7 @@
 	</div>
 	
 	<div id="modal18" title="Add task type">
-		<form id='modal18_form'>
+		<form id='modal18_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type="text" required></label><br>
 				<label>Description: <textarea></textarea></label><br>
@@ -203,7 +203,7 @@
 	</div>
 	
 	<div id="modal19" title="Copy product">
-		<form id='modal19_form'>
+		<form id='modal19_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type="text" required></label><br>
 				<label>Make: <input type="text"></label><br>
@@ -219,7 +219,7 @@
 	</div>
 	
 	<div id="modal20" title="Add new service">
-		<form id='modal20_form'>
+		<form id='modal20_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type="text" required></label><br>
 				<label>Description: <textarea></textarea></label><br>
@@ -232,7 +232,7 @@
 	</div>
 	
 	<div id="modal21" title="Copy service">
-		<form id='modal21_form'>
+		<form id='modal21_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type="text"></label><br>
 				<label>Description: <textarea></textarea></label><br>
@@ -244,7 +244,7 @@
 	</div>
 	
 	<div id="modal22" title="Add new batch">
-		<form id='modal22_form'>
+		<form id='modal22_form' autocomplete="off">
 			<fieldset>
 				<label>Product Name: <input type="text" required></label><br>
 				<label>Batch: <input type='text' required></label><br>
@@ -260,7 +260,7 @@
 	</div>
 	
 	<div id="modal23" title="Data Import">
-		<form id='modal23_form'>
+		<form id='modal23_form' autocomplete="off">
 			<fieldset>
 				<input type="button" value='Download import template' class='modal_submit'>
 				<br>
@@ -277,7 +277,7 @@
 	</div>
 	
 	<div id="modal24" title="Update Customer Address">
-		<form id='modal24_form'>
+		<form id='modal24_form' autocomplete="off">
 			<fieldset>
 				<label>Address: <textarea></textarea></label><br>
 				<label>Pincode: <input type="number"></label><br>
@@ -290,7 +290,7 @@
 	</div>
 	
 	<div id="modal25" title="Update Supplier Address">
-		<form id='modal25_form'>
+		<form id='modal25_form' autocomplete="off">
 			<fieldset>
 				<label>Address: <textarea></textarea></label><br>
 				<label>Pincode: <input type="number"></label><br>
@@ -303,7 +303,7 @@
 	</div>
 	
 	<div id="modal26" title="Payment Details">
-		<form id='modal26_form'>
+		<form id='modal26_form' autocomplete="off">
 			<fieldset>
 				<label>Paid by: <input type='text' required readonly='readonly'></label><br>
 				<label>Total Amount: Rs. <input type="number" required readonly='readonly' step='any'></label><br>
@@ -317,7 +317,7 @@
 	</div>
 	
 	<div id="modal27" title="Order product">
-		<form id='modal27_form'>
+		<form id='modal27_form' autocomplete="off">
 			<fieldset>
 				<label>Product Name: <input type='text' required readonly='readonly'></label><br>
 				<label>Make: <input type="text" required readonly='readonly'></label><br>
@@ -330,7 +330,7 @@
 	</div>
 
 	<div id="modal28" title="Payment Details">
-		<form id='modal28_form'>
+		<form id='modal28_form' autocomplete="off">
 			<fieldset>
 				<label>Paid to: <input type='text' required readonly='readonly'></label><br>
 				<label>Total Amount: Rs. <input type="number" required step='any'></label><br>
@@ -344,7 +344,7 @@
 	</div>
 	
 	<div id="modal29" title="Payment Details">
-		<form id='modal29_form'>
+		<form id='modal29_form' autocomplete="off">
 			<fieldset>
 				<label>Bill Id: <input type='text' readonly='readonly'></label><br>
 				<label>Date: <input type="text" readonly='readonly'></label><br>
@@ -357,7 +357,7 @@
 	</div>
 	
 	<div id="modal30" title="Add Receipt">
-		<form id='modal30_form'>
+		<form id='modal30_form' autocomplete="off">
 			<fieldset>
 				<label>Receipt Id: <input type='text' required></label><br>
 				<label>Account: <input type="text" required></label><br>
@@ -370,7 +370,7 @@
 	</div>
 	
 	<div id="modal31" title="Delete Receipt">
-		<form id='modal31_form'>
+		<form id='modal31_form' autocomplete="off">
 			<fieldset>
 				<label>Receipt Id: <input type='text' required></label><br>
 				<label>Account: <input type="text" readonly='readonly' required></label><br>
@@ -382,7 +382,7 @@
 	</div>
 
 	<div id="modal32" title="Add task">
-		<form id='modal32_form'>
+		<form id='modal32_form' autocomplete="off">
 			<fieldset>
 				<label>Task: <input type='text' required></label><br>
 				<label>Assignee: <input type="text"></label><br>
@@ -395,7 +395,7 @@
 	</div>
 
 	<div id="modal33" title="Update task">
-		<form id='modal33_form'>
+		<form id='modal33_form' autocomplete="off">
 			<fieldset>
 				<label>Task: <input type='text' readonly="readonly" required></label><br>
 				<label>Assignee: <input type="text"></label><br>
@@ -407,7 +407,7 @@
 	</div>
 	
 	<div id="modal35" title="Add Store Area">
-		<form id='modal35_form'>
+		<form id='modal35_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
 				<label>Owner: <input type='text'></label><br>
@@ -419,7 +419,7 @@
 	</div>
 
 	<div id="modal36" title="Add appointment">
-		<form id='modal36_form'>
+		<form id='modal36_form' autocomplete="off">
 			<fieldset>
 				<label>Customer: <input type='text' required></label><br>
 				<label>Assignee: <input type="text"></label><br>
@@ -433,7 +433,7 @@
 	</div>
 
 	<div id="modal37" title="Update appointment">
-		<form id='modal37_form'>
+		<form id='modal37_form' autocomplete="off">
 			<fieldset>
 				<label>Customer: <input type='text' required></label><br>
 				<label>Assignee: <input type="text"></label><br>
@@ -445,7 +445,7 @@
 	</div>
 	
 	<div id="modal38" title="Update sale price">
-		<form id='modal38_form'>
+		<form id='modal38_form' autocomplete="off">
 			<fieldset>
 				<label>Default Sale Price: Rs. <input type="number" step='any' required></label><br>
 				<label id='modal38_billings'></label><br>
@@ -455,7 +455,7 @@
 	</div>
 
 	<div id="modal39" title="Add loan">
-		<form id='modal39_form'>
+		<form id='modal39_form' autocomplete="off">
 			<fieldset>
 				<label>Type: <input type='text' required></label><br>
 				<label>Account: <input type="text" required></label><br>
@@ -475,7 +475,7 @@
 	</div>
 
 	<div id="modal40" title="Discard item">
-		<form id='modal40_form'>
+		<form id='modal40_form' autocomplete="off">
 			<fieldset>
 				<label>Item: <input type='text' required></label><br>
 				<label>Batch: <input type="text" required></label><br>
@@ -487,7 +487,7 @@
 	</div>
 
 	<div id="modal41" title="Close Payments">
-		<form id='modal41_form'>
+		<form id='modal41_form' autocomplete="off">
 			<fieldset>
 				<label>Account: <input type='text' readonly='readonly' required></label><br>
 				<label>Balance: Rs. <input type="text" readonly='readonly' required></label><br>
@@ -499,7 +499,7 @@
 	</div>
 
 	<div id="modal42" title="Bill Type">
-		<form id='modal42_form'>
+		<form id='modal42_form' autocomplete="off">
 			<fieldset>
 				<label>Bill Type: <input type='text' required></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
@@ -508,7 +508,7 @@
 	</div>
 	
 	<div id="modal43" title="Add task">
-		<form id='modal43_form'>
+		<form id='modal43_form' autocomplete="off">
 			<fieldset>
 				<label>Phase: <input type='text' required></label><br>
 				<label>Task: <input type="text"></label><br>
@@ -521,7 +521,7 @@
 	</div>
 	
 	<div id="modal44" title="Share">
-		<form id='modal44_form'>
+		<form id='modal44_form' autocomplete="off">
 			<fieldset>
 				<label>Choose Client: <input type='text' required value='gmail'></label><br>
 				<label>Recipient Email: <input type="text"></label><br>
@@ -532,7 +532,7 @@
 	</div>
 
 	<div id="modal45" title="Add new loyalty program">
-		<form id='modal45_form'>
+		<form id='modal45_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
 				<label>Type: <input type='text' required></label><br>
@@ -552,7 +552,7 @@
 	</div>
 	
 	<div id="modal46" title="Update loyalty program">
-		<form id='modal46_form'>
+		<form id='modal46_form' autocomplete="off">
 			<fieldset>
 				<label title='Minimum points for tier qualification'>Tier Criteria(min.): <input type="number" step='any' required></label><br>
 				<label title='Maximum points for tier qualification'>Tier Criteria(max.): <input type="number" step='any' required></label><br>
@@ -568,7 +568,7 @@
 	</div>
 
 	<div id="modal47" title="Add service request">
-		<form id='modal47_form'>
+		<form id='modal47_form' autocomplete="off">
 			<fieldset>
 				<label>Request Id: <input type="text" readonly='readonly'></label><br>
 				<label>Customer: <input type='text' required></label><br>
@@ -581,7 +581,7 @@
 	</div>
 	
 	<div id="modal48" title="Add solution">
-		<form id='modal48_form'>
+		<form id='modal48_form' autocomplete="off">
 			<fieldset>
 				<label>Issue Id: <input type="text" readonly='readonly'></label><br>
 				<label>Solution Detail: <textarea required></textarea></label><br>
@@ -659,7 +659,7 @@
 	</div>
 
 	<div id="modal101" title="Email Document">
-		<form id='modal101_form'>
+		<form id='modal101_form' autocomplete="off">
 			<fieldset>
 				<label>To: <input type='text' readonly="readonly"></label><br>
 				<label>Email: <textarea required></textarea></label><br>
@@ -671,7 +671,7 @@
 	</div>
 
 	<div id="modal102" title="Re-assign">
-		<form id='modal102_form'>
+		<form id='modal102_form' autocomplete="off">
 			<fieldset>
 				<label>Request Id: <input type='text' readonly="readonly"></label><br>
 				<label>Assignee: <input type='text' required></label><br>
@@ -681,7 +681,7 @@
 	</div>
 
 	<div id="modal103" title="Close service request">
-		<form id='modal103_form'>
+		<form id='modal103_form' autocomplete="off">
 			<fieldset>
 				<label>Request Id: <input type='text' readonly="readonly"></label><br>
 				<label>Closing notes: <textarea required></textarea></label><br>
@@ -692,7 +692,7 @@
 	</div>
 
 	<div id="modal104" title="Close machine service">
-		<form id='modal104_form'>
+		<form id='modal104_form' autocomplete="off">
 			<fieldset>
 				<label>Machine: <input type='text' readonly="readonly"></label><br>
 				<label>Closing notes: <textarea required></textarea></label><br>
@@ -703,7 +703,7 @@
 	</div>
 
 	<div id="modal105" title="Add Schedule">
-		<form id='modal105_form'>
+		<form id='modal105_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text'></label><br>
 				<label>Details: <textarea required></textarea></label><br>
@@ -716,7 +716,7 @@
 	</div>
 
 	<div id="modal106" title="Add Ledger Entry">
-		<form id='modal106_form'>
+		<form id='modal106_form' autocomplete="off">
 			<fieldset>
 				<label>Account: <input type='text' required></label><br>
 				<label>Particulars: <textarea required></textarea></label><br>
@@ -728,7 +728,7 @@
 	</div>
 	
 	<div id="modal107" title="Update Schedule">
-		<form id='modal107_form'>
+		<form id='modal107_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text'></label><br>
 				<label>Details: <textarea required></textarea></label><br>
@@ -741,7 +741,7 @@
 	</div>
 
 	<div id="modal108" title="Workflow Assignees (Record Level)">
-		<form id='modal108_form'>
+		<form id='modal108_form' autocomplete="off">
 			<fieldset>
 				<label>Access Type: <input type='text' required></label><br>
 				<label>User Field: <input required type='text'></label><br>
@@ -755,7 +755,7 @@
 	</div>
 
 	<div id="modal109" title="Workflow Assignees">
-		<form id='modal109_form'>
+		<form id='modal109_form' autocomplete="off">
 			<fieldset>
 				<label>Access Type: <input type='text' required></label><br>
 				<label>User Field: <input required type='text'></label><br>
@@ -769,7 +769,7 @@
 	</div>
 
 	<div id="modal110" title="Add to Inventory">
-		<form id='modal110_form'>
+		<form id='modal110_form' autocomplete="off">
 			<fieldset>
 				<label>Manufacturing Date: <input type='text'></label><br>
 				<label>Expiry Date: <input type='text'></label><br>
@@ -782,7 +782,7 @@
 	</div>
 	
 	<div id="modal111" title="Log location">
-		<form id='modal111_form'>
+		<form id='modal111_form' autocomplete="off">
 			<fieldset>
 				<label>Location: <textarea></textarea></label><br>
 				<label>Name: <textarea readonly='readonly'></textarea></label><br>
@@ -795,7 +795,7 @@
 	</div>
 
 	<div id="modal112" title="Add new product">
-		<form id='modal112_form'>
+		<form id='modal112_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type="text" required></label><br>
 				<label>Make: <input type="text"></label><br>
@@ -812,7 +812,7 @@
 	</div>
 
 	<div id="modal113" title="Add Store Area">
-		<form id='modal113_form'>
+		<form id='modal113_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
 				<label>Type: <input type='text' required></label><br>
@@ -829,7 +829,7 @@
 	</div>
 	
 	<div id="modal114" title="Add new product">
-		<form id='modal114_form'>
+		<form id='modal114_form' autocomplete="off">
 			<fieldset>
 				<label>SKU: <input type="text" required></label><br>
 				<label>Name: <textarea></textarea></label><br>
@@ -857,14 +857,15 @@
 		<br>
 		<br>
 		<br>		
-		<form id='modal115_form'>
+		<form id='modal115_form' autocomplete="off">
 			<fieldset>
 				<input type="button" value='Yes' class='modal_submit'>
 				<input type="button" value='No' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>
-	
+
+<!--	
 	<div id="modal116" title="Print Barcode">
 		<div id='modal116_div' style='width:200px;height:100px'>
 			<img style='width:200px;' id='modal116_img'>
@@ -873,9 +874,22 @@
 		<form id='modal116_form'></form>
 		<input type="button" id='modal116_print' value='Print' class='modal_submit'>
 	</div>
-	
+-->	
+
+	<div id="modal116" title="Map Barcode">
+		<form id='modal116_form' autocomplete="off">
+			<fieldset>
+				<label>Barcode: <input type='text' readonly='readonly' required name='barcode'></label><br>
+				<label>SKU: <input type="text" required name='sku'></label><br>
+				<label>Name: <textarea name='name'></textarea></label><br>
+				<input type='hidden' name='id'>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 	<div id="modal117" title="Add task">
-		<form id='modal117_form'>
+		<form id='modal117_form' autocomplete="off">
 			<fieldset>
 				<label>Task: <input type='text' required></label><br>
 				<label>Details: <textarea></textarea></label><br>
@@ -888,7 +902,7 @@
 	</div>
 
 	<div id="modal118" title="New order">
-		<form id='modal118_form'>
+		<form id='modal118_form' autocomplete="off">
 			<fieldset>
 				<label>Phone: <input type='text' required></label><br>
 				<label>Name: <input type='text' required></label><br>
@@ -904,7 +918,7 @@
 	</div>
 
 	<div id="modal119" title="Assignee">
-		<form id='modal119_form'>
+		<form id='modal119_form' autocomplete="off">
 			<fieldset>
 				<label>Name: <input type='text' required></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
@@ -913,7 +927,7 @@
 	</div>
 
 	<div id="modal120" title="Add new batch">
-		<form id='modal120_form'>
+		<form id='modal120_form' autocomplete="off">
 			<fieldset>
 				<label>Item: <input type="text" required></label><br>
 				<label>Batch: <input type='text' required></label><br>
@@ -927,7 +941,7 @@
 	<div id="modal121" title="Offline Storage Deletion">
 		Any unsynced data will be lost if you delete offline storage. Please re-enter your password to continue.
 		<br>
-		<form id='modal121_form'>
+		<form id='modal121_form' autocomplete="off">
 			<input type="password" name='pass' required>
 			<input type="submit" class='modal_submit' value='Delete'>
 		</form>

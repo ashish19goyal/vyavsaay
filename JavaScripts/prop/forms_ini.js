@@ -16947,7 +16947,7 @@ function form169_ini()
 					rowsHTML+="<form id='form169_"+result.id+"'></form>";
 						rowsHTML+="<td data-th='SKU'>";
 							rowsHTML+="<textarea readonly='readonly' form='form169_"+result.id+"'>"+result.name+"</textarea>";
-							rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode' onclick=\"modal116_action('"+result.bar_code+"');\">";
+							rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+result.bar_code+"' onclick=\"print_product_barcode('"+result.bar_code+"','"+result.name+"','"+result.description+"');\">";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Name'>";
 							rowsHTML+="<textarea readonly='readonly' form='form169_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
@@ -17080,6 +17080,7 @@ function form170_ini()
 				rowsHTML+="<form id='form170_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Name'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form170_"+result.id+"' value='"+result.name+"'>";
+						rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode' onclick=\"print_barcode('"+result.name+"');\">";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Type'>";
 						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form170_"+result.id+"' value='"+result.area_type+"'>";

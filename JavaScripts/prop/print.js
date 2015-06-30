@@ -1,3 +1,44 @@
+/**
+* Print barcodes
+*/
+function print_barcode(string)
+{
+	var container=document.createElement('div');
+	var image_element=document.createElement('img');
+	container.setAttribute('style','width:200px;height:100px');
+	image_element.setAttribute('style','width:200px;');
+	container.appendChild(image_element);
+	   
+	$(image_element).JsBarcode(string,{displayValue:true,fontSize:16});
+	$.print(container);	
+}
+
+/**
+* Print barcodes for products
+*/
+function print_product_barcode(barcode,sku,name)
+{
+	var container=document.createElement('div');
+	var sku_element=document.createElement('div');
+	var image_element=document.createElement('img');
+	var name_element=document.createElement('div');
+	
+	container.setAttribute('style','width:200px;height:100px');
+	sku_element.setAttribute('style','width:200px;text-align:center;');
+	image_element.setAttribute('style','width:200px;');
+	name_element.setAttribute('style','width:200px;');
+	
+	container.appendChild(sku_element);
+	container.appendChild(image_element);
+	container.appendChild(name_element);
+
+	sku_element.innerHTML=sku;	   
+	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:16});
+	name_element.innerHTML=name;	   
+
+	$.print(container);	
+}
+
  /**
  * Print reports in tabular format
  * @param report_name

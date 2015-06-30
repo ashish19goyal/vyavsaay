@@ -6620,7 +6620,17 @@ function form193_header_ini()
 	
 	var storage_filter=fields.elements['storage'];
 	var save_button=fields.elements['save'];
+	var barcode_button=fields.elements['barcode'];
+
+	storage_filter.value="";	
 	
+	$(barcode_button).off('click');
+	$(barcode_button).on('click',function()
+	{
+		var string=""+get_my_time();
+		print_barcode(string);
+	});
+
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
 	{
