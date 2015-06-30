@@ -884,6 +884,16 @@ function form149_import_template()
 };
 
 /**
+* @form Create Bill (DLM)
+* @formNo 154
+*/
+function form154_import_template()
+{
+	var data_array=['id','bill_id','item_name','quantity','unit','unit_price','amount','from_date','to_date','storage','hired','fresh'];
+	my_array_to_csv(data_array);
+};
+
+/**
 * @form Update Inventory (DLM)
 * @formNo 155
 */

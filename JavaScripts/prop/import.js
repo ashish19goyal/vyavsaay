@@ -4710,6 +4710,67 @@ function form149_import(data_array,import_type)
 };
 
 /**
+* @form Create Bill (DLM)
+* @formNo 154
+*/
+function form154_import(data_array,import_type)
+{
+	var data_xml="<bill_items>";
+	var counter=1;
+	var new_id=parseFloat(get_new_key());
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</bill_items><separator></separator><bill_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<batch>"+row.item_name+"</batch>" +
+				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<unit>"+row.unit+"</unit>" +
+				"<unit_price>"+row.unit_price+"</unit_price>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<storage>"+row.quantity+"</storage>" +
+				"<hired>"+row.hired+"</hired>" +
+				"<fresh>"+row.fresh+"</fresh>" +
+				"<from_date>"+get_raw_time(row.from_date)+"</from_date>" +
+				"<to_date>"+get_raw_time(row.to_date)+"</to_date>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";		
+	});
+
+	data_xml+="</bill_items>";
+	
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+}
+
+/**
 * @form Update Inventory (DLM)
 * @formNo 155
 */

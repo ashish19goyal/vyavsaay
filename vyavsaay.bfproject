@@ -1,12 +1,14 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:340156:340838:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:340221:339653:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/worker.js:280:0:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:214627:213628:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js:269532:260164:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:493041:491485:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:507591:510011:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js:119255:119308:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form153.php:548:0:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import_template.js:19299:18923:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import.js:0:0:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -18,10 +20,10 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: 158_
+ssearch_text: 154_
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -54,7 +56,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/grids.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/master_db_data.xml
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form91.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form16.php
@@ -68,8 +69,6 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form15.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import_template.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report63.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report64.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form108.php
@@ -84,6 +83,9 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form153.php
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/grid_metrics.xml
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import_template.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import.js
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 spell_check_default: 1
@@ -95,9 +97,6 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: 158_
-searchlist: 53_
-searchlist: form92_
 searchlist: form52
 searchlist: form53_
 searchlist: form154_
@@ -110,6 +109,9 @@ searchlist: form1_
 searchlist: form15_
 searchlist: form158_
 searchlist: 158_
+searchlist: 39_
+searchlist: form155_
+searchlist: 154_
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0
