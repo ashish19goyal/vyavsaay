@@ -481,7 +481,6 @@ function server_get_available_inventory(product,batch,data_array,callback)
 	});
 }
 
-
 function server_generate_report(report_id,results,callback)
 {
 	var domain=get_domain();
@@ -490,7 +489,6 @@ function server_generate_report(report_id,results,callback)
 	ajax_with_custom_func("./ajax/generate_report.php",{domain:domain,username:username,re:re_access,report_id:report_id},function(e)
 	{
 		//console.log(e.responseText);
-		
 		var row=e.responseXML.childNodes[0].childNodes;
 		for(var i=0; i<row.length; i++)
 		{

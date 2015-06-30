@@ -4735,7 +4735,7 @@ function form154_import(data_array,import_type)
 				"<unit>"+row.unit+"</unit>" +
 				"<unit_price>"+row.unit_price+"</unit_price>" +
 				"<amount>"+row.amount+"</amount>" +
-				"<storage>"+row.quantity+"</storage>" +
+				"<storage>"+row.storage+"</storage>" +
 				"<hired>"+row.hired+"</hired>" +
 				"<fresh>"+row.fresh+"</fresh>" +
 				"<from_date>"+get_raw_time(row.from_date)+"</from_date>" +
