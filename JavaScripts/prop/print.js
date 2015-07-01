@@ -254,7 +254,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 			
 			var type=result.item_type;
 			var name=result.item_name;
-			var detail=result.item_detail;
+			var detail=result.item_detail.replace(/\n/g,"<br>");
 			var blob=result.data_blob.replace(/ /g,"+");
 			var pic_url=result.pic_url;
 							

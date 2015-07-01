@@ -134,6 +134,7 @@ function form2_ini()
 		newsletter_id="";	
 	$('#form2_body').html("");
 	
+	console.log(newsletter_id);
 	if(newsletter_id!="")
 	{
 		show_loader();
@@ -178,9 +179,10 @@ function form2_ini()
 		{
 			results.forEach(function(result)
 			{
+								
 				var id=result.id;
 				var updated_blob=result.data_blob.replace(/ /g,"+");
-				var rowsHTML="<tr>";
+				var rowsHTML="<tr>";				
 				rowsHTML+="<form id='form2_"+id+"'></form>";
 					rowsHTML+="<td data-th='Item'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form2_"+id+"' value='"+result.item_type+"'>";

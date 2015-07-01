@@ -42,6 +42,7 @@ function form2_create_item(form)
 				}
 			});
 		
+			console.log(data_xml);
 			server_create_simple(data_xml);
 			
 			for(var i=0;i<7;i++)
