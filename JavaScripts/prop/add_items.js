@@ -10225,8 +10225,7 @@ function form193_add_item()
 					if(products.length>0)
 					{
 						desc_filter.value=products[0].description;
-						name_filter.value=products[0].name;
-					
+						name_filter.value=products[0].name;	
 		
 						var batch_data="<product_instances>"+
 									"<batch></batch>"+
@@ -10243,7 +10242,8 @@ function form193_add_item()
 								batch_filter.value=this.elements[3].value;
 								if(batch_filter.value=="")
 								{
-									$(batch_filter).focus();
+									batch_filter.value=name_filter.value;
+									$(batch_filter).focus();									
 								}
 								else
 								{

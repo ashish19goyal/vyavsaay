@@ -4,7 +4,7 @@
 */
 function form1_import_template()
 {
-	var data_array=['id','product_name','batch','expiry','manufacture_date','actual_quantity'];
+	var data_array=['id','product_name','batch','expiry','manufacture_date','actual_quantity','mrp'];
 	my_array_to_csv(data_array);
 };
 

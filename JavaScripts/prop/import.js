@@ -19,6 +19,7 @@ function form1_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
 				"<batch>"+row.batch+"</batch>" +
+				"<mrp>"+row.mrp+"</mrp>" +
 				"<expiry>"+get_raw_time(row.expiry)+"</expiry>" +
 				"<manufacture_date>"+get_raw_time(row.manufacture_date)+"</manufacture_date>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
@@ -5253,13 +5254,13 @@ function form169_import(data_array,import_type)
 				"<description>"+row.name+"</description>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<bar_code>"+row.bar_code+"</bar_code>" +
-				"<length>"+length+"</length>"+
-				"<breadth>"+breadth+"</breadth>"+
-				"<height>"+height+"</height>"+
-				"<volume>"+volume+"</volume>"+
-				"<unit>"+unit+"</unit>"+
-				"<weight>"+weight+"</weight>"+
-				"<packing>"+packing+"</packing>"+
+				"<length>"+row.length+"</length>"+
+				"<breadth>"+row.breadth+"</breadth>"+
+				"<height>"+row.height+"</height>"+
+				"<volume>"+row.volume+"</volume>"+
+				"<unit>"+row.unit+"</unit>"+
+				"<weight>"+row.weight+"</weight>"+
+				"<packing>"+row.packing+"</packing>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
