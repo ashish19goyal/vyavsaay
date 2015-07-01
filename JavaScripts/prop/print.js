@@ -5,11 +5,16 @@ function print_barcode(string)
 {
 	var container=document.createElement('div');
 	var image_element=document.createElement('img');
-	container.setAttribute('style','width:200px;height:100px');
+	var name_element=document.createElement('div');
+		
+	container.setAttribute('style','width:200px;height:100px');	
 	image_element.setAttribute('style','width:200px;');
+	name_element.setAttribute('style','width:200px;font-weight:bold;font-size:28px;margin:1px;text-align:center');
 	container.appendChild(image_element);
-	   
-	$(image_element).JsBarcode(string,{displayValue:true,fontSize:16});
+	container.appendChild(name_element);
+	
+	name_element.innerHTML=string;
+	$(image_element).JsBarcode(string,{displayValue:false});
 	$.print(container);	
 }
 
@@ -33,7 +38,7 @@ function print_product_barcode(barcode,sku,name)
 	container.appendChild(name_element);
 
 	sku_element.innerHTML=sku;	   
-	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:16});
+	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:24});
 	name_element.innerHTML=name;	   
 
 	$.print(container);	
