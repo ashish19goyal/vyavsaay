@@ -1,18 +1,16 @@
 {
 	re_xml:
 	{
-		system_grid_metrics:
+		user_profile:
 		{
-			row:
-			[
-				{
-					metric_id:'grid_item_1',
-					display_name:'Last sale bill Id',
-					grid:'sale bills',
-					function_def: '',
-					status: 'active',
-					last_updated: 1
-				},
+			id:
+			{
+				index: '',
+				type: '',
+				value: '';
+			},
+			username:
+		},
 				{
 					metric_id:'grid_item_2',
 					display_name:'Last sale bill Id',
@@ -29,9 +27,6 @@
 					status: 'active',
 					last_updated: 1
 				},
-
-				
-			]
 		}
 	}
 }

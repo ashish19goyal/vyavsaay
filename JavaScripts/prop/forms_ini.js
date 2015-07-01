@@ -6500,6 +6500,7 @@ function form78_ini()
 					"<email></email>" +
 					"<phone></phone>"+
 					"<acc_name></acc_name>" +
+					"<promotion_status exact='yes'>active</promotion_status>"+
 					"</customers>";
 			fetch_requested_data('',customer_columns,function(results)
 			{

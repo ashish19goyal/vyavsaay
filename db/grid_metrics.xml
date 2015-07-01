@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <re_xml>
 	<system_grid_metrics>
-			<row>
+		<row>
 			<metric_id>grid_item_1</metric_id>
 			<display_name>Last Sale Bill Id</display_name>
 			<grid>sale_bills</grid>
