@@ -179,7 +179,6 @@ function form2_ini()
 		{
 			results.forEach(function(result)
 			{
-								
 				var id=result.id;
 				var updated_blob=result.data_blob.replace(/ /g,"+");
 				var rowsHTML="<tr>";				
@@ -6502,13 +6501,13 @@ function form78_ini()
 					"<email></email>" +
 					"<phone></phone>"+
 					"<acc_name></acc_name>" +
-					"<promotion_status exact='yes'>active</promotion_status>"+
+					"<promotion_status></promotion_status>"+
 					"</customers>";
 			fetch_requested_data('',customer_columns,function(results)
 			{
 				results.forEach(function(result)
 				{
-					if(result.email!="" && result.email!="undefined")
+					if(result.promotion_status!="suspended")
 					var rowsHTML="";
 					var id=result.id;
 					rowsHTML+="<tr>";
