@@ -12401,7 +12401,7 @@ function form167_create_item(form)
 				"<id>"+data_id+"</id>" +
 				"<name>"+name+"</name>" +
 				"<parent>"+parent+"</parent>" +
-				"<length>"+length+"</length>" +
+				"<len>"+length+"</len>" +
 				"<breadth>"+breadth+"</breadth>" +
 				"<height>"+height+"</height>" +
 				"<unit>"+unit+"</unit>" +

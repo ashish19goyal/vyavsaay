@@ -1,32 +1,48 @@
 {
-	re_xml:
+	"re_xml":
 	{
-		user_profile:
+		"user_profile":
 		{
-			id:
+			"id":
 			{
-				index: '',
-				type: '',
-				value: '';
+				"index": "no",
+				"type": "BIGINT NOT NULL AUTO_INCREMENT"
 			},
-			username:
-		},
-				{
-					metric_id:'grid_item_2',
-					display_name:'Last sale bill Id',
-					grid:'sale bills',
-					function_def: '',
-					status: 'active',
-					last_updated: 1
-				},
-				{
-					metric_id:'grid_item_3',
-					display_name:'Last sale bill Id',
-					grid:'sale bills',
-					function_def: '',
-					status: 'active',
-					last_updated: 1
-				},
+			"username":
+			{
+				"index": "no",
+				"type": "VARCHAR(100) NOT NULL"
+			},
+			"phone":
+			{
+				"index": "no",
+				"type": "VARCHAR(15) NOT NULL"
+			},
+			"name":
+			{
+				"index": "no",
+				"type": "VARCHAR(90)"
+			},
+			"industry":
+			{
+				"index": "no",
+				"type": "VARCHAR(50)"
+			},
+			"status":
+			{
+				"index": "no",
+				"type": "VARCHAR(45)"
+			},
+			"dbname":
+			{
+				"index": "no",
+				"type": "VARCHAR(100)"
+			},
+			"email":
+			{
+				"index": "no",
+				"type": "VARCHAR(100)"
+			},			
 		}
 	}
 }

@@ -10,7 +10,7 @@
 			<promotion_status index='yes' type='VARCHAR(45)'></promotion_status><!--active/suspended-->
 			<notes index='no' type='TEXT'></notes>
 			<address index='yes' type="TEXT"></address>
-			<city index='no' type="VARCHAR(45)"></city>
+			<city index='no' type="TEXT"></city>
 			<pincode index='no' type='VARCHAR(15)'></pincode>
 			<state index='no' type="VARCHAR(45)"></state>
 			<country index='no' type="VARCHAR(45)"></country>
@@ -469,7 +469,7 @@
 			<description index='yes' type="TEXT"></description>
 			<make index='yes' type="TEXT"></make>
 			<tax index='no' type="DECIMAL(12,4)"></tax>
-			<length index='no' type="DECIMAL(12,4)"></length>
+			<len index='no' type="DECIMAL(12,4)"></len>
 			<breadth index='no' type="DECIMAL(12,4)"></breadth>
 			<height index='no' type="DECIMAL(12,4)"></height>
 			<volume index='no' type="DECIMAL(12,4)"></volume>
@@ -545,7 +545,7 @@
 			<parent index='yes' type="TEXT"></parent>
 			<owner index='yes' type="TEXT"></owner>
 			<area_type index='yes' type="TEXT"></area_type><!-- storage/office/bin/rack/row/store -->
-			<length index='no' type="DECIMAL(12,4)"></length>
+			<len index='no' type="DECIMAL(12,4)"></len>
 			<breadth index='no' type="DECIMAL(12,4)"></breadth>
 			<height index='no' type="DECIMAL(12,4)"></height>
 			<unit index='no' type="VARCHAR(50)"></unit><!--cm/m/mm/km/in/ft-->
@@ -555,7 +555,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(25)"></name>
 			<parent index='yes' type="TEXT"></parent>
-			<length index='no' type="DECIMAL(12,4)"></length>
+			<len index='no' type="DECIMAL(12,4)"></len>
 			<breadth index='no' type="DECIMAL(12,4)"></breadth>
 			<height index='no' type="DECIMAL(12,4)"></height>
 			<unit index='no' type="VARCHAR(50)"></unit><!--cm/m/mm/km/in/ft-->

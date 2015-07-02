@@ -2388,7 +2388,7 @@ function form83_import(data_array,import_type)
 				"<area_type>"+row.area_type+"</area_type>" +
 				"<height>"+row.length+"</height>" +
 				"<width>"+row.width+"</width>" +
-				"<length>"+row.length+"</length>" +
+				"<len>"+row.length+"</len>" +
 				"<locx>"+row.locx+"</locx>" +
 				"<locy>"+row.locy+"</locy>" +
 				"<locz>"+row.locz+"</locz>" +
@@ -5197,7 +5197,7 @@ function form167_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
 				"<parent>"+row.parent+"</parent>" +
-				"<length>"+row.length+"</length>" +
+				"<len>"+row.length+"</len>" +
 				"<breadth>"+row.breadth+"</breadth>" +
 				"<height>"+row.height+"</height>" +
 				"<unit>"+row.unit+"</unit>" +
@@ -5254,7 +5254,7 @@ function form169_import(data_array,import_type)
 				"<description>"+row.name+"</description>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<bar_code>"+row.bar_code+"</bar_code>" +
-				"<length>"+row.length+"</length>"+
+				"<len>"+row.length+"</len>"+
 				"<breadth>"+row.breadth+"</breadth>"+
 				"<height>"+row.height+"</height>"+
 				"<volume>"+row.volume+"</volume>"+
@@ -5316,7 +5316,7 @@ function form170_import(data_array,import_type)
 				"<area_type>"+row.area_type+"</area_type>" +
 				"<height>"+row.length+"</height>" +
 				"<breadth>"+row.breadth+"</breadth>" +
-				"<length>"+row.length+"</length>" +
+				"<len>"+row.length+"</len>" +
 				"<unit>"+row.unit+"</unit>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";

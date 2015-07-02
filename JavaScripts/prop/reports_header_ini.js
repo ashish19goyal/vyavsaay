@@ -730,7 +730,7 @@ function report45_header_ini()
 			"<area_type exact='yes'>block</area_type>" +
 			"<height></height>" +
 			"<width></width>" +
-			"<length></length>" +
+			"<len></len>" +
 			"<locx></locx>" +
 			"<locy></locy>" +
 			"<locz></locz>" +
@@ -753,7 +753,7 @@ function report45_header_ini()
 			"<area_type exact='yes'>door</area_type>" +
 			"<height></height>" +
 			"<width></width>" +
-			"<length></length>" +
+			"<len></len>" +
 			"<locx></locx>" +
 			"<locy></locy>" +
 			"<locz></locz>" +
@@ -777,7 +777,7 @@ function report45_header_ini()
 			"<area_type exact='yes'>storage</area_type>" +
 			"<height></height>" +
 			"<width></width>" +
-			"<length></length>" +
+			"<len></len>" +
 			"<locx></locx>" +
 			"<locy></locy>" +
 			"<locz></locz>" +

@@ -8612,7 +8612,7 @@ function form163_update_item(form)
 		var data_xml="<product_master>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+item+"</name>" +
-					"<length>"+length+"</length>" +
+					"<len>"+length+"</len>" +
 					"<breadth>"+breadth+"</breadth>" +
 					"<height>"+height+"</height>" +
 					"<volume>"+volume+"</volume>" +
@@ -8777,7 +8777,7 @@ function form167_update_item(form)
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
 					"<parent>"+parent+"</parent>" +
-					"<length>"+length+"</length>"+
+					"<len>"+length+"</len>"+
 					"<breadth>"+breadth+"</breadth>" +
 					"<height>"+height+"</height>" +
 					"<unit>"+unit+"</unit>" +
@@ -8894,7 +8894,7 @@ function form170_update_item(form)
 					"<owner>"+owner+"</owner>" +
 					"<parent>"+parent+"</parent>"+
 					"<area_type>"+area_type+"</area_type>" +
-					"<length>"+length+"</length>"+
+					"<len>"+length+"</len>"+
 					"<breadth>"+breadth+"</breadth>"+
 					"<height>"+height+"</height>"+
 					"<last_updated>"+last_updated+"</last_updated>" +

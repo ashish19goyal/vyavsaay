@@ -6672,7 +6672,7 @@ function modal113_action(func)
 		var storage_parent="<storage_structure>"+
 						"<parent></parent>"+
 						"<name exact='yes'>"+area_type_filter.value+"</name>"+
-						"<length></length>"+
+						"<len></len>"+
 						"<breadth></breadth>"+
 						"<height></height>"+
 						"<unit></unit>"+
@@ -6687,7 +6687,7 @@ function modal113_action(func)
 						"</store_areas>";
 				set_my_value_list(parent_data,parent_filter);
 				
-				length_filter.value=parents[0].length;
+				length_filter.value=parents[0].len;
 				breadth_filter.value=parents[0].breadth;
 				height_filter.value=parents[0].height;
 				unit_filter.value=parents[0].unit;
@@ -6759,7 +6759,7 @@ function modal113_action(func)
 						"<owner>"+owner+"</owner>" +
 						"<area_type>"+area_type+"</area_type>" +
 						"<parent>"+parent+"</parent>"+
-						"<length>"+length+"</length>"+
+						"<len>"+length+"</len>"+
 						"<breadth>"+breadth+"</breadth>"+
 						"<height>"+height+"</height>"+
 						"<unit>"+unit+"</unit>"+
@@ -6943,7 +6943,7 @@ function modal114_action(func)
 						"<name unique='yes'>"+name+"</name>" +
 						"<description>"+description+"</description>" +
 						"<tax>"+tax+"</tax>" +
-						"<length>"+length+"</length>"+
+						"<len>"+length+"</len>"+
 						"<breadth>"+breadth+"</breadth>"+
 						"<height>"+height+"</height>"+
 						"<volume>"+volume+"</volume>"+

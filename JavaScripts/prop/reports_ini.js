@@ -2747,7 +2747,7 @@ function report45_ini()
 			"<area_type exact='yes'>storage</area_type>" +
 			"<height></height>" +
 			"<width></width>" +
-			"<length></length>" +
+			"<len></len>" +
 			"<locx></locx>" +
 			"<locy></locy>" +
 			"<locz></locz>" +

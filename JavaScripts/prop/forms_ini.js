@@ -16366,7 +16366,7 @@ function form163_ini()
 	var columns="<product_master count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
 		"<name>"+fname+"</name>" +
-		"<length></length>" +
+		"<len></len>" +
 		"<breadth></breadth>" +
 		"<height></height>" +
 		"<volume></volume>" +
@@ -16388,7 +16388,7 @@ function form163_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form163_"+result.id+"'>"+result.name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Size'>";
-						rowsHTML+="Length: <input type='number' step='any' class='dblclick_editable' readonly='readonly' form='form163_"+result.id+"' value='"+result.length+"'>"+result.unit;
+						rowsHTML+="Length: <input type='number' step='any' class='dblclick_editable' readonly='readonly' form='form163_"+result.id+"' value='"+result.len+"'>"+result.unit;
 						rowsHTML+="<br>Breadth: <input type='number' step='any' class='dblclick_editable' readonly='readonly' form='form163_"+result.id+"' value='"+result.breadth+"'>"+result.unit;
 						rowsHTML+="<br>Height: <input type='number' step='any' class='dblclick_editable' readonly='readonly' form='form163_"+result.id+"' value='"+result.height+"'>"+result.unit;
 						rowsHTML+="<br>Volume: <input type='number' step='any' class='dblclick_editable' readonly='readonly' form='form163_"+result.id+"' value='"+result.volume+"'>";
@@ -16798,7 +16798,7 @@ function form167_ini()
 		"<id>"+fid+"</id>" +
 		"<name>"+fname+"</name>" +
 		"<parent>"+fparent+"</parent>" +
-		"<length></length>" +
+		"<len></len>" +
 		"<breadth></breadth>" +
 		"<height></height>"+
 		"<unit></unit>"+
@@ -16820,7 +16820,7 @@ function form167_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form167_"+result.id+"'>"+result.parent+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Default Dimensions'>";
-						rowsHTML+="Length: <input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form167_"+result.id+"' value='"+result.length+"'>";
+						rowsHTML+="Length: <input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form167_"+result.id+"' value='"+result.len+"'>";
 						rowsHTML+="<br>Breadth: <input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form167_"+result.id+"' value='"+result.breadth+"'>";
 						rowsHTML+="<br>Height: <input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form167_"+result.id+"' value='"+result.height+"'>";
 					rowsHTML+="</td>";
@@ -17064,7 +17064,7 @@ function form170_ini()
 			"<parent>"+fparent+"</parent>"+
 			"<area_type>"+ftype+"</area_type>" +
 			"<owner></owner>"+
-			"<length></length>"+
+			"<len></len>"+
 			"<breadth></breadth>"+
 			"<height></height>"+
 			"<unit></unit>"+
@@ -17092,7 +17092,7 @@ function form170_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Details'>";
 						rowsHTML+="Owner: <input type='text' readonly='readonly' class='dblclick_editable' form='form170_"+result.id+"' value='"+result.owner+"'>";
-						rowsHTML+="<br>Length: <input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form170_"+result.id+"' value='"+result.length+"'>"+result.unit;
+						rowsHTML+="<br>Length: <input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form170_"+result.id+"' value='"+result.len+"'>"+result.unit;
 						rowsHTML+="<br>Breadth: <input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form170_"+result.id+"' value='"+result.breadth+"'>"+result.unit;
 						rowsHTML+="<br>Height: <input type='number' step='any' readonly='readonly' class='dblclick_editable' form='form170_"+result.id+"' value='"+result.height+"'>"+result.unit;
 					rowsHTML+="</td>";
