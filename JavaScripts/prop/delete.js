@@ -209,7 +209,7 @@ function form10_delete_item(button)
 		modal115_action(function()
 		{
 			//console.log('deleting form10_item');
-			var bill_id=document.getElementById("form10_master").elements[5].value;
+			var bill_id=document.getElementById("form10_master").elements['bill_id'].value;
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);

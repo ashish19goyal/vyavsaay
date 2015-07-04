@@ -2783,6 +2783,7 @@ function form92_import(data_array,import_type)
 				"<offer>"+row.offer+"</offer>" +
 				"<discount>"+row.discount+"</discount>" +
 				"<tax>"+row.tax+"</tax>" +
+				"<tax_rate>"+row.tax_rate+"</tax_rate>" +
 				"<transaction_id>"+row.transaction_id+"</transaction_id>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";

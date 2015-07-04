@@ -12,16 +12,16 @@ function form2_add_item()
 		rowsHTML+="<form id='form2_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item Type'>";
 				rowsHTML+="Type: <input type='text' form='form2_"+id+"' required value=''>";
-				rowsHTML+="<br>Name: <input type='text' form='form2_"+id+"' required value=''>";
+				rowsHTML+="<br>Name: <input type='text' form='form2_"+id+"' class='dblclick_editable' required value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Detail'>";
-				rowsHTML+="Detail: <textarea class='widebox' form='form2_"+id+"' required></textarea>";
-				rowsHTML+="<br>Link: <textarea class='widebox' form='form2_"+id+"'></textarea>";
+				rowsHTML+="Detail: <textarea class='widebox' form='form2_"+id+"' class='dblclick_editable' required></textarea>";
+				rowsHTML+="<br>Link: <textarea class='widebox' form='form2_"+id+"' class='dblclick_editable'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Image'>";
-				rowsHTML+="<br><output form='form2_"+id+"'></output>";
+				rowsHTML+="<output form='form2_"+id+"'></output>";
 				rowsHTML+="<input type='file' form='form2_"+id+"'>";
-				rowsHTML+="<br>Size: <input type='number' value='2' required form='form2_"+id+"'>";
+				rowsHTML+="<br>Size: <input type='number' value='2' class='dblclick_editable' required form='form2_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form2_"+id+"' value='"+id+"'>";
@@ -59,56 +59,8 @@ function form2_add_item()
 			$(type_filter).focus();
 		});
 		
-		$(type_filter).on('blur',function () 
-		{
-			switch(type_filter.value)
-			{
-				case 'product': var products_data="<product_master>" +
-												"<name></name>" +
-												"</product_master>";
-								set_my_value_list(products_data,name_filter);
-								$(name_filter).on('blur',function()
-								{
-									var detail_data="<product_master>"+
-													"<description></description>"+
-													"<name exact='yes'>"+name_filter.value+"</name>"+
-													"</product_master>";
-									set_my_value(detail_data,detail_filter);
-													
-								});
-								break;
- 				case 'service': var service_data="<services>"+
- 												"<name></name>"+
- 												"</services>";
- 								set_my_value_list(service_data,name_filter);
-								$(name_filter).on('blur',function()
-								{
-									var detail_data="<services>"+
-													"<description></description>"+
-													"<name exact='yes'>"+name_filter.value+"</name>"+
-													"</services>";
-									set_my_value(detail_data,detail_filter);
-									
-								});
-								break;
-				case 'offer': var offer_data="<offers>"+
- 											"<offer_name></offer_name>"+
- 											"</offers>";
- 								set_my_value_list(offer_data,name_filter);
- 								$(name_filter).on('blur',function()
-								{
-									var detail_data="<offers>"+
-													"<offer_detail></offer_detail>"+
-													"<offer_name exact='yes'>"+name_filter.value+"</offer_name>"+
-													"</offers>";
-									set_my_value(detail_data,detail_filter);
-									
-								});
-								break;				
-			}
-		});	
-		
-		$('textarea').autosize();			
+		$('textarea').autosize();
+		longPressEditable($('.dblclick_editable'));
 	}
 	else
 	{
@@ -133,7 +85,7 @@ function form10_add_item()
 				rowsHTML+="<input type='text' required form='form10_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' id='form10_add_service_"+id+"'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Notes'>";
+			rowsHTML+="<td data-th='Remark'>";
 				rowsHTML+="<textarea form='form10_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";

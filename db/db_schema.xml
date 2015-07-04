@@ -319,8 +319,10 @@
 			<order_id index='yes' type="BIGINT"></order_id>
 			<order_num index='yes' type="VARCHAR(20)"></order_num>
 			<bill_date index='yes' type="BIGINT"></bill_date>
+			<due_date index='yes' type="BIGINT"></due_date>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<total index='yes' type="DECIMAL(12,2)"></total>
+			<total_quantity index='yes' type="DECIMAL(12,2)"></total_quantity>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
 			<billing_type index="yes" type="VARCHAR(20)"></billing_type>
 			<channel index="yes" type="TEXT"></channel>
@@ -1215,4 +1217,15 @@
 			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</system_grid_metrics>
+	<letterheads>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<date index='yes' type="VARCHAR(30)"></date>
+			<to index='yes' type="TEXT"></to>
+			<subject index='yes' type="TEXT"></subject>
+			<salutation index='no' type="TEXT"></salutation>
+			<content index='no' type="TEXT"></content>
+			<signature index='yes' type="TEXT"></signature>
+			<footer index='yes' type="TEXT"></footer>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</letterheads>
 </re_xml>

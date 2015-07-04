@@ -185,18 +185,18 @@ function form2_ini()
 				rowsHTML+="<form id='form2_"+id+"'></form>";
 					rowsHTML+="<td data-th='Item'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form2_"+id+"' value='"+result.item_type+"'>";
-						rowsHTML+="<br><b><textarea readonly='readonly' form='form2_"+id+"'>"+result.item_name+"</textarea></b>";
+						rowsHTML+="<br><b><textarea readonly='readonly' form='form2_"+id+"' class='dblclick_editable'>"+result.item_name+"</textarea></b>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Detail'>";
-						rowsHTML+="Detail: <textarea readonly='readonly' class='widebox' form='form2_"+id+"'>"+result.item_detail+"</textarea>";
-						rowsHTML+="<br>Link: <textarea readonly='readonly' class='widebox' form='form2_"+id+"'>"+result.url+"</textarea>";
+						rowsHTML+="Detail: <textarea readonly='readonly' class='widebox dblclick_editable' form='form2_"+id+"'>"+result.item_detail+"</textarea>";
+						rowsHTML+="<br>Link: <textarea readonly='readonly' class='widebox dblclick_editable' form='form2_"+id+"'>"+result.url+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Image'>";
 						rowsHTML+="<output form='form2_"+id+"'><div class='figure'><img src='"+updated_blob+"'></div></output>";
-						rowsHTML+="<br>Size: <input type='number' form='form2_"+id+"' readonly='readonly' value='"+result.column_size+"'>";
+						rowsHTML+="<input type='file' form='form2_"+id+"'>";
+						rowsHTML+="<br>Size: <input type='number' form='form2_"+id+"' readonly='readonly' class='dblclick_editable' value='"+result.column_size+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form2_"+id+"'>";					
 						rowsHTML+="<input type='hidden' form='form2_"+id+"' value='"+id+"'>";
 						rowsHTML+="<input type='submit' class='submit_hidden' form='form2_"+id+"' id='save_form2_"+id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form2_"+id+"' id='delete_form2_"+id+"' onclick='form2_delete_item($(this));'>";
@@ -209,9 +209,28 @@ function form2_ini()
 				$(fields).on("submit", function(event)
 				{
 					event.preventDefault();
+					form2_update_item(fields);
 				});
+				
+				var type_filter=fields.elements[0];
+				var name_filter=fields.elements[1];
+				var detail_filter=fields.elements[2];
+				var link_filter=fields.elements[3];
+				var pictureinfo=fields.elements[4];
+				var picture=fields.elements[5];
+		
+				picture.addEventListener('change',function(evt)
+				{
+					select_picture(evt,pictureinfo,function(dataURL)
+					{
+						pictureinfo.innerHTML="<div class='figure'><img id='img_form2_"+id+"' src='"+dataURL+"'></div>";			
+					});
+				},false);
+		
 			});
 			$('textarea').autosize();
+			longPressEditable($('.dblclick_editable'));
+
 			hide_loader();
 		});
 	}
@@ -612,10 +631,11 @@ function form10_ini()
 				"<customer_name></customer_name>" +
 				"<total></total>" +
 				"<bill_date></bill_date>" +
+				"<due_date></due_date>" +
 				"<amount></amount>" +
 				"<discount></discount>" +
 				"<tax></tax>" +
-				"<offer></offer>" +
+				"<total_quantity></total_quantity>"+
 				"<transaction_id></transaction_id>" +
 				"</bills>";
 		var bill_items_column="<bill_items>" +
@@ -640,14 +660,16 @@ function form10_ini()
 			
 			for (var i in bill_results)
 			{
-				filter_fields.elements[1].value=bill_results[i].customer_name;
-				filter_fields.elements[2].value=bill_results[i].order_num;
-				filter_fields.elements[3].value=bill_results[i].bill_num;
-				filter_fields.elements[4].value=get_my_past_date(bill_results[i].bill_date);
-				filter_fields.elements[5].value=bill_id;
-				filter_fields.elements[6].value=bill_results[i].order_id;
-				filter_fields.elements[7].value=bill_results[i].transaction_id;
-				var save_button=filter_fields.elements[8];
+				filter_fields.elements['customer'].value=bill_results[i].customer_name;
+				filter_fields.elements['order_num'].value=bill_results[i].order_num;
+				filter_fields.elements['bill_num'].value=bill_results[i].bill_num;
+				filter_fields.elements['bill_date'].value=get_my_past_date(bill_results[i].bill_date);
+				filter_fields.elements['due_date'].value=get_my_past_date(bill_results[i].due_date);
+				filter_fields.elements['bill_id'].value=bill_id;
+				filter_fields.elements['order_id'].value=bill_results[i].order_id;
+				filter_fields.elements['t_id'].value=bill_results[i].transaction_id;
+				var payment_filter=filter_fields.elements['payment'];
+				var save_button=filter_fields.elements['save'];
 				var address_filter=filter_fields.elements['customer_address'];
 				
 				$(save_button).off('click');
@@ -657,7 +679,7 @@ function form10_ini()
 					form10_update_form();
 				});
 
-				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+				var total_row="<tr><td colspan='2' data-th='Total'>Total<br>PCS: "+bill_results[i].total_quantity+"</td>" +
 							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 							"<td>Rs. "+bill_results[i].amount+"</br>" +
 							"Rs. "+bill_results[i].discount+"</br>" +
@@ -677,7 +699,26 @@ function form10_ini()
 				{
 					if(addresses.length>0)
 						address_filter.value=addresses[0].address+', '+addresses[0].city+"-"+addresses[0].pincode;
-				});				
+				});
+				
+				var payment_data="<payments count='1'>" +
+					"<id></id>" +
+					"<paid_amount></paid_amount>"+
+					"<total_amount></total_amount>"+
+					"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
+					"</payments>";
+				fetch_requested_data('',payment_data,function(payments)
+				{
+					if(payments.length>0)
+					{
+						if(parseFloat(payments[0].paid_amount)==0)
+							payment_filter.value="Unpaid<br>Balance: Rs. "+payments[0].total_amount;
+						else if(parseFloat(payments[0].paid_amount)==parseFloat(payments[0].total_amount))
+							payment_filter.value="Paid<br>Balance: Rs. 0";	
+						else 
+							payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(payments[0].total_amount)-parseFloat(payments[0].paid_amount));
+					}
+				});
 				break;
 			}
 
@@ -694,7 +735,7 @@ function form10_ini()
 						rowsHTML+="<td data-th='Item'>";
 							rowsHTML+="<input type='text' readonly='readonly' form='form10_"+id+"' value='"+result.item_name+"'>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Notes'>";
+						rowsHTML+="<td data-th='Remark'>";
 							rowsHTML+="<textarea readonly='readonly' form='form10_"+id+"'>"+result.notes+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
@@ -720,7 +761,7 @@ function form10_ini()
 				$('#form10_share').show();
 				$('#form10_share').click(function()
 				{
-					modal101_action('Sale Bill',filter_fields.elements[1].value,'customer',function (func) 
+					modal101_action('Sale Bill',filter_fields.elements['customer'].value,'customer',function (func) 
 					{
 						print_form10(func);
 					});

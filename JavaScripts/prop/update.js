@@ -171,6 +171,68 @@ function form1_update_item(form)
 }
 
 /**
+ * @form Create Newsletter
+ * @param button
+ */
+function form2_update_item(form)
+{
+	if(is_update_access('form2'))
+	{
+		if(is_online())
+		{
+			var nl_id=document.getElementById('form2_master').elements[3].value;
+			var type=form.elements[0].value;
+			var name=form.elements[1].value;
+			var detail=form.elements[2].value;
+			var url=form.elements[3].value;
+			var column_size=form.elements[6].value;
+			var data_id=form.elements[7].value;
+			var blob=$("#img_form2_"+data_id).attr('src');
+			var blob_name="client_images/"+data_id+".jpeg";
+			var del_button=form.elements[9];
+			var last_updated=get_my_time();
+			var data_xml="<newsletter_items>" +
+						"<id>"+data_id+"</id>" +
+						"<item_name>"+name+"</item_name>" +
+						"<item_type>"+type+"</item_type>" +
+						"<item_detail>"+detail+"</item_detail>" +
+						"<nl_id>"+nl_id+"</nl_id>" +
+						"<url>"+url+"</url>"+
+						"<data_blob>"+blob+"</data_blob>"+
+						"<pic_url>"+blob_name+"</pic_url>"+
+						"<column_size>"+column_size+"</column_size>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</newsletter_items>";			
+			$.ajax(
+			{
+				type: "POST",
+				url: "./ajax/save_image.php",
+				data: 
+				{
+					blob: blob,
+					name:blob_name
+				}
+			});
+		
+			server_update_simple(data_xml);
+			
+			for(var i=0;i<7;i++)
+			{
+				$(form.elements[i]).attr('readonly','readonly');
+			}
+		}
+		else
+		{
+			$("#modal6").dialog("open");		
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Create Pamphlets
  * @param button
  */
@@ -384,10 +446,13 @@ function form10_update_form()
 	{
 		var form=document.getElementById("form10_master");
 		
-		var customer=form.elements[1].value;
-		var bill_num=form.elements[3].value;
-		var bill_date=get_raw_time(form.elements[4].value);
-				
+		var customer=form.elements['customer'].value;
+		var bill_num=form.elements['bill_num'].value;
+		var bill_date=get_raw_time(form.elements['bill_date'].value);
+		var due_date=get_raw_time(form.elements['due_date'].value);
+		var payment_filter=form.elements['payment'].value;
+		
+		var quantity=0;		
 		var amount=0;
 		var discount=0;
 		var tax=0;
@@ -397,23 +462,26 @@ function form10_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
+			quantity+=parseFloat(subform.elements[2].value);
 			total+=parseFloat(subform.elements[4].value);
 			amount+=parseFloat(subform.elements[5].value);
 			discount+=parseFloat(subform.elements[6].value);
 			tax+=parseFloat(subform.elements[7].value);			
 		});
 		
-		var data_id=form.elements[5].value;
-		var order_id=form.elements[6].value;
-		var transaction_id=form.elements[7].value;
+		var data_id=form.elements['bill_id'].value;
+		var order_id=form.elements['order_id'].value;
+		var transaction_id=form.elements['t_id'].value;
 		var last_updated=get_my_time();
 
 		var data_xml="<bills>" +
 					"<id>"+data_id+"</id>" +
 					"<customer_name>"+customer+"</customer_name>" +
 					"<bill_date>"+bill_date+"</bill_date>" +
+					"<due_date>"+due_date+"</due_date>" +
 					"<amount>"+amount+"</amount>" +
 					"<total>"+total+"</total>" +
+					"<total_quantity>"+quantity+"</total_quantity>" +
 					"<type>service</type>" +
 					"<discount>"+discount+"</discount>" +
 					"<tax>"+tax+"</tax>" +
@@ -458,7 +526,7 @@ function form10_update_form()
 			local_update_simple(sale_order_xml);
 		}
 		
-		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+		var total_row="<tr><td colspan='2' data-th='Total'>Total<br>PCS: "+quantity+"</td>" +
 					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"Rs. "+discount+"</br>" +
@@ -497,14 +565,30 @@ function form10_update_form()
 				{
 					server_update_simple_func(payment_xml,function()
 					{
-						modal26_action(payments[y]);
+						modal26_action(payments[y],function (mode,paid) 
+						{
+							if(parseFloat(paid)==0)
+								payment_filter.value="Unpaid<br>Balance: Rs. "+total;
+							else if(parseFloat(paid)==parseFloat(total))
+								payment_filter.value="Paid<br>Balance: Rs. 0";	
+							else 
+								payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));	
+						});
 					});
 				}
 				else
 				{
 					local_update_simple_func(payment_xml,function()
 					{
-						modal26_action(payments[y]);
+						modal26_action(payments[y],function (mode,paid) 
+						{
+							if(parseFloat(paid)==0)
+								payment_filter.value="Unpaid<br>Balance: Rs. "+total;
+							else if(parseFloat(paid)==parseFloat(total))
+								payment_filter.value="Paid<br>Balance: Rs. 0";	
+							else 
+								payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));
+						});
 					});
 				}
 				break;

@@ -9,7 +9,7 @@
 			<label>	<input type='submit' class='submit_hidden'>	</label>				
 		</fieldset>
 	</form>
-	<table class='rwd-table'>
+	<table class='rwd-table sortable'>
 		<thead>
 			<tr>
 				<form id='form2_header'></form>

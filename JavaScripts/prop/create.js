@@ -59,6 +59,7 @@ function form2_create_item(form)
 			$(form).on('submit',function(event)
 			{
 				event.preventDefault();
+				form2_update_item(form);
 			});
 		}
 		else
@@ -186,7 +187,7 @@ function form10_create_item(form)
 {
 	if(is_create_access('form10'))
 	{
-		var bill_id=document.getElementById("form10_master").elements[5].value;
+		var bill_id=document.getElementById("form10_master").elements['bill_id'].value;
 		
 		var name=form.elements[0].value;
 		var notes=form.elements[1].value;
@@ -253,10 +254,12 @@ function form10_create_form()
 	{
 		var form=document.getElementById("form10_master");
 		
-		var customer=form.elements[1].value;
-		var order_num=form.elements[2].value;
-		var bill_num=form.elements[3].value;
-		var bill_date=get_raw_time(form.elements[4].value);
+		var customer=form.elements['customer'].value;
+		var order_num=form.elements['order_num'].value;
+		var bill_num=form.elements['bill_num'].value;
+		var bill_date=get_raw_time(form.elements['bill_date'].value);
+		var due_date=get_raw_time(form.elements['due_date'].value);
+		var payment_filter=form.elements['payment'].value;
 		
 		$('#form10_share').show();
 		$('#form10_share').click(function()
@@ -267,6 +270,7 @@ function form10_create_form()
 			});
 		});
 
+		var quantity=0;
 		var amount=0;
 		var discount=0;
 		var tax=0;
@@ -276,16 +280,17 @@ function form10_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
+			quantity+=parseFloat(subform.elements[2].value);
 			total+=parseFloat(subform.elements[4].value);
 			amount+=parseFloat(subform.elements[5].value);
 			discount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[7].value);			
+			tax+=parseFloat(subform.elements[7].value);
 		});
 
-		var data_id=form.elements[5].value;
-		var order_id=form.elements[6].value;
-		var transaction_id=form.elements[7].value;
-		var save_button=form.elements[8];
+		var data_id=form.elements['bill_id'].value;
+		var order_id=form.elements['order_id'].value;
+		var transaction_id=form.elements['t_id'].value;
+		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
 		
 		var data_xml="<bills>" +
@@ -295,8 +300,10 @@ function form10_create_form()
 					"<order_num>"+order_num+"</order_num>"+
 					"<customer_name>"+customer+"</customer_name>" +
 					"<bill_date>"+bill_date+"</bill_date>" +
+					"<due_date>"+due_date+"</due_date>" +
 					"<amount>"+amount+"</amount>" +
 					"<total>"+total+"</total>" +
+					"<total_quantity>"+quantity+"</total_quantity>" +					
 					"<type>service</type>" +
 					"<discount>"+discount+"</discount>" +
 					"<tax>"+tax+"</tax>" +
@@ -383,7 +390,16 @@ function form10_create_form()
 			server_create_simple(pt_xml);
 			server_create_simple_func(payment_xml,function()
 			{
-				modal26_action(pt_tran_id);
+				modal26_action(pt_tran_id,function (mode,paid) 
+				{
+					if(parseFloat(paid)==0)
+						payment_filter.value="Unpaid<br>Balance: Rs. "+total;
+					else if(parseFloat(paid)==parseFloat(total))
+						payment_filter.value="Paid<br>Balance: Rs. 0";	
+					else 
+						payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));	
+
+				});
 			});
 		}
 		else
@@ -394,11 +410,19 @@ function form10_create_form()
 			local_create_simple(pt_xml);
 			local_create_simple_func(payment_xml,function()
 			{
-				modal26_action(pt_tran_id);
+				modal26_action(pt_tran_id,function (mode,paid) 
+				{
+					if(parseFloat(paid)==0)
+						payment_filter.value="Unpaid<br>Balance: Rs. "+total;
+					else if(parseFloat(paid)==parseFloat(total))
+						payment_filter.value="Paid<br>Balance: Rs. 0";	
+					else 
+						payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));					
+				});
 			});
 		}
 		
-		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+		var total_row="<tr><td colspan='2' data-th='Total'>Total<br>PCS: "+quantity+"</td>" +
 					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"Rs. "+discount+"</br>" +

@@ -231,10 +231,10 @@ function my_sortable_tables()
 			update: function(event, ui) 
 			{
 				//ui.item.parent().trigger('dblclick');
-				ui.item.parent().find('tr').each(function(index)
-				{
-					$(this).find('td:nth-child(2)>input').attr('value',index+1);
-				});
+				//ui.item.parent().find('tr').each(function(index)
+				//{
+				//	$(this).find('td:nth-child(2)>input').attr('value',index+1);
+				//});
 			}
 		});
 	});

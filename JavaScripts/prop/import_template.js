@@ -507,7 +507,7 @@ function form91_import_template()
 */
 function form92_import_template()
 {
-	var data_array=['id','bill_num','customer_name','bill_date','amount','total','type','billing_type','offer','discount','tax','transaction_id'];
+	var data_array=['id','bill_num','customer_name','bill_date','amount','total','type','billing_type','offer','discount','tax','tax_rate','transaction_id'];
 	my_array_to_csv(data_array);
 };
 

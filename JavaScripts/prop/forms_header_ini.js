@@ -267,17 +267,20 @@ function form10_header_ini()
 {
 	var fields=document.getElementById('form10_master');
 	
-	var customers_filter=fields.elements[1];
-	var order_num=fields.elements[2];
-	var bill_num=fields.elements[3];
-	var bill_date=fields.elements[4];
-	fields.elements[5].value=get_new_key();
-	var order_id_filter=fields.elements[6];
+	var customers_filter=fields.elements['customer'];
+	var order_num=fields.elements['order_num'];
+	var bill_num=fields.elements['bill_num'];
+	var bill_date=fields.elements['bill_date'];
+	var due_date=fields.elements['due_date'];
+	fields.elements['bill_id'].value=get_new_key();
+	var order_id_filter=fields.elements['order_id'];
 	order_id_filter.value="";
-	fields.elements[7].value=fields.elements[5].value;
-	var save_button=fields.elements[8];
+	fields.elements['t_id'].value=fields.elements['bill_id'].value;
+	var save_button=fields.elements['save'];
 	var address_filter=fields.elements['customer_address'];
 	address_filter.value="";
+	order_num.value="";
+	customers_filter.value='';
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -285,14 +288,14 @@ function form10_header_ini()
 		event.preventDefault();
 		form10_create_form();
 	});
-	
+
 	var bill_id=$("#form10_link").attr('data_id');
 	if(bill_id==null || bill_id=='')
 	{
 		var bill_num_data="<user_preferences count='1'>"+
-							"<value></value>"+
-							"<name exact='yes'>bill_num</name>"+
-							"</user_preferences>";
+						"<value></value>"+
+						"<name exact='yes'>bill_num</name>"+
+						"</user_preferences>";
 		set_my_value(bill_num_data,bill_num);	
 	}
 	
@@ -314,7 +317,10 @@ function form10_header_ini()
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
-	set_my_value_list(customers_data,customers_filter);
+	set_my_value_list_func(customers_data,customers_filter,function () 
+	{
+		$(customers_filter).focus();
+	});
 	
 	var add_customer=document.getElementById('form10_add_customer');
 	$(add_customer).off('click');
@@ -365,11 +371,9 @@ function form10_header_ini()
 	});	
 	
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());
-	customers_filter.value='';
-	order_num.value="";
-		
-	$(customers_filter).focus();
+	bill_date.value=get_my_date();
+	$(due_date).datepicker();
+	due_date.value=get_my_past_date((get_my_time()+(2*86400000)));
 }
 
 
