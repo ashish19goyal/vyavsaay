@@ -791,7 +791,7 @@ function form136_import_template()
 */
 function form137_import_template()
 {
-	var data_array=['id','status','person','amount','detail','source','source_id'];
+	var data_array=['id','status','person','amount','detail','expense_date','source','source_id'];
 	my_array_to_csv(data_array);
 };
 

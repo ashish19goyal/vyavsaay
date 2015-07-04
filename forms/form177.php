@@ -7,9 +7,9 @@
 					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form177_header'></th>
 					<th>Values </th>
 					<th>Threshold </th>
-					<th>
+					<th><input type="button" value='Add new parameter' class='add_icon' form='form177_header' onclick="form177_add_item();">
 						<input type='button' form='form177_header' value='EXPORT' class='export_icon'>
-						<input type='submit' form='form177_header' style='visibility: hidden;'>
+						<input type='submit' form='form177_header' class='submit_hidden'>
 					</th>
 			</tr>
 		</thead>

@@ -4537,7 +4537,7 @@ function form137_delete_item(button)
 		{	
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);	
-			var data_id=form.elements[4].value;
+			var data_id=form.elements[5].value;
 			
 			var data_xml="<expenses>" +
 						"<id>"+data_id+"</id>" +
@@ -4640,7 +4640,7 @@ function form142_delete_item(button)
 	{
 		modal115_action(function()
 		{
-			var ques_id=document.getElementById("form142_master").elements[5].value;
+			var ques_id=document.getElementById("form142_master").elements['id'].value;
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);

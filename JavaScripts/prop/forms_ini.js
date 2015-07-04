@@ -5682,6 +5682,7 @@ function initialize_questionnaires(id,ques_name)
 					"<description></description>"+					
 					"<type></type>"+
 					"<fvalues></fvalues>"+
+					"<dynamic_values></dynamic_values>"+
 					"<fcol></fcol>"+
 					"<forder></forder>"+
 					"<freq></freq>"+
@@ -5704,6 +5705,8 @@ function initialize_questionnaires(id,ques_name)
 
 		content+="<input type='hidden'>";
 		content+="<input type='hidden'>";
+				
+		var dynamic_fields=[];
 				
 		fields.forEach(function(field)
 		{
@@ -5732,6 +5735,12 @@ function initialize_questionnaires(id,ques_name)
 								});
 								content+="</select></label>";
 							break;
+				case 'dynamic value list':content+="<label>"+field.display_name+field_desc+fcol+" <input id='field"+id+"_"+field.id+"' "+required+"></label>";
+								var dynamic_field=new Object();
+								dynamic_field.id=field.id;
+								dynamic_field.dynamic_values=revert_htmlentities(field.dynamic_values).replace(/vyavsaay/g,"");
+								dynamic_fields.push(dynamic_field);
+							break;
 				case 'textarea':content+="<label>"+field.display_name+field_desc+fcol+" <textarea id='field"+id+"_"+field.id+"' "+required+"></textarea></label>";
 							break;
 			}
@@ -5741,10 +5750,16 @@ function initialize_questionnaires(id,ques_name)
 		content+="</fieldset></form>";
 		$("#"+ques_name).html(content);
 		
+		dynamic_fields.forEach(function (dynamic_field) 
+		{
+			var filter_element=document.getElementById('field'+id+'_'+dynamic_field.id);
+			set_my_value_list(dynamic_field.dynamic_values,filter_element);
+		});
 		//function to submit the questionnaire
 		var ques_form=document.getElementById(ques_name+"_ques_main");
 		var reviewer_filter=ques_form.elements[1];
 		var approver_filter=ques_form.elements[2];
+		
 		
 		var reviewer_data="<ques_struct count='1'>"+
 						"<id>"+id+"</id>"+
@@ -13036,11 +13051,11 @@ function form137_ini()
 	var fields=document.getElementById('form137_master');
 	if(project_id=="")
 	{	
-		project_id=fields.elements[2].value;
+		project_id=fields.elements['id'].value;
 	}
 	else
 	{
-		fields.elements[2].value=project_id;
+		fields.elements['id'].value=project_id;
 	}
 
 	if(project_id!="")
@@ -13057,16 +13072,18 @@ function form137_ini()
 			"<person></person>" +
 			"<amount></amount>" +
 			"<detail></detail>" +
+			"<expense_date></expense_date>"+
 			"<status></status>" +
 			"</expenses>";
 
+		var filter_fields=document.getElementById('form137_master');
+				
 		fetch_requested_data('',project_columns,function(project_results)
 		{
 			for (var i in project_results)
 			{
-				var filter_fields=document.getElementById('form137_master');
-				filter_fields.elements[1].value=project_results[i].name;
-				filter_fields.elements[2].value=project_results[i].id;
+				filter_fields.elements['name'].value=project_results[i].name;
+				filter_fields.elements['id'].value=project_results[i].id;
 				
 				$(filter_fields).off('submit');
 				$(filter_fields).on("submit", function(event)
@@ -13083,6 +13100,9 @@ function form137_ini()
 		{
 			fetch_requested_data('',member_columns,function(results)
 			{
+				var total_expense=0;
+				var total_approved=0;
+				
 				results.forEach(function(result)
 				{
 					var read=false;
@@ -13123,37 +13143,53 @@ function form137_ini()
 					{
 						var id=result.id;
 						var rowsHTML="<tr>";
-						rowsHTML+="<form id='form137_"+id+"'></form>";
+						rowsHTML+="<form id='form137_rows_"+id+"'></form>";
 							rowsHTML+="<td data-th='Person'>";
-								rowsHTML+="<textarea readonly='readonly' form='form137_"+id+"'>"+result.person+"</textarea>";
+								rowsHTML+="<textarea readonly='readonly' form='form137_rows_"+id+"'>"+result.person+"</textarea>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Amount'>";
-								rowsHTML+="Rs. <input type='number' readonly='readonly' form='form137_"+id+"' value='"+result.amount+"' step='any'>";
+								rowsHTML+="Rs. <input type='number' readonly='readonly' form='form137_rows_"+id+"' value='"+result.amount+"' step='any'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
-								rowsHTML+="<textarea readonly='readonly' form='form137_"+id+"'>"+result.detail+"</textarea>";
+								rowsHTML+="<textarea readonly='readonly' form='form137_rows_"+id+"'>"+result.detail+"</textarea>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Date'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form137_rows_"+id+"' value='"+get_my_past_date(result.expense_date)+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Status'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form137_"+id+"' value='"+result.status+"'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form137_rows_"+id+"' value='"+result.status+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
-								rowsHTML+="<input type='hidden' form='form137_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='hidden' form='form137_rows_"+id+"' value='"+id+"'>";
 							if(update && result.status=='submitted')
 							{
-								rowsHTML+="<input type='button' class='generic_icon' value='Approve' form='form137_"+id+"' onclick='form137_approve_item($(this))'>";
-								rowsHTML+="<input type='button' class='generic_icon' value='Reject' form='form137_"+id+"' onclick='form137_reject_item($(this))'>";
+								rowsHTML+="<input type='button' class='generic_icon' value='Approve' form='form137_rows_"+id+"' onclick='form137_approve_item($(this))'>";
+								rowsHTML+="<input type='button' class='generic_icon' value='Reject' form='form137_rows_"+id+"' onclick='form137_reject_item($(this))'>";
 							}
 							if(del && result.status=='submitted')
 							{
-								rowsHTML+="<input type='button' class='delete_icon' form='form137_"+id+"' id='delete_form137_"+id+"' onclick='form137_delete_item($(this));'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form137_"+id+"' id='delete_form137_rows_"+id+"' onclick='form137_delete_item($(this)); form137_get_totals();'>";
 							}
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
-
+						if(result.amount!="")
+						{
+							if(result.status=='approved')
+							{
+								total_expense+=parseFloat(result.amount);
+								total_approved+=parseFloat(result.amount);
+							}
+							else if(result.status=='submitted')
+							{
+								total_expense+=parseFloat(result.amount);
+							}
+						}			
 						$('#form137_body').append(rowsHTML);
 					}
 				});
-				$('textarea').autosize();				
+				$('textarea').autosize();
+				filter_fields.elements['expense'].value=total_expense;
+				filter_fields.elements['approved'].value=total_approved;				
 				hide_loader();
 			});
 		});
@@ -13639,6 +13675,7 @@ function form142_ini()
 				"<description></description>" +
 				"<type></type>" +
 				"<fvalues></fvalues>" +
+				"<dynamic_values></dynamic_values>"+
 				"<fcol></fcol>" +
 				"<forder></forder>" +
 				"<freq></freq>" +
@@ -13671,35 +13708,63 @@ function form142_ini()
 			{				
 				results.forEach(function(result)
 				{
-					var rowsHTML="";
+					var values=result.fvalues;
+					if(result.type=='dynamic value list')
+					{
+						values=result.dynamic_values;
+						values=values.replace(/vyavsaay/g,"");
+					}
 					var id=result.id;
-					rowsHTML+="<tr>";
+					var rowsHTML="<tr>";
 					rowsHTML+="<form id='form142_"+id+"'></form>";
 						rowsHTML+="<td data-th='Name'>";
 							rowsHTML+="<textarea readonly='readonly' form='form142_"+id+"'>"+result.display_name+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Description'>";
-							rowsHTML+="<textarea readonly='readonly' form='form142_"+id+"'>"+result.description+"</textarea>";
+							rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form142_"+id+"'>"+result.description+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Type'>";
 							rowsHTML+="<input type='text' readonly='readonly' form='form142_"+id+"' value='"+result.type+"'>";
-							if(result.type=='value list')							
-								rowsHTML+="<br>Values: <input type='text' readonly='readonly' form='form142_"+id+"' value='"+result.fvalues+"'>";
+							rowsHTML+="<br><label>Values: <input type='text' readonly='readonly' form='form142_"+id+"' value='"+values+"'></label>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Order'>";
-							rowsHTML+="<input type='number' readonly='readonly' form='form142_"+id+"' value='"+result.forder+"'>";
+							rowsHTML+="<input type='number' readonly='readonly' class='dblclick_editable' form='form142_"+id+"' value='"+result.forder+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Required'>";
 							rowsHTML+="<input type='checkbox' readonly='readonly' form='form142_"+id+"' "+result.freq+">";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form142_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form142_"+id+"' id='save_form142_"+id+"' >";
+							rowsHTML+="<input type='button' class='delete_icon' form='form142_"+id+"' id='delete_form142_"+id+"' onclick='form142_delete_item($(this));'>";
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 				
 					$('#form142_body').append(rowsHTML);
-					$('textarea').autosize();
-				});				
+					
+					var fields=document.getElementById("form142_"+id);
+					var type_filter=fields.elements[2];
+					var values_filter=fields.elements[3];
+					var save_button=fields.elements[7];
+					var delete_button=fields.elements[8];
+					
+					$(save_button).on('click',function (event) 
+					{
+						event.preventDefault();
+						form142_update_item(fields);
+					});					
+					
+					if(type_filter.value=='value list' || type_filter.value=='dynamic value list')
+					{
+						$(values_filter).parent().show();
+					}
+					else
+					{
+						$(values_filter).parent().hide();
+					}
+				});	
+				$('textarea').autosize();
+				longPressEditable($('.dblclick_editable'));					
 				hide_loader();
 			});
 		});
@@ -15134,6 +15199,7 @@ function form153_ini()
 				"<amount></amount>" +
 				"<discount></discount>" +
 				"<tax></tax>" +
+				"<tax_rate></tax_rate>" +
 				"<offer></offer>" +
 				"<billing_type></billing_type>" +
 				"<intro_notes></intro_notes>"+
@@ -15194,7 +15260,7 @@ function form153_ini()
 							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 							"<td>Rs. "+Math.round(quot_results[i].amount)+"</br>" +
 							"Rs. <input type='number' value='"+Math.round(quot_results[i].discount)+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
-							"Rs. <input type='number' value='"+Math.round(quot_results[i].tax)+"' step='any' id='form153_tax' class='dblclick_editable'></br>" +
+							"Rs. "+Math.round(quot_results[i].tax)+" @ <input type='number' value='"+quot_results[i].tax_rate+"' step='any' id='form153_tax' class='dblclick_editable'>%</br>" +
 							"Rs. "+Math.round(quot_results[i].total)+"</td>" +
 							"<td></td>" +
 							"</tr>";
@@ -15279,6 +15345,7 @@ function form154_ini()
 				"<discount></discount>" +
 				"<cartage></cartage>"+
 				"<tax></tax>" +
+				"<tax_rate></tax_rate>"+
 				"<billing_type></billing_type>" +
 				"<type></type>" +
 				"<transaction_id></transaction_id>" +
@@ -15388,7 +15455,7 @@ function form154_ini()
 							"<td>Amount:<disc><br>Discount: </disc><br>Tax: <br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+Math.round(bill_results[i].amount)+"</br>" +
 							"<disc_amount>Rs. <input type='number' value='"+Math.round(bill_results[i].discount)+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
-							"Rs. <input type='number' value='"+Math.round(bill_results[i].tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
+							"Rs. "+Math.round(bill_results[i].tax)+" @ <input type='number' value='"+bill_results[i].tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>%<br>" +
 							"Rs. <input type='number' value='"+Math.round(bill_results[i].cartage)+"' step='any' id='form154_cartage' class='dblclick_editable'><br>" +
 							"Rs. "+Math.round(bill_results[i].total)+"</td>" +
 							"<td></td>" +
@@ -15409,7 +15476,7 @@ function form154_ini()
 							"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+Math.round(bill_results[i].amount)+"</br>" +
 							"<disc_amount>Rs. <input type='number' value='"+Math.round(bill_results[i].discount)+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
-							"Rs. <input type='number' value='"+Math.round(bill_results[i].tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
+							"Rs. "+Math.round(bill_results[i].tax)+" @ <input type='number' value='"+bill_results[i].tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>%<br>" +
 							"Rs. <input type='number' value='"+Math.round(bill_results[i].cartage)+"' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 							"Rs. "+Math.round(bill_results[i].total)+"</td>" +
 							"<td></td>" +
@@ -15443,7 +15510,7 @@ function form154_ini()
 							"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+Math.round(bill_results[i].amount)+"</br>" +
 							"<disc_amount>Rs. <input type='number' value='"+Math.round(bill_results[i].discount)+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
-							"Rs. <input type='number' value='"+Math.round(bill_results[i].tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
+							"Rs. "+Math.round(bill_results[i].tax)+" @ <input type='number' value='"+bill_results[i].tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>%<br>" +
 							"Rs. <input type='number' value='"+Math.round(bill_results[i].cartage)+"' step='any' id='form154_cartage' class='dblclick_editable'><br>" +
 							"Rs. "+Math.round(bill_results[i].total)+"</td>" +
 							"<td></td>" +
@@ -15606,7 +15673,8 @@ function form155_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form155_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' title='Update' form='form155_"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form155_"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='generic_icon' value='Inventory' title='Update Inventory' form='form155_"+result.id+"' onclick=\"modal122_action('"+result.product_name+"')\">";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -16032,6 +16100,7 @@ function form158_ini()
 				"<amount></amount>" +
 				"<discount></discount>" +
 				"<tax></tax>" +
+				"<tax_rate></tax_rate>"+
 				"<cartage></cartage>"+
 				"<bill_date></bill_date>" +
 				"<entry_date></entry_date>" +
@@ -16069,7 +16138,7 @@ function form158_ini()
 							"<td>Amount:<br>Discount: <br>Tax: <br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+Math.round(bill_results[i].amount)+"</br>" +
 							"<disc_amount>Rs. <input type='number' value='"+Math.round(bill_results[i].discount)+"' step='any' id='form158_discount' class='dblclick_editable'><br></disc_amount>" +
-							"Rs. <input type='number' value='"+Math.round(bill_results[i].tax)+"' step='any' id='form158_tax' class='dblclick_editable'><br>" +
+							"Rs. "+Math.round(bill_results[i].tax)+" @ <input type='number' value='"+bill_results[i].tax_rate+"' step='any' id='form158_tax' class='dblclick_editable'><br>%" +
 							"Rs. <input type='number' value='"+Math.round(bill_results[i].cartage)+"' step='any' id='form158_cartage' class='dblclick_editable'><br>" +
 							"Rs. "+Math.round(bill_results[i].total)+"</td>" +
 							"<td></td>" +
@@ -18060,7 +18129,7 @@ function form177_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[2];
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{

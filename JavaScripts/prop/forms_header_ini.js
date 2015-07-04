@@ -4867,14 +4867,22 @@ function form137_header_ini()
 {
 	var fields=document.getElementById('form137_master');
 
-	var code_filter=fields.elements[1];
-	var id_filter=fields.elements[2];
+	var code_filter=fields.elements['name'];
+	var id_filter=fields.elements['id'];
+	var expense_filter=fields.elements['expense'];
+	var approved_filter=fields.elements['approved'];
+	
+	expense_filter.value=0;
+	approved_filter.value=0;
 	
 	var name_data="<projects>" +
 			"<name></name>" +
 			"</projects>";
 	
-	set_my_value_list(name_data,code_filter);
+	set_my_value_list_func(name_data,code_filter,function () 
+	{
+		$(code_filter).focus();
+	});
 
 	id_filter.value="";
 	code_filter.value="";
@@ -4885,7 +4893,6 @@ function form137_header_ini()
 		event.preventDefault();
 		form137_ini();
 	});
-		
 
 	my_datalist_change(code_filter,function () 
 	{
@@ -5422,6 +5429,8 @@ function form153_header_ini()
 	var fields=document.getElementById('form153_master');
 	
 	var customers_filter=fields.elements[1];
+	customers_filter.value='';
+		
 	var quot_type=fields.elements[2];
 	var date=fields.elements[3];
 	fields.elements[5].value=get_new_key();
@@ -5460,7 +5469,10 @@ function form153_header_ini()
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
-	set_my_value_list(customers_data,customers_filter);
+	set_my_value_list_func(customers_data,customers_filter,function () 
+	{
+		$(customers_filter).focus();
+	});
 
 	var add_customer=document.getElementById('form153_add_customer');
 	$(add_customer).off('click');
@@ -5508,8 +5520,6 @@ function form153_header_ini()
 
 	$(date).datepicker();
 	$(date).val(get_my_date());
-	customers_filter.value='';
-	$(customers_filter).focus();
 }
 
 /**

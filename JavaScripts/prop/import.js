@@ -4247,6 +4247,7 @@ function form137_import(data_array,import_type)
 				"<person>"+row.person+"</person>" +
 				"<amount>"+row.amount+"</amount>" +
 				"<detail>"+row.detail+"</detail>" +
+				"<expense_date>"+get_raw_time(row.expense_date)+"</expense_date>" +
 				"<source>"+row.source+"</source>" +
 				"<source_id>"+row.source_id+"</source_id>"+
 				"<last_updated>"+last_updated+"</last_updated>" +

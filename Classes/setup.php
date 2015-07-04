@@ -21,7 +21,7 @@ class user_setup
 		$this->get_data_from_xml('master_db_data.xml');
 		$this->get_data_from_xml('demo_user_db_data.xml');
 		$this->get_data_from_xml('user_demo_data.xml');
-		$this->get_data_from_xml('grid_metrics.xml');
+		$this->get_data_from_json('grid_metrics.json');
 	}
 
 	public function __destruct()
@@ -121,6 +121,46 @@ class user_setup
 						}
 						//echo "data added to master table";
 					}
+				}
+			}
+		}
+	}
+	
+	public function get_data_from_json($filename)
+	{
+		$file_json=file_get_contents("../db/".$filename);
+		$file = json_decode($file_json, true);
+		$parent_json=$file['re_xml'];
+		
+		foreach ($parent_json as $table_name => $table)
+	    {
+			foreach ($table as $row_num => $row)
+		    {
+				$data_array=Array();
+				$q_string="insert into $table_name(";
+				
+						
+				foreach ($row as $column_name => $col_value)
+	    		{
+					$q_string.=$column_name.",";
+				}
+					
+				$q_string=rtrim($q_string,",");
+				$q_string.=") values(";
+				foreach ($row as $column_name => $col_value)
+	    		{
+						$q_string.="?,";
+						$data_array[]=$col_value;
+				}
+				$q_string=rtrim($q_string,",");
+				$q_string.=");";
+	
+				try{
+					$stmt=$this->conn->conn->prepare($q_string);
+					$stmt->execute($data_array);
+				}catch(PDOException $ex)
+				{
+					echo "Could not setup table $table_name: " .$ex->getMessage() ."</br>";
 				}
 			}
 		}

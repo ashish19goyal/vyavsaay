@@ -947,4 +947,15 @@
 		</form>
 	</div>
 
+	<div id="modal122" title="Update Inventory">
+		<form id='modal122_form' autocomplete="off">
+			<fieldset>
+				<label>Item: <input type="text" required readonly="readonly"></label><br>
+				<label>Fresh: <input type='number' step='any' required></label><br>
+				<label>Hireable: <input type="number" step='any' required></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

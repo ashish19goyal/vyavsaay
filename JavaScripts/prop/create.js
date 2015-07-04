@@ -10102,7 +10102,37 @@ function form136_create_form()
 	}
 }
 
+/**
+ * @form Project Expenses
+ * @formNo 137
+ * @param button
+ */
+function form137_get_totals()
+{
+	var master_form=document.getElementById('form137_master');
 
+	var total_expense=0;
+	var total_approved=0;
+	
+	$("[id^='form137_rows_']").each(function(index)
+	{
+		if(!isNaN(parseFloat(this.elements[1].value)))
+		{
+			if(this.elements[4].value=='submitted')
+			{
+				total_expense+=parseFloat(this.elements[1].value);
+			}
+			else if(this.elements[4].value=='approved')
+			{
+				total_expense+=parseFloat(this.elements[1].value);
+				total_approved+=parseFloat(this.elements[1].value);
+			}
+		}		
+	});
+	
+	master_form.elements['expense'].value=total_expense;
+	master_form.elements['approved'].value=total_approved;	
+}
 
 /**
  * @form Project Expenses
@@ -10113,18 +10143,21 @@ function form137_create_item(form)
 {
 	if(is_create_access('form137'))
 	{
-		var project_id=document.getElementById('form137_master').elements[2].value;
+		var project_id=document.getElementById('form137_master').elements['id'].value;
 		var person=form.elements[0].value;
 		var amount=form.elements[1].value;
 		var details=form.elements[2].value;
-		var status=form.elements[3].value;		
-		var data_id=form.elements[4].value;
+		var date=get_raw_time(form.elements[3].value);		
+		var status=form.elements[4].value;		
+		var data_id=form.elements[5].value;
+		var del_button=form.elements[7];
 		var last_updated=get_my_time();
 		var data_xml="<expenses>" +
 					"<id>"+data_id+"</id>" +
 					"<source_id>"+project_id+"</source_id>" +
 					"<source>project</source>"+
 					"<status>"+status+"</status>" +
+					"<expense_date>"+date+"</expense_date>" +
 					"<person>"+person+"</person>" +
 					"<amount>"+amount+"</amount>" +
 					"<detail>"+details+"</detail>" +
@@ -10142,13 +10175,12 @@ function form137_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[6];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form137_delete_item(del_button);
 		});
-		
+		form137_get_totals();
 		$(form).off('submit');
 	}
 	else
@@ -10292,28 +10324,37 @@ function form142_create_item(form)
 {
 	if(is_create_access('form142'))
 	{
-		var ques_id=document.getElementById("form142_master").elements[5].value;
+		var ques_id=document.getElementById("form142_master").elements['id'].value;
 
 		var display_name=form.elements[0].value;
 		var description=form.elements[1].value;
 		var type=form.elements[2].value;
-		var values=form.elements[3].value;
+		var values="";
+		var dynamic_values="";		
+		if(type=='value list')
+			values=form.elements[3].value;
+		else if(type=='dynamic value list')
+			dynamic_values="vyavsaay"+htmlentities(form.elements[3].value)+"vyavsaay";
+			
 		var order=form.elements[4].value;
 		var name='field'+order;
 		var required='unchecked';
 		if(form.elements[5].checked)
 			required='checked';
 		var data_id=form.elements[6].value;
+		var save_button=form.elements[7];
+		var del_button=form.elements[8];
 		var last_updated=get_my_time();
 					
 		var data_xml="<ques_fields>" +
 				"<id>"+data_id+"</id>" +
 				"<ques_id>"+ques_id+"</ques_id>" +
-				"<name>"+name+"</name>" +
+				"<name unique='yes'>"+name+"</name>" +
 				"<display_name>"+display_name+"</display_name>" +
 				"<description>"+description+"</description>" +
 				"<type>"+type+"</type>" +
 				"<fvalues>"+values+"</fvalues>" +
+				"<dynamic_values>"+dynamic_values+"</dynamic_values>"+				
 				"<forder>"+order+"</forder>" +
 				"<freq>"+required+"</freq>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
@@ -10332,14 +10373,12 @@ function form142_create_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[8];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form142_delete_item(del_button);
 		});
 
-		var save_button=form.elements[7];
 		$(save_button).off('click');
 	}
 	else
@@ -11114,11 +11153,12 @@ function form153_get_totals()
 	var amount=0;
 	var discount=0;
 	var tax=0;
-
+	var tax_rate=0;
+	
 	if(document.getElementById('form153_discount'))
 	{
 		discount=parseFloat(document.getElementById('form153_discount').value);
-		tax=parseFloat(document.getElementById('form153_tax').value);
+		tax_rate=parseFloat(document.getElementById('form153_tax').value);
 	}
 
 	$("[id^='save_form153']").each(function(index)
@@ -11135,13 +11175,14 @@ function form153_get_totals()
 		//discount+=parseFloat(subform.elements[8].value);
 	});
 
+	var tax=Math.round((tax_rate*((amount-discount)/100)));
 	var total=Math.round(amount+tax-discount);
 
 	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
-					"Rs. <input type='number' value='"+tax+"' step='any' id='form153_tax' class='dblclick_editable'></br>" +
+					"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' title='specify tax rate' step='any' id='form153_tax' class='dblclick_editable'>%</br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
 					"</tr>";
@@ -11170,11 +11211,12 @@ function form153_create_form()
 		var amount=0;
 		var discount=0;
 		var tax=0;
-	
+		var tax_rate=0;
+		
 		if(document.getElementById('form153_discount'))
 		{
 			discount=parseFloat(document.getElementById('form153_discount').value);
-			tax=parseFloat(document.getElementById('form153_tax').value);
+			tax_rate=parseFloat(document.getElementById('form153_tax').value);
 		}
 
 		$("[id^='save_form153']").each(function(index)
@@ -11186,7 +11228,8 @@ function form153_create_form()
 			//total+=Math.round(parseFloat(subform.elements[7].value));
 			//discount+=parseFloat(subform.elements[8].value);
 		});
-
+		
+		var tax=Math.round((tax_rate*((amount-discount)/100)));
 		var total=Math.round(amount+tax-discount);
 
 		var data_id=form.elements[5].value;
@@ -11201,6 +11244,7 @@ function form153_create_form()
 					"<billing_type>"+quot_type+"</billing_type>" +
 					"<discount>"+discount+"</discount>" +
 					"<tax>"+tax+"</tax>" +
+					"<tax_rate>"+tax_rate+"</tax_rate>" +
 					"<status>generated</status>"+
 					"<intro_notes>"+intro_notes+"</intro_notes>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -11227,7 +11271,7 @@ function form153_create_form()
 					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
-					"Rs. <input type='number' value='"+tax+"' step='any' id='form153_tax' class='dblclick_editable'></br>" +
+					"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' title='specify tax rate' step='any' id='form153_tax' class='dblclick_editable'>%</br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
 					"</tr>";
@@ -11487,13 +11531,13 @@ function form154_get_totals()
 		
 	var amount=0;
 	var discount=0;
-	var tax=0;
 	var cartage=0;
+	var tax_rate=0;
 	
 	if(document.getElementById('form154_discount'))
 	{
 		discount=parseFloat(document.getElementById('form154_discount').value);
-		tax=parseFloat(document.getElementById('form154_tax').value);
+		tax_rate=parseFloat(document.getElementById('form154_tax').value);
 		cartage=parseFloat(document.getElementById('form154_cartage').value);
 	}
 	
@@ -11532,14 +11576,15 @@ function form154_get_totals()
 			//discount+=parseFloat(subform.elements[6].value);
 		}
 	});
-	
+
+	var tax=Math.round((tax_rate*((amount-discount)/100)));		
 	var total=Math.round(amount+tax-discount+cartage);
 
 	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:<disc><br>Discount: </disc><br>Tax: <br>Cartage: <br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-				"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
+				"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>%<br>" +
 				"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 				"Rs. "+total+"</td>" +
 				"<td></td>" +
@@ -11550,7 +11595,7 @@ function form154_get_totals()
 				"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br><disc_amount>" +
-				"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
+				"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>%<br>" +
 				"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 				"Rs. "+total+"</td>" +
 				"<td></td>" +
@@ -11563,7 +11608,7 @@ function form154_get_totals()
 				"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-				"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
+				"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>%<br>" +
 				"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 				"Rs. "+total+"</td>" +
 				"<td></td>" +
@@ -11601,13 +11646,13 @@ function form154_create_form()
 		
 		var amount=0;
 		var discount=0;
-		var tax=0;
+		var tax_rate=0;
 		var cartage=0;
 		
 		if(document.getElementById('form154_discount'))
 		{
 			discount=parseFloat(document.getElementById('form154_discount').value);
-			tax=parseFloat(document.getElementById('form154_tax').value);
+			tax_rate=parseFloat(document.getElementById('form154_tax').value);
 			cartage=parseFloat(document.getElementById('form154_cartage').value);
 		}
 		
@@ -11647,6 +11692,7 @@ function form154_create_form()
 			}
 		});
 
+		var tax=Math.round((tax_rate*((amount-discount)/100)));		
 		var total=Math.round(amount+tax-discount+cartage);
 
 		var data_id=form.elements[8].value;
@@ -11665,6 +11711,7 @@ function form154_create_form()
 					"<discount>"+discount+"</discount>" +
 					"<cartage>0</cartage>" +
 					"<tax>"+tax+"</tax>" +
+					"<tax_rate>"+tax_rate+"</tax_rate>"+
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<storage>"+storage+"</storage>"+
 					"<print_1_job>"+print_1_job+"</print_1_job>"+
@@ -11761,7 +11808,7 @@ function form154_create_form()
 					"<td>Amount:<disc><br>Discount: </disc><br>Tax: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-					"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
+					"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>%<br>" +
 					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -11772,7 +11819,7 @@ function form154_create_form()
 					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br><disc_amount>" +
-					"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
+					"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>%<br>" +
 					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -11785,7 +11832,7 @@ function form154_create_form()
 					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-					"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form154_tax' class='dblclick_editable'><br>" +
+					"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>%<br>" +
 					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -12079,22 +12126,24 @@ function form158_get_totals()
 		
 	});
 	var discount=0;
-	var tax=0;
+	var tax_rate=0;
 	var cartage=0;
 	
 	if(document.getElementById('form158_discount'))
 	{
 		discount=parseFloat(document.getElementById('form158_discount').value);
-		tax=parseFloat(document.getElementById('form158_tax').value);
+		tax_rate=parseFloat(document.getElementById('form158_tax').value);
 		cartage=parseFloat(document.getElementById('form158_cartage').value);
 	}
+	
+	var tax=Math.round((tax_rate*((amount-discount)/100)));		
 	var total=Math.round(amount+tax-discount+cartage);
 	
 	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 							"<td>Amount:<br>Discount: <br>Tax: <br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+Math.round(amount)+"</br>" +
 							"<disc_amount>Rs. <input type='number' value='"+Math.round(discount)+"' step='any' id='form158_discount' class='dblclick_editable'><br></disc_amount>" +
-							"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form158_tax' class='dblclick_editable'><br>" +
+							"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' step='any' id='form158_tax' class='dblclick_editable'><br>%" +
 							"Rs. <input type='number' value='"+Math.round(cartage)+"' step='any' id='form158_cartage' class='dblclick_editable'><br>" +
 							"Rs. "+Math.round(total)+"</td>" +
 							"<td></td>" +
@@ -12138,16 +12187,25 @@ function form158_create_form()
 				amount+=parseFloat(subform.elements[3].value);
 		});
 
-		var discount=parseFloat(document.getElementById('form158_discount').value);
-		var tax=parseFloat(document.getElementById('form158_tax').value);
-		var cartage=parseFloat(document.getElementById('form158_cartage').value);
+		var discount=0;
+		var tax_rate=0;
+		var cartage=0;
+		
+		if(document.getElementById('form158_discount'))
+		{
+			discount=parseFloat(document.getElementById('form158_discount').value);
+			tax_rate=parseFloat(document.getElementById('form158_tax').value);
+			cartage=parseFloat(document.getElementById('form158_cartage').value);
+		}
+		
+		var tax=Math.round((tax_rate*((amount-discount)/100)));		
 		var total=Math.round(amount+tax-discount+cartage);
 
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 							"<td>Amount:<br>Discount: <br>Tax: <br>Cartage: <br>Total: </td>" +
 							"<td>Rs. "+Math.round(amount)+"</br>" +
 							"<disc_amount>Rs. <input type='number' value='"+Math.round(discount)+"' step='any' id='form158_discount' class='dblclick_editable'><br></disc_amount>" +
-							"Rs. <input type='number' value='"+Math.round(tax)+"' step='any' id='form158_tax' class='dblclick_editable'><br>" +
+							"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' step='any' id='form158_tax' class='dblclick_editable'><br>%" +
 							"Rs. <input type='number' value='"+Math.round(cartage)+"' step='any' id='form158_cartage' class='dblclick_editable'><br>" +
 							"Rs. "+Math.round(total)+"</td>" +
 							"<td></td>" +
@@ -12171,6 +12229,7 @@ function form158_create_form()
 					"<amount>"+amount+"</amount>" +
 					"<cartage>"+cartage+"</cartage>"+
 					"<tax>"+tax+"</tax>" +
+					"<tax_rate>"+tax_rate+"</tax_rate>"+
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<imported>"+imported+"</imported>" +
 					"<notes>"+notes+"</notes>"+

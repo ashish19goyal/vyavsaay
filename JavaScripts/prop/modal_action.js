@@ -7724,3 +7724,86 @@ function modal121_action()
 	
 	$("#modal121").dialog("open");
 }
+
+/**
+ * @modalNo 122
+ * @modal Update Inventory
+ */
+function modal122_action(item_name)
+{
+	var form=document.getElementById('modal122_form');
+	
+	var fitem=form.elements[1];
+	var ffresh=form.elements[2];
+	var fhireable=form.elements[3];
+	fitem.value=item_name;
+		
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form155'))
+		{
+			var item=fitem.value;
+			var fresh=parseFloat(ffresh.value);
+			var hireable=parseFloat(fhireable.value);
+			
+			var last_updated=get_my_time();
+			
+			var hireable_data="<bill_items sum='yes'>"+
+							"<quantity></quantity>"+
+							"<hired exact='yes'>yes</hired>"+
+							"<fresh exact='yes'>yes</fresh>"+
+							"<item_name exact='yes'>"+item+"</item_name>"+
+							"</bill_items>";
+			get_single_column_data(function(hireables)
+			{
+				var new_hireable=hireable;
+				if(hireables.length>0)
+				{
+					new_hireable-=parseFloat(hireables[0]);
+				}
+				
+				var hireable_xml="<bill_items sum='yes'>"+
+							"<id>"+get_new_key()+"</id>"+
+							"<quantity>"+new_hireable+"</quantity>"+
+							"<hired exact='yes'>yes</hired>"+
+							"<fresh exact='yes'>yes</fresh>"+
+							"<item_name exact='yes'>"+item+"</item_name>"+
+							"<from_date>"+last_updated+"</from_date>"+
+							"<to_date>"+last_updated+"</to_date>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</bill_items>";
+				
+				get_inventory(item,'',function(inventory)
+				{
+					var new_total=fresh+hireable-parseFloat(inventory);
+					var adjust_xml="<inventory_adjust>" +
+							"<id>"+get_new_key()+"</id>" +
+							"<product_name>"+item+"</product_name>" +
+							"<batch>"+item+"</batch>" +
+							"<quantity>"+new_total+"</quantity>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</inventory_adjust>";
+					if(is_online())
+					{
+						server_create_simple_no_warning(adjust_xml);
+						server_create_simple_no_warning(hireable_xml);
+					}
+					else
+					{
+						local_create_simple_no_warning(adjust_xml);
+						local_create_simple_no_warning(hireable_xml);
+					}
+				});
+			},hireable_data);
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal122").dialog("close");
+	});
+	
+	$("#modal122").dialog("open");
+}

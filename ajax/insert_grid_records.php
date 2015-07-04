@@ -63,5 +63,47 @@ use \DOMDocument;
 		}
 	}	
 	
-	insert_grid_metric_records($db_name);	
+	function insert_grid_metric_records_json($dbname)
+	{
+		$conn=new db_connect($dbname);
+		
+		$json_file=file_get_contents("../db/grid_metrics.json");
+		$file = json_decode($json_file,true);
+		$parent_json=$file['re_xml'];
+		
+		foreach($parent_json as $table_name => $table)
+	    {
+			foreach ($table as $row_num => $row)
+		    {
+				$data_array=Array();
+				$q_string="insert into $table_name(";
+				
+						
+				foreach ($row as $column_name => $col_value)
+	    		{
+					$q_string.=$column_name.",";
+				}
+					
+				$q_string=rtrim($q_string,",");
+				$q_string.=") values(";
+				foreach ($row as $column_name => $col_value)
+	    		{
+						$q_string.="?,";
+						$data_array[]=$col_value;
+				}
+				$q_string=rtrim($q_string,",");
+				$q_string.=");";
+	
+				try{
+					$stmt=$conn->conn->prepare($q_string);
+					$stmt->execute($data_array);
+				}catch(PDOException $ex)
+				{
+					echo "Could not setup table $table_name: " .$ex->getMessage() ."</br>";
+				}
+			}
+		}
+	}	
+
+	insert_grid_metric_records_json($db_name);	
 ?>

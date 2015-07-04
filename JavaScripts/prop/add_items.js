@@ -7112,31 +7112,37 @@ function form137_add_item()
 	{
 		var id=get_new_key();
 		var rowsHTML="<tr>";
-		rowsHTML+="<form id='form137_"+id+"' autocomplete='off'></form>";
+		rowsHTML+="<form id='form137_rows_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Person'>";
-				rowsHTML+="<input type='text' form='form137_"+id+"' required>";
+				rowsHTML+="<input type='text' form='form137_rows_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="Rs. <input type='number' step='any' form='form137_"+id+"' required>";
+				rowsHTML+="Rs. <input type='number' step='any' form='form137_rows_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Details'>";
-				rowsHTML+="<textarea form='form137_"+id+"'></textarea>";
+				rowsHTML+="<textarea form='form137_rows_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form137_rows_"+id+"' value='"+get_my_date()+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' readonly='readonly' form='form137_"+id+"' value='submitted'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form137_rows_"+id+"' value='submitted'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form137_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form137_"+id+"' id='save_form137_"+id+"' >";	
-				rowsHTML+="<input type='button' class='delete_icon' form='form137_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form137_rows_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form137_rows_"+id+"' id='save_form137_"+id+"' >";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form137_rows_"+id+"' onclick='$(this).parent().parent().remove(); form137_get_totals();'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
 		$('#form137_body').prepend(rowsHTML);
-		var fields=document.getElementById("form137_"+id);
+		var fields=document.getElementById("form137_rows_"+id);
 		var person_filter=fields.elements[0];
 		var amount_filter=fields.elements[1];
-		var status_filter=fields.elements[3];
+		var date_filter=fields.elements[3];
+		var status_filter=fields.elements[4];
+		
+		$(date_filter).datepicker();
 		
 		$(fields).on("submit", function(event)
 		{
@@ -7305,7 +7311,7 @@ function form142_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Type'>";
 				rowsHTML+="<input type='text' required form='form142_"+id+"'>";
-				rowsHTML+="<br><label>Values: <textarea type='text' form='form142_"+id+"'></textarea></label>";
+				rowsHTML+="<br><label>Values: <textarea type='text' title='Add values list segregated by semicolon' form='form142_"+id+"'></textarea></label>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Order'>";
 				rowsHTML+="<input type='number' required form='form142_"+id+"'>";
@@ -7348,7 +7354,7 @@ function form142_add_item()
 				
 		$(type_filter).on('blur',function(event)
 		{
-			if(type_filter.value=='value list')
+			if(type_filter.value=='value list' || type_filter.value=='dynamic value list')
 			{
 				$(values_filter).parent().show();
 			}
@@ -8140,8 +8146,8 @@ function form153_add_service()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form153_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' required form='form153_"+id+"'>";
-				rowsHTML+="<br><textarea readonly='readonly' class='dblclick_editable' form='form153_"+id+"'></textarea>";
+				rowsHTML+="<input type='text' placeholder='Name for the service' 	required form='form153_"+id+"'>";
+				rowsHTML+="<br><textarea placeholder='Add description..' class='dblclick_editable' form='form153_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' readonly='readonly' value='1' required form='form153_"+id+"'>";
@@ -8196,15 +8202,8 @@ function form153_add_service()
 			form153_add_service();
 		});
 		
-		var service_data="<services>" +
-				"<name></name>" +
-				"</services>";
-				
-		set_my_value_list_func(service_data,name_filter,function () 
-		{
-			$(name_filter).focus();
-		});
-
+		$(name_filter).focus();
+		
 		$(name_filter).on('keydown',function(e)
 		{
 			if(e.keyCode==118)
@@ -8214,7 +8213,7 @@ function form153_add_service()
 			}
 		});
 
-		$(name_filter).on('blur',function(event)
+/*		$(name_filter).on('blur',function(event)
 		{
 			var desc_data="<services>"+
 						"<description></description>"+
@@ -8239,7 +8238,7 @@ function form153_add_service()
 				}	
 			});			
 		});
-
+*/
 		$(price_filter).on('blur',function(event)
 		{
 			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
@@ -9724,15 +9723,17 @@ function form177_add_item()
 		var type_filter=fields.elements[0];
 		var name_filter=fields.elements[1];
 		
-		set_static_value_list('prioritization_parameters','type',type_filter);
-		
+		set_static_value_list('prioritization_parameters','type',type_filter,function () 
+		{
+			$(type_filter).focus();
+		});
+
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
 			form177_create_item(fields);
 		});
-					
-		$(name_filter).focus();
+
 	}
 	else
 	{

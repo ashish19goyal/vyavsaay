@@ -2,34 +2,304 @@
 	"re_xml":
 	{
 		"system_grid_metrics":
-		{
-			"row":
-			[
-				{
-					"metric_id":"grid_item_1",
-					"display_name":"Last sale bill Id",
-					"grid":"sale_bills",
-					"function_def": "function set_grid_item_1(){var columns=&quot;&lt;bills count='1'&gt;&lt;bill_num&gt;&lt;/bill_num&gt;&lt;/bills&gt;&quot;;get_single_column_data(function(results){if(results.length&gt;0){var grid_item=document.getElementById('grid_item_1');grid_item.innerHTML=results[0];}},columns);setTimeout(set_grid_item_1,600000);};",
-					"status": "active",
-					"last_updated": 1
-				},
-				{
-					"metric_id":"grid_item_2",
-					"display_name":"# Sale bills today",
-					"grid":"sale_bills",
-					"function_def": "function set_grid_item_2(){var columns=&quot;&lt;bills&gt;&lt;id&gt;&lt;/id&gt;&lt;bill_date lowerbound='yes'&gt;&quot;+(get_raw_time(get_my_date())-1000)+&quot;&lt;/bill_date&gt;&lt;bill_date upperbound='yes'&gt;&quot;+(get_raw_time(get_my_date())+86400000)+&quot;&lt;/bill_date&gt;&lt;/bills&gt;&quot;;get_single_column_data(function(results){document.getElementById('grid_item_2').innerHTML=results.length;},columns);setTimeout(set_grid_item_2,600000);};",
-					"status": "active",
-					"last_updated": 1
-				},
-				{
-					"metric_id":"grid_item_3",
-					"display_name":"Last bill #",
-					"grid":"purchase",
-					"function_def": "function set_grid_item_3(){var columns=&quot;&lt;supplier_bills count='1'&gt;&lt;id&gt;&lt;/id&gt;&lt;bill_id&gt;&lt;/bill_id&gt;&lt;/supplier_bills&gt;&quot;;fetch_requested_data('',columns,function(results){if(results.length&gt;0){var grid_item=document.getElementById('grid_item_3');$(grid_item).off('click');$(grid_item).on('click',function(ev){element_display(results[0].id,'form53');});grid_item.innerHTML=results[0].bill_id;}});setTimeout(set_grid_item_3,3600000);};",
-					"status": "active",
-					"last_updated": 1
-				}
-			]
-		}
+		[
+			{
+				"metric_id":"grid_item_1",
+				"display_name":"Last sale bill Id",
+				"grid":"sale_bills",
+				"function_name":"set_grid_item_1();",
+				"function_def": "function set_grid_item_1(){var columns=\"<bills count='1'><bill_num></bill_num></bills>\";get_single_column_data(function(results){if(results.length>0){var grid_item=document.getElementById('grid_item_1');grid_item.innerHTML=results[0];}},columns);setTimeout(set_grid_item_1,600000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_2",
+				"display_name":"# Sale bills today",
+				"grid":"sale_bills",
+				"function_name":"set_grid_item_2();",
+				"function_def": "function set_grid_item_2(){var columns=\"<bills><id></id><bill_date lowerbound='yes'>\"+(get_raw_time(get_my_date())-1000)+\"</bill_date><bill_date upperbound='yes'>\"+(get_raw_time(get_my_date())+86400000)+\"</bill_date></bills>\";get_single_column_data(function(results){document.getElementById('grid_item_2').innerHTML=results.length;},columns);setTimeout(set_grid_item_2,600000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_3",
+				"display_name":"Last bill #",
+				"grid":"purchase",
+				"function_name":"set_grid_item_3();",
+				"function_def": "function set_grid_item_3(){var columns=\"<supplier_bills count='1'><id></id><bill_id></bill_id></supplier_bills>\";fetch_requested_data('',columns,function(results){if(results.length>0){var grid_item=document.getElementById('grid_item_3');$(grid_item).off('click');$(grid_item).on('click',function(ev){element_display(results[0].id,'form53');});grid_item.innerHTML=results[0].bill_id;}});setTimeout(set_grid_item_3,3600000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_4",
+				"display_name":"# Bills entered today",
+				"grid":"purchase",
+				"function_name":"set_grid_item_4();",
+				"function_def": "function set_grid_item_4(){var columns=\"<supplier_bills><id></id><entry_date lowerbound='yes'>\"+(get_raw_time(get_my_date())-1000)+\"</entry_date><entry_date upperbound='yes'>\"+(get_raw_time(get_my_date())+86400000)+\"</entry_date></supplier_bills>\";get_single_column_data(function(results){document.getElementById('grid_item_4').innerHTML=results.length;},columns);setTimeout(set_grid_item_4,3600000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_5",
+				"display_name":"Today's Income",
+				"grid":"finances",
+				"function_name":"set_grid_item_5();",
+				"function_def": "function set_grid_item_5(){var columns=\"<payments><total_amount></total_amount><type exact='yes'>received</type><date lowerbound='yes'>\"+(get_raw_time(get_my_date())-1000)+\"</date><date upperbound='yes'>\"+(get_raw_time(get_my_date())+86400000)+\"</date><status array='yes'>--pending--closed--</status></payments>\";get_single_column_data(function(results){var income=0;for (var i in results){income+=parseFloat(results[i]);}document.getElementById('grid_item_5').innerHTML=\"Rs. \"+income;},columns);setTimeout(set_grid_item_5,3600000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_6",
+				"display_name":"Today's Expenses",
+				"grid":"finances",
+				"function_name":"set_grid_item_6();",
+				"function_def": "function set_grid_item_6(){var columns=\"<payments><total_amount></total_amount><type exact='yes'>paid</type><date lowerbound='yes'>\"+(get_raw_time(get_my_date())-1000)+\"</date><date upperbound='yes'>\"+(get_raw_time(get_my_date())+86400000)+\"</date><status array='yes'>--pending--closed--</status></payments>\";get_single_column_data(function(results){var expenses=0;for (var i in results){expenses+=parseFloat(results[i]);}document.getElementById('grid_item_6').innerHTML=\"Rs. \"+expenses;},columns);setTimeout(set_grid_item_6,3600000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_7",
+				"display_name":"Products Offered",
+				"grid":"finances",
+				"function_name":"set_grid_item_7();",
+				"function_def": "function set_grid_item_7(){var columns=\"<product_master><name></name></product_master>\";get_single_column_data(function(results){document.getElementById('grid_item_7').innerHTML=results.length;},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_8",
+				"display_name":"Today's Bestseller",
+				"grid":"products",
+				"function_name":"set_grid_item_8();",
+				"function_def": "function set_grid_item_8(){var columns=\"<bill_items><id></id><item_name></item_name><total></total><last_updated lowerbound='yes'>\"+(get_raw_time(get_my_date())-1000)+\"</last_updated></bill_items>\";fetch_requested_data('',columns,function(results){for(var i=0; i<results.length;i++){for(var j=i+1;j<results.length;j++){if(results[i].item_name==results[j].item_name){results[i].total=parseFloat(results[i].total)+parseFloat(results[j].total);results.splice(j,1);j-=1;}}}results.sort(function(a,b){if(parseFloat(a.total)<parseFloat(b.total)){return 1;}else {return -1;}});if(results.length>0){document.getElementById('grid_item_8').innerHTML=results[0].item_name;}});setTimeout(set_grid_item_8,3600000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_9",
+				"display_name":"Services Offered",
+				"grid":"services",
+				"function_name":"set_grid_item_9();",
+				"function_def": "function set_grid_item_9(){var columns=\"<services><name></name></services>\";get_single_column_data(function(results){document.getElementById('grid_item_9').innerHTML=results.length;},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_11",
+				"display_name":"Most expensive",
+				"grid":"products",
+				"function_name":"set_grid_item_11();",
+				"function_def": "function set_grid_item_11(){var columns=\"<product_instances><id></id><product_name></product_name><sale_price></sale_price></product_instances>\";fetch_requested_data('',columns,function(results){results.sort(function(a,b){if(parseFloat(a.sale_price)<parseFloat(b.sale_price)){return 1;}else {return -1;}});if(results.length>0){var grid_item=document.getElementById('grid_item_11');$(grid_item).off('click');$(grid_item).on('click',function(ev){element_display(results[0].id,'form1');});grid_item.innerHTML=results[0].product_name;}});};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_12",
+				"display_name":"Highest margin",
+				"grid":"products",
+				"function_name":"set_grid_item_12();",
+				"function_def": "function set_grid_item_12(){var columns=\"<product_instances><id></id><product_name></product_name><sale_price></sale_price><cost_price></cost_price></product_instances>\";fetch_requested_data('',columns,function(results){if(results.length>0){for(var k in results){var cost_price=parseFloat(results[k].cost_price);if(cost_price!=0 && cost_price!='NaN')results[k].margin=(parseFloat(results[k].sale_price)/cost_price);}results.sort(function(a,b){if(parseFloat(a.margin)<parseFloat(b.margin)){return 1;}else {return -1;}});var grid_item=document.getElementById('grid_item_12');$(grid_item).off('click');$(grid_item).on('click',function(ev){element_display(results[0].id,'form1');});grid_item.innerHTML=results[0].product_name;}});};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_13",
+				"display_name":"Today's unique customers",
+				"grid":"people",
+				"function_name":"set_grid_item_13();",
+				"function_def": "function set_grid_item_13(){var columns=\"<bills><customer_name></customer_name><bill_date lowerbound='yes'>\"+(get_raw_time(get_my_date())-1000)+\"</bill_date><bill_date upperbound='yes'>\"+(get_raw_time(get_my_date())+86400000)+\"</bill_date></bills>\";get_single_column_data(function(results){document.getElementById('grid_item_13').innerHTML=results.length;},columns);setTimeout(set_grid_item_13,600000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_14",
+				"display_name":"Last customer",
+				"grid":"people",
+				"function_name":"set_grid_item_14();",
+				"function_def": "function set_grid_item_14(){var columns=\"<bills count='1'><customer_name></customer_name></bills>\";get_single_column_data(function(results){if(results.length>0){document.getElementById('grid_item_14').innerHTML=results[0];}},columns);setTimeout(set_grid_item_14,100000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_15",
+				"display_name":"Last supplier",
+				"grid":"people",
+				"function_name":"set_grid_item_15();",
+				"function_def": "function set_grid_item_15(){var columns=\"<supplier_bills count='1'><supplier></supplier></supplier_bills>\";get_single_column_data(function(results){if(results.length>0){document.getElementById('grid_item_15').innerHTML=results[0];}},columns);setTimeout(set_grid_item_15,3600000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_16",
+				"display_name":"Payments due to suppliers",
+				"grid":"finances",
+				"function_name":"set_grid_item_16();",
+				"function_def": "function set_grid_item_16(){var columns=\"<payments><total_amount></total_amount><due_date upperbound='yes'>\"+get_my_time()+\"</due_date><type exact='yes'>paid</type><status exact='yes'>pending</status></payments>\";get_single_column_data(function(results){var payments=0;for (var i in results){payments+=parseFloat(results[i]);}document.getElementById('grid_item_16').innerHTML=\"Rs. \"+payments;},columns);setTimeout(set_grid_item_16,3600000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_17",
+				"display_name":"# Staff Present",
+				"grid":"people",
+				"function_name":"set_grid_item_17();",
+				"function_def": "function set_grid_item_17(){var columns=\"<attendance><id></id><presence exact='yes'>present</presence><date lowerbound='yes'>\"+(get_raw_time(get_my_date())-1000)+\"</date><date upperbound='yes'>\"+(get_raw_time(get_my_date())+86400000)+\"</date></attendance>\";get_single_column_data(function(results){document.getElementById('grid_item_17').innerHTML=results.length;},columns);};",				
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_18",
+				"display_name":"# Pending tasks",
+				"grid":"projects",
+				"function_name":"set_grid_item_18();",
+				"function_def": "function set_grid_item_18(){var columns=\"<task_instances><id></id><status exact='yes'>pending</status></task_instances>\";get_single_column_data(function(results){document.getElementById('grid_item_18').innerHTML=results.length;},columns);setTimeout(set_grid_item_18,600000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_19",
+				"display_name":"# Storage Areas",
+				"grid":"store",
+				"function_name":"set_grid_item_19();",
+				"function_def": "function set_grid_item_19(){var columns=\"<store_areas><id></id><area_type exact='yes'>storage</area_type></store_areas>\";get_single_column_data(function(results){document.getElementById('grid_item_19').innerHTML=results.length;},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_20",
+				"display_name":"# Pending orders",
+				"grid":"ecommerce",
+				"function_name":"set_grid_item_20();",
+				"function_def": "function set_grid_item_20(){var columns=\"<sale_orders><id></id><status exact='yes'>pending</status></sale_orders>\";get_single_column_data(function(results){document.getElementById('grid_item_20').innerHTML=results.length;},columns);setTimeout(set_grid_item_20,600000);};",
+				"status": "active",
+				"last_updated": 1
+			},			
+			{
+				"metric_id":"grid_item_22",
+				"display_name":"Latest offer",
+				"grid":"offers",
+				"function_name":"set_grid_item_22();",
+				"function_def": "function set_grid_item_22(){var columns=\"<offers count='1'><offer_name></offer_name><status array='yes'>--active--extended--</status></offers>\";get_single_column_data(function(results){if(results.length>0){document.getElementById('grid_item_22').innerHTML=results[0];}},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_23",
+				"display_name":"# Sales leads",
+				"grid":"offers",
+				"function_name":"set_grid_item_23();",
+				"function_def": "function set_grid_item_23(){var columns=\"<sale_leads><id></id></sale_leads>\";get_single_column_data(function(results){document.getElementById('grid_item_23').innerHTML=results.length;},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_24",
+				"display_name":"Verified customer address",
+				"grid":"maps",
+				"function_name":"set_grid_item_24();",
+				"function_def": "function set_grid_item_24(){var columns=\"<customers><id></id><address_status exact='yes'>confirmed</address_status></customers>\";get_single_column_data(function(results){document.getElementById('grid_item_24').innerHTML=results.length;},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_25",
+				"display_name":"Verified supplier address",
+				"grid":"maps",
+				"function_name":"set_grid_item_25();",
+				"function_def": "function set_grid_item_25(){var columns=\"<suppliers><id></id><address_status exact='yes'>confirmed</address_status></suppliers>\";get_single_column_data(function(results){document.getElementById('grid_item_25').innerHTML=results.length;},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_26",
+				"display_name":"Today's total sale",
+				"grid":"sale_reports",
+				"function_name":"set_grid_item_26();",
+				"function_def": "function set_grid_item_26(){var columns=\"<bills><total></total><bill_date lowerbound='yes'>\"+(get_raw_time(get_my_date())-1000)+\"</bill_date><bill_date upperbound='yes'>\"+(get_raw_time(get_my_date())+86400000)+\"</bill_date></bills>\";get_single_column_data(function(results){var sale=0;for (var i in results){sale+=parseFloat(results[i]);}document.getElementById('grid_item_26').innerHTML=\"Rs. \"+sale;},columns);setTimeout(set_grid_item_26,600000);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_27",
+				"display_name":"# Active projects",
+				"grid":"projects",
+				"function_name":"set_grid_item_27();",
+				"function_def": "function set_grid_item_27(){var columns=\"<projects><id></id><status exact='yes'>active</status></projects>\";get_single_column_data(function(results){document.getElementById('grid_item_27').innerHTML=results.length;},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_28",
+				"display_name":"# Completed projects",
+				"grid":"projects",
+				"function_name":"set_grid_item_28();",
+				"function_def": "function set_grid_item_28(){var columns=\"<projects><id></id><status exact='yes'>completed</status></projects>\";get_single_column_data(function(results){document.getElementById('grid_item_28').innerHTML=results.length;},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_29",
+				"display_name":"# Custom reports",
+				"grid":"admin",
+				"function_name":"set_grid_item_29();",
+				"function_def": "function set_grid_item_29(){var columns=\"<reports><id></id></reports>\";get_single_column_data(function(results){document.getElementById('grid_item_29').innerHTML=results.length;},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_30",
+				"display_name":"# Active tabs",
+				"grid":"admin",
+				"function_name":"set_grid_item_30();",
+				"function_def": "function set_grid_item_30(){var columns=\"<user_preferences><id></id><type array='yes'>--form--report--</type><value exact='yes'>checked</value></user_preferences>\";get_single_column_data(function(results){document.getElementById('grid_item_30').innerHTML=results.length;},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_31",
+				"display_name":"# open service requests",
+				"grid":"customer_service",
+				"function_name":"set_grid_item_31();",
+				"function_def": "function set_grid_item_31(){var columns=\"<service_requests><id></id><status exact='yes'>open</status></service_requests>\";get_single_column_data(function(results){document.getElementById('grid_item_31').innerHTML=results.length;},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_32",
+				"display_name":"Service requests closed today",
+				"grid":"customer_service",
+				"function_name":"set_grid_item_32();",
+				"function_def": "function set_grid_item_32(){var columns=\"<service_requests><id></id><status exact='yes'>closed</status><last_updated lowerbound='yes'>\"+(get_raw_time(get_my_date())-1000)+\"</last_updated>\"+\"</service_requests>\";get_single_column_data(function(results){document.getElementById('grid_item_32').innerHTML=results.length;},columns);};",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_33",
+				"display_name":"Active Production Plans",
+				"grid":"manufacturing",
+				"function_name":"",
+				"function_def":"",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_34",
+				"display_name":"Today's pending tasks",
+				"grid":"manufacturing",
+				"function_name":"",
+				"function_def":"",
+				"status": "active",
+				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_35",
+				"display_name":"# items under production",
+				"grid":"manufacturing",
+				"function_name":"",
+				"function_def":"",
+				"status": "active",
+				"last_updated": 1
+			}
+		]
 	}
 }
