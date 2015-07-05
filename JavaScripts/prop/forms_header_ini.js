@@ -6359,6 +6359,13 @@ function form184_header_ini()
 		event.preventDefault();
 		form184_ini();
 	});
+
+	var body_elem=document.getElementById('form184_body');
+	body_elem.addEventListener('table_sort',function(e)
+	{
+		form184_update_serial_numbers();
+		$("[id^='save_form184_']").click();
+	},false);
 };
 
 /**
@@ -6424,6 +6431,14 @@ function form186_header_ini()
 
 	plan_filter.value="";
 	$(plan_filter).focus();
+	
+	var body_elem=document.getElementById('form186_body');
+	body_elem.addEventListener('table_sort',function(e)
+	{
+		form186_update_serial_numbers();
+		$("[id^='save_form186_']").click();
+	},false);
+
 }
 
 /**
@@ -6450,6 +6465,13 @@ function form187_header_ini()
 		event.preventDefault();
 		form187_ini();
 	});
+
+	var body_elem=document.getElementById('form187_body');
+	body_elem.addEventListener('table_sort',function(e)
+	{
+		form187_update_serial_numbers();
+		$("[id^='save_form187_']").click();
+	},false);
 };
 
 /**

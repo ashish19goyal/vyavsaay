@@ -14,7 +14,7 @@
 					</th>
 			</tr>
 		</thead>
-		<tbody id='form187_body' ondblclick="console.log(); form187_update_serial_numbers(); $(\"[id^='save_form187_']\").click();">
+		<tbody id='form187_body'>
 		</tbody>
 	</table>
 	<div class='form_nav'>

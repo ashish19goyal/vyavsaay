@@ -230,7 +230,10 @@ function my_sortable_tables()
 			},
 			update: function(event, ui) 
 			{
-				//ui.item.parent().trigger('dblclick');
+				var tbody_elem=ui.item.parent();
+				var event=new Event('table_sort');				
+				tbody_elem[0].dispatchEvent(event);
+
 				//ui.item.parent().find('tr').each(function(index)
 				//{
 				//	$(this).find('td:nth-child(2)>input').attr('value',index+1);
