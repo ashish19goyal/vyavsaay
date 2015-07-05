@@ -19700,6 +19700,17 @@ function form196_ini()
 					"<phone></phone>"+
 					"<acc_name array='yes'>"+customer_string+"</acc_name>" +
 					"</customers>";
+			if(customer_string=="--")
+			{
+				customer_columns="<customers>" +
+					"<id></id>" +
+					"<name></name>" +
+					"<email></email>" +
+					"<phone></phone>"+
+					"<acc_name></acc_name>" +
+					"</customers>";
+			}
+			
 			fetch_requested_data('',customer_columns,function(results)
 			{
 				console.log(results);
