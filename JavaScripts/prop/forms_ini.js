@@ -19671,7 +19671,7 @@ function form196_ini()
 	var master_form=document.getElementById('form196_master');
 	var nl_name=master_form.elements['newsletter'].value;
 	var nl_id=master_form.elements['nl_id'].value;	
-	var sms_content=master_form.elements['nl_id'].value;	
+	var sms_content=master_form.elements['sms'].value;	
 	var list=master_form.elements['list'].value;	
 	
 	if(nl_id!="" || nl_name!="")
@@ -19681,7 +19681,7 @@ function form196_ini()
 							"<name></name>"+
 							"<attribute exact='yes'>list name</attribute>"+
 							"<type exact='yes'>customer</type>"+
-							"<value exact='yes'>"+list+"</value>"+
+							"<value>"+list+"</value>"+
 							"</attributes>";
 		
 		fetch_requested_data('',attributes_columns,function(attributes)
@@ -19702,6 +19702,7 @@ function form196_ini()
 					"</customers>";
 			fetch_requested_data('',customer_columns,function(results)
 			{
+				console.log(results);
 				print_newsletter(nl_name,nl_id,'mail',function(container)
 				{
 					var business_title=get_session_var('title');
