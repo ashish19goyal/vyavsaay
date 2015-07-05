@@ -19430,7 +19430,7 @@ function form190_ini()
 };
 
 /**
- * @form Orders (laundry)
+ * @form Manage Values list
  * @formNo 191
  * @Loading light
  */
@@ -19713,7 +19713,6 @@ function form196_ini()
 			
 			fetch_requested_data('',customer_columns,function(results)
 			{
-				console.log(results);
 				print_newsletter(nl_name,nl_id,'mail',function(container)
 				{
 					var business_title=get_session_var('title');
@@ -19750,3 +19749,127 @@ function form196_ini()
 		});
 	}
 }
+
+/**
+ * @form LetterHeads
+ * @formNo 195
+ * @Loading light
+ */
+function form195_ini()
+{
+	show_loader();
+	var fid=$("#form195_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form195_header');
+	
+	var fname=filter_fields.elements[0].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form195_index');
+	var prev_element=document.getElementById('form195_prev');
+	var next_element=document.getElementById('form195_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<letterheads count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<name>"+fname+"</name>" +
+			"<date></date>" +
+			"<to></to>"+
+			"<subject></subject>"+
+			"<salutation></salutation>"+
+			"<content></content>"+
+			"<signature></signature>"+
+			"<footer></footer>"+
+			"</values_list>";
+
+	$('#form195_body').html("");
+
+	fetch_requested_data('form195',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form195_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form195_"+result.id+"'>"+result.name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='To'>";
+						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form195_"+result.id+"'>"+result.to+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form195_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form195_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='hidden' form='form195_"+result.id+"' value='"+result.subject+"'>";
+						rowsHTML+="<input type='hidden' form='form195_"+result.id+"' value='"+result.salutation+"'>";
+						rowsHTML+="<input type='hidden' form='form195_"+result.id+"' value='"+result.content+"'>";
+						rowsHTML+="<input type='hidden' form='form195_"+result.id+"' value='"+result.signature+"'>";
+						rowsHTML+="<input type='hidden' form='form195_"+result.id+"' value='"+result.footer+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form195_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form195_"+result.id+"' title='Delete' onclick='form195_delete_item($(this))'>";
+						rowsHTML+="<input type='button' class='print_icon' form='form195_"+result.id+"' title='Print' onclick='form195_print_form($(this))'>";
+						rowsHTML+="<input type='button' class='share_icon' form='form195_"+result.id+"' title='Send as mail' onclick='form195_delete_item($(this))'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+
+			$('#form195_body').append(rowsHTML);
+
+			var fields=document.getElementById("form195_"+result.id);
+			var share_button=fields.elements[12];
+			
+			$(share_button).click(function()
+			{
+				modal101_action(result.name,'','customer',function (func) 
+				{
+					print_form195(func);
+				});
+			});
+
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form195_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'letterheads');
+		});
+		hide_loader();
+	});	
+};

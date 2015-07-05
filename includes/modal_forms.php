@@ -958,4 +958,20 @@
 		</form>
 	</div>
 
+	<div id="modal123" title="Add LetterHead">
+		<form id='modal123_form' autocomplete="off">
+			<fieldset>
+				<label>Name: <input type="text" required></label><br>
+				<label>Date: <input type="text"></label><br>
+				<label>To: <textarea></textarea></label><br>
+				<label>Subject: <textarea></textarea></label><br>
+				<label>Salutation: <textarea></textarea></label><br>
+				<label>Content: <textarea></textarea></label><br>
+				<label>Signature: <textarea></textarea></label><br>
+				<label>Footer: <textarea></textarea></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

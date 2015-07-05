@@ -9984,3 +9984,45 @@ function form193_update_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form LetterHead
+ * @formNo 195
+ * @param button
+ */
+function form195_update_item(form)
+{
+	if(is_update_access('form195'))
+	{
+		var name=form.elements[0].value;
+		var to=form.elements[1].value;
+		var date=get_raw_time(form.elements[2].value);
+		var data_id=form.elements[3].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<letterheads>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<date>"+date+"</date>"+
+					"<to>"+to+"</to>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</letterheads>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

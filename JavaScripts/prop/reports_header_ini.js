@@ -1470,3 +1470,34 @@ function report72_header_ini()
 	
 	set_static_filter('sale_orders','status',status_filter);	
 }
+
+/**
+ * @reportNo 73
+ * @report Sales tax
+ */
+function report73_header_ini()
+{	
+	var form=document.getElementById('report73_header');
+	var customer_filter=form.elements['customer'];
+	var item_filter=form.elements['item_name'];
+	var status_filter=form.elements['status'];	
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report73_ini();
+	});
+
+	set_static_filter('sale_orders','status',status_filter);
+	
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_filter(customer_data,customer_filter);
+	
+	var item_data="<bill_items>" +
+			"<item_name></item_name>" +
+			"</bill_items>";
+	set_my_filter(item_data,item_filter);
+}

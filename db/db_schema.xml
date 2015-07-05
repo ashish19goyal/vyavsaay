@@ -1219,6 +1219,7 @@
 	</system_grid_metrics>
 	<letterheads>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="TEXT"></name>
 			<date index='yes' type="VARCHAR(30)"></date>
 			<to index='yes' type="TEXT"></to>
 			<subject index='yes' type="TEXT"></subject>

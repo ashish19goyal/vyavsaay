@@ -5591,10 +5591,22 @@ function modal101_action(doc_type,person,person_type,func)
 		}		
 		else
 		{
-			
 			var person_xml="<suppliers>"+
 						"<acc_name></acc_name>"+
 						"</suppliers>";
+			if(person_type=='customer')			
+			{
+				person_xml="<customers>"+
+						"<acc_name></acc_name>"+
+						"</customers>";
+			}
+			else if(person_type=='staff')			
+			{
+				person_xml="<staff>"+
+						"<acc_name></acc_name>"+
+						"</staff>";
+			}
+			
 			set_my_value_list(person_xml,person_filter);
 			
 			$(person_filter).on('blur',function () 
@@ -7806,4 +7818,64 @@ function modal122_action(item_name)
 	});
 	
 	$("#modal122").dialog("open");
+}
+
+/**
+ * @modalNo 123
+ * @modal Add new letterhead
+ */
+function modal123_action(item_name)
+{
+	var form=document.getElementById('modal123_form');
+	
+	var date_filter=form.elements[2];
+	
+	$(date_filter).datepicker();	
+		
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form195'))
+		{
+			var name=form.elements[1].value;
+			var date=get_raw_time(form.elements[2].value);
+			var to=form.elements[3].value;
+			var subject=form.elements[4].value;
+			var salutation=form.elements[5].value;
+			var content=form.elements[6].value;
+			var signature=form.elements[7].value;
+			var footer=form.elements[8].value;
+			var last_updated=get_my_time();
+			
+			var letter_xml="<letterheads>"+
+							"<id>"+get_new_key()+"</id>"+
+							"<name unique='yes'>"+name+"</name>"+
+							"<date>"+date+"</date>"+
+							"<to>"+to+"</to>"+
+							"<subject>"+subject+"</subject>"+
+							"<salutation>"+salutation+"</salutation>"+
+							"<content>"+content+"</content>"+
+							"<signature>"+signature+"</signature>"+
+							"<footer>"+footer+"</footer>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</letterheads>";
+			if(is_online())
+			{
+				server_create_simple(letter_xml);
+			}
+			else
+			{
+				local_create_simple(letter_xml);
+			}
+			
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal123").dialog("close");
+	});
+	
+	$("#modal123").dialog("open");
 }

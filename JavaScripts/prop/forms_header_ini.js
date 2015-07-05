@@ -6768,3 +6768,25 @@ function form196_header_ini()
 	
 	$('textarea').autosize();
 }
+
+/**
+ * @form LetterHeads
+ * @formNo 195
+ */
+function form195_header_ini()
+{
+	var filter_fields=document.getElementById('form195_header');
+	var name_filter=filter_fields.elements[0];
+	
+	var name_data="<letterheads>" +
+			"<name></name>" +
+			"</letterheads>";
+	set_my_filter(name_data,name_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form195_ini();
+	});
+};

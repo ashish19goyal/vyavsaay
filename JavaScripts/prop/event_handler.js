@@ -307,7 +307,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=101;i<123;i++)
+	for(var i=101;i<124;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({
@@ -911,6 +911,8 @@ function import_data(form_name)
 		case 'form190':modal23_action(form190_import_template,form190_import);
 		break;
 		case 'form191':modal23_action(form191_import_template,form191_import);
+		break;
+		case 'form195':modal23_action(form195_import_template,form195_import);
 		break;
 	}
 }

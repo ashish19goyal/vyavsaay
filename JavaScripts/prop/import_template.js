@@ -1108,3 +1108,13 @@ function form191_import_template()
 	var data_array=['id','tablename','listname','name','status'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Letterhead
+* @formNo 195
+*/
+function form195_import_template()
+{
+	var data_array=['id','name','date','to','subject','salutation','content','signature','footer'];
+	my_array_to_csv(data_array);
+};

@@ -5903,3 +5903,111 @@ function form190_import(data_array,import_type)
 		}
 	}			
 };
+
+/**
+* @form Manage Values list
+* @formNo 191
+*/
+function form191_import(data_array,import_type)
+{
+	var data_xml="<values_list>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</values_list><separator></separator><values_list>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<tablename>"+row.tablename+"</tablename>" +
+				"<listname>"+row.listname+"</listname>" +
+				"<name>"+row.name+"</name>"+
+				"<status>"+row.status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</values_list>";
+	
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}			
+};
+
+/**
+* @form Letterhead
+* @formNo 195
+*/
+function form195_import(data_array,import_type)
+{
+	var data_xml="<letterheads>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</letterheads><separator></separator><letterheads>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.name+"</name>" +
+				"<date>"+get_raw_time(row.date)+"</date>" +
+				"<to>"+row.to+"</to>"+
+				"<subject>"+row.subject+"</subject>"+
+				"<salutation>"+row.salutation+"</salutation>"+
+				"<content>"+row.content+"</content>" +
+				"<signature>"+row.signature+"</signature>"+
+				"<footer>"+row.footer+"</footer>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</letterheads>";
+	
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}			
+};
