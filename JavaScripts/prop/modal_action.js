@@ -7852,7 +7852,7 @@ function modal123_action(item_name)
 							"<id>"+get_new_key()+"</id>"+
 							"<name unique='yes'>"+name+"</name>"+
 							"<date>"+date+"</date>"+
-							"<to>"+to+"</to>"+
+							"<receiver>"+to+"</receiver>"+
 							"<subject>"+subject+"</subject>"+
 							"<salutation>"+salutation+"</salutation>"+
 							"<content>"+content+"</content>"+
@@ -7867,8 +7867,7 @@ function modal123_action(item_name)
 			else
 			{
 				local_create_simple(letter_xml);
-			}
-			
+			}	
 		}
 		else
 		{

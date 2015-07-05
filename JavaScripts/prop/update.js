@@ -10004,7 +10004,7 @@ function form195_update_item(form)
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
 					"<date>"+date+"</date>"+
-					"<to>"+to+"</to>"+
+					"<receiver>"+to+"</receiver>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</letterheads>";
 		if(is_online())

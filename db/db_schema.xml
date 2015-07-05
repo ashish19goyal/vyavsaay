@@ -1221,7 +1221,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT"></name>
 			<date index='yes' type="VARCHAR(30)"></date>
-			<to index='yes' type="TEXT"></to>
+			<receiver index='yes' type="TEXT"></receiver>
 			<subject index='yes' type="TEXT"></subject>
 			<salutation index='no' type="TEXT"></salutation>
 			<content index='no' type="TEXT"></content>

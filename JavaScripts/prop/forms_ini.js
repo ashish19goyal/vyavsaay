@@ -19777,13 +19777,13 @@ function form195_ini()
 			"<id>"+fid+"</id>" +
 			"<name>"+fname+"</name>" +
 			"<date></date>" +
-			"<to></to>"+
+			"<receiver></receiver>"+
 			"<subject></subject>"+
 			"<salutation></salutation>"+
 			"<content></content>"+
 			"<signature></signature>"+
 			"<footer></footer>"+
-			"</values_list>";
+			"</letterheads>";
 
 	$('#form195_body').html("");
 
@@ -19798,7 +19798,7 @@ function form195_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form195_"+result.id+"'>"+result.name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='To'>";
-						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form195_"+result.id+"'>"+result.to+"</textarea>";
+						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form195_"+result.id+"'>"+result.receiver+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Date'>";
 						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form195_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
@@ -19813,7 +19813,7 @@ function form195_ini()
 						rowsHTML+="<input type='submit' class='save_icon' form='form195_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form195_"+result.id+"' title='Delete' onclick='form195_delete_item($(this))'>";
 						rowsHTML+="<input type='button' class='print_icon' form='form195_"+result.id+"' title='Print' onclick='form195_print_form($(this))'>";
-						rowsHTML+="<input type='button' class='share_icon' form='form195_"+result.id+"' title='Send as mail' onclick='form195_delete_item($(this))'>";
+						rowsHTML+="<input type='button' class='share_icon' form='form195_"+result.id+"' title='Send as mail'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 

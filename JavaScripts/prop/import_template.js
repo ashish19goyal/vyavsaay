@@ -1115,6 +1115,6 @@ function form191_import_template()
 */
 function form195_import_template()
 {
-	var data_array=['id','name','date','to','subject','salutation','content','signature','footer'];
+	var data_array=['id','name','date','receiver','subject','salutation','content','signature','footer'];
 	my_array_to_csv(data_array);
 };

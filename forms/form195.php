@@ -7,7 +7,7 @@
 					<th>To </th>
 					<th>Date </th>
 					<th>
-						<input type='button' class='add_icon' form='form195_header' title='Add new' onclick="form195_add_item();">
+						<input type='button' class='add_icon' form='form195_header' title='Add new' onclick="modal123_action();">
 						<input type='button' form='form195_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form195_header' style='visibility: hidden;'>
 					</th>

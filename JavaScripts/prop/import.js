@@ -5977,7 +5977,7 @@ function form195_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
 				"<date>"+get_raw_time(row.date)+"</date>" +
-				"<to>"+row.to+"</to>"+
+				"<receiver>"+row.receiver+"</receiver>"+
 				"<subject>"+row.subject+"</subject>"+
 				"<salutation>"+row.salutation+"</salutation>"+
 				"<content>"+row.content+"</content>" +
