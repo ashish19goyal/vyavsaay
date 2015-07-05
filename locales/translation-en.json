@@ -326,6 +326,9 @@
 	"manage_values_lists":"Manage Values Lists",
 	"pickup_deliveries":"Pickup & Deliveries",
 	"enter_purchases_laundry":"Enter Purchases(laundry)",
-	"adjust_inventory":"Adjust Inventory"
+	"adjust_inventory":"Adjust Inventory",
+	"stock_laundry":"Stock of Laundry",
+	"letterhead":"LetterHead",
+	"promotions_by_list":"Promotions by list"
   }
 }

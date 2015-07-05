@@ -1,6 +1,7 @@
 <div id='products_main' class='vy_tabs function_main'>
 
 		<ul>
+			<li><a id='report73_link' href='#report73' onclick='report73_header_ini();' data-i18n='form.stock_laundry'></a></li>
 			<li><a id='form87_link' href='#form87' onclick='form87_header_ini(); form87_ini();' data-i18n='form.manage_products'></a></li>
 			<li><a id='form39_link' href='#form39' onclick='form39_header_ini(); form39_ini();' data-i18n='form.manage_products'></a></li>
 			<li><a id='form169_link' href='#form169' onclick='form169_header_ini(); form169_ini();' data-i18n='form.manage_products'></a></li>
@@ -32,6 +33,7 @@
 		</ul>
 
 	<?php 
+			include "reports/report73.php";
 			include "forms/form87.php";
 			include "forms/form39.php";
 			include "forms/form169.php";

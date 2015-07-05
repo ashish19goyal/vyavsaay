@@ -1003,6 +1003,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report73</name>
+			<display_name>stock_laundry</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -2707,6 +2717,28 @@
 			<tables>--inventory_adjust--temp_inventory_adjust--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form195</name>
+			<display_name>letterhead</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--letterheads--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form196</name>
+			<display_name>promotions_by_list</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--newsletter--newsletter_items--sms--emails--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3340,6 +3372,17 @@
 			<username>master</username>
 			<element_id>report72</element_id>
 			<element_name>pickup_deliveries</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report73</element_id>
+			<element_name>stock_laundry</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -5045,6 +5088,28 @@
 			<username>master</username>
 			<element_id>form193</element_id>
 			<element_name>adjust_inventory</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form195</element_id>
+			<element_name>letterhead</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form196</element_id>
+			<element_name>promotions_by_list</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

@@ -6707,3 +6707,64 @@ function form193_header_ini()
 	$('#form193_head').html(head_html);
 	$('#form193_body').html("");
 }
+
+/**
+ * @form Promotion Emails
+ * @formNo 196
+ */
+function form196_header_ini()
+{
+	var fields=document.getElementById('form196_master');
+	var name_filter=fields.elements['newsletter'];
+	var sms_filter=fields.elements['sms'];
+	var list_filter=fields.elements['list'];
+	var id_filter=fields.elements['nl_id'];
+	id_filter.value="";
+	name_filter.value="";
+	list_filter.value="";
+	fields.elements['nl_id'].value="";
+	
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form196_ini();
+	});
+	
+	var list_data="<attributes>"+
+				"<value></value>"+
+				"<type exact='yes'>customer</type>"+
+				"<attribute exact='yes'>list name</attribute>"+
+				"</attributes>";		
+	set_my_value_list(list_data,list_filter);
+	
+	sms_filter.value=get_session_var('sms_content');
+	var name_data="<newsletter>" +
+			"<name></name>" +
+			"</newsletter>";
+	set_my_value_list_func(name_data,name_filter,function () 
+	{
+		$(name_filter).focus();
+	});
+	
+	$(name_filter).off('blur');
+	$(name_filter).on('blur',function()
+	{
+		var nl_id_data="<newsletter>" +
+				"<id></id>" +
+				"<name>"+name_filter.value+"</name>" +
+				"</newsletter>";
+		set_my_value(nl_id_data,id_filter);				
+	});
+
+	my_datalist_change(name_filter,function () 
+	{
+		var nl_id_data="<newsletter>" +
+				"<id></id>" +
+				"<name>"+name_filter.value+"</name>" +
+				"</newsletter>";
+		set_my_value(nl_id_data,id_filter);				
+	});
+	
+	$('textarea').autosize();
+}

@@ -203,7 +203,7 @@ function form2_ini()
 					rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 			
-				$('#form2_body').append(rowsHTML);
+				$('#form2_body').prepend(rowsHTML);
 				
 				var fields=document.getElementById("form2_"+id);
 				$(fields).on("submit", function(event)
@@ -6564,26 +6564,27 @@ function form78_ini()
 				results.forEach(function(result)
 				{
 					if(result.promotion_status!="suspended")
-					var rowsHTML="";
-					var id=result.id;
-					rowsHTML+="<tr>";
-					rowsHTML+="<form id='row_form78_"+id+"'></form>";
-						rowsHTML+="<td data-th='Customer Name'>";
-							rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'>"+result.acc_name+"</textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Email'>";
-							rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'>"+result.email+"</textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Phone'>";
-							rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'>"+result.phone+"</textarea>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Select'>";
-							rowsHTML+="<input type='checkbox' form='row_form78_"+id+"' checked>";
-							rowsHTML+="<input type='hidden' form='row_form78_"+id+"' value='"+result.name+"'>";
-						rowsHTML+="</td>";
-					rowsHTML+="</tr>";
-				
-					$('#form78_body').append(rowsHTML);				
+					{					
+						var id=result.id;
+						var rowsHTML="<tr>";
+						rowsHTML+="<form id='row_form78_"+id+"'></form>";
+							rowsHTML+="<td data-th='Customer Name'>";
+								rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'>"+result.acc_name+"</textarea>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Email'>";
+								rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'>"+result.email+"</textarea>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Phone'>";
+								rowsHTML+="<textarea readonly='readonly' form='row_form78_"+id+"'>"+result.phone+"</textarea>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Select'>";
+								rowsHTML+="<input type='checkbox' form='row_form78_"+id+"' checked>";
+								rowsHTML+="<input type='hidden' form='row_form78_"+id+"' value='"+result.name+"'>";
+							rowsHTML+="</td>";
+						rowsHTML+="</tr>";
+					
+						$('#form78_body').append(rowsHTML);
+					}				
 				});
 				$('textarea').autosize();
 				hide_loader();
@@ -19655,6 +19656,84 @@ function form192_ini()
 					
 				});			
 				hide_loader();
+			});
+		});
+	}
+}
+
+/**
+ * @form Promotion by list
+ * @formNo 196
+ * @Loading heavy
+ */
+function form196_ini()
+{
+	var master_form=document.getElementById('form196_master');
+	var nl_name=master_form.elements['newsletter'].value;
+	var nl_id=master_form.elements['nl_id'].value;	
+	var sms_content=master_form.elements['nl_id'].value;	
+	var list=master_form.elements['list'].value;	
+	
+	if(nl_id!="" || nl_name!="")
+	{
+		show_loader();
+		var attributes_columns="<attributes>"+
+							"<name></name>"+
+							"<attribute exact='yes'>list name</attribute>"+
+							"<type exact='yes'>customer</type>"+
+							"<value exact='yes'>"+list+"</value>"+
+							"</attributes>";
+		
+		fetch_requested_data('',attributes_columns,function(attributes)
+		{
+			var customer_string="--";
+			
+			for(var i in attributes)
+			{
+				customer_string+=attributes[i].name+"--";
+			}
+						
+			var customer_columns="<customers>" +
+					"<id></id>" +
+					"<name></name>" +
+					"<email></email>" +
+					"<phone></phone>"+
+					"<acc_name array='yes'>"+customer_string+"</acc_name>" +
+					"</customers>";
+			fetch_requested_data('',customer_columns,function(results)
+			{
+				print_newsletter(nl_name,nl_id,'mail',function(container)
+				{
+					var business_title=get_session_var('title');
+					var subject=nl_name;
+					
+					var email_id_string="";
+					var email_message=container.innerHTML;
+					var from=get_session_var('email');
+					
+					results.forEach(function (result) 
+					{
+						var to=result.email;
+						var customer_phone=result.phone;
+						var customer_name=result.name;
+						email_id_string+=customer_name+":"+to;
+						var message=sms_content.replace(/customer_name/g,customer_name);
+						message=message.replace(/business_title/g,business_title);
+							
+						send_sms(customer_phone,message,'transaction');
+						if(to!="")
+						{
+							email_id_string+=";";				
+						}						
+					});
+			
+					var email_to=email_id_string;
+					send_email(email_to,from,business_title,subject,email_message,function()
+					{
+						$("#modal58").dialog("open");
+						hide_loader();			
+					});
+				});		
 			});
 		});
 	}
