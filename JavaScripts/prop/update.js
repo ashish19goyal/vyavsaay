@@ -457,7 +457,7 @@ function form10_update_form()
 		var bill_num=form.elements['bill_num'].value;
 		var bill_date=get_raw_time(form.elements['bill_date'].value);
 		var due_date=get_raw_time(form.elements['due_date'].value);
-		var payment_filter=form.elements['payment'].value;
+		var payment_filter=form.elements['payment'];
 		
 		var quantity=0;		
 		var amount=0;
@@ -574,6 +574,7 @@ function form10_update_form()
 					{
 						modal26_action(payments[y],function (mode,paid) 
 						{
+							console.log(paid);
 							if(parseFloat(paid)==0)
 								payment_filter.value="Unpaid<br>Balance: Rs. "+total;
 							else if(parseFloat(paid)==parseFloat(total))

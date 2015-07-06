@@ -259,7 +259,7 @@ function form10_create_form()
 		var bill_num=form.elements['bill_num'].value;
 		var bill_date=get_raw_time(form.elements['bill_date'].value);
 		var due_date=get_raw_time(form.elements['due_date'].value);
-		var payment_filter=form.elements['payment'].value;
+		var payment_filter=form.elements['payment'];
 		
 		$('#form10_share').show();
 		$('#form10_share').click(function()
@@ -338,11 +338,11 @@ function form10_create_form()
 		var pt_tran_id=get_new_key();
 		var payment_xml="<payments>" +
 					"<id>"+pt_tran_id+"</id>" +
-					"<status>closed</status>" +
+					"<status>pending</status>" +
 					"<type>received</type>" +
 					"<date>"+get_my_time()+"</date>" +
 					"<total_amount>"+total+"</total_amount>" +
-					"<paid_amount>"+total+"</paid_amount>" +
+					"<paid_amount>0</paid_amount>" +
 					"<acc_name>"+customer+"</acc_name>" +
 					"<due_date>"+get_credit_period()+"</due_date>" +
 					"<mode>"+get_payment_mode()+"</mode>" +
