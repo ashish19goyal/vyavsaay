@@ -5554,7 +5554,9 @@ function modal101_action(doc_type,person,person_type,func)
 		var person_filter=form.elements[1];
 		$(person_filter).off('blur');
 		form.elements[3].value=doc_type;
-					
+		
+		$("#modal101").dialog("open");
+						
 		if(person!="")
 		{
 			var email_id_xml="<suppliers>"+
@@ -5585,7 +5587,6 @@ function modal101_action(doc_type,person,person_type,func)
 				form.elements[2].value=emails[0].email;
 				form.elements[4].value=emails[0].name;
 	
-				$("#modal101").dialog("open");
 				hide_loader();			
 			});
 		}		
@@ -5638,7 +5639,6 @@ function modal101_action(doc_type,person,person_type,func)
 					form.elements[2].value=emails[0].email;
 					form.elements[4].value=emails[0].name;
 		
-					$("#modal101").dialog("open");
 					hide_loader();			
 				});
 			});
@@ -7348,14 +7348,15 @@ function modal117_action(source,date_initiated)
 function modal118_action()
 {
 	var form=document.getElementById("modal118_form");
-	var phone_filter=form.elements[1];
-	var name_filter=form.elements[2];
-	var credit_filter=form.elements[3];
-	var address_filter=form.elements[4];
-	var notes_filter=form.elements[5];
-	var new_filter=form.elements[6];
-	var acc_name_filter=form.elements[7];
-	var id_filter=form.elements[8];
+	var phone_filter=form.elements['phone'];
+	var name_filter=form.elements['name'];
+	var credit_filter=form.elements['credit'];
+	var address_filter=form.elements['address'];
+	var notes_filter=form.elements['notes'];
+	var email_filter=form.elements['email'];
+	var new_filter=form.elements['new_old'];
+	var acc_name_filter=form.elements['acc_name'];
+	var id_filter=form.elements['customer_id'];
 	
 	var phone_data="<customers>" +
 			"<phone></phone>" +
@@ -7373,6 +7374,7 @@ function modal118_action()
 		var customers_data="<customers>"+
 						"<id></id>"+
 						"<name></name>"+
+						"<email></email>"+
 						"<acc_name></acc_name>"+
 						"<address></address>"+
 						"<phone exact='yes'>"+phone_filter.value+"</phone>"+
@@ -7408,6 +7410,7 @@ function modal118_action()
 					credit_filter.value=balance_amount;
 				});	
 				name_filter.value=customers[0].name;
+				email_filter.value=customers[0].email;
 				address_filter.value=customers[0].address;
 				acc_name_filter.value=customers[0].acc_name;
 				new_filter.value='no';
@@ -7418,6 +7421,7 @@ function modal118_action()
 			else 
 			{
 				name_filter.value="";
+				email_filter.value="";
 				address_filter.value="";
 				id_filter.value="";
 				name_filter.removeAttribute('readonly');
@@ -7440,14 +7444,15 @@ function modal118_action()
 		event.preventDefault();
 		if(is_create_access('form190'))
 		{
-			var phone=form.elements[1].value;
-			var name=form.elements[2].value;
-			var credit=form.elements[3].value;
-			var address=form.elements[4].value;
-			var notes=form.elements[5].value;
-			var new_old=form.elements[6].value;
-			var acc_name=form.elements[7].value;
-			var old_id=form.elements[8].value;
+			var phone=phone_filter.value;
+			var name=name_filter.value;
+			var credit=credit_filter.value;
+			var address=address_filter.value;
+			var notes=notes_filter.value;
+			var email=email_filter.value;
+			var new_old=new_filter.value;
+			var acc_name=acc_name_filter.value;
+			var old_id=id_filter.value;
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
 
@@ -7457,6 +7462,7 @@ function modal118_action()
 								"<id>"+data_id+"</id>"+
 								"<name>"+name+"</name>"+
 								"<phone>"+phone+"</phone>"+
+								"<email>"+email+"</email>"+
 								"<acc_name>"+acc_name+"</acc_name>"+
                         		"<status>active</status>"+
                         		"<address>"+address+"</address>"+
@@ -7877,4 +7883,125 @@ function modal123_action(item_name)
 	});
 	
 	$("#modal123").dialog("open");
+}
+
+/**
+ * @modal Send SMS
+ * @modalNo 124
+ */
+function modal124_action(person_type,person,sms)
+{
+	show_loader();
+	var form=document.getElementById('modal124_form');
+		
+	var person_filter=form.elements[1];
+	var sms_filter=form.elements[3];
+	
+	sms_filter.value=sms;
+	
+	$(person_filter).off('blur');
+				
+	if(person!="")
+	{
+		var phone_xml="<suppliers>"+
+				"<phone></phone>"+
+				"<name></name>"+
+				"<acc_name exact='yes'>"+person+"</acc_name>"+
+				"</suppliers>";
+		if(person_type=='customer')			
+		{
+			phone_xml="<customers>"+
+					"<phone></phone>"+
+					"<name></name>"+
+					"<acc_name exact='yes'>"+person+"</acc_name>"+
+					"</customers>";
+		}
+		else if(person_type=='staff')			
+		{
+			phone_xml="<staff>"+
+					"<phone></phone>"+
+					"<name></name>"+
+					"<acc_name exact='yes'>"+person+"</acc_name>"+
+					"</staff>";
+		}
+
+		fetch_requested_data('',phone_xml,function(phones)
+		{
+			form.elements[1].value=person;
+			form.elements[2].value=phones[0].phone;
+			form.elements[4].value=phones[0].name;
+
+			hide_loader();			
+		});
+	}		
+	else
+	{
+		var person_xml="<suppliers>"+
+					"<acc_name></acc_name>"+
+					"</suppliers>";
+		if(person_type=='customer')			
+		{
+			person_xml="<customers>"+
+					"<acc_name></acc_name>"+
+					"</customers>";
+		}
+		else if(person_type=='staff')			
+		{
+			person_xml="<staff>"+
+					"<acc_name></acc_name>"+
+					"</staff>";
+		}
+		
+		set_my_value_list(person_xml,person_filter);
+		
+		$(person_filter).on('blur',function () 
+		{
+			var phone_xml="<suppliers count='1'>"+
+				"<phone></phone>"+
+				"<name></name>"+
+				"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
+				"</suppliers>";
+			
+			if(person_type=='customer')			
+			{
+				phone_xml="<customers>"+
+						"<phone></phone>"+
+						"<name></name>"+
+						"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
+						"</customers>";
+			}
+			else if(person_type=='staff')			
+			{
+				phone_xml="<staff>"+
+						"<phone></phone>"+
+						"<name></name>"+
+						"<acc_name exact='yes'>"+person_filter.value+"</acc_name>"+
+						"</staff>";
+			}
+			fetch_requested_data('',phone_xml,function(phones)
+			{
+				form.elements[2].value=phones[0].phone;
+				form.elements[4].value=phones[0].name;
+	
+				hide_loader();			
+			});
+		});
+	}	
+
+	$("#modal124").dialog("open");			
+	$('textarea').autosize();
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		show_loader();
+		var to=form.elements[2].value;
+		var customer_name=form.elements[4].value;
+
+		var sms_content=sms.replace(/customer_name/g,customer_name);		
+		send_sms(to,sms_content,'transaction');
+		
+		$("#modal124").dialog("close");
+	});	
 }

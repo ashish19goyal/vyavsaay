@@ -888,6 +888,7 @@ function send_sms(to,message,type)
 	}
 	else 
 	{
+		hide_loader();
 		$("#modal60").dialog("open");
 	}
 }

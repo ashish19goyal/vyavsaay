@@ -19348,6 +19348,7 @@ function form190_ini()
 						rowsHTML+="<input type='hidden' form='form190_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form190_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form190_"+result.id+"' title='Delete' onclick='form190_delete_item($(this))'>";
+						rowsHTML+="<input type='button' class='share_icon' form='form190_"+result.id+"' title='Send SMS'>";
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form190_"+result.id+"' value='View Bill'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
@@ -19356,7 +19357,8 @@ function form190_ini()
 
 			var fields=document.getElementById("form190_"+result.id);
 			var status_filter=fields.elements[4];
-			var edit_button=fields.elements[8];
+			var share_button=fields.elements[8];
+			var edit_button=fields.elements[9];
 			
 			set_static_value_list('sale_orders','status',status_filter);
 			$(fields).on("submit",function(event)
@@ -19374,6 +19376,50 @@ function form190_ini()
 				edit_button.value="View Bill";
 			}
 
+			$(share_button).on("click", function(event)
+			{
+				event.preventDefault();
+				var sms="";
+				if(result.status=='delivered')
+				{
+					sms="Hello customer_name, your laundry has been delivered. Thanks for using our services.";
+				}
+				else if(result.status=='out for delivery')
+				{
+					sms="Hello customer_name, your laundry is out for delivery. Your bill amount is Rs. "+result.total;
+				}
+				else if(result.status=='ready for delivery')
+				{
+					sms="Hello customer_name, your laundry is ready for delivery. Your bill amount is Rs. "+result.total;
+				}
+				else if(result.status=='processed')
+				{
+					sms="Hello customer_name, your laundry has been processed. Your bill amount is Rs. "+result.total;
+				}
+				else if(result.status=='processing')
+				{
+					sms="Hello customer_name, we are currently processing your laundry. We will get back to you soon";
+				}
+				else if(result.status=='picked')
+				{
+					sms="Hello customer_name, your laundry was picked up by our representative. Thanks for using our service";
+				}
+				else if(result.status=='picking')
+				{
+					sms="Hello customer_name, our representative is out to pick your laundry. Please keep it ready.";
+				}
+				else if(result.status=='pending')
+				{
+					sms="Hello customer_name, we have captured you order. Our representative will soon pickup your laundry.";
+				}
+				else if(result.status=='cancelled')
+				{
+					sms="Hello customer_name, your order for laundry was cancelled. Please provide us feedback to improve our services";
+				}
+				
+				modal124_action('customer',result.customer_name,sms);
+			});
+			
 			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();

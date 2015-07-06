@@ -904,11 +904,12 @@
 	<div id="modal118" title="New order">
 		<form id='modal118_form' autocomplete="off">
 			<fieldset>
-				<label>Phone: <input type='text' required></label><br>
-				<label>Name: <input type='text' required></label><br>
-				<label>Credit: Rs. <input type="number" step='any' readonly="readonly"></label><br>
-				<label>Address: <textarea></textarea></label><br>
-				<label>Notes: <textarea></textarea></label><br>
+				<label>Phone: <input type='text' name='phone' required></label><br>
+				<label>Name: <input type='text' name='name' required></label><br>
+				<label>Credit: Rs. <input type="number" name='credit' step='any' readonly="readonly"></label><br>
+				<label>Address: <textarea name='address'></textarea></label><br>
+				<label>Notes: <textarea name='notes'></textarea></label><br>
+				<label>Email: <textarea name='email'></textarea></label><br>
 				<input type='hidden' name='new_old'>
 				<input type='hidden' name='acc_name'>
 				<input type='hidden' name='customer_id'>
@@ -970,6 +971,18 @@
 				<label>Signature: <textarea></textarea></label><br>
 				<label>Footer: <textarea></textarea></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div id="modal124" title="Send SMS">
+		<form id='modal124_form' autocomplete="off">
+			<fieldset>
+				<label>To: <input type='text' name='to' readonly="readonly"></label><br>
+				<label>Phone: <input type='text' name='phone' required></label><br>
+				<label>SMS: <textarea name='sms'></textarea></label><br>
+				<input type='hidden'>				
+				<input type="submit" value='Send' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>

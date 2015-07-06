@@ -1,6 +1,7 @@
 <div id='sale_bills_main' class='vy_tabs function_main'>
 		<ul>
 			<li><a id='form190_link' href='#form190' onclick='form190_header_ini(); form190_ini();' data-i18n='form.orders'></a></li>
+			<li><a id='report72_link' href='#report72' onclick='report72_header_ini();' data-i18n='form.pickup_deliveries'></a></li>
 			<li><a id='form10_link' href='#form10' onclick='form10_header_ini(); form10_ini();' data-i18n='form.create_bill'></a></li>
 			<li><a id='form12_link' href='#form12' onclick='form12_header_ini(); form12_ini();' data-i18n='form.product_bill'></a></li>
 			<li><a id='form72_link' href='#form72' onclick='form72_header_ini(); form72_ini();' data-i18n='form.create_bill'></a></li>
@@ -25,11 +26,11 @@
 			<li><a id='form113_link' href='#form113' onclick='form113_header_ini(); form113_ini();' data-i18n='form.manage_unbilled_items'></a></li>
 			<li><a id='form118_link' href='#form118' onclick='form118_header_ini(); form118_ini();' data-i18n='form.create_bill'></a></li>
 			<li><a id='form141_link' href='#form141' onclick='form141_header_ini(); form141_ini();' data-i18n='form.manage_order'></a></li>
-			<li><a id='report72_link' href='#report72' onclick='report72_header_ini();' data-i18n='form.pickup_deliveries'></a></li>
 		</ul>
 
 	<?php 
 			include "forms/form190.php";
+			include "reports/report72.php";
 			include "forms/form10.php";
 			include "forms/form12.php";
 			include "forms/form72.php";
@@ -54,6 +55,5 @@
 			include "forms/form113.php";
 			include "forms/form118.php";
 			include "forms/form141.php";
-			include "reports/report72.php";
 	?>
 </div>
