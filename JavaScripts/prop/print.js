@@ -289,7 +289,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 				}
 			}
 			
-			nl_item_heading.setAttribute('style','display:block;margin:2px;padding:2px;width:98%');
+			nl_item_heading.setAttribute('style','display:block;margin:2px;padding:2px;width:90%');
 			
 			nl_item_pic.setAttribute('style','float:left;margin:2px;padding:2px;');
 			if(url!="")
@@ -1540,18 +1540,19 @@ function print_form195(func)
 	var container=document.createElement('div');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
-		var business_title=document.createElement('div');
+		var business_details=document.createElement('div');
 	
-	var invoice_line=document.createElement('div');
-	
-	var info_section=document.createElement('div');	
-		var customer_info=document.createElement('div');
+	var top_section=document.createElement('div');	
+		var date_info=document.createElement('div');
+		var subject_info=document.createElement('div');
+		var to_info=document.createElement('div');
+		var salutation_info=document.createElement('div');
 
-	var table_container=document.createElement('div');
+	var content_section=document.createElement('div');
 
 	var footer=document.createElement('div');
+		var signature_info=document.createElement('div');
 		var tandc=document.createElement('div');
-		var address=document.createElement('div');
 
 	////////////setting styles for containers/////////////////////////
 
@@ -1597,42 +1598,7 @@ function print_form195(func)
 	
 	tandc.innerHTML=tandc_text;
 	address.innerHTML=tax_text+" | Address: "+business_address;
-
-	var table_element=document.getElementById(form_id+'_body').parentNode;
-	table_copy=table_element.cloneNode(true);
 	
-	table_copy.removeAttribute('class');
-	table_copy.setAttribute('width','1000px');
-	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh").remove();
-	$(table_copy).find('input,textarea').each(function(index)
-	{
-		$(this).replaceWith($(this).val());
-	});
-	
-	$(table_copy).find('label').each(function(index)
-	{
-		$(this).replaceWith($(this).html());
-	});
-		
-	$(table_copy).find('tfoot > tr > td:first').attr('colspan','1');
-	$(table_copy).find('tfoot > tr > td:nth-child(2)').attr('colspan','2');
-	
-	
-	//table_copy.removeAttribute('class');
-	//$(table_copy).attr('style','min-height:600px;');
-	$(table_copy).find('tbody').attr('style','height:500px;min-height:500px;');
-	$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
-	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
-	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
-	$(table_copy).find("tbody>tr").attr('style','flex:1;height:30px');
-	
-	$(table_copy).find("th:first, td:first").css('width','300px');
-	var row_count=$(table_copy).find('tbody>tr').length;
-	var rows_to_add=15-row_count;
-	for(var i=0;i<rows_to_add;i++)
-	{
-		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
-	}
 	
 	/////////////placing the containers //////////////////////////////////////////////////////	
 

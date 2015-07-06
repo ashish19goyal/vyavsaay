@@ -192,7 +192,7 @@ function form2_ini()
 						rowsHTML+="<br>Link: <textarea readonly='readonly' class='widebox dblclick_editable' form='form2_"+id+"'>"+result.url+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Image'>";
-						rowsHTML+="<output form='form2_"+id+"'><div class='figure'><img src='"+updated_blob+"'></div></output>";
+						rowsHTML+="<output form='form2_"+id+"'><div class='figure'><img id='img_form2_"+id+"' src='"+updated_blob+"'></div></output>";
 						rowsHTML+="<input type='file' form='form2_"+id+"'>";
 						rowsHTML+="<br>Size: <input type='number' form='form2_"+id+"' readonly='readonly' class='dblclick_editable' value='"+result.column_size+"'>";
 					rowsHTML+="</td>";

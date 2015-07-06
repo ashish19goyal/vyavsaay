@@ -185,6 +185,7 @@ function form2_update_item(form)
 			var name=form.elements[1].value;
 			var detail=form.elements[2].value;
 			var url=form.elements[3].value;
+			var picture=form.elements[5].value;
 			var column_size=form.elements[6].value;
 			var data_id=form.elements[7].value;
 			var blob=$("#img_form2_"+data_id).attr('src');
@@ -197,22 +198,28 @@ function form2_update_item(form)
 						"<item_type>"+type+"</item_type>" +
 						"<item_detail>"+detail+"</item_detail>" +
 						"<nl_id>"+nl_id+"</nl_id>" +
-						"<url>"+url+"</url>"+
-						"<data_blob>"+blob+"</data_blob>"+
-						"<pic_url>"+blob_name+"</pic_url>"+
-						"<column_size>"+column_size+"</column_size>"+
+						"<url>"+url+"</url>";
+					if(picture!="")
+					{							
+						data_xml+="<data_blob>"+blob+"</data_blob>"+
+								"<pic_url>"+blob_name+"</pic_url>";
+					}
+					data_xml+="<column_size>"+column_size+"</column_size>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</newsletter_items>";			
-			$.ajax(
-			{
-				type: "POST",
-				url: "./ajax/save_image.php",
-				data: 
+			if(picture!="")
+			{			
+				$.ajax(
 				{
-					blob: blob,
-					name:blob_name
-				}
-			});
+					type: "POST",
+					url: "./ajax/save_image.php",
+					data: 
+					{
+						blob: blob,
+						name:blob_name
+					}
+				});
+			}
 		
 			server_update_simple(data_xml);
 			
