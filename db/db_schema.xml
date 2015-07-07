@@ -132,7 +132,11 @@
 			<supplier index='yes' type="TEXT"></supplier>
 			<status index='yes' type="VARCHAR(25)"></status><!-- cancelled/order placed/draft/partially received/closed -->
 			<order_num index='yes' type="TEXT"></order_num>
+			<priority index='yes' type="TEXT"></priority>
 			<bill_id index='yes' type="BIGINT"></bill_id>
+			<amount index='no' type='DECIMAL(12,2)'></amount>
+			<tax index='no' type='DECIMAL(12,2)'></tax>
+			<total index='no' type='DECIMAL(12,2)'></total>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</purchase_orders>
 	<purchase_order_items>  
@@ -142,6 +146,9 @@
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<make index='yes' type='TEXT'></make>
 			<price index='no' type='DECIMAL(12,2)'></price>
+			<amount index='no' type='DECIMAL(12,2)'></amount>
+			<tax index='no' type='DECIMAL(12,2)'></tax>
+			<total index='no' type='DECIMAL(12,2)'></total>
 			<mrp index='no' type='DECIMAL(12,2)'></mrp>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</purchase_order_items>

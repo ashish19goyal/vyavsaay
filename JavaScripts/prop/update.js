@@ -9421,6 +9421,145 @@ function form177_update_item(form)
 }
 
 /**
+ * @form New Purchase Order
+ * @param button
+ */
+function form178_update_form()
+{
+	if(is_update_access('form178'))
+	{
+		var form=document.getElementById("form178_master");
+		var supplier=form.elements['supplier'].value;
+		var order_date=get_raw_time(form.elements['date'].value);		
+		var order_num=form.elements['order_num'].value;
+		var status=form.elements['status'].value;
+		var data_id=form.elements['order_id'].value;
+		var save_button=form.elements['save'];
+		
+		$('#form178_share').show();
+		$('#form178_share').click(function()
+		{
+			modal101_action('Purchase Order',supplier,'supplier',function (func) 
+			{
+				print_form178(func);
+			});
+		});
+		
+		var amount=0;
+		var tax=0;
+		var total=0;
+		
+		$("[id^='save_form178']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			
+			if(!isNaN(parseFloat(subform.elements[5].value)))
+			{
+				amount+=parseFloat(subform.elements[5].value);
+				tax+=parseFloat(subform.elements[6].value);
+				total+=parseFloat(subform.elements[7].value);
+			}
+		});
+		
+		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+								"<td>Amount:<br>Tax: <br>Total: </td>" +
+								"<td>Rs. "+amount+"<br>" +
+								"Rs. "+tax+"<br> " +
+								"Rs. "+total+"</td>" +
+								"<td></td>" +
+								"</tr>";
+						
+		$('#form178_foot').html(total_row);
+
+		var last_updated=get_my_time();		
+		var data_xml="<purchase_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<order_date>"+order_date+"</order_date>" +
+					"<status>"+status+"</status>" +
+					"<order_num>"+order_num+"</order_num>" +
+					"<amount>"+amount+"</amount>"+
+					"<tax>"+tax+"</tax>"+
+					"<total>"+total+"</total>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</purchase_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>purchase_orders</tablename>" +
+					"<link_to>form179</link_to>" +
+					"<title>Created</title>" +
+					"<notes>Purchase order # "+order_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		$("[id^='save_form178_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Purchase orders
+ * @param button
+ */
+function form179_update_item(form)
+{
+	if(is_update_access('form179'))
+	{
+		var order_num=form.elements[0].value;
+		var order_date=get_raw_time(form.elements[1].value);
+		var priority=form.elements[2].value;
+		var supplier_name=form.elements[3].value;
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<purchase_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier_name+"</supplier>" +
+					"<order_date>"+order_date+"</order_date>" +
+					"<status>"+status+"</status>" +
+					"<order_num>"+order_num+"</order_num>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</purchase_orders>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>purchase_orders</tablename>" +
+					"<link_to>form179</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Purchase Order # "+order_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form Production Steps
  * @formNo 184
  * @param button

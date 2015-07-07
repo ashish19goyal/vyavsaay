@@ -1069,6 +1069,28 @@ function form177_import_template()
 };
 
 /**
+* @form create Purchase Order
+* @formNo 178
+* @table purchase_order_items
+*/
+function form178_import_template()
+{
+	var data_array=['id','order_id','item_name','quantity','make','mrp','price','amount','tax','total'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form manage purchase order
+* @formNo 179
+* @table purchase_orders
+*/
+function form179_import_template()
+{
+	var data_array=['id','order_num','order_date','priority','supplier','status','amount','tax','total'];
+	my_array_to_csv(data_array);
+};
+
+/**
 * @form Production Steps
 * @formNo 184
 */

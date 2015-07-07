@@ -952,7 +952,6 @@ function form24_header_ini()
 	supplier_filter.value='';
 }
 
-
 /**
  * @form Manage Customers
  * @formNo 30
@@ -6333,6 +6332,101 @@ function form177_header_ini()
 		event.preventDefault();
 		form177_ini();
 	});
+};
+
+/**
+ * @form New Purchase Order
+ * @formNo 178
+ */
+function form178_header_ini()
+{
+	var fields=document.getElementById('form178_master');
+	
+	var supplier_filter=fields.elements['supplier'];
+	var order_date=fields.elements['date'];
+	var order_num=fields.elements['order_num'];
+	var status_filter=fields.elements['status'];
+	fields.elements['order_id'].value=get_new_key();
+	var save_button=fields.elements['save'];
+	var priority_filter=fields.elements['priority'];
+	var share_button=fields.elements['share'];	
+
+	status_filter.value='draft';
+	supplier_filter.value='';
+	order_date.value=get_my_date();
+	
+	var po_id=$("#form178_link").attr('data_id');
+	if(po_id==null || po_id=='')
+	{
+		var po_num_data="<user_preferences count='1'>"+
+						"<value></value>"+
+						"<name exact='yes'>po_num</name>"+
+						"</user_preferences>";
+		set_my_value(po_num_data,order_num);
+	}
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form178_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form178_add_item();
+	});
+
+	var supplier_data="<suppliers>" +
+		"<acc_name></acc_name>" +
+		"</suppliers>";	
+	set_my_value_list(supplier_data,supplier_filter);
+	
+	$(supplier_filter).parent().hide();
+	$(share_button).hide();
+	$(order_date).datepicker();
+	
+	set_static_filter('purchase_orders','status',status_filter);
+}
+
+/**
+ * @form Manage Purchase Orders
+ * @formNo 179
+ */
+function form179_header_ini()
+{
+	var filter_fields=document.getElementById('form179_header');
+	var order_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var order_data="<purchase_orders>" +
+			"<order_num></order_num>" +
+			"</purchase_orders>";
+	var name_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form179_ini();
+	});
+
+	set_my_filter(order_data,order_filter);
+	set_my_filter(name_data,name_filter);
+	set_static_filter('purchase_orders','status',status_filter);
 };
 
 /**

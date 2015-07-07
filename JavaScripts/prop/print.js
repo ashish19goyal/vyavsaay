@@ -582,7 +582,7 @@ function print_form24(func)
 	
 	////////////////filling in the content into the containers//////////////////////////
 
-	logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	//business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text;
 	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
 	
@@ -983,7 +983,7 @@ function form153_print_form()
 	
 ////////////////filling in the content into the containers/////////////////////////////////////
 
-	logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text+"<hr style='border: 1px solid #000;'>";
 	business_contact.innerHTML=business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website+"<hr style='border: 1px solid #000;'>";
 	
@@ -1126,7 +1126,7 @@ function form154_print_form()
 	
 	////////////////filling in the content into the containers//////////////////////////
 
-	logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_intro.innerHTML="<hr style='border: 1px solid #000;margin:2px;'>"+business_intro_text;
 	business_contact.innerHTML="<hr style='border: 1px solid #000;margin:2px;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;
 	
@@ -1274,6 +1274,136 @@ function form154_print_form()
 }
 
 /**
+ * @form Create purchase order
+ * @formNo 178
+ */
+function form178_print_form(id)
+{
+	print_form178(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	});	
+}
+
+/**
+ * @form Create purchase order (CPS)
+ * @formNo 178
+ */
+function print_form178(func)
+{
+	var form_id='form178';
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_intro=document.createElement('div');
+		var business_contact=document.createElement('div');
+	
+	var invoice_line=document.createElement('div');
+	
+	var info_section=document.createElement('div');	
+		var customer_info=document.createElement('div');
+		var business_info=document.createElement('div');
+
+	var table_container=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var tandc=document.createElement('div');
+		var signature=document.createElement('div');
+
+////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
+		business_intro.setAttribute('style','width:100%;text-align:center');
+		business_contact.setAttribute('style','width:100%;text-align:center');
+	info_section.setAttribute('style','width:100%;min-height:60px');
+		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:60px;border: 1px solid #00f;border-radius:5px;');
+		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:60px;border: 1px solid #00f;border-radius:5px;');
+	footer.setAttribute('style','width:100%;min-height:100px');
+		tandc.setAttribute('style','float:left;width:60%;min-height:50px');
+		signature.setAttribute('style','float:right;width:30%;min-height:60px');
+
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	var logo_image=get_session_var('logo');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	
+	var master_form=document.getElementById(form_id+'_master');
+	var supplier_name=master_form.elements[1].value;
+	var date=master_form.elements[2].value;	
+	var order_no=master_form.elements[3].value;
+	var vat_no=get_session_var('vat');
+		
+	var tandc_text=get_session_var('po_message');
+	var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
+	
+	////////////////filling in the content into the containers//////////////////////////
+
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	//business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text;
+	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
+	
+	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Purchase Order</b></div><hr style='border: 1px solid #00f;'>";
+	
+	customer_info.innerHTML="<b>To</b><br>"+supplier_name;
+	business_info.innerHTML="VAT #: "+vat_no+"<br>Date: "+date+"<br>Order No: "+order_no;
+	
+	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
+	signature.innerHTML=signature_text;
+
+	var table_element=document.getElementById(form_id+'_body').parentNode;
+	table_copy=table_element.cloneNode(true);
+	
+	table_copy.removeAttribute('class');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form").remove();
+	$(table_copy).find('input,textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+	
+	$(table_copy).find('label').each(function(index)
+	{
+		$(this).replaceWith($(this).html());
+	});
+
+	$(table_copy).find('tbody').attr('style','height:400px;');
+	$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
+	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
+
+	$(table_copy).find("tbody>tr").attr('style','flex:1;height:30px');
+	
+	$(table_copy).find("th:first, td:first").css('width','300px');
+	$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
+	
+	/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	container.appendChild(header);
+	container.appendChild(invoice_line);
+	container.appendChild(info_section);
+	
+	container.appendChild(table_copy);
+	container.appendChild(footer);
+	
+	header.appendChild(logo);
+	//header.appendChild(business_intro);
+	header.appendChild(business_contact);
+	
+	info_section.appendChild(customer_info);
+	info_section.appendChild(business_info);
+	
+	footer.appendChild(tandc);
+	footer.appendChild(signature);
+	
+	func(container);
+	
+}
+/**
  * @form Production Plan
  * @formNo 186
  */
@@ -1339,7 +1469,7 @@ function print_form186(func)
 		
 	////////////////filling in the content into the containers//////////////////////////
 
-	logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_title.innerHTML=bt;
 	plan_line.innerHTML="<div style='float:left;width:50%'>From: "+from_date+"</div><div style='float:right;text-align:right;width:50%'>To: "+to_date+"</div>";	
 	plan_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Plan Name: </b>"+plan_name+"<br>Plan Status: "+plan_status+"<hr style='border: 1px solid #000;margin:2px'>";
@@ -1448,7 +1578,7 @@ function print_form194(func)
 	
 	////////////////filling in the content into the containers//////////////////////////
 
-	logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
 	business_title.innerHTML=bt;
 	invoice_line.innerHTML="<div style='float:left;width:50%'>Invoice #: "+invoice_no+"</div><div style='float:right;text-align:right;width:50%'>Invoice Date: "+date+"</div>";
 	
@@ -1519,9 +1649,9 @@ function print_form194(func)
  * @form LetterHeads
  * @formNo 195
  */
-function form195_print_form()
+function form195_print_form(id)
 {
-	print_form195(function(container)
+	print_form195(id,function(container)
 	{
 		$.print(container);
 		container.innerHTML="";	
@@ -1532,7 +1662,7 @@ function form195_print_form()
  * @form Letterheads
  * @formNo 195
  */
-function print_form195(func)
+function print_form195(id,func)
 {
 	var form_id='form195';
 	
@@ -1551,71 +1681,77 @@ function print_form195(func)
 	var content_section=document.createElement('div');
 
 	var footer=document.createElement('div');
-		var signature_info=document.createElement('div');
+		var signature=document.createElement('div');
 		var tandc=document.createElement('div');
 
 	////////////setting styles for containers/////////////////////////
 
-	header.setAttribute('style','width:100%;min-height:100px;');
-		business_title.setAttribute('style','float:right;width:50%;text-align:right;');
-	invoice_line.setAttribute('style','width:100%;min-height:60px;background-color:#bbbbbb;');
-	info_section.setAttribute('style','width:100%;min-height:60px;text-align:left;');
-		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:100%;height:90px;');
-	footer.setAttribute('style','width:100%;min-height:100px');
-		tandc.setAttribute('style','width:100%;min-height:50px;background-color:#bbbbbb;');
-		address.setAttribute('style','width:100%;min-height:50px;text-align:center;');
+	header.setAttribute('style','width:100%;min-height:100px;margin-bottom:50px;');
+		logo.setAttribute('style','float:left;width:48%;');
+		business_details.setAttribute('style','float:right;width:50%;text-align:right;');
+	top_section.setAttribute('style','width:100%;min-height:60px;');
+		date_info.setAttribute('style','float:right;width:100%;text-align:right;margin:5px;');
+		subject_info.setAttribute('style','float:left;width:90%;text-align:left;margin:5px;');
+		to_info.setAttribute('style','float:left;width:100%;text-align:left;margin:5px;');
+		salutation_info.setAttribute('style','float:left;width:100%;text-align:left;margin:5px;');
+
+	content_section.setAttribute('style','width:100%;min-height:200px;text-align:left;margin:5px;margin-bottom:50px;');
+
+	footer.setAttribute('style','width:100%;min-height:50px;');
+		signature.setAttribute('style','width:100%;min-height:60px;margin:5px;');
+		tandc.setAttribute('style','width:100%;min-height:50px;text-align:left;margin:5px;');
 
 	///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
 	var font_size=get_session_var('print_size');
 	var logo_image=get_session_var('logo');
-	var business_intro_text=get_session_var('business_intro');
-	var business_address=get_session_var('address');
+	//var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address').replace(/\n/g,"<br>");
 	var business_phone=get_session_var('phone');
 	var business_email=get_session_var('email');
 	var business_website=get_session_var('website');
 
-	var master_form=document.getElementById(form_id+'_master');
-	var customer_name=master_form.elements[1].value;
-	var customer_address=master_form.elements['customer_address'].value;
-	var date=master_form.elements[4].value;
-	var invoice_no=master_form.elements[3].value;
-	var service_tax_no=get_session_var('service_tax_no');	
-	var tax_text="Service Tax No: "+service_tax_no;
-
-	var tandc_text=get_session_var('bill_message');
-	
+	var master_form=document.getElementById(form_id+'_'+id);
+	var date=master_form.elements[2].value;
+	var to=master_form.elements[1].value.replace(/\n/g,"<br>");
+	var subject=master_form.elements[4].value.replace(/\n/g,"<br>");
+	var salutation=master_form.elements[5].value.replace(/\n/g,"<br>");
+	var content=master_form.elements[6].value.replace(/\n/g,"<br>");
+	var signature_text=master_form.elements[7].value.replace(/\n/g,"<br>");
+	var tandc_text=master_form.elements[8].value.replace(/\n/g,"<br>");
+		
 	////////////////filling in the content into the containers//////////////////////////
 
-	logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
-	business_title.innerHTML=bt;
-	invoice_line.innerHTML="<div style='float:left;width:50%'>Invoice #: "+invoice_no+"</div><div style='float:right;text-align:right;width:50%'>Invoice Date: "+date+"</div>";
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	business_details.innerHTML=business_address+"<br>Phone: "+business_phone+"<br>Email: "+business_email+"<br>Web: "+business_website;
+	date_info.innerHTML=date;
+	subject_info.innerHTML="Subject: "+subject;
+	to_info.innerHTML=to;
+	salutation_info.innerHTML=salutation;
 	
-	//invoice_line.innerHTML="<hr style='border: 1px solid #000;margin:2px'><div style='text-align:center;'><b style='text-size:1.2em'>"+invoice_text+"</b></div><br>";
+	content_section.innerHTML=content;
 	
-	customer_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Customer</b><br>"+customer_name+"<br>"+customer_address+"<hr style='border: 1px solid #000;margin:2px'>";
-	
+	signature.innerHTML=signature_text;
 	tandc.innerHTML=tandc_text;
-	address.innerHTML=tax_text+" | Address: "+business_address;
-	
 	
 	/////////////placing the containers //////////////////////////////////////////////////////	
 
 	container.appendChild(header);
-	container.appendChild(invoice_line);
-	container.appendChild(info_section);
-
-	container.appendChild(table_copy);
+	container.appendChild(top_section);
+	container.appendChild(content_section);
 	container.appendChild(footer);
 
 	header.appendChild(logo);
-	header.appendChild(business_title);
+	header.appendChild(business_details);
 
-	info_section.appendChild(customer_info);
+	top_section.appendChild(date_info);
+	top_section.appendChild(subject_info);
+	top_section.appendChild(to_info);
+	top_section.appendChild(salutation_info);
 
+	footer.appendChild(signature);
 	footer.appendChild(tandc);
-	footer.appendChild(address);
 
 	func(container);
 }

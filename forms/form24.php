@@ -17,9 +17,9 @@
 		<thead>
 			<tr>
 				<form id='form24_header'></form>
-					<th>Product Name</th>
+					<th>Item</th>
 					<th>Quantity</th>
-					<th>Make</th>
+					<th>Brand</th>
 					<th>Price</th>
 					<th><input type='button' form='form24_header' title='Add item' class='add_icon' onclick='form24_add_item();'></th>
 			</tr>

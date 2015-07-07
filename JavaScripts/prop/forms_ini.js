@@ -1829,7 +1829,6 @@ function form21_ini()
 }
 
 
-
 /**
  * @form New Purchase order
  * @formNo 24
@@ -2548,16 +2547,34 @@ function form40_ini()
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.country+"'>";
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.address_status+"'>";
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.acc_name+"'>";
+						rowsHTML+="<input type='button' class='generic_icon' form='form40_"+result.id+"' name='prioritize' value='Prioritize'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form40_body').append(rowsHTML);
 			var fields=document.getElementById("form40_"+result.id);
+			var prioritize_button=fields.elements['prioritize'];
+						
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
 				form40_update_item(fields);
 			});
+			
+			$(prioritize_button).hide();
+			
+			var supplier_prioritize_ques=document.getElementById('ques2_link');
+			//console.log(supplier_prioritize_ques);
+			if(supplier_prioritize_ques!='null' && supplier_prioritize_ques!=null)
+			{
+				$(prioritize_button).show();
+				$(prioritize_button).on('click',function()
+				{
+					$('#ques2_link').trigger('click');
+						//var ques_form=document.getElementById("ques3_ques_main");
+						//ques_form.elements[3].value=result.order_num;
+				});
+			}
 			
 			var attributes_data="<attributes>"+
 								"<name exact='yes'>"+result.acc_name+"</name>" +
@@ -5713,7 +5730,7 @@ function notifications_ini()
 }
 
 
-function initialize_questionnaires(id,ques_name)
+function initialize_questionnaires(id,ques_name,func)
 {
 	var fields_data="<ques_fields>"+
 					"<id></id>"+
@@ -5878,6 +5895,11 @@ function initialize_questionnaires(id,ques_name)
 				event.preventDefault();
 			});
 		});
+		
+		if(typeof func!='undefined')
+		{
+			func();
+		}
 	});
 }
 
@@ -18182,6 +18204,322 @@ function form177_ini()
 };
 
 /**
+ * @form New Purchase order (CPS)
+ * @formNo 178
+ * @Loading light
+ */
+function form178_ini()
+{
+	var order_id=$("#form178_link").attr('data_id');
+	if(order_id==null)
+		order_id="";	
+	
+	$('#form178_body').html("");
+	$('#form178_foot').html("");
+	
+	if(order_id!="")
+	{
+		show_loader();
+		var order_columns="<purchase_orders>" +
+				"<id>"+order_id+"</id>" +
+				"<order_num></order_num>"+
+				"<supplier></supplier>" +
+				"<order_date></order_date>" +
+				"<priority></priority>" +
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+
+				"<status></status>" +
+				"</purchase_orders>";
+		var order_items_column="<purchase_order_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<quantity></quantity>" +
+				"<order_id exact='yes'>"+order_id+"</order_id>" +
+				"<make></make>" +
+				"<mrp></mrp>"+
+				"<price></price>" +
+				"</purchase_order_items>";
+	
+		////separate fetch function to get order details like customer name, total etc.
+		fetch_requested_data('',order_columns,function(order_results)
+		{
+			var filter_fields=document.getElementById('form178_master');
+			
+			for(var i in order_results)
+			{
+				var supplier_filter=filter_fields.elements['supplier'];
+				supplier_filter.value=order_results[i].supplier;
+				filter_fields.elements['date'].value=get_my_past_date(order_results[i].order_date);
+				filter_fields.elements['order_num'].value=order_results[i].order_num;
+				filter_fields.elements['status'].value=order_results[i].status;
+				filter_fields.elements['order_id'].value=order_id;
+				filter_fields.elements['priority'].value=order_results[i].priority;				
+				var save_button=filter_fields.elements['save'];
+				
+				if(order_results[i].status=='order placed' || order_results[i].status=='closed' || order_results[i].status=='supplier finalized')
+				{					
+					$(supplier_filter).parent().show();
+				}
+				
+				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+							"<td>Amount:<br>Tax: <br>Total: </td>" +
+							"<td>Rs. "+order_results[i].amount+"<br>" +
+							"Rs. "+order_results[i].tax+"<br> " +
+							"Rs. "+order_results[i].total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+					
+				$('#form178_foot').html(total_row);
+
+				$(save_button).off('click');
+				$(save_button).on("click", function(event)
+				{
+					event.preventDefault();
+					form178_update_form();
+				});
+
+				break;
+			}
+		
+			fetch_requested_data('',order_items_column,function(results)
+			{
+				results.forEach(function(result)
+				{
+					var rowsHTML="";
+					var id=result.id;
+					rowsHTML+="<tr>";
+					rowsHTML+="<form id='form178_"+id+"'></form>";
+						rowsHTML+="<td data-th='Item'>";
+							rowsHTML+="<textarea readonly='readonly' required form='form178_"+id+"'>"+result.item_name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' readonly='readonly' required form='form178_"+id+"' value='"+result.quantity+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Make'>";
+							rowsHTML+="<textarea readonly='readonly' required form='form178_"+id+"'>"+result.make+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Price'>";
+							rowsHTML+="MRP: <input type='number' readonly='readonly' required form='form178_"+id+"' value='"+result.mrp+"' step='any'>";
+							rowsHTML+="<br>Price: <input type='number' readonly='readonly' required form='form178_"+id+"' value='"+result.price+"' step='any'>";
+							rowsHTML+="<br>Amount: <input type='number' readonly='readonly' required form='form178_"+id+"' value='"+result.amount+"' step='any'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form178_"+id+"' value='"+result.tax+"'>";
+							rowsHTML+="<input type='hidden' form='form178_"+id+"' value='"+result.total+"'>";
+							rowsHTML+="<input type='hidden' form='form178_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form178_"+id+"' id='save_form178_"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form178_"+id+"' id='delete_form178_"+id+"' onclick='form178_delete_item($(this)); form178_get_totals();'>";
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+				
+					$('#form178_body').append(rowsHTML);
+				});
+				
+				$('#form178_share').show();
+				$('#form178_share').click(function()
+				{
+					modal101_action('Purchase Order',order_results[i].supplier,'supplier',function (func) 
+					{
+						print_form178(func);
+					});
+				});
+				
+				hide_loader();
+			});
+		});
+	}
+}
+
+/**
+ * @form Manage Purchase orders
+ * @formNo 179
+ * @Loading light
+ */
+function form179_ini()
+{
+	show_loader();
+	var fid=$("#form179_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form179_header');
+	
+	//populating form 
+	var fnum=filter_fields.elements[0].value;
+	var fname=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form179_index');
+	var prev_element=document.getElementById('form179_prev');
+	var next_element=document.getElementById('form179_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<purchase_orders count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<order_num>"+fnum+"</order_num>"+
+			"<supplier>"+fname+"</supplier>" +
+			"<order_date></order_date>" +
+			"<priority></priority>" +
+			"<status>"+fstatus+"</status>" +
+			"<bill_id></bill_id>"+
+			"</purchase_orders>";
+
+	$('#form179_body').html("");
+
+	fetch_requested_data('form179',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form179_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Order #'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form179_"+result.id+"' value='"+result.order_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Order Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form179_"+result.id+"' value='"+get_my_past_date(result.order_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Priority'>";
+						rowsHTML+="<textarea readonly='readonly' form='form179_"+result.id+"'>"+result.priority+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Supplier'>";
+					if(result.status=='order placed' || result.status=='closed' || result.status=='supplier finalized')
+					{					
+						rowsHTML+="<input type='text' readonly='readonly' form='form179_"+result.id+"' class='dblclick_editable' value='"+result.supplier+"'>";
+					}
+					else
+					{					
+						rowsHTML+="<input type='text' readonly='readonly' form='form179_"+result.id+"' class='dblclick_editable' value='XXXXXXXX'>";
+					}	
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form179_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form179_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='button' class='edit_icon' form='form179_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form178');\">";
+						rowsHTML+="<input type='submit' class='save_icon' form='form179_"+result.id+"' title='Save order'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form179_"+result.id+"' title='Delete order' onclick='form179_delete_item($(this));'>";
+					if(result.status=='order placed')
+					{
+						rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form179_"+result.id+"' value='Issue GRN'>";
+					}
+					else if(result.status=='closed')
+					{
+						rowsHTML+="<br><input type='button' name='view_bill' class='generic_icon' form='form179_"+result.id+"' value='View Bill'>";
+					}
+					if(result.status=='draft')
+					{
+						rowsHTML+="<br><input type='button' name='prioritize' class='generic_icon' form='form179_"+result.id+"' value='Prioritize'>";
+						rowsHTML+="<br><input type='button' name='assign_supplier' class='generic_icon' form='form179_"+result.id+"' value='Auto Assign'>";
+					}
+					
+					rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+
+			$('#form179_body').append(rowsHTML);
+			var fields=document.getElementById("form179_"+result.id);
+			var supplier_filter=fields.elements[3];
+			var status_filter=fields.elements[4];
+			
+			var supplier_data="<suppliers>"+
+							"<acc_name></acc_name>"+
+							"</suppliers>";
+			set_my_value_list(supplier_data,supplier_filter);
+			
+			set_static_value_list('purchase_orders','status',status_filter);
+			
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form179_update_item(fields);
+			});
+			
+			if(result.status=='order placed')
+			{
+				var issue_button=fields.elements['issue_grn'];
+				$(issue_button).on('click',function()
+				{
+					element_display('','form122');
+					var master_form=document.getElementById('form122_master');
+					master_form.elements['supplier'].value=result.supplier;
+					master_form.elements['po_num'].value=result.order_num;
+					master_form.elements['order_id'].value=result.id;
+					$(master_form.elements['bill_num']).focus();
+				});
+			}
+			else if(result.status=='closed')
+			{
+				var view_button=fields.elements['view_bill'];
+				$(view_button).on('click',function()
+				{
+					element_display(result.bill_id,'form122');
+				});
+			}						
+			
+			if(result.status=='draft')
+			{
+				var prioritize_button=fields.elements['prioritize'];
+				var assign_supplier_button=fields.elements['assign_supplier'];
+								
+				$(prioritize_button).on('click',function()
+				{
+					$('#ques3_link').trigger('click');
+					//var ques_form=document.getElementById("ques3_ques_main");
+					//ques_form.elements[3].value=result.order_num;
+				});
+				$(assign_supplier_button).on('click',function()
+				{
+					//form178_assign_supplier(result.id);
+					status_filter.value='supplier finalized';
+					supplier_filter.value='supplier a ()';
+					$(assign_supplier_button).hide();
+					$(prioritize_button).hide();					
+				});
+			}						
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'purchase_orders');
+		});
+		hide_loader();
+	});
+};
+
+/**
  * @form Production Steps
  * @formNo 184
  * @Loading light
@@ -19858,7 +20196,7 @@ function form195_ini()
 						rowsHTML+="<input type='hidden' form='form195_"+result.id+"' value='"+result.footer+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form195_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form195_"+result.id+"' title='Delete' onclick='form195_delete_item($(this))'>";
-						rowsHTML+="<input type='button' class='print_icon' form='form195_"+result.id+"' title='Print' onclick='form195_print_form($(this))'>";
+						rowsHTML+="<input type='button' class='print_icon' form='form195_"+result.id+"' title='Print' onclick=\"form195_print_form('"+result.id+"')\">";
 						rowsHTML+="<input type='button' class='share_icon' form='form195_"+result.id+"' title='Send as mail'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
@@ -19867,12 +20205,12 @@ function form195_ini()
 
 			var fields=document.getElementById("form195_"+result.id);
 			var share_button=fields.elements[12];
-			
+
 			$(share_button).click(function()
 			{
 				modal101_action(result.name,'','customer',function (func) 
 				{
-					print_form195(func);
+					print_form195(result.id,func);
 				});
 			});
 

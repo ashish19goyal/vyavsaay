@@ -5608,7 +5608,12 @@ function modal101_action(doc_type,person,person_type,func)
 						"</staff>";
 			}
 			
-			set_my_value_list(person_xml,person_filter);
+			person_filter.removeAttribute('readonly');
+			
+			set_my_value_list_func(person_xml,person_filter,function () 
+			{
+				$(person_filter).focus();
+			});
 			
 			$(person_filter).on('blur',function () 
 			{
@@ -5638,10 +5643,9 @@ function modal101_action(doc_type,person,person_type,func)
 				{
 					form.elements[2].value=emails[0].email;
 					form.elements[4].value=emails[0].name;
-		
-					hide_loader();			
 				});
 			});
+			hide_loader();
 		}	
 		
 		$(form).off("submit");

@@ -1843,7 +1843,6 @@ function form24_create_form()
 }
 
 
-
 /**
  * @form Store Placement
  * @param button
@@ -12915,6 +12914,220 @@ function form177_create_item(form)
 			event.preventDefault();
 			form177_update_item(form);
 		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form New Purchase Order (CPS)
+ * @param button
+ */
+function form178_create_item(form)
+{
+	if(is_create_access('form178'))
+	{
+		var order_id=document.getElementById("form178_master").elements['order_id'].value;
+		
+		var name=form.elements[0].value;
+		var quantity=form.elements[1].value;
+		var make=form.elements[2].value;
+		var mrp=form.elements[3].value;
+		var price=form.elements[4].value;
+		var amount=form.elements[5].value;
+		var tax=form.elements[6].value;
+		var total=form.elements[7].value;
+		var data_id=form.elements[8].value;
+		var save_button=form.elements[9];
+		var del_button=form.elements[10];
+		var last_updated=get_my_time();
+		var data_xml="<purchase_order_items>" +
+				"<id>"+data_id+"</id>" +
+				"<item_name>"+name+"</item_name>" +
+				"<quantity>"+quantity+"</quantity>" +
+				"<order_id>"+order_id+"</order_id>" +
+				"<make>"+make+"</make>" +
+				"<mrp>"+mrp+"</mrp>" +
+				"<price>"+price+"</price>" +
+				"<amount>"+amount+"</amount>"+
+				"<tax>"+tax+"</tax>"+
+				"<total>"+total+"</total>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</purchase_order_items>";	
+	
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}
+		
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form178_delete_item(del_button);
+		});
+		
+		$(save_button).off('click');
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+function form178_get_totals()
+{
+	var amount=0;
+	var tax=0;
+	var total=0;
+	
+	$("[id^='save_form178']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		
+		if(!isNaN(parseFloat(subform.elements[5].value)))
+		{
+			amount+=parseFloat(subform.elements[5].value);
+			tax+=parseFloat(subform.elements[6].value);
+			total+=parseFloat(subform.elements[7].value);
+		}
+	});
+	
+	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+							"<td>Amount:<br>Tax: <br>Total: </td>" +
+							"<td>Rs. "+amount+"<br>" +
+							"Rs. "+tax+"<br> " +
+							"Rs. "+total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+					
+	$('#form178_foot').html(total_row);
+}
+
+/**
+ * @form New Purchase Order (CPS)
+ * @param button
+ */
+function form178_create_form()
+{
+	if(is_create_access('form178'))
+	{
+		var form=document.getElementById("form178_master");
+		var supplier=form.elements['supplier'].value;
+		var order_date=get_raw_time(form.elements['date'].value);		
+		var order_num=form.elements['order_num'].value;
+		var status=form.elements['status'].value;
+		var data_id=form.elements['order_id'].value;
+		var save_button=form.elements['save'];
+		
+		$('#form178_share').show();
+		$('#form178_share').click(function()
+		{
+			modal101_action('Purchase Order',supplier,'supplier',function (func) 
+			{
+				print_form178(func);
+			});
+		});
+		
+		var amount=0;
+		var tax=0;
+		var total=0;
+		
+		$("[id^='save_form178']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			
+			if(!isNaN(parseFloat(subform.elements[5].value)))
+			{
+				amount+=parseFloat(subform.elements[5].value);
+				tax+=parseFloat(subform.elements[6].value);
+				total+=parseFloat(subform.elements[7].value);
+			}
+		});
+		
+		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+								"<td>Amount:<br>Tax: <br>Total: </td>" +
+								"<td>Rs. "+amount+"<br>" +
+								"Rs. "+tax+"<br> " +
+								"Rs. "+total+"</td>" +
+								"<td></td>" +
+								"</tr>";
+						
+		$('#form178_foot').html(total_row);
+
+		var last_updated=get_my_time();		
+		var data_xml="<purchase_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<order_date>"+order_date+"</order_date>" +
+					"<status>"+status+"</status>" +
+					"<priority>0</priority>" +
+					"<order_num>"+order_num+"</order_num>" +
+					"<amount>"+amount+"</amount>"+
+					"<tax>"+tax+"</tax>"+
+					"<total>"+total+"</total>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</purchase_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>purchase_orders</tablename>" +
+					"<link_to>form179</link_to>" +
+					"<title>Created</title>" +
+					"<notes>Purchase order # "+order_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}
+
+		var num_data="<user_preferences>"+
+						"<id></id>"+						
+						"<name exact='yes'>po_num</name>"+												
+						"</user_preferences>";
+		get_single_column_data(function (bill_num_ids)
+		{
+			if(bill_num_ids.length>0)
+			{
+				var num_xml="<user_preferences>"+
+							"<id>"+bill_num_ids[0]+"</id>"+
+							"<value>"+(parseInt(order_num)+1)+"</value>"+
+							"</user_preferences>";
+				if(is_online())
+				{
+					server_update_simple(num_xml);
+				}
+				else 
+				{
+					local_update_simple(num_xml);
+				}
+			}
+		},num_data);
+			
+		$(save_button).off('click');
+		$(save_button).on('click',function(event)
+		{
+			event.preventDefault();
+			form178_update_form();
+		});
+		
+		$("[id^='save_form178_']").click();
 	}
 	else
 	{

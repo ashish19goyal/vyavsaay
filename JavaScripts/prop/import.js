@@ -5726,6 +5726,119 @@ function form177_import(data_array,import_type)
 };
 
 /**
+* @form Create purchase orders (CPS)
+* @formNo 178
+*/
+function form178_import(data_array,import_type)
+{
+	var data_xml="<purchase_order_items>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</purchase_order_items><separator></separator><purchase_order_items>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<item_name>"+row.item_name+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<make>"+row.make+"</make>" +
+				"<order_id>"+row.order_id+"</order_id>" +
+				"<price>"+row.price+"</price>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<total>"+row.total+"</total>" +
+				"<mrp>"+row.mrp+"</mrp>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+
+	data_xml+="<purchase_order_items>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Manage Purchase orders
+* @formNo 179
+*/
+function form179_import(data_array,import_type)
+{
+	var data_xml="<purchase_orders>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</purchase_orders><separator></separator><purchase_orders>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<supplier>"+row.supplier+"</supplier>" +
+				"<order_date>"+get_raw_time(row.order_date)+"</order_date>" +
+				"<status>"+row.status+"</status>" +
+				"<priority>"+row.priority+"</priority>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<total>"+row.total+"</total>" +
+				"<order_num>"+row.order_num+"</order_num>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</purchase_orders>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
 * @form Production Steps
 * @formNo 184
 */

@@ -904,6 +904,10 @@ function import_data(form_name)
 		break;
 		case 'form177':modal23_action(form177_import_template,form177_import);
 		break;
+		case 'form178':modal23_action(form178_import_template,form178_import);
+		break;
+		case 'form179':modal23_action(form179_import_template,form179_import);
+		break;
 		case 'form184':modal23_action(form184_import_template,form184_import);
 		break;
 		case 'form187':modal23_action(form187_import_template,form187_import);

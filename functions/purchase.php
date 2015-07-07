@@ -1,6 +1,8 @@
 <div id='purchase_main' class='vy_tabs function_main'>
 	
 		<ul>
+			<li><a id='form178_link' href='#form178' onclick='form178_header_ini(); form178_ini();' data-i18n='form.create_purchase_order'></a></li>
+			<li><a id='form179_link' href='#form179' onclick='form179_header_ini(); form179_ini();' data-i18n='form.manage_purchase_orders'></a></li>
 			<li><a id='form21_link' href='#form21' onclick='form21_header_ini(); form21_ini();' data-i18n='form.enter_supplier_bill'></a></li>
 			<li><a id='form136_link' href='#form136' onclick='form136_header_ini(); form136_ini();' data-i18n='form.enter_supplier_bill'></a></li>
 			<li><a id='form122_link' href='#form122' onclick='form122_header_ini(); form122_ini();' data-i18n='form.enter_supplier_bill'></a></li>
@@ -9,8 +11,6 @@
 			<li><a id='form53_link' href='#form53' onclick='form53_header_ini(); form53_ini();' data-i18n='form.manage_supplier_bills'></a></li>
 			<li><a id='form24_link' href='#form24' onclick='form24_header_ini(); form24_ini();' data-i18n='form.create_purchase_order'></a></li>
 			<li><a id='form43_link' href='#form43' onclick='form43_header_ini(); form43_ini();' data-i18n='form.manage_purchase_orders'></a></li>
-			<li><a id='form178_link' href='#form178' onclick='form178_header_ini(); form178_ini();' data-i18n='form.create_purchase_order'></a></li>
-			<li><a id='form179_link' href='#form179' onclick='form179_header_ini(); form179_ini();' data-i18n='form.manage_purchase_order'></a></li>
 			<li><a id='form159_link' href='#form159' onclick='form159_header_ini(); form159_ini();' data-i18n='form.issue_grn'></a></li>
 			<li><a id='form160_link' href='#form160' onclick='form160_header_ini(); form160_ini();' data-i18n='form.manage_supplier_bills'></a></li>
 			<li><a id='form17_link' href='#form17' onclick='form17_header_ini(); form17_ini();' data-i18n='form.manage_returns'></a></li>
@@ -21,6 +21,8 @@
 		</ul>
 	<?php 
 
+			include "forms/form178.php";
+			include "forms/form179.php";
 			include "forms/form21.php";
 			include "forms/form136.php";
 			include "forms/form122.php";
@@ -29,8 +31,6 @@
 			include "forms/form53.php";
 			include "forms/form24.php";
 			include "forms/form43.php";
-			include "forms/form178.php";
-			include "forms/form179.php";
 			include "forms/form159.php";
 			include "forms/form160.php";
 			include "forms/form17.php";
