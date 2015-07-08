@@ -998,14 +998,26 @@ function form153_print_form()
 	
 		
 	var table_element=document.getElementById('form153_body').parentNode;
+	
+	$(table_element).find('textarea').each(function(index)
+	{
+		$(this).attr('value',$(this).val());
+	});
+
+	
 	table_copy=table_element.cloneNode(true);
 	
 	table_copy.removeAttribute('class');
 	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,v1").remove();
-	$(table_copy).find('input,textarea').each(function(index)
+	$(table_copy).find('input').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
 	});
+	$(table_copy).find('textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).attr('value'));
+	});
+		
 	$(table_copy).find('label').each(function(index)
 	{
 		$(this).replaceWith($(this).html());
@@ -1147,6 +1159,11 @@ function form154_print_form()
 	signature.innerHTML=signature_text;
 
 	var table_element=document.getElementById('form154_body').parentNode;
+	$(table_element).find('textarea').each(function(index)
+	{
+		$(this).attr('value',$(this).val());
+	});
+
 	table_copy=table_element.cloneNode(true);
 	
 	table_copy.removeAttribute('class');
@@ -1161,11 +1178,16 @@ function form154_print_form()
 	}
 
 	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh,v1").remove();
-	$(table_copy).find('input,textarea').each(function(index)
+	
+	$(table_copy).find('input').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
 	});
-	
+	$(table_copy).find('textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).attr('value'));
+	});
+
 	$(table_copy).find('label').each(function(index)
 	{
 		$(this).replaceWith($(this).html());
@@ -1227,7 +1249,7 @@ function form154_print_form()
 	$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
-	$(table_copy).find("tbody>tr").attr('style','flex:1;height:30px');
+	$(table_copy).find("tbody>tr").attr('style','flex:1;height:20px');
 	
 	if(hiring)
 	{
