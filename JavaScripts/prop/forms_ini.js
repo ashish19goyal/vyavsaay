@@ -8561,7 +8561,7 @@ function form101_ini()
 								if(result.status=='active')
 								{
 									rowsHTML+="<br><input type='button' class='generic_icon' form='form101_"+result.id+"' value='Budget' onclick=\"element_display('"+result.id+"','form144',['form137']);\">";
-									rowsHTML+="<br><input type='button' class='generic_icon' form='form101_"+result.id+"' value='Schedule' onclick=\"element_display('"+result.id+"','form135');\">";
+									rowsHTML+="<br><input type='button' class='generic_icon' form='form101_"+result.id+"' name='schedule' value='Schedule' onclick=\"element_display('"+result.id+"','form135');\">";
 								}
 							rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
@@ -8570,6 +8570,13 @@ function form101_ini()
 					
 					var fields=document.getElementById("form101_"+result.id);
 					var status_filter=fields.elements[3];
+					var schedule_button=fields.elements['schedule'];					
+					
+					if(!is_form_access('form135'))
+					{
+						$(schedule_button).hide();
+					}
+					
 					set_static_value_list('projects','status',status_filter);
 					
 					$(fields).on("submit", function(event)
