@@ -173,10 +173,13 @@ function start_workers()
 
 	deferred_execute(function()
 	{notifications8_add();});
-			
+
+	deferred_execute(function()
+	{notifications9_add();});
+
 	deferred_execute(function()
 	{sale_leads_add();});
-	
+
 	deferred_execute(function()
 	{generate_attendance_records();});
 	

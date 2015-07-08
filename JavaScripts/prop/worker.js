@@ -707,6 +707,67 @@ function notifications8_add()
 	setTimeout(notifications8_add,get_worker_repeat());
 }
 
+/**
+ * Overdue payments
+ */
+function notifications9_add()
+{
+	var last_updated=get_my_time();
+
+	////////overdue payments/////////////
+	var expense_data="<expenses>" +
+			"<id></id>" +
+			"<person></person>" +
+			"<amount></amount>" +
+			"<detail></detail>" +
+			"<expense_date></expense_date>" +
+			"<status></status>" +
+			"<last_updated lowerbound='yes'>"+(parseFloat(get_my_time())-86400000)+"</last_updated>"+
+			"</expenses>";
+	fetch_requested_data('',expense_data,function(expenses)
+	{
+		//console.log(expenses);
+		var expense_xml="<notifications>";
+		var counter=1;
+		var id=parseFloat(get_new_key());
+		expenses.forEach(function(expense)
+		{
+			if((counter%500)===0)
+			{
+				expense_xml+="</notifications><separator></separator><notifications>";
+			}
+			counter+=1;
+			var notes="Expense of Rs. "+expense.amount+" from "+
+					expense.person+" was "+expense.status;
+			
+			expense_xml+="<row>" +
+					"<id>"+(id+counter)+"</id>" +
+					"<t_generated>"+get_my_time()+"</t_generated>" +
+					"<data_id unique='yes'>"+expense.id+"</data_id>" +
+					"<title>Expense "+expense.status+"</title>" +
+					"<notes>"+notes+"</notes>" +
+					"<link_to>form137</link_to>" +
+					"<status>pending</status>" +
+					"<target_user>"+expense.person+"</target_user>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</row>";
+		});
+		expense_xml+="</notifications>";
+		
+		if(is_online())
+		{
+			server_create_batch_noloader(expense_xml);
+		}
+		else
+		{
+			local_create_batch_noloader(expense_xml);
+		}
+	});
+	//////////overdue payments end//////
+	
+	setTimeout(notifications9_add,get_worker_repeat());
+}
+
 
 /**
  * This function checks for favourable scenarios to generate sale leads in the background
