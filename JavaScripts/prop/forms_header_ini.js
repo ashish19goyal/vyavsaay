@@ -373,7 +373,7 @@ function form10_header_ini()
 	$(bill_date).datepicker();
 	bill_date.value=get_my_date();
 	$(due_date).datepicker();
-	due_date.value=get_my_past_date((get_my_time()+(2*86400000)));
+	due_date.value=get_my_past_date((get_my_time()+(3*86400000)));
 }
 
 
@@ -4248,9 +4248,7 @@ function form124_header_ini()
 {
 	var filter_fields=document.getElementById('form124_header');
 	var id_filter=filter_fields.elements[0];
-	var type_filter=filter_fields.elements[1];
-	var account_filter=filter_fields.elements[2];
-	var pid_filter=filter_fields.elements[3];
+	var account_filter=filter_fields.elements[1];
 	
 	var id_data="<receipts>" +
 			"<receipt_id></receipt_id>" +
@@ -4258,10 +4256,7 @@ function form124_header_ini()
 	var account_data="<accounts>" +
 			"<acc_name></acc_name>" +
 			"</accounts>";
-	var pid_data="<receipts>" +
-			"<payment_id></payment_id>" +
-			"</receipts>";
-
+	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
@@ -4270,9 +4265,7 @@ function form124_header_ini()
 	});
 
 	set_my_filter(id_data,id_filter);
-	set_my_filter(pid_data,pid_filter);
 	set_my_filter(account_data,account_filter);
-	set_static_filter('receipts','type',type_filter);
 };
 
 /**

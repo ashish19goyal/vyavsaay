@@ -934,3 +934,15 @@ function revert_htmlentities(str)
 {
     return String(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
 }
+
+function delete_simple_func(delete_mapping,func)
+{
+	if(is_online())
+	{
+		server_delete_simple_func(delete_mapping,func);
+	}
+	else
+	{
+		local_delete_simple_func(delete_mapping,func);
+	}
+}

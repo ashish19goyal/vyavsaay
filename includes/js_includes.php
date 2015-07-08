@@ -37,6 +37,7 @@
 <script src='./JavaScripts/prop/modal_action.js'></script>
 <script src='./JavaScripts/prop/my_chart.js'></script>
 <script src='./JavaScripts/prop/print.js'></script>
+<script src='./JavaScripts/prop/questionnaire.js'></script>
 <script src='./JavaScripts/prop/reports_ini.js'></script>
 <script src='./JavaScripts/prop/reports_header_ini.js'></script>
 <script src='./JavaScripts/prop/responsive_menu.js'></script>

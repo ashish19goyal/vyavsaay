@@ -5,7 +5,7 @@
 				<form id='form179_header'></form>
 					<th>Order #<img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form179_header'></th>
 					<th>Order Date</th>
-					<th>Priority</th>
+					<th>Score</th>
 					<th>Supplier <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form179_header'></th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form179_header'></th>
 					<th><input type='button' form='form179_header' value='EXPORT' class='export_icon'>

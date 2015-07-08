@@ -3913,7 +3913,7 @@ function report58_ini()
 	
 	fetch_requested_data('report58',payments_data,function(payments)
 	{	
-		var receipts_data="<receipts>"+
+		var receipts_data="<receipts_payment_mapping>"+
 							"<id></id>"+
 							"<receipt_id></receipt_id>"+
 							"<payment_id></payment_id>"+
@@ -3921,12 +3921,11 @@ function report58_ini()
 							"<amount></amount>"+
 							"<date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</date>" +
 							"<acc_name exact='yes'>"+account+"</acc_name>"+							
-							"<date></date>"+
-							"</receipts>";
+							"</receipts_payment_mapping>";
 //							"<date lowerbound='yes'>"+get_raw_time(start_date)+"</date>" +
 
 		fetch_requested_data('report58',receipts_data,function(receipts)
-		{	
+		{
 			for(var k in receipts)
 			{
 				var receipt_to_pay=new Object();
@@ -3950,7 +3949,6 @@ function report58_ini()
 						payments[j].paid_amount=parseFloat(payments[j].paid_amount)-parseFloat(receipt_to_pay.total_amount);
 					}
 				}				
-				
 				payments.push(receipt_to_pay);
 			}
 			
@@ -4118,7 +4116,7 @@ function report60_ini()
 	
 	fetch_requested_data('report60',payments_data,function(payments)
 	{	
-		var receipts_data="<receipts>"+
+		var receipts_data="<receipts_payment_mapping>"+
 							"<id></id>"+
 							"<receipt_id></receipt_id>"+
 							"<payment_id></payment_id>"+
@@ -4126,9 +4124,8 @@ function report60_ini()
 							"<amount></amount>"+
 							"<date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</date>" +
 							"<acc_name></acc_name>"+							
-							"<date></date>"+
-							"</receipts>";
-
+							"</receipts_payment_mapping>";
+							
 		fetch_requested_data('report60',receipts_data,function(receipts)
 		{	
 			for(var k in receipts)
@@ -4989,8 +4986,15 @@ function report72_ini()
 	
 	show_loader();
 	$('#report72_body').html('');	
-			
-	var orders_data="<sale_orders>" +
+	
+		////indexing///
+	var index_element=document.getElementById('report72_index');
+	var prev_element=document.getElementById('report72_prev');
+	var next_element=document.getElementById('report72_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var orders_data="<sale_orders count='25' start_index='"+start_index+"'>" +
 		"<id></id>"+
 		"<customer_name>"+customer+"</customer_name>" +
 		"<address>"+address+"</address>"+
@@ -5023,20 +5027,27 @@ function report72_ini()
 			}
 			else if(item.status=='picked')
 			{
+				assignee="Pickup by: "+item.pickup_assignee;
 				button_value="Process";
 			}
 			else if(item.status=='processing')
 			{
+				assignee="Pickup by: "+item.pickup_assignee;
 				button_value="Processed";
 			}
 			else if(item.status=='ready for delivery')
 			{
+				assignee="Pickup by: "+item.pickup_assignee;
 				button_value="Deliver";
 			}
 			else if(item.status=='out for delivery')
 			{
-				assignee="Delivery by: "+item.delivery_assignee;
+				assignee="Pickup by: "+item.pickup_assignee+"<br>Delivery by: "+item.delivery_assignee;
 				button_value="Delivered";
+			}
+			else if(item.status=='delivered')
+			{
+				assignee="Pickup by: "+item.pickup_assignee+"<br>Delivery by: "+item.delivery_assignee;
 			}
 			
 			var rowsHTML="<tr>";
@@ -5078,6 +5089,31 @@ function report72_ini()
 				});
 			}
 		});
+		
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(items.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
 		hide_loader();
 	});
 	

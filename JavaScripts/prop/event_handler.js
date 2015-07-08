@@ -76,30 +76,6 @@ function hide_progress()
 	progress_value=0;
 }
 
-function add_questionnaires(func)
-{
-	var struct_data="<ques_struct>"+
-					"<id></id>"+
-					"<name></name>"+
-					"<display_name></display_name>"+
-					"<func></func>"+
-					"<status exact='yes'>active</status>"+										
-					"</ques_struct>";
-	fetch_requested_data('',struct_data,function(structs)
-	{
-		structs.forEach(function(struct)
-		{
-			var link="<li><a id='"+struct.name+"_link' href='#"+struct.name+"' onclick=\"initialize_questionnaires('"+struct.id+"','"+struct.name+"')\">"+struct.display_name+"</a></li>";	
-			var content="<div id='"+struct.name+"' class='function_detail'></div>";
-			var func_element=$("#"+struct.func+"_main");
-			//console.log(func_element);			
-			$("#"+struct.func+"_main").append(content);			
-			$("#"+struct.func+"_main").find('ul').first().append(link);
-		});
-		func();
-	});
-}
-
 function add_grid_metrics(func)
 {
 	var grid_xml="<system_grid_metrics>"+

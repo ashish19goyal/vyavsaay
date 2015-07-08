@@ -7003,11 +7003,12 @@ function form142_update_item(form)
 			dynamic_values="vyavsaay"+htmlentities(form.elements[3].value)+"vyavsaay";
 		
 		var order=form.elements[4].value;
+		var weight=form.elements[5].value;
 		var name='field'+order;
 		var required='unchecked';
-		if(form.elements[5].checked)
+		if(form.elements[6].checked)
 			required='checked';
-		var data_id=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 					
 		var data_xml="<ques_fields>" +
@@ -7019,6 +7020,7 @@ function form142_update_item(form)
 				"<fvalues>"+values+"</fvalues>" +
 				"<dynamic_values>"+dynamic_values+"</dynamic_values>"+				
 				"<forder>"+order+"</forder>" +
+				"<weight>"+weight+"</weight>" +
 				"<freq>"+required+"</freq>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</ques_fields>";	
@@ -7030,7 +7032,7 @@ function form142_update_item(form)
 		{
 			local_update_simple(data_xml);
 		}	
-		for(var i=0;i<6;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

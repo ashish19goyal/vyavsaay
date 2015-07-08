@@ -181,6 +181,7 @@ JavaScripts/prop/login_helper.js
 JavaScripts/prop/modal_action.js
 JavaScripts/prop/my_chart.js
 JavaScripts/prop/print.js
+JavaScripts/prop/questionnaire.js
 JavaScripts/prop/reports_header_ini.js
 JavaScripts/prop/reports_ini.js
 JavaScripts/prop/responsive_menu.js

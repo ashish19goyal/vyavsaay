@@ -2511,6 +2511,7 @@ function form40_ini()
 			"<state></state>" +
 			"<country></country>" +
 			"<address_status></address_status>" +
+			"<score></score>"+
 			"<last_updated></last_updated>" +
 			"</suppliers>";
 
@@ -2571,9 +2572,9 @@ function form40_ini()
 				$(prioritize_button).on('click',function()
 				{
 					$('#ques2_link').trigger('click');
-						//var ques_form=document.getElementById("ques3_ques_main");
-						//ques_form.elements[3].value=result.order_num;
 				});
+				var td_elem=document.getElementById('form40_'+result.id+'_details');
+				td_elem.innerHTML="Score: "+result.score+"<br>";
 			}
 			
 			var attributes_data="<attributes>"+
@@ -2590,7 +2591,7 @@ function form40_ini()
 					attribute_content+=attribute.attribute+": "+attribute.value+"<br>";
 				});
 				var td_elem=document.getElementById('form40_'+result.id+'_details');
-				td_elem.innerHTML=attribute_content;
+				$(td_elem).append=attribute_content;
 			});	
 		});
 		
@@ -5729,422 +5730,6 @@ function notifications_ini()
 	});
 }
 
-
-function initialize_questionnaires(id,ques_name,func)
-{
-	var fields_data="<ques_fields>"+
-					"<id></id>"+
-					"<ques_id exact='yes'>"+id+"</ques_id>"+
-					"<name></name>"+
-					"<display_name></display_name>"+
-					"<description></description>"+					
-					"<type></type>"+
-					"<fvalues></fvalues>"+
-					"<dynamic_values></dynamic_values>"+
-					"<fcol></fcol>"+
-					"<forder></forder>"+
-					"<freq></freq>"+
-					"</ques_fields>";
-	fetch_requested_data('',fields_data,function(fields)
-	{
-		///sort the results by forder
-		var content="<form id='"+ques_name+"_ques_header'><fieldset>";
-		content+="<label><b>Questionnaire Id</b><br><input type='text' readonly='readonly'></label><label><b>Submitter</b><br><input type='text' readonly='readonly'></label><label><b>Submission Date</b><br><input type='text' readonly='readonly'></label>";
-		content+="<input type='button' value='Previous Submissions' class='generic_icon' onclick=\"previous_questionnaires('"+id+"','"+ques_name+"',0);\"></fieldset></form>"+
-				"<form class='questionnaire_form' id='"+ques_name+"_ques_main'><fieldset>";
-
-		fields.sort(function(a,b)
-		{
-			if(parseInt(a.forder)>parseInt(b.forder))
-			{	return 1;}
-			else 
-			{	return -1;}
-		});			
-
-		content+="<input type='hidden'>";
-		content+="<input type='hidden'>";
-				
-		var dynamic_fields=[];
-				
-		fields.forEach(function(field)
-		{
-			var required='';
-			if(field.freq=='checked')
-				required='required';			
-			var fcol=":";
-			content+="<br>";
-			var field_desc="";
-			if(field.description!="" && field.description!=null)
-			{
-				field_desc=" ("+field.description+")";
-			}
-
-			switch(field.type)
-			{
-				case 'text':content+="<label>"+field.display_name+field_desc+fcol+" <input id='field"+id+"_"+field.id+"' type='text' "+required+"></label>";
-							break;
-				case 'number':content+="<label>"+field.display_name+field_desc+fcol+" <input id='field"+id+"_"+field.id+"' type='number' step='any' "+required+"></label>";
-							break;
-				case 'value list':content+="<label>"+field.display_name+field_desc+fcol+" <select id='field"+id+"_"+field.id+"' "+required+">";
-								var values_array=field.fvalues.split(";");
-								values_array.forEach(function(fvalue)
-								{
-									content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
-								});
-								content+="</select></label>";
-							break;
-				case 'dynamic value list':content+="<label>"+field.display_name+field_desc+fcol+" <input id='field"+id+"_"+field.id+"' "+required+"></label>";
-								var dynamic_field=new Object();
-								dynamic_field.id=field.id;
-								dynamic_field.dynamic_values=revert_htmlentities(field.dynamic_values).replace(/vyavsaay/g,"");
-								dynamic_fields.push(dynamic_field);
-							break;
-				case 'textarea':content+="<label>"+field.display_name+field_desc+fcol+" <textarea id='field"+id+"_"+field.id+"' "+required+"></textarea></label>";
-							break;
-			}
-			content+="<br>";
-		});
-		content+="<label><input type='submit' value='Submit' class='generic_icon'></label>";
-		content+="</fieldset></form>";
-		$("#"+ques_name).html(content);
-		
-		dynamic_fields.forEach(function (dynamic_field) 
-		{
-			var filter_element=document.getElementById('field'+id+'_'+dynamic_field.id);
-			set_my_value_list(dynamic_field.dynamic_values,filter_element);
-		});
-		//function to submit the questionnaire
-		var ques_form=document.getElementById(ques_name+"_ques_main");
-		var reviewer_filter=ques_form.elements[1];
-		var approver_filter=ques_form.elements[2];
-		
-		
-		var reviewer_data="<ques_struct count='1'>"+
-						"<id>"+id+"</id>"+
-						"<reviewer></reviewer>"+
-						"<approver></approver>"+
-						"</ques_struct>";
-		fetch_requested_data('',reviewer_data,function(people)
-		{
-			if(people.length>0)
-			{
-				reviewer_filter.value=people[0].reviewer;
-				approver_filter.value=people[0].approver;
-			}
-		});		
-		
-		var ques_header=document.getElementById(ques_name+"_ques_header");
-		ques_header.elements[1].value=get_new_key();
-		ques_header.elements[2].value=get_account_name();
-		ques_header.elements[3].value=get_my_date();
-		
-		$(ques_form).off('submit');
-		$(ques_form).on('submit',function(event)
-		{
-			event.preventDefault();
-			
-			var data_id=ques_header.elements[1].value;
-			var submitter=ques_header.elements[2].value;
-			var sub_date=get_raw_time(ques_header.elements[3].value);
-			var reviewer=ques_form.elements[1].value;
-			var approver=ques_form.elements[2].value;
-			var last_updated=get_my_time();
-			
-			var ques_data="<ques_data>"+
-						"<id>"+data_id+"</id>"+
-						"<ques_struct_id>"+id+"</ques_struct_id>"+
-						"<submitter>"+submitter+"</submitter>"+
-						"<reviewer>"+reviewer+"</reviewer>"+
-						"<approver>"+approver+"</approver>"+
-						"<sub_date>"+sub_date+"</sub_date>"+
-						"<status>submitted</status>"+
-						"<last_updated>"+last_updated+"</last_updated>"+
-						"</ques_data>";
-			if(is_online())
-			{
-				server_create_simple(ques_data);
-			}
-			else
-			{
-				local_create_simple(ques_data);
-			}
-			
-			fields.forEach(function(field)
-			{
-				var field_value=document.getElementById("field"+id+"_"+field.id).value;
-				var field_data_id=get_new_key();
-				var field_data="<ques_fields_data>"+
-						"<id>"+field_data_id+"</id>"+
-						"<ques_id>"+data_id+"</ques_id>"+
-						"<field_id>"+field.id+"</field_id>"+
-						"<field_value>"+field_value+"</field_value>"+
-						"<last_updated>"+last_updated+"</last_updated>"+
-						"</ques_fields_data>";
-				if(is_online())
-				{
-					server_create_simple(field_data);
-				}
-				else
-				{
-					local_create_simple(field_data);
-				}				
-			});
-			$(ques_form).off('submit');
-			$(ques_form).on('submit',function(event)
-			{
-				event.preventDefault();
-			});
-		});
-		
-		if(typeof func!='undefined')
-		{
-			func();
-		}
-	});
-}
-
-function previous_questionnaires(id,ques_name,start_index)
-{
-	show_loader();
-	var ques_data="<ques_data count='25' start_index='"+start_index+"'>"+
-					"<id></id>"+
-					"<ques_struct_id exact='yes'>"+id+"</ques_struct_id>"+
-					"<submitter></submitter>"+
-					"<status></status>"+
-					"<sub_date></sub_date>"+
-					"</ques_data>";
-
-	if_data_read_access('ques_data',function(accessible_data)
-	{
-		fetch_requested_data('',ques_data,function(questionnaires)
-		{
-			var next_index=parseInt(start_index)+25;
-			var prev_index=parseInt(start_index)-25;
-			var content="<table class='rwd-table'>"+
-						"<thead><tr>"+
-						"<th>Id</th>"+
-						"<th>Submitter</th>"+
-						"<th>Submission Date</th>"+
-						"<th>Status</th>"+
-						"<th>Action</th>"+
-						"</tr></thead><tbody id='"+ques_name+"_body'></tbody></table>"+
-						"<div class='form_nav'>"+
-						"<img src='./images/previous.png' id='"+ques_name+"_prev' class='prev_icon' onclick=onclick=\"previous_questionnaires('"+id+"','"+ques_name+"',"+prev_index+");\">"+
-						"<img src='./images/next.png' id='"+ques_name+"_next' class='next_icon' onclick=onclick=\"previous_questionnaires('"+id+"','"+ques_name+"',"+next_index+");\">"+
-						"</div>";
-	
-			$("#"+ques_name).html(content);
-			var tbody=document.getElementById(ques_name+'_body');
-			var next_element=document.getElementById(ques_name+'_next');
-			var prev_element=document.getElementById(ques_name+'_prev');
-	
-			if(questionnaires.length<25)
-			{
-				$(next_element).hide();
-			}
-			else
-			{
-				$(next_element).show();
-			}
-			if(start_index<1)
-			{
-				$(prev_element).hide();
-			}
-			else
-			{
-				$(prev_element).show();
-			}
-
-			questionnaires.forEach(function(result)
-			{
-				var read=false;
-				var update=false;
-				var del=false;
-				var access=false;
-				for(var x in accessible_data)
-				{
-					if(accessible_data[x].record_id===result.id || accessible_data[x].record_id=='all')
-					{
-						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || result[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
-						{
-							if(accessible_data[x].access_type=='all')
-							{
-								read=true;
-								update=true;
-								del=true;
-								access=true;
-								break;
-							}
-							else if(accessible_data[x].access_type=='read')
-							{
-								read=true;
-							}
-							else if(accessible_data[x].access_type=='delete')
-							{
-								del=true;
-							}
-							else if(accessible_data[x].access_type=='update')
-							{
-								update=true;
-							}
-						}
-					}
-				}
-				
-				if(read)
-				{
-					var rowsHTML="<tr>";
-						rowsHTML+="<form id='ques_"+result.id+"'></form>";
-							rowsHTML+="<td data-th='Id'>";
-								rowsHTML+="<a onclick=\"filled_questionnaires('"+id+"','"+ques_name+"','"+result.id+"','"+result.submitter+"','"+result.sub_date+"')\">"+result.id+"</a>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Submitter'>";
-								rowsHTML+=result.submitter;
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Submission Date'>";
-								rowsHTML+=get_my_past_date(result.sub_date);
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Status' id='ques_status_"+result.id+"'>";
-								rowsHTML+=result.status;
-							rowsHTML+="</td>";
-							if(update)
-							{
-								rowsHTML+="<td data-th='Action'>";
-								if(result.status=='submitted')								
-									rowsHTML+="<input type='button' class='generic_icon' value='Review' onclick='questionnaire_reviewed("+result.id+");'>";
-								else if(result.status=='reviewed')								
-									rowsHTML+="<input type='button' class='generic_icon' value='Approve' onclick='questionnaire_approved("+result.id+");'>";
-								rowsHTML+="</td>";						
-							}
-					rowsHTML+="</tr>";
-					
-					$(tbody).append(rowsHTML);
-				}
-			});
-
-			hide_loader();
-		});
-	});
-}
-
-function questionnaire_reviewed(id)
-{
-	var last_updated=get_my_time();
-	var status_element=document.getElementById('ques_status_'+id);
-	status_element.innerHTML='reviewed';
-	var ques_xml="<ques_data>"+
-					"<id>"+id+"</id>"+
-					"<status>reviewed</status>"+
-					"<rev_date>"+last_updated+"</rev_date>"+
-					"<last_updated>"+last_updated+"</last_updated>"+
-					"</ques_data>";
-	if(is_online())
-	{
-		server_update_simple(ques_xml);
-	}
-	else
-	{
-		local_update_simple(ques_xml);
-	}		
-}
-
-function questionnaire_approved(id)
-{
-	var last_updated=get_my_time();
-	var status_element=document.getElementById('ques_status_'+id);
-	status_element.innerHTML='approved';
-	var ques_xml="<ques_data>"+
-					"<id>"+id+"</id>"+
-					"<status>approved</status>"+
-					"<rev_date>"+last_updated+"</rev_date>"+
-					"<last_updated>"+last_updated+"</last_updated>"+
-					"</ques_data>";
-	if(is_online())
-	{
-		server_update_simple(ques_xml);
-	}
-	else
-	{
-		local_update_simple(ques_xml);
-	}		
-}
-
-
-function filled_questionnaires(struct_id,ques_name,ques_id,submitter,sub_date)
-{
-	var fields_data="<ques_fields>"+
-					"<id></id>"+
-					"<ques_id exact='yes'>"+struct_id+"</ques_id>"+
-					"<name></name>"+
-					"<display_name></display_name>"+
-					"<description></description>"+					
-					"<type></type>"+
-					"<fvalues></fvalues>"+
-					"<forder></forder>"+
-					"<freq></freq>"+
-					"</ques_fields>";
-	fetch_requested_data('',fields_data,function(fields)
-	{
-		var field_value_data="<ques_fields_data>"+
-							"<id></id>"+
-							"<ques_id exact='yes'>"+ques_id+"</ques_id>"+
-							"<field_id></field_id>"+
-							"<field_value></field_value>"+
-							"</ques_fields_data>";
-
-		fetch_requested_data('',field_value_data,function(field_values)
-		{
-			var content="<form id='"+ques_name+"_ques_header'><fieldset>";
-			content+="<label><b>Questionnaire Id</b><br><input type='text' value='"+ques_id+"' readonly='readonly'></label>"+
-					"<label><b>Submitter</b><br><input type='text' value='"+submitter+"' readonly='readonly'></label>"+
-					"<label><b>Submission Date</b><br><input type='text' value='"+get_my_past_date(sub_date)+"' readonly='readonly'></label>";
-			content+="<input type='button' value='Previous Submissions' class='generic_icon' onclick=\"previous_questionnaires('"+struct_id+"','"+ques_name+"',0);\"></fieldset></form>"+
-					"<form class='questionnaire_form' id='"+ques_name+"_ques_main'><fieldset>";
-	
-			fields.sort(function(a,b)
-			{
-				if(parseInt(a.forder)>parseInt(b.forder))
-				{	return 1;}
-				else 
-				{	return -1;}
-			});
-	
-			fields.forEach(function(field)
-			{
-				var field_value="";
-				for(var i in field_values)
-				{
-					if(field_values[i].field_id==field.id)
-					{
-						field_value=field_values[i].field_value;
-						break;
-					}
-				}
-				var fcol=":";
-				content+="<br>";
-				var field_desc="";
-				if(field.description!="" && field.description!=null)
-				{
-					field_desc=" ("+field.description+")";
-				}
-				
-				switch(field.type)
-				{
-					case 'text':content+="<label>"+field.display_name+field_desc+fcol+" <input value='"+field_value+"' type='text' readonly='readonly'></label>";
-								break;
-					case 'number':content+="<label>"+field.display_name+field_desc+fcol+" <input value='"+field_value+"' type='number' readonly='readonly'></label>";
-								break;
-					case 'value list':content+="<label>"+field.display_name+field_desc+fcol+" <input type='text' value='"+field_value+"' readonly='readonly'></label>";
-								break;
-					case 'textarea':content+="<label>"+field.display_name+field_desc+fcol+" <textarea readonly='readonly'>"+field_value+"</textarea></label>";
-								break;
-				}
-			});
-			content+="</fieldset></form>";
-			$("#"+ques_name).html(content);			
-		});		
-	});
-}
 
 function activities_ini()
 {
@@ -11389,9 +10974,9 @@ function form124_ini()
 	var filter_fields=document.getElementById('form124_header');
 	
 	var rid=filter_fields.elements[0].value;
-	var ftype=filter_fields.elements[1].value;
-	var faccount=filter_fields.elements[2].value;
-	var pid=filter_fields.elements[3].value;
+	//var ftype=filter_fields.elements[1].value;
+	var faccount=filter_fields.elements[1].value;
+	//var pid=filter_fields.elements[3].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form124_index');
@@ -11403,9 +10988,9 @@ function form124_ini()
 	var columns="<receipts count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<receipt_id>"+rid+"</receipt_id>" +
-			"<type>"+ftype+"</type>" +
+			//"<type>"+ftype+"</type>" +
 			"<acc_name>"+faccount+"</acc_name>" +
-			"<payment_id>"+pid+"</payment_id>" +
+			//"<payment_id>"+pid+"</payment_id>" +
 			"<amount></amount>" +
 			"</receipts>";
 
@@ -11421,15 +11006,15 @@ function form124_ini()
 					rowsHTML+="<td data-th='Receipt Id'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form124_"+result.id+"' value='"+result.receipt_id+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Type'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form124_"+result.id+"' value='"+result.type+"'>";
-					rowsHTML+="</td>";
+					//rowsHTML+="<td data-th='Type'>";
+					//	rowsHTML+="<input type='text' readonly='readonly' form='form124_"+result.id+"' value='"+result.type+"'>";
+					//rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Account'>";
 						rowsHTML+="<textarea readonly='readonly' form='form124_"+result.id+"'>"+result.acc_name+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Payment Id'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form124_"+result.id+"' value='"+result.payment_id+"'>";
-					rowsHTML+="</td>";
+					//rowsHTML+="<td data-th='Payment Id'>";
+					//	rowsHTML+="<input type='text' readonly='readonly' form='form124_"+result.id+"' value='"+result.payment_id+"'>";
+					//rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Amount'>";
 						rowsHTML+="<input type='number' readonly='readonly' form='form124_"+result.id+"' value='"+result.amount+"'>";
 						rowsHTML+="<input type='hidden' form='form124_"+result.id+"' value='"+result.id+"'>";
@@ -11463,7 +11048,7 @@ function form124_ini()
 		}
 		/////////////
 		
-		var export_button=filter_fields.elements[6];
+		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -13742,6 +13327,7 @@ function form142_ini()
 				"<dynamic_values></dynamic_values>"+
 				"<fcol></fcol>" +
 				"<forder></forder>" +
+				"<weight></weight>"+
 				"<freq></freq>" +
 				"</ques_fields>";
 	
@@ -13789,10 +13375,11 @@ function form142_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Type'>";
 							rowsHTML+="<input type='text' readonly='readonly' form='form142_"+id+"' value='"+result.type+"'>";
-							rowsHTML+="<br><label>Values: <input type='text' readonly='readonly' form='form142_"+id+"' value='"+values+"'></label>";
+							rowsHTML+="<br><label>Values: <textarea class='dblclick_editable' readonly='readonly' form='form142_"+id+"'>"+values+"</textarea></label>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Order'>";
-							rowsHTML+="<input type='number' readonly='readonly' class='dblclick_editable' form='form142_"+id+"' value='"+result.forder+"'>";
+						rowsHTML+="<td data-th='Details'>";
+							rowsHTML+="Order: <input type='number' readonly='readonly' class='dblclick_editable' form='form142_"+id+"' value='"+result.forder+"'>";
+							rowsHTML+="<br>Weight: <input type='number' readonly='readonly' class='dblclick_editable' form='form142_"+id+"' value='"+result.weight+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Required'>";
 							rowsHTML+="<input type='checkbox' readonly='readonly' form='form142_"+id+"' "+result.freq+">";
@@ -13809,8 +13396,8 @@ function form142_ini()
 					var fields=document.getElementById("form142_"+id);
 					var type_filter=fields.elements[2];
 					var values_filter=fields.elements[3];
-					var save_button=fields.elements[7];
-					var delete_button=fields.elements[8];
+					var save_button=fields.elements[8];
+					var delete_button=fields.elements[9];
 					
 					$(save_button).on('click',function (event) 
 					{
@@ -18382,7 +17969,7 @@ function form179_ini()
 					rowsHTML+="<td data-th='Order Date'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form179_"+result.id+"' value='"+get_my_past_date(result.order_date)+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Priority'>";
+					rowsHTML+="<td data-th='Score'>";
 						rowsHTML+="<textarea readonly='readonly' form='form179_"+result.id+"'>"+result.priority+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Supplier'>";
@@ -18413,7 +18000,7 @@ function form179_ini()
 					}
 					if(result.status=='draft')
 					{
-						rowsHTML+="<br><input type='button' name='prioritize' class='generic_icon' form='form179_"+result.id+"' value='Prioritize'>";
+						rowsHTML+="<br><input type='button' name='prioritize' class='generic_icon' form='form179_"+result.id+"' value='Score'>";
 						rowsHTML+="<br><input type='button' name='assign_supplier' class='generic_icon' form='form179_"+result.id+"' value='Auto Assign'>";
 					}
 					
@@ -18473,9 +18060,10 @@ function form179_ini()
 				});
 				$(assign_supplier_button).on('click',function()
 				{
-					//form178_assign_supplier(result.id);
+					
 					status_filter.value='supplier finalized';
 					supplier_filter.value='supplier a ()';
+					
 					$(assign_supplier_button).hide();
 					$(prioritize_button).hide();					
 				});
@@ -19765,9 +19353,9 @@ function form190_ini()
 				{
 					element_display("",'form10');
 					var form10_master=document.getElementById('form10_master');
-					form10_master.elements[1].value=result.customer_name;
-					form10_master.elements[2].value=result.order_num;
-					form10_master.elements[6].value=result.id;	
+					form10_master.elements['customer'].value=result.customer_name;
+					form10_master.elements['order_num'].value=result.order_num;
+					form10_master.elements['order_id'].value=result.id;	
 				}
 				else
 				{

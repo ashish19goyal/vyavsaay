@@ -7263,10 +7263,11 @@ function form142_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Type'>";
 				rowsHTML+="<input type='text' required form='form142_"+id+"'>";
-				rowsHTML+="<br><label>Values: <textarea type='text' title='Add values list segregated by semicolon' form='form142_"+id+"'></textarea></label>";
+				rowsHTML+="<br><label>Values: <textarea type='text' title='Add list segregated by semicolon and specify numerical values using colon' form='form142_"+id+"'></textarea></label>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Order'>";
-				rowsHTML+="<input type='number' required form='form142_"+id+"'>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="Order: <input type='number' required form='form142_"+id+"'>";
+				rowsHTML+="Weight: <input type='number' step='any' required form='form142_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Required'>";
 				rowsHTML+="<input type='checkbox' form='form142_"+id+"'>";			
@@ -7285,7 +7286,7 @@ function form142_add_item()
 		var name_filter=fields.elements[0];
 		var type_filter=fields.elements[2];
 		var values_filter=fields.elements[3];
-		var save_button=fields.elements[7];
+		var save_button=fields.elements[8];
 
 		$(name_filter).focus();
 		$(values_filter).parent().hide();		
@@ -7315,6 +7316,7 @@ function form142_add_item()
 				$(values_filter).parent().hide();
 			}
 		});		
+		$('textarea').autosize();
 	}
 	else
 	{

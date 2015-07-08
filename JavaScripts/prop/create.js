@@ -10348,6 +10348,7 @@ function form142_create_item(form)
 	if(is_create_access('form142'))
 	{
 		var ques_id=document.getElementById("form142_master").elements['id'].value;
+		var ques_name=document.getElementById("form142_master").elements['name'].value;
 
 		var display_name=form.elements[0].value;
 		var description=form.elements[1].value;
@@ -10360,13 +10361,14 @@ function form142_create_item(form)
 			dynamic_values="vyavsaay"+htmlentities(form.elements[3].value)+"vyavsaay";
 			
 		var order=form.elements[4].value;
-		var name='field'+order;
+		var weight=form.elements[5].value;
+		var name=ques_name+'field'+order;
 		var required='unchecked';
-		if(form.elements[5].checked)
+		if(form.elements[6].checked)
 			required='checked';
-		var data_id=form.elements[6].value;
-		var save_button=form.elements[7];
-		var del_button=form.elements[8];
+		var data_id=form.elements[7].value;
+		var save_button=form.elements[8];
+		var del_button=form.elements[9];
 		var last_updated=get_my_time();
 					
 		var data_xml="<ques_fields>" +
@@ -10379,6 +10381,7 @@ function form142_create_item(form)
 				"<fvalues>"+values+"</fvalues>" +
 				"<dynamic_values>"+dynamic_values+"</dynamic_values>"+				
 				"<forder>"+order+"</forder>" +
+				"<weight>"+weight+"</weight>" +
 				"<freq>"+required+"</freq>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</ques_fields>";	
@@ -10392,7 +10395,7 @@ function form142_create_item(form)
 			local_create_simple(data_xml);
 		}
 				
-		for(var i=0;i<6;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

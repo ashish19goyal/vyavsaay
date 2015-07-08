@@ -987,4 +987,13 @@
 		</form>
 	</div>
 
+	<div id="modal125" title="List of suppliers">
+		<form id='modal125_form' autocomplete="off">
+			<fieldset>
+				<label id='modal125_suppliers'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

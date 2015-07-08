@@ -1207,7 +1207,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--area_utilization--store_areas--</tables>
+			<tables>--area_utilization--store_areas--product_instances--inventory_adjust--bill_items--supplier_bill_items--supplier_return_items--customer_return_items--discarded--unbilled_sale_items--unbilled_purchase_items--store_movement--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -2329,7 +2329,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--area_utilization--store_areas--</tables>
+			<tables>--area_utilization--store_areas--product_instances--inventory_adjust--bill_items--supplier_bill_items--supplier_return_items--customer_return_items--discarded--unbilled_sale_items--unbilled_purchase_items--store_movement--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -4581,7 +4581,7 @@
 		<row>
 			<username>master</username>
 			<element_id>form145</element_id>
-			<element_name>store_placement</element_name>
+			<element_name>store_movement</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
