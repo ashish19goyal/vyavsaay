@@ -8552,7 +8552,7 @@ function form158_update_form()
 			imported='yes';
 			notes='Imported';
 		}
-
+	var amount=0;
 		$("[id^='save_form158']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
