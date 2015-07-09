@@ -5095,7 +5095,7 @@ function form154_delete_item(button)
 	{
 		modal115_action(function()
 		{
-			var bill_id=document.getElementById("form154_master").elements[8].value;
+			var bill_id=document.getElementById("form154_master").elements['bill_id'].value;
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
@@ -5135,7 +5135,7 @@ function form154_delete_service_item(button)
 	{
 		modal115_action(function()
 		{
-			var bill_id=document.getElementById("form154_master").elements[8].value;
+			var bill_id=document.getElementById("form154_master").elements['bill_id'].value;
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
@@ -5175,7 +5175,7 @@ function form154_delete_hiring_item(button)
 	{
 		modal115_action(function()
 		{
-			var bill_id=document.getElementById("form154_master").elements[8].value;
+			var bill_id=document.getElementById("form154_master").elements['bill_id'].value;
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);

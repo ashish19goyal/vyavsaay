@@ -5526,18 +5526,21 @@ function form154_header_ini()
 {
 	var fields=document.getElementById('form154_master');
 	
-	var customers_filter=fields.elements[1];
-	var bill_type=fields.elements[2];
-	var store_filter=fields.elements[3];	
-	var bill_date=fields.elements[4];
-	var narration=fields.elements[5];
+	var customers_filter=fields.elements['customer'];
+	var bill_type=fields.elements['bill_type'];
+	var store_filter=fields.elements['store'];	
+	var bill_date=fields.elements['date'];
+	var narration=fields.elements['narration'];
 	var a1_job=document.getElementById('form154_1job');
-	var bill_num=fields.elements[7];
-	fields.elements[8].value=get_new_key();
-	fields.elements[9].value=fields.elements[8].value;
-	var save_button=fields.elements[10];
-	var cst_filter=fields.elements[13];
-	var tin_filter=fields.elements[14];
+	var bill_num=fields.elements['bill_num'];
+	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['t_id'].value=fields.elements['bill_id'].value;
+	var save_button=fields.elements['save'];
+	var cst_filter=fields.elements['cst'];
+	var tin_filter=fields.elements['tin'];
+	var cform_filter=fields.elements['cform'];
+	
+	fields.elements['cform'].checked=false;
 	
 	narration.value="";
 	$(a1_job).hide();

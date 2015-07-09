@@ -364,6 +364,7 @@
 			<print_1_job index='yes' type="VARCHAR(25)"></print_1_job><!--yes/no-->
 			<notes index='no' type="TEXT"></notes>
 			<status index='no' type="VARCHAR(30)"></status><!--cancelled-->
+			<cform index='no' type="VARCHAR(30)"></cform><!--yes/no-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</bills>
 	<bill_items>

@@ -2,22 +2,23 @@
 	<form id='form154_master' autocomplete="off">
 		<fieldset>
 			<label>Customer <img src='./images/add_image.png' class='add_image' id='form154_add_customer'><br>
-				<input type='text' required></label>
-			<label>Type<br><input type='text' required></label>
+				<input type='text' required name='customer'></label>
+			<label>Type<br><input type='text' name='bill_type' required></label>
 			<label>Store<br><input type='text' name='store'></label>
-			<label>Date<br><input type='text' required></label>
+			<label>Date<br><input type='text' name='date' required></label>
 			<br>
-			<label>Narration<br><textarea style='width:200px;'></textarea></label>
-			<label id='form154_1job'>Print as 1 job <input type='checkbox'></label>
+			<label>Narration<br><textarea style='width:200px;' name='narration'></textarea></label>
+			<label id='form154_1job'>Print as 1 job <input type='checkbox' name='job'></label>
 			<label>Invoice #<br><input type='text' name='bill_num'></label>
 			<label id='form154_customer_info'></label>
+			<label>C-form<input type='checkbox' name='cform'></label>
 			<label>
 				<input type='hidden' name='bill_id'>
-				<input type='hidden' name='transaction'>
+				<input type='hidden' name='t_id'>
 			</label>
 			<br>
-			<label>	<input type='button' title='Save Bill' class='save_icon'></label>
-			<label>	<input type='button' title='Print Bill' class='print_icon' onclick='form154_print_form();'></label>
+			<label>	<input type='button' title='Save Bill' name='save' class='save_icon'></label>
+			<label>	<input type='button' title='Print Bill' class='print_icon' name='print' onclick='form154_print_form();'></label>
 			<label>	<input type='submit' class='submit_hidden'>
 					<input type='hidden' name='cst'>
 					<input type='hidden' name='tin'>

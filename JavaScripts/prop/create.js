@@ -11330,8 +11330,8 @@ function form154_create_product(form)
 {
 	if(is_create_access('form154'))
 	{
-		var storage=document.getElementById("form154_master").elements[3].value;
-		var bill_id=document.getElementById("form154_master").elements[8].value;
+		var storage=document.getElementById("form154_master").elements['store'].value;
+		var bill_id=document.getElementById("form154_master").elements['bill_id'].value;
 		
 		var name=form.elements[0].value;
 		var quantity=form.elements[1].value;
@@ -11400,8 +11400,8 @@ function form154_create_service(form)
 {
 	if(is_create_access('form154'))
 	{
-		var storage=document.getElementById("form154_master").elements[3].value;
-		var bill_id=document.getElementById("form154_master").elements[8].value;
+		var storage=document.getElementById("form154_master").elements['store'].value;
+		var bill_id=document.getElementById("form154_master").elements['bill_id'].value;
 		
 		var name=form.elements[0].value;
 		var quantity=form.elements[1].value;
@@ -11473,8 +11473,8 @@ function form154_create_hiring_item(form)
 {
 	if(is_create_access('form154'))
 	{
-		var storage=document.getElementById("form154_master").elements[3].value;
-		var bill_id=document.getElementById("form154_master").elements[8].value;
+		var storage=document.getElementById("form154_master").elements['store'].value;
+		var bill_id=document.getElementById("form154_master").elements['bill_id'].value;
 		
 		var name=form.elements[0].value;
 		var fresh='no';
@@ -11549,7 +11549,7 @@ function form154_get_totals()
 {
 	var form=document.getElementById("form154_master");
 		
-	var bill_type=form.elements[2].value;
+	var bill_type=form.elements['bill_type'].value;
 		
 	var hiring=false;
 	if(bill_type=='Hiring')
@@ -11656,15 +11656,20 @@ function form154_create_form()
 	{
 		var form=document.getElementById("form154_master");
 		
-		var customer=form.elements[1].value;
-		var bill_type=form.elements[2].value;
-		var storage=form.elements[3].value;		
-		var bill_date=get_raw_time(form.elements[4].value);
-		var narration=form.elements[5].value;		
+		var customer=form.elements['customer'].value;
+		var bill_type=form.elements['bill_type'].value;
+		var storage=form.elements['store'].value;		
+		var bill_date=get_raw_time(form.elements['date'].value);
+		var narration=form.elements['narration'].value;		
 		var print_1_job='no';
-		if(form.elements[6].checked)
+		var cform='no';
+
+		if(form.elements['job'].checked)
 			print_1_job='yes';
-		var bill_num=form.elements[7].value;
+		var bill_num=form.elements['bill_num'].value;
+
+		if(form.elements['cform'].checked)
+			cform='yes';
 		
 		var hiring=false;
 		if(bill_type=='Hiring')
@@ -11721,9 +11726,9 @@ function form154_create_form()
 		var tax=Math.round((tax_rate*((amount-discount)/100)));		
 		var total=Math.round(amount+tax-discount+cartage);
 
-		var data_id=form.elements[8].value;
-		var transaction_id=form.elements[9].value;
-		var save_button=form.elements[10];
+		var data_id=form.elements['bill_id'].value;
+		var transaction_id=form.elements['t_id'].value;
+		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
 		
 		var data_xml="<bills>" +
@@ -11741,6 +11746,7 @@ function form154_create_form()
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<storage>"+storage+"</storage>"+
 					"<print_1_job>"+print_1_job+"</print_1_job>"+
+					"<cform>"+cform+"</cform>"+
 					"<notes>"+narration+"</notes>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bills>";
@@ -11795,9 +11801,9 @@ function form154_create_form()
 			if(bill_num_ids.length>0)
 			{
 				var num_xml="<user_preferences>"+
-								"<id>"+bill_num_ids[0]+"</id>"+
-								"<value>"+(parseInt(bill_num)+1)+"</value>"+
-								"</user_preferences>";
+							"<id>"+bill_num_ids[0]+"</id>"+
+							"<value>"+(parseInt(bill_num)+1)+"</value>"+
+							"</user_preferences>";
 				if(is_online())
 				{
 					server_update_simple(num_xml);

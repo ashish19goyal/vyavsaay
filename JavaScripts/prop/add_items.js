@@ -8225,8 +8225,8 @@ function form153_add_service()
 function form154_add_product()
 {
 	var filter_fields=document.getElementById('form154_master');
-	var bill_type=filter_fields.elements[2].value;
-	var customer_name=filter_fields.elements[1].value;
+	var bill_type=filter_fields.elements['bill_type'].value;
+	var customer_name=filter_fields.elements['customer'].value;
 	
 	var hiring=false;
 	if(bill_type=='Hiring')
@@ -8411,7 +8411,7 @@ function form154_add_product()
 							"</attributes>";
 				get_single_column_data(function(units)
 				{
-					console.log(units);
+					//console.log(units);
 					if(units.length>0)
 						$('#form154_unit_'+id).html(units[0]);
 				},unit_data);			
@@ -8718,8 +8718,8 @@ function form154_add_product()
 function form154_add_service()
 {
 	var filter_fields=document.getElementById('form154_master');
-	var bill_type=filter_fields.elements[2].value;
-	var customer_name=filter_fields.elements[1].value;
+	var bill_type=filter_fields.elements['bill_type'].value;
+	var customer_name=filter_fields.elements['customer'].value;
 	
 	var hiring=false;
 				

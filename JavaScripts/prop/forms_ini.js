@@ -2548,7 +2548,7 @@ function form40_ini()
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.country+"'>";
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.address_status+"'>";
 						rowsHTML+="<input type='hidden' form='form40_"+result.id+"' value='"+result.acc_name+"'>";
-						rowsHTML+="<input type='button' class='generic_icon' form='form40_"+result.id+"' name='prioritize' value='Prioritize'>";
+						rowsHTML+="<input type='button' class='generic_icon' form='form40_"+result.id+"' name='prioritize' value='Score'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -15038,36 +15038,45 @@ function form154_ini()
 
 			for (var i in bill_results)
 			{
-				filter_fields.elements[1].value=bill_results[i].customer_name;
-				filter_fields.elements[2].value=bill_results[i].billing_type;
-				filter_fields.elements[3].value=bill_results[i].storage;
-				filter_fields.elements[4].value=get_my_past_date(bill_results[i].bill_date);
-				filter_fields.elements[5].value=bill_results[i].notes;
+				filter_fields.elements['customer'].value=bill_results[i].customer_name;
+				filter_fields.elements['bill_type'].value=bill_results[i].billing_type;
+				filter_fields.elements['store'].value=bill_results[i].storage;
+				filter_fields.elements['date'].value=get_my_past_date(bill_results[i].bill_date);
+				filter_fields.elements['narration'].value=bill_results[i].notes;
 				
 				if(bill_results[i].print_1_job=='yes')
 				{
-					filter_fields.elements[6].checked=true;
+					filter_fields.elements['job'].checked=true;
 				}			
 				else 
 				{
-					filter_fields.elements[6].checked=false;
+					filter_fields.elements['job'].checked=false;
 				}
 
-				filter_fields.elements[7].value=bill_results[i].bill_num;
-				filter_fields.elements[8].value=bill_id;				
-				filter_fields.elements[9].value=bill_results[i].transaction_id;
-				var save_button=filter_fields.elements[10];
-				filter_fields.elements[2].setAttribute('readonly','readonly');
-				filter_fields.elements[3].setAttribute('readonly','readonly');
-				var cst_filter=filter_fields.elements[13];
-				var tin_filter=filter_fields.elements[14];
+				if(bill_results[i].cform=='yes')
+				{
+					filter_fields.elements['cform'].checked=true;
+				}			
+				else 
+				{
+					filter_fields.elements['cform'].checked=false;
+				}
+				
+				filter_fields.elements['bill_num'].value=bill_results[i].bill_num;
+				filter_fields.elements['bill_id'].value=bill_id;				
+				filter_fields.elements['t_id'].value=bill_results[i].transaction_id;
+				var save_button=filter_fields.elements['save'];
+				filter_fields.elements['bill_type'].setAttribute('readonly','readonly');
+				filter_fields.elements['store'].setAttribute('readonly','readonly');
+				var cst_filter=filter_fields.elements['cst'];
+				var tin_filter=filter_fields.elements['tin'];
 				
 				if(filter_fields.elements[2].value=='Hiring')
 				{
 					hiring=true;
 				}
 				
-				if(filter_fields.elements[2].value=='Retail' || filter_fields.elements[2].value=='Tax')
+				if(filter_fields.elements['bill_type'].value=='Retail' || filter_fields.elements['bill_type'].value=='Tax')
 				{
 					var cst_data="<attributes>"+
 								"<value></value>"+
@@ -15151,7 +15160,7 @@ function form154_ini()
 							"</tr>";
 					$(a1_job).show();				
 				}
-				else if(filter_fields.elements[2].value=='Retail' || filter_fields.elements[2].value=='Tax')
+				else if(filter_fields.elements['bill_type'].value=='Retail' || filter_fields.elements['bill_type'].value=='Tax')
 				{
 					headHTML="<tr><form id='form154_header'></form>"+
 							"<th style='width:50px'>S.No.</th>"+
