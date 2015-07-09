@@ -1,0 +1,68 @@
+<!Doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Feedback Form</title>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+<script>
+	function set_id()
+	{
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+				vars[key] = value;
+		});
+		var form=document.getElementById('feedback_form');
+		form.elements['id'].value=vars['i'];
+		form.elements['domain'].value=vars['d'];
+	};
+	
+	function myFunction()
+	{
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function()
+	    {
+	     	if(xmlhttp.readyState==4 && xmlhttp.status==200)
+		   	{
+		   		console.log(xmlhttp.responseText);
+		     	//$("#myDiv").hide();
+		        document.getElementById("myDiv").setAttribute('style','display:none;');	                 
+	            document.getElementById("thankYou").innerHTML="Thank you for your time";
+		   	}
+		}
+		var form=document.getElementById('feedback_form');
+		var id_data=form.elements['id'].value;
+		var rating_data=form.elements['wash'].value;
+		var comment_data=form.elements['complaint'].value;
+		var domain=form.elements['domain'].value;
+		
+		console.log(domain);
+		
+		xmlhttp.open("POST","../ajax/feedback.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send("id="+id_data+"&rating="+rating_data+"&comment="+comment_data+"&domain="+domain);
+		//xmlhttp.send("domain=laundry");
+	}
+</script>
+</head>
+<body onload='set_id();'>
+<div id="myDiv">
+<h1>Kindly take two minutes to give us some feedback</h1>
+<form id='feedback_form'>
+<input type="hidden" name="id">
+<input type="hidden" name="domain">
+<p>Please rate our services (5 highest):</p>
+   <input type="radio" name="wash" value="1">1</input>
+   <input type="radio" name="wash" value="2">2</input>
+   <input type="radio" name="wash" value="3">3</input>
+   <input type="radio" name="wash" value="4" checked>4</input>
+   <input type="radio" name="wash" value="5">5</input>   
+<br><br>
+<p>Please provide comments/complaints in the box below</p><br>
+<textarea name="complaint" rows="10" style="width:300px;"></textarea><br><br>
+
+<button type="button" onclick="myFunction();">submit</button>
+</form> 
+</div>
+<h1 id="thankYou"></h1> 
+</body>
+</html>

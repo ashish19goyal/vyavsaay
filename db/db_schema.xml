@@ -714,8 +714,9 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<provider index='yes' type="TEXT"></provider>
 			<type index='yes' type="VARCHAR(15)"></type><!-- positive/negative -->
+			<order_id index='yes' type="BIGINT"></order_id>
 			<detail index='no' type="TEXT"></detail>
-			<rating index='no' type="VARCHAR(10)"></rating><!-- low/medium/high -->
+			<rating index='no' type="VARCHAR(10)"></rating><!-- 1/2/3/4/5-->
 			<date index='yes' type="BIGINT"></date>
 			<last_updated index='yes' type="BIGINT"></last_updated>		
 	</feedback>

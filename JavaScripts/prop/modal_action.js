@@ -8184,3 +8184,50 @@ function modal125_action(item_name)
 	
 	$("#modal125").dialog("open");
 }
+
+/**
+ * @modalNo 127
+ * @modal Print laundry tags
+ * @param button
+ */
+function modal127_action()
+{
+	var form127=document.getElementById('modal127_form');
+	var yes_button=form127.elements[1];
+	var no_button=form127.elements[2];
+	
+	$(yes_button).off('click');
+	$(yes_button).on('click',function()
+	{
+		$("#modal127").dialog("close");
+		////add code to print tags
+		
+		var master_form=document.getElementById('form10_master');
+		var bill_num=master_form.elements['bill_num'];
+		var bill_due_data=master_form.elements['due_date'];
+		var bus_title='The Washclub';
+		var customer_address=master_form.elements['customer_address'];		
+		var total_quantity=0;
+		var items=[];
+		$("[id^='save_form10_']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			total_quantity+=1;
+			var item=new Object();
+			item.number=total_quantity;
+			item.name=subform.elements[0].value;
+			items.push(item);						
+		});
+
+		
+		////////////////////////
+	});
+		
+	$(no_button).on('click',function()
+	{
+		$("#modal127").dialog("close");
+	});
+
+	$("#modal127").dialog("open");
+}

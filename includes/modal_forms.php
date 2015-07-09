@@ -996,4 +996,17 @@
 		</form>
 	</div>
 
+	<div id="modal127" title="Print Laundry Tags">
+		Do you want to print tags?
+		<br>
+		<br>
+		<br>		
+		<form id='modal127_form' autocomplete="off">
+			<fieldset>
+				<input type="button" value='Yes' class='modal_submit'>
+				<input type="button" value='No' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

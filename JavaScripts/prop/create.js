@@ -398,7 +398,8 @@ function form10_create_form()
 						payment_filter.value="Paid<br>Balance: Rs. 0";	
 					else 
 						payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));	
-
+					
+					modal127_action();
 				});
 			});
 		}
@@ -417,7 +418,9 @@ function form10_create_form()
 					else if(parseFloat(paid)==parseFloat(total))
 						payment_filter.value="Paid<br>Balance: Rs. 0";	
 					else 
-						payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));					
+						payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));
+					
+					modal127_action();						
 				});
 			});
 		}

@@ -19321,7 +19321,17 @@ function form190_ini()
 				var sms="";
 				if(result.status=='delivered')
 				{
-					sms="Hello customer_name, your laundry has been delivered. Thanks for using our services.";
+					var f_id=get_new_key();
+					var last_updated=get_new_key();
+					var feedback_xml="<feedback>"+
+								"<id>"+f_id+"</id>"+
+								"<order_num>"+result.order_num+"</order_num>"+
+								"<provider>"+result.customer_name+"</provider>"+
+								"<date>"+last_updated+"</date>"+
+								"<last_updated>"+last_updated+"</last_updated>"+
+								"</feedback>";
+					create_simple(feedback_xml);					
+					sms="Hi, your laundry was delivered. Please provide feedback. vyavsaay.com/f/v.htm?i="+f_id+"&d=washclub";
 				}
 				else if(result.status=='out for delivery')
 				{
@@ -19353,9 +19363,20 @@ function form190_ini()
 				}
 				else if(result.status=='cancelled')
 				{
-					sms="Hello customer_name, your order for laundry was cancelled. Please provide us feedback to improve our services";
+					var f_id=get_new_key();
+					var last_updated=get_new_key();
+					var feedback_xml="<feedback>"+
+								"<id>"+f_id+"</id>"+
+								"<order_num>"+result.order_num+"</order_num>"+
+								"<provider>"+result.customer_name+"</provider>"+
+								"<date>"+last_updated+"</date>"+
+								"<last_updated>"+last_updated+"</last_updated>"+
+								"</feedback>";
+					create_simple(feedback_xml);					
+
+					sms="Hi, your order for laundry was cancelled. Please provide feedback to help us improve. vyavsaay.com/f/v.htm?i="+f_id+"&d=washclub";
 				}
-				
+	
 				modal124_action('customer',result.customer_name,sms);
 			});
 			

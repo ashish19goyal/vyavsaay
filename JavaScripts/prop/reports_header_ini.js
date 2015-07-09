@@ -620,9 +620,9 @@ function report41_header_ini()
 function report42_header_ini()
 {	
 	var form=document.getElementById('report42_header');
-	var type_filter=form.elements[1];
-	var start_filter=form.elements[2];
-	var end_filter=form.elements[3];
+	var customer_filter=form.elements['customer'];
+	var start_filter=form.elements['start'];
+	var end_filter=form.elements['end'];	
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -630,13 +630,14 @@ function report42_header_ini()
 		event.preventDefault();
 		report42_ini();
 	});
-		
-	set_static_filter('feedback','type',type_filter);
+
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_filter(customer_data,customer_filter);
+
 	$(start_filter).datepicker();
-	start_filter.value=get_my_past_date((get_my_time()-86400000));
-	
 	$(end_filter).datepicker();
-	end_filter.value=get_my_date();
 }
 
 /**
@@ -1473,7 +1474,7 @@ function report72_header_ini()
 
 /**
  * @reportNo 73
- * @report Sales tax
+ * @report Laundry Stock
  */
 function report73_header_ini()
 {	

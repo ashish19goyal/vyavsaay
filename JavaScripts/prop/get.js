@@ -935,14 +935,63 @@ function revert_htmlentities(str)
     return String(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
 }
 
-function delete_simple_func(delete_mapping,func)
+
+function create_simple(data_xml)
 {
 	if(is_online())
 	{
-		server_delete_simple_func(delete_mapping,func);
+		server_create_simple(data_xml);
 	}
 	else
 	{
-		local_delete_simple_func(delete_mapping,func);
+		local_create_simple(data_xml);
+	}
+}
+
+function create_simple_func(data_xml,func)
+{
+	if(is_online())
+	{
+		server_create_simple_func(data_xml,func);
+	}
+	else
+	{
+		local_create_simple_func(data_xml,func);
+	}
+}
+
+function delete_row(data_xml,activity_xml)
+{
+	if(is_online())
+	{
+		server_delete_row(data_xml,activity_xml);
+	}
+	else
+	{
+		local_delete_row(data_xml,activity_xml)
+	}
+}
+
+function delete_simple(data_xml)
+{
+	if(is_online())
+	{
+		server_delete_simple(data_xml);
+	}
+	else
+	{
+		local_delete_simple(data_xml);
+	}
+}
+
+function delete_simple_func(data_xml,func)
+{
+	if(is_online())
+	{
+		server_delete_simple_func(data_xml,func);
+	}
+	else
+	{
+		local_delete_simple_func(data_xml,func);
 	}
 }

@@ -2465,7 +2465,7 @@ function report42_ini()
 	show_loader();
 	
 	var form=document.getElementById('report42_header');
-	var type=form.elements[1].value;
+	var customer=form.elements[1].value;
 	var start_date=form.elements[2].value;
 	var end_date=form.elements[3].value;
 	
@@ -2473,8 +2473,8 @@ function report42_ini()
 	var rowsHTML="";
 	
 	var feedback_data="<feedback>" +
-			"<provider></provider>" +
-			"<type>"+type+"</type>" +
+			"<provider>"+customer+"</provider>" +
+			"<order_num></order_num>"+			
 			"<detail></detail>" +
 			"<rating></rating>" +
 			"<date lowerbound='yes'>"+get_raw_time(start_date)+"</date>" +
@@ -2486,20 +2486,17 @@ function report42_ini()
 		feedbacks.forEach(function(feedback)
 		{
 			rowsHTML+="<tr>";
-				rowsHTML+="<td data-th='Feedback Provider'>";
+				rowsHTML+="<td data-th='Customer'>";
 					rowsHTML+=feedback.provider;
 				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Type'>";
-					rowsHTML+=feedback.type;
+				rowsHTML+="<td data-th='Order #'>";
+					rowsHTML+=feedback.order_num+"<br>Date: "+get_my_past_date(feedback.date);
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Rating'>";
 					rowsHTML+=feedback.rating;
 				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Detail'>";
+				rowsHTML+="<td data-th='Comments'>";
 					rowsHTML+=feedback.detail;
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Date'>";
-					rowsHTML+=get_my_past_date(feedback.date);
 				rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 		});

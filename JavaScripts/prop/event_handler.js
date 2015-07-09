@@ -286,7 +286,7 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=101;i<125;i++)
+	for(var i=101;i<128;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({

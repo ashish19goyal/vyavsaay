@@ -8,6 +8,7 @@
 			<li><a id='report9_link' href='#report9' onclick='report9_header_ini();' data-i18n='form.product_sales_report'></a></li>
 			<li><a id='report54_link' href='#report54' onclick='report54_header_ini();' data-i18n='form.best_days'></a></li>
 			<li><a id='report55_link' href='#report55' onclick='report55_header_ini();' data-i18n='form.worst_days'></a></li>
+			<li><a id='report42_link' href='#report42' onclick='report42_header_ini();' data-i18n='form.feedback'></a></li>
 		</ul>
 
 	<?php
@@ -18,6 +19,8 @@
 			include "reports/report9.php";
 			include "reports/report54.php";
 			include "reports/report55.php";
+			include "reports/report42.php"; 
+			
 	?>
 	
 </div>
