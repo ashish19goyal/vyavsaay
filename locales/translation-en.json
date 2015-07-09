@@ -329,6 +329,7 @@
 	"adjust_inventory":"Adjust Inventory",
 	"stock_laundry":"Stock of Laundry",
 	"letterhead":"Letter-Head",
-	"promotions_by_list":"Promotions by list"
+	"promotions_by_list":"Promotions by list",
+	"supplier_item_mapping":"Supplier Item Mapping"
   }
 }

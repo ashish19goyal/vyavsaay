@@ -2739,6 +2739,17 @@
 			<tables>--newsletter--newsletter_items--sms--emails--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form197</name>
+			<display_name>supplier_item_mapping</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_item_mapping--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -5110,6 +5121,17 @@
 			<username>master</username>
 			<element_id>form196</element_id>
 			<element_name>promotions_by_list</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form197</element_id>
+			<element_name>supplier_item_mapping</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

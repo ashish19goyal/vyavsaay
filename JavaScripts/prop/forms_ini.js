@@ -12824,7 +12824,7 @@ function form137_ini()
 							}
 							if(del && result.status=='submitted')
 							{
-								rowsHTML+="<input type='button' class='delete_icon' form='form137_"+id+"' id='delete_form137_rows_"+id+"' onclick='form137_delete_item($(this)); form137_get_totals();'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form137_rows_"+id+"' id='delete_form137_rows_"+id+"' onclick='form137_delete_item($(this)); form137_get_totals();'>";
 							}
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
@@ -18046,8 +18046,8 @@ function form179_ini()
 				var issue_button=fields.elements['issue_grn'];
 				$(issue_button).on('click',function()
 				{
-					element_display('','form122');
-					var master_form=document.getElementById('form122_master');
+					element_display('','form136');
+					var master_form=document.getElementById('form136_master');
 					master_form.elements['supplier'].value=result.supplier;
 					master_form.elements['po_num'].value=result.order_num;
 					master_form.elements['order_id'].value=result.id;
@@ -18059,7 +18059,7 @@ function form179_ini()
 				var view_button=fields.elements['view_bill'];
 				$(view_button).on('click',function()
 				{
-					element_display(result.bill_id,'form122');
+					element_display(result.bill_id,'form136');
 				});
 			}						
 			
@@ -18071,14 +18071,11 @@ function form179_ini()
 				$(prioritize_button).on('click',function()
 				{
 					$('#ques3_link').trigger('click');
-					//var ques_form=document.getElementById("ques3_ques_main");
-					//ques_form.elements[3].value=result.order_num;
 				});
 				$(assign_supplier_button).on('click',function()
-				{
-					
+				{					
 					status_filter.value='supplier finalized';
-					supplier_filter.value='supplier a ()';
+					supplier_filter.value='Supplier b (9392943282)';
 					
 					$(assign_supplier_button).hide();
 					$(prioritize_button).hide();					
@@ -19860,4 +19857,97 @@ function form195_ini()
 		});
 		hide_loader();
 	});	
+};
+
+/**
+ * @form Supplier Item mapping
+ * @formNo 197
+ * @Loading light
+ */
+function form197_ini()
+{
+	show_loader();
+	var fid=$("#form197_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form197_header');
+	
+	var fproduct=filter_fields.elements[0].value;
+	var fsupplier=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form197_index');
+	var prev_element=document.getElementById('form197_prev');
+	var next_element=document.getElementById('form197_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<supplier_item_mapping count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<item>"+fproduct+"</item>" +
+			"<supplier>"+fsupplier+"</supplier>" +
+			"</supplier_item_mapping>";
+
+	$('#form197_body').html("");
+
+	fetch_requested_data('form197',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form197_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Item'>";
+						rowsHTML+="<textarea readonly='readonly' form='form197_"+result.id+"'>"+result.item+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Supplier'>";
+						rowsHTML+="<textarea readonly='readonly' form='form197_"+result.id+"'>"+result.supplier+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form197_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form197_"+result.id+"' value='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form197_"+result.id+"' value='Delete' onclick='form197_delete_item($(this));'>";	
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form197_body').append(rowsHTML);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'supplier_item_mapping');
+		});
+		hide_loader();
+	});
 };

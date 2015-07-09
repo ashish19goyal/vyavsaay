@@ -6321,3 +6321,39 @@ function form195_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * formNo 197
+ * form Supplier Item Mapping
+ * @param button
+ */
+function form197_delete_item(button)
+{
+	if(is_delete_access('form197'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var data_id=form.elements[2].value;
+			var last_updated=get_my_time();
+			var data_xml="<supplier_item_mapping>" +
+						"<id>"+data_id+"</id>" +
+						"</supplier_item_mapping>";
+			if(is_online())
+			{
+				server_delete_simple(data_xml);
+			}
+			else
+			{
+				local_delete_simple(data_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

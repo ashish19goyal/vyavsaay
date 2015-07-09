@@ -18,6 +18,7 @@
 			<li><a id='report52_link' href='#report52' onclick='report52_header_ini();' data-i18n='form.product_purchase_report'></a></li>		
 			<li><a id='form114_link' href='#form114' onclick='form114_header_ini();' data-i18n='form.add_unbilled_items'></a></li>
 			<li><a id='form115_link' href='#form115' onclick='form115_header_ini(); form115_ini();' data-i18n='form.manage_unbilled_items'></a></li>
+			<li><a id='form197_link' href='#form197' onclick='form197_header_ini(); form197_ini();' data-i18n='form.supplier_item_mapping'></a></li>
 		</ul>
 	<?php 
 
@@ -38,6 +39,7 @@
 			include "reports/report52.php";
 			include "forms/form114.php";
 			include "forms/form115.php";
+			include "forms/form197.php";
 	?>
 			
 </div>

@@ -6880,3 +6880,31 @@ function form195_header_ini()
 		form195_ini();
 	});
 };
+
+/**
+ * @form Supplier Item Mapping
+ * @formNo 197
+ */
+function form197_header_ini()
+{
+	var filter_fields=document.getElementById('form197_header');
+	var product_filter=filter_fields.elements[0];
+	var supplier_filter=filter_fields.elements[1];
+	
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var supplier_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+	
+	set_my_filter(product_data,product_filter);
+	set_my_filter(supplier_data,supplier_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form197_ini();
+	});
+};

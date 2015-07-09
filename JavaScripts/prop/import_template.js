@@ -1140,3 +1140,13 @@ function form195_import_template()
 	var data_array=['id','name','date','receiver','subject','salutation','content','signature','footer'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Supplier Item Mapping
+* @formNo 197
+*/
+function form197_import_template()
+{
+	var data_array=['id','item','supplier'];
+	my_array_to_csv(data_array);
+};
