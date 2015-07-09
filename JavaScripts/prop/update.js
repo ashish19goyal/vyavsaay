@@ -8127,6 +8127,7 @@ function form154_update_form()
 					"<amount>"+amount+"</amount>" +
 					"<total>"+total+"</total>" +
 					"<billing_type>"+bill_type+"</billing_type>" +
+					"<bill_num>"+bill_num+"</bill_num>" +
 					"<discount>"+discount+"</discount>" +
 					"<cartage>"+cartage+"</cartage>" +
 					"<tax>"+tax+"</tax>" +
