@@ -960,6 +960,18 @@ function create_simple_func(data_xml,func)
 	}
 }
 
+function create_simple_no_warning(data_xml)
+{
+	if(is_online())
+	{
+		server_create_simple_no_warning(data_xml);
+	}
+	else
+	{
+		local_create_simple_no_warning(data_xml);
+	}
+}
+
 function delete_row(data_xml,activity_xml)
 {
 	if(is_online())

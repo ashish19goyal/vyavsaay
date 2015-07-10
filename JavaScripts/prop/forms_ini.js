@@ -19325,12 +19325,12 @@ function form190_ini()
 					var last_updated=get_new_key();
 					var feedback_xml="<feedback>"+
 								"<id>"+f_id+"</id>"+
-								"<order_num>"+result.order_num+"</order_num>"+
+								"<order_num unique='yes'>"+result.order_num+"</order_num>"+
 								"<provider>"+result.customer_name+"</provider>"+
 								"<date>"+last_updated+"</date>"+
 								"<last_updated>"+last_updated+"</last_updated>"+
 								"</feedback>";
-					create_simple(feedback_xml);					
+					create_simple_no_warning(feedback_xml);					
 					sms="Hi, your laundry was delivered. Please provide feedback. vyavsaay.com/f/v.htm?i="+f_id+"&d=washclub";
 				}
 				else if(result.status=='out for delivery')
@@ -19367,12 +19367,12 @@ function form190_ini()
 					var last_updated=get_new_key();
 					var feedback_xml="<feedback>"+
 								"<id>"+f_id+"</id>"+
-								"<order_num>"+result.order_num+"</order_num>"+
+								"<order_num unique='yes'>"+result.order_num+"</order_num>"+
 								"<provider>"+result.customer_name+"</provider>"+
 								"<date>"+last_updated+"</date>"+
 								"<last_updated>"+last_updated+"</last_updated>"+
 								"</feedback>";
-					create_simple(feedback_xml);					
+					create_simple_no_warning(feedback_xml);					
 
 					sms="Hi, your order for laundry was cancelled. Please provide feedback to help us improve. vyavsaay.com/f/v.htm?i="+f_id+"&d=washclub";
 				}
