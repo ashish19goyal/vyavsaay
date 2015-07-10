@@ -623,14 +623,8 @@ function report42_header_ini()
 	var customer_filter=form.elements['customer'];
 	var start_filter=form.elements['start'];
 	var end_filter=form.elements['end'];	
+	var refresh_button=form.elements['refresh'];	
 	
-	$(form).off('submit');
-	$(form).on('submit',function(event)
-	{
-		event.preventDefault();
-		report42_ini();
-	});
-
 	var customer_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
@@ -1501,4 +1495,25 @@ function report73_header_ini()
 			"<item_name></item_name>" +
 			"</bill_items>";
 	set_my_filter(item_data,item_filter);
+}
+
+/**
+ * @reportNo 74
+ * @report Feedback
+ */
+function report74_header_ini()
+{	
+	var form=document.getElementById('report74_header');
+	var customer_filter=form.elements['customer'];
+	var start_filter=form.elements['start'];
+	var end_filter=form.elements['end'];	
+	var refresh_button=form.elements['refresh'];	
+	
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_filter(customer_data,customer_filter);
+
+	$(start_filter).datepicker();
+	$(end_filter).datepicker();
 }

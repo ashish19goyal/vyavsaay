@@ -8203,24 +8203,60 @@ function modal127_action()
 		////add code to print tags
 		
 		var master_form=document.getElementById('form10_master');
-		var bill_num=master_form.elements['bill_num'];
-		var bill_due_data=master_form.elements['due_date'];
+		var bill_num=master_form.elements['bill_num'].value;
+		var bill_due_date=master_form.elements['due_date'].value;
 		var bus_title='The Washclub';
-		var customer_address=master_form.elements['customer_address'];		
+		var customer_address=master_form.elements['customer_address'].value;		
 		var total_quantity=0;
 		var items=[];
 		$("[id^='save_form10_']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			total_quantity+=1;
-			var item=new Object();
-			item.number=total_quantity;
-			item.name=subform.elements[0].value;
-			items.push(item);						
+			var quantity=parseInt(subform.elements[2].value);			
+			for(var i=0;i<quantity;i++)
+			{	
+				total_quantity+=1;			
+				var item=new Object();
+				item.number=total_quantity;
+				item.name=subform.elements[0].value;
+				items.push(item);
+			}						
 		});
 
+		var container=document.createElement('div');
+		container.setAttribute('style','width:100px;font-size:9px;');
 		
+		items.forEach(function(item)
+		{
+			var item_container=document.createElement('div');
+				var item_count_elem=document.createElement('div');
+				var business_title_elem=document.createElement('div');
+				var item_name_elem=document.createElement('div');
+				var bill_num_elem=document.createElement('div');
+				var due_date_elem=document.createElement('div');
+				var address_elem=document.createElement('div');
+
+			item_container.setAttribute('style','margin-bottom:10px');
+			bill_num_elem.setAttribute('style','font-size:11px');
+
+			item_count_elem.innerHTML="<hr style='border: 1px solid #000;margin:1px;'>"+item.number+" of "+total_quantity;
+			business_title_elem.innerHTML=bus_title;
+			item_name_elem.innerHTML=item.name;
+			bill_num_elem.innerHTML="<b>"+bill_num+"</b>";
+			due_date_elem.innerHTML="<b>"+bill_due_date+"</b>";
+			address_elem.innerHTML="<hr style='border: 1px solid #000;margin:1px;'>"+customer_address+"<hr style='border: 1px solid #000;margin:1px;'>";			
+			
+			item_container.appendChild(item_count_elem);
+			item_container.appendChild(business_title_elem);
+			item_container.appendChild(item_name_elem);
+			item_container.appendChild(bill_num_elem);	
+			item_container.appendChild(due_date_elem);
+			item_container.appendChild(address_elem);
+			container.appendChild(item_container);
+		});
+		
+		$.print(container);
 		////////////////////////
 	});
 		

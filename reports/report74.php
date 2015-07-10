@@ -1,12 +1,12 @@
-<div id='report42' class='function_detail'>
-	<form id='report42_header' autocomplete="off">
+<div id='report74' class='function_detail'>
+	<form id='report74_header' autocomplete="off">
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Customer<br><input type='text' name='customer'></label>
 			<label>Start Date<br><input type='text' name='start'></label>
 			<label>End Date<br><input type='text' name='end'></label>
 			<label>
-				<input type='button' value='Refresh' name='refresh' onclick='report42_ini();' class='generic_icon'>
+				<input type='button' value='Refresh' name='refresh' onclick='report74_ini();' class='generic_icon'>
 				<input type='button' title='Print' class='print_icon'>
 			</label>
 		</fieldset>
@@ -20,7 +20,7 @@
 				<th>Comments</th>
 			</tr>
 		</thead>
-		<tbody id='report42_body'>
+		<tbody id='report74_body'>
 		</tbody>
 	</table>
 </div>
