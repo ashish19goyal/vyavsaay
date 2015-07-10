@@ -19322,7 +19322,7 @@ function form190_ini()
 				if(result.status=='delivered')
 				{
 					var f_id=get_new_key();
-					var last_updated=get_new_key();
+					var last_updated=get_my_time();
 					var feedback_xml="<feedback>"+
 								"<id>"+f_id+"</id>"+
 								"<order_num unique='yes'>"+result.order_num+"</order_num>"+
@@ -19364,7 +19364,7 @@ function form190_ini()
 				else if(result.status=='cancelled')
 				{
 					var f_id=get_new_key();
-					var last_updated=get_new_key();
+					var last_updated=get_my_time();
 					var feedback_xml="<feedback>"+
 								"<id>"+f_id+"</id>"+
 								"<order_num unique='yes'>"+result.order_num+"</order_num>"+
