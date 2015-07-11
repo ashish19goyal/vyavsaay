@@ -2058,10 +2058,7 @@ function form80_header_ini()
 		form80_update_form();
 	});
 	
-	var object_data="<de_duplication_ref>" +
-			"<object></object>" +
-			"</de_duplication_ref>";
-	set_my_value_list(object_data,object_filter);
+	set_static_value_list('de_duplication_ref','object',object_filter);
 	
 	$(merge_button).off('click');
 	$(merge_button).on('click',function(event)
