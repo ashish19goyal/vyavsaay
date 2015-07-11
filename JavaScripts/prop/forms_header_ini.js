@@ -2035,8 +2035,9 @@ function form80_header_ini()
 	var column_filter=fields.elements[3];
 	var refs_filter=fields.elements[4];
 	var ref_ids_filter=fields.elements[5];
-	var merge_button=fields.elements[7];
-		
+	var mapping_button=fields.elements['mapping'];
+	var merge_button=fields.elements['merging'];
+
 	object_filter.value='';
 	table_filter.value='';
 	column_filter.value='';
@@ -2047,6 +2048,13 @@ function form80_header_ini()
 	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
+		form80_ini();
+	});
+	
+	$(mapping_button).off('submit');
+	$(mapping_button).on("submit", function(event)
+	{
+		event.preventDefault();
 		form80_update_form();
 	});
 	
@@ -2055,36 +2063,31 @@ function form80_header_ini()
 			"</de_duplication_ref>";
 	set_my_value_list(object_data,object_filter);
 	
-	$(object_filter).on('blur',function(event)
+	$(merge_button).off('click');
+	$(merge_button).on('click',function(event)
 	{
-		$(merge_button).off('click');
-		$(merge_button).on('click',function(event)
-		{
-			modal51_action(object_filter.value);
-		});
-		
+		modal51_action(object_filter.value);
+	});
+
+	$(object_filter).on('blur',function(event)
+	{		
 		var table_data="<de_duplication_ref>" +
+				"<references_id></references_id>" +
 				"<tablename></tablename>" +
-				"<object exact='yes'>"+object_filter.value+"</object>" +
-				"</de_duplication_ref>";
-		set_my_value(table_data,table_filter);
-		var column_data="<de_duplication_ref>" +
 				"<keycolumn></keycolumn>" +
-				"<object exact='yes'>"+object_filter.value+"</object>" +
-				"</de_duplication_ref>";
-		set_my_value(column_data,column_filter);
-		var refs_data="<de_duplication_ref>" +
 				"<references_value></references_value>" +
 				"<object exact='yes'>"+object_filter.value+"</object>" +
 				"</de_duplication_ref>";
-		set_my_value(refs_data,refs_filter);
-		var ref_ids_data="<de_duplication_ref>" +
-				"<references_id></references_id>" +
-				"<object exact='yes'>"+object_filter.value+"</object>" +
-				"</de_duplication_ref>";
-		set_my_value(ref_ids_data,ref_ids_filter);
-		
-		form80_ini();
+		fetch_requested_data('',table_data,function (tables) 
+		{
+			if(tables.length>0)
+			{
+				table_filter.value=tables[0].tablename;
+				column_filter.value=tables[0].keycolumn;
+				refs_filter.value=tables[0].references_value;
+				ref_ids_filter.value=tables[0].references_id;
+			}
+		});
 	});
 	
 	$(object_filter).focus();
@@ -5624,9 +5627,27 @@ function form154_header_ini()
 		},type_data);
 	}
 
+	if(bill_type.value=='Retail')
+	{
+		$(cform_filter).parent().show();
+	}
+	else
+	{
+		$(cform_filter).parent().hide();
+	}
+
 	$(bill_type).off('blur');
 	$(bill_type).on('blur',function (e) 
 	{
+		if(bill_type.value=='Retail')
+		{
+			$(cform_filter).parent().show();
+		}
+		else
+		{
+			$(cform_filter).parent().hide();
+		}
+		
 		if(bill_type.value=='Retail' || bill_type.value=='Tax')
 		{
 			var headHTML="<tr><form id='form154_header'></form>"+

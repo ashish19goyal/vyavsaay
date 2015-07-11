@@ -721,7 +721,7 @@ function notifications9_add()
 			"<amount></amount>" +
 			"<detail></detail>" +
 			"<expense_date></expense_date>" +
-			"<status></status>" +
+			"<status array='yes'>--approved--rejected--</status>" +
 			"<last_updated lowerbound='yes'>"+(parseFloat(get_my_time())-86400000)+"</last_updated>"+
 			"</expenses>";
 	fetch_requested_data('',expense_data,function(expenses)

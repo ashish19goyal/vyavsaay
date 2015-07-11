@@ -10,30 +10,38 @@
    <meta name="author" content="Ashish" > 												<!--Change content-->						
 	<title>Vyavsaay - Register</title>																<!--Change title-->	      
    <link href="appic/css/style.css?v=1" rel="stylesheet">                          		 			<!-- Stylesheet -->    
-
+  <style>
+	#loading_icon{
+		width:30%;
+	    height: 30%;
+	    position: fixed;
+	    top: 35%;
+	    left: 42%;
+	    z-index:1000;
+	}
+	
+	#transparent_layer{
+		width:100%;
+		height:100%;
+		position:fixed;
+		top: 0;
+		left: 0;
+		z-index:999;
+		opacity: 0.8;
+		background-color: #333333;
+	}
+</style>
+ 
 </head>
 
 <body>
 <div class="wrapper">
+<div id="loading_icon"><img src="./images/loader.gif"></div>
+<div id="transparent_layer"></div>
 	<!-- Begin header -->
 	<header id='reset_header'>
 	</header>
 	<!-- End header -->
-
-	<!--begin login box-->
-				<div style='display:none' id='login_box' class='login_box'>
-       			<div id="failed_auth"></div>
-					<form id='login'>
-						<fieldset>
-							Login ID: <input type="text" autocomplete="on" autofocus="autofocus" required><br>
-							Password: <input type="password" required><br>
-							<a href="pass_reset.html">Forgot password?</a><br>
-							<input type="submit" value='Login'>
-						</fieldset>
-					</form>
-       		</div>
-
-	<!--end login box-->
 
 	<!-- Begin main content -->
 
@@ -93,16 +101,16 @@
 		$('#reset_footer').load('footer.html');
 		$('#reset_header').load('header.html',function () 
 		{
-				default_load();
-				$("#login_box").dialog({
-	   		autoOpen: false,
-	   		width: 300,
-	   		modal: true,
-	   		show: "slide",
-	   		closeOnEscape: true,
+			default_load();
+			$("#login_box").dialog(
+			{
+	   			autoOpen: false,
+	   			width: 300,
+	   			modal: true,
+	   			show: "slide",
+	   			closeOnEscape: true,
 			});
-		});	
-
+		});
 	});
 	
 	$('#index_reset').on('submit',function(event)
@@ -131,7 +139,7 @@
 			else
 			{
 				$("#index_reset").slideUp();
-				document.getElementById("reset_complete").innerHTML="We have sent a you a mail with updated password information. Please check your mailbox.";	
+				document.getElementById("reset_complete").innerHTML="We have sent you a mail with updated password information. Please check your mailbox.";	
 			}
 			hide_loader();
 			console.log(e.responseText);

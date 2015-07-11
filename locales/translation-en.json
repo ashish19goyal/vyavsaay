@@ -330,6 +330,7 @@
 	"stock_laundry":"Stock of Laundry",
 	"letterhead":"Letter-Head",
 	"promotions_by_list":"Promotions by list",
-	"supplier_item_mapping":"Supplier Item Mapping"
+	"supplier_item_mapping":"Supplier Item Mapping",
+	"supplier_score_report":"Supplier Score Report"
   }
 }

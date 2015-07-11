@@ -3,10 +3,10 @@
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Customer<br><input type='text' name='customer'></label>
-			<label>Start Date<br><input type='text' name='start'></label>
-			<label>End Date<br><input type='text' name='end'></label>
+			<label>Start Date<br><input type='text' required name='start'></label>
+			<label>End Date<br><input type='text' required name='end'></label>
 			<label>
-				<input type='button' value='Refresh' name='refresh' onclick='report74_ini();' class='generic_icon'>
+				<input type='submit' value='Refresh' name='refresh' class='generic_icon'>
 				<input type='button' title='Print' class='print_icon'>
 			</label>
 		</fieldset>

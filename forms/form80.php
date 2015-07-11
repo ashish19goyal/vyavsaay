@@ -8,8 +8,9 @@
 				<input type='hidden' name='references'>
 				<input type='hidden' name='reference_ids'>
 			</label>
-			<label>	<input type='submit' value='Save all Mappings' class='generic_icon'></label>
-			<label>	<input type='button' value='Start merging' class='generic_icon'></label>	
+			<label>	<input type='button' value='Save all Mappings' name='mapping' class='generic_icon'></label>
+			<label>	<input type='button' value='Start merging' name='merging' class='generic_icon'></label>	
+			<label>	<input type='submit' class='submit_hidden'></label>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

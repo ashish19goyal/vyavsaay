@@ -8010,8 +8010,8 @@ function form153_update_form()
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
-					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
-					"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' title='specify tax rate' step='any' id='form153_tax' class='dblclick_editable'>%</br>" +
+					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'><br>" +
+					"@ <input type='number' value='"+tax_rate+"' title='specify tax rate' step='any' id='form153_tax' class='dblclick_editable'>% Rs. "+tax+" <br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
 					"</tr>";
@@ -8174,7 +8174,7 @@ function form154_update_form()
 					"<td>Amount:<disc><br>Discount:</disc><br>Tax: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
-					"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>%<br>" +
+					"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax+" <br>" +
 					"Rs. <input type='number' value='"+cartage+"' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -8185,7 +8185,7 @@ function form154_update_form()
 					"<td>Amount:<disc><br>Discount:</disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
-					"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>%<br>" +
+					"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax+" <br>" +
 					"Rs. <input type='number' value='"+cartage+"' step='any' id='form154_cartage' class='dblclick_editable'><br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -8197,7 +8197,7 @@ function form154_update_form()
 					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
 					"<td>Rs. "+amount+"</br>" +
 					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-					"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>%<br>" +
+					"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax+" <br>" +
 					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -8586,7 +8586,7 @@ function form158_update_form()
 								"<td>Amount:<br>Discount: <br>Tax: <br>Cartage: <br>Total: </td>" +
 								"<td>Rs. "+Math.round(amount)+"</br>" +
 								"<disc_amount>Rs. <input type='number' value='"+Math.round(discount)+"' step='any' id='form158_discount' class='dblclick_editable'><br></disc_amount>" +
-								"Rs. "+tax+" @ <input type='number' value='"+tax_rate+"' step='any' id='form158_tax' class='dblclick_editable'><br>%" +
+								"@ <input type='number' value='"+tax_rate+"' step='any' id='form158_tax' class='dblclick_editable'>% Rs. "+tax+" <br>" +
 								"Rs. <input type='number' value='"+Math.round(cartage)+"' step='any' id='form158_cartage' class='dblclick_editable'><br>" +
 								"Rs. "+Math.round(total)+"</td>" +
 								"<td></td>" +

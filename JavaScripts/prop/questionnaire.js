@@ -540,8 +540,7 @@ function ques2_submit_action(ques_form)
 				}
 			},po_data);
 		});
-	});
-	
+	});	
 }
 
 /*purchase order prioritization*/

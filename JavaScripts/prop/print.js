@@ -522,7 +522,6 @@ function form24_print_form()
 	});	
 }
 
-
 /**
 * This function prepares the printing template for the documents like bills and purchase orders
 */
@@ -814,6 +813,61 @@ function form130_print_form()
 {
 	print_tabular_form('form130','Job Order');
 }
+
+ /**
+ * @form Expenses
+ * @formNo 137
+ */
+function form137_print()
+{
+	var container=document.createElement('div');
+	var business_title=document.createElement('div');
+	var title=document.createElement('div');
+	var bt=get_session_var('title');
+	var form_title="Project Expenses";
+	var form_name="form137";
+
+	business_title.innerHTML="<div style='text-align:center;display:block;width:100%;font-size:1.5em'><b>"+bt+"</b></div>";
+	title.innerHTML="<div style='display: block;width:100%;font-size:1.2em'><b>"+form_title+"</b></div>";
+	var table_element=document.getElementById(form_name+"_body").parentNode;
+	var form_element=document.getElementById(form_name+"_master");
+
+	$(table_element).find("textarea").each(function(index)
+	{
+		$(this).attr('value',$(this).val());
+	});	
+
+	var table_copy=table_element.cloneNode(true);
+	var form_copy=form_element.cloneNode(true);
+
+	table_copy.removeAttribute('class');
+	table_copy.setAttribute('width','1000px');
+	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh").remove();
+	$(form_copy).find("input[type=button],input[type=hidden],input[type=submit]").remove();
+	
+	$(table_copy).add(form_copy).find('input').each(function(index)
+	{
+		$(this).replaceWith($(this).val());
+	});
+	$(table_copy).add(form_copy).find('textarea').each(function(index)
+	{
+		$(this).replaceWith($(this).attr('value'));
+	});
+	
+	$(table_copy).find('label').each(function(index)
+	{
+		$(this).replaceWith($(this).html());
+	});
+		
+	var font_size=get_session_var('print_size');
+	$(table_copy).find('td,th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
+	container.appendChild(business_title);
+	container.appendChild(title);
+	container.appendChild(form_copy);
+	container.appendChild(table_copy);
+	$.print(container);
+}
+
 
 /**
  * @form Service Request - budgeting
@@ -1254,7 +1308,7 @@ function form154_print_form()
 	if(hiring)
 	{
 		$(table_copy).find("th:nth-child(3), td:nth-child(3)").css('width','200px');
-		$(table_copy).find("th:first, td:first").css('width','50px');
+		$(table_copy).find("th:first, td:first").css('width','40px');
 		var row_count=$(table_copy).find('tbody>tr').length;
 		var rows_to_add=15-row_count;
 		for(var i=0;i<rows_to_add;i++)
@@ -1264,6 +1318,7 @@ function form154_print_form()
 	}
 	else
 	{
+		$(table_copy).find("th:first, td:first").css('width','40px');
 		$(table_copy).find("th:nth-child(2), td:nth-child(2)").css('width','300px');
 		var row_count=$(table_copy).find('tbody>tr').length;
 		var rows_to_add=15-row_count;

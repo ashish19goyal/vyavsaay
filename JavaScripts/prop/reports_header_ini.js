@@ -1514,6 +1514,38 @@ function report74_header_ini()
 			"</customers>";
 	set_my_filter(customer_data,customer_filter);
 
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report74_ini();
+	});
+
 	$(start_filter).datepicker();
 	$(end_filter).datepicker();
+	start_filter.value=get_my_past_date((get_my_time()-86400000));
+	end_filter.value=get_my_date();
+}
+
+/**
+ * @reportNo 75
+ * @report Supplier Score Report
+ */
+function report75_header_ini()
+{	
+	var form=document.getElementById('report75_header');
+	var supplier_filter=form.elements['supplier'];
+	var refresh_button=form.elements['refresh'];	
+	
+	var supplier_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+	set_my_filter(supplier_data,supplier_filter);
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report75_ini();
+	});
 }

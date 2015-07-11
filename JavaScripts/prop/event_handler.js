@@ -485,7 +485,7 @@ function show_all_activities()
 
 function element_display(fid,element_name,elements)
 {
-	if(is_form_access(element_name))
+	if(is_read_access(element_name))
 	{
 		var element_link="#"+element_name+"_link";
 		var function_link=$(element_link).parent().parent().parent().attr('id');
@@ -498,7 +498,7 @@ function element_display(fid,element_name,elements)
 	{
 		for(var i=0;i<elements.length;i++)
 		{
-			if(is_form_access(elements[i]))
+			if(is_read_access(elements[i]))
 			{
 				var element_link="#"+elements[i]+"_link";
 				var function_link=$(element_link).parent().parent().parent().attr('id');

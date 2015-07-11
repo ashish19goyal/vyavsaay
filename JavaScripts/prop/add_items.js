@@ -2767,12 +2767,12 @@ function form80_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form80_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Change'>";
-				rowsHTML+="<input type='text' form='form80_"+id+"' value=''>";
-				rowsHTML+="<input type='hidden' form='form80_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form80_"+id+"' required>";
+				rowsHTML+="<input type='hidden' form='form80_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='To'>";
-				rowsHTML+="<input type='text' form='form80_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form80_"+id+"' value=''>";
+				rowsHTML+="<input type='text' form='form80_"+id+"' required>";
+				rowsHTML+="<input type='hidden' form='form80_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 			rowsHTML+="<input type='hidden' form='form80_"+id+"' value='"+id+"'>";
@@ -2805,7 +2805,6 @@ function form80_add_item()
 				"<"+column+" exact='yes'>"+slave_filter.value+"</"+column+">" +
 				"</"+table+">";
 			set_my_value(slave_id_data,slave_id_filter);
-
 		});
 		$(master_filter).on('blur',function(event)
 		{
@@ -8247,7 +8246,7 @@ function form154_add_product()
 					rowsHTML+="<fresh><br>Fresh: <input type='checkbox' form='form154_"+id+"'></fresh>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Quantity'>";
-					rowsHTML+="<input type='number' min='0' required form='form154_"+id+"' step='any'><b id='form154_unit_"+id+"'></b>";
+					rowsHTML+="<input type='number' min='0' required form='form154_"+id+"' step='any'> <b id='form154_unit_"+id+"'></b>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Date'>";
 					rowsHTML+="From: <f1><input type='text' required form='form154_"+id+"'></f1>";
@@ -8539,7 +8538,7 @@ function form154_add_product()
 					rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form154_add_product_"+id+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Quantity'>";
-					rowsHTML+="<input type='number' min='0' required form='form154_"+id+"' step='any'><b id='form154_unit_"+id+"'></b>";
+					rowsHTML+="<input type='number' min='0' required form='form154_"+id+"' step='any'> <b id='form154_unit_"+id+"'></b>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Rate'>";
 					rowsHTML+="<input type='number' required form='form154_"+id+"' step='any'>";

@@ -8186,6 +8186,139 @@ function modal125_action(item_name)
 }
 
 /**
+ * @modalNo 126
+ * @modal Priority Suppliers
+ * @param button
+ */
+function modal126_action(po_id,po_num)
+{
+	var form=document.getElementById('modal126_form');
+	var assign_button=form.elements['assign'];
+	var cancel_button=form.elements['cancel'];
+
+	$(cancel_button).off('click');
+	$(cancel_button).on('click',function () 
+	{
+		$("#modal126").dialog("close");
+	});
+
+	$(assign_button).off('click');
+	$(assign_button).on('click',function (event) 
+	{
+		event.preventDefault();
+		var supplier_name=form.elements['supplier'].value;
+		var po_xml="<purchase_orders>" +
+				"<id>"+po_id+"</id>" +
+				"<supplier>"+supplier_name+"</supplier>" +
+				"<status>supplier finalized</status>"+
+				"<last_updated>"+get_my_time()+"</last_updated>" +
+				"</purchase_orders>";
+		var activity_xml="<activity>" +
+				"<data_id>"+po_id+"</data_id>" +
+				"<tablename>purchase_orders</tablename>" +
+				"<link_to>form179</link_to>" +
+				"<title>Assigned</title>" +
+				"<notes>Supplier for PO # "+po_num+"</notes>" +
+				"<updated_by>"+get_name()+"</updated_by>" +
+				"</activity>";
+			
+		if(is_online())
+		{
+			server_update_row(po_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(po_xml,activity_xml);
+		}
+	
+		$("#modal126").dialog("close");
+	});
+		
+	////adding attribute fields/////
+	var supplier_label=document.getElementById('modal126_suppliers');
+	supplier_label.innerHTML="";
+	
+	var po_items_data="<purchase_order_items>" +
+				"<item_name></item_name>"+
+				"<order_id exact='yes'>"+po_id+"</order_id>" +
+				"</purchase_order_items>";
+	fetch_requested_data('',po_items_data,function(po_items)
+	{
+		po_items=jQuery.unique(po_items);
+		var item_string="--";
+		for(var k in po_items)
+		{
+			item_string+=po_items[k].item_name+"--";
+		}
+
+		var suppliers_xml="<supplier_item_mapping>"+
+						"<supplier></supplier>"+
+						"<item array='yes'>"+item_string+"</item>"+
+						"</supplier_item_mapping>";
+		fetch_requested_data('',suppliers_xml,function(suppliers)
+		{
+			var unique_sup_array=new Object();
+			
+			for(var i in suppliers)
+			{
+				var supplier_name=suppliers[i].supplier;
+				if(!Array.isArray(unique_sup_array[supplier_name]))
+				{		
+					unique_sup_array[supplier_name]=[];				
+				}				
+				unique_sup_array[supplier_name].push(suppliers[i].item);				
+			}
+			
+			var final_suppliers=[];
+			for(var x in unique_sup_array)
+			{
+				if(unique_sup_array[x].length==po_items.length)
+				{
+					final_suppliers.push(x);
+				}
+			}
+			
+			var suppliers_string="--";
+			for(var l in final_suppliers)
+			{
+				suppliers_string+=suppliers[l].supplier+"--";
+			}
+
+			var score_xml="<suppliers>"+
+						"<score></score>"+
+						"<acc_name array='yes'>"+suppliers_string+"</acc_name>"+
+						"</suppliers>";
+			fetch_requested_data('',score_xml,function (scores) 
+			{
+				scores.sort(function(a,b)
+				{
+					if(a.score<b.score)
+					{	return 1;}
+					else 
+					{	return -1;}
+				});
+				
+				var radio_check='checked';
+				scores.forEach(function(score)
+				{
+					var attr_label=document.createElement('label');
+					attr_label.innerHTML=score.score+": <input type='radio' value='"+score.acc_name+"' "+radio_check+" name='supplier'>";
+					if(radio_check=='checked')
+					{
+						radio_check="";
+					}
+					supplier_label.appendChild(attr_label);
+					var line_break=document.createElement('br');
+					supplier_label.appendChild(line_break);
+				});
+			});									
+		});
+	});
+	
+	$("#modal126").dialog("open");
+}
+
+/**
  * @modalNo 127
  * @modal Print laundry tags
  * @param button

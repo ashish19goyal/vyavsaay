@@ -5,7 +5,8 @@
 			<label>Total Expense<br><input type='text' name='expense' required></label>
 			<label>Total Approved<br><input type='text' name='approved' required></label>
 			<label>	<input type='hidden' name='id' form='form137_master'></label>
-			<label>	<input type='button' onclick='form137_ini();' value='Refresh' class='generic_icon'></label>
+			<label>	<input type='button' onclick='form137_ini();' value='Refresh' name='refresh' class='generic_icon'></label>
+			<label>	<input type='button' onclick='form137_print();' title='Print' name='print' class='print_icon'></label>
 			<label>	<input type='submit' class='submit_hidden'></label>			
 		</fieldset>
 	</form>

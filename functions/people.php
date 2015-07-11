@@ -21,6 +21,7 @@
 			<li><a id='form96_link' href='#form96' onclick='form96_header_ini(); form96_ini();' data-i18n='form.customer_attributes'></a></li>
 			<li><a id='form97_link' href='#form97' onclick='form97_header_ini(); form97_ini();' data-i18n='form.supplier_attributes'></a></li>
 			<li><a id='form98_link' href='#form98' onclick='form98_header_ini(); form98_ini();' data-i18n='form.staff_attributes'></a></li>
+			<li><a id='report75_link' href='#report75' onclick='report75_header_ini();' data-i18n='form.supplier_score_report'></a></li>
 	</ul>
 
 	<?php 
@@ -45,5 +46,6 @@
 			include "forms/form96.php";
 			include "forms/form97.php";
 			include "forms/form98.php";		
+			include "reports/report75.php";		
 	?>		
 </div>
