@@ -179,6 +179,7 @@ JavaScripts/prop/import.js
 JavaScripts/prop/local_db_handling.js
 JavaScripts/prop/login_helper.js
 JavaScripts/prop/modal_action.js
+JavaScripts/prop/numeral.js
 JavaScripts/prop/my_chart.js
 JavaScripts/prop/print.js
 JavaScripts/prop/questionnaire.js

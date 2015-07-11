@@ -8061,7 +8061,7 @@ function form153_add_product()
 		$(price_filter).add(quantity_filter).on('blur',function(event)
 		{
 			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
-			amount_filter.value=Math.round(amount);
+			amount_filter.value=Math.round(amount).toFixed(2);
 			
 			//tax_filter.value=parseFloat((parseFloat(tax_unit_filter.value)*(amount-parseFloat(discount_filter.value)))/100);
 			//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value));			
@@ -8195,7 +8195,7 @@ function form153_add_service()
 		$(price_filter).on('blur',function(event)
 		{
 			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
-			amount_filter.value=Math.round(amount);
+			amount_filter.value=Math.round(amount).toFixed(2);
 				
 			//tax_filter.value=parseFloat((parseFloat(tax_unit_filter.value)*amount)/100);
 			//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
@@ -8513,7 +8513,7 @@ function form154_add_product()
 				days_filter.value=days;
 				
 				var amount=my_round(parseFloat(quantity_filter.value)*parseFloat(price_filter.value)*days,2);
-				amount_filter.value=Math.round(amount);
+				amount_filter.value=Math.round(amount).toFixed(2);
 				
 				//tax_filter.value=my_round(parseFloat((parseFloat(tax_unit_filter.value)*(amount-parseFloat(discount_filter.value)))/100),2);
 					
@@ -8688,7 +8688,7 @@ function form154_add_product()
 			$(price_filter).add(quantity_filter).on('blur',function(event)
 			{
 				var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
-				amount_filter.value=Math.round(amount);
+				amount_filter.value=Math.round(amount).toFixed(2);
 					
 				//tax_filter.value=my_round(parseFloat((parseFloat(tax_unit_filter.value)*(amount-parseFloat(discount_filter.value)))/100),2);
 				//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value));
@@ -8788,7 +8788,7 @@ function form154_add_service()
 		$(price_filter).on('blur',function(event)
 		{
 			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
-			amount_filter.value=Math.round(amount);
+			amount_filter.value=Math.round(amount).toFixed(2);
 			//tax_filter.value=my_round(parseFloat((parseFloat(tax_unit_filter.value)*amount)),2);
 			//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
 		});

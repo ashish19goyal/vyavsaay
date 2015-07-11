@@ -35,6 +35,7 @@
 <script src='./JavaScripts/prop/local_db_handling.js'></script>
 <script src='./JavaScripts/prop/login_helper.js'></script>
 <script src='./JavaScripts/prop/modal_action.js'></script>
+<script src='./JavaScripts/prop/numeral.js'></script>
 <script src='./JavaScripts/prop/my_chart.js'></script>
 <script src='./JavaScripts/prop/print.js'></script>
 <script src='./JavaScripts/prop/questionnaire.js'></script>

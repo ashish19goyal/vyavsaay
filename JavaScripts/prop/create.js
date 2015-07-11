@@ -11212,13 +11212,13 @@ function form153_get_totals()
 		//discount+=parseFloat(subform.elements[8].value);
 	});
 
-	var tax=Math.round((tax_rate*((amount-discount)/100)));
-	var total=Math.round(amount+tax-discount);
+	var tax=Math.round((tax_rate*((amount-discount)/100))).toFixed(2);
+	var total=Math.round(amount+tax-discount).toFixed(2);
 
 	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-					"<td>Rs. "+amount+"</br>" +
-					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
+					"<td>Rs. "+amount.toFixed(2)+"</br>" +
+					"Rs. <input type='number' value='"+discount.toFixed(2)+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
 					"@ <input type='number' value='"+tax_rate+"' title='specify tax rate' step='any' id='form153_tax' class='dblclick_editable'>% Rs. "+tax+"<br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -11266,8 +11266,8 @@ function form153_create_form()
 			//discount+=parseFloat(subform.elements[8].value);
 		});
 		
-		var tax=Math.round((tax_rate*((amount-discount)/100)));
-		var total=Math.round(amount+tax-discount);
+		var tax=Math.round((tax_rate*((amount-discount)/100))).toFixed(2);
+		var total=Math.round(amount+tax-discount).toFixed(2);
 
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
@@ -11306,8 +11306,8 @@ function form153_create_form()
 		
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-					"<td>Rs. "+amount+"</br>" +
-					"Rs. <input type='number' value='"+discount+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
+					"<td>Rs. "+amount.toFixed(2)+"</br>" +
+					"Rs. <input type='number' value='"+discount.toFixed(2)+"' step='any' id='form153_discount' class='dblclick_editable'></br>" +
 					"@ <input type='number' value='"+tax_rate+"' title='specify tax rate' step='any' id='form153_tax' class='dblclick_editable'>% Rs. "+tax+" <br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
@@ -11561,6 +11561,13 @@ function form154_get_totals()
 	var form=document.getElementById("form154_master");
 		
 	var bill_type=form.elements['bill_type'].value;
+	var tax_type=form.elements['tax_type'].value;
+	
+	var tax_text="VAT";
+	if(tax_type=='CST' || tax_type=='Retail Central')
+	{
+		tax_text="CST";
+	}
 		
 	var hiring=false;
 	if(bill_type=='Hiring')
@@ -11584,45 +11591,38 @@ function form154_get_totals()
 		var subform=document.getElementById(subform_id);
 		if(hiring)
 		{
-			//tax+=parseFloat(subform.elements[7].value);
 			if(isNaN(parseFloat(subform.elements[7].value)))
 				amount+=0;
 			else
 				amount+=Math.round(parseFloat(subform.elements[7].value));
-			//total+=Math.round(parseFloat(subform.elements[9].value));
-			//discount+=parseFloat(subform.elements[10].value);
 		}
 		else if(bill_type=='Installation' || bill_type=='Repair')
 		{			
-			//tax+=parseFloat(subform.elements[3].value);
 			if(isNaN(parseFloat(subform.elements[3].value)))
 				amount+=0;
 			else
 				amount+=Math.round(parseFloat(subform.elements[3].value));
-			//total+=Math.round(parseFloat(subform.elements[5].value));
-			//discount+=parseFloat(subform.elements[6].value);
 		}
 		else
 		{			
-			//tax+=parseFloat(subform.elements[3].value);
 			if(isNaN(parseFloat(subform.elements[3].value)))
 				amount+=0;
 			else
 				amount+=Math.round(parseFloat(subform.elements[3].value));
-			//total+=Math.round(parseFloat(subform.elements[5].value));
-			//discount+=parseFloat(subform.elements[6].value);
 		}
 	});
 
 	var tax=Math.round((tax_rate*((amount-discount)/100)));		
-	var total=Math.round(amount+tax-discount+cartage);
-
+	var total=Math.round(amount+tax-discount+cartage).toFixed(2);
+	
+	form.elements['bill_total'].value=total;
+	
 	var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-				"<td>Amount:<disc><br>Discount: </disc><br>Tax: <br>Cartage: <br>Total: </td>" +
-				"<td>Rs. "+amount+"</br>" +
-				"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-				"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax+" <br>" +
-				"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
+				"<td>Amount:<disc><br>Discount: </disc><br>"+tax_text+": <br>Cartage: <br>Total: </td>" +
+				"<td>Rs. "+amount.toFixed(2)+"</br>" +
+				"<disc_amount>Rs. <input type='number' value='"+discount.toFixed(2)+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
+				"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax.toFixed(2)+" <br>" +
+				"Rs. <input type='number' value='0.00' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 				"Rs. "+total+"</td>" +
 				"<td></td>" +
 				"</tr>";
@@ -11630,10 +11630,10 @@ function form154_get_totals()
 	{
 		total_row="<tr><td colspan='4' data-th='Total'>Total</td>" +
 				"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
-				"<td>Rs. "+amount+"</br>" +
-				"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br><disc_amount>" +
-				"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax+" <br>" +
-				"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
+				"<td>Rs. "+amount.toFixed(2)+"</br>" +
+				"<disc_amount>Rs. <input type='number' value='"+discount.toFixed(2)+"' step='any' id='form154_discount' class='dblclick_editable'><br><disc_amount>" +
+				"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax.toFixed(2)+" <br>" +
+				"Rs. <input type='number' value='0.00' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 				"Rs. "+total+"</td>" +
 				"<td></td>" +
 				"</tr>";
@@ -11643,10 +11643,10 @@ function form154_get_totals()
 	{
 		total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
-				"<td>Rs. "+amount+"</br>" +
-				"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-				"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax+" <br>" +
-				"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
+				"<td>Rs. "+amount.toFixed(2)+"</br>" +
+				"<disc_amount>Rs. <input type='number' value='"+discount.toFixed(2)+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
+				"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax.toFixed(2)+" <br>" +
+				"Rs. <input type='number' value='0.00' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 				"Rs. "+total+"</td>" +
 				"<td></td>" +
 				"</tr>";
@@ -11669,11 +11669,20 @@ function form154_create_form()
 		
 		var customer=form.elements['customer'].value;
 		var bill_type=form.elements['bill_type'].value;
+		var tax_type=form.elements['tax_type'].value;
 		var storage=form.elements['store'].value;		
 		var bill_date=get_raw_time(form.elements['date'].value);
 		var narration=form.elements['narration'].value;		
 		var print_1_job='no';
 		var cform='no';
+
+		var tax_type=form.elements['tax_type'].value;
+		
+		var tax_text="VAT";
+		if(tax_type=='CST' || tax_type=='Retail Central')
+		{
+			tax_text="CST";
+		}
 
 		if(form.elements['job'].checked)
 			print_1_job='yes';
@@ -11735,7 +11744,9 @@ function form154_create_form()
 		});
 
 		var tax=Math.round((tax_rate*((amount-discount)/100)));		
-		var total=Math.round(amount+tax-discount+cartage);
+		var total=Math.round(amount+tax-discount+cartage).toFixed(2);
+	
+		form.elements['bill_total'].value=total;
 
 		var data_id=form.elements['bill_id'].value;
 		var transaction_id=form.elements['t_id'].value;
@@ -11750,6 +11761,7 @@ function form154_create_form()
 					"<amount>"+amount+"</amount>" +
 					"<total>"+total+"</total>" +
 					"<billing_type>"+bill_type+"</billing_type>" +
+					"<tax_type>"+tax_type+"</tax_type>" +
 					"<discount>"+discount+"</discount>" +
 					"<cartage>0</cartage>" +
 					"<tax>"+tax+"</tax>" +
@@ -11848,11 +11860,11 @@ function form154_create_form()
 		}
 		
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-					"<td>Amount:<disc><br>Discount: </disc><br>Tax: <br>Cartage: <br>Total: </td>" +
-					"<td>Rs. "+amount+"</br>" +
-					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-					"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax+"<br>" +
-					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
+					"<td>Amount:<disc><br>Discount: </disc><br>"+tax_text+": <br>Cartage: <br>Total: </td>" +
+					"<td>Rs. "+amount.toFixed(2)+"</br>" +
+					"<disc_amount>Rs. <input type='number' value='"+discount.toFixed(2)+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
+					"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax.toFixed(2)+"<br>" +
+					"Rs. <input type='number' value='0.00' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
 					"</tr>";
@@ -11860,10 +11872,10 @@ function form154_create_form()
 		{
 			total_row="<tr><td colspan='4' data-th='Total'>Total</td>" +
 					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
-					"<td>Rs. "+amount+"</br>" +
-					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'><br><disc_amount>" +
-					"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax+"<br>" +
-					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
+					"<td>Rs. "+amount.toFixed(2)+"</br>" +
+					"<disc_amount>Rs. <input type='number' value='"+discount.toFixed(2)+"' step='any' id='form154_discount' class='dblclick_editable'><br><disc_amount>" +
+					"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax.toFixed(2)+"<br>" +
+					"Rs. <input type='number' value='0.00' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
 					"</tr>";
@@ -11873,10 +11885,10 @@ function form154_create_form()
 		{
 			total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 					"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
-					"<td>Rs. "+amount+"</br>" +
-					"<disc_amount>Rs. <input type='number' value='"+discount+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
-					"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax+" <br>" +
-					"Rs. <input type='number' value='0' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
+					"<td>Rs. "+amount.toFixed(2)+"</br>" +
+					"<disc_amount>Rs. <input type='number' value='"+discount.toFixed(2)+"' step='any' id='form154_discount' class='dblclick_editable'></br></disc_amount>" +
+					"@ <input type='number' value='"+tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+tax.toFixed(2)+" <br>" +
+					"Rs. <input type='number' value='0.00' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
 					"Rs. "+total+"</td>" +
 					"<td></td>" +
 					"</tr>";

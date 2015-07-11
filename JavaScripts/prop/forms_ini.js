@@ -14915,10 +14915,10 @@ function form153_ini()
 
 				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-							"<td>Rs. "+Math.round(quot_results[i].amount)+"</br>" +
-							"Rs. <input type='number' value='"+Math.round(quot_results[i].discount)+"' step='any' id='form153_discount' class='dblclick_editable'><br>" +
-							"@ <input type='number' value='"+quot_results[i].tax_rate+"' step='any' id='form153_tax' class='dblclick_editable'>% Rs. "+Math.round(quot_results[i].tax)+"<br>" +
-							"Rs. "+Math.round(quot_results[i].total)+"</td>" +
+							"<td>Rs. "+Math.round(quot_results[i].amount).toFixed(2)+"</br>" +
+							"Rs. <input type='number' value='"+Math.round(quot_results[i].discount).toFixed(2)+"' step='any' id='form153_discount' class='dblclick_editable'><br>" +
+							"@ <input type='number' value='"+quot_results[i].tax_rate+"' step='any' id='form153_tax' class='dblclick_editable'>% Rs. "+Math.round(quot_results[i].tax).toFixed(2)+"<br>" +
+							"Rs. "+Math.round(quot_results[i].total).toFixed(2)+"</td>" +
 							"<td></td>" +
 							"</tr>";
 				$('#form153_foot').html(total_row);
@@ -14951,7 +14951,7 @@ function form153_ini()
 						{	rowsHTML+="/day";  }	
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Amount'>";
-								rowsHTML+="<input type='number' readonly='readonly' form='form153_"+id+"' value='"+Math.round(result.amount)+"'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form153_"+id+"' value='"+Math.round(result.amount).toFixed(2)+"'>";
 						if(hiring)
 						{	rowsHTML+="/day";  }	
 						rowsHTML+="</td>";
@@ -15003,6 +15003,7 @@ function form154_ini()
 				"<tax></tax>" +
 				"<tax_rate></tax_rate>"+
 				"<billing_type></billing_type>" +
+				"<tax_type></tax_type>"+
 				"<type></type>" +
 				"<transaction_id></transaction_id>" +
 				"<storage></storage>"+
@@ -15041,6 +15042,17 @@ function form154_ini()
 				filter_fields.elements['store'].value=bill_results[i].storage;
 				filter_fields.elements['date'].value=get_my_past_date(bill_results[i].bill_date);
 				filter_fields.elements['narration'].value=bill_results[i].notes;
+				filter_fields.elements['bill_total'].value=bill_results[i].total;
+				var tax_type_filter=filter_fields.elements['tax_type'];
+				tax_type_filter.value=bill_results[i].tax_type;
+
+				var tax_text="VAT";
+				if(filter_fields.elements['tax_type'].value=="Retail Central" || filter_fields.elements['tax_type'].value=="CST")
+				{
+					tax_text="CST";
+				}
+				
+				$(tax_type_filter).parent().hide();
 				
 				if(bill_results[i].print_1_job=='yes')
 				{
@@ -15069,11 +15081,11 @@ function form154_ini()
 				var cst_filter=filter_fields.elements['cst'];
 				var tin_filter=filter_fields.elements['tin'];
 				
-				if(filter_fields.elements[2].value=='Hiring')
+				if(filter_fields.elements['bill_type'].value=='Hiring')
 				{
 					hiring=true;
 				}
-				
+
 				if(filter_fields.elements['bill_type'].value=='Retail' || filter_fields.elements['bill_type'].value=='Tax')
 				{
 					var cst_data="<attributes>"+
@@ -15117,12 +15129,12 @@ function form154_ini()
 				});
 
 				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-							"<td>Amount:<disc><br>Discount: </disc><br>Tax: <br>Cartage: <br>Total: </td>" +
-							"<td>Rs. "+Math.round(bill_results[i].amount)+"</br>" +
-							"<disc_amount>Rs. <input type='number' value='"+Math.round(bill_results[i].discount)+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
-							"@ <input type='number' value='"+bill_results[i].tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+Math.round(bill_results[i].tax)+" <br>" +
-							"Rs. <input type='number' value='"+Math.round(bill_results[i].cartage)+"' step='any' id='form154_cartage' class='dblclick_editable'><br>" +
-							"Rs. "+Math.round(bill_results[i].total)+"</td>" +
+							"<td>Amount:<disc><br>Discount: </disc><br>"+tax_text+": <br>Cartage: <br>Total: </td>" +
+							"<td>Rs. "+Math.round(bill_results[i].amount).toFixed(2)+"</br>" +
+							"<disc_amount>Rs. <input type='number' value='"+Math.round(bill_results[i].discount).toFixed(2)+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
+							"@ <input type='number' value='"+bill_results[i].tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+Math.round(bill_results[i].tax).toFixed(2)+" <br>" +
+							"Rs. <input type='number' value='"+Math.round(bill_results[i].cartage).toFixed(2)+"' step='any' id='form154_cartage' class='dblclick_editable'><br>" +
+							"Rs. "+Math.round(bill_results[i].total).toFixed(2)+"</td>" +
 							"<td></td>" +
 							"</tr>";
 				
@@ -15139,11 +15151,11 @@ function form154_ini()
 				{				
 					total_row="<tr><td colspan='4' data-th='Total'>Total</td>" +
 							"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
-							"<td>Rs. "+Math.round(bill_results[i].amount)+"</br>" +
-							"<disc_amount>Rs. <input type='number' value='"+Math.round(bill_results[i].discount)+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
-							"@ <input type='number' value='"+bill_results[i].tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+Math.round(bill_results[i].tax)+" <br>" +
-							"Rs. <input type='number' value='"+Math.round(bill_results[i].cartage)+"' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
-							"Rs. "+Math.round(bill_results[i].total)+"</td>" +
+							"<td>Rs. "+Math.round(bill_results[i].amount).toFixed(2)+"</br>" +
+							"<disc_amount>Rs. <input type='number' value='"+Math.round(bill_results[i].discount).toFixed(2)+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
+							"@ <input type='number' value='"+bill_results[i].tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+Math.round(bill_results[i].tax).toFixed(2)+" <br>" +
+							"Rs. <input type='number' value='"+Math.round(bill_results[i].cartage).toFixed(2)+"' step='any' id='form154_cartage' class='dblclick_editable'></br>" +
+							"Rs. "+Math.round(bill_results[i].total).toFixed(2)+"</td>" +
 							"<td></td>" +
 							"</tr>";
 							
@@ -15168,16 +15180,17 @@ function form154_ini()
 							"<th>Amount</th>"+
 							"<th><input type='button' title='Add Product' class='add_icon' onclick='form154_add_product();'></th>"+
 							"</tr>";
+					$(tax_type_filter).parent().show();		
 				}
 				else
 				{
 					total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 							"<td>Amount:<disc><br>Discount: </disc><br>Service Tax @ 14%: <br>Cartage: <br>Total: </td>" +
-							"<td>Rs. "+Math.round(bill_results[i].amount)+"</br>" +
-							"<disc_amount>Rs. <input type='number' value='"+Math.round(bill_results[i].discount)+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
-							"@ <input type='number' value='"+bill_results[i].tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+Math.round(bill_results[i].tax)+"<br>" +
-							"Rs. <input type='number' value='"+Math.round(bill_results[i].cartage)+"' step='any' id='form154_cartage' class='dblclick_editable'><br>" +
-							"Rs. "+Math.round(bill_results[i].total)+"</td>" +
+							"<td>Rs. "+Math.round(bill_results[i].amount).toFixed(2)+"</br>" +
+							"<disc_amount>Rs. <input type='number' value='"+Math.round(bill_results[i].discount).toFixed(2)+"' step='any' id='form154_discount' class='dblclick_editable'><br></disc_amount>" +
+							"@ <input type='number' value='"+bill_results[i].tax_rate+"' step='any' id='form154_tax' class='dblclick_editable'>% Rs. "+Math.round(bill_results[i].tax).toFixed(2)+"<br>" +
+							"Rs. <input type='number' value='"+Math.round(bill_results[i].cartage).toFixed(2)+"' step='any' id='form154_cartage' class='dblclick_editable'><br>" +
+							"Rs. "+Math.round(bill_results[i].total).toFixed(2)+"</td>" +
 							"<td></td>" +
 							"</tr>";
 				
@@ -15227,7 +15240,7 @@ function form154_ini()
 								rowsHTML+="<input type='number' readonly='readonly' form='form154_"+id+"' value='"+result.unit_price+"' step='any'> /day";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Amount'>";
-									rowsHTML+="<input type='number' readonly='readonly' form='form154_"+id+"' value='"+Math.round(result.amount)+"'>";
+									rowsHTML+="<input type='number' readonly='readonly' form='form154_"+id+"' value='"+Math.round(result.amount).toFixed(2)+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form154_"+id+"' value='"+id+"'>";
@@ -15262,7 +15275,7 @@ function form154_ini()
 								rowsHTML+="<input type='number' readonly='readonly' form='form154_"+id+"' value='"+result.unit_price+"' step='any'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Amount'>";
-									rowsHTML+="<input type='number' readonly='readonly' form='form154_"+id+"' value='"+Math.round(result.amount)+"'>";
+									rowsHTML+="<input type='number' readonly='readonly' form='form154_"+id+"' value='"+Math.round(result.amount).toFixed(2)+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form154_"+id+"' value='"+id+"'>";

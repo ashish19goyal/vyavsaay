@@ -1063,6 +1063,11 @@ function form153_print_form()
 	
 	table_copy.removeAttribute('class');
 	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,v1").remove();
+	
+	$(table_copy).find('input[type=number]').each(function(index)
+	{
+		$(this).replaceWith(Math.round($(this).val()).toFixed(2));
+	});	
 	$(table_copy).find('input').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
@@ -1152,33 +1157,35 @@ function form154_print_form()
 	var business_website=get_session_var('website');
 
 	var master_form=document.getElementById('form154_master');
-	var customer_name=master_form.elements[1].value;
+	var customer_name=master_form.elements['customer'].value;
 	var customer_address1=document.getElementById('form154_customer_info').innerHTML;
 	var customer_address=customer_address1.replace("Address<br>","");
-	var date=master_form.elements[4].value;
-	var narration=master_form.elements[5].value;
-	var invoice_no=master_form.elements[7].value;
-	var customer_cst=master_form.elements[13].value;	
-	var customer_tin=master_form.elements[14].value;
+	var date=master_form.elements['date'].value;
+	var narration=master_form.elements['narration'].value;
+	var invoice_no=master_form.elements['bill_num'].value;
+	var customer_cst=master_form.elements['cst'].value;	
+	var customer_tin=master_form.elements['tin'].value;
 	var tin_no=get_session_var('tin');
 	var sales_tax_no=get_session_var('sales_tax_no');	
 	var service_tax_no=get_session_var('service_tax_no');	
 	var tax_text="Tin No: "+tin_no;
 	var hiring=false;
 	var a1_job=false;
-	if(master_form.elements[6].checked)
+	if(master_form.elements['job'].checked)
 		a1_job=true;
 
+	var bill_total=parseFloat(master_form.elements['bill_total'].value);
+
 	var invoice_text="Invoice";
-	if(master_form.elements[2].value=='Retail')
+	if(master_form.elements['bill_type'].value=='Retail')
 	{
 		invoice_text="Retail Invoice";
 	}
-	else if(master_form.elements[2].value=='Tax')
+	else if(master_form.elements['bill_type'].value=='Tax')
 	{
 		invoice_text="Tax Invoice";
 	}
-	else if(master_form.elements[2].value=='Hiring')
+	else if(master_form.elements['bill_type'].value=='Hiring')
 	{
 		hiring=true;
 		tax_text="Service Tax no: "+service_tax_no;	
@@ -1198,7 +1205,7 @@ function form154_print_form()
 	
 	invoice_line.innerHTML="<hr style='border: 1px solid #000;margin:2px'><div style='text-align:center;'><b style='text-size:1.2em'>"+invoice_text+"</b></div><br>";
 	
-	if(master_form.elements[2].value=='Tax' || master_form.elements[2].value=='Retail')
+	if(master_form.elements['bill_type'].value=='Tax' || master_form.elements['bill_type'].value=='Retail')
 	{
 		customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address+"<br>CST#: "+customer_cst+"<br>TIN#: "+customer_tin;
 	}
@@ -1233,6 +1240,11 @@ function form154_print_form()
 
 	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh,v1").remove();
 	
+	$(table_copy).find('input[type=number]').each(function(index)
+	{
+		$(this).replaceWith(Math.round($(this).val()).toFixed(2));
+	});	
+
 	$(table_copy).find('input').each(function(index)
 	{
 		$(this).replaceWith($(this).val());
@@ -1246,7 +1258,8 @@ function form154_print_form()
 	{
 		$(this).replaceWith($(this).html());
 	});
-		
+
+	var wording_total=number2text(bill_total);	
 	if(hiring)
 	{
 		var head_html="<tr><form id='form154_header'></form>"+
@@ -1270,11 +1283,13 @@ function form154_print_form()
 		$(table_copy).find('tfoot > tr > td:first').attr('colspan','4');
 		$(table_copy).find('tfoot > tr > td:nth-child(2)').attr('colspan','2');
 		$(table_copy).find('tfoot > tr > td:nth-child(3)').attr('colspan','2');
+		$(table_copy).find('tfoot > tr > td:first').html('Total<br>'+wording_total);		
 	}
 	else 
 	{
 		$(table_copy).find('tfoot > tr > td:first').attr('colspan','2');
 		$(table_copy).find('tfoot > tr > td:nth-child(2)').attr('colspan','2');
+		$(table_copy).find('tfoot > tr > td:first').html('Total<br>'+wording_total);		
 	}
 	
 	if(a1_job)

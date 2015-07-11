@@ -348,6 +348,7 @@
 			<total_quantity index='yes' type="DECIMAL(12,2)"></total_quantity>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
 			<billing_type index="yes" type="VARCHAR(20)"></billing_type>
+			<tax_type index="yes" type="VARCHAR(20)"></tax_type><!--CST/Retail Local/Retail Central/Tax Invoice-->
 			<channel index="yes" type="TEXT"></channel>
 			<offer index='no' type="TEXT"></offer>
 			<discount index='no' type="DECIMAL(12,2)"></discount>

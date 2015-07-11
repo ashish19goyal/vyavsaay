@@ -5530,6 +5530,7 @@ function form154_header_ini()
 	var bill_type=fields.elements['bill_type'];
 	var store_filter=fields.elements['store'];	
 	var bill_date=fields.elements['date'];
+	var tax_type=fields.elements['tax_type'];
 	var narration=fields.elements['narration'];
 	var a1_job=document.getElementById('form154_1job');
 	var bill_num=fields.elements['bill_num'];
@@ -5556,8 +5557,10 @@ function form154_header_ini()
 	});
 	
 	$(document).off('keydown');
-	$(document).on('keydown', function(event) {
-		if( event.keyCode == 83 && event.ctrlKey) {
+	$(document).on('keydown', function(event) 
+	{
+		if( event.keyCode == 83 && event.ctrlKey) 
+		{
 	    	event.preventDefault();
 	    	$(save_button).trigger('click');
 	    }
@@ -5599,6 +5602,8 @@ function form154_header_ini()
 		"</bill_types>";
 	set_my_value_list(type_data,bill_type);
 	
+	set_static_value_list('bills','tax_type',tax_type);
+
 	var bill_id=$("#form154_link").attr('data_id');
 	if(bill_id==null || bill_id=='')
 	{	
@@ -5633,6 +5638,15 @@ function form154_header_ini()
 		$(cform_filter).parent().hide();
 	}
 
+	if(bill_type.value=='Retail' || bill_type.value=='Tax')
+	{
+		$(tax_type).parent().show();
+	}
+	else
+	{
+		$(tax_type).parent().hide();
+	}
+
 	$(bill_type).off('blur');
 	$(bill_type).on('blur',function (e) 
 	{
@@ -5643,6 +5657,15 @@ function form154_header_ini()
 		else
 		{
 			$(cform_filter).parent().hide();
+		}
+
+		if(bill_type.value=='Retail' || bill_type.value=='Tax')
+		{
+			$(tax_type).parent().show();
+		}
+		else
+		{
+			$(tax_type).parent().hide();
 		}
 		
 		if(bill_type.value=='Retail' || bill_type.value=='Tax')
