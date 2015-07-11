@@ -5363,7 +5363,7 @@ function modal51_action(object)
 				    "<master_value></master_value>"+
 				    "<references_value></references_value>"+
 				    "<references_id></references_id>"+
-				    "<status>pending</status>"+
+				    "<status exact='yes'>pending</status>"+
 				    "</de_duplication>";
 				
 		fetch_requested_data('',de_duplication_data,function(results)
@@ -5393,32 +5393,50 @@ function modal51_action(object)
 						var refs_split=refs.split("--");
 						var tablename=refs_split[0];
 						var column=refs_split[1];
+						var action_type=refs_split[2];
 						
 						if(tablename!=="" && tablename!==null)
 						{	
-							var refs_data="<"+tablename+">" +
-									"<id></id>" +
-									"<"+column+" exact='yes'>"+result.slave_value+"</"+column+">" +
-									"</"+tablename+">";
-							fetch_requested_data('',refs_data,function(ref_results)
+							if(action_type=='delete')
 							{
-								ref_results.forEach(function(ref_result)
+								var refs_data="<"+tablename+">" +
+										"<"+column+" exact='yes'>"+result.slave_value+"</"+column+">" +
+										"</"+tablename+">";
+								if(is_online())
 								{
-									var refs_xml="<"+tablename+">" +
-											"<id>"+ref_result.id+"</id>" +
-											"<"+column+">"+result.master_value+"</"+column+">" +
-											"<last_updated>"+get_my_time()+"</last_updated>" +
-											"</"+tablename+">";
-									if(is_online())
+									server_delete_simple(refs_data);
+								}
+								else
+								{
+									local_delete_simple(refs_data);
+								}
+							}
+							else
+							{
+								var refs_data="<"+tablename+">" +
+										"<id></id>" +
+										"<"+column+" exact='yes'>"+result.slave_value+"</"+column+">" +
+										"</"+tablename+">";
+								fetch_requested_data('',refs_data,function(ref_results)
+								{
+									ref_results.forEach(function(ref_result)
 									{
-										server_update_simple(refs_xml);
-									}
-									else
-									{
-										local_update_simple(refs_xml);
-									}
-								});
-							});
+										var refs_xml="<"+tablename+">" +
+												"<id>"+ref_result.id+"</id>" +
+												"<"+column+">"+result.master_value+"</"+column+">" +
+												"<last_updated>"+get_my_time()+"</last_updated>" +
+												"</"+tablename+">";
+										if(is_online())
+										{
+											server_update_simple(refs_xml);
+										}
+										else
+										{
+											local_update_simple(refs_xml);
+										}
+									});
+								});								
+							}
 						}
 					});
 					

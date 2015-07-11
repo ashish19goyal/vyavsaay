@@ -2793,7 +2793,7 @@ function form80_add_item()
 		var column=master_fields.elements[3].value;
 		
 		var slave_data="<"+table+">" +
-				"<"+column+" exact='yes'></"+column+">" +
+				"<"+column+"></"+column+">" +
 				"</"+table+">";
 		set_my_value_list(slave_data,slave_filter);
 		set_my_value_list(slave_data,master_filter);

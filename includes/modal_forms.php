@@ -606,8 +606,8 @@
 	</div>
 	
 	<div id="modal51" title="Merging Records">
-		Merging records. 
-		You can close this window at any time. The process will continue in the background.
+		Merging records.
+		Please don't close this window immediately.
 	</div>
 	
 	<div id="modal52" title="Local Storage Cleared">
