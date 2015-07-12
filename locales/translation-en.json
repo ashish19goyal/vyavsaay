@@ -28,7 +28,8 @@
     "admin":"Admin",
     "promotion":"Promotion",
     "people":"People",
-    "manufacturing":"Manufacturing"
+    "manufacturing":"Manufacturing",
+    "logistics":"Logistics"
   },
   "general":{
   	"hello": "Hello"
@@ -331,6 +332,24 @@
 	"letterhead":"Letter-Head",
 	"promotions_by_list":"Promotions by list",
 	"supplier_item_mapping":"Supplier Item Mapping",
-	"supplier_score_report":"Supplier Score Report"
-  }
+	"supplier_score_report":"Supplier Score Report",
+	"logistic_order_status":"Logistics Order Status",
+	"logistic_orders_by_delivery":"Logistics Orders (by delivery)",
+	"logistic_order_details":"Logistic Order Details",
+	"incoming_items":"Incoming Items",
+	"create_drs":"Create DRS",
+	"manage_drs":"Manage DRS",
+	"logistic_exchange":"Logistic Exchange",
+	"manage_logistic_orders":"Manage Logistic Orders",
+	"pending_logistic_orders":"Pending Logistic Orders",
+	"delivered_logistic_orders":"Delivered Logistic Orders",
+	"undelivered_logistic_orders":"Undelivered Logistic Orders",
+	"exchanges":"Exchanges",
+	"order_delivery":"Order Delivery",
+	"order_status":"Order Status",
+	"pending_orders":"Pending Orders",
+	"undelivered_orders":"Undelivered Orders",
+	"delivered_orders":"Delivered Orders",
+	"order_details":"Order Details"
+	}
 }

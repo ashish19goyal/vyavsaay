@@ -632,3 +632,53 @@ function set_grid_item_32()
 		document.getElementById('grid_item_32').innerHTML=results.length;
 	},columns);
 };
+
+/**
+ * @item Today's # logisitcs orders
+ * @itemNo 36
+ */
+function set_grid_item_36()
+{
+	var columns="<logistics_orders>" +
+		"<id></id>" +
+		"<dispatch_date exact='yes'>"+get_raw_time(get_my_date())+"</dispatch_date>"+
+		"</logistics_orders>";
+	get_single_column_data(function(results)
+	{
+		document.getElementById('grid_item_36').innerHTML=results.length;
+	},columns);
+};
+
+/**
+ * @item Today's # undelivered orders
+ * @itemNo 37
+ */
+function set_grid_item_37()
+{
+	var columns="<logistics_orders>" +
+		"<id></id>" +
+		"<status exact='yes'>undelivered</status>"+
+		"<dispatch_date exact='yes'>"+get_raw_time(get_my_date())+"</dispatch_date>"+
+		"</logistics_orders>";
+	get_single_column_data(function(results)
+	{
+		document.getElementById('grid_item_37').innerHTML=results.length;
+	},columns);
+};
+
+/**
+ * @item Today's # pending orders
+ * @itemNo 38
+ */
+function set_grid_item_38()
+{
+	var columns="<logistics_orders>" +
+		"<id></id>" +
+		"<status exact='yes'>pending</status>"+
+		"<dispatch_date exact='yes'>"+get_raw_time(get_my_date())+"</dispatch_date>"+
+		"</logistics_orders>";
+	get_single_column_data(function(results)
+	{
+		document.getElementById('grid_item_38').innerHTML=results.length;
+	},columns);
+};

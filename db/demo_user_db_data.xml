@@ -1033,6 +1033,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report76</name>
+			<display_name>logistic_order_status</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -2770,6 +2780,105 @@
 			<tables>--supplier_item_mapping--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form198</name>
+			<display_name>logistic_order_details</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form199</name>
+			<display_name>incoming_items</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form200</name>
+			<display_name>create_drs</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--drs--drs_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form201</name>
+			<display_name>manage_drs</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--drs--drs_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form202</name>
+			<display_name>logistic_exchange</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--store_areas--store_movement--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form203</name>
+			<display_name>manage_logistic_orders</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form204</name>
+			<display_name>pending_logistic_orders</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form205</name>
+			<display_name>delivered_logistic_orders</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form206</name>
+			<display_name>undelivered_logistic_orders</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3436,6 +3545,17 @@
 			<username>master</username>
 			<element_id>report75</element_id>
 			<element_name>supplier_score_report</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report76</element_id>
+			<element_name>logistic_order_status</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -5169,11 +5289,110 @@
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form197</element_id>
 			<element_name>supplier_item_mapping</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form198</element_id>
+			<element_name>logistic_order_details</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form199</element_id>
+			<element_name>incoming_items</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form200</element_id>
+			<element_name>create_drs</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form201</element_id>
+			<element_name>manage_drs</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form202</element_id>
+			<element_name>logistic_exchange</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form203</element_id>
+			<element_name>logistic_manage_orders</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form204</element_id>
+			<element_name>logistic_pending_orders</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form205</element_id>
+			<element_name>logistic_delivered_orders</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form206</element_id>
+			<element_name>logistic_undelivered_orders</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

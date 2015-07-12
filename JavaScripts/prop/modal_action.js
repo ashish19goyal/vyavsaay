@@ -8418,3 +8418,74 @@ function modal127_action()
 
 	$("#modal127").dialog("open");
 }
+
+/**
+ * @modalNo 128
+ * @modal Add Logistics Order
+ */
+function modal128_action()
+{
+	var form=document.getElementById('modal128_form');
+	
+	var date_filter=form.elements['date'];	
+	$(date_filter).datepicker();	
+		
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form195'))
+		{
+			var awb=form.elements['awb'].value;
+			var type=form.elements['type'].value;
+			var order=form.elements['order'].value;
+			var merchant=form.elements['merchant'].value;
+			var shipto=form.elements['shipto'].value;
+			var address=form.elements['address'].value;
+			var city=form.elements['city'].value;
+			var pincode=form.elements['pincode'].value;
+			var phone=form.elements['phone'].value;
+			var weight=form.elements['weight'].value;
+			var d_value=form.elements['d_value'].value;
+			var c_value=form.elements['c_value'].value;
+			var raddress=form.elements['raddress'].value;
+			var date=get_raw_time(form.elements['date'].value);
+			var last_updated=get_my_time();
+			
+			var orders_xml="<logistics_orders>"+
+						"<id>"+get_new_key()+"</id>"+
+						"<awb_num>"+awb+"</awb_num>"+
+		                "<type>"+type+"</type>"+
+		                "<order_num>"+order+"</order_num>"+
+		                "<merchant_name>"+merchant+"</merchant_name>"+
+		                "<ship_to>"+shipto+"</ship_to>"+
+		                "<address1>"+address+"</address1>"+
+		                "<city>"+city+"</city>"+
+		                "<pincode>"+pincode+"</pincode>"+
+		                "<phone>"+phone+"</phone>"+
+		                "<weight>"+weight+"</weight>"+
+		                "<declared_value>"+d_value+"</declared_value>"+
+		                "<collectable_value>"+c_value+"</collectable_value>"+
+		                "<return_address1>"+raddress+"</return_address1>"+
+		                "<dispatch_date>"+date+"</dispatch_date>"+
+		                "<status>picked</status>"+
+		                "<last_updated>"+last_updated+"</last_updated>"+
+						"</logistics_orders>";
+			if(is_online())
+			{
+				server_create_simple(orders_xml);
+			}
+			else
+			{
+				local_create_simple(orders_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal128").dialog("close");
+	});
+	
+	$("#modal128").dialog("open");
+}

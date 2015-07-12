@@ -1150,3 +1150,13 @@ function form197_import_template()
 	var data_array=['id','item','supplier'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Logistics orders
+* @formNo 203
+*/
+function form203_import_template()
+{
+	var data_array=['id','awb_num','type','order_num','manifest_id','merchant_name','ship_to','address1','address2','city','state','pincode','phone','telephone','weight','declared_value','collectable_value','vendor_code','shipper_name','return_address1','return_address2','return_address3','return_pincode','len','breadth','height','pieces','carrier_account','carrier_name','manifest_type','dispatch_date','notes','pickup_location','pickup_by','status','current_location','delivery_person'];
+	my_array_to_csv(data_array);
+};

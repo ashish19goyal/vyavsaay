@@ -323,7 +323,7 @@ function hide_unreadable_elements()
 {
 	var forms_array=[];
 	var reports_array=[];
-	for (var i=1;i<200;i++)
+	for (var i=1;i<225;i++)
 	{
 		forms_array.push("form"+i);
 		reports_array.push("report"+i);
@@ -417,6 +417,7 @@ function hide_all()
 	
 	//hide all functions
 	$("#sale_bills_main").hide();
+	$("#logistics_main").hide();
 	$("#products_main").hide();
 	$("#purchase_main").hide();
 	$("#services_main").hide();
@@ -898,6 +899,8 @@ function import_data(form_name)
 		case 'form195':modal23_action(form195_import_template,form195_import);
 		break;
 		case 'form197':modal23_action(form197_import_template,form197_import);
+		break;
+		case 'form203':modal23_action(form203_import_template,form203_import);
 		break;
 	}
 }

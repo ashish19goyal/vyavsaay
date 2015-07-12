@@ -19963,3 +19963,107 @@ function form197_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Logistics Orders
+ * @formNo 203
+ * @Loading light
+ */
+function form203_ini()
+{
+	show_loader();
+	var fid=$("#form203_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form203_header');
+
+	//populating form 
+	var fawb=filter_fields.elements[0].value;
+	var forder=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form203_index');
+	var prev_element=document.getElementById('form203_prev');
+	var next_element=document.getElementById('form203_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<logistics_orders count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<order_num>"+forder+"</order_num>"+
+			"<awb_num>"+fawb+"</awb_num>"+
+			"<merchant_name></merchant_name>" +
+			"<ship_tp></ship_to>" +
+			"<dispatch_date></dispatch_date>" +
+			"<status>"+fstatus+"</status>" +
+			"</logistics_orders>";
+
+	$('#form203_body').html("");
+
+	fetch_requested_data('form203',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form203_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='AWB #'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form203_"+result.id+"' onclick=\"element_display('"+result.id+"','form198');\" value='"+result.awb_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Order #'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.order_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="Merchant: <textarea readonly='readonly' form='form203_"+result.id+"'>"+result.merchant_name+"</textarea>";
+						rowsHTML+="<br>Ship to: <textarea readonly='readonly' form='form203_"+result.id+"'>"+result.ship_to+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form203_"+result.id+"' value='"+result.id+"' name='id'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form203_"+result.id+"' title='Delete order' onclick='form203_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form203_body').append(rowsHTML);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'logistics_orders');
+		});
+		hide_loader();
+	});
+};

@@ -298,6 +298,46 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>logistics_orders</tablename>
+			<listname>status</listname>
+			<name>picked</name>
+			<value>Picked</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>logistics_orders</tablename>
+			<listname>status</listname>
+			<name>received</name>
+			<value>Received</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>logistics_orders</tablename>
+			<listname>status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>logistics_orders</tablename>
+			<listname>status</listname>
+			<name>delivered</name>
+			<value>Delivered</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>logistics_orders</tablename>
+			<listname>status</listname>
+			<name>undelivered</name>
+			<value>Undelivered</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>customer_returns</tablename>
 			<listname>status</listname>
 			<name>cancelled</name>

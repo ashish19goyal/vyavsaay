@@ -1259,4 +1259,63 @@
 			<footer index='yes' type="TEXT"></footer>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</letterheads>
+	<logistics_orders>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<awb_num index='yes' type="VARCHAR(20)"></awb_num>
+			<type index='yes' type="VARCHAR(10)"></type>
+			<order_num index='yes' type="VARCHAR(20)"></order_num>
+			<manifest_id index='yes' type="VARCHAR(20)"></manifest_id>
+			<merchant_name index='yes' type="TEXT"></merchant_name>
+			<ship_to index='yes' type="TEXT"></ship_to>
+			<address1 index='no' type="TEXT"></address1>
+			<address2 index='no' type="TEXT"></address2>
+			<city index='no' type="TEXT"></city>
+			<state index='no' type="TEXT"></state>
+			<pincode index='yes' type="TEXT"></pincode>
+			<phone index='yes' type="TEXT"></phone>
+			<telephone index='yes' type="TEXT"></telephone>
+			<weight index='no' type="DECIMAL(12,2)"></weight>
+			<declared_value index='no' type="DECIMAL(12,2)"></declared_value>
+			<collectable_value index='no' type="DECIMAL(12,2)"></collectable_value>
+			<vendor_code index='yes' type="TEXT"></vendor_code>
+			<shipper_name index='yes' type="TEXT"></shipper_name>
+			<return_address1 index='no' type="TEXT"></return_address1>
+			<return_address2 index='no' type="TEXT"></return_address2>
+			<return_address3 index='no' type="TEXT"></return_address3>
+			<return_pincode index='no' type="TEXT"></return_pincode>
+			<len index='no' type="DECIMAL(12,2)"></len>
+			<breadth index='no' type="DECIMAL(12,2)"></breadth>
+			<height index='no' type="DECIMAL(12,2)"></height>
+			<pieces index='no' type="DECIMAL(12,0)"></pieces>
+			<carrier_account index='no' type="TEXT"></carrier_account>
+			<carrier_name index='yes' type="TEXT"></carrier_name>
+			<manifest_type index='yes' type="TEXT"></manifest_type>
+			<dispatch_date index='yes' type="BIGINT"></dispatch_date>
+			<notes index='no' type="TEXT"></notes>
+			<pickup_location index='no' type="TEXT"></pickup_location>
+			<pickup_by index='yes' type="TEXT"></pickup_by>
+			<status index='yes' type="VARCHAR(20)"></status><!--picked/received/delivered/pending/undelivered-->
+			<current_location index='yes' type="TEXT"></current_location>
+			<delivery_person index='yes' type="TEXT"></delivery_person>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</logistics_orders>
+	<logistics_sku_mapping>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<awb_num index='yes' type="VARCHAR(20)"></awb_num>
+			<sku index='yes' type="VARCHAR(20)"></sku>
+			<product_name index='no' type="TEXT"></product_name>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</logistics_sku_mapping>
+	<drs>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<drs_num index='yes' type="VARCHAR(20)"></drs_num>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</drs>
+	<drs_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<drs_id index='yes' type="BIGINT"></drs_id>
+			<drs_num index='yes' type="VARCHAR(20)"></drs_num>
+			<awb_num index='yes' type="VARCHAR(20)"></awb_num>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</drs_items>
 </re_xml>

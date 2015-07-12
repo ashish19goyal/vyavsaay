@@ -5382,3 +5382,88 @@ function report75_ini()
 		}		
 	});	
 };
+
+/**
+ * @reportNo 76
+ * @report Pickup and Deliveries
+ */
+function report76_ini()
+{
+	var form=document.getElementById('report76_header');
+	var awb_filter=form.elements[1].value;
+	var delivery_filter=form.elements[2].value;
+	var date_filter=form.elements[3].value;
+	var status_filter=form.elements[4].value;
+	
+	show_loader();
+	$('#report76_body').html('');	
+	
+		////indexing///
+	var index_element=document.getElementById('report76_index');
+	var prev_element=document.getElementById('report76_prev');
+	var next_element=document.getElementById('report76_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var orders_data="<logistics_orders count='25' start_index='"+start_index+"'>" +
+		"<id></id>"+
+		"<awb_num>"+awb_filter+"</awb_num>" +
+		"<dispatch_date>"+date_filter+"</dispatch_date>"+
+		"<delivery_person>"+delivery_filter+"</delivery_person>"+
+		"<status>"+status_filter+"</status>"+
+		"</logistics_orders>";
+
+	fetch_requested_data('report76',orders_data,function(items)
+	{	
+		var rowsHTML="";
+		items.forEach(function(item)
+		{
+			rowsHTML=+"<tr>";
+			rowsHTML+="<form id='report76_"+item.id+"'></form>";
+			rowsHTML+="<td data-th='AWB #'>";
+				rowsHTML+=item.awb_num;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Delivery Person'>";
+				rowsHTML+=item.delivery_person;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date'>";
+				rowsHTML+=get_my_past_date(item.dispatch_date);
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+=item.status;
+			rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+					
+		});
+		$('#report76_body').append(rowsHTML);
+		
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(items.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		hide_loader();
+	});
+	
+	var print_button=form.elements[6];
+	print_tabular_report('report76','Orders',print_button);
+};

@@ -16,6 +16,7 @@
 		<li><a id='form109_link' href='#form109' onclick='form109_header_ini(); form109_ini();' data-i18n='form.asset_attributes'></a></li>
 		<li><a id='report45_link' href='#report45' onclick='report45_header_ini();' data-i18n='form.virtual_store'></a></li>
 		<li><a id='report1_link' href='#report1' onclick='report1_header_ini();' data-i18n='form.signage_changes'></a></li>
+		<li><a id='form202_link' href='#form202' onclick='form202_header_ini(); form202_ini();' data-i18n='form.exchanges'></a></li>
 	</ul>
 
 	<?php
@@ -35,5 +36,6 @@
 			include "forms/form109.php";
 			include "reports/report45.php";
 			include "reports/report1.php";
+			include "forms/form202.php";
 	?>
 </div>

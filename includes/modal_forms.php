@@ -1021,4 +1021,26 @@
 		</form>
 	</div>
 
+	<div id="modal128" title="Add Order">
+		<form id='modal128_form' autocomplete="off">
+			<fieldset>
+				<label>AWB #: <input name='awb' type="text" required></label><br>
+				<label>Type: <input name='type' type="text"></label><br>
+				<label>Order #: <input name='order' type='text'></label><br>
+				<label>Merchant: <input name='merchant' type='text'></label><br>
+				<label>Ship To: <input name='shipto' type='text'></label><br>
+				<label>Address: <input name='address' type='text'></label><br>
+				<label>City: <input name='city' type='text'></label><br>
+				<label>Pincode: <input name='pincode' type='text'></label><br>
+				<label>Phone: <input name='phone' type='text'></label><br>
+				<label>Weight: <input name='weight' type='text'></label><br>
+				<label>Declared Value: <input name='d_value' type='number'></label><br>
+				<label>Collectable Value: <input name='c_value' type='number'></label><br>
+				<label>Return Address: <input name='raddress' type='text'></label><br>
+				<label>Date: <input name='date' type='text'></label><br>
+				<input type="submit" value='Save' name='save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

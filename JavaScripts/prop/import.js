@@ -3368,7 +3368,6 @@ function form108_import(data_array,import_type)
 };
 
 
-
 /**
 * @form Asset Attributes
 * @formNo 109
@@ -6150,6 +6149,89 @@ function form197_import(data_array,import_type)
 				"</row>";
 	});
 	data_xml+="</supplier_item_mapping>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Manage sale order (multi-register)
+* @formNo 203
+*/
+function form203_import(data_array,import_type)
+{
+	var data_xml="<logistics_orders>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</logistics_orders><separator></separator><logistics_orders>";
+		}
+		counter+=1;
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<awb_num>"+row.awb_num+"</awb_num>"+
+                "<type>"+row.type+"</type>"+
+                "<order_num>"+row.order_num+"</order_num>"+
+                "<manifest_id>"+row.manifest_id+"</manifest_id>"+
+                "<merchant_name>"+row.merchant_name+"</merchant_name>"+
+                "<ship_to>"+row.ship_to+"</ship_to>"+
+                "<address1>"+row.address1+"</address1>"+
+                "<address2>"+row.address2+"</address2>"+
+                "<city>"+row.city+"</city>"+
+                "<state>"+row.state+"</state>"+
+                "<pincode>"+row.pincode+"</pincode>"+
+                "<phone>"+row.phone+"</phone>"+
+                "<telephone>"+row.telephone+"</telephone>"+
+                "<weight>"+row.weight+"</weight>"+
+                "<declared_value>"+row.declared_value+"</declared_value>"+
+                "<collectable_value>"+row.collectable_value+"</collectable_value>"+
+                "<vendor_code>"+row.vendor_code+"</vendor_code>"+
+                "<shipper_name>"+row.shipper_name+"</shipper_name>"+
+                "<return_address1>"+row.return_address1+"</return_address1>"+
+                "<return_address2>"+row.return_address2+"</return_address2>"+
+                "<return_address3>"+row.return_address3+"</return_address3>"+
+                "<return_pincode>"+row.return_pincode+"</return_pincode>"+
+                "<len>"+row.len+"</len>"+
+                "<breadth>"+row.breadth+"</breadth>"+
+                "<height>"+row.height+"</height>"+
+                "<pieces>"+row.pieces+"</pieces>"+
+                "<carrier_account>"+row.carrier_account+"</carrier_account>"+
+                "<carrier_name>"+row.carrier_name+"</carrier_name>"+
+                "<manifest_type>"+row.manifest_type+"</manifest_type>"+
+                "<dispatch_date>"+get_raw_time(row.dispatch_date)+"</dispatch_date>"+
+                "<notes>"+row.notes+"</notes>"+
+                "<pickup_location>"+row.pickup_location+"</pickup_location>"+
+                "<pickup_by>"+row.pickup_by+"</pickup_by>"+
+                "<status>"+row.status+"</status>"+
+                "<current_location>"+row.current_location+"</current_location>"+
+                "<delivery_person>"+row.delivery_person+"</delivery_person>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</logistics_orders>";
 	if(import_type=='create_new')
 	{
 		if(is_online())
