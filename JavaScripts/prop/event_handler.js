@@ -17,6 +17,7 @@ function default_load()
 	number_active_ajax=0;
 	loaderTimer=0;
 	count_notif_timer=0;
+	count_sync_timer=0;
 	show_notif_timer=0;
 	progress_value=0;
 	modal_forms_ini();
@@ -308,6 +309,7 @@ function home_display()
 {
 	$(document).off('keydown');
 	count_notif();
+	count_sync();
 	hide_all();
 	$('#home_grid').show();	
 }

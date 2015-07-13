@@ -278,7 +278,7 @@ a div{
 	background-color: #333333;
 }
 
-#count_notif{
+#count_notif,#count_sync{
 	float: right;
 	position:absolute;
 	right: 5px;

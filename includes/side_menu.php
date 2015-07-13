@@ -14,6 +14,7 @@
 	</div>
 	
 	<div id='sync_icon' class='menu_icon'>
+		<div id='count_sync'></div>
 		<img title='Sync to server' src='./images/sync.png' class='icon' onclick='sync_local_and_server();'>
 	</div>
 

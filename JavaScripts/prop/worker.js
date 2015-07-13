@@ -120,6 +120,36 @@ function count_notif()
 }
 
 /**
+ * This function keeps counting the pending data records for sync and shows the number on icon
+ */
+function count_sync()
+{
+	//var notifs=fetch_notifications();	
+	var sync_data="<activities>" +
+			"<id></id>" +
+			"<status exact='yes'>unsynced</status>" +
+			"</activities>";
+
+		fetch_requested_data('',sync_data,function(syncs)
+		{
+			var num_res=syncs.length;
+			
+			if(num_res===0)
+			{	
+				$('#count_sync').html("");
+				$('#count_sync').hide();
+			}
+			else
+			{	
+				$('#count_sync').html(num_res);
+				$('#count_sync').show(); 
+			}
+		});
+	clearInterval(count_sync_timer);
+	count_sync_timer=setTimeout(count_sync,get_worker_repeat());
+}
+
+/**
  * This function counts the unseen notifications and shows a desktop notification
  */
 function show_notif()
