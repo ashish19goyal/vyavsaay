@@ -60,9 +60,12 @@ function switch_to_offline()
 				progress_value=50;
 				sync_local_to_server(function()
 				{
+					//console.log('sync local t0 server');
+					
 					progress_value=100;
 					set_session_offline();
 					hide_progress();
+					//hide_loader();
 				});
 			});
 		});
@@ -122,12 +125,16 @@ function sync_server_to_local(func)
 {
 	start_table="";
 	start_offset=0;
-	
+	var domain=get_domain();
 	//console.log(number_active_ajax);
-	//console.log(localdb_open_requests);
-	get_last_sync_time(function(last_sync_time)
+	//console.log(localdb_open_requests);	
+	update_local_db(domain,function()
 	{
-		sync_server_to_local_ajax(start_table,start_offset,last_sync_time);
+		//delete(static_local_db);//="undefined";
+		get_last_sync_time(function(last_sync_time)
+		{
+			sync_server_to_local_ajax(start_table,start_offset,last_sync_time);
+		});
 	});
 	
 	var max_localdb_open_requests=0;
@@ -149,6 +156,7 @@ function sync_server_to_local(func)
   			   clearInterval(sync_download_complete);
 	  		   update_last_sync_time(function()
 	  		   {
+	  		   		//console.log('update last sync time');
 					func();
 			   });
   		   }
@@ -189,6 +197,7 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 
 			for(var i=0;i<tables.length; i++)
 			{
+				//console.log(tableName);
 				var tableName=tables[i].nodeName;
 				
 				var objectStore=static_local_db.transaction([tableName],"readwrite").objectStore(tableName);
@@ -284,7 +293,7 @@ function sync_local_to_server(func)
 		get_last_sync_time(function(last_sync_time)
 		{
 			var log_data_array=log_data.split("<separator></separator>");
-			console.log(log_data_array.length);
+			//console.log(log_data_array.length);
 			var log_data_counter=0;
 			log_data_array.forEach(function(log_data_chunk)
 			{

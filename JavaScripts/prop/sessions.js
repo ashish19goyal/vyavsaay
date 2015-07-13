@@ -296,6 +296,7 @@ function set_session_offline()
 {
 	if(typeof static_local_db=='undefined')
 	{
+		//console.log('static_local_db_undefined');
 		open_local_db(function()
 		{
 			set_session_offline();
@@ -303,6 +304,8 @@ function set_session_offline()
 	}
 	else
 	{
+		//console.log('static_local_db_set');
+
 		var objectStore=static_local_db.transaction(['user_preferences'],"readwrite").objectStore('user_preferences');
 		var kv=IDBKeyRange.bound(['offline','0'],['offline','99999999']);
 		var req=objectStore.index('name').get(kv);

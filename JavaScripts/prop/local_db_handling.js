@@ -31,7 +31,7 @@ function create_local_db(domain,func)
 					func();
 				}
 			};
-			
+
 			request.onerror=function(ev)
 			{
 				alert('Could not switch to offline mode. Please refresh your browser and try again.');
@@ -148,6 +148,69 @@ function delete_local_db()
 		$("#modal52").dialog("open");
 	}
 }
+
+/**
+ * This function creates a new table in the local database if it is not already present
+ * @param db_name name of the local database
+ * @param func function to be executed on success
+ */
+function update_local_db(domain,func)
+{
+	if("indexedDB" in window)
+	{
+		var db_name="re_local_"+domain;
+		ajax_with_custom_func("./db/db_schema.xml","",function(e)
+		{
+			var request = indexedDB.open(db_name,2);
+		
+			request.onsuccess=function(ev)
+			{
+				var db=ev.target.result;
+				var tables=e.responseXML.childNodes[0].childNodes;
+				
+				//console.log(tables);
+				
+				for(var k=0;k<tables.length;k++)
+				{
+					if(tables[k].nodeName!="" && tables[k].nodeName!="#text" && tables[k].nodeName!="#comment")
+					{
+						if(!db.objectStoreNames.contains(tables[k].nodeName))
+						{
+							//console.log(tables[k].nodeName);
+							var table=db.createObjectStore(tables[k].nodeName,{keyPath:'id'});
+						
+							for(var i=0;i<tables[k].childNodes.length;i++)
+							{	
+								if(tables[k].childNodes[i].nodeName!="" && tables[k].childNodes[i].nodeName!="#text" && tables[k].childNodes[i].nodeName!="#comment")
+								{	
+									var indexing=tables[k].childNodes[i].getAttribute('index');
+									if(indexing=='yes')
+									{
+										table.createIndex(tables[k].childNodes[i].nodeName,[tables[k].childNodes[i].nodeName,'last_updated']);
+									}
+								}		
+							}
+						}
+					}
+				}
+				if(typeof func!="undefined")
+				{					
+					func();
+				}
+			};
+
+			request.onerror=function(ev)
+			{
+				alert('Could not switch to offline mode. Please refresh your browser and try again.');
+			};
+		});
+	}
+	else
+	{
+		alert('Offline mode is not supported in your browser. Please update your browser.');
+	}
+};
+
 
 function backup_server_db()
 {
