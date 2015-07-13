@@ -2544,12 +2544,13 @@ function local_get_store_inventory(store,product,batch,callback)
 	{
 		var sort_order='prev';
 		var result=0;
-		var transaction=static_local_db.transaction(['bill_items','supplier_bill_items','supplier_return_items','store_movement','customer_return_items','discarded','unbilled_sale_items','unbilled_purchase_items'],"readonly");
+		var transaction=static_local_db.transaction(['bill_items','supplier_bill_items','inventory_adjust','supplier_return_items','store_movement','customer_return_items','discarded','unbilled_sale_items','unbilled_purchase_items'],"readonly");
 		
 		var keyValue=IDBKeyRange.bound([product,'0'],[product,'99999999']);
 		transaction.objectStore('bill_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 		{
 			var bi_result=e.target.result;
+			//console.log(bi_result);			
 			if(bi_result)
 			{
 				var bi_record=bi_result.value;
@@ -2564,6 +2565,8 @@ function local_get_store_inventory(store,product,batch,callback)
 				transaction.objectStore('supplier_bill_items').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 				{
 					var si_result=e.target.result;
+					//console.log("si_result");			
+					//console.log(si_result);			
 					if(si_result)
 					{
 						var si_record=si_result.value;
@@ -2578,6 +2581,8 @@ function local_get_store_inventory(store,product,batch,callback)
 						transaction.objectStore('supplier_return_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 						{
 							var sr_result=e.target.result;
+							//console.log("sr_result");			
+							//console.log(sr_result);			
 							if(sr_result)
 							{
 								var sr_record=sr_result.value;
@@ -2592,6 +2597,8 @@ function local_get_store_inventory(store,product,batch,callback)
 								transaction.objectStore('inventory_adjust').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 								{
 									var ia_result=e.target.result;
+									//console.log("ia_result");			
+									//console.log(ia_result);			
 									if(ia_result)
 									{
 										var ia_record=ia_result.value;
@@ -2606,6 +2613,8 @@ function local_get_store_inventory(store,product,batch,callback)
 										transaction.objectStore('store_movement').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 										{
 											var sm_result=e.target.result;
+											//console.log("sm_result");			
+											//console.log(sm_result);		
 											if(sm_result)
 											{
 												var sm_record=sm_result.value;
@@ -2624,6 +2633,9 @@ function local_get_store_inventory(store,product,batch,callback)
 												transaction.objectStore('customer_return_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 												{
 													var cr_result=e.target.result;
+													//console.log("cr_result");			
+													//console.log(cr_result);			
+																		
 													if(cr_result)
 													{
 														var cr_record=cr_result.value;
@@ -2642,6 +2654,9 @@ function local_get_store_inventory(store,product,batch,callback)
 														transaction.objectStore('discarded').index('product_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 														{
 															var di_result=e.target.result;
+															//console.log("di_result");			
+															//console.log(di_result);				
+					
 															if(di_result)
 															{
 																var di_record=di_result.value;
@@ -2656,6 +2671,9 @@ function local_get_store_inventory(store,product,batch,callback)
 																transaction.objectStore('unbilled_sale_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 																{
 																	var us_result=e.target.result;
+																	//console.log("us_result");			
+																	//console.log(us_result);			
+																						
 																	if(us_result)
 																	{
 																		var us_record=us_result.value;
@@ -2670,6 +2688,8 @@ function local_get_store_inventory(store,product,batch,callback)
 																		transaction.objectStore('unbilled_purchase_items').index('item_name').openCursor(keyValue,sort_order).onsuccess=function(e)
 																		{
 																			var up_result=e.target.result;
+																			//console.log("up_result");			
+																			//console.log(up_result);			
 																			if(up_result)
 																			{
 																				var up_record=up_result.value;

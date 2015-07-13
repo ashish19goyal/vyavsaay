@@ -7313,19 +7313,37 @@ function modal115_action(func)
  * @modal Map Barcode
  * @modalNo 116
  */
-function modal116_action(barcode)
+function modal116_action(barcode,sku)
 {
 	var form=document.getElementById("modal116_form");
 	var barcode_filter=form.elements['barcode'];
 	var sku_filter=form.elements['sku'];
 	var name_filter=form.elements['name'];
 	var id_filter=form.elements['id'];
-	
+
 	barcode_filter.value=barcode;	
 	sku_filter.value="";
 	name_filter.value="";
 	id_filter.value="";
 	
+	if(typeof sku!='undefined')
+	{
+		sku_filter.value=sku;
+		var product_data="<product_master count='1'>"+
+						"<id></id>"+
+						"<description></description>"+
+						"<name exact='yes'>"+sku_filter.value+"</name>"+
+						"</product_master>";
+		fetch_requested_data('',product_data,function (products) 
+		{
+			if(products.length>0)
+			{
+				name_filter.value=products[0].description;
+				id_filter.value=products[0].id;				
+			}
+		});
+	}
+
 	var sku_data="<product_master>" +
 			"<name></name>" +
 			"<bar_code exact='yes'></bar_code>"+
@@ -7334,9 +7352,8 @@ function modal116_action(barcode)
 	{
 		$(sku_filter).focus();
 	});
-	
-	$(sku_filter).off('blur');
-	$(sku_filter).on('blur',function () 
+
+	my_datalist_change(sku_filter,function () 
 	{
 		var product_data="<product_master count='1'>"+
 						"<id></id>"+
@@ -7352,7 +7369,6 @@ function modal116_action(barcode)
 			}
 		});				
 	});
-	
 		
 	$(form).off('submit');
 	$(form).on('submit',function(event)

@@ -10232,7 +10232,7 @@ function form193_add_item()
 		var id=get_new_key();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='193form193_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Barcode'>";
+			rowsHTML+="<td id='form193_barcode_"+id+"' data-th='Barcode'>";
 				rowsHTML+="<input type='text' form='193form193_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Item'>";
@@ -10241,6 +10241,9 @@ function form193_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' form='193form193_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="1";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='193form193_"+id+"' id='save_form193_"+id+"' >";
@@ -10268,14 +10271,34 @@ function form193_add_item()
 				"<name></name>" +
 				"</product_master>";
 		set_my_value_list(product_data,name_filter);
-		
+
 		$(name_filter).on('blur',function(event)
 		{
 			var desc_data="<product_master>"+
 						"<description></description>"+
+						"<bar_code></bar_code>"+
 						"<name exact='yes'>"+name_filter.value+"</name>"+						
-						"</product_master>";			
-			set_my_value(desc_data,desc_filter);			
+						"</product_master>";
+			fetch_requested_data('',desc_data,function (descs) 
+			{
+				if(descs.length>0)
+				{
+					desc_filter.value=descs[0].description;
+					barcode_filter.value=descs[0].bar_code;
+					
+					if(barcode_filter.value!="")
+					{	
+						var barcode_td=document.getElementById('form193_barcode_'+id);
+						$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+descs[0].bar_code+"' onclick=\"print_product_barcode('"+descs[0].bar_code+"','"+name_filter.value+"','"+descs[0].description+"');\">");
+					}
+					else 
+					{
+						var string=""+get_my_time();
+						modal116_action(string,name_filter.value);
+						$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+string+"' onclick=\"print_product_barcode('"+string+"','"+name_filter.value+"','"+descs[0].description+"');\">");
+					}
+				}
+			});
 
 			var batch_data="<product_instances>"+
 						"<batch></batch>"+
@@ -10292,16 +10315,13 @@ function form193_add_item()
 					batch_filter.value=this.elements[3].value;
 					if(batch_filter.value=="")
 					{
+						batch_filter.value=name_filter.value;						
 						$(batch_filter).focus();
+						$('#form193_body>tr:first').remove();						
 					}
-					else
-					{
-						form193_add_item();				
-					}
-					return false;
+					//	return false;
 				}
 			});
-
 		});
 		
 		$(barcode_filter).on('keydown',function (event) 
@@ -10334,18 +10354,18 @@ function form193_add_item()
 							if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value)
 							{
 								batch_filter.value=this.elements[3].value;
-								if(batch_filter.value=="")
-								{
-									batch_filter.value=name_filter.value;
-									$(batch_filter).focus();									
-								}
-								else
-								{
-									form193_add_item();				
-								}
-								return false;
+								//return false;
 							}
 						});
+						if(batch_filter.value=="")
+						{
+							batch_filter.value=name_filter.value;
+							$(batch_filter).focus();									
+						}
+						else
+						{
+							form193_add_item();				
+						}
 					}
 					else
 					{
