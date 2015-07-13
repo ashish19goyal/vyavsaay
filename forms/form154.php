@@ -6,7 +6,7 @@
 			<label>Type<br><input type='text' name='bill_type' required></label>
 			<label>Store<br><input type='text' name='store'></label>
 			<label>Date<br><input type='text' name='date' required></label>
-			<label>Tax Type<br><input type='text' name='tax_type' required></label>
+			<label>Tax Type<br><input type='text' name='tax_type'></label>
 			<br>
 			<label>Narration<br><textarea style='width:200px;' name='narration'></textarea></label>
 			<label id='form154_1job'>Print as 1 job <input type='checkbox' name='job'></label>

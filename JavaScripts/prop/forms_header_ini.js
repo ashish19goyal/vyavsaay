@@ -6951,6 +6951,35 @@ function form197_header_ini()
 };
 
 /**
+ * @form Incoming Items
+ * @formNo 199
+ */
+function form199_header_ini()
+{
+	var fields=document.getElementById('form199_master');
+	
+	var comments_filter=fields.elements['comments'];
+	var save_button=fields.elements['save'];
+
+	comments_filter.value="";	
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form199_update_form();
+	});
+
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form199_add_item();
+	});
+
+	$('#form199_body').html("");
+}
+/**
  * @form Logistics Manage Orders
  * @formNo 203
  */
@@ -6979,3 +7008,93 @@ function form203_header_ini()
 	set_my_filter(awb_data,awb_filter);
 	set_static_filter('logistics_orders','status',status_filter);
 };
+
+/**
+ * @form Pending Logistics Orders
+ * @formNo 204
+ */
+function form204_header_ini()
+{
+	var fields=document.getElementById('form204_master');
+	
+	var comments_filter=fields.elements['comments'];
+	var save_button=fields.elements['save'];
+
+	comments_filter.value="";	
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form204_update_form();
+	});
+
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form204_add_item();
+	});
+
+	$('#form204_body').html("");
+}
+
+/**
+ * @form Delivered Logistics Orders
+ * @formNo 205
+ */
+function form205_header_ini()
+{
+	var fields=document.getElementById('form205_master');
+	
+	var comments_filter=fields.elements['comments'];
+	var save_button=fields.elements['save'];
+
+	comments_filter.value="";	
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form205_update_form();
+	});
+
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form205_add_item();
+	});
+
+	$('#form205_body').html("");
+}
+
+/**
+ * @form Undelivered Logistics Orders
+ * @formNo 206
+ */
+function form206_header_ini()
+{
+	var fields=document.getElementById('form206_master');
+	
+	var comments_filter=fields.elements['comments'];
+	var save_button=fields.elements['save'];
+
+	comments_filter.value="";	
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form206_update_form();
+	});
+
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form206_add_item();
+	});
+
+	$('#form206_body').html("");
+}

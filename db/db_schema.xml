@@ -1294,7 +1294,7 @@
 			<notes index='no' type="TEXT"></notes>
 			<pickup_location index='no' type="TEXT"></pickup_location>
 			<pickup_by index='yes' type="TEXT"></pickup_by>
-			<status index='yes' type="VARCHAR(20)"></status><!--picked/received/delivered/pending/undelivered-->
+			<status index='yes' type="VARCHAR(20)"></status><!--picked/out for delivery/received/delivered/pending/undelivered-->
 			<current_location index='yes' type="TEXT"></current_location>
 			<delivery_person index='yes' type="TEXT"></delivery_person>
 			<last_updated index='yes' type="BIGINT"></last_updated>
