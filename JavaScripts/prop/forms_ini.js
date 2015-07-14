@@ -2590,7 +2590,7 @@ function form40_ini()
 					attribute_content+=attribute.attribute+": "+attribute.value+"<br>";
 				});
 				var td_elem=document.getElementById('form40_'+result.id+'_details');
-				$(td_elem).append=attribute_content;
+				$(td_elem).append(attribute_content);
 			});	
 		});
 		
