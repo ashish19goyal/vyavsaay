@@ -879,7 +879,9 @@
 	<div id="modal116" title="Map Barcode">
 		<form id='modal116_form' autocomplete="off">
 			<fieldset>
-				<label>Barcode: <input type='text' readonly='readonly' required name='barcode'></label><br>
+				<label>Barcode: <input type='text' readonly='readonly' required name='barcode'>
+				<img src='./images/barcode.png' id='modal116_barcode_img' class='barcode_icon'>
+				</label><br>
 				<label>SKU: <input type="text" required name='sku'></label><br>
 				<label>Name: <textarea name='name'></textarea></label><br>
 				<input type='hidden' name='id'>
@@ -1038,6 +1040,17 @@
 				<label>Collectable Value: <input name='c_value' type='number'></label><br>
 				<label>Return Address: <input name='raddress' type='text'></label><br>
 				<label>Date: <input name='date' type='text'></label><br>
+				<input type="submit" value='Save' name='save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal129" title="Add DRS Items">
+		<form id='modal129_form' autocomplete="off">
+			<fieldset>
+				<label>Address: <input name='address' type="text"></label><br>
+				<label>City: <input name='city' type="text"></label><br>
+				<label>Pincode: <input name='pincode' type='text'></label><br>
 				<input type="submit" value='Save' name='save' class='modal_submit'>
 			</fieldset>
 		</form>

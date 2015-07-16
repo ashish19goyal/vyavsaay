@@ -6359,6 +6359,174 @@ function form197_delete_item(button)
 }
 
 /**
+ * @form Logistics Incoming Items
+ * @param button
+ */
+function form199_delete_item(button)
+{
+	if(is_update_access('form199'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var awb_num=form.elements[0].value;
+		var status='picked';
+		var id=form.elements[2].value;
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>logistics_orders</tablename>" +
+					"<link_to>form198</link_to>" +
+					"<title>Unmarked</title>" +
+					"<notes>AWB # "+awb_num+" from received</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 200
+ * form Create DRS
+ * @param button
+ */
+function form200_delete_item(button)
+{
+	if(is_delete_access('form200'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[9].value;
+			var last_updated=get_my_time();
+			var data_xml="<logistics_orders>" +
+						"<id>"+data_id+"</id>" +
+						"<status>received</status>" +
+						"<drs_num></drs_num>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</logistics_orders>";
+			if(is_online())
+			{
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage DRS
+ * @param button
+ */
+function form201_delete_item(button)
+{
+	if(is_delete_access('form201'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var drs_num=form.elements[0].value;
+			var data_id=form.elements[4].value;
+			var data_xml="<drs>" +
+						"<id>"+data_id+"</id>" +
+						"</drs>";	
+			var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>drs</tablename>" +
+					"<link_to>form201</link_to>" +
+					"<title>Delete</title>" +
+					"<notes>DRS # "+drs_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+			
+			var drs_items_xml="<logistics_orders>"+
+							"<id></id>"+
+							"<status exact='yes'>out for delivery</status>"+
+							"<drs_num exact='yes'>"+drs_num+"</drs_num>"+
+							"</logistics_orders>";			
+			get_single_column_data(function(drs_items)
+			{
+				var data_xml="<logistics_orders>";
+				var counter=1;
+				var last_updated=get_my_time();
+				
+				drs_items.forEach(function(drs_item)
+				{
+					if((counter%500)===0)
+					{
+						data_xml+="</logistics_orders><separator></separator><logistics_orders>";
+					}
+						
+					counter+=1;
+				
+					data_xml+="<row>" +
+							"<id>"+drs_item+"</id>" +
+							"<drs_num></drs_num>" +
+							"<status>received</status>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+				});
+				data_xml+="</logistics_orders>";
+				console.log(data_xml);
+				if(is_online())
+				{	
+					server_update_batch(data_xml);
+				}
+				else
+				{
+					local_update_batch(data_xml);
+				}
+
+			},drs_items_xml);
+			
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Logistics Orders
  * @param button
  */
@@ -6400,6 +6568,141 @@ function form203_delete_item(button)
 			}	
 			$(button).parent().parent().remove();
 		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Logistics Pending Orders
+ * @param button
+ */
+function form204_delete_item(button)
+{
+	if(is_update_access('form204'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var awb_num=form.elements[0].value;
+		var status='out for delivery';
+		var id=form.elements[2].value;
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>logistics_orders</tablename>" +
+					"<link_to>form198</link_to>" +
+					"<title>Unmarked</title>" +
+					"<notes>AWB # "+awb_num+" from pending</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Logistics delivered Orders
+ * @param button
+ */
+function form205_delete_item(button)
+{
+	if(is_update_access('form205'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var awb_num=form.elements[0].value;
+		var status='out for delivery';
+		var id=form.elements[2].value;
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>logistics_orders</tablename>" +
+					"<link_to>form198</link_to>" +
+					"<title>Unmarked</title>" +
+					"<notes>AWB # "+awb_num+" from undelivered</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		$(button).parent().parent().remove();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Logistics Pending Orders
+ * @param button
+ */
+function form206_delete_item(button)
+{
+	if(is_update_access('form206'))
+	{
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		
+		var awb_num=form.elements[0].value;
+		var status='out for delivery';
+		var id=form.elements[2].value;
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>logistics_orders</tablename>" +
+					"<link_to>form198</link_to>" +
+					"<title>Unmarked</title>" +
+					"<notes>AWB # "+awb_num+" from delivered</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		$(button).parent().parent().remove();
 	}
 	else
 	{

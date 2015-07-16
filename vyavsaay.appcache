@@ -158,6 +158,7 @@ JavaScripts/open/jquery.autosize.min.js
 JavaScripts/open/jquery.cookie.js
 JavaScripts/open/jquery.datetimepicker.js
 JavaScripts/open/jquery.easing.min.js
+JavaScripts/open/jquery.autosize.input.min.js
 JavaScripts/open/jquery.fn.gantt.min.js
 JavaScripts/open/jQuery.print.js
 JavaScripts/open/leaflet.js

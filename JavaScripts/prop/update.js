@@ -10191,3 +10191,471 @@ function form195_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Order details
+ * @param button
+ */
+function form198_update_item()
+{
+	if(is_update_access('form198'))
+	{
+		var form=document.getElementById("form198_master");
+		
+		var awb_num=form.elements['awb_num'].value;
+		var order_num=form.elements['order_num'].value;
+		var type=form.elements['type'].value;
+		var manifest_id=form.elements['manifest_id'].value;
+		var merchant_name=form.elements['merchant_name'].value;
+		var ship_to=form.elements['ship_to'].value;
+		var address1=form.elements['address1'].value;
+		var address2=form.elements['address2'].value;
+		var city=form.elements['city'].value;
+		var state=form.elements['state'].value;
+		var pincode=form.elements['pincode'].value;
+		var phone=form.elements['phone'].value;
+		var telephone=form.elements['telephone'].value;
+		var weight=form.elements['weight'].value;
+		var d_value=form.elements['d_value'].value;
+		var c_value=form.elements['c_value'].value;
+		var vendor_code=form.elements['vendor_code'].value;
+		var shipper_name=form.elements['shipper_name'].value;
+		var r_address1=form.elements['r_address1'].value;
+		var r_address2=form.elements['r_address2'].value;
+		var r_address3=form.elements['r_address3'].value;
+		var rpincode=form.elements['rpincode'].value;
+		var len=form.elements['len'].value;
+		var breadth=form.elements['breadth'].value;
+		var height=form.elements['height'].value;
+		var pieces=form.elements['pieces'].value;
+		var c_account=form.elements['c_account'].value;
+		var c_name=form.elements['c_name'].value;
+		var manifest_type=form.elements['manifest_type'].value;
+		var ddate=form.elements['ddate'].value;
+		var notes=form.elements['notes'].value;
+		var pickup_location=form.elements['pickup_location'].value;
+		var pickup_by=form.elements['pickup_by'].value;
+		var sku=form.elements['sku'].value;
+		var product_name=form.elements['product_name'].value;
+		var status=form.elements['status'].value;
+		var current_location=form.elements['current_location'].value;
+		var delivery_person=form.elements['delivery_person'].value;
+		var comments=form.elements['comments'].value;
+
+		var id=form.elements['id'].value;
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<type>"+type+"</type>"+
+                "<order_num>"+order_num+"</order_num>"+
+                "<manifest_id>"+manifest_id+"</manifest_id>"+
+                "<merchant_name>"+merchant_name+"</merchant_name>"+
+                "<ship_to>"+ship_to+"</ship_to>"+
+                "<address1>"+address1+"</address1>"+
+                "<address2>"+address2+"</address2>"+
+                "<city>"+city+"</city>"+
+                "<state>"+state+"</state>"+
+                "<pincode>"+pincode+"</pincode>"+
+                "<phone>"+phone+"</phone>"+
+                "<telephone>"+telephone+"</telephone>"+
+                "<weight>"+weight+"</weight>"+
+                "<declared_value>"+d_value+"</declared_value>"+
+                "<collectable_value>"+c_value+"</collectable_value>"+
+                "<vendor_code>"+vendor_code+"</vendor_code>"+
+                "<shipper_name>"+shipper_name+"</shipper_name>"+
+                "<return_address1>"+r_address1+"</return_address1>"+
+                "<return_address2>"+r_address2+"</return_address2>"+
+                "<return_address3>"+r_address3+"</return_address3>"+
+                "<return_pincode>"+rpincode+"</return_pincode>"+
+                "<len>"+len+"</len>"+
+                "<breadth>"+breadth+"</breadth>"+
+                "<height>"+height+"</height>"+
+                "<pieces>"+pieces+"</pieces>"+
+                "<carrier_account>"+c_account+"</carrier_account>"+
+                "<carrier_name>"+c_name+"</carrier_name>"+
+                "<manifest_type>"+manifest_type+"</manifest_type>"+
+                "<dispatch_date>"+get_raw_time(ddate)+"</dispatch_date>"+
+                "<notes>"+notes+"</notes>"+
+                "<pickup_location>"+pickup_location+"</pickup_location>"+
+                "<pickup_by>"+pickup_by+"</pickup_by>"+
+                "<sku>"+sku+"</sku>"+
+                "<product_name>"+product_name+"</product_name>"+
+                "<status>"+status+"</status>"+
+                "<current_location>"+current_location+"</current_location>"+
+                "<delivery_person>"+delivery_person+"</delivery_person>"+
+                "<comments>"+comments+"</comments>"+
+                "<last_updated>"+last_updated+"</last_updated>" +
+				"</logistics_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>logistics_orders</tablename>" +
+					"<link_to>form198</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>AWB # "+awb_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		
+		$('#form198_fieldset').html("Order details have been updated.");
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Logistics Incoming Items
+ * @param button
+ */
+function form199_update_item(form)
+{
+	if(is_update_access('form199'))
+	{
+		var master_form=document.getElementById("form199_master");		
+		var comments=master_form.elements['comments'].value;
+		
+		var awb_num=form.elements[0].value;
+		var status='received';
+		var id=form.elements[2].value;
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<status>"+status+"</status>" +
+					"<comments>"+comments+"</comments>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>logistics_orders</tablename>" +
+					"<link_to>form198</link_to>" +
+					"<title>Received</title>" +
+					"<notes>AWB # "+awb_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<2;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create DRS
+ * @param button
+ */
+function form200_update_form()
+{
+	if(is_create_access('form200'))
+	{
+		console.log('form200_update_form');
+		var form=document.getElementById("form200_master");
+		
+		var drs_num=form.elements['drs_num'].value;
+		var employee=form.elements['employee'].value;
+		var ddate=get_raw_time(form.elements['date'].value);
+		var data_id=form.elements['id'].value;
+		
+		$('#form200_share').show();
+		$('#form200_share').click(function()
+		{
+			modal101_action('Delivery Run Sheet',employee,'staff',function (func) 
+			{
+				print_form200(func);
+			});
+		});
+
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var data_xml="<drs>" +
+					"<id>"+data_id+"</id>" +
+					"<drs_num>"+drs_num+"</drs_num>"+
+					"<employee>"+employee+"</employee>"+
+					"<drs_time>"+ddate+"</drs_time>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</drs>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>drs</tablename>" +
+					"<link_to>form201</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>DRS # "+drs_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		
+		$("[id^='save_form200_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Logistics Pending orders
+ * @param button
+ */
+function form204_update_item(form)
+{
+	if(is_update_access('form204'))
+	{
+		var master_form=document.getElementById("form204_master");		
+		var comments=master_form.elements['comments'].value;
+		
+		var awb_num=form.elements[0].value;
+		var status='pending';
+		var id=form.elements[2].value;
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<status>"+status+"</status>" +
+					"<comments>"+comments+"</comments>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>logistics_orders</tablename>" +
+					"<link_to>form198</link_to>" +
+					"<title>Marked Pending</title>" +
+					"<notes>AWB # "+awb_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<2;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Logistics unDelivered orders
+ * @param button
+ */
+function form205_update_item(form)
+{
+	if(is_update_access('form205'))
+	{
+		var master_form=document.getElementById("form205_master");		
+		var comments=master_form.elements['comments'].value;
+		
+		var awb_num=form.elements[0].value;
+		var status='undelivered';
+		var id=form.elements[2].value;
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<status>"+status+"</status>" +
+					"<comments>"+comments+"</comments>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>logistics_orders</tablename>" +
+					"<link_to>form198</link_to>" +
+					"<title>Delivered</title>" +
+					"<notes>AWB # "+awb_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<2;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Logistics delivered orders
+ * @param button
+ */
+function form206_update_item(form)
+{
+	if(is_update_access('form206'))
+	{
+		var master_form=document.getElementById("form206_master");		
+		var comments=master_form.elements['comments'].value;
+		
+		var awb_num=form.elements[0].value;
+		var status='delivered';
+		var id=form.elements[2].value;
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<status>"+status+"</status>" +
+					"<comments>"+comments+"</comments>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>logistics_orders</tablename>" +
+					"<link_to>form198</link_to>" +
+					"<title>Marked Undelivered</title>" +
+					"<notes>AWB # "+awb_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<2;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+function form200_update_serial_numbers()
+{
+	$('#form200_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+}
+
+/**
+ * @form Create DRS
+ * @param button
+ */
+function form200_update_form()
+{
+	if(is_create_access('form200'))
+	{
+		var form=document.getElementById("form200_master");
+		
+		var drs_num=form.elements['drs_num'].value;
+		var employee=form.elements['employee'].value;
+		var ddate=get_raw_time(form.elements['date'].value);
+		var data_id=form.elements['id'].value;
+		
+		$('#form200_share').show();
+		$('#form200_share').click(function()
+		{
+			modal101_action('Delivery Run Sheet',employee,'staff',function (func) 
+			{
+				print_form200(func);
+			});
+		});
+
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var data_xml="<drs>" +
+					"<id>"+data_id+"</id>" +
+					"<drs_num>"+drs_num+"</drs_num>"+
+					"<employee>"+employee+"</employee>"+
+					"<drs_time>"+ddate+"</drs_time>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</drs>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>drs</tablename>" +
+					"<link_to>form201</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>DRS # "+drs_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var num_data="<user_preferences>"+
+					"<id></id>"+						
+					"<name exact='yes'>drs_num</name>"+												
+					"</user_preferences>";
+		get_single_column_data(function (drs_num_ids)
+		{
+			if(drs_num_ids.length>0)
+			{
+				var num_xml="<user_preferences>"+
+								"<id>"+drs_num_ids[0]+"</id>"+
+								"<value>"+(parseInt(drs_num)+1)+"</value>"+
+								"</user_preferences>";
+				if(is_online())
+				{
+					server_update_simple(num_xml);
+				}
+				else 
+				{
+					local_update_simple(num_xml);
+				}
+			}
+		},num_data);
+
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+
+		$("[id^='save_form200_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

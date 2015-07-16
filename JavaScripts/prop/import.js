@@ -14,7 +14,12 @@ function form1_import(data_array,import_type)
 		{
 			data_xml+="</product_instances><separator></separator><product_instances>";
 		}
+		
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
@@ -93,7 +98,13 @@ function form5_import(data_array,import_type)
 		{
 			data_xml+="</assets><separator></separator><assets>";
 		}
+		
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -147,6 +158,11 @@ function form8_import(data_array,import_type)
 			account_xml+="</accounts><separator></separator><accounts>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -226,6 +242,11 @@ function form10_import(data_array,import_type)
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
@@ -293,6 +314,11 @@ function form11_import(data_array,import_type)
 			transaction_xml+="</transactions><separator></separator><transactions>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 	
 		var receiver=row.acc_name;
 		var giver="master";
@@ -374,6 +400,11 @@ function form12_import(data_array,import_type)
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
@@ -438,6 +469,11 @@ function form14_import(data_array,import_type)
 			data_xml+="</task_instances><separator></separator><task_instances>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -497,6 +533,11 @@ function form15_import(data_array,import_type)
 			discard_xml+="</discarded><separator></separator><discarded>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -577,6 +618,11 @@ function form16_import(data_array,import_type)
 			transaction_xml+="</transactions><separator></separator><transactions>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -652,6 +698,11 @@ function form17_import(data_array,import_type)
 			transaction_xml+="</transactions><separator></separator><transactions>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -722,6 +773,11 @@ function form19_import(data_array,import_type)
 			data_xml+="</supplier_return_items><separator></separator><supplier_return_items>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<return_id>"+row.return_id+"</return_id>" +
@@ -778,6 +834,11 @@ function form21_import(data_array,import_type)
 			data_xml+="</supplier_bill_items><separator></separator><supplier_bill_items>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
@@ -837,6 +898,11 @@ function form24_import(data_array,import_type)
 			data_xml+="</purchase_order_items><separator></separator><purchase_order_items>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
@@ -894,6 +960,11 @@ function form30_import(data_array,import_type)
 			account_xml+="</accounts><separator></separator><accounts>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -967,6 +1038,11 @@ function form35_import(data_array,import_type)
 			data_xml+="</offers><separator></separator><offers>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<offer_name unique='yes'>"+row.offer_name+"</offer_name>" +
@@ -1033,6 +1109,11 @@ function form38_import(data_array,import_type)
 			data_xml+="</area_utilization><separator></separator><area_utilization>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
@@ -1085,6 +1166,11 @@ function form39_import(data_array,import_type)
 			data_xml+="</product_master><separator></separator><product_master>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name unique='yes'>"+row.name+"</name>" +
@@ -1141,6 +1227,11 @@ function form40_import(data_array,import_type)
 			account_xml+="</accounts><separator></separator><accounts>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -1214,6 +1305,11 @@ function form42_import(data_array,import_type)
 			transaction_xml+="</transactions><separator></separator><transactions>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_num>"+row.bill_num+"</bill_num>"+
@@ -1286,6 +1382,11 @@ function form43_import(data_array,import_type)
 			data_xml+="</purchase_orders><separator></separator><purchase_orders>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<supplier>"+row.supplier+"</supplier>" +
@@ -1341,6 +1442,11 @@ function form53_import(data_array,import_type)
 			transaction_xml+="</transactions><separator></separator><transactions>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
@@ -1420,6 +1526,11 @@ function form56_import(data_array,import_type)
 			transaction_xml+="</transactions><separator></separator><transactions>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		var receiver=row.acc_name;
 		var giver="master";
 		if(row.type=='received')
@@ -1527,6 +1638,11 @@ function form57_import(data_array,import_type)
 			data_xml+="</services><separator></separator><services>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -1580,6 +1696,10 @@ function form58_import(data_array,import_type)
 			data_xml+="</pre_requisites><separator></separator><pre_requisites>";
 		}
 		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -1632,7 +1752,12 @@ function form59_import(data_array,import_type)
 		{
 			data_xml+="</pre_requisites><separator></separator><pre_requisites>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -1686,7 +1811,12 @@ function form60_import(data_array,import_type)
 		{
 			data_xml+="</attributes><separator></separator><attributes>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -1737,7 +1867,12 @@ function form61_import(data_array,import_type)
 		{
 			data_xml+="</attributes><separator></separator><attributes>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -1788,7 +1923,12 @@ function form62_import(data_array,import_type)
 		{
 			data_xml+="</reviews><separator></separator><reviews>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -1840,7 +1980,12 @@ function form63_import(data_array,import_type)
 		{
 			data_xml+="</reviews><separator></separator><reviews>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -1892,7 +2037,12 @@ function form64_import(data_array,import_type)
 		{
 			data_xml+="</cross_sells><separator></separator><cross_sells>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -1945,7 +2095,12 @@ function form66_import(data_array,import_type)
 		{
 			data_xml+="</cross_sells><separator></separator><cross_sells>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -1996,7 +2151,12 @@ function form69_import(data_array,import_type)
 		{
 			data_xml+="</sale_order_items><separator></separator><sale_order_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<order_id>"+row.order_id+"</order_id>" +
@@ -2050,7 +2210,12 @@ function form70_import(data_array,import_type)
 		{
 			data_xml+="</sale_orders><separator></separator><sale_orders>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<customer_name>"+row.customer_name+"</customer_name>" +
@@ -2102,7 +2267,12 @@ function form71_import(data_array,import_type)
 		{
 			data_xml+="</accounts><separator></separator><accounts>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<acc_name>"+row.acc_name+"</acc_name>" +
@@ -2152,7 +2322,12 @@ function form72_import(data_array,import_type)
 		{
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
@@ -2216,7 +2391,12 @@ function form79_import(data_array,import_type)
 		{
 			data_xml+="</task_type><separator></separator><task_type>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -2266,7 +2446,12 @@ function form81_import(data_array,import_type)
 		{
 			data_xml+="</sale_leads><separator></separator><sale_leads>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<customer>"+row.customer+"</customer>" +
@@ -2317,7 +2502,12 @@ function form82_import(data_array,import_type)
 		{
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
@@ -2381,7 +2571,12 @@ function form83_import(data_array,import_type)
 		{
 			data_xml+="</store_areas><separator></separator><store_areas>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -2444,7 +2639,12 @@ function form84_import(data_array,import_type)
 		{
 			data_xml+="</service_subscriptions><separator></separator><service_subscriptions>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<customer>"+row.customer+"</customer>" +
@@ -2498,7 +2698,12 @@ function form87_import(data_array,import_type)
 		{
 			data_xml+="</product_master><separator></separator><product_master>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name unique='yes'>"+row.name+"</name>" +
@@ -2551,7 +2756,12 @@ function form88_import(data_array,import_type)
 		{
 			data_xml+="</manufacturing_schedule><separator></separator><manufacturing_schedule>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product unique='yes'>"+row.product+"</product>" +
@@ -2603,7 +2813,12 @@ function form89_import(data_array,import_type)
 		{
 			data_xml+="</appointments><separator></separator><appointments>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<customer>"+row.customer+"</customer>" +
@@ -2658,7 +2873,12 @@ function form90_import(data_array,import_type)
 		{
 			data_xml+="</bill_types><separator></separator><bill_types>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name unique='yes'>"+row.name+"</name>" +
@@ -2707,7 +2927,12 @@ function form91_import(data_array,import_type)
 		{
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
@@ -2769,7 +2994,12 @@ function form92_import(data_array,import_type)
 			data_xml+="</bills><separator></separator><bills>";
 			transaction_xml+="</transactions><separator></separator><transactions>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -2844,7 +3074,12 @@ function form93_import(data_array,import_type)
 		{
 			data_xml+="</loans><separator></separator><loans>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<type>"+row.type+"</type>" +
@@ -2907,7 +3142,12 @@ function form94_import(data_array,import_type)
 		{
 			data_xml+="</discarded><separator></separator><discarded>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
@@ -2959,7 +3199,12 @@ function form96_import(data_array,import_type)
 		{
 			data_xml+="</attributes><separator></separator><attributes>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -3010,7 +3255,12 @@ function form97_import(data_array,import_type)
 		{
 			data_xml+="</attributes><separator></separator><attributes>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -3061,7 +3311,12 @@ function form96_import(data_array,import_type)
 		{
 			data_xml+="</attributes><separator></separator><attributes>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -3112,7 +3367,12 @@ function form101_import(data_array,import_type)
 		{
 			data_xml+="</projects><separator></separator><projects>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name unique='yes'>"+row.name+"</name>" +
@@ -3164,7 +3424,12 @@ function form102_import(data_array,import_type)
 		{
 			data_xml+="</project_team><separator></separator><project_team>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<project_id>"+row.project_id+"</project_id>" +
@@ -3217,7 +3482,12 @@ function form103_import(data_array,import_type)
 		{
 			data_xml+="</project_phases><separator></separator><project_phases>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<project_id>"+row.project_id+"</project_id>" +
@@ -3272,7 +3542,12 @@ function form104_import(data_array,import_type)
 		{
 			data_xml+="</task_instances><separator></separator><task_instances>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -3331,7 +3606,12 @@ function form108_import(data_array,import_type)
 		{
 			data_xml+="</sale_orders><separator></separator><sale_orders>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<customer_name>"+row.customer_name+"</customer_name>" +
@@ -3384,7 +3664,12 @@ function form109_import(data_array,import_type)
 		{
 			data_xml+="</attributes><separator></separator><attributes>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -3435,7 +3720,12 @@ function form112_import(data_array,import_type)
 		{
 			data_xml+="</unbilled_sale_items><separator></separator><unbilled_sale_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<customer>"+row.customer+"</customer>" +
@@ -3495,7 +3785,12 @@ function form113_import(data_array,import_type)
 		{
 			data_xml+="</unbilled_sale_items><separator></separator><unbilled_sale_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<customer>"+row.customer+"</customer>" +
@@ -3556,7 +3851,12 @@ function form114_import(data_array,import_type)
 		{
 			data_xml+="</unbilled_purchase_items><separator></separator><unbilled_purchase_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<supplier>"+row.supplier+"</supplier>" +
@@ -3615,7 +3915,12 @@ function form115_import(data_array,import_type)
 		{
 			data_xml+="</unbilled_purchase_items><separator></separator><unbilled_purchase_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<supplier>"+row.supplier+"</supplier>" +
@@ -3674,7 +3979,12 @@ function form116_import(data_array,import_type)
 		{
 			data_xml+="</loyalty_programs><separator></separator><loyalty_programs>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -3732,7 +4042,12 @@ function form118_import(data_array,import_type)
 		{
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
@@ -3798,7 +4113,12 @@ function form119_import(data_array,import_type)
 		{
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
@@ -3862,7 +4182,12 @@ function form120_import(data_array,import_type)
 		{
 			data_xml+="</loyalty_customers><separator></separator><loyalty_customers>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<program_name>"+row.program_name+"</program_name>" +
@@ -3912,7 +4237,12 @@ function form121_import(data_array,import_type)
 		{
 			data_xml+="</loyalty_points><separator></separator><loyalty_points>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<program_name>"+row.program_name+"</program_name>" +
@@ -3966,7 +4296,12 @@ function form122_import(data_array,import_type)
 		{
 			data_xml+="</supplier_bill_items><separator></separator><supplier_bill_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
@@ -4025,7 +4360,12 @@ function form123_import(data_array,import_type)
 		{
 			data_xml+="</mandatory_attributes><separator></separator><mandatory_attributes>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<object>"+row.object+"</object>" +
@@ -4076,7 +4416,12 @@ function form124_import(data_array,import_type)
 		{
 			data_xml+="</receipts><separator></separator><receipts>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<receipt_id>"+row.receipt_id+"</receipt_id>" +
@@ -4129,7 +4474,12 @@ function form125_import(data_array,import_type)
 		{
 			data_xml+="</accounts><separator></separator><accounts>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<username>"+row.username+"</username>" +
@@ -4181,7 +4531,12 @@ function form136_import(data_array,import_type)
 		{
 			data_xml+="</supplier_bill_items><separator></separator><supplier_bill_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
@@ -4240,7 +4595,12 @@ function form137_import(data_array,import_type)
 		{
 			data_xml+="</expenses><separator></separator><expenses>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<status>"+row.status+"</status>" +
@@ -4294,7 +4654,12 @@ function form139_import(data_array,import_type)
 		{
 			data_xml+="</assets><separator></separator><assets>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -4350,7 +4715,12 @@ function form140_import(data_array,import_type)
 		{
 			data_xml+="</assets><separator></separator><assets>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -4408,7 +4778,12 @@ function form142_import(data_array,import_type)
 		{
 			data_xml+="</ques_fields><separator></separator><ques_fields>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -4464,7 +4839,12 @@ function form143_import(data_array,import_type)
 		{
 			data_xml+="</ques_struct><separator></separator><ques_struct>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -4518,7 +4898,12 @@ function form145_import(data_array,import_type)
 		{
 			data_xml+="</store_movement><separator></separator><store_movement>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -4574,7 +4959,12 @@ function form146_import(data_array,import_type)
 		{
 			data_xml+="</manufacturing_schedule><separator></separator><manufacturing_schedule>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product>"+row.product+"</product>" +
@@ -4626,7 +5016,12 @@ function form147_import(data_array,import_type)
 		{
 			data_xml+="</roles><separator></separator><roles>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<role_name>"+row.role_name+"</role_name>" +
@@ -4676,7 +5071,12 @@ function form149_import(data_array,import_type)
 		{
 			data_xml+="</user_role_mapping><separator></separator><user_role_mapping>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<role_name>"+row.role_name+"</role_name>" +
@@ -4727,7 +5127,12 @@ function form154_import(data_array,import_type)
 		{
 			data_xml+="</bill_items><separator></separator><bill_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
@@ -4788,7 +5193,12 @@ function form155_import(data_array,import_type)
 		{
 			data_xml+="</product_instances><separator></separator><product_instances>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
@@ -4868,7 +5278,12 @@ function form156_import(data_array,import_type)
 		{
 			data_xml+="</area_utilization><separator></separator><area_utilization>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
@@ -4919,7 +5334,12 @@ function form157_import(data_array,import_type)
 		{
 			data_xml+="</store_movement><separator></separator><store_movement>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -4976,7 +5396,12 @@ function form158_import(data_array,import_type)
 		{
 			data_xml+="</supplier_bill_items><separator></separator><supplier_bill_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
@@ -5033,7 +5458,12 @@ function form161_import(data_array,import_type)
 		{
 			data_xml+="</checklist_items><separator></separator><checklist_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<checkpoint>"+row.checkpoint+"</checkpoint>" +
@@ -5085,7 +5515,12 @@ function form162_import(data_array,import_type)
 		{
 			data_xml+="</checklist_mapping><separator></separator><checklist_mapping>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<checkpoint>"+row.checkpoint+"</checkpoint>" +
@@ -5138,7 +5573,12 @@ function form166_import(data_array,import_type)
 		{
 			data_xml+="</product_instances><separator></separator><product_instances>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
@@ -5192,7 +5632,12 @@ function form167_import(data_array,import_type)
 		{
 			data_xml+="</storage_structure><separator></separator><storage_structure>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
@@ -5247,7 +5692,12 @@ function form169_import(data_array,import_type)
 		{
 			data_xml+="</product_master><separator></separator><product_master>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name unique='yes'>"+row.sku+"</name>" +
@@ -5308,7 +5758,12 @@ function form170_import(data_array,import_type)
 		{
 			data_xml+="</store_areas><separator></separator><store_areas>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -5364,7 +5819,12 @@ function form171_import(data_array,import_type)
 		{
 			data_xml+="</sale_channels><separator></separator><sale_channels>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -5416,7 +5876,12 @@ function form172_import(data_array,import_type)
 		{
 			data_xml+="</channel_prices><separator></separator><channel_prices>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<channel>"+row.channel+"</channel>" +
@@ -5481,7 +5946,12 @@ function form173_import(data_array,import_type)
 		{
 			data_xml+="</sku_mapping><separator></separator><sku_mapping>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<channel>"+row.channel+"</channel>" +
@@ -5534,7 +6004,12 @@ function form174_import(data_array,import_type)
 		{
 			data_xml+="</pickup_charges><separator></separator><pickup_charges>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<channel>"+row.channel+"</channel>" +
@@ -5586,7 +6061,12 @@ function form175_import(data_array,import_type)
 		{
 			data_xml+="</channel_category><separator></separator><channel_category>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<channel>"+row.channel+"</channel>" +
@@ -5638,7 +6118,12 @@ function form176_import(data_array,import_type)
 		{
 			data_xml+="</category_sku_mapping><separator></separator><category_sku_mapping>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<channel>"+row.channel+"</channel>" +
@@ -5689,7 +6174,12 @@ function form177_import(data_array,import_type)
 		{
 			data_xml+="</prioritization_parameters><separator></separator><prioritization_parameters>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -5740,7 +6230,12 @@ function form178_import(data_array,import_type)
 		{
 			data_xml+="</purchase_order_items><separator></separator><purchase_order_items>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
@@ -5797,7 +6292,12 @@ function form179_import(data_array,import_type)
 		{
 			data_xml+="</purchase_orders><separator></separator><purchase_orders>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<supplier>"+row.supplier+"</supplier>" +
@@ -5853,7 +6353,12 @@ function form184_import(data_array,import_type)
 		{
 			data_xml+="</business_processes><separator></separator><business_processes>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<order_no>"+row.order_no+"</order_no>" +
@@ -5907,7 +6412,12 @@ function form187_import(data_array,import_type)
 		{
 			data_xml+="</business_processes><separator></separator><business_processes>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<order_no>"+row.order_no+"</order_no>" +
@@ -5963,7 +6473,12 @@ function form190_import(data_array,import_type)
 			data_xml+="</sale_orders><separator></separator><sale_orders>";
 			task_xml+="</task_instances><separator></separator><task_instances>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<customer_name>"+row.customer_name+"</customer_name>" +
@@ -6032,7 +6547,12 @@ function form191_import(data_array,import_type)
 		{
 			data_xml+="</values_list><separator></separator><values_list>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<tablename>"+row.tablename+"</tablename>" +
@@ -6084,7 +6604,12 @@ function form195_import(data_array,import_type)
 		{
 			data_xml+="</letterheads><separator></separator><letterheads>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<name>"+row.name+"</name>" +
@@ -6140,7 +6665,12 @@ function form197_import(data_array,import_type)
 		{
 			data_xml+="</supplier_item_mapping><separator></separator><supplier_item_mapping>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<item>"+row.item+"</item>" +
@@ -6189,49 +6719,154 @@ function form203_import(data_array,import_type)
 		{
 			data_xml+="</logistics_orders><separator></separator><logistics_orders>";
 		}
-		counter+=1;
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
-				"<awb_num>"+row.awb_num+"</awb_num>"+
-                "<type>"+row.type+"</type>"+
-                "<order_num>"+row.order_num+"</order_num>"+
-                "<manifest_id>"+row.manifest_id+"</manifest_id>"+
-                "<merchant_name>"+row.merchant_name+"</merchant_name>"+
-                "<ship_to>"+row.ship_to+"</ship_to>"+
-                "<address1>"+row.address1+"</address1>"+
-                "<address2>"+row.address2+"</address2>"+
-                "<city>"+row.city+"</city>"+
-                "<state>"+row.state+"</state>"+
-                "<pincode>"+row.pincode+"</pincode>"+
-                "<phone>"+row.phone+"</phone>"+
-                "<telephone>"+row.telephone+"</telephone>"+
-                "<weight>"+row.weight+"</weight>"+
-                "<declared_value>"+row.declared_value+"</declared_value>"+
-                "<collectable_value>"+row.collectable_value+"</collectable_value>"+
-                "<vendor_code>"+row.vendor_code+"</vendor_code>"+
-                "<shipper_name>"+row.shipper_name+"</shipper_name>"+
-                "<return_address1>"+row.return_address1+"</return_address1>"+
-                "<return_address2>"+row.return_address2+"</return_address2>"+
-                "<return_address3>"+row.return_address3+"</return_address3>"+
-                "<return_pincode>"+row.return_pincode+"</return_pincode>"+
-                "<len>"+row.len+"</len>"+
-                "<breadth>"+row.breadth+"</breadth>"+
-                "<height>"+row.height+"</height>"+
-                "<pieces>"+row.pieces+"</pieces>"+
-                "<carrier_account>"+row.carrier_account+"</carrier_account>"+
-                "<carrier_name>"+row.carrier_name+"</carrier_name>"+
-                "<manifest_type>"+row.manifest_type+"</manifest_type>"+
-                "<dispatch_date>"+get_raw_time(row.dispatch_date)+"</dispatch_date>"+
-                "<notes>"+row.notes+"</notes>"+
-                "<pickup_location>"+row.pickup_location+"</pickup_location>"+
-                "<pickup_by>"+row.pickup_by+"</pickup_by>"+
-                "<status>"+row.status+"</status>"+
-                "<current_location>"+row.current_location+"</current_location>"+
-                "<delivery_person>"+row.delivery_person+"</delivery_person>"+
+				"<awb_num>"+row['AWB No.']+"</awb_num>"+
+                "<type>"+row['Type']+"</type>"+
+                "<order_num>"+row['Order No.']+"</order_num>"+
+                "<manifest_id>"+row['Manifest ID']+"</manifest_id>"+
+                "<merchant_name>"+row['Merchant Name']+"</merchant_name>"+
+                "<ship_to>"+row['Ship To']+"</ship_to>"+
+                "<address1>"+row['Address1']+"</address1>"+
+                "<address2>"+row['Address2']+"</address2>"+
+                "<city>"+row['City']+"</city>"+
+                "<state>"+row['State']+"</state>"+
+                "<pincode>"+row['Pincode']+"</pincode>"+
+                "<phone>"+row['Mobile number']+"</phone>"+
+                "<telephone>"+row['Tel. Number']+"</telephone>"+
+                "<weight>"+row['Weight(K.G.)']+"</weight>"+
+                "<declared_value>"+row['Declared Value']+"</declared_value>"+
+                "<collectable_value>"+row['Collectable Value']+"</collectable_value>"+
+                "<vendor_code>"+row['Vendor Code']+"</vendor_code>"+
+                "<shipper_name>"+row['Shipper Name']+"</shipper_name>"+
+                "<return_address1>"+row['Return Address1']+"</return_address1>"+
+                "<return_address2>"+row['Return Address2']+"</return_address2>"+
+                "<return_address3>"+row['Return Address3']+"</return_address3>"+
+                "<return_pincode>"+row['Return Pin']+"</return_pincode>"+
+                "<len>"+row['Length ( Cms )']+"</len>"+
+                "<breadth>"+row['Breadth ( Cms )']+"</breadth>"+
+                "<height>"+row['Height ( Cms )']+"</height>"+
+                "<pieces>"+row['Pieces']+"</pieces>"+
+                "<carrier_account>"+row['Carrier Account']+"</carrier_account>"+
+                "<carrier_name>"+row['Carrier Name']+"</carrier_name>"+
+                "<manifest_type>"+row['Manifest Type']+"</manifest_type>"+
+                "<dispatch_date>"+get_raw_time(row['Dispatch Date'])+"</dispatch_date>"+
+                "<notes>"+row['Notes']+"</notes>"+
+                "<pickup_location>"+row['Pickup Location']+"</pickup_location>"+
+                "<pickup_by>"+row['Pickup By']+"</pickup_by>"+
+                "<sku>"+row['Prod/SKU code']+"</sku>"+
+                "<product_name>"+row['Product name']+"</product_name>"+
+                "<status>picked</status>"+
+                "<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";							
+	});
+	data_xml+="</logistics_orders>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};
+
+/**
+* @form Create DRS
+* @formNo 200
+*/
+function form200_import(data_array,import_type)
+{
+	var data_xml="<logistics_orders>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</logistics_orders><separator></separator><logistics_orders>";
+		}
+		
+		counter+=1;
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<drs_num>"+row.drs_num+"</drs_num>" +
+				"<status>out for delivery</status>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
 	data_xml+="</logistics_orders>";
+	
+	if(is_online())
+	{	
+		server_update_batch(data_xml);
+	}
+	else
+	{
+		local_update_batch(data_xml);
+	}
+	
+};
+
+/**
+* @form manage DRS
+* @formNo 201
+*/
+function form201_import(data_array,import_type)
+{
+	var data_xml="<drs>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</drs><separator></separator><drs>";
+		}
+		
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<drs_num>"+row.drs_num+"</drs_num>" +
+				"<employee>"+row.employee+"</employee>" +
+				"<drs_time>"+get_raw_time(row.drs_time)+"</drs_time>" +
+				"<status>"+row.status+"</status>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</drs>";
 	if(import_type=='create_new')
 	{
 		if(is_online())

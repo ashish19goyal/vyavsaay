@@ -7320,12 +7320,15 @@ function modal116_action(barcode,sku)
 	var sku_filter=form.elements['sku'];
 	var name_filter=form.elements['name'];
 	var id_filter=form.elements['id'];
-
+	
+	var barcode_img=document.getElementById('modal116_barcode_img');
+	$(barcode_img).hide();
+	
 	barcode_filter.value=barcode;	
 	sku_filter.value="";
 	name_filter.value="";
 	id_filter.value="";
-	
+
 	if(typeof sku!='undefined')
 	{
 		sku_filter.value=sku;
@@ -7339,7 +7342,13 @@ function modal116_action(barcode,sku)
 			if(products.length>0)
 			{
 				name_filter.value=products[0].description;
-				id_filter.value=products[0].id;				
+				id_filter.value=products[0].id;	
+				$(barcode_img).show();
+				$(barcode_img).off('click');
+				$(barcode_img).on('click',function () 
+				{
+					print_product_barcode(barcode_filter.value,sku_filter.value,name_filter.value);
+				});
 			}
 		});
 	}
@@ -8504,4 +8513,101 @@ function modal128_action()
 	});
 	
 	$("#modal128").dialog("open");
+}
+
+/**
+ * @modalNo 129
+ * @modal Add DRS Items
+ */
+function modal129_action()
+{
+	var form=document.getElementById('modal129_form');
+			
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form200'))
+		{
+			var address=form.elements['address'].value;
+			var city=form.elements['city'].value;
+			var pincode=form.elements['pincode'].value;
+			var last_updated=get_my_time();
+			
+			var orders_data="<logistics_orders count='50'>"+
+							"<id></id>"+
+							"<address1>"+address+"</address1>"+
+							"<address2></address2>"+
+							"<city>"+city+"</city>"+
+							"<pincode>"+pincode+"</pincode>"+
+							"<awb_num></awb_num>" +
+							"<manifest_type></manifest_type>" +
+							"<order_num></order_num>" +
+							"<merchant_name></merchant_name>" +
+							"<ship_to></ship_to>" +
+							"<phone></phone>" +
+							"<weight></weight>" +
+							"<pieces></pieces>" +
+							"<drs_num></drs_num>" +
+							"<status exact='yes'>received</status>"+
+							"</logistics_orders>";
+			//console.log(orders_data);				
+			fetch_requested_data('',orders_data,function (orders) 
+			{
+				//console.log(orders);
+				orders.forEach(function (result)
+				{
+					if(result.drs_num=='null' || result.drs_num=="")
+					{
+						var id=result.id;
+						var rowsHTML="<tr>";
+						rowsHTML+="<form id='form200_"+id+"'></form>";
+							rowsHTML+="<td data-th='S.No.'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='AWB #'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form200_"+id+"' value='"+result.awb_num+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Address'>";
+								rowsHTML+="<textarea readonly='readonly' form='form200_"+id+"'>"+result.address1+", "+result.address2+", "+result.city+"-"+result.pincode+"</textarea>";
+								rowsHTML+="<br>Phone: <input type='text' readonly='readonly' value='"+result.phone+"' form='form200_"+id+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Details'>";
+								rowsHTML+="Weight: <input type='number' readonly='readonly' form='form200_"+id+"' value='"+result.weight+"' step='any'>";
+								rowsHTML+="<br>Pieces: <input type='number' readonly='readonly' form='form200_"+id+"' value='"+result.pieces+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Status'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form200_"+id+"' value='"+result.status+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+result.manifest_type+"'>";
+								rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+result.order_num+"'>";
+								rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+result.merchant_name+"'>";
+								rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='submit' class='submit_hidden' form='form200_"+id+"' id='save_form200_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form200_"+id+"' id='delete_form200_"+id+"' onclick='form200_delete_item($(this));'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+	
+						$('#form200_body').append(rowsHTML);
+						
+						var item_form=document.getElementById('form200'+id);
+						
+						$(item_form).on('submit',function (e) 
+						{
+							e.preventDefault();
+							form200_create_item(item_form);
+						});
+					}
+				});
+				form200_update_serial_numbers();
+				$('textarea').autosize();
+			});
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal129").dialog("close");
+	});
+	$("#modal129").dialog("open");
 }

@@ -13812,3 +13812,143 @@ function form197_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * formNo 200
+ * form Create DRS
+ * @param button
+ */
+function form200_create_item(form)
+{
+	console.log('form200_create_form');
+	if(is_create_access('form200'))
+	{
+		var drs_num=document.getElementById('form200_master').elements['drs_num'].value;
+		var data_id=form.elements[9].value;
+		var del_button=form.elements[11];
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<status>out for delivery</status>" +
+					"<drs_num>"+drs_num+"</drs_num>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}	
+		for(var i=0;i<9;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form200_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create DRS
+ * @param button
+ */
+function form200_create_form()
+{
+	if(is_create_access('form200'))
+	{
+		console.log('form200_create_form');
+		var form=document.getElementById("form200_master");
+		
+		var drs_num=form.elements['drs_num'].value;
+		var employee=form.elements['employee'].value;
+		var ddate=get_raw_time(form.elements['date'].value);
+		var data_id=form.elements['id'].value;
+		
+		$('#form200_share').show();
+		$('#form200_share').click(function()
+		{
+			modal101_action('Delivery Run Sheet',employee,'staff',function (func) 
+			{
+				print_form200(func);
+			});
+		});
+
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var data_xml="<drs>" +
+					"<id>"+data_id+"</id>" +
+					"<drs_num>"+drs_num+"</drs_num>"+
+					"<employee>"+employee+"</employee>"+
+					"<drs_time>"+ddate+"</drs_time>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</drs>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>drs</tablename>" +
+					"<link_to>form201</link_to>" +
+					"<title>Generated</title>" +
+					"<notes>DRS # "+drs_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var num_data="<user_preferences>"+
+					"<id></id>"+						
+					"<name exact='yes'>drs_num</name>"+												
+					"</user_preferences>";
+		get_single_column_data(function (drs_num_ids)
+		{
+			if(drs_num_ids.length>0)
+			{
+				var num_xml="<user_preferences>"+
+								"<id>"+drs_num_ids[0]+"</id>"+
+								"<value>"+(parseInt(drs_num)+1)+"</value>"+
+								"</user_preferences>";
+				if(is_online())
+				{
+					server_update_simple(num_xml);
+				}
+				else 
+				{
+					local_update_simple(num_xml);
+				}
+			}
+		},num_data);
+
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}
+
+		$(save_button).off('click');
+		$(save_button).on('click',function(event)
+		{
+			event.preventDefault();
+			form200_update_form();
+		});
+		
+		$("[id^='save_form200_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

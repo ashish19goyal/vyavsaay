@@ -23,13 +23,6 @@ textarea{
 	border: 1px solid #dadada;
 }
 
-textarea.widebox{
-	width:225px;
-}
-
-input.widebox{
-	width:225px;
-}
 
 input{
 	outline:  none !important;
@@ -52,7 +45,7 @@ input:not([type="button"]):not([readonly="readonly"]):not([type="submit"]):focus
 
 td input[type="text"]
 {
-	width:100px;
+	/*width:100px;*/
 	transition: width 0.25s;
 	white-space:normal;
 }
@@ -134,6 +127,10 @@ a:hover {
 	color: #445a71;	
 }
 
+input.input_link{
+	cursor: pointer;
+	text-decoration: underline;
+}
 
 body {
 	color: #2A2A2A;
@@ -911,6 +908,22 @@ canvas{
 	border: 1px solid #dadada;
 }
 
+textarea.widebox{
+	width:225px;
+}
+
+input.widebox{
+	width:225px;
+}
+
+textarea.ultrawidebox{
+	width:400px;
+}
+
+input.ultrawidebox{
+	width:400px;
+}
+
 @media screen and (min-width: 1300px) {
 	#content_box{
 		min-width:1050px;
@@ -1220,4 +1233,21 @@ canvas{
 	v2{
 		margin-left: 175px;
 	}
+	
+	textarea.widebox{
+		width:300px;
+	}
+	
+	input.widebox{
+		width:300px;
+	}
+	
+	textarea.ultrawidebox{
+		width:300px;
+	}
+	
+	input.ultrawidebox{
+		width:300px;
+	}
+
 }

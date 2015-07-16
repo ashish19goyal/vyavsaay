@@ -19966,6 +19966,345 @@ function form197_ini()
 
 /**
  * @form Logistics Orders
+ * @formNo 198
+ * @Loading light
+ */
+function form198_ini()
+{
+	show_loader();
+	var fid=$("#form198_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var master_form=document.getElementById('form198_master');
+	var awb_num=master_form.elements['awb_num'];
+
+	var columns="<logistics_orders count='1'>" +
+			"<id>"+fid+"</id>" +
+			"<order_num></order_num>"+
+			"<awb_num>"+awb_num.value+"</awb_num>"+
+			    "<type></type>"+
+                "<manifest_id></manifest_id>"+
+                "<merchant_name></merchant_name>"+
+                "<ship_to></ship_to>"+
+                "<address1></address1>"+
+                "<address2></address2>"+
+                "<city></city>"+
+                "<state></state>"+
+                "<pincode></pincode>"+
+                "<phone></phone>"+
+                "<telephone></telephone>"+
+                "<weight></weight>"+
+                "<declared_value></declared_value>"+
+                "<collectable_value></collectable_value>"+
+                "<vendor_code></vendor_code>"+
+                "<shipper_name></shipper_name>"+
+                "<return_address1></return_address1>"+
+                "<return_address2></return_address2>"+
+                "<return_address3></return_address3>"+
+                "<return_pincode></return_pincode>"+
+                "<len></len>"+
+                "<breadth></breadth>"+
+                "<height></height>"+
+                "<pieces></pieces>"+
+                "<carrier_account></carrier_account>"+
+                "<carrier_name></carrier_name>"+
+                "<manifest_type></manifest_type>"+
+                "<dispatch_date></dispatch_date>"+
+                "<notes></notes>"+
+                "<pickup_location></pickup_location>"+
+                "<pickup_by></pickup_by>"+
+                "<sku></sku>"+
+                "<product_name></product_name>"+
+                "<status></status>"+
+                "<current_location></current_location>"+
+                "<delivery_person></delivery_person>"+
+                "<comments></comments>"+
+                "</logistics_orders>";
+
+	$('#form198_body').html("");
+
+	fetch_requested_data('form198',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			if(awb_num.value=="")
+			{
+				awb_num.value=result.awb_num;
+			}
+			var rowsHTML="";
+				rowsHTML+="<input type='hidden' name='id'  value='"+result.id+"'>";
+				rowsHTML+="<label>Order #: <input type='text' name='order_num'  value='"+result.order_num+"'></label>";
+				rowsHTML+="<label>Type: <input type='text' name='type'  value='"+result.type+"' required></label>";
+				rowsHTML+="<label>Manifest ID: <input type='text' name='manifest_id'  value='"+result.manifest_id+"' required></label>";
+				rowsHTML+="<label>Merchant Name: <textarea name='merchant_name'  required>"+result.merchant_name+"</textarea></label>";
+				rowsHTML+="<label>Ship To: <textarea name='ship_to'  required>"+result.ship_to+"</textarea></label>";
+				rowsHTML+="<label>Address 1: <textarea name='address1' >"+result.address1+"</textarea></label>";
+				rowsHTML+="<label>Address 2: <textarea name='address2' >"+result.address2+"</textarea></label>";
+				rowsHTML+="<label>City: <input type='text' name='city'  value='"+result.city+"'></label>";
+				rowsHTML+="<label>State: <input type='text' name='state'  value='"+result.state+"'></label>";
+				rowsHTML+="<label>Pincode: <input type='text' name='pincode'  value='"+result.pincode+"'></label>";
+				rowsHTML+="<label>Phone: <input type='text' name='phone'  required value='"+result.phone+"'></label>";
+				rowsHTML+="<label>Telephone: <input type='text' name='telephone'  value='"+result.telephone+"'></label>";
+				rowsHTML+="<label>Weight: <input type='number' step='any' name='weight'  value='"+result.weight+"'></label>";
+				rowsHTML+="<label>Declared Value: <input type='number' step='any' name='d_value'  value='"+result.declared_value+"'></label>";
+				rowsHTML+="<label>Collectable Value: <input type='number' step='any' name='c_value'  value='"+result.collectable_value+"'></label>";
+				rowsHTML+="<label>Vendor Code: <input type='text' name='vendor_code'  required value='"+result.vendor_code+"'></label>";
+				rowsHTML+="<label>Shipper Name: <textarea name='shipper_name' >"+result.shipper_name+"</textarea></label>";
+				rowsHTML+="<label>Return Address 1: <textarea name='r_address1' >"+result.return_address1+"</textarea></label>";
+				rowsHTML+="<label>Return Address 2: <textarea name='r_address2' >"+result.return_address2+"</textarea></label>";
+				rowsHTML+="<label>Return Address 3: <textarea name='r_address3' >"+result.return_address3+"</textarea></label>";
+				rowsHTML+="<label>Return Pincode: <input type='text' name='rpincode' value='"+result.return_pincode+"'></label>";
+				rowsHTML+="<label>Length: <input type='number' step='any' name='len'  value='"+result.len+"'></label>";
+				rowsHTML+="<label>Breadth: <input type='number' step='any' name='breadth'  value='"+result.breadth+"'></label>";
+				rowsHTML+="<label>Height: <input type='number' step='any' name='height'  value='"+result.height+"'></label>";
+				rowsHTML+="<label>Pieces: <input type='number' step='any' name='pieces'  value='"+result.pieces+"'></label>";
+				rowsHTML+="<label>Carrier Account: <input type='text' name='c_account'  value='"+result.carrier_account+"'></label>";
+				rowsHTML+="<label>Carrier Name: <input type='text' name='c_name'  value='"+result.carrier_name+"'></label>";
+				rowsHTML+="<label>Manifest Type: <input type='text' name='manifest_type'  value='"+result.manifest_type+"'></label>";
+				rowsHTML+="<label>Dispatch Date: <input type='text' name='ddate'  value='"+get_my_past_date(result.dispatch_date)+"'></label>";
+				rowsHTML+="<label>Notes: <textarea name='notes' >"+result.notes+"</textarea></label>";
+				rowsHTML+="<label>Pickup Location: <input type='text' name='pickup_location'  value='"+result.pickup_location+"'></label>";
+				rowsHTML+="<label>Pickup By: <input type='text' name='pickup_by'  value='"+result.pickup_by+"'></label>";
+				rowsHTML+="<label>SKU: <textarea name='sku' >"+result.sku+"</textarea></label>";
+				rowsHTML+="<label>Product Name: <textarea name='product_name' >"+result.product_name+"</textarea></label>";
+				rowsHTML+="<label>Status: <input type='text' name='status'  required value='"+result.status+"'></label>";
+				rowsHTML+="<label>Current Location: <input type='text' name='current_location'  value='"+result.current_location+"'></label>";
+				rowsHTML+="<label>Delivery Person: <input type='text' name='delivery_person'  value='"+result.delivery_person+"'></label>";
+				rowsHTML+="<label>Comments: <textarea name='comments' >"+result.comments+"</textarea></label>";
+				rowsHTML+="<label><input type='button' value='Update' class='generic_icon' name='update' onclick='form198_update_item();'></label>";
+
+			$('#form198_fieldset').html(rowsHTML);
+		});
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();		
+		hide_loader();
+	});
+};
+
+/**
+ * @form Create DRS
+ * @formNo 200
+ * @Loading light
+ */
+function form200_ini()
+{
+	var drs_id=$("#form200_link").attr('data_id');
+	if(drs_id==null)
+		drs_id="";	
+	$('#form200_body').html("");
+	$('#form200_foot').html("");
+	
+	if(drs_id!="")
+	{
+		show_loader();
+		var drs_columns="<drs>" +
+				"<id>"+drs_id+"</id>" +
+				"<drs_num></drs_num>"+
+				"<employee></employee>"+
+				"<drs_time></drs_time>"+
+				"</drs>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',drs_columns,function(drs_results)
+		{
+			var filter_fields=document.getElementById('form200_master');
+			if(drs_results.length>0)
+			{
+				filter_fields.elements['drs_num'].value=drs_results[0].drs_num;
+				filter_fields.elements['employee'].value=drs_results[0].employee;
+				filter_fields.elements['date'].value=get_my_past_date(drs_results[0].drs_time);
+				filter_fields.elements['id'].value=drs_results[0].id;
+				
+				var save_button=filter_fields.elements['save'];
+				
+				$(save_button).off('click');
+				$(save_button).on("click", function(event)
+				{
+					event.preventDefault();
+					form200_update_form();
+				});
+
+				var drs_items_column="<logistics_orders>" +
+									"<id></id>" +
+									"<awb_num></awb_num>" +
+									"<manifest_type></manifest_type>" +
+									"<order_num></order_num>" +
+									"<merchant_name></merchant_name>" +
+									"<ship_to></ship_to>" +
+									"<address1></address1>" +
+									"<address2></address2>" +
+									"<city></city>" +
+									"<pincode></pincode>" +
+									"<phone></phone>" +
+									"<weight></weight>" +
+									"<pieces></pieces>" +
+									"<drs_num exact='yes'>"+drs_results[0].drs_num+"</drs_num>" +
+									"<tax></tax>" +
+									"</logistics_orders>";
+
+				/////////////////////////////////////////////////////////////////////////
+	
+				fetch_requested_data('',drs_items_column,function(results)
+				{
+					results.forEach(function(result)
+					{
+						var id=result.id;
+						var rowsHTML="<tr>";
+						rowsHTML+="<form id='form200_"+id+"'></form>";
+							rowsHTML+="<td data-th='S.No.'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='AWB #'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form200_"+id+"' value='"+result.awb_num+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Address'>";
+								rowsHTML+="<textarea readonly='readonly' form='form200_"+id+"'>"+result.address1+", "+result.address2+", "+result.city+"-"+result.pincode+"</textarea>";
+								rowsHTML+="<br>Phone: <input type='text' readonly='readonly' value='"+result.phone+"' form='form200_"+id+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Details'>";
+								rowsHTML+="Weight: <input type='number' readonly='readonly' form='form200_"+id+"' value='"+result.weight+"' step='any'>";
+								rowsHTML+="<br>Pieces: <input type='number' readonly='readonly' form='form200_"+id+"' value='"+result.pieces+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Status'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form200_"+id+"' value='"+result.status+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+result.manifest_type+"'>";
+								rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+result.order_num+"'>";
+								rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+result.merchant_name+"'>";
+								rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='button' class='submit_hidden' form='form200_"+id+"' id='save_form200_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form200_"+id+"' id='delete_form200_"+id+"' onclick='form200_delete_item($(this));'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+	
+						$('#form200_body').append(rowsHTML);
+					});
+					
+					$('#form200_share').show();
+					$('#form200_share').click(function()
+					{
+						modal101_action('Delivery Run Sheet',filter_fields.elements['employee'].value,'staff',function (func) 
+						{
+							print_form200(func);
+						});
+					});
+					
+					form200_update_serial_numbers();
+					$('textarea').autosize();
+					hide_loader();
+				});
+			}
+		});
+	}
+}
+
+/**
+ * @form Manage DRS
+ * @formNo 201
+ * @Loading light
+ */
+function form201_ini()
+{
+	show_loader();
+	var fid=$("#form201_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form201_header');
+
+	//populating form 
+	var fdrs=filter_fields.elements[0].value;
+	var femployee=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form201_index');
+	var prev_element=document.getElementById('form201_prev');
+	var next_element=document.getElementById('form201_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<drs count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<drs_num>"+fdrs+"</drs_num>"+
+			"<employee>"+femployee+"</employee>"+
+			"<drs_time></drs_time>" +
+			"<status>"+fstatus+"</status>" +
+			"</drs>";
+
+	$('#form201_body').html("");
+
+	fetch_requested_data('form201',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form201_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='DRS #'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='input_link' form='form201_"+result.id+"' value='"+result.drs_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Employee'>";
+						rowsHTML+="<textarea readonly='readonly' form='form201_"+result.id+"'>"+result.employee+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='DRS Time'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' value='"+get_my_datetime(result.drs_time)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form201_"+result.id+"' value='"+result.id+"' name='id'>";
+						rowsHTML+="<input type='button' form='form201_"+result.id+"' class='edit_icon' title='View DRS' name='edit' onclick=\"element_display('"+result.id+"','form200');\">";
+						rowsHTML+="<input type='button' class='delete_icon' form='form201_"+result.id+"' title='Delete order' onclick='form201_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form201_body').append(rowsHTML);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'DRS');
+		});
+		hide_loader();
+	});
+};
+
+
+/**
+ * @form Logistics Orders
  * @formNo 203
  * @Loading light
  */
@@ -19995,7 +20334,7 @@ function form203_ini()
 			"<order_num>"+forder+"</order_num>"+
 			"<awb_num>"+fawb+"</awb_num>"+
 			"<merchant_name></merchant_name>" +
-			"<ship_tp></ship_to>" +
+			"<ship_to></ship_to>" +
 			"<dispatch_date></dispatch_date>" +
 			"<status>"+fstatus+"</status>" +
 			"</logistics_orders>";
@@ -20010,14 +20349,14 @@ function form203_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form203_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='AWB #'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form203_"+result.id+"' onclick=\"element_display('"+result.id+"','form198');\" value='"+result.awb_num+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='input_link' form='form203_"+result.id+"' onclick=\"element_display('"+result.id+"','form198');\" value='"+result.awb_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Order #'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.order_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Customer'>";
-						rowsHTML+="Merchant: <textarea readonly='readonly' form='form203_"+result.id+"'>"+result.merchant_name+"</textarea>";
-						rowsHTML+="<br>Ship to: <textarea readonly='readonly' form='form203_"+result.id+"'>"+result.ship_to+"</textarea>";
+						rowsHTML+="Merchant: <input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.merchant_name+"'>";
+						rowsHTML+="<br>Ship to: <input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.ship_to+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.status+"'>";

@@ -11,6 +11,7 @@
 <script src='./JavaScripts/open/fullcalendar.min.js'></script>
 <script src='./JavaScripts/open/jquery.datetimepicker.js'></script>
 <script src='./JavaScripts/open/jquery.easing.min.js'></script>
+<script src='./JavaScripts/open/jquery.autosize.input.min.js'></script>
 <script src='./JavaScripts/open/move-top.js'></script>
 <script src='./JavaScripts/open/shortcuts.min.js'></script>
 <script src='./JavaScripts/open/angular.js'></script>

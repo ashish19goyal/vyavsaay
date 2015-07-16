@@ -6952,25 +6952,46 @@ function form197_header_ini()
 };
 
 /**
+ * @form Order Details
+ * @formNo 198
+ */
+function form198_header_ini()
+{
+	var fields=document.getElementById('form198_master');
+
+	var awb_filter=fields.elements['awb_num'];
+
+	awb_filter.value="";	
+
+	var awb_data="<logistics_orders>"+
+				"<awb_num></awb_num>"+
+				"</logistics_orders>";
+	set_my_value_list(awb_data,awb_filter,function () 
+	{
+		$(awb_filter).focus();
+	});
+
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form198_ini();
+	});
+
+	$('#form198_fieldset').html("");
+}
+
+/**
  * @form Incoming Items
  * @formNo 199
  */
 function form199_header_ini()
 {
 	var fields=document.getElementById('form199_master');
-	
+
 	var comments_filter=fields.elements['comments'];
-	var save_button=fields.elements['save'];
 
 	comments_filter.value="";	
-	
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form199_update_form();
-	});
-
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
 	{
@@ -6980,6 +7001,99 @@ function form199_header_ini()
 
 	$('#form199_body').html("");
 }
+
+/**
+ * @form Create Drs
+ * @formNo 200
+ */
+function form200_header_ini()
+{
+	var fields=document.getElementById('form200_master');
+
+	var drs_filter=fields.elements['drs_num'];
+	var employee=fields.elements['employee'];
+	var drs_date=fields.elements['date'];
+	var print_date=fields.elements['pdate'];
+
+	fields.elements['id'].value=get_new_key();
+	
+	var save_button=fields.elements['save'];
+	drs_filter.value="";
+	employee.value="";
+	
+	var drs_num_data="<user_preferences count='1'>"+
+					"<value></value>"+
+					"<name exact='yes'>drs_num</name>"+
+					"</user_preferences>";
+	set_my_value(drs_num_data,drs_filter);	
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form200_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		modal129_action();
+	});
+
+	var employee_data="<staff>" +
+		"<acc_name></acc_name>" +
+		"</staff>";
+	set_my_value_list(employee_data,employee,function () 
+	{
+		$(employee).focus();
+	});
+	
+	$(drs_date).datepicker();
+	drs_date.value=get_my_date();
+	$(print_date).datepicker();
+	print_date.value=get_my_date();
+	$('#form200_share').hide();
+}
+
+/**
+ * @form Manage Drs
+ * @formNo 201
+ */
+function form201_header_ini()
+{
+	var filter_fields=document.getElementById('form201_header');
+	var drs_filter=filter_fields.elements[0];
+	var employee_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+		
+	var drs_data="<drs>" +
+			"<drs_num></drs_num>" +
+			"</drs>";
+	var employee_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form201_ini();
+	});
+
+	set_my_filter(drs_data,drs_filter);
+	set_my_filter(employee_data,employee_filter);
+	set_static_filter('drs','status',status_filter);
+};
+
 /**
  * @form Logistics Manage Orders
  * @formNo 203
@@ -7019,17 +7133,8 @@ function form204_header_ini()
 	var fields=document.getElementById('form204_master');
 	
 	var comments_filter=fields.elements['comments'];
-	var save_button=fields.elements['save'];
 
 	comments_filter.value="";	
-	
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form204_update_form();
-	});
-
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
 	{
@@ -7049,17 +7154,8 @@ function form205_header_ini()
 	var fields=document.getElementById('form205_master');
 	
 	var comments_filter=fields.elements['comments'];
-	var save_button=fields.elements['save'];
 
 	comments_filter.value="";	
-	
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form205_update_form();
-	});
-
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
 	{
@@ -7079,17 +7175,8 @@ function form206_header_ini()
 	var fields=document.getElementById('form206_master');
 	
 	var comments_filter=fields.elements['comments'];
-	var save_button=fields.elements['save'];
 
 	comments_filter.value="";	
-	
-	$(save_button).off('click');
-	$(save_button).on("click", function(event)
-	{
-		event.preventDefault();
-		form206_update_form();
-	});
-
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
 	{

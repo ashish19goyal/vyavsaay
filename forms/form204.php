@@ -2,7 +2,7 @@
 	<form id='form204_master' autocomplete="off">
 		<fieldset>
 			<label>Pending Comments: <textarea name='comments'></textarea></label>
-			<label><input type='button' name='save' class='generic_icon' value='Update Status'></label>
+			<!--<label><input type='button' name='save' class='generic_icon' value='Update Status'></label>-->
 		</fieldset>
 	</form>
 	<table class='rwd-table'>
