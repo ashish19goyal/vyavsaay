@@ -682,3 +682,28 @@ function set_grid_item_38()
 		document.getElementById('grid_item_38').innerHTML=results.length;
 	},columns);
 };
+
+/**
+ * @item Today's # pending branch orders
+ * @itemNo 39
+ */
+function set_grid_item_39()
+{
+	var columns="<logistics_orders>" +
+		"<id></id>" +
+		"<status array='yes'>--pending--undelivered--received--out for delivery--</status>"+
+		"<dispatch_date exact='yes'>"+get_raw_time(get_my_date())+"</dispatch_date>"+
+		"</logistics_orders>";
+	get_single_column_data(function(results)
+	{
+		var count=0;
+		for(var i in results)
+		{
+			if(results[i].current_location!="" && results[i].current_location!="null")
+			{
+				count+=1;
+			}
+		}
+		document.getElementById('grid_item_39').innerHTML=count;
+	},columns);
+};

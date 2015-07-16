@@ -326,6 +326,15 @@
 				"function_def":"function set_grid_item_38(){var columns=\"<logistics_orders><id></id><status exact='yes'>pending</status><dispatch_date exact='yes'>\"+get_raw_time(get_my_date())+\"</dispatch_date></logistics_orders>\";get_single_column_data(function(results){document.getElementById('grid_item_38').innerHTML=results.length;},columns);};",
 				"status": "active",
 				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_39",
+				"display_name":"# pending branch orders",
+				"grid":"store",
+				"function_name":"set_grid_item_39();",
+				"function_def":"function set_grid_item_39(){var columns=\"<logistics_orders><id></id><status array='yes'>--pending--undelivered--received--out for delivery--</status><dispatch_date exact='yes'>\"+get_raw_time(get_my_date())+\"</dispatch_date></logistics_orders>\";get_single_column_data(function(results){var count=0;for(var i in results){if(results[i].current_location!='' && results[i].current_location!='null'){count+=1;}}document.getElementById('grid_item_39').innerHTML=count;},columns);};",
+				"status": "active",
+				"last_updated": 1
 			}
 		]
 	}
