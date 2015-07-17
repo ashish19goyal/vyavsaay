@@ -20152,6 +20152,12 @@ function form200_ini()
 					{
 						var id=result.id;
 						var rowsHTML="<tr>";
+
+						var address=result.address1+", "+result.address2+", "+result.city+"-"+result.pincode;
+						if(result.address2=="--" || result.address2==result.address1)
+						{
+							var address=result.address1+", "+result.city+"-"+result.pincode;
+						}						
 						rowsHTML+="<form id='form200_"+id+"'></form>";
 							rowsHTML+="<td data-th='S.No.'>";
 							rowsHTML+="</td>";
@@ -20159,7 +20165,7 @@ function form200_ini()
 								rowsHTML+="<input type='text' readonly='readonly' form='form200_"+id+"' value='"+result.awb_num+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Address'>";
-								rowsHTML+="<textarea readonly='readonly' form='form200_"+id+"'>"+result.address1+", "+result.address2+", "+result.city+"-"+result.pincode+"</textarea>";
+								rowsHTML+="<textarea readonly='readonly' form='form200_"+id+"'>"+address+"</textarea>";
 								rowsHTML+="<br>Phone: <input type='text' readonly='readonly' value='"+result.phone+"' form='form200_"+id+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
