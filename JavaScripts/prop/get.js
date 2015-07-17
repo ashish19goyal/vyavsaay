@@ -680,9 +680,7 @@ function csv_string_to_obj_array(csvString)
 						}
 					}
 					columns[j]=columns[j].replace(/^\"/, "");
-					columns[j]=columns[j].replace(/\"$/, "");
-					//columns[j] = columns[j].replace(/[^a-zA-Z0-9&\/\\#,+()$~%.'":*?<>{}]/g,'');
-					
+					columns[j]=columns[j].replace(/\"$/, "");	
 				}
 				columns[j]=columns[j].replace(/&/g, "and");
 				col_result[header_cols[j]]=columns[j];

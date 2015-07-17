@@ -1,7 +1,9 @@
 <?php
-		
+
 	include_once "../Classes/db.php";
+	include_once "../Classes/mailer.php";
 	use RetailingEssentials\db_connect;
+	use RetailingEssentials\send_mailer;
 
 	$userNameString=$_POST['userName'];
 	$userEmail=$_POST['userEmail'];
@@ -39,18 +41,16 @@
 			
 			echo $password;
 			
-			//$message='<html><head><title>'.$subject.'</title></head><body><table><tr><td>Your Vyavsaay password has been temporarily reset to: '+$password+'</td></tr><tr><td>Please login with this password and change it.</td></tr></table></body></html>';
 			$message = '<html><head><title>'.$subject.
 			'</title></head><body><table><tr><td>Your Vyavsaay password has been changed to : <b>'.$password.'</b></td></tr>'.
 			'<tr><td>Please login with this password and change it as soon as possible. </td></tr>'.
 			'</table></body></html>';
-			
-			$to=strip_tags($userEmail);
-			$headers = "From: info@vyavsaay.com \r\n";
-			$headers .= "Reply-To: info@vyavsaay.com \r\n";
-			$headers .= "MIME-Version: 1.0"."\r\n";
-			$headers .= "Content-Type:text/html;charset=UTF-8\r\n";
-			$mail_status=mail($to, $subject, $message, $headers);
+
+			$from = "info@vyavsaay.com";
+			$from_name = "info@vyavsaay.com";					
+			$email_instance=new send_mailer();
+			$email_instance->direct_send($subject,$message,"User:".$userEmail,$from,$from_name);
+			$email_instance->log_mailer($domain,$subject,$message,"User:".$userEmail,$from,$from_name);	
 		}
 		else
 		{

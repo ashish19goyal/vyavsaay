@@ -132,7 +132,7 @@
 		
 		ajax_with_custom_func("./ajax/pass_reset.php",post_data,function(e)
 		{
-			if(e.responseText=='failed')
+			if(e.responseText.indexOf('failed')!=-1)
 			{
 				document.getElementById("reset_complete").innerHTML="Couldn't reset your password. Please confirm that the Username and email ID are correct.";
 			}

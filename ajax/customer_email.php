@@ -33,8 +33,10 @@
 	session_start();
 	
 	include_once "../Classes/db.php";
+	include_once "../Classes/mailer.php";
 	use RetailingEssentials\db_connect;
-	
+	use RetailingEssentials\send_mailer;
+
 	$email_data=$_POST['email_data'];
 	$domain=$_POST['domain'];
 	$username=$_POST['username'];
