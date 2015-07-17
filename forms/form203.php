@@ -8,7 +8,8 @@
 					<th>Customer </th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form203_header'></th>
 					<th><input type="button" value='Add new order' class='add_icon' form='form203_header' onclick="modal128_action();">
-						<input type='button' form='form203_header' value='EXPORT' class='export_icon'>
+						<br><input type='button' form='form203_header' value='Import' name='import' class='import_icon'>
+						<br><input type='button' form='form203_header' value='EXPORT' name='export' class='export_icon'>
 						<input type='submit' form='form203_header' style='visibility: hidden;'>
 					</th>
 			</tr>

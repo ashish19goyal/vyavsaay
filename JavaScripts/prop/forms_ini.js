@@ -20244,7 +20244,7 @@ function form201_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form201_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='DRS #'>";
-						rowsHTML+="<input type='text' readonly='readonly' class='input_link' form='form201_"+result.id+"' value='"+result.drs_num+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' value='"+result.drs_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Employee'>";
 						rowsHTML+="<textarea readonly='readonly' form='form201_"+result.id+"'>"+result.employee+"</textarea>";
@@ -20397,7 +20397,7 @@ function form203_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[4];
+		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{

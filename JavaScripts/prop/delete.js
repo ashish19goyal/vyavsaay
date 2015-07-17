@@ -6423,6 +6423,7 @@ function form200_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<status>received</status>" +
 						"<drs_num></drs_num>"+
+						"<delivery_person></delivery_person>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</logistics_orders>";
 			if(is_online())

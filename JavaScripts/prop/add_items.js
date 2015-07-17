@@ -10459,7 +10459,7 @@ function form199_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form199_"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form199_"+id+"' id='save_form199_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form199_"+id+"' id='save_form199_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form199_"+id+"' id='delete_form199_"+id+"' onclick='form199_delete_item($(this));'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
@@ -10490,7 +10490,6 @@ function form199_add_item()
 		{
 			if(event.keyCode == 13 ) 
 			{
-//				event.preventDefault();
 				var order_data="<logistics_orders count='1'>"+
 							"<id></id>"+
 							"<order_num></order_num>"+
@@ -10532,11 +10531,11 @@ function form202_add_item()
 				rowsHTML+="<input type='text' form='form202_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Address'>";
-				rowsHTML+="<textarea readonly='readonly' form='form202_"+id+"'>";
+				rowsHTML+="<textarea readonly='readonly' form='form202_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form202_"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form202_"+id+"' id='save_form202_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form202_"+id+"' id='save_form202_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form202_"+id+"' id='delete_form202_"+id+"' onclick='form202_delete_item($(this))'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
@@ -10588,6 +10587,7 @@ function form202_add_item()
 				});					
 			}
 		});
+		$('textarea').autosize();
 	}
 	else
 	{
@@ -10614,7 +10614,7 @@ function form204_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form204_"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form204_"+id+"' id='save_form204_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form204_"+id+"' id='save_form204_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form204_"+id+"' id='delete_form204_"+id+"' onclick='form204_delete_item($(this))'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
@@ -10686,7 +10686,7 @@ function form205_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form205_"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form205_"+id+"' id='save_form205_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form205_"+id+"' id='save_form205_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form205_"+id+"' id='delete_form205_"+id+"' onclick='form205_delete_item($(this));'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
@@ -10758,7 +10758,7 @@ function form206_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form206_"+id+"'>";	
-				rowsHTML+="<input type='submit' class='save_icon' form='form206_"+id+"' id='save_form206_"+id+"' >";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form206_"+id+"' id='save_form206_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form206_"+id+"' id='delete_form206_"+id+"' onclick='form206_delete_item($(this));'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";

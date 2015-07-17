@@ -371,6 +371,7 @@ function form10_create_form()
 				var num_xml="<user_preferences>"+
 								"<id>"+bill_num_ids[0]+"</id>"+
 								"<value>"+(parseInt(bill_num)+1)+"</value>"+
+								"<last_updated>"+last_updated+"</last_updated>"+
 								"</user_preferences>";
 				if(is_online())
 				{
@@ -856,6 +857,7 @@ function form12_create_form()
 					var num_xml="<user_preferences>"+
 									"<id>"+bill_num_ids[0]+"</id>"+
 									"<value>"+(parseInt(bill_num)+1)+"</value>"+
+									"<last_updated>"+last_updated+"</last_updated>"+
 									"</user_preferences>";
 					if(is_online())
 					{
@@ -1818,6 +1820,7 @@ function form24_create_form()
 				var num_xml="<user_preferences>"+
 							"<id>"+bill_num_ids[0]+"</id>"+
 							"<value>"+(parseInt(order_num)+1)+"</value>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
 							"</user_preferences>";
 				if(is_online())
 				{
@@ -2707,6 +2710,7 @@ function form69_create_form()
 				var num_xml="<user_preferences>"+
 							"<id>"+num_ids[0]+"</id>"+
 							"<value>"+(parseInt(order_num)+1)+"</value>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
 							"</user_preferences>";
 				if(is_online())
 				{
@@ -3933,6 +3937,7 @@ function form72_create_form()
 					var num_xml="<user_preferences>"+
 									"<id>"+bill_num_ids[0]+"</id>"+
 									"<value>"+(parseInt(bill_num)+1)+"</value>"+
+									"<last_updated>"+last_updated+"</last_updated>"+
 									"</user_preferences>";
 					if(is_online())
 					{
@@ -4694,6 +4699,7 @@ function form82_bill()
 							var num_xml="<user_preferences>"+
 											"<id>"+bill_num_ids[0]+"</id>"+
 											"<value>"+(parseInt(bill_num)+1)+"</value>"+
+											"<last_updated>"+get_my_time()+"</last_updated>"+
 											"</user_preferences>";
 							if(is_online())
 							{
@@ -5161,6 +5167,7 @@ function form84_bills()
 								var num_xml="<user_preferences>"+
 												"<id>"+bill_num_ids[0]+"</id>"+
 												"<value>"+(parseInt(bill_num)+1)+"</value>"+
+												"<last_updated>"+get_my_time()+"</last_updated>"+
 												"</user_preferences>";
 								if(is_online())
 								{
@@ -5780,6 +5787,7 @@ function form91_create_form()
 				var num_xml="<user_preferences>"+
 								"<id>"+bill_num_ids[0]+"</id>"+
 								"<value>"+(parseInt(bill_num)+1)+"</value>"+
+								"<last_updated>"+last_updated+"</last_updated>"+
 								"</user_preferences>";
 				if(is_online())
 				{
@@ -6572,6 +6580,7 @@ function form108_bill(order_id,bill_type)
 							var num_xml="<user_preferences>"+
 									"<id>"+bill_num_ids[0].id+"</id>"+
 									"<value>"+(parseInt(bill_num_ids[0].value)+1)+"</value>"+
+									"<last_updated>"+get_my_time()+"</last_updated>"+
 									"</user_preferences>";
 							var bill_xml="<bills>" +
 									"<id>"+order_id+"</id>" +
@@ -7439,6 +7448,7 @@ function form118_create_form()
 					var num_xml="<user_preferences>"+
 									"<id>"+bill_num_ids[0]+"</id>"+
 									"<value>"+(parseInt(bill_num)+1)+"</value>"+
+									"<last_updated>"+last_updated+"</last_updated>"+
 									"</user_preferences>";
 					if(is_online())
 					{
@@ -8005,6 +8015,7 @@ function form119_create_form()
 					var num_xml="<user_preferences>"+
 									"<id>"+bill_num_ids[0]+"</id>"+
 									"<value>"+(parseInt(bill_num)+1)+"</value>"+
+									"<last_updated>"+last_updated+"</last_updated>"+
 									"</user_preferences>";
 					if(is_online())
 					{
@@ -11826,6 +11837,7 @@ function form154_create_form()
 				var num_xml="<user_preferences>"+
 							"<id>"+bill_num_ids[0]+"</id>"+
 							"<value>"+(parseInt(bill_num)+1)+"</value>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
 							"</user_preferences>";
 				if(is_online())
 				{
@@ -13140,6 +13152,7 @@ function form178_create_form()
 				var num_xml="<user_preferences>"+
 							"<id>"+bill_num_ids[0]+"</id>"+
 							"<value>"+(parseInt(order_num)+1)+"</value>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
 							"</user_preferences>";
 				if(is_online())
 				{
@@ -13824,6 +13837,7 @@ function form200_create_item(form)
 	if(is_create_access('form200'))
 	{
 		var drs_num=document.getElementById('form200_master').elements['drs_num'].value;
+		var delivery_person=document.getElementById('form200_master').elements['employee'].value;
 		var data_id=form.elements[9].value;
 		var del_button=form.elements[11];
 		var last_updated=get_my_time();
@@ -13831,6 +13845,7 @@ function form200_create_item(form)
 					"<id>"+data_id+"</id>" +
 					"<status>out for delivery</status>" +
 					"<drs_num>"+drs_num+"</drs_num>"+
+					"<delivery_person>"+delivery_person+"</delivery_person>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
 		if(is_online())
@@ -13917,6 +13932,7 @@ function form200_create_form()
 				var num_xml="<user_preferences>"+
 								"<id>"+drs_num_ids[0]+"</id>"+
 								"<value>"+(parseInt(drs_num)+1)+"</value>"+
+								"<last_updated>"+last_updated+"</last_updated>"+
 								"</user_preferences>";
 				if(is_online())
 				{

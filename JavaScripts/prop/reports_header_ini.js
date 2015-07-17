@@ -1559,8 +1559,7 @@ function report76_header_ini()
 	var form=document.getElementById('report76_header');
 	var awb_filter=form.elements[1];
 	var delivery_filter=form.elements[2];
-	var date_filter=form.elements[3];
-	var status_filter=form.elements[4];
+	var status_filter=form.elements[3];
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -1579,8 +1578,5 @@ function report76_header_ini()
 				"</logistics_orders>";
 	set_my_filter(delivery_data,delivery_filter);
 	
-	$(date_filter).datepicker();
-	date_filter.value=get_my_date();
-		
 	set_static_filter('logistics_orders','status',status_filter);	
 }

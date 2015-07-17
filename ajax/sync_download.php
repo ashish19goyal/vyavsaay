@@ -47,7 +47,7 @@
 			$db_schema=$db_schema_xml->documentElement;
 			
 			$xmlresponse="<re_xml><data>";
-		
+
 			$first_iteration=true;
 			$num_records=500;
 			$end_table='end_syncing';

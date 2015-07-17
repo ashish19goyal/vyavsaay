@@ -5385,15 +5385,14 @@ function report75_ini()
 
 /**
  * @reportNo 76
- * @report Pickup and Deliveries
+ * @report Logistics Order Status
  */
 function report76_ini()
 {
 	var form=document.getElementById('report76_header');
 	var awb_filter=form.elements[1].value;
 	var delivery_filter=form.elements[2].value;
-	var date_filter=form.elements[3].value;
-	var status_filter=form.elements[4].value;
+	var status_filter=form.elements[3].value;
 	
 	show_loader();
 	$('#report76_body').html('');	
@@ -5408,25 +5407,26 @@ function report76_ini()
 	var orders_data="<logistics_orders count='25' start_index='"+start_index+"'>" +
 		"<id></id>"+
 		"<awb_num>"+awb_filter+"</awb_num>" +
-		"<dispatch_date>"+date_filter+"</dispatch_date>"+
+		"<dispatch_date></dispatch_date>"+
 		"<delivery_person>"+delivery_filter+"</delivery_person>"+
 		"<status>"+status_filter+"</status>"+
 		"</logistics_orders>";
-
+	//console.log(orders_data);
+	
 	fetch_requested_data('report76',orders_data,function(items)
-	{	
+	{
 		var rowsHTML="";
 		items.forEach(function(item)
 		{
-			rowsHTML=+"<tr>";
+			rowsHTML+="<tr>";
 			rowsHTML+="<form id='report76_"+item.id+"'></form>";
-			rowsHTML+="<td data-th='AWB #'>";
+			rowsHTML+="<td data-th='AWB #' onclick=\"element_display('"+item.id+"','form198')\">";
 				rowsHTML+=item.awb_num;
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Delivery Person'>";
 				rowsHTML+=item.delivery_person;
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Date'>";
+			rowsHTML+="<td data-th='Dispatch Date'>";
 				rowsHTML+=get_my_past_date(item.dispatch_date);
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
@@ -5464,6 +5464,6 @@ function report76_ini()
 		hide_loader();
 	});
 	
-	var print_button=form.elements[6];
+	var print_button=form.elements[5];
 	print_tabular_report('report76','Orders',print_button);
 };

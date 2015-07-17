@@ -7134,6 +7134,7 @@ function form203_header_ini()
 	var awb_filter=filter_fields.elements[0];
 	var order_filter=filter_fields.elements[1];
 	var status_filter=filter_fields.elements[2];
+	var import_button=filter_fields.elements['import'];
 		
 	var awb_data="<logistics_orders>" +
 			"<awb_num></awb_num>" +
@@ -7147,6 +7148,11 @@ function form203_header_ini()
 	{
 		event.preventDefault();
 		form203_ini();
+	});
+
+	$(import_button).on("click",function(event)
+	{
+		import_data('form203');
 	});
 
 	set_my_filter(order_data,order_filter);

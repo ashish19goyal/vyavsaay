@@ -8590,7 +8590,7 @@ function modal129_action()
 	
 						$('#form200_body').append(rowsHTML);
 						
-						var item_form=document.getElementById('form200'+id);
+						var item_form=document.getElementById('form200_'+id);
 						
 						$(item_form).on('submit',function (e) 
 						{

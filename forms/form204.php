@@ -1,7 +1,7 @@
 <div id='form204' class='function_detail'>
 	<form id='form204_master' autocomplete="off">
 		<fieldset>
-			<label>Pending Comments: <textarea name='comments'></textarea></label>
+			<label>Pending Comments: <textarea class='widebox' name='comments'></textarea></label>
 			<!--<label><input type='button' name='save' class='generic_icon' value='Update Status'></label>-->
 		</fieldset>
 	</form>
