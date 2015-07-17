@@ -7095,6 +7095,36 @@ function form201_header_ini()
 };
 
 /**
+ * @form Exhanges
+ * @formNo 202
+ */
+function form202_header_ini()
+{
+	var fields=document.getElementById('form202_master');
+	
+	var target_filter=fields.elements['target'];
+
+	var target_data="<store_areas>"+
+					"<name></name>"+
+					"<area_type array='yes'>--store--office--</area_type>"+
+					"</store_areas>";
+	set_my_value_list(target_data,target_filter,function () 
+	{
+		$(target_filter).focus();
+	});				
+	
+	target_filter.value="";	
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form202_add_item();
+	});
+
+	$('#form202_body').html("");
+}
+
+/**
  * @form Logistics Manage Orders
  * @formNo 203
  */

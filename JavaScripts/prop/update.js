@@ -10423,6 +10423,55 @@ function form200_update_form()
 }
 
 /**
+ * @form Exchanges
+ * @param button
+ */
+function form202_update_item(form)
+{
+	if(is_update_access('form202'))
+	{
+		var master_form=document.getElementById("form202_master");		
+		var target=master_form.elements['target'].value;
+		
+		var awb_num=form.elements[0].value;
+		var status='out for delivery';
+		var id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<status>"+status+"</status>" +
+					"<current_location>"+target+"</current_location>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>logistics_orders</tablename>" +
+					"<link_to>form198</link_to>" +
+					"<title>Transferred</title>" +
+					"<notes>AWB # "+awb_num+" to "+target+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Logistics Pending orders
  * @param button
  */

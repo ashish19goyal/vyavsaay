@@ -10515,6 +10515,87 @@ function form199_add_item()
 }
 
 /**
+ * @form Exchanges
+ * @formNo 202
+ */
+function form202_add_item()
+{
+	if(is_create_access('form202'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form202_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='AWB #'>";
+				rowsHTML+="<input type='text' required form='form202_"+id+"' oninvalid=\"setCustomValidity('This AWB # is invalid')\">";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Order #'>";
+				rowsHTML+="<input type='text' form='form202_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Address'>";
+				rowsHTML+="<textarea readonly='readonly' form='form202_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form202_"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form202_"+id+"' id='save_form202_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form202_"+id+"' id='delete_form202_"+id+"' onclick='form202_delete_item($(this))'>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+
+		$('#form202_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form202_"+id);
+		var awb_filter=fields.elements[0];
+		var order_filter=fields.elements[1];
+		var address_filter=fields.elements[2];
+		var id_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form202_add_item();
+		});
+
+		var awb_data="<logistics_orders>"+
+					"<awb_num></awb_num>"+
+					"<status exact='yes'>received</status>"+
+					"</logistics_orders>";
+		set_my_value_list(awb_data,awb_filter,function () 
+		{
+			$(awb_filter).focus();		
+		});
+
+		$(awb_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				var order_data="<logistics_orders count='1'>"+
+							"<order_num></order_num>"+
+							"<address1></address1>"+
+							"<address2></address2>"+
+							"<city></city>"+
+							"<pincode></pincode>"+
+							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
+							"</logistics_orders>";
+				fetch_requested_data('',order_data,function(orders)
+				{
+					if(orders.length>0)
+					{
+						address_filter.value=orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
+						order_filter.value=orders[0].order_num;
+						id_filter.value=orders[0].id;
+						form202_update_item(fields);
+					}
+				});					
+			}
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Pending Logistics Orders
  * @formNo 204
  */
