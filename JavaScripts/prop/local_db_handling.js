@@ -161,7 +161,7 @@ function update_local_db(domain,func)
 		var db_name="re_local_"+domain;
 		ajax_with_custom_func("./db/db_schema.xml","",function(e)
 		{
-			var request = indexedDB.open(db_name,2);
+			var request = indexedDB.open(db_name);
 		
 			request.onsuccess=function(ev)
 			{
