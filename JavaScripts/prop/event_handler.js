@@ -429,6 +429,7 @@ function hide_all()
 	$("#people_main").hide();
 	//$("#customers_main").hide();
 	$("#customer_service_main").hide();
+	$("#treatment_main").hide();
 	$("#projects_main").hide();
 	//$("#suppliers_main").hide();
 	//$("#staff_main").hide();

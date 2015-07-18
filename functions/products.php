@@ -6,6 +6,7 @@
 			<li><a id='form169_link' href='#form169' onclick='form169_header_ini(); form169_ini();' data-i18n='form.manage_products'></a></li>
 			<li><a id='form1_link' href='#form1' onclick='form1_header_ini(); form1_ini();' data-i18n='form.update_inventory'></a></li>
 			<li><a id='form155_link' href='#form155' onclick='form155_header_ini(); form155_ini();' data-i18n='form.update_inventory'></a></li>
+			<li><a id='form207_link' href='#form207' onclick='form207_header_ini(); form207_ini();' data-i18n='form.update_inventory'></a></li>
 			<li><a id='form183_link' href='#form183' onclick='form183_header_ini(); form183_ini();' data-i18n='form.update_inventory'></a></li>
 			<li><a id='form146_link' href='#form146' onclick='form146_header_ini(); form146_ini();' data-i18n='form.manufacturing'></a></li>
 			<li><a id='form59_link' href='#form59' onclick='form59_header_ini(); form59_ini();' data-i18n='form.manage_pre_requisites'></a></li>
@@ -37,6 +38,7 @@
 			include "forms/form169.php";
 			include "forms/form1.php";
 			include "forms/form155.php";
+			include "forms/form207.php";
 			include "forms/form183.php";
 			include "forms/form146.php";
 			include "forms/form59.php";

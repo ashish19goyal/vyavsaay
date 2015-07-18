@@ -475,7 +475,7 @@
 			<name>activities</name>
 			<display_name>activities</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -506,7 +506,7 @@
 			<name>report5</name>
 			<display_name>customer_account_balance</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -516,7 +516,7 @@
 			<name>report6</name>
 			<display_name>payments_due_from_customers</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -526,7 +526,7 @@
 			<name>report9</name>
 			<display_name>product_sales_report</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -546,7 +546,7 @@
 			<name>report15</name>
 			<display_name>financial_summary</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -566,7 +566,7 @@
 			<name>report26</name>
 			<display_name>sales_by_customers</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -576,7 +576,7 @@
 			<name>report27</name>
 			<display_name>expiring_inventory</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -616,7 +616,7 @@
 			<name>report31</name>
 			<display_name>customer_map_by_credit</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -626,7 +626,7 @@
 			<name>report32</name>
 			<display_name>staff_map</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -636,7 +636,7 @@
 			<name>report33</name>
 			<display_name>supplier_map_by_debit</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -646,7 +646,7 @@
 			<name>report34</name>
 			<display_name>effective_margin</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -656,7 +656,7 @@
 			<name>report35</name>
 			<display_name>customer_map_by_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -666,7 +666,7 @@
 			<name>report36</name>
 			<display_name>supplier_map_by_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -676,7 +676,7 @@
 			<name>report37</name>
 			<display_name>payments_due_to_suppliers</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -686,7 +686,7 @@
 			<name>report38</name>
 			<display_name>sales_by_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -746,7 +746,7 @@
 			<name>report44</name>
 			<display_name>compare_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -766,7 +766,7 @@
 			<name>report46</name>
 			<display_name>supplier_account_balance</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -776,7 +776,7 @@
 			<name>report47</name>
 			<display_name>inventory_value</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -796,7 +796,7 @@
 			<name>report50</name>
 			<display_name>margin_by_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -806,7 +806,7 @@
 			<name>report51</name>
 			<display_name>dead_items</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -816,7 +816,7 @@
 			<name>report52</name>
 			<display_name>product_purchase_report</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -826,7 +826,7 @@
 			<name>report53</name>
 			<display_name>sales_tax</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -836,7 +836,7 @@
 			<name>report54</name>
 			<display_name>best_days_by_sales</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -846,7 +846,7 @@
 			<name>report55</name>
 			<display_name>worst_days_by_sales</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -856,7 +856,7 @@
 			<name>report56</name>
 			<display_name>service_requests_report</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -866,7 +866,7 @@
 			<name>report57</name>
 			<display_name>subscription_status</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -876,7 +876,7 @@
 			<name>report58</name>
 			<display_name>ledger</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -886,7 +886,7 @@
 			<name>report60</name>
 			<display_name>trial_balance</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -896,7 +896,7 @@
 			<name>report61</name>
 			<display_name>expiring_inventory</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -906,7 +906,7 @@
 			<name>report62</name>
 			<display_name>inventory_prediction</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -916,7 +916,7 @@
 			<name>report63</name>
 			<display_name>item_picklist</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -926,7 +926,7 @@
 			<name>report64</name>
 			<display_name>packing_instructions</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -936,7 +936,7 @@
 			<name>report65</name>
 			<display_name>pricing_update_report</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -946,7 +946,7 @@
 			<name>report66</name>
 			<display_name>inventory_level_store</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -956,7 +956,7 @@
 			<name>report67</name>
 			<display_name>channel_collections</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -966,7 +966,7 @@
 			<name>report68</name>
 			<display_name>project_prioritization</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -976,7 +976,7 @@
 			<name>report69</name>
 			<display_name>project_expenses</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -986,7 +986,7 @@
 			<name>report70</name>
 			<display_name>inventory_shortage</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -996,7 +996,7 @@
 			<name>report71</name>
 			<display_name>ordered_inventory</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1006,7 +1006,7 @@
 			<name>report72</name>
 			<display_name>pickup_deliveries</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1056,7 +1056,7 @@
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1078,7 +1078,7 @@
 			<name>form5</name>
 			<display_name>manage_assets</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1089,7 +1089,7 @@
 			<name>form7</name>
 			<display_name>attendance</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1100,7 +1100,7 @@
 			<name>form8</name>
 			<display_name>manage_staff</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1122,7 +1122,7 @@
 			<name>form11</name>
 			<display_name>manage_payments</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1144,7 +1144,7 @@
 			<name>form14</name>
 			<display_name>manage_tasks</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1210,7 +1210,7 @@
 			<name>form24</name>
 			<display_name>create_purchase_order</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1221,7 +1221,7 @@
 			<name>form30</name>
 			<display_name>manage_customers</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1232,7 +1232,7 @@
 			<name>form35</name>
 			<display_name>manage_offers</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1243,7 +1243,7 @@
 			<name>form38</name>
 			<display_name>store_placement</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1254,7 +1254,7 @@
 			<name>form39</name>
 			<display_name>manage_products</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1265,7 +1265,7 @@
 			<name>form40</name>
 			<display_name>manage_suppliers</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1276,7 +1276,7 @@
 			<name>form41</name>
 			<display_name>verify_customer_addresses</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1298,7 +1298,7 @@
 			<name>form43</name>
 			<display_name>manage_purchase_orders</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1320,7 +1320,7 @@
 			<name>form46</name>
 			<display_name>set_defaults</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1331,7 +1331,7 @@
 			<name>form47</name>
 			<display_name>change_password</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1342,7 +1342,7 @@
 			<name>form48</name>
 			<display_name>select_reports</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1353,7 +1353,7 @@
 			<name>form49</name>
 			<display_name>select_forms</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1364,7 +1364,7 @@
 			<name>form50</name>
 			<display_name>set_accounting_defaults</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1375,7 +1375,7 @@
 			<name>form51</name>
 			<display_name>access_control</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1386,7 +1386,7 @@
 			<name>form53</name>
 			<display_name>manage_supplier_bills</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1408,7 +1408,7 @@
 			<name>form56</name>
 			<display_name>cash_register</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1540,7 +1540,7 @@
 			<name>form71</name>
 			<display_name>manage_accounts</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1562,7 +1562,7 @@
 			<name>form77</name>
 			<display_name>set_shortcuts</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1584,7 +1584,7 @@
 			<name>form79</name>
 			<display_name>manage_task_types</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1606,7 +1606,7 @@
 			<name>form81</name>
 			<display_name>sale_leads</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1628,7 +1628,7 @@
 			<name>form83</name>
 			<display_name>storage_areas</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1650,7 +1650,7 @@
 			<name>form85</name>
 			<display_name>verify_supplier_addresses</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1661,7 +1661,7 @@
 			<name>form86</name>
 			<display_name>staff_geo_tracking</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1694,7 +1694,7 @@
 			<name>form89</name>
 			<display_name>appointments</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1705,7 +1705,7 @@
 			<name>form90</name>
 			<display_name>billing_types</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1727,7 +1727,7 @@
 			<name>form92</name>
 			<display_name>manage_bills_multi_register</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1738,7 +1738,7 @@
 			<name>form93</name>
 			<display_name>manage_loans</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1749,7 +1749,7 @@
 			<name>form94</name>
 			<display_name>discard_items</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1760,7 +1760,7 @@
 			<name>form95</name>
 			<display_name>data_import</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1771,7 +1771,7 @@
 			<name>form96</name>
 			<display_name>customer_attributes</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1782,7 +1782,7 @@
 			<name>form97</name>
 			<display_name>supplier_attributes</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1804,7 +1804,7 @@
 			<name>form99</name>
 			<display_name>delete_storage</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1826,7 +1826,7 @@
 			<name>form101</name>
 			<display_name>manage_projects</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1859,7 +1859,7 @@
 			<name>form104</name>
 			<display_name>project_tasks</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1870,7 +1870,7 @@
 			<name>form105</name>
 			<display_name>data_access</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1892,7 +1892,7 @@
 			<name>form109</name>
 			<display_name>asset_attributes</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1903,7 +1903,7 @@
 			<name>form110</name>
 			<display_name>manage_reports</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1914,7 +1914,7 @@
 			<name>form111</name>
 			<display_name>create_reports</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1969,7 +1969,7 @@
 			<name>form116</name>
 			<display_name>manage_loyalty_programs</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1991,7 +1991,7 @@
 			<name>form119</name>
 			<display_name>create_bills_multi_register_unbilled</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2002,7 +2002,7 @@
 			<name>form120</name>
 			<display_name>manage_loyalty_customers</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2013,7 +2013,7 @@
 			<name>form121</name>
 			<display_name>adjust_loyalty_points</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2057,7 +2057,7 @@
 			<name>form125</name>
 			<display_name>customer_accounts</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2068,7 +2068,7 @@
 			<name>form126</name>
 			<display_name>issues_list</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2079,7 +2079,7 @@
 			<name>form128</name>
 			<display_name>manage_service_requests</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2090,7 +2090,7 @@
 			<name>form129</name>
 			<display_name>engineer_locations</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2112,7 +2112,7 @@
 			<name>form131</name>
 			<display_name>assign_tasks</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2145,7 +2145,7 @@
 			<name>form134</name>
 			<display_name>service_request_detail</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2156,7 +2156,7 @@
 			<name>form135</name>
 			<display_name>project_dashboard</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2167,7 +2167,7 @@
 			<name>form136</name>
 			<display_name>enter_supplier_bill_wholesale</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2200,7 +2200,7 @@
 			<name>form141</name>
 			<display_name>manage_orders_app</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2211,7 +2211,7 @@
 			<name>form142</name>
 			<display_name>create_questionnaire</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2222,7 +2222,7 @@
 			<name>form143</name>
 			<display_name>manage_questionnaire</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2233,7 +2233,7 @@
 			<name>form144</name>
 			<display_name>project_budgeting</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2244,7 +2244,7 @@
 			<name>form145</name>
 			<display_name>store_movement</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2255,7 +2255,7 @@
 			<name>form146</name>
 			<display_name>manufacturing</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2266,7 +2266,7 @@
 			<name>form147</name>
 			<display_name>manage_roles</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2277,7 +2277,7 @@
 			<name>form148</name>
 			<display_name>create_roles</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2288,7 +2288,7 @@
 			<name>form149</name>
 			<display_name>assign_roles</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2299,7 +2299,7 @@
 			<name>form150</name>
 			<display_name>project_feeds</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2310,7 +2310,7 @@
 			<name>form151</name>
 			<display_name>service_request_billing</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2728,7 +2728,7 @@
 			<name>form191</name>
 			<display_name>manage_values_lists</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2739,7 +2739,7 @@
 			<name>form192</name>
 			<display_name>enter_purchases_laundry</display_name>
 			<status>active</status>
-			<value>checked</value>
+			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2887,6 +2887,39 @@
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form207</name>
+			<display_name>manage_inventory_salon</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_instances--inventory_adjust--bill_items--supplier_bill_items--supplier_return_items--customer_return_items--sale_prices--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form208</name>
+			<display_name>treatment_plans</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--treatment_plans--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form209</name>
+			<display_name>treatment_plan_details</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--treatment_plans--</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -5403,6 +5436,39 @@
 			<username>master</username>
 			<element_id>form206</element_id>
 			<element_name>logistic_undelivered_orders</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form207</element_id>
+			<element_name>manage_inventory_salon</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form208</element_id>
+			<element_name>treatment_plans</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form209</element_id>
+			<element_name>treatment_plan_details</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

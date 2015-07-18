@@ -75,8 +75,6 @@
 			{
 				$to=$row->childNodes->item(1)->nodeValue;
 				$subject = $row->childNodes->item(0)->nodeValue.": ".$custom_subject;
-				//echo "subject: ".$subject;	
-				//echo "send to: ".$to;
 				$mail_status=mail($to, $subject, $message, $headers);
 			}
 			echo "mails sent";	

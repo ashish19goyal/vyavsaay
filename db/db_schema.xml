@@ -1318,4 +1318,12 @@
 			<awb_num index='yes' type="VARCHAR(20)"></awb_num>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</drs_items>
+	<treatment_plans>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<plan_num index='yes' type="TEXT"></plan_num>
+			<customer index='yes' type="TEXT"></customer>
+			<start_date index='yes' type="BIGINT"></start_date>
+			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active/suspended/completed -->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</treatment_plans>
 </re_xml>

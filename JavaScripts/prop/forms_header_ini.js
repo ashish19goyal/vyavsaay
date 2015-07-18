@@ -2458,6 +2458,9 @@ function form89_header_ini()
 		form89_ini();
 	});
 
+	var prev_element=document.getElementById('form89_prev');
+	var next_element=document.getElementById('form89_next');
+	
 	$(next_element).hide();
 	$(prev_element).hide();	
 };
@@ -6850,6 +6853,7 @@ function form196_header_ini()
 	var name_filter=fields.elements['newsletter'];
 	var sms_filter=fields.elements['sms'];
 	var list_filter=fields.elements['list'];
+	var value_filter=fields.elements['value'];
 	var id_filter=fields.elements['nl_id'];
 	id_filter.value="";
 	name_filter.value="";
@@ -6862,13 +6866,24 @@ function form196_header_ini()
 		event.preventDefault();
 		form196_ini();
 	});
-	
+
 	var list_data="<attributes>"+
-				"<value></value>"+
+				"<attribute></attribute>"+
 				"<type exact='yes'>customer</type>"+
-				"<attribute exact='yes'>list name</attribute>"+
 				"</attributes>";		
 	set_my_value_list(list_data,list_filter);
+
+	$(list_filter).off('blur');
+	$(list_filter).on('blur',function()
+	{
+		var value_data="<attributes>"+
+				"<value></value>"+
+				"<type exact='yes'>customer</type>"+
+				"<attribute exact='yes'>"+list_filter.value+"</attribute>"+
+				"</attributes>";
+		set_my_value_list(value_data,value_filter);				
+	});
+	
 	
 	sms_filter.value=get_session_var('sms_content');
 	var name_data="<newsletter>" +

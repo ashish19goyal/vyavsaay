@@ -335,7 +335,17 @@
 				"function_def":"function set_grid_item_39(){var columns=\"<logistics_orders><id></id><status array='yes'>--pending--undelivered--received--out for delivery--</status><dispatch_date exact='yes'>\"+get_raw_time(get_my_date())+\"</dispatch_date></logistics_orders>\";get_single_column_data(function(results){var count=0;for(var i in results){if(results[i].current_location!='' && results[i].current_location!='null'){count+=1;}}document.getElementById('grid_item_39').innerHTML=count;},columns);};",
 				"status": "active",
 				"last_updated": 1
+			},
+			{
+				"metric_id":"grid_item_40",
+				"display_name":"# active treatments",
+				"grid":"treatment",
+				"function_name":"set_grid_item_40();",
+				"function_def":"function set_grid_item_40(){var columns=\"<treatment_plans><id></id><status exact='yes'>active</status></treatment_plans>\";get_single_column_data(function(results){document.getElementById('grid_item_40').innerHTML=results.length;},columns);}",
+				"status": "active",
+				"last_updated": 1
 			}
+
 		]
 	}
 }

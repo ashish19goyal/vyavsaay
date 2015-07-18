@@ -1,4 +1,3 @@
-
 <div id='suppliers_main' class='vy_tabs function_main'>
 
 		<ul>

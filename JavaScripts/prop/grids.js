@@ -707,3 +707,19 @@ function set_grid_item_39()
 		document.getElementById('grid_item_39').innerHTML=count;
 	},columns);
 };
+
+/**
+ * @item # active treatments
+ * @itemNo 40
+ */
+function set_grid_item_40()
+{
+	var columns="<treatment_plans>" +
+		"<id></id>" +
+		"<status exact='yes'>active</status>"+
+		"</treatment_plans>";
+	get_single_column_data(function(results)
+	{
+		document.getElementById('grid_item_40').innerHTML=results.length;
+	},columns);
+};

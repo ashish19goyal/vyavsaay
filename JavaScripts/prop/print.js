@@ -1173,6 +1173,9 @@ function form154_print_form()
 	var a1_job=false;
 	if(master_form.elements['job'].checked)
 		a1_job=true;
+	var c_form=false;
+	if(master_form.elements['cform'].checked)
+		c_form=true;
 
 	var bill_total=parseFloat(master_form.elements['bill_total'].value);
 
@@ -1289,7 +1292,14 @@ function form154_print_form()
 	{
 		$(table_copy).find('tfoot > tr > td:first').attr('colspan','2');
 		$(table_copy).find('tfoot > tr > td:nth-child(2)').attr('colspan','2');
-		$(table_copy).find('tfoot > tr > td:first').html('Total<br>'+wording_total);		
+		if(c_form)
+		{
+			$(table_copy).find('tfoot > tr > td:first').html('Total<br>'+wording_total+'<br>Against C-form');
+		}
+		else
+		{
+			$(table_copy).find('tfoot > tr > td:first').html('Total<br>'+wording_total);
+		}		
 	}
 	
 	if(a1_job)

@@ -42,7 +42,12 @@
 			</ul>
 		</li>
 
-		
+		<li id="treatment_link" onclick="grid_click('treatment');" style='background-color:#314264'>
+			<a><div style='background-color:#0f2042'><b data-i18n="function.treatment"></b></div></a>		
+			<ul>
+			</ul>
+		</li>
+
 		<li id="people_link" onclick="grid_click('people');" style='background-color:#74dfc5'>
 			<a><div style='background-color:#52bda3'><b data-i18n="function.people"></b></div></a>		
 			<ul>

@@ -32,6 +32,7 @@
 		//include "functions/inventory.php";
 		//include "functions/customers.php";
 		include "functions/customer_service.php";
+		include "functions/treatment.php";
 		//include "functions/staff.php";
 		//include "functions/suppliers.php";
 		include "functions/people.php";

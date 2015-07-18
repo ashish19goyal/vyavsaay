@@ -3623,7 +3623,7 @@ function form96_add_item()
 				rowsHTML+="<input type='text' form='form96_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Value'>";
-				rowsHTML+="<input type='text' form='form96_"+id+"' required>";
+				rowsHTML+="<input type='text' class='dblclick_editable' form='form96_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form96_"+id+"' value='"+id+"'>";
@@ -3671,6 +3671,9 @@ function form96_add_item()
 				"<type exact='yes'>customer</type>" +
 				"</attributes>";
 		set_my_filter(attribute_data,attribute_filter);
+		
+		longPressEditable($('.dblclick_editable'));
+		
 	}
 	else
 	{
@@ -3698,7 +3701,7 @@ function form97_add_item()
 				rowsHTML+="<input type='text' form='form97_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Value'>";
-				rowsHTML+="<input type='text' form='form97_"+id+"' required>";
+				rowsHTML+="<input type='text' class='dblclick_editable' form='form97_"+id+"' required>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form97_"+id+"' value='"+id+"'>";
@@ -3746,6 +3749,8 @@ function form97_add_item()
 				"<type exact='yes'>supplier</type>" +
 				"</attributes>";
 		set_my_filter(attribute_data,attribute_filter);
+		
+		longPressEditable($('.dblclick_editable'));		
 	}
 	else
 	{

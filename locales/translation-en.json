@@ -29,7 +29,8 @@
     "promotion":"Promotion",
     "people":"People",
     "manufacturing":"Manufacturing",
-    "logistics":"Logistics"
+    "logistics":"Logistics",
+    "treatment":"Treatment Planning"
   },
   "general":{
   	"hello": "Hello"
@@ -350,6 +351,10 @@
 	"pending_orders":"Pending Orders",
 	"undelivered_orders":"Undelivered Orders",
 	"delivered_orders":"Delivered Orders",
-	"order_details":"Order Details"
+	"order_details":"Order Details",
+	"manage_inventory_salon":"Manage Inventory (Salon)",
+	"treatment_plans":"Treatment Plans",
+	"treatment_plan_details":"Treatment Plan Details",
+	"plan_details":"Plan Details"
 	}
 }
