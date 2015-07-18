@@ -7870,25 +7870,17 @@ function modal121_action()
 	{
 		event.preventDefault();
 		var pass=document.getElementById("modal121_form").elements['pass'].value;
-		var user=get_username();
-		var domain=get_domain();
-				
-		var user_kvp={domain:domain,user:user,pass:pass};
-		ajax_with_custom_func("./ajax/login.php",user_kvp,function(e)
-		{
-			login_status=e.responseText;
-			if(login_status=="failed_auth")
-			{
-				alert('Wrong password! aborting operation');								
-				hide_loader();
-			}
-			else 
-			{
-				hide_loader();
-				delete_local_db();
-			}
-		});
 		
+		verify_login(pass,function () 
+		{
+			hide_loader();
+			delete_local_db();
+		},
+		function () 
+		{
+			alert('Wrong password! aborting operation');								
+			hide_loader();
+		});
 		$("#modal121").dialog("close");
 	});
 	
@@ -8610,4 +8602,23 @@ function modal129_action()
 		$("#modal129").dialog("close");
 	});
 	$("#modal129").dialog("open");
+}
+
+/**
+ * @modalNo 130
+ * @modal Delete Cache 
+ */
+function modal130_action()
+{
+	var form=document.getElementById('modal130_form');
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		$("#modal130").dialog("close");
+		clear_appcache();
+	});
+	console.log('something else 7');	
+	$("#modal130").dialog("open");
 }

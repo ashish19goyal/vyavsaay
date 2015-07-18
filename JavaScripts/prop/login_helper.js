@@ -602,3 +602,105 @@ function reseller_emailid_validation(emailid)
 		});
 	}
 }
+
+function verify_login(pass,func_success,func_failure)
+{
+	var domain=get_domain();
+	var username=get_username();
+	if(is_online())
+	{
+		ajax_with_custom_func("./ajax/login.php",{domain:domain,user:username,pass:pass},function(e)
+		{
+			login_status=e.responseText;
+			var session_xml=e.responseXML;
+			if(login_status=="failed_auth")
+			{
+				func_failure();
+			}
+			else
+			{
+				func_success();
+			}
+		});
+	}
+	else 
+	{
+		////////////checking if indexed db is supported/////////////////
+		if("indexedDB" in window)
+		{
+			//console.log("3.1");
+			var db_name="re_local_" + domain;
+			var request = indexedDB.open(db_name);
+			
+			request.onsuccess=function(e)
+			{
+				//console.log("3.2");
+				var db=e.target.result;
+				if(!db.objectStoreNames.contains("accounts"))
+				{
+					//console.log("3.3");
+					var deleterequest=indexedDB.deleteDatabase(db_name);
+					deleterequest.onsuccess=function(ev)
+					{
+						//console.log("3.3.1");
+						func_failure();
+					};
+				}
+				else
+				{
+					//console.log("3.4");
+					var tran=db.transaction("accounts","readonly");
+					var table = tran.objectStore("accounts");
+					
+					var index=table.index("username");
+					var kv=IDBKeyRange.bound([username,'0'],[username,'99999999']);
+					var records=index.get(kv);
+					
+					records.onsuccess=function(e)
+					{
+						var result=records.result;
+						var password="p";
+						if(result) { password=result.password;}
+						var salt='$2a$10$'+domain+'1234567891234567891234';
+						var salt_22=salt.substring(0, 29);
+
+						var bcrypt = new bCrypt();
+						bcrypt.hashpw(pass,salt_22,function(newhash)
+						{
+							if(newhash.substring(3)==password.substring(3))
+							{
+								func_success();
+							}
+							else
+							{
+								func_failure();
+							}
+						}, function() {});												
+						//console.log("3.5");	
+					};
+					records.onerror=function(e)
+					{
+						//console.log("3.6");
+						func_failure();
+					};
+				}
+				//console.log("3.7");
+				db.close();
+			};
+			
+			request.onerror = function(e)
+			{
+				//console.log("3.8");
+				var db=e.target.result;
+				if(db)
+					db.close();
+				func_failure();
+			};
+		}
+		else
+		{
+			//alert('you browser doesnt support offline mode. Please upgrade');
+			func_failure();
+		}
+	}
+}

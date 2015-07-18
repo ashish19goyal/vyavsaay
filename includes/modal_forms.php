@@ -1056,4 +1056,14 @@
 		</form>
 	</div>
 
+	<div id="modal130" title="Delete Cache">
+		Do you want to cleared browser cache? (There will be no impact on your saved data.) 
+		<br>
+		<b>Please refresh the browser again after the cache is cleared.</b>
+		<br>
+		<form id='modal130_form' autocomplete="off">
+			<input type="submit" class='modal_submit' value='Delete'>
+		</form>
+	</div>
+
 </div>

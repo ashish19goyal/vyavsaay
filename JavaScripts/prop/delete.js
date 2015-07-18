@@ -700,7 +700,7 @@ function form24_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[5].value;
+			var data_id=form.elements[8].value;
 			var data_xml="<purchase_order_items>" +
 						"<id>"+data_id+"</id>" +
 						"</purchase_order_items>";	

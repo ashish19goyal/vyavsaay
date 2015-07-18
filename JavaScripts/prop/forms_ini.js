@@ -1841,6 +1841,7 @@ function form24_ini()
 		order_id="";	
 	
 	$('#form24_body').html("");
+	$('#form24_foot').html("");
 	
 	if(order_id!="")
 	{
@@ -1851,6 +1852,9 @@ function form24_ini()
 				"<supplier></supplier>" +
 				"<order_date></order_date>" +
 				"<status></status>" +
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+
 				"</purchase_orders>";
 		var order_items_column="<purchase_order_items>" +
 				"<id></id>" +
@@ -1860,6 +1864,9 @@ function form24_ini()
 				"<make></make>" +
 				"<mrp></mrp>"+
 				"<price></price>" +
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+				
 				"</purchase_order_items>";
 	
 		////separate fetch function to get order details like customer name, total etc.
@@ -1869,13 +1876,13 @@ function form24_ini()
 			
 			for(var i in order_results)
 			{
-				filter_fields.elements[1].value=order_results[i].supplier;
-				filter_fields.elements[2].value=get_my_past_date(order_results[i].order_date);
-				filter_fields.elements[3].value=order_results[i].order_num;
-				filter_fields.elements[4].value=order_results[i].status;
-				filter_fields.elements[5].value=order_id;
+				filter_fields.elements['supplier'].value=order_results[i].supplier;
+				filter_fields.elements['date'].value=get_my_past_date(order_results[i].order_date);
+				filter_fields.elements['order_num'].value=order_results[i].order_num;
+				filter_fields.elements['status'].value=order_results[i].status;
+				filter_fields.elements['order_id'].value=order_id;
 				
-				var save_button=filter_fields.elements[6];
+				var save_button=filter_fields.elements['save'];
 				
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
@@ -1883,7 +1890,16 @@ function form24_ini()
 					event.preventDefault();
 					form24_update_form();
 				});
-
+				
+				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+							"<td>Amount:<br>Tax: <br>Total: </td>" +
+							"<td>Rs. "+order_results[i].amount+"<br>" +
+							"Rs. "+order_results[i].tax+"<br> " +
+							"Rs. "+order_results[i].total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+					
+				$('#form24_foot').html(total_row);
 				break;
 			}
 		
@@ -1905,13 +1921,16 @@ function form24_ini()
 							rowsHTML+="<textarea readonly='readonly' required form='form24_"+id+"'>"+result.make+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Price'>";
-							rowsHTML+="MRP: <input type='number'readonly='readonly' required form='form24_"+id+"' value='"+result.mrp+"' step='any'>";
-							rowsHTML+="<br>Price: <input type='number'readonly='readonly' required form='form24_"+id+"' value='"+result.price+"' step='any'>";
+							rowsHTML+="MRP: <input type='number' readonly='readonly' required form='form24_"+id+"' value='"+result.mrp+"' step='any'>";
+							rowsHTML+="<br>Price: <input type='number' readonly='readonly' required form='form24_"+id+"' value='"+result.price+"' step='any'>";
+							rowsHTML+="<br>Amount: <input type='number' readonly='readonly' required form='form24_"+id+"' value='"+result.amount+"' step='any'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' readonly='readonly' form='form24_"+id+"' value='"+result.tax+"'>";
+							rowsHTML+="<input type='hidden' readonly='readonly' form='form24_"+id+"' value='"+result.total+"'>";
 							rowsHTML+="<input type='hidden' form='form24_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form24_"+id+"' id='save_form24_"+id+"'>";
-							rowsHTML+="<input type='button' class='delete_icon' form='form24_"+id+"' id='delete_form24_"+id+"' onclick='form24_delete_item($(this));'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form24_"+id+"' id='delete_form24_"+id+"' onclick='form24_delete_item($(this)); form24_get_totals();'>";
 						rowsHTML+="</td>";
 					rowsHTML+="</tr>";
 				
@@ -17863,6 +17882,9 @@ function form178_ini()
 				"<make></make>" +
 				"<mrp></mrp>"+
 				"<price></price>" +
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+
 				"</purchase_order_items>";
 	
 		////separate fetch function to get order details like customer name, total etc.

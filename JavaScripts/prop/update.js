@@ -1478,15 +1478,44 @@ function form24_update_form()
 		var order_num=form.elements[3].value;		
 		var status=form.elements[4].value;		
 		var data_id=form.elements[5].value;
-				
 		var last_updated=get_my_time();
 		
+		var amount=0;
+		var tax=0;
+		var total=0;
+		
+		$("[id^='save_form24']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			
+			if(!isNaN(parseFloat(subform.elements[5].value)))
+			{
+				amount+=parseFloat(subform.elements[5].value);
+				tax+=parseFloat(subform.elements[6].value);
+				total+=parseFloat(subform.elements[7].value);
+			}
+		});
+		
+		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+								"<td>Amount:<br>Tax: <br>Total: </td>" +
+								"<td>Rs. "+amount+"<br>" +
+								"Rs. "+tax+"<br> " +
+								"Rs. "+total+"</td>" +
+								"<td></td>" +
+								"</tr>";
+						
+		$('#form24_foot').html(total_row);		
+
 		var data_xml="<purchase_orders>" +
 					"<id>"+data_id+"</id>" +
 					"<supplier>"+supplier+"</supplier>" +
 					"<order_date>"+order_date+"</order_date>" +
 					"<status>"+status+"</status>" +
 					"<order_num>"+order_num+"</order_num>" +
+					"<amount>"+amount+"</amount>" +
+					"<tax>"+tax+"</tax>" +
+					"<total>"+total+"</total>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_orders>";
 		var activity_xml="<activity>" +

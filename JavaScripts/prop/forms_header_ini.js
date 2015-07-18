@@ -885,13 +885,13 @@ function form24_header_ini()
 {
 	var fields=document.getElementById('form24_master');
 	
-	var supplier_filter=fields.elements[1];
-	var order_date=fields.elements[2];
-	var order_num=fields.elements[3];
-	var status_filter=fields.elements[4];
+	var supplier_filter=fields.elements['supplier'];
+	var order_date=fields.elements['date'];
+	var order_num=fields.elements['order_num'];
+	var status_filter=fields.elements['status'];
 	fields.elements[5].value=get_new_key();
-	var save_button=fields.elements[6];
-	var share_button=fields.elements[7];	
+	var save_button=fields.elements['save'];
+	var share_button=fields.elements['share'];	
 	
 	$(share_button).hide();
 	

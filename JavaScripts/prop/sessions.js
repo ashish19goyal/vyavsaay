@@ -330,3 +330,16 @@ function set_session_offline()
 		};
 	}
 };
+
+function clear_appcache()
+{	
+	var appCache = window.applicationCache;
+	
+	appCache.update();
+
+	if (appCache.status == window.applicationCache.UPDATEREADY)
+	{
+  		appCache.swapCache(); //replaces the old cache with the new one.
+	}
+	window.location.reload();
+}

@@ -911,6 +911,9 @@ function form24_import(data_array,import_type)
 				"<order_id>"+row.order_id+"</order_id>" +
 				"<price>"+row.price+"</price>" +
 				"<mrp>"+row.mrp+"</mrp>"+
+				"<amount>"+row.amount+"</amount>"+
+				"<tax>"+row.tax+"</tax>"+
+				"<total>"+row.total+"</total>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
@@ -1393,6 +1396,9 @@ function form43_import(data_array,import_type)
 				"<order_date>"+get_raw_time(row.order_date)+"</order_date>" +
 				"<status>"+row.status+"</status>" +
 				"<order_num>"+row.order_num+"</order_num>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<total>"+row.total+"</total>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
