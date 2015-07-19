@@ -8,9 +8,80 @@ function worker_update_orders_status()
 		show_loader();
 		
 		///////////handling orders where status is picking///////		
-		var picking_orders="";
+		var orders_xml="<sale_orders>"+
+						"<id></id>"+
+						"<bill_id></bill_id>"+
+						"<status exact='yes'>billed</status>"+
+						"</sale_orders>";
+		fetch_requested_data('',orders_xml,function (orders) 
+		{
+			var bill_id_string="--";
+			for(var i in orders)
+			{
+				bill_id_string+=orders[i].bill_id+"--";
+			}
+			var picked_pending_xml="<bill_items>"+
+								"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
+								"<picked_status exact='yes'>pending</picked_status>"+
+								"</bill_items>";
+			get_single_column_data(function (pick_items) 
+			{
+				var packed_pending_xml="<bill_items>"+
+								"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
+								"<packing_status exact='yes'>pending</packing_status>"+
+								"</bill_items>";
+				get_single_column_data(function (pack_items) 
+				{
+					var data_xml="<sale_orders>";
+					var counter=1;
+					var last_updated=get_my_time();
+				
+					orders.forEach(function(row)
+					{
+						var picked=pick_items.indexOf(row.bill_id);
+						var packed=pack_items.indexOf(row.bill_id);
+						
+						if(picked==-1 && packed==-1)
+						{
+							row.status='packed';
+						}
+						else if(picked==-1)
+						{
+							row.status='picked';
+						}
+
+						if(row.status!='billed')
+						{
+							if((counter%500)===0)
+							{
+								data_xml+="</sale_orders><separator></separator><sale_orders>";
+							}
+
+							counter+=1;						
+							data_xml+="<row>" +
+								"<id>"+row.id+"</id>" +
+								"<status>"+row.status+"</status>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</row>";
+						}
+					});
+					data_xml+="</sale_orders>";
+					
+					//console.log(data_xml);
+					if(is_online())
+					{
+						server_update_batch(data_xml);
+					}
+					else
+					{
+						local_update_batch(data_xml);
+					}
+					hide_loader();
+				},packed_pending_xml);				
+			},picked_pending_xml);	
+		});
+		//////////////////////////////////////////////////////
 		
-		hide_loader();
 	}
 	else 
 	{

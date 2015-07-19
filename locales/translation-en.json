@@ -277,7 +277,7 @@
   	"sms_enabled":"Enable SMS service (this is separately billed)",
   	"email_enabled":"Enable email service",
   	"item_picklist":"Item pick-list",
-  	"packing_instructions":"Packing Instructions",
+  	"packing_instructions":"Packing Instructions (item)",
   	"pricing_update_report":"Pricing update report",
   	"issue_grn":"Issue GRN",
   	"manage_grn":"Manage GRN",
@@ -355,6 +355,8 @@
 	"manage_inventory_salon":"Manage Inventory (Salon)",
 	"treatment_plans":"Treatment Plans",
 	"treatment_plan_details":"Treatment Plan Details",
-	"plan_details":"Plan Details"
+	"plan_details":"Plan Details",
+	"inventory_storage_by_item":"Inventory (storage by item)",
+	"packing_instructions_invoice":"Packing Instructions (invoice)"	
 	}
 }

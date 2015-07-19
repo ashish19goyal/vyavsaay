@@ -636,7 +636,7 @@ function form15_header_ini()
 	fields.elements['t_id'].value=get_new_key();
 	var save_button=fields.elements['save'];
 
-	customer_filter.value="";
+	customers_filter.value="";
 	order_num.value="";
 	channel.value="";
 	order_id.value="";
@@ -3070,7 +3070,7 @@ function form108_header_ini()
 	$(update_order_button).off('click');	
 	$(update_order_button).on('click',function () 
 	{
-		$("#modal61").dialog("open");
+		//$("#modal61").dialog("open");
 		worker_update_orders_status();
 	});
 	

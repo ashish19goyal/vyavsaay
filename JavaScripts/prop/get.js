@@ -1008,3 +1008,24 @@ function delete_simple_func(data_xml,func)
 		local_delete_simple_func(data_xml,func);
 	}
 }
+
+function get_all_child_storage(store_area,area_array,tracker)
+{
+	var child_data="<store_areas>"+
+					"<name></name>"+
+					"<parent exact='yes'>"+store_area+"</parent>" +
+					"</store_areas>";
+	tracker+=1;
+	fetch_requested_data('',child_data,function(children)
+	{
+		if(children.length>0)
+		{
+			children.forEach(function(child)
+			{
+				area_array.push(child.name);
+				get_all_child_storage(child.name,area_array);
+			});
+		}
+		tracker-=1;		
+	});
+}

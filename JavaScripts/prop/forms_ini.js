@@ -9480,7 +9480,7 @@ function form108_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[4];
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -16296,7 +16296,13 @@ function form165_ini()
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
 
-	var columns="<supplier_bill_items count='25' start_index='"+start_index+"'>" +
+	$('#form165_body').html("");
+
+	if_data_read_access('store_areas',function(accessible_data)
+	{		
+		//console.log(accessible_data);
+		
+		var columns="<supplier_bill_items count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<batch>"+fbatch+"</batch>" +
 			"<product_name>"+fproduct+"</product_name>" +
@@ -16304,23 +16310,44 @@ function form165_ini()
 			"<storage></storage>"+
 			"<put_away_status exact='yes'>pending</put_away_status>"+
 			"</supplier_bill_items>";
-
-	$('#form165_body').html("");
-
-	if_data_read_access('store_areas',function(accessible_data)
-	{
-		//console.log(accessible_data);
+		
 		fetch_requested_data('form165',columns,function(results)
 		{	
-			//console.log(results);
-			results.forEach(function(result)
+			var unbilled_columns="<unbilled_purchase_items count='25' start_index='"+start_index+"'>" +
+					"<id>"+fid+"</id>" +
+					"<batch>"+fbatch+"</batch>" +
+					"<item_name>"+fproduct+"</item_name>" +
+					"<quantity></quantity>"+
+					"<storage></storage>"+
+					"<put_away_status exact='yes'>pending</put_away_status>"+
+					"</unbilled_purchase_items>";
+			
+			fetch_requested_data('form165',unbilled_columns,function(unbilled_results)
 			{
-				var read=false;
-				var update=false;
-				var del=false;
-				var access=false;
-				for(var x in accessible_data)
+				results.forEach(function(result)
 				{
+					result.table_type='supplier_bill_items';
+				});
+				for(var y in unbilled_results)
+				{
+					var unbilled_item=new Object();
+					unbilled_item.product_name=unbilled_results[y].item_name;
+					unbilled_item.batch=unbilled_results[y].batch;
+					unbilled_item.quantity=unbilled_results[y].quantity;
+					unbilled_item.storage=unbilled_results[y].storage;
+					unbilled_item.id=unbilled_results[y].id;
+					unbilled_item.table_type='unbilled_purchase_items';
+					results.push(unbilled_item);
+				}
+				//console.log(results);
+				results.forEach(function(result)
+				{
+					var read=false;
+					var update=false;
+					var del=false;
+					var access=false;
+					for(var x in accessible_data)
+					{
 						if(result.storage==accessible_data[x].name)
 						{
 							if(accessible_data[x].access_type=='all')
@@ -16344,91 +16371,92 @@ function form165_ini()
 								update=true;
 							}
 						}
-					
-				}
-
-				if(read)
-				{
-					var rowsHTML="";
-						rowsHTML+="<tr>";
-							rowsHTML+="<form id='form165_"+result.id+"'></form>";
-								rowsHTML+="<td data-th='Item'>";
-									rowsHTML+="<textarea readonly='readonly' form='form165_"+result.id+"'>"+result.product_name+"</textarea>";
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Batch'>";
-									rowsHTML+="<input type='text' readonly='readonly' form='form165_"+result.id+"' value='"+result.batch+"'>";
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Quantity'>";
-									rowsHTML+="<input type='number' readonly='readonly' form='form165_"+result.id+"' value='"+result.quantity+"'>";
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Storage'>";
-									rowsHTML+="<input type='text' form='form165_"+result.id+"' value='"+result.storage+"' class='dblclick_editable'>";
-								rowsHTML+="</td>";
-								rowsHTML+="<td data-th='Action'>";
-									rowsHTML+="<input type='hidden' form='form165_"+result.id+"' value='"+result.id+"'>";
-							if(update)
-							{
-									rowsHTML+="<input type='submit' class='generic_icon' form='form165_"+result.id+"' value='Place'>";
-							}
-								rowsHTML+="</td>";											
-					rowsHTML+="</tr>";
+					}
+	
+					if(read)
+					{
+						var rowsHTML="";
+							rowsHTML+="<tr>";
+								rowsHTML+="<form id='form165_"+result.id+"'></form>";
+									rowsHTML+="<td data-th='Item'>";
+										rowsHTML+="<textarea readonly='readonly' form='form165_"+result.id+"'>"+result.product_name+"</textarea>";
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Batch'>";
+										rowsHTML+="<input type='text' readonly='readonly' form='form165_"+result.id+"' value='"+result.batch+"'>";
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Quantity'>";
+										rowsHTML+="<input type='number' readonly='readonly' form='form165_"+result.id+"' value='"+result.quantity+"'>";
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Storage'>";
+										rowsHTML+="<input type='text' form='form165_"+result.id+"' value='"+result.storage+"' class='dblclick_editable'>";
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Action'>";
+										rowsHTML+="<input type='hidden' form='form165_"+result.id+"' value='"+result.id+"'>";
+										rowsHTML+="<input type='hidden' form='form165_"+result.id+"' value='"+result.table_type+"'>";
+								if(update)
+								{
+										rowsHTML+="<input type='submit' class='generic_icon' form='form165_"+result.id+"' value='Place'>";
+								}
+									rowsHTML+="</td>";											
+						rowsHTML+="</tr>";
+							
+						$('#form165_body').append(rowsHTML);
+						var fields=document.getElementById("form165_"+result.id);
+						var storage_filter=fields.elements[3];
+						var storage_data="<store_areas>"+
+										"<name></name>"+
+										"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+										"</store_areas>";
+						set_my_value_list(storage_data,storage_filter);
 						
-					$('#form165_body').append(rowsHTML);
-					var fields=document.getElementById("form165_"+result.id);
-					var storage_filter=fields.elements[3];
-					var storage_data="<store_areas>"+
-									"<name></name>"+
-									"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
-									"</store_areas>";
-					set_my_value_list(storage_data,storage_filter);
-					
-					$(storage_filter).on('click',function()
-					{
-						///write code to select all text in the field
-						this.select();
-					});
-
-					$(fields).on('submit',function(event)
-					{
-						event.preventDefault();
-						form165_place_item(fields);
-					});
+						$(storage_filter).on('click',function()
+						{
+							///write code to select all text in the field
+							this.select();
+						});
+	
+						$(fields).on('submit',function(event)
+						{
+							event.preventDefault();
+							form165_place_item(fields);
+						});
+					}
+				});
+		
+				////indexing///
+				var next_index=parseInt(start_index)+25;
+				var prev_index=parseInt(start_index)-25;
+				next_element.setAttribute('data-index',next_index);
+				prev_element.setAttribute('data-index',prev_index);
+				index_element.setAttribute('data-index','0');
+				if(results.length<25)
+				{
+					$(next_element).hide();
 				}
+				else
+				{
+					$(next_element).show();
+				}
+				if(prev_index<0)
+				{
+					$(prev_element).hide();
+				}
+				else
+				{
+					$(prev_element).show();
+				}
+				/////////////
+		
+				longPressEditable($('.dblclick_editable'));
+				
+				var export_button=filter_fields.elements[2];
+				$(export_button).off("click");
+				$(export_button).on("click", function(event)
+				{
+					get_export_data(columns,'put_away_suggestions');
+				});
+				hide_loader();
 			});
-	
-			////indexing///
-			var next_index=parseInt(start_index)+25;
-			var prev_index=parseInt(start_index)-25;
-			next_element.setAttribute('data-index',next_index);
-			prev_element.setAttribute('data-index',prev_index);
-			index_element.setAttribute('data-index','0');
-			if(results.length<25)
-			{
-				$(next_element).hide();
-			}
-			else
-			{
-				$(next_element).show();
-			}
-			if(prev_index<0)
-			{
-				$(prev_element).hide();
-			}
-			else
-			{
-				$(prev_element).show();
-			}
-			/////////////
-	
-			longPressEditable($('.dblclick_editable'));
-			
-			var export_button=filter_fields.elements[2];
-			$(export_button).off("click");
-			$(export_button).on("click", function(event)
-			{
-				get_export_data(columns,'put_away_suggestions');
-			});
-			hide_loader();
 		});
 	});
 };
@@ -16881,12 +16909,18 @@ function form170_ini()
 			
 			$('#form170_body').append(rowsHTML);
 			var fields=document.getElementById("form170_"+result.id);
+			var type_filter=fields.elements[2];
 			var parent_filter=fields.elements[2];
 			var owner_filter=fields.elements[3];
 
-			var parent_data="<storage_structure>"+
-						"<parent></parent>"+							
+			var type_data="<storage_structure>"+
+						"<name></name>"+							
 						"</storage_structure>";
+			set_my_value_list(type_data,type_filter);
+
+			var parent_data="<store_areas>"+
+						"<name></name>"+							
+						"</store_areas>";
 			set_my_value_list(parent_data,parent_filter);
 			
 			var owner_data="<staff>"+

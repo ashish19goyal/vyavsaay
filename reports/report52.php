@@ -16,7 +16,7 @@
 		<thead>
 			<tr>
 				<th>Product Name</th>
-				<th>Make</th>
+				<th>Brand</th>
 				<th>Supplier</th>
 				<th>Quantity</th>
 				<th>Amount</th>

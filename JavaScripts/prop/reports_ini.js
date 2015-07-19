@@ -3354,7 +3354,7 @@ function report52_ini()
 										rowsHTML+="<td data-th='Product Name'>";
 											rowsHTML+=bill_ids[k].product_name;
 										rowsHTML+="</td>";
-										rowsHTML+="<td data-th='Make'>";
+										rowsHTML+="<td data-th='Brand'>";
 											rowsHTML+=makes[z].make;
 										rowsHTML+="</td>";
 										rowsHTML+="<td data-th='Supplier'>";
@@ -3393,7 +3393,7 @@ function report52_ini()
 										rowsHTML+="<td data-th='Product Name'>";
 											rowsHTML+=return_ids[k].item_name;
 										rowsHTML+="</td>";
-										rowsHTML+="<td data-th='Make'>";
+										rowsHTML+="<td data-th='Brand'>";
 											rowsHTML+=makes[z].make;
 										rowsHTML+="</td>";
 										rowsHTML+="<td data-th='Supplier'>";
@@ -4301,6 +4301,13 @@ function report63_ini()
 	var order_id=form.elements[4].value;
 	var invoice=form.elements[5].value;
 	
+	////indexing///
+	var index_element=document.getElementById('report63_index');
+	var prev_element=document.getElementById('report63_prev');
+	var next_element=document.getElementById('report63_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	
 	show_loader();
 	$('#report63_head').html('');
 	$('#report63_body').html('');
@@ -4316,7 +4323,7 @@ function report63_ini()
 					"</tr>";
 		$('#report63_head').append(headHTML);
 				
-		var items_data="<bill_items>" +
+		var items_data="<bill_items count='25' start_index='"+start_index+"'>" +
 			"<id></id>"+
 			"<item_name>"+sku+"</item_name>" +
 			"<item_desc>"+item+"</item_desc>"+
@@ -4328,64 +4335,114 @@ function report63_ini()
 	
 		fetch_requested_data('report63',items_data,function(items)
 		{
-			for(var i=0;i<items.length;i++)
-			{
-				for(var j=i+1;j<items.length;j++)
-				{
-					if(items[i].item_name==items[j].item_name && items[i].batch==items[j].batch && items[i].storage==items[i].storage)
-					{
-						items[i].quantity=parseFloat(items[i].quantity)+parseFloat(items[j].quantity);
-						items[i].id=items[i].id+"--"+items[j].id;						
-						items.splice(j,1);
-						j--;
-					}
-				}
-			}			
+			var unbilled_items_data="<unbilled_sale_items count='25' start_index='"+start_index+"'>" +
+				"<id></id>"+
+				"<item_name>"+sku+"</item_name>" +
+				"<item_desc>"+item+"</item_desc>"+
+				"<batch></batch>" +
+				"<quantity></quantity>"+
+				"<storage></storage>"+
+				"<picked_status exact='yes'>pending</picked_status>"+
+				"</unbilled_sale_items>";
 			
-			items.forEach(function(item)
+			fetch_requested_data('report63',unbilled_items_data,function(unbilled_items)
 			{
-				var rowsHTML="<tr>";
-				rowsHTML+="<form id='report63_"+item.id+"'></form>";
-				rowsHTML+="<td data-th='Item'>";
-					rowsHTML+=item.item_name+"<br>"+item.item_desc;
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Batch'>";
-					rowsHTML+=item.batch;
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Quantity'>";
-					rowsHTML+=item.quantity;
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Storage'>";
-					rowsHTML+="<input type='text' form='report63_"+item.id+"' value='"+item.storage+"'>";
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Action'>";
-					rowsHTML+="<input type='hidden' form='report63_"+item.id+"' value='"+item.id+"'>";
-					rowsHTML+="<input type='submit' form='report63_"+item.id+"' class='generic_icon' value='Picked'>";
-				rowsHTML+="</td>";
-				rowsHTML+="</tr>";
-						
-				$('#report63_body').append(rowsHTML);
-				var report63_form=document.getElementById('report63_'+item.id);
-				var storage_filter=report63_form.elements[0];
+				var num_items=items.length+1;
 				
-				var storage_data="<store_areas>"+
-								"<name></name>"+
-								"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
-								"</store_areas>";
-				set_my_value_list(storage_data,storage_filter);
-					
-				$(storage_filter).on('click',function()
+				items.forEach(function(item)
 				{
-					this.select();
+					item.table_type='bill_items';
 				});
+				for(var y in unbilled_items)
+				{
+					unbilled_items[y].table_type='unbilled_sale_items';
+					items.push(unbilled_items[y]);
+				}				
 
-				$(report63_form).on('submit',function(event)
+				for(var i=0;i<items.length;i++)
 				{
-					event.preventDefault();
-					report63_update(report63_form);
+					for(var j=i+1;j<items.length;j++)
+					{
+						if(items[i].item_name==items[j].item_name && items[i].batch==items[j].batch && items[i].storage==items[j].storage && items[i].table_type==items[j].table_type)
+						{
+							items[i].quantity=parseFloat(items[i].quantity)+parseFloat(items[j].quantity);
+							items[i].id=items[i].id+"--"+items[j].id;						
+							items.splice(j,1);
+							j--;
+						}
+					}
+				}			
+				
+				items.forEach(function(item)
+				{
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='report63_"+item.id+"'></form>";
+					rowsHTML+="<td data-th='Item'>";
+						rowsHTML+=item.item_name+"<br>"+item.item_desc;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Batch'>";
+						rowsHTML+=item.batch;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+=item.quantity;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Storage'>";
+						rowsHTML+="<input type='text' form='report63_"+item.id+"' value='"+item.storage+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='report63_"+item.id+"' value='"+item.id+"'>";
+						rowsHTML+="<input type='hidden' form='report63_"+item.id+"' value='"+item.table_type+"'>";
+						rowsHTML+="<input type='submit' form='report63_"+item.id+"' class='generic_icon' value='Picked'>";
+					rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+							
+					$('#report63_body').append(rowsHTML);
+					var report63_form=document.getElementById('report63_'+item.id);
+					var storage_filter=report63_form.elements[0];
+					
+					var storage_data="<store_areas>"+
+									"<name></name>"+
+									"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+									"</store_areas>";
+					set_my_value_list(storage_data,storage_filter);
+						
+					$(storage_filter).on('click',function()
+					{
+						this.select();
+					});
+	
+					$(report63_form).on('submit',function(event)
+					{
+						event.preventDefault();
+						report63_update(report63_form);
+					});
 				});
+				
+				////indexing///
+				var next_index=parseInt(start_index)+25;
+				var prev_index=parseInt(start_index)-25;
+				next_element.setAttribute('data-index',next_index);
+				prev_element.setAttribute('data-index',prev_index);
+				index_element.setAttribute('data-index','0');
+				if(num_items<26)
+				{
+					$(next_element).hide();
+				}
+				else
+				{
+					$(next_element).show();
+				}
+				if(prev_index<0)
+				{
+					$(prev_element).hide();
+				}
+				else
+				{
+					$(prev_element).show();
+				}
+				
+				hide_loader();
 			});
-			hide_loader();
 		});
 	}
 	else 
@@ -4399,18 +4456,21 @@ function report63_ini()
 					"<th>Action</th>"+
 					"</tr>";
 		$('#report63_head').append(headHTML);
-				
-		var bills_data="<bills>"+
-						"<id></id>"+
-						"<bill_num>"+invoice+"</bill_num>"+
-						"<order_id>"+order_id+"</order_id>"+
-						"<billing_type></billing_type>"+
-						"</bills>";
-		fetch_requested_data('report63',bills_data,function(bills)
+
+		var items_data="<bill_items count='25' start_index='"+start_index+"'>" +
+				"<id></id>"+
+				"<item_name></item_name>" +
+				"<item_desc></item_desc>"+
+				"<batch></batch>" +
+				"<quantity></quantity>"+
+				"<storage></storage>"+
+				"<picked_status exact='yes'>pending</picked_status>"+
+				"<bill_id></bill_id>"+
+				"</bill_items>";
+		
+		fetch_requested_data('report63',items_data,function(items)
 		{
-			bills.forEach(function(bill)
-			{
-				var items_data="<bill_items>" +
+			var unbilled_items_data="<unbilled_sale_items count='25' start_index='"+start_index+"'>" +
 					"<id></id>"+
 					"<item_name></item_name>" +
 					"<item_desc></item_desc>"+
@@ -4418,60 +4478,117 @@ function report63_ini()
 					"<quantity></quantity>"+
 					"<storage></storage>"+
 					"<picked_status exact='yes'>pending</picked_status>"+
-					"<bill_id exact='yes'>"+bill.id+"</bill_id>"+
-					"</bill_items>";
-			
-				fetch_requested_data('report63',items_data,function(items)
+					"<customer></customer>"+
+					"</unbilled_sale_items>";
+			fetch_requested_data('report63',unbilled_items_data,function(unbilled_items)
+			{
+				items.forEach(function(item)
 				{
-					items.forEach(function(item)
-					{
-						var rowsHTML="<tr>";
-						rowsHTML+="<form id='report63_"+item.id+"'></form>";
-						rowsHTML+="<td data-th='Order'>";
-							rowsHTML+=bill.channel+" Order id: "+bill.order_id+"<br>"+bill.billing_type+" Invoice #: "+bill.bill_num;
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Item'>";
-							rowsHTML+=item.item_name+"<br>"+item.item_desc;
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Batch'>";
-							rowsHTML+=item.batch;
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+=item.quantity;
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Storage'>";
-							rowsHTML+="<input type='text' form='report63_"+item.id+"' value='"+item.storage+"'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='hidden' form='report63_"+item.id+"' value='"+item.id+"'>";
-							rowsHTML+="<input type='submit' form='report63_"+item.id+"' class='generic_icon' value='Picked'>";
-						rowsHTML+="</td>";
-						rowsHTML+="</tr>";
-								
-						$('#report63_body').append(rowsHTML);
-						var report63_form=document.getElementById('report63_'+item.id);
-						
-						var storage_filter=report63_form.elements[0];
-						var storage_data="<store_areas>"+
-										"<name></name>"+
-										"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
-										"</store_areas>";
-						set_my_value_list(storage_data,storage_filter);
-							
-						$(storage_filter).on('click',function()
-						{
-							this.select();
-						});
-
-						$(report63_form).on('submit',function(event)
-						{
-							event.preventDefault();
-							report63_update(report63_form);
-						});
-					});
-					hide_loader();
+					item.table_type='bill_items';
 				});
-			});	
+				for(var y in unbilled_items)
+				{
+					unbilled_items[y].table_type='unbilled_sale_items';
+					items.push(unbilled_items[y]);
+				}				
+
+				items.forEach(function(item)
+				{
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='report63_"+item.id+"'></form>";
+					rowsHTML+="<td data-th='Order' id='report63_order_"+item.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Item'>";
+						rowsHTML+=item.item_name+"<br>"+item.item_desc;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Batch'>";
+						rowsHTML+=item.batch;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+=item.quantity;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Storage'>";
+						rowsHTML+="<input type='text' form='report63_"+item.id+"' value='"+item.storage+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='report63_"+item.id+"' value='"+item.id+"'>";
+						rowsHTML+="<input type='hidden' form='report63_"+item.id+"' value='"+item.table_type+"'>";
+						rowsHTML+="<input type='submit' form='report63_"+item.id+"' class='generic_icon' value='Picked'>";
+					rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+					
+					$('#report63_body').append(rowsHTML);
+
+					if(item.table_type=='bill_items')
+					{
+						var bills_data="<bills>"+
+							"<id>"+item.bill_id+"</id>"+
+							"<bill_num></bill_num>"+
+							"<order_id></order_id>"+
+							"<billing_type></billing_type>"+
+							"<channel></channel>"+
+							"</bills>";
+						fetch_requested_data('',bills_data,function(bills)
+						{
+							if(bills.length>0)
+							{
+								var order_td=document.getElementById('report63_order_'+item.id);
+								order_td.innerHTML=bills[0].channel+" Order id: "+bills[0].order_id+"<br>"+bills[0].billing_type+" Invoice #: "+bills[0].bill_num;
+							}
+						});
+					}
+					else 
+					{
+						var order_td=document.getElementById('report63_order_'+item.id);
+						order_td.innerHTML="Challan #: "+item.id+"<br>"+item.customer;
+					}
+
+					var report63_form=document.getElementById('report63_'+item.id);
+					
+					var storage_filter=report63_form.elements[0];
+					var storage_data="<store_areas>"+
+									"<name></name>"+
+									"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+									"</store_areas>";
+					set_my_value_list(storage_data,storage_filter);
+						
+					$(storage_filter).on('click',function()
+					{
+						this.select();
+					});
+	
+					$(report63_form).on('submit',function(event)
+					{
+						event.preventDefault();
+						report63_update(report63_form);
+					});
+				});
+				
+				////indexing///
+				var next_index=parseInt(start_index)+25;
+				var prev_index=parseInt(start_index)-25;
+				next_element.setAttribute('data-index',next_index);
+				prev_element.setAttribute('data-index',prev_index);
+				index_element.setAttribute('data-index','0');
+				if(items.length<25)
+				{
+					$(next_element).hide();
+				}
+				else
+				{
+					$(next_element).show();
+				}
+				if(prev_index<0)
+				{
+					$(prev_element).hide();
+				}
+				else
+				{
+					$(prev_element).show();
+				}
+				
+				hide_loader();
+			});
 		});
 	}
 	
@@ -4761,8 +4878,6 @@ function report66_ini()
 	var form=document.getElementById('report66_header');
 	var type_filter=form.elements[1].value;
 	var storage_filter=form.elements[2].value;
-	var item_filter=form.elements[3].value;
-	var batch_filter=form.elements[4].value;
 	
 	show_loader();
 	
@@ -4771,7 +4886,7 @@ function report66_ini()
 		
 	var area_data="<store_areas>" +
 			"<id></id>"+
-			"<name>"+storage_filter+"</name>"+
+			"<name exact='yes'>"+storage_filter+"</name>"+
 			"<area_type exact='yes'>"+type_filter+"</area_type>" +
 			"</store_areas>";
 	total_calls+=1;
@@ -4804,8 +4919,8 @@ function report66_ini()
 	
 					var item_data="<area_utilization>"+
 								"<name array='yes'>"+storage_string+"</name>"+
-								"<item_name>"+item_filter+"</item_name>"+
-								"<batch>"+batch_filter+"</batch>"+
+								"<item_name></item_name>"+
+								"<batch></batch>"+
 								"</area_utilization>";	
 					total_calls+=1;				
 					fetch_requested_data('',item_data,function(items)
@@ -4816,7 +4931,7 @@ function report66_ini()
 						{
 							for(var j=i+1;j<items.length;j++)
 							{
-								if(items[i].item_name==items[j].item_name && items[i].batch==items[j].batch)
+								if(items[i].item_name==items[j].item_name && items[i].batch==items[j].batch && items[i].name==items[j].name)
 								{
 									items.splice(j,1);
 									j--;
@@ -4826,84 +4941,48 @@ function report66_ini()
 						
 						items.forEach(function(item)
 						{
-							var total_quantity=0;
-							var count=storage_array.length;
-							storage_array.forEach(function(storage_area)
+							total_calls+=1;
+							get_store_inventory(item.name,item.item_name,item.batch,function(quantity)
 							{
-								total_calls+=1;
-								get_store_inventory(storage_area,item.item_name,item.batch,function(quantity)
-								{
-									total_quantity+=parseFloat(quantity);
-									count--;
-									total_calls-=1;
-								});
-							});						
-							
-							var inventory_complete=setInterval(function()
+								item.quantity=parseFloat(quantity);
+								total_calls-=1;
+							});
+						});
+						
+						var inventory_complete=setInterval(function()
+						{
+							if(total_calls===0)
 							{
-								if(count===0)
+					  	   		clearInterval(inventory_complete);
+								var rowsHTML="";									
+								items.forEach(function (item) 
 								{
-						  	   		clearInterval(inventory_complete);
-									if(parseFloat(total_quantity)>0)
-									{
-										var rowsHTML="<tr>";
-										rowsHTML+="<td data-th='Storage'>";
-											rowsHTML+=area.name;
-										rowsHTML+="</td>";
-										rowsHTML+="<td data-th='Item'>";
-											rowsHTML+=item.item_name;
-										rowsHTML+="</td>";
-										rowsHTML+="<td data-th='Batch'>";
-											rowsHTML+=item.batch;
-										rowsHTML+="</td>";
-										rowsHTML+="<td data-th='Quantity'>";
-											rowsHTML+=total_quantity;
-										rowsHTML+="</td>";
-										rowsHTML+="</tr>";
-										
-										$('#report66_body').append(rowsHTML);
-									}
-								}
-						     },100);
-						});					
+									rowsHTML+="<tr>";
+									rowsHTML+="<td data-th='Storage'>";
+										rowsHTML+=item.name;
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Item'>";
+										rowsHTML+=item.item_name;
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Batch'>";
+										rowsHTML+=item.batch;
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Quantity'>";
+										rowsHTML+=item.quantity;
+									rowsHTML+="</td>";
+									rowsHTML+="</tr>";
+								});	
+								$('#report66_body').html(rowsHTML);
+								hide_loader();
+							}
+					     },50);					
 					});
 				}
-			},100);
-		});
-		
-		var report_complete=setInterval(function()
-		{
-			if(total_calls==0)
-			{
-				hide_loader();
-				clearInterval(report_complete);
-			}
-		},100);
+			},50);
+		});		
 	});
 	
-	function get_all_child_storage(store_area,area_array,tracker)
-	{
-		var child_data="<store_areas>"+
-						"<name></name>"+
-						"<parent exact='yes'>"+store_area+"</parent>" +
-						"</store_areas>";
-		tracker+=1;
-		fetch_requested_data('',child_data,function(children)
-		{
-			tracker-=1;
-			if(children.length>0)
-			{
-				children.forEach(function(child)
-				{
-					area_array.push(child.name);
-					get_all_child_storage(child.name,area_array);
-				});
-			}
-		});
-	}
-	
-	
-	var print_button=form.elements[6];
+	var print_button=form.elements[4];
 	print_tabular_report('report66','Inventory Level (by store)',print_button);
 };
 
@@ -4915,7 +4994,7 @@ function report67_ini()
 {
 	var form=document.getElementById('report67_header');
 	var channel_filter=form.elements[1].value;
-	var customer_filter=form.elements[2].value;
+	var status_filter=form.elements[2].value;
 	var from_filter=get_raw_time(form.elements[3].value);
 	var to_filter=get_raw_time(form.elements[4].value);
 	
@@ -4925,12 +5004,13 @@ function report67_ini()
 	var prices_data="<bills>" +
 			"<id></id>"+
 			"<channel>"+channel_filter+"</channel>"+
-			"<customer_name>"+customer_filter+"</customer_name>" +
+			"<customer_name></customer_name>" +
 			"<bill_date lowerbound='yes'>"+from_filter+"</bill_date>" +
 			"<bill_date upperbound='yes'>"+(to_filter+86400000)+"</bill_date>" +
 			"<channel_charges></channel_charges>"+
 			"<channel_tax></channel_tax>"+
 			"<channel_payable></channel_payable>"+
+			"<collection_status>"+status_filter+"</collection_status>"+
 			"<total></total>"+
 			"</bills>";
 
@@ -4959,8 +5039,26 @@ function report67_ini()
 			rowsHTML+="<td data-th='Date'>";
 				rowsHTML+=get_my_past_date(price.bill_date);
 			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status' id='report67_status_"+price.id+"'>";
+				rowsHTML+=price.collection_status;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				if(price.collection_status=='pending')
+					rowsHTML+="<input type='button' id='report67_collected_"+price.id+"' class='generic_icon' value='Collected'>";	
+			rowsHTML+="</td>";
 			rowsHTML+="</tr>";
+			
 			$('#report67_body').append(rowsHTML);
+			
+			var report67_button=document.getElementById('report67_collected_'+price.id);
+				
+			$(report67_button).on('click',function(event)
+			{
+				event.preventDefault();
+				report67_update(price.id);
+				$(report67_button).hide();
+				document.getElementById('report67_status_'+price.id).innerHTML='received';
+			});
 		});
 		hide_loader();				
 	});
@@ -5397,7 +5495,7 @@ function report76_ini()
 	show_loader();
 	$('#report76_body').html('');	
 	
-		////indexing///
+	////indexing///
 	var index_element=document.getElementById('report76_index');
 	var prev_element=document.getElementById('report76_prev');
 	var next_element=document.getElementById('report76_next');
@@ -5466,4 +5564,85 @@ function report76_ini()
 	
 	var print_button=form.elements[5];
 	print_tabular_report('report76','Orders',print_button);
+};
+
+/**
+ * @reportNo 77
+ * @report Inventory Storage (by item)
+ */
+function report77_ini()
+{
+	var form=document.getElementById('report77_header');
+	var item_filter=form.elements[1].value;
+	var batch_filter=form.elements[2].value;
+	
+	show_loader();
+	
+	var total_calls=0;
+	$('#report77_body').html('');
+		
+	var item_data="<area_utilization>"+
+			"<name></name>"+
+			"<item_name exact='yes'>"+item_filter+"</item_name>"+
+			"<batch>"+batch_filter+"</batch>"+
+			"</area_utilization>";	
+						
+	fetch_requested_data('report77',item_data,function(items)
+	{
+		for(var i=0;i<items.length;i++)
+		{
+			for(var j=i+1;j<items.length;j++)
+			{
+				if(items[i].item_name==items[j].item_name && items[i].batch==items[j].batch && items[i].name==items[j].name)
+				{
+					items.splice(j,1);
+					j--;
+				}
+			}
+		}
+		
+		var total_calls=0;			
+		items.forEach(function(item)
+		{
+			total_calls+=1;
+			get_store_inventory(item.name,item.item_name,item.batch,function(quantity)
+			{
+				item.quantity=parseFloat(quantity);
+				total_calls-=1;
+			});
+		});					
+							
+		var inventory_complete=setInterval(function()
+		{
+			if(total_calls===0)
+			{
+	  	   		clearInterval(inventory_complete);
+	  	   		var rowsHTML="";
+					
+				items.forEach(function (item) 
+				{
+					rowsHTML+="<tr>";
+					rowsHTML+="<td data-th='Item'>";
+						rowsHTML+=item.item_name;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Batch'>";
+						rowsHTML+=item.batch;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+=item.quantity;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Storage'>";
+						rowsHTML+=item.name;
+					rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+					
+					$('#report77_body').html(rowsHTML);
+					hide_loader();
+				});
+			}
+	     },50);		
+	});	
+	
+	var print_button=form.elements[4];
+	print_tabular_report('report77','Inventory Storage (by item)',print_button);
 };

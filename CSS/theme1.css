@@ -45,7 +45,14 @@ input:not([type="button"]):not([readonly="readonly"]):not([type="submit"]):focus
 
 td input[type="text"]
 {
-	/*width:100px;*/
+	width:100px;
+	transition: width 0.25s;
+	white-space:normal;
+}
+
+td input[type="text"].wideinput
+{
+	width:175px;
 	transition: width 0.25s;
 	white-space:normal;
 }

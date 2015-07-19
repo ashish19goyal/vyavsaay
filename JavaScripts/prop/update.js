@@ -8,17 +8,18 @@ function report63_update(form)
 	{
 		var storage=form.elements[0].value;
 		var data_ids=form.elements[1].value;
+		var table_type=form.elements[2].value;
 		var last_updated=get_my_time();
 		var ids=data_ids.split("--");
 
-		var data_xml="<bill_items>";
+		var data_xml="<"+table_type+">";
 		var counter=1;
 
 		ids.forEach(function(id)
 		{
 			if((counter%500)===0)
 			{
-				data_xml+="</bill_items><separator></separator><bill_items>";
+				data_xml+="</"+table_type+"><separator></separator><"+table_type+">";
 			}
 			data_xml+="<row>" +
 					"<id>"+id+"</id>" +
@@ -28,7 +29,7 @@ function report63_update(form)
 					"</row>";
 		});
 	
-		data_xml+="</bill_items>";
+		data_xml+="</"+table_type+">";
 		
 		if(is_online())
 		{	
@@ -43,6 +44,36 @@ function report63_update(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @report Channel Collections
+ * @param form
+ */
+function report67_update(data_id)
+{
+	if(is_update_access('report67'))
+	{
+		var last_updated=get_my_time();
+		var	data_xml="<bills>" +
+					"<id>"+data_id+"</id>" +
+					"<collection_status>received</collection_status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bills>";
+		
+		if(is_online())
+		{	
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}		
 	}
 	else
 	{
@@ -8867,13 +8898,14 @@ function form165_place_item(form)
 		var batch=form.elements[1].value;
 		var storage=form.elements[3].value;
 		var data_id=form.elements[4].value;
+		var table_type=form.elements[5].value;
 		var last_updated=get_my_time();
-		var data_xml="<supplier_bill_items>" +
+		var data_xml="<"+table_type+">" +
 					"<id>"+data_id+"</id>" +
 					"<storage>"+storage+"</storage>"+
 					"<put_away_status>completed</put_away_status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</supplier_bill_items>";
+					"</"+table_type+">";
 		if(is_online())
 		{
 			server_update_simple(data_xml);
@@ -10127,11 +10159,11 @@ function form193_update_form()
 		}
 
 		var body_html="";
-		var head_html="<tr><td style='min-width:200px'>Item</td><td>Batch</td><td>Quantity</td></tr>";
+		var head_html="<tr><td>SKU</td><td>Item Name</td><td>Batch</td><td>Quantity</td></tr>";
 		
 		items.forEach(function(item)
 		{
-			body_html+="<tr><td>"+item.name+"<br>"+item.desc+"</td><td>"+item.batch+"</td><td>"+item.quantity+"</td></tr>";
+			body_html+="<tr><td>"+item.name+"</td><td>"+item.desc+"</td><td>"+item.batch+"</td><td>"+item.quantity+"</td></tr>";
 
 			get_store_inventory(storage,item.name,item.batch,function(sys_quantity)
 			{
@@ -10165,6 +10197,36 @@ function form193_update_form()
 					{
 						local_create_row(data_xml,activity_xml);
 					}
+				
+					///////////adding store placement////////
+					var storage_data="<area_utilization>" +
+							"<id></id>" +
+							"<name exact='yes'>"+storage+"</name>" +
+							"<item_name exact='yes'>"+item.name+"</item_name>" +
+							"<batch exact='yes'>"+item.batch+"</batch>" +
+							"</area_utilization>";
+					fetch_requested_data('',storage_data,function(placements)
+					{
+						if(placements.length===0 && storage!="")
+						{
+							var storage_xml="<area_utilization>" +
+									"<id>"+get_new_key()+"</id>" +
+									"<name>"+storage+"</name>" +
+									"<item_name>"+item.name+"</item_name>" +
+									"<batch>"+item.batch+"</batch>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</area_utilization>";
+							if(is_online())
+							{
+								server_create_simple(storage_xml);
+							}
+							else
+							{
+								local_create_simple(storage_xml);
+							}
+						}
+					});
+					///////////////////////////////////	
 				}
 			});
 		});

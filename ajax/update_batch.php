@@ -40,29 +40,32 @@
 			$conn=new db_connect($db_name);
 			$table=$data_input->nodeName;
 			
-			$update_query="update $table set ";
-			
-			foreach($data_input->childNodes->item(0)->childNodes as $data)
+			if($data_input->childNodes->length>0)
 			{
-				$update_query.=$data->nodeName."=?,";
-			}
-			$update_query=rtrim($update_query,",");
-			$update_query.=" where id=?;";
-			//echo $update_query;
-			$update_stmt=$conn->conn->prepare($update_query);
-			
-			foreach($data_input->childNodes as $row)
-			{
-				$data_array=array();
-				$id=$row->getElementsByTagName('id')->item(0)->nodeValue;
+				$update_query="update $table set ";
 				
-				foreach($row->childNodes as $data)
+				foreach($data_input->childNodes->item(0)->childNodes as $data)
 				{
-					$data_array[]=$data->nodeValue;
+					$update_query.=$data->nodeName."=?,";
 				}
+				$update_query=rtrim($update_query,",");
+				$update_query.=" where id=?;";
+				//echo $update_query;
+				$update_stmt=$conn->conn->prepare($update_query);
 				
-				$data_array[]=$id;
-				$update_stmt->execute($data_array);
+				foreach($data_input->childNodes as $row)
+				{
+					$data_array=array();
+					$id=$row->getElementsByTagName('id')->item(0)->nodeValue;
+					
+					foreach($row->childNodes as $data)
+					{
+						$data_array[]=$data->nodeValue;
+					}
+					
+					$data_array[]=$id;
+					$update_stmt->execute($data_array);
+				}
 			}
 			echo "data saved";
 		}

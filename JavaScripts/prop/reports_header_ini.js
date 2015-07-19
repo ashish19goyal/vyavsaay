@@ -1165,8 +1165,6 @@ function report63_header_ini()
 	var type_filter=form.elements[1];
 	var sku_filter=form.elements[2];
 	var item_name_filter=form.elements[3];
-	var order_filter=form.elements[4];
-	var invoice_filter=form.elements[5];
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -1174,12 +1172,7 @@ function report63_header_ini()
 		event.preventDefault();
 		report63_ini();
 	});
-
-	$(order_filter).parent().hide();
-	$(invoice_filter).parent().hide();			
-	$(sku_filter).parent().hide();
-	$(item_name_filter).parent().hide();
-		
+	
 	set_static_value_list('item_picklist','pick_type',type_filter,function ()
 	{
 		$(type_filter).focus();
@@ -1187,41 +1180,16 @@ function report63_header_ini()
 	
 	$(type_filter).off('blur');
 	$(type_filter).on('blur',function () 
-	{
-		if(type_filter.value=='aggregated')
-		{
-			var sku_data="<product_master>"+
-				"<name></name>"+
-				"</product_master>";
-			set_my_filter(sku_data,sku_filter);	
+	{	
+		var sku_data="<product_master>"+
+			"<name></name>"+
+			"</product_master>";
+		set_my_filter(sku_data,sku_filter);	
 
-			var name_data="<product_master>"+
-				"<description></description>"+
-				"</product_master>";
-			set_my_filter(name_data,item_name_filter);
-			
-			$(order_filter).parent().hide();
-			$(invoice_filter).parent().hide();			
-			$(sku_filter).parent().show();
-			$(item_name_filter).parent().show();
-		}
-		else
-		{
-			var order_data="<bills>"+
-				"<order_id></order_id>"+
-				"</bills>";
-			set_my_filter(order_data,order_filter);	
-
-			var invoice_data="<bills>"+
-				"<bill_num></bill_num>"+
-				"</bills>";
-			set_my_filter(invoice_data,invoice_filter);
-			
-			$(sku_filter).parent().hide();
-			$(item_name_filter).parent().hide();
-			$(order_filter).parent().show();
-			$(invoice_filter).parent().show();			
-		}
+		var name_data="<product_master>"+
+			"<description></description>"+
+			"</product_master>";
+		set_my_filter(name_data,item_name_filter);	
 	});				
 }
 
@@ -1374,8 +1342,6 @@ function report66_header_ini()
 	var form=document.getElementById('report66_header');
 	var type_filter=form.elements[1];
 	var storage_filter=form.elements[2];
-	var item_filter=form.elements[3];
-	var batch_filter=form.elements[4];
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -1384,25 +1350,21 @@ function report66_header_ini()
 		report66_ini();
 	});
 	
+	$(type_filter).off('blur');
+	$(type_filter).on('blur',function () 
+	{
+		var storage_data="<store_areas>"+
+				"<name></name>"+
+				"<area_type exact='yes'>"+type_filter.value+"</area_type>"+
+				"</store_areas>";
+		set_my_filter(storage_data,storage_filter);
+		storage_filter.value="";
+	});
+	
 	var type_data="<storage_structure>"+
 				"<name></name>"+
 				"</storage_structure>";
-	set_my_value_list(type_data,type_filter);
-	
-	var storage_data="<store_areas>"+
-				"<name></name>"+
-				"</store_areas>";
-	set_my_filter(storage_data,storage_filter);
-	
-	var item_data="<product_master>"+
-				"<name></name>"+
-				"</product_master>";
-	set_my_filter(item_data,item_filter);
-	
-	var batch_data="<product_instances>"+
-				"<batch></batch>"+
-				"</product_instances>";
-	set_my_filter(batch_data,batch_filter);				
+	set_my_value_list(type_data,type_filter);		
 }
 
 /**
@@ -1413,7 +1375,7 @@ function report67_header_ini()
 {	
 	var form=document.getElementById('report67_header');
 	var channel_filter=form.elements[1];
-	var customer_filter=form.elements[2];
+	var status_filter=form.elements[2];
 	var from_filter=form.elements[3];
 	var to_filter=form.elements[4];
 	
@@ -1424,11 +1386,13 @@ function report67_header_ini()
 		report67_ini();
 	});
 	
-	var customer_data="<customers>"+
+/*	var customer_data="<customers>"+
 				"<acc_name></acc_name>"+
 				"</customers>";
 	set_my_filter(customer_data,customer_filter);
-	
+*/
+
+	set_static_filter('bills','collection_status',status_filter);	
 	var channel_data="<sale_channels>"+
 				"<name></name>"+
 				"</sale_channels>";
@@ -1579,4 +1543,32 @@ function report76_header_ini()
 	set_my_filter(delivery_data,delivery_filter);
 	
 	set_static_filter('logistics_orders','status',status_filter);	
+}
+
+/**
+ * @reportNo 77
+ * @report Inventory Storage (by item)
+ */
+function report77_header_ini()
+{	
+	var form=document.getElementById('report77_header');
+	var item_filter=form.elements[1];
+	var batch_filter=form.elements[2];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report77_ini();
+	});
+			
+	var item_data="<product_master>"+
+				"<name></name>"+
+				"</product_master>";
+	set_my_filter(item_data,item_filter);
+	
+	var batch_data="<product_instances>"+
+				"<batch></batch>"+
+				"</product_instances>";
+	set_my_filter(batch_data,batch_filter);				
 }

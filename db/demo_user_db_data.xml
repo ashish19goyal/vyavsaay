@@ -1053,6 +1053,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report77</name>
+			<display_name>inventory_storage_by_item</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -2922,6 +2932,17 @@
 			<tables>--treatment_plans--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form210</name>
+			<display_name>packing_instructions_invoice</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bill_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3599,6 +3620,17 @@
 			<username>master</username>
 			<element_id>report76</element_id>
 			<element_name>logistic_order_status</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report77</element_id>
+			<element_name>inventory_storage_by_item</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -5469,6 +5501,17 @@
 			<username>master</username>
 			<element_id>form209</element_id>
 			<element_name>treatment_plan_details</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form210</element_id>
+			<element_name>packing_instructions_invoice</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

@@ -8270,7 +8270,7 @@ function form154_add_product()
 				rowsHTML+="<td data-th='S.No.'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Item'>";
-					rowsHTML+="<input type='text' required form='form154_"+id+"'>";
+					rowsHTML+="<input type='text' class='wideinput' required form='form154_"+id+"'>";
 					rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form154_add_product_"+id+"'>";
 					rowsHTML+="<fresh><br>Fresh: <input type='checkbox' form='form154_"+id+"'></fresh>";
 				rowsHTML+="</td>";
@@ -8563,7 +8563,7 @@ function form154_add_product()
 				rowsHTML+="<td data-th='S.No.'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Item'>";
-					rowsHTML+="<input type='text' required form='form154_"+id+"'>";
+					rowsHTML+="<input type='text' class='wideinput' required form='form154_"+id+"'>";
 					rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form154_add_product_"+id+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Quantity'>";
@@ -9083,7 +9083,7 @@ function form158_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form158_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' required form='form158_"+id+"'>";
+				rowsHTML+="<input type='text' class='wideinput' required form='form158_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form158_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";

@@ -360,6 +360,7 @@
 			<channel_charges index='no' type="DECIMAL(12,2)"></channel_charges>
 			<channel_tax index='no' type="DECIMAL(12,2)"></channel_tax>
 			<channel_payable index='no' type="DECIMAL(12,2)"></channel_payable>
+			<collection_status index='no' type="VARCHAR(30)"></collection_status><!--pending/received-->
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
 			<storage index='yes' type="TEXT"></storage>
 			<print_1_job index='yes' type="VARCHAR(25)"></print_1_job><!--yes/no-->
