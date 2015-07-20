@@ -352,7 +352,7 @@ function form66_import_template()
 */
 function form69_import_template()
 {
-	var data_array=['id','order_id','item_name','item_desc','channel_sku','vendor_sku','quantity','notes'];
+	var data_array=['id','order_id','item_name','item_desc','channel_sku','vendor_sku','quantity','mrp','price','amount','tax','freight','total'];
 	my_array_to_csv(data_array);
 };
 
@@ -615,7 +615,7 @@ function form104_import_template()
 */
 function form108_import_template()
 {
-	var data_array=['id','order_num','customer_name','order_date','channel','status'];
+	var data_array=['id','order_num','customer_name','order_date','channel','status','amount','tax','freight','total'];
 	my_array_to_csv(data_array);
 };
 

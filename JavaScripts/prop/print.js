@@ -2015,3 +2015,72 @@ function print_form200(func)
 
 	func(container);
 }
+
+/**
+ * @form Issue GRN without QC
+ * @modalNo 131
+ */
+function modal131_print(order_num,received_quantity,total_quantity,supplier_name,order_date)
+{
+	print_modal131(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	},order_num,received_quantity,total_quantity,supplier_name,order_date);	
+}
+
+/**
+ * @form Issue GRN without QC
+ * @formNo 131
+ */
+function print_modal131(func,order_num,received_quantity,total_quantity,supplier_name,order_date)
+{	
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var business_title=document.createElement('div');
+	
+	var invoice_box=document.createElement('div');
+
+	var info_section=document.createElement('div');	
+		var supplier_info=document.createElement('div');
+		var order_info=document.createElement('div');
+
+		
+	////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:100%;min-height:100px;');
+		business_title.setAttribute('style','width:90%;text-align:center;');
+	invoice_box.setAttribute('style','width:98%;min-height:60px;background-color:#bbbbbb;border: 1px solid #000000;padding:2px;');
+	info_section.setAttribute('style','width:99%;min-height:60px;border: 1px solid #000000;');
+		supplier_info.setAttribute('style','padding:2px;margin:2px;float:left;width:48%;height:60px;text-align:left;');
+		order_info.setAttribute('style','padding:2px;margin:2px;float:right;width:48%;height:60px;text-align:right;');
+
+	///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var today_date=get_my_date();
+	
+	////////////////filling in the content into the containers//////////////////////////
+
+	business_title.innerHTML="<b>"+bt+"</b><br>"+business_address+"<br>"+business_phone;
+	invoice_box.innerHTML="<div style='float:left;width:50%'>Order No.: "+order_num+"</div><div style='float:right;text-align:right;width:50%'>Order Date: "+order_date+"<br>Receiving Date: "+today_date+"</div>";
+	
+	supplier_info.innerHTML="<b>Supplier</b><br>"+supplier_name;
+	order_info.innerHTML="Received "+received_quantity+" quantity out of total order of "+total_quantity+" quantity";
+
+	
+	container.appendChild(header);
+	container.appendChild(invoice_box);
+	container.appendChild(info_section);
+
+	header.appendChild(business_title);
+
+	info_section.appendChild(supplier_info);
+	info_section.appendChild(order_info);
+
+	func(container);
+}

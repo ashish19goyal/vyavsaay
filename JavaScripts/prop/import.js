@@ -2171,7 +2171,12 @@ function form69_import(data_array,import_type)
 				"<channel_sku>"+row.channel_sku+"</channel_sku>" +
 				"<vendor_sku>"+row.vendor_sku+"</vendor_sku>" +
 				"<quantity>"+row.quantity+"</quantity>" +
-				"<notes>"+row.notes+"</notes>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<price>"+row.price+"</price>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<freight>"+row.freight+"</freight>" +
+				"<total>"+row.total+"</total>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
@@ -3625,6 +3630,10 @@ function form108_import(data_array,import_type)
 				"<order_num>"+row.order_num+"</order_num>" +
 				"<channel>"+row.channel+"</channel>"+
 				"<status>"+row.status+"</status>" +
+				"<amount>"+row.amount+"</amount>" +
+				"<tax>"+row.tax+"</tax>" +
+				"<freight>"+row.freight+"</freight>" +
+				"<total>"+row.total+"</total>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});

@@ -7,6 +7,7 @@
 					<th>Supplier <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form43_header'></th>
 					<th>Order Date</th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form43_header'></th>
+					<th>Quantity</th>
 					<th><input type="button" value='Add new order' class='add_icon' form='form43_header' onclick="element_display('','form24'); form24_new_form();">
 						<input type='button' form='form43_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form43_header' style='visibility: hidden;'>

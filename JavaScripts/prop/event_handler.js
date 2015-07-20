@@ -20,8 +20,10 @@ function default_load()
 	count_sync_timer=0;
 	show_notif_timer=0;
 	progress_value=0;
+	vyavsaay_active_tab="";
+	
 	modal_forms_ini();
-
+	
 	if(is_set_session())
 	{
 		add_questionnaires(function()
@@ -287,7 +289,8 @@ function modal_forms_ini()
 			$(this).parent().dialog("close");
 		});
 	}
-	for(var i=101;i<131;i++)
+
+	for(var i=101;i<133;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({

@@ -161,6 +161,7 @@ function init_functions_tabs()
 		    beforeActivate:function(event,ui)
 		    {
 		    	$(document).off('keydown');
+		    	vyavsaay_active_tab=ui.newPanel.attr('id');
 			}
 		}).css(
 		{

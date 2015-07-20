@@ -19,11 +19,13 @@
 				<form id='form69_header'></form>
 					<th>Item</th>
 					<th>Quantity</th>
-					<th>Notes</th>
+					<th>Pricing</th>
 					<th><input type='button' form='form69_header' title='Add item' class='add_icon' onclick='form69_add_item();'></th>
 			</tr>
 		</thead>
 		<tbody id='form69_body'>
 		</tbody>
+		<tfoot id='form69_foot'>
+		</tfoot>
 	</table>
 </div>

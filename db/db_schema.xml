@@ -144,6 +144,8 @@
 			<amount index='no' type='DECIMAL(12,2)'></amount>
 			<tax index='no' type='DECIMAL(12,2)'></tax>
 			<total index='no' type='DECIMAL(12,2)'></total>
+			<total_quantity index='no' type='DECIMAL(12,2)'></total_quantity>
+			<quantity_received index='no' type='DECIMAL(12,2)'></quantity_received>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</purchase_orders>
 	<purchase_order_items>  
@@ -318,6 +320,7 @@
 			<notes index='no' type="TEXT"></notes>
 			<order_date index='yes' type="BIGINT"></order_date>
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product -->
+			<freight index='no' type="DECIMAL(12,2)"></freight>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
@@ -333,6 +336,12 @@
 			<vendor_sku index='yes' type="TEXT"></vendor_sku>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<notes index='no' type='TEXT'></notes>
+			<mrp index='no' type="DECIMAL(12,2)"></mrp>
+			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
+			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<freight index='no' type="DECIMAL(12,2)"></freight>
+			<total index='no' type="DECIMAL(12,2)"></total>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</sale_order_items>
 	<bills>

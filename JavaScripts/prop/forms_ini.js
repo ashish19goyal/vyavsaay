@@ -2976,6 +2976,8 @@ function form43_ini()
 			"<order_date></order_date>" +
 			"<status>"+fstatus+"</status>" +
 			"<bill_id></bill_id>"+
+			"<total_quantity></total_quantity>"+
+			"<quantity_received></quantity_received>"+
 			"<last_updated></last_updated>" +
 			"</purchase_orders>";
 
@@ -3000,36 +3002,41 @@ function form43_ini()
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form43_"+result.id+"' value='"+result.status+"'>";
 					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+="Ordered: <input type='number' step='any' readonly='readonly' form='form43_"+result.id+"' value='"+result.total_quantity+"'>";
+						rowsHTML+="Received: <input type='number' step='any' readonly='readonly' form='form43_"+result.id+"' value='"+result.quantity_received+"'>";
+					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form43_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='edit_icon' form='form43_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form24');\">";
 						rowsHTML+="<input type='submit' class='save_icon' form='form43_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form43_"+result.id+"' title='Delete order' onclick='form43_delete_item($(this));'>";
-					if(result.status=='order placed')
+					if(result.status=='order placed' || result.status=='partially received')
 					{
-						rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form43_"+result.id+"' value='Issue GRN'>";
+						rowsHTML+="<br><input type='button' name='issue_quantity' class='generic_icon' form='form43_"+result.id+"' value='GRN without QC'>";
+						rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form43_"+result.id+"' value='GRN with QC'>";
 					}
-					else if(result.status=='partially received' || result.status=='closed')
+					if(result.bill_id!='' && result.bill_id!='null')
 					{
 						rowsHTML+="<br><input type='button' name='view_bill' class='generic_icon' form='form43_"+result.id+"' value='View Bill'>";
 					}
-					
+
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
 			$('#form43_body').append(rowsHTML);
 			var fields=document.getElementById("form43_"+result.id);
 			var status_filter=fields.elements[3];
-			
+
 			set_static_value_list('purchase_orders','status',status_filter);
-			
+
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
 				form43_update_item(fields);
 			});
-			
-			if(result.status=='order placed')
+
+			if(result.status=='order placed' || result.status=='partially received')
 			{
 				var issue_button=fields.elements['issue_grn'];
 				$(issue_button).on('click',function()
@@ -3041,8 +3048,15 @@ function form43_ini()
 					master_form.elements['order_id'].value=result.id;
 					$(master_form.elements['bill_num']).focus();
 				});
-			}						
-			else if(result.status=='partially received' || result.status=='closed')
+
+				var quantity_button=fields.elements['issue_quantity'];
+				$(quantity_button).on('click',function()
+				{
+					modal131_action(result.id,result.order_num,result.total_quantity,result.supplier,get_my_past_date(result.order_date));
+				});
+			}
+
+			if(result.bill_id!='' && result.bill_id!='null')
 			{
 				var view_button=fields.elements['view_bill'];
 				$(view_button).on('click',function()
@@ -5047,6 +5061,10 @@ function form69_ini()
 				"<order_num></order_num>"+
 				"<channel></channel>"+
 				"<order_date></order_date>" +
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+
+				"<freight></freight>"+
 				"<status></status>" +
 				"</sale_orders>";
 		var order_items_column="<sale_order_items>" +
@@ -5056,7 +5074,13 @@ function form69_ini()
 				"<channel_sku></channel_sku>"+
 				"<vendor_sku></vendor_sku>"+
 				"<quantity></quantity>" +
-				"<order_id exact='yes'>"+order_id+"</order_id>" +
+				"<mrp></mrp>"+
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+
+				"<unit_price></unit_price>"+
+				"<freight></freight>"+
+                "<order_id exact='yes'>"+order_id+"</order_id>" +
 				"<notes></notes>" +
 				"</sale_order_items>";
 	
@@ -5081,6 +5105,16 @@ function form69_ini()
 					event.preventDefault();
 					form69_update_form();
 				});
+				
+				var total_row="<tr><td colspan='1' data-th='Total'>Total</td>" +
+							"<td>Amount:</br>Tax: <br>Freight: </br>Total: </td>" +
+							"<td>Rs. "+order_results[i].amount+"</br>" +
+							"Rs. "+order_results[i].tax+"</br>" +
+							"Rs. "+order_results[i].freight+"</br>" +
+							"Rs. "+order_results[i].total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+				$('#form69_foot').html(total_row);
 
 				break;
 			}
@@ -5097,18 +5131,23 @@ function form69_ini()
 						rowsHTML+="<td data-th='Item'>";
 							rowsHTML+="<input type='hidden' readonly='readonly' required form='form69_"+id+"' value='"+result.channel_sku+"'>";
 							rowsHTML+="<input type='hidden' readonly='readonly' required form='form69_"+id+"' value='"+result.vendor_sku+"'>";
-							rowsHTML+="<br>System SKU: <input type='text' readonly='readonly' required form='form69_"+id+"' value='"+result.item_name+"'>";
+							rowsHTML+="<input type='text' class='wideinput' readonly='readonly' required form='form69_"+id+"' value='"+result.item_name+"'>";
 							rowsHTML+="<br>Name: <textarea readonly='readonly' form='form69_"+id+"'>"+result.item_desc+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
 							rowsHTML+="<input type='number' class='dblclick_editable' readonly='readonly' required form='form69_"+id+"' value='"+result.quantity+"'>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Notes'>";
-							rowsHTML+="<textarea readonly='readonly' form='form69_"+id+"'>"+result.notes+"</textarea>";
+						rowsHTML+="<td data-th='Price'>";
+							rowsHTML+="Price: <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.unit_price+"' step='any'>";
+							rowsHTML+="<br>MRP: <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.mrp+"' step='any'>";
+							rowsHTML+="<br>Amount: <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.amount+"' step='any'>";
+							rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.tax+"' step='any'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form69_"+id+"' value='"+result.freight+"'>";
+							rowsHTML+="<input type='hidden' form='form69_"+id+"' value='"+result.total+"'>";
 							rowsHTML+="<input type='hidden' form='form69_"+id+"' value='"+id+"'>";
-							rowsHTML+="<input type='submit' class='submit_hidden' form='form69_"+id+"' id='save_form69_"+id+"'>";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form69_"+id+"' id='save_form69_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form69_"+id+"' id='delete_form69_"+id+"' onclick='form69_delete_item($(this));'>";
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
@@ -5119,12 +5158,6 @@ function form69_ini()
 					var name_filter=fields.elements[2];
 					var desc_filter=fields.elements[3];
 					var quantity_filter=fields.elements[4];
-					
-					$(fields).on("submit", function(event)
-					{
-						event.preventDefault();
-						form69_update_item(fields);
-					});
 					
 					if(result.item_name=="")
 					{

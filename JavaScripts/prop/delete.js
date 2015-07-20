@@ -1946,7 +1946,7 @@ function form69_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[6].value;
+			var data_id=form.elements[11].value;
 			var last_updated=get_my_time();
 			var data_xml="<sale_order_items>" +
 						"<id>"+data_id+"</id>" +

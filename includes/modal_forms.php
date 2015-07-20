@@ -1066,4 +1066,25 @@
 		</form>
 	</div>
 
+	<div id="modal131" title="Issue GRN without QC">
+		<form id='modal131_form' autocomplete="off">
+			<fieldset>
+				<label>Order #: <input readonly='readonly' name='order_num' type="text"></label><br>
+				<label>Order Quantity: <input readonly='readonly' name='o_quantity' type="number" step='any'></label><br>
+				<label>Received Quantity: <input name='r_quantity' required type='number' step='any'></label><br>
+				<input type="button" value='Print & Save' name='print' class='modal_submit'>
+				<input type="submit" value='Save' name='save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal132" title="Refresh Tab">
+		Any unsaved data will be lost. Do you want to carry on?
+		<br>
+		<form id='modal132_form' autocomplete="off">
+			<input type="submit" class='modal_submit' value='Yes'>
+			<input type="button" class='modal_submit' value='No'>
+		</form>
+	</div>
+
 </div>

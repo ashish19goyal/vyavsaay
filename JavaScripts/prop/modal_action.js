@@ -7276,7 +7276,8 @@ function modal115_action(func)
 		$("#modal115").dialog("close");
 		func();
 	});
-		
+	
+	$(no_button).off('click');
 	$(no_button).on('click',function()
 	{
 		$("#modal115").dialog("close");
@@ -7772,7 +7773,7 @@ function modal119_action(data_id,type)
  * @modalNo 120
  * @modal Add new batch
  */
-function modal120_action(func)
+function modal120_action(func,product_name)
 {
 	var form=document.getElementById('modal120_form');
 	
@@ -7787,7 +7788,28 @@ function modal120_action(func)
 			"<name></name>" +
 			"</product_master>";
 	set_my_value_list(name_data,fname);
-	
+
+	if(typeof product_name!='undefined')
+	{
+		fname.value=product_name;
+		var batch_data="<product_instances>" +
+				"<batch></batch>" +
+				"<product_name exact='yes'>"+fname.value+"</product_name>" +
+				"</product_instances>";
+		get_single_column_data(function(batches)
+		{
+			$(fbatch).off('blur');
+			$(fbatch).on('blur',function(event)
+			{
+				var found = $.inArray($(this).val(), batches) > -1;
+				if(found)
+				{
+		            $(this).val('');
+		        }
+			});
+		},batch_data);
+	}
+		
 	$(fname).off('blur');
 	$(fname).on('blur',function(event)
 	{
@@ -8621,4 +8643,102 @@ function modal130_action()
 	});
 	console.log('something else 7');	
 	$("#modal130").dialog("open");
+}
+
+/**
+ * @modalNo 131
+ * @modal Issue GRN without QC
+ */
+function modal131_action(order_id,order_num,total_quantity,supplier_name,order_date)
+{
+	var form=document.getElementById('modal131_form');
+	var order_num_filter=form.elements['order_num'];
+	var total_filter=form.elements['o_quantity'];
+	var received_filter=form.elements['r_quantity'];
+	var print_button=form.elements['print'];
+
+	$(print_button).off('click');
+	$(print_button).on('click',function () 
+	{
+		var received_quantity=received_filter.value;
+		modal131_print(order_num,received_quantity,total_quantity,supplier_name,order_date);
+		$(form).trigger('submit');
+	});
+
+	order_num_filter.value=order_num;
+	total_filter.value=total_quantity;
+	received_filter.setAttribute('max',total_quantity);
+	//received_filter.value="";
+	$(received_filter).focus();
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form43'))
+		{
+			var order_num=order_num_filter.value;
+			var received_quantity=received_filter.value;
+			var last_updated=get_my_time();
+			
+			var status='partially received';
+
+			var orders_xml="<purchase_orders>"+
+						"<id>"+order_id+"</id>"+
+		                "<status>"+status+"</status>"+
+		                "<quantity_received>"+received_quantity+"</quantity_received>"+
+		                "<last_updated>"+last_updated+"</last_updated>"+
+						"</purchase_orders>";
+			if(is_online())
+			{
+				server_update_simple(orders_xml);
+			}
+			else
+			{
+				local_update_simple(orders_xml);
+			}	
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal131").dialog("close");
+	});
+	
+	$("#modal131").dialog("open");
+}
+
+/**
+ * @modalNo 132
+ * @modal Refresh Tab
+ * @param button
+ */
+function modal132_action(tab_id,func)
+{
+	var form132=document.getElementById('modal132_form');
+	var yes_button=form132.elements[0];
+	var no_button=form132.elements[1];
+
+	if(vyavsaay_active_tab==tab_id)
+	{
+		$(form132).off('submit');
+		$(form132).on('submit',function(event)
+		{
+			event.preventDefault();
+			$("#modal132").dialog("close");
+			func();
+		});
+		
+		$(no_button).off('click');
+		$(no_button).on('click',function()
+		{
+			$("#modal132").dialog("close");
+		});
+	
+		$("#modal132").dialog("open");
+	}
+	else 
+	{
+		func();
+	}
 }

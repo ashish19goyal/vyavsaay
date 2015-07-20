@@ -1514,6 +1514,7 @@ function form24_update_form()
 		var amount=0;
 		var tax=0;
 		var total=0;
+		var total_quantity=0;
 		
 		$("[id^='save_form24']").each(function(index)
 		{
@@ -1526,6 +1527,9 @@ function form24_update_form()
 				tax+=parseFloat(subform.elements[6].value);
 				total+=parseFloat(subform.elements[7].value);
 			}
+			if(!isNaN(parseFloat(subform.elements[1].value)))			
+				total_quantity+=parseFloat(subform.elements[1].value);						
+		
 		});
 		
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
@@ -1547,6 +1551,7 @@ function form24_update_form()
 					"<amount>"+amount+"</amount>" +
 					"<tax>"+tax+"</tax>" +
 					"<total>"+total+"</total>" +
+					"<total_quantity>"+total_quantity+"</total_quantity>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_orders>";
 		var activity_xml="<activity>" +
@@ -3045,52 +3050,6 @@ function form66_update_item(form)
 	}
 }
 
-/**
- * @form New Sale orders
- * @param button
- */
-function form69_update_item(form)
-{
-	if(is_update_access('form69'))
-	{
-		var order_id=document.getElementById("form69_master").elements['order_id'].value;
-		
-		var name=form.elements[2].value;
-		var desc=form.elements[3].value;
-		var quantity=form.elements[4].value;
-		var notes=form.elements[5].value;
-		var data_id=form.elements[6].value;
-		var save_button=form.elements[7];
-		var del_button=form.elements[8];
-		var last_updated=get_my_time();
-		var data_xml="<sale_order_items>" +
-				"<id>"+data_id+"</id>" +
-				"<item_name>"+name+"</item_name>" +
-				"<item_desc>"+desc+"</item_desc>" +
-				"<quantity>"+quantity+"</quantity>" +
-				"<order_id>"+order_id+"</order_id>" +
-				"<notes>"+notes+"</notes>" +
-				"<last_updated>"+last_updated+"</last_updated>" +
-				"</sale_order_items>";	
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
-		for(var i=0;i<6;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
-
 
 /**
  * @form New Sale Order
@@ -3109,7 +3068,37 @@ function form69_update_form()
 		var order_num=form.elements['order_num'].value;
 		var channel=form.elements['channel'].value;
 		var save_button=form.elements['save'];
-		var last_updated=get_my_time();		
+		var last_updated=get_my_time();	
+		
+		var amount=0;
+		var freight=0;
+		var tax=0;
+		var total=0;
+		
+		$("[id^='save_form69']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			if(!isNaN(parseFloat(subform.elements[7].value)))
+				amount+=parseFloat(subform.elements[7].value);
+			if(!isNaN(parseFloat(subform.elements[8].value)))			
+				tax+=parseFloat(subform.elements[8].value);
+			if(!isNaN(parseFloat(subform.elements[9].value)))			
+				freight+=parseFloat(subform.elements[9].value);
+			if(!isNaN(parseFloat(subform.elements[10].value)))			
+				total+=parseFloat(subform.elements[10].value);
+		});
+	
+		var total_row="<tr><td colspan='1' data-th='Total'>Total</td>" +
+							"<td>Amount:</br>Tax: <br>Freight: </br>Total: </td>" +
+							"<td>Rs. "+amount+"</br>" +
+							"Rs. "+tax+"</br>" +
+							"Rs. "+freight+"</br>" +
+							"Rs. "+total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+		$('#form69_foot').html(total_row);
+
 		var data_xml="<sale_orders>" +
 					"<id>"+data_id+"</id>" +
 					"<customer_name>"+customer+"</customer_name>" +
@@ -3117,6 +3106,10 @@ function form69_update_form()
 					"<order_num>"+order_num+"</order_num>" +
 					"<channel>"+channel+"</channel>" +
 					"<status>"+status+"</status>" +
+					"<amount>"+amount+"</amount>" +
+					"<tax>"+tax+"</tax>" +
+					"<freight>"+freight+"</freight>" +
+					"<total>"+total+"</total>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_orders>";
 		var activity_xml="<activity>" +
