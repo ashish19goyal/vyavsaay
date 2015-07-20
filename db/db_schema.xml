@@ -195,6 +195,8 @@
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<storage index='yes' type="TEXT"></storage>
+			<qc index='yes' type="VARCHAR(20)"></qc><!--accepted/rejected-->
+			<qc_comments index='yes' type="TEXT"></qc_comments>
 			<put_away_status index='yes' type="TEXT"></put_away_status><!--pending/completed-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_bill_items>

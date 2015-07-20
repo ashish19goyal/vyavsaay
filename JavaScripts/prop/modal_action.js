@@ -8719,6 +8719,7 @@ function modal132_action(tab_id,func)
 	var yes_button=form132.elements[0];
 	var no_button=form132.elements[1];
 
+	
 	if(vyavsaay_active_tab==tab_id)
 	{
 		$(form132).off('submit');

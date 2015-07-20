@@ -25,9 +25,9 @@
 				<form id='form122_header'></form>
 					<th>Item</th>
 					<th>Batch</th>
-					<th>Quantity</th>
 					<th>Amount</th>
 					<th>Storage</th>
+					<th>Check</th>
 					<th><input type='button' form='form122_header' title='Add item' class='add_icon' onclick='form122_add_item();'></th>
 			</tr>
 		</thead>

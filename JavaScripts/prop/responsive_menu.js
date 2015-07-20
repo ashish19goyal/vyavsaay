@@ -157,11 +157,11 @@ function init_functions_tabs()
 					if(typeof map85 != 'undefined')		    	
 		    			map85.invalidateSize(false);
 				}
+				vyavsaay_active_tab=ui.newPanel.attr('id');
 		    },
 		    beforeActivate:function(event,ui)
 		    {
 		    	$(document).off('keydown');
-		    	vyavsaay_active_tab=ui.newPanel.attr('id');
 			}
 		}).css(
 		{
@@ -219,6 +219,7 @@ function init_functions_accordion()
 					if(typeof map85 != 'undefined')		    	
 		    			map85.invalidateSize(false);
 				}
+				vyavsaay_active_tab=ui.newPanel.attr('id');
 		    },
 		    beforeActivate:function(event,ui)
 		    {

@@ -685,6 +685,28 @@ tbody tr:hover{
 	vertical-align:middle;
 }
 
+.green_circle
+{
+	height:25px;
+	width: 25px;
+	background:url('/images/green_circle.png') no-repeat left top;
+	border: 0;
+	background-size: 25px 25px;
+	color:transparent;
+	vertical-align:middle;
+}
+
+.red_circle
+{
+	height:25px;
+	width: 25px;
+	background:url('/images/red_circle.png') no-repeat left top;
+	border: 0;
+	background-size: 25px 25px;
+	color:transparent;
+	vertical-align:middle;
+}
+
 .barcode_icon{
 	height:25px;
 	width: 25px;

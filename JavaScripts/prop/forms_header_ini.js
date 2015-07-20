@@ -4162,9 +4162,7 @@ function form122_header_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Batch'>";
 							rowsHTML+="<input type='text' form='form122_"+id+"' value='"+ub_item.batch+"' required readonly='readonly'>";
-						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Quantity'>";
-							rowsHTML+="<input type='number' form='form122_"+id+"' value='"+ub_item.quantity+"' required step='any' readonly='readonly'>";
+							rowsHTML+="<br>Quantity: <input type='number' form='form122_"+id+"' value='"+ub_item.quantity+"' required step='any' readonly='readonly'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Amount'>";
 							rowsHTML+="Unit Price: Rs. <input type='number' form='form122_"+id+"' value='"+ub_item.unit_price+"' required step='any' readonly='readonly'>";
@@ -4173,6 +4171,10 @@ function form122_header_ini()
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Storage'>";
 							rowsHTML+="<input type='text' form='form122_"+id+"' value='"+ub_item.storage+"' readonly='readonly'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Check'>";
+							rowsHTML+="<input type='text' form='form122_"+id+"' value='accepted' readonly='readonly'> <img src='./images/green_circle.png' class='green_circle'>";
+							rowsHTML+="<br>Comments: <textarea form='form122_"+id+"' readonly='readonly'>From challan</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form122_"+id+"' value='"+id+"'>";
@@ -4188,7 +4190,7 @@ function form122_header_ini()
 					$('#form122_body').prepend(rowsHTML);
 					
 					var fields=document.getElementById("form122_"+id);
-					var save_button=fields.elements[10];
+					var save_button=fields.elements[12];
 					
 					$(save_button).on("click", function(event)
 					{
