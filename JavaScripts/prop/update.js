@@ -1952,7 +1952,7 @@ function form43_update_item(form)
 		var supplier_name=form.elements[1].value;
 		var order_date=get_raw_time(form.elements[2].value);
 		var status=form.elements[3].value;
-		var data_id=form.elements[4].value;
+		var data_id=form.elements[6].value;
 		var last_updated=get_my_time();
 		var data_xml="<purchase_orders>" +
 					"<id>"+data_id+"</id>" +
@@ -5846,16 +5846,25 @@ function form122_update_form()
 		var total=0;
 		var tax=0;
 		var amount=0;
+		var total_quantity=0;
 		
 		$("[id^='save_form122']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			amount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[7].value);
-			total+=amount+tax;
+			if(subform.elements[9].value=='accepted')
+			{
+				if(!isNaN(parseFloat(subform.elements[6].value)))
+					amount+=parseFloat(subform.elements[6].value);
+				if(!isNaN(parseFloat(subform.elements[7].value)))
+					tax+=parseFloat(subform.elements[7].value);
+				if(!isNaN(parseFloat(subform.elements[4].value)))
+					total_quantity+=subform.elements[4].value;			
+			}
 		});
 
+		total=amount+tax;
+		
 		var discount=0;
 		
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
@@ -5890,6 +5899,12 @@ function form122_update_form()
 					"<notes>Supplier Bill # "+data_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		var po_xml="<purchase_orders>" +
+					"<id>"+order_id+"</id>" +
+					"<bill_id>"+data_id+"</bill_id>" +
+					"<quantity_accepted>"+total_quantity+"</quantity_accepted>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</purchase_orders>";
 		var transaction_xml="<transactions>" +
 					"<id>"+transaction_id+"</id>" +
 					"<trans_date>"+get_my_time()+"</trans_date>" +
@@ -5940,14 +5955,14 @@ function form122_update_form()
 				{
 					server_update_simple_func(payment_xml,function()
 					{
-						modal28_action(payments[y]);
+						//modal28_action(payments[y]);
 					});
 				}
 				else
 				{
 					local_update_simple_func(payment_xml,function()
 					{
-						modal28_action(payments[y]);
+						//modal28_action(payments[y]);
 					});
 				}
 				break;

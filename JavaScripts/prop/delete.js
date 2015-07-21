@@ -3756,17 +3756,22 @@ function form122_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[9].value;
+			var data_id=form.elements[11].value;
 			var data_xml="<supplier_bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"</supplier_bill_items>";
+			var return_xml="<supplier_return_items>" +
+						"<id>"+data_id+"</id>" +
+						"</supplier_return_items>";
 			if(is_online())
 			{
 				server_delete_simple(data_xml);
+				server_delete_simple(return_xml);
 			}
 			else
 			{
 				local_delete_simple(data_xml);
+				local_delete_simple(return_xml);
 			}	
 			$(button).parent().parent().remove();
 		});

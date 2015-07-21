@@ -8346,6 +8346,8 @@ function form122_create_item(form)
 	if(is_create_access('form122'))
 	{
 		var bill_id=document.getElementById('form122_master').elements['bill_id'].value;
+		var supplier=document.getElementById('form122_master').elements['supplier'].value;
+		var entry_date=get_raw_time(document.getElementById('form122_master').elements['entry_date'].value);
 		
 		var item_name=form.elements[1].value;
 		var item_desc=form.elements[2].value;
@@ -8356,9 +8358,11 @@ function form122_create_item(form)
 		var tax=form.elements[7].value;
 		var total=parseFloat(amount)+parseFloat(tax);
 		var storage=form.elements[8].value;
-		var data_id=form.elements[9].value;
-		var save_button=form.elements[10];
-		var del_button=form.elements[11];
+		var qc=form.elements[9].value;
+		var qc_comments=form.elements[10].value;
+		var data_id=form.elements[11].value;
+		var save_button=form.elements[12];
+		var del_button=form.elements[13];
 		var is_unbilled=form.elements['unbilled'].value;
 		
 		var last_updated=get_my_time();
@@ -8374,6 +8378,8 @@ function form122_create_item(form)
 					"<tax>"+tax+"</tax>"+
 					"<total>"+total+"</total>"+
 					"<storage>"+storage+"</storage>"+
+					"<qc>"+qc+"</qc>"+
+					"<qc_comments>"+qc_comments+"</qc_comments>"+
 					"<put_away_status>pending</put_away_status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</supplier_bill_items>";
@@ -8385,7 +8391,32 @@ function form122_create_item(form)
 		{
 			local_create_simple(data_xml);
 		}	
-		for(var i=0;i<9;i++)
+
+		if(qc=='rejected')
+		{
+			var return_xml="<supplier_returns>" +
+					"<id>"+bill_id+"</id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<return_date>"+entry_date+"</return_date>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</supplier_returns>";
+		
+			var return_data_xml="<supplier_return_items>" +
+						"<id>"+data_id+"</id>" +
+						"<return_id>"+bill_id+"</return_id>"+					
+						"<item_name>"+item_name+"</item_name>" +
+						"<item_desc>"+item_desc+"</item_desc>"+
+						"<batch>"+batch+"</batch>" +
+						"<quantity>"+quantity+"</quantity>" +
+						"<storage>"+storage+"</storage>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</supplier_return_items>";
+			
+			create_simple(return_data_xml);
+			create_simple_no_warning(return_xml);
+		}
+				
+		for(var i=0;i<11;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -8475,16 +8506,24 @@ function form122_create_form()
 		var total=0;
 		var tax=0;
 		var amount=0;
+		var total_quantity=0;
 		
 		$("[id^='save_form122']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			amount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[7].value);
-			total+=amount+tax;
+			if(subform.elements[9].value=='accepted')
+			{
+				if(!isNaN(parseFloat(subform.elements[6].value)))
+					amount+=parseFloat(subform.elements[6].value);
+				if(!isNaN(parseFloat(subform.elements[7].value)))
+					tax+=parseFloat(subform.elements[7].value);
+				if(!isNaN(parseFloat(subform.elements[4].value)))
+					total_quantity+=subform.elements[4].value;			
+			}
 		});
 
+		total=amount+tax;
 		var discount=0;
 		
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
@@ -8523,7 +8562,7 @@ function form122_create_form()
 		var po_xml="<purchase_orders>" +
 					"<id>"+order_id+"</id>" +
 					"<bill_id>"+data_id+"</bill_id>" +
-					"<status>closed</status>" +
+					"<quantity_accepted>"+total_quantity+"</quantity_accepted>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_orders>";
 		var transaction_xml="<transactions>" +
@@ -8567,7 +8606,7 @@ function form122_create_form()
 			server_create_simple(pt_xml);
 			server_create_simple_func(payment_xml,function()
 			{
-				modal28_action(pt_tran_id);
+				//modal28_action(pt_tran_id);
 			});
 		}
 		else
@@ -8578,7 +8617,7 @@ function form122_create_form()
 			local_create_simple(pt_xml);
 			local_create_simple_func(payment_xml,function()
 			{
-				modal28_action(pt_tran_id);
+				//modal28_action(pt_tran_id);
 			});
 		}
 		

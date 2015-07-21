@@ -4328,6 +4328,8 @@ function form122_import(data_array,import_type)
 				"<amount>"+row.amount+"</amount>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<total>"+row.total+"</total>" +
+				"<qc>"+row.qc+"</qc>" +
+				"<qc_comments>"+row.qc_comments+"</qc_comments>" +
 				"<storage>"+row.storage+"</storage>" +
 				"<put_away_status>"+row.put_away_status+"</put_away_status>" +
 				"<last_updated>"+last_updated+"</last_updated>" +

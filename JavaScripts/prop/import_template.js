@@ -735,7 +735,7 @@ function form121_import_template()
 function form122_import_template()
 {
 	var data_array=['id','quantity','product_name','item_desc','batch','bill_id','unit_price',
-					'amount','tax','total','storage','put_away_status'];
+					'amount','tax','total','qc','qc_comments','storage','put_away_status'];
 	my_array_to_csv(data_array);
 };
 
