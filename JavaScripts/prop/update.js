@@ -1769,11 +1769,13 @@ function form39_update_item(form)
 		{
 			server_update_row(data_xml,activity_xml);
 			server_update_simple(pic_xml);
+			server_create_simple(pic_xml);
 		}
 		else
 		{
 			local_update_row(data_xml,activity_xml);
 			local_update_simple(pic_xml);
+			local_create_simple(pic_xml);
 		}	
 		for(var i=0;i<6;i++)
 		{
@@ -9109,11 +9111,13 @@ function form169_update_item(form)
 		{
 			server_update_row(data_xml,activity_xml);
 			server_update_simple(pic_xml);
+			server_create_simple(pic_xml);
 		}
 		else
 		{
 			local_update_row(data_xml,activity_xml);
 			local_update_simple(pic_xml);
+			local_create_simple(pic_xml);
 		}	
 		for(var i=0;i<6;i++)
 		{

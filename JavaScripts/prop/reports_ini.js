@@ -4524,7 +4524,7 @@ function report63_ini()
 						var bills_data="<bills>"+
 							"<id>"+item.bill_id+"</id>"+
 							"<bill_num></bill_num>"+
-							"<order_id></order_id>"+
+							"<order_num></order_num>"+
 							"<billing_type></billing_type>"+
 							"<channel></channel>"+
 							"</bills>";
@@ -4533,7 +4533,7 @@ function report63_ini()
 							if(bills.length>0)
 							{
 								var order_td=document.getElementById('report63_order_'+item.id);
-								order_td.innerHTML=bills[0].channel+" Order id: "+bills[0].order_id+"<br>"+bills[0].billing_type+" Invoice #: "+bills[0].bill_num;
+								order_td.innerHTML=bills[0].channel+" Order #: "+bills[0].order_num+"<br>"+bills[0].billing_type+" Invoice #: "+bills[0].bill_num;
 							}
 						});
 					}

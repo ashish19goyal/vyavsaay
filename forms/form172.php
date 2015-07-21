@@ -7,7 +7,7 @@
 					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form172_header'></th>
 					<th>Price</th>
 					<th>Profit</th>
-					<th>
+					<th><input type='button' form='form172_header' value='Add new item' class='add_icon' onclick='form172_add_item();'>
 						<input type='button' form='form172_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form172_header' style='visibility: hidden;'>
 					</th>

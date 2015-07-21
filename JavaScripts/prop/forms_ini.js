@@ -112,7 +112,7 @@ function form1_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 
-		var export_button=filter_fields.elements[4];
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -9643,7 +9643,7 @@ function form108_ini()
 						rowsHTML+="<input type='button' class='edit_icon' form='form108_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form69');\">";
 						rowsHTML+="<input type='button' class='submit_hidden' form='form108_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form108_"+result.id+"' title='Delete order' onclick='form108_delete_item($(this));'>";
-					if(result.status=='pending')
+					if(result.bill_id=='' || result.bill_id=='null' || result.bill_id=='0')
 					{
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form108_"+result.id+"' value='Create Bill'>";
 					}
@@ -9669,11 +9669,11 @@ function form108_ini()
 			
 			//set_static_value_list('sale_orders','status',status_filter);
 			
-			if(result.status=='pending')
+			if(result.bill_id=='' || result.bill_id=='null' || result.bill_id=='0')
 			{
 				$(bill_button).on('click',function(event)
 				{
-					modal42_action(result.id);
+					modal133_action(result.id,result.channel,result.order_num,result.customer_name);
 				});
 			}
 			else
@@ -17556,7 +17556,7 @@ function form172_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[2];
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -17957,7 +17957,7 @@ function form176_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Item'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form176_"+result.id+"' value='"+result.sku+"'>";
-						rowsHTML+="<textarea readonly='readonly' form='form176_"+result.id+"'></textarea>";
+						rowsHTML+="<br><textarea readonly='readonly' form='form176_"+result.id+"'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form176_"+result.id+"' value='"+result.id+"'>";
@@ -17970,7 +17970,7 @@ function form176_ini()
 			var fields=document.getElementById("form176_"+result.id);
 			var type_filter=fields.elements[1];
 			var category_filter=fields.elements[2];
-			var desc_filter=fields.elements[3];
+			var desc_filter=fields.elements[4];
 
 			set_static_value_list('category_sku_mapping','cat_type',type_filter);
 			
@@ -17986,7 +17986,7 @@ function form176_ini()
 			
 			var desc_data="<product_master>"+
 						"<description></description>"+
-						"<name exact='yes'>"+result.item+"</name>"+
+						"<name exact='yes'>"+result.sku+"</name>"+
 						"</product_master>";
 			set_my_value(desc_data,desc_filter);
 			
@@ -18024,7 +18024,7 @@ function form176_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[4];
+		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{

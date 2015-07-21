@@ -7,7 +7,7 @@
 					<th>Type <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form176_header'></th>
 					<th>Category <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form176_header'></th>
 					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form176_header'></th>
-					<th>
+					<th><input type='button' form='form176_header' value='Add new mapping' class='add_icon' onclick='form176_add_item();'>
 						<input type='button' form='form176_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form176_header' style='visibility: hidden;'>
 					</th>

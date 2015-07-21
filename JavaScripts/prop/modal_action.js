@@ -4566,7 +4566,6 @@ function modal41_action(button)
 	$("#modal41").dialog("open");
 }
 
-
 /**
  * @modal Bill Type
  * @modalNo 42
@@ -8742,4 +8741,143 @@ function modal132_action(tab_id,func)
 	{
 		func();
 	}
+}
+
+/**
+ * @modal Analyze Order
+ * @modalNo 133
+ */
+function modal133_action(order_id,sale_channel,order_num,customer)
+{
+	var form=document.getElementById("modal133_form");
+	var type_filter=form.elements[0];
+	var cancel_button=form.elements[2];
+	
+	var type_data="<bill_types>" +
+			"<name></name>" +
+			"<status exact='yes'>active</status>" +
+			"</bill_types>";
+	set_my_value_list(type_data,type_filter);
+	set_my_value(type_data,type_filter);	
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		form108_bill(order_id,type_filter.value,order_num,sale_channel,customer);
+		$("#modal133").dialog("close");
+	});
+
+	$(cancel_button).off('click');
+	$(cancel_button).on('click',function(event)
+	{
+		event.preventDefault();
+		$("#modal133").dialog("close");
+	});
+	
+	var headHTML="<tr style='background-color:#2C8A50;'>"+
+				"<td>Item</td>"+
+				"<td>Quantity</td>"+
+				"<td>Select</td>"+
+				"</tr>";
+	$('#modal133_item_table').html(headHTML);
+				
+	var order_items_xml="<sale_order_items>"+
+					"<id></id>"+
+					"<order_id exact='yes'>"+order_id+"</order_id>"+
+                    "<item_name></item_name>"+
+                    "<item_desc></item_desc>"+
+                    "<channel_sku></channel_sku>"+
+                    "<vendor_sku></vendor_sku>"+
+                    "<quantity></quantity>"+
+                    "<mrp></mrp>"+
+                    "<unit_price></unit_price>"+
+                    "<amount></amount>"+
+                    "<tax></tax>"+
+                    "<freight></freight>"+
+                    "<total></total>"+
+					"</sale_order_items>";
+	fetch_requested_data('',order_items_xml,function (order_items) 
+	{
+		var channel_sku_string="--";
+		for(var i in order_items)
+		{
+			channel_sku_string+=order_items[i].channel_sku+"--";
+		}
+		
+		var sku_data="<sku_mapping count='1'>"+
+					"<item_desc></item_desc>"+
+					"<system_sku></system_sku>"+
+					"<channel_sku array='yes'>"+channel_sku_string+"</channel_sku>"+
+					"<channel exact='yes'>"+sale_channel+"</channel>"+
+					"</sku_mapping>";
+		fetch_requested_data('',sku_data,function(skus)
+		{
+			order_items.forEach(function (order_item) 
+			{
+				if(order_item.item_name=="" || order_item.item_desc=="")
+				{
+					for(var i in skus)
+					{
+						if(skus[i].channel_sku==order_item.channel_sku)
+						{
+							order_item.item_name=skus[i].system_sku;
+							order_item.item_desc=skus[i].item_desc;
+						}
+					}
+				}
+	
+				var rowsHTML="<tr title='' id='modal133_item_row_"+order_item.id+"'>"+
+						"<td>"+order_item.item_name+"</td>"+
+						"<td>"+order_item.quantity+"</td>"+
+						"<td><input checked type='checkbox' id='modal133_item_check_"+order_item.id+"'></td>"+
+						"</tr>";
+				$('#modal133_item_table').append(rowsHTML);
+		
+				get_inventory(order_item.item_name,'',function(quantity)
+				{
+					if(parseFloat(quantity)<parseFloat(order_item.quantity))
+					{
+						var checkbox=document.getElementById("modal133_item_check_"+order_item.id);
+						checkbox.checked=false;
+						var tr_elem=document.getElementById("modal133_item_row_"+order_item.id);
+						tr_elem.title='Insufficient Inventory';
+					}
+				});
+				
+				var price_data="<channel_prices count='1'>" +
+						"<latest exact='yes'>yes</latest>"+
+						"<channel exact='yes'>"+sale_channel+"</channel>"+
+                        "<item exact='yes'>"+order_item.item_name+"</item>"+
+						"<sale_price></sale_price>"+
+						"<freight></freight>"+
+						"<discount_customer></discount_customer>"+
+        				"<gateway_charges></gateway_charges>"+
+        				"<storage_charges></storage_charges>"+
+        				"<channel_commission></channel_commission>"+
+						"<total_charges></total_charges>"+
+						"<service_tax></service_tax>"+
+						"<total_payable></total_payable>"+
+						"<total_receivable></total_receivable>"+
+						"</channel_prices>";
+				fetch_requested_data('',price_data,function(sale_prices)
+				{
+					if(sale_prices.length>0)
+					{
+						var total_sale_price=parseFloat(sale_prices[0].sale_price)+parseFloat(sale_prices[0].freight);
+						var order_total_price=parseFloat(order_item.total)/parseFloat(order_item.quantity);
+						if(total_sale_price>order_total_price)
+						{
+							var checkbox=document.getElementById("modal133_item_check_"+order_item.id);
+							checkbox.checked=false;
+							var tr_elem=document.getElementById("modal133_item_row_"+order_item.id);
+							tr_elem.title='Over priced';
+						}
+					}
+				});
+			});
+		});
+	});				
+	
+	$("#modal133").dialog("open");
 }

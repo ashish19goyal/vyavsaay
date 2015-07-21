@@ -827,13 +827,13 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
 	<div id="modal114" title="Add new product">
 		<form id='modal114_form' autocomplete="off">
 			<fieldset>
 				<label>SKU: <input type="text" required></label><br>
 				<label>Name: <textarea></textarea></label><br>
-				<label>Make: <textarea></textarea></label><br>
+				<label>Brand: <textarea></textarea></label><br>
 				<label>Picture: <output></output>
 								<input type="file"></label><br>
 				<label>Tax (%): <input type="number" step='any'></label><br>
@@ -1087,4 +1087,15 @@
 		</form>
 	</div>
 
+	<div id="modal133" title="Analyze Order">
+		<table id='modal133_item_table'>
+		</table>
+		<br>
+		<br>
+		<form id='modal133_form' autocomplete="off">
+			<label>Bill Type: <input type='text' required></label><br>
+			<input type="submit" class='modal_submit' value='Bill'>
+			<input type="button" class='modal_submit' value='Cancel'>
+		</form>				
+	</div>
 </div>

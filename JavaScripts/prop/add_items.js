@@ -9850,50 +9850,163 @@ function form172_add_item()
 {
 	if(is_create_access('form172'))
 	{
-		var rowsHTML="";
 		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form172_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Channel'>";
-				rowsHTML+="<input type='text' form='form172_"+id+"' required value=''>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='SKU'>";
-				rowsHTML+="<textarea form='form172_"+id+"'></textarea>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Price'>";
-				rowsHTML+="<input type='number' step='any' form='form172_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form172_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='submit' class='save_icon' form='form172_"+id+"' title='Save'>";	
-				rowsHTML+="<input type='button' class='delete_icon' form='form172_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
-			rowsHTML+="</td>";			
+		var rowsHTML="<tr>";
+			rowsHTML+="<form id='form172_"+id+"'></form>";
+				rowsHTML+="<td data-th='Channel'>";
+					rowsHTML+="<input type='text' form='form172_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Item'>";
+					rowsHTML+="<input type='text' form='form172_"+id+"'>";
+					rowsHTML+="<br><input type='text' form='form172_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Price'>";
+					rowsHTML+="MRP: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+id+"'>";
+					rowsHTML+="<br>Disc.: Rs. <input type='number' step='any' form='form172_"+id+"'>";
+					rowsHTML+="<br>SP: Rs. <input type='number' step='any' form='form172_"+id+"'>";
+					rowsHTML+="<br>Freight: Rs. <input type='number' step='any' form='form172_"+id+"'>";
+					rowsHTML+="<br>Ch. Comm.: <input type='number' step='any' readonly='readonly' form='form172_"+id+"'> %";
+					rowsHTML+="<br>Pickup: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+id+"'>";
+					rowsHTML+="<br>S. Tax: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Profit'>";
+					rowsHTML+="CP: Rs. <input type='number' step='any' form='form172_"+id+"'>";
+					rowsHTML+="<br>Profit: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+id+"'>";
+					rowsHTML+="<br>Profit (MRP): <input type='number' step='any' readonly='readonly' form='form172_"+id+"'> %";
+					rowsHTML+="<br>Profit (SP): <input type='number' step='any' readonly='readonly' form='form172_"+id+"'> %";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Action'>";
+					rowsHTML+="<input type='hidden' form='form172_"+id+"' value='"+id+"'>";
+					rowsHTML+="<input type='submit' class='save_icon' form='form172_"+id+"' title='Save'>";
+					rowsHTML+="<input type='hidden' form='form172_"+id+"' name='commission_charges'>";
+					rowsHTML+="<input type='hidden' form='form172_"+id+"' name='total_charges'>";
+				rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
 		$('#form172_body').prepend(rowsHTML);
-		longPressEditable($('.dblclick_editable'));
-		
+
 		var fields=document.getElementById("form172_"+id);
-		var name_filter=fields.elements[0];
-		var sku_filter=fields.elements[1];
+		var channel_filter=fields.elements[0];
+		var name_filter=fields.elements[1];
+		var desc_filter=fields.elements[2];
+		var mrp_filter=fields.elements[3];
+		var discount_filter=fields.elements[4];
+		var sp_filter=fields.elements[5];
+		var freight_filter=fields.elements[6];
+		var commission_filter=fields.elements[7];
+		var pickup_filter=fields.elements[8];
+		var tax_filter=fields.elements[9];
+		var cp_filter=fields.elements[10];
+		var profit_filter=fields.elements[11];
+		var profit_mrp_filter=fields.elements[12];
+		var profit_sp_filter=fields.elements[13];
+		var commission_charges_filter=fields.elements[16];
+		var total_charges_filter=fields.elements[17];
 		
 		var channel_data="<sale_channels>"+
 						"<name></name>"+
 						"</sale_channels>";
-		set_my_value_list(channel_data,name_filter);
+		set_my_value_list(channel_data,channel_filter,function () 
+		{
+			$(channel_filter).focus();
+		});
+
+		var item_data="<product_master>"+
+						"<name></name>"+
+						"</product_master>";
+		set_my_value_list(item_data,name_filter);
 		
-		var sku_data="<product_master>"+
-					"<name></name>"+
-					"</product_master>";
-		set_my_value_list(sku_data,sku_filter);
+		$(name_filter).on('blur',function () 
+		{
+			var desc_data="<product_master>"+
+						"<description></description>"+
+						"<name exact='yes'>"+name_filter.value+"</name>"+
+						"</product_master>";
+			set_my_value(desc_data,desc_filter);
+			
+			var mrp_data="<product_instances>"+
+						"<mrp></mrp>"+
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>"+
+						"</product_instances>";
+			set_my_value(mrp_data,mrp_filter);
+			
+			var cp_data="<supplier_bill_items count='1'>"+
+						"<total></total>"+
+						"<quantity></quantity>"+
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>"+
+						"</supplier_bill_items>";
+			fetch_requested_data('',cp_data,function (cps) 
+			{
+				if(cps.length>0)
+				{
+					cp_filter.value=parseFloat(cps[0].total)/parseFloat(cps[0].quantity);
+				}
+			});
+		
+			var cat_data="<category_sku_mapping>"+
+						"<cat_type></cat_type>"+
+						"<cat_name></cat_name>"+
+						"<channel exact='yes'>"+channel_filter.value+"</channel>"+
+						"<sku exact='yes'>"+name_filter.value+"</sku>"+
+						"</category_sku_mapping>";
+			fetch_requested_data('',cat_data,function (cats) 
+			{
+				var comm_data="<channel_category>"+
+							"<commission></commission>"+
+							"<channel exact='yes'>"+channel_filter.value+"</channel>"+
+							"<type exact='yes'>"+cats[0].cat_type+"</type>"+
+							"<name exact='yes'>"+cats[0].cat_name+"</name>"+
+							"</channel_category>";
+				set_my_value(comm_data,commission_filter,function ()
+				{
+					var pickup_data="<pickup_charges>"+
+									"<min_charges></min_charges>"+
+									"<max_charges></max_charges>"+
+									"<channel exact='yes'>"+channel_filter.value+"</channel>"+
+									"<pincode exact='yes'>all</pincode>"+
+									"</pickup_charges>";
+					fetch_requested_data('',pickup_data,function(pickups)
+					{
+						var average_pickup=(parseFloat(pickups[0].min_charges)+parseFloat(pickups[0].max_charges))/2;
+						pickup_filter.value=Math.max(parseFloat(pickups[0].min_charges),average_pickup);
+						commission_charges_filter.value=my_round((parseFloat(commission_filter.value)*parseFloat(sp_filter.value)/100),2);
+						tax_filter.value=my_round((.14*(parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value))),2);						
+						total_charges_filter.value=parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value)+parseFloat(tax_filter.value);
+					});
+				});							
+			});
+		});
+		
+		$(discount_filter).on('change',function()
+		{
+			sp_filter.value=parseFloat(mrp_filter.value)-parseFloat(discount_filter.value);
+			$(sp_filter).trigger('change');
+		});	
+		
+		$(sp_filter).add(freight_filter).add(cp_filter).on('change',function ()
+		{
+			commission_charges_filter.value=my_round((parseFloat(commission_filter.value)*parseFloat(sp_filter.value)/100),2);
+			tax_filter.value=my_round((.14*(parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value))),2);						
+			total_charges_filter.value=parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value)+parseFloat(tax_filter.value);					
+			profit_filter.value=my_round((parseFloat(sp_filter.value)+parseFloat(freight_filter.value)-parseFloat(total_charges_filter.value)-parseFloat(cp_filter.value)),2);
+			profit_mrp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(mrp_filter.value)*100),2);
+			profit_sp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(sp_filter.value)*100),2);
+		});			
+		
+		$(profit_filter).on('blur',function()
+		{
+			profit_mrp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(mrp_filter.value)*100),2);
+			profit_sp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(sp_filter.value)*100),2);
+		});
 					
-		$(fields).on("submit", function(event)
+		$(fields).on("submit",function(event)
 		{
 			event.preventDefault();
 			form172_create_item(fields);
 		});
-					
-		$(name_filter).focus();
+	
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
 	}
 	else
 	{
@@ -10042,6 +10155,92 @@ function form175_add_item()
 		$("#modal2").dialog("open");
 	}		
 }
+
+/**
+ * @form Category Item Mapping
+ * @formNo 176
+ */
+function form176_add_item()
+{
+	if(is_create_access('form176'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+			rowsHTML+="<form id='form176_"+id+"'></form>";
+				rowsHTML+="<td data-th='Channel'>";
+					rowsHTML+="<input type='text' form='form176_"+id+"' required>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Type'>";
+					rowsHTML+="<input type='text' class='dblclick_editable' form='form176_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Category'>";
+					rowsHTML+="<input type='text' class='dblclick_editable' form='form176_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Item'>";
+					rowsHTML+="<input type='text' form='form176_"+id+"' required>";
+					rowsHTML+="<br><textarea readonly='readonly' form='form176_"+id+"'></textarea>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Action'>";
+					rowsHTML+="<input type='hidden' form='form176_"+id+"' value='"+id+"'>";
+					rowsHTML+="<input type='submit' class='save_icon' form='form176_"+id+"' title='Save'>";
+				rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form176_body').prepend(rowsHTML);
+
+		var fields=document.getElementById("form176_"+id);
+		var channel_filter=fields.elements[0];
+		var type_filter=fields.elements[1];
+		var category_filter=fields.elements[2];
+		var item_filter=fields.elements[3];
+		var desc_filter=fields.elements[4];
+
+		var channel_data="<sale_channels>"+
+						"<name></name>"+
+						"</sale_channels>";
+		set_my_value_list(channel_data,channel_filter,function () 
+		{
+			$(channel_filter).focus();
+		});
+
+		set_static_value_list('category_sku_mapping','cat_type',type_filter);
+
+		$(type_filter).on('blur',function()
+		{
+			var category_data="<channel_category>"+
+							"<name></name>"+
+							"<type exact='yes'>"+type_filter.value+"</type>"+
+							"<channel exact='yes'>"+channel_filter.value+"</channel>"+
+							"</channel_category>";
+			set_my_value_list(category_data,category_filter);
+		});
+		
+		var item_data="<product_master>"+
+					"<name></name>"+
+					"</product_master>";
+		set_my_value_list(item_data,item_filter);
+		
+		$(item_filter).on('blur',function ()
+		{
+			var desc_data="<product_master>"+
+					"<description></description>"+
+					"<name exact='yes'>"+item_filter.value+"</name>"+
+					"</product_master>";
+			set_my_value(desc_data,desc_filter);
+		});
+		
+		$(fields).on("submit",function(event)
+		{
+			event.preventDefault();
+			form176_create_item(fields);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
 
 /**
  * @form Prioritization Parameters

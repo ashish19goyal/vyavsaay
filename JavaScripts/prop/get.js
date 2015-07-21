@@ -937,6 +937,18 @@ function revert_htmlentities(str)
 }
 
 
+function create_row(data_xml,activity_xml)
+{
+	if(is_online())
+	{
+		server_create_row(data_xml,activity_xml);
+	}
+	else
+	{
+		local_create_row(data_xml,activity_xml);
+	}
+}
+
 function create_simple(data_xml)
 {
 	if(is_online())
@@ -1006,6 +1018,30 @@ function delete_simple_func(data_xml,func)
 	else
 	{
 		local_delete_simple_func(data_xml,func);
+	}
+}
+
+function update_row(data_xml,activity_xml)
+{
+	if(is_online())
+	{
+		server_update_row(data_xml,activity_xml);
+	}
+	else
+	{
+		local_update_row(data_xml,activity_xml);
+	}
+}
+
+function update_simple(data_xml)
+{
+	if(is_online())
+	{
+		server_update_simple(data_xml);
+	}
+	else
+	{
+		local_update_simple(data_xml);
 	}
 }
 
