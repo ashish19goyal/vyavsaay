@@ -43,6 +43,7 @@ class send_sms
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 		$result = curl_exec($ch);
 		curl_close($ch);
+		echo $result;
 	}
 
 	///send all pending sms stored in the db

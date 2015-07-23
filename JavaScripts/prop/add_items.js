@@ -11170,7 +11170,14 @@ function form200_add_item()
 		var id_filter=item_form.elements[9];
 		var save_button=item_form.elements[10];
 		
-		$(awb_filter).focus();
+		var awb_data="<logistics_orders>"+
+					"<awb_num></awb_num>"+
+					"<status exact='yes'>received</status>"+
+					"</logistics_orders>";
+		set_my_value_list(awb_data,awb_filter,function () 
+		{
+			$(awb_filter).focus();
+		});
 		
 		$(awb_filter).on('blur',function () 
 		{

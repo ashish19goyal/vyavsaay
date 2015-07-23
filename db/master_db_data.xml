@@ -298,6 +298,22 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>followups</tablename>
+			<listname>response</listname>
+			<name>warm</name>
+			<value>Warm</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>followups</tablename>
+			<listname>response</listname>
+			<name>cold</name>
+			<value>Cold</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>logistics_orders</tablename>
 			<listname>status</listname>
 			<name>picked</name>

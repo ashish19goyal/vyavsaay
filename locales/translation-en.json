@@ -357,6 +357,11 @@
 	"treatment_plan_details":"Treatment Plan Details",
 	"plan_details":"Plan Details",
 	"inventory_storage_by_item":"Inventory (storage by item)",
-	"packing_instructions_invoice":"Packing Instructions (invoice)"	
+	"packing_instructions_invoice":"Packing Instructions (invoice)",
+	"followup_report":"Follow-up Report",
+	"update_logistics_orders":"Update Logistics Orders",
+	"update_logistics_orders_branches":"Update Logistics Orders (branches)",
+	"sale_leads_followup":"Sale Leads (with follow-up)",
+	"update_orders":"Update Orders"
 	}
 }

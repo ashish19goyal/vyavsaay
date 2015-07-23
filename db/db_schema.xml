@@ -673,6 +673,16 @@
 			<source_id index='yes' type="BIGINT"></source_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</sale_leads>
+	<followups>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<customer index='yes' type="TEXT"></customer>
+			<response index='no' type="TEXT"></response><!--warm/cold-->
+			<detail index='no' type="TEXT"></detail>
+			<date index='yes' type="BIGINT"></date>
+			<next_date index='yes' type="TEXT"></next_date>
+			<source_id index='yes' type="BIGINT"></source_id>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+	</followups>
 	<user_preferences>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(30)" unique='yes'></name>

@@ -1063,6 +1063,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report78</name>
+			<display_name>followup_report</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -2943,6 +2953,39 @@
 			<tables>--bill_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form211</name>
+			<display_name>update_logistics_orders</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form212</name>
+			<display_name>update_logistics_orders_branches</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form213</name>
+			<display_name>sale_leads_followup</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_leads--followups--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3631,6 +3674,17 @@
 			<username>master</username>
 			<element_id>report77</element_id>
 			<element_name>inventory_storage_by_item</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report78</element_id>
+			<element_name>followup_report</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -5512,6 +5566,39 @@
 			<username>master</username>
 			<element_id>form210</element_id>
 			<element_name>packing_instructions_invoice</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form211</element_id>
+			<element_name>update_logistics_orders</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form212</element_id>
+			<element_name>update_logistics_orders_branches</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form213</element_id>
+			<element_name>sale_leads_followup</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
