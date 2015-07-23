@@ -8899,10 +8899,7 @@ function modal134_action(lead_id,customer)
 		
 	date_filter.value=get_my_date();
 	
-	set_static_value_list('followups','response',response_filter,function () 
-	{
-		//$(response_filter).focus();
-	});
+	set_static_value_list('followups','response',response_filter);
 
 	$(form).off("submit");
 	$(form).on("submit",function(event)

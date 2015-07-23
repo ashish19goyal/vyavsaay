@@ -10812,6 +10812,100 @@ function form200_update_form()
 }
 
 /**
+ * @form Update Logistics orders
+ * @param button
+ */
+function form211_update_item(form)
+{
+	if(is_update_access('form211'))
+	{
+		var awb_num=form.elements[0].value;
+		var status=form.elements[1].value;
+		var remarks=form.elements[2].value;
+		var id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<status>"+status+"</status>" +
+					"<comments>"+remarks+"</comments>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>logistics_orders</tablename>" +
+					"<link_to>form198</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>AWB # "+awb_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Update Logistics orders (branches)
+ * @param button
+ */
+function form212_update_item(form)
+{
+	if(is_update_access('form212'))
+	{
+		var awb_num=form.elements[0].value;
+		var status=form.elements[1].value;
+		var remarks=form.elements[2].value;
+		var id=form.elements[3].value;
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+id+"</id>" +
+					"<awb_num>"+awb_num+"</awb_num>" +
+					"<status>"+status+"</status>" +
+					"<comments>"+remarks+"</comments>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>logistics_orders</tablename>" +
+					"<link_to>form198</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>AWB # "+awb_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Sale leads (followups)
  * @param button
  */

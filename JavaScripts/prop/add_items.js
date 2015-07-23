@@ -11537,6 +11537,190 @@ function form206_add_item()
 }
 
 /**
+ * @form Update Logistics Orders
+ * @formNo 211
+ */
+function form211_add_item()
+{
+	if(is_create_access('form211'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form211_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='AWB #'>";
+				rowsHTML+="<input type='text' required form='form211_"+id+"' oninvalid=\"setCustomValidity('This AWB # is invalid')\">";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Order #' id='form211_order_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form211_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Remark'>";
+				rowsHTML+="<textarea form='form211_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form211_"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form211_"+id+"' id='save_form211_"+id+"' >";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+
+		$('#form211_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form211_"+id);
+		var awb_filter=fields.elements[0];
+		var order_filter=document.getElementById("form211_order_"+id);
+		var status_filter=fields.elements[1];
+		var remark_filter=fields.elements[2];
+		var id_filter=fields.elements[3];
+		var save_button=fields.elements[4];
+		
+		set_static_value_list('logistics_orders','status',status_filter);
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form211_update_item(fields);
+			form211_add_item();
+		});
+
+		$(awb_filter).focus();		
+		
+		$(awb_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();
+				//$(awb_filter).trigger('blur');
+				$(status_filter).focus();
+			}
+		});
+
+		$(remark_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();
+				$(save_button).trigger('click');
+			}
+		});
+
+		$(awb_filter).on('blur',function () 
+		{
+			var order_data="<logistics_orders count='1'>"+
+						"<order_num></order_num>"+
+						"<status></status>"+							
+						"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
+						"</logistics_orders>";
+			fetch_requested_data('',order_data,function(orders)
+			{
+				if(orders.length>0)
+				{
+					order_filter.innerHTML=orders[0].order_num;
+					status_filter.value=orders[0].status;
+					id_filter.value=orders[0].id;
+				}
+			});					
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Update Logistics Orders (branches)
+ * @formNo 212
+ */
+function form212_add_item()
+{
+	if(is_create_access('form212'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form212_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='AWB #'>";
+				rowsHTML+="<input type='text' required form='form212_"+id+"' oninvalid=\"setCustomValidity('This AWB # is invalid')\">";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Order #' id='form212_order_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form212_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Remark'>";
+				rowsHTML+="<textarea form='form212_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form212_"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form212_"+id+"' id='save_form212_"+id+"' >";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+
+		$('#form212_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form212_"+id);
+		var awb_filter=fields.elements[0];
+		var order_filter=document.getElementById("form212_order_"+id);
+		var status_filter=fields.elements[1];
+		var remark_filter=fields.elements[2];
+		var id_filter=fields.elements[3];
+		var save_button=fields.elements[4];
+		
+		set_static_value_list('logistics_orders','status',status_filter);
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form212_update_item(fields);
+			form212_add_item();
+		});
+
+		$(remark_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();
+				$(save_button).trigger('click');
+			}
+		});
+
+		$(awb_filter).focus();		
+		
+		$(awb_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();
+				//$(awb_filter).trigger('blur');
+				$(status_filter).focus();
+			}
+		});
+
+		$(awb_filter).on('blur',function () 
+		{
+			var order_data="<logistics_orders count='1'>"+
+						"<order_num></order_num>"+
+						"<status></status>"+							
+						"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
+						"</logistics_orders>";
+			fetch_requested_data('',order_data,function(orders)
+			{
+				if(orders.length>0)
+				{
+					order_filter.innerHTML=orders[0].order_num;
+					status_filter.value=orders[0].status;
+					id_filter.value=orders[0].id;
+				}
+			});					
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Sale Leads (followup)
  * @formNo 213
  */

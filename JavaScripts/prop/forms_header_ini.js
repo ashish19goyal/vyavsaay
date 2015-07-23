@@ -7246,6 +7246,24 @@ function form206_header_ini()
 }
 
 /**
+ * @form Update Logisitcs Orders
+ * @formNo 211
+ */
+function form211_header_ini()
+{
+	$('#form211_body').html("");
+}
+
+/**
+ * @form Update Logisitcs Orders (branches)
+ * @formNo 212
+ */
+function form212_header_ini()
+{
+	$('#form212_body').html("");
+}
+
+/**
  * @form Sale leads (followup)
  * @formNo 213
  */
