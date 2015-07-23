@@ -8881,3 +8881,74 @@ function modal133_action(order_id,sale_channel,order_num,customer)
 	
 	$("#modal133").dialog("open");
 }
+
+/**
+ * @modalNo 134
+ * @modal Followup Details
+ */
+function modal134_action(lead_id,customer)
+{
+	var form=document.getElementById('modal134_form');
+	var date_filter=form.elements['date'];
+	var response_filter=form.elements['response'];
+	var detail_filter=form.elements['details'];
+	var next_date_filter=form.elements['next_date'];
+	
+	$(date_filter).datepicker();
+	$(next_date_filter).datepicker();
+		
+	date_filter.value=get_my_date();
+	
+	set_static_value_list('followups','response',response_filter,function () 
+	{
+		$(response_filter).focus();
+	});
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form213'))
+		{
+			var id=get_new_key();
+			var date=get_raw_time(date_filter.value);
+			var response=response_filter.value;
+			var details=detail_filter.value;
+			var next_date=get_raw_time(next_date_filter.value);
+			var last_updated=get_my_time();
+			
+			var follow_xml="<followups>"+
+						"<id>"+id+"</id>"+
+		                "<customer>"+customer+"</customer>"+
+		                "<date>"+date+"</date>"+
+		                "<response>"+response+"</response>"+
+		                "<details>"+details+"</details>"+
+		                "<next_date>"+next_date+"</next_date>"+
+		                "<source_id>"+lead_id+"</source_id>"+		                
+		                "<last_updated>"+last_updated+"</last_updated>"+
+						"</followups>";
+			var lead_xml="<sale_leads>"+
+						"<id>"+id+"</id>"+
+		                "<due_date>"+next_date+"</due_date>"+
+		                "<last_updated>"+last_updated+"</last_updated>"+
+						"</sale_leads>";
+			if(is_online())
+			{
+				server_create_simple(follow_xml);
+				server_update_simple(lead_xml);
+			}
+			else
+			{
+				local_create_simple(follow_xml);
+				local_update_simple(lead_xml);
+			}
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal134").dialog("close");
+	});
+	
+	$("#modal134").dialog("open");
+}

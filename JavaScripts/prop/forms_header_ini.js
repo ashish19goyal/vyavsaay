@@ -2111,8 +2111,7 @@ function form81_header_ini()
 	{
 		event.preventDefault();
 		form81_ini();
-	});
-	
+	});	
 }
 
 /**
@@ -7244,4 +7243,28 @@ function form206_header_ini()
 	});
 
 	$('#form206_body').html("");
+}
+
+/**
+ * @form Sale leads (followup)
+ * @formNo 213
+ */
+function form213_header_ini()
+{
+	var filter_fields=document.getElementById('form213_header');	
+	var names_filter=filter_fields.elements[0];
+	
+	//setting autocompletes 
+	var names_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+
+	set_my_filter(names_data,names_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form213_ini();
+	});	
 }

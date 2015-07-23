@@ -1098,4 +1098,17 @@
 			<input type="button" class='modal_submit' value='Cancel'>
 		</form>				
 	</div>
+	
+	<div id="modal134" title="Follow-up Details">
+		<form id='modal134_form' autocomplete="off">
+			<fieldset>
+				<label>Date: <input readonly='readonly' name='date' required type="text"></label><br>
+				<label>Response: <input name='response' type="text"></label><br>
+				<label>Details: <textarea name='details'></textarea></label><br>
+				<label>Next Followup Date: <input name='next_date' required type="text"></label><br>
+				<input type="submit" value='Save' name='save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

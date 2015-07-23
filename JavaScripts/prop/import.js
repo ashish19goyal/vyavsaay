@@ -6907,3 +6907,59 @@ function form201_import(data_array,import_type)
 		}
 	}
 };
+
+/**
+* @form Sale leads (followups)
+* @formNo 213
+*/
+function form213_import(data_array,import_type)
+{
+	var data_xml="<sale_leads>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</sale_leads><separator></separator><sale_leads>";
+		}
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<customer>"+row.customer+"</customer>" +
+				"<detail>"+row.detail+"</detail>" +
+				"<due_date>"+row.due_date+"</due_date>" +
+				"<identified_by>"+row.identified_by+"</identified_by>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</sale_leads>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+}

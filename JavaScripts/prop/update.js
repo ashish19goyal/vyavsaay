@@ -3848,7 +3848,6 @@ function form81_update_item(form)
 }
 
 
-
 /**
  * @form Notifications
  * @param data_id
@@ -10805,6 +10804,55 @@ function form200_update_form()
 		}
 
 		$("[id^='save_form200_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Sale leads (followups)
+ * @param button
+ */
+function form213_update_item(form)
+{
+	if(is_update_access('form213'))
+	{
+		var customer=form.elements[0].value;
+		var detail=form.elements[1].value;
+		var due_date=get_raw_time(form.elements[2].value);
+		var identified_by=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<sale_leads>" +
+					"<id>"+data_id+"</id>" +
+					"<customer>"+customer+"</customer>" +
+					"<detail>"+detail+"</detail>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<identified_by>"+identified_by+"</identified_by>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_leads>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>sale_leads</tablename>" +
+					"<link_to>form213</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Sale lead for customer "+customer+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
 	}
 	else
 	{

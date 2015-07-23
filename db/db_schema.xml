@@ -676,7 +676,7 @@
 	<followups>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<customer index='yes' type="TEXT"></customer>
-			<response index='no' type="TEXT"></response><!--warm/cold-->
+			<response index='yes' type="TEXT"></response><!--warm/cold-->
 			<detail index='no' type="TEXT"></detail>
 			<date index='yes' type="BIGINT"></date>
 			<next_date index='yes' type="TEXT"></next_date>

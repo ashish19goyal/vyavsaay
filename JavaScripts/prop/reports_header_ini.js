@@ -1572,3 +1572,27 @@ function report77_header_ini()
 				"</product_instances>";
 	set_my_filter(batch_data,batch_filter);				
 }
+
+/**
+ * @reportNo 78
+ * @report Followup report
+ */
+function report78_header_ini()
+{	
+	var form=document.getElementById('report78_header');
+	var customer_filter=form.elements['customer'];
+	var date_filter=form.elements['date'];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report78_ini();
+	});
+			
+	var customer_data="<customers>"+
+				"<acc_name></acc_name>"+
+				"</customers>";
+	set_my_filter(customer_data,customer_filter);
+	$(date_filter).datepicker();
+}
