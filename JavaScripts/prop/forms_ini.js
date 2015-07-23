@@ -20007,7 +20007,7 @@ function form196_ini()
 							"<name></name>"+
 							"<attribute exact='yes'>"+list+"</attribute>"+
 							"<type exact='yes'>customer</type>"+
-							"<value exact='yes'>"+list_value+"</value>"+
+							"<value>"+list_value+"</value>"+
 							"</attributes>";
 		
 		fetch_requested_data('',attributes_columns,function(attributes)

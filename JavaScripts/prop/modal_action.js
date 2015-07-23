@@ -8901,7 +8901,7 @@ function modal134_action(lead_id,customer)
 	
 	set_static_value_list('followups','response',response_filter,function () 
 	{
-		$(response_filter).focus();
+		//$(response_filter).focus();
 	});
 
 	$(form).off("submit");
@@ -8922,13 +8922,13 @@ function modal134_action(lead_id,customer)
 		                "<customer>"+customer+"</customer>"+
 		                "<date>"+date+"</date>"+
 		                "<response>"+response+"</response>"+
-		                "<details>"+details+"</details>"+
+		                "<detail>"+details+"</detail>"+
 		                "<next_date>"+next_date+"</next_date>"+
 		                "<source_id>"+lead_id+"</source_id>"+		                
 		                "<last_updated>"+last_updated+"</last_updated>"+
 						"</followups>";
 			var lead_xml="<sale_leads>"+
-						"<id>"+id+"</id>"+
+						"<id>"+lead_id+"</id>"+
 		                "<due_date>"+next_date+"</due_date>"+
 		                "<last_updated>"+last_updated+"</last_updated>"+
 						"</sale_leads>";
