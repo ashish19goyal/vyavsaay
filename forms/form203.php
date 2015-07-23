@@ -6,6 +6,8 @@
 					<th>AWB # <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form203_header'></th>
 					<th>Order # <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form203_header'></th>
 					<th>Customer </th>
+					<th>Date <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form203_header'></th>
+					<th>Type </th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form203_header'></th>
 					<th><input type="button" value='Add new order' class='add_icon' form='form203_header' onclick="modal128_action();">
 						<br><input type='button' form='form203_header' value='Import' name='import' class='import_icon'>

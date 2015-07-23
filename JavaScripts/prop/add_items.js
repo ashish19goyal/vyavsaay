@@ -11118,6 +11118,120 @@ function form199_add_item()
 }
 
 /**
+ * @form Create DRS
+ * @formNo 200
+ */
+function form200_add_item()
+{
+	if(is_create_access('form200'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form200_"+id+"'></form>";
+			rowsHTML+="<td data-th='S.No.'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='AWB #'>";
+				rowsHTML+="<input type='text' required form='form200_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Address'>";
+				rowsHTML+="<textarea readonly='readonly' form='form200_"+id+"'></textarea>";
+				rowsHTML+="<br>Phone: <input type='text' readonly='readonly' form='form200_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="Weight: <input type='number' readonly='readonly' form='form200_"+id+"' step='any'>";
+				rowsHTML+="<br>Pieces: <input type='number' readonly='readonly' form='form200_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form200_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form200_"+id+"' name='manifest_type'>";
+				rowsHTML+="<input type='hidden' form='form200_"+id+"' name='order_num'>";
+				rowsHTML+="<input type='hidden' form='form200_"+id+"' name='merchant_name'>";
+				rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form200_"+id+"' id='save_form200_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form200_"+id+"' id='delete_form200_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form200_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form200_body').prepend(rowsHTML);
+		
+		var item_form=document.getElementById('form200_'+id);
+		var awb_filter=item_form.elements[0];
+		var address_filter=item_form.elements[1];
+		var phone_filter=item_form.elements[2];
+		var weight_filter=item_form.elements[3];
+		var pieces_filter=item_form.elements[4];
+		var status_filter=item_form.elements[5];
+		var manifest_type_filter=item_form.elements[6];
+		var order_num_filter=item_form.elements[7];
+		var merchant_filter=item_form.elements[8];
+		var id_filter=item_form.elements[9];
+		var save_button=item_form.elements[10];
+		
+		$(awb_filter).focus();
+		
+		$(awb_filter).on('blur',function () 
+		{
+			var orders_data="<logistics_orders count='1'>"+
+							"<id></id>"+
+							"<address1></address1>"+
+							"<address2></address2>"+
+							"<city></city>"+
+							"<pincode></pincode>"+
+							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
+							"<manifest_type></manifest_type>" +
+							"<order_num></order_num>" +
+							"<merchant_name></merchant_name>" +
+							"<ship_to></ship_to>" +
+							"<phone></phone>" +
+							"<weight></weight>" +
+							"<pieces></pieces>" +
+							"<drs_num></drs_num>" +
+							"<status></status>"+
+							"</logistics_orders>";
+			//console.log(orders_data);				
+			fetch_requested_data('',orders_data,function (orders) 
+			{
+				//console.log(orders);
+				if(orders.length>0)
+				{
+					address_filter.value=orders[0].ship_to+"\n"+orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
+					phone_filter.value=orders[0].phone;
+					weight_filter.value=orders[0].weight;
+					pieces_filter.value=orders[0].pieces;
+					status_filter.value=orders[0].status;
+					manifest_type_filter.value=orders[0].manifest_type;
+					order_num_filter.value=orders[0].order_num;
+					id_filter.value=orders[0].id;
+					merchant_filter.value=orders[0].merchant_name;
+				}
+			});
+		});
+
+		$(save_button).on('click',function (e) 
+		{
+			e.preventDefault();
+			form200_create_item(item_form);
+		});
+
+		$(item_form).on('submit',function (e) 
+		{
+			e.preventDefault();
+			form200_add_item();
+		});
+		
+		$('textarea').autosize();
+		form200_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Exchanges
  * @formNo 202
  */

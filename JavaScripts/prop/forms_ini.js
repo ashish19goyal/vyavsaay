@@ -20482,10 +20482,10 @@ function form200_ini()
 						var id=result.id;
 						var rowsHTML="<tr>";
 
-						var address=result.address1+", "+result.address2+", "+result.city+"-"+result.pincode;
+						var address=result.ship_to+"\n"+result.address1+", "+result.address2+", "+result.city+"-"+result.pincode;
 						if(result.address2=="--" || result.address2==result.address1)
 						{
-							var address=result.address1+", "+result.city+"-"+result.pincode;
+							var address=result.ship_to+"\n"+result.address1+", "+result.city+"-"+result.pincode;
 						}						
 						rowsHTML+="<form id='form200_"+id+"'></form>";
 							rowsHTML+="<td data-th='S.No.'>";
@@ -20552,7 +20552,8 @@ function form201_ini()
 	//populating form 
 	var fdrs=filter_fields.elements[0].value;
 	var femployee=filter_fields.elements[1].value;
-	var fstatus=filter_fields.elements[2].value;
+	var fdate=get_raw_time(filter_fields.elements[2].value);
+	var fstatus=filter_fields.elements[3].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form201_index');
@@ -20565,7 +20566,7 @@ function form201_ini()
 			"<id>"+fid+"</id>" +
 			"<drs_num>"+fdrs+"</drs_num>"+
 			"<employee>"+femployee+"</employee>"+
-			"<drs_time></drs_time>" +
+			"<drs_time>"+fdate+"</drs_time>" +
 			"<status>"+fstatus+"</status>" +
 			"</drs>";
 
@@ -20585,7 +20586,7 @@ function form201_ini()
 						rowsHTML+="<textarea readonly='readonly' form='form201_"+result.id+"'>"+result.employee+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='DRS Time'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' value='"+get_my_datetime(result.drs_time)+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' value='"+get_my_past_date(result.drs_time)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' value='"+result.status+"'>";
@@ -20627,7 +20628,7 @@ function form201_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[3];
+		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -20655,7 +20656,8 @@ function form203_ini()
 	//populating form 
 	var fawb=filter_fields.elements[0].value;
 	var forder=filter_fields.elements[1].value;
-	var fstatus=filter_fields.elements[2].value;
+	var fdate=get_raw_time(filter_fields.elements[2].value);
+	var fstatus=filter_fields.elements[3].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form203_index');
@@ -20670,7 +20672,9 @@ function form203_ini()
 			"<awb_num>"+fawb+"</awb_num>"+
 			"<merchant_name></merchant_name>" +
 			"<ship_to></ship_to>" +
-			"<dispatch_date></dispatch_date>" +
+			"<dispatch_date>"+fdate+"</dispatch_date>" +
+			"<type></type>"+
+			"<manifest_type></manifest_type>"+
 			"<status>"+fstatus+"</status>" +
 			"</logistics_orders>";
 
@@ -20687,11 +20691,18 @@ function form203_ini()
 						rowsHTML+="<input type='text' readonly='readonly' class='input_link' form='form203_"+result.id+"' onclick=\"element_display('"+result.id+"','form198');\" value='"+result.awb_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Order #'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.order_num+"'>";
+						rowsHTML+=result.order_num;
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Customer'>";
-						rowsHTML+="Merchant: <input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.merchant_name+"'>";
-						rowsHTML+="<br>Ship to: <input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.ship_to+"'>";
+						rowsHTML+="Merchant:"+ result.merchant_name;
+						rowsHTML+="<br>Ship to:"+ result.ship_to;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+=get_my_past_date(result.dispatch_date);
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Type'>";
+						rowsHTML+="Type:"+ result.type;
+						rowsHTML+="<br>Manifest Type:"+ result.manifest_type;
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.status+"'>";
@@ -20701,7 +20712,7 @@ function form203_ini()
 						rowsHTML+="<input type='button' class='delete_icon' form='form203_"+result.id+"' title='Delete order' onclick='form203_delete_item($(this));'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
-			
+
 			$('#form203_body').append(rowsHTML);
 		});
 
@@ -20732,7 +20743,7 @@ function form203_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[5];
+		var export_button=filter_fields.elements[6];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{

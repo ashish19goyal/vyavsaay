@@ -7063,7 +7063,8 @@ function form200_header_ini()
 	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
-		modal129_action();
+		//modal129_action();
+		form200_add_item();
 	});
 
 	var employee_data="<staff>" +
@@ -7090,7 +7091,8 @@ function form201_header_ini()
 	var filter_fields=document.getElementById('form201_header');
 	var drs_filter=filter_fields.elements[0];
 	var employee_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
+	var date_filter=filter_fields.elements[2];
+	var status_filter=filter_fields.elements[3];
 		
 	var drs_data="<drs>" +
 			"<drs_num></drs_num>" +
@@ -7109,6 +7111,8 @@ function form201_header_ini()
 	set_my_filter(drs_data,drs_filter);
 	set_my_filter(employee_data,employee_filter);
 	set_static_filter('drs','status',status_filter);
+	
+	$(date_filter).datepicker();
 };
 
 /**
@@ -7150,7 +7154,8 @@ function form203_header_ini()
 	var filter_fields=document.getElementById('form203_header');
 	var awb_filter=filter_fields.elements[0];
 	var order_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
+	var date_filter=filter_fields.elements[2];
+	var status_filter=filter_fields.elements[3];
 	var import_button=filter_fields.elements['import'];
 		
 	var awb_data="<logistics_orders>" +
@@ -7175,6 +7180,7 @@ function form203_header_ini()
 	set_my_filter(order_data,order_filter);
 	set_my_filter(awb_data,awb_filter);
 	set_static_filter('logistics_orders','status',status_filter);
+	$(date_filter).datepicker();
 };
 
 /**

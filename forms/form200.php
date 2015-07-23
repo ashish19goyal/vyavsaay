@@ -17,12 +17,12 @@
 		<thead>
 			<tr>
 				<form id='form200_header'></form>
-					<th>S. No.</th>
+					<th style='width:50px'>S. No.</th>
 					<th>AWB #</th>
 					<th>Address</th>					
 					<th>Details</th>
 					<th>Status</th>
-					<th><input type='button' form='form200_header' title='Add item' class='add_icon' onclick='modal129_action();'></th>
+					<th><input type='button' form='form200_header' title='Add item' class='add_icon' onclick='form200_add_item();'></th>
 			</tr>
 		</thead>
 		<tbody id='form200_body'>

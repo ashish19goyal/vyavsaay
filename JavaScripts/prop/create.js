@@ -14021,6 +14021,7 @@ function form200_create_item(form)
 		var drs_num=document.getElementById('form200_master').elements['drs_num'].value;
 		var delivery_person=document.getElementById('form200_master').elements['employee'].value;
 		var data_id=form.elements[9].value;
+		var save_button=form.elements[10];
 		var del_button=form.elements[11];
 		var last_updated=get_my_time();
 		var data_xml="<logistics_orders>" +
@@ -14048,8 +14049,8 @@ function form200_create_item(form)
 			form200_delete_item(del_button);
 		});
 
-		$(form).off('submit');
-		$(form).on('submit',function(event)
+		$(save_button).off('click');
+		$(save_button).on('click',function(event)
 		{
 			event.preventDefault();
 		});
@@ -14068,7 +14069,6 @@ function form200_create_form()
 {
 	if(is_create_access('form200'))
 	{
-		console.log('form200_create_form');
 		var form=document.getElementById("form200_master");
 		
 		var drs_num=form.elements['drs_num'].value;

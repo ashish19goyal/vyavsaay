@@ -6546,7 +6546,7 @@ function form203_delete_item(button)
 			var form=document.getElementById(form_id);
 			
 			var awb_num=form.elements[0].value;
-			var data_id=form.elements[5].value;
+			var data_id=form.elements[2].value;
 			var last_updated=get_my_time();
 			var data_xml="<logisitcs_orders>" +
 						"<id>"+data_id+"</id>" +

@@ -5,7 +5,7 @@
 				<form id='form201_header'></form>
 					<th>DRS # <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form201_header'></th>
 					<th>Employee <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form201_header'></th>
-					<th>Time </th>
+					<th>Date <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form201_header'></th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form201_header'></th>
 					<th>
 						<input type='button' form='form201_header' value='EXPORT' class='export_icon'>
