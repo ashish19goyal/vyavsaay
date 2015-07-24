@@ -6212,7 +6212,7 @@ function form101_create_item(form)
 					"<tablename>projects</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"<access_type>all</access_type>" +
-					"<access_type>user</access_type>" +
+					"<user_type>user</user_type>" +
 					"<user>"+get_account_name()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";

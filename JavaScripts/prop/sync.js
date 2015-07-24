@@ -305,6 +305,7 @@ function sync_local_to_server(func)
 				}
 				//console.log(log_data_chunk);
 				log_data_chunk="<activities>"+log_data_chunk+"</activities>";
+				//console.log(log_data_chunk);
 				ajax_with_custom_func("./ajax/sync_upload.php",{run_daemons:run_daemons,domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,data:log_data_chunk,last_sync:last_sync_time},function(e)
 				{
 					//console.log(e.responseText);

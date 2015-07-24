@@ -6039,6 +6039,14 @@ function activities_ini()
 			$("#all_activity_lane").html(result_html);
 			hide_loader();
 		});
+		
+		var export_button=document.getElementById('export_activities_button');
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'activities');
+		});
+		hide_loader();
 	}
 	else 
 	{

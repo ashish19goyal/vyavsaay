@@ -127,6 +127,7 @@
 								}
 								$q_string2=rtrim($q_string2,",");
 								$q_string2.=");";	
+								//echo $q_string2;								
 								$stmt2=$conn->conn->prepare($q_string2);
 								try{
 									$stmt2->execute($data_array);
