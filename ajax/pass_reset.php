@@ -49,7 +49,7 @@
 			$from = "info@vyavsaay.com";
 			$from_name = "info@vyavsaay.com";					
 			$email_instance=new send_mailer();
-			$email_instance->direct_send($subject,$message,"User:".$userEmail,$from,$from_name);
+			$email_instance->direct_send($subject,$message,'',"User:".$userEmail,$from,$from_name);
 			$email_instance->log_mailer($domain,$subject,$message,"User:".$userEmail,$from,$from_name);	
 		}
 		else

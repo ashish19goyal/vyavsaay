@@ -94,7 +94,7 @@ function worker_update_orders_status()
  */
 function activities_lane_ini()
 {
-	if(is_create_access('activities'))
+	if(is_read_access('activities'))
 	{
 		var columns="<activities count='10'>" +
 			"<title></title>" +

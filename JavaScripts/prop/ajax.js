@@ -520,12 +520,12 @@ function server_send_sms(to,message,type)
 	});
 }
 
-function server_send_email(to,from,from_name,subject,message,func)
+function server_send_email(to,from,from_name,subject,message,message_attachment,func)
 {
 	var domain=get_domain();
 	var username=get_username();
 	var read_access=get_session_var('re');
-	ajax_with_custom_func("./ajax/email.php",{domain:domain,username:username,re:read_access,to:to,from:from,message:message,subject:subject,from_name:from_name},function(e)
+	ajax_with_custom_func("./ajax/email.php",{domain:domain,username:username,re:read_access,to:to,from:from,message:message,message_attachment:message_attachment,subject:subject,from_name:from_name},function(e)
 	{
 		console.log(e.responseText);
 		func();

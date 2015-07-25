@@ -475,7 +475,7 @@
 			<name>activities</name>
 			<display_name>activities</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1340,7 +1340,7 @@
 			<name>form46</name>
 			<display_name>set_defaults</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1351,7 +1351,7 @@
 			<name>form47</name>
 			<display_name>change_password</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1362,7 +1362,7 @@
 			<name>form48</name>
 			<display_name>select_reports</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1373,7 +1373,7 @@
 			<name>form49</name>
 			<display_name>select_forms</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1384,7 +1384,7 @@
 			<name>form50</name>
 			<display_name>set_accounting_defaults</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1395,7 +1395,7 @@
 			<name>form51</name>
 			<display_name>access_control</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1560,7 +1560,7 @@
 			<name>form71</name>
 			<display_name>manage_accounts</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -1890,7 +1890,7 @@
 			<name>form105</name>
 			<display_name>data_access</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
@@ -2242,7 +2242,7 @@
 			<name>form143</name>
 			<display_name>manage_questionnaire</display_name>
 			<status>active</status>
-			<value>unchecked</value>
+			<value>checked</value>
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>

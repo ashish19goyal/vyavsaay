@@ -21,7 +21,7 @@ class send_mailer
 	}
 
 	//send mailer
-	public function direct_send($subject,$message,$receivers,$from,$from_name)
+	public function direct_send($subject,$message,$message_attachment,$receivers,$from,$from_name)
 	{
 		$merge_vars=array();
 	    $to=array();    
@@ -50,17 +50,10 @@ class send_mailer
 				array_push($merge_vars, $merge_var);
 				array_push($to, $to_var);
 			}
-		}		
-
-		$attachment=array(
-	            array(
-	                'type' => 'application/pdf',
-	                'name' => $subject.'.pdf',
-	                'content' => base64_encode($message)
-	            )
-	        );
-				
-		$message = array(
+		}
+		
+		
+		$final_message = array(
 	        'html' => $message,
 	        'subject' => $subject,
 	        'from_email' => $from,
@@ -70,10 +63,36 @@ class send_mailer
 	        'preserve_recipients' => false,
 	        'merge' => true,
 	        'merge_language' => 'mailchimp',
-	        'merge_vars' => $merge_vars, 
-	        'attachments' => $attachment
+	        'merge_vars' => $merge_vars
 	    );
-	    $result = $this->mandrill->messages->send($message);
+	    
+	    if($message_attachment!="")
+	    {
+	    	$new_attachment=preg_replace('/data:image\/png;base64,/',"",$message_attachment,1);
+	    	$attachment=array(
+	            array(
+	                'type' => 'image/png',
+	                'name' => "$subject".".png",
+	                'content' => $new_attachment
+	            )
+	        );
+	        
+       		$final_message = array(
+		        'html' => $message,
+		        'subject' => $subject,
+		        'from_email' => $from,
+		        'from_name' => $from_name,
+		        'to' => $to,
+		        'headers' => array('Reply-To' => $from),
+		        'preserve_recipients' => false,
+		        'merge' => true,
+		        'merge_language' => 'mailchimp',
+		        'merge_vars' => $merge_vars,
+		        'images' => $attachment
+		    );
+	    }
+	    
+	    $result = $this->mandrill->messages->send($final_message);
 	    //print_r($result);
 	}
 
@@ -92,7 +111,7 @@ class send_mailer
 		
 		for($i=0;$i<count($result);$i++)
 		{
-			$this->direct_send($result[$i]['subject'],$result[$i]['message'],$result[$i]['receivers'],$result[$i]['sender'],$result[$i]['sender_name']);			
+			$this->direct_send($result[$i]['subject'],$result[$i]['message'],$result[$i]['message_attachment'],$result[$i]['receivers'],$result[$i]['sender'],$result[$i]['sender_name']);			
 			$update_stmt->execute(array('sent',$result[$i]['id']));
 		}
 	}
@@ -101,18 +120,18 @@ class send_mailer
 	{
 		$conn=new db_connect('re_user_'.$domain);
 		
-		$create_query="insert into emails (subject,message,receivers,sender,sender_name,status,last_updated) values(?,?,?,?,?,?,?)";		
+		$create_query="insert into emails (subject,message,message_attachment,receivers,sender,sender_name,status,last_updated) values(?,?,?,?,?,?,?)";		
 		$create_stmt=$conn->conn->prepare($create_query);
-		$create_stmt->execute(array($subject,$message,$to,$from,$from_name,'pending',1000*time()));		
+		$create_stmt->execute(array($subject,$message,$message_attachment,$to,$from,$from_name,'pending',1000*time()));		
 	}
 
-	public function log_mailer($domain,$subject,$message,$to,$from,$from_name)
+	public function log_mailer($domain,$subject,$message,$message_attachment,$to,$from,$from_name)
 	{
 		$conn=new db_connect('re_user_'.$domain);
 		
-		$create_query="insert into emails (subject,message,receivers,sender,sender_name,status,last_updated) values(?,?,?,?,?,?,?)";
+		$create_query="insert into emails (subject,message,message_attachment,receivers,sender,sender_name,status,last_updated) values(?,?,?,?,?,?,?,?)";
 		$create_stmt=$conn->conn->prepare($create_query);
-		$create_stmt->execute(array($subject,$message,$to,$from,$from_name,'sent',1000*time()));		
+		$create_stmt->execute(array($subject,$message,$message_attachment,$to,$from,$from_name,'sent',1000*time()));		
 	}
 	
 	public function send_all_stored_mailer()

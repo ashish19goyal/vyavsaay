@@ -897,27 +897,50 @@ function send_sms(to,message,type)
 function send_email(to,from,from_name,subject,message,func)
 {
 	var email_enabled=get_session_var('email_enabled');
+	var message_attachment="";
+	var pdf_elem=document.getElementById('pdf_print_div');
+	
 	if(email_enabled=='yes')
 	{
-		if(is_online())
+		pdf_elem.innerHTML=message;
+	
+		html2canvas(pdf_elem, 
 		{
-			server_send_email(to,from,from_name,subject,message,func);
-		}
-		else
-		{
-			var email_data="<emails>"+
-						"<id>"+get_new_key()+"</id>"+
-						"<subject>"+subject+"</subject>"+
-						"<message>"+htmlentities(message)+"</message>"+
-						"<receivers>"+to+"</receivers>"+
-						"<sender>"+from+"</sender>"+
-						"<sender_name>"+from_name+"</sender_name>"+
-						"<status>pending</status>"+
-						"<last_updated>"+get_my_time()+"</last_updated>"+
-						"</emails>";
-			local_create_simple(email_data);			
-			func();
-		}
+	        onrendered: function(canvas) 
+	        {         
+	        	var imgData = canvas.toDataURL(
+	                'image/png');              
+	            //var doc = new jsPDF('p', 'mm');
+	            //doc.addImage(imgData, 'PNG', 10, 10);
+	            //doc.save('sample-file.pdf');
+	           	//message_attachment=doc.output('datauristring');
+				message_attachment=canvas.toDataURL("image/png");
+				window.location=message_attachment;
+	            //console.log(message_attachment);
+				pdf_elem.innerHTML="";
+	
+				if(is_online())
+				{
+					server_send_email(to,from,from_name,subject,message,message_attachment,func);
+				}
+				else
+				{
+					var email_data="<emails>"+
+								"<id>"+get_new_key()+"</id>"+
+								"<subject>"+subject+"</subject>"+
+								"<message>"+htmlentities(message)+"</message>"+
+								"<message_attachment>"+message_attachment+"</message_attachment>"+
+								"<receivers>"+to+"</receivers>"+
+								"<sender>"+from+"</sender>"+
+								"<sender_name>"+from_name+"</sender_name>"+
+								"<status>pending</status>"+
+								"<last_updated>"+get_my_time()+"</last_updated>"+
+								"</emails>";
+					local_create_simple(email_data);			
+					func();
+				}	    
+	        }
+	    });		
 	}
 	else
 	{

@@ -13,7 +13,7 @@
 	$subject="New customer for newsletter";
 	$message="Email: $email";
 	$email_instance=new send_mailer();
-	$email_instance->direct_send($subject,$message,$to,$from,$from_name);
+	$email_instance->direct_send($subject,$message,'',$to,$from,$from_name);
 	echo "mail success";
 	
 ?>

@@ -1,4 +1,8 @@
+<div id='pdf_print_div'>xyz</div>
 <div class='modal_forms'>
+	
+	<!--this div is to be populated with pdf content when printing it-->
+
 	<div id="modal1" title="Please type your password again">
 		<form>
 			<input type="password" id="modal1_pass" required>
@@ -1110,5 +1114,6 @@
 			</fieldset>
 		</form>
 	</div>
+
 
 </div>

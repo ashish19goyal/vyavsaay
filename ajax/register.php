@@ -41,11 +41,21 @@
 	}
 			
 	echo $status;
-	$message="Congratulations!! Your vyavsaay account has been successfully setup.";
+	$message="Congratulations!! Your Vyavsaay ERP account has been successfully setup.";
 	$sms_instance=new send_sms();		
 	$sms_instance->direct_send($message,$phone,'transaction');
 	$sms_instance->log_sms($username,$message,$phone,'transaction');		
 
+	$from = "info@vyavsaay.com";
+	$from_name = "info@vyavsaay.com";					
+	$email_message="Congratulations!! Your Vyavsaay ERP account has been successfully setup.".
+					"<br>Your account details are as follows".
+					"Url: https://vyavsaay.com<br>".
+					"Login: ".$username.
+					"Password: ".$pass;
+	$email_instance=new send_mailer();
+	$email_instance->direct_send('Vyavsaay: Account Setup',$message,'',"User:".$email,$from,$from_name);
+	
 	function set_user_preferences($conn2,$industry)
 	{
 		$stmt1=$conn2->conn->prepare("insert into user_preferences (name,display_name,status,value,type,last_updated) values(?,?,?,?,?,?)");

@@ -1140,6 +1140,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<subject index='no' type="TEXT"></subject>
 			<message index='no' type="TEXT"></message>
+			<message_attachment index='no' type="MEDIUMBLOB"></message_attachment>
 			<receivers index='yes' type="TEXT"></receivers>
 			<sender index='yes' type="TEXT"></sender>
 			<sender_name index='yes' type="TEXT"></sender_name>

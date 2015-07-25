@@ -149,6 +149,8 @@ JavaScripts/open/img/slider_handle.png
 JavaScripts/open/angular.js
 JavaScripts/open/bcrypt.js
 JavaScripts/open/chart.js
+JavaScripts/open/jspdf.js
+JavaScripts/open/html2canvas.js
 JavaScripts/open/dataDaysEnh.js
 JavaScripts/open/dataDays.js
 JavaScripts/open/dataHours.js

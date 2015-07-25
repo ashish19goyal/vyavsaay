@@ -388,8 +388,7 @@ function register_click()
 	var userid_valid=document.getElementById("userid_validation").value;
 	var emailid_valid=document.getElementById("emailid_validation").value;
 	var pass_valid=document.getElementById("password_match_validation").value;
-	
-	
+
 	if(userid_valid=="incorrect" || emailid_valid=="incorrect" || pass_valid=="incorrect")
 	{
 		document.getElementById("failed_register").innerHTML="Please update the incorrect fields to proceed!";
@@ -406,6 +405,7 @@ function register_click()
 
 		ajax_with_custom_func("./ajax/user_db_creation.php",{userid:userid,industry:industry},function(e2)
 		{
+			console.log(e2.responseText);
 			if(e2.responseText=="")
 			{
 				ajax_with_custom_func("./ajax/register.php",post_data,function(e)
