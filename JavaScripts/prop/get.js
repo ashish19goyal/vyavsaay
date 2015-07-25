@@ -915,7 +915,7 @@ function send_email(to,from,from_name,subject,message,func)
 	            //doc.save('sample-file.pdf');
 	           	//message_attachment=doc.output('datauristring');
 				message_attachment=canvas.toDataURL("image/png");
-				window.location=message_attachment;
+				//window.location=message_attachment;
 	            //console.log(message_attachment);
 				pdf_elem.innerHTML="";
 	
