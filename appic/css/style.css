@@ -3956,8 +3956,8 @@ ul#navigation > li:hover:after {
   color: #fff;
 }
 .footer-widgets {
-  padding-top: 64px;
-  padding-bottom: 50px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 .widget-title {
   padding-bottom: 25px;
