@@ -7287,3 +7287,24 @@ function form213_header_ini()
 		form213_ini();
 	});	
 }
+
+/**
+ * @form Sale Leads (self)
+ * @formNo 214
+ */
+function form214_header_ini()
+{
+	var fields=document.getElementById('form214_master');
+
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form214_create_item();
+	});
+
+	var date_filter=fields.elements['date'];
+	$(date_filter).datepicker();
+
+	$('#form214_attributes').html("");
+}

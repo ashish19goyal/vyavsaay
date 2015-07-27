@@ -14250,3 +14250,99 @@ function form213_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+
+/**
+ * @form Sale leads (self)
+ * @param button
+ */
+function form214_create_item()
+{
+	if(is_create_access('form214'))
+	{
+		var form=document.getElementById("form214_master");
+		
+		var name=form.elements['name'].value;
+		var phone=form.elements['phone'].value;
+		var email=form.elements['email'].value;
+		var address=form.elements['address'].value;
+		var pincode=form.elements['pincode'].value;
+		var city=form.elements['city'].value;
+		var state=form.elements['state'].value;
+		var details=form.elements['details'].value;
+		var due_date=form.elements['date'].value;
+		var identified_by=form.elements['contact'].value;
+		var acc_name=name+" ("+phone+")";
+			
+		var id=get_new_key();
+		var last_updated=get_my_time();
+		var customer_xml="<customers>" +
+						"<id>"+id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<phone>"+phone+"</phone>" +
+						"<email>"+email+"</email>" +
+						"<notes></notes>" +
+						"<acc_name unique='yes'>"+acc_name+"</acc_name>" +
+						"<status>active</status>" +
+						"<address>"+address+"</address>" +
+						"<pincode>"+pincode+"</pincode>" +
+						"<city>"+city+"</city>" +
+						"<state>"+state+"</state>" +
+						"<country>India</country>" +
+						"<address_status>pending analysis</address_status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</customers>";
+		var lead_xml="<sale_leads>" +
+				"<id>"+id+"</id>" +
+				"<customer>"+acc_name+"</customer>" +
+				"<detail>"+details+"</detail>"+
+                "<due_date>"+get_raw_time(due_date)+"</due_date>"+
+                "<identified_by>"+identified_by+"</identified_by>"+
+                "<last_updated>"+last_updated+"</last_updated>" +
+				"</sale_leads>";
+		var activity_xml="<activity>" +
+				"<data_id>"+id+"</data_id>" +
+				"<tablename>sale_leads</tablename>" +
+				"<link_to>form214</link_to>" +
+				"<title>Identified</title>" +
+				"<notes>Sale opportunity with "+acc_name+"</notes>" +
+				"<updated_by>"+get_name()+"</updated_by>" +
+				"</activity>";
+		
+		create_row(lead_xml,activity_xml);
+		create_simple_no_warning(customer_xml);
+		
+		$("#form214_attributes").find('input, select').each(function()
+		{
+			id++;
+			var value=$(this).val();
+			var attribute=$(this).attr('name');
+			if(value!="")
+			{
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<name>"+acc_name+"</name>" +
+						"<type>customer</type>" +
+						"<attribute>"+attribute+"</attribute>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				if(is_online())
+				{
+					server_create_simple(attribute_xml);
+				}
+				else
+				{
+					local_create_simple(attribute_xml);
+				}
+			}
+		});
+
+		$('#modal62').dialog('open');
+		form214_ini();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

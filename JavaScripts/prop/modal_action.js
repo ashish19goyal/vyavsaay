@@ -3276,7 +3276,12 @@ function modal31_action()
 	var account_filter=form.elements[2];
 	var balance_filter=form.elements[3];
 	var amount_filter=form.elements[4];
-			
+
+	receipt_filter.value="";
+	account_filter.value="";
+	balance_filter.value="";
+	amount_filter.value="";
+	
 	$(receipt_filter).off('blur');
 	$(receipt_filter).on('blur',function(e)
 	{
@@ -7510,6 +7515,16 @@ function modal118_action()
 	var acc_name_filter=form.elements['acc_name'];
 	var id_filter=form.elements['customer_id'];
 	
+	phone_filter.value="";
+	name_filter.value="";
+	credit_filter.value="";
+	address_filter.value="";
+	notes_filter.value="";
+	email_filter.value="";
+	new_filter.value="";
+	acc_name_filter.value="";
+	id_filter.value="";
+
 	var phone_data="<customers>" +
 			"<phone></phone>" +
 			"</customers>";

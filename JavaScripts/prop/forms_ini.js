@@ -20867,3 +20867,59 @@ function form213_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Sale leads (self)
+ * @formNo 214
+ * @Loading light
+ */
+function form214_ini()
+{
+	show_loader();
+	
+	var master_form=document.getElementById('form214_master');
+	var contact_person_filter=master_form.elements['contact'];
+	
+	master_form.reset();
+	contact_person_filter.value=get_account_name();
+
+	var attribute_label=document.getElementById('form214_attributes');
+	var attributes_data="<mandatory_attributes>" +
+			"<attribute></attribute>" +
+			"<status></status>" +
+			"<value></value>"+
+			"<object exact='yes'>customer</object>" +
+			"</mandatory_attributes>";
+	fetch_requested_data('',attributes_data,function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+			if(attribute.status!='inactive')
+			{
+				var required="";
+				if(attribute.status=='required')
+					required='required'
+				var attr_label=document.createElement('label');
+				if(attribute.value=="")
+				{
+					attr_label.innerHTML=attribute.attribute+" <input type='text' class='widebox' "+required+" name='"+attribute.attribute+"'>";
+				}				
+				else 
+				{
+					var values_array=attribute.value.split(";");
+					var content=attribute.attribute+" <select name='"+attribute.attribute+"' "+required+">";
+					values_array.forEach(function(fvalue)
+					{
+						content+="<option value='"+fvalue+"'>"+fvalue+"</option>";
+					});
+					content+="</select>";
+					attr_label.innerHTML=content;
+				}
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+			}
+		});
+		hide_loader();
+	});
+};

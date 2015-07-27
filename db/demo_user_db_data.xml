@@ -5674,14 +5674,14 @@
 		<row>
 			<username>master</username>
 			<element_id>form215</element_id>
-			<element_name>items_dispatch</element_name>
+			<element_name>items_dispatch_nikki</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
 			<up>checked</up>
 			<del>checked</del>
 			<last_updated>1</last_updated>
-		</row>				
+		</row>
 		<row>
 			<username>master</username>
 			<element_id>form216</element_id>

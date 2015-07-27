@@ -662,6 +662,10 @@
 		Please wait while we update the status of the processed orders.
 	</div>
 
+	<div id="modal62" title="Thanks">
+		Thanks! Your details have been saved. We will reach out to you on the suggested follow-up date.
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>
