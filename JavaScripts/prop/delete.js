@@ -1240,6 +1240,93 @@ function form44_delete_item(button)
 	}
 }
 
+/**
+ * @form Set Defaults
+ * @param button
+ */
+function form46_delete_item(button)
+{
+	if(is_delete_access('form46'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var name=form.elements[3].value;
+			var data_id=form.elements[2].value;
+			var last_updated=get_my_time();
+			var data_xml="<user_preferences>" +
+						"<id>"+data_id+"</id>" +
+						"</user_preferences>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>user_preferences</tablename>" +
+						"<link_to>form46</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Setting "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Set Accounting Defaults
+ * @param button
+ */
+function form46_delete_item(button)
+{
+	if(is_delete_access('form50'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var name=form.elements[3].value;
+			var data_id=form.elements[2].value;
+			var last_updated=get_my_time();
+			var data_xml="<user_preferences>" +
+						"<id>"+data_id+"</id>" +
+						"</user_preferences>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>user_preferences</tablename>" +
+						"<link_to>form50</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Setting "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
 
 /**
  * @form Manage Supplier Bills

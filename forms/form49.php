@@ -6,6 +6,7 @@
 					<th>Form <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type="text" class='filter' form='form49_header'></th>
 					<th>Selection</th>
 					<th><input type="button" title="Save All" class='save_icon' form='form49_header'>
+						<input type="button" title="Add new" class='add_icon' form='form49_header' onclick="modal136_action('form');">
 						<input type='button' form='form49_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form49_header' style='visibility: hidden;'>
 					</th>

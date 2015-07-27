@@ -2,6 +2,12 @@
 <re_xml>
 	<user_fields_list>
 		<row>
+			<tablename>drs</tablename>
+			<field_name>employee</field_name>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>store_areas</tablename>
 			<field_name>owner</field_name>
 			<status>active</status>
@@ -297,6 +303,22 @@
 		</row>
 	</user_fields_list>
 	<values_list>
+		<row>
+			<tablename>bill_items</tablename>
+			<listname>dispatch_status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>bill_items</tablename>
+			<listname>dispatch_status</listname>
+			<name>dispatched</name>
+			<value>Dispatched</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<tablename>followups</tablename>
 			<listname>response</listname>

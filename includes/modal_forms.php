@@ -1115,5 +1115,28 @@
 		</form>
 	</div>
 
+	<div id="modal135" title="Set User Preferences">
+		<form id='modal135_form' autocomplete="off">
+			<fieldset>
+				<label>Type: <input name='type' required readonly='readonly' class='dblclick_editable' type="text"></label><br>
+				<label>Name: <input name='name' required type="text"></label><br>
+				<label>Display Name: <textarea name='display_name' required></textarea></label><br>
+				<label>Value: <textarea name='value'></textarea></label><br>
+				<input type="submit" value='Save' name='save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal136" title="Add form/report">
+		<form id='modal136_form' autocomplete="off">
+			<fieldset>
+				<label>Type: <input name='type' required readonly='readonly' class='dblclick_editable' type="text"></label><br>
+				<label>Name: <input name='name' required type="text"></label><br>
+				<label>Display Name: <textarea name='display_name' required></textarea></label><br>
+				<label>Tables: <textarea name='tables'></textarea></label><br>
+				<input type="submit" value='Save' name='save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
 
 </div>

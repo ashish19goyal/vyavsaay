@@ -1073,6 +1073,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report79</name>
+			<display_name>pending_po_items</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -2986,6 +2996,39 @@
 			<tables>--sale_leads--followups--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form214</name>
+			<display_name>sale_leads_self</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--sale_leads--customers--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form215</name>
+			<display_name>items_dispatch_nikki</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bill_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form216</name>
+			<display_name>order_picklist</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--bill_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3685,6 +3728,17 @@
 			<username>master</username>
 			<element_id>report78</element_id>
 			<element_name>followup_report</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report79</element_id>
+			<element_name>pending_po_items</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -5599,6 +5653,39 @@
 			<username>master</username>
 			<element_id>form213</element_id>
 			<element_name>sale_leads_followup</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form214</element_id>
+			<element_name>sale_leads_self</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form215</element_id>
+			<element_name>items_dispatch</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form216</element_id>
+			<element_name>order_picklist</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

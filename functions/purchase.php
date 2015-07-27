@@ -19,6 +19,7 @@
 			<li><a id='form114_link' href='#form114' onclick="modal132_action('form114',function(){form114_header_ini();});" data-i18n='form.add_unbilled_items'></a></li>
 			<li><a id='form115_link' href='#form115' onclick='form115_header_ini(); form115_ini();' data-i18n='form.manage_unbilled_items'></a></li>
 			<li><a id='form197_link' href='#form197' onclick='form197_header_ini(); form197_ini();' data-i18n='form.supplier_item_mapping'></a></li>
+			<li><a id='report79_link' href='#report79' onclick='report79_header_ini();' data-i18n='form.pending_po_items'></a></li>		
 		</ul>
 	<?php 
 
@@ -40,6 +41,7 @@
 			include "forms/form114.php";
 			include "forms/form115.php";
 			include "forms/form197.php";
+			include "reports/report79.php";
 	?>
 			
 </div>

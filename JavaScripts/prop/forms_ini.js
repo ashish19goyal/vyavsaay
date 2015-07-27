@@ -3468,6 +3468,7 @@ function form46_ini()
 						rowsHTML+="<input type='hidden' form='form46_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='hidden' form='form46_"+result.id+"' value='"+result.name+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' id='save_form46_"+result.id+"' form='form46_"+result.id+"' title='Save'>";	
+						rowsHTML+="<input type='button' class='delete_icon' id='delete_form46_"+result.id+"' form='form46_"+result.id+"' title='Delete' onclick='form46_delete_item($(this));'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -3613,7 +3614,7 @@ function form48_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[2];
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -3712,7 +3713,7 @@ function form49_ini()
 		/////////////
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[2];
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -3721,7 +3722,6 @@ function form49_ini()
 		hide_loader();
 	});
 };
-
 
 /**
  * @form Set Accounting Defaults
@@ -3772,7 +3772,8 @@ function form50_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form50_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='hidden' form='form50_"+result.id+"' value='"+result.name+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' id='save_form50_"+result.id+"' form='form50_"+result.id+"'>";	
+						rowsHTML+="<input type='submit' class='save_icon' id='save_form50_"+result.id+"' form='form50_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' id='delete_form50_"+result.id+"' form='form50_"+result.id+"' title='Delete' onclick='form50_delete_item($(this));'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			

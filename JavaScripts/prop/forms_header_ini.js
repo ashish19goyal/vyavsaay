@@ -1200,12 +1200,13 @@ function form46_header_ini()
 {
 	var filter_fields=document.getElementById('form46_header');
 	var other_element=filter_fields.elements[0];
-	var save_element=filter_fields.elements[1];
+	var add_element=filter_fields.elements[1];
 	
-	$(save_element).off('click');
-	$(save_element).on('click',function(e)
+	$(add_element).off('click');
+	$(add_element).on('click',function(e)
 	{
-		form46_update_form();
+		modal135_action('');	
+//		form46_update_form();
 	});
 	
 	$(filter_fields).off('submit');
@@ -1309,12 +1310,13 @@ function form50_header_ini()
 {
 	var filter_fields=document.getElementById('form50_header');
 	var accounts_filter=filter_fields.elements[0];
-	var save_element=filter_fields.elements[1];
+	var add_element=filter_fields.elements[1];
 	
-	$(save_element).off('click');
-	$(save_element).on('click',function(e)
+	$(add_element).off('click');
+	$(add_element).on('click',function(e)
 	{
-		form50_update_form();
+		//form50_update_form();
+		modal135_action('accounting');
 	});
 	
 	$(filter_fields).off('submit');
@@ -1329,7 +1331,6 @@ function form50_header_ini()
 			"</user_preferences>";
 
 	set_my_filter(accounts_data,accounts_filter);
-
 };
 
 /**

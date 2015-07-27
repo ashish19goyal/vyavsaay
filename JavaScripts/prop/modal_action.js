@@ -8949,3 +8949,171 @@ function modal134_action(lead_id,customer)
 	
 	$("#modal134").dialog("open");
 }
+
+/**
+ * @modalNo 135
+ * @modal Set User preferences
+ */
+function modal135_action(type)
+{
+	var form=document.getElementById('modal135_form');
+	var type_filter=form.elements['type'];
+	var name_filter=form.elements['name'];
+	var display_name_filter=form.elements['display_name'];
+	var value_filter=form.elements['value'];
+	
+	if(type!="")
+	{
+		type_filter.value=type;
+		type_filter.setAttribute('readonly','readonly');
+		$(name_filter).focus();
+	}
+	else 
+	{
+		type_filter.value="";
+		type_filter.removeAttribute('readonly');
+		$(type_filter).focus();
+	}
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form46') || is_create_access('form50'))
+		{
+			var id=get_new_key();
+			var type_new=type_filter.value;
+			var name=name_filter.value;
+			var display_name=display_name_filter.value;
+			var value=value_filter.value;
+			var last_updated=get_my_time();
+			
+			var pref_xml="<user_preferences>"+
+						"<id>"+id+"</id>"+
+		                "<name unique='yes'>"+name+"</name>"+
+		                "<display_name>"+display_name+"</display_name>"+
+		                "<type>"+type_new+"</type>"+
+		                "<value>"+value+"</value>"+
+		                "<status>active</status>"+
+		                "<shortcut></shortcut>"+
+		                "<sync>checked</sync>"+		                
+		                "<last_updated>"+last_updated+"</last_updated>"+
+						"</user_preferences>";
+			if(is_online())
+			{
+				server_create_simple(pref_xml);
+			}
+			else
+			{
+				local_create_simple(pref_xml);
+			}
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal135").dialog("close");
+	});
+	
+	$("#modal135").dialog("open");
+}
+
+/**
+ * @modalNo 136
+ * @modal Add form/report
+ */
+function modal136_action(type)
+{
+	var form=document.getElementById('modal136_form');
+	var type_filter=form.elements['type'];
+	var name_filter=form.elements['name'];
+	var display_name_filter=form.elements['display_name'];
+	var tables_filter=form.elements['tables'];
+	
+	if(type!="")
+	{
+		type_filter.value=type;
+		type_filter.setAttribute('readonly','readonly');
+		$(name_filter).focus();
+	}
+	else 
+	{
+		type_filter.value="";
+		type_filter.removeAttribute('readonly');
+		$(type_filter).focus();
+	}
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form46') || is_create_access('form50'))
+		{
+			var id=get_new_key();
+			var type_new=type_filter.value;
+			var name=name_filter.value;
+			var display_name=display_name_filter.value;
+			var tables=tables_filter.value;
+			var last_updated=get_my_time();
+			
+			var pref_xml="<user_preferences>"+
+						"<id>"+id+"</id>"+
+		                "<name unique='yes'>"+name+"</name>"+
+		                "<display_name>"+display_name+"</display_name>"+
+		                "<type>"+type_new+"</type>"+
+		                "<value>checked</value>"+
+		                "<status>active</status>"+
+		                "<shortcut></shortcut>"+
+		                "<sync>checked</sync>"+		                
+		                "<last_updated>"+last_updated+"</last_updated>"+
+						"</user_preferences>";
+						
+			if(is_online())
+			{
+				server_create_simple(pref_xml);
+			}
+			else
+			{
+				local_create_simple(pref_xml);
+			}
+			
+			var username_data="<access_control>"+
+							"<username></username>"+
+							"</access_control>";
+			get_single_column_data(function (usernames) 
+			{
+				var data_xml="<access_control>";
+				var counter=1;
+				var last_updated=get_my_time();
+				usernames.forEach(function(username)
+				{
+					counter+=1;
+					var id=last_updated+counter;
+					
+					data_xml+="<row>" +
+							"<id>"+id+"</id>" +
+							"<element_id>"+name+"</element_id>" +
+							"<element_name>"+display_name+"</element_name>" +
+							"<username>"+username+"</username>" +
+							"<re>checked</re>" +
+							"<cr>checked</cr>" +
+							"<up>checked</up>" +
+							"<del>checked</del>" +
+							"<status>active</status>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+				});
+			
+				data_xml+="</access_control>";
+				create_batch(data_xml);				
+			},username_data);				
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal136").dialog("close");
+	});
+	
+	$("#modal136").dialog("open");
+}
