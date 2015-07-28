@@ -169,21 +169,13 @@ function form8_import(data_array,import_type)
 				"<phone>"+row.phone+"</phone>" +
 				"<email>"+row.email+"</email>" +
 				"<acc_name unique='yes'>"+row.acc_name+"</acc_name>" +
-				"<joining_date>"+row.joining_date+"</joining_date>" +
-				"<skills>"+row.skills+"</skills>" +
-				"<qualification>"+row.qualification+"</qualification>" +
-				"<fixed_comp>"+row.fixed_comp+"</fixed_comp>" +
-				"<variable_comp_rate>"+row.variable_comp_rate+"</variable_comp_rate>" +
-				"<monthly_hours>"+row.monthly_hours+"</monthly_hours>" +
-				"<allowed_pto>"+row.allowed_pto+"</allowed_pto>" +
 				"<status>"+row.status+"</status>" +
-				"<notes>"+row.notes+"</notes>" +
 				"<address>"+row.address+"</address>" +
 				"<pincode>"+row.pincode+"</pincode>" +
 				"<city>"+row.city+"</city>" +
 				"<state>"+row.state+"</state>" +
 				"<country>"+row.country+"</country>" +
-				"<address_status>"+row.address_status+"</address_status>" +
+				"<address_status>pending analysis</address_status>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 		account_xml+="<row>" +
