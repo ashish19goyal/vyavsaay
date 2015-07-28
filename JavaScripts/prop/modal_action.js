@@ -8429,7 +8429,7 @@ function modal127_action()
 		});
 
 		var container=document.createElement('div');
-		container.setAttribute('style','width:100px;font-size:9px;');
+		container.setAttribute('style','width:1.5in;font-size:.1in;line-height:.12in;');
 		
 		items.forEach(function(item)
 		{
@@ -8441,8 +8441,8 @@ function modal127_action()
 				var due_date_elem=document.createElement('div');
 				var address_elem=document.createElement('div');
 
-			item_container.setAttribute('style','margin-bottom:10px');
-			bill_num_elem.setAttribute('style','font-size:11px');
+			item_container.setAttribute('style','width:1.5in;height:2in;margin:0px');
+			bill_num_elem.setAttribute('style','font-size:.1in;');
 
 			item_count_elem.innerHTML="<hr style='border: 1px solid #000;margin:1px;'>"+item.number+" of "+total_quantity;
 			business_title_elem.innerHTML=bus_title;
