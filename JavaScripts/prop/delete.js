@@ -1575,10 +1575,10 @@ function form57_delete_item(button)
 			if(is_online())
 			{
 				server_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete3);
-				local_delete_simple(other_delete4);
-				local_delete_simple(other_delete5);
-				local_delete_simple(other_delete6);
+				server_delete_simple(other_delete3);
+				server_delete_simple(other_delete4);
+				server_delete_simple(other_delete5);
+				server_delete_simple(other_delete6);
 			}
 			else
 			{
