@@ -591,7 +591,7 @@ function get_export_data(columns,filename)
 {
 	var new_columns=columns.replace(" count='25'","");
 	new_columns=new_columns.replace("start_index","dont_use_index");
-	console.log(new_columns);
+	//console.log(new_columns);
 	fetch_requested_data('',new_columns,function(results)
 	{
 		my_obj_array_to_csv(results,filename);
@@ -613,9 +613,9 @@ function my_obj_array_to_csv(data_array,file_name)
 		header_array.push(p);	
 		header_string+=p+",";
 	}
-	
+
     csvRows.push(header_string);
-	
+
 	/////for data rows
 	data_array.forEach(function(data_row)
 	{
@@ -628,7 +628,9 @@ function my_obj_array_to_csv(data_array,file_name)
 			}
 			data_string+=data_row[header_array[i]]+",";
 		}
-	    csvRows.push(data_string);
+		data_string=escape(data_string);
+		//console.log(data_string);
+		csvRows.push(data_string);
 	});
 
 	var csvString = csvRows.join("%0D%0A");
