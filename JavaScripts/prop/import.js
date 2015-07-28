@@ -1649,7 +1649,6 @@ function form57_import(data_array,import_type)
 				"<description>"+row.description+"</description>" +
 				"<price>"+row.price+"</price>" +
 				"<tax>"+row.tax+"</tax>" +
-				"<duration>"+row.duration+"</duration>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
