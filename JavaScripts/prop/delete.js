@@ -1535,18 +1535,10 @@ function form57_delete_item(button)
 			
 			var service=form.elements[0].value;
 			var description=form.elements[1].value;
-			var price=form.elements[2].value;
-			var duration=form.elements[3].value;
-			var tax=form.elements[4].value;
-			var data_id=form.elements[5].value;
+			var data_id=form.elements[4].value;
 			var last_updated=get_my_time();
 			var data_xml="<services>" +
 						"<id>"+data_id+"</id>" +
-						"<name unique='yes'>"+service+"</name>" +
-						"<description>"+description+"</description>" +
-						"<price>"+price+"</price>" +
-						"<duration>"+duration+"</duration>" +
-						"<tax>"+tax+"</tax>" +
 						"</services>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
