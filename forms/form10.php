@@ -25,7 +25,7 @@
 		<thead>
 			<tr>
 				<form id='form10_header'></form>
-					<th>Item</th>
+					<th style='min-width:200px'>Item</th>
 					<th>Remark</th>
 					<th>Quantity</th>
 					<th>Price</th>

@@ -388,12 +388,12 @@ function print_form10(func)
 		
 	////////////setting styles for containers/////////////////////////
 
-	header.setAttribute('style','width:100%;min-height:100px;');
+	header.setAttribute('style','width:100%;min-height:1in;');
 		business_title.setAttribute('style','width:90%;text-align:center;');
-	invoice_box.setAttribute('style','width:98%;min-height:60px;background-color:#bbbbbb;border: 1px solid #000000;padding:2px;');
-	info_section.setAttribute('style','width:99%;min-height:60px;border: 1px solid #000000;');
-		customer_info.setAttribute('style','padding:2px;margin:2px;float:left;width:48%;height:60px;text-align:left;');
-		payment_info.setAttribute('style','padding:2px;margin:2px;float:right;width:48%;height:60px;text-align:right;');
+	invoice_box.setAttribute('style','width:98%;min-height:.5in;background-color:#bbbbbb;border: 1px solid #000000;padding:2px;font-size:10px');
+	info_section.setAttribute('style','width:99%;min-height:.5in;border: 1px solid #000000;font-size:10px');
+		customer_info.setAttribute('style','padding:2px;margin:2px;float:left;width:48%;height:.5in;text-align:left;');
+		payment_info.setAttribute('style','padding:2px;margin:2px;float:right;width:48%;height:.5in;text-align:right;');
 	
 	///////////////getting the content////////////////////////////////////////
 
@@ -418,49 +418,67 @@ function print_form10(func)
 	customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address;
 	payment_info.innerHTML=payment_text;
 
-	var table_element=document.getElementById(form_id+'_body').parentNode;
-	table_copy=table_element.cloneNode(true);
+	var table_element=document.getElementById(form_id+'_body');
 	
-	table_copy.removeAttribute('class');
-	table_copy.setAttribute('width','1000px');
-	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form,fresh").remove();
-	$(table_copy).find('input,textarea').each(function(index)
+	/////////////placing the containers //////////////////////////////////////////////////////	
+	var new_table=document.createElement('table');
+	new_table.setAttribute('style','font-size:10px;border:1px solid black;text-align:left;');
+	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'><td style='text-align:left;width:.2in;'>Qty</td>"+
+				"<td style='text-align:left;width:1.5in'>Item</td>"+
+				"<td style='text-align:left;width:.5in'>Remark</td>"+
+				"<td style='text-align:left;width:.3in'>Rate</td>"+
+				"<td style='text-align:left;width:.3in'>Amount</td></tr>";
+				
+	var table_rows=table_header;
+	var counter=0;
+	
+	$(table_element).find('form').each(function(index)
 	{
-		$(this).replaceWith($(this).val());
+		counter+=1;
+		var form=$(this)[0];
+		//console.log(form);
+		var quantity=""+form.elements[2].value;
+		var item_name=form.elements[0].value;
+		var remark=form.elements[1].value;
+		var rate=form.elements[3].value;
+		var amount=form.elements[4].value;		
+
+		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
+				"<td style='text-align:left;width:.2in'>"+quantity+"</td>"+
+				"<td style='text-align:left;width:1.5in'>"+item_name+"</td>"+
+				"<td style='text-align:left;width:.5in'>"+remark+"</td>"+
+				"<td style='text-align:left;width:.3in'>"+rate+"</td>"+
+				"<td style='text-align:left;width:.3in'>"+amount+"</td></tr>";
 	});
 	
-	$(table_copy).find('label').each(function(index)
-	{
-		$(this).replaceWith($(this).html());
-	});
-		
-	$(table_copy).find('tfoot > tr > td:first').attr('colspan','1');
-	$(table_copy).find('tfoot > tr > td:nth-child(2)').attr('colspan','2');
-	
-	
-	//table_copy.removeAttribute('class');
-	//$(table_copy).attr('style','min-height:600px;');
-	$(table_copy).find('tbody').attr('style','height:500px;min-height:500px;');
-	$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
-	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
-	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
-	$(table_copy).find("tbody>tr").attr('style','flex:1;height:30px');
-	
-	$(table_copy).find("th:first, td:first").css('width','300px');
-	var row_count=$(table_copy).find('tbody>tr').length;
+	var row_count=$(table_element).find('tbody>tr').length;
 	var rows_to_add=15-row_count;
 	for(var i=0;i<rows_to_add;i++)
 	{
-		$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
+		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:.2in;'><td></td><td></td><td></td><td></td><td></td></tr>";
 	}
+
+	var table_foot=document.getElementById(form_id+'_foot');
+	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
+	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
+	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
 	
-	/////////////placing the containers //////////////////////////////////////////////////////	
+	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
+				"<td colspan='2' style='text-align:left;'>"+total_quantity+"</td>"+
+				"<td style='text-align:left;'>"+total_text+"</td>"+
+				"<td colspan='2' style='text-align:left;width:.3in'>"+total_amount+"</td></tr>";
+		
+	table_rows+=table_foot_row;
+	new_table.innerHTML=table_rows;
+	
+
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	container.appendChild(header);
 	container.appendChild(invoice_box);
 	container.appendChild(info_section);
 
-	container.appendChild(table_copy);
+	container.appendChild(new_table);
 
 	header.appendChild(business_title);
 

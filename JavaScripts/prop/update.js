@@ -500,11 +500,26 @@ function form10_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			quantity+=parseFloat(subform.elements[2].value);
-			total+=parseFloat(subform.elements[4].value);
-			amount+=parseFloat(subform.elements[5].value);
-			discount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[7].value);			
+			if(!isNaN(parseFloat(subform.elements[2].value)))
+			{
+				quantity+=parseFloat(subform.elements[2].value);
+			}	
+			if(!isNaN(parseFloat(subform.elements[4].value)))
+			{
+				amount+=parseFloat(subform.elements[4].value);
+			}	
+			if(!isNaN(parseFloat(subform.elements[5].value)))
+			{
+				discount+=parseFloat(subform.elements[5].value);
+			}	
+			if(!isNaN(parseFloat(subform.elements[6].value)))
+			{
+				tax+=parseFloat(subform.elements[6].value);
+			}	
+			if(!isNaN(parseFloat(subform.elements[7].value)))
+			{
+				total+=parseFloat(subform.elements[7].value);
+			}
 		});
 		
 		var data_id=form.elements['bill_id'].value;

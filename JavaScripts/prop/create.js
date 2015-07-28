@@ -193,10 +193,10 @@ function form10_create_item(form)
 		var notes=form.elements[1].value;
 		var quantity=form.elements[2].value;
 		var price=form.elements[3].value;
-		var total=form.elements[4].value;
-		var amount=form.elements[5].value;
-		var discount=form.elements[6].value;
-		var tax=form.elements[7].value;
+		var amount=form.elements[4].value;
+		var discount=form.elements[5].value;
+		var tax=form.elements[6].value;
+		var total=form.elements[7].value;
 		var data_id=form.elements[8].value;
 		var save_button=form.elements[9];
 		var del_button=form.elements[10];
@@ -280,11 +280,27 @@ function form10_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			quantity+=parseFloat(subform.elements[2].value);
-			total+=parseFloat(subform.elements[4].value);
-			amount+=parseFloat(subform.elements[5].value);
-			discount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[7].value);
+			
+			if(!isNaN(parseFloat(subform.elements[2].value)))
+			{
+				quantity+=parseFloat(subform.elements[2].value);
+			}	
+			if(!isNaN(parseFloat(subform.elements[4].value)))
+			{
+				amount+=parseFloat(subform.elements[4].value);
+			}	
+			if(!isNaN(parseFloat(subform.elements[5].value)))
+			{
+				discount+=parseFloat(subform.elements[5].value);
+			}	
+			if(!isNaN(parseFloat(subform.elements[6].value)))
+			{
+				tax+=parseFloat(subform.elements[6].value);
+			}	
+			if(!isNaN(parseFloat(subform.elements[7].value)))
+			{
+				total+=parseFloat(subform.elements[7].value);
+			}
 		});
 
 		var data_id=form.elements['bill_id'].value;

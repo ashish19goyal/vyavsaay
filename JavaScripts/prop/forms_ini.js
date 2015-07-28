@@ -742,13 +742,13 @@ function form10_ini()
 							rowsHTML+="<input type='number' step='1' readonly='readonly' form='form10_"+id+"' value='"+result.quantity+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Price'>";
-							rowsHTML+="<input type='number' readonly='readonly' form='form10_"+id+"' value='"+result.unit_price+"' step='any'>";
+							rowsHTML+="Unit Price: <input type='number' readonly='readonly' form='form10_"+id+"' value='"+result.unit_price+"' step='any'>";
+							rowsHTML+="<br>Amount: <input type='hidden' form='form10_"+id+"' value='"+result.amount+"'>";
+							rowsHTML+="<br>Discount: <input type='hidden' form='form10_"+id+"' value='"+result.discount+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.total+"'>";
-							rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.amount+"'>";
-							rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.discount+"'>";
 							rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.tax+"'>";
+							rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+result.total+"'>";
 							rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form10_"+id+"' id='save_form10_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form10_"+id+"' id='delete_form10_"+id+"' onclick='form10_delete_item($(this));'>";

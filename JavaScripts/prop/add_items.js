@@ -92,13 +92,13 @@ function form10_add_item()
 				rowsHTML+="<input type='number' step='1' form='form10_"+id+"' value='1'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Price'>";
-				rowsHTML+="<input type='number' required form='form10_"+id+"' step='any'>";
+				rowsHTML+="Unit Price: <input type='number' required form='form10_"+id+"' step='any'>";
+				rowsHTML+="<br>Amount: <input type='number' readonly='readonly' step='any' form='form10_"+id+"' name='amount'>";
+				rowsHTML+="<br>Discount: <input type='number' step='any' form='form10_"+id+"' name='discount' value='0'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form10_"+id+"' name='total'>";
-				rowsHTML+="<input type='hidden' form='form10_"+id+"' name='amount'>";
-				rowsHTML+="<input type='hidden' form='form10_"+id+"' name='discount'>";
 				rowsHTML+="<input type='hidden' form='form10_"+id+"' name='tax'>";
+				rowsHTML+="<input type='hidden' form='form10_"+id+"' name='total'>";
 				rowsHTML+="<input type='hidden' form='form10_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form10_"+id+"' id='save_form10_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form10_"+id+"' id='delete_form10_"+id+"' onclick='$(this).parent().parent().remove();'>";
@@ -114,10 +114,10 @@ function form10_add_item()
 		var notes_filter=fields.elements[1];
 		var quantity_filter=fields.elements[2];
 		var price_filter=fields.elements[3];
-		var total_filter=fields.elements[4];
-		var amount_filter=fields.elements[5];
-		var discount_filter=fields.elements[6];
-		var tax_filter=fields.elements[7];
+		var amount_filter=fields.elements[4];
+		var discount_filter=fields.elements[5];
+		var tax_filter=fields.elements[6];
+		var total_filter=fields.elements[7];
 		var id_filter=fields.elements[8];
 		var save_button=fields.elements[9];
 		var tax_unit_filter=fields.elements[12];
@@ -179,18 +179,16 @@ function form10_add_item()
 				{
 					price_filter.value=prices[0].price;
 					tax_unit_filter.value=prices[0].tax;
-					var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
-					amount_filter.value=amount;
-					tax_filter.value=parseFloat((parseFloat(tax_unit_filter.value)*(amount-parseFloat(discount_filter.value)))/100);
+					amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+					tax_filter.value=parseFloat((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)-parseFloat(discount_filter.value)))/100);
 				}
 				total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
 			});					
 		});
-		$(quantity_filter).on('blur',function () 
+		$(quantity_filter).add(price_filter).add(discount_filter).on('blur',function () 
 		{
-			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
-			amount_filter.value=amount;
-			tax_filter.value=parseFloat((parseFloat(tax_unit_filter.value)*(amount-parseFloat(discount_filter.value)))/100);
+			amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			tax_filter.value=parseFloat((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)-parseFloat(discount_filter.value)))/100);
 			total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);			
 		});
 	}
