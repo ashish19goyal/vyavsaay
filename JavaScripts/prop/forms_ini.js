@@ -733,7 +733,7 @@ function form10_ini()
 					rowsHTML+="<tr>";
 					rowsHTML+="<form id='form10_"+id+"'></form>";
 						rowsHTML+="<td data-th='Item'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form10_"+id+"' value='"+result.item_name+"'>";
+							rowsHTML+="<textarea readonly='readonly' form='form10_"+id+"'>"+result.item_name+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Remark'>";
 							rowsHTML+="<textarea readonly='readonly' form='form10_"+id+"'>"+result.notes+"</textarea>";
@@ -17676,7 +17676,7 @@ function form173_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[5];
+		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{

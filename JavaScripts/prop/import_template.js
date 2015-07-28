@@ -27,7 +27,7 @@ function form8_import_template()
 {
 	var data_array=['id','name','phone','email','status','joining_date','qualification',
 	                'skills','fixed_comp','variable_comp_rate','monthly_hours','allowed_pto','acc_name',
-	                'address','pincode','city','state','country','address_status'];
+	                'address','pincode','city','state','country','address_status','username'];
 	my_array_to_csv(data_array);
 };
 

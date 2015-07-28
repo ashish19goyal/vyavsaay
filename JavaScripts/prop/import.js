@@ -191,11 +191,13 @@ function form8_import(data_array,import_type)
 				"<acc_name>"+row.acc_name+"</acc_name>" +
 				"<description></description>" +
 				"<type>staff</type>" +
+				"<username unique='yes'>"+row.username+"</username>" +
+				"<status>active</status>"+				
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});
 
-	data_xml+="</assets>";
+	data_xml+="</staff>";
 	account_xml+="</accounts>";
 	if(import_type=='create_new')
 	{

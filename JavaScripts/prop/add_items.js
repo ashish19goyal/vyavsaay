@@ -82,7 +82,7 @@ function form10_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form10_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' required form='form10_"+id+"'>";
+				rowsHTML+="<input type='text' class='wideinput' required form='form10_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' id='form10_add_service_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Remark'>";
