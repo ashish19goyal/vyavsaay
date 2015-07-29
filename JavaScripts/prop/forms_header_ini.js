@@ -7307,4 +7307,17 @@ function form214_header_ini()
 	$(date_filter).datepicker();
 
 	$('#form214_attributes').html("");
+	
+	var logo_image=get_session_var('logo');
+	var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+	var intro_text=business_intro_text+"<br>Address: "+business_address+"<br>Phone: "+business_phone+"<br>Email: "+
+				business_email+"<br>Web: "+business_website;
+	
+	$('#form214_logo').attr('src','./client_images/'+logo_image);
+	$('#form214_intro').html(intro_text);
+	
 }

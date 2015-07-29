@@ -205,7 +205,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 	var business_website=get_session_var('website');
 	var tandc_text=get_session_var('bill_message');
 	var powered_by_text=get_session_var('powered_by');	
-	var powered_by_link=get_session_var('powered_by_link');	
+	var powered_by_link=get_session_var('powered_by_link');
 	
 ////////////////filling in the content into the containers/////////////////////////////////////
 

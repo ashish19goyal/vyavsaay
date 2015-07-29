@@ -362,12 +362,13 @@
 	"update_logistics_orders":"Update Logistics Orders",
 	"update_logistics_orders_branches":"Update Logistics Orders (branches)",
 	"sale_leads_followup":"Sale Leads (with follow-up)",
-	"update_orders":"Update Orders",
+	"update_orders":"Update Status",
 	"sale_leads_self":"Sale Lead (self)",
 	"items_dispatch_nikki":"Items Dispatch (Nikki)",
 	"order_picklist":"Order Picklist",
 	"pending_po_items":"Pending Purchase Order Items",
 	"dispatch_items":"Dispatch Items",
-	"self_entry":"Self Entry"
+	"self_entry":"Self Entry",
+	"total_sales":"Total Sales"
 	}
 }

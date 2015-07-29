@@ -1596,3 +1596,24 @@ function report78_header_ini()
 	set_my_filter(customer_data,customer_filter);
 	$(date_filter).datepicker();
 }
+
+/**
+ * @reportNo 80
+ * @report Total Sales
+ */
+function report80_header_ini()
+{	
+	var form=document.getElementById('report80_header');
+	var start_filter=form.elements[1];
+	var end_filter=form.elements[2];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report80_ini();
+	});
+	
+	$(start_filter).datepicker();
+	$(end_filter).datepicker();	
+}

@@ -1,4 +1,6 @@
 <div id='form214' class='function_detail'>
+	<div><img id='form214_logo' style='width:90%;height:'></div>
+	<br>
 	<form id='form214_master' autocomplete="off" class='questionnaire_form'>
 		<label>Name: <input name='name' type='text' class='widebox' required></label><br>
 		<label>Phone: <input name='phone' type="tel" class='widebox' required></label><br>
@@ -16,4 +18,6 @@
 		<label>Contact Person: <input type='text' name='contact' class='widebox' required></label>
 		<label><input type='submit' name='save' value='Save' class='generic_icon widebox'></label>
 	</form>
+	<br>
+	<div id='form214_intro' style='text-align:center'></div>	
 </div>
