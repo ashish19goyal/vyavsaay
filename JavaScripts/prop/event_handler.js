@@ -23,6 +23,7 @@ function default_load()
 	vyavsaay_active_tab="";
 	
 	modal_forms_ini();
+	fix_orientation();
 	
 	if(is_set_session())
 	{
@@ -61,6 +62,16 @@ function default_load()
 	}
 }
 
+function fix_orientation()
+{
+	window.addEventListener('orientationchange', function ()
+	{
+	    if (window.innerHeight < window.innerWidth)
+	    {
+	        document.getElementsByTagName('body').style.transform = "rotate(90deg)";
+	    }
+	});
+}
 
 function show_progress()
 {
