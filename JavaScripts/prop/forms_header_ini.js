@@ -7314,10 +7314,10 @@ function form214_header_ini()
 	var business_phone=get_session_var('phone');
 	var business_email=get_session_var('email');
 	var business_website=get_session_var('website');
-	var intro_text=business_intro_text+"<br>Address: "+business_address+"<br>Phone: "+business_phone+"<br>Email: "+
-				business_email+"<br>Web: "+business_website;
+	//var intro_text=business_intro_text+"<br>Address: "+business_address+"<br>Phone: "+business_phone+"<br>Email: "+
+	//			business_email+"<br>Web: "+business_website;
 	
 	$('#form214_logo').attr('src','./client_images/'+logo_image);
-	$('#form214_intro').html(intro_text);
+//	$('#form214_intro').html(intro_text);
 	
 }
