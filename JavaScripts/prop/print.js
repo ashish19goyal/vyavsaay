@@ -420,7 +420,7 @@ function print_form10(func)
 
 	var table_element=document.getElementById(form_id+'_body');
 	
-	/////////////placing the containers //////////////////////////////////////////////////////	
+	/////////////adding new table //////////////////////////////////////////////////////	
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','font-size:10px;border:1px solid black;text-align:left;');
 	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'><td style='text-align:left;width:.2in;'>Qty</td>"+
@@ -611,30 +611,64 @@ function print_form24(func)
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
 
-	var table_element=document.getElementById(form_id+'_body').parentNode;
-	table_copy=table_element.cloneNode(true);
+	var table_element=document.getElementById(form_id+'_body');
 	
-	table_copy.removeAttribute('class');
-	$(table_copy).find("a,img,input[type=checkbox],th:last-child, td:last-child,form").remove();
-	$(table_copy).find('input,textarea').each(function(index)
+	/////////////adding new table //////////////////////////////////////////////////////	
+	var new_table=document.createElement('table');
+	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
+	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
+				"<td style='text-align:left;width:150px;'>Item Name</td>"+
+				"<td style='text-align:left;width:100px'>SKU</td>"+
+				"<td style='text-align:left;width:50px'>Qty</td>"+
+				"<td style='text-align:left;width:50px'>MRP</td>"+
+				"<td style='text-align:left;width:50px'>Price</td>"+
+				"<td style='text-align:left;width:50px'>Tax</td>"+
+				"<td style='text-align:left;width:100px'>Total(inc taxes)</td></tr>";
+				
+	var table_rows=table_header;
+	var counter=0;
+	
+	$(table_element).find('form').each(function(index)
 	{
-		$(this).replaceWith($(this).val());
+		counter+=1;
+		var form=$(this)[0];
+		var item_desc=form.elements[1].value;
+		var item_name=form.elements[0].value;
+		var quantity=""+form.elements[2].value;
+		var mrp=form.elements[4].value;
+		var price=form.elements[5].value;
+		var tax_rate=form.elements[7].value;		
+		var total=form.elements[9].value;
+
+		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
+				"<td style='text-align:left;'>"+item_desc+"</td>"+
+				"<td style='text-align:left;'>"+item_name+"</td>"+
+				"<td style='text-align:left;'>"+quantity+"</td>"+
+				"<td style='text-align:left;'>"+mrp+"</td>"+
+				"<td style='text-align:left;'>"+price+"</td>"+
+				"<td style='text-align:left;'>"+tax_rate+"</td>"+
+				"<td style='text-align:left;'>"+total+"</td></tr>";
 	});
 	
-	$(table_copy).find('label').each(function(index)
+	var row_count=$(table_element).find('tbody>tr').length;
+	var rows_to_add=20-row_count;
+	for(var i=0;i<rows_to_add;i++)
 	{
-		$(this).replaceWith($(this).html());
-	});
+		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+	}
 
-	$(table_copy).find('tbody').attr('style','height:400px;');
-	$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
-	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
-	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
-
-	$(table_copy).find("tbody>tr").attr('style','flex:1;height:30px');
+	var table_foot=document.getElementById(form_id+'_foot');
+	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
+	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
+	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
 	
-	$(table_copy).find("th:first, td:first").css('width','300px');
-	$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
+	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
+				"<td colspan='3' style='text-align:left;'>"+total_quantity+"</td>"+
+				"<td colspan='2' style='text-align:left;'>"+total_text+"</td>"+
+				"<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr>";
+		
+	table_rows+=table_foot_row;
+	new_table.innerHTML=table_rows;
 	
 	/////////////placing the containers //////////////////////////////////////////////////////	
 	
@@ -642,7 +676,7 @@ function print_form24(func)
 	container.appendChild(invoice_line);
 	container.appendChild(info_section);
 	
-	container.appendChild(table_copy);
+	container.appendChild(new_table);
 	container.appendChild(footer);
 	
 	header.appendChild(logo);

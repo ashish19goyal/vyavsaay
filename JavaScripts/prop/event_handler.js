@@ -23,7 +23,7 @@ function default_load()
 	vyavsaay_active_tab="";
 	
 	modal_forms_ini();
-	fix_orientation();
+	//fix_orientation();
 	
 	if(is_set_session())
 	{
@@ -66,11 +66,13 @@ function fix_orientation()
 {
 	window.addEventListener('orientationchange', function ()
 	{
+		console.log('orientationchanged');
 	    if (window.innerHeight < window.innerWidth)
 	    {
+			console.log('rotated');	
 	        document.getElementsByTagName('body').style.transform = "rotate(90deg)";
 	    }
-	});
+	},false);
 }
 
 function show_progress()
@@ -301,7 +303,7 @@ function modal_forms_ini()
 		});
 	}
 
-	for(var i=101;i<137;i++)
+	for(var i=101;i<138;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({

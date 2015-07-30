@@ -1756,20 +1756,23 @@ function form24_create_item(form)
 		var order_id=document.getElementById("form24_master").elements[5].value;
 		
 		var name=form.elements[0].value;
-		var quantity=form.elements[1].value;
-		var make=form.elements[2].value;
-		var mrp=form.elements[3].value;
-		var price=form.elements[4].value;
-		var amount=form.elements[5].value;
-		var tax=form.elements[6].value;
-		var total=form.elements[7].value;
-		var data_id=form.elements[8].value;
-		var save_button=form.elements[9];
-		var del_button=form.elements[10];
+		var desc=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var make=form.elements[3].value;
+		var mrp=form.elements[4].value;
+		var price=form.elements[5].value;
+		var amount=form.elements[6].value;
+		var tax_rate=form.elements[7].value;
+		var tax=form.elements[8].value;
+		var total=form.elements[9].value;
+		var data_id=form.elements[10].value;
+		var save_button=form.elements[11];
+		var del_button=form.elements[12];
 		var last_updated=get_my_time();
 		var data_xml="<purchase_order_items>" +
 				"<id>"+data_id+"</id>" +
 				"<item_name>"+name+"</item_name>" +
+				"<item_desc>"+desc+"</item_desc>" +
 				"<quantity>"+quantity+"</quantity>" +
 				"<order_id>"+order_id+"</order_id>" +
 				"<make>"+make+"</make>" +
@@ -1777,6 +1780,7 @@ function form24_create_item(form)
 				"<price>"+price+"</price>" +
 				"<amount>"+amount+"</amount>" +
 				"<tax>"+tax+"</tax>" +
+				"<tax_rate>"+tax_rate+"</tax_rate>" +
 				"<total>"+total+"</total>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</purchase_order_items>";	
@@ -1790,7 +1794,7 @@ function form24_create_item(form)
 			local_create_simple(data_xml);
 		}
 		
-		for(var i=0;i<8;i++)
+		for(var i=0;i<10;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -1820,11 +1824,11 @@ function form24_get_totals()
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
 		
-		if(!isNaN(parseFloat(subform.elements[5].value)))
+		if(!isNaN(parseFloat(subform.elements[6].value)))
 		{
-			amount+=parseFloat(subform.elements[5].value);
-			tax+=parseFloat(subform.elements[6].value);
-			total+=parseFloat(subform.elements[7].value);
+			amount+=parseFloat(subform.elements[6].value);
+			tax+=parseFloat(subform.elements[8].value);
+			total+=parseFloat(subform.elements[9].value);
 		}		
 	});
 	
@@ -1874,14 +1878,14 @@ function form24_create_form()
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
 			
-			if(!isNaN(parseFloat(subform.elements[5].value)))
+			if(!isNaN(parseFloat(subform.elements[6].value)))
 			{
-				amount+=parseFloat(subform.elements[5].value);
-				tax+=parseFloat(subform.elements[6].value);
-				total+=parseFloat(subform.elements[7].value);
+				amount+=parseFloat(subform.elements[6].value);
+				tax+=parseFloat(subform.elements[8].value);
+				total+=parseFloat(subform.elements[9].value);
 			}
-			if(!isNaN(parseFloat(subform.elements[1].value)))			
-				total_quantity+=parseFloat(subform.elements[1].value);						
+			if(!isNaN(parseFloat(subform.elements[2].value)))			
+				total_quantity+=parseFloat(subform.elements[2].value);						
 		
 		});
 		
@@ -1926,9 +1930,9 @@ function form24_create_form()
 		}
 
 		var num_data="<user_preferences>"+
-						"<id></id>"+						
-						"<name exact='yes'>po_num</name>"+												
-						"</user_preferences>";
+					"<id></id>"+						
+					"<name exact='yes'>po_num</name>"+												
+					"</user_preferences>";
 		get_single_column_data(function (bill_num_ids)
 		{
 			if(bill_num_ids.length>0)
@@ -14327,6 +14331,33 @@ function form214_create_item()
 		
 		create_row(lead_xml,activity_xml);
 		create_simple_no_warning(customer_xml);
+		
+		var business_title=get_session_var('title');
+		var sms_content=get_session_var('sms_content');			
+		var message=sms_content.replace(/customer_name/g,name);
+		message=message.replace(/business_title/g,business_title);
+		
+		send_sms(phone,message,'transaction');
+		///////////////////////////////////////////////////////////////////////////////
+
+		var nl_name=get_session_var('default_newsletter');
+		var nl_id_xml="<newsletter>"+
+					"<id></id>"+
+					"<name exact='yes'>"+nl_name+"</name>"+
+					"</newsletter>";
+		get_single_column_data(function(nls)
+		{
+			var subject=nl_name;
+			var nl_id=nls[0];	
+			print_newsletter(nl_name,nl_id,'mail',function(container)
+			{
+				var message=container.innerHTML;
+				var to=name+":"+email;
+				var from=get_session_var('email');
+				send_email(to,from,business_title,subject,message,function(){});
+			});
+		},nl_id_xml);
+	
 		
 		$("#form214_attributes").find('input, select').each(function()
 		{

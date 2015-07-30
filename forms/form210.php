@@ -10,9 +10,9 @@
 		<thead id='form210_head'>
 			<tr>
 				<form id='form210_header'></form>
-					<th>AWB #</th>
-					<th>Order #</th>
-					<th><input type='button' form='form210_header' title='Add item' class='add_icon' onclick='form210_add_item();'></th>
+				<th>AWB #</th>
+				<th>Order #</th>
+				<th><input type='button' form='form210_header' title='Add item' class='add_icon' onclick='form210_add_item();'></th>
 			</tr>
 		</thead>
 		<tbody id='form210_body'>

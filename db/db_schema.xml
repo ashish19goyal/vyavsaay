@@ -137,10 +137,10 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<order_date index='yes' type="BIGINT"></order_date>
 			<supplier index='yes' type="TEXT"></supplier>
-			<status index='yes' type="VARCHAR(25)"></status><!-- cancelled/order placed/draft/partially received/closed -->
+			<status index='yes' type="VARCHAR(25)"></status><!-- cancelled/order placed/draft/partially received/completely received/closed -->
 			<order_num index='yes' type="TEXT"></order_num>
 			<priority index='yes' type="TEXT"></priority>
-			<bill_id index='yes' type="BIGINT"></bill_id>
+			<bill_id index='yes' type="TEXT"></bill_id>
 			<amount index='no' type='DECIMAL(12,2)'></amount>
 			<tax index='no' type='DECIMAL(12,2)'></tax>
 			<total index='no' type='DECIMAL(12,2)'></total>
@@ -154,11 +154,13 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<order_id index='yes' type="BIGINT"></order_id>
 			<item_name index='yes' type="TEXT"></item_name>
+			<item_desc index='yes' type="TEXT"></item_desc>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<make index='yes' type='TEXT'></make>
 			<price index='no' type='DECIMAL(12,2)'></price>
 			<amount index='no' type='DECIMAL(12,2)'></amount>
 			<tax index='no' type='DECIMAL(12,2)'></tax>
+			<tax_rate index='no' type='DECIMAL(12,2)'></tax_rate>
 			<total index='no' type='DECIMAL(12,2)'></total>
 			<mrp index='no' type='DECIMAL(12,2)'></mrp>
 			<last_updated index='yes' type="BIGINT"></last_updated>

@@ -1096,6 +1096,7 @@
 	</div>
 
 	<div id="modal133" title="Analyze Order">
+		<br>		
 		<table id='modal133_item_table'>
 		</table>
 		<br>
@@ -1141,6 +1142,17 @@
 				<input type="submit" value='Save' name='save' class='modal_submit'>
 			</fieldset>
 		</form>
+	</div>
+
+	<div id="modal137" title="View Bills">
+		<br>		
+		<table id='modal137_item_table'>
+		</table>
+		<br>
+		<br>
+		<form id='modal137_form'>
+			<input type="button" class='modal_submit' id='modal137_cancel' value='Cancel' onclick="$('#modal137').dialog('close');">
+		</form>	
 	</div>
 
 </div>

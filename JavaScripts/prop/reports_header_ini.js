@@ -1598,6 +1598,30 @@ function report78_header_ini()
 }
 
 /**
+ * @reportNo 79
+ * @report Pending PO items
+ */
+function report79_header_ini()
+{	
+	var form=document.getElementById('report79_header');
+	var order_filter=form.elements[1];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report79_ini();
+	});
+	
+	var order_data="<purchase_orders>"+
+				"<order_num></order_num>"+
+				"<status array='yes'>--order placed--partially received--</status>"+
+				"</purchase_orders>";
+	set_my_filter(order_data,order_filter);
+}
+
+
+/**
  * @reportNo 80
  * @report Total Sales
  */

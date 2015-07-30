@@ -943,7 +943,10 @@ function form24_header_ini()
 	var supplier_data="<suppliers>" +
 		"<acc_name></acc_name>" +
 		"</suppliers>";	
-	set_my_value_list(supplier_data,supplier_filter);
+	set_my_value_list(supplier_data,supplier_filter,function () 
+	{
+		$(supplier_filter).focus();
+	});
 	
 	$(order_date).datepicker();
 	order_date.value=get_my_date();

@@ -1859,6 +1859,7 @@ function form24_ini()
 		var order_items_column="<purchase_order_items>" +
 				"<id></id>" +
 				"<item_name></item_name>" +
+				"<item_desc></item_desc>" +
 				"<quantity></quantity>" +
 				"<order_id exact='yes'>"+order_id+"</order_id>" +
 				"<make></make>" +
@@ -1866,6 +1867,7 @@ function form24_ini()
 				"<price></price>" +
 				"<amount></amount>"+
 				"<tax></tax>"+
+				"<tax_rate></tax_rate>"+
 				"<total></total>"+				
 				"</purchase_order_items>";
 	
@@ -1912,7 +1914,8 @@ function form24_ini()
 					rowsHTML+="<tr>";
 					rowsHTML+="<form id='form24_"+id+"'></form>";
 						rowsHTML+="<td data-th='Item Name'>";
-							rowsHTML+="<textarea readonly='readonly' required form='form24_"+id+"'>"+result.item_name+"</textarea>";
+							rowsHTML+="<input readonly='readonly' type='text' required form='form24_"+id+"' value='"+result.item_name+"'>";
+							rowsHTML+="<br><textarea readonly='readonly' form='form24_"+id+"'>"+result.item_desc+"</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
 							rowsHTML+="<input type='number' readonly='readonly' required form='form24_"+id+"' value='"+result.quantity+"'>";
@@ -1924,6 +1927,7 @@ function form24_ini()
 							rowsHTML+="MRP: <input type='number' readonly='readonly' required form='form24_"+id+"' value='"+result.mrp+"' step='any'>";
 							rowsHTML+="<br>Price: <input type='number' readonly='readonly' required form='form24_"+id+"' value='"+result.price+"' step='any'>";
 							rowsHTML+="<br>Amount: <input type='number' readonly='readonly' required form='form24_"+id+"' value='"+result.amount+"' step='any'>";
+							rowsHTML+="<br>Tax Rate: <input type='number' readonly='readonly' form='form24_"+id+"' value='"+result.tax_rate+"' step='any'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' readonly='readonly' form='form24_"+id+"' value='"+result.tax+"'>";
@@ -3018,18 +3022,22 @@ function form43_ini()
 					else if(result.status=='partially received')
 					{
 						rowsHTML+="<br><input type='button' name='issue_quantity' class='generic_icon' form='form43_"+result.id+"' value='GRN without QC'>";
-						rowsHTML+="<br><input type='button' name='new_order' class='generic_icon' form='form43_"+result.id+"' value='New Order'>";
 					}
 					
 					if(result.bill_id!='' && result.bill_id!='null')
 					{
 						rowsHTML+="<br><input type='button' name='view_bill' class='generic_icon' form='form43_"+result.id+"' value='View Bill'>";
 					}
-					else if(result.status=='order placed' || result.status=='partially_received')
+					else if(result.status=='order placed' || result.status=='partially received')
 					{
 						rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form43_"+result.id+"' value='GRN with QC'>";
 					}
 
+					if(result.status=='partially received')
+					{
+						rowsHTML+="<br><input type='button' name='new_order' class='generic_icon' form='form43_"+result.id+"' value='New Order'>";
+					}
+					
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 
@@ -3269,10 +3277,11 @@ function form43_ini()
 				var view_button=fields.elements['view_bill'];
 				$(view_button).on('click',function()
 				{
-					element_display(result.bill_id,'form122');
+					modal137_action(result.bill_id);
+					//element_display(result.bill_id,'form122');
 				});
 			}
-			else if(result.status=='order placed' || result.status=='partially_received')
+			else if(result.status=='order placed' || result.status=='partially received')
 			{
 				var issue_button=fields.elements['issue_grn'];
 				$(issue_button).on('click',function()
@@ -3314,7 +3323,7 @@ function form43_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[4];
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{

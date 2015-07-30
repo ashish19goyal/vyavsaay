@@ -1118,6 +1118,7 @@ function form24_add_item()
 			rowsHTML+="<td data-th='Item Name'>";
 				rowsHTML+="<input type='text' required form='form24_"+id+"' value=''>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form24_add_product_"+id+"'>";
+				rowsHTML+="<br><textarea readonly='readonly' form='form24_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form24_"+id+"' value='' step='any'>";
@@ -1129,6 +1130,7 @@ function form24_add_item()
 				rowsHTML+="MRP: <input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly'>";
 				rowsHTML+="<br>Price: <input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly' class='dblclick_editable'>";
 				rowsHTML+="<br>Amount: <input type='number' required readonly='readonly' form='form24_"+id+"' step='any' class='dblclick_editable'>";
+				rowsHTML+="<br>Tax Rate: <input type='number' readonly='readonly' step='any' form='form24_"+id+"' name='tax_rate'>";		
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form24_"+id+"' name='tax'>";
@@ -1137,7 +1139,6 @@ function form24_add_item()
 				rowsHTML+="<input type='button' class='submit_hidden' form='form24_"+id+"' id='save_form24_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form24_"+id+"' id='delete_form24_"+id+"' onclick='$(this).parent().parent().remove(); form24_get_totals();'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form24_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form24_"+id+"' name='tax_rate'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -1148,16 +1149,17 @@ function form24_add_item()
 		
 		var fields=document.getElementById("form24_"+id);
 		var name_filter=fields.elements[0];
-		var quantity_filter=fields.elements[1];
-		var make_filter=fields.elements[2];
-		var mrp_filter=fields.elements[3];
-		var price_filter=fields.elements[4];
-		var amount_filter=fields.elements[5];
-		var tax_filter=fields.elements[6];
-		var total_filter=fields.elements[7];
-		var id_filter=fields.elements[8];
-		var save_button=fields.elements[9];
-		var tax_rate_filter=fields.elements[12];
+		var desc_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
+		var make_filter=fields.elements[3];
+		var mrp_filter=fields.elements[4];
+		var price_filter=fields.elements[5];
+		var amount_filter=fields.elements[6];
+		var tax_rate_filter=fields.elements[7];
+		var tax_filter=fields.elements[8];
+		var total_filter=fields.elements[9];
+		var id_filter=fields.elements[10];
+		var save_button=fields.elements[11];
 				
 		$(save_button).on("click", function(event)
 		{
@@ -1199,6 +1201,7 @@ function form24_add_item()
 			var make_data="<product_master count='1'>" +
 					"<make></make>" +
 					"<tax></tax>"+
+					"<description></description>"+
 					"<name exact='yes'>"+name_filter.value+"</name>" +
 					"</product_master>";
 			fetch_requested_data('',make_data,function (makes) 
@@ -1207,6 +1210,7 @@ function form24_add_item()
 				{
 					make_filter.value=makes[0].make;
 					tax_rate_filter.value=makes[0].tax;
+					desc_filter.value=makes[0].description;
 				}
 			});			
 			

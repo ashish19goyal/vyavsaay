@@ -900,6 +900,7 @@ function form24_import(data_array,import_type)
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
+				"<item_desc>"+row.item_desc+"</item_desc>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<make>"+row.make+"</make>" +
 				"<order_id>"+row.order_id+"</order_id>" +
