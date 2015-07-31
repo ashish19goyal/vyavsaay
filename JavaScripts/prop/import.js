@@ -4318,6 +4318,7 @@ function form122_import(data_array,import_type)
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<batch>"+row.batch+"</batch>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
+				"<mrp>"+row.mrp+"</mrp>" +
 				"<unit_price>"+row.unit_price+"</unit_price>" +
 				"<amount>"+row.amount+"</amount>" +
 				"<tax>"+row.tax+"</tax>" +

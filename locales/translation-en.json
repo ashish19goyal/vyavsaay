@@ -369,6 +369,8 @@
 	"pending_po_items":"Pending Purchase Order Items",
 	"dispatch_items":"Dispatch Items",
 	"self_entry":"Self Entry",
-	"total_sales":"Total Sales"
+	"total_sales":"Total Sales",
+	"grn_item_accept_editable":"Edit acceptability of GRN items",
+	"purchase_bill_approver":"Purchase bill approver"
 	}
 }

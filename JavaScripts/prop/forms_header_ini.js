@@ -3077,6 +3077,13 @@ function form108_header_ini()
 		worker_update_orders_status();
 	});
 	
+	var import_button=filter_fields.elements['import'];
+	$(import_button).off('click');	
+	$(import_button).on('click',function () 
+	{
+		modal138_action();
+	});
+	
 	var order_data="<sale_orders>" +
 			"<id></id>" +
 			"</sale_orders>";
@@ -4140,6 +4147,7 @@ function form122_header_ini()
 				"<supplier exact='yes'>"+supplier_filter.value+"</supplier>" +
 				"<item_desc></item_desc>"+
 				"<batch></batch>"+
+				"<mrp></mrp>"+
 				"<unit_price></unit_price>"+
 				"<amount></amount>"+
 				"<tax></tax>"+
@@ -4166,6 +4174,7 @@ function form122_header_ini()
 						rowsHTML+="<td data-th='Batch'>";
 							rowsHTML+="<input type='text' form='form122_"+id+"' value='"+ub_item.batch+"' required readonly='readonly'>";
 							rowsHTML+="<br>Quantity: <input type='number' form='form122_"+id+"' value='"+ub_item.quantity+"' required step='any' readonly='readonly'>";
+							rowsHTML+="<br>MRP: <input type='number' form='form122_"+id+"' value='"+ub_item.mrp+"' required step='any' readonly='readonly'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Amount'>";
 							rowsHTML+="Unit Price: Rs. <input type='number' form='form122_"+id+"' value='"+ub_item.unit_price+"' required step='any' readonly='readonly'>";
@@ -4193,7 +4202,7 @@ function form122_header_ini()
 					$('#form122_body').prepend(rowsHTML);
 					
 					var fields=document.getElementById("form122_"+id);
-					var save_button=fields.elements[12];
+					var save_button=fields.elements[13];
 					
 					$(save_button).on("click", function(event)
 					{

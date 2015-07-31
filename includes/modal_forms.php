@@ -1155,4 +1155,19 @@
 		</form>	
 	</div>
 
+	<div id="modal138" title="Import Sale Orders">
+		<form id='modal138_form' autocomplete="off">
+			<fieldset>
+				<input type="button" value='Download import template' class='modal_submit'>
+				<br>
+				<br>
+				<br>
+				<b>Import pre-filled template</b><br>
+				<input type="file" value='Select file' accept=".csv"><br>
+				<output name='selected_file'></output><br>
+				<input type="submit" value='Import' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

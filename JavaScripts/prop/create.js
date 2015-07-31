@@ -8314,16 +8314,17 @@ function form122_create_item(form)
 		var item_desc=form.elements[2].value;
 		var batch=form.elements[3].value;
 		var quantity=form.elements[4].value;
-		var unit_price=form.elements[5].value;
-		var amount=form.elements[6].value;
-		var tax=form.elements[7].value;
+		var mrp=form.elements[5].value;
+		var unit_price=form.elements[6].value;
+		var amount=form.elements[7].value;
+		var tax=form.elements[8].value;
 		var total=parseFloat(amount)+parseFloat(tax);
-		var storage=form.elements[8].value;
-		var qc=form.elements[9].value;
-		var qc_comments=form.elements[10].value;
-		var data_id=form.elements[11].value;
-		var save_button=form.elements[12];
-		var del_button=form.elements[13];
+		var storage=form.elements[9].value;
+		var qc=form.elements[10].value;
+		var qc_comments=form.elements[11].value;
+		var data_id=form.elements[12].value;
+		var save_button=form.elements[13];
+		var del_button=form.elements[14];
 		var is_unbilled=form.elements['unbilled'].value;
 		
 		var last_updated=get_my_time();
@@ -8334,6 +8335,7 @@ function form122_create_item(form)
 					"<item_desc>"+item_desc+"</item_desc>"+
 					"<batch>"+batch+"</batch>" +
 					"<quantity>"+quantity+"</quantity>" +
+					"<mrp>"+mrp+"</mrp>"+
 					"<unit_price>"+unit_price+"</unit_price>"+
 					"<amount>"+amount+"</amount>"+
 					"<tax>"+tax+"</tax>"+
@@ -8473,12 +8475,12 @@ function form122_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			if(subform.elements[9].value=='accepted')
+			if(subform.elements[10].value=='accepted')
 			{
-				if(!isNaN(parseFloat(subform.elements[6].value)))
-					amount+=parseFloat(subform.elements[6].value);
 				if(!isNaN(parseFloat(subform.elements[7].value)))
-					tax+=parseFloat(subform.elements[7].value);
+					amount+=parseFloat(subform.elements[7].value);
+				if(!isNaN(parseFloat(subform.elements[8].value)))
+					tax+=parseFloat(subform.elements[8].value);
 				if(!isNaN(parseFloat(subform.elements[4].value)))
 					total_quantity+=subform.elements[4].value;			
 			}
@@ -8509,6 +8511,7 @@ function form122_create_form()
 					"<discount>"+discount+"</discount>" +
 					"<amount>"+amount+"</amount>" +
 					"<tax>"+tax+"</tax>" +
+					"<notes>pending approval</notes>"+
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</supplier_bills>";
@@ -8520,12 +8523,27 @@ function form122_create_form()
 					"<notes>Supplier Bill # "+bill_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var po_xml="<purchase_orders>" +
+		var po_data="<purchase_orders>"+
 					"<id>"+order_id+"</id>" +
-					"<bill_id>"+data_id+"</bill_id>" +
-					"<quantity_accepted>"+total_quantity+"</quantity_accepted>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
+					"<bill_id></bill_id>" +
+					"<quantity_accepted></quantity_accepted>"+
 					"</purchase_orders>";
+		fetch_requested_data('',po_data,function (porders) 
+		{
+			if(porders.length>0)
+			{
+				var new_bill_id=porders[0].bill_id+"--"+data_id;
+				var quantity_accepted=parseFloat(porders[0].quantity_accepted)+parseFloat(total_quantity);
+				var po_xml="<purchase_orders>" +
+						"<id>"+order_id+"</id>" +
+						"<bill_id>"+new_bill_id+"</bill_id>" +
+						"<quantity_accepted>"+quantity_accepted+"</quantity_accepted>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</purchase_orders>";
+				update_simple(po_xml);
+			}
+		});		
+		
 		var transaction_xml="<transactions>" +
 					"<id>"+transaction_id+"</id>" +
 					"<trans_date>"+get_my_time()+"</trans_date>" +
@@ -8559,29 +8577,28 @@ function form122_create_form()
 					"<tax>0</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-			server_update_simple(po_xml);
-			server_create_simple(transaction_xml);
-			server_create_simple(pt_xml);
-			server_create_simple_func(payment_xml,function()
+		var	notification_xml="<notifications>" +
+					"<id>"+get_new_key()+"</id>" +
+					"<t_generated>"+get_my_time()+"</t_generated>" +
+					"<data_id unique='yes'>"+data_id+"</data_id>" +
+					"<title>Pending purchase bill approval</title>" +
+					"<notes>Purchase bill # "+bill_id+" is pending for approval</notes>" +
+					"<link_to>form53</link_to>" +
+					"<status>pending</status>" +
+					"<target_user>"+get_session_var('purchase_bill_approver')+"</target_user>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</notifications>";
+					
+			create_row(data_xml,activity_xml);
+			create_simple(transaction_xml);
+			create_simple(pt_xml);
+			create_simple_func(payment_xml,function()
 			{
 				//modal28_action(pt_tran_id);
 			});
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-			local_update_simple(po_xml);
-			local_create_simple(transaction_xml);
-			local_create_simple(pt_xml);
-			local_create_simple_func(payment_xml,function()
-			{
-				//modal28_action(pt_tran_id);
-			});
-		}
-		
+			create_simple_no_warning(notification_xml);
+			
+			
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
 		{

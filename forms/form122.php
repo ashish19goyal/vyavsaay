@@ -3,7 +3,7 @@
 		<fieldset>
 			<label>Supplier <img src='./images/add_image.png' class='add_image' id='form122_add_supplier'><br>
 			<input type='text' required name='supplier'></label>
-			<label>Order #<br><input type='text' name='po_num'></label>
+			<label>Order #<br><input type='text' readonly='readonly' name='po_num'></label>
 			<label>Bill #<br><input type='text' name='bill_num' required></label>
 			<label>Bill Date<br><input type='text' name='bill_date' required></label>
 			<label>Entry Date<br><input type='text' name='entry_date' required></label>

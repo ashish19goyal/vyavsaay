@@ -5582,6 +5582,12 @@ function form122_add_item()
 		var supplier_name=master_form.elements['supplier'].value;
 		var order_id=master_form.elements['order_id'].value;
 		
+		var accepted_readonly="";
+		var accepted_editable=get_session_var('grn_item_accept_editable');		
+		if(accepted_editable=='no')
+		{
+			accepted_readonly="readonly='readonly'";
+		}
 		var id=get_new_key();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form122_"+id+"' autocomplete='off'></form>";
@@ -5595,6 +5601,7 @@ function form122_add_item()
 				rowsHTML+="<input type='text' form='form122_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add batch' id='form122_add_batch_"+id+"'>";
 				rowsHTML+="<br>Quantity: <input type='number' form='form122_"+id+"' value='1' required step='any'>";
+				rowsHTML+="<br>MRP: <input type='number' form='form122_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
 				rowsHTML+="Unit Price: Rs. <input type='number' form='form122_"+id+"' required step='any'>";
@@ -5605,7 +5612,7 @@ function form122_add_item()
 				rowsHTML+="<input type='text' form='form122_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Check'>";
-				rowsHTML+="<input type='text' form='form122_"+id+"' value='accepted'>";
+				rowsHTML+="<input type='text' form='form122_"+id+"' "+accepted_readonly+" value='accepted'>";
 				rowsHTML+=" <img id='form122_check_image_"+id+"' src='./images/green_circle.png' class='green_circle'>";
 				rowsHTML+="<br>Comments: <textarea form='form122_"+id+"'></textarea>";
 			rowsHTML+="</td>";
@@ -5617,7 +5624,6 @@ function form122_add_item()
 				rowsHTML+="<input type='hidden' form='form122_"+id+"' name='tax_unit'>";
 				rowsHTML+="<input type='hidden' form='form122_"+id+"' name='unbilled' value='no'>";
 				rowsHTML+="<input type='hidden' form='form122_"+id+"' name='supplier_margin'>";
-				rowsHTML+="<input type='hidden' form='form122_"+id+"' name='mrp'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -5629,16 +5635,16 @@ function form122_add_item()
 		var desc_filter=fields.elements[2];
 		var batch_filter=fields.elements[3];
 		var quantity_filter=fields.elements[4];
-		var unit_filter=fields.elements[5];
-		var amount_filter=fields.elements[6];
-		var tax_filter=fields.elements[7];
-		var storage_filter=fields.elements[8];
-		var qc_filter=fields.elements[9];
-		var qc_comments_filter=fields.elements[10];
-		var save_button=fields.elements[12];
-		var tax_unit_filter=fields.elements[15];
-		var margin_filter=fields.elements[17];
-		var mrp_filter=fields.elements[18];
+		var mrp_filter=fields.elements[5];
+		var unit_filter=fields.elements[6];
+		var amount_filter=fields.elements[7];
+		var tax_filter=fields.elements[8];
+		var storage_filter=fields.elements[9];
+		var qc_filter=fields.elements[10];
+		var qc_comments_filter=fields.elements[11];
+		var save_button=fields.elements[13];
+		var tax_unit_filter=fields.elements[16];
+		var margin_filter=fields.elements[18];
 		var qc_image=document.getElementById('form122_check_image_'+id);
 		
 		$(barcode_filter).focus();
@@ -5752,20 +5758,15 @@ function form122_add_item()
 			
 			var last_batch_data="<supplier_bill_items count='1'>" +
 					"<batch></batch>" +
+					"<storage></storage>"+
 					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"</supplier_bill_items>";
-			get_single_column_data(function(data)
+			fetch_requested_data('',last_batch_data,function(data)
 			{
 				if(data.length>0)
 				{
-					batch_filter.value=data[0];				
-					
-					var its_storage_data="<supplier_bill_items>"+
-							"<storage></storage>"+
-							"<product_name exact='yes'>"+name_filter.value+"</product_name>"+
-							"<batch exact='yes'>"+batch_filter.value+"</batch>"+
-							"</supplier_bill_items>";
-					set_my_value(its_storage_data,storage_filter);					
+					batch_filter.value=data[0].batch;				
+					storage_filter.value=data[0].storage;
 					
 					var mrp_data="<product_instances>"+
 						"<mrp></mrp>"+
@@ -5815,7 +5816,7 @@ function form122_add_item()
 						},margin_data);					
 					});			
 				}				
-			},last_batch_data);
+			});
 		});
 		
 		$(batch_filter).on('blur',function(event)

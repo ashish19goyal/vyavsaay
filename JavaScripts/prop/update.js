@@ -1969,7 +1969,7 @@ function form43_update_item(form)
 		var supplier_name=form.elements[1].value;
 		var order_date=get_raw_time(form.elements[2].value);
 		var status=form.elements[3].value;
-		var data_id=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		var data_xml="<purchase_orders>" +
 					"<id>"+data_id+"</id>" +
@@ -1995,7 +1995,7 @@ function form43_update_item(form)
 		{
 			local_update_row(data_xml,activity_xml);
 		}	
-		for(var i=0;i<4;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -2480,6 +2480,31 @@ function form51_update_form()
 				$("[id^='save_form51_']").click();
 			}, function() {});
 		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Manage purchase bills
+ * @param button
+ */
+function form53_approve_item(bill_id)
+{
+	if(is_update_access('form53'))
+	{
+		var master_form=document.getElementById('form53_master');
+			
+		var last_updated=get_my_time();
+		var data_xml="<supplier_bills>" +
+					"<id>"+bill_id+"</id>" +
+					"<notes>approved</notes>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</supplier_bills>";	
+		update_simple(data_xml);
 	}
 	else
 	{
@@ -5870,10 +5895,10 @@ function form122_update_form()
 			var subform=document.getElementById(subform_id);
 			if(subform.elements[9].value=='accepted')
 			{
-				if(!isNaN(parseFloat(subform.elements[6].value)))
-					amount+=parseFloat(subform.elements[6].value);
 				if(!isNaN(parseFloat(subform.elements[7].value)))
-					tax+=parseFloat(subform.elements[7].value);
+					amount+=parseFloat(subform.elements[7].value);
+				if(!isNaN(parseFloat(subform.elements[8].value)))
+					tax+=parseFloat(subform.elements[8].value);
 				if(!isNaN(parseFloat(subform.elements[4].value)))
 					total_quantity+=subform.elements[4].value;			
 			}
@@ -5915,12 +5940,6 @@ function form122_update_form()
 					"<notes>Supplier Bill # "+data_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var po_xml="<purchase_orders>" +
-					"<id>"+order_id+"</id>" +
-					"<bill_id>"+data_id+"</bill_id>" +
-					"<quantity_accepted>"+total_quantity+"</quantity_accepted>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</purchase_orders>";
 		var transaction_xml="<transactions>" +
 					"<id>"+transaction_id+"</id>" +
 					"<trans_date>"+get_my_time()+"</trans_date>" +

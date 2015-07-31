@@ -2982,6 +2982,7 @@ function form43_ini()
 			"<bill_id></bill_id>"+
 			"<total_quantity></total_quantity>"+
 			"<quantity_received></quantity_received>"+
+			"<quantity_accepted></quantity_accepted>"+
 			"<last_updated></last_updated>" +
 			"</purchase_orders>";
 
@@ -3009,33 +3010,28 @@ function form43_ini()
 					rowsHTML+="<td data-th='Quantity'>";
 						rowsHTML+="Ordered: <input type='number' step='any' readonly='readonly' form='form43_"+result.id+"' value='"+result.total_quantity+"'>";
 						rowsHTML+="Received: <input type='number' step='any' readonly='readonly' form='form43_"+result.id+"' value='"+result.quantity_received+"'>";
+						rowsHTML+="Accepted: <input type='number' step='any' readonly='readonly' form='form43_"+result.id+"' value='"+result.quantity_accepted+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form43_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='edit_icon' form='form43_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form24');\">";
 						rowsHTML+="<input type='submit' class='save_icon' form='form43_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form43_"+result.id+"' title='Delete order' onclick='form43_delete_item($(this));'>";
-					if(result.status=='order placed')
-					{
-						rowsHTML+="<br><input type='button' name='issue_quantity' class='generic_icon' form='form43_"+result.id+"' value='GRN without QC'>";						
-					}
-					else if(result.status=='partially received')
+					if(result.status=='order placed' || result.status=='partially received')
 					{
 						rowsHTML+="<br><input type='button' name='issue_quantity' class='generic_icon' form='form43_"+result.id+"' value='GRN without QC'>";
+						rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form43_"+result.id+"' value='GRN with QC'>";
+						rowsHTML+="<br><input type='button' name='new_order' class='generic_icon' form='form43_"+result.id+"' value='New Order'>";						
+					}
+					else if(result.status=='completely received')
+					{
+						rowsHTML+="<br><input type='button' name='issue_quantity' class='generic_icon' form='form43_"+result.id+"' value='GRN without QC'>";
+						rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form43_"+result.id+"' value='GRN with QC'>";
 					}
 					
 					if(result.bill_id!='' && result.bill_id!='null')
 					{
 						rowsHTML+="<br><input type='button' name='view_bill' class='generic_icon' form='form43_"+result.id+"' value='View Bill'>";
-					}
-					else if(result.status=='order placed' || result.status=='partially received')
-					{
-						rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form43_"+result.id+"' value='GRN with QC'>";
-					}
-
-					if(result.status=='partially received')
-					{
-						rowsHTML+="<br><input type='button' name='new_order' class='generic_icon' form='form43_"+result.id+"' value='New Order'>";
 					}
 					
 					rowsHTML+="</td>";
@@ -3053,22 +3049,28 @@ function form43_ini()
 				form43_update_item(fields);
 			});
 
-			if(result.status=='order placed')
+			if(result.status=='order placed' || result.status=='partially received' || result.status=='completely received')
 			{
-				var quantity_button=fields.elements['issue_quantity'];
-				$(quantity_button).on('click',function()
-				{
-					modal131_action(result.id,result.order_num,result.total_quantity,result.supplier,get_my_past_date(result.order_date));
-				});
-			}
-			if(result.status=='partially received')
-			{
+				///grn without qc
 				var quantity_button=fields.elements['issue_quantity'];
 				$(quantity_button).on('click',function()
 				{
 					modal131_action(result.id,result.order_num,result.total_quantity,result.supplier,get_my_past_date(result.order_date));
 				});
 				
+				//grn with qc
+				var issue_button=fields.elements['issue_grn'];
+				$(issue_button).on('click',function()
+				{
+					element_display('','form122');
+					var master_form=document.getElementById('form122_master');
+					master_form.elements['supplier'].value=result.supplier;
+					master_form.elements['po_num'].value=result.order_num;
+					master_form.elements['order_id'].value=result.id;
+					$(master_form.elements['bill_num']).focus();
+				});
+				
+				//new order
 				var new_order_button=fields.elements['new_order'];
 				$(new_order_button).on('click',function()
 				{
@@ -3088,46 +3090,44 @@ function form43_ini()
 						var bill_items_xml="<supplier_bill_items>"+
 										"<product_name></product_name>"+
 										"<quantity></quantity>"+
-										"<qc></qc>"+
-										"<bill_id exact='yes'>"+result.bill_id+"</bill_id>"+
+										"<qc exact='yes'>accepted</qc>"+
+										"<bill_id array='yes'>"+result.bill_id+"</bill_id>"+
 										"</supplier_bill_items>";
 						fetch_requested_data('',bill_items_xml,function (bill_items) 
 						{
-							for(var i=0;i<bill_items.length;i++)
-							{
-								for(var j=i+1;j<bill_items.length;i++)
-								{
-									if(bill_items[i].product_name==bill_items[j].product_name && bill_items[i].qc==bill_items[j].qc)
-									{
-										bill_items[i].quantity=parseFloat(bill_items[i].quantity)+parseFloat(bill_items[j].quantity);
-										bill_items.splice(j,1);
-										j--;
-									}
-								}
-							}
-							
 							for(var k=0;k<po_items.length;k++)
 							{
 								for(var l=0;l<bill_items.length;l++)
 								{
-									if(po_items[k].item_name==bill_items[l].product_name && bill_items[l].qc=='accepted')
+									if(po_items[k].item_name==bill_items[l].product_name)
 									{
-										var new_quantity=parseFloat(po_items[k].quantity)-parseFloat(bill_items[l].quantity);
-										bill_items.splice(l,1);
-										if(new_quantity>0)
+										if(parseFloat(po_items[k].quantity)>parseFloat(bill_items[l].quantity))
 										{
 											var old_quantity=parseFloat(po_items[k].quantity);
+											var new_quantity=parseFloat(po_items[k].quantity)-parseFloat(bill_items[l].quantity);
+																					
 											po_items[k].quantity=new_quantity;
 											po_items[k].amount=parseFloat(po_items[k].amount)*new_quantity/old_quantity;
 											po_items[k].tax=parseFloat(po_items[k].tax)*new_quantity/old_quantity;
 											po_items[k].total=parseFloat(po_items[k].total)*new_quantity/old_quantity;
+										
+											bill_items.splice(l,1);
+											l--;
+										}
+										else if(parseFloat(po_items[k].quantity)<parseFloat(bill_items[l].quantity))
+										{
+											bill_items[l].quantity=parseFloat(bill_items[l].quantity)-parseFloat(po_items[k].quantity);
+											po_items.splice(k,1);
+											k--;
+											break;
 										}
 										else 
 										{
+											bill_items.splice(l,1);
 											po_items.splice(k,1);
 											k--;
+											break;
 										}
-										l--;
 									}
 								}
 							}
@@ -3281,19 +3281,6 @@ function form43_ini()
 					//element_display(result.bill_id,'form122');
 				});
 			}
-			else if(result.status=='order placed' || result.status=='partially received')
-			{
-				var issue_button=fields.elements['issue_grn'];
-				$(issue_button).on('click',function()
-				{
-					element_display('','form122');
-					var master_form=document.getElementById('form122_master');
-					master_form.elements['supplier'].value=result.supplier;
-					master_form.elements['po_num'].value=result.order_num;
-					master_form.elements['order_id'].value=result.id;
-					$(master_form.elements['bill_num']).focus();
-				});
-			}						
 		});
 
 		////indexing///
@@ -4016,6 +4003,7 @@ function form53_ini()
 			"<notes></notes>" +
 			"<transaction_id></transaction_id>" +
 			"<last_updated></last_updated>" +
+			"<notes></notes>"+
 			"</supplier_bills>";
 
 	$('#form53_body').html("");
@@ -4047,6 +4035,8 @@ function form53_ini()
 						rowsHTML+="<input type='button' class='edit_icon' form='form53_"+result.id+"' title='Edit Bill'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form53_"+result.id+"' title='Delete Bill' onclick='form53_delete_item($(this));'>";
 						rowsHTML+="<input type='hidden' form='form53_"+result.id+"' value='"+result.transaction_id+"'>";
+						if(result.notes=='pending approval')
+							rowsHTML+="<br><input type='button' class='generic_icon' value='approve' form='form53_"+result.id+"' title='Approve Bill' onclick=\"form53_approve_item('"+result.id+"');\">";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -11100,6 +11090,7 @@ function form122_ini()
 				"<batch></batch>" +
 				"<quantity></quantity>" +
 				"<unit_price></unit_price>"+
+				"<mrp></mrp>"+
 				"<amount></amount>"+
 				"<tax></tax>"+
 				"<total></total>"+
@@ -11124,6 +11115,7 @@ function form122_ini()
 					rowsHTML+="<td data-th='Batch'>";
 						rowsHTML+="<input type='text' form='form122_"+id+"' value='"+result.batch+"' required readonly='readonly'>";
 						rowsHTML+="<br>Quantity: <input type='number' form='form122_"+id+"' value='"+result.quantity+"' required step='any' readonly='readonly'>";
+						rowsHTML+="<br>MRP: <input type='number' form='form122_"+id+"' value='"+result.mrp+"' required step='any' readonly='readonly'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Amount'>";
 						rowsHTML+="Unit Price: Rs. <input type='number' form='form122_"+id+"' value='"+result.unit_price+"' required step='any' readonly='readonly'>";

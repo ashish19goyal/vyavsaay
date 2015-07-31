@@ -1153,7 +1153,7 @@ function form43_delete_item(button)
 			
 			var order_num=form.elements[0].value;
 			var supplier_name=form.elements[1].value;
-			var data_id=form.elements[6].value;
+			var data_id=form.elements[7].value;
 			var last_updated=get_my_time();
 			var data_xml="<purchase_orders>" +
 						"<id>"+data_id+"</id>" +
@@ -3835,7 +3835,7 @@ function form122_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[11].value;
+			var data_id=form.elements[12].value;
 			var data_xml="<supplier_bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"</supplier_bill_items>";

@@ -8694,9 +8694,15 @@ function modal131_action(order_id,order_num,total_quantity,supplier_name,order_d
 			var order_num=order_num_filter.value;
 			var received_quantity=received_filter.value;
 			var last_updated=get_my_time();
+			console.log(received_quantity);
+			console.log(total_quantity);
 			
 			var status='partially received';
-
+			if(parseFloat(received_quantity)==parseFloat(total_quantity))
+			{
+				status='completely received';
+			}
+			
 			var orders_xml="<purchase_orders>"+
 						"<id>"+order_id+"</id>"+
 		                "<status>"+status+"</status>"+
@@ -9156,4 +9162,198 @@ function modal137_action(bill_ids)
 
 	$('#modal137_item_table').html(rowsHTML);		
 	$("#modal137").dialog("open");
+}
+
+/**
+ * @modal Import sale orders
+ * @param t_func function to generate import template
+ * @param i_func function to import the generated data_array
+ */
+function modal138_action(i_func)
+{
+	var form=document.getElementById('modal138_form');
+	
+	var template_button=form.elements[1];
+	var select_file=form.elements[2];
+	var selected_file=form.elements[3];
+	var import_button=form.elements[4];
+
+	$(template_button).off("click");
+	$(template_button).on("click",function(event)
+	{
+		var data_array=['order_id','Order Date','Order Time','payment mode','customer_firstname','customer_lastname',
+						'customer_email','phone','address city','state','pincode','item_name','item.sku',
+						'item.product_id','item_mrp','item_price','qty','shipping_amount','estimated shipping date','customer_phone'];
+		my_array_to_csv(data_array);
+	});
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		show_progress();
+		var file=select_file.files[0];
+        var fileType = /csv/gi;
+
+        selected_file.value = "Uploading!! Please don't refresh";
+    	var reader = new FileReader();
+        reader.onload = function(e)
+        {
+        	progress_value=5;
+        	var content=reader.result;
+        	var data_array=csv_string_to_obj_array(content);
+
+        	progress_value=10;
+           
+           	//////////////////
+           	
+       		var data_xml="<sale_orders>";
+       		var data2_xml="<sale_order_items>";
+			var data3_xml="<customers>";
+			var counter=1;
+			var last_updated=get_my_time();
+			var order_array=[];
+			var order_item_array=[];
+			var customer_array=[];
+			
+			data_array.forEach(function (data_row) 
+			{
+				counter+=1;
+				var customer=data_row.customer_firstname+" "+data_row.customer_lastname+" ("+data_row.phone+")";
+				var customer_object=new Object();
+				customer_object.id=last_updated+counter;
+				customer_object.name="";
+				customer_object.acc_name="";
+                customer_object.email="";
+                customer_object.phone="";
+                customer_object.address="";
+                customer_object.city="";
+                customer_object.pincode="";
+                customer_object.state="";
+                customer_object.country="";
+                
+                var order_object=new Object();
+				order_object.id=last_updated+counter;
+				order_object.order_num="";
+                order_object.customer="";
+                order_object.pincode="";
+                order_object.order_date="";
+                order_object.freight="";
+                order_object.item_price="";
+                order_object.total="";
+           	
+			});
+
+			order_array.forEach(function(row)
+			{
+				if((counter%500)===0)
+				{
+					data_xml+="</sale_orders><separator></separator><sale_orders>";
+				}
+				counter+=1;
+				data_xml+="<row>" +
+						"<id>"+row.id+"</id>" +
+						"<order_num>"+row.order_id+"</order_num>" +
+						"<channel>"+channel+"</channel>" +
+						"<customer_name>"+row.customer+"</customer_name>"+
+						"<pincode>"+row.pincode+"</pincode>"+
+						"<order_date>"+get_raw_time(row.order_date)+"</order_date>"+
+						"<freight>"+row.freight+"</freight>"+
+						"<amount>"+row.item_price+"</amount>"+
+						"<tax></tax>"+
+						"<total>"+row.total+"</total>"+
+						"<status>pending</status>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</row>";
+			});
+
+			order_item_array.forEach(function(row)
+			{
+				if((counter%500)===0)
+				{
+					data2_xml+="</sale_order_items><separator></separator><sale_order_items>";
+				}
+				counter+=1;
+				
+				data2_xml+="<row>" +
+						"<id>"+row.id+"</id>" +
+						"<order_id>"+row.order_num+"</order_id>"+
+                        "<item_name>"+row.item_name+"</item_name>"+
+                        "<item_desc>"+row.item_desc+"</item_desc>"+
+                        "<channel_sku>"+row.channel_sku+"</channel_sku>"+
+                        "<vendor_sku>"+row.vendor_sku+"</vendor_sku>"+
+                        "<quantity>"+row.quantity+"</quantity>"+
+                        "<notes></notes>"+
+                        "<mrp>"+row.mrp+"</mrp>"+
+                        "<unit_price>"+row.unit_price+"</unit_price>"+
+                        "<amount>"+row.amount+"</amount>"+
+                        "<tax></tax>"
+                        "<freight>"+row.freight+"</freight>"+
+                        "<total>"+row.total+"</total>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</row>";		
+			});
+		
+			customer_array.forEach(function(row)
+			{
+				if((counter%500)===0)
+				{
+					data3_xml+="</customers><separator></separator><customers>";
+				}
+				counter+=1;
+				
+				data3_xml+="<row>" +
+						"<id>"+row.id+"</id>" +
+						"<name>"+row.name+"</name>"+
+                        "<acc_name unique='yes'>"+row.acc_name+"</acc_name>"+
+                        "<email>"+row.email+"</email>"+
+                        "<phone>"+row.phone+"</phone>"+
+                        "<status>active</status>"+
+                        "<address>"+row.address+"</address>"+
+                        "<city>"+row.city+"</city>"+
+                        "<pincode>"+row.pincode+"</pincode>"+
+                        "<state>"+row.state+"</state>"+
+                        "<country>"+row.country+"</country>"+
+                        "<last_updated>"+last_updated+"</last_updated>" +
+						"</row>";		
+			});
+		
+			data_xml+="</sale_orders>";
+			data2_xml+="</sale_order_items>";
+			data3_xml+="</customers>";
+			
+			create_batch(data_xml);
+			create_batch(data2_xml);
+
+           	////////////////////
+        	progress_value=15;
+        	
+        	//console.log(data_array.length);
+        	
+        	var ajax_complete=setInterval(function()
+        	{
+        		//console.log(number_active_ajax);
+        		if(number_active_ajax===0)
+        		{
+        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
+        		}
+        		else if(localdb_open_requests===0)
+        		{
+        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
+        		}
+        		
+        		if(number_active_ajax===0 && localdb_open_requests===0)
+        		{
+        			hide_progress();
+        			selected_file.value="Upload complete";
+        			$(select_file).val('');
+        			$("#modal138").dialog("close");
+        			clearInterval(ajax_complete);
+        		}
+        	},1000);
+        }
+        reader.readAsText(file);    
+    });
+	
+	$("#modal138").dialog("open");
 }

@@ -195,6 +195,7 @@
 			<item_desc index='yes' type="TEXT"></item_desc>
 			<batch index='yes' type="TEXT"></batch>
 			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
+			<mrp index='no' type="DECIMAL(12,2)"></mrp>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
