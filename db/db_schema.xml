@@ -44,7 +44,10 @@
 	<supplier_item_mapping>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<item index='yes' type="TEXT"></item>
+			<item_desc index='yes' type="TEXT"></item_desc>
+			<supplier_sku index='yes' type="TEXT"></supplier_sku>
 			<supplier index='yes' type='TEXT'></supplier>
+			<margin index='no' type="DECIMAL(12,2)"></margin>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</supplier_item_mapping>
 	<staff>
@@ -147,6 +150,7 @@
 			<total_quantity index='no' type='DECIMAL(12,2)'></total_quantity>
 			<quantity_received index='no' type='DECIMAL(12,2)'></quantity_received>
 			<quantity_accepted index='no' type='DECIMAL(12,2)'></quantity_accepted>
+			<quantity_qc_pending index='no' type='DECIMAL(12,2)'></quantity_qc_pending>
 			<new_order_id index='yes' type="BIGINT"></new_order_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 	</purchase_orders>
@@ -155,6 +159,7 @@
 			<order_id index='yes' type="BIGINT"></order_id>
 			<item_name index='yes' type="TEXT"></item_name>
 			<item_desc index='yes' type="TEXT"></item_desc>
+			<supplier_sku index='yes' type="TEXT"></supplier_sku>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<make index='yes' type='TEXT'></make>
 			<price index='no' type='DECIMAL(12,2)'></price>

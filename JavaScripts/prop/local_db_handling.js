@@ -835,6 +835,7 @@ function local_update_batch(data_xml)
 		
 		var i=0;
 		var j=0;
+		var success_count=0;
 		
 		function update_records()
 		{
@@ -862,6 +863,7 @@ function local_update_batch(data_xml)
 						var put_req=os1.put(data_record);
 						put_req.onsuccess=function(e)
 						{
+							success_count+=1;
 							update_records();
 						};
 					}
@@ -911,6 +913,21 @@ function local_update_batch(data_xml)
 		{
 		   if(localdb_open_requests===0)
 		   {
+		   		var act_row={id:""+(activity_id+i+5),
+						type:'update',
+						status:'unsynced',
+						title:'Data import',
+						notes:'Updated '+success_count+' records from table '+table,
+						data_xml:'',
+						user_display:'yes',
+						data_id:'',
+						tablename:'',
+						link_to:'',
+						last_updated:""+get_my_time()};
+				var transaction=static_local_db.transaction([table,'activities'],"readwrite");		
+				var os3=transaction.objectStore('activities');		
+				os3.put(act_row).onsuccess=function(e){};
+			    
 			   clearInterval(local_update_complete);
      		   hide_loader();
 		   }
@@ -1407,6 +1424,7 @@ function local_create_batch(data_xml)
 		
 		var i=0;
 		var m=0;
+		var success_count=0;
 		
 		function create_records()
 		{
@@ -1440,6 +1458,7 @@ function local_create_batch(data_xml)
 						{
 							os1.put(data_row).onsuccess=function(e)
 							{
+								success_count+=1;
 								var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
 								var row_data_xml="<"+table+">"+rows[i].innerHTML+"</"+table+">";
 								var act_row={id:""+(activity_id+i),
@@ -1496,6 +1515,20 @@ function local_create_batch(data_xml)
 		{
 		   if(localdb_open_requests===0)
 		   {
+		   		var act_row={id:""+(activity_id+i+5),
+						type:'create',
+						status:'unsynced',
+						title:'Data import',
+						notes:'Added '+success_count+' records to table '+table,
+						data_xml:'',
+						user_display:'yes',
+						data_id:'',
+						tablename:'',
+						link_to:'',
+						last_updated:""+get_my_time()};
+				var transaction=static_local_db.transaction([table,'activities'],"readwrite");		
+				var os3=transaction.objectStore('activities');		
+				os3.put(act_row).onsuccess=function(e){};
 			   clearInterval(local_create_complete);
      		   hide_loader();
 		   }
@@ -1565,6 +1598,7 @@ function local_create_batch_noloader(data_xml)
 		
 		var i=0;
 		var m=0;
+		var success_count=0;
 		
 		function create_records()
 		{
@@ -1598,6 +1632,7 @@ function local_create_batch_noloader(data_xml)
 						{
 							os1.put(data_row).onsuccess=function(e)
 							{
+								success_count+=1;
 								var data_id=rows[i].getElementsByTagName('id')[0].innerHTML;
 								var row_data_xml="<"+table+">"+rows[i].innerHTML+"</"+table+">";
 								var act_row={id:""+(activity_id+i),
@@ -1647,7 +1682,7 @@ function local_create_batch_noloader(data_xml)
 			}
 		};
 
-		create_records();
+		create_records();		
 	}
 }
 

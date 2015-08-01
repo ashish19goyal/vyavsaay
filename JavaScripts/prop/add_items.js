@@ -1124,12 +1124,13 @@ function form24_add_item()
 				rowsHTML+="<input type='number' required form='form24_"+id+"' value='' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Make'>";
-				rowsHTML+="<textarea form='form24_"+id+"' readonly='readonly'></textarea>";
+				rowsHTML+="Make: <input type='text' form='form24_"+id+"' readonly='readonly'>";
+				rowsHTML+="<br>Supplier SKU: <input type='text' readonly='readonly' form='form24_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Price'>";
 				rowsHTML+="MRP: <input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly'>";
 				rowsHTML+="<br>Price: <input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly' class='dblclick_editable'>";
-				rowsHTML+="<br>Amount: <input type='number' required readonly='readonly' form='form24_"+id+"' step='any' class='dblclick_editable'>";
+				rowsHTML+="<br>Amount: <input type='number' required readonly='readonly' form='form24_"+id+"' step='any'>";
 				rowsHTML+="<br>Tax Rate: <input type='number' readonly='readonly' step='any' form='form24_"+id+"' name='tax_rate'>";		
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
@@ -1145,21 +1146,23 @@ function form24_add_item()
 		$('#form24_body').prepend(rowsHTML);
 
 		var master_form=document.getElementById("form24_master");		
-		var supplier_name=master_form.elements['supplier'].value;
+		var supplier_name_filter=master_form.elements['supplier'];
+		var supplier_name=supplier_name_filter.value;
 		
 		var fields=document.getElementById("form24_"+id);
 		var name_filter=fields.elements[0];
 		var desc_filter=fields.elements[1];
 		var quantity_filter=fields.elements[2];
 		var make_filter=fields.elements[3];
-		var mrp_filter=fields.elements[4];
-		var price_filter=fields.elements[5];
-		var amount_filter=fields.elements[6];
-		var tax_rate_filter=fields.elements[7];
-		var tax_filter=fields.elements[8];
-		var total_filter=fields.elements[9];
-		var id_filter=fields.elements[10];
-		var save_button=fields.elements[11];
+		var supplier_sku_filter=fields.elements[4];
+		var mrp_filter=fields.elements[5];
+		var price_filter=fields.elements[6];
+		var amount_filter=fields.elements[7];
+		var tax_rate_filter=fields.elements[8];
+		var tax_filter=fields.elements[9];
+		var total_filter=fields.elements[10];
+		var id_filter=fields.elements[11];
+		var save_button=fields.elements[12];
 				
 		$(save_button).on("click", function(event)
 		{
@@ -1196,7 +1199,7 @@ function form24_add_item()
 			});
 		});		
 				
-		$(name_filter).on('blur',function(event)
+		$(name_filter).add(supplier_name_filter).on('blur',function(event)
 		{
 			var make_data="<product_master count='1'>" +
 					"<make></make>" +
@@ -1224,20 +1227,35 @@ function form24_add_item()
 				{
 					mrp_filter.value=mrps[0];
 				}
-				else{
-					mrp_filter.value=0;
+				else
+				{
+					mrp_filter.value="";
 				}
-				var margin_data="<attributes>" +
-							"<value></value>"+
-							"<type exact='yes'>supplier</type>"+
-							"<attribute exact='yes'>Margin</attribute>" +
-							"<name exact='yes'>"+supplier_name+"</name>" +
-							"</attributes>";
-				get_single_column_data(function(margins)
+				var margin_data="<supplier_item_mapping>" +
+							"<margin></margin>"+
+							"<supplier_sku></supplier_sku>"+							
+							"<supplier exact='yes'>"+supplier_name_filter.value+"</supplier>" +
+							"<item exact='yes'>"+name_filter.value+"</item>"+
+							"</supplier_item_mapping>";
+				fetch_requested_data('',margin_data,function(margins)
 				{
 					if(margins.length>0)
-						price_filter.value=my_round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0]))/100),2);
-				},margin_data);					
+					{
+						supplier_sku_filter.value=margins[0].supplier_sku;
+						price_filter.value=my_round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0].margin))/100),2);
+						amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(price_filter.value));
+						tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_rate_filter.value)/100));
+						total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
+					}
+					else
+					{
+						supplier_sku_filter.value="";
+						price_filter.value="";
+						amount_filter.value="";
+						tax_filter.value="";
+						total_filter.value="";
+					}
+				});					
 			},mrp_data);
 		});
 		
@@ -1247,7 +1265,7 @@ function form24_add_item()
 			tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_rate_filter.value)/100));
 			total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
 		});
-		
+
 		form24_get_totals();
 		longPressEditable($('.dblclick_editable'));		
 	}
@@ -11822,4 +11840,78 @@ function form213_add_item()
 	{
 		$("#modal2").dialog("open");
 	}		
+}
+
+/**
+ * @form SKU Mapping (Supplier)
+ * @formNo 217
+ */
+function form217_add_item()
+{
+	if(is_create_access('form217'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form217_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Supplier'>";
+				rowsHTML+="<input type='text' form='form217_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' form='form217_"+id+"' required>";
+				rowsHTML+="<br><textarea readonly='readonly' form='form217_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Supplier SKU'>";
+				rowsHTML+="<input type='text' form='form217_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Margin'>";
+				rowsHTML+="<input type='number' step='any' form='form217_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form217_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form217_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form217_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form217_body').prepend(rowsHTML);
+		var fields=document.getElementById("form217_"+id);
+		var supplier_filter=fields.elements[0];
+		var product_filter=fields.elements[1];
+		var desc_filter=fields.elements[2];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form217_create_item(fields);
+		});
+				
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,product_filter);
+		
+		$(product_filter).on('blur',function () 
+		{
+			var desc_data="<product_master>"+
+						"<description></description>"+
+						"<name exact='yes'>"+product_filter.value+"</name>"+
+						"</product_master>";
+			set_my_value(desc_data,desc_filter);			
+		});
+		
+		var supplier_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";
+		set_my_value_list(supplier_data,supplier_filter,function () 
+		{
+			$(supplier_filter).focus();
+		});
+		
+		$('textarea').autosize();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
 }

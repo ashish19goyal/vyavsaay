@@ -1759,15 +1759,16 @@ function form24_create_item(form)
 		var desc=form.elements[1].value;
 		var quantity=form.elements[2].value;
 		var make=form.elements[3].value;
-		var mrp=form.elements[4].value;
-		var price=form.elements[5].value;
-		var amount=form.elements[6].value;
-		var tax_rate=form.elements[7].value;
-		var tax=form.elements[8].value;
-		var total=form.elements[9].value;
-		var data_id=form.elements[10].value;
-		var save_button=form.elements[11];
-		var del_button=form.elements[12];
+		var supplier_sku=form.elements[4].value;
+		var mrp=form.elements[5].value;
+		var price=form.elements[6].value;
+		var amount=form.elements[7].value;
+		var tax_rate=form.elements[8].value;
+		var tax=form.elements[9].value;
+		var total=form.elements[10].value;
+		var data_id=form.elements[11].value;
+		var save_button=form.elements[12];
+		var del_button=form.elements[13];
 		var last_updated=get_my_time();
 		var data_xml="<purchase_order_items>" +
 				"<id>"+data_id+"</id>" +
@@ -1776,6 +1777,7 @@ function form24_create_item(form)
 				"<quantity>"+quantity+"</quantity>" +
 				"<order_id>"+order_id+"</order_id>" +
 				"<make>"+make+"</make>" +
+				"<supplier_sku>"+supplier_sku+"</supplier_sku>" +
 				"<mrp>"+mrp+"</mrp>" +
 				"<price>"+price+"</price>" +
 				"<amount>"+amount+"</amount>" +
@@ -1794,7 +1796,7 @@ function form24_create_item(form)
 			local_create_simple(data_xml);
 		}
 		
-		for(var i=0;i<10;i++)
+		for(var i=0;i<11;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -1824,11 +1826,11 @@ function form24_get_totals()
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
 		
-		if(!isNaN(parseFloat(subform.elements[6].value)))
+		if(!isNaN(parseFloat(subform.elements[7].value)))
 		{
-			amount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[8].value);
-			total+=parseFloat(subform.elements[9].value);
+			amount+=parseFloat(subform.elements[7].value);
+			tax+=parseFloat(subform.elements[9].value);
+			total+=parseFloat(subform.elements[10].value);
 		}		
 	});
 	
@@ -1878,11 +1880,11 @@ function form24_create_form()
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
 			
-			if(!isNaN(parseFloat(subform.elements[6].value)))
+			if(!isNaN(parseFloat(subform.elements[7].value)))
 			{
-				amount+=parseFloat(subform.elements[6].value);
-				tax+=parseFloat(subform.elements[8].value);
-				total+=parseFloat(subform.elements[9].value);
+				amount+=parseFloat(subform.elements[7].value);
+				tax+=parseFloat(subform.elements[9].value);
+				total+=parseFloat(subform.elements[10].value);
 			}
 			if(!isNaN(parseFloat(subform.elements[2].value)))			
 				total_quantity+=parseFloat(subform.elements[2].value);						
@@ -1910,6 +1912,9 @@ function form24_create_form()
 					"<tax>"+tax+"</tax>" +
 					"<total>"+total+"</total>" +
 					"<total_quantity>"+total_quantity+"</total_quantity>" +
+					"<quantity_received>0</quantity_received>" +
+					"<quantity_accepted>0</quantity_accepted>" +
+					"<quantity_qc_pending>0</quantity_qc_pending>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_orders>";
 		var activity_xml="<activity>" +
@@ -1920,15 +1925,22 @@ function form24_create_form()
 					"<notes>Purchase order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}
-
+		var	notification_xml="<notifications>" +
+					"<id>"+get_new_key()+"</id>" +
+					"<t_generated>"+get_my_time()+"</t_generated>" +
+					"<data_id unique='yes'>"+data_id+"</data_id>" +
+					"<title>Purchase Order created</title>" +
+					"<notes>Purchase order # "+order_num+" has been created. Please review and place order.</notes>" +
+					"<link_to>form43</link_to>" +
+					"<status>pending</status>" +
+					"<target_user></target_user>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</notifications>";
+					
+		
+		create_row(data_xml,activity_xml);
+		create_simple(notification_xml);
+		
 		var num_data="<user_preferences>"+
 					"<id></id>"+						
 					"<name exact='yes'>po_num</name>"+												
@@ -8470,6 +8482,7 @@ function form122_create_form()
 		var tax=0;
 		var amount=0;
 		var total_quantity=0;
+		var total_quantity_in_rej=0;
 		
 		$("[id^='save_form122']").each(function(index)
 		{
@@ -8484,6 +8497,8 @@ function form122_create_form()
 				if(!isNaN(parseFloat(subform.elements[4].value)))
 					total_quantity+=subform.elements[4].value;			
 			}
+			if(!isNaN(parseFloat(subform.elements[4].value)))
+				total_quantity_in_rej+=subform.elements[4].value;
 		});
 
 		total=amount+tax;
@@ -8526,6 +8541,7 @@ function form122_create_form()
 		var po_data="<purchase_orders>"+
 					"<id>"+order_id+"</id>" +
 					"<bill_id></bill_id>" +
+					"<quantity_received></quantity_received>"+
 					"<quantity_accepted></quantity_accepted>"+
 					"</purchase_orders>";
 		fetch_requested_data('',po_data,function (porders) 
@@ -8534,10 +8550,14 @@ function form122_create_form()
 			{
 				var new_bill_id=porders[0].bill_id+"--"+data_id;
 				var quantity_accepted=parseFloat(porders[0].quantity_accepted)+parseFloat(total_quantity);
+				var quantity_qc_pending=parseFloat(porders[0].quantity_received)-parseFloat(porders[0].quantity_accepted)-parseFloat(total_quantity_in_rej);
+				if(quantity_qc_pending<0)
+					quantity_qc_pending=0;
 				var po_xml="<purchase_orders>" +
 						"<id>"+order_id+"</id>" +
 						"<bill_id>"+new_bill_id+"</bill_id>" +
 						"<quantity_accepted>"+quantity_accepted+"</quantity_accepted>"+
+						"<quantity_qc_pending>"+quantity_qc_pending+"</quantity_qc_pending>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</purchase_orders>";
 				update_simple(po_xml);
@@ -14404,6 +14424,63 @@ function form214_create_item()
 
 		$('#modal62').dialog('open');
 		form214_ini();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 217
+ * form SKU mapping (Supplier)
+ * @param button
+ */
+function form217_create_item(form)
+{
+	if(is_create_access('form217'))
+	{
+		var supplier=form.elements[0].value;
+		var item=form.elements[1].value;
+		var desc=form.elements[2].value;
+		var sku=form.elements[3].value;
+		var margin=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var del_button=form.elements[7];
+		var last_updated=get_my_time();
+		var data_xml="<supplier_item_mapping>" +
+					"<id>"+data_id+"</id>" +
+					"<item>"+item+"</item>" +
+					"<item_desc>"+desc+"</item_desc>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<supplier_sku>"+sku+"</supplier_sku>" +
+					"<margin>"+margin+"</margin>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</supplier_item_mapping>";
+		if(is_online())
+		{
+			server_create_simple(data_xml);
+		}
+		else
+		{
+			local_create_simple(data_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form217_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form217_update_item(form);
+		});
 	}
 	else
 	{

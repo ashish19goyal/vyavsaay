@@ -145,7 +145,7 @@ function form21_import_template()
 */
 function form24_import_template()
 {
-	var data_array=['id','order_id','item_name','item_desc','quantity','make','mrp','price','amount','tax','total'];
+	var data_array=['id','order_id','item_name','item_desc','supplier_sku','quantity','make','mrp','price','amount','tax','total'];
 	my_array_to_csv(data_array);
 };
 
@@ -1188,5 +1188,15 @@ function form203_import_template()
 function form213_import_template()
 {
 	var data_array=['id','customer','detail','due_date','identified_by'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form SKU Mapping (Supplier)
+* @formNo 217
+*/
+function form217_import_template()
+{
+	var data_array=['id','item','item_desc','supplier_sku','margin','supplier'];
 	my_array_to_csv(data_array);
 };

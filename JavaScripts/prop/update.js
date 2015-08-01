@@ -1536,11 +1536,11 @@ function form24_update_form()
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
 			
-			if(!isNaN(parseFloat(subform.elements[6].value)))
+			if(!isNaN(parseFloat(subform.elements[7].value)))
 			{
-				amount+=parseFloat(subform.elements[6].value);
-				tax+=parseFloat(subform.elements[8].value);
-				total+=parseFloat(subform.elements[9].value);
+				amount+=parseFloat(subform.elements[7].value);
+				tax+=parseFloat(subform.elements[9].value);
+				total+=parseFloat(subform.elements[10].value);
 			}
 			if(!isNaN(parseFloat(subform.elements[2].value)))			
 				total_quantity+=parseFloat(subform.elements[2].value);						
@@ -1969,7 +1969,7 @@ function form43_update_item(form)
 		var supplier_name=form.elements[1].value;
 		var order_date=get_raw_time(form.elements[2].value);
 		var status=form.elements[3].value;
-		var data_id=form.elements[7].value;
+		var data_id=form.elements[8].value;
 		var last_updated=get_my_time();
 		var data_xml="<purchase_orders>" +
 					"<id>"+data_id+"</id>" +
@@ -1995,7 +1995,7 @@ function form43_update_item(form)
 		{
 			local_update_row(data_xml,activity_xml);
 		}	
-		for(var i=0;i<7;i++)
+		for(var i=0;i<8;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -2492,12 +2492,16 @@ function form51_update_form()
  * @form Manage purchase bills
  * @param button
  */
-function form53_approve_item(bill_id)
+function form53_approve_item(button)
 {
 	if(is_update_access('form53'))
 	{
-		var master_form=document.getElementById('form53_master');
-			
+		$(button).hide();
+		var form_id=$(button).attr('form');
+		var form=document.getElementById(form_id);
+		var bill_id=form.elements[5].value;
+		form.elements[4].value='approved';
+								
 		var last_updated=get_my_time();
 		var data_xml="<supplier_bills>" +
 					"<id>"+bill_id+"</id>" +
@@ -10978,6 +10982,51 @@ function form213_update_item(form)
 			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 217
+ * form SKU mapping (Supplier)
+ * @param button
+ */
+function form217_update_item(form)
+{
+	if(is_update_access('form217'))
+	{
+		var supplier=form.elements[0].value;
+		var item=form.elements[1].value;
+		var desc=form.elements[2].value;
+		var sku=form.elements[3].value;
+		var margin=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var del_button=form.elements[7];
+		var last_updated=get_my_time();
+		var data_xml="<supplier_item_mapping>" +
+					"<id>"+data_id+"</id>" +
+					"<item>"+item+"</item>" +
+					"<item_desc>"+desc+"</item_desc>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<supplier_sku>"+sku+"</supplier_sku>" +
+					"<margin>"+margin+"</margin>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</supplier_item_mapping>";
+		if(is_online())
+		{
+			server_update_simple(data_xml);
+		}
+		else
+		{
+			local_update_simple(data_xml);
+		}
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

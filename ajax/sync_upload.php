@@ -91,95 +91,97 @@
 						echo "activity id=".$id."\n";
 					*/
 					}		
-							
-					$q_string1="select last_updated from $table_name where id=?;";
-					$stmt1=$conn->conn->prepare($q_string1);
-					$stmt1->execute(array($data_id));
-					
-					$result1=$stmt1->fetch(PDO::FETCH_ASSOC);
-					$server_last_update=$result1['last_updated'];
-					
-					if($server_last_update<$last_updated || !($server_last_update))
-					{
-						$q_string2="";
-						$data=$data_xml->childNodes->item(0);
+					if($table_name!="")
+					{		
+						$q_string1="select last_updated from $table_name where id=?;";
+						$stmt1=$conn->conn->prepare($q_string1);
+						$stmt1->execute(array($data_id));
 						
-						switch($type)
+						$result1=$stmt1->fetch(PDO::FETCH_ASSOC);
+						$server_last_update=$result1['last_updated'];
+						
+						if($server_last_update<$last_updated || !($server_last_update))
 						{
-							case 'create': 
-								$data_array=array();
-								$q_string2="insert into $table_name (";
-								foreach($data->childNodes as $column)
-								{
-									if($column->nodeName!='#text')
-										$q_string2.=$column->nodeName.",";
-								}
-								$q_string2=rtrim($q_string2,",");
-								$q_string2.=") values(";
-								foreach($data->childNodes as $column)
-								{
-									if($column->nodeName!='#text')
+							$q_string2="";
+							$data=$data_xml->childNodes->item(0);
+							
+							switch($type)
+							{
+								case 'create': 
+									$data_array=array();
+									$q_string2="insert into $table_name (";
+									foreach($data->childNodes as $column)
 									{
-										$q_string2.="?,";
-										$data_array[]=$column->nodeValue;
-										//echo $column->nodeValue;
+										if($column->nodeName!='#text')
+											$q_string2.=$column->nodeName.",";
 									}
-								}
-								$q_string2=rtrim($q_string2,",");
-								$q_string2.=");";	
-								//echo $q_string2;								
-								$stmt2=$conn->conn->prepare($q_string2);
-								try{
-									$stmt2->execute($data_array);
-								}
-								catch(PDOException $e)
-								{
-								}
-								break;
-							case 'update': 
-								$q_string2="update $table_name set ";
-								$data_array=array();
-								foreach($data->childNodes as $column)
-								{
-									if($column->nodeName!='#text')
+									$q_string2=rtrim($q_string2,",");
+									$q_string2.=") values(";
+									foreach($data->childNodes as $column)
 									{
-										$q_string2.=$column->nodeName."=?,";
-										$data_array[]=$column->nodeValue;
+										if($column->nodeName!='#text')
+										{
+											$q_string2.="?,";
+											$data_array[]=$column->nodeValue;
+											//echo $column->nodeValue;
+										}
 									}
-								}
-								$q_string2=rtrim($q_string2,",");
-								$q_string2.=" where id=?";
-								$data_array[]=$data_id;
-								$stmt2=$conn->conn->prepare($q_string2);
-								try{
-									$stmt2->execute($data_array);
-								}
-								catch(PDOException $e)
-								{
-								/*	echo $e;
-									foreach ($data_array as $data_key => $data_array_value)
+									$q_string2=rtrim($q_string2,",");
+									$q_string2.=");";	
+									//echo $q_string2;								
+									$stmt2=$conn->conn->prepare($q_string2);
+									try{
+										$stmt2->execute($data_array);
+									}
+									catch(PDOException $e)
 									{
-										echo $data_key."=".$data_array_value."\n";
 									}
-									continue;
-								*/
-								}
-								break;
-							case 'delete': $q_string2="delete from $table_name where id=?";
-								$stmt2=$conn->conn->prepare($q_string2);
-								$stmt2->execute(array($data_id));
-								break;
-						}	
+									break;
+								case 'update': 
+									$q_string2="update $table_name set ";
+									$data_array=array();
+									foreach($data->childNodes as $column)
+									{
+										if($column->nodeName!='#text')
+										{
+											$q_string2.=$column->nodeName."=?,";
+											$data_array[]=$column->nodeValue;
+										}
+									}
+									$q_string2=rtrim($q_string2,",");
+									$q_string2.=" where id=?";
+									$data_array[]=$data_id;
+									$stmt2=$conn->conn->prepare($q_string2);
+									try{
+										$stmt2->execute($data_array);
+									}
+									catch(PDOException $e)
+									{
+									/*	echo $e;
+										foreach ($data_array as $data_key => $data_array_value)
+										{
+											echo $data_key."=".$data_array_value."\n";
+										}
+										continue;
+									*/
+									}
+									break;
+								case 'delete': $q_string2="delete from $table_name where id=?";
+									$stmt2=$conn->conn->prepare($q_string2);
+									$stmt2->execute(array($data_id));
+									break;
+							}	
+						}
+						
+						//if($user_display=='yes')
+						//{
+							$ids_for_update.="<id>$id</id>";
+						//}
+						//else
+						//{
+						//	$ids_for_delete.="<id>$id</id>";
+						//}
 					}
-					
-					//if($user_display=='yes')
-					//{
-						$ids_for_update.="<id>$id</id>";
-					//}
-					//else
-					//{
-					//	$ids_for_delete.="<id>$id</id>";
-					//}
 				}
 			}
 			

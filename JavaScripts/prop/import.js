@@ -903,6 +903,7 @@ function form24_import(data_array,import_type)
 				"<item_desc>"+row.item_desc+"</item_desc>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<make>"+row.make+"</make>" +
+				"<supplier_sku>"+row.supplier_sku+"</supplier_sku>" +
 				"<order_id>"+row.order_id+"</order_id>" +
 				"<price>"+row.price+"</price>" +
 				"<mrp>"+row.mrp+"</mrp>"+
@@ -6958,3 +6959,60 @@ function form213_import(data_array,import_type)
 		}
 	}
 }
+
+/**
+* @form SKU Mapping (Supplier)
+* @formNo 217
+*/
+function form217_import(data_array,import_type)
+{
+	var data_xml="<supplier_item_mapping>";
+	var counter=1;
+	var last_updated=get_my_time();
+
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</supplier_item_mapping><separator></separator><supplier_item_mapping>";
+		}
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<item>"+row.item+"</item>" +
+				"<item_desc>"+row.item_desc+"</item_desc>" +
+				"<supplier_sku>"+row.supplier_sku+"</supplier_sku>" +
+				"<margin>"+row.margin+"</margin>" +
+				"<supplier>"+row.supplier+"</supplier>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	data_xml+="</supplier_item_mapping>";
+	if(import_type=='create_new')
+	{
+		if(is_online())
+		{
+			server_create_batch(data_xml);
+		}
+		else
+		{
+			local_create_batch(data_xml);
+		}
+	}
+	else
+	{
+		if(is_online())
+		{	
+			server_update_batch(data_xml);
+		}
+		else
+		{
+			local_update_batch(data_xml);
+		}
+	}
+};

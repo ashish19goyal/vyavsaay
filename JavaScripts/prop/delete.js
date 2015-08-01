@@ -700,7 +700,7 @@ function form24_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[10].value;
+			var data_id=form.elements[11].value;
 			var data_xml="<purchase_order_items>" +
 						"<id>"+data_id+"</id>" +
 						"</purchase_order_items>";	
@@ -1153,7 +1153,7 @@ function form43_delete_item(button)
 			
 			var order_num=form.elements[0].value;
 			var supplier_name=form.elements[1].value;
-			var data_id=form.elements[7].value;
+			var data_id=form.elements[8].value;
 			var last_updated=get_my_time();
 			var data_xml="<purchase_orders>" +
 						"<id>"+data_id+"</id>" +
@@ -6878,6 +6878,42 @@ function form213_delete_item(button)
 			else
 			{
 				local_delete_row(data_xml,activity_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 217
+ * form SKU Mapping (Supplier)
+ * @param button
+ */
+function form217_delete_item(button)
+{
+	if(is_delete_access('form217'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var data_id=form.elements[5].value;
+			var last_updated=get_my_time();
+			var data_xml="<supplier_item_mapping>" +
+						"<id>"+data_id+"</id>" +
+						"</supplier_item_mapping>";
+			if(is_online())
+			{
+				server_delete_simple(data_xml);
+			}
+			else
+			{
+				local_delete_simple(data_xml);
 			}	
 			$(button).parent().parent().remove();
 		});

@@ -39,7 +39,8 @@
 			$db_name="re_user_".$domain;
 			$conn=new db_connect($db_name);
 			$table=$data_input->nodeName;
-			
+			$success_count=0;
+
 			if($data_input->childNodes->length>0)
 			{
 				$update_query="update $table set ";
@@ -64,9 +65,19 @@
 					}
 					
 					$data_array[]=$id;
-					$update_stmt->execute($data_array);
+					$update_result=$update_stmt->execute($data_array);
+					if($update_result)
+					{
+						$success_count+=1;
+					}
 				}
+				$notes="Updated ".$success_count." records from table ".$table;
+				$act_data=array('Data import','yes',$notes,'','','online',1000*time(),'update',$_SESSION['name']);
+				$query3="insert into activities (user_display,notes,tablename,data_xml,status,last_updated,type,updated_by) values(?,?,?,?,?,?,?,?)";
+				$stmt3=$conn->conn->prepare($query3);
+				$stmt3->execute($act_data);
 			}
+			
 			echo "data saved";
 		}
 		else

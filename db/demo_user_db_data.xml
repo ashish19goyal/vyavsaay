@@ -3039,6 +3039,17 @@
 			<tables>--bill_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form217</name>
+			<display_name>sku_mapping_supplier</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--supplier_item_mapping--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -5707,6 +5718,17 @@
 			<username>master</username>
 			<element_id>form216</element_id>
 			<element_name>order_picklist</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form217</element_id>
+			<element_name>supplier_item_mapping</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

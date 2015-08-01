@@ -894,6 +894,8 @@ function form24_header_ini()
 	var share_button=fields.elements['share'];	
 	
 	$(share_button).hide();
+
+	$(supplier_filter).off('blur');	
 	
 	var po_id=$("#form24_link").attr('data_id');
 	if(po_id==null || po_id=='')
@@ -1150,6 +1152,13 @@ function form43_header_ini()
 	var order_filter=filter_fields.elements[0];
 	var name_filter=filter_fields.elements[1];
 	var status_filter=filter_fields.elements[2];
+	var import_button=filter_fields.elements['import'];
+	
+	$(import_button).off('click');	
+	$(import_button).on('click',function () 
+	{
+		modal140_action();
+	});
 	
 	var order_data="<purchase_orders>" +
 			"<order_num></order_num>" +
@@ -3076,7 +3085,7 @@ function form108_header_ini()
 		//$("#modal61").dialog("open");
 		worker_update_orders_status();
 	});
-	
+
 	var import_button=filter_fields.elements['import'];
 	$(import_button).off('click');	
 	$(import_button).on('click',function () 
@@ -7333,3 +7342,44 @@ function form214_header_ini()
 //	$('#form214_intro').html(intro_text);
 	
 }
+
+/**
+ * @form SKU mapping (Supplier)
+ * @formNo 217
+ */
+function form217_header_ini()
+{
+	var filter_fields=document.getElementById('form217_header');
+	var supplier_filter=filter_fields.elements[0];
+	var product_filter=filter_fields.elements[1];
+	var supplier_sku_filter=filter_fields.elements[2];
+	
+	var product_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	var supplier_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+	var supplier_sku_data="<supplier_item_mapping>" +
+			"<supplier_sku></supplier_sku>" +
+			"</supplier_item_mapping>";
+	
+	set_my_filter(product_data,product_filter);
+	set_my_filter(supplier_data,supplier_filter);
+	set_my_filter(supplier_sku_data,supplier_sku_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form217_ini();
+	});
+	
+	var import_button=filter_fields.elements['import'];
+	$(import_button).off('click');	
+	$(import_button).on('click',function () 
+	{
+		import_data('form217');
+	});
+	
+};

@@ -1163,6 +1163,37 @@
 				<br>
 				<br>
 				<b>Import pre-filled template</b><br>
+				Channel: <input type="text" required><br>
+				<input type="file" value='Select file' accept=".csv"><br>
+				<output name='selected_file'></output><br>
+				<input type="submit" value='Import' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal139" title="Assign Barcode">
+		<form id='modal139_form' autocomplete="off">
+			<fieldset>
+				<label>SKU: <input type="text" readonly="readonly" name='sku'></label><br>
+				<label>Name: <textarea name='name' readonly="readonly"></textarea></label><br>
+				<label>Barcode: <input type='text' required name='barcode'>
+				<img src='./images/barcode.png' id='modal139_barcode_img' class='barcode_icon'>
+				</label><br>
+				<label>Auto-generate: <input type='checkbox' name='check'></label>
+				<input type='hidden' name='id'>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal140" title="Import Purchase Orders">
+		<form id='modal140_form' autocomplete="off">
+			<fieldset>
+				<input type="button" value='Download import template' class='modal_submit'>
+				<br>
+				<br>
+				<br>
+				<b>Import pre-filled template</b><br>
 				<input type="file" value='Select file' accept=".csv"><br>
 				<output name='selected_file'></output><br>
 				<input type="submit" value='Import' class='modal_submit'>

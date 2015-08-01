@@ -6,7 +6,7 @@ function get_raw_time(date)
 	}
 	else
 	{
-		var date_array=date.split("/");
+		var date_array=date.split(/[\-\/]+/);
 		var day=parseInt(date_array[0]);
 		var month=parseInt(date_array[1])-1;
 		var year=parseInt(date_array[2]);

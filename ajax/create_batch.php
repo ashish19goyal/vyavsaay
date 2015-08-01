@@ -37,6 +37,7 @@
 		{
 			if($data_input->hasChildNodes())
 			{
+				$success_count=0;
 				$db_name="re_user_".$domain;
 				$conn=new db_connect($db_name);
 				$table=$data_input->nodeName;
@@ -99,8 +100,13 @@
 						{
 							$data_array[]=$data->nodeValue;
 						}
-						try {
-							$insert_stmt->execute($data_array);
+						try 
+						{
+							$insert_result=$insert_stmt->execute($data_array);
+							if($insert_result)
+							{
+								$success_count+=1;
+							}
 						}catch(PDOException $e)
 						{
 							echo $e;
@@ -111,6 +117,13 @@
 						}
 					}
 				}
+
+				$notes="Added ".$success_count." records to table ".$table;
+				$act_data=array('Data import','yes',$notes,'','','online',1000*time(),'create',$_SESSION['name']);
+				$query3="insert into activities (title,user_display,notes,tablename,data_xml,status,last_updated,type,updated_by) values(?,?,?,?,?,?,?,?,?)";
+				$stmt3=$conn->conn->prepare($query3);
+				$stmt3->execute($act_data);
+
 				echo "data saved";
 			}
 		}
@@ -123,5 +136,4 @@
 	{
 		echo "Invalid session";
 	}
-	
 ?>

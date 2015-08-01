@@ -617,13 +617,14 @@ function print_form24(func)
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
 	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
-				"<td style='text-align:left;width:150px;'>Item Name</td>"+
-				"<td style='text-align:left;width:100px'>SKU</td>"+
-				"<td style='text-align:left;width:50px'>Qty</td>"+
-				"<td style='text-align:left;width:50px'>MRP</td>"+
-				"<td style='text-align:left;width:50px'>Price</td>"+
-				"<td style='text-align:left;width:50px'>Tax</td>"+
-				"<td style='text-align:left;width:100px'>Total(inc taxes)</td></tr>";
+				"<td style='text-align:left;width:130px;'>Item Name</td>"+
+				"<td style='text-align:left;width:80px'>SKU</td>"+
+				"<td style='text-align:left;width:80px'>Supplier SKU</td>"+
+				"<td style='text-align:left;width:45px'>Qty</td>"+
+				"<td style='text-align:left;width:45px'>MRP</td>"+
+				"<td style='text-align:left;width:45px'>Price</td>"+
+				"<td style='text-align:left;width:45px'>Tax</td>"+
+				"<td style='text-align:left;width:80px'>Total(inc taxes)</td></tr>";
 				
 	var table_rows=table_header;
 	var counter=0;
@@ -635,14 +636,16 @@ function print_form24(func)
 		var item_desc=form.elements[1].value;
 		var item_name=form.elements[0].value;
 		var quantity=""+form.elements[2].value;
-		var mrp=form.elements[4].value;
-		var price=form.elements[5].value;
-		var tax_rate=form.elements[7].value;		
-		var total=form.elements[9].value;
+		var supplier_sku=form.elements[4].value;
+		var mrp=form.elements[5].value;
+		var price=form.elements[6].value;
+		var tax_rate=form.elements[8].value;		
+		var total=form.elements[10].value;
 
 		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
 				"<td style='text-align:left;'>"+item_desc+"</td>"+
 				"<td style='text-align:left;'>"+item_name+"</td>"+
+				"<td style='text-align:left;'>"+supplier_sku+"</td>"+
 				"<td style='text-align:left;'>"+quantity+"</td>"+
 				"<td style='text-align:left;'>"+mrp+"</td>"+
 				"<td style='text-align:left;'>"+price+"</td>"+
@@ -654,7 +657,7 @@ function print_form24(func)
 	var rows_to_add=20-row_count;
 	for(var i=0;i<rows_to_add;i++)
 	{
-		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 	}
 
 	var table_foot=document.getElementById(form_id+'_foot');
@@ -664,7 +667,7 @@ function print_form24(func)
 	
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
 				"<td colspan='3' style='text-align:left;'>"+total_quantity+"</td>"+
-				"<td colspan='2' style='text-align:left;'>"+total_text+"</td>"+
+				"<td colspan='3' style='text-align:left;'>"+total_text+"</td>"+
 				"<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr>";
 		
 	table_rows+=table_foot_row;
