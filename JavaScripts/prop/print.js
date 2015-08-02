@@ -7,14 +7,14 @@ function print_barcode(string)
 	var image_element=document.createElement('img');
 	var name_element=document.createElement('div');
 		
-	container.setAttribute('style','width:95%;height:95%;padding:5%;');	
-	image_element.setAttribute('style','width:95%;height:30%;');
+	container.setAttribute('style','width:200px;height:150px;padding:5%;');	
+	image_element.setAttribute('style','width:200px;');
 	name_element.setAttribute('style','width:95%;font-weight:bold;font-size:12px;margin:5%;text-align:center;');
 	container.appendChild(image_element);
 	container.appendChild(name_element);
 	
 	name_element.innerHTML=string;
-	$(image_element).JsBarcode(string,{displayValue:false});
+	//$(image_element).JsBarcode(string,{displayValue:false});
 	$.print(container);	
 }
 
