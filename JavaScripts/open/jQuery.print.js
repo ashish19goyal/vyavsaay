@@ -115,7 +115,8 @@
                     $iframe = $('<iframe height="0" width="0" border="0" wmode="Opaque"/>').prependTo('body').css({
                         "position" : "absolute",
                         "top" : -999,
-                        "left" : -999
+                        "left" : -999,
+                        "margin": 0
                     });
                 }
                 w = $iframe.get(0);

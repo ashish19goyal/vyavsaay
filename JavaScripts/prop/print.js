@@ -7,14 +7,14 @@ function print_barcode(string)
 	var image_element=document.createElement('img');
 	var name_element=document.createElement('div');
 		
-	container.setAttribute('style','width:200px;height:150px;padding:5%;');	
+	container.setAttribute('style','width:200px;height:200px;padding:1px;');	
 	image_element.setAttribute('style','width:200px;');
-	name_element.setAttribute('style','width:95%;font-weight:bold;font-size:12px;margin:5%;text-align:center;');
+	name_element.setAttribute('style','width:200px;font-weight:bold;font-size:11px;margin:1px;text-align:center;');
 	container.appendChild(image_element);
 	container.appendChild(name_element);
 	
 	name_element.innerHTML=string;
-	//$(image_element).JsBarcode(string,{displayValue:false});
+	$(image_element).JsBarcode(string,{displayValue:false});
 	$.print(container);	
 }
 
@@ -28,19 +28,23 @@ function print_product_barcode(barcode,sku,name)
 	var image_element=document.createElement('img');
 	var name_element=document.createElement('div');
 	
-	container.setAttribute('style','width:200px;height:100px');
-	sku_element.setAttribute('style','width:200px;text-align:center;');
-	image_element.setAttribute('style','width:200px;');
-	name_element.setAttribute('style','width:200px;');
+	container.setAttribute('style','width:90%;height:90%;max-height:90%;margin:0px;padding:0px;');
+	sku_element.setAttribute('style','width:90px;height:20px;text-align:center;font-size:10px;margin:0px;padding:0px;');
+	image_element.setAttribute('style','width:100px;height:30px;margin:0px;padding:0px;');
+	name_element.setAttribute('style','width:90px;height:20px;font-size:10px;margin:0px;padding:0px;');
 	
 	container.appendChild(sku_element);
 	container.appendChild(image_element);
 	container.appendChild(name_element);
 
-	sku_element.innerHTML=sku;	   
-	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:24});
+	sku_element.innerHTML=sku;
+	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:10});
 	name_element.innerHTML=name;	   
-
+	
+	//var container_html=container.innerHTML;
+	//var my_con=document.getElementById('pdf_print_div');
+	//my_con.innerHTML=container_html;
+	
 	$.print(container);	
 }
 
