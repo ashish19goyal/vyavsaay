@@ -9,7 +9,7 @@ function print_barcode(string)
 		
 	container.setAttribute('style','width:90%;height:90%;padding:0px;margin:0px');	
 	image_element.setAttribute('style','width:200px;');
-	name_element.setAttribute('style','width:200px;font-weight:bold;font-size:11px;margin:1px;text-align:center;');
+	name_element.setAttribute('style','width:90%;font-weight:bold;font-size:11px;margin:1px;text-align:center;');
 	container.appendChild(image_element);
 	container.appendChild(name_element);
 	
@@ -29,9 +29,9 @@ function print_product_barcode(barcode,sku,name)
 	var name_element=document.createElement('div');
 	
 	container.setAttribute('style','width:90%;height:90%;max-height:90%;margin:0px;padding:0px;');
-	sku_element.setAttribute('style','width:100px;height:20px;text-align:center;font-size:12px;margin:0px;padding:0px;');
+	sku_element.setAttribute('style','width:90%;height:20px;text-align:center;font-size:10px;margin:0px;padding:0px;');
 	image_element.setAttribute('style','width:200px;height:60px;margin:0px;padding:0px;');
-	name_element.setAttribute('style','width:100px;height:20px;font-size:12px;margin:0px;padding:0px;');
+	name_element.setAttribute('style','width:90%;height:20px;font-size:9px;margin:0px;padding:0px;');
 	
 	container.appendChild(sku_element);
 	container.appendChild(image_element);
