@@ -29,16 +29,16 @@ function print_product_barcode(barcode,sku,name)
 	var name_element=document.createElement('div');
 	
 	container.setAttribute('style','width:90%;height:90%;max-height:90%;margin:0px;padding:0px;');
-	sku_element.setAttribute('style','width:90px;height:20px;text-align:center;font-size:10px;margin:0px;padding:0px;');
-	image_element.setAttribute('style','width:100px;height:30px;margin:0px;padding:0px;');
-	name_element.setAttribute('style','width:90px;height:20px;font-size:10px;margin:0px;padding:0px;');
+	sku_element.setAttribute('style','width:100px;height:20px;text-align:center;font-size:12px;margin:0px;padding:0px;');
+	image_element.setAttribute('style','width:200px;height:60px;margin:0px;padding:0px;');
+	name_element.setAttribute('style','width:100px;height:20px;font-size:12px;margin:0px;padding:0px;');
 	
 	container.appendChild(sku_element);
 	container.appendChild(image_element);
 	container.appendChild(name_element);
 
 	sku_element.innerHTML=sku;
-	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:10});
+	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:24});
 	name_element.innerHTML=name;	   
 	
 	//var container_html=container.innerHTML;
