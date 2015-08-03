@@ -38,7 +38,7 @@
 		margin-left:4%;
 	}
 	
-	input[type=button]{
+	input[type=submit]{
 		width: 90%;
 		margin: 1% 4%;
 		float:left;
@@ -60,12 +60,13 @@
 	h1{
 		float:left;
 		padding:5px;
-		height:50px;
+		/*height:200px;*/
 		color:#ffffff;
 		font-size:20px;
 		font-family:verdana;
 		margin:1% 4%;
 		width:90%;
+		text-align: center;
 	}
 
 	#contact_details{
@@ -118,7 +119,9 @@
 			   		console.log(xmlhttp.responseText);
 			     	//$("#myDiv").hide();
 			        document.getElementById("saleslead").setAttribute('style','display:none;');
-	                document.getElementById("thankYou").innerHTML="Thanks for your details. We will be in touch!";
+	                var complete_message=document.getElementById("thankYou");
+	                complete_message.innerHTML="Thanks for your details. We will be in touch!";
+	                complete_message.height="200px";
 			   	}
 			}
 			var form=document.getElementById('saleslead');
@@ -141,15 +144,15 @@
 	<img id='logo'>
 
 	<form id="saleslead">
-		<input class="righties" type="text" name="clientname" placeholder="Name"></input>
-		<input class="righties" type="text" name="phone" placeholder="Phone"></input>
+		<input class="righties" type="text" required name="clientname" placeholder="Name"></input>
+		<input class="righties" type="text" required name="phone" placeholder="Phone"></input>
 		<input class="righties" type="text" name="company" placeholder="Company"></input>
-		<input class="righties" type="text" name="email" placeholder="E-mail"></input>
+		<input class="righties" type="email" name="email" placeholder="E-mail"></input>
 		<textarea class="outliers" name="address" placeholder="Address" ></textarea>
 		<input class="righties" type="text" name="city" placeholder="City"></input>
 		<textarea class="outliers" name="requirements" placeholder="Requirements"></textarea>
 		<input type="hidden" name="domain" placeholder="City">
-		<input type="button" onclick="myFunction();" value='Save'>
+		<input type="submit" onsubmit="myFunction();" value='Save'>
 	</form>
 	
 	<br><br>
