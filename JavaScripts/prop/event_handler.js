@@ -21,7 +21,7 @@ function default_load()
 	show_notif_timer=0;
 	progress_value=0;
 	vyavsaay_active_tab="";
-	
+	storage_count_tracker=0;
 	modal_forms_ini();
 	//fix_orientation();
 	

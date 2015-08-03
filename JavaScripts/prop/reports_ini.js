@@ -4898,14 +4898,14 @@ function report66_ini()
 		{	
 			var storage_array=[];
 			storage_array.push(area.name);
-			var tracker=0;
-			get_all_child_storage(area.name,storage_array,tracker);			
-			
+			storage_count_tracker=0;
+			get_all_child_storage(area.name,storage_array);			
+
 			total_calls+=1;
 			
 			var areas_complete=setInterval(function()
 			{
-				if(tracker===0)
+				if(storage_count_tracker===0)
 				{
 					console.log(storage_array);
 					clearInterval(areas_complete);

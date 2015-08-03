@@ -1082,13 +1082,13 @@ function update_simple(data_xml)
 	}
 }
 
-function get_all_child_storage(store_area,area_array,tracker)
+function get_all_child_storage(store_area,area_array)
 {
 	var child_data="<store_areas>"+
 					"<name></name>"+
 					"<parent exact='yes'>"+store_area+"</parent>" +
 					"</store_areas>";
-	tracker+=1;
+	storage_count_tracker+=1;				
 	fetch_requested_data('',child_data,function(children)
 	{
 		if(children.length>0)
@@ -1096,9 +1096,11 @@ function get_all_child_storage(store_area,area_array,tracker)
 			children.forEach(function(child)
 			{
 				area_array.push(child.name);
+				//console.log(storage_count_tracker);
 				get_all_child_storage(child.name,area_array);
 			});
 		}
-		tracker-=1;		
+		storage_count_tracker-=1;
+		//console.log(storage_count_tracker);		
 	});
 }
