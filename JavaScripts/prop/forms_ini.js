@@ -17059,7 +17059,7 @@ function form169_ini()
 							}
 							else
 							{
-								rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Click to assign barcode' onclick=\"modal139_action('"+result.id+"','"+result.name+"','"+result.description+"');\">";
+								rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Click to assign barcode' onclick=\"modal139_action('"+result.id+"','"+result.name+"','"+result.description+"',this);\">";
 							}
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Name'>";

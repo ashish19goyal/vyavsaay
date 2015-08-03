@@ -7383,3 +7383,14 @@ function form217_header_ini()
 	});
 	
 };
+
+/**
+ * @form Launch contact form
+ * @formNo 218
+ */
+function form218_header_ini()
+{
+	var domain=get_domain();
+	var url="./f/s.html?d="+domain+"&r=y";
+	window.open(url,'_blank');
+};

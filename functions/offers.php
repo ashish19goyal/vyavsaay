@@ -13,6 +13,7 @@
 			<li><a id='form116_link' href='#form116' onclick='form116_header_ini(); form116_ini();' data-i18n='form.manage_loyalty_programs'></a></li>
 			<li><a id='form120_link' href='#form120' onclick='form120_header_ini(); form120_ini();' data-i18n='form.manage_customers'></a></li>
 			<li><a id='form121_link' href='#form121' onclick='form121_header_ini(); form121_ini();' data-i18n='form.adjust_loyalty_points'></a></li>
+			<li><a id='form218_link' href='#form218' onclick='form218_header_ini();' data-i18n='form.launch_contact_form'></a></li>
 		</ul>
 
 	<?php 
@@ -29,6 +30,7 @@
 			include "forms/form116.php";
 			include "forms/form120.php";
 			include "forms/form121.php";
+			include "forms/form218.php";
 	?>
 	
 </div>

@@ -1,0 +1,132 @@
+<!Doctype html>
+<html>
+<head>
+<style>
+<!-- body {background-color:#CBE32D} -->
+body {background-color:#FFC04D}
+
+
+.righties {
+      float:left;
+	  border-bottom-left-radius: .5em;
+	  border-bottom-right-radius: .5em;
+	  border-top-left-radius: .5em;
+	  border-top-right-radius: .5em;
+	  height:30px;
+	  <!-- background-color:#F3FAB6; -->
+	  background-color:white;
+	  color:#CC7000;
+	  font-size:20px;
+	  font-family:verdana
+	}
+.outliers  {
+      float:left;
+      height:55px;
+      width:1048px;
+       border-bottom-left-radius: .5em;
+	  border-bottom-right-radius: .5em;
+	  border-top-left-radius: .5em;
+	  border-top-right-radius: .5em;	  
+	  <!-- background-color:#F3FAB6; -->
+	  background-color:white;
+	  color:#CC7000;
+	  font-size:20px;
+	  font-family:verdana
+    }
+
+</style>
+
+
+
+	<meta charset="utf-8">
+	<title>Sales Lead Capture Form</title>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+<script>
+
+    function loadImage()
+    {
+	    var xmlhttp1 = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function()
+        {
+		    if(xmlhttp.readyState==4 && xmlhttp.status==200)  	
+            {
+			 getElementById("logo").src="";
+			}
+		}
+		
+		xmlhttp.open("GET",,true);
+		xmlhttp.send();
+    }
+	function set_id()
+	{
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+				vars[key] = value;
+		});
+		var form=document.getElementById('f  eedback_form');
+		form.elements['id'].value=vars['i'];
+		form.elements['domain'].value=vars['d'];
+	};
+	 
+	function myFunction()
+	{
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function()
+	    {
+	     	if(xmlhttp.readyState==4 && xmlhttp.status==200)
+		   	{
+		   		console.log(xmlhttp.responseText);
+		     	//$("#myDiv").hide();
+		        document.getElementsByClassName("righties").setAttribute('style','display:none;');
+                document.getElementsByClassName("outliers").setAttribute('style','display:none;');	   				
+	            document.getElementById("thankYou").innerHTML="Thank you for your time";
+		   	}
+		}
+		var form=document.getElementById('saleslead');
+		var id_data=form.elements['id'].value;
+		var domain=form.elements['domain'].value;
+		var name_data=form.elements['clientname'].value;
+		var phone_data=form.elements['phone'].value;
+		var company_data=form.elements['company'].value;
+		var email_data=form.elements['email'].value;
+		var address_data=form.elements['address'].value;
+		var city_data=form.elements['city'].value;
+		var requirements_data=form.elements['requirements'].value;
+		
+		xmlhttp.open("POST","../ajax/feedback.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send("id="+id_data+"&domain="+domain+"&name="+name_data+"&phone="+phone_data+"&company="+company_data+"&email="+email_data+"&address="+address_data+"&city="+city_data+"&requirements="+requirements_data);
+		//xmlhttp.send("domain=laundry");
+	}
+</script>
+</head>
+<body onload='set_id(); loadImage();'>
+
+
+
+<img id="logo" src="http://www.delhilightandmusic.com/images/logo.png" style="width:550px; height:120px; margin-bottom:40px ; margin-top:10px; margin-left:400px">
+
+<form id="saleslead">
+
+ 
+   <input class="righties" type="text" name="clientname" size="100" style="float:left; margin:5px 150px" placeholder="Name"></input>
+   
+   <input class="righties" type="text" name="phone" size="100" style="float:left; margin:5px 150px"  placeholder="Phone"></input>
+
+   <input class="righties" type="text" name="company" size="100" style="float:left; margin:5px 150px"  placeholder="Company"></input>
+
+   <input class="righties" type="text" name="email" size="100" style="float:left; margin:5px 150px"  placeholder="E-mail"></input>
+
+   <textarea class="outliers" name="address" style="float:left; margin:5px 150px"  placeholder="Address" ></textarea>
+
+   <input class="righties" type="text" name="city" size="100" style="float:left; margin:5px 150px "  placeholder="City"></input>
+
+   <textarea class="outliers" name="requirements" style="float:left; margin:5px 150px ; margin-bottom:40px"  placeholder="Requirements"></textarea>
+
+</form>
+<br><br>
+<button type="button" onclick="myFunction();" style="float:right; margin-right:140px">submit</button>
+ 
+<h1 id="thankYou"></h1> 
+</body>
+</html>

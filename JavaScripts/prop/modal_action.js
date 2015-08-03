@@ -8429,7 +8429,7 @@ function modal127_action()
 		});
 
 		var container=document.createElement('div');
-		container.setAttribute('style','width:1.5in;font-size:.1in;line-height:.12in;');
+		container.setAttribute('style','width:95%;font-size:9px;line-height:10px;');
 		
 		items.forEach(function(item)
 		{
@@ -8441,15 +8441,15 @@ function modal127_action()
 				var due_date_elem=document.createElement('div');
 				var address_elem=document.createElement('div');
 
-			item_container.setAttribute('style','width:1.5in;height:2in;margin:0px');
-			bill_num_elem.setAttribute('style','font-size:.1in;');
+			item_container.setAttribute('style','width:95%;height:90%;margin:0px;font-size:8px');
+			bill_num_elem.setAttribute('style','font-size:8px;');
 
-			item_count_elem.innerHTML="<hr style='border: 1px solid #000;margin:1px;'>"+item.number+" of "+total_quantity;
+			item_count_elem.innerHTML="<hr style='border: 1px solid #000;margin:0px;'>"+item.number+" of "+total_quantity;
 			business_title_elem.innerHTML=bus_title;
 			item_name_elem.innerHTML=item.name;
 			bill_num_elem.innerHTML="<b>"+bill_num+"</b>";
 			due_date_elem.innerHTML="<b>"+bill_due_date+"</b>";
-			address_elem.innerHTML="<hr style='border: 1px solid #000;margin:1px;'>"+customer_address+"<hr style='border: 1px solid #000;margin:1px;'>";			
+			address_elem.innerHTML="<hr style='border: 1px solid #000;margin:0px;'>"+customer_address+"<hr style='border: 0px solid #000;margin:0px;'>";			
 			
 			item_container.appendChild(item_count_elem);
 			item_container.appendChild(business_title_elem);
@@ -9424,7 +9424,7 @@ function modal138_action(i_func)
  * @modal Assign Barcode
  * @modalNo 139
  */
-function modal139_action(id,name,description)
+function modal139_action(id,name,description,button)
 {
 	var form=document.getElementById("modal139_form");
 	var barcode_filter=form.elements['barcode'];
@@ -9481,9 +9481,16 @@ function modal139_action(id,name,description)
 		else
 		{
 			local_update_simple(data_xml);
-		}	
-		
+		}
+
 		$("#modal139").dialog("close");
+
+		button.removeAttribute("onclick");
+		$(button).on('click',function () 
+		{
+			print_product_barcode(barcode,name,description);
+		});
+		$(button).attr('title','Print Barcode - '+barcode);
 	});
 	
 	$("#modal139").dialog("open");

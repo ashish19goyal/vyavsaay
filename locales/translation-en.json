@@ -372,6 +372,8 @@
 	"total_sales":"Total Sales",
 	"grn_item_accept_editable":"Edit acceptability of GRN items",
 	"purchase_bill_approver":"Purchase bill approver",
-	"sku_mapping_supplier":"SKU Mapping (supplier)"
+	"sku_mapping_supplier":"SKU Mapping (supplier)",
+	"sale_leads_external":"Sale Leads (external form)",
+	"launch_contact_form":"Launch Contact Form"	
 	}
 }

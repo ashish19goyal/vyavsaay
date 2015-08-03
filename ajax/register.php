@@ -2,7 +2,9 @@
 
 	include_once "../Classes/db.php";
 	include_once "../Classes/sms.php";
+	include_once "../Classes/mailer.php";
 	use RetailingEssentials\send_sms;
+	use RetailingEssentials\send_mailer;
 	use RetailingEssentials\db_connect;
 	
 	$status="failed_registration";
