@@ -950,6 +950,7 @@
 			<type>report</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
+			<tables>--inventory_adjust--area_utilization--store_areas--product_master--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>

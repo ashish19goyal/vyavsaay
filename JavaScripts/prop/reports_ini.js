@@ -4892,7 +4892,7 @@ function report66_ini()
 	total_calls+=1;
 	fetch_requested_data('report66',area_data,function(areas)
 	{
-		console.log(areas);
+		//console.log(areas);
 		total_calls-=1;
 		areas.forEach(function(area)
 		{	
@@ -4907,7 +4907,7 @@ function report66_ini()
 			{
 				if(storage_count_tracker===0)
 				{
-					console.log(storage_array);
+					//console.log(storage_array);
 					clearInterval(areas_complete);
 
 					total_calls-=1;
@@ -4925,7 +4925,7 @@ function report66_ini()
 					total_calls+=1;				
 					fetch_requested_data('',item_data,function(items)
 					{
-						console.log(items);
+						//console.log(items);
 						total_calls-=1;
 						for(var i=0;i<items.length;i++)
 						{
