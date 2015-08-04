@@ -20,6 +20,7 @@
 			<shipping index='yes' type="BOOL"></shipping>
 			<business_type index='yes' type="TEXT"></business_type>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</customers>
 	<suppliers>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -40,6 +41,7 @@
 			<business_type index='yes' type="TEXT"></business_type>
 			<score index='yes' type="TEXT"></score>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</suppliers>
 	<supplier_item_mapping>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -49,6 +51,7 @@
 			<supplier index='yes' type='TEXT'></supplier>
 			<margin index='no' type="DECIMAL(12,2)"></margin>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</supplier_item_mapping>
 	<staff>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -67,6 +70,7 @@
 			<lng index='no' type="DECIMAL(14,10)"></lng>
 			<shipping index='yes' type="BOOL"></shipping>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</staff>
 	<location_history>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -76,6 +80,7 @@
 			<location index='no' type='TEXT'></location>
 			<log_time index='yes' type='BIGINT'></log_time>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</location_history>
 	<accounts>
 			<id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
@@ -94,6 +99,7 @@
 			<presence index='yes' type="VARCHAR(10)"></presence><!-- present/absent/not known -->
 			<hours_worked index='no' type="DECIMAL(12,2)"></hours_worked>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</attendance>
 	<documents>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -102,6 +108,7 @@
 			<doc_type index='yes' type="VARCHAR(50)"></doc_type><!-- service/service instance/staff/product/product instance/asset/service request/project -->
 			<target_id index='yes' type="BIGINT"></target_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</documents>
 	<expenses>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -113,6 +120,7 @@
 			<source index='yes' type="VARCHAR(50)"></source><!-- service request/project/project phase/task instance -->
 			<source_id index='yes' type="BIGINT"></source_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</expenses>
 	<task_instances>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -128,6 +136,7 @@
 			<expense index='no' type="DECIMAL(12,2)"></expense>
 			<task_hours index='no' type="DECIMAL(5,2)"></task_hours>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</task_instances>
 	<task_type>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -135,6 +144,7 @@
 			<description index='no' type="TEXT"></description>
 			<est_hours index='no' type="DECIMAL(5,2)"></est_hours>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</task_type>
 	<purchase_orders>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -153,6 +163,7 @@
 			<quantity_qc_pending index='no' type='DECIMAL(12,2)'></quantity_qc_pending>
 			<new_order_id index='yes' type="BIGINT"></new_order_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</purchase_orders>
 	<purchase_order_items>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -169,6 +180,7 @@
 			<total index='no' type='DECIMAL(12,2)'></total>
 			<mrp index='no' type='DECIMAL(12,2)'></mrp>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</purchase_order_items>
 	<supplier_bills>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -188,6 +200,7 @@
 			<imported index='yes' type='VARCHAR(25)'></imported><!--yes/no-->
 			<notes index='yes' type="TEXT"></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</supplier_bills>
 	<supplier_bill_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -209,6 +222,7 @@
 			<qc_comments index='yes' type="TEXT"></qc_comments>
 			<put_away_status index='yes' type="TEXT"></put_away_status><!--pending/completed-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</supplier_bill_items>
 	<supplier_returns>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -219,6 +233,7 @@
 			<type index="yes" type="VARCHAR(10)"></type><!-- service/product/both -->
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</supplier_returns>
 	<supplier_return_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -233,6 +248,7 @@
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<storage index='yes' type="TEXT"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</supplier_return_items>
 	<transactions>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -243,6 +259,7 @@
 			<tax index='yes' type="DECIMAL(12,2)"></tax>
 			<service_tax index='yes' type="DECIMAL(12,2)"></service_tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</transactions>
 	<cash_register>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -252,6 +269,7 @@
 			<notes index='no' type="TEXT"></notes>
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</cash_register>
 	<receipts_payment_mapping>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -262,6 +280,7 @@
 			<acc_name index='yes' type="TEXT"></acc_name>
 			<date index='yes' type="BIGINT"></date>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</receipts_payment_mapping>
 	<receipts>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -271,6 +290,7 @@
 			<acc_name index='yes' type="TEXT"></acc_name>
 			<date index='yes' type="BIGINT"></date>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</receipts>
 	<payments>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -287,6 +307,7 @@
 			<source_info index='no' type="TEXT"></source_info>
 			<notes index='yes' type="TEXT"></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</payments>
 	<credit_notes>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -318,6 +339,7 @@
 			<offer_detail index='no' type="TEXT"></offer_detail>
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/expired/closed/extended -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</offers>
 	<sale_orders>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -339,6 +361,7 @@
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<status index='yes' type='VARCHAR(25)'></status><!-- billed/cancelled/pending -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</sale_orders>
 	<sale_order_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -356,6 +379,7 @@
 			<freight index='no' type="DECIMAL(12,2)"></freight>
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</sale_order_items>
 	<bills>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -390,6 +414,7 @@
 			<status index='no' type="VARCHAR(30)"></status><!--cancelled-->
 			<cform index='no' type="VARCHAR(30)"></cform><!--yes/no-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</bills>
 	<bill_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -424,6 +449,7 @@
 			<packing_status index='yes' type="VARCHAR(25)"></packing_status><!--pending/packed-->
 			<dispatch_status index='yes' type="VARCHAR(25)"></dispatch_status><!--pending/dispatched-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</bill_items>
 	<customer_returns>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -438,6 +464,7 @@
 			<channel index='yes' type="TEXT"></channel>
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</customer_returns>
 	<customer_return_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -454,6 +481,7 @@
 			<storage index='yes' type="TEXT"></storage>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</customer_return_items>
 	<service_subscriptions>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -465,6 +493,7 @@
 			<notes index='no' type="TEXT"></notes>
 			<status index='yes' type="VARCHAR(25)"></status><!-- active/cancelled/suspended -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</service_subscriptions>
 	<services>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -473,6 +502,7 @@
 			<price index='no' type="DECIMAL(12,2)"></price>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</services>
 	<product_instances>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -484,6 +514,7 @@
 			<sale_price index='yes' type="DECIMAL(12,2)"></sale_price>
 			<mrp index='no' type="DECIMAL(12,2)"></mrp>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</product_instances>
 	<sale_prices>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -493,6 +524,7 @@
 			<pi_id index='yes' type="BIGINT"></pi_id>
 			<billing_type index='yes' type='TEXT'></billing_type>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</sale_prices>
 	<inventory_adjust>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -503,6 +535,7 @@
 			<source_id index='yes' type="BIGINT"></source_id>
 			<storage index='yes' type="TEXT"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</inventory_adjust>
 	<discarded>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -515,6 +548,7 @@
 			<source_id index='yes' type='BIGINT'></source_id>
 			<storage index='yes' type="TEXT"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</discarded>
 	<product_master>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -531,6 +565,7 @@
 			<packing index='no' type="TEXT"></packing>
 			<weight index='no' type="DECIMAL(12,4)"></weight><!--in grams-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</product_master>
 	<attributes>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -539,6 +574,7 @@
 			<attribute index='yes' type="TEXT"></attribute><!--recurrent sale(days)/season start date(1 jan)/season end date(2 december)/subscription period(4 days/2 months/10 weeks/1 year)-->
 			<value index='no' type='TEXT'></value>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</attributes>
 	<mandatory_attributes>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -547,6 +583,7 @@
 			<value index='no' type='TEXT'></value>
 			<status index='yes' type="VARCHAR(20)"></status><!-- required/active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</mandatory_attributes>
 	<cross_sells>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -555,6 +592,7 @@
 			<cross_type index='yes' type="VARCHAR(10)"></cross_type><!-- service/product -->
 			<cross_name index='yes' type="TEXT"></cross_name>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</cross_sells>
 	<reviews>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -564,6 +602,7 @@
 			<detail index='no' type="TEXT"></detail>
 			<rating index='no' type='DECIMAL(4,2)'></rating>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</reviews>
 	<pre_requisites>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -573,6 +612,7 @@
 			<requisite_name index='yes' type="TEXT"></requisite_name>
 			<quantity index="no" type="DECIMAL(10,2)"></quantity>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</pre_requisites>
 	<area_utilization>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -580,6 +620,7 @@
 			<item_name index='yes' type="TEXT"></item_name>
 			<batch index='yes' type="TEXT"></batch>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</area_utilization>
 	<store_movement>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -592,6 +633,7 @@
 			<dispatcher index='no' type="TEXT"></dispatcher>
 			<receiver index='no' type="TEXT"></receiver>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</store_movement>
 	<store_areas>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -604,6 +646,7 @@
 			<height index='no' type="DECIMAL(12,4)"></height>
 			<unit index='no' type="VARCHAR(50)"></unit><!--cm/m/mm/km/in/ft-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</store_areas>
 	<storage_structure>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -614,6 +657,7 @@
 			<height index='no' type="DECIMAL(12,4)"></height>
 			<unit index='no' type="VARCHAR(50)"></unit><!--cm/m/mm/km/in/ft-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</storage_structure>
 	<assets>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -627,6 +671,7 @@
 			<notes index='no' type="TEXT"></notes>
 			<owner index='yes' type="TEXT"></owner>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</assets>
 	<newsletter>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -635,6 +680,7 @@
 			<count_items index='no' type="INT"></count_items>
 			<valid_until index='yes' type="BIGINT"></valid_until>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</newsletter>
 	<newsletter_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -647,6 +693,7 @@
 			<url index='no' type="TEXT"></url>
 			<column_size index='no' type="INT"></column_size>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</newsletter_items>
 	<activities>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -661,6 +708,7 @@
 			<status index='yes' type="VARCHAR(20)"></status><!-- online/synced/unsynced -->
 			<updated_by index='yes' type='TEXT'></updated_by>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</activities>
 	<notifications>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -672,6 +720,7 @@
 			<status index='yes' type="VARCHAR(20)"></status><!-- pending/reviewed/closed -->
 			<target_user index='no' type="TEXT"></target_user>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</notifications>
 	<sale_leads>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -681,6 +730,7 @@
 			<identified_by index='yes' type="TEXT"></identified_by>
 			<source_id index='yes' type="BIGINT"></source_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</sale_leads>
 	<followups>  
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -691,6 +741,7 @@
 			<next_date index='yes' type="TEXT"></next_date>
 			<source_id index='yes' type="BIGINT"></source_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</followups>
 	<user_preferences>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -703,6 +754,7 @@
 			<tables index='no' type="TEXT"></tables>
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</user_preferences>
 	<access_control>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -715,6 +767,7 @@
 			<del index="no" type="VARCHAR(10)"></del><!-- checked/unchecked -->
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</access_control>
 	<templates>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -728,6 +781,7 @@
 			<row_fields index="no" type="INT"></row_fields>
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</templates>
 	<values_list>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -737,6 +791,7 @@
 			<value index='no' type="VARCHAR(30)"></value>
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</values_list>
 	<user_fields_list>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -744,6 +799,7 @@
 			<field_name index='yes' type="TEXT"></field_name>
 			<status index='yes' type="VARCHAR(10)"></status><!-- active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</user_fields_list>
 	<feedback>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -798,6 +854,7 @@
 			<hours index='no' type="DECIMAL(5,2)"></hours>
 			<notes index='no' type="TEXT"></notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</appointments>
 	<bill_types>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -805,6 +862,7 @@
 			<notes index='no' type="TEXT"></notes>
 			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</bill_types>
 	<sale_channels>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -812,6 +870,7 @@
 			<details index='no' type="TEXT"></details>
 			<dead_weight_factor index='no' type="TEXT"></dead_weight_factor>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</sale_channels>
 	<sku_mapping>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -821,6 +880,7 @@
 			<channel_sku index='yes' type="TEXT"></channel_sku>
 			<channel_system_sku index='yes' type="TEXT"></channel_system_sku>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</sku_mapping>
 	<channel_prices>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -843,6 +903,7 @@
 			<from_time index='yes' type="BIGINT"></from_time>
 			<to_time index='yes' type="BIGINT"></to_time>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</channel_prices>
 	<pickup_charges>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -852,6 +913,7 @@
 			<max_charges index='no' type="DECIMAL(12,2)"></max_charges>
 			<pincode index='yes' type='TEXT'></pincode>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</pickup_charges>
 	<channel_category>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -861,6 +923,7 @@
 			<parent index='yes' type='TEXT'></parent>
 			<commission index='no' type='DECIMAL(12,2)'></commission>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</channel_category>
 	<category_sku_mapping>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -869,6 +932,7 @@
 			<cat_name index='yes' type='TEXT'></cat_name>
 			<sku index='yes' type='TEXT'></sku>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</category_sku_mapping>
 	<checklist_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -876,6 +940,7 @@
 			<desired_result index='no' type='TEXT'></desired_result>
 			<status index='yes' type='VARCHAR(25)'></status><!--active/inactive/required-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</checklist_items>
 	<checklist_mapping>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -883,6 +948,7 @@
 			<checkpoint index='yes' type="TEXT"></checkpoint>
 			<desired_result index='no' type='TEXT'></desired_result>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</checklist_mapping>
 	<loans>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -902,6 +968,7 @@
 			<pending_emi index='no' type='INTEGER'></pending_emi>
 			<status index='yes' type="VARCHAR(45)"></status><!-- open/closed -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</loans>
 	<projects>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -910,6 +977,7 @@
 			<start_date index='yes' type="BIGINT"></start_date>
 			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active/suspended/completed -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</projects>
 	<project_team>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -920,6 +988,7 @@
 			<access_type index='yes' type="VARCHAR(25)"></access_type><!--all/read/update/delete-->
 			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active/left -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</project_team>
 	<project_phases>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -931,6 +1000,7 @@
 			<percent_complete index='no' type="INT"></percent_complete>
 			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active/suspended/completed -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</project_phases>
 	<data_access>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -943,12 +1013,14 @@
 			<criteria_field index='yes' type="TEXT"></criteria_field>
 			<criteria_value index='yes' type="TEXT"></criteria_value>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</data_access>
 	<reports>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="VARCHAR(200)"></name>
 			<description index='no' type="TEXT"></description>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</reports>
 	<report_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -960,6 +1032,7 @@
 			<condition1 index='no' type="VARCHAR(30)"></condition1><!--equals value/equals field/not equals value/greater than value/less than value/not equals field/greater than field/less than field-->
 			<value index='no' type="TEXT"></value>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</report_items>
 	<unbilled_sale_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -980,6 +1053,7 @@
 			<bill_status index='yes' type="VARCHAR(25)"></bill_status><!--pending/completed-->
 			<picked_status index='yes' type="VARCHAR(25)"></picked_status><!--pending/picked-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</unbilled_sale_items>
 	<unbilled_purchase_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -998,6 +1072,7 @@
 			<put_away_status index='yes' type="VARCHAR(25)"></put_away_status><!--pending/completed-->
 			<bill_status index='yes' type="VARCHAR(25)"></bill_status><!--pending/completed-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</unbilled_purchase_items>
 	<loyalty_programs>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1013,6 +1088,7 @@
 			<reward_product index='no' type="TEXT"></reward_product>
 			<status index='yes' type='VARCHAR(25)'></status><!-- active/retired -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</loyalty_programs>
 	<loyalty_points>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1024,6 +1100,7 @@
 			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale return-->
 			<source_id index='yes' type="BIGINT"></source_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</loyalty_points>
 	<loyalty_customers>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1032,6 +1109,7 @@
 			<tier index='yes' type="TEXT"></tier>
 			<status index='yes' type='VARCHAR(25)'></status><!-- active/inactive -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</loyalty_customers>
 	<issues>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1039,6 +1117,7 @@
 			<detail index='yes' type="TEXT"></detail>
 			<status index='yes' type='VARCHAR(25)'></status><!-- active/archived -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</issues>
 	<solutions>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1046,6 +1125,7 @@
 			<detail index='yes' type="TEXT"></detail>
 			<status index='yes' type='VARCHAR(25)'></status><!-- active/archived -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</solutions>
 	<service_requests>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1059,6 +1139,7 @@
 			<end_time index='yes' type="BIGINT"></end_time>
 			<status index='yes' type='VARCHAR(25)'></status><!-- open/closed/cancelled -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</service_requests>
 	<service_request_machines>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1070,6 +1151,7 @@
 			<closing_notes index='no' type="TEXT"></closing_notes>
 			<status index='yes' type='VARCHAR(25)'></status><!-- open/closed/cancelled -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</service_request_machines>
 	<service_request_team>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1078,6 +1160,7 @@
 			<phone index='no' type="VARCHAR(15)"></phone>
 			<email index='no' type="TEXT"></email>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</service_request_team>
 	<service_request_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1088,6 +1171,7 @@
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<status index='yes' type='VARCHAR(25)'></status><!-- requested/approved/dispatched/used -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</service_request_items>
 	<ques_struct>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1101,6 +1185,7 @@
 			<function_name index='no' type="TEXT"></function_name>
 			<function_def index='no' type="TEXT"></function_def>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</ques_struct>
 	<ques_fields>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1116,6 +1201,7 @@
 			<weight index='no' type='DECIMAL(5,2)'></weight>
 			<freq index='yes' type='VARCHAR(15)'></freq><!--checked/unchecked-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</ques_fields>
 	<ques_data>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1129,6 +1215,7 @@
 			<status index='yes' type='VARCHAR(25)'></status><!--submitted/approved/reviewed-->
 			<total_score index='no' type='DECIMAL(12,2)'></total_score>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</ques_data>
 	<ques_fields_data>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1136,6 +1223,7 @@
 			<field_id index='yes' type="BIGINT NOT NULL"></field_id>
 			<field_value index='yes' type="TEXT"></field_value>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</ques_fields_data>
 	<sms>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1144,6 +1232,7 @@
 			<status index='yes' type="VARCHAR(25)"></status><!--pending/sent/cancelled-->
 			<type index='yes' type='VARCHAR(25)'></type><!--transaction/promotion-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</sms>
 	<emails>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1156,6 +1245,7 @@
 			<status index='yes' type="VARCHAR(25)"></status><!--pending/sent/cancelled-->
 			<type index='yes' type='VARCHAR(25)'></type><!--transaction/promotion-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</emails>
 	<roles>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1163,6 +1253,7 @@
 			<description index='no' type="TEXT"></description>
 			<status index='yes' type="VARCHAR(25)"></status><!--active/inactive-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</roles>
 	<user_role_mapping>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1170,6 +1261,7 @@
 			<username index='yes' type='TEXT'></username>
 			<status index='yes' type="VARCHAR(25)"></status><!--active/inactive-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</user_role_mapping>
 	<feeds>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1184,12 +1276,14 @@
 			<target_user index='no' type="TEXT"></target_user>
 			<owner index='yes' type="TEXT"></owner>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</feeds>
 	<feed_likes>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<feed_id index='yes' type="BIGINT"></feed_id>
 			<person index='yes' type="TEXT"></person>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</feed_likes>
 	<feed_comments>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1197,6 +1291,7 @@
 			<person index='yes' type="TEXT"></person>
 			<comment_text index='no' type='TEXT'></comment_text>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</feed_comments>
 	<quotation>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1212,6 +1307,7 @@
 			<intro_notes index='no' type="TEXT"></intro_notes>
 			<status index='yes' type="VARCHAR(25)"></status><!--generated/approved/rejected-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</quotation>
 	<quotation_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1232,6 +1328,7 @@
 			<notes index='no' type="TEXT"></notes>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</quotation_items>
 	<prioritization_parameters>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1240,6 +1337,7 @@
 			<values_list index='no' type='TEXT'></values_list>
 			<threshold index='no' type='DECIMAL(12,2)'></threshold>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</prioritization_parameters>
 	<business_processes>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1251,6 +1349,7 @@
 			<time_estimate index='yes' type="DECIMAL(12,6)"></time_estimate><!--hours/quantity-->
 			<default_assignee index='yes' type="TEXT"></default_assignee>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</business_processes>
 	<production_plan>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1260,6 +1359,7 @@
 			<from_time index='yes' type="BIGINT"></from_time>
 			<to_time index='yes' type="BIGINT"></to_time>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</production_plan>
 	<production_plan_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1271,6 +1371,7 @@
 			<from_time index='yes' type="BIGINT"></from_time>
 			<to_time index='yes' type="BIGINT"></to_time>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</production_plan_items>
 	<system_grid_metrics>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1281,6 +1382,7 @@
 			<function_def index='no' type="TEXT"></function_def>
 			<status index='yes' type="VARCHAR(30)"></status><!--active/inactive-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</system_grid_metrics>
 	<letterheads>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1293,6 +1395,7 @@
 			<signature index='yes' type="TEXT"></signature>
 			<footer index='yes' type="TEXT"></footer>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</letterheads>
 	<logistics_orders>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1337,6 +1440,7 @@
 			<comments index='no' type="TEXT"></comments>
 			<drs_num index='yes' type="VARCHAR(20)"></drs_num>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</logistics_orders>
 	<drs>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1345,6 +1449,7 @@
 			<drs_time index='yes' type="BIGINT"></drs_time>
 			<status index='yes' type="VARCHAR(20)"></status><!--out for delivery/delivered/pending/undelivered-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</drs>
 	<drs_items>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1352,6 +1457,7 @@
 			<drs_num index='yes' type="VARCHAR(20)"></drs_num>
 			<awb_num index='yes' type="VARCHAR(20)"></awb_num>
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</drs_items>
 	<treatment_plans>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -1360,5 +1466,6 @@
 			<start_date index='yes' type="BIGINT"></start_date>
 			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active/suspended/completed -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</treatment_plans>
 </re_xml>

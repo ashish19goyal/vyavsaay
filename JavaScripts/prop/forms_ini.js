@@ -2012,7 +2012,7 @@ function form30_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Contact'>";
 						rowsHTML+="Phone: <input type='text' readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable' value='"+result.phone+"'>";
-						rowsHTML+="<br>Email: <input type='text' readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable' value='"+result.email+"'>";
+						rowsHTML+="<br>Email: <textarea readonly='readonly' form='form30_"+result.id+"' class='dblclick_editable'>"+result.email+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Address'>";
 						rowsHTML+="<textarea readonly='readonly' form='form30_"+result.id+"'>"+result.address+", "+result.pincode+", "+result.city+", "+result.state+", "+result.country+"</textarea>";
@@ -20812,6 +20812,7 @@ function form213_ini()
 	
 	var filter_fields=document.getElementById('form213_header');
 	var fname=filter_fields.elements[0].value;
+	var fidentify=filter_fields.elements[1].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form213_index');
@@ -20825,7 +20826,7 @@ function form213_ini()
 		"<customer>"+fname+"</customer>" +
 		"<detail></detail>" +
 		"<due_date></due_date>" +
-		"<identified_by></identified_by>" +
+		"<identified_by>"+fidentify+"</identified_by>" +
 		"<last_updated></last_updated>" +
 		"</sale_leads>";
 	
@@ -20848,7 +20849,7 @@ function form213_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form213_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.due_date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Identified By'>";
-						rowsHTML+="<textarea readonly='readonly' form='form213_"+result.id+"'>"+result.identified_by+"</textarea>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form213_"+result.id+"' class='dblclick_editable' value='"+result.identified_by+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form213_"+result.id+"' value='"+result.id+"'>";
@@ -20860,6 +20861,13 @@ function form213_ini()
 			
 			$('#form213_body').append(rowsHTML);
 			var fields=document.getElementById("form213_"+result.id);
+			var identified_filter=fields.elements[3];
+			
+			var identified_data="<staff>"+
+								"<acc_name></acc_name>"+
+								"</staff>";
+			set_my_value_list(identified_data,identified_filter);
+					
 			$(fields).on("submit", function(event)
 			{
 				event.preventDefault();
@@ -20894,7 +20902,7 @@ function form213_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[2];
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{

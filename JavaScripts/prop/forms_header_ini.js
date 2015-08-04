@@ -7293,12 +7293,19 @@ function form213_header_ini()
 {
 	var filter_fields=document.getElementById('form213_header');	
 	var names_filter=filter_fields.elements[0];
-	
+	var identified_filter=filter_fields.elements[1];
+
 	//setting autocompletes 
 	var names_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
 
+	set_my_filter(names_data,names_filter);
+
+	//setting autocompletes 
+	var identified_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
 	set_my_filter(names_data,names_filter);
 	
 	$(filter_fields).off('submit');
