@@ -78,8 +78,9 @@
 				if($table_name!="#text" && ($found!==false))
 				{
 					$xmlresponse.="<$table_name>";
-					$stmt[$table_name]=$conn->conn->prepare("select * from $table_name where last_updated>? limit ?,?;");
-					$stmt[$table_name]->execute(array($last_sync_time,$start_offset,$num_records));
+					//echo $table_name;
+					$stmt[$table_name]=$conn->conn->prepare("select * from $table_name where last_updated>? or last_sync_time>? limit ?,?;");
+					$stmt[$table_name]->execute(array($last_sync_time,$last_sync_time,$start_offset,$num_records));
 					$stmt_res=$stmt[$table_name]->fetchAll(PDO::FETCH_ASSOC);
 					
 					for($i=0;$i<count($stmt_res);$i++)

@@ -91,6 +91,7 @@
 			<type index='yes' type='VARCHAR(20)'></type><!-- customer/staff/supplier/financial/master -->
 			<status index='yes' type="VARCHAR(45)"></status><!-- active/retired/suspended -->
 			<last_updated index='yes' type='BIGINT'></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</accounts>
 	<attendance>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -316,6 +317,7 @@
 			<acc_name index='yes' type="TEXT"></acc_name>
 			<status index='yes' type="VARCHAR(15)"></status><!-- active/used/expired -->
 			<last_updated index='yes' type="BIGINT"></last_updated>		
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</credit_notes>
 	<offers>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -810,6 +812,7 @@
 			<rating index='no' type="VARCHAR(10)"></rating><!-- 1/2/3/4/5-->
 			<date index='yes' type="BIGINT"></date>
 			<last_updated index='yes' type="BIGINT"></last_updated>		
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</feedback>
 	<de_duplication>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -824,6 +827,7 @@
 			<references_id index='no' type="TEXT"></references_id>
 			<status index='yes' type="VARCHAR(25)"></status><!-- pending/closed/cancelled -->
 			<last_updated index='yes' type="BIGINT"></last_updated>		
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</de_duplication>
 	<de_duplication_ref>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -833,6 +837,7 @@
 			<references_value index='no' type="TEXT"></references_value>
 			<references_id index='no' type="TEXT"></references_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>		
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</de_duplication_ref>
 	<manufacturing_schedule>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
@@ -844,6 +849,7 @@
 			<schedule index='yes' type="BIGINT"></schedule>
 			<iteration_notes index='no' type="TEXT"></iteration_notes>
 			<last_updated index='yes' type="BIGINT"></last_updated>		
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</manufacturing_schedule>
 	<appointments>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
