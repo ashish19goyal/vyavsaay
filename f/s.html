@@ -38,7 +38,7 @@
 		margin-left:4%;
 	}
 	
-	input[type=submit]{
+	input[type=button]{
 		width: 90%;
 		margin: 1% 4%;
 		float:left;
@@ -102,11 +102,24 @@
 			});
 
 			var form=document.getElementById('saleslead');
-			form.reset();
-			form.elements['domain'].value=vars['d'];	
+			//form.reset();
+			form.elements['clientname'].value="";
+			form.elements['phone'].value="";
+			form.elements['company'].value="";
+			form.elements['email'].value="";
+			form.elements['address'].value="";
+			form.elements['city'].value="";
+			form.elements['requirements'].value="";
+/*
+			form.addEventListener('submit',function()
+			{
+				myFunction();
+			});
+*/			form.elements['domain'].value=vars['d'];	
 			document.getElementById("logo").src="../client_images/"+vars['d']+".png";
 			if(vars['r']=='y')
-				document.getElementById("footer_message").innerHTML="Powered by Rise Consulting";	
+				document.getElementById("footer_message").innerHTML="Powered by Rise Consulting";
+				
 	    }
 	
 		function myFunction()
@@ -152,7 +165,7 @@
 		<input class="righties" type="text" name="city" placeholder="City"></input>
 		<textarea class="outliers" name="requirements" placeholder="Requirements"></textarea>
 		<input type="hidden" name="domain" placeholder="City">
-		<input type="submit" onsubmit="myFunction();" value='Save'>
+		<input type="button" onclick='myFunction();' value='Save'>
 	</form>
 	
 	<br><br>

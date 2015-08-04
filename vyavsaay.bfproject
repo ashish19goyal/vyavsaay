@@ -1,10 +1,10 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:425286:424210:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/reports_ini.js:143829:143135:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/reports_ini.js:143835:143288:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js:23516:22986:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:279410:276813:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/db/demo_user_db_data.xml:24136:23363:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:277194:276813:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/f/s.html:1820:1388:1:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -16,7 +16,7 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/f
 wrap_text_default: 0
 bookmarks_filename_mode: 0
 ssearch_text: 66
@@ -61,7 +61,6 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/f/s2.html
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/f/s.html
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/footer.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/CSS/theme1.css
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form217.php
@@ -82,8 +81,9 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/event_handler.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/demo_user_db_data.xml
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/f/s.html
 snr_replacetype: 0
-savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db
+savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/f
 spell_check_default: 1
 spell_insert_entities: 0
 last_filefilter: 
