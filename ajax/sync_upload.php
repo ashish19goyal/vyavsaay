@@ -33,8 +33,9 @@
 			$xmlresponse_xml=new DOMDocument();
 			$xmlresponse_xml->loadXML($post_data);
 			$xmlresponse=$xmlresponse_xml->documentElement;
-		
-			$q_string="insert into activities (id,tablename,type,data_id,data_xml,last_updated,status,link_to,user_display,title,notes,updated_by) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			
+			$sync_time=1000*time();
+			$q_string="insert into activities (id,tablename,type,data_id,data_xml,last_updated,status,link_to,user_display,title,notes,updated_by,last_sync_time) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$stmt=$conn->conn->prepare($q_string);
 				
 			foreach($xmlresponse->childNodes as $row)
@@ -83,7 +84,7 @@
 					}
 					try{
 						if($user_display=='yes')
-							$stmt->execute(array($id,$table_name,$type,$data_id,$xmlresponse_xml->saveXML($data_xml),$last_updated,'synced',$link_to,$user_display,$title,$notes,$updated_by));
+							$stmt->execute(array($id,$table_name,$type,$data_id,$xmlresponse_xml->saveXML($data_xml),$last_updated,'synced',$link_to,$user_display,$title,$notes,$updated_by,$sync_time));
 					}
 					catch(PDOException $e)
 					{
@@ -115,8 +116,9 @@
 										if($column->nodeName!='#text')
 											$q_string2.=$column->nodeName.",";
 									}
-									$q_string2=rtrim($q_string2,",");
-									$q_string2.=") values(";
+									//$q_string2=rtrim($q_string2,",");
+									$q_string2.="last_sync_time) values(";
+																		
 									foreach($data->childNodes as $column)
 									{
 										if($column->nodeName!='#text')
@@ -126,8 +128,10 @@
 											//echo $column->nodeValue;
 										}
 									}
-									$q_string2=rtrim($q_string2,",");
-									$q_string2.=");";	
+									//$q_string2=rtrim($q_string2,",");
+									$q_string2.="?);";
+									$data_array[]=$sync_time;
+									
 									//echo $q_string2;								
 									$stmt2=$conn->conn->prepare($q_string2);
 									try{
@@ -148,8 +152,10 @@
 											$data_array[]=$column->nodeValue;
 										}
 									}
-									$q_string2=rtrim($q_string2,",");
-									$q_string2.=" where id=?";
+									//$q_string2=rtrim($q_string2,",");
+									$q_string2.="last_sync_time=? where id=?";
+									$data_array[]=$sync_time;
+									
 									$data_array[]=$data_id;
 									$stmt2=$conn->conn->prepare($q_string2);
 									try{

@@ -161,7 +161,7 @@ function sync_server_to_local(func)
 			   });
   		   }
   	   }
-     },3000);
+     },1000);
 	
 };
 
@@ -175,7 +175,7 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 	ajax_with_custom_func("./ajax/sync_download.php",{domain:domain,username:username,re:re_access,start_table:start_table,start_offset:start_offset,last_sync_time:last_sync_time},function(e)
 	{
 		var response=e.responseXML;
-		//console.log(e.responseText);
+	//	console.log(e.responseText);
 		if(typeof static_local_db=='undefined')
 		{
 			open_local_db(function()
@@ -208,12 +208,14 @@ function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)
 				{	
 					local_put_record(this_table,objectStore,num_rows,0);
 				}
-				if(tableName==='activities')
+				if(tableName=='activities')
 				{
+					//console.log(this_table);
 					local_delete_record(this_table,num_rows,0);
 				}
 			}
 		}
+		
 	});
 }
 

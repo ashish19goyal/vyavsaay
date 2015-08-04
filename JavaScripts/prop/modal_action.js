@@ -8408,9 +8408,10 @@ function modal127_action()
 		
 		var master_form=document.getElementById('form10_master');
 		var bill_num=master_form.elements['bill_num'].value;
-		var bill_due_date=master_form.elements['due_date'].value;
-		var bus_title='The Washclub';
-		var customer_address=master_form.elements['customer_address'].value;		
+		var bill_date=master_form.elements['bill_date'].value;
+		//var bill_due_date=master_form.elements['due_date'].value;
+		//var bus_title='The Washclub';
+		//var customer_address=master_form.elements['customer_address'].value;		
 		var total_quantity=0;
 		var items=[];
 		$("[id^='save_form10_']").each(function(index)
@@ -8429,34 +8430,35 @@ function modal127_action()
 		});
 
 		var container=document.createElement('div');
-		container.setAttribute('style','width:95%;font-size:9px;line-height:10px;');
+		container.setAttribute('style','width:95%;font-size:14px;line-height:16px;');
 		
 		items.forEach(function(item)
 		{
 			var item_container=document.createElement('div');
 				var item_count_elem=document.createElement('div');
-				var business_title_elem=document.createElement('div');
+				//var business_title_elem=document.createElement('div');
 				var item_name_elem=document.createElement('div');
 				var bill_num_elem=document.createElement('div');
 				var due_date_elem=document.createElement('div');
-				var address_elem=document.createElement('div');
+				//var address_elem=document.createElement('div');
 
-			item_container.setAttribute('style','width:95%;height:90%;margin:0px;font-size:8px');
-			bill_num_elem.setAttribute('style','font-size:8px;');
-
+			item_container.setAttribute('style','width:95%;height:90%;margin:0px;margin-top:5%;margin-bottom:5%;font-size:14px');
+			bill_num_elem.setAttribute('style','font-size:15px;margin:5px;');
+			item_name_elem.setAttribute('style','font-size:12px;margin:5px;');
+			
 			item_count_elem.innerHTML="<hr style='border: 1px solid #000;margin:0px;'>"+item.number+" of "+total_quantity;
-			business_title_elem.innerHTML=bus_title;
+			//business_title_elem.innerHTML=bus_title;
 			item_name_elem.innerHTML=item.name;
 			bill_num_elem.innerHTML="<b>"+bill_num+"</b>";
-			due_date_elem.innerHTML="<b>"+bill_due_date+"</b>";
-			address_elem.innerHTML="<hr style='border: 1px solid #000;margin:0px;'>"+customer_address+"<hr style='border: 0px solid #000;margin:0px;'>";			
+			due_date_elem.innerHTML="<b>"+bill_date+"</b><hr style='border: 1px solid #000;margin:0px;'>";
+			//address_elem.innerHTML="<hr style='border: 1px solid #000;margin:0px;'>"+customer_address+"<hr style='border: 0px solid #000;margin:0px;'>";			
 			
 			item_container.appendChild(item_count_elem);
-			item_container.appendChild(business_title_elem);
+			//item_container.appendChild(business_title_elem);
 			item_container.appendChild(item_name_elem);
 			item_container.appendChild(bill_num_elem);	
 			item_container.appendChild(due_date_elem);
-			item_container.appendChild(address_elem);
+			//item_container.appendChild(address_elem);
 			container.appendChild(item_container);
 		});
 		

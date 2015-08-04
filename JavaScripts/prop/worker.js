@@ -164,8 +164,9 @@ function count_notif()
 					}
 				}
 				
-				var found=notifs[i].target_user.indexOf(get_account_name());
-				if(!(read || found>=0))
+				//var found=notifs[i].target_user.indexOf(get_account_name());
+				//if(!(read || found>=0))
+				if(!(read))
 				{
 					notifs.splice(i,1);
 					i--;
@@ -254,8 +255,9 @@ function show_notif()
 					}
 				}
 				
-				var found=notifs[i].target_user.indexOf(get_account_name());
-				if(!(read || found>=0))
+				//var found=notifs[i].target_user.indexOf(get_account_name());
+				//if(!(read || found>=0))
+				if(!(read))
 				{
 					notifs.splice(i,1);
 					i--;
@@ -551,6 +553,7 @@ function notifications4_add()
 									"<notes>"+notes+"</notes>" +
 									"<link_to>form1</link_to>" +
 									"<status>pending</status>" +
+									"<target_user></target_user>"+
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</notifications>";
 							if(is_online())
@@ -604,6 +607,7 @@ function notifications5_add()
 					"<notes>"+notes+"</notes>" +
 					"<link_to>form88</link_to>" +
 					"<status>pending</status>" +
+					"<target_user></target_user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</notifications>";
 			if(is_online())
@@ -663,6 +667,7 @@ function notifications6_add()
 					"<notes>"+notes+"</notes>" +
 					"<link_to>form88</link_to>" +
 					"<status>pending</status>" +
+					"<target_user></target_user>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</row>";
 		});

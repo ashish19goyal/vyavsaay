@@ -164,5 +164,16 @@
 			<criteria_value></criteria_value>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<tablename>notifications</tablename>
+			<record_id>all</record_id>
+			<access_type>read</access_type>
+			<user_type>field</user_type>
+			<user></user>
+			<user_field>target_user</user_field>
+			<criteria_field></criteria_field>
+			<criteria_value></criteria_value>
+			<last_updated>1</last_updated>
+		</row>
 	</data_access>
 </re_xml>

@@ -61,11 +61,12 @@
 			{
 				$selected_tables.=$table_value[0];
 			}
-
+			//echo $selected_tables;
+			
 			foreach($db_schema->childNodes as $table)
 			{	
 				$table_name=$table->nodeName;
-				
+				//echo $table_name;
 				if($table_name!=$start_table && $first_iteration && $start_table!="")
 				{
 					continue;
@@ -85,15 +86,15 @@
 					
 					for($i=0;$i<count($stmt_res);$i++)
 					{
-						if($table_name==='activities')
+						if($table_name=='activities')
 						{
 							$found_activity=strpos($selected_tables, "--".$stmt_res[$i]['tablename']."--");
-							if($found_activity==false)
+							if($found_activity===false)
 							{
 								continue;
 							}
 						}
-						
+
 						$xmlresponse.="<row>";
 						
 						foreach ($stmt_res[$i] as $key => $value)
