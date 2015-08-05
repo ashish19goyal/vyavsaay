@@ -7970,6 +7970,7 @@ function modal122_action(item_name)
 							"<item_name exact='yes'>"+item+"</item_name>"+
 							"<from_date>"+last_updated+"</from_date>"+
 							"<to_date>"+last_updated+"</to_date>"+
+							"<storage>"+get_session_var('sales_store')+"</storage>"+
 							"<last_updated>"+last_updated+"</last_updated>"+
 							"</bill_items>";
 				
@@ -7982,6 +7983,7 @@ function modal122_action(item_name)
 							"<batch>"+item+"</batch>" +
 							"<quantity>"+new_total+"</quantity>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
+							"<storage>"+get_session_var('discard_items_store')+"</storage>"+
 							"</inventory_adjust>";
 					if(is_online())
 					{
@@ -7993,6 +7995,65 @@ function modal122_action(item_name)
 						local_create_simple_no_warning(adjust_xml);
 						local_create_simple_no_warning(hireable_xml);
 					}
+					
+					///////////adding store placement////////
+					///////////adding store placement////////
+					var bill_storage_data="<area_utilization>" +
+							"<id></id>" +
+							"<name exact='yes'>"+get_session_var('sales_store')+"</name>" +
+							"<item_name exact='yes'>"+item+"</item_name>" +
+							"<batch exact='yes'>"+item+"</batch>" +
+							"</area_utilization>";
+					fetch_requested_data('',bill_storage_data,function(placements)
+					{
+						if(placements.length===0 && storage!="")
+						{
+							var storage_xml="<area_utilization>" +
+									"<id>"+get_new_key()+"</id>" +
+									"<name>"+get_session_var('sales_store')+"</name>" +
+									"<item_name>"+item+"</item_name>" +
+									"<batch>"+item+"</batch>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</area_utilization>";
+							if(is_online())
+							{
+								server_create_simple(storage_xml);
+							}
+							else
+							{
+								local_create_simple(storage_xml);
+							}
+						}
+					});		
+					
+					var storage_data="<area_utilization>" +
+							"<id></id>" +
+							"<name exact='yes'>"+get_session_var('discard_items_store')+"</name>" +
+							"<item_name exact='yes'>"+item+"</item_name>" +
+							"<batch exact='yes'>"+item+"</batch>" +
+							"</area_utilization>";
+					fetch_requested_data('',storage_data,function(placements)
+					{
+						if(placements.length===0 && storage!="")
+						{
+							var storage_xml="<area_utilization>" +
+									"<id>"+get_new_key()+"</id>" +
+									"<name>"+get_session_var('discard_items_store')+"</name>" +
+									"<item_name>"+item+"</item_name>" +
+									"<batch>"+item+"</batch>" +
+									"<last_updated>"+get_my_time()+"</last_updated>" +
+									"</area_utilization>";
+							if(is_online())
+							{
+								server_create_simple(storage_xml);
+							}
+							else
+							{
+								local_create_simple(storage_xml);
+							}
+						}
+					});		
+
 				});
 			},hireable_data);
 		}
