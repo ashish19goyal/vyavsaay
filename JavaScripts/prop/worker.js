@@ -483,7 +483,7 @@ function notifications3_add()
 					
 		});
 		leads_xml+="</notifications>";
-		console.log(leads_xml);
+		//console.log(leads_xml);
 		if(is_online())
 		{
 			server_create_batch_noloader(leads_xml);
