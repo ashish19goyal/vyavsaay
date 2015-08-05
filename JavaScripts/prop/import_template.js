@@ -1177,7 +1177,7 @@ function form201_import_template()
 */
 function form203_import_template()
 {
-	var data_array=['id','AWB No.','Type','Order No.','Manifest ID','Merchant Name','Ship To','Address1','Address2','City','State','Pincode','Mobile number','Tel. Number','Prod/SKU code','Product name','Weight(K.G.)','Declared Value','Collectable Value','Vendor Code','Shipper Name','Return Address1','Return Address2','Return Address3','Return Pin','Length ( Cms )','Breadth ( Cms )','Height ( Cms )','Pieces','Carrier Account','Carrier Name','Manifest Type','Dispatch Date','Notes','Pickup Location','Pickup By'];
+	var data_array=['id','AWB No.','Type','Order No.','Manifest ID','Merchant Name','Ship To','Address1','Address2','City','State','Pincode','Mobile number','Tel. Number','Prod/SKU code','Product name','Weight','Declared Value','Collectable Value','Vendor Code','Shipper Name','Return Address1','Return Address2','Return Address3','Return Pin','Length ( Cms )','Breadth ( Cms )','Height ( Cms )','Pieces','Carrier Account','Carrier Name','Manifest Type','Dispatch Date','Notes','Pickup Location','Pickup By'];
 	my_array_to_csv(data_array);
 };
 

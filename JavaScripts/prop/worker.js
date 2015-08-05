@@ -450,6 +450,7 @@ function notifications3_add()
 			"<due_date lowerbound='yes'>"+lead_past_time+"</due_date>" +
 			"<detail></detail>" +
 			"<identified_by></identified_by>" +
+			"<last_updated></last_updated>"+
 			"</sale_leads>";
 	
 	fetch_requested_data('',leads_data,function(leads)
@@ -465,13 +466,13 @@ function notifications3_add()
 				leads_xml+="</notifications><separator></separator><notifications>";
 			}
 			counter+=1;
-		
+			var addon_id=lead.last_updated.substr(10,3);
 			var notes="A sale opportunity with customer "+lead.customer+" is coming up."+
 					"The details are as follows.\n"+lead.detail;
 			leads_xml+="<row>" +
 					"<id>"+(id+counter)+"</id>" +
 					"<t_generated>"+get_my_time()+"</t_generated>" +
-					"<data_id unique='yes'>"+lead.id+"</data_id>" +
+					"<data_id unique='yes'>"+lead.id+addon_id+"</data_id>" +
 					"<title>Sale Opportunity</title>" +
 					"<notes>"+notes+"</notes>" +
 					"<link_to>form81</link_to>" +
@@ -479,8 +480,10 @@ function notifications3_add()
 					"<status>pending</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</row>";
+					
 		});
 		leads_xml+="</notifications>";
+		console.log(leads_xml);
 		if(is_online())
 		{
 			server_create_batch_noloader(leads_xml);

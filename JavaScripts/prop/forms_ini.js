@@ -6286,6 +6286,80 @@ function search_ini()
 			$("#search_results").append(result_html);
 		});
 	
+		///////////////////////from logistics_orders awb_num//////////////
+		var logistics_order_columns="<logistics_orders count='10'>" +
+				"<id></id>" +
+				"<awb_num>"+searchStr+"</awb_num>" +
+				"<order_num></order_num>" +
+				"<ship_to></ship_to>" +
+				"</logistics_orders>";
+	
+		fetch_requested_data('',logistics_order_columns,function(logistics_order_results)
+		{
+			var num_res=0;
+			var result_html="";
+			logistics_order_results.forEach(function(result)
+			{
+				result_html+="<div class='search_detail'>" +
+						"<b>AWB #: "+result.awb_num+
+						"</b></br><a onclick=\"" +
+						"element_display('"+result.id +
+						"','form198');\">Order #: "+result.order_num+" to be shipped to: "+result.ship_to+"</a>" +
+						"</div>";
+				num_res=num_res+1;
+			});
+			$("#search_results").append(result_html);
+		});
+
+		///////////////////////from logistics_orders order_num//////////////
+		var logistics_order_columns="<logistics_orders count='10'>" +
+				"<id></id>" +
+				"<awb_num></awb_num>" +
+				"<order_num>"+searchStr+"</order_num>" +
+				"<ship_to></ship_to>" +
+				"</logistics_orders>";
+	
+		fetch_requested_data('',logistics_order_columns,function(logistics_order_results)
+		{
+			var num_res=0;
+			var result_html="";
+			logistics_order_results.forEach(function(result)
+			{
+				result_html+="<div class='search_detail'>" +
+						"<b>AWB #: "+result.awb_num+
+						"</b></br><a onclick=\"" +
+						"element_display('"+result.id +
+						"','form198');\">Order #: "+result.order_num+" to be shipped to: "+result.ship_to+"</a>" +
+						"</div>";
+				num_res=num_res+1;
+			});
+			$("#search_results").append(result_html);
+		});
+
+		///////////////////////from drs//////////////
+		var drs_columns="<drs count='10'>" +
+				"<id></id>" +
+				"<drs_num>"+searchStr+"</drs_num>" +
+				"<employee></employee>" +
+				"</drs>";
+
+		fetch_requested_data('',drs_columns,function(drs_results)
+		{
+			var num_res=0;
+			var result_html="";
+			drs_results.forEach(function(result)
+			{
+				result_html+="<div class='search_detail'>" +
+						"<b>DRS #: "+result.drs_num+
+						"</b></br><a onclick=\"" +
+						"element_display('"+result.id +
+						"','form200');\">Assigned to: "+result.employee+"</a>" +
+						"</div>";
+				num_res=num_res+1;
+			});
+			$("#search_results").append(result_html);
+		});
+	
 		/////////////////////from activities///////////
 		var columns="<activities count='10'>" +
 				"<title></title>" +

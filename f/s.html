@@ -5,16 +5,19 @@
 	<title>Contact Form</title>
 
 	<style>
-	<!-- body {background-color:#CBE32D} -->
-	body {background-color:#FFC04D}
+/*	<!-- body {background-color:#CBE32D} -->
 	
-	
+	body {
+		background-color:#FFC04D;
+	}
+*/	
+		
 	.righties {
 		float:left;
 		padding:5px;
-		border-radius: .5em;
+		/*border-radius: .5em;*/
 		height:30px;
-		color:#CC7000;
+		color:#333333;
 		font-size:20px;
 		font-family:verdana;
 		margin:1% 4%;
@@ -25,8 +28,8 @@
 	    height:55px;
 	    width:90%;
 	    padding: 5px;
-	    border-radius: .5em;
-		color:#CC7000;
+		/*border-radius: .5em;*/
+		color:#333333;
 		font-size:20px;
 		font-family:verdana;
 		margin:1% 4%;
@@ -53,9 +56,9 @@
 		-webkit-transition: 0.5s all;
 		-moz-transition: 0.5s all;
 		-o-transition: 0.5s all;
-		background: #aa6000;
+		background: #a09e58;
 		outline: none;
-		border-radius: .5em;		
+		/*border-radius: .5em;*/
 	}
 	h1{
 		float:left;
@@ -79,7 +82,7 @@
 		margin:1% 4%;
 		width:90%;
 	}
-	footer{
+	.footer{
 		display: block;
 		width:90%;
 		text-align:center;
@@ -88,7 +91,14 @@
 		margin:1% 4%;
 		z-index:99;
 	}
-
+	div.background {
+		display:block;
+		width:100%;
+		height:620px;
+	    background: url(../client_images/sound_background.png) black;
+	    background-size: 100% 100%;
+	    background-repeat: no-repeat;
+	} 
 	</style>
 
 	<script>
@@ -129,9 +139,8 @@
 		    {
 		     	if(xmlhttp.readyState==4 && xmlhttp.status==200)
 			   	{
-			   		console.log(xmlhttp.responseText);
-			     	//$("#myDiv").hide();
-			        document.getElementById("saleslead").setAttribute('style','display:none;');
+			   		//console.log(xmlhttp.responseText);
+			     	document.getElementById("saleslead").setAttribute('style','display:none;');
 	                var complete_message=document.getElementById("thankYou");
 	                complete_message.innerHTML="Thanks for your details. We will be in touch!";
 	                complete_message.height="200px";
@@ -156,22 +165,25 @@
 <body onload='initialize_contact_form();'>
 	<img id='logo'>
 
-	<form id="saleslead">
-		<input class="righties" type="text" required name="clientname" placeholder="Name"></input>
-		<input class="righties" type="text" required name="phone" placeholder="Phone"></input>
-		<input class="righties" type="text" name="company" placeholder="Company"></input>
-		<input class="righties" type="email" name="email" placeholder="E-mail"></input>
-		<textarea class="outliers" name="address" placeholder="Address" ></textarea>
-		<input class="righties" type="text" name="city" placeholder="City"></input>
-		<textarea class="outliers" name="requirements" placeholder="Requirements"></textarea>
-		<input type="hidden" name="domain" placeholder="City">
-		<input type="button" onclick='myFunction();' value='Save'>
-	</form>
-	
-	<br><br>
-	<h1 id="thankYou"></h1>
-	<footer class='footer'>
+	<div class='background'>
+		<form id="saleslead" style='display:block;'>
+			<input class="righties" type="text" name="clientname" placeholder="Name">
+			<input class="righties" type="text" name="phone" placeholder="Phone">
+			<input class="righties" type="text" name="company" placeholder="Company">
+			<input class="righties" type="email" name="email" placeholder="E-mail">
+			<textarea class="outliers" name="address" placeholder="Address" ></textarea>
+			<input class="righties" type="text" name="city" placeholder="City">
+			<textarea class="outliers" name="requirements" placeholder="Requirements"></textarea>
+			<input type="hidden" name="domain" placeholder="City">
+			<input type="button" onclick='myFunction();' value='Save'>
+		</form>
+		
+		<br><br>
+		<h1 id="thankYou"></h1>
+		
+	</div>
+	<div class='footer'>
 			<a id='footer_message'>&copy; 2015 Vyavsaay.com</a> 
-	</footer>
+	</div>
 </body>
 </html>

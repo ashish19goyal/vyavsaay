@@ -6757,7 +6757,7 @@ function form203_import(data_array,import_type)
                 "<pincode>"+row['Pincode']+"</pincode>"+
                 "<phone>"+row['Mobile number']+"</phone>"+
                 "<telephone>"+row['Tel. Number']+"</telephone>"+
-                "<weight>"+row['Weight(K.G.)']+"</weight>"+
+                "<weight>"+row['Weight']+"</weight>"+
                 "<declared_value>"+row['Declared Value']+"</declared_value>"+
                 "<collectable_value>"+row['Collectable Value']+"</collectable_value>"+
                 "<vendor_code>"+row['Vendor Code']+"</vendor_code>"+

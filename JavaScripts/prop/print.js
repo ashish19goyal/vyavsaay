@@ -2002,7 +2002,7 @@ function print_form200(func)
 				"<td style='text-align:left;width:20px'>P</td>"+
 				"<td style='text-align:left;width:30px'>Time</td>"+
 				"<td style='text-align:left;width:100px'>Receiver/Comp Seal</td>"+
-				"<td style='text-align:left;width:20px'>RO</td>"+
+				"<td style='text-align:left;width:20px'>RC</td>"+
 				"<td style='text-align:left;width:50px'>Sign</td></tr>";
 				
 	var table_rows=table_header;

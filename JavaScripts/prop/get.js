@@ -1022,6 +1022,18 @@ function create_batch(data_xml)
 	}
 }
 
+function create_batch_noloader(data_xml)
+{
+	if(is_online())
+	{
+		server_create_batch_noloader(data_xml);
+	}
+	else
+	{
+		local_create_batch_noloader(data_xml);
+	}
+}
+
 function delete_row(data_xml,activity_xml)
 {
 	if(is_online())
