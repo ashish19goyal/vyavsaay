@@ -375,6 +375,7 @@
 	"purchase_bill_approver":"Purchase bill approver",
 	"sku_mapping_supplier":"SKU Mapping (supplier)",
 	"sale_leads_external":"Sale Leads (external form)",
-	"launch_contact_form":"Launch Contact Form"	
+	"launch_contact_form":"Launch Contact Form",
+	"sale_leads_by_staff":"Sales Lead Report"
 	}
 }

@@ -1641,3 +1641,25 @@ function report80_header_ini()
 	$(start_filter).datepicker();
 	$(end_filter).datepicker();	
 }
+
+/**
+ * @reportNo 81
+ * @report Sale leads report
+ */
+function report81_header_ini()
+{	
+	var form=document.getElementById('report81_header');
+	var staff_filter=form.elements['staff'];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report81_ini();
+	});
+			
+	var staff_data="<staff>"+
+				"<acc_name></acc_name>"+
+				"</staff>";
+	set_my_filter(staff_data,staff_filter);
+}
