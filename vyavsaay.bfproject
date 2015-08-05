@@ -1,7 +1,8 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:208785:208002:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:72722:71658:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:74497:74029:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/f/s.html:1726:1391:1:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -13,7 +14,7 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/f
 wrap_text_default: 0
 bookmarks_filename_mode: 0
 ssearch_text: drs_barcode
@@ -76,11 +77,11 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import_template.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/f/s.html
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/worker.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/f/s.html
 snr_replacetype: 0
-savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
+savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/f
 spell_check_default: 1
 spell_insert_entities: 0
 last_filefilter: 
