@@ -3305,7 +3305,7 @@ function form97_import(data_array,import_type)
 * @form Staff Attributes
 * @formNo 98
 */
-function form96_import(data_array,import_type)
+function form98_import(data_array,import_type)
 {
 	var data_xml="<attributes>";
 	var counter=1;
