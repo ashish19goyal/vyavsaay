@@ -1,5 +1,5 @@
 <div id='report31' class='report_detail'>
-	<form id='report31_header'>
+	<form id='report31_header' autocomplete="off">
 		<fieldset>
 			<legend>Select customers by:</legend>
 			<label>Credit<br><input type='text' name='credit' readonly='readonly'></label>

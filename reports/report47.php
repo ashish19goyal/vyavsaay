@@ -1,5 +1,5 @@
 <div id='report47' class='report_detail'>
-	<form id='report47_header'>
+	<form id='report47_header' autocomplete="off">
 		<fieldset>
 			<legend>Select product:</legend>
 			<label>Product</br><input type='text' title='If this field is left blank, top 10 products will be shown'></label>

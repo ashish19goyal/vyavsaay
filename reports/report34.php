@@ -1,5 +1,5 @@
 <div id='report34' class='report_detail'>
-	<form id='report34_header'>
+	<form id='report34_header' autocomplete="off">
 		<fieldset>
 			<legend>Set parameters</legend>
 			<label>Start date</br><input type='text' required title='Period start date for determination of effective margin'></label>

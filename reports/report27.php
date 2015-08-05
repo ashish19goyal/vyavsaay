@@ -1,5 +1,5 @@
 <div id='report27' class='report_detail'>
-	<form id='report27_header'>
+	<form id='report27_header' autocomplete="off">
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Expiry by</br><input type='text' required></label>

@@ -1,5 +1,5 @@
 <div id='report6' class='report_detail'>
-	<form id='report6_header'>
+	<form id='report6_header' autocomplete="off">
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Due date</br><input type='text' required></label>

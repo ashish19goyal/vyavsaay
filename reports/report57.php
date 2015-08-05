@@ -1,5 +1,5 @@
 <div id='report57' class='function_detail'>
-	<form id='report57_header'>
+	<form id='report57_header' autocomplete="off">
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Customer<input type='text'></label>

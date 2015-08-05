@@ -1,5 +1,5 @@
 <div id='report41' class='function_detail'>
-	<form id='report41_header'>
+	<form id='report41_header' autocomplete="off">
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Service Name <input type='text' title='If this field is left blank, pre-requisites for all services will be shown'></label>

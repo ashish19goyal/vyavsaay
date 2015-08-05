@@ -1,5 +1,5 @@
 <div id='report48' class='function_detail'>
-	<form id='report48_header'>
+	<form id='report48_header' autocomplete="off">
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Product <input type='text' title='If this field is blank, all applicable products will be shown'></label>

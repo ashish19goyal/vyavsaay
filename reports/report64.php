@@ -1,5 +1,5 @@
 <div id='report64' class='function_detail'>
-	<form id='report64_header'>
+	<form id='report64_header' autocomplete="off">
 		<fieldset>
 			<legend>Scan the barcode on the picked items to proceed</legend>
 			<label>Item: <input type='text'></label>	

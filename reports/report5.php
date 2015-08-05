@@ -1,5 +1,5 @@
 <div id='report5' class='function_detail'>
-	<form id='report5_header'>
+	<form id='report5_header' autocomplete="off">
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Min balance amount</br><input type='number' value='0' required title='Customers with balance more than this amount will be shown'></label>

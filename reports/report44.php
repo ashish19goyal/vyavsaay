@@ -1,5 +1,5 @@
 <div id='report44' class='function_detail'>
-	<form id='report44_header'>
+	<form id='report44_header' autocomplete="off">
 		<fieldset>
 			<label>Keywords <input type='text' required title='specify more keywords for better match (limited to a max of 7 words)'></label>
 			<label>

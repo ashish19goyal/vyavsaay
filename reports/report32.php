@@ -1,5 +1,5 @@
 <div id='report32' class='report_detail'>
-		<form id='report32_header'>
+		<form id='report32_header' autocomplete="off">
 			<fieldset>
 				<legend>Locate staff</legend>
 				<label><input type='submit' value='Refresh' class='generic_icon'></label>
