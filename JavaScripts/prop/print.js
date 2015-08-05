@@ -1956,7 +1956,7 @@ function print_form200(func)
 	////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','display:block;width:100%;min-height:40px;');
-		logo.setAttribute('style','float:left;width:30%;');
+		logo.setAttribute('style','float:left;width:30%;height:40px;');
 		business_title.setAttribute('style','float:left;width:35%;text-align:center;font-weight:bold;');
 		drs_barcode.setAttribute('style','float:right;width:30%;height:30px;padding:left:5px;padding-right:5px;');
 	drs_title.setAttribute('style','display:block;width:100%;min-height:20px;text-align:center');	
@@ -1981,7 +1981,7 @@ function print_form200(func)
 		
 	var total_items=$(table_element).find('tr').length;
 
-	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"' style='height:120%;margin-left:20%'>";
 	business_title.innerHTML=bt;
 
 	$(drs_barcode).JsBarcode(drs_num,{displayValue:true});
@@ -2115,7 +2115,7 @@ function print_form219(func)
 	////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','display:block;width:100%;min-height:40px;');
-		logo.setAttribute('style','float:left;width:30%;');
+		logo.setAttribute('style','float:left;width:30%;height:40px;');
 		business_title.setAttribute('style','float:left;width:35%;text-align:center;font-weight:bold;');
 		drs_barcode.setAttribute('style','float:right;width:30%;height:30px;padding:left:5px;padding-right:5px;');
 	drs_title.setAttribute('style','display:block;width:100%;min-height:20px;text-align:center');	
@@ -2138,8 +2138,8 @@ function print_form219(func)
 	var table_element=document.getElementById(form_id+'_body');
 		
 	var total_items=$(table_element).find('tr').length;
-
-	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"' style='height:120%;margin-left:20%'>";
 	business_title.innerHTML=bt;
 
 	$(drs_barcode).JsBarcode(drs_num,{displayValue:true});
@@ -2147,6 +2147,7 @@ function print_form219(func)
 	drs_title.innerHTML="Delivery Run Sheet";
 
 	employee_text="<td>Employee: "+employee_name+"</td><td>Total Items: "+total_items+"</td>";
+	drs_text="<td>DRS #: "+drs_num+"</td><td>DRS Date: "+drs_date+"</td>";
 	drs_text="<td>DRS #: "+drs_num+"</td><td>DRS Date: "+drs_date+"</td>";
 	detail_text="<table style='border:none;width:100%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+drs_text+"</tr></table>";
 	
@@ -2158,9 +2159,9 @@ function print_form219(func)
 	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:5%'>S.No.</td>"+
 				"<td style='text-align:left;width:20%'>C-Note No.</td>"+
 				"<td style='text-align:left;width:15%'>Address</td>"+
-				"<td style='text-align:left;width:6%'>Wt.</td>"+
-				"<td style='text-align:left;width:6%'>P</td>"+
-				"<td style='text-align:left;width:8%'>Time</td>"+
+				"<td style='text-align:left;width:5%'>Wt.</td>"+
+				"<td style='text-align:left;width:5%'>P</td>"+
+				"<td style='text-align:left;width:10%'>COD</td>"+
 				"<td style='text-align:left;width:20%'>Receiver/Comp Seal</td>"+
 				"<td style='text-align:left;width:5%'>RC</td>"+
 				"<td style='text-align:left;width:15%'>Sign</td></tr>";
@@ -2211,9 +2212,9 @@ function print_form219(func)
 		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td>"+counter+"</td>"+
 				"<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
 				"<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
-				"<td>"+form.elements[3].value+"</td>"+
 				"<td>"+form.elements[4].value+"</td>"+
-				"<td></td>"+
+				"<td>"+form.elements[5].value+"</td>"+
+				"<td>Rs. "+form.elements[3].value+"</td>"+
 				"<td><div style='text-align:left;'>"+mob_seal+"</div></td>"+
 				"<td>"+rc+"</td>"+
 				"<td></td></tr>";

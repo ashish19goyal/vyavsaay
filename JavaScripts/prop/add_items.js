@@ -11938,7 +11938,7 @@ function form219_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Details'>";
 				rowsHTML+="COD Amount: <input type='number' readonly='readonly' form='form219_"+id+"' step='any'>";
-				rowsHTML+="Weight: <input type='number' readonly='readonly' form='form219_"+id+"' step='any'>";
+				rowsHTML+="<br>Weight: <input type='number' readonly='readonly' form='form219_"+id+"' step='any'>";
 				rowsHTML+="<br>Pieces: <input type='number' readonly='readonly' form='form219_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
@@ -11995,7 +11995,7 @@ function form219_add_item()
 							"<ship_to></ship_to>" +
 							"<phone></phone>" +
 							"<weight></weight>" +
-							"<collectable_amount></collectable_amount>" +
+							"<collectable_value></collectable_value>" +
 							"<pieces></pieces>" +
 							"<drs_num></drs_num>" +
 							"<status></status>"+
@@ -12008,7 +12008,7 @@ function form219_add_item()
 				{
 					address_filter.value=orders[0].ship_to+"\n"+orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
 					phone_filter.value=orders[0].phone;
-					cod_filter.value=orders[0].collectable_amount;
+					cod_filter.value=orders[0].collectable_value;
 					weight_filter.value=orders[0].weight;
 					pieces_filter.value=orders[0].pieces;
 					status_filter.value=orders[0].status;

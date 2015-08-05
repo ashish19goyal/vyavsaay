@@ -21220,7 +21220,7 @@ function form219_ini()
 									"<phone></phone>" +
 									"<weight></weight>" +
 									"<pieces></pieces>" +
-									"<collectable_amount></collectable_amount>"+
+									"<collectable_value></collectable_value>"+
 									"<drs_num exact='yes'>"+drs_results[0].drs_num+"</drs_num>" +
 									"<tax></tax>" +
 									"</logistics_orders>";
@@ -21250,8 +21250,8 @@ function form219_ini()
 								rowsHTML+="<br>Phone: <input type='text' readonly='readonly' value='"+result.phone+"' form='form219_"+id+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Details'>";
-								rowsHTML+="COD Amount: Rs. <input type='number' readonly='readonly' form='form219_"+id+"' value='"+result.collectable_amount+"' step='any'>";
-								rowsHTML+="Weight: <input type='number' readonly='readonly' form='form219_"+id+"' value='"+result.weight+"' step='any'>";
+								rowsHTML+="COD Amount: Rs. <input type='number' readonly='readonly' form='form219_"+id+"' value='"+result.collectable_value+"' step='any'>";
+								rowsHTML+="<br>Weight: <input type='number' readonly='readonly' form='form219_"+id+"' value='"+result.weight+"' step='any'>";
 								rowsHTML+="<br>Pieces: <input type='number' readonly='readonly' form='form219_"+id+"' value='"+result.pieces+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Status'>";

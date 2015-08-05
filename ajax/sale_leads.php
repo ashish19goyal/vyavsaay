@@ -18,7 +18,7 @@
 	$acc_name=$name." (".$phone.")";
 	$due_time=1000*(time()+3*86400);
 
-	$sl_query="insert into sale_leads (customer,detail,due_date,last_updated) values(?,?,?,?);";
+	//$sl_query="insert into sale_leads (customer,detail,due_date,last_updated) values(?,?,?,?);";
 	$cs_query="select acc_name from customers where acc_name=?";
 	$c_query="insert into customers (name,phone,email,acc_name,status,address,city,last_updated) values(?,?,?,?,?,?,?,?);";
 	$ca_query="insert into attributes (name,type,attribute,value,last_updated) values(?,?,?,?,?);";
@@ -33,10 +33,11 @@
 		$c_stmt->execute(array($name,$phone,$email,$acc_name,'active',$address,$city,(1000*time())));
 		$ca_stmt=$conn->conn->prepare($ca_query);
 		$ca_stmt->execute(array($acc_name,'customer','Company',$company,(1000*time())));
+		$ca_stmt->execute(array($acc_name,'customer','Sale Requirement',$requirement,(1000*time())));
 	}	
 
-	$sl_stmt=$conn->conn->prepare($sl_query);
-	$sl_stmt->execute(array($acc_name,$requirement,$due_time,(1000*time())));
+	//$sl_stmt=$conn->conn->prepare($sl_query);
+	//$sl_stmt->execute(array($acc_name,$requirement,$due_time,(1000*time())));
 					
 	echo "contact saved";
 ?>

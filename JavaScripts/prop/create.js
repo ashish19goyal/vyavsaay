@@ -14150,6 +14150,7 @@ function form200_create_form()
 					"<drs_num>"+drs_num+"</drs_num>"+
 					"<employee>"+employee+"</employee>"+
 					"<drs_time>"+ddate+"</drs_time>"+
+					"<type>NONCOD</type>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</drs>";
 		var activity_xml="<activity>" +
@@ -14499,7 +14500,7 @@ function form219_create_item(form)
 	{
 		var drs_num=document.getElementById('form219_master').elements['drs_num'].value;
 		var delivery_person=document.getElementById('form219_master').elements['employee'].value;
-		var data_id=form.elements[9].value;
+		var data_id=form.elements[10].value;
 		var save_button=form.elements[11];
 		var del_button=form.elements[12];
 		var last_updated=get_my_time();
@@ -14575,6 +14576,7 @@ function form219_create_form()
 					"<drs_num>"+drs_num+"</drs_num>"+
 					"<employee>"+employee+"</employee>"+
 					"<drs_time>"+ddate+"</drs_time>"+
+					"<type>COD</type>"+
 					"<collectable_amount>"+collectable_amount+"</collectable_amount>"+
 					"<collected_amount>"+collected_amount+"</collected_amount>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
