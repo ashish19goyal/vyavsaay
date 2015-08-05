@@ -1958,7 +1958,7 @@ function print_form200(func)
 	header.setAttribute('style','display:block;width:100%;min-height:40px;');
 		logo.setAttribute('style','float:left;width:30%;');
 		business_title.setAttribute('style','float:left;width:35%;text-align:center;font-weight:bold;');
-		drs_barcode.setAttribute('style','float:right;width:30%;height:30px;text-align:right;');
+		drs_barcode.setAttribute('style','float:right;width:30%;height:30px;padding:left:5px;padding-right:5px;');
 	drs_title.setAttribute('style','display:block;width:100%;min-height:20px;text-align:center');	
 	detail_section.setAttribute('style','display:block;width:100%;min-height:30px;text-align:center;');
 	
@@ -1997,22 +1997,22 @@ function print_form200(func)
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
 
-	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:20px'>S.No.</td>"+
-				"<td style='text-align:left;width:150px'>C-Note No.</td>"+
-				"<td style='text-align:left;width:120px'>Address</td>"+
-				"<td style='text-align:left;width:20px'>Wt.</td>"+
-				"<td style='text-align:left;width:20px'>P</td>"+
-				"<td style='text-align:left;width:30px'>Time</td>"+
-				"<td style='text-align:left;width:150px'>Receiver/Comp Seal</td>"+
-				"<td style='text-align:left;width:20px'>RC</td>"+
-				"<td style='text-align:left;width:80px'>Sign</td></tr>";
+	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:5%'>S.No.</td>"+
+				"<td style='text-align:left;width:20%'>C-Note No.</td>"+
+				"<td style='text-align:left;width:15%'>Address</td>"+
+				"<td style='text-align:left;width:6%'>Wt.</td>"+
+				"<td style='text-align:left;width:6%'>P</td>"+
+				"<td style='text-align:left;width:8%'>Time</td>"+
+				"<td style='text-align:left;width:20%'>Receiver/Comp Seal</td>"+
+				"<td style='text-align:left;width:5%'>RC</td>"+
+				"<td style='text-align:left;width:15%'>Sign</td></tr>";
 				
 	var table_rows=table_header;
 	var counter=0;
 
-	var td_text="<td style='width:15px;height:15px;border:solid 1px #000000'></td>";
+	var td_text="<td style='border:solid 1px #000000'></td>";
 	var tr_text="<tr>"+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+"</tr>";
-	var rc="<table style='width:15px;height:15px;'><tr>"+td_text+"</tr></table>";
+	var rc="<table style='width:12px;height:12px;'><tr>"+td_text+"</tr></table>";
 
 	$(table_element).find('form').each(function(index)
 	{
@@ -2022,7 +2022,7 @@ function print_form200(func)
 		//}
 		counter+=1;
 		var form=$(this)[0];
-		var mob_seal="<table style='width:150px;height:30px;'>"+tr_text+tr_text+"</table><br>"+form.elements[2].value;
+		var mob_seal="<table style='width:95%;height:30px;'>"+tr_text+tr_text+"</table><br>"+form.elements[2].value;
 		
 		var awb_num=""+form.elements[0].value;
 		var manifest_type=form.elements[6].value.replace(/manifest/g,"");
@@ -2050,7 +2050,7 @@ function print_form200(func)
 		cnote_no.appendChild(type_value);
 		cnote_no.appendChild(merchant_value);
 
-		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td style='width:20px'>"+counter+"</td>"+
+		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td>"+counter+"</td>"+
 				"<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
 				"<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
 				"<td>"+form.elements[3].value+"</td>"+
