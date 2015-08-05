@@ -10501,6 +10501,14 @@ function form199_update_item(form)
 	}
 }
 
+function form200_update_serial_numbers()
+{
+	$('#form200_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+}
+
 /**
  * @form Create DRS
  * @param button
@@ -10509,7 +10517,6 @@ function form200_update_form()
 {
 	if(is_create_access('form200'))
 	{
-		console.log('form200_update_form');
 		var form=document.getElementById("form200_master");
 		
 		var drs_num=form.elements['drs_num'].value;
@@ -10544,7 +10551,29 @@ function form200_update_form()
 					"<notes>DRS # "+drs_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		
+		var num_data="<user_preferences>"+
+					"<id></id>"+						
+					"<name exact='yes'>drs_num</name>"+												
+					"</user_preferences>";
+		get_single_column_data(function (drs_num_ids)
+		{
+			if(drs_num_ids.length>0)
+			{
+				var num_xml="<user_preferences>"+
+								"<id>"+drs_num_ids[0]+"</id>"+
+								"<value>"+(parseInt(drs_num)+1)+"</value>"+
+								"</user_preferences>";
+				if(is_online())
+				{
+					server_update_simple(num_xml);
+				}
+				else 
+				{
+					local_update_simple(num_xml);
+				}
+			}
+		},num_data);
+
 		if(is_online())
 		{
 			server_update_row(data_xml,activity_xml);
@@ -10553,7 +10582,7 @@ function form200_update_form()
 		{
 			local_update_row(data_xml,activity_xml);
 		}
-		
+
 		$("[id^='save_form200_']").click();
 	}
 	else
@@ -10759,95 +10788,6 @@ function form206_update_item(form)
 	}
 }
 
-function form200_update_serial_numbers()
-{
-	$('#form200_body').find('tr').each(function(index)
-	{
-		$(this).find('td:nth-child(2)').html(index+1);
-	});
-}
-
-/**
- * @form Create DRS
- * @param button
- */
-function form200_update_form()
-{
-	if(is_create_access('form200'))
-	{
-		var form=document.getElementById("form200_master");
-		
-		var drs_num=form.elements['drs_num'].value;
-		var employee=form.elements['employee'].value;
-		var ddate=get_raw_time(form.elements['date'].value);
-		var data_id=form.elements['id'].value;
-		
-		$('#form200_share').show();
-		$('#form200_share').click(function()
-		{
-			modal101_action('Delivery Run Sheet',employee,'staff',function (func) 
-			{
-				print_form200(func);
-			});
-		});
-
-		var save_button=form.elements['save'];
-		var last_updated=get_my_time();
-		
-		var data_xml="<drs>" +
-					"<id>"+data_id+"</id>" +
-					"<drs_num>"+drs_num+"</drs_num>"+
-					"<employee>"+employee+"</employee>"+
-					"<drs_time>"+ddate+"</drs_time>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</drs>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>drs</tablename>" +
-					"<link_to>form201</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>DRS # "+drs_num+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var num_data="<user_preferences>"+
-					"<id></id>"+						
-					"<name exact='yes'>drs_num</name>"+												
-					"</user_preferences>";
-		get_single_column_data(function (drs_num_ids)
-		{
-			if(drs_num_ids.length>0)
-			{
-				var num_xml="<user_preferences>"+
-								"<id>"+drs_num_ids[0]+"</id>"+
-								"<value>"+(parseInt(drs_num)+1)+"</value>"+
-								"</user_preferences>";
-				if(is_online())
-				{
-					server_update_simple(num_xml);
-				}
-				else 
-				{
-					local_update_simple(num_xml);
-				}
-			}
-		},num_data);
-
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
-
-		$("[id^='save_form200_']").click();
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
 
 /**
  * @form Update Logistics orders
@@ -11030,6 +10970,121 @@ function form217_update_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+function form219_update_serial_numbers()
+{
+	$('#form219_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+	
+	var total_amount=0;
+	var collected_amount=0;
+	
+	$("[id^='save_form219']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		
+		if(!isNaN(parseFloat(subform.elements[3].value)))
+		{
+			total_amount+=parseFloat(subform.elements[3].value);
+			if(subform.elements[6].value=='delivered')
+				collected_amount+=parseFloat(subform.elements[3].value);
+		}		
+	});
+	
+	var form=document.getElementById("form219_master");
+	form.elements['total'].value=total_amount;
+	form.elements['collected'].value=collected_amount;		
+}
+
+/**
+ * @form Create DRS
+ * @param button
+ */
+function form219_update_form()
+{
+	if(is_create_access('form219'))
+	{
+		form219_update_serial_numbers();
+		var form=document.getElementById("form219_master");
+		
+		var drs_num=form.elements['drs_num'].value;
+		var employee=form.elements['employee'].value;
+		var ddate=get_raw_time(form.elements['date'].value);
+		var collectable_amount=form.elements['total'].value;
+		var collected_amount=form.elements['collected'].value;
+		var data_id=form.elements['id'].value;
+		
+		$('#form219_share').show();
+		$('#form219_share').click(function()
+		{
+			modal101_action('Delivery Run Sheet',employee,'staff',function (func) 
+			{
+				print_form219(func);
+			});
+		});
+
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var data_xml="<drs>" +
+					"<id>"+data_id+"</id>" +
+					"<drs_num>"+drs_num+"</drs_num>"+
+					"<employee>"+employee+"</employee>"+
+					"<collectable_amount>"+collectable_amount+"</collectable_amount>"+
+					"<collected_amount>"+collected_amount+"</collected_amount>"+
+					"<drs_time>"+ddate+"</drs_time>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</drs>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>drs</tablename>" +
+					"<link_to>form201</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>DRS # "+drs_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var num_data="<user_preferences>"+
+					"<id></id>"+						
+					"<name exact='yes'>drs_num</name>"+												
+					"</user_preferences>";
+		get_single_column_data(function (drs_num_ids)
+		{
+			if(drs_num_ids.length>0)
+			{
+				var num_xml="<user_preferences>"+
+								"<id>"+drs_num_ids[0]+"</id>"+
+								"<value>"+(parseInt(drs_num)+1)+"</value>"+
+								"</user_preferences>";
+				if(is_online())
+				{
+					server_update_simple(num_xml);
+				}
+				else 
+				{
+					local_update_simple(num_xml);
+				}
+			}
+		},num_data);
+
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}
+
+		$("[id^='save_form219_']").click();
 	}
 	else
 	{

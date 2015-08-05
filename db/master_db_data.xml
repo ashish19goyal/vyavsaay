@@ -304,6 +304,22 @@
 	</user_fields_list>
 	<values_list>
 		<row>
+			<tablename>drs</tablename>
+			<listname>type</listname>
+			<name>COD</name>
+			<value>COD</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>drs</tablename>
+			<listname>type</listname>
+			<name>NONCOD</name>
+			<value>NONCOD</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>bill_items</tablename>
 			<listname>dispatch_status</listname>
 			<name>pending</name>

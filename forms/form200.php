@@ -7,7 +7,7 @@
 			<label>Print Date<br><input type='text' name='pdate'></label>
 			<label>	<input type='button' title='Save DRS' name='save' class='save_icon'></label>
 			<label>	<input type='button' title='Print DRS' name='print' class='print_icon' onclick='form200_print_form();'></label>
-			<label>	<input type='button' title='Email DRS' name='print' class='share_icon' id='form200_share'></label>
+			<label>	<input type='button' title='Email DRS' name='share' class='share_icon' id='form200_share'></label>
 			<label>	<input type='hidden' name='id'>
 					<input type='submit' class='submit_hidden'>
 			</label>

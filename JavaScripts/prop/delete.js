@@ -6923,3 +6923,43 @@ function form217_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * formNo 219
+ * form Create COD DRS
+ * @param button
+ */
+function form219_delete_item(button)
+{
+	if(is_delete_access('form219'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[10].value;
+			var last_updated=get_my_time();
+			var data_xml="<logistics_orders>" +
+						"<id>"+data_id+"</id>" +
+						"<status>received</status>" +
+						"<drs_num></drs_num>"+
+						"<delivery_person></delivery_person>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</logistics_orders>";
+			if(is_online())
+			{
+				server_update_simple(data_xml);
+			}
+			else
+			{
+				local_update_simple(data_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

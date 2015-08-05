@@ -7113,7 +7113,7 @@ function form201_header_ini()
 	var drs_filter=filter_fields.elements[0];
 	var employee_filter=filter_fields.elements[1];
 	var date_filter=filter_fields.elements[2];
-	var status_filter=filter_fields.elements[3];
+	var type_filter=filter_fields.elements[3];
 		
 	var drs_data="<drs>" +
 			"<drs_num></drs_num>" +
@@ -7130,9 +7130,9 @@ function form201_header_ini()
 	});
 
 	set_my_filter(drs_data,drs_filter);
-	set_my_filter(employee_data,employee_filter);
-	set_static_filter('drs','status',status_filter);
-	
+	set_my_filter(employee_data,employee_filter);	
+	set_static_filter('drs','type',type_filter);
+
 	$(date_filter).datepicker();
 };
 
@@ -7401,3 +7401,65 @@ function form218_header_ini()
 	var url="./f/s.html?d="+domain+"&r=y";
 	window.open(url,'_blank');
 };
+
+/**
+ * @form Create COD Drs
+ * @formNo 219
+ */
+function form219_header_ini()
+{
+	var fields=document.getElementById('form219_master');
+
+	var drs_filter=fields.elements['drs_num'];
+	var employee=fields.elements['employee'];
+	var drs_date=fields.elements['date'];
+	var total_cod=fields.elements['total'];
+	var collected_cod=fields.elements['collected'];
+	
+	fields.elements['id'].value=get_new_key();
+	
+	var save_button=fields.elements['save'];
+	drs_filter.value="";
+	employee.value="";
+	
+	var drs_num_data="<user_preferences count='1'>"+
+					"<value></value>"+
+					"<name exact='yes'>drs_num</name>"+
+					"</user_preferences>";
+	set_my_value(drs_num_data,drs_filter);	
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form219_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		//modal129_action();
+		form219_add_item();
+	});
+
+	var employee_data="<staff>" +
+		"<acc_name></acc_name>" +
+		"</staff>";
+	set_my_value_list(employee_data,employee,function () 
+	{
+		$(employee).focus();
+	});
+	
+	$(drs_date).datepicker();
+	drs_date.value=get_my_date();
+	$('#form219_share').hide();
+}

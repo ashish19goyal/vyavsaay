@@ -1152,22 +1152,12 @@ function form197_import_template()
 };
 
 /**
-* @form Create DRS
-* @formNo 200
-*/
-function form200_import_template()
-{
-	var data_array=['id','drs_num','awb_num'];
-	my_array_to_csv(data_array);
-};
-
-/**
 * @form Manage DRS
 * @formNo 201
 */
 function form201_import_template()
 {
-	var data_array=['id','drs_num','employee','drs_time','status'];
+	var data_array=['id','drs_num','employee','drs_time','status','type','collectable_amount','collected_amount'];
 	my_array_to_csv(data_array);
 };
 

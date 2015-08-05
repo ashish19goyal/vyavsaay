@@ -2036,9 +2036,9 @@ function print_form200(func)
 		var merchant_value=document.createElement('div');
 		
 		barcode_image.setAttribute('style','width:150px;height:30px;');
-		barcode_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:center');
-		type_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:center');	
-		merchant_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:center');
+		barcode_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:center;');
+		type_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:left;');	
+		merchant_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:left;');
 		
 		barcode_value.innerHTML=awb_num;
 		type_value.innerHTML="Type: "+manifest_type+" O-ID: "+order_id;
@@ -2076,6 +2076,165 @@ function print_form200(func)
 
 	func(container);
 }
+
+/**
+ * @form Create COD DRS
+ * @formNo 219
+ */
+function form219_print_form()
+{
+	print_form219(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	});	
+}
+
+/**
+ * @form Create COD DRS
+ * @formNo 219
+ */
+function print_form219(func)
+{
+	var form_id='form219';
+	
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_title=document.createElement('div');
+		var drs_barcode=document.createElement('img');
+	
+	var drs_title=document.createElement('div');
+	
+	var detail_section=document.createElement('div');
+	
+	var table_container=document.createElement('div');
+
+	////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','display:block;width:100%;min-height:40px;');
+		logo.setAttribute('style','float:left;width:30%;');
+		business_title.setAttribute('style','float:left;width:35%;text-align:center;font-weight:bold;');
+		drs_barcode.setAttribute('style','float:right;width:30%;height:30px;padding:left:5px;padding-right:5px;');
+	drs_title.setAttribute('style','display:block;width:100%;min-height:20px;text-align:center');	
+	detail_section.setAttribute('style','display:block;width:100%;min-height:30px;text-align:center;');
+	
+	///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	var logo_image=get_session_var('logo');
+
+	var master_form=document.getElementById(form_id+'_master');
+	var employee_name=master_form.elements['employee'].value;
+	var drs_date=master_form.elements['date'].value;
+	var drs_num=master_form.elements['drs_num'].value;
+	var page_num=1;
+	
+	////////////////filling in the content into the containers//////////////////////////
+	
+	var table_element=document.getElementById(form_id+'_body');
+		
+	var total_items=$(table_element).find('tr').length;
+
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	business_title.innerHTML=bt;
+
+	$(drs_barcode).JsBarcode(drs_num,{displayValue:true});
+		
+	drs_title.innerHTML="Delivery Run Sheet";
+
+	employee_text="<td>Employee: "+employee_name+"</td><td>Total Items: "+total_items+"</td>";
+	drs_text="<td>DRS #: "+drs_num+"</td><td>DRS Date: "+drs_date+"</td>";
+	detail_text="<table style='border:none;width:100%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+drs_text+"</tr></table>";
+	
+	detail_section.innerHTML=detail_text;
+	
+	var new_table=document.createElement('table');
+	new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
+
+	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:5%'>S.No.</td>"+
+				"<td style='text-align:left;width:20%'>C-Note No.</td>"+
+				"<td style='text-align:left;width:15%'>Address</td>"+
+				"<td style='text-align:left;width:6%'>Wt.</td>"+
+				"<td style='text-align:left;width:6%'>P</td>"+
+				"<td style='text-align:left;width:8%'>Time</td>"+
+				"<td style='text-align:left;width:20%'>Receiver/Comp Seal</td>"+
+				"<td style='text-align:left;width:5%'>RC</td>"+
+				"<td style='text-align:left;width:15%'>Sign</td></tr>";
+				
+	var table_rows=table_header;
+	var counter=0;
+
+	var td_text="<td style='border:solid 1px #000000'></td>";
+	var tr_text="<tr>"+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+"</tr>";
+	var rc="<table style='width:12px;height:12px;'><tr>"+td_text+"</tr></table>";
+
+	$(table_element).find('form').each(function(index)
+	{
+		//if((counter%10)==0)
+		//{
+		//	table_rows+=table_header;
+		//}
+		counter+=1;
+		var form=$(this)[0];
+		var mob_seal="<table style='width:95%;height:30px;'>"+tr_text+tr_text+"</table><br>"+form.elements[2].value;
+		
+		var awb_num=""+form.elements[0].value;
+		var manifest_type=form.elements[7].value.replace(/manifest/g,"");
+		var order_id=form.elements[8].value;
+		var merchant_name=form.elements[9].value;
+
+		var cnote_no=document.createElement('div');
+		var barcode_image=document.createElement('img');
+		var barcode_value=document.createElement('div');
+		var type_value=document.createElement('div');
+		var merchant_value=document.createElement('div');
+		
+		barcode_image.setAttribute('style','width:150px;height:30px;');
+		barcode_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:center;');
+		type_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:left;');	
+		merchant_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:left;');
+		
+		barcode_value.innerHTML=awb_num;
+		type_value.innerHTML="Type: "+manifest_type+" O-ID: "+order_id;
+		merchant_value.innerHTML=merchant_name;
+		$(barcode_image).JsBarcode(awb_num,{displayValue:false});
+		
+		cnote_no.appendChild(barcode_image);
+		cnote_no.appendChild(barcode_value);
+		cnote_no.appendChild(type_value);
+		cnote_no.appendChild(merchant_value);
+
+		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td>"+counter+"</td>"+
+				"<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
+				"<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
+				"<td>"+form.elements[3].value+"</td>"+
+				"<td>"+form.elements[4].value+"</td>"+
+				"<td></td>"+
+				"<td><div style='text-align:left;'>"+mob_seal+"</div></td>"+
+				"<td>"+rc+"</td>"+
+				"<td></td></tr>";
+				
+	});
+	new_table.innerHTML=table_rows;
+	/////////////placing the containers //////////////////////////////////////////////////////	
+
+	container.appendChild(header);
+	container.appendChild(drs_title);
+	container.appendChild(detail_section);
+
+	container.appendChild(new_table);
+	
+	header.appendChild(logo);
+	header.appendChild(business_title);
+	header.appendChild(drs_barcode);
+
+	func(container);
+}
+
 
 /**
  * @form Issue GRN without QC
@@ -2145,3 +2304,4 @@ function print_modal131(func,order_num,received_quantity,total_quantity,supplier
 
 	func(container);
 }
+

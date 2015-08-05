@@ -1454,6 +1454,9 @@
 			<employee index='yes' type="TEXT"></employee>
 			<drs_time index='yes' type="BIGINT"></drs_time>
 			<status index='yes' type="VARCHAR(20)"></status><!--out for delivery/delivered/pending/undelivered-->
+			<type index='yes' type="VARCHAR(20)"></type><!--COD/Non-COD-->
+			<collectable_amount index='yes' type="DECIMAL(12,2)"></collectable_amount>
+			<collected_amount index='yes' type="DECIMAL(12,2)"></collected_amount>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</drs>
@@ -1462,6 +1465,7 @@
 			<drs_id index='yes' type="BIGINT"></drs_id>
 			<drs_num index='yes' type="VARCHAR(20)"></drs_num>
 			<awb_num index='yes' type="VARCHAR(20)"></awb_num>
+			<cod_amount index='yes' type="DECIMAL(12,2)"></cod_amount>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</drs_items>

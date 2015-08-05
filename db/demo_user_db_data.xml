@@ -3062,6 +3062,17 @@
 			<tables>--sale_leads--followups--sms--emails--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form219</name>
+			<display_name>create_cod_drs</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--drs--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -5752,6 +5763,17 @@
 			<username>master</username>
 			<element_id>form218</element_id>
 			<element_name>sale_leads_external</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form219</element_id>
+			<element_name>create_cod_drs</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

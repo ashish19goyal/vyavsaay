@@ -20672,7 +20672,7 @@ function form201_ini()
 	var fdrs=filter_fields.elements[0].value;
 	var femployee=filter_fields.elements[1].value;
 	var fdate=get_raw_time(filter_fields.elements[2].value);
-	var fstatus=filter_fields.elements[3].value;
+	var ftype=filter_fields.elements[3].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form201_index');
@@ -20686,7 +20686,9 @@ function form201_ini()
 			"<drs_num>"+fdrs+"</drs_num>"+
 			"<employee>"+femployee+"</employee>"+
 			"<drs_time>"+fdate+"</drs_time>" +
-			"<status>"+fstatus+"</status>" +
+			"<type>"+ftype+"</type>" +
+			"<collectable_amount></collectable_amount>" +
+			"<collected_amount></collected_amount>" +
 			"</drs>";
 
 	$('#form201_body').html("");
@@ -20707,12 +20709,18 @@ function form201_ini()
 					rowsHTML+="<td data-th='DRS Time'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' value='"+get_my_past_date(result.drs_time)+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="<td data-th='Type'>";
+						if(result.type=='COD')
+							rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' title='Collectable Amount: Rs. "+result.collectable_amount+"\nCollected Amount: Rs. "+result.collected_amount+"' value='"+result.type+"'>";
+						else
+							rowsHTML+="<input type='text' readonly='readonly' form='form201_"+result.id+"' title='Non-COD' value='"+result.type+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form201_"+result.id+"' value='"+result.id+"' name='id'>";
-						rowsHTML+="<input type='button' form='form201_"+result.id+"' class='edit_icon' title='View DRS' name='edit' onclick=\"element_display('"+result.id+"','form200');\">";
+						if(result.type=='COD')
+							rowsHTML+="<input type='button' form='form201_"+result.id+"' class='edit_icon' title='View DRS' name='edit' onclick=\"element_display('"+result.id+"','form219');\">";
+						else
+							rowsHTML+="<input type='button' form='form201_"+result.id+"' class='edit_icon' title='View DRS' name='edit' onclick=\"element_display('"+result.id+"','form200');\">";
 						rowsHTML+="<input type='button' class='delete_icon' form='form201_"+result.id+"' title='Delete order' onclick='form201_delete_item($(this));'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
@@ -21150,3 +21158,132 @@ function form217_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Create COD DRS
+ * @formNo 219
+ * @Loading light
+ */
+function form219_ini()
+{
+	var drs_id=$("#form219_link").attr('data_id');
+	if(drs_id==null)
+		drs_id="";	
+	$('#form219_body').html("");
+	$('#form219_foot').html("");
+	
+	if(drs_id!="")
+	{
+		show_loader();
+		var drs_columns="<drs>" +
+				"<id>"+drs_id+"</id>" +
+				"<drs_num></drs_num>"+
+				"<employee></employee>"+
+				"<collectable_amount></collectable_amount>"+
+				"<collected_amount></collected_amount>"+
+				"<drs_time></drs_time>"+
+				"</drs>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',drs_columns,function(drs_results)
+		{
+			var filter_fields=document.getElementById('form219_master');
+			if(drs_results.length>0)
+			{
+				filter_fields.elements['drs_num'].value=drs_results[0].drs_num;
+				filter_fields.elements['employee'].value=drs_results[0].employee;
+				filter_fields.elements['date'].value=get_my_past_date(drs_results[0].drs_time);
+				filter_fields.elements['id'].value=drs_results[0].id;
+				filter_fields.elements['total'].value=drs_results[0].collectable_amount;
+				filter_fields.elements['collected'].value=drs_results[0].collected_amount;
+				
+				var save_button=filter_fields.elements['save'];
+				
+				$(save_button).off('click');
+				$(save_button).on("click", function(event)
+				{
+					event.preventDefault();
+					form219_update_form();
+				});
+
+				var drs_items_column="<logistics_orders>" +
+									"<id></id>" +
+									"<awb_num></awb_num>" +
+									"<manifest_type></manifest_type>" +
+									"<order_num></order_num>" +
+									"<merchant_name></merchant_name>" +
+									"<ship_to></ship_to>" +
+									"<address1></address1>" +
+									"<address2></address2>" +
+									"<city></city>" +
+									"<pincode></pincode>" +
+									"<phone></phone>" +
+									"<weight></weight>" +
+									"<pieces></pieces>" +
+									"<collectable_amount></collectable_amount>"+
+									"<drs_num exact='yes'>"+drs_results[0].drs_num+"</drs_num>" +
+									"<tax></tax>" +
+									"</logistics_orders>";
+
+				/////////////////////////////////////////////////////////////////////////
+	
+				fetch_requested_data('',drs_items_column,function(results)
+				{
+					results.forEach(function(result)
+					{
+						var id=result.id;
+						var rowsHTML="<tr>";
+
+						var address=result.ship_to+"\n"+result.address1+", "+result.address2+", "+result.city+"-"+result.pincode;
+						if(result.address2=="--" || result.address2==result.address1)
+						{
+							var address=result.ship_to+"\n"+result.address1+", "+result.city+"-"+result.pincode;
+						}						
+						rowsHTML+="<form id='form219_"+id+"'></form>";
+							rowsHTML+="<td data-th='S.No.'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='AWB #'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form219_"+id+"' value='"+result.awb_num+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Address'>";
+								rowsHTML+="<textarea readonly='readonly' form='form219_"+id+"'>"+address+"</textarea>";
+								rowsHTML+="<br>Phone: <input type='text' readonly='readonly' value='"+result.phone+"' form='form219_"+id+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Details'>";
+								rowsHTML+="COD Amount: Rs. <input type='number' readonly='readonly' form='form219_"+id+"' value='"+result.collectable_amount+"' step='any'>";
+								rowsHTML+="Weight: <input type='number' readonly='readonly' form='form219_"+id+"' value='"+result.weight+"' step='any'>";
+								rowsHTML+="<br>Pieces: <input type='number' readonly='readonly' form='form219_"+id+"' value='"+result.pieces+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Status'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form219_"+id+"' value='"+result.status+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form219_"+id+"' value='"+result.manifest_type+"'>";
+								rowsHTML+="<input type='hidden' form='form219_"+id+"' value='"+result.order_num+"'>";
+								rowsHTML+="<input type='hidden' form='form219_"+id+"' value='"+result.merchant_name+"'>";
+								rowsHTML+="<input type='hidden' form='form219_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='button' class='submit_hidden' form='form219_"+id+"' id='save_form219_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form219_"+id+"' id='delete_form219_"+id+"' onclick='form219_delete_item($(this));form219_update_serial_numbers();'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+	
+						$('#form219_body').append(rowsHTML);
+					});
+					
+					$('#form219_share').show();
+					$('#form219_share').click(function()
+					{
+						modal101_action('Delivery Run Sheet',filter_fields.elements['employee'].value,'staff',function (func) 
+						{
+							print_form219(func);
+						});
+					});
+					
+					form219_update_serial_numbers();
+					$('textarea').autosize();
+					hide_loader();
+				});
+			}
+		});
+	}
+}
