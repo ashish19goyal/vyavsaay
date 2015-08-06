@@ -9368,7 +9368,6 @@ function form104_ini()
 	
 	if(project_id!="")
 	{
-		console.log('form104');
 		$('#form104_calendar').fullCalendar('destroy');
 		$('#form104_calendar').fullCalendar({
 			header: {
@@ -12845,7 +12844,8 @@ function form135_ini()
 					{
 						modal107_action(data);
 					},
-				});					
+				});	
+				$('textarea').autosize();				
 			});		
 		
 			/////////////project team////////////////////////
@@ -12890,6 +12890,7 @@ function form135_ini()
 						form135_update_team(fields);
 					});
 				});
+				$('textarea').autosize();
 				longPressEditable($('.dblclick_editable'));
 			});
 			
@@ -12922,7 +12923,8 @@ function form135_ini()
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";				
 					$('#form135_document_body').append(rowsHTML);
-				});				
+				});		
+				$('textarea').autosize();		
 			});
 
 			/////////////project tasks////////////////////
@@ -12972,6 +12974,7 @@ function form135_ini()
 						form135_update_task(fields);
 					});
 				});	
+				$('textarea').autosize();
 				longPressEditable($('.dblclick_editable'));
 			});
 			
@@ -13984,8 +13987,8 @@ function form143_ini()
 function form144_ini()
 {
 	var filter_fields=document.getElementById('form144_master');
-	var project_id=filter_fields.elements[5].value;
-
+	var project_id=filter_fields.elements['project_id'].value;
+	
 	$('#form144_task_body').html("");
 	$('#form144_expense_body').html("");
 	if(project_id!="")

@@ -4764,8 +4764,8 @@ function form144_delete_expense(button)
 		modal115_action(function()
 		{
 			var master_fields=document.getElementById('form144_master');
-			var project_name=master_fields.elements[1].value;
-			var project_id=master_fields.elements[5].value;
+			var project_name=master_fields.elements['project'].value;
+			var project_id=master_fields.elements['project_id'].value;
 	
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);		

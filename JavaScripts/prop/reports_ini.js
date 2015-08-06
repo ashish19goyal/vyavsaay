@@ -5067,6 +5067,99 @@ function report67_ini()
 	print_tabular_report('report67','Channel Collections',print_button);
 };
 
+/**
+ * @reportNo 69
+ * @report Project Expenses
+ */
+function report69_ini()
+{
+	var form=document.getElementById('report69_header');
+	var id_filter=form.elements['project_id'].value;
+	var staff_filter=form.elements['staff'].value;
+	var from_filter=form.elements['from'].value;
+	var to_filter=form.elements['to'].value;
+	var key_filter=form.elements['key'].value;
+
+	show_loader();
+	$('#report69_body').html('');	
+	
+	////indexing///
+	var index_element=document.getElementById('report69_index');
+	var prev_element=document.getElementById('report69_prev');
+	var next_element=document.getElementById('report69_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var expense_data="<expenses count='25' start_index='"+start_index+"'>" +
+		"<id></id>"+
+		"<person>"+staff_filter+"</person>" +
+		"<amount></amount>"+
+		"<status></status>"+
+		"<detail>"+key_filter+"</detail>"+
+		"<source exact='yes'>project</source>"+
+		"<source_id>"+id_filter+"</source_id>"+
+		"<expense_date lowerbound='yes'>"+get_raw_time(from_filter)+"</expense_date>" +
+		"<expense_date upperbound='yes'>"+(get_raw_time(to_filter)+86400000)+"</expense_date>" +			
+		"</expenses>";
+	//console.log(expense_data);
+	fetch_requested_data('report69',expense_data,function(items)
+	{
+		//console.log(items);
+		var rowsHTML="";
+		items.forEach(function(item)
+		{
+			rowsHTML+="<tr>";
+			rowsHTML+="<form id='report69_"+item.id+"'></form>";
+			rowsHTML+="<td data-th='Staff'>";
+				rowsHTML+=item.person;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Detail'>";
+				rowsHTML+=item.detail;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+=item.amount;
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date'>";
+				rowsHTML+=get_my_past_date(item.expense_date);
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+=item.status;
+			rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+					
+		});
+		$('#report69_body').html(rowsHTML);
+		
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(items.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		hide_loader();
+	});
+	
+	var print_button=form.elements['print'];
+	print_tabular_report('report69','Project Expenses',print_button);
+};
 
 /**
  * @reportNo 72

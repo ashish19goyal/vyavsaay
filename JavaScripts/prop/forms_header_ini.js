@@ -3078,6 +3078,7 @@ function form104_header_ini()
 	
 	$("#form104_body").parent().hide();
 	$("#form104_calendar").show();
+	$('#form104_calendar').fullCalendar('destroy');
 }
 
 function form104_switch_view()
@@ -5184,12 +5185,11 @@ function form144_header_ini()
 	var fields=document.getElementById('form144_master');
 	var project_id=$("#form144_link").attr('data_id');
 	
-	var name_filter=fields.elements[1];
-	var expense_estimate_filter=fields.elements[2];
-	var total_estimate_filter=fields.elements[3];
-	var total_budget_filter=fields.elements[4];
-	var project_id_filter=fields.elements[5];
-	var save_button=fields.elements[6];
+	var name_filter=fields.elements['project'];
+	var total_estimate_filter=fields.elements['estimate'];
+	var total_budget_filter=fields.elements['actual'];
+	var project_id_filter=fields.elements['project_id'];
+	var save_button=fields.elements['save'];
 
 	project_id_filter.value=project_id;
 	
@@ -5199,7 +5199,7 @@ function form144_header_ini()
 		event.preventDefault();
 		form144_ini();
 	});	
-	
+
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
 	{
@@ -5216,7 +5216,6 @@ function form144_header_ini()
 	});
 	
 	name_filter.value='';
-	expense_estimate_filter.value='';
 	total_estimate_filter.value='';
 	total_budget_filter.value='';
 	

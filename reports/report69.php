@@ -3,10 +3,12 @@
 		<fieldset>
 			<legend>Select Filters</legend>
 			<label>Project<br><input type='text' name='project'></label>
-			<label>Staff<br><input name='delivery' type='staff'></label>
-			<label>From Date<br><input type='text' name='from'></label>
-			<label>To Date<br><input type='text' name='to'></label>
-			<label>	
+			<label>Staff<br><input type='text' name='staff'></label>
+			<label>Keywords<br><input type='text' name='key'></label>
+			<label>From Date<br><input type='text' name='from' required></label>
+			<label>To Date<br><input type='text' name='to' required></label>
+			<label>
+				<input type='hidden' name='project_id'>
 				<input type='submit' value='Refresh' name='refresh' class='generic_icon'>
 				<input type='button' title='Print' name='print' class='print_icon'>
 			</label>	
@@ -15,8 +17,9 @@
 	<table class='rwd-table'>
 		<thead>
 			<tr>
-				<th>AWB #</th>
-				<th>Delivery Person</th>
+				<th>Staff</th>
+				<th>Detail</th>
+				<th>Amount</th>
 				<th>Date</th>
 				<th>Status</th>
 			</tr>

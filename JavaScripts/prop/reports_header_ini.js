@@ -1405,6 +1405,49 @@ function report67_header_ini()
 }
 
 /**
+ * @reportNo 69
+ * @report Project Expenses
+ */
+function report69_header_ini()
+{	
+	var form=document.getElementById('report69_header');
+	var project_filter=form.elements['project'];
+	var staff_filter=form.elements['staff'];
+	var from_filter=form.elements['from'];
+	var to_filter=form.elements['to'];
+	var id_filter=form.elements['project_id'];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report69_ini();
+	});
+	
+	var project_data="<projects>"+
+				"<name></name>"+
+				"</projects>";
+	set_my_value_list(project_data,project_filter);
+
+	my_datalist_change(project_filter,function () 
+	{
+		var id_data="<projects>"+
+					"<id></id>"+
+					"<name exact='yes'>"+project_filter.value+"</name>"+					
+					"</projects>";
+		set_my_value(id_data,id_filter);
+	});
+
+	var staff_data="<staff>"+
+				"<acc_name></acc_name>"+
+				"</staff>";
+	set_my_filter(staff_data,staff_filter);
+
+	$(from_filter).datepicker();
+	$(to_filter).datepicker();
+}
+
+/**
  * @reportNo 72
  * @report Pickup and deliveries
  */

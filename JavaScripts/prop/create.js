@@ -10709,8 +10709,8 @@ function form144_create_expense(form)
 	if(is_create_access('form144'))
 	{
 		var master_fields=document.getElementById('form144_master');
-		var project_name=master_fields.elements[1].value;
-		var project_id=master_fields.elements[5].value;
+		var project_name=master_fields.elements['project'].value;
+		var project_id=master_fields.elements['project_id'].value;
 
 		var person=form.elements[0].value;
 		var amount=form.elements[1].value;
@@ -10727,6 +10727,7 @@ function form144_create_expense(form)
 					"<amount>"+amount+"</amount>"+
 					"<detail>"+detail+"</detail>" +
 					"<status>"+status+"</status>"+
+					"<expense_date>"+last_updated+"</expense_date>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</expenses>";	
 		var activity_xml="<activity>" +

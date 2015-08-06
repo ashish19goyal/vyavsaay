@@ -11195,6 +11195,7 @@ function form200_add_item()
 		var awb_data="<logistics_orders>"+
 					"<awb_num></awb_num>"+
 					"<status exact='yes'>received</status>"+
+					"<type exact='yes'>NONCOD</type>"+
 					"</logistics_orders>";
 		set_my_value_list(awb_data,awb_filter,function () 
 		{
@@ -11974,6 +11975,7 @@ function form219_add_item()
 		var awb_data="<logistics_orders>"+
 					"<awb_num></awb_num>"+
 					"<status exact='yes'>received</status>"+
+					"<type exact='yes'>COD</type>"+
 					"</logistics_orders>";
 		set_my_value_list(awb_data,awb_filter,function () 
 		{

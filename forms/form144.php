@@ -1,12 +1,14 @@
 <div id='form144' class='function_detail'>
 	<form id='form144_master' autocomplete="off">
 		<fieldset>
-			<label>Project Name<br><input type='text' required></label>
-			<label>Budget Estimate<br>Rs. <input type='number' readonly='readonly'></label>
-			<label>Budget Actuals<br>Rs. <input type='number' readonly='readonly'></label>
-			<label>	<input type='hidden' name='project_id'></label>
-			<label>	<input type='button' title='Save' class='save_icon'></label>
-			<label>	<input type='submit' class='submit_hidden'>	</label>	
+			<label>Project Name<br><input type='text' name='project' required></label>
+			<label>Budget Estimate<br>Rs. <input type='number' name='estimate' readonly='readonly'></label>
+			<label>Budget Actuals<br>Rs. <input type='number' name='actual' readonly='readonly'></label>
+			<label>	<input type='button' title='Save' name='save' class='save_icon'></label>
+			<label>
+				<input type='hidden' name='project_id'>	
+				<input type='submit' class='submit_hidden'>	
+			</label>	
 		</fieldset>
 	</form>
 

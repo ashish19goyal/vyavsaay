@@ -7279,7 +7279,7 @@ function form144_update_task(form)
 {
 	if(is_update_access('form144'))
 	{
-		var project_id=document.getElementById('form144_master').elements[5].value;
+		var project_id=document.getElementById('form144_master').elements['project_id'].value;
 		var task=form.elements[0].value;
 		var description=form.elements[1].value;
 		var estimate=form.elements[2].value;
@@ -7325,7 +7325,7 @@ function form144_update_expense(form)
 {
 	if(is_update_access('form144'))
 	{
-		var project_id=document.getElementById('form144_master').elements[5].value;
+		var project_id=document.getElementById('form144_master').elements['project_id'].value;
 		var person=form.elements[0].value;
 		var amount=form.elements[1].value;
 		var details=form.elements[2].value;
