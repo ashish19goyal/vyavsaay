@@ -1854,6 +1854,8 @@ function form24_ini()
 				"<status></status>" +
 				"<amount></amount>"+
 				"<tax></tax>"+
+				"<cst></cst>"+
+				"<payment_mode></payment_mode>"+
 				"<total></total>"+
 				"</purchase_orders>";
 		var order_items_column="<purchase_order_items>" +
@@ -1884,7 +1886,17 @@ function form24_ini()
 				filter_fields.elements['order_num'].value=order_results[i].order_num;
 				filter_fields.elements['status'].value=order_results[i].status;
 				filter_fields.elements['order_id'].value=order_id;
-				
+				filter_fields.elements['mode'].value=order_results[i].payment_mode;
+				//order_results[i].order_num;
+				if(order_results[i].cst=='yes')
+				{
+					filter_fields.elements['cst'].checked=true;
+				}
+				else 
+				{
+					filter_fields.elements['cst'].checked=false;
+				}
+
 				var save_button=filter_fields.elements['save'];
 				
 				$(save_button).off('click');
@@ -1893,6 +1905,20 @@ function form24_ini()
 					event.preventDefault();
 					form24_update_form();
 				});
+				
+				var supplier_address_xml="<suppliers>"+
+										"<address></adddress>"+
+										"<acc_name exact='yes'>"+order_results[i].supplier+"</acc_name>"+
+										"</suppliers>";
+				set_my_value(supplier_address_xml,filter_fields.elements['address']);
+				
+				var supplier_tin_xml="<attributes>"+
+									"<value></value>"+
+									"<type exact='yes'>supplier</type>"+
+									"<attribute exact='yes'>TIN#</attribute>"+
+									"<name exact='yes'>"+order_results[i].supplier+"</name>"+
+									"</attributes>";
+				set_my_value(supplier_tin_xml,filter_fields.elements['tin']);
 				
 				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 							"<td>Amount:<br>Tax: <br>Total: </td>" +
@@ -1942,11 +1968,11 @@ function form24_ini()
 				
 					$('#form24_body').append(rowsHTML);
 				});
-				
+				var bt=get_session_var('title');
 				$('#form24_share').show();
 				$('#form24_share').click(function()
 				{
-					modal101_action('Purchase Order',order_results[i].supplier,'supplier',function (func) 
+					modal101_action(bt+' - PO# '+order_results[i].order_num,order_results[i].supplier,'supplier',function (func) 
 					{
 						print_form24(func);
 					});

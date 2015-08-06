@@ -889,13 +889,57 @@ function form24_header_ini()
 	var order_date=fields.elements['date'];
 	var order_num=fields.elements['order_num'];
 	var status_filter=fields.elements['status'];
-	fields.elements[5].value=get_new_key();
+	fields.elements['order_id'].value=get_new_key();
 	var save_button=fields.elements['save'];
 	var share_button=fields.elements['share'];	
-	
+	var pmode_filter=fields.elements['mode'];	
+	pmode_filter.value="";
+	fields.elements['cst'].checked=false;
+
 	$(share_button).hide();
 
 	$(supplier_filter).off('blur');	
+	//$(supplier_filter).off('change');	
+	$(supplier_filter).on('blur',function () 
+	{
+		var supplier_address="<suppliers>"+
+							"<address></address>"+
+							"<acc_name exact='yes'>"+supplier_filter.value+"</acc_name>"+
+							"</suppliers>";
+		set_my_value(supplier_address,fields.elements['address']);					
+		var supplier_attributes="<attributes>"+
+								"<type exact='yes'>supplier</type>"+
+								"<name exact='yes'>"+supplier_filter.value+"</name>"+
+								"<attribute></attribute>"+
+								"<value></value>"+
+								"</attributes>";
+		fetch_requested_data('',supplier_attributes,function (attributes) 
+		{
+			for(var i in attributes)
+			{
+				if(attributes[i].attribute=='CST')
+				{
+					if(attributes[i].value=='yes')
+					{
+						fields.elements['cst'].checked=true;
+					}
+					else{
+						fields.elements['cst'].checked=false;
+					}
+				}
+				else if(attributes[i].attribute=='payment mode')
+				{
+					pmode_filter.value=attributes[i].value;
+				}
+				else if(attributes[i].attribute=='TIN#')
+				{
+					fields.elements['tin'].value=attributes[i].value;
+				}
+			}
+		});						
+	});	
+	
+	set_static_value_list('purchase_orders','payment_mode',pmode_filter);
 	
 	var po_id=$("#form24_link").attr('data_id');
 	if(po_id==null || po_id=='')

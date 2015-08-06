@@ -574,9 +574,9 @@ function print_form24(func)
 	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
 		business_intro.setAttribute('style','width:100%;text-align:center');
 		business_contact.setAttribute('style','width:100%;text-align:center');
-	info_section.setAttribute('style','width:100%;min-height:60px');
-		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:60px;border: 1px solid #00f;border-radius:5px;');
-		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:60px;border: 1px solid #00f;border-radius:5px;');
+	info_section.setAttribute('style','width:100%;min-height:80px');
+		customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
+		business_info.setAttribute('style','padding:5px;margin:5px;float:right;width:46%;height:80px;border: 1px solid #00f;border-radius:5px;');
 	footer.setAttribute('style','width:100%;min-height:100px');
 		tandc.setAttribute('style','float:left;width:60%;min-height:50px');
 		signature.setAttribute('style','float:right;width:30%;min-height:60px');
@@ -593,9 +593,12 @@ function print_form24(func)
 	//var business_website=get_session_var('website');
 
 	var master_form=document.getElementById(form_id+'_master');
-	var supplier_name=master_form.elements[1].value;
-	var date=master_form.elements[2].value;	
-	var order_no=master_form.elements[3].value;
+	var supplier_name=master_form.elements['supplier'].value;
+	var date=master_form.elements['date'].value;	
+	var order_no=master_form.elements['order_num'].value;
+	var supplier_address=master_form.elements['address'].value;
+	var supplier_tin=master_form.elements['tin'].value;
+	var payment_mode=master_form.elements['mode'].value;
 	var vat_no=get_session_var('vat');
 		
 	var tandc_text=get_session_var('po_message');
@@ -609,8 +612,8 @@ function print_form24(func)
 	
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Purchase Order</b></div><hr style='border: 1px solid #00f;'>";
 	
-	customer_info.innerHTML="<b>To</b><br>"+supplier_name;
-	business_info.innerHTML="VAT #: "+vat_no+"<br>Date: "+date+"<br>Order No: "+order_no;
+	customer_info.innerHTML="<b>To</b><br>"+supplier_name+"<br>"+supplier_address+"<br>TIN#: "+supplier_tin;
+	business_info.innerHTML="VAT #: "+vat_no+"<br>Date: "+date+"<br>Order No: "+order_no+"<br>Payment Mode: "+payment_mode;
 	
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
@@ -658,7 +661,7 @@ function print_form24(func)
 	});
 	
 	var row_count=$(table_element).find('tbody>tr').length;
-	var rows_to_add=20-row_count;
+	var rows_to_add=12-row_count;
 	for(var i=0;i<rows_to_add;i++)
 	{
 		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";

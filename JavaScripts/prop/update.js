@@ -1519,13 +1519,16 @@ function form24_update_form()
 	{
 		var form=document.getElementById("form24_master");
 		
-		var supplier=form.elements[1].value;
-		var order_date=get_raw_time(form.elements[2].value);		
-		var order_num=form.elements[3].value;		
-		var status=form.elements[4].value;		
-		var data_id=form.elements[5].value;
+		var supplier=form.elements['supplier'].value;
+		var order_date=get_raw_time(form.elements['date'].value);		
+		var order_num=form.elements['order_num'].value;
+		var status=form.elements['status'].value;		
+		var data_id=form.elements['order_id'].value;
 		var last_updated=get_my_time();
 		
+		var cst='no'
+		var payment_mode=form.elements['mode'].value;
+
 		var amount=0;
 		var tax=0;
 		var total=0;
@@ -1547,6 +1550,13 @@ function form24_update_form()
 		
 		});
 		
+		if(form.elements['cst'].checked)
+		{
+			cst='yes';
+			tax+=.02*amount;
+			total+=.02*amount;
+		}
+
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 								"<td>Amount:<br>Tax: <br>Total: </td>" +
 								"<td>Rs. "+amount+"<br>" +
@@ -1567,6 +1577,8 @@ function form24_update_form()
 					"<tax>"+tax+"</tax>" +
 					"<total>"+total+"</total>" +
 					"<total_quantity>"+total_quantity+"</total_quantity>" +
+					"<cst>"+cst+"</cst>"+
+					"<payment_mode>"+payment_mode+"</payment_mode>"+					
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_orders>";
 		var activity_xml="<activity>" +
@@ -10186,12 +10198,14 @@ function form193_update_form()
 
 		$("[id^='193form193_']").each(function () 
 		{
+			
 			var item=new Object();
 			item.name=this.elements[1].value;
 			item.desc=this.elements[2].value;			
 			item.batch=this.elements[3].value;
 			item.quantity=1;
-			items.push(item);
+			if(item.name!="")			
+				items.push(item);
 		});
 
 		for(var i=0;i<items.length;i++)

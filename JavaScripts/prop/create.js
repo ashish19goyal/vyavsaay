@@ -1753,7 +1753,7 @@ function form24_create_item(form)
 {
 	if(is_create_access('form24'))
 	{
-		var order_id=document.getElementById("form24_master").elements[5].value;
+		var order_id=document.getElementById("form24_master").elements['order_id'].value;
 		
 		var name=form.elements[0].value;
 		var desc=form.elements[1].value;
@@ -1834,6 +1834,13 @@ function form24_get_totals()
 		}		
 	});
 	
+	var form=document.getElementById("form24_master");
+	if(form.elements['cst'].checked)
+	{
+		tax+=.02*amount;
+		total+=.02*amount;
+	}
+			
 	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 							"<td>Amount:<br>Tax: <br>Total: </td>" +
 							"<td>Rs. "+amount+"<br>" +
@@ -1861,10 +1868,18 @@ function form24_create_form()
 		var data_id=form.elements['order_id'].value;
 		var save_button=form.elements['save'];
 		
+		var cst='no'
+		if(form.elements['cst'].checked)
+		{
+			cst='yes';
+		}
+		var payment_mode=form.elements['mode'].value;
+		
+		var bt=get_session_var('title');
 		$('#form24_share').show();
 		$('#form24_share').click(function()
 		{
-			modal101_action('Purchase Order',supplier,'supplier',function (func) 
+			modal101_action(bt+' - PO# '+order_num,supplier,'supplier',function (func) 
 			{
 				print_form24(func);
 			});
@@ -1891,6 +1906,13 @@ function form24_create_form()
 		
 		});
 		
+		if(form.elements['cst'].checked)
+		{
+			cst='yes';
+			tax+=.02*amount;
+			total+=.02*amount;
+		}
+		
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 								"<td>Amount:<br>Tax: <br>Total: </td>" +
 								"<td>Rs. "+amount+"<br>" +
@@ -1915,6 +1937,8 @@ function form24_create_form()
 					"<quantity_received>0</quantity_received>" +
 					"<quantity_accepted>0</quantity_accepted>" +
 					"<quantity_qc_pending>0</quantity_qc_pending>" +
+					"<cst>"+cst+"</cst>"+
+					"<payment_mode>"+payment_mode+"</payment_mode>"+					
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</purchase_orders>";
 		var activity_xml="<activity>" +

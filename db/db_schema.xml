@@ -163,6 +163,8 @@
 			<quantity_accepted index='no' type='DECIMAL(12,2)'></quantity_accepted>
 			<quantity_qc_pending index='no' type='DECIMAL(12,2)'></quantity_qc_pending>
 			<new_order_id index='yes' type="BIGINT"></new_order_id>
+			<cst index='yes' type="VARCHAR(10)"></cst><!--yes/no-->
+			<payment_mode index='yes' type="VARCHAR(30)"></payment_mode><!--advance/credit/consignment-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</purchase_orders>
