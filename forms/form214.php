@@ -14,7 +14,7 @@
 		</fieldset>
 
 		<label>Requirement Details: <textarea name='details' class='widebox'></textarea></label>
-		<label>Follow up date: <input type='text' name='date' class='widebox' required></label>
+		<label>Follow up date: <input type='text' name='date' class='widebox'></label>
 		<label>Contact Person: <input type='text' name='contact' class='widebox' required></label>
 		<label><input type='submit' name='save' value='Save' class='generic_icon widebox'></label>
 	</form>
