@@ -1190,3 +1190,25 @@ function form217_import_template()
 	var data_array=['id','item','item_desc','supplier_sku','margin','supplier'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form manage Projects (CPS)
+* @formNo 220
+* @table projects
+*/
+function form220_import_template()
+{
+	var data_array=['id','name','details','priority','start_date','status'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Timesheet
+* @formNo 221
+* @table Timesheet
+*/
+function form221_import_template()
+{
+	var data_array=['id','acc_name','project','date','hours_worked'];
+	my_array_to_csv(data_array);
+};

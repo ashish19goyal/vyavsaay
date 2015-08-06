@@ -2975,7 +2975,6 @@ function form101_header_ini()
 		event.preventDefault();
 		form101_ini();
 	});
-
 };
 
 /**
@@ -5188,6 +5187,7 @@ function form144_header_ini()
 	var name_filter=fields.elements['project'];
 	var total_estimate_filter=fields.elements['estimate'];
 	var total_budget_filter=fields.elements['actual'];
+	var hours_filter=fields.elements['hours'];
 	var project_id_filter=fields.elements['project_id'];
 	var save_button=fields.elements['save'];
 
@@ -5226,11 +5226,27 @@ function form144_header_ini()
 	
 	my_datalist_change(name_filter,function () 
 	{
+		console.log('project selected');
 		var project_id_data="<projects>"+
 							"<id></id>"+
 							"<name exact='yes'>"+name_filter.value+"</name>"+
 							"</projects>";
 		set_my_value(project_id_data,project_id_filter);
+		
+		var timesheet_data="<timesheet>"+
+							"<hours_worked></hours_worked>"+
+							"<source exact='yes'>project</source>"+
+							"<source_name exact='yes'>"+name_filter.value+"</source_name>"+
+							"</timesheet>";
+		fetch_requested_data('',timesheet_data,function(times)
+		{
+			var total_hours=0;
+			for(var i in times)
+			{
+				total_hours+=parseFloat(times[i].hours_worked);
+			}
+			hours_filter.value=total_hours;
+		});					
 	});
 }
 
@@ -7506,3 +7522,60 @@ function form219_header_ini()
 	drs_date.value=get_my_date();
 	$('#form219_share').hide();
 }
+
+/**
+ * @form Manage Projects (CPS)
+ * @formNo 220
+ */
+function form220_header_ini()
+{
+	var filter_fields=document.getElementById('form220_header');
+	var name_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[1];
+	
+	var name_data="<projects>" +
+			"<name></name>" +
+			"</projects>";
+	
+	set_my_filter(name_data,name_filter);
+	set_static_filter('projects','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form220_ini();
+	});
+};
+
+/**
+ * @form Timesheet
+ * @formNo 221
+ */
+function form221_header_ini()
+{
+	var filter_fields=document.getElementById('form220_header');
+	var name_filter=filter_fields.elements[0];
+	var project_filter=filter_fields.elements[1];
+	var date_filter=filter_fields.elements[2];
+
+	var name_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	
+	var project_data="<projects>" +
+			"<name></name>" +
+			"</projects>";
+	
+	set_my_filter(name_data,name_filter);
+	set_my_filter(project_data,project_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form220_ini();
+	});
+	
+	$(date_filter).datepicker();
+};

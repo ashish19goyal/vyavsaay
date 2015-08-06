@@ -14006,14 +14006,30 @@ function form144_ini()
 		{
 			if(project_results.length>0)
 			{
-				filter_fields.elements[1].value=project_results[0].name;
+				filter_fields.elements['project'].value=project_results[0].name;
 				//filter_fields.elements[2].value=project_results[0].details;
-				//filter_fields.elements[3].value=project_results[0].status;								
+				//filter_fields.elements[3].value=project_results[0].status;
+				var hours_filter=filter_fields.elements['hours'];
+			
+				var timesheet_data="<timesheet>"+
+							"<hours_worked></hours_worked>"+
+							"<source exact='yes'>project</source>"+
+							"<source_name exact='yes'>"+project_results[0].name+"</source_name>"+
+							"</timesheet>";
+				fetch_requested_data('',timesheet_data,function(times)
+				{
+					var total_hours=0;
+					for(var i in times)
+					{
+						total_hours+=parseFloat(times[i].hours_worked);
+					}
+					hours_filter.value=total_hours;
+				});								
 			}
 			/////////////project tasks////////////////////
 			
-			var budget_estimate_filter=filter_fields.elements[2];
-			var budget_actual_filter=filter_fields.elements[3];
+			var budget_estimate_filter=filter_fields.elements['estimate'];
+			var budget_actual_filter=filter_fields.elements['actual'];
 			budget_actual_filter.value=0;
 			
 			var task_data="<task_instances>"+
@@ -21316,3 +21332,313 @@ function form219_ini()
 		});
 	}
 }
+
+/**
+ * @form Manage Projects (CPS)
+ * @formNo 220
+ * @Loading light
+ */
+function form220_ini()
+{
+	show_loader();
+	var fid=$("#form220_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form220_header');
+	
+	//populating form 
+	var fname=filter_fields.elements[0].value;
+	var fstatus=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form220_index');
+	var prev_element=document.getElementById('form220_prev');
+	var next_element=document.getElementById('form220_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<projects count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<name>"+fname+"</name>" +
+			"<details></details>" +
+			"<start_date></start_date>" +
+			"<priority></priority>" +
+			"<status>"+fstatus+"</status>" +
+			"<last_updated></last_updated>" +
+			"</projects>";
+
+	$('#form220_body').html("");
+
+	if_data_read_access('projects',function(accessible_data)
+	{
+		fetch_requested_data('form220',columns,function(results)
+		{
+			results.forEach(function(result)
+			{
+				var read=false;
+				var update=false;
+				var del=false;
+				var access=false;
+				for(var x in accessible_data)
+				{
+					if(accessible_data[x].record_id===result.id || accessible_data[x].record_id=='all')
+					{
+						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || result[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
+						{
+							if(accessible_data[x].access_type=='all')
+							{
+								read=true;
+								update=true;
+								del=true;
+								access=true;
+								break;
+							}
+							else if(accessible_data[x].access_type=='read')
+							{
+								read=true;
+							}
+							else if(accessible_data[x].access_type=='delete')
+							{
+								del=true;
+							}
+							else if(accessible_data[x].access_type=='update')
+							{
+								update=true;
+							}
+						}
+					}
+				}
+				
+				if(read)
+				{
+					var rowsHTML="";
+					rowsHTML+="<tr>";
+						rowsHTML+="<form id='form220_"+result.id+"'></form>";
+							rowsHTML+="<td data-th='Project Name'>";
+								rowsHTML+="<textarea readonly='readonly' form='form220_"+result.id+"'>"+result.name+"</textarea>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Details'>";
+								rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form220_"+result.id+"'>"+result.details+"</textarea>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Priority'>";
+								rowsHTML+="<input type='number' readonly='readonly' form='form220_"+result.id+"' value='"+result.priority+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Start Date'>";
+								rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form220_"+result.id+"' value='"+get_my_past_date(result.start_date)+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Status'>";
+								rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form220_"+result.id+"' value='"+result.status+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' readonly='readonly' form='form220_"+result.id+"' value='"+result.id+"'>";
+								if(update)
+								{
+									rowsHTML+="<input type='submit' class='save_icon' form='form220_"+result.id+"' title='Save'>";
+								}
+								if(del)
+								{
+									rowsHTML+="<input type='button' class='delete_icon' form='form220_"+result.id+"' title='Delete' onclick='form220_delete_item($(this));'>";
+								}
+								if(result.status=='active')
+								{
+									rowsHTML+="<br><input type='button' class='generic_icon' form='form220_"+result.id+"' value='Budget' onclick=\"element_display('"+result.id+"','form144',['form137']);\">";
+									rowsHTML+="<br><input type='button' class='generic_icon' form='form220_"+result.id+"' name='schedule' value='Schedule' onclick=\"element_display('"+result.id+"','form135');\">";
+								}
+							rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+					
+					$('#form220_body').append(rowsHTML);
+					
+					var fields=document.getElementById("form220_"+result.id);
+					var status_filter=fields.elements[4];
+					var schedule_button=fields.elements['schedule'];					
+					
+					if(!is_form_access('form135'))
+					{
+						$(schedule_button).hide();
+					}
+					
+					set_static_value_list('projects','status',status_filter);
+					
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form220_update_item(fields);
+					});
+				}
+			});
+	
+			////indexing///
+			var next_index=parseInt(start_index)+25;
+			var prev_index=parseInt(start_index)-25;
+			next_element.setAttribute('data-index',next_index);
+			prev_element.setAttribute('data-index',prev_index);
+			index_element.setAttribute('data-index','0');
+			if(results.length<25)
+			{
+				$(next_element).hide();
+			}
+			else
+			{
+				$(next_element).show();
+			}
+			if(prev_index<0)
+			{
+				$(prev_element).hide();
+			}
+			else
+			{
+				$(prev_element).show();
+			}
+			
+			longPressEditable($('.dblclick_editable'));
+			$('textarea').autosize();
+			
+			var export_button=filter_fields.elements[3];
+			$(export_button).off("click");
+			$(export_button).on("click", function(event)
+			{
+				get_export_data(columns,'projects');
+			});
+			hide_loader();
+		});
+	});
+};
+
+/**
+ * @form Timesheet
+ * @formNo 221
+ * @Loading light
+ */
+function form221_ini()
+{
+	show_loader();
+	var fid=$("#form221_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	$('#form221_body').html('');
+	var filter_fields=document.getElementById('form221_header');
+	
+	//populating form 
+	var fname=filter_fields.elements[0].value;
+	var fproject=filter_fields.elements[1].value;
+	var fdate=get_raw_time(filter_fields.elements[2].value);
+	
+	////indexing///
+	var index_element=document.getElementById('form221_index');
+	var prev_element=document.getElementById('form221_prev');
+	var next_element=document.getElementById('form221_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<timesheet count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<acc_name>"+fname+"</acc_name>" +
+			"<date>"+fdate+"</date>" +
+			"<hours_worked></hours_worked>" +
+			"<source exact='yes'>project</source>" +
+			"<source_name>"+fproject+"</source_name>" +
+			"</timesheet>";
+
+	if_data_read_access('timesheet',function(accessible_data)
+	{
+		fetch_requested_data('',columns,function(results)
+		{
+			results.forEach(function(result)
+			{
+				var read=false;
+				var update=false;
+				var del=false;
+				var access=false;
+				for(var x in accessible_data)
+				{
+					if(accessible_data[x].record_id==result.id || accessible_data[x].record_id=='all')
+					{
+						if(accessible_data[x].criteria_field=="" || accessible_data[x].criteria_field== null || result[accessible_data[x].criteria_field]==accessible_data[x].criteria_value)
+						{
+							if(accessible_data[x].access_type=='all')
+							{
+								read=true;
+								update=true;
+								del=true;
+								access=true;
+								break;
+							}
+							else if(accessible_data[x].access_type=='read')
+							{
+								read=true;
+							}
+							else if(accessible_data[x].access_type=='delete')
+							{
+								del=true;
+							}
+							else if(accessible_data[x].access_type=='update')
+							{
+								update=true;
+							}
+						}
+					}
+				}
+				
+				if(read)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form221_"+id+"'></form>";
+						rowsHTML+="<td data-th='Name'>";
+							rowsHTML+="<textarea readonly='readonly' form='form221_"+id+"'>"+result.acc_name+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Project'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form221_"+id+"' value='"+result.source_name+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Date'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form221_"+id+"' value='"+get_my_past_date(result.date)+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Hours'>";
+							rowsHTML+="<input type='number' step='any' readonly='readonly' form='form221_"+id+"' value='"+result.hours_worked+"'> Hours";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form221_"+id+"' value='"+id+"'>";
+						if(del)
+						{
+							rowsHTML+="<input type='button' class='delete_icon' form='form221_"+id+"' id='delete_form221_rows_"+id+"' onclick='form221_delete_item($(this));'>";
+						}
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+					
+					$('#form221_body').append(rowsHTML);
+				}
+			});
+			
+			////indexing///
+			var next_index=parseInt(start_index)+25;
+			var prev_index=parseInt(start_index)-25;
+			next_element.setAttribute('data-index',next_index);
+			prev_element.setAttribute('data-index',prev_index);
+			index_element.setAttribute('data-index','0');
+			if(results.length<25)
+			{
+				$(next_element).hide();
+			}
+			else
+			{
+				$(next_element).show();
+			}
+			if(prev_index<0)
+			{
+				$(prev_element).hide();
+			}
+			else
+			{
+				$(prev_element).show();
+			}
+			
+			longPressEditable($('.dblclick_editable'));
+			$('textarea').autosize();
+			hide_loader();
+		});
+	});
+}
+

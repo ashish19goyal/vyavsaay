@@ -3083,6 +3083,28 @@
 			<tables>--drs--logistics_orders--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form220</name>
+			<display_name>manage_projects_cps</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--projects--expenses--project_team--tasks--project_phases--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form221</name>
+			<display_name>timesheet</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--projects--timesheet--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -5795,6 +5817,28 @@
 			<username>master</username>
 			<element_id>form219</element_id>
 			<element_name>create_cod_drs</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form220</element_id>
+			<element_name>manage_projects_cps</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form221</element_id>
+			<element_name>timesheet</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

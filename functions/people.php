@@ -12,6 +12,7 @@
 			<li><a id='report46_link' href='#report46' onclick='report46_header_ini();' data-i18n='form.supplier_account_balance'></a></li>
 			<li><a id='form8_link' href='#form8' onclick='form8_header_ini(); form8_ini();' data-i18n='form.manage_staff'></a></li>
 			<li><a id='form7_link' href='#form7' onclick='form7_header_ini(); form7_ini();' data-i18n='form.attendance'></a></li>
+			<li><a id='form221_link' href='#form221' onclick='form221_header_ini(); form221_ini();' data-i18n='form.timesheet'></a></li>
 			<li><a id='report42_link' href='#report42' onclick='report42_header_ini();' data-i18n='form.feedback'></a></li>
 			<li><a id='form14_link' href='#form14' onclick='form14_header_ini(); form14_ini();' data-i18n='form.manage_tasks'></a></li>
 			<li><a id='form79_link' href='#form79' onclick='form79_header_ini(); form79_ini();' data-i18n='form.manage_task_types'></a></li>
@@ -37,6 +38,7 @@
 			include "reports/report46.php";
 			include "forms/form8.php";
 			include "forms/form7.php";
+			include "forms/form221.php";
 			include "reports/report42.php"; 
 			include "forms/form14.php";
 			include "forms/form79.php";

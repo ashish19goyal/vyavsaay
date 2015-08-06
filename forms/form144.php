@@ -4,6 +4,7 @@
 			<label>Project Name<br><input type='text' name='project' required></label>
 			<label>Budget Estimate<br>Rs. <input type='number' name='estimate' readonly='readonly'></label>
 			<label>Budget Actuals<br>Rs. <input type='number' name='actual' readonly='readonly'></label>
+			<label>Hours Spent<br><input type='number' name='hours' readonly='readonly'></label>
 			<label>	<input type='button' title='Save' name='save' class='save_icon'></label>
 			<label>
 				<input type='hidden' name='project_id'>	

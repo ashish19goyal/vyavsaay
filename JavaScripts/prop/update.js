@@ -11105,3 +11105,55 @@ function form219_update_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * formNo 220
+ * form Manage Projects (CPS)
+ * @param button
+ */
+function form220_update_item(form)
+{
+	if(is_update_access('form220'))
+	{
+		var name=form.elements[0].value;
+		var details=form.elements[1].value;
+		var priority=form.elements[2].value;
+		var start_date=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<projects>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<priority>"+priority+"</priority>" +
+					"<details>"+details+"</details>" +
+					"<start_date>"+start_date+"</start_date>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</projects>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>projects</tablename>" +
+					"<link_to>form220</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Project "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

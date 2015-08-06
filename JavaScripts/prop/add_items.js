@@ -12042,3 +12042,133 @@ function form219_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Projects (CPS)
+ * @formNo 220
+ */
+function form220_add_item()
+{
+	if(is_create_access('form220'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form220_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Project Name'>";
+				rowsHTML+="<textarea required form='form220_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<textarea form='form220_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Priority'>";
+				rowsHTML+="<input type='number' readonly='readonly' value='0' form='form220_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Start Date'>";
+				rowsHTML+="<input type='text' required form='form220_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' required form='form220_"+id+"' value='active'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form220_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form220_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form220_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form220_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form220_"+id);
+		var name_filter=fields.elements[0];
+		var start_filter=fields.elements[3];
+		var status_filter=fields.elements[4];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form220_create_item(fields);
+		});
+				
+		$(name_filter).focus();
+
+		set_static_value_list('projects','status',status_filter);
+		$(start_filter).datepicker();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Project expenses
+ * @formNo 221
+ */
+function form221_add_item()
+{
+	if(is_create_access('form221'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form221_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Name'>";
+				rowsHTML+="<input type='text' form='form221_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Project'>";
+				rowsHTML+="<input type='text' form='form221_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date'>";
+				rowsHTML+="<input type='text' form='form221_"+id+"' value='"+get_my_date()+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Hours'>";
+				rowsHTML+="<input type='text' form='form221_"+id+"' required> Hours";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form221_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form221_"+id+"' id='save_form221_"+id+"' >";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form221_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form221_body').prepend(rowsHTML);
+		var fields=document.getElementById("form221_"+id);
+		var person_filter=fields.elements[0];
+		var project_filter=fields.elements[1];
+		var date_filter=fields.elements[2];
+		
+		$(date_filter).datepicker();
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form221_create_item(fields);
+		});
+		
+		var project_data="<projects>"+
+						"<name></name>"+
+						"</projects>";
+		set_my_value_list(project_data,project_filter);
+						
+		if(is_update_access('form221'))
+		{
+			var person_data="<staff>"+
+							"<acc_name></acc_name>"+
+							"</staff>";
+			set_my_value_list_func(person_data,person_filter,function () 
+			{
+				$(person_filter).focus();
+			});
+		}
+		else
+		{
+			person_filter.value=get_account_name();
+			person_filter.setAttribute('readonly','readonly');
+			$(project_filter).focus();
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

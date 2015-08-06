@@ -2,6 +2,12 @@
 <re_xml>
 	<user_fields_list>
 		<row>
+			<tablename>timesheet</tablename>
+			<field_name>acc_name</field_name>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>drs</tablename>
 			<field_name>employee</field_name>
 			<status>active</status>

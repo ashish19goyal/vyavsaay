@@ -197,13 +197,17 @@ function initialize_questionnaires(id,ques_name)
 			{
 				server_create_simple_func(ques_data,function () 
 				{
-					if(ques_name=='ques3')
+					if(ques_name=='ques1')
 					{
-						ques3_submit_action(ques_form);
+						ques1_submit_action(ques_form);
 					}
 					else if(ques_name=='ques2')
 					{
 						ques2_submit_action(ques_form);
+					}
+					else if(ques_name=='ques3')
+					{
+						ques3_submit_action(ques_form);
 					}
 				});
 			}
@@ -211,13 +215,17 @@ function initialize_questionnaires(id,ques_name)
 			{
 				local_create_simple_func(ques_data,function () 
 				{
-					if(ques_name=='ques3')
+					if(ques_name=='ques1')
 					{
-						ques3_submit_action(ques_form);
+						ques1_submit_action(ques_form);
 					}
 					else if(ques_name=='ques2')
 					{
 						ques2_submit_action(ques_form);
+					}
+					else if(ques_name=='ques3')
+					{
+						ques3_submit_action(ques_form);
 					}
 				});
 			}
@@ -472,6 +480,74 @@ function filled_questionnaires(struct_id,ques_name,ques_id,submitter,sub_date)
 			$("#"+ques_name).html(content);			
 		});		
 	});
+}
+
+/*Project prioritization*/
+function ques1_submit_action(ques_form)
+{
+	var project=ques_form.elements[3].value;
+	var project_field_id=ques_form.elements[3].id;
+	var field_ids=project_field_id.split("_");
+	var field_id=field_ids[1];
+
+	var ques_fields_data="<ques_fields_data>"+
+						"<ques_id></ques_id>"+
+						"<field_id exact='yes'>"+field_id+"</field_id>"+
+						"<field_value exact='yes'>"+project+"</field_value>"+
+						"</ques_fields_data>";
+	fetch_requested_data('',ques_fields_data,function (ques_fields)
+	{
+		var id_array="--";
+		for (var i in ques_fields)
+		{
+			id_array+=ques_fields[i].ques_id+"--";
+		}
+
+		var ques_data="<ques_data>"+
+					"<total_score></total_score>"+
+					"<id array='yes'>"+id_array+"</id>"+
+					"</ques_data>";
+		fetch_requested_data('',ques_data,function(quess)
+		{
+			var total_count=quess.length;
+			var total_score=0;
+
+			for (var j in quess)
+			{
+				total_score+=parseFloat(quess[j].total_score);
+			}
+			
+			var avg_score=0;			
+			if(total_count>0)
+			{
+				avg_score=Math.round(total_score/total_count);
+			}
+			
+			var project_data="<projects>"+
+				"<id></id>"+
+				"<name exact='yes'>"+project+"</name>"+
+				"</projects>";
+			get_single_column_data(function(pos)
+			{
+				if(pos.length>0)
+				{
+					var project_xml="<projects>"+
+							"<id>"+pos[0]+"</id>"+
+							"<priority>"+avg_score+"</priority>"+
+							"<last_updated>"+get_my_time()+"</last_updated>"+
+							"</projects>";
+					if(is_online())
+					{	
+						server_update_simple(project_xml);
+					}
+					else
+					{
+						local_update_simple(project_xml);
+					}		
+				}
+			},project_data);
+		});
+	});	
 }
 
 

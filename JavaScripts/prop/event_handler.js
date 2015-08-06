@@ -923,6 +923,10 @@ function import_data(form_name)
 		break;
 		case 'form217':modal23_action(form217_import_template,form217_import);
 		break;
+		case 'form220':modal23_action(form220_import_template,form220_import);
+		break;
+		case 'form217':modal23_action(form221_import_template,form221_import);
+		break;
 	}
 }
 

@@ -377,6 +377,8 @@
 	"sku_mapping_supplier":"SKU Mapping (supplier)",
 	"sale_leads_external":"Sale Leads (external form)",
 	"launch_contact_form":"Launch Contact Form",
-	"sale_leads_by_staff":"Sales Lead Report"
+	"sale_leads_by_staff":"Sales Lead Report",
+	"manage_projects_cps":"Manage Projects (CPS)",
+	"timesheet":"Timesheet"
 	}
 }

@@ -102,6 +102,16 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</attendance>
+	<timesheet>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<acc_name index='yes' type="TEXT"></acc_name>
+			<date index='yes' type="BIGINT"></date>
+			<hours_worked index='no' type="DECIMAL(12,2)"></hours_worked>
+			<source index='yes' type="VARCHAR(50)"></source><!-- service request/project/project phase/task instance -->
+			<source_name index='yes' type="TEXT"></source_name>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</timesheet>
 	<documents>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<url index='no' type="MEDIUMBLOB"></url>
@@ -983,6 +993,7 @@
 			<name index='yes' type="TEXT"></name>
 			<details index='no' type="TEXT"></details>
 			<start_date index='yes' type="BIGINT"></start_date>
+			<priority index='yes' type="DECIMAL(12,2)"></priority>
 			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active/suspended/completed -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -1165,7 +1176,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<request_id index='yes' type="BIGINT NOT NULL"></request_id>
 			<assignee index='yes' type="TEXT"></assignee>
-			<phone index='no' type="VARCHAR(15)"></phone>
+			<phone index='no' type="TEXT"></phone>
 			<email index='no' type="TEXT"></email>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

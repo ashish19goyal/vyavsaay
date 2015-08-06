@@ -11178,7 +11178,7 @@ function form150_post_feed()
 		{
 			if (e.keyCode==13) 
 			{
-				create_feed_comment(feed_id,this);
+				create_feed_comment(data_id,this);
 			}
 		});
 	}
@@ -14655,6 +14655,141 @@ function form219_create_form()
 		});
 		
 		$("[id^='save_form219_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 220
+ * form Manage Projects (CPS)
+ * @param button
+ */
+function form220_create_item(form)
+{
+	if(is_create_access('form220'))
+	{
+		var name=form.elements[0].value;
+		var details=form.elements[1].value;
+		var priority=form.elements[2].value;
+		var start_date=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var del_button=form.elements[7];
+
+		var last_updated=get_my_time();
+		var data_xml="<projects>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<details>"+details+"</details>" +
+					"<priority>"+priority+"</priority>" +
+					"<start_date>"+start_date+"</start_date>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</projects>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>projects</tablename>" +
+					"<link_to>form220</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Project "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var access_xml="<data_access>" +
+					"<id>"+get_new_key()+"</id>" +
+					"<tablename>projects</tablename>" +
+					"<record_id>"+data_id+"</record_id>" +
+					"<access_type>all</access_type>" +
+					"<user_type>user</user_type>" +
+					"<user>"+get_account_name()+"</user>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</data_access>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+			server_create_simple(access_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+			local_create_simple(access_xml);
+		}	
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form220_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form220_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Timesheet
+ * @formNo 221
+ * @param button
+ */
+function form221_create_item(form)
+{
+	if(is_create_access('form221'))
+	{
+		var person=form.elements[0].value;
+		var project=form.elements[1].value;
+		var date=get_raw_time(form.elements[2].value);		
+		var hours=form.elements[3].value;		
+		var data_id=form.elements[4].value;
+		var del_button=form.elements[6];
+		var last_updated=get_my_time();
+		var data_xml="<timesheet>" +
+					"<id>"+data_id+"</id>" +
+					"<source_name>"+project+"</source_name>" +
+					"<source>project</source>"+
+					"<date>"+date+"</date>" +
+					"<acc_name>"+person+"</acc_name>" +
+					"<hours_worked>"+hours+"</hours_worked>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</timesheet>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>timesheet</tablename>" +
+					"<link_to>form221</link_to>" +
+					"<title>Timesheet</title>" +
+					"<notes>Added "+hours+" hours for project "+project+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_create_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_create_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form221_delete_item(del_button);
+		});
+		$(form).off('submit');
 	}
 	else
 	{
