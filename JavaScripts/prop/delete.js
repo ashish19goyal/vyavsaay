@@ -1288,7 +1288,7 @@ function form46_delete_item(button)
  * @form Set Accounting Defaults
  * @param button
  */
-function form46_delete_item(button)
+function form50_delete_item(button)
 {
 	if(is_delete_access('form50'))
 	{
@@ -4729,7 +4729,7 @@ function form142_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[6].value;
+			var data_id=form.elements[7].value;
 				
 			var data_xml="<ques_fields>" +
 					"<id>"+data_id+"</id>" +
