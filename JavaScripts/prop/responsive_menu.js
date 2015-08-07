@@ -58,7 +58,7 @@ function setup_grid_display_accordion()
 function tabsToAccordions()
 {
 	$(".vy_tabs").each(function(){
-		var e=$("<div class='vy_accordion function_main' id='"+$(this).attr('id')+"' style='width:500px;'>");
+		var e=$("<div class='vy_accordion function_main' id='"+$(this).attr('id')+"' style='width:480px;'>");
 		var t=new Array;
 		$(this).find(">ul>li").each(function()
 		{
