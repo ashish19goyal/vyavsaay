@@ -173,13 +173,6 @@ function init_functions_tabs()
 
 function init_functions_accordion()
 {
-	$(window).resize(function(event)
-	{
-		event.preventDefault();
-		console.log('window resized');    	
-    	//$("#sidebar_column_accordion").accordion("refresh");
-	});
-	
 	var functions_array=['sale_bills','logistics','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin','settings'];
 	functions_array.forEach(function(func)
 	{

@@ -11,7 +11,7 @@
 		<li><a id='form210_link' href='#form210' onclick='form210_header_ini(); form210_ini();' data-i18n='form.packing_instructions_invoice'></a></li>		
 		<li><a id='form145_link' href='#form145' onclick='form145_header_ini(); form145_ini();' data-i18n='form.store_movement'></a></li>
 		<li><a id='form157_link' href='#form157' onclick='form157_header_ini(); form157_ini();' data-i18n='form.store_movement'></a></li>
-		<li><a id='form193_link' href='#form193' onclick="modal132_action('form193',function(){form193_header_ini();});" data-i18n='form.adjust_inventory'></a></li>
+		<li><a id='form193_link' href='#form193' onclick="form193_header_ini();" data-i18n='form.adjust_inventory'></a></li>
 		<li><a id='form167_link' href='#form167' onclick='form167_header_ini(); form167_ini();' data-i18n='form.storage_structure'></a></li>
 		<li><a id='form83_link' href='#form83' onclick='form83_header_ini(); form83_ini();' data-i18n='form.storage_areas'></a></li>
 		<li><a id='form170_link' href='#form170' onclick='form170_header_ini(); form170_ini();' data-i18n='form.storage_areas'></a></li>

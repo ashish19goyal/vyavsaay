@@ -1,4 +1,4 @@
-/**
+	/**
  * @form Update Inventory
  * @formNo 1
  */
@@ -2703,6 +2703,7 @@ function form91_header_ini()
  */
 function form92_header_ini()
 {
+	console.log('92_header');
 	var filter_fields=document.getElementById('form92_header');
 	var bill_filter=filter_fields.elements[0];
 	var type_filter=filter_fields.elements[1];
