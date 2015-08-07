@@ -58,7 +58,7 @@ function setup_grid_display_accordion()
 function tabsToAccordions()
 {
 	$(".vy_tabs").each(function(){
-		var e=$("<div class='vy_accordion function_main' id='"+$(this).attr('id')+"'>");
+		var e=$("<div class='vy_accordion function_main' id='"+$(this).attr('id')+"' style='width:500px;'>");
 		var t=new Array;
 		$(this).find(">ul>li").each(function()
 		{
@@ -173,13 +173,20 @@ function init_functions_tabs()
 
 function init_functions_accordion()
 {
+	$(window).resize(function(event)
+	{
+		event.preventDefault();
+		console.log('window resized');    	
+    	//$("#sidebar_column_accordion").accordion("refresh");
+	});
+	
 	var functions_array=['sale_bills','logistics','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin','settings'];
 	functions_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main");
 		$(function_main).accordion(
 		{
-			collapsible:true,
+			collapsible:false,
 			animate:500,
 			active:false,
 			activate:function(e, ui) 
