@@ -10461,6 +10461,130 @@ function form178_add_item()
 }
 
 /**
+ * @form Create Sale Order (CPS)
+ * @formNo 180
+ */
+function form180_add_item()
+{
+	if(is_create_access('form180'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form180_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' required form='form180_"+id+"' value=''>";
+				rowsHTML+="<br>Name: <textarea required form='form180_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' required form='form180_"+id+"' value='' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Notes'>";
+				rowsHTML+="Price: <input type='number' readonly='readonly' class='dblclick_editable' form='form180_"+id+"' step='any'>";
+				rowsHTML+="<br>MRP: <input type='number' readonly='readonly' form='form180_"+id+"' step='any'>";
+				rowsHTML+="<br>Amount: <input type='number' readonly='readonly' form='form180_"+id+"' step='any'>";
+				rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form180_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form180_"+id+"' name='total'>";
+				rowsHTML+="<input type='hidden' form='form180_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form180_"+id+"' id='save_form180_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form180_"+id+"' id='delete_form180_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form180_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form180_"+id+"' name='tax_rate'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form180_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form180_"+id);
+		var name_filter=fields.elements[0];
+		var desc_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var mrp_filter=fields.elements[4];
+		var amount_filter=fields.elements[5];
+		var tax_filter=fields.elements[6];
+		var total_filter=fields.elements[7];
+		var id_filter=fields.elements[8];
+		var save_button=fields.elements[9];
+		var tax_unit_filter=fields.elements[12];
+				
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form180_create_item(fields);
+		});
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form180_add_item();
+		});
+				
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";		
+		set_my_value_list_func(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		});
+
+		$(name_filter).on('blur',function(event)
+		{
+			if(name_filter.value!="")
+			{
+				var desc_data="<product_master>" +
+							"<description></description>" +
+							"<tax></tax>" +
+							"<name exact='yes'>"+name_filter.value+"</name>" +
+							"</product_master>";
+				fetch_requested_data('',desc_data,function(descs)
+				{
+					if(descs.length>0)
+					{
+						desc_filter.value=descs[0].description;
+						tax_unit_filter.value=descs[0].tax;
+					}
+				});
+				
+				var price_data="<product_instances>" +
+							"<mrp></mrp>" +
+							"<sale_price></sale_price>"+
+							"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+							"</product_instances>";
+				fetch_requested_data('',price_data,function(prices)
+				{
+					if(prices.length>0)
+					{
+						price_filter.value=prices[0].sale_price;
+						mrp_filter.value=prices[0].mrp;
+					}
+				});
+			}
+		});
+		
+		$(quantity_filter).add(price_filter).on('blur',function(event)
+		{
+			amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+						
+			tax_filter.value=my_round(((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)))/100),2);			
+			if(isNaN(parseFloat(tax_filter.value)))
+				tax_filter.value=0;
+			total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
+		});
+
+		$('textarea').autosize();
+		longPressEditable($('.dblclick_editable'));
+		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form Production Steps
  * @formNo 184
  */

@@ -192,8 +192,17 @@
 			}
 			
 			if($run_daemons=='yes')
-			{
+			{				
 				$sms_instance=new send_sms();
+				
+				$sms_string="select value from user_preferences where name=?;";
+				$sms_stmt=$conn->conn->prepare($sms_string);
+				$sms_stmt->execute(array('sms_sender_id'));
+				$sms_result=$sms_stmt->fetch(PDO::FETCH_ASSOC);
+				$sender_id=$sms_result['value'];
+								
+				if($sender_id!="")
+					$sms_instance->sender_id($sender_id);
 				$sms_instance->send_stored_sms($domain);
 				$email_instance=new send_mailer();
 				$email_instance->send_stored_mailer($domain);

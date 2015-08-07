@@ -5973,6 +5973,94 @@ function form179_delete_item(button)
 }
 
 /**
+ * @form Create Sale Order (CPS)
+ * @param button
+ */
+function form180_delete_item(button)
+{
+	if(is_delete_access('form180'))
+	{
+		modal115_action(function()
+		{			
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var data_id=form.elements[8].value;
+			var last_updated=get_my_time();
+			var data_xml="<sale_order_items>" +
+						"<id>"+data_id+"</id>" +
+						"</sale_order_items>";	
+			if(is_online())
+			{
+				server_delete_simple(data_xml);
+			}
+			else
+			{
+				local_delete_simple(data_xml);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Sale Orders (CPS)
+ * @param button
+ */
+function form181_delete_item(button)
+{
+	if(is_delete_access('form181'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var order_num=form.elements[0].value;
+			var customer_name=form.elements[1].value;
+			var order_date=get_raw_time(form.elements[2].value);
+			var status=form.elements[3].value;
+			var data_id=form.elements[4].value;
+			var last_updated=get_my_time();
+			var data_xml="<sale_orders>" +
+						"<id>"+data_id+"</id>" +
+						"</sale_orders>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>sale_orders</tablename>" +
+						"<link_to>form181</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Sale Order # "+order_num+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var other_delete="<sale_order_items>" +
+					"<order_id>"+data_id+"</order_id>" +
+					"</sale_order_items>";
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+				server_delete_simple(other_delete);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+				local_delete_simple(other_delete);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form Production Steps
  * @param button
  */

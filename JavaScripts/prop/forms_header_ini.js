@@ -3136,7 +3136,7 @@ function form108_header_ini()
 	{
 		modal138_action();
 	});
-	
+
 	var order_data="<sale_orders>" +
 			"<id></id>" +
 			"</sale_orders>";
@@ -6550,6 +6550,108 @@ function form179_header_ini()
 	set_my_filter(name_data,name_filter);
 	set_static_filter('purchase_orders','status',status_filter);
 };
+
+/**
+ * @form create Sale Order (CPS)
+ * @formNo 180
+ */
+function form180_header_ini()
+{
+	var fields=document.getElementById('form180_master');
+	
+	var customers_filter=fields.elements['customer'];
+	var order_date=fields.elements['order_date'];
+	var status_filter=fields.elements['status'];
+	var order_num_filter=fields.elements['order_num'];
+	
+	fields.elements['order_id'].value=get_new_key();
+	order_num_filter.value="";
+	
+	var save_button=fields.elements['save'];
+
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form180_create_form();
+	});
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form180_add_item();
+	});
+	
+	var customers_data="<customers>" +
+		"<acc_name></acc_name>" +
+		"</customers>";
+	set_my_value_list(customers_data,customers_filter);
+	
+	var add_customer=document.getElementById('form180_add_customer');
+	$(add_customer).off('click');
+	$(add_customer).on('click',function()
+	{
+		modal11_action(function()
+		{
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";			
+			set_my_value_list(customers_data,customers_filter);
+		});
+	});
+	
+	var order_num_data="<user_preferences count='1'>"+
+				"<value></value>"+
+				"<name exact='yes'>so_num</name>"+
+				"</user_preferences>";
+	set_my_value(order_num_data,order_num_filter);
+
+	$(order_date).datepicker();
+	order_date.value=get_my_date();
+	set_static_filter('sale_orders','status',status_filter);
+	status_filter.value='pending';
+	customers_filter.value='';
+}
+
+/**
+ * @form Manage Sale Orders (CPS)
+ * @formNo 181
+ */
+function form181_header_ini()
+{
+	var filter_fields=document.getElementById('form181_header');
+	var order_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var order_data="<sale_orders>" +
+			"<order_num></order_num>" +
+			"</sale_orders>";
+
+	var cust_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form181_ini();
+	});
+
+	set_my_filter(order_data,order_filter);
+	set_my_filter(cust_data,name_filter);
+	set_static_filter('sale_orders','status',status_filter);
+};
+
 
 /**
  * @form Production Steps

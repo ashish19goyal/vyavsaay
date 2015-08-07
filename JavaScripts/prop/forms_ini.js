@@ -18603,6 +18603,250 @@ function form179_ini()
 	});
 };
 
+
+/**
+ * @form Create sale order (CPS)
+ * @formNo 180
+ * @Loading light
+ */
+function form180_ini()
+{
+	var order_id=$("#form180_link").attr('data_id');
+	if(order_id==null)
+		order_id="";	
+	
+	$('#form180_body').html("");
+	$('#form180_foot').html("");
+
+	if(order_id!="")
+	{
+		show_loader();
+		var order_columns="<sale_orders>" +
+				"<id>"+order_id+"</id>" +
+				"<customer_name></customer_name>" +
+				"<order_num></order_num>"+
+				"<order_date></order_date>" +
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+
+				"<status></status>" +
+				"</sale_orders>";
+		var order_items_column="<sale_order_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<item_desc></item_desc>" +
+				"<quantity></quantity>" +
+				"<mrp></mrp>"+
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+
+				"<unit_price></unit_price>"+
+				"<order_id exact='yes'>"+order_id+"</order_id>" +
+				"<notes></notes>" +
+				"</sale_order_items>";
+	
+		////separate fetch function to get order details like customer name, total etc.
+		fetch_requested_data('',order_columns,function(order_results)
+		{
+			for(var i in order_results)
+			{
+				var filter_fields=document.getElementById('form180_master');
+				filter_fields.elements['customer'].value=order_results[i].customer_name;
+				filter_fields.elements['order_date'].value=get_my_past_date(order_results[i].order_date);
+				filter_fields.elements['status'].value=order_results[i].status;
+				filter_fields.elements['order_id'].value=order_id;
+				filter_fields.elements['order_num'].value=order_results[i].order_num;
+				
+				var save_button=filter_fields.elements['save'];
+				
+				$(save_button).off('click');
+				$(save_button).on("click", function(event)
+				{
+					event.preventDefault();
+					form180_update_form();
+				});
+				
+				var total_row="<tr><td colspan='1' data-th='Total'>Total</td>" +
+							"<td>Amount:</br>Tax: </br>Total: </td>" +
+							"<td>Rs. "+order_results[i].amount+"</br>" +
+							"Rs. "+order_results[i].tax+"</br>" +
+							"Rs. "+order_results[i].total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+				$('#form180_foot').html(total_row);
+
+				break;
+			}
+		/////////////////////////////////////////////////////////////////////////
+		
+			fetch_requested_data('',order_items_column,function(results)
+			{
+				results.forEach(function(result)
+				{
+					var rowsHTML="";
+					var id=result.id;
+					rowsHTML+="<tr>";
+					rowsHTML+="<form id='form180_"+id+"'></form>";
+						rowsHTML+="<td data-th='Item'>";
+							rowsHTML+="<input type='text' class='wideinput' readonly='readonly' required form='form180_"+id+"' value='"+result.item_name+"'>";
+							rowsHTML+="<br>Name: <textarea readonly='readonly' form='form180_"+id+"'>"+result.item_desc+"</textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' class='dblclick_editable' readonly='readonly' required form='form180_"+id+"' value='"+result.quantity+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Price'>";
+							rowsHTML+="Price: <input type='number' readonly='readonly' form='form180_"+id+"' value='"+result.unit_price+"' step='any'>";
+							rowsHTML+="<br>MRP: <input type='number' readonly='readonly' form='form180_"+id+"' value='"+result.mrp+"' step='any'>";
+							rowsHTML+="<br>Amount: <input type='number' readonly='readonly' form='form180_"+id+"' value='"+result.amount+"' step='any'>";
+							rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form180_"+id+"' value='"+result.tax+"' step='any'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form180_"+id+"' value='"+result.total+"'>";
+							rowsHTML+="<input type='hidden' form='form180_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form180_"+id+"' id='save_form180_"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form180_"+id+"' id='delete_form180_"+id+"' onclick='form180_delete_item($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+				
+					$('#form180_body').append(rowsHTML);					
+				});
+				$('textarea').autosize();
+				hide_loader();
+			});
+		});		
+	}
+}
+
+/**
+ * @form Manage Sale orders
+ * @formNo 181
+ * @Loading light
+ */
+function form181_ini()
+{
+	show_loader();
+	var fid=$("#form181_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form181_header');
+	
+	//populating form 
+	var	forder=filter_fields.elements[0].value;
+	var fname=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form181_index');
+	var prev_element=document.getElementById('form181_prev');
+	var next_element=document.getElementById('form181_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<sale_orders count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<order_num>"+forder+"</order_num>" +
+			"<customer_name>"+fname+"</customer_name>" +
+			"<order_date></order_date>" +
+			"<status>"+fstatus+"</status>" +
+			"<last_updated></last_updated>" +
+			"</sale_orders>";
+
+	$('#form181_body').html("");
+
+	fetch_requested_data('form181',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form181_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Order #'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form181_"+result.id+"' value='"+result.order_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form181_"+result.id+"'>"+result.customer_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Order Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form181_"+result.id+"' value='"+get_my_past_date(result.order_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form181_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form181_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='button' class='edit_icon' form='form181_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form180');\">";
+						rowsHTML+="<input type='submit' class='save_icon' form='form181_"+result.id+"' title='Save order'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form181_"+result.id+"' title='Delete order' onclick='form181_delete_item($(this));'>";
+						//rowsHTML+="<br><input type='button' class='generic_icon' form='form181_"+result.id+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form181_body').append(rowsHTML);
+			var fields=document.getElementById("form181_"+result.id);
+			//var bill_button=fields.elements[8];
+			var status_filter=fields.elements[3];
+			
+			set_static_value_list('sale_orders','status',status_filter);
+			/*
+			if(result.status=='pending')
+			{
+				$(bill_button).attr('value','Create Bill');
+				$(bill_button).on('click',function(event)
+				{
+					form181_bill(result.id);
+				});
+			}
+			else
+			{
+				$(bill_button).hide();
+			}
+			*/
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form181_update_item(fields);
+			});
+			
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'sale_orders');
+		});
+		hide_loader();
+	});
+};
+
 /**
  * @form Production Steps
  * @formNo 184
