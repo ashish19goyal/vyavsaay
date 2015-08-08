@@ -7420,7 +7420,7 @@ function modal116_action(barcode,sku)
  * @modal Add Task
  * @modalNo 117
  */
-function modal117_action(source,date_initiated)
+function modal117_action(date_initiated)
 {
 	var form=document.getElementById("modal117_form");
 	var task_filter=form.elements[1];
@@ -7433,7 +7433,6 @@ function modal117_action(source,date_initiated)
 
 	var step_data="<business_processes>" +
 			"<name></name>" +
-			"<type exact='yes'>"+source+"</type>"+
 			"</business_processes>";
 	set_my_value_list(step_data,task_filter);
 	
@@ -7467,7 +7466,7 @@ function modal117_action(source,date_initiated)
 						"<t_due>"+t_due+"</t_due>" +
 						"<status>"+status+"</status>" +
 						"<task_hours>1</task_hours>" +
-						"<source>"+source+"</source>" +
+						"<source>business process</source>" +
 						"<source_id></source_id>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</task_instances>";
@@ -8583,7 +8582,7 @@ function modal128_action()
 		                "<declared_value>"+d_value+"</declared_value>"+
 		                "<collectable_value>"+c_value+"</collectable_value>"+
 		                "<return_address1>"+raddress+"</return_address1>"+
-		                "<dispatch_date>"+date+"</dispatch_date>"+
+		                "<import_date>"+date+"</import_date>"+
 		                "<status>picked</status>"+
 		                "<last_updated>"+last_updated+"</last_updated>"+
 						"</logistics_orders>";
@@ -9797,4 +9796,189 @@ function modal140_action(i_func)
     });
 	
 	$("#modal140").dialog("open");
+}
+
+/**
+ * @modalNo 141
+ * @modal Print laundry tags
+ * @param button
+ */
+function modal141_action(button)
+{
+	var form141=document.getElementById('modal141_form');
+	var save_button=form141.elements['save'];
+	var cancel_button=form141.elements['cancel'];
+	
+	var form_id=$(button).attr('form');
+	var form=document.getElementById(form_id);
+	var item=form.elements[1].value;
+	var quantity=form.elements[2].value;
+	var plan_item_id=form.elements[6].value;			
+	
+	form141.elements['quantity'].value=quantity;
+	
+	var batch_filter=form141.elements['batch'];
+	var price_filter=form141.elements['price'];
+	var storage_filter=form141.elements['storage'];
+	var new_batch_filter=form141.elements['new_batch'];
+	
+	var storage_data="<store_areas>"+
+					"<name></name>"+
+					"</store_areas>";	
+	set_my_value_list(storage_data,storage_filter,function () 
+	{
+		$(storage_filter).focus();
+	});
+	
+	$(batch_filter).off('blur');
+	$(batch_filter).on('blur',function () 
+	{
+		var price_xml="<product_instances>"+
+					"<sale_price></sale_price>"+
+					"<product_name exact='yes'>"+item+"</product_name>"+
+					"<batch exact='yes'>"+batch_filter.value+"</batch>"+
+					"</product_instances>";
+		get_single_column_data(function(prices)
+		{
+			if(prices.length>0)
+			{
+				price_filter.value=prices[0];
+				new_batch_filter.value='no';
+			}
+			else 
+			{
+				price_filter.value="";
+				new_batch_filter.value='yes';
+			}
+		},price_xml);			
+	});
+
+	////adding pre-requiresites data///////
+	var raw_label=document.getElementById('modal141_raw');
+	raw_label.innerHTML="";
+	var raw_data="<pre_requisites>" +
+			"<type exact='yes'>product</type>" +
+			"<requisite_type exact='yes'>product</requisite_type>"+
+			"<name exact='yes'>"+item+"</name>" +
+			"<requisite_name></requisite_name>"+
+			"<quantity></quantity>"+
+			"</pre_requisites>";
+	fetch_requested_data('',raw_data,function(raws)
+	{
+		raw_label.innerHTML="Please specify the quantities of raw material used<br>";
+		raws.forEach(function(raw)
+		{
+			var attr_label=document.createElement('label');
+			raw.quantity=parseFloat(raw.quantity)*parseFloat(quantity);			
+			attr_label.innerHTML=raw.requisite_name+": <input type='number' step='any' value='"+raw.quantity+"' required name='"+raw.requisite_name+"'>";
+
+			raw_label.appendChild(attr_label);
+			var line_break=document.createElement('br');
+			raw_label.appendChild(line_break);
+		});
+	});
+	
+
+	$(save_button).off('click');
+	$(save_button).on('click',function()
+	{
+		form.elements[5].value='completed';
+		var last_updated=get_my_time();
+		var batch=batch_filter.value;
+		var price=price_filter.value;
+		var storage=storage_filter.value;
+		
+		//console.log(storage_filter);
+		
+		////update production plan item
+		var plan_item_xml="<production_plan_items>"+
+						"<id>"+plan_item_id+"</id>"+
+						"<batch>"+batch+"</batch>"+
+						"<status>completed</status>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</production_plan_items>";
+		update_simple(plan_item_xml);
+		
+		///add to inventory
+		var item_created_xml="<inventory_adjust>"+
+							"<id>"+get_new_key()+"</id>"+
+							"<product_name>"+item+"</product_name>"+
+							"<batch>"+batch+"</batch>"+
+							"<quantity>"+quantity+"</quantity>"+
+							"<source>manufacturing</source>"+
+							"<source_id>"+plan_item_id+"</source_id>"+
+							"<storage>"+storage+"</storage>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</inventory_adjust>";
+		create_simple(item_created_xml);
+		
+		///add product instance if not exist
+		if(new_batch_filter.value=='yes')
+		{
+			var instance_xml="<product_instances>"+
+							"<id>"+get_new_key()+"</id>"+
+							"<sale_price>"+price+"</sale_price>"+
+							"<product_name>"+item+"</product_name>"+
+							"<batch exact='yes'>"+batch+"</batch>"+
+							"<manufacture_date>"+get_my_time()+"</manufacture_date>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</product_instances>";
+			create_simple(instance_xml);				
+		}
+		
+		///add area utilization if not exist
+		var storage_data="<area_utilization>" +
+				"<id></id>" +
+				"<name exact='yes'>"+storage+"</name>" +
+				"<item_name exact='yes'>"+item+"</item_name>" +
+				"<batch exact='yes'>"+batch+"</batch>" +
+				"</area_utilization>";
+		fetch_requested_data('',storage_data,function(placements)
+		{
+			if(placements.length===0 && storage!="")
+			{
+				var storage_xml="<area_utilization>" +
+						"<id>"+get_new_key()+"</id>" +
+						"<name>"+storage+"</name>" +
+						"<item_name>"+item+"</item_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</area_utilization>";
+				create_simple(storage_xml);
+			}
+		});		
+		
+		///subtract inventory for raw material		
+		var id=get_new_key();
+		$("#modal141_raw").find('input').each(function()
+		{
+			id++;
+			var item_quantity=$(this).val();
+			var requisite=$(this).attr('name');
+			if(item_quantity!=0)
+			{
+				var item_subtracted_xml="<inventory_adjust>"+
+							"<id>"+id+"</id>"+
+							"<product_name>"+requisite+"</product_name>"+
+							"<batch>"+requisite+"</batch>"+
+							"<quantity>-"+item_quantity+"</quantity>"+
+							"<source>manufacturing</source>"+
+							"<source_id>"+plan_item_id+"</source_id>"+
+							"<storage>"+storage+"</storage>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</inventory_adjust>";
+				create_simple(item_subtracted_xml);
+			}
+		});
+		
+		$("#modal141").dialog("close");
+		
+	});
+		
+	$(cancel_button).on('click',function()
+	{
+		$("#modal141").dialog("close");
+	});
+
+	$("#modal141").dialog("open");
 }

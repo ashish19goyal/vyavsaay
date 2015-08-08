@@ -2703,7 +2703,7 @@ function form91_header_ini()
  */
 function form92_header_ini()
 {
-	console.log('92_header');
+	//console.log('92_header');
 	var filter_fields=document.getElementById('form92_header');
 	var bill_filter=filter_fields.elements[0];
 	var type_filter=filter_fields.elements[1];
@@ -6662,14 +6662,15 @@ function form184_header_ini()
 {
 	var filter_fields=document.getElementById('form184_header');
 	var name_filter=filter_fields.elements[0];
-	var status_filter=filter_fields.elements[1];
+	var type_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
 	
 	var name_data="<business_processes>" +
 			"<name></name>" +
-			"<type exact='yes'>production</type>"+
 			"</business_processes>";
 	
 	set_my_filter(name_data,name_filter);
+	set_static_filter('business_processes','type',type_filter);
 	set_static_filter('business_processes','status',status_filter);
 	
 	$(filter_fields).off('submit');
@@ -6693,6 +6694,31 @@ function form184_header_ini()
  */
 function form185_header_ini()
 {
+	var filter_fields=document.getElementById('form185_header');
+	var task_filter=filter_fields.elements[0];
+	var assignee_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var name_data="<business_processes>" +
+			"<name></name>" +
+			"</business_processes>";
+	
+	set_my_filter(name_data,task_filter);
+	
+	var assignee_data="<staff>"+
+					"<acc_name></acc_name>"+
+					"</staff>";
+	set_my_filter(assignee_data,assignee_filter);
+	
+	set_static_filter('task_instances','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form185_ini();
+	});
+
 	$("#form185_body").parent().hide();
 	$("#form185_nav").hide();
 	$("#form185_calendar").show();
@@ -6750,6 +6776,8 @@ function form186_header_ini()
 
 	plan_filter.value="";
 	$(plan_filter).focus();
+	
+	set_static_value_list('production_plan','status',status_filter);
 	
 	var body_elem=document.getElementById('form186_body');
 	body_elem.addEventListener('table_sort',function(e)
@@ -7213,8 +7241,7 @@ function form200_header_ini()
 	var drs_filter=fields.elements['drs_num'];
 	var employee=fields.elements['employee'];
 	var drs_date=fields.elements['date'];
-	var print_date=fields.elements['pdate'];
-
+	
 	fields.elements['id'].value=get_new_key();
 	
 	var save_button=fields.elements['save'];
@@ -7260,8 +7287,6 @@ function form200_header_ini()
 	
 	$(drs_date).datepicker();
 	drs_date.value=get_my_date();
-	$(print_date).datepicker();
-	print_date.value=get_my_date();
 	$('#form200_share').hide();
 }
 

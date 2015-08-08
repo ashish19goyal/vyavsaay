@@ -141,7 +141,7 @@
 			<t_due index='yes' type="BIGINT"></t_due>
 			<status index='yes' type="VARCHAR(45)"></status><!-- pending/completed/cancelled -->
 			<assignee index='yes' type="TEXT"></assignee>
-			<source index='yes' type="VARCHAR(50)"></source><!--service request/project/project phase/production/testing-->
+			<source index='yes' type="VARCHAR(50)"></source><!--service request/project/project phase/business process-->
 			<source_id index='yes' type="BIGINT"></source_id>
 			<est_expense index='no' type="DECIMAL(12,2)"></est_expense>
 			<expense index='no' type="DECIMAL(12,2)"></expense>
@@ -545,7 +545,7 @@
 			<batch index='yes' type="TEXT"></batch>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<product_name index='yes' type="TEXT"></product_name>
-			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale_return/manual-->
+			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale_return/manual/manufacturing-->
 			<source_id index='yes' type="BIGINT"></source_id>
 			<storage index='yes' type="TEXT"></storage>
 			<last_updated index='yes' type="BIGINT"></last_updated>
@@ -1384,6 +1384,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<plan_id index='yes' type="BIGINT"></plan_id>
 			<item index='yes' type="TEXT"></item>
+			<batch index='yes' type="TEXT"></batch>
 			<order_no index='yes' type="INT"></order_no>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<status index='yes' type='VARCHAR(30)'></status><!--pending/completed/overdue-->
@@ -1448,6 +1449,7 @@
 			<carrier_name index='yes' type="TEXT"></carrier_name>
 			<manifest_type index='yes' type="TEXT"></manifest_type>
 			<dispatch_date index='yes' type="BIGINT"></dispatch_date>
+			<import_date index='yes' type="BIGINT"></import_date>
 			<notes index='no' type="TEXT"></notes>
 			<pickup_location index='no' type="TEXT"></pickup_location>
 			<pickup_by index='yes' type="TEXT"></pickup_by>

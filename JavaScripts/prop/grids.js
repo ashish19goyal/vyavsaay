@@ -641,7 +641,7 @@ function set_grid_item_36()
 {
 	var columns="<logistics_orders>" +
 		"<id></id>" +
-		"<dispatch_date exact='yes'>"+get_raw_time(get_my_date())+"</dispatch_date>"+
+		"<import_date exact='yes'>"+get_raw_time(get_my_date())+"</import_date>"+
 		"</logistics_orders>";
 	get_single_column_data(function(results)
 	{
@@ -658,7 +658,7 @@ function set_grid_item_37()
 	var columns="<logistics_orders>" +
 		"<id></id>" +
 		"<status exact='yes'>undelivered</status>"+
-		"<dispatch_date exact='yes'>"+get_raw_time(get_my_date())+"</dispatch_date>"+
+		"<import_date exact='yes'>"+get_raw_time(get_my_date())+"</import_date>"+
 		"</logistics_orders>";
 	get_single_column_data(function(results)
 	{
@@ -675,7 +675,7 @@ function set_grid_item_38()
 	var columns="<logistics_orders>" +
 		"<id></id>" +
 		"<status exact='yes'>pending</status>"+
-		"<dispatch_date exact='yes'>"+get_raw_time(get_my_date())+"</dispatch_date>"+
+		"<import_date exact='yes'>"+get_raw_time(get_my_date())+"</import_date>"+
 		"</logistics_orders>";
 	get_single_column_data(function(results)
 	{
@@ -692,7 +692,7 @@ function set_grid_item_39()
 	var columns="<logistics_orders>" +
 		"<id></id>" +
 		"<status array='yes'>--pending--undelivered--received--out for delivery--</status>"+
-		"<dispatch_date exact='yes'>"+get_raw_time(get_my_date())+"</dispatch_date>"+
+		"<import_date exact='yes'>"+get_raw_time(get_my_date())+"</import_date>"+
 		"</logistics_orders>";
 	get_single_column_data(function(results)
 	{

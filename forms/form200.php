@@ -4,7 +4,6 @@
 			<label>DRS # <br><input type='text' name='drs_num' required></label>
 			<label>Employee<br><input type='text' name='employee' required></label>
 			<label>DRS Date<br><input type='text' name='date'></label>
-			<label>Print Date<br><input type='text' name='pdate'></label>
 			<label>	<input type='button' title='Save DRS' name='save' class='save_icon'></label>
 			<label>	<input type='button' title='Print DRS' name='print' class='print_icon' onclick='form200_print_form();'></label>
 			<label>	<input type='button' title='Email DRS' name='share' class='share_icon' id='form200_share'></label>

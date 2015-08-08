@@ -10607,6 +10607,9 @@ function form184_add_item()
 				rowsHTML+="<br>Default Assignee: <input type='text' class='dblclick_editable'  form='form184_"+id+"'>";
 				rowsHTML+="<br>Notes: <textarea class='dblclick_editable' form='form184_"+id+"'></textarea>";
 			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Type'>";
+				rowsHTML+="<input type='text' form='form184_"+id+"' required>";
+			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
 				rowsHTML+="<input type='text' form='form184_"+id+"' required value='active'>";
 			rowsHTML+="</td>";
@@ -10623,7 +10626,8 @@ function form184_add_item()
 		var fields=document.getElementById("form184_"+id);
 		var step_filter=fields.elements[1];
 		var assignee_filter=fields.elements[3];
-		var status_filter=fields.elements[5];
+		var type_filter=fields.elements[5];
+		var status_filter=fields.elements[6];
 			
 		var assignee_data="<staff>"+
 							"<acc_name></acc_name>"+
@@ -10631,6 +10635,7 @@ function form184_add_item()
 							"</staff>";
 		set_my_value_list(assignee_data,assignee_filter);
 		
+		set_static_value_list('business_processes','type',type_filter);
 		set_static_value_list('business_processes','status',status_filter);
 		
 		$(fields).on("submit", function(event)

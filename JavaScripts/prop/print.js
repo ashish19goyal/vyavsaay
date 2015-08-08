@@ -1974,7 +1974,7 @@ function print_form200(func)
 	var master_form=document.getElementById(form_id+'_master');
 	var employee_name=master_form.elements['employee'].value;
 	var drs_date=master_form.elements['date'].value;
-	var print_date=master_form.elements['pdate'].value;
+	//var print_date=master_form.elements['pdate'].value;
 	var drs_num=master_form.elements['drs_num'].value;
 	var page_num=1;
 	
@@ -1992,7 +1992,7 @@ function print_form200(func)
 	drs_title.innerHTML="Delivery Run Sheet";
 
 	employee_text="<td>Employee: "+employee_name+"</td><td>Total Items: "+total_items+"</td>";
-	drs_text="<td>DRS #: "+drs_num+"</td><td>DRS Date: "+drs_date+"</td><td>Print Date: "+print_date+"</td>";
+	drs_text="<td>DRS #: "+drs_num+"</td><td>DRS Date: "+drs_date+"</td>";
 	detail_text="<table style='border:none;width:100%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+drs_text+"</tr></table>";
 	
 	detail_section.innerHTML=detail_text;

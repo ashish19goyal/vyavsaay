@@ -6074,7 +6074,7 @@ function form184_delete_item(button)
 			var form=document.getElementById(form_id);
 
 			var name=form.elements[1].value;
-			var data_id=form.elements[6].value;
+			var data_id=form.elements[7].value;
 			var last_updated=get_my_time();
 			var data_xml="<business_processes>" +
 						"<id>"+data_id+"</id>" +
@@ -6118,7 +6118,7 @@ function form185_delete_item(button)
 			var form=document.getElementById(form_id);
 
 			var name=form.elements[0].value;
-			var data_id=form.elements[5].value;
+			var data_id=form.elements[6].value;
 			var last_updated=get_my_time();
 			var data_xml="<task_instances>" +
 						"<id>"+data_id+"</id>" +
@@ -6670,7 +6670,7 @@ function form201_delete_item(button)
 							"</row>";
 				});
 				data_xml+="</logistics_orders>";
-				console.log(data_xml);
+				//console.log(data_xml);
 				if(is_online())
 				{	
 					server_update_batch(data_xml);

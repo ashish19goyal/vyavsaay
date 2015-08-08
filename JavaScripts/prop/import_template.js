@@ -1118,7 +1118,7 @@ function form181_import_template()
 */
 function form184_import_template()
 {
-	var data_array=['id','name','details','time_estimate','default_assignee','order_no','status'];
+	var data_array=['id','name','details','time_estimate','default_assignee','order_no','type','status'];
 	my_array_to_csv(data_array);
 };
 

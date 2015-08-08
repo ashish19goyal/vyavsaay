@@ -9839,8 +9839,9 @@ function form184_update_item(form)
 		var time=form.elements[2].value;
 		var assignee=form.elements[3].value;
 		var details=form.elements[4].value;
-		var status=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var type=form.elements[5].value;
+		var status=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		var data_xml="<business_processes>" +
 					"<id>"+data_id+"</id>" +
@@ -9849,6 +9850,7 @@ function form184_update_item(form)
 					"<details>"+details+"</details>" +
 					"<time_estimate>"+time+"</time_estimate>"+
 					"<default_assignee>"+assignee+"</default_assignee>"+
+					"<type>"+type+"</type>" +
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</business_processes>";
@@ -9861,7 +9863,7 @@ function form184_update_item(form)
 			local_update_simple(data_xml);
 		}	
 		
-		for(var i=0;i<6;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -9890,7 +9892,8 @@ function form186_update_item(form)
 	if(is_update_access('form186'))
 	{
 		var master_form=document.getElementById("form186_master");		
-
+		var plan_id=master_form.elements['plan_id'].value;
+		
 		var order=form.elements[0].value;
 		var item=form.elements[1].value;
 		var quantity=form.elements[2].value;
@@ -10056,12 +10059,12 @@ function form189_update_item(form)
 {
 	if(is_update_access('form189'))
 	{
-		var name=form.elements[1].value;
-		var details=form.elements[2].value;
-		var from=get_raw_time(form.elements[3].value);
-		var to=get_raw_time(form.elements[4].value);
-		var status=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var name=form.elements[0].value;
+		var details=form.elements[1].value;
+		var from=get_raw_time(form.elements[2].value);
+		var to=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<production_plan>" +
@@ -10082,7 +10085,7 @@ function form189_update_item(form)
 			local_update_simple(data_xml);
 		}	
 		
-		for(var i=0;i<6;i++)
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -10525,9 +10528,9 @@ function form198_update_item()
 		var id=form.elements['id'].value;
 		var last_updated=get_my_time();
 		var data_xml="<logistics_orders>" +
-					"<id>"+id+"</id>" +
-					"<awb_num>"+awb_num+"</awb_num>" +
-					"<type>"+type+"</type>"+
+				"<id>"+id+"</id>" +
+				"<awb_num>"+awb_num+"</awb_num>" +
+				"<type>"+type+"</type>"+
                 "<order_num>"+order_num+"</order_num>"+
                 "<manifest_id>"+manifest_id+"</manifest_id>"+
                 "<merchant_name>"+merchant_name+"</merchant_name>"+
@@ -10555,7 +10558,7 @@ function form198_update_item()
                 "<carrier_account>"+c_account+"</carrier_account>"+
                 "<carrier_name>"+c_name+"</carrier_name>"+
                 "<manifest_type>"+manifest_type+"</manifest_type>"+
-                "<dispatch_date>"+get_raw_time(ddate)+"</dispatch_date>"+
+                "<import_date>"+get_raw_time(ddate)+"</import_date>"+
                 "<notes>"+notes+"</notes>"+
                 "<pickup_location>"+pickup_location+"</pickup_location>"+
                 "<pickup_by>"+pickup_by+"</pickup_by>"+
@@ -10568,13 +10571,13 @@ function form198_update_item()
                 "<last_updated>"+last_updated+"</last_updated>" +
 				"</logistics_orders>";
 		var activity_xml="<activity>" +
-					"<data_id>"+id+"</data_id>" +
-					"<tablename>logistics_orders</tablename>" +
-					"<link_to>form198</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>AWB # "+awb_num+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
+				"<data_id>"+id+"</data_id>" +
+				"<tablename>logistics_orders</tablename>" +
+				"<link_to>form198</link_to>" +
+				"<title>Updated</title>" +
+				"<notes>AWB # "+awb_num+"</notes>" +
+				"<updated_by>"+get_name()+"</updated_by>" +
+				"</activity>";
 		if(is_online())
 		{
 			server_update_row(data_xml,activity_xml);

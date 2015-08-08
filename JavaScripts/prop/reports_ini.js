@@ -5598,7 +5598,7 @@ function report76_ini()
 	var orders_data="<logistics_orders count='25' start_index='"+start_index+"'>" +
 		"<id></id>"+
 		"<awb_num>"+awb_filter+"</awb_num>" +
-		"<dispatch_date></dispatch_date>"+
+		"<import_date></import_date>"+
 		"<delivery_person>"+delivery_filter+"</delivery_person>"+
 		"<status>"+status_filter+"</status>"+
 		"</logistics_orders>";
@@ -5617,8 +5617,8 @@ function report76_ini()
 			rowsHTML+="<td data-th='Delivery Person'>";
 				rowsHTML+=item.delivery_person;
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Dispatch Date'>";
-				rowsHTML+=get_my_past_date(item.dispatch_date);
+			rowsHTML+="<td data-th='Date'>";
+				rowsHTML+=get_my_past_date(item.import_date);
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
 				rowsHTML+=item.status;

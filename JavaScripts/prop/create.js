@@ -13633,9 +13633,10 @@ function form184_create_item(form)
 		var time=form.elements[2].value;
 		var assignee=form.elements[3].value;
 		var details=form.elements[4].value;
-		var status=form.elements[5].value;
-		var data_id=form.elements[6].value;
-		var del_button=form.elements[8];
+		var type=form.elements[5].value;
+		var status=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		var del_button=form.elements[9];
 		var last_updated=get_my_time();
 		var data_xml="<business_processes>" +
 					"<id>"+data_id+"</id>" +
@@ -13644,7 +13645,7 @@ function form184_create_item(form)
 					"<details>"+details+"</details>" +
 					"<time_estimate>"+time+"</time_estimate>"+
 					"<default_assignee>"+assignee+"</default_assignee>"+
-					"<type>production</type>"+
+					"<type>"+type+"</type>"+
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</business_processes>";
@@ -13666,7 +13667,7 @@ function form184_create_item(form)
 			local_create_row(data_xml,activity_xml);
 		}
 
-		for(var i=0;i<6;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -13776,7 +13777,7 @@ function form186_create_item(form)
 							"<t_initiated>"+t_initiated+"</t_initiated>" +
 							"<task_hours>"+task_hours+"</task_hours>" +
 							"<status>pending</status>" +
-							"<source>"+step.type+"</source>" +
+							"<source>business process</source>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</row>";
 				t_initiated=t_due;

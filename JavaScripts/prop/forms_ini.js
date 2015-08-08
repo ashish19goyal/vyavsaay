@@ -59,7 +59,7 @@ function form1_ini()
 						rowsHTML+="<input type='hidden' form='form1_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form1_"+result.id+"'>";					
 						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form1_"+result.id+"' onclick='form1_delete_item($(this));'>";
-						rowsHTML+="<input type='button' class='generic_icon' value='Purchase' form='form1_"+result.id+"' onclick=\"modal27_action('"+result.product_name+"');\">";
+						//rowsHTML+="<input type='button' class='generic_icon' value='Purchase' form='form1_"+result.id+"' onclick=\"modal27_action('"+result.product_name+"');\">";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -18862,7 +18862,8 @@ function form184_ini()
 	var filter_fields=document.getElementById('form184_header');
 	
 	var fname=filter_fields.elements[0].value;
-	var fstatus=filter_fields.elements[1].value;
+	var ftype=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form184_index');
@@ -18878,7 +18879,7 @@ function form184_ini()
 			"<order_no></order_no>"+
 			"<default_assignee></default_assignee>"+
 			"<time_estimate></time_estimate>"+
-			"<type exact='yes'>production</type>"+
+			"<type>"+ftype+"</type>"+
 			"<status>"+fstatus+"</status>"+
 			"</business_processes>";
 
@@ -18910,6 +18911,9 @@ function form184_ini()
 						rowsHTML+="<br>Default Assignee: <input type='text' class='dblclick_editable' readonly='readonly' form='form184_"+result.id+"' value='"+result.default_assignee+"'>";
 						rowsHTML+="<br>Notes: <textarea readonly='readonly' class='dblclick_editable' form='form184_"+result.id+"'>"+result.details+"</textarea>";
 					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Type'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form184_"+result.id+"' value='"+result.type+"'>";
+					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form184_"+result.id+"' value='"+result.status+"'>";
 					rowsHTML+="</td>";
@@ -18924,7 +18928,7 @@ function form184_ini()
 
 			var fields=document.getElementById("form184_"+result.id);
 			var assignee_filter=fields.elements[3];
-			var status_filter=fields.elements[5];
+			var status_filter=fields.elements[6];
 			
 			var assignee_data="<staff>"+
 							"<acc_name></acc_name>"+
@@ -18967,7 +18971,7 @@ function form184_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[3];
+		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -19012,7 +19016,7 @@ function form185_ini()
 	        		"<status></status>" +
 	        		"<assignee></assignee>" +
 	        		"<task_hours></task_hours>" +
-	        		"<source exact='yes'>production</source>" +
+	        		"<source exact='yes'>business process</source>" +
 	        		"</task_instances>";
 
 	        if_data_read_access('task_instances',function(accessible_data)
@@ -19088,7 +19092,7 @@ function form185_ini()
 	        });
 	    },
 	    dayClick: function(date,jsEvent,view){
-	    	modal117_action('production',get_my_date_from_iso(date.format()));
+	    	modal117_action(get_my_date_from_iso(date.format()));
 	    },
 	    eventClick: function(calEvent,jsEvent,view){
 	    	modal33_action(calEvent.id);
@@ -19126,6 +19130,13 @@ function form185_ini()
 			}
 		}
 	});
+
+	var filter_fields=document.getElementById('form185_header');
+	
+	var fname=filter_fields.elements[0].value;
+	var fassignee=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
 	
 	////indexing///
 	var index_element=document.getElementById('form185_index');
@@ -19136,14 +19147,14 @@ function form185_ini()
 
 	var columns="<task_instances count='25' start_index='"+start_index+"'>" +
 			"<id></id>" +
-			"<name></name>" +
+			"<name>"+fname+"</name>" +
 			"<description></description>" +
-			"<assignee></assignee>" +
+			"<assignee>"+fassignee+"</assignee>" +
 			"<t_due></t_due>" +
 			"<t_initiated></t_initiated>" +
 			"<task_hours></task_hours>" +
-			"<status></status>" +
-			"<source exact='yes'>production</source>" +
+			"<status>"+fstatus+"</status>" +
+			"<source exact='yes'>business process</source>" +
 			"<last_updated></last_updated>" +
 			"</task_instances>";
 	
@@ -19203,8 +19214,9 @@ function form185_ini()
 							rowsHTML+="<td data-th='Assignee'>";
 								rowsHTML+="<input type='text' readonly='readonly' form='form185_"+result.id+"' class='dblclick_editable' value='"+result.assignee+"'>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Due Time'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form185_"+result.id+"' class='dblclick_editable' value='"+result.t_due+"'>";
+							rowsHTML+="<td data-th='Time'>";
+								rowsHTML+="Start: <input type='text' readonly='readonly' form='form185_"+result.id+"' class='dblclick_editable' value='"+result.t_initiated+"'>";
+								rowsHTML+="<br>Due by: <input type='text' readonly='readonly' form='form185_"+result.id+"' class='dblclick_editable' value='"+result.t_due+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Status'>";
 								rowsHTML+="<input type='text' readonly='readonly' form='form185_"+result.id+"' class='dblclick_editable' value='"+result.status+"'>";
@@ -19228,8 +19240,9 @@ function form185_ini()
 					
 					var name_filter=fields.elements[0];
 					var assignee_filter=fields.elements[2];
-					var due_filter=fields.elements[3];
-					var status_filter=fields.elements[4];
+					var from_filter=fields.elements[3];
+					var due_filter=fields.elements[4];
+					var status_filter=fields.elements[5];
 								
 					var staff_data="<staff>" +
 							"<acc_name></acc_name>" +
@@ -19238,6 +19251,7 @@ function form185_ini()
 					
 					set_static_value_list('task_instances','status',status_filter);
 					$(due_filter).datepicker();
+					$(from_filter).datepicker();
 				}
 			});
 			
@@ -19340,6 +19354,7 @@ function form186_ini()
 			{
 				results.forEach(function(result)
 				{
+					var plan_status=filter_fields.elements[4].value;
 					var rowsHTML="";
 					var id=result.id;
 					rowsHTML+="<tr>";
@@ -19363,7 +19378,12 @@ function form186_ini()
 						rowsHTML+="<td data-th='Action'>";
 							rowsHTML+="<input type='hidden' form='form186_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='save_icon' form='form186_"+id+"' id='save_form186_"+id+"'>";
+						if(result.status!='completed')
 							rowsHTML+="<input type='button' class='delete_icon' form='form186_"+id+"' id='delete_form186_"+id+"' onclick='form186_delete_item($(this));'>";
+						if(plan_status=='approved' && result.status=='pending')
+						{
+							rowsHTML+="<input type='button' class='generic_icon' value='Ready' form='form186_"+id+"' onclick='modal141_action($(this));'>";							
+						}						
 						rowsHTML+="</td>";			
 					rowsHTML+="</tr>";
 				
@@ -20748,6 +20768,7 @@ function form198_ini()
                 "<carrier_name></carrier_name>"+
                 "<manifest_type></manifest_type>"+
                 "<dispatch_date></dispatch_date>"+
+                "<import_date></import_date>"+
                 "<notes></notes>"+
                 "<pickup_location></pickup_location>"+
                 "<pickup_by></pickup_by>"+
@@ -20799,7 +20820,7 @@ function form198_ini()
 				rowsHTML+="<label>Carrier Account: <input type='text' name='c_account'  value='"+result.carrier_account+"'></label>";
 				rowsHTML+="<label>Carrier Name: <input type='text' name='c_name'  value='"+result.carrier_name+"'></label>";
 				rowsHTML+="<label>Manifest Type: <input type='text' name='manifest_type'  value='"+result.manifest_type+"'></label>";
-				rowsHTML+="<label>Dispatch Date: <input type='text' name='ddate'  value='"+get_my_past_date(result.dispatch_date)+"'></label>";
+				rowsHTML+="<label>Import Date: <input type='text' name='ddate'  value='"+get_my_past_date(result.import_date)+"'></label>";
 				rowsHTML+="<label>Notes: <textarea name='notes' >"+result.notes+"</textarea></label>";
 				rowsHTML+="<label>Pickup Location: <input type='text' name='pickup_location'  value='"+result.pickup_location+"'></label>";
 				rowsHTML+="<label>Pickup By: <input type='text' name='pickup_by'  value='"+result.pickup_by+"'></label>";
@@ -21088,7 +21109,7 @@ function form203_ini()
 			"<awb_num>"+fawb+"</awb_num>"+
 			"<merchant_name></merchant_name>" +
 			"<ship_to></ship_to>" +
-			"<dispatch_date>"+fdate+"</dispatch_date>" +
+			"<import_date>"+fdate+"</import_date>" +
 			"<type></type>"+
 			"<manifest_type></manifest_type>"+
 			"<status>"+fstatus+"</status>" +
@@ -21114,7 +21135,7 @@ function form203_ini()
 						rowsHTML+="<br>Ship to:"+ result.ship_to;
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Date'>";
-						rowsHTML+=get_my_past_date(result.dispatch_date);
+						rowsHTML+=get_my_past_date(result.import_date);
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Type'>";
 						rowsHTML+="Type:"+ result.type;

@@ -6495,7 +6495,7 @@ function form184_import(data_array,import_type)
 				"<order_no>"+row.order_no+"</order_no>" +
 				"<name>"+row.name+"</name>" +
 				"<details>"+row.details+"</details>" +
-				"<type>production</type>"+
+				"<type>"+row.type+"</type>"+
 				"<time_estimate>"+row.time_estimate+"</time_estimate>"+
 				"<default_assignee>"+row.default_assignee+"</default_assignee>"+
 				"<status>"+row.status+"</status>" +
@@ -6892,6 +6892,7 @@ function form203_import(data_array,import_type)
                 "<carrier_name>"+row['Carrier Name']+"</carrier_name>"+
                 "<manifest_type>"+row['Manifest Type']+"</manifest_type>"+
                 "<dispatch_date>"+get_raw_time(row['Dispatch Date'])+"</dispatch_date>"+
+                "<import_date>"+get_raw_time(get_my_date())+"</import_date>"+
                 "<notes>"+row['Notes']+"</notes>"+
                 "<pickup_location>"+row['Pickup Location']+"</pickup_location>"+
                 "<pickup_by>"+row['Pickup By']+"</pickup_by>"+

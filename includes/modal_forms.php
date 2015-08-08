@@ -1201,4 +1201,19 @@
 		</form>
 	</div>
 
+	<div id="modal141" title="Product Ready">
+		<form id='modal141_form' autocomplete="off">
+			<fieldset>
+				<label>Quantity: <input type='number' step='any' name='quantity' readonly="readonly"></label><br>
+				<label>Storage: <input type='text' name='storage' required></label><br>
+				<label>Batch: <input type='text' name='batch' required></label><br>
+				<label>Sale Price: <input type='text' name='price' required></label><br>
+				<label id='modal141_raw'></label><br>
+				<input type='hidden' name='new_batch'>
+				<input type="submit" class='modal_submit' name='save' value='Save'>
+				<input type="button" class='modal_submit' name='cancel' value='Cancel'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

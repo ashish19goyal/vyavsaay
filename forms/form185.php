@@ -5,12 +5,14 @@
 		<thead>
 			<tr>
 				<form id='form185_header'></form>
-					<th>Task</th>
+					<th>Task <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form185_header'></th>
 					<th>Details</th>
-					<th>Assignee</th>
-					<th>Due Time</th>
-					<th>Status</th>
-					<th><input type='button' class='add_icon' form='form185_header' title='Add task' onclick="modal117_action('production');">
+					<th>Assignee <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form185_header'></th>
+					<th>Time</th>
+					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form185_header'></th>
+					<th>
+						<input type='button' class='add_icon' form='form185_header' title='Add task' onclick="modal117_action('production');">
+						<input type='submit' form='form185_header' style='visibility: hidden;'>				
 					</th>
 			</tr>
 		</thead>
