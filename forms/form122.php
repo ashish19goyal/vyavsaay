@@ -1,12 +1,13 @@
 <div id='form122' class='function_detail'>
 	<form id='form122_master' autocomplete="off">
 		<fieldset>
+			<label>Order #<br><input type='text' readonly='readonly' name='po_num'></label>
 			<label>Supplier <img src='./images/add_image.png' class='add_image' id='form122_add_supplier'><br>
 			<input type='text' required name='supplier'></label>
-			<label>Order #<br><input type='text' readonly='readonly' name='po_num'></label>
 			<label>Bill #<br><input type='text' name='bill_num' required></label>
-			<label>Bill Date<br><input type='text' name='bill_date' required></label>
+			<br><label>Bill Date<br><input type='text' name='bill_date' required></label>
 			<label>Entry Date<br><input type='text' name='entry_date' required></label>
+			<label>CST: <input type='checkbox' name='cst'></label>
 			<label>Challan Items<br><input readonly='readonly' type='number' name='unbilled'></label>
 			<label>
 				<input type='hidden' name='order_id'>

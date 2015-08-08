@@ -1888,6 +1888,7 @@ function form24_ini()
 				filter_fields.elements['order_id'].value=order_id;
 				filter_fields.elements['mode'].value=order_results[i].payment_mode;
 				//order_results[i].order_num;
+				
 				if(order_results[i].cst=='yes')
 				{
 					filter_fields.elements['cst'].checked=true;
@@ -1907,7 +1908,7 @@ function form24_ini()
 				});
 				
 				var supplier_address_xml="<suppliers>"+
-										"<address></adddress>"+
+										"<address></address>"+
 										"<acc_name exact='yes'>"+order_results[i].supplier+"</acc_name>"+
 										"</suppliers>";
 				set_my_value(supplier_address_xml,filter_fields.elements['address']);
@@ -21320,6 +21321,7 @@ function form214_ini()
 	contact_person_filter.value=get_account_name();
 
 	var attribute_label=document.getElementById('form214_attributes');
+	$(attribute_label).html('');	
 	var attributes_data="<mandatory_attributes>" +
 			"<attribute></attribute>" +
 			"<status></status>" +
