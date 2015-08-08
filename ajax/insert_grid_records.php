@@ -97,6 +97,7 @@ use \DOMDocument;
 				try{
 					$stmt=$conn->conn->prepare($q_string);
 					$stmt->execute($data_array);
+					echo "added grid metric<br>";
 				}catch(PDOException $ex)
 				{
 					echo "Could not setup table $table_name: " .$ex->getMessage() ."</br>";

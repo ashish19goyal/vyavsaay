@@ -70,18 +70,18 @@ class send_sms
 	{
 		$conn=new db_connect('re_user_'.$domain);
 		
-		$create_query="insert into sms (receiver,message,status,type,last_updated) values(?,?,?,?,?)";		
+		$create_query="insert into sms (receiver,message,status,billing_status,type,last_updated) values(?,?,?,?,?,?)";		
 		$create_stmt=$conn->conn->prepare($create_query);
-		$create_stmt->execute(array($to,$message,'pending',$type,1000*time()));		
+		$create_stmt->execute(array($to,$message,'pending','pending',$type,1000*time()));		
 	}
 
 	public function log_sms($domain,$message,$to,$type)
 	{
 		$conn=new db_connect('re_user_'.$domain);
 		
-		$create_query="insert into sms (receiver,message,status,type,last_updated) values(?,?,?,?,?)";		
+		$create_query="insert into sms (receiver,message,status,billing_status,type,last_updated) values(?,?,?,?,?,?)";		
 		$create_stmt=$conn->conn->prepare($create_query);
-		$create_stmt->execute(array($to,$message,'sent',$type,1000*time()));		
+		$create_stmt->execute(array($to,$message,'sent','pending',$type,1000*time()));		
 	}
 	
 	public function send_all_stored_sms()

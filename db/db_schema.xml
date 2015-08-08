@@ -1250,6 +1250,7 @@
 			<receiver index='yes' type="VARCHAR(15)"></receiver>
 			<message index='no' type="TEXT"></message>
 			<status index='yes' type="VARCHAR(25)"></status><!--pending/sent/cancelled-->
+			<billing_status index='yes' type="VARCHAR(25)"></billing_status><!--pending/billed-->
 			<type index='yes' type='VARCHAR(25)'></type><!--transaction/promotion-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

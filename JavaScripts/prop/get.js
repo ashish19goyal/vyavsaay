@@ -882,6 +882,7 @@ function send_sms(to,message,type)
 						"<receiver>"+to+"</receiver>"+
 						"<message>"+htmlentities(message)+"</message>"+
 						"<status>pending</status>"+
+						"<billing_status>pending</billing_status>"+
 						"<type>"+type+"</type>"+
 						"<last_updated>"+get_my_time()+"</last_updated>"+
 						"</sms>";
