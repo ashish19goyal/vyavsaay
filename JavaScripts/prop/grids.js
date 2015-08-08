@@ -743,9 +743,10 @@ function set_grid_item_41()
 		var total_credits=0;
 		results.forEach(function(result)
 		{
-			result.num_sms=Math.round((result.message.length/sms_char_length)+1);
-			result.num_phone=Math.round((result.receiver.length/13)+1);
+			result.num_sms=Math.floor(result.message.length/sms_char_length)+1;
+			result.num_phone=Math.floor(result.receiver.length/13)+1;
 			result.sms_credit=result.num_sms*result.num_phone;
+			
 			total_credits+=result.sms_credit;
 		});
 		document.getElementById('grid_item_41').innerHTML=total_credits;

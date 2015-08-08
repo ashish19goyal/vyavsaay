@@ -347,10 +347,10 @@
 			},
 			{
 				"metric_id":"grid_item_41",
-				"display_name":"unbilled sms credits",
+				"display_name":"Unbilled sms credits",
 				"grid":"offers",
 				"function_name":"set_grid_item_41();",
-				"function_def":"function set_grid_item_41(){var columns=\"<sms><id></id><message></message><receiver></receiver><status exact='yes'>sent</status><billing_status exact='yes'>pending</billing_status></sms>\";fetch_requested_data('',columns,function(results){var sms_char_length=160;var total_credits=0;results.forEach(function(result){result.num_sms=Math.round((result.message.length/sms_char_length)+1);result.num_phone=Math.round((result.receiver.length/13)+1);result.sms_credit=result.num_sms*result.num_phone;total_credits+=result.sms_credit;});document.getElementById('grid_item_41').innerHTML=total_credits;},columns);}",
+				"function_def":"function set_grid_item_41(){var columns=\"<sms><id></id><message></message><receiver></receiver><status exact='yes'>sent</status><billing_status exact='yes'>pending</billing_status></sms>\";fetch_requested_data('',columns,function(results){var sms_char_length=160;var total_credits=0;results.forEach(function(result){result.num_sms=Math.floor(result.message.length/sms_char_length)+1;result.num_phone=Math.floor(result.receiver.length/13)+1;result.sms_credit=result.num_sms*result.num_phone;total_credits+=result.sms_credit;});document.getElementById('grid_item_41').innerHTML=total_credits;},columns);}",
 				"status": "active",
 				"last_updated": 1
 			}
