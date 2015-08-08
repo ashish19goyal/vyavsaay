@@ -8415,7 +8415,7 @@ function form122_create_item(form)
 			create_simple_no_warning(return_xml);
 		}
 				
-		for(var i=0;i<11;i++)
+		for(var i=0;i<12;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -8525,9 +8525,17 @@ function form122_create_form()
 				total_quantity_in_rej+=subform.elements[4].value;
 		});
 
+
 		total=amount+tax;
 		var discount=0;
-		
+		var cst='no';
+		if(form.elements['cst'].checked)
+		{
+			tax+=.02*amount;
+			total+=.02*amount;
+			cst='yes';
+		}
+			
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:</br>Tax: </br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
@@ -8550,6 +8558,7 @@ function form122_create_form()
 					"<discount>"+discount+"</discount>" +
 					"<amount>"+amount+"</amount>" +
 					"<tax>"+tax+"</tax>" +
+					"<cst>"+cst+"</cst>"+
 					"<notes>pending approval</notes>"+
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +

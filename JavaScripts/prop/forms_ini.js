@@ -3013,6 +3013,7 @@ function form43_ini()
 			"<quantity_received></quantity_received>"+
 			"<quantity_accepted></quantity_accepted>"+
 			"<quantity_qc_pending></quantity_qc_pending>"+
+			"<cst></cst>"+
 			"<last_updated></last_updated>" +
 			"</purchase_orders>";
 
@@ -3109,6 +3110,9 @@ function form43_ini()
 					master_form.elements['supplier'].value=result.supplier;
 					master_form.elements['po_num'].value=result.order_num;
 					master_form.elements['order_id'].value=result.id;
+					
+					if(result.cst=='yes')
+						master_form.elements['cst'].checked=true;
 					$(master_form.elements['bill_num']).focus();
 				});
 				
@@ -11168,6 +11172,7 @@ function form122_ini()
 					"<discount></discount>" +
 					"<amount></amount>" +
 					"<tax></tax>" +
+					"<cst></cst>"+
 					"<transaction_id></transaction_id>" +
 					"</supplier_bills>";
 		
@@ -11190,6 +11195,12 @@ function form122_ini()
 				//$(unbilled).parent().hide();
 				//$(unbilled_button).parent().hide();
 				var save_button=filter_fields.elements['save'];
+				
+				filter_fields.elements['cst'].checked=false;
+				if(bill_results[i].cst=='yes')
+				{
+					filter_fields.elements['cst'].checked=true;				
+				}
 				
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)

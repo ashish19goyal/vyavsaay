@@ -4124,12 +4124,14 @@ function form122_header_ini()
 	var entry_date=fields.elements['entry_date'];
 	var unbilled_button=fields.elements['unbilled_button'];
 	var save_button=fields.elements['save'];
+	var cst_filter=fields.elements['cst'];
 	bill_num_filter.value="";
 	order_num_filter.value="";
 	order_id_filter.value="";
 	unbilled_filter.value="";
 	bill_id_filter.value=get_new_key();
 	t_id_filter.value=bill_id_filter.value;
+	cst_filter.checked=false;
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)

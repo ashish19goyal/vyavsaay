@@ -5924,6 +5924,14 @@ function form122_update_form()
 		
 		var discount=0;
 		
+		var cst='no';
+		if(form.elements['cst'].checked)
+		{
+			tax+=.02*amount;
+			total+=.02*amount;
+			cst='yes';
+		}
+		
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:</br>Tax: </br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
@@ -5945,6 +5953,7 @@ function form122_update_form()
 					"<discount>"+discount+"</discount>" +
 					"<amount>"+amount+"</amount>" +
 					"<tax>"+tax+"</tax>" +
+					"<cst>"+cst+"</cst>" +
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</supplier_bills>";

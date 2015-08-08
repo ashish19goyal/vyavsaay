@@ -208,6 +208,7 @@
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<tax_rate index='no' type="DECIMAL(12,2)"></tax_rate>
 			<cartage index='no' type="DECIMAL(12,2)"></cartage>
+			<cst index='yes' type="VARCHAR(10)"></cst><!--yes/no-->
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<transaction_id index='yes' type="BIGINT"></transaction_id>
 			<imported index='yes' type='VARCHAR(25)'></imported><!--yes/no-->

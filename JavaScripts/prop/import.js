@@ -4323,6 +4323,7 @@ function form122_import(data_array,import_type)
 				"<unit_price>"+row.unit_price+"</unit_price>" +
 				"<amount>"+row.amount+"</amount>" +
 				"<tax>"+row.tax+"</tax>" +
+				"<cst>"+row.cst+"</cst>" +
 				"<total>"+row.total+"</total>" +
 				"<qc>"+row.qc+"</qc>" +
 				"<qc_comments>"+row.qc_comments+"</qc_comments>" +
