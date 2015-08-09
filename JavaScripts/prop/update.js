@@ -10960,3 +10960,126 @@ function form220_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Purchase orders
+ * @param button
+ */
+function form223_update_item(form)
+{
+	if(is_update_access('form223'))
+	{
+		var order_num=form.elements[0].value;
+		var supplier_name=form.elements[1].value;
+		var order_date=get_raw_time(form.elements[2].value);
+		var status=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<purchase_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier_name+"</supplier>" +
+					"<order_date>"+order_date+"</order_date>" +
+					"<status>"+status+"</status>" +
+					"<order_num>"+order_num+"</order_num>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</purchase_orders>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>purchase_orders</tablename>" +
+					"<link_to>form223</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Purchase Order # "+order_num+" for supplier "+supplier_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		if(is_online())
+		{
+			server_update_row(data_xml,activity_xml);
+		}
+		else
+		{
+			local_update_row(data_xml,activity_xml);
+		}	
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form New Purchase Order (Aurilion)
+ * @param button
+ */
+function form222_update_form()
+{
+	if(is_update_access('form222'))
+	{
+		var form=document.getElementById("form222_master");
+		
+		var supplier=form.elements['supplier'].value;
+		var order_date=get_raw_time(form.elements['date'].value);		
+		var order_num=form.elements['order_num'].value;
+		var status=form.elements['status'].value;		
+		var data_id=form.elements['order_id'].value;
+		var last_updated=get_my_time();
+		
+
+		var amount=0;
+		var tax=0;
+		var total=0;
+		
+		$("[id^='save_form222']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			
+			if(!isNaN(parseFloat(subform.elements[5].value)))
+			{
+				amount+=parseFloat(subform.elements[5].value);
+				tax+=parseFloat(subform.elements[6].value);
+				total+=parseFloat(subform.elements[7].value);
+			}		
+		});
+		
+		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+								"<td>Amount:<br>Tax: <br>Total: </td>" +
+								"<td>Rs. "+amount+"<br>" +
+								"Rs. "+tax+"<br> " +
+								"Rs. "+total+"</td>" +
+								"<td></td>" +
+								"</tr>";
+						
+		$('#form222_foot').html(total_row);		
+
+		var data_xml="<purchase_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<supplier>"+supplier+"</supplier>" +
+					"<order_date>"+order_date+"</order_date>" +
+					"<status>"+status+"</status>" +
+					"<order_num>"+order_num+"</order_num>" +
+					"<amount>"+amount+"</amount>" +
+					"<tax>"+tax+"</tax>" +
+					"<total>"+total+"</total>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</purchase_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>purchase_orders</tablename>" +
+					"<link_to>form43</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Purchase order # "+order_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		$("[id^='save_form222_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

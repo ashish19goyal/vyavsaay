@@ -1216,4 +1216,18 @@
 		</form>
 	</div>
 
+	<div id="modal142" title="Add new batch">
+		<form id='modal142_form' autocomplete="off">
+			<fieldset>
+				<label>Item: <input type="text" required></label><br>
+				<label>Batch: <input type='text' required></label><br>
+				<label>Expiry: <input type="text"></label><br>
+				<label>MRP: Rs. <input type="number" step='any'></label><br>
+				<label>Cost Price: Rs. <input type="number" step='any'></label><br>
+				<label>Sale Price: Rs. <input type="number" step='any'></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

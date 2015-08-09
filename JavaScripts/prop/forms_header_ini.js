@@ -1,4 +1,4 @@
-	/**
+/**
  * @form Update Inventory
  * @formNo 1
  */
@@ -7458,6 +7458,35 @@ function form206_header_ini()
 }
 
 /**
+ * @form Update Inventory (Aurilion)
+ * @formNo 1
+ */
+function form207_header_ini()
+{
+	var filter_fields=document.getElementById('form207_header');	
+	var names_filter=filter_fields.elements[0];
+	var batches_filter=filter_fields.elements[1];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form207_ini();
+	});
+	//setting autocompletes 
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	var batch_data="<product_instances>" +
+			"<batch></batch>" +
+			"</product_instances>";
+
+	set_my_filter(products_data,names_filter);
+	set_my_filter(batch_data,batches_filter);
+};
+
+/**
  * @form Update Logisitcs Orders
  * @formNo 211
  */
@@ -7709,4 +7738,118 @@ function form221_header_ini()
 	});
 	
 	$(date_filter).datepicker();
+};
+
+/**
+ * @form New Purchase Order (Aurilion)
+ * @formNo 222
+ */
+function form222_header_ini()
+{
+	var fields=document.getElementById('form222_master');
+	
+	var supplier_filter=fields.elements['supplier'];
+	var order_date=fields.elements['date'];
+	var order_num=fields.elements['order_num'];
+	var status_filter=fields.elements['status'];
+	fields.elements['order_id'].value=get_new_key();
+	var save_button=fields.elements['save'];
+	var share_button=fields.elements['share'];	
+	
+	$(share_button).hide();
+	
+	var po_id=$("#form222_link").attr('data_id');
+	if(po_id==null || po_id=='')
+	{
+		var po_num_data="<user_preferences count='1'>"+
+							"<value></value>"+
+							"<name exact='yes'>po_num</name>"+
+							"</user_preferences>";
+		set_my_value(po_num_data,order_num);
+	}
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form222_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form222_add_item();
+	});
+
+	var add_supplier=document.getElementById('form222_add_supplier');
+	$(add_supplier).off('click');
+	$(add_supplier).on('click',function()
+	{
+		modal13_action(function()
+		{
+			var supplier_data="<suppliers>" +
+				"<acc_name></acc_name>" +
+				"</suppliers>";	
+			set_my_value_list(supplier_data,supplier_filter);
+		});
+	});
+
+	var supplier_data="<suppliers>" +
+		"<acc_name></acc_name>" +
+		"</suppliers>";	
+	set_my_value_list(supplier_data,supplier_filter,function () 
+	{
+		$(supplier_filter).focus();
+	});
+	
+	$(order_date).datepicker();
+	order_date.value=get_my_date();
+	set_static_filter('purchase_orders','status',status_filter);
+	status_filter.value='draft';
+	supplier_filter.value='';
+}
+
+/**
+ * @form Manage Purchase Orders (aurilion)
+ * @formNo 223
+ */
+function form223_header_ini()
+{
+	var filter_fields=document.getElementById('form223_header');
+	var order_filter=filter_fields.elements[0];
+	var name_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	$(import_button).off('click');	
+	$(import_button).on('click',function () 
+	{
+		modal140_action();
+	});
+	
+	var order_data="<purchase_orders>" +
+			"<order_num></order_num>" +
+			"</purchase_orders>";
+	var name_data="<suppliers>" +
+			"<acc_name></acc_name>" +
+			"</suppliers>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form223_ini();
+	});
+
+	set_my_filter(order_data,order_filter);
+	set_my_filter(name_data,name_filter);
+	set_static_filter('purchase_orders','status',status_filter);
 };

@@ -1960,7 +1960,7 @@ function form24_ini()
 				$('#form24_share').show();
 				$('#form24_share').click(function()
 				{
-					modal101_action(bt+' - PO# '+order_results[i].order_num,order_results[i].supplier,'supplier',function (func) 
+					modal101_action(bt+' - PO# '+filter_fields.elements['order_num'].value,filter_fields.elements['supplier'].value,'supplier',function (func) 
 					{
 						print_form24(func);
 					});
@@ -21146,6 +21146,132 @@ function form203_ini()
 };
 
 /**
+ * @form Update Inventory (Aurilion)
+ * @formNo 1
+ * @Loading heavy
+ */
+function form207_ini()
+{
+	show_loader();
+	var fid=$("#form207_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form207_header');
+	
+	var fname=filter_fields.elements[0].value;
+	var fbatch=filter_fields.elements[1].value;
+
+	////indexing///
+	var index_element=document.getElementById('form207_index');
+	var prev_element=document.getElementById('form207_prev');
+	var next_element=document.getElementById('form207_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	
+	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
+		"<id>"+fid+"</id>" +
+		"<batch>"+fbatch+"</batch>" +
+		"<product_name>"+fname+"</product_name>" +
+		"<manufacture_date></manufacture_date>"+
+		"<expiry></expiry>" +
+		"<cost_price></cost_price>"+
+		"<sale_price></sale_price>"+
+		"<mrp></mrp>"+		
+		"</product_instances>";
+
+	$('#form207_body').html("");
+	
+	fetch_requested_data('form207',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form207_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form207_"+result.id+"'>"+result.product_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Batch'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form207_"+result.id+"' value='"+result.batch+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Expiry'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form207_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.expiry)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Pricing'>";
+						rowsHTML+="MRP: <input type='number' step='any' readonly='readonly' form='form207_"+result.id+"' class='dblclick_editable' value='"+result.mrp+"'>";
+						rowsHTML+="</br>SP: <input type='number' step='any' readonly='readonly' form='form207_"+result.id+"' value='"+result.sale_price+"' class='dblclick_editable'>";
+						rowsHTML+="</br>CP: <input type='number' step='any' readonly='readonly' form='form207_"+result.id+"' value='"+result.cost_price+"' class='dblclick_editable' >";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+="Fresh: <input type='number' step='any' readonly='readonly' form='form207_"+result.id+"' value=''>";
+						rowsHTML+="</br>In use: <input type='number' step='any' readonly='readonly' form='form207_"+result.id+"' value=''>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form207_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form207_"+result.id+"'>";					
+						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form207_"+result.id+"' onclick='form207_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form207_body').append(rowsHTML);
+			var fields=document.getElementById("form207_"+result.id);
+			var expiry=fields.elements[2];
+			var fresh_inventory=fields.elements[6];
+			var inuse_inventory=fields.elements[7];
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form207_update_item(fields);
+			});
+			
+			$(expiry).datepicker();
+			
+			get_inventory(result.product_name,result.batch,function(inventory)
+			{
+				fresh_inventory.value=inventory;
+				inuse_inventory.value=0;
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'inventory');
+		});
+		hide_loader();
+	});
+};
+
+/**
  * @form Sale Leads (followup)
  * @formNo 213
  * @Loading light
@@ -21863,3 +21989,240 @@ function form221_ini()
 	});
 }
 
+/**
+ * @form New Purchase order
+ * @formNo 222
+ * @Loading light
+ */
+function form222_ini()
+{
+	var order_id=$("#form222_link").attr('data_id');
+	if(order_id==null)
+		order_id="";	
+	
+	$('#form222_body').html("");
+	$('#form222_foot').html("");
+	
+	if(order_id!="")
+	{
+		show_loader();
+		var order_columns="<purchase_orders>" +
+				"<id>"+order_id+"</id>" +
+				"<order_num></order_num>"+
+				"<supplier></supplier>" +
+				"<order_date></order_date>" +
+				"<status></status>" +
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+
+				"</purchase_orders>";
+		var order_items_column="<purchase_order_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<item_desc></item_desc>" +
+				"<quantity></quantity>" +
+				"<order_id exact='yes'>"+order_id+"</order_id>" +
+				"<make></make>" +
+				"<mrp></mrp>"+
+				"<price></price>" +
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+				
+				"</purchase_order_items>";
+	
+		////separate fetch function to get order details like customer name, total etc.
+		fetch_requested_data('',order_columns,function(order_results)
+		{
+			var filter_fields=document.getElementById('form222_master');
+			
+			if(order_results.length>0)
+			{
+				filter_fields.elements['supplier'].value=order_results[0].supplier;
+				filter_fields.elements['date'].value=get_my_past_date(order_results[0].order_date);
+				filter_fields.elements['order_num'].value=order_results[0].order_num;
+				filter_fields.elements['status'].value=order_results[0].status;
+				filter_fields.elements['order_id'].value=order_id;
+				var save_button=filter_fields.elements['save'];
+				
+				$(save_button).off('click');
+				$(save_button).on("click", function(event)
+				{
+					event.preventDefault();
+					form222_update_form();
+				});
+				
+				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+							"<td>Amount:<br>Tax: <br>Total: </td>" +
+							"<td>Rs. "+order_results[0].amount+"<br>" +
+							"Rs. "+order_results[0].tax+"<br> " +
+							"Rs. "+order_results[0].total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+					
+				$('#form222_foot').html(total_row);
+			}
+		
+			fetch_requested_data('',order_items_column,function(results)
+			{
+				results.forEach(function(result)
+				{
+					var rowsHTML="";
+					var id=result.id;
+					rowsHTML+="<tr>";
+					rowsHTML+="<form id='form222_"+id+"'></form>";
+						rowsHTML+="<td data-th='Item Name'>";
+							rowsHTML+="<input readonly='readonly' type='text' required form='form222_"+id+"' value='"+result.item_name+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' readonly='readonly' required form='form222_"+id+"' value='"+result.quantity+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Make'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form222_"+id+"' value='"+result.make+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Price'>";
+							rowsHTML+="MRP: <input type='number' readonly='readonly' required form='form222_"+id+"' value='"+result.mrp+"' step='any'>";
+							rowsHTML+="<br>Price: <input type='number' readonly='readonly' required form='form222_"+id+"' value='"+result.price+"' step='any'>";
+							rowsHTML+="<br>Amount: <input type='number' readonly='readonly' required form='form222_"+id+"' value='"+result.amount+"' step='any'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' readonly='readonly' form='form222_"+id+"' value='"+result.tax+"'>";
+							rowsHTML+="<input type='hidden' readonly='readonly' form='form222_"+id+"' value='"+result.total+"'>";
+							rowsHTML+="<input type='hidden' form='form222_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form222_"+id+"' id='save_form222_"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form222_"+id+"' id='delete_form222_"+id+"' onclick='form222_delete_item($(this)); form222_get_totals();'>";
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+				
+					$('#form222_body').append(rowsHTML);
+				});
+				var bt=get_session_var('title');
+				$('#form222_share').show();
+				$('#form222_share').click(function()
+				{
+					modal101_action(bt+' - PO# '+filter_fields.elements['order_num'].value,filter_fields.elements['supplier'].value,'supplier',function (func) 
+					{
+						print_form222(func);
+					});
+				});
+				
+				hide_loader();
+			});
+		});
+	}
+}
+
+/**
+ * @form Manage Purchase orders (Aurilion)
+ * @formNo 223
+ * @Loading light
+ */
+function form223_ini()
+{
+	show_loader();
+	var fid=$("#form223_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form223_header');
+	
+	//populating form 
+	var fnum=filter_fields.elements[0].value;
+	var fname=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form223_index');
+	var prev_element=document.getElementById('form223_prev');
+	var next_element=document.getElementById('form223_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<purchase_orders count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<order_num>"+fnum+"</order_num>"+
+			"<supplier>"+fname+"</supplier>" +
+			"<order_date></order_date>" +
+			"<status>"+fstatus+"</status>" +
+			"<bill_id></bill_id>"+
+			"<last_updated></last_updated>" +
+			"</purchase_orders>";
+
+	$('#form223_body').html("");
+
+	fetch_requested_data('form223',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form223_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Order #'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form223_"+result.id+"' value='"+result.order_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Supplier'>";
+						rowsHTML+="<textarea readonly='readonly' form='form223_"+result.id+"'>"+result.supplier+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Order Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form223_"+result.id+"' value='"+get_my_past_date(result.order_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form223_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form223_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='button' class='edit_icon' form='form223_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form222');\">";
+						rowsHTML+="<input type='submit' class='save_icon' form='form223_"+result.id+"' title='Save order'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form223_"+result.id+"' title='Delete order' onclick='form223_delete_item($(this));'>";
+					
+					rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+
+			$('#form223_body').append(rowsHTML);
+			var fields=document.getElementById("form223_"+result.id);
+			var status_filter=fields.elements[3];
+
+			set_static_value_list('purchase_orders','status',status_filter);
+
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form223_update_item(fields);
+			});			
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'purchase_orders');
+		});
+		hide_loader();
+	});
+};

@@ -9982,3 +9982,110 @@ function modal141_action(button)
 
 	$("#modal141").dialog("open");
 }
+
+/**
+ * @modalNo 142
+ * @modal Add new batch (Aurilion)
+ */
+function modal142_action(func)
+{
+	var form=document.getElementById('modal142_form');
+	
+	var fname=form.elements[1];
+	var fbatch=form.elements[2];
+	var fexpiry=form.elements[3];
+	var fmrp=form.elements[4];
+	
+	$(fexpiry).datepicker();
+	
+	var name_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	set_my_value_list(name_data,fname);
+
+	if(typeof product_name!='undefined')
+	{
+		fname.value=product_name;
+		var batch_data="<product_instances>" +
+				"<batch></batch>" +
+				"<product_name exact='yes'>"+fname.value+"</product_name>" +
+				"</product_instances>";
+		get_single_column_data(function(batches)
+		{
+			$(fbatch).off('blur');
+			$(fbatch).on('blur',function(event)
+			{
+				var found = $.inArray($(this).val(), batches) > -1;
+				if(found)
+				{
+		            $(this).val('');
+		        }
+			});
+		},batch_data);
+	}
+		
+	$(fname).off('blur');
+	$(fname).on('blur',function(event)
+	{
+		var batch_data="<product_instances>" +
+				"<batch></batch>" +
+				"<product_name exact='yes'>"+fname.value+"</product_name>" +
+				"</product_instances>";
+		get_single_column_data(function(batches)
+		{
+			$(fbatch).off('blur');
+			$(fbatch).on('blur',function(event)
+			{
+				var found = $.inArray($(this).val(), batches) > -1;
+				if(found)
+				{
+		            $(this).val('');
+		        }
+			});
+		},batch_data);
+	});		
+		
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form1'))
+		{
+			var name=fname.value;
+			var batch=fbatch.value;
+			var expiry=get_raw_time(fexpiry.value);
+			var mrp=fmrp.value;
+			var cp=fcp.value;
+			var sp=fsp.value;
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			var data_xml="<product_instances>" +
+						"<id>"+data_id+"</id>" +
+						"<product_name>"+name+"</product_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<expiry>"+expiry+"</expiry>" +
+						"<mrp>"+mrp+"</mrp>" +
+						"<cost_price>"+cp+"</cost_price>" +
+						"<sale_price>"+sp+"</sale_price>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</product_instances>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>product_instances</tablename>" +
+						"<link_to>form1</link_to>" +
+						"<title>Added</title>" +
+						"<notes>New batch "+batch+" for item "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			create_row_func(data_xml,activity_xml,func);
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal142").dialog("close");
+	});
+	
+	$("#modal142").dialog("open");
+}

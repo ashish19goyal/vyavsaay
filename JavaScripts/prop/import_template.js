@@ -1233,3 +1233,25 @@ function form221_import_template()
 	var data_array=['id','acc_name','project','date','hours_worked'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form create Purchase Order
+* @formNo 222
+* @table purchase_order_items
+*/
+function form222_import_template()
+{
+	var data_array=['id','order_id','item_name','quantity','make','mrp','price','amount','tax','total'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form manage purchase order (Aurilion)
+* @formNo 223
+* @table purchase_orders
+*/
+function form223_import_template()
+{
+	var data_array=['id','order_num','order_date','supplier','status','amount','tax','total'];
+	my_array_to_csv(data_array);
+};
