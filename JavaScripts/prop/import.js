@@ -836,16 +836,13 @@ function form21_import(data_array,import_type)
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
-				"<p_quantity>"+row.p_quantity+"</p_quantity>" +
-				"<f_quantity>"+row.f_quantity+"</f_quantity>" +
 				"<quantity>"+row.quantity+"</quantity>" +
-				"<batch>"+row.batch+"</batch>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<unit_price>"+row.unit_price+"</unit_price>" +
 				"<amount>"+row.amount+"</amount>" +
 				"<tax>"+row.tax+"</tax>" +
 				"<total>"+row.total+"</total>" +
-				"<storage>"+row.storage+"</storage>" +
+				"<discount>"+row.discount+"</discount>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});

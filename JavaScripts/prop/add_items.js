@@ -913,7 +913,7 @@ function form21_add_item()
 			rowsHTML+="<td data-th='Amount'>";
 				rowsHTML+="Amount: <input type='number' required readonly='readonly' form='form21_"+id+"' step='any'>";
 				rowsHTML+="<br>Discount: <input type='number' form='form21_"+id+"' value='' step='any'>";
-				rowsHTML+="</br>Tax: <input type='number' readonly='readonly' form='form21_"+id+"' value='' step='any'>";
+				rowsHTML+="</br>Tax: <input type='number' class='dblclick_editable' readonly='readonly' form='form21_"+id+"' value='' step='any'>";
 				rowsHTML+="</br>Total: <input type='number' readonly='readonly' form='form21_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
@@ -956,6 +956,30 @@ function form21_add_item()
 				"</product_master>";
 		set_my_value_list_func(product_data,name_filter); 
 		
+		$(barcode_filter).focus();
+		
+		$(barcode_filter).on('blur',function()
+		{
+			var item_data="<product_master>"+
+						"<name></name>"+
+						"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
+						"</product_master>";
+			set_my_value(item_data,name_filter,function () 
+			{
+				$(name_filter).trigger('blur');
+			});
+			$(quantity_filter).focus();
+		});
+		
+		$(barcode_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();			
+				$(barcode_filter).trigger('blur');
+			}
+		});
+
 		var add_product=document.getElementById('form21_add_product_'+id);
 		$(add_product).on('click',function()
 		{
@@ -991,12 +1015,12 @@ function form21_add_item()
 		
 		$(price_filter).add(quantity_filter).add(tax_filter).add(discount_filter).on('blur',function(event)
 		{
-			var amount=parseFloat(total_filter.value)-parseFloat(tax_filter.value);
-			amount_filter.value=amount;
-			var price=parseFloat(amount_filter.value)/parseFloat(pquantity_filter.value);
-			price_filter.value=Math.round(price*100)/100;
-			
+			amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			tax_filter.value=parseFloat((parseFloat(tax_rate_filter.value)*(parseFloat(amount_filter.value)-parseFloat(discount_filter.value)))/100);
+			total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
 		});
+		
+		longPressEditable($('.dblclick_editable'));
 	}
 	else
 	{
@@ -2280,12 +2304,12 @@ function form72_add_product()
 			form72_add_product();
 		});
 		
-		$(barcode_filter).focus();
-		
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
 		set_my_value_list_func(product_data,name_filter); 
+		
+		$(barcode_filter).focus();
 		
 		$(barcode_filter).on('blur',function()
 		{

@@ -656,12 +656,12 @@ function form21_delete_item(button)
 	{
 		modal115_action(function()
 		{
-			var bill_id=document.getElementById("form21_master").elements[6].value;
+			var bill_id=document.getElementById("form21_master").elements['bill_id'].value;
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[10].value;
+			var data_id=form.elements[8].value;
 			var last_updated=get_my_time();
 			
 			var data_xml="<supplier_bill_items>" +

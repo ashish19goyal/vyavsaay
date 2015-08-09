@@ -7,7 +7,7 @@
 			<label>Bill Date<br><input type='text' name='date' required></label>
 			<label>Entry Date<br><input type='text' name='edate' required></label>
 			<label>
-				<input type='hidden' value='bill_id'>
+				<input type='hidden' name='bill_id'>
 				<input type='hidden' name='t_id'>
 			</label>
 			<label>	<input type='button' title='Save Bill' name='save' class='save_icon'></label>

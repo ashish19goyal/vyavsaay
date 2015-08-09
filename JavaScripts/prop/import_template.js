@@ -133,8 +133,8 @@ function form19_import_template()
 */
 function form21_import_template()
 {
-	var data_array=['id','p_quantity','f_quantity','quantity','product_name','batch',
-	               'bill_id','unit_price','amount','tax','total','storage'];
+	var data_array=['id','quantity','product_name',
+	               'bill_id','unit_price','amount','tax','total','discount'];
 	my_array_to_csv(data_array);
 };
 

@@ -1519,86 +1519,45 @@ function form21_create_item(form)
 	if(is_create_access('form21'))
 	{
 		var bill_id=document.getElementById("form21_master").elements[6].value;
-		var name=form.elements[0].value;
-		var pquantity=form.elements[1].value;
-		var fquantity=form.elements[2].value;
-		var quantity=parseFloat(pquantity)+parseFloat(fquantity);
-		var total=form.elements[3].value;
-		var tax=form.elements[4].value;
-		var amount=form.elements[5].value;
-		var price=form.elements[6].value;
-		var batch=form.elements[8].value;
-		var storage=form.elements[9].value;
-		var data_id=form.elements[10].value;
+		var name=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		var price=form.elements[3].value;
+		var amount=form.elements[4].value;
+		var discount=form.elements[5].value;
+		var tax=form.elements[6].value;
+		var total=form.elements[7].value;
+		var data_id=form.elements[8].value;
+		var save_button=form.elements[9];
+		var del_button=form.elements[10];
+		
 		var last_updated=get_my_time();
 
 		var data_xml="<supplier_bill_items>" +
 				"<id>"+data_id+"</id>" +
 				"<product_name>"+name+"</product_name>" +
-				"<batch>"+batch+"</batch>" +
 				"<quantity>"+quantity+"</quantity>" +
-				"<p_quantity>"+pquantity+"</p_quantity>" +
-				"<f_quantity>"+fquantity+"</f_quantity>" +
 				"<total>"+total+"</total>" +
 				"<tax>"+tax+"</tax>" +
 				"<amount>"+amount+"</amount>" +
+				"<discount>"+discount+"</discount>" +
 				"<unit_price>"+price+"</unit_price>" +
 				"<bill_id>"+bill_id+"</bill_id>" +
-				"<storage>"+storage+"</storage>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</supplier_bill_items>";	
 	
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}
-				
+		create_simple(data_xml);
+			
 		for(var i=0;i<10;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		var del_button=form.elements[12];
 		del_button.removeAttribute("onclick");
 		$(del_button).on('click',function(event)
 		{
 			form21_delete_item(del_button);
 		});
 
-		var save_button=form.elements[11];
 		$(save_button).off('click');
-		
-		///////////adding store placement////////
-		var storage_data="<area_utilization>" +
-				"<id></id>" +
-				"<name exact='yes'>"+storage+"</name>" +
-				"<item_name exact='yes'>"+name+"</item_name>" +
-				"<batch exact='yes'>"+batch+"</batch>" +
-				"</area_utilization>";
-		fetch_requested_data('',storage_data,function(placements)
-		{
-			if(placements.length===0 && storage!="")
-			{
-				var storage_xml="<area_utilization>" +
-						"<id>"+get_new_key()+"</id>" +
-						"<name>"+storage+"</name>" +
-						"<item_name>"+name+"</item_name>" +
-						"<batch>"+batch+"</batch>" +
-						"<last_updated>"+get_my_time()+"</last_updated>" +
-						"</area_utilization>";
-				if(is_online())
-				{
-					server_create_simple(storage_xml);
-				}
-				else
-				{
-					local_create_simple(storage_xml);
-				}
-			}
-		});
 	}
 	else
 	{
@@ -1617,27 +1576,30 @@ function form21_create_form()
 	{
 		var form=document.getElementById("form21_master");
 		
-		var supplier=form.elements[1].value;
-		var bill_id=form.elements[2].value;
-		var bill_date=get_raw_time(form.elements[3].value);
-		var entry_date=get_raw_time(form.elements[4].value);
+		var supplier=form.elements['supplier'].value;
+		var bill_id=form.elements['bill_num'].value;
+		var bill_date=get_raw_time(form.elements['date'].value);
+		var entry_date=get_raw_time(form.elements['edate'].value);
+		var data_id=form.elements['bill_id'].value;
+		var transaction_id=form.elements['t_id'].value;
+		var save_button=form.elements['save'];
 		
 		var total=0;
 		var tax=0;
+		var discount=0;
 		var amount=0;
 		
 		$("[id^='save_form21']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			total+=parseFloat(subform.elements[3].value);
-			tax+=parseFloat(subform.elements[4].value);
-			amount+=parseFloat(subform.elements[5].value);
+			amount+=parseFloat(subform.elements[4].value);
+			discount+=parseFloat(subform.elements[5].value);
+			tax+=parseFloat(subform.elements[6].value);
+			total+=parseFloat(subform.elements[7].value);
 		});
 
-		var discount=0;
-		
-		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"Rs. "+discount+"</br>" +
@@ -1647,9 +1609,6 @@ function form21_create_form()
 				"</tr>";
 		$('#form21_foot').html(total_row);
 
-		var notes=form.elements[5].value;
-		var data_id=form.elements[6].value;
-		var transaction_id=form.elements[7].value;
 		var last_updated=get_my_time();
 		
 		var data_xml="<supplier_bills>" +
@@ -1663,7 +1622,6 @@ function form21_create_form()
 					"<amount>"+amount+"</amount>" +
 					"<tax>"+tax+"</tax>" +
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
-					"<notes>"+notes+"</notes>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</supplier_bills>";
 		var activity_xml="<activity>" +
@@ -1671,7 +1629,7 @@ function form21_create_form()
 					"<tablename>supplier_bills</tablename>" +
 					"<link_to>form53</link_to>" +
 					"<title>Saved</title>" +
-					"<notes>Supplier Bill no "+bill_id+"</notes>" +
+					"<notes>Purchase Bill no "+bill_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var transaction_xml="<transactions>" +
@@ -1707,28 +1665,14 @@ function form21_create_form()
 					"<tax>0</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		if(is_online())
+		create_row(data_xml,activity_xml);
+		create_simple(transaction_xml);
+		create_simple(pt_xml);
+		create_simple_func(payment_xml,function()
 		{
-			server_create_row(data_xml,activity_xml);
-			server_create_simple(transaction_xml);
-			server_create_simple(pt_xml);
-			server_create_simple_func(payment_xml,function()
-			{
-				modal28_action(pt_tran_id);
-			});
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-			local_create_simple(transaction_xml);
-			local_create_simple(pt_xml);
-			local_create_simple_func(payment_xml,function()
-			{
-				modal28_action(pt_tran_id);
-			});
-		}
-
-		var save_button=form.elements[8];
+			modal28_action(pt_tran_id);
+		});
+		
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
 		{

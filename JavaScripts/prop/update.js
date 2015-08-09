@@ -1377,30 +1377,30 @@ function form21_update_form()
 {
 	if(is_update_access('form21'))
 	{
-		var form=document.getElementById("form21_master");
-		
-		var supplier=form.elements[1].value;
-		var bill_id=form.elements[2].value;
-		var bill_date=get_raw_time(form.elements[3].value);
-		var entry_date=get_raw_time(form.elements[4].value);
+		var supplier=form.elements['supplier'].value;
+		var bill_id=form.elements['bill_num'].value;
+		var bill_date=get_raw_time(form.elements['date'].value);
+		var entry_date=get_raw_time(form.elements['edate'].value);
+		var data_id=form.elements['bill_id'].value;
+		var transaction_id=form.elements['t_id'].value;
+		var save_button=form.elements['save'];
 		
 		var total=0;
 		var tax=0;
+		var discount=0;
 		var amount=0;
 		
 		$("[id^='save_form21']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			total+=parseFloat(subform.elements[3].value);
-			tax+=parseFloat(subform.elements[4].value);
-			amount+=parseFloat(subform.elements[5].value);
+			amount+=parseFloat(subform.elements[4].value);
+			discount+=parseFloat(subform.elements[5].value);
+			tax+=parseFloat(subform.elements[6].value);
+			total+=parseFloat(subform.elements[7].value);
 		});
 
-		var discount=0;
-		total=total-discount;
-		
-		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
 				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"Rs. "+discount+"</br>" +
@@ -1409,12 +1409,9 @@ function form21_update_form()
 				"<td></td>" +
 				"</tr>";
 		$('#form21_foot').html(total_row);
-
-		var notes=form.elements[5].value;
-		var data_id=form.elements[6].value;
-		var transaction_id=form.elements[7].value;
+		
 		var last_updated=get_my_time();
-								
+						
 		var data_xml="<supplier_bills>" +
 					"<id>"+data_id+"</id>" +
 					"<bill_id>"+bill_id+"</bill_id>" +
@@ -1426,7 +1423,6 @@ function form21_update_form()
 					"<amount>"+amount+"</amount>" +
 					"<tax>"+tax+"</tax>" +
 					"<transaction_id>"+transaction_id+"</transaction_id>" +
-					"<notes>"+notes+"</notes>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</supplier_bills>";
 		var activity_xml="<activity>" +
@@ -1434,7 +1430,7 @@ function form21_update_form()
 					"<tablename>supplier_bills</tablename>" +
 					"<link_to>form53</link_to>" +
 					"<title>Updated</title>" +
-					"<notes>Supplier Bill no "+data_id+"</notes>" +
+					"<notes>Purchase Bill no "+data_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		var transaction_xml="<transactions>" +
@@ -1446,16 +1442,8 @@ function form21_update_form()
 					"<tax>"+(-tax)+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-			server_update_simple(transaction_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-			local_update_simple(transaction_xml);
-		}
+		update_row(data_xml,activity_xml);
+		update_simple(transaction_xml);
 		
 		var payment_data="<payments>" +
 				"<id></id>" +
@@ -1482,20 +1470,10 @@ function form21_update_form()
 							"<tax>0</tax>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</transactions>";
-				if(is_online())
+				update_simple_func(payment_xml,function()
 				{
-					server_update_simple_func(payment_xml,function()
-					{
-						modal28_action(payments[y]);
-					});
-				}
-				else
-				{
-					local_update_simple_func(payment_xml,function()
-					{
-						modal28_action(payments[y]);
-					});
-				}
+					modal28_action(payments[y]);
+				});
 				break;
 			}
 		},payment_data);
