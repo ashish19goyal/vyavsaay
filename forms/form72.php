@@ -20,6 +20,7 @@
 			<tr>
 				<form id='form72_header'></form>
 					<th>Item</th>
+					<th>Batch</th>
 					<th>Quantity</th>
 					<th>Rate</th>
 					<th>Amount</th>

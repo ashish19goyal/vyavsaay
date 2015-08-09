@@ -142,7 +142,7 @@
 				<label>Picture: <output></output>
 								<input type="file"></label><br>
 				<label>Tax (%): <input type="number" step='any'></label><br>
-				<label>Bar Code: <input type="text" required></label>
+				<label>Bar Code: <input type="text"></label>
 				<label><input type='checkbox'>Auto generate</label><br>
 				<label id='modal14_attributes'></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
@@ -1230,4 +1230,27 @@
 		</form>
 	</div>
 
+	<div id="modal143" title="Update Inventory">
+		<form id='modal143_form' autocomplete="off">
+			<fieldset>
+				<label>Item: <input type="text" required readonly="readonly"></label><br>
+				<label>Batch: <input type="text" required readonly="readonly"></label><br>
+				<label>Fresh: <input type='number' step='any' required></label><br>
+				<label>In-Use: <input type="number" step='any' required></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal144" title="Add document">
+		<form id='modal144_form' autocomplete="off">
+			<fieldset>
+				<label>Document Name: <input type="text"></label><br>
+				<label>File: <a id='modal144_url'>link</a>
+						<input type="file"></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+	
 </div>

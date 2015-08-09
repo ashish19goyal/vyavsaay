@@ -133,8 +133,7 @@ function form19_import_template()
 */
 function form21_import_template()
 {
-	var data_array=['id','quantity','product_name',
-	               'bill_id','unit_price','amount','tax','total','discount'];
+	var data_array=['id','quantity','product_name','batch','bill_id','unit_price','amount','tax','total','discount'];
 	my_array_to_csv(data_array);
 };
 
@@ -385,8 +384,7 @@ function form71_import_template()
 */
 function form72_import_template()
 {
-	var data_array=['id','bill_id','item_name','quantity','unit_price','amount',
-	                'total','discount','tax'];
+	var data_array=['id','bill_id','item_name','batch','quantity','unit_price','amount','total','discount','tax'];
 	my_array_to_csv(data_array);
 };
 
@@ -1189,6 +1187,16 @@ function form201_import_template()
 function form203_import_template()
 {
 	var data_array=['id','AWB No.','Type','Order No.','Manifest ID','Merchant Name','Ship To','Address1','Address2','City','State','Pincode','Mobile number','Tel. Number','Prod/SKU code','Product name','Weight','Declared Value','Collectable Value','Vendor Code','Shipper Name','Return Address1','Return Address2','Return Address3','Return Pin','Length ( Cms )','Breadth ( Cms )','Height ( Cms )','Pieces','Carrier Account','Carrier Name','Manifest Type','Dispatch Date','Notes','Pickup Location','Pickup By'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Update Inventory (aurilion)
+* @formNo 207
+*/
+function form207_import_template()
+{
+	var data_array=['id','product_name','batch','expiry','sale_price','cost_price','mrp','actual_quantity'];
 	my_array_to_csv(data_array);
 };
 

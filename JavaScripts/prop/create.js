@@ -1510,7 +1510,7 @@ function form19_create_form()
 
 
 /**
- * @form New Purchase Bill
+ * @form New Purchase Bill (aurilion)
  * @formNo 21
  * @param button
  */
@@ -1520,21 +1520,23 @@ function form21_create_item(form)
 	{
 		var bill_id=document.getElementById("form21_master").elements[6].value;
 		var name=form.elements[1].value;
-		var quantity=form.elements[2].value;
-		var price=form.elements[3].value;
-		var amount=form.elements[4].value;
-		var discount=form.elements[5].value;
-		var tax=form.elements[6].value;
-		var total=form.elements[7].value;
-		var data_id=form.elements[8].value;
-		var save_button=form.elements[9];
-		var del_button=form.elements[10];
+		var batch=form.elements[2].value;
+		var quantity=form.elements[3].value;
+		var price=form.elements[4].value;
+		var amount=form.elements[5].value;
+		var discount=form.elements[6].value;
+		var tax=form.elements[7].value;
+		var total=form.elements[8].value;
+		var data_id=form.elements[9].value;
+		var save_button=form.elements[10];
+		var del_button=form.elements[11];
 		
 		var last_updated=get_my_time();
 
 		var data_xml="<supplier_bill_items>" +
 				"<id>"+data_id+"</id>" +
 				"<product_name>"+name+"</product_name>" +
+				"<batch>"+batch+"</batch>" +
 				"<quantity>"+quantity+"</quantity>" +
 				"<total>"+total+"</total>" +
 				"<tax>"+tax+"</tax>" +
@@ -1547,7 +1549,7 @@ function form21_create_item(form)
 	
 		create_simple(data_xml);
 			
-		for(var i=0;i<10;i++)
+		for(var i=0;i<9;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -1593,10 +1595,10 @@ function form21_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			amount+=parseFloat(subform.elements[4].value);
-			discount+=parseFloat(subform.elements[5].value);
-			tax+=parseFloat(subform.elements[6].value);
-			total+=parseFloat(subform.elements[7].value);
+			amount+=parseFloat(subform.elements[5].value);
+			discount+=parseFloat(subform.elements[6].value);
+			tax+=parseFloat(subform.elements[7].value);
+			total+=parseFloat(subform.elements[8].value);
 		});
 
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
@@ -3421,20 +3423,22 @@ function form72_create_item(form)
 	{
 		var bill_id=document.getElementById("form72_master").elements['bill_id'].value;
 		var name=form.elements[1].value;
-		var quantity=form.elements[2].value;
-		var price=form.elements[3].value;
-		var amount=form.elements[4].value;
-		var discount=form.elements[5].value;
-		var tax=form.elements[6].value;
-		var total=form.elements[7].value;
-		var data_id=form.elements[8].value;
+		var batch=form.elements[2].value;
+		var quantity=form.elements[3].value;
+		var price=form.elements[4].value;
+		var amount=form.elements[5].value;
+		var discount=form.elements[6].value;
+		var tax=form.elements[7].value;
+		var total=form.elements[8].value;
+		var data_id=form.elements[9].value;
 		var last_updated=get_my_time();
-		var save_button=form.elements[9];
-		var del_button=form.elements[10];
+		var save_button=form.elements[10];
+		var del_button=form.elements[11];
 		
 		var data_xml="<bill_items>" +
 				"<id>"+data_id+"</id>" +
 				"<item_name>"+name+"</item_name>" +
+				"<batch>"+batch+"</batch>" +
 				"<quantity>"+quantity+"</quantity>" +
 				"<unit_price>"+price+"</unit_price>" +
 				"<amount>"+amount+"</amount>" +
@@ -3446,7 +3450,7 @@ function form72_create_item(form)
 				"</bill_items>";		
 		create_simple(data_xml);
 					
-		for(var i=0;i<8;i++)
+		for(var i=0;i<9;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -3503,10 +3507,10 @@ function form72_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			amount+=parseFloat(subform.elements[4].value);
-			discount+=parseFloat(subform.elements[5].value);
-			tax+=parseFloat(subform.elements[6].value);
-			total+=parseFloat(subform.elements[7].value);			
+			amount+=parseFloat(subform.elements[5].value);
+			discount+=parseFloat(subform.elements[6].value);
+			tax+=parseFloat(subform.elements[7].value);
+			total+=parseFloat(subform.elements[8].value);			
 		});
 
 		var last_updated=get_my_time();

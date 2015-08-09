@@ -177,7 +177,7 @@ function form1_update_item(form)
 		var activity_xml="<activity>" +
 					"<data_id>"+data_id+"</data_id>" +
 					"<tablename>product_instances</tablename>" +
-					"<link_to>form166</link_to>" +
+					"<link_to>form1</link_to>" +
 					"<title>Updated</title>" +
 					"<notes>Costing for batch number "+batch+" of "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
@@ -1394,10 +1394,10 @@ function form21_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			amount+=parseFloat(subform.elements[4].value);
-			discount+=parseFloat(subform.elements[5].value);
-			tax+=parseFloat(subform.elements[6].value);
-			total+=parseFloat(subform.elements[7].value);
+			amount+=parseFloat(subform.elements[5].value);
+			discount+=parseFloat(subform.elements[6].value);
+			tax+=parseFloat(subform.elements[7].value);
+			total+=parseFloat(subform.elements[8].value);
 		});
 
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
@@ -3302,10 +3302,10 @@ function form72_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			amount+=parseFloat(subform.elements[4].value);
-			discount+=parseFloat(subform.elements[5].value);
-			tax+=parseFloat(subform.elements[6].value);
-			total+=parseFloat(subform.elements[7].value);			
+			amount+=parseFloat(subform.elements[5].value);
+			discount+=parseFloat(subform.elements[6].value);
+			tax+=parseFloat(subform.elements[7].value);
+			total+=parseFloat(subform.elements[8].value);			
 		});
 
 		var last_updated=get_my_time();
@@ -10605,6 +10605,88 @@ function form206_update_item(form)
 	}
 }
 
+/**
+ * @form Update inventory (aurilion)
+ * @param button
+ */
+function form207_update_item(form)
+{
+	if(is_update_access('form1'))
+	{
+		var name=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var expiry=get_raw_time(form.elements[2].value);
+		var mrp=form.elements[3].value;
+		var sp=form.elements[4].value;
+		var cp=form.elements[5].value;
+		var data_id=form.elements[8].value;
+		var last_updated=get_my_time();
+		var data_xml="<product_instances>" +
+					"<id>"+data_id+"</id>" +
+					"<product_name>"+name+"</product_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<mrp>"+mrp+"</mrp>"+
+					"<sale_price>"+sp+"</sale_price>"+
+					"<cost_price>"+cp+"</cost_price>"+
+					"<expiry>"+expiry+"</expiry>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</product_instances>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>product_instances</tablename>" +
+					"<link_to>form207</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Batch number "+batch+" of "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<8;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Treatment Plans
+ * @formNo 208
+ * @param button
+ */
+function form208_update_item(form)
+{
+	if(is_update_access('form189'))
+	{
+		var num=form.elements[0].value;
+		var customer=form.elements[1].value;
+		var details=form.elements[2].value;
+		var start_date=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<treatment_plans>" +
+					"<id>"+data_id+"</id>" +
+					"<details>"+details+"</details>" +
+					"<start_date>"+start_date+"</start_date>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</treatment_plans>";
+		update_simple(data_xml);
+		
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
 
 /**
  * @form Update Logistics orders

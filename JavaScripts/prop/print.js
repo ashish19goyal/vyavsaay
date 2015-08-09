@@ -804,6 +804,7 @@ function print_form72(func)
 	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
 	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
 				"<td style='text-align:left;width:130px;'>Item</td>"+
+				"<td style='text-align:left;width:50px;'>Batch</td>"+
 				"<td style='text-align:left;width:45px'>Qty</td>"+
 				"<td style='text-align:left;width:45px'>Rate</td>"+
 				"<td style='text-align:left;width:45px'>Amount</td>"+
@@ -818,14 +819,16 @@ function print_form72(func)
 		counter+=1;
 		var form=$(this)[0];
 		var item_name=form.elements[1].value;
-		var quantity=""+form.elements[2].value;
-		var price=form.elements[3].value;
-		var amount=form.elements[4].value;
-		var tax=form.elements[6].value;
-		var total=form.elements[7].value;
+		var batch=form.elements[2].value;
+		var quantity=""+form.elements[3].value;
+		var price=form.elements[4].value;
+		var amount=form.elements[5].value;
+		var tax=form.elements[7].value;
+		var total=form.elements[8].value;
 
 		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
 				"<td style='text-align:left;'>"+item_name+"</td>"+
+				"<td style='text-align:left;'>"+batch+"</td>"+
 				"<td style='text-align:left;'>"+quantity+"</td>"+
 				"<td style='text-align:left;'>"+price+"</td>"+
 				"<td style='text-align:left;'>"+amount+"</td>"+
@@ -837,7 +840,7 @@ function print_form72(func)
 	var rows_to_add=12-row_count;
 	for(var i=0;i<rows_to_add;i++)
 	{
-		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 	}
 
 	var table_foot=document.getElementById(form_id+'_foot');
@@ -846,7 +849,7 @@ function print_form72(func)
 	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
 	//console.log(total_amount);
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
-				"<td colspan='1' style='text-align:left;'>"+total_text1+"</td>"+
+				"<td colspan='2' style='text-align:left;'>"+total_text1+"</td>"+
 				"<td colspan='4' style='text-align:left;'>"+total_text2+"</td>"+
 				"<td colspan='1' style='text-align:left;'>"+total_amount+"</td></tr>";
 	//console.log(table_foot_row);

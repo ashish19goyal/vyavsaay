@@ -1102,7 +1102,7 @@ function form39_header_ini()
 	$(add_button).off('click');
 	$(add_button).on('click',function()
 	{
-		if(is_read_access('form1'))
+		if(is_read_access('form1') || is_read_access('form207'))
 		{
 			modal14_action();
 		}
@@ -7485,6 +7485,108 @@ function form207_header_ini()
 	set_my_filter(products_data,names_filter);
 	set_my_filter(batch_data,batches_filter);
 };
+
+/**
+ * @form Manage Production Plans
+ * @formNo 208
+ */
+function form208_header_ini()
+{
+	var filter_fields=document.getElementById('form208_header');
+	var num_filter=filter_fields.elements[0];
+	var customer_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var num_data="<treatment_plans>" +
+			"<plan_num></plan_num>" +
+			"</treatment_plans>";
+	
+	set_my_filter(num_data,num_filter);
+
+	var cust_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_filter(cust_data,customer_filter);
+
+	set_static_filter('treatment_plans','status',status_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form208_ini();
+	});
+};
+
+/**
+ * @form Create Treatment Plan
+ * @formNo 209
+ */
+function form209_header_ini()
+{
+	var fields=document.getElementById('form209_master');
+	
+	var num_filter=fields.elements['num'];
+	var customer_filter=fields.elements['customer'];
+	var date_filter=fields.elements['date'];
+	var status_filter=fields.elements['status'];
+	fields.elements['plan_id'].value=get_new_key();
+	var save_button=fields.elements['save'];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form209_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	var plan_id=$("#form209_link").attr('data_id');
+	if(plan_id=="" || plan_id==null)
+	{
+		var plan_num_data="<user_preferences count='1'>"+
+					"<value></value>"+
+					"<name exact='yes'>treatment_plan_num</name>"+
+					"</user_preferences>";
+		set_my_value(plan_num_data,num_filter);	
+	}
+	
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form209_add_item();
+	});
+	
+	$(date_filter).datepicker();
+	$(date_filter).val(get_my_date());
+	
+	customer_filter.value="";
+	
+	var customer_data="<customers>"+
+					"<acc_name></acc_name>"+
+					"</customers>";	
+	set_my_value_list(customer_data,customer_filter,function () 
+	{
+		$(customer_filter).focus();
+	});
+	
+	set_static_value_list('treatment_plans','status',status_filter);
+	
+	var body_elem=document.getElementById('form209_body');
+	body_elem.addEventListener('table_sort',function(e)
+	{
+		form209_update_serial_numbers();
+		$("[id^='save_form209_']").click();
+	},false);
+}
 
 /**
  * @form Update Logisitcs Orders

@@ -1750,7 +1750,7 @@ function form21_ini()
 					form21_update_form();
 				});
 				
-				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 							"<td>Rs. "+bill_results[i].amount+"</br>" +
 							"Rs. "+bill_results[i].discount+"</br>" +
@@ -1788,6 +1788,9 @@ function form21_ini()
 					rowsHTML+="<td data-th='Item'>";
 						rowsHTML+="<input type='hidden' form='form21_"+id+"'>";
 						rowsHTML+="<textarea readonly='readonly' form='form21_"+id+"'>"+result.product_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Batch'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form21_"+id+"' value='"+result.batch+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Quantity'>";
 						rowsHTML+="<input type='number' readonly='readonly' form='form21_"+id+"' value='"+result.quantity+"' step='any'>";
@@ -5769,13 +5772,10 @@ function form72_ini()
 				"<batch></batch>" +
 				"<staff></staff>" +
 				"<quantity></quantity>" +
-				"<notes></notes>" +
 				"<unit_price></unit_price>" +
 				"<amount></amount>" +
 				"<total></total>" +
 				"<discount></discount>" +
-				"<offer></offer>" +
-				"<type></type>" +
 				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +
 				"<tax></tax>" +
 				"</bill_items>";
@@ -5822,6 +5822,9 @@ function form72_ini()
 						rowsHTML+="<td data-th='Item'>";
 							rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 							rowsHTML+="<input type='text' readonly='readonly' form='form72_"+id+"' value='"+result.item_name+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Batch'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form72_"+id+"' value='"+result.batch+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
 							rowsHTML+="<input type='number' readonly='readonly' form='form72_"+id+"' value='"+result.quantity+"'>";
@@ -15755,7 +15758,7 @@ function form155_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form155_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form155_"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='generic_icon' value='Inventory' title='Update Inventory' form='form155_"+result.id+"' onclick=\"modal122_action('"+result.product_name+"')\">";
+						rowsHTML+="<input type='button' class='generic_icon' value='Inventory' title='Update Inventory' form='form155_"+result.id+"' onclick=\"modal122_action('"+result.product_name+"')\">";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -21211,6 +21214,7 @@ function form207_ini()
 						rowsHTML+="<input type='hidden' form='form207_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form207_"+result.id+"'>";					
 						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form207_"+result.id+"' onclick='form207_delete_item($(this));'>";
+						rowsHTML+="<input type='button' class='generic_icon' value='Inventory' title='Update Inventory' form='form207_"+result.id+"' onclick=\"modal143_action('"+result.product_name+"','"+result.batch+"')\">";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -21227,10 +21231,19 @@ function form207_ini()
 			
 			$(expiry).datepicker();
 			
-			get_inventory(result.product_name,result.batch,function(inventory)
+			var hireable_data="<bill_items sum='yes'>"+
+							"<quantity></quantity>"+
+							"<hired exact='yes'>yes</hired>"+
+							"<fresh exact='yes'>yes</fresh>"+
+							"<item_name exact='yes'>"+result.product_name+"</item_name>"+
+							"<batch exact='yes'>"+result.batch+"</batch>"+
+							"</bill_items>";
+			set_my_value_func(hireable_data,inuse_inventory,function()
 			{
-				fresh_inventory.value=inventory;
-				inuse_inventory.value=0;
+				get_inventory(result.product_name,result.batch,function(inventory)
+				{
+					fresh_inventory.value=parseFloat(inventory)-parseFloat(inuse_inventory.value);
+				});
 			});
 		});
 
@@ -21270,6 +21283,293 @@ function form207_ini()
 		hide_loader();
 	});
 };
+
+
+
+/**
+ * @form Treatment Plans
+ * @formNo 208
+ * @Loading light
+ */
+function form208_ini()
+{
+	show_loader();
+	var fid=$("#form208_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form208_header');
+	
+	var fnum=filter_fields.elements[0].value;
+	var fcust=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form208_index');
+	var prev_element=document.getElementById('form208_prev');
+	var next_element=document.getElementById('form208_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<treatment_plans count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<plan_num>"+fnum+"</plan_num>" +
+			"<customer>"+fcust+"</customer>" +
+			"<details></details>" +
+			"<start_date></start_date>"+
+			"<status>"+fstatus+"</status>"+
+			"</treatment_plans>";
+
+	$('#form208_body').html("");
+
+	fetch_requested_data('form208',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form208_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Plan #'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form208_"+result.id+"' value='"+result.name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form208_"+result.id+"'>"+result.customer+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form208_"+result.id+"'>"+result.details+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Start Date'>";
+						rowsHTML+="<input type='text' class='dblclick_editable' readonly='readonly' form='form208_"+result.id+"' value='"+get_my_past_date(result.start_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form208_"+result.id+"' value='"+result.status+"' required>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form208_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='button' class='edit_icon' form='form208_"+result.id+"' title='Edit/View Plan'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form208_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form208_"+result.id+"' title='Delete' onclick='form208_delete_item($(this))'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+
+			$('#form208_body').append(rowsHTML);
+
+			var fields=document.getElementById("form208_"+result.id);
+			var date_filter=fields.elements[3];
+			var status_filter=fields.elements[4];
+			var edit_button=fields.elements[6];
+			
+			$(date_filter).datepicker();
+			
+			$(edit_button).on("click", function(event)
+			{
+				event.preventDefault();
+				element_display(result.id,'form209');
+			});
+
+			set_static_value_list('treatment_plans','status',status_filter);
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form208_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'treatment_plans');
+		});
+		hide_loader();
+	});	
+};
+
+/**
+ * @form Create Treatment Plan
+ * @formNo 209
+ * @Loading light
+ */
+function form209_ini()
+{
+	var plan_id=$("#form209_link").attr('data_id');
+	if(plan_id==null)
+		plan_id="";	
+	
+	$('#form209_body').html("");
+	$('#form209_foot').html("");
+	
+	if(plan_id!="")
+	{
+		show_loader();
+		var plan_columns="<treatment_plans>" +
+				"<id>"+plan_id+"</id>" +
+				"<plan_num></plan_num>" +
+				"<details></details>" +
+				"<customer></customer>" +
+				"<start_date></start_date>" +
+				"<status></status>"+
+				"</treatment_plans>";
+		
+		var filter_fields=document.getElementById('form209_master');
+
+		////separate fetch function to get plan details 
+		fetch_requested_data('',plan_columns,function(plan_results)
+		{
+			if (plan_results.length>0)
+			{
+				filter_fields.elements['num'].value=plan_results[0].plan_num;
+				filter_fields.elements['customer'].value=plan_results[0].customer;
+				filter_fields.elements['date'].value=get_my_past_date(plan_results[0].start_date);
+				filter_fields.elements['status'].value=plan_results[0].status;
+				filter_fields.elements['plan_id'].value=plan_id;
+				var save_button=filter_fields.elements['save'];
+				
+				$(save_button).off('click');
+				$(save_button).on("click", function(event)
+				{
+					event.preventDefault();
+					form209_update_form();
+				});
+			}
+		
+		
+			var plan_items_column="<treatment_plan_items>" +
+					"<id></id>" +
+					"<item></item>" +
+					"<order_no></order_no>" +
+					"<status></status>" +
+					"<details></details>" +
+					"<from_time></from_time>" +
+					"<to_time></to_time>" +
+					"<plan_id exact='yes'>"+plan_id+"</plan_id>" +
+					"</treatment_plan_items>";
+			
+			fetch_requested_data('',plan_items_column,function(results)
+			{
+				results.forEach(function(result)
+				{
+					var plan_status=filter_fields.elements[4].value;
+					var rowsHTML="";
+					var id=result.id;
+					rowsHTML+="<tr>";
+					rowsHTML+="<form id='form209_"+id+"'></form>";
+						rowsHTML+="<td data-th='Order'>";
+							rowsHTML+="<input type='number' readonly='readonly' form='form209_"+id+"' value='"+result.order_no+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Item'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form209_"+id+"' value='"+result.item+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Details'>";
+							rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form209_"+id+"'>"+result.details+"</textarea>";
+							rowsHTML+="<br><div id='form209_documents_"+id+"'></div>";
+							rowsHTML+="<input type='button' form='form209_"+id+"' value='Add document' class='generic_icon'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Schedule'>";
+							rowsHTML+="From: <input type='text' readonly='readonly' class='dblclick_editable' form='form209_"+id+"' value='"+get_my_past_date(result.from_time)+"'>";
+							rowsHTML+="<br>To: <input type='text' readonly='readonly' class='dblclick_editable' form='form209_"+id+"' value='"+get_my_past_date(result.to_time)+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Status'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form209_"+id+"' class='dblclick_editable' value='"+result.status+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form209_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='save_icon' form='form209_"+id+"' id='save_form209_"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form209_"+id+"' id='delete_form209_"+id+"' onclick='form209_delete_item($(this));'>";
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+				
+					$('#form209_body').prepend(rowsHTML);
+					var fields=document.getElementById('form209_'+id);
+					var doc_filter=fields.elements[3];
+					var from_filter=fields.elements[4];
+					var to_filter=fields.elements[5];
+					var status_filter=fields.elements[6];
+					var save_button=fields.elements[8];
+					
+					$(doc_filter).on('click',function () 
+					{
+						modal144_action('treatment_plan_items',id,function (url,doc_name) 
+						{
+							var docHTML+="<a href='"+url+"' download='"+doc_name+"'><u>"+doc_name+"</u></a><br>";
+							var doc_container=document.getElementById('form209_documents_'+id);
+							$(doc_container).append(docHTML);
+						});
+					});
+					
+					$(from_filter).datepicker();
+					$(to_filter).datepicker();
+					set_static_value_list('treatment_plan_items','status',status_filter);
+					
+					$(save_button).on('click',function (event) 
+					{
+						event.preventDefault();
+						form209_update_item(fields);
+					});
+					
+					///fetching documents for this item					
+					
+					var doc_column="<documents>" +
+							"<id></id>" +
+							"<url></url>" +
+							"<doc_name></doc_name>"+
+							"<doc_type exact='yes'>treatment_plan_items</doc_type>" +
+							"<target_id exact='yes'>"+result.id+"</target_id>" +
+							"</documents>";
+					fetch_requested_data('form209',doc_column,function(doc_results)
+					{
+						var docHTML="";
+						for (var j in doc_results)
+						{
+							var updated_url=doc_results[j].url.replace(/ /g,"+");
+							docHTML+="<a href='"+updated_url+"' download='"+doc_results[j].doc_name+"'><u>"+doc_results[j].doc_name+"</u></a><br>";							
+						}
+						document.getElementById('form209_documents_'+id).innerHTML=docHTML;
+					});
+				});
+
+				$('#form209_share').show();
+				$('#form209_share').click(function()
+				{
+					modal101_action('Treatment Plan',filter_fields.elements['customer'].value,'customer',function (func) 
+					{
+						print_form209(func);
+					});
+				});
+
+				hide_loader();
+			});
+		});
+	}
+}
+
 
 /**
  * @form Sale Leads (followup)

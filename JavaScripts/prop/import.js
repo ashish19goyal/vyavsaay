@@ -836,6 +836,7 @@ function form21_import(data_array,import_type)
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<product_name>"+row.product_name+"</product_name>" +
+				"<batch>"+row.batch+"</batch>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<unit_price>"+row.unit_price+"</unit_price>" +
@@ -2335,6 +2336,7 @@ function form72_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<bill_id>"+row.bill_id+"</bill_id>" +
 				"<item_name>"+row.item_name+"</item_name>" +
+				"<batch>"+row.batch+"</batch>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<unit_price>"+row.unit_price+"</unit_price>" +
 				"<amount>"+row.amount+"</amount>" +
@@ -6978,6 +6980,71 @@ function form201_import(data_array,import_type)
 		}
 	}
 };
+
+/**
+* @form Update Inventory (aurilion)
+* @formNo 207
+*/
+function form207_import(data_array,import_type)
+{
+	var data_xml="<product_instances>";
+	var counter=1;
+	var new_id=parseFloat(get_new_key());
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</product_instances><separator></separator><product_instances>";
+		}
+		
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.product_name+"</product_name>" +
+				"<batch>"+row.batch+"</batch>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<expiry>"+get_raw_time(row.expiry)+"</expiry>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<cost_price>"+row.cost_price+"</cost_price>" +
+				"<sale_price>"+row.sale_price+"</sale_price>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+		if(row.actual_quantity!="")
+		{
+			get_inventory(row.product_name,row.batch,function(quantity)
+			{
+				if(parseFloat(quantity)!==parseFloat(row.actual_quantity))
+				{
+					var new_quantity=parseFloat(row.actual_quantity)-parseFloat(quantity);
+					var adjust_xml="<inventory_adjust>" +
+							"<id>"+(new_id+counter)+"</id>" +
+							"<product_name>"+row.product_name+"</product_name>" +
+							"<batch>"+row.batch+"</batch>" +
+							"<quantity>"+new_quantity+"</quantity>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</inventory_adjust>";
+					create_simple_no_warning(adjust_xml);
+				}
+			});
+		}
+	});
+
+	data_xml+="</product_instances>";
+	
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+}
 
 /**
 * @form Sale leads (followups)

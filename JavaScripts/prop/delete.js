@@ -661,7 +661,7 @@ function form21_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[8].value;
+			var data_id=form.elements[9].value;
 			var last_updated=get_my_time();
 			
 			var data_xml="<supplier_bill_items>" +
@@ -2166,7 +2166,7 @@ function form72_delete_item(button)
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var data_id=form.elements[8].value;
+			var data_id=form.elements[9].value;
 			
 			var data_xml="<bill_items>" +
 					"<id>"+data_id+"</id>" +
@@ -6901,6 +6901,101 @@ function form206_delete_item(button)
 	}
 }
 
+/**
+ * @form Update Inventory (aurilion)
+ * @param button
+ */
+function form207_delete_item(button)
+{
+	if(is_delete_access('form207'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var name=form.elements[0].value;
+			var batch=form.elements[1].value;
+			var data_id=form.elements[8].value;
+			var last_updated=get_my_time();
+			var data_xml="<product_instances>" +
+						"<id>"+data_id+"</id>" +
+						"</product_instances>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>product_instances</tablename>" +
+						"<link_to>form207</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Batch number "+batch+" of product "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var other_delete="<area_utilization>" +
+						"<item_name>"+name+"</item_name>" +
+						"<batch>"+batch+"</batch>" +
+						"</area_utilization>";
+			
+			if(is_online())
+			{
+				server_delete_row(data_xml,activity_xml);
+				server_delete_simple(other_delete);
+			}
+			else
+			{
+				local_delete_row(data_xml,activity_xml);
+				local_delete_simple(other_delete);
+			}	
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Treatment plans
+ * @param button
+ */
+function form208_delete_item(button)
+{
+	if(is_delete_access('form208'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var plan_num=form.elements[0].value;
+			var data_id=form.elements[5].value;
+			var last_updated=get_my_time();
+			var data_xml="<treatment_plans>" +
+						"<id>"+data_id+"</id>" +
+						"</treatment_plans>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>treatment_plans</tablename>" +
+						"<link_to>form208</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Treatment plan # "+plan_num+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			
+			var items_xml="<treatment_plan_items>" +
+						"<id></id>"+						
+						"<plan_id exact='yes'>"+data_id+"</plan_id>" +
+						"</treatment_plan_items>";	
+			
+			delete_row(data_xml,activity_xml);
+			delete_simple(items_xml);
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
 
 /**
  * @form Sale Leads

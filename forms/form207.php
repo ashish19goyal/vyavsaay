@@ -8,7 +8,7 @@
 					<th>Expiry</th>
 					<th>Pricing</th>
 					<th>Quantity</th>
-					<th><input type='button' form='form207_header' value='Add Batch' class='add_icon' onclick='modal120_action();'>
+					<th><input type='button' form='form207_header' value='Add Batch' class='add_icon' onclick='modal142_action();'>
 						<input type='button' form='form207_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form207_header' style='display:none;visibility: hidden;'>
 					</th>

@@ -1482,6 +1482,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<plan_num index='yes' type="TEXT"></plan_num>
 			<customer index='yes' type="TEXT"></customer>
+			<details index='yes' type="TEXT"></details>
 			<start_date index='yes' type="BIGINT"></start_date>
 			<status index='yes' type="VARCHAR(45)"></status><!-- inactive/active/suspended/completed -->
 			<last_updated index='yes' type="BIGINT"></last_updated>

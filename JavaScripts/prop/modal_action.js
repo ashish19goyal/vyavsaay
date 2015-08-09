@@ -9995,6 +9995,8 @@ function modal142_action(func)
 	var fbatch=form.elements[2];
 	var fexpiry=form.elements[3];
 	var fmrp=form.elements[4];
+	var fcp=form.elements[5];
+	var fsp=form.elements[6];
 	
 	$(fexpiry).datepicker();
 	
@@ -10044,8 +10046,7 @@ function modal142_action(func)
 			});
 		},batch_data);
 	});		
-		
-	
+
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{
@@ -10073,12 +10074,18 @@ function modal142_action(func)
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
 						"<tablename>product_instances</tablename>" +
-						"<link_to>form1</link_to>" +
+						"<link_to>form207</link_to>" +
 						"<title>Added</title>" +
 						"<notes>New batch "+batch+" for item "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			create_row_func(data_xml,activity_xml,func);
+			create_row_func(data_xml,activity_xml,function () 
+			{
+				if(typeof func!='undefined')
+				{
+					func();
+				}
+			});
 		}
 		else
 		{
@@ -10088,4 +10095,141 @@ function modal142_action(func)
 	});
 	
 	$("#modal142").dialog("open");
+}
+
+/**
+ * @modalNo 143
+ * @modal Update Inventory (aurilion)
+ */
+function modal143_action(item_name,batch)
+{
+	var form=document.getElementById('modal143_form');
+	
+	var fitem=form.elements[1];
+	var fbatch=form.elements[2];
+	var ffresh=form.elements[3];
+	var finuse=form.elements[4];
+	fitem.value=item_name;
+	fbatch.value=batch;
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form207'))
+		{
+			var fresh=parseFloat(ffresh.value);
+			var inuse=parseFloat(finuse.value);
+			var last_updated=get_my_time();
+			
+			var inuse_data="<bill_items sum='yes'>"+
+							"<quantity></quantity>"+
+							"<hired exact='yes'>yes</hired>"+
+							"<fresh exact='yes'>yes</fresh>"+
+							"<item_name exact='yes'>"+item_name+"</item_name>"+
+							"<batch exact='yes'>"+batch+"</batch>"+
+							"</bill_items>";
+			get_single_column_data(function(hireables)
+			{
+				var new_inuse=inuse;
+				if(hireables.length>0)
+				{
+					new_inuse-=parseFloat(hireables[0]);
+				}
+				
+				var hireable_xml="<bill_items sum='yes'>"+
+							"<id>"+get_new_key()+"</id>"+
+							"<quantity>"+new_inuse+"</quantity>"+
+							"<hired exact='yes'>yes</hired>"+
+							"<fresh exact='yes'>yes</fresh>"+
+							"<item_name exact='yes'>"+item_name+"</item_name>"+
+							"<batch exact='yes'>"+batch+"</batch>"+
+							"<from_date>"+last_updated+"</from_date>"+
+							"<to_date>"+last_updated+"</to_date>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</bill_items>";
+				
+				get_inventory(item_name,batch,function(inventory)
+				{
+					var new_total=fresh+inuse-parseFloat(inventory);
+					var adjust_xml="<inventory_adjust>" +
+							"<id>"+get_new_key()+"</id>" +
+							"<product_name>"+item_name+"</product_name>" +
+							"<batch>"+batch+"</batch>" +
+							"<quantity>"+new_total+"</quantity>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</inventory_adjust>";
+					create_simple_no_warning(adjust_xml);
+					create_simple_no_warning(hireable_xml);
+				});
+			},inuse_data);
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal143").dialog("close");
+	});
+	
+	$("#modal143").dialog("open");
+}
+
+/**
+ * @modalNo 9
+ * @modal Add document
+ * @param button
+ */
+function modal144_action(doc_type,target_id,func)
+{
+	var form=document.getElementById('modal144_form');
+	
+	var fname=form.elements[1];
+	var docInfo=document.getElementById('modal144_url');
+	var fpicture=form.elements[2];
+		
+	fpicture.addEventListener('change',function(evt)
+	{
+		select_document(evt,function(dataURL)
+		{
+			docInfo.setAttribute('href',dataURL);
+		});
+	},false);
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_create_access('form39'))
+		{
+			var doc_name=fname.value;
+			var data_id=get_new_key();
+			var url=$(docInfo).attr('href');
+			var last_updated=get_my_time();
+
+			if(url!="")
+			{
+				var pic_xml="<documents>" +
+							"<id>"+data_id+"</id>" +
+							"<url>"+url+"</url>" +
+							"<doc_type>"+doc_type+"</doc_type>" +
+							"<doc_name>"+doc_name+"</doc_name>"+						
+							"<target_id>"+target_id+"</target_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</documents>";
+				create_simple(pic_xml);	
+				
+				if(typeof func!='undefined')
+				{
+					func(url,doc_name);
+				}		
+			}
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal144").dialog("close");
+	});
+	
+	$("#modal144").dialog("open");
 }

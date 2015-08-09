@@ -1107,6 +1107,18 @@ function update_simple_func(data_xml,func)
 	}
 }
 
+function update_batch(data_xml)
+{
+	if(is_online())
+	{
+		server_update_batch(data_xml);
+	}
+	else
+	{
+		local_update_batch(data_xml);
+	}
+}
+
 function get_all_child_storage(store_area,area_array)
 {
 	var child_data="<store_areas>"+

@@ -904,6 +904,10 @@ function form21_add_item()
 				rowsHTML+="<br>Name: <input type='text' required form='form21_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form21_add_product_"+id+"'>";
 			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<input type='text' required form='form21_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form21_add_batch_"+id+"'>";
+			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' step='any' required form='form21_"+id+"'>";
 			rowsHTML+="</td>";
@@ -930,15 +934,16 @@ function form21_add_item()
 		var fields=document.getElementById("form21_"+id);
 		var barcode_filter=fields.elements[0];
 		var name_filter=fields.elements[1];
-		var quantity_filter=fields.elements[2];
-		var price_filter=fields.elements[3];
-		var amount_filter=fields.elements[4];
-		var discount_filter=fields.elements[5];
-		var tax_filter=fields.elements[6];
-		var total_filter=fields.elements[7];
-		var id_filter=fields.elements[8];
-		var save_button=fields.elements[9];
-		var tax_rate_filter=fields.elements[12];
+		var batch_filter=fields.elements[2];
+		var quantity_filter=fields.elements[3];
+		var price_filter=fields.elements[4];
+		var amount_filter=fields.elements[5];
+		var discount_filter=fields.elements[6];
+		var tax_filter=fields.elements[7];
+		var total_filter=fields.elements[8];
+		var id_filter=fields.elements[9];
+		var save_button=fields.elements[10];
+		var tax_rate_filter=fields.elements[13];
 				
 		$(save_button).on("click", function(event)
 		{
@@ -950,7 +955,7 @@ function form21_add_item()
 			event.preventDefault();
 			form21_add_item();
 		});
-		
+				
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
@@ -968,7 +973,7 @@ function form21_add_item()
 			{
 				$(name_filter).trigger('blur');
 			});
-			$(quantity_filter).focus();
+			$(batch_filter).focus();
 		});
 		
 		$(barcode_filter).on('keydown',function (event) 
@@ -992,17 +997,60 @@ function form21_add_item()
 			});
 		});		
 
+		var add_batch=document.getElementById('form21_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal142_action(function()
+			{	
+				var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value_list_func(batch_data,batch_filter);
+			});
+		});		
+
 		$(name_filter).on('blur',function(event)
 		{
+			var batch_data="<product_instances>" +
+				"<batch></batch>" +
+				"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+				"</product_instances>";
+			set_my_value_list_func(batch_data,batch_filter); 
+
 			var tax_data="<product_master count='1'>" +
 					"<tax></tax>" +
 					"<name exact='yes'>"+name_filter.value+"</name>" +
 					"</product_master>";
 			set_my_value(tax_data,tax_rate_filter);
-
+			
+			var last_batch_data="<supplier_bill_items count='1'>"+
+								"<batch></batch>"+
+								"<product_name exact='yes'>"+name_fitler.value+"</product_name>"+
+								"</supplier_bill_items>";
+			set_my_value(last_batch_data,batch_filter,function()
+			{
+				var price_data="<product_instances count='1'>" +
+						"<cost_price></cost_price>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"<batch exact='yes'>"+batch_filter.value+"</batch>" +
+						"</product_instances>";
+				set_my_value(price_data,price_filter);
+		
+				quantity_filter.value="";
+				total_filter.value=0;
+				amount_filter.value=0;
+				discount_filter.value=0;
+				tax_filter.value=0;				
+			});
+		});
+		
+		$(batch_filter).on('blur',function(event)
+		{
 			var price_data="<product_instances count='1'>" +
 					"<cost_price></cost_price>" +
 					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"<batch exact='yes'>"+batch_filter.value+"</batch>" +
 					"</product_instances>";
 			set_my_value(price_data,price_filter);
 	
@@ -2256,6 +2304,9 @@ function form72_add_product()
 				rowsHTML+="Barcode: <input type='text' form='form72_"+id+"'>";
 				rowsHTML+="<br>Item: <input type='text' required form='form72_"+id+"'>";
 			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
+			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
 			rowsHTML+="</td>";
@@ -2265,8 +2316,8 @@ function form72_add_product()
 			rowsHTML+="<td data-th='Amount'>";
 				rowsHTML+="Amount: <input type='number' readonly='readonly' required form='form72_"+id+"' step='any'>";
 				rowsHTML+="<br>Discount: <input type='number' form='form72_"+id+"' step='any' value='0'>";
-				rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form72_"+id+"' step='any'>";
-				rowsHTML+="<br>Total: <input type='number' readonly='readonly' required form='form72_"+id+"' step='any'>";
+				rowsHTML+="<br>Tax: <input type='number' required readonly='readonly' form='form72_"+id+"' step='any'>";
+				rowsHTML+="<br>Total: <input type='number' required readonly='readonly' required form='form72_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
@@ -2282,15 +2333,16 @@ function form72_add_product()
 		var fields=document.getElementById("form72_"+id);
 		var barcode_filter=fields.elements[0];
 		var name_filter=fields.elements[1];
-		var quantity_filter=fields.elements[2];
-		var price_filter=fields.elements[3];
-		var amount_filter=fields.elements[4];
-		var discount_filter=fields.elements[5];
-		var tax_filter=fields.elements[6];
-		var total_filter=fields.elements[7];
-		var id_filter=fields.elements[8];
-		var save_button=fields.elements[9];
-		var tax_rate_filter=fields.elements[12];
+		var batch_filter=fields.elements[2];
+		var quantity_filter=fields.elements[3];
+		var price_filter=fields.elements[4];
+		var amount_filter=fields.elements[5];
+		var discount_filter=fields.elements[6];
+		var tax_filter=fields.elements[7];
+		var total_filter=fields.elements[8];
+		var id_filter=fields.elements[9];
+		var save_button=fields.elements[10];
+		var tax_rate_filter=fields.elements[13];
 				
 		$(save_button).on("click", function(event)
 		{
@@ -2321,7 +2373,7 @@ function form72_add_product()
 			{
 				$(name_filter).trigger('blur');
 			});
-			$(quantity_filter).focus();
+			$(batch_filter).focus();
 		});
 		
 		$(barcode_filter).on('keydown',function (event) 
@@ -2340,14 +2392,42 @@ function form72_add_product()
 					"<name exact='yes'>"+name_filter.value+"</name>" +
 					"</product_master>";
 			set_my_value(tax_data,tax_rate_filter);
-
+			
+			var last_batch_data="<bill_items count='1'>"+
+								"<batch></batch>"+
+								"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+								"</bill_items>";
+			set_my_value(last_batch_data,batch_filter,function () 
+			{					
+				var price_data="<product_instances count='1'>" +
+						"<sale_price></sale_price>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+				set_my_value(price_data,price_filter);
+	
+				get_inventory(name_filter.value,'',function(quantity)
+				{
+					$(quantity_filter).attr('min',"0");
+					$(quantity_filter).attr('placeholder',quantity);
+				});
+		
+				quantity_filter.value="";
+				total_filter.value=0;
+				amount_filter.value=0;
+				discount_filter.value=0;
+				tax_filter.value=0;
+			});	
+		});
+		
+		$(batch_filter).on('blur',function(event)
+		{
 			var price_data="<product_instances count='1'>" +
 					"<sale_price></sale_price>" +
 					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"</product_instances>";
 			set_my_value(price_data,price_filter);
 
-			get_inventory(name_filter.value,'',function(quantity)
+			get_inventory(name_filter.value,batch_filter.value,function(quantity)
 			{
 				$(quantity_filter).attr('min',"0");
 				$(quantity_filter).attr('placeholder',quantity);
@@ -2390,6 +2470,9 @@ function form72_add_service()
 				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
 			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<input type='text' readonly='readonly' value='NA' required form='form72_"+id+"'>";
+			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
 			rowsHTML+="</td>";
@@ -2416,15 +2499,16 @@ function form72_add_service()
 		var fields=document.getElementById("form72_"+id);
 		var barcode_filter=fields.elements[0];
 		var name_filter=fields.elements[1];
-		var quantity_filter=fields.elements[2];
-		var price_filter=fields.elements[3];
-		var amount_filter=fields.elements[4];
-		var discount_filter=fields.elements[5];
-		var tax_filter=fields.elements[6];
-		var total_filter=fields.elements[7];
-		var id_filter=fields.elements[8];
-		var save_button=fields.elements[9];
-		var tax_rate_filter=fields.elements[12];
+		var batch_filter=fields.elements[2];
+		var quantity_filter=fields.elements[3];
+		var price_filter=fields.elements[4];
+		var amount_filter=fields.elements[5];
+		var discount_filter=fields.elements[6];
+		var tax_filter=fields.elements[7];
+		var total_filter=fields.elements[8];
+		var id_filter=fields.elements[9];
+		var save_button=fields.elements[10];
+		var tax_rate_filter=fields.elements[13];
 				
 		$(save_button).on("click", function(event)
 		{
