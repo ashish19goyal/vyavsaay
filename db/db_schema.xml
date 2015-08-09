@@ -229,6 +229,7 @@
 			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
 			<mrp index='no' type="DECIMAL(12,2)"></mrp>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
+			<discount index='no' type="DECIMAL(12,2)"></discount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<storage index='yes' type="TEXT"></storage>
@@ -1477,15 +1478,6 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</drs>
-	<drs_items>
-			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
-			<drs_id index='yes' type="BIGINT"></drs_id>
-			<drs_num index='yes' type="VARCHAR(20)"></drs_num>
-			<awb_num index='yes' type="VARCHAR(20)"></awb_num>
-			<cod_amount index='yes' type="DECIMAL(12,2)"></cod_amount>
-			<last_updated index='yes' type="BIGINT"></last_updated>
-			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
-	</drs_items>
 	<treatment_plans>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<plan_num index='yes' type="TEXT"></plan_num>
@@ -1495,4 +1487,16 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</treatment_plans>
+	<treatment_plan_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<plan_id index='yes' type="BIGINT"></plan_id>
+			<item index='yes' type="TEXT"></item>
+			<details index='yes' type="TEXT"></details>
+			<order_no index='yes' type="INT"></order_no>
+			<status index='yes' type='VARCHAR(30)'></status><!--pending/completed/overdue-->
+			<from_time index='yes' type="BIGINT"></from_time>
+			<to_time index='yes' type="BIGINT"></to_time>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</treatment_plan_items>
 </re_xml>

@@ -899,52 +899,46 @@ function form21_add_item()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form21_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Product Name'>";
-				rowsHTML+="<input type='text' required form='form21_"+id+"'>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="Barcode: <input type='text' form='form21_"+id+"'>";
+				rowsHTML+="<br>Name: <input type='text' required form='form21_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form21_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="Bought: <input type='number' step='any' required form='form21_"+id+"'>";
-				rowsHTML+="</br>Free: <input type='number' step='any' required form='form21_"+id+"' value='0'>";
+				rowsHTML+="<input type='number' step='any' required form='form21_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Rate'>";
+				rowsHTML+="<input type='number' required form='form21_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="Total: <input type='number' required form='form21_"+id+"' step='any'>";
-				rowsHTML+="</br>Tax: <input type='number' form='form21_"+id+"' value='' step='any'>";
-				rowsHTML+="</br>Amount: <input type='number' readonly='readonly' form='form21_"+id+"' value='' step='any'>";
-				rowsHTML+="</br>Unit Price: <input type='number' readonly='readonly' form='form21_"+id+"' step='any'>";
-				rowsHTML+="</br>Previous Price: <input type='number' readonly='readonly' form='form21_"+id+"' value='' step='any'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Batch'>";
-				rowsHTML+="<input type='text' required form='form21_"+id+"'></br>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form21_add_batch_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Storage Area'>";
-				rowsHTML+="<input type='text' form='form21_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new storage' id='form21_add_storage_"+id+"'>";
+				rowsHTML+="Amount: <input type='number' required readonly='readonly' form='form21_"+id+"' step='any'>";
+				rowsHTML+="<br>Discount: <input type='number' form='form21_"+id+"' value='' step='any'>";
+				rowsHTML+="</br>Tax: <input type='number' readonly='readonly' form='form21_"+id+"' value='' step='any'>";
+				rowsHTML+="</br>Total: <input type='number' readonly='readonly' form='form21_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form21_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form21_"+id+"' id='save_form21_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form21_"+id+"' id='delete_form21_"+id+"' onclick='$(this).parent().parent().remove();'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form21_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form21_"+id+"' name='tax_rate'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 	
 		$('#form21_body').prepend(rowsHTML);
 		
 		var fields=document.getElementById("form21_"+id);
-		var name_filter=fields.elements[0];
-		var pquantity_filter=fields.elements[1];
-		var fquantity_filter=fields.elements[2];
-		var total_filter=fields.elements[3];
-		var tax_filter=fields.elements[4];
-		var amount_filter=fields.elements[5];
-		var price_filter=fields.elements[6];
-		var previous_price_filter=fields.elements[7];
-		var batch_filter=fields.elements[8];
-		var storage_filter=fields.elements[9];
-		var id_filter=fields.elements[10];
-		var save_button=fields.elements[11];
+		var barcode_filter=fields.elements[0];
+		var name_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
+		var price_filter=fields.elements[3];
+		var amount_filter=fields.elements[4];
+		var discount_filter=fields.elements[5];
+		var tax_filter=fields.elements[6];
+		var total_filter=fields.elements[7];
+		var id_filter=fields.elements[8];
+		var save_button=fields.elements[9];
+		var tax_rate_filter=fields.elements[12];
 				
 		$(save_button).on("click", function(event)
 		{
@@ -960,10 +954,7 @@ function form21_add_item()
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function () 
-		{
-			$(name_filter).focus();
-		});
+		set_my_value_list_func(product_data,name_filter); 
 		
 		var add_product=document.getElementById('form21_add_product_'+id);
 		$(add_product).on('click',function()
@@ -973,127 +964,38 @@ function form21_add_item()
 				var product_data="<product_master>" +
 						"<name></name>" +
 						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function () 
-				{
-					$(name_filter).focus();
-				});
+				set_my_value_list_func(product_data,name_filter);
 			});
-		});
-
-		var add_batch=document.getElementById('form21_add_batch_'+id);
-		$(add_batch).on('click',function()
-		{
-			modal22_action(function()
-			{	
-				var batch_data="<product_instances>" +
-						"<batch></batch>" +
-						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-						"</product_instances>";
-				set_my_value_list(batch_data,batch_filter);
-			});
-		});
-
-		var add_storage=document.getElementById('form21_add_storage_'+id);
-		$(add_storage).on('click',function()
-		{
-			modal35_action(function()
-			{	
-				var storage_data="<store_areas>" +
-							"<name></name>" +
-							"<area_type exact='yes'>storage</area_type>" +
-							"</store_areas>";
-				set_my_value_list(storage_data,storage_filter);
-			});
-		});
-
-		var storage_data="<store_areas>" +
-					"<name></name>" +
-					"<owner></owner>"+					
-					"<area_type exact='yes'>storage</area_type>" +
-					"</store_areas>";
-		fetch_requested_data('',storage_data,function(storages) 
-		{
-			var form=fields;
-			var datalist=document.createElement('datalist');
-			var element_array=[];
-			storages.forEach(function(d)
-			{
-				var option=document.createElement('option');
-				option.setAttribute('value',d.name);
-				element_array.push(d.name);
-				datalist.appendChild(option);
-				if(d.owner==get_account_name())
-				{
-					storage_filter.value=d.name;
-				}
-			});
-			
-			var list_id=storage_filter.getAttribute('list');
-			if(list_id=='' || list_id==null)
-			{
-				list_id="list_"+get_new_key();
-				storage_filter.setAttribute("list",list_id);
-			}
-			else
-			{
-				var oldlist=document.getElementById(list_id);
-				form.removeChild(oldlist);
-			}
-			
-			form.appendChild(datalist);
-			datalist.setAttribute('id',list_id);
-			
-			$(storage_filter).off("change");
-			$(storage_filter).on("change",function(event)
-			{
-				var found = $.inArray($(this).val(), element_array) > -1;
-				if(!found)
-				{
-		            $(this).val('');
-		        }
-			});
-		});
+		});		
 
 		$(name_filter).on('blur',function(event)
 		{
-			var batch_data="<product_instances>" +
-					"<batch></batch>" +
+			var tax_data="<product_master count='1'>" +
+					"<tax></tax>" +
+					"<name exact='yes'>"+name_filter.value+"</name>" +
+					"</product_master>";
+			set_my_value(tax_data,tax_rate_filter);
+
+			var price_data="<product_instances count='1'>" +
+					"<cost_price></cost_price>" +
 					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"</product_instances>";
-			set_my_value_list(batch_data,batch_filter);
-			
-			var price_data="<supplier_bill_items count='1'>" +
-					"<unit_price></unit_price>" +
-					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-					"</supplier_bill_items>";
-			set_my_value(price_data,previous_price_filter);
-			
-			batch_filter.value="";
-			pquantity_filter.value=0;
-			fquantity_filter.value=0;
-			price_filter.value=0;
+			set_my_value(price_data,price_filter);
+	
+			quantity_filter.value="";
+			total_filter.value=0;
 			amount_filter.value=0;
+			discount_filter.value=0;
+			tax_filter.value=0;
 		});
 		
-		$(pquantity_filter).on('blur',function(event)
-		{
-			var price=parseFloat(amount_filter.value)/parseFloat(pquantity_filter.value);
-			price_filter.value=Math.round(price*100)/100;
-		});
-		$(total_filter).on('blur',function(event)
+		$(price_filter).add(quantity_filter).add(tax_filter).add(discount_filter).on('blur',function(event)
 		{
 			var amount=parseFloat(total_filter.value)-parseFloat(tax_filter.value);
 			amount_filter.value=amount;
 			var price=parseFloat(amount_filter.value)/parseFloat(pquantity_filter.value);
 			price_filter.value=Math.round(price*100)/100;
 			
-		});
-		$(tax_filter).on('blur',function(event)
-		{
-			var amount=parseFloat(total_filter.value)-parseFloat(tax_filter.value);
-			amount_filter.value=amount;
-			var price=parseFloat(amount_filter.value)/parseFloat(pquantity_filter.value);
-			price_filter.value=Math.round(price*100)/100;
 		});
 	}
 	else
@@ -2326,55 +2228,45 @@ function form72_add_product()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form72_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Item Name'>";
-				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form72_add_product_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Batch'>";
-				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form72_add_batch_"+id+"'>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="Barcode: <input type='text' form='form72_"+id+"'>";
+				rowsHTML+="<br>Item: <input type='text' required form='form72_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Unit Price'>";
+			rowsHTML+="<td data-th='Rate'>";
 				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Total'>";
-				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+="Amount: <input type='number' readonly='readonly' required form='form72_"+id+"' step='any'>";
+				rowsHTML+="<br>Discount: <input type='number' form='form72_"+id+"' step='any' value='0'>";
+				rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form72_"+id+"' step='any'>";
+				rowsHTML+="<br>Total: <input type='number' readonly='readonly' required form='form72_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form72_"+id+"' id='save_form72_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='$(this).parent().parent().remove();'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"' name='tax_rate'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
 		$('#form72_body').prepend(rowsHTML);
 		
 		var fields=document.getElementById("form72_"+id);
-		var name_filter=fields.elements[0];
-		var batch_filter=fields.elements[1];
+		var barcode_filter=fields.elements[0];
+		var name_filter=fields.elements[1];
 		var quantity_filter=fields.elements[2];
 		var price_filter=fields.elements[3];
-		var total_filter=fields.elements[4];
-		var amount_filter=fields.elements[5];
-		var discount_filter=fields.elements[6];
-		var tax_filter=fields.elements[7];
-		var offer_filter=fields.elements[8];
-		var id_filter=fields.elements[9];
-		var save_button=fields.elements[10];
-		var free_product_filter=fields.elements[12];
-		var free_product_quantity=fields.elements[13];
-		var free_service_filter=fields.elements[14];
+		var amount_filter=fields.elements[4];
+		var discount_filter=fields.elements[5];
+		var tax_filter=fields.elements[6];
+		var total_filter=fields.elements[7];
+		var id_filter=fields.elements[8];
+		var save_button=fields.elements[9];
+		var tax_rate_filter=fields.elements[12];
 				
 		$(save_button).on("click", function(event)
 		{
@@ -2387,238 +2279,68 @@ function form72_add_product()
 			event.preventDefault();
 			form72_add_product();
 		});
-				
+		
+		$(barcode_filter).focus();
+		
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
-		set_my_value_list_func(product_data,name_filter,function () 
+		set_my_value_list_func(product_data,name_filter); 
+		
+		$(barcode_filter).on('blur',function()
 		{
-			$(name_filter).focus();
+			var item_data="<product_master>"+
+						"<name></name>"+
+						"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
+						"</product_master>";
+			set_my_value(item_data,name_filter,function () 
+			{
+				$(name_filter).trigger('blur');
+			});
+			$(quantity_filter).focus();
 		});
 		
-		var add_product=document.getElementById('form72_add_product_'+id);
-		$(add_product).on('click',function()
+		$(barcode_filter).on('keydown',function (event) 
 		{
-			modal14_action(function()
-			{	
-				var product_data="<product_master>" +
-						"<name></name>" +
-						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function () 
-				{
-					$(name_filter).focus();
-				});
-			});
-		});
-
-		var add_batch=document.getElementById('form72_add_batch_'+id);
-		$(add_batch).on('click',function()
-		{
-			modal22_action(function()
-			{	
-				var batch_data="<product_instances>" +
-						"<batch></batch>" +
-						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-						"</product_instances>";
-				set_my_value_list(batch_data,batch_filter);
-			});
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();			
+				$(barcode_filter).trigger('blur');
+			}
 		});
 
 		$(name_filter).on('blur',function(event)
 		{
-			var batch_data="<product_instances>" +
-					"<batch></batch>" +
-					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-					"</product_instances>";
-			set_my_value_list(batch_data,batch_filter);
-			
-			var last_batch_data="<bill_items count='1'>" +
-					"<batch></batch>" +
-					"<item_name exact='yes'>"+name_filter.value+"</item_name>" +
-					"</bill_items>";
-			get_single_column_data(function(data)
-			{
-				if(data.length>0)
-				{
-					batch_filter.value=data[0];
-				
-				
-					var price_data="<product_instances count='1'>" +
-							"<sale_price></sale_price>" +
-							"<batch exact='yes'>"+batch_filter.value+"</batch>" +
-							"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-							"</product_instances>";
-					set_my_value(price_data,price_filter);
-					
-					get_inventory(name_filter.value,batch_filter.value,function(quantity)
-					{
-						//$(quantity_filter).attr('max',quantity);
-						$(quantity_filter).attr('min',"0");
-						$(quantity_filter).attr('placeholder',quantity);
-					});
-				}				
-			},last_batch_data);
-			
-			quantity_filter.value="";
-			total_filter.value=0;
-			amount_filter.value=0;
-			discount_filter.value=0;
-			tax_filter.value=0;
-			offer_filter.value="";
-			free_product_filter.value="";
-			free_product_quantity.value="";
-			free_service_filter.value="";
-		});
-		
-		$(batch_filter).on('blur',function(event){
+			var tax_data="<product_master count='1'>" +
+					"<tax></tax>" +
+					"<name exact='yes'>"+name_filter.value+"</name>" +
+					"</product_master>";
+			set_my_value(tax_data,tax_rate_filter);
+
 			var price_data="<product_instances count='1'>" +
 					"<sale_price></sale_price>" +
-					"<batch exact='yes'>"+batch_filter.value+"</batch>" +
 					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"</product_instances>";
 			set_my_value(price_data,price_filter);
-			
-			get_inventory(name_filter.value,batch_filter.value,function(quantity)
+
+			get_inventory(name_filter.value,'',function(quantity)
 			{
-				//$(quantity_filter).attr('max',quantity);
 				$(quantity_filter).attr('min',"0");
 				$(quantity_filter).attr('placeholder',quantity);
 			});
-			
+	
 			quantity_filter.value="";
 			total_filter.value=0;
 			amount_filter.value=0;
 			discount_filter.value=0;
 			tax_filter.value=0;
-			offer_filter.value="";
-			free_product_filter.value="";
-			free_product_quantity.value="";
-			free_service_filter.value="";
 		});
 						
-		$(quantity_filter).on('blur',function(event)
+		$(quantity_filter).add(price_filter).add(discount_filter).on('blur',function(event)
 		{
-			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
-			amount_filter.value=amount;
-			var offer_data="<offers>" +
-					"<offer_type>product</offer_type>" +
-					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-					"<batch array='yes'>"+batch_filter.value+"--all</batch>" +
-					"<criteria_type></criteria_type>" +
-					"<criteria_amount></criteria_amount>" +
-					"<criteria_quantity></criteria_quantity>" +
-					"<result_type></result_type>" +
-					"<discount_percent></discount_percent>" +
-					"<discount_amount></discount_amount>" +
-					"<quantity_add_percent></quantity_add_percent>" +
-					"<quantity_add_amount></quantity_add_amount>" +
-					"<free_product_name></free_product_name>" +
-					"<free_product_quantity></free_product_quantity>" +
-					"<free_service_name></free_service_name>" +
-					"<offer_detail></offer_detail>" +
-					"<status array='yes'>active--extended</status>" +
-					"</offers>";
-			fetch_requested_data('',offer_data,function(offers)
-			{
-				offers.sort(function(a,b)
-				{
-					if(a.criteria_amount<b.criteria_amount)
-					{	return 1;}
-					else if(a.criteria_quantity<b.criteria_quantity)
-					{	return 1;}
-					else 
-					{	return -1;}
-				});
-						
-				for(var i in offers)
-				{
-					offer_filter.value=offers[i].offer_detail;
-					if(offers[i].criteria_type=='min quantity crossed' && parseFloat(offers[i].criteria_quantity)<=parseFloat(quantity_filter.value))
-					{
-						if(offers[i].result_type=='discount')
-						{
-							if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
-							{
-								discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
-							}
-							else 
-							{
-								discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
-							}
-						}
-						else if(offers[i].result_type=='quantity addition')
-						{
-							if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
-							{
-								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
-							}
-							else 
-							{
-								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity))));
-							}
-						}
-						else if(offers[i].result_type=='product free')
-						{
-							free_product_filter.value=offers[i].free_product_name;
-							free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
-						}
-						else if(offers[i].result_type=='service free')
-						{
-							free_service_filter.value=offers[i].free_service_name;
-						}
-						break;
-					}
-					else if(offers[i].criteria_type=='min amount crossed' && offers[i].criteria_amount<=amount)
-					{
-						if(offers[i].result_type=='discount')
-						{
-							if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
-							{
-								discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
-							}
-							else 
-							{
-								discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
-							}
-						}
-						else if(offers[i].result_type=='quantity addition')
-						{
-							if(offers[i].quantity_add_percent!="" && offers[i].quantity_add_percent!=0 && offers[i].quantity_add_percent!="0")
-							{
-								quantity_filter.value=parseFloat(quantity_filter.value)*(1+(parseFloat(offers[i].quantity_add_percent)/100));
-							}
-							else 
-							{
-								quantity_filter.value=parseFloat(quantity_filter.value)+(parseFloat(offers[i].quantity_add_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount))));
-							}
-						}
-						else if(offers[i].result_type=='product free')
-						{
-							free_product_filter.value=offers[i].free_product_name;
-							free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
-						}
-						else if(offers[i].result_type=='service free')
-						{
-							free_service_filter.value=offers[i].free_service_name;
-						}
-
-						break;
-					}
-				}
-				
-				var tax_data="<product_master>" +
-						"<tax></tax>" +
-						"<name exact='yes'>"+name_filter.value+"</name>" +
-						"</product_master>";
-				get_single_column_data(function(taxes)
-				{
-					taxes.forEach(function(tax)
-					{
-						tax_filter.value=parseFloat((parseFloat(tax)*(amount-parseFloat(discount_filter.value)))/100);
-					});
-					total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
-				},tax_data);				
-			});
+			amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			tax_filter.value=parseFloat((parseFloat(tax_rate_filter.value)*(parseFloat(amount_filter.value)-parseFloat(discount_filter.value)))/100);
+			total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
 		});
 	}
 	else
@@ -2640,55 +2362,45 @@ function form72_add_service()
 		var id=get_new_key();
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form72_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Name'>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='text' required form='form72_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new service' id='form72_add_service_"+id+"'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Person'>";
-				rowsHTML+="<input type='text' form='form72_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new staff' id='form72_add_staff_"+id+"'>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Notes'>";
-				rowsHTML+="<textarea form='form72_"+id+"'></textarea>";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Unit Price'>";
+			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Total'>";
-				rowsHTML+="<input type='number' required form='form72_"+id+"' step='any'>";
+			rowsHTML+="<td data-th='Rate'>";
+				rowsHTML+="<input type='number' required form='form72_"+id+"' value='1'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+="Amount: <input type='number' readonly='readonly' required form='form72_"+id+"' step='any'>";
+				rowsHTML+="<br>Discount: <input type='number' form='form72_"+id+"' step='any' value='0'>";
+				rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form72_"+id+"' step='any'>";
+				rowsHTML+="<br>Total: <input type='number' readonly='readonly' required form='form72_"+id+"' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form72_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form72_"+id+"' id='save_form72_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form72_"+id+"' id='delete_form72_"+id+"' onclick='$(this).parent().parent().remove();'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
-				rowsHTML+="<input type='hidden' form='form72_"+id+"'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form72_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form72_"+id+"' name='tax_rate'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
 		$('#form72_body').prepend(rowsHTML);
 		
 		var fields=document.getElementById("form72_"+id);
-		var name_filter=fields.elements[0];
-		var staff_filter=fields.elements[1];
-		var notes_filter=fields.elements[2];
+		var barcode_filter=fields.elements[0];
+		var name_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
 		var price_filter=fields.elements[3];
-		var total_filter=fields.elements[4];
-		var amount_filter=fields.elements[5];
-		var discount_filter=fields.elements[6];
-		var tax_filter=fields.elements[7];
-		var offer_filter=fields.elements[8];
-		var id_filter=fields.elements[9];
-		var save_button=fields.elements[10];
-		var free_product_filter=fields.elements[12];
-		var free_product_quantity=fields.elements[13];
-		var free_service_filter=fields.elements[14];
+		var amount_filter=fields.elements[4];
+		var discount_filter=fields.elements[5];
+		var tax_filter=fields.elements[6];
+		var total_filter=fields.elements[7];
+		var id_filter=fields.elements[8];
+		var save_button=fields.elements[9];
+		var tax_rate_filter=fields.elements[12];
 				
 		$(save_button).on("click", function(event)
 		{
@@ -2701,130 +2413,44 @@ function form72_add_service()
 			event.preventDefault();
 			form72_add_service();
 		});
-				
+		
+		$(name_filter).focus();
+		
 		var service_data="<services>" +
 				"<name></name>" +
 				"</services>";
-		set_my_value_list_func(service_data,name_filter,function () 
-		{
-			$(name_filter).focus();
-		});
-				
-		var staff_data="<staff>" +
-				"<acc_name></acc_name>" +
-				"<status exact='yes'>active</status>" +
-				"</staff>";
-		set_my_value_list(staff_data,staff_filter);
+		set_my_value_list_func(service_data,name_filter); 
 		
-		var add_service=document.getElementById('form72_add_service_'+id);
-		$(add_service).on('click',function()
+		$(name_filter).on('blur',function(event)
 		{
-			modal20_action(function()
-			{	
-				var service_data="<services>" +
-						"<name></name>" +
-						"</services>";
-				set_my_value_list_func(service_data,name_filter,function () 
-				{
-					$(name_filter).focus();
-				});
-			});
-		});
-
-		var add_staff=document.getElementById('form72_add_staff_'+id);
-		$(add_staff).on('click',function()
-		{
-			modal16_action(function()
-			{	
-				var staff_data="<staff>" +
-						"<acc_name></acc_name>" +
-						"<status exact='yes'>active</status>" +
-						"</staff>";
-				set_my_value_list(staff_data,staff_filter);
-			});
-		});
-		
-		$(name_filter).on('blur',function(event){
-			notes_filter.value="";
-			price_filter.value=0;
-			total_filter.value=0;
-			amount_filter.value=0;
-			discount_filter.value=0;
-			tax_filter.value=0;
-			offer_filter.value="";
-			free_product_filter.value="";
-			free_product_quantity.value="";
-			free_service_filter.value="";
-			
-			var price_data="<services>" +
-					"<price></price>" +
+			var tax_data="<services count='1'>" +
 					"<tax></tax>" +
+					"<price></price>"+
 					"<name exact='yes'>"+name_filter.value+"</name>" +
 					"</services>";
-			
-			fetch_requested_data('',price_data,function(prices)
+			fetch_requested_data('',tax_data,function(taxes)
 			{
-				for(var a in prices)
+				if(taxes.length>0)
 				{
-					price_filter.value=prices[a].price;
-					var amount=parseFloat(prices[a].price);
-					amount_filter.value=amount;
-					var offer_data="<offers>" +
-							"<offer_type>service</offer_type>" +
-							"<criteria_type>min amount crossed</criteria_type>" +
-							"<criteria_amount upperbound='yes'>"+amount+"</criteria_amount>" +
-							"<service exact='yes'>"+name_filter.value+"</service>" +
-							"<result_type></result_type>" +
-							"<discount_percent></discount_percent>" +
-							"<discount_amount></discount_amount>" +
-							"<offer_detail></offer_detail>" +
-							"<free_product_name></free_product_name>" +
-							"<free_product_quantity></free_product_quantity>" +
-							"<free_service_name></free_service_name>" +
-							"<status array='yes'>active--extended</status>" +
-							"</offers>";
-					fetch_requested_data('',offer_data,function(offers)
-					{
-						offers.sort(function(a,b)
-						{
-							if(a.criteria_amount<b.criteria_amount)
-							{	return 1;}
-							else 
-							{	return -1;}
-						});
-								
-						for(var i in offers)
-						{
-							offer_filter.value=offers[i].offer_detail;	
-							if(offers[i].result_type=='discount')
-							{
-								if(offers[i].discount_percent!="" && offers[i].discount_percent!=0 && offers[i].discount_percent!="0")
-								{
-									discount_filter.value=parseFloat((amount*parseInt(offers[i].discount_percent))/100);
-								}
-								else 
-								{
-									discount_filter.value=parseFloat(offers[i].discount_amount)*(Math.floor(parseFloat(amount_filter.value)/parseFloat(offers[i].criteria_amount)));
-								}
-							}
-							else if(offers[i].result_type=='product free')
-							{
-								free_product_filter.value=offers[i].free_product_name;
-								free_product_quantity.value=parseFloat(offers[i].free_product_quantity)*(Math.floor(parseFloat(quantity_filter.value)/parseFloat(offers[i].criteria_quantity)));
-							}		
-							else if(offers[i].result_type=='service free')
-							{
-								free_service_filter.value=offers[i].free_service_name;
-							}		
-							break;
-						}
-					});
-
-					tax_filter.value=parseFloat((parseFloat(prices[a].tax)*(amount-parseFloat(discount_filter.value)))/100);
-					break;
+					tax_rate_filter.value=taxes[0].tax;
+					price_filter.value=taxes[0].price;
+					amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+					tax_filter.value=parseFloat((parseFloat(tax_rate_filter.value)*(parseFloat(amount_filter.value)-parseFloat(discount_filter.value)))/100);
+					total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);	
 				}
-				total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
-			});					
+				else 
+				{
+					tax_rate_filter.value=0;
+					price_filter.value="";
+				}	
+			});
+		});
+						
+		$(quantity_filter).add(price_filter).add(discount_filter).on('blur',function(event)
+		{
+			amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			tax_filter.value=parseFloat((parseFloat(tax_rate_filter.value)*(parseFloat(amount_filter.value)-parseFloat(discount_filter.value)))/100);
+			total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
 		});
 	}
 	else

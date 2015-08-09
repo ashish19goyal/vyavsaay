@@ -2340,17 +2340,10 @@ function form72_import(data_array,import_type)
 				"<item_name>"+row.item_name+"</item_name>" +
 				"<quantity>"+row.quantity+"</quantity>" +
 				"<unit_price>"+row.unit_price+"</unit_price>" +
-				"<mrp>"+row.mrp+"</mrp>" +
 				"<amount>"+row.amount+"</amount>" +
 				"<total>"+row.total+"</total>" +
 				"<discount>"+row.discount+"</discount>" +
-				"<offer>"+row.offer+"</offer>" +
-				"<type>"+row.type+"</type>" +
-				"<batch>"+row.batch+"</batch>" +
-				"<notes>"+row.notes+"</notes>" +
-				"<staff>"+row.staff+"</staff>" +
 				"<tax>"+row.tax+"</tax>" +
-				"<free_with>"+row.free_with+"</free_with>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});

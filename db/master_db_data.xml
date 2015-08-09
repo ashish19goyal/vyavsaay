@@ -2,6 +2,12 @@
 <re_xml>
 	<user_fields_list>
 		<row>
+			<tablename>treatment_plans</tablename>
+			<field_name>customer</field_name>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<tablename>timesheet</tablename>
 			<field_name>acc_name</field_name>
 			<status>active</status>
@@ -309,6 +315,62 @@
 		</row>
 	</user_fields_list>
 	<values_list>
+		<row>
+			<tablename>treatment_plans</tablename>
+			<listname>status</listname>
+			<name>inactive</name>
+			<value>Inactive</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>treatment_plans</tablename>
+			<listname>status</listname>
+			<name>active</name>
+			<value>Active</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>treatment_plans</tablename>
+			<listname>status</listname>
+			<name>suspended</name>
+			<value>Suspended</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>treatment_plans</tablename>
+			<listname>status</listname>
+			<name>completed</name>
+			<value>Completed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>treatment_plan_items</tablename>
+			<listname>status</listname>
+			<name>completed</name>
+			<value>Completed</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>treatment_plan_items</tablename>
+			<listname>status</listname>
+			<name>pending</name>
+			<value>Pending</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<tablename>treatment_plan_items</tablename>
+			<listname>status</listname>
+			<name>overdue</name>
+			<value>Overdue</value>
+			<status>active</status>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<tablename>drs</tablename>
 			<listname>type</listname>

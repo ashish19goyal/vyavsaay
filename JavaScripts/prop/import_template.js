@@ -385,9 +385,8 @@ function form71_import_template()
 */
 function form72_import_template()
 {
-	var data_array=['id','bill_id','item_name','quantity','unit_price','mrp','amount',
-	                'total','discount','offer','type','batch','notes',
-	                'staff','tax','free_with'];
+	var data_array=['id','bill_id','item_name','quantity','unit_price','amount',
+	                'total','discount','tax'];
 	my_array_to_csv(data_array);
 };
 

@@ -11,6 +11,8 @@
 			<li><a id='form53_link' href='#form53' onclick='form53_header_ini(); form53_ini();' data-i18n='form.manage_supplier_bills'></a></li>
 			<li><a id='form24_link' href='#form24' onclick="form24_header_ini(); form24_ini();" data-i18n='form.create_purchase_order'></a></li>
 			<li><a id='form43_link' href='#form43' onclick='form43_header_ini(); form43_ini();' data-i18n='form.manage_purchase_orders'></a></li>
+			<li><a id='form222_link' href='#form222' onclick="form222_header_ini(); form222_ini();" data-i18n='form.create_purchase_order'></a></li>
+			<li><a id='form223_link' href='#form223' onclick='form223_header_ini(); form223_ini();' data-i18n='form.manage_purchase_orders'></a></li>
 			<li><a id='form159_link' href='#form159' onclick='form159_header_ini(); form159_ini();' data-i18n='form.issue_grn'></a></li>
 			<li><a id='form160_link' href='#form160' onclick='form160_header_ini(); form160_ini();' data-i18n='form.manage_supplier_bills'></a></li>
 			<li><a id='form17_link' href='#form17' onclick='form17_header_ini(); form17_ini();' data-i18n='form.manage_returns'></a></li>
@@ -34,6 +36,8 @@
 			include "forms/form53.php";
 			include "forms/form24.php";
 			include "forms/form43.php";
+			include "forms/form222.php";
+			include "forms/form223.php";
 			include "forms/form159.php";
 			include "forms/form160.php";
 			include "forms/form17.php";

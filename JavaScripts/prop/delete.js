@@ -2162,48 +2162,17 @@ function form72_delete_item(button)
 	{
 		modal115_action(function()
 		{
-			var bill_id=document.getElementById("form72_master").elements[4].value;
+			var bill_id=document.getElementById("form72_master").elements['bill_id'].value;
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var data_id=form.elements[9].value;
+			var data_id=form.elements[8].value;
 			
-			if(isNaN(form.elements[2].value))
-			{
-				var data_xml="<bill_items>" +
-						"<id>"+data_id+"</id>" +
-						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
-				var task_xml="<task_instances>" +
-						"<source></source>" +
-						"<source_id>"+data_id+"</source_id>" +
-						"</task_instances>";
-				if(is_online())
-				{
-					server_delete_simple(data_xml);
-					server_delete_simple(task_xml);				
-				}
-				else
-				{
-					local_delete_simple(data_xml);
-					local_delete_simple(task_xml);
-				}
-			}
-			else
-			{
-				var data_xml="<bill_items>" +
-						"<id>"+data_id+"</id>" +
-						"<bill_id>"+bill_id+"</bill_id>" +
-						"</bill_items>";	
-				if(is_online())
-				{
-					server_delete_simple(data_xml);
-				}
-				else
-				{
-					local_delete_simple(data_xml);
-				}
-			}					
+			var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<bill_id>"+bill_id+"</bill_id>" +
+					"</bill_items>";	
+			delete_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
 	}

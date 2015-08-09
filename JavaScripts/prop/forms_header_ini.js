@@ -816,14 +816,14 @@ function form21_header_ini()
 {
 	var fields=document.getElementById('form21_master');
 	
-	var supplier_filter=fields.elements[1];
-	fields.elements[2].value="";
-	var bill_date=fields.elements[3];
-	var entry_date=fields.elements[4];
-	fields.elements[5].value="";
-	fields.elements[6].value=get_new_key();
-	fields.elements[7].value=fields.elements[6].value;
-	var save_button=fields.elements[8];
+	var supplier_filter=fields.elements['supplier'];
+	var bill_date=fields.elements['date'];
+	var entry_date=fields.elements['edate'];
+	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['t_id'].value=fields.elements['bill_id'].value;
+	var save_button=fields.elements['save'];	
+	fields.elements['bill_num'].value="";
+	supplier_filter.value='';
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -851,7 +851,10 @@ function form21_header_ini()
 		"<acc_name></acc_name>" +
 		"</suppliers>";
 	
-	set_my_value_list(suppliers_data,supplier_filter);
+	set_my_value_list(suppliers_data,supplier_filter,function () 
+	{
+		$(supplier_filter).focus();
+	});
 
 	var add_supplier=document.getElementById('form21_add_supplier');
 	$(add_supplier).off('click');
@@ -871,9 +874,6 @@ function form21_header_ini()
 	
 	$(entry_date).datepicker();
 	$(entry_date).val(get_my_date());
-
-	supplier_filter.value='';
-	$(supplier_filter).focus();
 }
 
 
@@ -1925,20 +1925,19 @@ function form71_header_ini()
 
 
 /**
- * @form Create Bills
+ * @form Create Bills (Aurilion)
  * @formNo 72
  */
 function form72_header_ini()
 {
 	var fields=document.getElementById('form72_master');
 	
-	var customers_filter=fields.elements[1];
-	var bill_date=fields.elements[2];
-	var bill_num=fields.elements[3];
-	fields.elements[4].value=get_new_key();
-	fields.elements[5].value="";
-	fields.elements[6].value=fields.elements[4].value;
-	var save_button=fields.elements[7];
+	var customers_filter=fields.elements['customer'];
+	var bill_date=fields.elements['date'];
+	var bill_num=fields.elements['bill_num'];
+	fields.elements['bill_id'].value=get_new_key();
+	fields.elements['t_id'].value=fields.elements['bill_id'].value;
+	var save_button=fields.elements['save'];
 
 	var bill_id=$("#form72_link").attr('data_id');
 	if(bill_id==null || bill_id=='')
@@ -1971,10 +1970,14 @@ function form72_header_ini()
 		event.preventDefault();
 		form72_add_product();
 	});
+	
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
-	set_my_filter(customers_data,customers_filter);
+	set_my_value_list(customers_data,customers_filter,function () 
+	{
+		$(customers_filter).focus();
+	});
 
 	var add_customer=document.getElementById('form72_add_customer');
 	$(add_customer).off('click');
@@ -1992,8 +1995,6 @@ function form72_header_ini()
 	$(bill_date).datepicker();
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';
-	
-	$(customers_filter).focus();
 }
 
 

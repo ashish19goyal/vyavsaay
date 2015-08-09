@@ -379,6 +379,8 @@
 	"launch_contact_form":"Launch Contact Form",
 	"sale_leads_by_staff":"Sales Lead Report",
 	"manage_projects_cps":"Manage Projects (CPS)",
-	"timesheet":"Timesheet"
+	"timesheet":"Timesheet",
+	"create_purchase_order_aurilion":"Create Purchase Order (Aurilion)",
+	"manage_purchase_orders_aurilion":"Manage Purchase Orders (Aurilion)"
 	}
 }
