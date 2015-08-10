@@ -197,7 +197,12 @@ function start_workers()
 	{sale_leads_add();});
 
 	deferred_execute(function()
-	{generate_attendance_records();});
+	{
+		if(is_form_access('form7'))
+		{
+			generate_attendance_records();
+		}
+	});
 	
 	deferred_execute(function()
 	{manufactured_products_outofstock();});
