@@ -6013,7 +6013,7 @@ function activities_ini()
 	if(is_create_access('activities'))
 	{
 		show_loader();
-		var columns="<activities count='100'>" +
+		var columns="<activities count='100' start_index='0'>" +
 			"<title></title>" +
 			"<link_to></link_to>" +
 			"<data_id></data_id>" +
