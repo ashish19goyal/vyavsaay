@@ -1026,7 +1026,7 @@ function form21_add_item()
 			
 			var last_batch_data="<supplier_bill_items count='1'>"+
 								"<batch></batch>"+
-								"<product_name exact='yes'>"+name_fitler.value+"</product_name>"+
+								"<product_name exact='yes'>"+name_filter.value+"</product_name>"+
 								"</supplier_bill_items>";
 			set_my_value(last_batch_data,batch_filter,function()
 			{
