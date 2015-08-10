@@ -5801,7 +5801,7 @@ function form72_ini()
 					form72_update_form();
 				});
 
-				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 							"<td>Rs. "+bill_results[0].amount+"</br>" +
 							"Rs. "+bill_results[0].discount+"</br>" +
@@ -21340,7 +21340,7 @@ function form208_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form208_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Plan #'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form208_"+result.id+"' value='"+result.name+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form208_"+result.id+"' value='"+result.plan_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Customer'>";
 						rowsHTML+="<textarea readonly='readonly' form='form208_"+result.id+"'>"+result.customer+"</textarea>";
@@ -21486,7 +21486,6 @@ function form209_ini()
 			{
 				results.forEach(function(result)
 				{
-					var plan_status=filter_fields.elements[4].value;
 					var rowsHTML="";
 					var id=result.id;
 					rowsHTML+="<tr>";

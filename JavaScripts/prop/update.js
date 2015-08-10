@@ -3341,7 +3341,7 @@ function form72_update_form()
 		update_row(data_xml,activity_xml);
 		update_simple(transaction_xml);
 		
-		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"Rs. "+discount+"</br>" +
@@ -10687,6 +10687,108 @@ function form208_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create Treatment plan
+ * @formNo 209
+ * @param button
+ */
+function form209_update_item(form)
+{
+	if(is_update_access('form209'))
+	{
+		var master_form=document.getElementById("form209_master");		
+		var plan_id=master_form.elements['plan_id'].value;
+		
+		var order=form.elements[0].value;
+		var item=form.elements[1].value;
+		var details=form.elements[2].value;
+		var from=get_raw_time(form.elements[4].value);
+		var to=get_raw_time(form.elements[5].value);
+		var status=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		var save_button=form.elements[8];
+		var del_button=form.elements[9];
+		var last_updated=get_my_time();
+			
+		var data_xml="<treatment_plan_items>" +
+				"<id>"+data_id+"</id>" +
+				"<order_no>"+order+"</order_no>" +
+				"<item>"+item+"</item>" +
+				"<details>"+details+"</details>" +
+				"<from_time>"+from+"</from_time>" +
+				"<to_time>"+to+"</to_time>" +
+				"<status>"+status+"</status>" +
+				"<plan_id>"+plan_id+"</plan_id>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</treatment_plan_items>";
+	
+		update_simple(data_xml);
+				
+		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Create Treatment Plan
+ * @param button
+ */
+function form209_update_form()
+{
+	if(is_update_access('form209'))
+	{
+		var form=document.getElementById("form209_master");
+		
+		var num=form.elements['num'].value;
+		var customer=form.elements['customer'].value;
+		var start_date=get_raw_time(form.elements['date'].value);
+		var status=form.elements['status'].value;
+		var data_id=form.elements['plan_id'].value;
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var data_xml="<treatment_plans>" +
+					"<id>"+data_id+"</id>" +
+					"<plan_num>"+num+"</plan_num>" +
+					"<start_date>"+start_date+"</start_date>" +
+					"<customer>"+customer+"</customer>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</treatment_plans>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>treatment_plans</tablename>" +
+					"<link_to>form208</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Treatment Plan "+num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+			
+		$("[id^='save_form209_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+function form209_update_serial_numbers()
+{
+	$('#form209_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)>input').attr('value',index+1);
+	});
+}
+
 
 /**
  * @form Update Logistics orders

@@ -11423,7 +11423,7 @@ function form206_add_item()
 }
 
 /**
- * @form Production Plan Items
+ * @form Treatment Plan Items
  * @formNo 209
  */
 function form209_add_item()
@@ -11432,69 +11432,65 @@ function form209_add_item()
 	{
 		var filter_fields=document.getElementById('form209_master');
 		
-		var rowsHTML="";
 		var id=get_new_key();
-		rowsHTML+="<tr>";
-		rowsHTML+="<form id='form209_"+id+"' autocomplete='off'></form>";
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form209_"+id+"'></form>";
 			rowsHTML+="<td data-th='Order'>";
-				rowsHTML+="<input type='number' form='form209_"+id+"'>";
+				rowsHTML+="<input type='number' readonly='readonly' form='form209_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' required form='form209_"+id+"'>";
+				rowsHTML+="<input type='text' form='form209_"+id+"'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Quantity'>";
-				rowsHTML+="<input type='number' required form='form209_"+id+"' step='any'>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<textarea class='dblclick_editable' form='form209_"+id+"'></textarea>";
+				rowsHTML+="<br><div id='form209_documents_"+id+"'></div>";
+				rowsHTML+="<input type='button' form='form209_"+id+"' value='Add document' class='generic_icon'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Schedule'>";
-				rowsHTML+="From: <input type='text' form='form209_"+id+"'>";
-				rowsHTML+="<br>To: <input type='text' form='form209_"+id+"'>";
+				rowsHTML+="From: <input type='text' class='dblclick_editable' form='form209_"+id+"'>";
+				rowsHTML+="<br>To: <input type='text' class='dblclick_editable' form='form209_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' form='form209_"+id+"' required value='pending'>";
+				rowsHTML+="<input type='text' form='form209_"+id+"' class='dblclick_editable' value='pending'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form209_"+id+"' value='"+id+"'>";
-				rowsHTML+="<input type='button' class='save_icon' form='form209_"+id+"' id='save_form209_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form209_"+id+"' id='delete_form209_"+id+"' onclick='$(this).parent().parent().remove();'>";
-				rowsHTML+="<input type='submit' class='submit_hidden' form='form209_"+id+"'>";
+				rowsHTML+="<input type='button' class='save_icon' form='form209_"+id+"' id='save_form209_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form209_"+id+"' id='delete_form209_"+id+"' onclick='form209_delete_item($(this));'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 	
-		$('#form209_body').append(rowsHTML);
-		
-		var fields=document.getElementById("form209_"+id);
-		var order_filter=fields.elements[0];
+		$('#form209_body').prepend(rowsHTML);
+		var fields=document.getElementById('form209_'+id);
 		var item_filter=fields.elements[1];
-		var quantity_filter=fields.elements[2];
-		var from_filter=fields.elements[3];
-		var to_filter=fields.elements[4];
-		var status_filter=fields.elements[5];
-		var id_filter=fields.elements[6];
-		var save_button=fields.elements[7];
+		var doc_filter=fields.elements[3];
+		var from_filter=fields.elements[4];
+		var to_filter=fields.elements[5];
+		var status_filter=fields.elements[6];
+		var save_button=fields.elements[8];
 		
-		$(save_button).on("click", function(event)
-		{
-			event.preventDefault();
-			form209_create_item(fields);
-		});
-
-		$(fields).on("submit", function(event)
-		{
-			event.preventDefault();
-			form209_add_item();
-		});
+		$(item_filter).focus();
 		
-		var product_data="<product_master>" +
-				"<name></name>" +
-				"</product_master>";
-		set_my_value_list_func(product_data,item_filter,function () 
+		$(doc_filter).on('click',function () 
 		{
-			$(item_filter).focus();
+			modal144_action('treatment_plan_items',id,function (url,doc_name) 
+			{
+				var docHTML="<a href='"+url+"' download='"+doc_name+"'><u>"+doc_name+"</u></a><br>";
+				var doc_container=document.getElementById('form209_documents_'+id);
+				$(doc_container).append(docHTML);
+			});
 		});
 		
 		$(from_filter).datepicker();
 		$(to_filter).datepicker();
-		set_static_value_list('production_plan_items','status',status_filter);
+		set_static_value_list('treatment_plan_items','status',status_filter);
+		
+		$(save_button).on('click',function (event) 
+		{
+			event.preventDefault();
+			form209_create_item(fields);
+		});
+		
 		form209_update_serial_numbers();
 	}
 	else

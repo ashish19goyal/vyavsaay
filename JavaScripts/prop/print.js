@@ -2236,6 +2236,145 @@ function print_form200(func)
 }
 
 /**
+ * @form Treatment Plan
+ * @formNo 209
+ */
+function form209_print_form()
+{
+	print_form209(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	});	
+}
+
+/**
+ * @form Create Treatment Plan
+ * @formNo 209
+ */
+function print_form209(func)
+{
+	var form_id='form209';
+	
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_title=document.createElement('div');
+	
+	var plan_line=document.createElement('div');
+	
+	var info_section=document.createElement('div');	
+		var plan_info=document.createElement('div');
+
+	var table_container=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var address=document.createElement('div');
+
+	////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:100%;min-height:100px;');
+		business_title.setAttribute('style','float:right;width:50%;text-align:right;');
+	plan_line.setAttribute('style','width:100%;min-height:60px;background-color:#bbbbbb;');
+	info_section.setAttribute('style','width:100%;min-height:60px;text-align:left;');
+		plan_info.setAttribute('style','padding:5px;margin:5px;float:left;width:100%;height:90px;');
+	footer.setAttribute('style','width:100%;min-height:100px');
+		address.setAttribute('style','width:100%;min-height:50px;text-align:center;');
+
+	///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	var logo_image=get_session_var('logo');
+	var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+
+	var master_form=document.getElementById(form_id+'_master');
+	var plan_num=master_form.elements['num'].value;
+	var customer=master_form.elements['customer'].value;
+	var start_date=master_form.elements['date'].value;
+	var plan_status=master_form.elements['status'].value;
+		
+	////////////////filling in the content into the containers//////////////////////////
+
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	business_title.innerHTML=bt;
+	plan_line.innerHTML="<div style='float:left;width:50%'>Name: "+customer+"</div><div style='float:right;text-align:right;width:50%'>Starting From: "+start_date+"</div>";	
+	plan_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Plan #: </b>"+plan_num+"<br>Plan Status: "+plan_status+"<hr style='border: 1px solid #000;margin:2px'>";
+	
+	address.innerHTML="Address: "+business_address;
+
+	var table_element=document.getElementById(form_id+'_body');
+	/////////////adding new table //////////////////////////////////////////////////////	
+	var new_table=document.createElement('table');
+	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
+	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
+				"<td style='text-align:left;width:30px;'>S.No.</td>"+
+				"<td style='text-align:left;width:130px;'>Item</td>"+
+				"<td style='text-align:left;width:100px'>Details</td>"+
+				"<td style='text-align:left;width:45px'>From</td>"+
+				"<td style='text-align:left;width:45px'>To</td>"+
+				"<td style='text-align:left;width:45px'>Status</td></tr>";
+				
+	var table_rows=table_header;
+	var counter=0;
+	
+	$(table_element).find('form').each(function(index)
+	{
+		counter+=1;
+		var form=$(this)[0];
+		var s_no=form.elements[0].value;
+		var item_name=form.elements[1].value;
+		var details=form.elements[2].value;
+		var from=form.elements[4].value;
+		var to=form.elements[5].value;
+		var status=form.elements[6].value;
+		
+		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
+				"<td style='text-align:left;'>"+s_no+"</td>"+
+				"<td style='text-align:left;'>"+item_name+"</td>"+
+				"<td style='text-align:left;'>"+details+"</td>"+
+				"<td style='text-align:left;'>"+from+"</td>"+
+				"<td style='text-align:left;'>"+to+"</td>"+
+				"<td style='text-align:left;'>"+status+"</td></tr>";
+	});
+	
+	var row_count=$(table_element).find('tbody>tr').length;
+	var rows_to_add=10-row_count;
+	for(var i=0;i<rows_to_add;i++)
+	{
+		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+	}
+
+	new_table.innerHTML=table_rows;
+	
+	/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	/////////////placing the containers //////////////////////////////////////////////////////	
+
+	container.appendChild(header);
+	container.appendChild(plan_line);
+	container.appendChild(info_section);
+
+	container.appendChild(new_table);
+	container.appendChild(footer);
+
+	header.appendChild(logo);
+	header.appendChild(business_title);
+
+	info_section.appendChild(plan_info);
+
+	footer.appendChild(address);
+
+	func(container);
+}
+
+
+/**
  * @form Create COD DRS
  * @formNo 219
  */

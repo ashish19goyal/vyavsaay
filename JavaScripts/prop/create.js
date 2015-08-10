@@ -3595,7 +3595,7 @@ function form72_create_form()
 		});
 		
 		
-		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"Rs. "+discount+"</br>" +
@@ -13831,6 +13831,130 @@ function form200_create_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Treatment plan
+ * @formNo 209
+ * @param button
+ */
+function form209_create_item(form)
+{
+	if(is_create_access('form209'))
+	{
+		var master_form=document.getElementById("form209_master");
+		
+		var plan_id=master_form.elements['plan_id'].value;
+		
+		var order=form.elements[0].value;
+		var item=form.elements[1].value;
+		var details=form.elements[2].value;
+		var from=get_raw_time(form.elements[4].value);
+		var to=get_raw_time(form.elements[5].value);
+		var status=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		var save_button=form.elements[8];
+		var del_button=form.elements[9];
+		var last_updated=get_my_time();
+			
+		var data_xml="<treatment_plan_items>" +
+				"<id>"+data_id+"</id>" +
+				"<order_no>"+order+"</order_no>" +
+				"<item>"+item+"</item>" +
+				"<details>"+details+"</details>" +
+				"<from_time>"+from+"</from_time>" +
+				"<to_time>"+to+"</to_time>" +
+				"<status>"+status+"</status>" +
+				"<plan_id>"+plan_id+"</plan_id>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</treatment_plan_items>";
+	
+		create_simple(data_xml);
+		
+		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}		
+
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form209_delete_item(del_button);
+		});
+
+		$(save_button).off('click');
+		$(save_button).on('click',function () 
+		{
+			form209_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Create production plan
+ * @param button
+ */
+function form209_create_form()
+{
+	if(is_create_access('form209'))
+	{
+		show_loader();
+		var form=document.getElementById("form209_master");
+		
+		var num=form.elements['num'].value;
+		var customer=form.elements['customer'].value;
+		var start_date=get_raw_time(form.elements['date'].value);
+		var status=form.elements['status'].value;
+		var data_id=form.elements['plan_id'].value;
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var data_xml="<treatment_plans>" +
+					"<id>"+data_id+"</id>" +
+					"<plan_num>"+num+"</plan_num>" +
+					"<customer>"+customer+"</customer>" +
+					"<start_date>"+start_date+"</start_date>" +
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</treatment_plans>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>treatment_plans</tablename>" +
+					"<link_to>form208</link_to>" +
+					"<title>Saved</title>" +
+					"<notes>Treatment plan "+num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		
+		$(save_button).off('click');
+		$(save_button).on('click',function(event)
+		{
+			event.preventDefault();
+			form209_update_form();
+		});
+
+		$('#form209_share').show();
+		$('#form209_share').click(function()
+		{
+			modal101_action('Treatment Plan',customer,'customer',function (func) 
+			{
+				print_form209(func);
+			});
+		});
+
+		$("[id^='save_form209_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 /**
  * @form Sale leads

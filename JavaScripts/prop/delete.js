@@ -6998,6 +6998,35 @@ function form208_delete_item(button)
 }
 
 /**
+ * @form Create production plan
+ * @param button
+ */
+function form209_delete_item(button)
+{
+	if(is_delete_access('form209'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[7].value;
+			var last_updated=get_my_time();
+			var data_xml="<treatment_plan_items>" +
+						"<id>"+data_id+"</id>" +
+						"</treatment_plan_items>";	
+			delete_simple(data_xml);
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Sale Leads
  * @param button
  */
