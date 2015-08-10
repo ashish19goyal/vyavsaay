@@ -21518,7 +21518,7 @@ function form209_ini()
 					{
 						modal144_action('treatment_plan_items',id,function (url,doc_name) 
 						{
-							var docHTML+="<a href='"+url+"' download='"+doc_name+"'><u>"+doc_name+"</u></a><br>";
+							var docHTML="<a href='"+url+"' download='"+doc_name+"'><u>"+doc_name+"</u></a><br>";
 							var doc_container=document.getElementById('form209_documents_'+id);
 							$(doc_container).append(docHTML);
 						});

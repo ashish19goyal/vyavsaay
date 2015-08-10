@@ -11423,6 +11423,87 @@ function form206_add_item()
 }
 
 /**
+ * @form Production Plan Items
+ * @formNo 209
+ */
+function form209_add_item()
+{
+	if(is_create_access('form209'))
+	{
+		var filter_fields=document.getElementById('form209_master');
+		
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form209_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Order'>";
+				rowsHTML+="<input type='number' form='form209_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' required form='form209_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' required form='form209_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Schedule'>";
+				rowsHTML+="From: <input type='text' form='form209_"+id+"'>";
+				rowsHTML+="<br>To: <input type='text' form='form209_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form209_"+id+"' required value='pending'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form209_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='save_icon' form='form209_"+id+"' id='save_form209_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form209_"+id+"' id='delete_form209_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form209_"+id+"'>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form209_body').append(rowsHTML);
+		
+		var fields=document.getElementById("form209_"+id);
+		var order_filter=fields.elements[0];
+		var item_filter=fields.elements[1];
+		var quantity_filter=fields.elements[2];
+		var from_filter=fields.elements[3];
+		var to_filter=fields.elements[4];
+		var status_filter=fields.elements[5];
+		var id_filter=fields.elements[6];
+		var save_button=fields.elements[7];
+		
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form209_create_item(fields);
+		});
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form209_add_item();
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,item_filter,function () 
+		{
+			$(item_filter).focus();
+		});
+		
+		$(from_filter).datepicker();
+		$(to_filter).datepicker();
+		set_static_value_list('production_plan_items','status',status_filter);
+		form209_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Update Logistics Orders
  * @formNo 211
  */
