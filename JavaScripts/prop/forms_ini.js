@@ -6049,7 +6049,17 @@ function activities_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'activities');
+			var new_columns="<activities count='100' start_index='0'>" +
+			"<title></title>" +
+			"<link_to></link_to>" +
+			"<data_id></data_id>" +
+			"<notes></notes>" +
+			"<updated_by></updated_by>" +
+			"<status></status>" +
+			"<last_updated></last_updated>" +
+			"</activities>";
+		
+			get_export_data(new_columns,'activities');
 		});
 		hide_loader();
 	}
