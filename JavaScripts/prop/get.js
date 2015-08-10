@@ -590,6 +590,7 @@ function my_array_to_csv(data_array)
 function get_export_data(columns,filename)
 {
 	var new_columns=columns.replace(" count='25'","");
+	new_columns=new_columns.replace(" count='100'","");
 	new_columns=new_columns.replace("start_index","dont_use_index");
 	//console.log(new_columns);
 	fetch_requested_data('',new_columns,function(results)
