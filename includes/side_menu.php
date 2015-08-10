@@ -12,9 +12,9 @@
 	<div id='offline_icon' class='menu_icon'>
 		<img title='Working offline, click to switch to online' src='./images/offline.png' class='icon' onclick='switch_to_online();' >
 	</div>
-	
+
 	<div id='sync_icon' class='menu_icon'>
-		<div id='count_sync'></div>
+		<div id='count_sync' onclick='sync_local_and_server();'></div>
 		<img title='Sync to server' src='./images/sync.png' class='icon' onclick='sync_local_and_server();'>
 	</div>
 
