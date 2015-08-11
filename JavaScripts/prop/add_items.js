@@ -12225,7 +12225,7 @@ function form222_add_item()
 						"<cost_price></cost_price>"
 						"<product_name exact='yes'>"+name_filter.value+"</product_name>"+
 						"</product_instances>";
-			fetch_requested_data(function(mrps)
+			fetch_requested_data('',mrp_data,function(mrps)
 			{
 				if(mrps.length>0)
 				{
@@ -12237,7 +12237,7 @@ function form222_add_item()
 					mrp_filter.value="";
 					price_filter.value="";
 				}
-			},mrp_data);
+			});
 
 			amount_filter.value="";
 			tax_filter.value="";

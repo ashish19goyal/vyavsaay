@@ -3604,7 +3604,7 @@ function form48_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form48_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Report'>";
-						rowsHTML+="<textarea readonly='readonly' form='form48_"+result.id+"' data-i18n='form."+result.display_name+"'></textarea>";
+						rowsHTML+="<textarea readonly='readonly' form='form48_"+result.id+"' title='"+result.name+"' data-i18n='form."+result.display_name+"'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Selection'>";
 						rowsHTML+="<input type='checkbox' form='form48_"+result.id+"' "+result.value+">";
@@ -3704,7 +3704,7 @@ function form49_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form49_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Form'>";
-						rowsHTML+="<textarea readonly='readonly' form='form49_"+result.id+"' data-i18n='form."+result.display_name+"'></textarea>";
+						rowsHTML+="<textarea readonly='readonly' form='form49_"+result.id+"' title='"+result.name+"' data-i18n='form."+result.display_name+"'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Selection'>";
 						rowsHTML+="<input type='checkbox' form='form49_"+result.id+"' "+result.value+">";
@@ -7574,6 +7574,90 @@ function form89_ini()
 	if(fid==null)
 		fid="";
 	
+	///////////calendar view
+	$('#form89_calendar').fullCalendar('destroy');
+	$('#form89_calendar').fullCalendar({
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,agendaWeek,agendaDay'
+		},
+		height:400,
+		fixedWeekCount:false,
+		editable: true,
+		eventLimit: true, // allow "more" link when too many events
+		events: function(start, end, timezone, callback) {
+	        var start_time=parseFloat(start.unix())*1000;
+	        var end_time=parseFloat(end.unix())*1000;
+	        var app_data="<appointments>" +
+	        		"<id>"+fid+"</id>" +
+	        		"<customer></customer>" +
+	        		"<schedule lowerbound='yes'>"+start_time+"</schedule>" +
+	        		"<schedule upperbound='yes'>"+end_time+"</schedule>" +
+	        		"<status></status>" +
+	        		"<assignee></assignee>" +
+	        		"<hours></hours>" +
+	        		"<notes></notes>" +
+	        		"</appointments>";
+	        
+	        fetch_requested_data('form89',app_data,function(apps)
+	        {
+	        	//console.log(apps);
+	        	var events=[];
+	        	
+	        	apps.forEach(function(app)
+	        	{
+        			var color="yellow";
+        			if(app.status=='cancelled')
+        			{
+        				color="aaaaaa";
+        			}
+        			else if(app.status=='closed')
+        			{
+        				color='#00ff00';
+        			}
+	        		events.push({
+	        			title: "\n"+app.assignee+"\nappointment with: "+app.customer,
+	        			start:get_iso_time(app.schedule),
+	        			end:get_iso_time(parseFloat(app.schedule)+(parseFloat(app.hours)*3600000)),
+	        			color: color,
+	        			textColor:"#333",
+	        			id: app.id
+	        		});	        		
+	        	});
+	        	callback(events);
+	        });
+	    },
+	    dayClick: function(date,jsEvent,view){
+	    	modal36_action(get_my_date_from_iso(date.format()));
+	    },
+	    eventClick: function(calEvent,jsEvent,view){
+	    	modal37_action(calEvent.id);
+	    },
+	    eventDrop: function(event,delta,revertFunc){
+	    	var schedule=(parseFloat(event.start.unix())*1000);
+	    	var data_xml="<appointments>" +
+						"<id>"+event.id+"</id>" +
+						"<schedule>"+schedule+"</schedule>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</appointments>";
+			update_simple(data_xml);
+	    },
+	    eventResize: function(event, delta, revertFunc){
+	    	var hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
+	    	var data_xml="<appointments>" +
+						"<id>"+event.id+"</id>" +
+						"<hours>"+hours+"</hours>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</appointments>";
+			update_simple(data_xml);
+		}
+	});
+	
+
+	////////////////
+	
+	
 	var filter_fields=document.getElementById('form89_header');
 	
 	//populating form 
@@ -7605,8 +7689,6 @@ function form89_ini()
 	{
 		results.forEach(function(result)
 		{
-			var message_string=result.customer+" appointment with "+result.assignee+" @"+get_my_datetime(result.schedule)+"\nNotes:"+result.notes;
-			message_string=encodeURIComponent(message_string);
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form89_"+result.id+"'></form>";
@@ -7629,7 +7711,6 @@ function form89_ini()
 						rowsHTML+="<input type='hidden' readonly='readonly' form='form89_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form89_"+result.id+"' title='Save'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form89_"+result.id+"' title='Delete' onclick='form89_delete_item($(this));'>";
-						rowsHTML+="<a id='form89_whatsapp_"+result.id+"' href='whatsapp://send?text="+message_string+"' target='_blank'><img style='width:25px;height:25px;' src='./images/whatsapp.jpeg' form='form89_"+result.id+"' title='Send details through WhatsApp'></a>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			

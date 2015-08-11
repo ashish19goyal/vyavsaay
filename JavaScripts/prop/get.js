@@ -976,6 +976,18 @@ function create_row(data_xml,activity_xml)
 	}
 }
 
+function create_row_func(data_xml,activity_xml,func)
+{
+	if(is_online())
+	{
+		server_create_row_func(data_xml,activity_xml,func);
+	}
+	else
+	{
+		local_create_row_func(data_xml,activity_xml,func);
+	}
+}
+
 function create_simple(data_xml)
 {
 	if(is_online())

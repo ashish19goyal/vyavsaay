@@ -20,7 +20,7 @@
 			<li><a id='form15_link' href='#form15' onclick="form15_header_ini(); form15_ini();" data-i18n='form.enter_returns'></a></li>
 			<li><a id='form16_link' href='#form16' onclick='form16_header_ini(); form16_ini();' data-i18n='form.manage_returns'></a></li>
 			<li><a id='form82_link' href='#form82' onclick='form82_header_ini();' data-i18n='form.scan_items'></a></li>
-			<li><a id='form89_link' href='#form89' onclick='form89_header_ini();' data-i18n='form.appointments'></a></li>
+			<li><a id='form89_link' href='#form89' onclick='form89_header_ini(); form89_ini();' data-i18n='form.appointments'></a></li>
 			<li><a id='form90_link' href='#form90' onclick='form90_header_ini(); form90_ini();' data-i18n='form.billing_types'></a></li>
 			<li><a id='form112_link' href='#form112' onclick="form112_header_ini();" data-i18n='form.add_unbilled_items'></a></li>
 			<li><a id='form113_link' href='#form113' onclick='form113_header_ini(); form113_ini();' data-i18n='form.manage_unbilled_items'></a></li>

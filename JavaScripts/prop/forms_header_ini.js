@@ -2397,99 +2397,9 @@ function form89_header_ini()
 {
 	$("#form89_body").parent().hide();
 	$("#form89_calendar").show();
-	
+	$('#form89_calendar').fullCalendar('destroy');
+
 	///initializing calendar
-	
-	$('#form89_calendar').fullCalendar({
-		header: {
-			left: 'prev,next today',
-			center: 'title',
-			right: 'month,agendaWeek,agendaDay'
-		},
-		height:400,
-		fixedWeekCount:false,
-		editable: true,
-		eventLimit: true, // allow "more" link when too many events
-		events: function(start, end, timezone, callback) {
-	        var start_time=parseFloat(start.unix())*1000;
-	        var end_time=parseFloat(end.unix())*1000;
-	        var app_data="<appointments>" +
-	        		"<id></id>" +
-	        		"<customer></customer>" +
-	        		"<schedule lowerbound='yes'>"+start_time+"</schedule>" +
-	        		"<schedule upperbound='yes'>"+end_time+"</schedule>" +
-	        		"<status></status>" +
-	        		"<assignee></assignee>" +
-	        		"<hours></hours>" +
-	        		"<notes></notes>" +
-	        		"</appointments>";
-	        
-	        fetch_requested_data('form89',app_data,function(apps)
-	        {
-	        	var events=[];
-	        	
-	        	apps.forEach(function(app)
-	        	{
-        			var color="yellow";
-        			if(app.status=='cancelled')
-        			{
-        				color="aaaaaa";
-        			}
-        			else if(app.status=='closed')
-        			{
-        				color='#00ff00';
-        			}
-	        		events.push({
-	        			title: "\n"+app.assignee+"\nappointment with: "+app.customer,
-	        			start:get_iso_time(app.schedule),
-	        			end:get_iso_time(parseFloat(app.schedule)+(parseFloat(app.hours)*3600000)),
-	        			color: color,
-	        			textColor:"#333",
-	        			id: app.id
-	        		});	        		
-	        	});
-	        	callback(events);
-	        });
-	    },
-	    dayClick: function(date,jsEvent,view){
-	    	modal36_action(get_my_date_from_iso(date.format()));
-	    },
-	    eventClick: function(calEvent,jsEvent,view){
-	    	modal37_action(calEvent.id);
-	    },
-	    eventDrop: function(event,delta,revertFunc){
-	    	var schedule=(parseFloat(event.start.unix())*1000);
-	    	var data_xml="<appointments>" +
-						"<id>"+event.id+"</id>" +
-						"<schedule>"+schedule+"</schedule>" +
-						"<last_updated>"+get_my_time()+"</last_updated>" +
-						"</appointments>";
-			if(is_online())
-			{
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
-	    },
-	    eventResize: function(event, delta, revertFunc){
-	    	var hours=parseFloat((parseFloat(event.end.unix())-parseFloat(event.start.unix()))/3600);
-	    	var data_xml="<appointments>" +
-						"<id>"+event.id+"</id>" +
-						"<hours>"+hours+"</hours>" +
-						"<last_updated>"+get_my_time()+"</last_updated>" +
-						"</appointments>";
-			if(is_online())
-			{
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}
-		}
-	});
 	
 	///calendar set
 	var filter_fields=document.getElementById('form89_header');
@@ -2520,6 +2430,7 @@ function form89_header_ini()
 	
 	$(next_element).hide();
 	$(prev_element).hide();	
+	
 };
 
 /**
@@ -2528,7 +2439,7 @@ function form89_header_ini()
  */
 function form89_switch_view()
 {
-	form89_ini();
+	//form89_ini();
 	$("#form89_body").parent().toggle();
 	$("#form89_calendar").toggle();
 }
