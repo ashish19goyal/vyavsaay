@@ -6509,7 +6509,10 @@ function form180_header_ini()
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
-	set_my_value_list(customers_data,customers_filter);
+	set_my_value_list(customers_data,customers_filter,function () 
+	{
+		$(customers_filter).focus();
+	});
 	
 	var add_customer=document.getElementById('form180_add_customer');
 	$(add_customer).off('click');
@@ -6565,6 +6568,35 @@ function form181_header_ini()
 	set_my_filter(order_data,order_filter);
 	set_my_filter(cust_data,name_filter);
 	set_static_filter('sale_orders','status',status_filter);
+};
+
+/**
+ * @form Update Inventory (CPS)
+ * @formNo 183
+ */
+function form183_header_ini()
+{
+	var filter_fields=document.getElementById('form183_header');	
+	var names_filter=filter_fields.elements[0];
+	var batches_filter=filter_fields.elements[1];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form183_ini();
+	});
+	//setting autocompletes 
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	var batch_data="<product_instances>" +
+			"<batch></batch>" +
+			"</product_instances>";
+
+	set_my_filter(products_data,names_filter);
+	set_my_filter(batch_data,batches_filter);
 };
 
 

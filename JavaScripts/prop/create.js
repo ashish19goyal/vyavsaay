@@ -12992,14 +12992,48 @@ function form180_create_form()
 					"<notes>Sale order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
+		var transaction_xml="<transactions>" +
+					"<id>"+data_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>"+customer+"</receiver>" +
+					"<giver>master</giver>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		var pt_tran_id=get_new_key();
+		var payment_xml="<payments>" +
+					"<id>"+pt_tran_id+"</id>" +
+					"<status>pending</status>" +
+					"<type>received</type>" +
+					"<date>"+get_my_time()+"</date>" +
+					"<total_amount>"+total+"</total_amount>" +
+					"<paid_amount>0</paid_amount>" +
+					"<acc_name>"+customer+"</acc_name>" +
+					"<due_date>"+get_credit_period()+"</due_date>" +
+					"<mode>"+get_payment_mode()+"</mode>" +
+					"<transaction_id>"+pt_tran_id+"</transaction_id>" +
+					"<bill_id>"+data_id+"</bill_id>" +
+					"<source_info>for sale order #"+order_num+"</source_info>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</payments>";
+		var pt_xml="<transactions>" +
+					"<id>"+pt_tran_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>master</receiver>" +
+					"<giver>"+customer+"</giver>" +
+					"<tax>0</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		
+		create_row(data_xml,activity_xml);
+		create_simple(transaction_xml);
+		create_simple(pt_xml);
+		create_simple_func(payment_xml,function()
 		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}
+			modal26_action(pt_tran_id);
+		});
 
 		var num_data="<user_preferences>"+
 						"<id></id>"+						
@@ -13014,14 +13048,8 @@ function form180_create_form()
 							"<value>"+(parseInt(order_num)+1)+"</value>"+
 							"<last_updated>"+last_updated+"</last_updated>"+
 							"</user_preferences>";
-				if(is_online())
-				{
-					server_update_simple(num_xml);
-				}
-				else 
-				{
-					local_update_simple(num_xml);
-				}
+				update_simple(num_xml);
+				
 			}
 		},num_data);
 

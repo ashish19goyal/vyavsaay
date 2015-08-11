@@ -18931,6 +18931,128 @@ function form181_ini()
 };
 
 /**
+ * @form Update Inventory (CPS)
+ * @formNo 183
+ * @Loading heavy
+ */
+function form183_ini()
+{
+	show_loader();
+	var fid=$("#form183_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form183_header');
+	
+	var fname=filter_fields.elements[0].value;
+	var fbatch=filter_fields.elements[1].value;
+
+	////indexing///
+	var index_element=document.getElementById('form183_index');
+	var prev_element=document.getElementById('form183_prev');
+	var next_element=document.getElementById('form183_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	
+	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
+		"<id>"+fid+"</id>" +
+		"<batch>"+fbatch+"</batch>" +
+		"<product_name>"+fname+"</product_name>" +
+		"<manufacture_date></manufacture_date>"+
+		"<expiry></expiry>" +
+		"</product_instances>";
+
+	$('#form183_body').html("");
+	
+	fetch_requested_data('form183',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form183_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Name'>";
+						rowsHTML+="<textarea readonly='readonly' form='form183_"+result.id+"'>"+result.product_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Batch'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form183_"+result.id+"' value='"+result.batch+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Manufacturing'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form183_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.manufacture_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Expiry'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form183_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.expiry)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form183_"+result.id+"' value=''>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form183_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' title='Save' form='form183_"+result.id+"'>";					
+						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form183_"+result.id+"' onclick='form183_delete_item($(this));'>";
+						//rowsHTML+="<input type='button' class='generic_icon' value='Purchase' form='form183_"+result.id+"' onclick=\"modal27_action('"+result.product_name+"');\">";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form183_body').append(rowsHTML);
+			var fields=document.getElementById("form183_"+result.id);
+			var manufacturing=fields.elements[2];
+			var expiry=fields.elements[3];
+			var sys_inventory=fields.elements[4];
+			$(fields).on("submit", function(event)
+			{
+				event.preventDefault();
+				form183_update_item(fields);
+			});
+			
+			$(manufacturing).datepicker();
+			$(expiry).datepicker();
+
+			get_inventory(result.product_name,result.batch,function(inventory)
+			{
+				sys_inventory.value=inventory;
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'inventory');
+		});
+		hide_loader();
+	});
+};
+
+
+/**
  * @form Production Steps
  * @formNo 184
  * @Loading light

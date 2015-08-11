@@ -6028,6 +6028,54 @@ function form181_delete_item(button)
 	}
 }
 
+/**
+ * @form Update Inventory (CPS)
+ * @param button
+ */
+function form183_delete_item(button)
+{
+	if(is_delete_access('form183'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var name=form.elements[0].value;
+			var batch=form.elements[1].value;
+			var data_id=form.elements[5].value;
+			var last_updated=get_my_time();
+			var data_xml="<product_instances>" +
+						"<id>"+data_id+"</id>" +
+						"</product_instances>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>product_instances</tablename>" +
+						"<link_to>form183</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Batch number "+batch+" of product "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var other_delete="<area_utilization>" +
+						"<item_name>"+name+"</item_name>" +
+						"<batch>"+batch+"</batch>" +
+						"</area_utilization>";
+			var other_delete2="<inventory_adjust>" +
+						"<product_name>"+name+"</product_name>" +
+						"<batch>"+batch+"</batch>" +
+						"</inventory_adjust>";	
+			
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
+			delete_simple(other_delete2);
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
 
 /**
  * @form Production Steps

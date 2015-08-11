@@ -1706,3 +1706,25 @@ function report81_header_ini()
 				"</staff>";
 	set_my_filter(staff_data,staff_filter);
 }
+
+/**
+ * @reportNo 82
+ * @report Iventory report
+ */
+function report82_header_ini()
+{	
+	var form=document.getElementById('report82_header');
+	var item_filter=form.elements['item'];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report82_ini();
+	});
+			
+	var item_data="<product_master>"+
+				"<name></name>"+
+				"</product_master>";
+	set_my_filter(item_data,item_filter);
+}

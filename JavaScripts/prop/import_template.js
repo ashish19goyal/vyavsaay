@@ -1110,6 +1110,16 @@ function form181_import_template()
 };
 
 /**
+* @form Update Inventory (CPS)
+* @formNo 183
+*/
+function form183_import_template()
+{
+	var data_array=['id','product_name','batch','expiry','manufacture_date','actual_quantity','mrp'];
+	my_array_to_csv(data_array);
+};
+
+/**
 * @form Production Steps
 * @formNo 184
 */

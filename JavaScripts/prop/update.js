@@ -566,18 +566,9 @@ function form10_update_form()
 					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-			server_update_simple(transaction_xml);
-			server_update_simple(sale_order_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-			local_update_simple(transaction_xml);
-			local_update_simple(sale_order_xml);
-		}
+		update_row(data_xml,activity_xml);
+		update_simple(transaction_xml);
+		update_simple(sale_order_xml);
 		
 		var total_row="<tr><td colspan='2' data-th='Total'>Total<br>PCS: "+quantity+"</td>" +
 					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
@@ -614,41 +605,23 @@ function form10_update_form()
 							"<tax>0</tax>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</transactions>";
-				if(is_online())
+				update_simple_func(payment_xml,function()
 				{
-					server_update_simple_func(payment_xml,function()
+					modal26_action(payments[y],function (mode,paid) 
 					{
-						modal26_action(payments[y],function (mode,paid) 
-						{
-							console.log(paid);
-							if(parseFloat(paid)==0)
-								payment_filter.value="Unpaid<br>Balance: Rs. "+total;
-							else if(parseFloat(paid)==parseFloat(total))
-								payment_filter.value="Paid<br>Balance: Rs. 0";	
-							else 
-								payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));
-							
-							modal127_action();		
-						});
+						//console.log(paid);
+						if(parseFloat(paid)==0)
+							payment_filter.value="Unpaid<br>Balance: Rs. "+total;
+						else if(parseFloat(paid)==parseFloat(total))
+							payment_filter.value="Paid<br>Balance: Rs. 0";	
+						else 
+							payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));
+						
+						modal127_action();		
 					});
-				}
-				else
-				{
-					local_update_simple_func(payment_xml,function()
-					{
-						modal26_action(payments[y],function (mode,paid) 
-						{
-							if(parseFloat(paid)==0)
-								payment_filter.value="Unpaid<br>Balance: Rs. "+total;
-							else if(parseFloat(paid)==parseFloat(total))
-								payment_filter.value="Paid<br>Balance: Rs. 0";	
-							else 
-								payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));
-							
-							modal127_action();	
-						});
-					});
-				}
+				});
+			
+				
 				break;
 			}
 		},payment_data);
@@ -9434,14 +9407,50 @@ function form180_update_form()
 					"<notes>Order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
+		var transaction_xml="<transactions>" +
+					"<id>"+data_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>"+customer+"</receiver>" +
+					"<giver>master</giver>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		update_row(data_xml,activity_xml);
+		update_simple(transaction_xml);
+		
+		var payment_data="<payments>" +
+				"<id></id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"</payments>";
+		get_single_column_data(function(payments)
 		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+			if(payments.length>0)
+			{
+				var payment_xml="<payments>" +
+							"<id>"+payments[0]+"</id>" +
+							"<type>received</type>" +
+							"<total_amount>"+total+"</total_amount>" +
+							"<acc_name>"+customer+"</acc_name>" +
+							"<transaction_id>"+payments[0]+"</transaction_id>" +
+							"<bill_id>"+data_id+"</bill_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</payments>";
+				var pt_xml="<transactions>" +
+							"<id>"+payments[0]+"</id>" +
+							"<amount>"+total+"</amount>" +
+							"<receiver>master</receiver>" +
+							"<giver>"+customer+"</giver>" +
+							"<tax>0</tax>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</transactions>";
+				update_simple_func(payment_xml,function()
+				{
+					modal26_action(payments[0]);
+				});
+			}
+		},payment_data);
+		
 		$("[id^='save_form180_']").click();
 	}
 	else
@@ -9489,6 +9498,49 @@ function form181_update_item(form)
 			local_update_row(data_xml,activity_xml);
 		}	
 		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Update inventory (CPS)
+ * @param button
+ */
+function form183_update_item(form)
+{
+	if(is_update_access('form183'))
+	{
+		var name=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var manufacturing=get_raw_time(form.elements[2].value);
+		var expiry=get_raw_time(form.elements[3].value);
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<product_instances>" +
+					"<id>"+data_id+"</id>" +
+					"<product_name>"+name+"</product_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<manufacture_date>"+manufacturing+"</manufacture_date>"+
+					"<expiry>"+expiry+"</expiry>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</product_instances>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>product_instances</tablename>" +
+					"<link_to>form183</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Costing for batch number "+batch+" of "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

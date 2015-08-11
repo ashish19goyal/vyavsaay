@@ -381,6 +381,7 @@
 	"manage_projects_cps":"Manage Projects (CPS)",
 	"timesheet":"Timesheet",
 	"create_purchase_order_aurilion":"Create Purchase Order (Aurilion)",
-	"manage_purchase_orders_aurilion":"Manage Purchase Orders (Aurilion)"
+	"manage_purchase_orders_aurilion":"Manage Purchase Orders (Aurilion)",
+	"inventory_report":"Inventory Report"
 	}
 }
