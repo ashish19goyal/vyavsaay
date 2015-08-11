@@ -6749,6 +6749,8 @@ function form186_header_ini()
 	fields.elements[5].value=get_new_key();
 	var save_button=fields.elements[6];
 	
+	status_filter.value='draft';
+	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
 	{

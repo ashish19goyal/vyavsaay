@@ -8968,17 +8968,17 @@ function modal133_action(order_id,sale_channel,order_num,customer)
  * @modalNo 134
  * @modal Followup Details
  */
-function modal134_action(lead_id,customer)
+function modal134_action(lead_id,customer,lead_details)
 {
 	var form=document.getElementById('modal134_form');
 	var date_filter=form.elements['date'];
 	var response_filter=form.elements['response'];
 	var detail_filter=form.elements['details'];
 	var next_date_filter=form.elements['next_date'];
-	
+
 	$(date_filter).datepicker();
 	$(next_date_filter).datepicker();
-		
+	
 	date_filter.value=get_my_date();
 	
 	set_static_value_list('followups','response',response_filter);
@@ -8995,7 +8995,8 @@ function modal134_action(lead_id,customer)
 			var details=detail_filter.value;
 			var next_date=get_raw_time(next_date_filter.value);
 			var last_updated=get_my_time();
-			
+			var new_details=lead_details+"\n"+date_filter.value+": "+details;
+
 			var follow_xml="<followups>"+
 						"<id>"+id+"</id>"+
 		                "<customer>"+customer+"</customer>"+
@@ -9009,18 +9010,11 @@ function modal134_action(lead_id,customer)
 			var lead_xml="<sale_leads>"+
 						"<id>"+lead_id+"</id>"+
 		                "<due_date>"+next_date+"</due_date>"+
+		                "<detail>"+new_details+"</detail>"+
 		                "<last_updated>"+last_updated+"</last_updated>"+
 						"</sale_leads>";
-			if(is_online())
-			{
-				server_create_simple(follow_xml);
-				server_update_simple(lead_xml);
-			}
-			else
-			{
-				local_create_simple(follow_xml);
-				local_update_simple(lead_xml);
-			}
+			create_simple(follow_xml);
+			update_simple(lead_xml);
 		}
 		else
 		{
@@ -10175,7 +10169,7 @@ function modal143_action(item_name,batch)
 }
 
 /**
- * @modalNo 9
+ * @modalNo 144
  * @modal Add document
  * @param button
  */
@@ -10232,4 +10226,131 @@ function modal144_action(doc_type,target_id,func)
 	});
 	
 	$("#modal144").dialog("open");
+}
+
+/**
+ * @modalNo 145
+ * @modal Add new customer
+ * @param button
+ */
+function modal145_action(customer_acc_name)
+{
+	var form=document.getElementById('modal145_form');
+	
+	var fname=form.elements[1];
+	var fphone=form.elements[2];
+	var femail=form.elements[3];
+	var faddress=form.elements[4];
+	var fpincode=form.elements[5];
+	var fcity=form.elements[6];
+	var fstate=form.elements[7];
+	var fid=form.elements['id'];
+
+	var customer_xml="<customers count='1'>"+
+					"<id></id>"+
+					"<name></name>"+
+					"<phone></phone>"+
+					"<email></email>"+
+					"<address></address>"+
+					"<city></city>"+
+					"<state></state>"+
+					"<pincode></pincode>"+
+					"<acc_name exact='yes'>"+customer_acc_name+"</acc_name>"+
+					"</customers>";	
+	fetch_requested_data('',customer_xml,function(customers)
+	{
+		if(customers.length>0)
+		{
+			fname.value=customers[0].name;
+			fphone.value=customers[0].phone;
+			femail.value=customers[0].email;
+			faddress.value=customers[0].address;
+			fpincode.value=customers[0].pincode;
+			fcity.value=customers[0].city;
+			fstate.value=customers[0].state;
+			fid.value=customers[0].id;
+		}
+	});
+	
+	////adding attribute fields///////
+	var attribute_label=document.getElementById('modal145_attributes');
+	attribute_label.innerHTML="";
+	var attributes_data="<attributes>" +
+			"<id></id>"+
+			"<attribute></attribute>" +
+			"<value></value>"+
+			"<type exact='yes'>customer</type>" +
+			"<name exact='yes'>"+customer_acc_name+"</name>" +
+			"</attributes>";
+	fetch_requested_data('',attributes_data,function(attributes)
+	{
+		attributes.forEach(function(attribute)
+		{
+				var attr_label=document.createElement('label');
+				attr_label.innerHTML=attribute.attribute+" <input type='text' name='"+attribute.id+"' value='"+attribute.value+"'>";
+				attribute_label.appendChild(attr_label);
+				var line_break=document.createElement('br');
+				attribute_label.appendChild(line_break);
+		});
+	});
+	
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form30'))
+		{
+			var name=fname.value;
+			var phone=fphone.value;
+			var email=femail.value;
+			var address=faddress.value;
+			var pincode=fpincode.value;
+			var city=fcity.value;
+			var state=fstate.value;
+			var data_id=fid.value;
+			var last_updated=get_my_time();
+			var data_xml="<customers>" +
+						"<id>"+data_id+"</id>" +
+						"<name>"+name+"</name>" +
+						"<phone>"+phone+"</phone>" +
+						"<email>"+email+"</email>" +
+						"<status>active</status>" +
+						"<address>"+address+"</address>" +
+						"<pincode>"+pincode+"</pincode>" +
+						"<city>"+city+"</city>" +
+						"<state>"+state+"</state>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</customers>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>customers</tablename>" +
+						"<link_to>form30</link_to>" +
+						"<title>Updated</title>" +
+						"<notes>Details for customer "+name+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			update_row(data_xml,activity_xml);
+			
+			$("#modal145_attributes").find('input, select').each(function()
+			{
+				var value=$(this).val();
+				var id=$(this).attr('name');
+				
+				var attribute_xml="<attributes>" +
+						"<id>"+id+"</id>" +
+						"<value>"+value+"</value>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</attributes>";
+				update_simple(attribute_xml);
+			});
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal145").dialog("close");
+	});
+	
+	$("#modal145").dialog("open");
 }

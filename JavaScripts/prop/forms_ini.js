@@ -11410,10 +11410,44 @@ function form124_ini()
 					rowsHTML+="<td data-th='Amount'>";
 						rowsHTML+="<input type='number' readonly='readonly' form='form124_"+result.id+"' value='"+result.amount+"'>";
 						rowsHTML+="<input type='hidden' form='form124_"+result.id+"' value='"+result.id+"'>";
-					rowsHTML+="</td>";			
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Document'>";
+						rowsHTML+="<br><div id='form124_documents_"+result.id+"'></div>";
+						rowsHTML+="<input type='button' form='form124_"+result.id+"' value='Add document' class='generic_icon'>";
+					rowsHTML+="</td>";				
 			rowsHTML+="</tr>";
 			
 			$('#form124_body').append(rowsHTML);
+			var fields=document.getElementById('form124_'+result.id);
+			var doc_filter=fields.elements[4];
+					
+			$(doc_filter).on('click',function () 
+			{
+				modal144_action('receipts',result.id,function (url,doc_name) 
+				{
+					var docHTML="<a href='"+url+"' download='"+doc_name+"'><u>"+doc_name+"</u></a><br>";
+					var doc_container=document.getElementById('form124_documents_'+result.id);
+					$(doc_container).append(docHTML);
+				});
+			});
+			
+			var doc_column="<documents>" +
+							"<id></id>" +
+							"<url></url>" +
+							"<doc_name></doc_name>"+
+							"<doc_type exact='yes'>receipts</doc_type>" +
+							"<target_id exact='yes'>"+result.id+"</target_id>" +
+							"</documents>";
+			fetch_requested_data('form124',doc_column,function(doc_results)
+			{
+				var docHTML="";
+				for (var j in doc_results)
+				{
+					var updated_url=doc_results[j].url.replace(/ /g,"+");
+					docHTML+="<a href='"+updated_url+"' download='"+doc_results[j].doc_name+"'><u>"+doc_results[j].doc_name+"</u></a><br>";							
+				}
+				document.getElementById('form124_documents_'+result.id).innerHTML=docHTML;
+			});
 		});
 
 		////indexing///
@@ -21631,13 +21665,17 @@ function form213_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form213_"+result.id+"' class='dblclick_editable' value='"+get_my_past_date(result.due_date)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Identified By'>";
+					if(result.identified_by=="")
 						rowsHTML+="<input type='text' readonly='readonly' form='form213_"+result.id+"' class='dblclick_editable' value='"+result.identified_by+"'>";
+					else
+						rowsHTML+="<input type='text' readonly='readonly' form='form213_"+result.id+"' value='"+result.identified_by+"'>";	
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form213_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form213_"+result.id+"'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form213_"+result.id+"' onclick='form213_delete_item($(this));'>";
-						rowsHTML+="<input type='button' class='generic_icon' form='form213_"+result.id+"' value='Follow-up' onclick=\"modal134_action('"+result.id+"','"+result.customer+"');\">";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form213_"+result.id+"' value='Follow-up' onclick=\"modal134_action('"+result.id+"','"+result.customer+"','"+result.detail+"');\">";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form213_"+result.id+"' value='Update Contact' onclick=\"modal145_action('"+result.customer+"');\">";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			

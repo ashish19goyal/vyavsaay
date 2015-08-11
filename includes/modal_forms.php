@@ -1252,5 +1252,22 @@
 			</fieldset>
 		</form>
 	</div>
-	
+
+	<div id="modal145" title="Update Contact">
+		<form id='modal145_form' autocomplete="off">
+			<fieldset>
+				<label>Name: <input readonly='readonly' type='text' required></label><br>
+				<label>Phone: <input type="tel"></label><br>
+				<label>Email: <input type="text"></label><br>
+				<label>Address: <textarea></textarea></label><br>
+				<label>Pincode: <input type="number"></label><br>
+				<label>City: <input type="text"></label><br>
+				<label>State: <input type="text"></label><br>
+				<label id='modal145_attributes'></label><br>
+				<input type="hidden" name='id'>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>
