@@ -24,6 +24,7 @@
 	
 	$domain=$_POST['domain'];
 	$username=$_POST['username'];
+	$user_display=$_POST['user_display'];
 	$cr_access=$_POST['cr'];
 	$data_xml=$_POST['data_xml'];
 	$data_xml=preg_replace('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u',' ',$data_xml);
@@ -118,12 +119,14 @@
 					}
 				}
 
-				$notes="Added ".$success_count." records to table ".$table;
-				$act_data=array('Data import','yes',$notes,'','','online',1000*time(),'create',$_SESSION['name']);
-				$query3="insert into activities (title,user_display,notes,tablename,data_xml,status,last_updated,type,updated_by) values(?,?,?,?,?,?,?,?,?)";
-				$stmt3=$conn->conn->prepare($query3);
-				$stmt3->execute($act_data);
-
+				if($user_display=='yes')
+				{
+					$notes="Added ".$success_count." records to table ".$table;
+					$act_data=array('Data import',$user_display,$notes,'','','online',1000*time(),'create',$_SESSION['name']);
+					$query3="insert into activities (title,user_display,notes,tablename,data_xml,status,last_updated,type,updated_by) values(?,?,?,?,?,?,?,?,?)";
+					$stmt3=$conn->conn->prepare($query3);
+					$stmt3->execute($act_data);
+				}
 				echo "data saved";
 			}
 		}

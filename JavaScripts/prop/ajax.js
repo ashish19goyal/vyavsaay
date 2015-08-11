@@ -305,7 +305,7 @@ function server_create_batch(data_xml)
 	var data_xml_array=data_xml.split("<separator></separator>");
 	data_xml_array.forEach(function(data_chunk)
 	{
-		ajax_with_custom_func("./ajax/create_batch.php",{domain:domain,username:username,cr:cr_access,data_xml:data_chunk},function(e)
+		ajax_with_custom_func("./ajax/create_batch.php",{domain:domain,username:username,cr:cr_access,data_xml:data_chunk,user_display:'yes'},function(e)
 		{
 			//console.log(e.responseText);
 		});
@@ -331,7 +331,7 @@ function server_create_batch_noloader(data_xml)
 	var data_xml_array=data_xml.split("<separator></separator>");
 	data_xml_array.forEach(function(data_chunk)
 	{
-		ajax_with_custom_func("./ajax/create_batch.php",{domain:domain,username:username,cr:cr_access,data_xml:data_chunk},function(e)
+		ajax_with_custom_func("./ajax/create_batch.php",{domain:domain,username:username,cr:cr_access,data_xml:data_chunk,user_display:'no'},function(e)
 		{
 			//console.log(e.responseText);
 		});

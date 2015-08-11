@@ -67,15 +67,7 @@ function worker_update_orders_status()
 					});
 					data_xml+="</sale_orders>";
 					
-					//console.log(data_xml);
-					if(is_online())
-					{
-						server_update_batch(data_xml);
-					}
-					else
-					{
-						local_update_batch(data_xml);
-					}
+					update_batch(data_xml);
 					hide_loader();
 				},packed_pending_xml);				
 			},picked_pending_xml);	
@@ -348,14 +340,8 @@ function notifications1_add()
 		});
 		not_pay_xml+="</notifications>";
 		
-		if(is_online())
-		{
-			server_create_batch_noloader(not_pay_xml);
-		}
-		else
-		{
-			local_create_batch_noloader(not_pay_xml);
-		}
+		create_batch_noloader(not_pay_xml);
+		
 	});
 	//////////overdue payments end//////
 	
@@ -416,14 +402,8 @@ function notifications2_add()
 		
 		task_xml+="</notifications>";
 		
-		if(is_online())
-		{
-			server_create_batch_noloader(task_xml);
-		}
-		else
-		{
-			local_create_batch_noloader(task_xml);
-		}
+		create_batch_noloader(task_xml);
+		
 	});
 	
 	///////////overdue tasks end//////////
@@ -484,14 +464,8 @@ function notifications3_add()
 		});
 		leads_xml+="</notifications>";
 		//console.log(leads_xml);
-		if(is_online())
-		{
-			server_create_batch_noloader(leads_xml);
-		}
-		else
-		{
-			local_create_batch_noloader(leads_xml);
-		}
+		create_batch_noloader(leads_xml);
+		
 	});
 	
 	///////////overdue sale leads end//////////
@@ -613,14 +587,8 @@ function notifications5_add()
 					"<target_user></target_user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</notifications>";
-			if(is_online())
-			{
-				server_create_simple_no_warning(task_xml);
-			}
-			else
-			{
-				local_create_simple_no_warning(task_xml);
-			}
+			create_simple_no_warning(task_xml);
+			
 		}
 	});
 	
@@ -675,14 +643,8 @@ function notifications6_add()
 					"</row>";
 		});
 		schedule_xml+="</notifications>";
-		if(is_online())
-		{
-			server_create_batch_noloader(schedule_xml);
-		}
-		else
-		{
-			local_create_batch_noloader(schedule_xml);
-		}
+		create_batch_noloader(schedule_xml);
+		
 	});
 	
 	///////////manufacturing end//////////
@@ -735,14 +697,8 @@ function notifications7_add()
 		});
 
 		app_xml+="</notifications>";
-		if(is_online())
-		{
-			server_create_batch_noloader(app_xml);
-		}
-		else
-		{
-			local_create_batch_noloader(app_xml);
-		}
+		create_batch_noloader(app_xml);
+		
 	});
 	
 	///////////due appointments//////////
@@ -803,14 +759,8 @@ function notifications8_add()
 		});
 
 		dispatch_xml+="</notifications>";
-		if(is_online())
-		{
-			server_create_batch_noloader(dispatch_xml);
-		}
-		else
-		{
-			local_create_batch_noloader(dispatch_xml);
-		}
+		create_batch_noloader(dispatch_xml);
+		
 	});
 	
 	setTimeout(notifications8_add,get_worker_repeat());
@@ -863,14 +813,8 @@ function notifications9_add()
 		});
 		expense_xml+="</notifications>";
 		
-		if(is_online())
-		{
-			server_create_batch_noloader(expense_xml);
-		}
-		else
-		{
-			local_create_batch_noloader(expense_xml);
-		}
+		create_batch_noloader(expense_xml);
+		
 	});
 	//////////overdue payments end//////
 	
@@ -942,14 +886,7 @@ function sale_leads_add()
 										"<due_date>"+due_date+"</due_date>" +
 										"<identified_by>auto</identified_by>" +
 										"</sale_leads>";
-								if(is_online())
-								{
-									server_create_simple_no_warning(sale_lead_xml);
-								}
-								else
-								{
-									local_create_simple_no_warning(sale_lead_xml);
-								}
+								create_simple_no_warning(sale_lead_xml);
 								break;
 							}
 						}
@@ -1036,14 +973,8 @@ function sale_leads_add()
 												"<due_date>"+due_date+"</due_date>" +
 												"<identified_by>auto</identified_by>" +
 												"</sale_leads>";
-										if(is_online())
-										{
-											server_create_simple_no_warning(sale_lead_xml);
-										}
-										else
-										{
-											local_create_simple_no_warning(sale_lead_xml);
-										}
+										create_simple_no_warning(sale_lead_xml);
+										
 									}
 								}
 							}
@@ -1084,14 +1015,7 @@ function manufactured_products_outofstock()
 							"<schedule></schedule>" +
 							"<last_updated>"+get_my_time()+"</last_updated>" +
 							"</manufacturing_schedule>";
-					if(is_online())
-					{
-						server_update_simple(schedule_data);
-					}
-					else
-					{
-						local_update_simple(schedule_data);
-					}
+					update_simple(schedule_data);
 				}
 			});
 		});
@@ -1169,18 +1093,9 @@ function loans_interest_processing()
 							"<tax>0</tax>" +
 							"<last_updated>"+get_my_time()+"</last_updated>" +
 							"</transactions>";
-				if(is_online())
-				{
-					server_update_simple(loan_xml);
-					server_create_simple(payment_xml);
-					server_create_simple(pt_xml);
-				}
-				else
-				{
-					local_update_simple(loan_xml);
-					local_create_simple(payment_xml);
-					local_create_simple(pt_xml);
-				}
+				update_simple(loan_xml);
+				create_simple(payment_xml);
+				create_simple(pt_xml);
 			}
 			else
 			{
@@ -1191,14 +1106,8 @@ function loans_interest_processing()
 							"<loan_amount>"+loan_amount+"</loan_amount>" +
 							"<last_updated>"+get_my_time()+"</last_updated>" +
 							"</loans>";
-				if(is_online())
-				{
-					server_update_simple(loan_xml);
-				}
-				else
-				{
-					local_update_simple(loan_xml);
-				}
+				update_simple(loan_xml);
+				
 			}
 		});
 	});
@@ -1273,18 +1182,9 @@ function loans_instalment_processing()
 						"<tax>0</tax>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +
 						"</transactions>";
-			if(is_online())
-			{
-				server_update_simple(loan_xml);
-				server_create_simple(payment_xml);
-				server_create_simple(pt_xml);
-			}
-			else
-			{
-				local_update_simple(loan_xml);
-				local_create_simple(payment_xml);
-				local_create_simple(pt_xml);
-			}
+			update_simple(loan_xml);
+			create_simple(payment_xml);
+			create_simple(pt_xml);
 		});
 	});
 	
@@ -1330,14 +1230,7 @@ function generate_attendance_records()
 								"<hours_worked>8</hours_worked>" +
 								"<last_updated>"+get_my_time()+"</last_updated>" +
 								"</attendance>";
-					if(is_online())
-					{
-						server_create_simple(data_xml);
-					}
-					else
-					{
-						local_create_simple(data_xml);
-					}
+					create_simple(data_xml);
 				});
 			});
 		}
@@ -1435,14 +1328,7 @@ function balance_out_payments()
 									"<notes>"+notes+"</notes>" +
 									"<last_updated>"+get_my_time()+"</last_updated>" +
 									"</payments>";
-								if(is_online())
-								{
-									server_update_simple(received_xml);
-								}
-								else
-								{
-									local_update_simple(received_xml);
-								}
+								update_simple(received_xml);
 							}
 							else
 							{
@@ -1457,15 +1343,8 @@ function balance_out_payments()
 										"<notes>"+notes+"</notes>" +
 										"<last_updated>"+get_my_time()+"</last_updated>" +
 										"</payments>";
-									if(is_online())
-									{
-										server_update_simple(paid_xml);
-									}
-									else
-									{
-										local_update_simple(paid_xml);
-									}
-	
+									update_simple(paid_xml);
+									
 									payment.total_received-=pending_amount;
 									payment.total_paid-=pending_amount;
 								}
@@ -1480,15 +1359,8 @@ function balance_out_payments()
 										"<notes>"+notes+"</notes>" +
 										"<last_updated>"+get_my_time()+"</last_updated>" +
 										"</payments>";
-									if(is_online())
-									{
-										server_update_simple(paid_xml);
-									}
-									else
-									{
-										local_update_simple(paid_xml);
-									}
-	
+									update_simple(paid_xml);
+									
 									payment.total_received=0;
 									payment.total_paid=0;
 								}
@@ -1506,14 +1378,8 @@ function balance_out_payments()
 									"<notes>"+notes+"</notes>" +
 									"<last_updated>"+get_my_time()+"</last_updated>" +
 									"</payments>";
-								if(is_online())
-								{
-									server_update_simple(paid_xml);
-								}
-								else
-								{
-									local_update_simple(paid_xml);
-								}
+								update_simple(paid_xml);
+								
 							}
 							else
 							{
@@ -1529,14 +1395,7 @@ function balance_out_payments()
 										"<notes>"+notes+"</notes>" +
 										"<last_updated>"+get_my_time()+"</last_updated>" +
 										"</payments>";
-									if(is_online())
-									{
-										server_update_simple(received_xml);
-									}
-									else
-									{
-										local_update_simple(received_xml);
-									}
+									update_simple(received_xml);
 									
 									payment.total_received-=pending_amount;
 									payment.total_paid-=pending_amount;
@@ -1552,14 +1411,7 @@ function balance_out_payments()
 										"<notes>"+notes+"</notes>" +
 										"<last_updated>"+get_my_time()+"</last_updated>" +
 										"</payments>";
-									if(is_online())
-									{
-										server_update_simple(received_xml);
-									}
-									else
-									{
-										local_update_simple(received_xml);
-									}
+									update_simple(received_xml);
 									payment.total_received=0;
 									payment.total_paid=0;
 								}
@@ -1644,14 +1496,7 @@ function activate_loyalty_programs()
 														"<status>active</status>"+
 														"<last_updated>"+get_my_time()+"</last_updated>"+
 														"</loyalty_customers>";
-												if(is_online())
-												{
-													server_update_simple(loyalty_xml);
-												}
-												else
-												{
-													local_update_simple(loyalty_xml);
-												}
+												update_simple(loyalty_xml);
 												break;
 											}
 										}
