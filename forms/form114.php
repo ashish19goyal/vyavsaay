@@ -2,9 +2,9 @@
 	<form id='form114_master' autocomplete="off">
 		<fieldset>	    
 		    <label>Supplier	<img src='./images/add_image.png' class='add_image' id='form114_add_supplier'><br>
-			<input type='text' required></label>
-			<label>Date<br><input type='text' required></label>
-			<label>	<input type='button' class='save_icon'></label>
+			<input type='text' name='supplier' required></label>
+			<label>Date<br><input type='text' name='date' required></label>
+			<label>	<input type='button' class='save_icon' name='save'></label>
 			<label>	<input type='submit' class='submit_hidden'></label>
 		</fieldset>	
 	</form>

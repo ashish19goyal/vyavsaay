@@ -3282,13 +3282,14 @@ function form114_header_ini()
 	var supplier_data="<suppliers>" +
 		"<acc_name></acc_name>" +
 		"</suppliers>";
-	set_my_value_list(supplier_data,supplier_filter);
+	set_my_value_list(supplier_data,supplier_filter,function () 
+	{
+		$(supplier_filter).focus();
+	});
 	
 	$(purchase_date).datepicker();
 	$(purchase_date).val(get_my_date());
 	supplier_filter.value='';
-	
-	$(supplier_filter).focus();
 	
 	$('#form114_body').html("");
 }
@@ -4093,11 +4094,12 @@ function form122_header_ini()
 	{
 		var unbilled_data="<unbilled_purchase_items>" +
 				"<id></id>" +
+				"<bill_status exact='yes'>pending</bill_status>"+
 				"<supplier exact='yes'>"+supplier_filter.value+"</supplier>" +
 				"</unbilled_purchase_items>";
 		get_single_column_data(function(suppliers)
 		{
-			fields.elements[6].value=suppliers.length;
+			unbilled_filter.value=suppliers.length;
 			if(suppliers.length>0)
 				$(unbilled_button).show();
 		},unbilled_data);

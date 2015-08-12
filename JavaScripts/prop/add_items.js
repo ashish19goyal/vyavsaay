@@ -4324,7 +4324,7 @@ function form114_add_item()
 {
 	if(is_create_access('form114'))
 	{
-		var supplier_name=document.getElementById('form114_master').elements[1].value;
+		var supplier_name=document.getElementById('form114_master').elements['supplier'].value;
 		var rowsHTML="";
 		var id=get_new_key();
 		rowsHTML+="<tr>";
@@ -4495,23 +4495,33 @@ function form114_add_item()
 						{
 							mrp_price=parseFloat(mrps[0]);
 						}
-		
-						var margin_data="<attributes>" +
-									"<value></value>"+
-									"<type exact='yes'>supplier</type>"+
-									"<attribute exact='yes'>Margin</attribute>" +
-									"<name exact='yes'>"+supplier_name+"</name>" +
-									"</attributes>";
-						get_single_column_data(function(margins)
+						console.log(mrp_price);
+								
+						var margin_data="<supplier_item_mapping>" +
+									"<margin></margin>"+
+									"<supplier_sku></supplier_sku>"+							
+									"<supplier exact='yes'>"+supplier_name+"</supplier>" +
+									"<item exact='yes'>"+name_filter.value+"</item>"+
+									"</supplier_item_mapping>";
+						fetch_requested_data('',margin_data,function(margins)
 						{
+							console.log(margins);
 							if(margins.length>0)
 							{
-								var tax_factor=(100-parseFloat(tax_unit_filter.value))/100;
-								unit_filter.value=my_round(tax_factor*(mrp_price*(100-parseFloat(margins[0]))/100),2);
-								amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-								tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);			
+								console.log(unit_filter);
+								unit_filter.value=my_round((parseFloat(mrp_price.value)*(100-parseFloat(margins[0].margin))/100),2);
+								amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(unit_filter.value));
+								tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_unit_filter.value)/100));
+								//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
 							}
-						},margin_data);					
+							else
+							{
+								unit_filter.value="";
+								amount_filter.value="";
+								tax_filter.value="";
+								//total_filter.value="";
+							}
+						});					
 					},mrp_data);			
 
 				}				
@@ -4541,22 +4551,29 @@ function form114_add_item()
 					mrp_price=parseFloat(mrps[0]);
 				}
 
-				var margin_data="<attributes>" +
-							"<value></value>"+
-							"<type exact='yes'>supplier</type>"+
-							"<attribute exact='yes'>Margin</attribute>" +
-							"<name exact='yes'>"+supplier_name+"</name>" +
-							"</attributes>";
-				get_single_column_data(function(margins)
+				var margin_data="<supplier_item_mapping>" +
+							"<margin></margin>"+
+							"<supplier_sku></supplier_sku>"+							
+							"<supplier exact='yes'>"+supplier_name+"</supplier>" +
+							"<item exact='yes'>"+name_filter.value+"</item>"+
+							"</supplier_item_mapping>";
+				fetch_requested_data('',margin_data,function(margins)
 				{
 					if(margins.length>0)
 					{
-						var tax_factor=(100-parseFloat(tax_unit_filter.value))/100;
-						unit_filter.value=my_round(tax_factor*(mrp_price*(100-parseFloat(margins[0]))/100),2);
-						amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-						tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+						unit_filter.value=my_round((parseFloat(mrp_price.value)*(100-parseFloat(margins[0].margin))/100),2);
+						amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(unit_filter.value));
+						tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_unit_filter.value)/100));
+						//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
 					}
-				},margin_data);					
+					else
+					{
+						unit_filter.value="";
+						amount_filter.value="";
+						tax_filter.value="";
+						//total_filter.value="";
+					}
+				});					
 			},mrp_data);			
 		});
 		
@@ -5549,23 +5566,30 @@ function form122_add_item()
 							}
 						}
 
-						var margin_data="<attributes>" +
-									"<value></value>"+
-									"<type exact='yes'>supplier</type>"+
-									"<attribute exact='yes'>Margin</attribute>" +
-									"<name exact='yes'>"+supplier_name+"</name>" +
-									"</attributes>";
-						get_single_column_data(function(margins)
+						var margin_data="<supplier_item_mapping>" +
+									"<margin></margin>"+
+									"<supplier_sku></supplier_sku>"+							
+									"<supplier exact='yes'>"+supplier_name+"</supplier>" +
+									"<item exact='yes'>"+name_filter.value+"</item>"+
+									"</supplier_item_mapping>";
+						fetch_requested_data('',margin_data,function(margins)
 						{
 							if(margins.length>0)
 							{
-								margin_filter.value=margins[0];
-								var tax_factor=(100-parseFloat(tax_unit_filter.value))/100;
-								unit_filter.value=my_round(tax_factor*(parseFloat(mrp_filter.value)*(100-parseFloat(margins[0]))/100),2);
-								amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-								tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);			
+								margin_filter.value=margins[0].margin;
+								unit_filter.value=my_round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0].margin))/100),2);
+								amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(unit_filter.value));
+								tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_unit_filter.value)/100));
+								//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
 							}
-						},margin_data);					
+							else
+							{
+								unit_filter.value="";
+								amount_filter.value="";
+								tax_filter.value="";
+								//total_filter.value="";
+							}
+						});					
 					});			
 				}				
 			});
@@ -5610,23 +5634,30 @@ function form122_add_item()
 					}
 				}
 
-				var margin_data="<attributes>" +
-							"<value></value>"+
-							"<type exact='yes'>supplier</type>"+
-							"<attribute exact='yes'>Margin</attribute>" +
-							"<name exact='yes'>"+supplier_name+"</name>" +
-							"</attributes>";
-				get_single_column_data(function(margins)
+				var margin_data="<supplier_item_mapping>" +
+							"<margin></margin>"+
+							"<supplier_sku></supplier_sku>"+							
+							"<supplier exact='yes'>"+supplier_name+"</supplier>" +
+							"<item exact='yes'>"+name_filter.value+"</item>"+
+							"</supplier_item_mapping>";
+				fetch_requested_data('',margin_data,function(margins)
 				{
 					if(margins.length>0)
 					{
-						margin_filter.value=margins[0];
-						var tax_factor=(100-parseFloat(tax_unit_filter.value))/100;
-						unit_filter.value=my_round(tax_factor*(parseFloat(mrp_filter.value)*(100-parseFloat(margins[0]))/100),2);
-						amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
-						tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);			
+						margin_filter.value=margins[0].margin;
+						unit_filter.value=my_round((parseFloat(mrp_filter.value)*(100-parseFloat(margins[0].margin))/100),2);
+						amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(unit_filter.value));
+						tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_unit_filter.value)/100));
+						//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
 					}
-				},margin_data);					
+					else
+					{
+						unit_filter.value="";
+						amount_filter.value="";
+						tax_filter.value="";
+						//total_filter.value="";
+					}
+				});					
 			});				
 		});
 		

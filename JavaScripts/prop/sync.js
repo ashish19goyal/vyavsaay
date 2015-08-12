@@ -123,46 +123,62 @@ function sync_local_and_server()
  */
 function sync_server_to_local(func)
 {
-	start_table="";
-	start_offset=0;
-	var domain=get_domain();
-	//console.log(number_active_ajax);
-	//console.log(localdb_open_requests);	
-	update_local_db(domain,function()
+	if(typeof static_local_db=='undefined')
 	{
-		//delete(static_local_db);//="undefined";
-		get_last_sync_time(function(last_sync_time)
+		open_local_db(function()
 		{
-			sync_server_to_local_ajax(start_table,start_offset,last_sync_time);
+			sync_server_to_local(func);
 		});
-	});
-	
-	var max_localdb_open_requests=0;
-	var progress_dummy=progress_value+5;
-	var sync_download_complete=setInterval(function()
+	}
+	else
 	{
-  	   if(number_active_ajax===0)
-  	   {
-  		   if(max_localdb_open_requests===0)
-  		   {
-  			  max_localdb_open_requests=localdb_open_requests;
-  		   }
-  		   else
-  		   {
-  			   progress_value=progress_dummy+(1-(localdb_open_requests/max_localdb_open_requests))*45;
-  		   }
-  		   if(localdb_open_requests===0)
-  		   {
-  			   clearInterval(sync_download_complete);
-	  		   update_last_sync_time(function()
+		var new_version=parseInt(static_local_db.version)+1;		
+		start_table="";
+		start_offset=0;
+		var domain=get_domain();
+		//console.log(number_active_ajax);
+		//console.log(localdb_open_requests);	
+		
+		//console.log(new_version);
+		static_local_db.close();
+		delete(static_local_db);//="undefined";
+				
+		//console.log('db_closed');
+				
+		update_local_db(domain,function()
+		{
+			get_last_sync_time(function(last_sync_time)
+			{
+				sync_server_to_local_ajax(start_table,start_offset,last_sync_time);
+			});
+		},new_version);
+		
+		var max_localdb_open_requests=0;
+		var progress_dummy=progress_value+5;
+		var sync_download_complete=setInterval(function()
+		{
+	  	   if(number_active_ajax===0)
+	  	   {
+	  		   if(max_localdb_open_requests===0)
 	  		   {
-	  		   		//console.log('update last sync time');
-					func();
-			   });
-  		   }
-  	   }
-     },1000);
-	
+	  			  max_localdb_open_requests=localdb_open_requests;
+	  		   }
+	  		   else
+	  		   {
+	  			   progress_value=progress_dummy+(1-(localdb_open_requests/max_localdb_open_requests))*45;
+	  		   }
+	  		   if(localdb_open_requests===0)
+	  		   {
+	  			   clearInterval(sync_download_complete);
+		  		   update_last_sync_time(function()
+		  		   {
+		  		   		//console.log('update last sync time');
+						func();
+				   });
+	  		   }
+	  	   }
+	     },1000);	
+	 }
 };
 
 function sync_server_to_local_ajax(start_table,start_offset,last_sync_time)

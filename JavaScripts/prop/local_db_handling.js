@@ -154,18 +154,35 @@ function delete_local_db()
  * @param db_name name of the local database
  * @param func function to be executed on success
  */
-function update_local_db(domain,func)
+function update_local_db(domain,func,new_version)
 {
 	if("indexedDB" in window)
 	{
 		var db_name="re_local_"+domain;
 		ajax_with_custom_func("./db/db_schema.xml","",function(e)
 		{
-			var request = indexedDB.open(db_name);
+			var request = indexedDB.open(db_name,new_version);
 		
-			request.onsuccess=function(ev)
+			request.onsuccess=function(e)
+			{
+				var db=e.target.result;
+				//console.log(db.version);
+				db.close();
+				if(typeof func!="undefined")
+				{					
+					func();
+				}
+			};
+
+			request.onerror=function(ev)
+			{
+				alert('Could not switch to offline mode. Please refresh your browser and try again.');
+			};
+				
+			request.onupgradeneeded=function(ev)
 			{
 				var db=ev.target.result;
+				//console.log(db.version);
 				var tables=e.responseXML.childNodes[0].childNodes;
 				
 				//console.log(tables);
