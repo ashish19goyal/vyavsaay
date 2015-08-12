@@ -2117,8 +2117,9 @@ function form48_update_item(form)
 		var value='unchecked';
 		if(form.elements[1].checked)
 			value='checked';
-		var data_id=form.elements[2].value;
-		var element_id=form.elements[3].value;
+		var tables=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var element_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var table='user_preferences';
 		var data_xml="<"+table+">" +
@@ -2126,6 +2127,7 @@ function form48_update_item(form)
 					"<name unique='yes'>"+element_id+"</name>" +
 					"<display_name>"+name+"</display_name>" +
 					"<value>"+value+"</value>" +
+					"<tables>"+tables+"</tables>" +
 					"<type>report</type>" +
 					"<status>active</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -2186,8 +2188,9 @@ function form49_update_item(form)
 		var value='unchecked';
 		if(form.elements[1].checked)
 			value='checked';
-		var data_id=form.elements[2].value;
-		var element_id=form.elements[3].value;
+		var tables=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		var element_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var table='user_preferences';
 		var data_xml="<"+table+">" +
@@ -2195,6 +2198,7 @@ function form49_update_item(form)
 					"<name unique='yes'>"+element_id+"</name>" +
 					"<display_name>"+name+"</display_name>" +
 					"<value>"+value+"</value>" +
+					"<tables>"+tables+"</tables>" +
 					"<type>form</type>" +
 					"<status>active</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +

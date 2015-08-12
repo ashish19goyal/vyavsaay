@@ -3577,6 +3577,7 @@ function form48_ini()
 	var filter_fields=document.getElementById('form48_header');
 	
 	var fname=filter_fields.elements[0].value;
+	var ftables=filter_fields.elements[1].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form48_index');
@@ -3591,6 +3592,7 @@ function form48_ini()
 			"<display_name>"+fname+"</display_name>" +
 			"<value></value>" +
 			"<status exact='yes'>active</status>" +
+			"<tables>"+ftables+"</tables>"+
 			"<type exact='yes'>report</type>" +
 			"</user_preferences>";
 
@@ -3608,6 +3610,9 @@ function form48_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Selection'>";
 						rowsHTML+="<input type='checkbox' form='form48_"+result.id+"' "+result.value+">";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Tables'>";
+						rowsHTML+="<textarea readonly='readonly' form='form48_"+result.id+"' class='dblclick_editable widebox'>"+result.tables+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form48_"+result.id+"' value='"+result.id+"'>";
@@ -3653,7 +3658,7 @@ function form48_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[3];
+		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -3677,6 +3682,7 @@ function form49_ini()
 	
 	var filter_fields=document.getElementById('form49_header');
 	var fname=filter_fields.elements[0].value;
+	var ftables=filter_fields.elements[1].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form49_index');
@@ -3691,6 +3697,7 @@ function form49_ini()
 			"<display_name>"+fname+"</display_name>" +
 			"<value></value>" +
 			"<status exact='yes'>active</status>" +
+			"<tables>"+ftables+"</tables>"+
 			"<type exact='yes'>form</type>" +
 			"</user_preferences>";
 
@@ -3708,6 +3715,9 @@ function form49_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Selection'>";
 						rowsHTML+="<input type='checkbox' form='form49_"+result.id+"' "+result.value+">";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Tables'>";
+						rowsHTML+="<textarea readonly='readonly' form='form49_"+result.id+"' class='dblclick_editable widebox'>"+result.tables+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form49_"+result.id+"' value='"+result.id+"'>";
@@ -3751,8 +3761,9 @@ function form49_ini()
 		}
 		/////////////
 		$('textarea').autosize();
+		longPressEditable($('.dblclick_editable'));
 		
-		var export_button=filter_fields.elements[3];
+		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{

@@ -1301,7 +1301,7 @@ function form48_header_ini()
 {
 	var filter_fields=document.getElementById('form48_header');
 	var report_filter=filter_fields.elements[0];
-	var save_element=filter_fields.elements[1];
+	var save_element=filter_fields.elements['save'];
 	
 	$(save_element).off('click');
 	$(save_element).on('click',function(e)
@@ -1334,7 +1334,7 @@ function form49_header_ini()
 {
 	var filter_fields=document.getElementById('form49_header');
 	var form_filter=filter_fields.elements[0];
-	var save_element=filter_fields.elements[1];
+	var save_element=filter_fields.elements['save'];
 	
 	$(save_element).off('click');
 	$(save_element).on('click',function(e)

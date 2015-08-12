@@ -7887,7 +7887,10 @@ function form149_add_item()
 		var role_data="<roles>"+
 						"<role_name></role_name>"+						
 						"</roles>";
-		set_my_value_list(role_data,role_filter);		
+		set_my_value_list(role_data,role_filter,function () 
+		{
+			$(role_filter).focus();
+		});		
 		
 		var user_data="<accounts>"+
 						"<username></username>"+						
