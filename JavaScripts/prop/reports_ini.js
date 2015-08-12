@@ -6159,7 +6159,7 @@ function report83_ini()
 {
 	var form=document.getElementById('report83_header');
 	var test_filter=form.elements['test'].value;
-	var item_filter=form.elements['item'].value;
+	var item_filter=form.elements['name'].value;
 	var result_filter=form.elements['result'].value;
 	
 	show_loader();
@@ -6230,7 +6230,7 @@ function report83_ini()
 		next_element.setAttribute('data-index',next_index);
 		prev_element.setAttribute('data-index',prev_index);
 		index_element.setAttribute('data-index','0');
-		if(items.length<25)
+		if(tests.length<25)
 		{
 			$(next_element).hide();
 		}

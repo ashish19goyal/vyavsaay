@@ -5,6 +5,7 @@
 				<form id='form224_header'></form>
 					<th>Test Id <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form224_header'></th>
 					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form224_header'></th>
+					<th>Details </th>
 					<th>Next Due Date</th>
 					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form224_header'></th>
 					<th><input type="button" value='Add new test' class='add_icon' form='form224_header' onclick="form224_add_item();">

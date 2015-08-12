@@ -22799,3 +22799,124 @@ function form223_ini()
 		hide_loader();
 	});
 };
+
+
+/**
+ * @form Manage Purchase orders (Aurilion)
+ * @formNo 224
+ * @Loading light
+ */
+function form224_ini()
+{
+	show_loader();
+	var fid=$("#form224_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form224_header');
+	
+	//populating form 
+	var fnum=filter_fields.elements[0].value;
+	var fname=filter_fields.elements[1].value;
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form224_index');
+	var prev_element=document.getElementById('form224_prev');
+	var next_element=document.getElementById('form224_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<testing_process count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<test_id>"+fnum+"</test_id>"+
+			"<item>"+fname+"</item>" +
+			"<details></details>" +
+			"<status>"+fstatus+"</status>" +
+			"<next_due></next_due>"+
+			"</testing_process>";
+
+	$('#form224_body').html("");
+
+	fetch_requested_data('form224',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form224_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Test Id'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form224_"+result.id+"' value='"+result.test_id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Item'>";
+						rowsHTML+="<textarea readonly='readonly' form='form224_"+result.id+"'>"+result.item+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+="<textarea readonly='readonly' form='form224_"+result.id+"' class='dblclick_editable'>"+result.details+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Next Due Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form224_"+result.id+"' value='"+get_my_past_date(result.next_due)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form224_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form224_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form224_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form224_"+result.id+"' title='Delete' onclick='form224_delete_item($(this));'>";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form224_"+result.id+"' value='Add Results' onclick=\"modal146_action('"+result.id+"','"+result.test_id+"','"+result.item+"');\">";
+					rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+
+			$('#form224_body').append(rowsHTML);
+			var fields=document.getElementById("form224_"+result.id);
+			var date_filter=fields.elements[3];
+			var status_filter=fields.elements[4];
+
+			$(date_filter).datepicker();
+			
+			set_static_value_list('purchase_orders','status',status_filter);
+
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form224_update_item(fields);
+			});			
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Testing');
+		});
+		hide_loader();
+	});
+};

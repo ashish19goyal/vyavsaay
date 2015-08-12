@@ -10348,3 +10348,93 @@ function modal145_action(customer_acc_name)
 	
 	$("#modal145").dialog("open");
 }
+
+/**
+ * @modalNo 146
+ * @modal Add Test Results
+ * @param button
+ */
+function modal146_action(test_data_id,test_id,item)
+{
+	var form=document.getElementById('modal146_form');
+	
+	var fdate=form.elements[1];
+	var fresult=form.elements[2];
+	var fdetails=form.elements[3];
+	var docInfo=document.getElementById('modal146_url');
+	var fpicture=form.elements[4];
+	var fnext=form.elements[5];
+
+	$(fnext).datepicker();
+	fdate.value=get_my_date();
+	set_static_filter('testing_results','response',fresult);
+	
+	fpicture.addEventListener('change',function(evt)
+	{
+		select_document(evt,function(dataURL)
+		{
+			docInfo.setAttribute('href',dataURL);
+		});
+	},false);
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form224'))
+		{
+			var files=fpicture.files;
+			var doc_name="";
+    		for(var i = 0; i < files.length; i++)
+        		doc_name+= files[i].name + " ";
+        	var data_id=get_new_key();
+			var url=$(docInfo).attr('href');
+			var last_updated=get_my_time();
+
+			var result_xml="<testing_results>"+
+						"<id>"+data_id+"</id>"+
+						"<test_id>"+test_id+"</test_id>"+
+						"<item>"+item+"</item>"+
+						"<response>"+fresult.value+"</response>"+
+						"<details>"+fdetails.value+"</details>"+
+						"<date>"+get_raw_time(fdate.value)+"</date>"+
+						"<next_date>"+get_raw_time(fnext.value)+"</next_date>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</testing_results>";
+			create_simple(result_xml);	
+			
+			var test_xml="<testing_process>" +
+				"<id>"+test_data_id+"</id>" +
+				"<next_due>"+get_raw_time(fnext.value)+"</next_due>" +
+				"<status>"+status+"</status>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</testing_process>";	
+			update_simple(test_xml);
+					
+			if(url!="")
+			{
+				var pic_xml="<documents>" +
+							"<id>"+data_id+"</id>" +
+							"<url>"+url+"</url>" +
+							"<doc_type>testing_results</doc_type>" +
+							"<doc_name>"+doc_name+"</doc_name>"+						
+							"<target_id>"+data_id+"</target_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</documents>";
+				create_simple(pic_xml);	
+				
+				if(typeof func!='undefined')
+				{
+					func(url,doc_name);
+				}		
+			}
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal146").dialog("close");
+	});
+	
+	$("#modal146").dialog("open");
+}

@@ -1270,4 +1270,18 @@
 		</form>
 	</div>
 
+	<div id="modal146" title="Add Test Results">
+		<form id='modal146_form' autocomplete="off">
+			<fieldset>
+				<label>Date: <input type="text" required readonly='readonly'></label><br>
+				<label>Result: <input type="text" required></label><br>
+				<label>Details: <textarea></textarea></label><br>
+				<label>Document: <a id='modal146_url'>link</a>
+						<input type="file"></label><br>
+				<label>Next Test Date: <input type="text"></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+	
 </div>
