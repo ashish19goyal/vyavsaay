@@ -6026,97 +6026,93 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 						"</channel_prices>";
 				fetch_requested_data('',price_data,function(sale_prices)
 				{
-					//////adding offer details
-					var pickup_data="<pickup_charges>"+
-									"<rate></rate>"+
-									"<min_charges></min_charges>"+
-									"<max_charges></max_charges>"+
-									"<pincode exact='yes'>all</pincode>"+
-									"<channel exact='yes'>"+sale_channel+"</channel>"+
-									"</pickup_charges>";
-					fetch_requested_data('',pickup_data,function(pickups)
+					if(sale_prices.length>0)
 					{
-						var pickup_charges=0;
-						var item_dead_weight=100;
-						if(pickups.length>0)
+						//////adding offer details
+						var pickup_data="<pickup_charges>"+
+										"<rate></rate>"+
+										"<min_charges></min_charges>"+
+										"<max_charges></max_charges>"+
+										"<pincode exact='yes'>all</pincode>"+
+										"<channel exact='yes'>"+sale_channel+"</channel>"+
+										"</pickup_charges>";
+						fetch_requested_data('',pickup_data,function(pickups)
 						{
-							pickup_charges=parseFloat(pickups[0].rate)*parseFloat(item_dead_weight);
-							if(pickup_charges>parseFloat(pickups[0].max_charges))
+							var pickup_charges=0;
+							var item_dead_weight=100;
+							if(pickups.length>0)
 							{
-								pickup_charges=parseFloat(pickups[0].max_charges);
+								pickup_charges=parseFloat(pickups[0].rate)*parseFloat(item_dead_weight);
+								if(pickup_charges>parseFloat(pickups[0].max_charges))
+								{
+									pickup_charges=parseFloat(pickups[0].max_charges);
+								}
+								else if(pickup_charges<parseFloat(pickups[0].min_charges))
+								{
+									pickup_charges=parseFloat(pickups[0].min_charges);
+								}
 							}
-							else if(pickup_charges<parseFloat(pickups[0].min_charges))
-							{
-								pickup_charges=parseFloat(pickups[0].min_charges);
-							}
-						}
-						
-						item_freight=parseFloat(order_item.quantity)*parseFloat(sale_prices[0].freight);
-						item_total=(parseFloat(order_item.quantity)*parseFloat(sale_prices[0].sale_price))+item_freight;
-						item_channel_charges=(parseFloat(order_item.quantity)*(parseFloat(sale_prices[0].channel_commission)+pickup_charges));
-						item_channel_tax=item_channel_charges*.14;
-						item_channel_payable=item_channel_charges*1.14;												
-						
-						var tax_data="<product_master count='1'>" +
-								"<name exact='yes'>"+order_item.item_name+"</name>" +
-								"<description></description>"+
-								"<tax></tax>" +
-								"</product_master>";
-						fetch_requested_data('',tax_data,function(taxes)
-						{
-							order_item.item_desc=taxes[0].description;
-							taxes.forEach(function(tax)
-							{
-								item_amount=my_round((item_total-item_freight)/(1+(parseFloat(tax.tax)/100)),2);
-								item_tax=my_round((item_total-item_amount-item_freight),2);
-							});
 
-							var unit_price=item_amount/parseFloat(order_item.quantity);
-
-							/////saving to bill item
-							var bill_item_id=get_new_key();
-			                var data_xml="<bill_items>" +
-									"<id>"+bill_item_id+"</id>" +
-									"<item_name>"+order_item.item_name+"</item_name>" +
-									"<item_desc>"+order_item.item_desc+"</item_desc>" +
-									"<batch>"+batch+"</batch>" +
-									"<unit_price>"+unit_price+"</unit_price>" +
-									"<quantity>"+order_item.quantity+"</quantity>" +
-									"<amount>"+item_amount+"</amount>" +
-									"<total>"+item_total+"</total>" +
-									"<channel_charges>"+item_channel_charges+"</channel_charges>" +
-									"<freight>"+item_freight+"</freight>" +
-									"<tax>"+item_tax+"</tax>" +
-									"<bill_id>"+order_id+"</bill_id>" +
-									"<picked_status>pending</picked_status>"+
-									"<packing_status>pending</packing_status>"+
-									"<last_updated>"+get_my_time()+"</last_updated>" +
-									"</bill_items>";	
-							var order_item_xml="<sale_order_items>" +
-									"<id>"+order_item.id+"</id>" +
-									"<item_name>"+order_item.item_name+"</item_name>" +
-									"<item_desc>"+order_item.item_desc+"</item_desc>" +
-									"<last_updated>"+get_my_time()+"</last_updated>" +
-									"</sale_order_items>";	
-							bill_amount+=item_amount;
-							bill_freight+=item_freight;
-							bill_total+=item_total;
-							bill_tax+=item_tax;
-							bill_channel_charges+=item_channel_charges;
-							bill_channel_tax+=item_channel_tax;
-							bill_channel_payable+=item_channel_payable;
-							pending_items_count-=1;
+							item_freight=parseFloat(order_item.quantity)*parseFloat(sale_prices[0].freight);
+							item_total=(parseFloat(order_item.quantity)*parseFloat(sale_prices[0].sale_price))+item_freight;
+							item_channel_charges=(parseFloat(order_item.quantity)*(parseFloat(sale_prices[0].channel_commission)+pickup_charges));
+							item_channel_tax=item_channel_charges*.14;
+							item_channel_payable=item_channel_charges*1.14;												
 							
-							if(is_online())
+							var tax_data="<product_master count='1'>" +
+									"<name exact='yes'>"+order_item.item_name+"</name>" +
+									"<description></description>"+
+									"<tax></tax>" +
+									"</product_master>";
+							fetch_requested_data('',tax_data,function(taxes)
 							{
-								server_create_simple(data_xml);
-							}
-							else
-							{
-								local_create_simple(data_xml);
-							}
+								order_item.item_desc=taxes[0].description;
+								if(taxes.length>0)
+								{
+									item_amount=my_round((item_total-item_freight)/(1+(parseFloat(taxes[0].tax)/100)),2);
+									item_tax=my_round((item_total-item_amount-item_freight),2);
+
+									var unit_price=item_amount/parseFloat(order_item.quantity);
+	
+									/////saving to bill item
+									var bill_item_id=get_new_key();
+					                var data_xml="<bill_items>" +
+											"<id>"+bill_item_id+"</id>" +
+											"<item_name>"+order_item.item_name+"</item_name>" +
+											"<item_desc>"+order_item.item_desc+"</item_desc>" +
+											"<batch>"+batch+"</batch>" +
+											"<unit_price>"+unit_price+"</unit_price>" +
+											"<quantity>"+order_item.quantity+"</quantity>" +
+											"<amount>"+item_amount+"</amount>" +
+											"<total>"+item_total+"</total>" +
+											"<channel_charges>"+item_channel_charges+"</channel_charges>" +
+											"<freight>"+item_freight+"</freight>" +
+											"<tax>"+item_tax+"</tax>" +
+											"<bill_id>"+order_id+"</bill_id>" +
+											"<picked_status>pending</picked_status>"+
+											"<packing_status>pending</packing_status>"+
+											"<last_updated>"+get_my_time()+"</last_updated>" +
+											"</bill_items>";	
+									var order_item_xml="<sale_order_items>" +
+											"<id>"+order_item.id+"</id>" +
+											"<item_name>"+order_item.item_name+"</item_name>" +
+											"<item_desc>"+order_item.item_desc+"</item_desc>" +
+											"<last_updated>"+get_my_time()+"</last_updated>" +
+											"</sale_order_items>";	
+									bill_amount+=item_amount;
+									bill_freight+=item_freight;
+									bill_total+=item_total;
+									bill_tax+=item_tax;
+									bill_channel_charges+=item_channel_charges;
+									bill_channel_tax+=item_channel_tax;
+									bill_channel_payable+=item_channel_payable;
+									pending_items_count-=1;
+									
+									create_simple(data_xml);
+								}
+							});
 						});
-					});
+					}
 				});
 			});
 		});
@@ -12399,6 +12395,57 @@ function form172_create_item(fields)
 		{
 			$(fields.elements[i]).attr('readonly','readonly');
 		}		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form SKU mappings
+ * @formNo 173
+ */
+function form173_create_item(form)
+{
+	if(is_create_access('form173'))
+	{
+		var channel=form.elements[0].value;
+		var channel_sku=form.elements[1].value;
+		var vendor_sku=form.elements[2].value;
+		var system_sku=form.elements[3].value;
+		var description=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var del_button=form.elements[7];
+		var last_updated=get_my_time();
+		var data_xml="<sku_mapping>" +
+					"<id>"+data_id+"</id>" +
+					"<channel>"+channel+"</channel>" +
+					"<item_desc>"+description+"</item_desc>" +
+					"<channel_sku>"+channel_sku+"</channel_sku>" +
+					"<channel_system_sku>"+vendor_sku+"</channel_system_sku>" +
+					"<system_sku>"+system_sku+"</system_sku>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sku_mapping>";
+		create_simple(data_xml);
+
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form173_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form173_update_item(form);
+		});
 	}
 	else
 	{

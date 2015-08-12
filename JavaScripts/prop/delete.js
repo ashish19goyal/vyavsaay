@@ -5689,24 +5689,51 @@ function form171_delete_item(button)
 						"<channel exact='yes'>"+name+"</channel>" +
 						"</category_sku_mapping>";
 			
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(pickup_xml);
-				server_delete_simple(sku_xml);
-				server_delete_simple(channel_prices_xml);
-				server_delete_simple(category_xml);
-				server_delete_simple(cat_sku_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(pickup_xml);
-				local_delete_simple(sku_xml);
-				local_delete_simple(channel_prices_xml);
-				local_delete_simple(category_xml);
-				local_delete_simple(cat_sku_xml);
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(pickup_xml);
+			delete_simple(sku_xml);
+			delete_simple(channel_prices_xml);
+			delete_simple(category_xml);
+			delete_simple(cat_sku_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form SKU mappings
+ * @param button
+ */
+function form173_delete_item(button)
+{
+	if(is_delete_access('form173'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var channel=form.elements[0].value;
+			var system_sku=form.elements[3].value;
+			var data_id=form.elements[5].value;
+			var last_updated=get_my_time();
+			var data_xml="<sku_mapping>" +
+						"<id>"+data_id+"</id>" +
+						"</sku_mapping>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>sku_mapping</tablename>" +
+						"<link_to>form173</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Mapping of "+system_sku+" for channel "+channel+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}

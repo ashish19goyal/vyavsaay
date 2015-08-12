@@ -5442,7 +5442,7 @@ function form69_ini()
 							{
 								name_filter.value=skus[0].system_sku;
 								desc_filter.value=skus[0].item_desc;
-								$(fields).trigger('submit');
+								//$(fields).trigger('submit');
 							}
 						});
 					}
@@ -17882,6 +17882,7 @@ function form173_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form173_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form173_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form173_"+result.id+"' title='Delete' onclick='form173_delete_item($(this))'>";			
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 		
@@ -17923,7 +17924,7 @@ function form173_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[4];
+		var export_button=filter_fields.elements[5];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{

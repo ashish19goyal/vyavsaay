@@ -9799,6 +9799,81 @@ function form172_add_item()
 }
 
 /**
+ * @form SKU mappings
+ * @formNo 173
+ */
+function form173_add_item()
+{
+	if(is_create_access('form173'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form173_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Channel'>";
+				rowsHTML+="<input type='text' form='form173_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Channel SKU'>";
+				rowsHTML+="<input type='text' form='form173_"+id+"' required>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Vendor SKU'>";
+				rowsHTML+="<input type='text' form='form173_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='System SKU'>";
+				rowsHTML+="<input type='text' form='form173_"+id+"' required>";
+				rowsHTML+="<br>Name: <textarea readonly='readonly' form='form173_"+id+"'></textarea>";					
+			rowsHTML+="</td>";			
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form173_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form173_"+id+"' title='Save'>";	
+				rowsHTML+="<input type='button' class='delete_icon' form='form173_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form173_body').prepend(rowsHTML);
+		longPressEditable($('.dblclick_editable'));
+		
+		var fields=document.getElementById("form173_"+id);
+		var channel_filter=fields.elements[0];
+		var system_sku_filter=fields.elements[3];
+		var description_filter=fields.elements[4];
+		
+		var channel_data="<sale_channels>"+
+						"<name></name>"+
+						"</sale_channels>";
+		set_my_value_list_func(channel_data,channel_filter,function () 
+		{
+			$(channel_filter).focus();
+		});
+		
+		var sku_data="<product_master>"+
+					"<name></name>"+
+					"</product_master>";
+		set_my_value_list(sku_data,system_sku_filter);
+
+		$(system_sku_filter).on('blur',function () 
+		{
+			var description_data="<product_master>"+
+								"<description></description>"+
+								"<name exact='yes'>"+system_sku_filter.value+"</name>"+
+								"</product_master>";
+			set_my_value(description_data,description_filter);
+		});
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form173_create_item(fields);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}		
+}
+
+
+/**
  * @form Pickup Charges
  * @formNo 174
  */
