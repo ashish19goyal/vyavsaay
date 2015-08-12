@@ -16803,7 +16803,6 @@ function form165_ini()
 	if_data_read_access('store_areas',function(accessible_data)
 	{		
 		//console.log(accessible_data);
-		
 		var columns="<supplier_bill_items count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
 			"<batch>"+fbatch+"</batch>" +
@@ -16814,7 +16813,8 @@ function form165_ini()
 			"</supplier_bill_items>";
 		
 		fetch_requested_data('form165',columns,function(results)
-		{	
+		{
+			//console.log(results);
 			var unbilled_columns="<unbilled_purchase_items count='25' start_index='"+start_index+"'>" +
 					"<id>"+fid+"</id>" +
 					"<batch>"+fbatch+"</batch>" +
@@ -16850,7 +16850,10 @@ function form165_ini()
 					var access=false;
 					for(var x in accessible_data)
 					{
-						if(result.storage==accessible_data[x].name)
+						//console.log(result.storage);
+						//console.log(accessible_data[x].name);
+						
+						if(result.storage==accessible_data[x].name || accessible_data[x].record_id=='all')
 						{
 							if(accessible_data[x].access_type=='all')
 							{
@@ -16890,7 +16893,7 @@ function form165_ini()
 										rowsHTML+="<input type='number' readonly='readonly' form='form165_"+result.id+"' value='"+result.quantity+"'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Storage'>";
-										rowsHTML+="<input type='text' form='form165_"+result.id+"' value='"+result.storage+"' class='dblclick_editable'>";
+										rowsHTML+="<input type='text' form='form165_"+result.id+"' required value='"+result.storage+"' class='dblclick_editable'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Action'>";
 										rowsHTML+="<input type='hidden' form='form165_"+result.id+"' value='"+result.id+"'>";

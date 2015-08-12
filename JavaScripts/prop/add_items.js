@@ -4495,7 +4495,6 @@ function form114_add_item()
 						{
 							mrp_price=parseFloat(mrps[0]);
 						}
-						console.log(mrp_price);
 								
 						var margin_data="<supplier_item_mapping>" +
 									"<margin></margin>"+
@@ -4505,11 +4504,9 @@ function form114_add_item()
 									"</supplier_item_mapping>";
 						fetch_requested_data('',margin_data,function(margins)
 						{
-							console.log(margins);
 							if(margins.length>0)
 							{
-								console.log(unit_filter);
-								unit_filter.value=my_round((parseFloat(mrp_price.value)*(100-parseFloat(margins[0].margin))/100),2);
+								unit_filter.value=my_round((parseFloat(mrp_price)*(100-parseFloat(margins[0].margin))/100),2);
 								amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(unit_filter.value));
 								tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_unit_filter.value)/100));
 								//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
@@ -4561,7 +4558,7 @@ function form114_add_item()
 				{
 					if(margins.length>0)
 					{
-						unit_filter.value=my_round((parseFloat(mrp_price.value)*(100-parseFloat(margins[0].margin))/100),2);
+						unit_filter.value=my_round((parseFloat(mrp_price)*(100-parseFloat(margins[0].margin))/100),2);
 						amount_filter.value=Math.round(parseFloat(quantity_filter.value)*parseFloat(unit_filter.value));
 						tax_filter.value=Math.round(parseFloat(amount_filter.value)*(parseFloat(tax_unit_filter.value)/100));
 						//total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value));
