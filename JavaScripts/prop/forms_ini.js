@@ -5435,12 +5435,15 @@ function form69_ini()
 									"<channel_sku>"+result.channel_sku+"</channel_sku>"+
 									"<channel_system_sku>"+result.vendor_sku+"</channel_system_sku>"+
 									"<channel exact='yes'>"+filter_fields.elements['channel'].value+"</channel>"+
-									"<sku_mapping>";
+									"</sku_mapping>";
 						fetch_requested_data('',sku_data,function(skus)
 						{
-							name_filter.value=skus[0].system_sku;
-							desc_filter.value=skus[0].item_desc;
-							$(fields).trigger('submit');
+							if(skus.length>0)
+							{
+								name_filter.value=skus[0].system_sku;
+								desc_filter.value=skus[0].item_desc;
+								$(fields).trigger('submit');
+							}
 						});
 					}
 				});

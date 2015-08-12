@@ -9397,7 +9397,7 @@ function modal138_action(i_func)
                         "<item_name>"+row.item_name+"</item_name>"+
                         "<item_desc>"+row.item_desc+"</item_desc>"+
                         "<channel_sku>"+row.channel_sku+"</channel_sku>"+
-                        //"<vendor_sku>"+row.vendor_sku+"</vendor_sku>"+
+                        "<vendor_sku>"+row.vendor_sku+"</vendor_sku>"+
                         "<quantity>"+row.quantity+"</quantity>"+
                         "<notes></notes>"+
                         "<mrp>"+row.mrp+"</mrp>"+

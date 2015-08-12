@@ -401,34 +401,34 @@ function local_read_single_column(columns,callback,results)
 				if(result)
 				{
 					var record=result.value;
-					var match=true;
+					var match_word=true;
 					for(var i=0;i<filter.length;i++)
 					{
 						var string=record[filter[i].name].toString().toLowerCase();
-						var search=filter[i].value.toString().toLowerCase();
+						var search_word=filter[i].value.toString().toLowerCase();
 						var found=0;
 						
 						if(filter[i].type=='')
 						{
-							found=string.indexOf(search);
+							found=string.indexOf(search_word);
 						}
 						else if(filter[i].type=='exact')
 						{
-							if(search!==string)
+							if(search_word!==string)
 							{
-								match=false;
+								match_word=false;
 								break;
 							}
 						}
 						else if(filter[i].type=='array')
 						{
-							found=search.indexOf("-"+string+"-");
+							found=search_word.indexOf("-"+string+"-");
 						}
 						else if(filter[i].type=='upperbound') 
 						{
 							if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
 							{
-								match=false;
+								match_word=false;
 								break;
 							}
 						}
@@ -436,19 +436,19 @@ function local_read_single_column(columns,callback,results)
 						{
 							if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
 							{
-								match=false;
+								match_word=false;
 								break;
 							}
 						}
 						
 						if(found==-1)
 						{
-							match=false;
+							match_word=false;
 							break;
 						}
 					}
 					
-					if(match===true)
+					if(match_word===true)
 					{
 						if(sum)
 						{
@@ -615,33 +615,33 @@ function local_read_multi_column(columns,callback,results)
 			if(result)
 			{
 				var record=result.value;
-				var match=true;
+				var match_word=true;
 				for(var i=0;i<filter.length;i++)
 				{
 					var string=record[filter[i].name].toString().toLowerCase();
-					var search=filter[i].value.toString().toLowerCase();
+					var search_word=filter[i].value.toString().toLowerCase();
 					var found=0;
 					
 					if(filter[i].type=='')
 					{
-						found=string.indexOf(search);
+						found=string.indexOf(search_word);
 					}
 					else if(filter[i].type=='exact')
 					{
-						if(search!==string)
+						if(search_word!==string)
 						{
-							match=false;
+							match_word=false;
 							break;
 						}
 					}
 					else if(filter[i].type=='array')
 					{
-						found=search.indexOf("-"+string+"-");
+						found=search_word.indexOf("-"+string+"-");
 					}
 					
 					if(found===-1)
 					{
-						match=false;
+						match_word=false;
 						break;
 					}
 					
@@ -649,7 +649,7 @@ function local_read_multi_column(columns,callback,results)
 					{
 						if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
 						{
-							match=false;
+							match_word=false;
 							break;
 						}
 					}
@@ -657,13 +657,13 @@ function local_read_multi_column(columns,callback,results)
 					{
 						if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
 						{
-							match=false;
+							match_word=false;
 							break;
 						}
 					}
 				}
 				
-				if(match===true)
+				if(match_word===true)
 				{
 					if(start_index==0)
 					{
@@ -2000,18 +2000,18 @@ function local_delete_row(data_xml,activity_xml)
 				var data=get_req.result;
 				if(data)
 				{
-					var match=true;
+					var match_word=true;
 					for(var i=1;i<filter.length;i++)
 					{
 						var string=data[filter[i].name].toString().toLowerCase();
-						var search=filter[i].value.toString().toLowerCase();
-						if(string!=search)
+						var search_word=filter[i].value.toString().toLowerCase();
+						if(string!=search_word)
 						{
-							match=false;
+							match_word=false;
 							break;
 						}
 					}
-					if(match===true)
+					if(match_word===true)
 					{
 						localdb_open_requests+=1;
 						objectStore.delete(filter[0].value).onsuccess=function(e)
@@ -2050,18 +2050,18 @@ function local_delete_row(data_xml,activity_xml)
 				{
 					var data=result.value;
 					
-					var match=true;
+					var match_word=true;
 					for(var i=1;i<filter.length;i++)
 					{
 						var string=data[filter[i].name].toString().toLowerCase();
-						var search=filter[i].value.toString().toLowerCase();
-						if(string!=search)
+						var search_word=filter[i].value.toString().toLowerCase();
+						if(string!=search_word)
 						{
-							match=false;
+							match_word=false;
 							break;
 						}
 					}
-					if(match===true)
+					if(match_word===true)
 					{
 						delete_ids_array.push(data.id);
 					}
@@ -2182,18 +2182,18 @@ function local_delete_simple(data_xml)
 				var data=get_req.result;
 				if(data)
 				{
-					var match=true;
+					var match_word=true;
 					for(var i=1;i<filter.length;i++)
 					{
 						var string=data[filter[i].name].toString().toLowerCase();
-						var search=filter[i].value.toString().toLowerCase();
-						if(string!=search)
+						var search_word=filter[i].value.toString().toLowerCase();
+						if(string!=search_word)
 						{
-							match=false;
+							match_word=false;
 							break;
 						}
 					}
-					if(match===true)
+					if(match_word===true)
 					{
 						localdb_open_requests+=1;
 						objectStore.delete(filter[0].value).onsuccess=function(e)
@@ -2230,20 +2230,20 @@ function local_delete_simple(data_xml)
 				{
 					var data=result.value;
 					
-					var match=true;
+					var match_word=true;
 					for(var i=1;i<filter.length;i++)
 					{
 						var string=data[filter[i].name].toString().toLowerCase();
-						var search=filter[i].value.toString().toLowerCase();
-						if(string!=search)
+						var search_word=filter[i].value.toString().toLowerCase();
+						if(string!=search_word)
 						{
-							match=false;
+							match_word=false;
 							break;
 						}
 					}
-					if(match===true)
+					if(match_word===true)
 					{
-						delete_ids_array.push(parseInt(data.id));
+						delete_ids_array.push(data.id);
 					}
 					result.continue();
 				}
@@ -2360,18 +2360,18 @@ function local_delete_simple_func(data_xml,func)
 				var data=get_req.result;
 				if(data)
 				{
-					var match=true;
+					var match_word=true;
 					for(var i=1;i<filter.length;i++)
 					{
 						var string=data[filter[i].name].toString().toLowerCase();
-						var search=filter[i].value.toString().toLowerCase();
-						if(string!=search)
+						var search_word=filter[i].value.toString().toLowerCase();
+						if(string!=search_word)
 						{
-							match=false;
+							match_word=false;
 							break;
 						}
 					}
-					if(match===true)
+					if(match_word===true)
 					{
 						localdb_open_requests+=1;
 						objectStore.delete(filter[0].value).onsuccess=function(e)
@@ -2410,18 +2410,18 @@ function local_delete_simple_func(data_xml,func)
 				{
 					var data=result.value;
 					
-					var match=true;
+					var match_word=true;
 					for(var i=1;i<filter.length;i++)
 					{
 						var string=data[filter[i].name].toString().toLowerCase();
-						var search=filter[i].value.toString().toLowerCase();
-						if(string!=search)
+						var search_word=filter[i].value.toString().toLowerCase();
+						if(string!=search_word)
 						{
-							match=false;
+							match_word=false;
 							break;
 						}
 					}
-					if(match===true)
+					if(match_word===true)
 					{
 						delete_ids_array.push(data.id);
 					}
@@ -3087,35 +3087,35 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																				if(iresult)
 																				{
 																					var record=iresult.value;
-																					var match=true;
+																					var match_word=true;
 																					
 																					for(var i=0;i<filter.length;i++)
 																					{
 																						var string=record[filter[i].name].toString().toLowerCase();
-																						var search=filter[i].value.toString().toLowerCase();
+																						var search_word=filter[i].value.toString().toLowerCase();
 																						var found=0;
 																						
 																						if(filter[i].type=='')
 																						{
-																							found=string.indexOf(search);
+																							found=string.indexOf(search_word);
 																						}
 																						else if(filter[i].type=='exact')
 																						{
-																							if(search!==string)
+																							if(search_word!==string)
 																							{
-																								match=false;
+																								match_word=false;
 																								break;
 																							}
 																						}
 																						else if(filter[i].type=='array')
 																						{
-																							found=search.indexOf("-"+string+"-");
+																							found=search_word.indexOf("-"+string+"-");
 																						}
 																						else if(filter[i].type=='upperbound') 
 																						{
 																							if(parseFloat(record[filter[i].name])>=parseFloat(filter[i].value))
 																							{
-																								match=false;
+																								match_word=false;
 																								break;
 																							}
 																						}
@@ -3123,19 +3123,19 @@ function local_get_available_inventory(product,batch,data_array,callback)
 																						{
 																							if(parseFloat(record[filter[i].name])<=parseFloat(filter[i].value))
 																							{
-																								match=false;
+																								match_word=false;
 																								break;
 																							}
 																						}
 																						
 																						if(found==-1)
 																						{
-																							match=false;
+																							match_word=false;
 																							break;
 																						}
 																					}
 																					
-																					if(match===true)
+																					if(match_word===true)
 																					{
 																						if(add_sub_type=='add')
 																							result+=record['quantity'];
@@ -3244,27 +3244,27 @@ function local_generate_report(report_id,results,callback)
 						    {
 								if(j==report_tables.length)
 							    {
-									var match=true;
+									var match_word=true;
 									for(var y in field_conditions)
 									{
 										if(field_conditions[y][2]=='equals field' && cursors[field_conditions[y][0]].value[field_conditions[y][1]]!=cursors[field_conditions[y][3]].value[field_conditions[y][4]])
 										{
-											match=false;
+											match_word=false;
 											break;
 										}
 										if(field_conditions[y][2]=='not equals field' && cursors[field_conditions[y][0]].value[field_conditions[y][1]]==cursors[field_conditions[y][3]].value[field_conditions[y][4]])
 										{
-											match=false;
+											match_word=false;
 											break;
 										}	
 										if(field_conditions[y][2]=='greater than field' && cursors[field_conditions[y][0]].value[field_conditions[y][1]]<=cursors[field_conditions[y][3]].value[field_conditions[y][4]])
 										{
-											match=false;
+											match_word=false;
 											break;
 										}
 										if(field_conditions[y][2]=='less than field' && cursors[field_conditions[y][0]].value[field_conditions[y][1]]>=cursors[field_conditions[y][3]].value[field_conditions[y][4]])
 										{
-											match=false;
+											match_word=false;
 											break;
 										}
 									}
@@ -3273,27 +3273,27 @@ function local_generate_report(report_id,results,callback)
 									{
 										if(value_conditions[z][2]=='equals value' && cursors[value_conditions[z][0]].value[value_conditions[z][1]]!=value_conditions[z][3])
 										{
-											match=false;
+											match_word=false;
 											break;
 										}
 										if(value_conditions[z][2]=='not equals value' && cursors[value_conditions[z][0]].value[value_conditions[z][1]]==value_conditions[z][3])
 										{
-											match=false;
+											match_word=false;
 											break;
 										}	
 										if(value_conditions[z][2]=='greater than value' && cursors[value_conditions[z][0]].value[value_conditions[z][1]]<=value_conditions[z][3])
 										{
-											match=false;
+											match_word=false;
 											break;
 										}
 										if(value_conditions[z][2]=='less than value' && cursors[value_conditions[z][0]].value[value_conditions[z][1]]>=value_conditions[z][3])
 										{
-											match=false;
+											match_word=false;
 											break;
 										}
 									}
 									
-									if(match===true)
+									if(match_word===true)
 									{
 										var data_array=new Object();
 										for(var x=0;x<report_fields.length;x++)
