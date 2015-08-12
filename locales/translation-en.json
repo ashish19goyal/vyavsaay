@@ -323,6 +323,8 @@
 	"production_plan":"Create Production Plan",
 	"testing_processes":"Testing Steps",
 	"track_testing":"Track Testing",
+	"testing":"Testing",
+	"testing_results":"Testing Results",
 	"manage_production_plans":"Manage Production Plans",
 	"orders_laundry":"Orders (laundry)",
 	"orders":"Orders",

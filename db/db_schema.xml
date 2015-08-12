@@ -1500,4 +1500,26 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</treatment_plan_items>
+	<testing_process>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<test_id index='yes' type="BIGINT"></test_id>
+			<item index='yes' type="TEXT"></item>
+			<details index='yes' type="TEXT"></details>
+			<assignee index='yes' type="TEXT"></assignee>
+			<status index='yes' type='VARCHAR(30)'></status><!--pending/completed/overdue-->
+			<next_due index='yes' type="BIGINT"></next_due>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</testing_process>
+	<testing_results>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<test_id index='yes' type="BIGINT"></test_id>
+			<item index='yes' type="TEXT"></item>
+			<response index='yes' type="TEXT"></response><!--satisfactory/unsatisfactory-->
+			<details index='no' type="TEXT"></details>
+			<date index='yes' type="BIGINT"></date>
+			<next_date index='yes' type="TEXT"></next_date>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</testing_results>
 </re_xml>

@@ -1285,6 +1285,74 @@ function form46_delete_item(button)
 }
 
 /**
+ * @form Select Reports
+ * @param button
+ */
+function form48_delete_item(button)
+{
+	if(is_delete_access('form48'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var element_id=form.elements[4].value;
+			var data_id=form.elements[3].value;
+			var last_updated=get_my_time();
+			var data_xml="<user_preferences>" +
+						"<id>"+data_id+"</id>" +
+						"<type>report</type>" +
+						"</user_preferences>";
+			var data2_xml="<access_control>" +
+						"<element_id>"+element_id+"</element_id>" +
+						"</access_control>";
+			delete_simple(data_xml);
+			delete_simple(data2_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Select Forms
+ * @param button
+ */
+function form49_delete_item(button)
+{
+	if(is_delete_access('form49'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var element_id=form.elements[4].value;
+			var data_id=form.elements[3].value;
+			var last_updated=get_my_time();
+			var data_xml="<user_preferences>" +
+						"<id>"+data_id+"</id>" +
+						"<type>form</type>" +
+						"</user_preferences>";
+			var data2_xml="<access_control>" +
+						"<element_id>"+element_id+"</element_id>" +
+						"</access_control>";
+			delete_simple(data_xml);
+			delete_simple(data2_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form Set Accounting Defaults
  * @param button
  */

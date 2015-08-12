@@ -7,6 +7,8 @@
 		<li><a id='form189_link' href='#form189' onclick='form189_header_ini(); form189_ini();' data-i18n='form.manage_production_plans'></a></li>
 		<li><a id='form184_link' href='#form184' onclick='form184_header_ini(); form184_ini();' data-i18n='form.manufacturing_processes'></a></li>
 		<li><a id='form187_link' href='#form187' onclick='form187_header_ini(); form187_ini();' data-i18n='form.testing_processes'></a></li>
+		<li><a id='form224_link' href='#form224' onclick='form224_header_ini(); form224_ini();' data-i18n='form.testing'></a></li>
+		<li><a id='report83_link' href='#report83' onclick='report83_header_ini();' data-i18n='form.testing_results'></a></li>
 	</ul>
 	<?php 
 		include "forms/form88.php";
@@ -16,5 +18,7 @@
 		include "forms/form189.php";
 		include "forms/form184.php";
 		include "forms/form187.php";
+		include "forms/form224.php";
+		include "reports/report83.php";
 	?>
 </div>

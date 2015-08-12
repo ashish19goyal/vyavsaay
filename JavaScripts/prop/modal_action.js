@@ -9137,6 +9137,7 @@ function modal136_action(type)
 		                "<name unique='yes'>"+name+"</name>"+
 		                "<display_name>"+display_name+"</display_name>"+
 		                "<type>"+type_new+"</type>"+
+		                "<tables>"+tables+"</tables>"+
 		                "<value>checked</value>"+
 		                "<status>active</status>"+
 		                "<shortcut></shortcut>"+
@@ -9144,14 +9145,7 @@ function modal136_action(type)
 		                "<last_updated>"+last_updated+"</last_updated>"+
 						"</user_preferences>";
 						
-			if(is_online())
-			{
-				server_create_simple(pref_xml);
-			}
-			else
-			{
-				local_create_simple(pref_xml);
-			}
+			create_simple(pref_xml);
 			
 			var username_data="<access_control>"+
 							"<username></username>"+

@@ -7902,3 +7902,33 @@ function form223_header_ini()
 	set_my_filter(name_data,name_filter);
 	set_static_filter('purchase_orders','status',status_filter);
 };
+
+/**
+ * @form Testing
+ * @formNo 224
+ */
+function form224_header_ini()
+{
+	var filter_fields=document.getElementById('form224_header');
+	var test_filter=filter_fields.elements[0];
+	var item_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+		
+	var test_data="<testing_process>" +
+			"<test_id></test_id>" +
+			"</testing_process>";
+	var item_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form224_ini();
+	});
+
+	set_my_filter(test_data,test_filter);
+	set_my_filter(item_data,item_filter);
+	set_static_filter('testing_process','status',status_filter);
+};

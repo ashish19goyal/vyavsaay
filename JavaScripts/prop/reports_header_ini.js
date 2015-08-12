@@ -1728,3 +1728,40 @@ function report82_header_ini()
 				"</product_master>";
 	set_my_filter(item_data,item_filter);
 }
+
+/**
+ * @reportNo 83
+ * @report Testing Results
+ */
+function report83_header_ini()
+{	
+	var form=document.getElementById('report83_header');
+	var test_filter=form.elements['test'];
+	var name_filter=form.elements['name'];
+	var result_filter=form.elements['result'];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report83_ini();
+	});
+			
+	var name_data="<product_master>"+
+				"<name></name>"+
+				"</product_master>";
+	set_my_filter(name_data,name_filter);
+	
+	var test_data="<testing_process>"+
+				"<test_id></test_id>"+
+				"</testing_process>";
+	set_my_filter(test_data,test_filter);
+	
+	set_static_filter('testing_results','response',result_filter);
+	
+	var prev_element=document.getElementById('report83_prev');
+	var next_element=document.getElementById('report83_next');
+	
+	$(prev_element).hide();
+	$(next_element).hide();	
+}

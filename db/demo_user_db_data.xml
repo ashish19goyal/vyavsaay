@@ -1114,6 +1114,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report83</name>
+			<display_name>testing_results</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -3137,6 +3147,18 @@
 			<tables>--purchase_orders--purchase_order_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form224</name>
+			<display_name>testing</display_name>
+			<status>active</status>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--testing_process--testing_results--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3880,6 +3902,17 @@
 			<username>master</username>
 			<element_id>report82</element_id>
 			<element_name>inventory_report</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report83</element_id>
+			<element_name>testing_results</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -5904,6 +5937,17 @@
 			<username>master</username>
 			<element_id>form223</element_id>
 			<element_name>manage_purchase_orders_aurilion</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form224</element_id>
+			<element_name>testing</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
