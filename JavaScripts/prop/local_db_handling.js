@@ -17,55 +17,73 @@ function create_local_db(domain,func)
 {
 	if("indexedDB" in window)
 	{
-		var db_name="re_local_"+domain;
-		ajax_with_custom_func("./db/db_schema.xml","",function(e)
+		if(typeof static_local_db=='undefined')
 		{
-			var request = indexedDB.open(db_name,2);
-		
-			request.onsuccess=function(e)
+			open_local_db(function()
 			{
-				var db=e.target.result;
-				db.close();
-				if(typeof func!="undefined")
-				{					
-					func();
-				}
-			};
+				create_local_db(domain,func);
+			});
+		}
+		else
+		{
+			var dbversion=parseInt(static_local_db.version);
+			if(dbversion<2 || dbversion==NaN)
+			{
+				dbversion=2;
+			}
+			static_local_db.close();
+			delete(static_local_db);//="undefined";
 
-			request.onerror=function(ev)
+			var db_name="re_local_"+domain;
+			ajax_with_custom_func("./db/db_schema.xml","",function(e)
 			{
-				alert('Could not switch to offline mode. Please refresh your browser and try again.');
-			};
-				
-			request.onupgradeneeded=function(ev)
-			{
-				var db=ev.target.result;
-				var tables=e.responseXML.childNodes[0].childNodes;
-				
-				//console.log(tables);
-				
-				for(var k=0;k<tables.length;k++)
+				var request = indexedDB.open(db_name,dbversion);
+
+				request.onsuccess=function(e)
 				{
-					if(tables[k].nodeName!="" && tables[k].nodeName!="#text" && tables[k].nodeName!="#comment")
-					{	
-						//console.log(tables[k].nodeName);
-						var table=db.createObjectStore(tables[k].nodeName,{keyPath:'id'});
-					
-						for(var i=0;i<tables[k].childNodes.length;i++)
-						{	
-							if(tables[k].childNodes[i].nodeName!="" && tables[k].childNodes[i].nodeName!="#text" && tables[k].childNodes[i].nodeName!="#comment")
-							{	
-								var indexing=tables[k].childNodes[i].getAttribute('index');
-								if(indexing=='yes')
-								{
-									table.createIndex(tables[k].childNodes[i].nodeName,[tables[k].childNodes[i].nodeName,'last_updated']);
-								}
-							}		
-						}
+					var db=e.target.result;
+					db.close();
+					if(typeof func!="undefined")
+					{					
+						func();
 					}
-				}			
-			};
-		});
+				};
+	
+				request.onerror=function(ev)
+				{
+					alert('Could not switch to offline mode. Please refresh your browser and try again.');
+				};
+					
+				request.onupgradeneeded=function(ev)
+				{
+					var db=ev.target.result;
+					var tables=e.responseXML.childNodes[0].childNodes;
+					
+					//console.log(tables);
+					
+					for(var k=0;k<tables.length;k++)
+					{
+						if(tables[k].nodeName!="" && tables[k].nodeName!="#text" && tables[k].nodeName!="#comment")
+						{	
+							//console.log(tables[k].nodeName);
+							var table=db.createObjectStore(tables[k].nodeName,{keyPath:'id'});
+						
+							for(var i=0;i<tables[k].childNodes.length;i++)
+							{	
+								if(tables[k].childNodes[i].nodeName!="" && tables[k].childNodes[i].nodeName!="#text" && tables[k].childNodes[i].nodeName!="#comment")
+								{	
+									var indexing=tables[k].childNodes[i].getAttribute('index');
+									if(indexing=='yes')
+									{
+										table.createIndex(tables[k].childNodes[i].nodeName,[tables[k].childNodes[i].nodeName,'last_updated']);
+									}
+								}		
+							}
+						}
+					}			
+				};
+			});
+		}		
 	}
 	else
 	{

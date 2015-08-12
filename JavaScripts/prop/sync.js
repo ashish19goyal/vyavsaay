@@ -37,7 +37,7 @@ function switch_to_online()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -72,7 +72,7 @@ function switch_to_offline()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -113,7 +113,7 @@ function sync_local_and_server()
 	}
 	else
 	{
-		$("#modal_access_denied").dialog("open");
+		$("#modal2").dialog("open");
 	}
 }
 
@@ -132,14 +132,11 @@ function sync_server_to_local(func)
 	}
 	else
 	{
-		var new_version=parseInt(static_local_db.version)+1;		
 		start_table="";
 		start_offset=0;
 		var domain=get_domain();
-		//console.log(number_active_ajax);
-		//console.log(localdb_open_requests);	
-		
-		//console.log(new_version);
+
+		var new_version=parseInt(static_local_db.version)+1;		
 		static_local_db.close();
 		delete(static_local_db);//="undefined";
 				

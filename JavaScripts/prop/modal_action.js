@@ -9347,7 +9347,7 @@ function modal138_action(i_func)
                 order_item_object.item_name=data_row.system_sku;
                 order_item_object.item_desc=data_row.item_name;
                 order_item_object.channel_sku=data_row.channel_sku;
-                //order_item_object.vendor_sku=data_row['item.sku'];
+                order_item_object.vendor_sku="";
                 order_item_object.quantity=data_row.quantity;
                 order_item_object.mrp=data_row.item_mrp;
                 order_item_object.unit_price=parseFloat(data_row.item_mrp)/parseFloat(data_row.quantity);

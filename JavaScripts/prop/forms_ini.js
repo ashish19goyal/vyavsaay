@@ -5426,6 +5426,9 @@ function form69_ini()
 					
 					if(result.item_name=="")
 					{
+						console.log(result.channel_sku);
+						console.log(result.vendor_sku);
+						
 						var sku_data="<sku_mapping count='1'>"+
 									"<item_desc></item_desc>"+
 									"<system_sku></system_sku>"+
