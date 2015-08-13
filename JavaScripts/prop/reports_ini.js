@@ -6068,16 +6068,16 @@ function report81_ini()
 
 /**
  * @reportNo 82
- * @report Sale leads report
+ * @report Inventory report
  */
 function report82_ini()
 {
 	var form=document.getElementById('report82_header');
 	var item_filter=form.elements[1].value;
-	
+
 	show_loader();
 	$('#report82_body').html('');	
-	
+
 	////indexing///
 	var index_element=document.getElementById('report82_index');
 	var prev_element=document.getElementById('report82_prev');
@@ -6104,7 +6104,7 @@ function report82_ini()
 			rowsHTML+="<td data-th='Total Inventory'>";
 				rowsHTML+="<p id='report82_total_"+item.id+"'></p>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Ordered Inventory'>";
+			rowsHTML+="<td data-th='Pending Order'>";
 				rowsHTML+="<p id='report82_ordered_"+item.id+"'></p>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Available Inventory'>";
@@ -6116,7 +6116,28 @@ function report82_ini()
 			
 			get_inventory(item.name,'',function (inventory) 
 			{
-				//document.getElementById('');
+				document.getElementById("report82_total_"+item.id).innerHTML=inventory;
+				var sale_item_xml="<sale_order_items sum='yes'>"+
+								"<quantity></quantity>"+								
+								"<bill_status exact='yes'>pending</bill_status>"+
+								"<item_name exact='yes'>"+item.name+"</item_name>"+
+								"</sale_order_items>";
+				get_single_column_data(function (sale_items) 
+				{
+						
+					if(sale_items.length>0)
+					{
+						var av_inventory=parseFloat(inventory)-parseFloat(sale_items[0]);
+						document.getElementById("report82_ordered_"+item.id).innerHTML=sale_items[0];
+						document.getElementById("report82_available_"+item.id).innerHTML=av_inventory;
+					}
+					else
+					{
+						document.getElementById("report82_ordered_"+item.id).innerHTML='0';
+						document.getElementById("report82_available_"+item.id).innerHTML=inventory;
+					}
+				},sale_item_xml);				
+				
 			});				
 		});		
 		

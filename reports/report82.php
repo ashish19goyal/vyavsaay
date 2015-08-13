@@ -14,7 +14,7 @@
 			<tr>
 				<th>Item</th>
 				<th>Total Inventory</th>
-				<th>Ordered Inventory</th>
+				<th>Pending Order</th>
 				<th>Available Inventory</th>
 			</tr>
 		</thead>
