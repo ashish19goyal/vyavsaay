@@ -22886,7 +22886,7 @@ function form224_ini()
 
 			$(date_filter).datepicker();
 			
-			set_static_value_list('purchase_orders','status',status_filter);
+			set_static_value_list('testing_process','status',status_filter);
 
 			$(fields).on("submit",function(event)
 			{

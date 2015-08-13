@@ -10406,7 +10406,6 @@ function modal146_action(test_data_id,test_id,item)
 			var test_xml="<testing_process>" +
 				"<id>"+test_data_id+"</id>" +
 				"<next_due>"+get_raw_time(fnext.value)+"</next_due>" +
-				"<status>"+status+"</status>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</testing_process>";	
 			update_simple(test_xml);
