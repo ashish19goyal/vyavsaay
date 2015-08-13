@@ -1714,7 +1714,7 @@ function report81_header_ini()
 function report82_header_ini()
 {	
 	var form=document.getElementById('report82_header');
-	var item_filter=form.elements['item'];
+	var product_filter=form.elements['product'];
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -1723,10 +1723,10 @@ function report82_header_ini()
 		report82_ini();
 	});
 			
-	var item_data="<product_master>"+
+	var product_data="<product_master>"+
 				"<name></name>"+
 				"</product_master>";
-	set_my_filter(item_data,item_filter);
+	set_my_filter(product_data,product_filter);
 }
 
 /**
@@ -1809,5 +1809,5 @@ function report85_header_ini()
 	$(start_date).datepicker();
 	$(end_date).datepicker();
 	start_date.value=get_my_past_date((get_my_time()-(7*86400000)));
-	end_date.value=get_my_date();
+	end_date.value=get_my_date();	
 }

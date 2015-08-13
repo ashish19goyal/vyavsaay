@@ -394,7 +394,7 @@
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<freight index='no' type="DECIMAL(12,2)"></freight>
 			<total index='no' type="DECIMAL(12,2)"></total>
-			<ibill_status index='yes' type='VARCHAR(25)'></bill_status><!-- billed/cancelled/pending -->
+			<bill_status index='yes' type='VARCHAR(25)'></bill_status><!-- billed/cancelled/pending -->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</sale_order_items>

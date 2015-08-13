@@ -2,7 +2,7 @@
 	<form id='report82_header' autocomplete="off">
 		<fieldset>
 			<legend>Select Filters</legend>
-			<label>Item<br><input type='text' name='item'></label>
+			<label>Item<br><input type='text' name='product'></label>
 			<label>
 				<input type='submit' value='Refresh' class='generic_icon'>
 				<input type='button' title='Print' class='print_icon'>
