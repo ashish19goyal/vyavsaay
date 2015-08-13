@@ -30,7 +30,8 @@
     "people":"People",
     "manufacturing":"Manufacturing",
     "logistics":"Logistics",
-    "treatment":"Treatment Planning"
+    "treatment":"Treatment Planning",
+    "reports":"Reports"
   },
   "general":{
   	"hello": "Hello"
@@ -385,6 +386,9 @@
 	"create_purchase_order_aurilion":"Create Purchase Order (Aurilion)",
 	"manage_purchase_orders_aurilion":"Manage Purchase Orders (Aurilion)",
 	"inventory_report":"Inventory Report",
-	"create_bill_cps":"Create Bill (CPS)"
+	"create_bill_cps":"Create Bill (CPS)",
+	"num_deliveries":"# of Deliveries",
+	"num_drs":"# of DRS",
+	"delivery_run":"Delivery Run"
 	}
 }

@@ -1124,6 +1124,26 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report84</name>
+			<display_name>num_deliveries</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>report85</name>
+			<display_name>num_drs</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -3171,6 +3191,18 @@
 			<tables>--bills--bill_items--transactions--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form226</name>
+			<display_name>delivery_run</display_name>
+			<status>active</status>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--delivery_run--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3925,6 +3957,28 @@
 			<username>master</username>
 			<element_id>report83</element_id>
 			<element_name>testing_results</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report84</element_id>
+			<element_name>num_deliveries</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report85</element_id>
+			<element_name>num_drs</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -5971,6 +6025,17 @@
 			<username>master</username>
 			<element_id>form225</element_id>
 			<element_name>create_bill_cps</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form226</element_id>
+			<element_name>delivery_run</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

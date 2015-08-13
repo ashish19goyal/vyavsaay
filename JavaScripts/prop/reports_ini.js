@@ -6254,3 +6254,115 @@ function report83_ini()
 	var print_button=form.elements[5];
 	print_tabular_report('report83','Testing Results',print_button);
 };
+
+
+/**
+ * @reportNo 84
+ * @report # Deliveries
+ */
+function report84_ini()
+{
+	show_loader();
+	var form=document.getElementById('report84_header');
+	var start_date=form.elements[1].value;
+	var end_date=form.elements[2].value;
+	
+	var canvas_parent=$("#report84_canvas").parent();
+	$("#report84_canvas").remove();
+	$(canvas_parent).append("<canvas id='report84_canvas' class='report_sizing'></canvas>");
+	
+	var ctx = document.getElementById("report84_canvas").getContext("2d");
+	
+	var orders_data="<logistics_orders>" +
+			"<id></id>" +
+			"<delivery_person></delivery_person>" +
+			"<import_date lowerbound='yes'>"+get_raw_time(start_date)+"</import_date>" +
+			"<import_date upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</import_date>" +
+			"</logistics_orders>";
+	fetch_requested_data('report84',orders_data,function(orders)
+	{
+		for(var i=0;i<orders.length;i++)
+		{
+			orders[i].deliveries=1;
+			for(var j=i+1;j<orders.length;j++)
+			{
+				if(orders[i].delivery_person==orders[j].delivery_person)
+				{
+					orders[i].deliveries+=1;
+					orders.splice(j,1);
+					j-=1;
+				}
+			}
+		}
+
+		for(var i=0;i<orders.length;i++)
+		{
+			if(orders[i].delivery_person=="")
+			{
+				orders[i].delivery_person="Unknown";
+				break;
+			}
+		}
+
+		var result=transform_to_bar_sum(orders,'# Deliveries','deliveries','delivery_person');
+		var mybarchart = new Chart(ctx).Bar(result,{});
+		document.getElementById("report84_legend").innerHTML=mybarchart.generateLegend();
+
+		var print_button=form.elements[4];
+		print_graphical_report('report84','# Deliveries',print_button,mybarchart);
+		hide_loader();
+	});
+};
+
+/**
+ * @reportNo 85
+ * @report # DRS
+ */
+function report85_ini()
+{
+	show_loader();
+	var form=document.getElementById('report85_header');
+	var start_date=form.elements[1].value;
+	var end_date=form.elements[2].value;
+	
+	var canvas_parent=$("#report85_canvas").parent();
+	$("#report85_canvas").remove();
+	$(canvas_parent).append("<canvas id='report85_canvas' class='report_sizing'></canvas>");
+	
+	var ctx = document.getElementById("report85_canvas").getContext("2d");
+	
+	var drs_data="<drs>" +
+			"<id></id>" +
+			"<drs_time lowerbound='yes'>"+get_raw_time(start_date)+"</drs_time>" +
+			"<drs_time upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</drs_time>" +
+			"</drs>";
+	fetch_requested_data('report85',drs_data,function(orders)
+	{
+		for(var i=0;i<orders.length;i++)
+		{
+			orders[i].drs_count=1;
+			for(var j=i+1;j<orders.length;j++)
+			{
+				if(orders[i].drs_time==orders[j].drs_time)
+				{
+					orders[i].drs_count+=1;
+					orders.splice(j,1);
+					j-=1;
+				}
+			}
+		}
+
+		for(var i=0;i<orders.length;i++)
+		{
+			orders[i].drs_time=get_my_past_date(orders[i].drs_time);
+		}
+
+		var result=transform_to_bar_sum(orders,'# DRS','drs_count','drs_time');
+		var mybarchart = new Chart(ctx).Bar(result,{});
+		document.getElementById("report85_legend").innerHTML=mybarchart.generateLegend();
+
+		var print_button=form.elements[4];
+		print_graphical_report('report85','# DRS',print_button,mybarchart);
+		hide_loader();
+	});
+};

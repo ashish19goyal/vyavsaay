@@ -7460,3 +7460,47 @@ function form223_import(data_array,import_type)
 		}
 	}
 };
+
+/**
+* @form Delivery Run
+* @formNo 226
+*/
+function form226_import(data_array,import_type)
+{
+	var data_xml="<delivery_run>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</delivery_run><separator></separator><delivery_run>";
+		}
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<person>"+row.person+"</person>" +
+				"<date>"+get_raw_time(row.date)+"</date>" +
+				"<starting_km>"+row.starting_km+"</starting_km>" +
+				"<ending_km>"+row.ending_km+"</ending_km>" +
+				"<total_run>"+row.total_run+"</total_run>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</delivery_run>";
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+};

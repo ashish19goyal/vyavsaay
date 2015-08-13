@@ -1273,3 +1273,14 @@ function form223_import_template()
 	var data_array=['id','order_num','order_date','supplier','status','amount','tax','total'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Delivery Run
+* @formNo 226
+* @table delivery_run
+*/
+function form226_import_template()
+{
+	var data_array=['id','person','date','starting_km','ending_km','total_run'];
+	my_array_to_csv(data_array);
+};

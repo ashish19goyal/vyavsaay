@@ -21359,15 +21359,15 @@ function form203_ini()
 						rowsHTML+=result.order_num;
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Customer'>";
-						rowsHTML+="Merchant:"+ result.merchant_name;
-						rowsHTML+="<br>Ship to:"+ result.ship_to;
+						rowsHTML+="<b>Merchant: </b>"+ result.merchant_name;
+						rowsHTML+="<br><b>Ship to: </b>"+ result.ship_to;
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Date'>";
 						rowsHTML+=get_my_past_date(result.import_date);
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Type'>";
-						rowsHTML+="Type:"+ result.type;
-						rowsHTML+="<br>Manifest Type:"+ result.manifest_type;
+						rowsHTML+="<b>Type: </b>"+ result.type;
+						rowsHTML+="<br><b>Manifest Type: </b>"+ result.manifest_type;
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Status'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form203_"+result.id+"' value='"+result.status+"'>";
@@ -23047,3 +23047,107 @@ function form225_ini()
 		});
 	}
 }
+
+/**
+ * @form Delivery Run
+ * @formNo 226
+ * @Loading light
+ */
+function form226_ini()
+{
+	show_loader();
+	var fid=$("#form226_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form226_header');
+	
+	//populating form 
+	var fperson=filter_fields.elements[0].value;
+	var fdate=get_raw_time(filter_fields.elements[1].value);
+	
+	////indexing///
+	var index_element=document.getElementById('form226_index');
+	var prev_element=document.getElementById('form226_prev');
+	var next_element=document.getElementById('form226_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<delivery_run count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<person>"+fperson+"</person>"+
+			"<date>"+fdate+"</date>" +
+			"<starting_km></starting_km>" +
+			"<ending_km></ending_km>" +
+			"<total_run></total_run>"+
+			"</delivery_run>";
+
+	$('#form226_body').html("");
+
+	fetch_requested_data('form226',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<form id='form226_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Person'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form226_"+result.id+"' value='"+result.person+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form226_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Start KMs'>";
+						rowsHTML+="<input type='number' readonly='readonly' step='any' form='form226_"+result.id+"' value='"+result.starting_km+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='End KMs'>";
+						rowsHTML+="<input type='number' readonly='readonly' step='any' form='form226_"+result.id+"' value='"+result.ending_km+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Total Run (KMs)'>";
+						rowsHTML+="<input type='number' readonly='readonly' step='any' form='form226_"+result.id+"' value='"+result.total_run+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form226_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form226_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form226_"+result.id+"' title='Delete' onclick='form226_delete_item($(this));'>";
+					rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+
+			$('#form226_body').append(rowsHTML);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Delivery Run');
+		});
+		hide_loader();
+	});
+};

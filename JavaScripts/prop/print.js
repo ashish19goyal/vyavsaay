@@ -2312,10 +2312,10 @@ function print_form200(func)
 
 	////////////setting styles for containers/////////////////////////
 
-	header.setAttribute('style','display:block;width:100%;min-height:40px;');
-		logo.setAttribute('style','float:left;width:30%;height:40px;');
-		business_title.setAttribute('style','float:left;width:35%;text-align:center;font-weight:bold;');
-		drs_barcode.setAttribute('style','float:right;width:30%;height:30px;padding:left:5px;padding-right:5px;');
+	header.setAttribute('style','display:block;width:100%;min-height:70px;margin-top:10px;');
+		logo.setAttribute('style','float:left;width:35%;height:60px;');
+		business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
+		drs_barcode.setAttribute('style','float:right;width:20%;height:60px;padding:left:5px;padding-right:5px;');
 	drs_title.setAttribute('style','display:block;width:100%;min-height:20px;text-align:center');	
 	detail_section.setAttribute('style','display:block;width:100%;min-height:30px;text-align:center;');
 	
@@ -2354,14 +2354,14 @@ function print_form200(func)
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
 
-	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:5%'>S.No.</td>"+
+	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:4%'>S.No.</td>"+
 				"<td style='text-align:left;width:20%'>C-Note No.</td>"+
-				"<td style='text-align:left;width:15%'>Address</td>"+
-				"<td style='text-align:left;width:6%'>Wt.</td>"+
-				"<td style='text-align:left;width:6%'>P</td>"+
-				"<td style='text-align:left;width:8%'>Time</td>"+
-				"<td style='text-align:left;width:20%'>Receiver/Comp Seal</td>"+
-				"<td style='text-align:left;width:5%'>RC</td>"+
+				"<td style='text-align:left;width:12%'>Address</td>"+
+				"<td style='text-align:left;width:5%'>Wt.</td>"+
+				"<td style='text-align:left;width:5%'>P</td>"+
+				"<td style='text-align:left;width:5%'>Time</td>"+
+				"<td style='text-align:left;width:30%'>Receiver/Comp Seal</td>"+
+				"<td style='text-align:left;width:4%'>RC</td>"+
 				"<td style='text-align:left;width:15%'>Sign</td></tr>";
 				
 	var table_rows=table_header;
@@ -2369,7 +2369,7 @@ function print_form200(func)
 
 	var td_text="<td style='border:solid 1px #000000'></td>";
 	var tr_text="<tr>"+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+"</tr>";
-	var rc="<table style='width:12px;height:12px;'><tr>"+td_text+"</tr></table>";
+	var rc="<table style='width:15px;height:15px;'><tr>"+td_text+"</tr></table>";
 
 	$(table_element).find('form').each(function(index)
 	{
@@ -2379,7 +2379,7 @@ function print_form200(func)
 		//}
 		counter+=1;
 		var form=$(this)[0];
-		var mob_seal="<table style='width:95%;height:30px;'>"+tr_text+tr_text+"</table><br>"+form.elements[2].value;
+		var mob_seal="<table style='width:95%;height:40px;'>"+tr_text+tr_text+"</table><br>"+form.elements[2].value;
 		
 		var awb_num=""+form.elements[0].value;
 		var manifest_type=form.elements[6].value.replace(/manifest/g,"");
@@ -2392,10 +2392,10 @@ function print_form200(func)
 		var type_value=document.createElement('div');
 		var merchant_value=document.createElement('div');
 		
-		barcode_image.setAttribute('style','width:150px;height:30px;');
-		barcode_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:center;');
-		type_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:left;');	
-		merchant_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:left;');
+		barcode_image.setAttribute('style','width:130px;height:30px;');
+		barcode_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:center;');
+		type_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');	
+		merchant_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');
 		
 		barcode_value.innerHTML=awb_num;
 		type_value.innerHTML="Type: "+manifest_type+" O-ID: "+order_id;
@@ -2415,8 +2415,7 @@ function print_form200(func)
 				"<td></td>"+
 				"<td><div style='text-align:left;'>"+mob_seal+"</div></td>"+
 				"<td>"+rc+"</td>"+
-				"<td></td></tr>";
-				
+				"<td></td></tr>";				
 	});
 	new_table.innerHTML=table_rows;
 	/////////////placing the containers //////////////////////////////////////////////////////	
@@ -2610,10 +2609,11 @@ function print_form219(func)
 
 	////////////setting styles for containers/////////////////////////
 
-	header.setAttribute('style','display:block;width:100%;min-height:40px;');
-		logo.setAttribute('style','float:left;width:30%;height:40px;');
-		business_title.setAttribute('style','float:left;width:35%;text-align:center;font-weight:bold;');
-		drs_barcode.setAttribute('style','float:right;width:30%;height:30px;padding:left:5px;padding-right:5px;');
+	header.setAttribute('style','display:block;width:100%;min-height:70px;margin-top:10px;');
+		logo.setAttribute('style','float:left;width:35%;height:60px;');
+		business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
+		drs_barcode.setAttribute('style','float:right;width:20%;height:60px;padding:left:5px;padding-right:5px;');
+	
 	drs_title.setAttribute('style','display:block;width:100%;min-height:20px;text-align:center');	
 	detail_section.setAttribute('style','display:block;width:100%;min-height:30px;text-align:center;');
 	
@@ -2652,14 +2652,14 @@ function print_form219(func)
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
 
-	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:5%'>S.No.</td>"+
+	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:4%'>S.No.</td>"+
 				"<td style='text-align:left;width:20%'>C-Note No.</td>"+
-				"<td style='text-align:left;width:15%'>Address</td>"+
+				"<td style='text-align:left;width:12%'>Address</td>"+
 				"<td style='text-align:left;width:5%'>Wt.</td>"+
 				"<td style='text-align:left;width:5%'>P</td>"+
-				"<td style='text-align:left;width:10%'>COD</td>"+
-				"<td style='text-align:left;width:20%'>Receiver/Comp Seal</td>"+
-				"<td style='text-align:left;width:5%'>RC</td>"+
+				"<td style='text-align:left;width:5%'>Time</td>"+
+				"<td style='text-align:left;width:30%'>Receiver/Comp Seal</td>"+
+				"<td style='text-align:left;width:4%'>RC</td>"+
 				"<td style='text-align:left;width:15%'>Sign</td></tr>";
 				
 	var table_rows=table_header;
@@ -2667,17 +2667,13 @@ function print_form219(func)
 
 	var td_text="<td style='border:solid 1px #000000'></td>";
 	var tr_text="<tr>"+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+td_text+"</tr>";
-	var rc="<table style='width:12px;height:12px;'><tr>"+td_text+"</tr></table>";
+	var rc="<table style='width:15px;height:15px;'><tr>"+td_text+"</tr></table>";
 
 	$(table_element).find('form').each(function(index)
 	{
-		//if((counter%10)==0)
-		//{
-		//	table_rows+=table_header;
-		//}
 		counter+=1;
 		var form=$(this)[0];
-		var mob_seal="<table style='width:95%;height:30px;'>"+tr_text+tr_text+"</table><br>"+form.elements[2].value;
+		var mob_seal="<table style='width:95%;height:40px;'>"+tr_text+tr_text+"</table><br>"+form.elements[2].value;
 		
 		var awb_num=""+form.elements[0].value;
 		var manifest_type=form.elements[7].value.replace(/manifest/g,"");
@@ -2690,10 +2686,10 @@ function print_form219(func)
 		var type_value=document.createElement('div');
 		var merchant_value=document.createElement('div');
 		
-		barcode_image.setAttribute('style','width:150px;height:30px;');
-		barcode_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:center;');
-		type_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:left;');	
-		merchant_value.setAttribute('style','width:150px;font-size:9px;margin:1px;text-align:left;');
+		barcode_image.setAttribute('style','width:130px;height:30px;');
+		barcode_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:center;');
+		type_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');	
+		merchant_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');
 		
 		barcode_value.innerHTML=awb_num;
 		type_value.innerHTML="Type: "+manifest_type+" O-ID: "+order_id;

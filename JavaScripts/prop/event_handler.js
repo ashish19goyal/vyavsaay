@@ -969,7 +969,9 @@ function import_data(form_name)
 		break;
 		case 'form220':modal23_action(form220_import_template,form220_import);
 		break;
-		case 'form217':modal23_action(form221_import_template,form221_import);
+		case 'form221':modal23_action(form221_import_template,form221_import);
+		break;
+		case 'form226':modal23_action(form226_import_template,form226_import);
 		break;
 	}
 }

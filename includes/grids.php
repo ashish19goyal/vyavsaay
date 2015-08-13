@@ -91,7 +91,7 @@
 		</li>
 
 		<li id="sale_reports_link" onclick="grid_click('sale_reports');" style='background-color:#ef3d8f'>
-			<a><div style='background-color:#ce1b6d'><b data-i18n="function.sale_reports"></b></div></a>		
+			<a><div style='background-color:#ce1b6d'><b data-i18n="function.reports"></b></div></a>		
 			<ul>
 			</ul>
 		</li>

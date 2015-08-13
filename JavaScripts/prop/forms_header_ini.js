@@ -8005,3 +8005,29 @@ function form225_header_ini()
 	$(bill_date).val(get_my_date());
 	customers_filter.value='';
 }
+
+/**
+ * @form Delivery Run
+ * @formNo 226
+ */
+function form226_header_ini()
+{
+	var filter_fields=document.getElementById('form226_header');
+	var person_filter=filter_fields.elements[0];
+	var date_filter=filter_fields.elements[1];
+		
+	var person_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form226_ini();
+	});
+
+	set_my_filter(person_data,person_filter);
+	
+	$(date_filter).datepicker();
+};

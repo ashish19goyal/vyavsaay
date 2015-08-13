@@ -1522,4 +1522,14 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</testing_results>
+	<delivery_run>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<person index='yes' type="TEXT"></person>
+			<date index='yes' type="BIGINT"></date>
+			<starting_km index='no' type="DECIMAL(12,2)"></starting_km>
+			<ending_km index='no' type="DECIMAL(12,2)"></ending_km>
+			<total_run index='no' type="DECIMAL(12,2)"></total_run>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</delivery_run>
 </re_xml>

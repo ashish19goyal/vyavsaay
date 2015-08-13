@@ -1765,3 +1765,49 @@ function report83_header_ini()
 	$(prev_element).hide();
 	$(next_element).hide();	
 }
+
+/**
+ * @reportNo 84
+ * @report # deliveries
+ */
+function report84_header_ini()
+{	
+	var form=document.getElementById('report84_header');
+	var start_date=form.elements[1];
+	var end_date=form.elements[2];
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report84_ini();
+	});
+	
+	$(start_date).datepicker();
+	$(end_date).datepicker();
+	start_date.value=get_my_past_date((get_my_time()-(7*86400000)));
+	end_date.value=get_my_date();
+}
+
+/**
+ * @reportNo 85
+ * @report # deliveries
+ */
+function report85_header_ini()
+{	
+	var form=document.getElementById('report85_header');
+	var start_date=form.elements[1];
+	var end_date=form.elements[2];
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report85_ini();
+	});
+	
+	$(start_date).datepicker();
+	$(end_date).datepicker();
+	start_date.value=get_my_past_date((get_my_time()-(7*86400000)));
+	end_date.value=get_my_date();
+}

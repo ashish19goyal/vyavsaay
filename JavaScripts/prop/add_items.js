@@ -12587,3 +12587,79 @@ function form225_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Delivery Run
+ * @formNo 226
+ */
+function form226_add_item()
+{
+	if(is_create_access('form226'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+			rowsHTML+="<form id='form226_"+id+"'></form>";
+				rowsHTML+="<td data-th='Person'>";
+					rowsHTML+="<input type='text' form='form226_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Date'>";
+					rowsHTML+="<input type='text' form='form226_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Start KMs'>";
+					rowsHTML+="<input type='number' step='any' form='form226_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='End KMs'>";
+					rowsHTML+="<input type='number' step='any' form='form226_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Total Run (KMs)'>";
+					rowsHTML+="<input type='number' readonly='readonly' step='any' required value='0' form='form226_"+id+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Action'>";
+					rowsHTML+="<input type='hidden' form='form226_"+id+"' value='"+id+"'>";
+					rowsHTML+="<input type='submit' class='save_icon' form='form226_"+id+"' title='Save'>";
+					rowsHTML+="<input type='button' class='delete_icon' form='form226_"+id+"' title='Delete' onclick='form226_delete_item($(this));'>";
+				rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+
+		$('#form226_body').prepend(rowsHTML);
+		var fields=document.getElementById("form226_"+id);
+		var person_filter=fields.elements[0];
+		var date_filter=fields.elements[1];
+		var start_filter=fields.elements[2];
+		var end_filter=fields.elements[3];
+		var total_filter=fields.elements[4];
+		
+		$(date_filter).datepicker();
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form226_create_item(fields);
+		});
+		
+		$(start_filter).add(end_filter).on('blur',function () 
+		{
+			if(parseFloat(end_filter.value)>=parseFloat(start_filter.value))
+			{
+				total_filter.value=parseFloat(end_filter.value)-parseFloat(start_filter.value);
+			}
+			else 
+			{
+				end_filter.value=start_filter.value;
+				total_filter.value=0;
+			}
+		});
+		
+		var person_data="<staff>"+
+						"<acc_name></acc_name>"+
+						"</staff>";
+		set_my_value_list(person_data,person_filter,function () 
+		{
+			$(person_filter).focus();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
