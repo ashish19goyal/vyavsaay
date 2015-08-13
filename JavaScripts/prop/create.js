@@ -12922,6 +12922,7 @@ function form180_create_item(form)
 	if(is_create_access('form180'))
 	{
 		var order_id=document.getElementById("form180_master").elements['order_id'].value;
+		var order_status=document.getElementById("form180_master").elements['status'].value;
 		
 		var name=form.elements[0].value;
 		var desc=form.elements[1].value;
@@ -12946,17 +12947,11 @@ function form180_create_item(form)
 				"<tax>"+tax+"</tax>" +
 				"<total>"+total+"</total>" +
 				"<order_id>"+order_id+"</order_id>" +
+				"<bill_status>"+order_status+"</bill_status>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</sale_order_items>";	
 	
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}
+		create_simple(data_xml);
 		
 		for(var i=0;i<8;i++)
 		{

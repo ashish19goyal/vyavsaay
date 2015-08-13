@@ -4733,7 +4733,7 @@ function form108_update_item(form)
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
-		}
+		}					
 	}
 	else
 	{
@@ -9375,12 +9375,20 @@ function form180_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
+			var row_id=subform.elements[8].value;
 			if(!isNaN(parseFloat(subform.elements[5].value)))
 				amount+=parseFloat(subform.elements[5].value);
 			if(!isNaN(parseFloat(subform.elements[6].value)))			
 				tax+=parseFloat(subform.elements[6].value);
 			if(!isNaN(parseFloat(subform.elements[7].value)))			
 				total+=parseFloat(subform.elements[7].value);
+				
+			var row_update_xml="<sale_order_items>"+
+							"<id>"+row_id+"</id>"+
+							"<bill_status>"+status+"</bill_status>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</sale_order_items>";
+			update_simple(row_update_xml);
 		});
 	
 		var total_row="<tr><td colspan='1' data-th='Total'>Total</td>" +
@@ -9427,7 +9435,7 @@ function form180_update_form()
  */
 function form181_update_item(form)
 {
-	if(is_update_access('form70'))
+	if(is_update_access('form181'))
 	{
 		var order_num=form.elements[0].value;
 		var customer_name=form.elements[1].value;
@@ -9451,18 +9459,29 @@ function form181_update_item(form)
 					"<notes>Sale Order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
+			
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+
+		var sale_items_xml="<sale_order_items>"+
+					"<id></id>"+
+					"<order_id>"+data_id+"</order_id>"+
+					"</sale_order_items>";
+		get_single_column_data(function (sale_items) 
+		{
+			for(var i=0;i<sale_items.length;i++)
+			{
+				var row_update_xml="<sale_order_items>"+
+							"<id>"+sale_items[i]+"</id>"+
+							"<bill_status>"+status+"</bill_status>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</sale_order_items>";
+				update_simple(row_update_xml);
+			}
+		},sale_items_xml);
 	}
 	else
 	{
