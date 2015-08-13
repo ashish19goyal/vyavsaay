@@ -11056,6 +11056,7 @@ function form199_add_item()
 				rowsHTML+="<input type='hidden' form='form199_"+id+"'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form199_"+id+"' id='save_form199_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form199_"+id+"' id='delete_form199_"+id+"' onclick='form199_delete_item($(this));'>";
+				rowsHTML+="<input type='hidden' form='form199_"+id+"' name='order_history'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 
@@ -11065,6 +11066,7 @@ function form199_add_item()
 		var awb_filter=fields.elements[0];
 		var order_filter=fields.elements[1];
 		var id_filter=fields.elements[2];
+		var order_history=fields.elements[5];
 
 		$(fields).on("submit", function(event)
 		{
@@ -11088,6 +11090,7 @@ function form199_add_item()
 				var order_data="<logistics_orders count='1'>"+
 							"<id></id>"+
 							"<order_num></order_num>"+
+							"<order_history></order_history>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
 				fetch_requested_data('',order_data,function(orders)
@@ -11096,6 +11099,7 @@ function form199_add_item()
 					{
 						order_filter.value=orders[0].order_num;
 						id_filter.value=orders[0].id;
+						order_history.value=orders[0].order_history;
 						form199_update_item(fields);
 					}
 				});				
@@ -11143,11 +11147,12 @@ function form200_add_item()
 				rowsHTML+="<input type='button' class='submit_hidden' form='form200_"+id+"' id='save_form200_"+id+"'>";
 				rowsHTML+="<input type='button' class='delete_icon' form='form200_"+id+"' id='delete_form200_"+id+"' onclick='$(this).parent().parent().remove();'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form200_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form200_"+id+"' name='order_history'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 
 		$('#form200_body').prepend(rowsHTML);
-		
+
 		var item_form=document.getElementById('form200_'+id);
 		var awb_filter=item_form.elements[0];
 		var address_filter=item_form.elements[1];
@@ -11160,6 +11165,7 @@ function form200_add_item()
 		var merchant_filter=item_form.elements[8];
 		var id_filter=item_form.elements[9];
 		var save_button=item_form.elements[10];
+		var order_history=item_form.elements[13];
 		
 		var awb_data="<logistics_orders>"+
 					"<awb_num></awb_num>"+
@@ -11189,6 +11195,7 @@ function form200_add_item()
 							"<pieces></pieces>" +
 							"<drs_num></drs_num>" +
 							"<status></status>"+
+							"<order_history></order_history>"+
 							"</logistics_orders>";
 			//console.log(orders_data);				
 			fetch_requested_data('',orders_data,function (orders) 
@@ -11205,6 +11212,7 @@ function form200_add_item()
 					order_num_filter.value=orders[0].order_num;
 					id_filter.value=orders[0].id;
 					merchant_filter.value=orders[0].merchant_name;
+					order_history.value=orders[0].order_history;
 				}
 			});
 		});
@@ -11254,6 +11262,7 @@ function form202_add_item()
 				rowsHTML+="<input type='hidden' form='form202_"+id+"'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form202_"+id+"' id='save_form202_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form202_"+id+"' id='delete_form202_"+id+"' onclick='form202_delete_item($(this))'>";
+				rowsHTML+="<input type='hidden' form='form202_"+id+"' name='order_history'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 
@@ -11264,6 +11273,7 @@ function form202_add_item()
 		var order_filter=fields.elements[1];
 		var address_filter=fields.elements[2];
 		var id_filter=fields.elements[3];
+		var order_history=fields.elements[6];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -11290,6 +11300,7 @@ function form202_add_item()
 							"<address2></address2>"+
 							"<city></city>"+
 							"<pincode></pincode>"+
+							"<order_history></order_history>"+							
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
 				fetch_requested_data('',order_data,function(orders)
@@ -11299,6 +11310,7 @@ function form202_add_item()
 						address_filter.value=orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
 						order_filter.value=orders[0].order_num;
 						id_filter.value=orders[0].id;
+						order_history.value=orders[0].order_history;
 						form202_update_item(fields);
 					}
 				});					
@@ -11333,6 +11345,7 @@ function form204_add_item()
 				rowsHTML+="<input type='hidden' form='form204_"+id+"'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form204_"+id+"' id='save_form204_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form204_"+id+"' id='delete_form204_"+id+"' onclick='form204_delete_item($(this))'>";
+				rowsHTML+="<input type='hidden' form='form204_"+id+"' name='order_history'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 
@@ -11342,6 +11355,7 @@ function form204_add_item()
 		var awb_filter=fields.elements[0];
 		var order_filter=fields.elements[1];
 		var id_filter=fields.elements[2];
+		var order_history=fields.elements[5];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -11364,6 +11378,7 @@ function form204_add_item()
 			{
 				var order_data="<logistics_orders count='1'>"+
 							"<order_num></order_num>"+
+							"<order_history></order_history>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
 				fetch_requested_data('',order_data,function(orders)
@@ -11372,6 +11387,7 @@ function form204_add_item()
 					{
 						order_filter.value=orders[0].order_num;
 						id_filter.value=orders[0].id;
+						order_history.value=orders[0].order_history;
 						form204_update_item(fields);
 					}
 				});					
@@ -11405,6 +11421,7 @@ function form205_add_item()
 				rowsHTML+="<input type='hidden' form='form205_"+id+"'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form205_"+id+"' id='save_form205_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form205_"+id+"' id='delete_form205_"+id+"' onclick='form205_delete_item($(this));'>";
+				rowsHTML+="<input type='hidden' form='form205_"+id+"' name='order_history'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 
@@ -11414,6 +11431,7 @@ function form205_add_item()
 		var awb_filter=fields.elements[0];
 		var order_filter=fields.elements[1];
 		var id_filter=fields.elements[2];
+		var order_history=fields.elements[5];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -11436,6 +11454,7 @@ function form205_add_item()
 			{
 				var order_data="<logistics_orders count='1'>"+
 							"<order_num></order_num>"+
+							"<order_history></order_history>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
 				fetch_requested_data('',order_data,function(orders)
@@ -11444,6 +11463,7 @@ function form205_add_item()
 					{
 						order_filter.value=orders[0].order_num;
 						id_filter.value=orders[0].id;
+						order_history.value=orders[0].order_history;
 						form205_update_item(fields);
 					}
 				});				
@@ -11477,6 +11497,7 @@ function form206_add_item()
 				rowsHTML+="<input type='hidden' form='form206_"+id+"'>";	
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form206_"+id+"' id='save_form206_"+id+"' >";
 				rowsHTML+="<input type='button' class='delete_icon' form='form206_"+id+"' id='delete_form206_"+id+"' onclick='form206_delete_item($(this));'>";
+				rowsHTML+="<input type='hidden' form='form206_"+id+"' name='order_history'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 
@@ -11486,6 +11507,7 @@ function form206_add_item()
 		var awb_filter=fields.elements[0];
 		var order_filter=fields.elements[1];
 		var id_filter=fields.elements[2];
+		var order_history=fields.elements[5];
 		
 		$(fields).on("submit", function(event)
 		{
@@ -11508,6 +11530,7 @@ function form206_add_item()
 			{
 				var order_data="<logistics_orders count='1'>"+
 							"<order_num></order_num>"+
+							"<order_history></order_history>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
 				fetch_requested_data('',order_data,function(orders)
@@ -11516,6 +11539,7 @@ function form206_add_item()
 					{
 						order_filter.value=orders[0].order_num;
 						id_filter.value=orders[0].id;
+						order_history.value=orders[0].order_history;					
 						form206_update_item(fields);
 					}
 				});					
@@ -11630,6 +11654,7 @@ function form211_add_item()
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form211_"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form211_"+id+"' id='save_form211_"+id+"' >";
+				rowsHTML+="<input type='hidden' form='form211_"+id+"' name='order_history'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 
@@ -11642,6 +11667,7 @@ function form211_add_item()
 		var remark_filter=fields.elements[2];
 		var id_filter=fields.elements[3];
 		var save_button=fields.elements[4];
+		var order_history=fields.elements[5];
 		
 		set_static_value_list('logistics_orders','status',status_filter);
 
@@ -11679,6 +11705,7 @@ function form211_add_item()
 						"<order_num></order_num>"+
 						"<status></status>"+							
 						"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
+						"<order_history></order_history>"+
 						"</logistics_orders>";
 			fetch_requested_data('',order_data,function(orders)
 			{
@@ -11687,6 +11714,7 @@ function form211_add_item()
 					order_filter.innerHTML=orders[0].order_num;
 					status_filter.value=orders[0].status;
 					id_filter.value=orders[0].id;
+					order_history.value=orders[0].order_history;
 				}
 			});					
 		});
@@ -11722,6 +11750,7 @@ function form212_add_item()
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form212_"+id+"'>";
 				rowsHTML+="<input type='submit' class='save_icon' form='form212_"+id+"' id='save_form212_"+id+"' >";
+				rowsHTML+="<input type='hidden' form='form212_"+id+"' name='order_history'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 
@@ -11734,6 +11763,7 @@ function form212_add_item()
 		var remark_filter=fields.elements[2];
 		var id_filter=fields.elements[3];
 		var save_button=fields.elements[4];
+		var order_history=fields.elements[5];
 		
 		set_static_value_list('logistics_orders','status',status_filter);
 		
@@ -11769,7 +11799,8 @@ function form212_add_item()
 		{
 			var order_data="<logistics_orders count='1'>"+
 						"<order_num></order_num>"+
-						"<status></status>"+							
+						"<status></status>"+
+						"<order_history></order_history>"+
 						"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 						"</logistics_orders>";
 			fetch_requested_data('',order_data,function(orders)
@@ -11779,6 +11810,7 @@ function form212_add_item()
 					order_filter.innerHTML=orders[0].order_num;
 					status_filter.value=orders[0].status;
 					id_filter.value=orders[0].id;
+					order_history.value=orders[0].order_history;				
 				}
 			});					
 		});
@@ -11999,6 +12031,7 @@ function form219_add_item()
 				rowsHTML+="<input type='button' class='submit_hidden' form='form219_"+id+"' id='save_form219_"+id+"'>";
 				rowsHTML+="<input type='button' class='delete_icon' form='form219_"+id+"' id='delete_form219_"+id+"' onclick='$(this).parent().parent().remove(); form219_update_serial_numbers();'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form219_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form219_"+id+"' name='order_history'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 
@@ -12017,6 +12050,7 @@ function form219_add_item()
 		var merchant_filter=item_form.elements[9];
 		var id_filter=item_form.elements[10];
 		var save_button=item_form.elements[11];
+		var order_history=item_form.elements[14];
 		
 		var awb_data="<logistics_orders>"+
 					"<awb_num></awb_num>"+
@@ -12047,6 +12081,7 @@ function form219_add_item()
 							"<pieces></pieces>" +
 							"<drs_num></drs_num>" +
 							"<status></status>"+
+							"<order_history></order_history>"+
 							"</logistics_orders>";
 			//console.log(orders_data);				
 			fetch_requested_data('',orders_data,function (orders) 
@@ -12064,6 +12099,7 @@ function form219_add_item()
 					order_num_filter.value=orders[0].order_num;
 					id_filter.value=orders[0].id;
 					merchant_filter.value=orders[0].merchant_name;
+					order_history.value=orders[0].order_history;
 				}
 			});
 		});

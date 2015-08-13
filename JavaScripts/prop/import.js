@@ -6916,6 +6916,15 @@ function form203_import(data_array,import_type)
 		{
 			row.id=last_updated+counter;
 		}
+		var order_history=[];
+		var history_object=new Object();
+		history_object.timeStamp=get_raw_time(row['Dispatch Date']);
+		history_object.details="Order dispatched from merchant";
+		history_object.location=row['Merchant Name'];
+		history_object.status="dispatched";
+		order_history.push(history_object);
+		var order_history_string=JSON.stringify(order_history);
+		
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<awb_num>"+row['AWB No.']+"</awb_num>"+
@@ -6954,6 +6963,7 @@ function form203_import(data_array,import_type)
                 "<pickup_by>"+row['Pickup By']+"</pickup_by>"+
                 "<sku>"+row['Prod/SKU code']+"</sku>"+
                 "<product_name>"+row['Product name']+"</product_name>"+
+                "<order_history>"+order_history_string+"</order_history>"+
                 "<status>picked</status>"+
                 "<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";							

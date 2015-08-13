@@ -1462,6 +1462,7 @@
 			<status index='yes' type="VARCHAR(20)"></status><!--picked/out for delivery/received/delivered/pending/undelivered-->
 			<current_location index='yes' type="TEXT"></current_location>
 			<delivery_person index='yes' type="TEXT"></delivery_person>
+			<order_history index='no' type="TEXT"></order_history>
 			<comments index='no' type="TEXT"></comments>
 			<drs_num index='yes' type="VARCHAR(20)"></drs_num>
 			<last_updated index='yes' type="BIGINT"></last_updated>

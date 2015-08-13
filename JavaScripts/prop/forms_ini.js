@@ -21005,6 +21005,7 @@ function form198_ini()
                 "<status></status>"+
                 "<current_location></current_location>"+
                 "<delivery_person></delivery_person>"+
+                "<order_history></order_history>"+
                 "<comments></comments>"+
                 "</logistics_orders>";
 
@@ -21018,7 +21019,17 @@ function form198_ini()
 			{
 				awb_num.value=result.awb_num;
 			}
-			var rowsHTML="";
+			
+			var order_history=JSON.parse(result.order_history);
+		
+			var rowsHTML="<b>Order History</b><br><table><tr style='background-color:#4eac72'><td>Time</td><td>Details</td><td>Location</td><td>Status</td></tr>";
+			
+			for(var k in order_history)
+			{
+				rowsHTML+="<tr><td>"+get_my_datetime(order_history[k].timestamp)+"</td><td>"+order_history[k].details+"</td><td>"+order_history[k].location+"</td><td>"+order_history[k].status+"</td></tr>";
+			}
+			rowsHTML+="</table><br>";
+
 				rowsHTML+="<input type='hidden' name='id'  value='"+result.id+"'>";
 				rowsHTML+="<label>Order #: <input type='text' name='order_num'  value='"+result.order_num+"'></label>";
 				rowsHTML+="<label>Type: <input type='text' name='type'  value='"+result.type+"' required></label>";
@@ -21057,7 +21068,7 @@ function form198_ini()
 				rowsHTML+="<label>Status: <input type='text' name='status'  required value='"+result.status+"'></label>";
 				rowsHTML+="<label>Current Location: <input type='text' name='current_location'  value='"+result.current_location+"'></label>";
 				rowsHTML+="<label>Delivery Person: <input type='text' name='delivery_person'  value='"+result.delivery_person+"'></label>";
-				rowsHTML+="<label>Comments: <textarea name='comments' >"+result.comments+"</textarea></label>";
+				//rowsHTML+="<label>Comments: <textarea name='comments' >"+result.comments+"</textarea></label>";
 				rowsHTML+="<label><input type='button' value='Update' class='generic_icon' name='update' onclick='form198_update_item();'></label>";
 
 			$('#form198_fieldset').html(rowsHTML);

@@ -10317,11 +10317,24 @@ function form199_update_item(form)
 		var status='received';
 		var id=form.elements[2].value;
 		var last_updated=get_my_time();
+		
+		var old_order_history=form.elements[5].value;
+
+		var order_history=JSON.parse(old_order_history);
+		var history_object=new Object();
+		history_object.timeStamp=get_my_time();
+		history_object.details=comments;
+		history_object.location=get_session_var('official_address');
+		history_object.status=status;
+		order_history.push(history_object);
+		var order_history_string=JSON.stringify(order_history);		
+		
 		var data_xml="<logistics_orders>" +
 					"<id>"+id+"</id>" +
 					"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
 					"<comments>"+comments+"</comments>" +
+					"<order_history>"+order_history_string+"</order_history>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
 		var activity_xml="<activity>" +
@@ -10332,14 +10345,8 @@ function form199_update_item(form)
 					"<notes>AWB # "+awb_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
+		
 		for(var i=0;i<2;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -10413,25 +10420,13 @@ function form200_update_form()
 								"<id>"+drs_num_ids[0]+"</id>"+
 								"<value>"+(parseInt(drs_num)+1)+"</value>"+
 								"</user_preferences>";
-				if(is_online())
-				{
-					server_update_simple(num_xml);
-				}
-				else 
-				{
-					local_update_simple(num_xml);
-				}
+				update_simple(num_xml);
+				
 			}
 		},num_data);
 
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
+		
 
 		$("[id^='save_form200_']").click();
 	}
@@ -10456,10 +10451,23 @@ function form202_update_item(form)
 		var status='out for delivery';
 		var id=form.elements[3].value;
 		var last_updated=get_my_time();
+		
+		var old_order_history=form.elements[6].value;
+
+		var order_history=JSON.parse(old_order_history);
+		var history_object=new Object();
+		history_object.timeStamp=get_my_time();
+		history_object.details="In transit";
+		history_object.location=target;
+		history_object.status='transit';
+		order_history.push(history_object);
+		var order_history_string=JSON.stringify(order_history);		
+		
 		var data_xml="<logistics_orders>" +
 					"<id>"+id+"</id>" +
 					"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
+					"<order_history>"+order_history_string+"</order_history>" +
 					"<current_location>"+target+"</current_location>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
@@ -10471,14 +10479,8 @@ function form202_update_item(form)
 					"<notes>AWB # "+awb_num+" to "+target+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
+		
 		for(var i=0;i<3;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -10505,10 +10507,23 @@ function form204_update_item(form)
 		var status='pending';
 		var id=form.elements[2].value;
 		var last_updated=get_my_time();
+		
+		var old_order_history=form.elements[5].value;
+
+		var order_history=JSON.parse(old_order_history);
+		var history_object=new Object();
+		history_object.timeStamp=get_my_time();
+		history_object.details=comments;
+		history_object.location=get_session_var('official_address');
+		history_object.status=status;
+		order_history.push(history_object);
+		var order_history_string=JSON.stringify(order_history);		
+		
 		var data_xml="<logistics_orders>" +
 					"<id>"+id+"</id>" +
 					"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
+					"<order_history>"+order_history_string+"</order_history>" +
 					"<comments>"+comments+"</comments>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
@@ -10520,14 +10535,8 @@ function form204_update_item(form)
 					"<notes>AWB # "+awb_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
+		
 		for(var i=0;i<2;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -10555,10 +10564,23 @@ function form205_update_item(form)
 		var status='undelivered';
 		var id=form.elements[2].value;
 		var last_updated=get_my_time();
+		
+		var old_order_history=form.elements[5].value;
+
+		var order_history=JSON.parse(old_order_history);
+		var history_object=new Object();
+		history_object.timeStamp=get_my_time();
+		history_object.details=comments;
+		history_object.location="";
+		history_object.status=status;
+		order_history.push(history_object);
+		var order_history_string=JSON.stringify(order_history);		
+		
 		var data_xml="<logistics_orders>" +
 					"<id>"+id+"</id>" +
 					"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
+					"<order_history>"+order_history_string+"</order_history>" +
 					"<comments>"+comments+"</comments>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
@@ -10570,14 +10592,8 @@ function form205_update_item(form)
 					"<notes>AWB # "+awb_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
+		
 		for(var i=0;i<2;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -10604,10 +10620,23 @@ function form206_update_item(form)
 		var status='delivered';
 		var id=form.elements[2].value;
 		var last_updated=get_my_time();
+		
+		var old_order_history=form.elements[5].value;
+
+		var order_history=JSON.parse(old_order_history);
+		var history_object=new Object();
+		history_object.timeStamp=get_my_time();
+		history_object.details=comments;
+		history_object.location="";
+		history_object.status=status;
+		order_history.push(history_object);
+		var order_history_string=JSON.stringify(order_history);		
+		
 		var data_xml="<logistics_orders>" +
 					"<id>"+id+"</id>" +
 					"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
+					"<order_history>"+order_history_string+"</order_history>" +
 					"<comments>"+comments+"</comments>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
@@ -10619,14 +10648,8 @@ function form206_update_item(form)
 					"<notes>AWB # "+awb_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
+		
 		for(var i=0;i<2;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -10836,11 +10859,40 @@ function form211_update_item(form)
 		var remarks=form.elements[2].value;
 		var id=form.elements[3].value;
 		var last_updated=get_my_time();
+		
+		var old_order_history=form.elements[5].value;
+		var order_history=JSON.parse(old_order_history);
+		var history_object=new Object();
+		history_object.timeStamp=get_my_time();
+		history_object.details=remarks;
+		history_object.status=status;
+		
+		if(status=='received')
+		{
+			history_object.location=get_session_var('official_address');
+		}
+		else if(status=='pending')
+		{
+			history_object.location=get_session_var('official_address');
+		}
+		else if(status=='delivered')
+		{
+			history_object.location="";
+		}
+		else if(status=='undelivered')
+		{
+			history_object.location="";
+		}
+		
+		order_history.push(history_object);
+		var order_history_string=JSON.stringify(order_history);		
+		
 		var data_xml="<logistics_orders>" +
 					"<id>"+id+"</id>" +
 					"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
 					"<comments>"+remarks+"</comments>" +
+					"<order_history>"+order_history_string+"</order_history>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
 		var activity_xml="<activity>" +
@@ -10851,14 +10903,7 @@ function form211_update_item(form)
 					"<notes>AWB # "+awb_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
 		for(var i=0;i<3;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -10883,11 +10928,40 @@ function form212_update_item(form)
 		var remarks=form.elements[2].value;
 		var id=form.elements[3].value;
 		var last_updated=get_my_time();
+
+		var old_order_history=form.elements[5].value;
+		var order_history=JSON.parse(old_order_history);
+		var history_object=new Object();
+		history_object.timeStamp=get_my_time();
+		history_object.details=remarks;
+		history_object.status=status;
+		
+		if(status=='received')
+		{
+			history_object.location=get_session_var('official_address');
+		}
+		else if(status=='pending')
+		{
+			history_object.location=get_session_var('official_address');
+		}
+		else if(status=='delivered')
+		{
+			history_object.location="";
+		}
+		else if(status=='undelivered')
+		{
+			history_object.location="";
+		}
+		
+		order_history.push(history_object);
+		var order_history_string=JSON.stringify(order_history);		
+				
 		var data_xml="<logistics_orders>" +
 					"<id>"+id+"</id>" +
 					"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
 					"<comments>"+remarks+"</comments>" +
+					"<order_history>"+order_history_string+"</order_history>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
 		var activity_xml="<activity>" +
@@ -10898,14 +10972,8 @@ function form212_update_item(form)
 					"<notes>AWB # "+awb_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
+		
 		for(var i=0;i<3;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');

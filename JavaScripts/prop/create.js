@@ -13724,7 +13724,7 @@ function form197_create_item(form)
  */
 function form200_create_item(form)
 {
-	console.log('form200_create_form');
+	//console.log('form200_create_form');
 	if(is_create_access('form200'))
 	{
 		var drs_num=document.getElementById('form200_master').elements['drs_num'].value;
@@ -13732,22 +13732,28 @@ function form200_create_item(form)
 		var data_id=form.elements[9].value;
 		var save_button=form.elements[10];
 		var del_button=form.elements[11];
+		var old_order_history=form.elements[13].value;
+
+		var order_history=JSON.parse(old_order_history);
+		var history_object=new Object();
+		history_object.timeStamp=get_my_time();
+		history_object.details="Order Out for delivery";
+		history_object.location=get_session_var('official_address');
+		history_object.status="Out for delivery";
+		order_history.push(history_object);
+		var order_history_string=JSON.stringify(order_history);		
+		
 		var last_updated=get_my_time();
 		var data_xml="<logistics_orders>" +
 					"<id>"+data_id+"</id>" +
 					"<status>out for delivery</status>" +
 					"<drs_num>"+drs_num+"</drs_num>"+
 					"<delivery_person>"+delivery_person+"</delivery_person>"+
+					"<order_history>"+order_history_string+"</order_history>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
+		update_simple(data_xml);
+		
 		for(var i=0;i<9;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -14280,21 +14286,28 @@ function form219_create_item(form)
 		var save_button=form.elements[11];
 		var del_button=form.elements[12];
 		var last_updated=get_my_time();
+	
+		var old_order_history=form.elements[14].value;
+
+		var order_history=JSON.parse(old_order_history);
+		var history_object=new Object();
+		history_object.timeStamp=get_my_time();
+		history_object.details="Order Out for delivery";
+		history_object.location=get_session_var('official_address');
+		history_object.status="Out for delivery";
+		order_history.push(history_object);
+		var order_history_string=JSON.stringify(order_history);		
+		
 		var data_xml="<logistics_orders>" +
 					"<id>"+data_id+"</id>" +
 					"<status>out for delivery</status>" +
 					"<drs_num>"+drs_num+"</drs_num>"+
 					"<delivery_person>"+delivery_person+"</delivery_person>"+
+					"<order_history>"+order_history_string+"</order_history>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
+		update_simple(data_xml);
+		
 		for(var i=0;i<10;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
