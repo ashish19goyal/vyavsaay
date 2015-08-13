@@ -10312,8 +10312,8 @@ function form180_add_item()
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form180_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' required form='form180_"+id+"' value=''>";
-				rowsHTML+="<br>Name: <textarea required form='form180_"+id+"'></textarea>";
+				rowsHTML+="<input type='text' placeholder='Item' required form='form180_"+id+"' value=''>";
+				rowsHTML+="<br><textarea required placeholder='Name' form='form180_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' required form='form180_"+id+"' value='' step='any'>";
@@ -12423,6 +12423,164 @@ function form224_add_item()
 		});
 						
 		set_static_value_list('testing_process','status',status_filter);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Bill (CPS)
+ * @formNo 225
+ */
+function form225_add_item()
+{
+	if(is_create_access('form225'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form225_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' placeholder='Item' required form='form225_"+id+"'>";
+				rowsHTML+="<br><textarea placeholder='Name' required form='form225_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<input type='text' required form='form225_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' required form='form225_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Rate'>";
+				rowsHTML+="<input type='number' required form='form225_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Amount'>";
+				rowsHTML+="Amount: <input type='number' readonly='readonly' required form='form225_"+id+"' step='any'>";
+				rowsHTML+="<br>Discount: <input type='number' form='form225_"+id+"' step='any' value='0'>";
+				rowsHTML+="<br>Tax: <input type='number' required readonly='readonly' form='form225_"+id+"' step='any'>";
+				rowsHTML+="<br>Total: <input type='number' required readonly='readonly' required form='form225_"+id+"' step='any'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form225_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form225_"+id+"' id='save_form225_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form225_"+id+"' id='delete_form225_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form225_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form225_"+id+"' name='tax_rate'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form225_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form225_"+id);
+		var name_filter=fields.elements[0];
+		var desc_filter=fields.elements[1];
+		var batch_filter=fields.elements[2];
+		var quantity_filter=fields.elements[3];
+		var price_filter=fields.elements[4];
+		var amount_filter=fields.elements[5];
+		var discount_filter=fields.elements[6];
+		var tax_filter=fields.elements[7];
+		var total_filter=fields.elements[8];
+		var id_filter=fields.elements[9];
+		var save_button=fields.elements[10];
+		var tax_rate_filter=fields.elements[13];
+				
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form225_create_item(fields);
+		});
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form225_add_product();
+		});
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,name_filter,function () 
+		{
+			$(name_filter).focus();
+		}); 
+
+		$(name_filter).on('blur',function(event)
+		{
+			var batch_data="<product_instances>"+
+							"<batch></batch>"+
+							"<product_name exact='yes'>"+name_filter.value+"</product_name>"+
+							"</product_instances>";
+			set_my_value_list(batch_data,batch_filter);
+			
+			var tax_data="<product_master count='1'>" +
+					"<tax></tax>" +
+					"<description></description>" +
+					"<name exact='yes'>"+name_filter.value+"</name>" +
+					"</product_master>";
+			fetch_requested_data('',tax_data,function(taxes)
+			{
+				if(taxes.length>0)
+				{
+					tax_rate_filter.value=taxes[0].tax;
+					desc_filter.value=taxes[0].description;
+				}
+			});			
+			
+			var last_batch_data="<bill_items count='1'>"+
+								"<batch></batch>"+
+								"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+								"</bill_items>";
+			set_my_value(last_batch_data,batch_filter,function () 
+			{					
+				var price_data="<product_instances count='1'>" +
+						"<sale_price></sale_price>" +
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+						"</product_instances>";
+				set_my_value(price_data,price_filter);
+	
+				get_inventory(name_filter.value,'',function(quantity)
+				{
+					$(quantity_filter).attr('min',"0");
+					$(quantity_filter).attr('placeholder',quantity);
+				});
+		
+				quantity_filter.value="";
+				total_filter.value=0;
+				amount_filter.value=0;
+				discount_filter.value=0;
+				tax_filter.value=0;
+			});	
+		});
+		
+		$(batch_filter).on('blur',function(event)
+		{
+			var price_data="<product_instances count='1'>" +
+					"<sale_price></sale_price>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+			set_my_value(price_data,price_filter);
+
+			get_inventory(name_filter.value,batch_filter.value,function(quantity)
+			{
+				$(quantity_filter).attr('min',"0");
+				$(quantity_filter).attr('placeholder',quantity);
+			});
+	
+			quantity_filter.value="";
+			total_filter.value=0;
+			amount_filter.value=0;
+			discount_filter.value=0;
+			tax_filter.value=0;
+		});
+						
+		$(quantity_filter).add(price_filter).add(discount_filter).on('blur',function(event)
+		{
+			amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			tax_filter.value=parseFloat((parseFloat(tax_rate_filter.value)*(parseFloat(amount_filter.value)-parseFloat(discount_filter.value)))/100);
+			total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
+		});
 	}
 	else
 	{

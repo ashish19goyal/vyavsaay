@@ -13039,49 +13039,8 @@ function form180_create_form()
 					"<notes>Sale order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var transaction_xml="<transactions>" +
-					"<id>"+data_id+"</id>" +
-					"<trans_date>"+get_my_time()+"</trans_date>" +
-					"<amount>"+total+"</amount>" +
-					"<receiver>"+customer+"</receiver>" +
-					"<giver>master</giver>" +
-					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</transactions>";
-		var pt_tran_id=get_new_key();
-		var payment_xml="<payments>" +
-					"<id>"+pt_tran_id+"</id>" +
-					"<status>pending</status>" +
-					"<type>received</type>" +
-					"<date>"+get_my_time()+"</date>" +
-					"<total_amount>"+total+"</total_amount>" +
-					"<paid_amount>0</paid_amount>" +
-					"<acc_name>"+customer+"</acc_name>" +
-					"<due_date>"+get_credit_period()+"</due_date>" +
-					"<mode>"+get_payment_mode()+"</mode>" +
-					"<transaction_id>"+pt_tran_id+"</transaction_id>" +
-					"<bill_id>"+data_id+"</bill_id>" +
-					"<source_info>for sale order #"+order_num+"</source_info>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</payments>";
-		var pt_xml="<transactions>" +
-					"<id>"+pt_tran_id+"</id>" +
-					"<trans_date>"+get_my_time()+"</trans_date>" +
-					"<amount>"+total+"</amount>" +
-					"<receiver>master</receiver>" +
-					"<giver>"+customer+"</giver>" +
-					"<tax>0</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</transactions>";
-		
 		create_row(data_xml,activity_xml);
-		create_simple(transaction_xml);
-		create_simple(pt_xml);
-		create_simple_func(payment_xml,function()
-		{
-			modal26_action(pt_tran_id);
-		});
-
+		
 		var num_data="<user_preferences>"+
 						"<id></id>"+						
 						"<name exact='yes'>so_num</name>"+												
@@ -14854,6 +14813,215 @@ function form224_create_item(form)
 		{
 			form224_update_item(form);
 		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Bill (CPS)
+ * @param button
+ */
+function form225_create_item(form)
+{
+	if(is_create_access('form225'))
+	{
+		var bill_id=document.getElementById("form225_master").elements['bill_id'].value;
+		var name=form.elements[0].value;
+		var desc=form.elements[1].value;
+		var batch=form.elements[2].value;
+		var quantity=form.elements[3].value;
+		var price=form.elements[4].value;
+		var amount=form.elements[5].value;
+		var discount=form.elements[6].value;
+		var tax=form.elements[7].value;
+		var total=form.elements[8].value;
+		var data_id=form.elements[9].value;
+		var last_updated=get_my_time();
+		var save_button=form.elements[10];
+		var del_button=form.elements[11];
+		
+		var data_xml="<bill_items>" +
+				"<id>"+data_id+"</id>" +
+				"<item_name>"+name+"</item_name>" +
+				"<item_desc>"+desc+"</item_desc>" +
+				"<batch>"+batch+"</batch>" +
+				"<quantity>"+quantity+"</quantity>" +
+				"<unit_price>"+price+"</unit_price>" +
+				"<amount>"+amount+"</amount>" +
+				"<total>"+total+"</total>" +
+				"<discount>"+discount+"</discount>" +
+				"<tax>"+tax+"</tax>" +
+				"<bill_id>"+bill_id+"</bill_id>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</bill_items>";		
+		create_simple(data_xml);
+					
+		for(var i=0;i<9;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form225_delete_item(del_button);
+		});
+
+		$(save_button).off('click');
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Create Bill (CPS)
+ * @param button
+ */
+function form225_create_form()
+{
+	if(is_create_access('form225'))
+	{
+		var form=document.getElementById("form225_master");
+		
+		var customer=form.elements['customer'].value;
+		var bill_date=get_raw_time(form.elements['date'].value);
+		var bill_num=form.elements['bill_num'].value;
+				
+		var data_id=form.elements['bill_id'].value;
+		var transaction_id=form.elements['t_id'].value;
+		var save_button=form.elements['save'];
+
+		var bt=get_session_var('title');
+		$('#form225_share').show();
+		$('#form225_share').click(function()
+		{
+			modal101_action(bt+' - Invoice# '+bill_num,customer,'customer',function (func) 
+			{
+				print_form225(func);
+			});
+		});
+
+		var amount=0;
+		var discount=0;
+		var tax=0;
+		var total=0;
+		
+		$("[id^='save_form225']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			amount+=parseFloat(subform.elements[5].value);
+			discount+=parseFloat(subform.elements[6].value);
+			tax+=parseFloat(subform.elements[7].value);
+			total+=parseFloat(subform.elements[8].value);			
+		});
+
+		var last_updated=get_my_time();
+		
+		var data_xml="<bills>" +
+					"<id>"+data_id+"</id>" +
+					"<customer_name>"+customer+"</customer_name>" +
+					"<bill_num>"+bill_num+"</bill_num>"+
+					"<bill_date>"+bill_date+"</bill_date>" +
+					"<amount>"+amount+"</amount>" +
+					"<total>"+total+"</total>" +
+					"<discount>"+discount+"</discount>" +
+					"<tax>"+tax+"</tax>" +
+					"<transaction_id>"+transaction_id+"</transaction_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bills>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bills</tablename>" +
+					"<link_to>form42</link_to>" +
+					"<title>Saved</title>" +
+					"<notes>Bill no "+bill_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var transaction_xml="<transactions>" +
+					"<id>"+transaction_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>"+customer+"</receiver>" +
+					"<giver>master</giver>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		var pt_tran_id=get_new_key();
+		var payment_xml="<payments>" +
+					"<id>"+pt_tran_id+"</id>" +
+					"<status>closed</status>" +
+					"<type>received</type>" +
+					"<date>"+get_my_time()+"</date>" +
+					"<total_amount>"+total+"</total_amount>" +
+					"<paid_amount>"+total+"</paid_amount>" +
+					"<acc_name>"+customer+"</acc_name>" +
+					"<due_date>"+get_credit_period()+"</due_date>" +
+					"<mode>"+get_payment_mode()+"</mode>" +
+					"<transaction_id>"+pt_tran_id+"</transaction_id>" +
+					"<bill_id>"+data_id+"</bill_id>" +
+					"<source_info>from sale bill #"+bill_num+"</source_info>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</payments>";
+		var pt_xml="<transactions>" +
+					"<id>"+pt_tran_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>master</receiver>" +
+					"<giver>"+customer+"</giver>" +
+					"<tax>0</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		var num_data="<user_preferences>"+
+					"<id></id>"+						
+					"<name exact='yes'>bill_num</name>"+												
+					"</user_preferences>";
+		get_single_column_data(function (bill_num_ids)
+		{
+			if(bill_num_ids.length>0)
+			{
+				var num_xml="<user_preferences>"+
+								"<id>"+bill_num_ids[0]+"</id>"+
+								"<value>"+(parseInt(bill_num)+1)+"</value>"+
+								"<last_updated>"+last_updated+"</last_updated>"+
+								"</user_preferences>";
+				update_simple(num_xml);
+				
+			}
+		},num_data);
+		create_row(data_xml,activity_xml);
+		create_simple(transaction_xml);
+		create_simple(pt_xml);
+		create_simple_func(payment_xml,function()
+		{
+			modal26_action(pt_tran_id);
+		});
+		
+		
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+				"<td>Rs. "+amount+"</br>" +
+				"Rs. "+discount+"</br>" +
+				"Rs. "+tax+"</br>" +
+				"Rs. "+total+"</td>" +
+				"<td></td>" +
+				"</tr>";
+		$('#form225_foot').html(total_row);
+	
+		$(save_button).off('click');
+		$(save_button).on('click',function(event)
+		{
+			event.preventDefault();
+			form225_update_form();
+		});
+		
+		$("[id^='save_form225_']").click();
 	}
 	else
 	{

@@ -9411,50 +9411,8 @@ function form180_update_form()
 					"<notes>Order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		var transaction_xml="<transactions>" +
-					"<id>"+data_id+"</id>" +
-					"<trans_date>"+get_my_time()+"</trans_date>" +
-					"<amount>"+total+"</amount>" +
-					"<receiver>"+customer+"</receiver>" +
-					"<giver>master</giver>" +
-					"<tax>"+tax+"</tax>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</transactions>";
 		update_row(data_xml,activity_xml);
-		update_simple(transaction_xml);
-		
-		var payment_data="<payments>" +
-				"<id></id>" +
-				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
-				"</payments>";
-		get_single_column_data(function(payments)
-		{
-			if(payments.length>0)
-			{
-				var payment_xml="<payments>" +
-							"<id>"+payments[0]+"</id>" +
-							"<type>received</type>" +
-							"<total_amount>"+total+"</total_amount>" +
-							"<acc_name>"+customer+"</acc_name>" +
-							"<transaction_id>"+payments[0]+"</transaction_id>" +
-							"<bill_id>"+data_id+"</bill_id>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</payments>";
-				var pt_xml="<transactions>" +
-							"<id>"+payments[0]+"</id>" +
-							"<amount>"+total+"</amount>" +
-							"<receiver>master</receiver>" +
-							"<giver>"+customer+"</giver>" +
-							"<tax>0</tax>" +
-							"<last_updated>"+last_updated+"</last_updated>" +
-							"</transactions>";
-				update_simple_func(payment_xml,function()
-				{
-					modal26_action(payments[0]);
-				});
-			}
-		},payment_data);
-		
+
 		$("[id^='save_form180_']").click();
 	}
 	else
@@ -11357,6 +11315,131 @@ function form224_update_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Bill (CPS)
+ * @param button
+ */
+function form225_update_form()
+{
+	if(is_create_access('form225'))
+	{
+		var form=document.getElementById("form225_master");
+		
+		var customer=form.elements['customer'].value;
+		var bill_date=get_raw_time(form.elements['date'].value);
+		var bill_num=form.elements['bill_num'].value;
+		var data_id=form.elements['bill_id'].value;
+		var transaction_id=form.elements['t_id'].value;
+		
+		var bt=get_session_var('title');
+		$('#form225_share').show();
+		$('#form225_share').click(function()
+		{
+			modal101_action(bt+' - Invoice# '+bill_num,customer,'customer',function (func) 
+			{
+				print_form225(func);
+			});
+		});
+
+		var amount=0;
+		var discount=0;
+		var tax=0;
+		var total=0;
+		
+		$("[id^='save_form225']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			amount+=parseFloat(subform.elements[5].value);
+			discount+=parseFloat(subform.elements[6].value);
+			tax+=parseFloat(subform.elements[7].value);
+			total+=parseFloat(subform.elements[8].value);			
+		});
+
+		var last_updated=get_my_time();
+		
+		var data_xml="<bills>" +
+					"<id>"+data_id+"</id>" +
+					"<customer_name>"+customer+"</customer_name>" +
+					"<bill_date>"+bill_date+"</bill_date>" +
+					"<amount>"+amount+"</amount>" +
+					"<total>"+total+"</total>" +
+					"<discount>"+discount+"</discount>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"<transaction_id>"+transaction_id+"</transaction_id>" +
+					"</bills>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bills</tablename>" +
+					"<link_to>form42</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Bill no "+bill_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var transaction_xml="<transactions>" +
+					"<id>"+transaction_id+"</id>" +
+					"<trans_date>"+get_my_time()+"</trans_date>" +
+					"<amount>"+total+"</amount>" +
+					"<receiver>"+customer+"</receiver>" +
+					"<giver>master</giver>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transactions>";
+		update_row(data_xml,activity_xml);
+		update_simple(transaction_xml);
+		
+		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+				"<td>Rs. "+amount+"</br>" +
+				"Rs. "+discount+"</br>" +
+				"Rs. "+tax+"</br>" +
+				"Rs. "+total+"</td>" +
+				"<td></td>" +
+				"</tr>";
+		$('#form225_foot').html(total_row);
+
+		var payment_data="<payments>" +
+				"<id></id>" +
+				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
+				"</payments>";
+		get_single_column_data(function(payments)
+		{
+			for(var y in payments)
+			{
+				var payment_xml="<payments>" +
+							"<id>"+payments[y]+"</id>" +
+							"<type>received</type>" +
+							"<total_amount>"+total+"</total_amount>" +
+							"<acc_name>"+customer+"</acc_name>" +
+							"<transaction_id>"+payments[y]+"</transaction_id>" +
+							"<bill_id>"+data_id+"</bill_id>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</payments>";
+				var pt_xml="<transactions>" +
+							"<id>"+payments[y]+"</id>" +
+							"<amount>"+total+"</amount>" +
+							"<receiver>master</receiver>" +
+							"<giver>"+customer+"</giver>" +
+							"<tax>0</tax>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</transactions>";
+				update_simple_func(payment_xml,function()
+				{
+					modal26_action(payments[y]);
+				});
+				break;
+			}
+		},payment_data);
+	
+		$("[id^='save_form225_']").click();
 	}
 	else
 	{
