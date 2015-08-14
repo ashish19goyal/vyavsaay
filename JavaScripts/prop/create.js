@@ -5956,6 +5956,11 @@ function form105_create_form()
  */
 function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 {
+	
+	///check following data is adequately updated
+	//a. product batches
+	//b. channel prices
+	//c. pickup charges
 	if(is_create_access('form108'))
 	{
 		show_loader();

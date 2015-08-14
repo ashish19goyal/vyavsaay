@@ -7360,8 +7360,8 @@ function modal116_action(barcode,sku)
 
 	var sku_data="<product_master>" +
 			"<name></name>" +
-			"<bar_code exact='yes'></bar_code>"+
 			"</product_master>";
+			//"<bar_code exact='yes'></bar_code>"+
 	set_my_value_list_func(sku_data,sku_filter,function()
 	{
 		$(sku_filter).focus();
