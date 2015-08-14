@@ -3171,7 +3171,6 @@
 			<name>form224</name>
 			<display_name>testing</display_name>
 			<status>active</status>
-			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
@@ -3183,7 +3182,6 @@
 			<name>form225</name>
 			<display_name>create_bill_cps</display_name>
 			<status>active</status>
-			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
 			<shortcut></shortcut>
@@ -3194,7 +3192,6 @@
 		<row>
 			<name>form226</name>
 			<display_name>delivery_run</display_name>
-			<status>active</status>
 			<status>active</status>
 			<value>unchecked</value>
 			<type>form</type>
