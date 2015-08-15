@@ -1,10 +1,9 @@
 <?php
 
 	$awb_num=$_POST['awb_num'];
-
 	$data_object=[];
-	$data_object['api_key']="12345";
-	$data_object['username']="vyavsaay";
+	$data_object['api_key']="becontent15082015";
+	$data_object['username']="becontent";
 	$data_object['data_store']="logistics_orders";
 	$data_object['count']="1";
 	$data_object['start_index']="0";
@@ -16,11 +15,8 @@
 		
     $data_string="data=".json_encode($data_object);
 	
-	//echo $data_string;
-	
-	$url="localhost/ajax/get_data.php";
-
-	//echo $get_url;
+	//$url="localhost/api/get_data.php";
+	$url="https://vyavsaay.com/api/get_data.php";
 
 	$ch=curl_init();
 	curl_setopt($ch,CURLOPT_URL,$url);
@@ -35,7 +31,7 @@
 	
 	if($result===false) 
 	{
-	  	//die("Curl failed");
+	  	die("Curl failed");
 	}
 	else 
 	{
