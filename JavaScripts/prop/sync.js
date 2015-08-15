@@ -333,8 +333,8 @@ function sync_local_to_server(func)
 			var sync_complete=setInterval(function()
 			{
   			   progress_value=progress_dummy+(1-(number_active_ajax/log_data_array.length))*30;
-  			   console.log(number_active_ajax);
-  			   console.log(localdb_open_requests);
+  			   //console.log(number_active_ajax);
+  			   //console.log(localdb_open_requests);
   			   
   			   if(number_active_ajax===0)
          	   {

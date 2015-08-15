@@ -41,7 +41,7 @@
 			if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['re']==$read_access)
 			{
 				$table=$input->nodeName;
-				$columns_array=array();
+				//$columns_array=array();
 				$values_array=array();
 				$query="select * from $table where ";
 				$order_by=" ORDER BY last_updated DESC, ";
@@ -60,7 +60,7 @@
 				
 				foreach($input->childNodes as $col)
 				{
-					$columns_array[]=$col->nodeName;
+					//$columns_array[]=$col->nodeName;
 					
 					if($col->nodeValue!="")
 					{

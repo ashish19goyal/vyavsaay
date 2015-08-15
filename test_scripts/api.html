@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>API Testing</title>
+</head>
+<body>
+	<input type='text' name='awb_num' id='awb_num'>
+	<button onclick="my_func();">Request</button>
+	<div id='myresult'>
+	</div>
+</body>
+<script src='../JavaScripts/open/jquery-1.11.1.min.js'></script>
+<script>
+	function my_func()
+	{
+		var my_div=document.getElementById('myresult');
+		var awb_num=document.getElementById('awb_num').value;
+
+		$.ajax(
+		{
+			type: "POST",
+			url: "./api.php",
+			data: {awb_num:awb_num},
+			error:function(xhr)
+			{
+				my_div.innerHTML="failure in ajax request";
+				console.log(xhr.responseText);
+			},
+			success: function(return_data,return_status,e)
+			{
+				my_div.innerHTML="ajax request successful";
+				console.log(e.responseText);
+				////e.responseText will be a JSON string
+				////decode and extract data
+				///present this data to the user on the website 
+			}
+		});
+	}
+</script>
+</html>

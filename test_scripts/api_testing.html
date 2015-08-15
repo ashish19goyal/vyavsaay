@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>API Testing</title>
+</head>
+<body>
+	<div id='myform'>
+	</div>
+	<button onclick="my_func();">Request</button>
+</body>
+<script src='../JavaScripts/open/jquery-1.11.1.min.js'></script>
+<script>
+	function my_func()
+	{
+		var my_div=document.getElementById('myform');
+		var call_data_object=new Object();
+		call_data_object.api_key="12345";
+		call_data_object.username="vyavsaay";
+		call_data_object.data_store="logistics_orders";
+		call_data_object.count="1";
+		call_data_object.start_index="0";
+		call_data_object.indexes=[];
+		call_data_object.indexes[0]=new Object();
+		call_data_object.indexes[0].index='awb_num';
+		call_data_object.indexes[0].value='';
+		
+		var call_data=JSON.stringify(call_data_object);
+
+		$.ajax(
+		{
+			type: "POST",
+			url: "../ajax/get_data.php",
+			data: {data:call_data},
+			error:function()
+			{
+				my_div.innerHTML="failure in ajax request";
+			},
+			success: function(return_data,return_status,e)
+			{
+				my_div.innerHTML="ajax request successful";
+				console.log(e.responseText);
+			}
+		});
+	}
+</script>
+</html>

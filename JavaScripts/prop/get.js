@@ -614,20 +614,30 @@ function my_obj_array_to_csv(data_array,file_name)
 		header_array.push(p);	
 		header_string+=p+",";
 	}
-
+	console.log(header_array);
+	//console.log(data_array);
+	
     csvRows.push(header_string);
-
+	
 	/////for data rows
 	data_array.forEach(function(data_row)
 	{
+		//console.log(data_row);
 		var data_string="";
 		for(var i=0;i<header_array.length;i++)
 		{
-			if(data_row[header_array[i]].search(","))
+			if(typeof data_row[header_array[i]]!= 'undefined')
 			{
-				data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
+				if(data_row[header_array[i]].search(","))
+				{
+					data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
+				}
+				data_string+=data_row[header_array[i]]+",";
 			}
-			data_string+=data_row[header_array[i]]+",";
+			else 
+			{
+				data_string+=",";
+			}
 		}
 		data_string=escape(data_string);
 		//console.log(data_string);
