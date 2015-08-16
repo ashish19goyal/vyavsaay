@@ -965,15 +965,18 @@ function form21_add_item()
 		
 		$(barcode_filter).on('blur',function()
 		{
-			var item_data="<product_master>"+
-						"<name></name>"+
-						"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
-						"</product_master>";
-			set_my_value(item_data,name_filter,function () 
+			if(barcode_filter.value!="")
 			{
-				$(name_filter).trigger('blur');
-			});
-			$(batch_filter).focus();
+				var item_data="<product_master>"+
+							"<name></name>"+
+							"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
+							"</product_master>";
+				set_my_value(item_data,name_filter,function () 
+				{
+					$(name_filter).trigger('blur');
+				});
+				$(batch_filter).focus();
+			}
 		});
 		
 		$(barcode_filter).on('keydown',function (event) 
