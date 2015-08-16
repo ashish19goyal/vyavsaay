@@ -1350,6 +1350,8 @@ function form21_update_form()
 {
 	if(is_update_access('form21'))
 	{
+		var form=document.getElementById("form21_master");
+		
 		var supplier=form.elements['supplier'].value;
 		var bill_id=form.elements['bill_num'].value;
 		var bill_date=get_raw_time(form.elements['date'].value);
