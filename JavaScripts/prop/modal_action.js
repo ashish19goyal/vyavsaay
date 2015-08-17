@@ -7391,8 +7391,8 @@ function modal116_action(barcode,sku)
 		
 		var id=id_filter.value;
 		var barcode=barcode_filter.value;
-		console.log(id);
-		console.log(barcode);
+		//console.log(id);
+		//console.log(barcode);
 		
 		var last_updated=get_my_time();
 		var data_xml="<product_master>" +
@@ -7400,14 +7400,7 @@ function modal116_action(barcode,sku)
 					"<bar_code>"+barcode+"</bar_code>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</product_master>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
+		update_simple(data_xml);
 		
 		$("#modal116").dialog("close");
 	});

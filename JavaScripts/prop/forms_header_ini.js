@@ -8148,3 +8148,140 @@ function form230_header_ini()
 					"</customers>";
 	set_my_filter(customer_data,customer_filter);
 };
+
+/**
+ * @form Create Prescription
+ * @formNo 231
+ */
+function form231_header_ini()
+{
+	var fields=document.getElementById('form231_master');
+	
+	var patient_filter=fields.elements['patient'];
+	var doctor_filter=fields.elements['doctor'];
+	var num_filter=fields.elements['p_num'];
+	var date_filter=fields.elements['date'];
+	var next_filter=fields.elements['next'];
+	fields.elements['pres_id'].value=get_new_key();
+	var save_button=fields.elements['save'];
+	var age_filter=fields.elements['age'];
+	var sex_filter=fields.elements['sex'];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form231_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form231_add_item();
+	});
+	
+	var pres_id=$("#form231_link").attr('data_id');
+	if(pres_id==null || pres_id=='')
+	{
+		var pres_num_data="<user_preferences count='1'>"+
+						"<value></value>"+
+						"<name exact='yes'>pres_num</name>"+
+						"</user_preferences>";
+		set_my_value(pres_num_data,num_filter);	
+	}
+
+	$(date_filter).datepicker();
+	$(next_filter).datepicker();
+	date_filter.value=get_my_date();
+	
+	var patient_data="<customers>"+
+					"<acc_name></acc_name>"+
+					"</customers>";	
+	set_my_value_list(patient_data,patient_filter,function () 
+	{
+		$(patient_filter).focus();
+	});
+	
+	var add_patient=document.getElementById('form231_add_customer');
+	$(add_patient).off('click');
+	$(add_patient).on('click',function()
+	{
+		modal11_action(function()
+		{	
+			var customers_data="<customers>" +
+				"<acc_name></acc_name>" +
+				"</customers>";
+			set_my_value_list(customers_data,patient_filter);
+		});
+	});
+
+	$(patient_filter).on('blur',function () 
+	{
+		var age_data="<attributes>"+
+					"<value></value>"+
+					"<attribute exact='yes'>Age</attribute>"+
+					"<type exact='yes'>customer</type>"+
+					"<name exact='yes'>"+patient_filter.value+"</name>"+
+					"</attributes>";
+		set_my_value(age_data,age_filter);							
+
+		var sex_data="<attributes>"+
+					"<value></value>"+
+					"<attribute exact='yes'>Sex</attribute>"+
+					"<type exact='yes'>customer</type>"+
+					"<name exact='yes'>"+patient_filter.value+"</name>"+
+					"</attributes>";
+		set_my_value(sex_data,sex_filter);							
+	});
+	
+	var doctor_data="<staff>"+
+					"<acc_name></acc_name>"+
+					"</staff>";	
+	set_my_value_list(doctor_data,doctor_filter,function () 
+	{
+		doctor_filter.value=get_account_name();
+	});
+}
+
+/**
+ * @form Manage Prescriptions
+ * @formNo 232
+ */
+function form232_header_ini()
+{
+	var filter_fields=document.getElementById('form232_header');
+	var num_filter=filter_fields.elements[0];
+	var doctor_filter=filter_fields.elements[1];
+	var patient_filter=filter_fields.elements[2];
+	
+	var num_data="<prescriptions>" +
+			"<p_num></p_num>" +
+			"</prescriptions>";
+	set_my_filter(num_data,num_filter);
+	
+	var doctor_data="<staff>" +
+			"<acc_name></acc_name>" +
+			"</staff>";
+	set_my_filter(doctor_data,doctor_filter);
+	
+	var patient_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_filter(patient_data,patient_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form232_ini();
+	});
+};

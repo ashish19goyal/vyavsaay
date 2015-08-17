@@ -396,6 +396,8 @@
 	"inventory_in_out":"Inventory In and Out",
 	"in_out":"In-out",
 	"sales_report_modern":"Sales Report (Modern)",
-	"sales_report":"Sales Report"
+	"sales_report":"Sales Report",
+	"create_prescription":"Create Prescription",
+	"manage_prescriptions":"Manage Prescriptions"
 	}
 }

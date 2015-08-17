@@ -3254,6 +3254,28 @@
 			<tables>--product_instances--inventory_adjust--bill_items--supplier_bill_items--customer_returns--customer_return_items--sale_prices--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form231</name>
+			<display_name>create_prescription</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--prescriptions--prescription_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form232</name>
+			<display_name>manage_prescriptions</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--prescriptions--prescription_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>

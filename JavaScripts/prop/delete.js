@@ -7588,3 +7588,76 @@ function form230_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create Prescriptions
+ * @param button
+ */
+function form231_delete_item(button)
+{
+	if(is_delete_access('form231'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[5].value;
+			var last_updated=get_my_time();
+			var data_xml="<prescription_items>" +
+						"<id>"+data_id+"</id>" +
+						"</prescription_items>";	
+			delete_simple(data_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Prescriptions
+ * @param button
+ */
+function form232_delete_item(button)
+{
+	if(is_delete_access('form232'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var pres_num=form.elements[0].value;
+			var patient=form.elements[2].value;
+			var data_id=form.elements[5].value;
+			var last_updated=get_my_time();
+			var data_xml="<prescriptions>" +
+						"<id>"+data_id+"</id>" +
+						"</prescriptions>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>prescriptions</tablename>" +
+						"<link_to>form232</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Prescription # "+pres_num+" for "+patient+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			delete_row(data_xml,activity_xml);
+			
+			var items_xml="<prescription_items>" +
+						"<id></id>"+						
+						"<p_id exact='yes'>"+data_id+"</p_id>" +
+						"</prescription_items>";	
+			delete_simple(items_xml);
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

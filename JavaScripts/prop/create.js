@@ -15158,3 +15158,124 @@ function form230_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create Prescriptions
+ * @formNo 231
+ * @param button
+ */
+function form231_create_item(form)
+{
+	if(is_create_access('form231'))
+	{
+		var master_form=document.getElementById("form231_master");
+		
+		var pres_id=master_form.elements['pres_id'].value;
+		var pres_num=master_form.elements['p_num'].value;
+		
+		var type=form.elements[0].value;
+		var item=form.elements[1].value;
+		var dosage=form.elements[2].value;
+		var frequency=form.elements[3].value;
+		var days=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var save_button=form.elements[6];
+		var del_button=form.elements[7];
+		var last_updated=get_my_time();
+			
+		var data_xml="<prescription_items>" +
+				"<id>"+data_id+"</id>" +
+				"<p_id>"+pres_id+"</p_id>" +
+				"<item>"+item+"</item>" +
+				"<type>"+type+"</type>" +
+				"<dosage>"+dosage+"</dosage>" +
+				"<frequency>"+frequency+"</frequency>" +
+				"<num_days>"+days+"</num_days>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</prescription_items>";
+	
+		create_simple(data_xml);
+		
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}		
+		
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form231_delete_item(del_button);
+		});
+
+		$(save_button).off('click');
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Create Prescription
+ * @param button
+ */
+function form231_create_form()
+{
+	if(is_create_access('form231'))
+	{
+		show_loader();
+		var form=document.getElementById("form231_master");
+		
+		var data_id=form.elements['pres_id'].value;
+		var date=get_raw_time(form.elements['date'].value);
+		var next_visit=get_raw_time(form.elements['next'].value);
+		var pres_num=form.elements['p_num'].value;
+		var patient=form.elements['patient'].value;
+		var doctor=form.elements['doctor'].value;
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var data_xml="<prescriptions>" +
+					"<id>"+data_id+"</id>" +
+					"<p_num>"+pres_num+"</p_num>" +
+					"<date>"+date+"</date>" +
+					"<next_date>"+next_visit+"</next_date>" +
+					"<patient>"+patient+"</patient>"+
+					"<doctor>"+doctor+"</doctor>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</prescriptions>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>prescriptions</tablename>" +
+					"<link_to>form232</link_to>" +
+					"<title>Saved</title>" +
+					"<notes>Prescription # "+pres_num+" for "+patient+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		
+		$(save_button).off('click');
+		$(save_button).on('click',function(event)
+		{
+			event.preventDefault();
+			form231_update_form();
+		});
+		
+		var bt=get_session_var('title');
+		$('#form231_share').show();
+		$('#form231_share').click(function()
+		{
+			modal101_action('Prescription from '+bt,patient,'customer',function (func) 
+			{
+				print_form231(func);
+			});
+		});
+
+		$("[id^='save_form231_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

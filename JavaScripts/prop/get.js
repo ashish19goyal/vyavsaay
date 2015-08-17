@@ -529,6 +529,10 @@ function set_my_value(filter_data,filter_element,func)
 		{
 			filter_element.value=data[0];
 		}
+		else 
+		{
+			filter_element.value="";
+		}
 		if(typeof func!='undefined')
 		{
 			func();

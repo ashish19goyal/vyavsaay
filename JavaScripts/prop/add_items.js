@@ -12811,3 +12811,87 @@ function form230_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Prescription Items
+ * @formNo 231
+ */
+function form231_add_item()
+{
+	if(is_create_access('form231'))
+	{
+		var filter_fields=document.getElementById('form231_master');
+
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form231_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Type'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form231_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' required form='form231_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Strength'>";
+				rowsHTML+="<input type='text' required form='form231_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Frequency'>";
+				rowsHTML+="<input type='text' required form='form231_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Days'>";
+				rowsHTML+="<input type='number' form='form231_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form231_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='save_icon' form='form231_"+id+"' id='save_form231_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form231_"+id+"' id='delete_form231_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+	
+		$('#form231_body').append(rowsHTML);
+		
+		var fields=document.getElementById("form231_"+id);
+		var type_filter=fields.elements[0];
+		var item_filter=fields.elements[1];
+		var strength_filter=fields.elements[2];
+		var frequency_filter=fields.elements[3];
+		var save_button=fields.elements[6];
+		
+		$(save_button).on("click", function(event)
+		{
+			event.preventDefault();
+			form231_create_item(fields);
+		});
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form231_add_item();
+		});
+
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,item_filter,function () 
+		{
+			$(item_filter).focus();
+		});
+
+		set_static_value_list('prescription_items','frequency',frequency_filter);
+		
+		$(item_filter).on('blur',function () 
+		{
+			var type_data="<attributes>"+
+						"<value></value>"+
+						"<attribute exact='yes'>type</attribute>"+
+						"<type exact='yes'>product</type>"+
+						"<name exact='yes'>"+item_filter.value+"</name>"+
+						"</attributes>";
+			set_my_value(type_data,type_filter);			
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

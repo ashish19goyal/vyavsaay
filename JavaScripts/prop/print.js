@@ -2571,7 +2571,6 @@ function print_form209(func)
 	func(container);
 }
 
-
 /**
  * @form Create COD DRS
  * @formNo 219
@@ -3059,6 +3058,158 @@ function print_form225(func)
 	footer.appendChild(tandc);
 	footer.appendChild(signature);
 	
+	func(container);
+}
+
+/**
+ * @form Prescription
+ * @formNo 231
+ */
+function form231_print_form()
+{
+	print_form231(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	});	
+}
+
+/**
+ * @form Prescription
+ * @formNo 231
+ */
+function print_form231(func)
+{
+	var form_id='form231';
+	
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_title=document.createElement('div');
+		var business_intro=document.createElement('div');
+	
+	var doctor_line=document.createElement('div');
+	
+	var info_section=document.createElement('div');	
+	
+	var main_section=document.createElement('div');
+		var rx_line=document.createElement('div');
+		var table_container=document.createElement('div');
+		var signature_box=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var address=document.createElement('div');
+
+	////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:95%;min-height:200px;line-height:40px;');
+		logo.setAttribute('style','float:left;width:30%;');
+		business_title.setAttribute('style','float:left;width:65%;text-align:left;font-size:30px;');		
+		business_intro.setAttribute('style','float:left;width:65%;text-align:left;font-size:25px;');
+	doctor_line.setAttribute('style','width:95%;min-height:40px;font-size:20px;font-weight:600;');
+	info_section.setAttribute('style','display:block;width:95%;min-height:60px;background-color:#bcd7ef;text-align:left;font-size:20px;line-height:25px;');
+	main_section.setAttribute('style','width:95%;min-height:500px;text-align:left;padding:10px;');
+		rx_line.setAttribute('style','padding:5px;margin:5px;float:left;width:95%;height:40px;font-size:25px;font-weight:900;');
+		signature_box.setAttribute('style','padding:5px;margin:5px;float:right;text-align:right;width:95%;height:30px;font-size:20px;');
+	footer.setAttribute('style','width:95%;min-height:100px;font-size:15px;');
+		address.setAttribute('style','width:95%;min-height:50px;text-align:center;');
+
+	///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var logo_image=get_session_var('logo');
+	var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+
+	var master_form=document.getElementById(form_id+'_master');
+	var pres_num=master_form.elements['p_num'].value;
+	var doctor=master_form.elements['doctor'].value;
+	var patient=master_form.elements['patient'].value;
+	var date=master_form.elements['date'].value;
+	var age=master_form.elements['age'].value;
+	var sex=master_form.elements['sex'].value;
+	var next_visit=master_form.elements['next'].value;
+	if(master_form.elements['next'].value=="")
+		next_visit="";
+	////////////////filling in the content into the containers//////////////////////////
+
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";	
+	business_title.innerHTML=bt;
+	business_intro.innerHTML="<i>"+business_intro_text+"</i>";
+	
+	doctor_line.innerHTML="<div style='float:left'>Dr. Anish Goyal</div><div style='float:right'>Dr. Neha Sharma</div><br><hr style='border: 1px solid #000;margin:2px'>";
+	
+	info_section.innerHTML="Date: "+date+"<br>Patient: "+patient+"<br>Age: "+age+"<br>Sex: "+sex+"<br>Next Visit: "+next_visit;	
+	rx_line.innerHTML="Rx";
+	signature_box.innerHTML="<hr style='width:30%;border: 1px solid #000;margin:2px;float:right;'>Signature";
+
+	address.innerHTML="<hr style='width:100%;border: 1px solid #000;margin:2px'>"+business_address+"<br>Contact No. "+business_phone+"<br>Email: "+business_email+" Web: "+business_website;
+
+	var table_element=document.getElementById(form_id+'_body');
+	/////////////adding new table //////////////////////////////////////////////////////	
+	var new_table=document.createElement('table');
+	new_table.setAttribute('style','float:left;width:100%;border:none;font-size:15px;text-align:left;');
+	var table_header="<tr style='border-bottom: 1px solid #000000;'>"+
+				"<td style='text-align:left;width:30px;'>S.No.</td>"+
+				"<td style='text-align:left;width:100px;'>Type</td>"+
+				"<td style='text-align:left;width:200px'>Item</td>"+
+				"<td style='text-align:left;width:100px'>Strength</td>"+
+				"<td style='text-align:left;width:100px'>Frequency</td>"+
+				"<td style='text-align:left;width:50px'>Days</td></tr>";
+
+	var table_rows=table_header;
+	var counter=0;
+	
+	$(table_element).find('form').each(function(index)
+	{
+		counter+=1;
+		var form=$(this)[0];
+		var item_type=form.elements[0].value;
+		var item_name=form.elements[1].value;
+		var dosage=form.elements[2].value;
+		var frequency=form.elements[3].value;
+		var days=form.elements[4].value;
+
+		table_rows+="<tr>"+
+				"<td style='text-align:left;'>"+counter+"</td>"+
+				"<td style='text-align:left;'>"+item_type+"</td>"+
+				"<td style='text-align:left;'>"+item_name+"</td>"+
+				"<td style='text-align:left;'>"+dosage+"</td>"+
+				"<td style='text-align:left;'>"+frequency+"</td>"+
+				"<td style='text-align:left;'>"+days+"</td></tr>";
+	});
+
+	var row_count=$(table_element).find('tbody>tr').length;
+	var rows_to_add=12-row_count;
+	for(var i=0;i<rows_to_add;i++)
+	{
+		table_rows+="<tr style='flex:2;height:25px;'><td></td><td></td><td></td><td></td><td></td></tr>";
+	}
+
+	new_table.innerHTML=table_rows;
+
+	/////////////placing the containers //////////////////////////////////////////////////////	
+
+	container.appendChild(header);
+	container.appendChild(doctor_line);
+	container.appendChild(info_section);
+	container.appendChild(main_section);
+	container.appendChild(footer);
+
+	main_section.appendChild(rx_line);
+	main_section.appendChild(new_table);
+	main_section.appendChild(signature_box);
+
+	header.appendChild(logo);
+	header.appendChild(business_title);
+	header.appendChild(business_intro);
+
+	footer.appendChild(address);
+
 	func(container);
 }
 

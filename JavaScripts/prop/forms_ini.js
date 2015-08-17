@@ -23624,3 +23624,224 @@ function form230_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Create Prescriptions
+ * @formNo 231
+ * @Loading light
+ */
+function form231_ini()
+{
+	var pres_id=$("#form231_link").attr('data_id');
+	if(pres_id==null)
+		pres_id="";	
+
+	$('#form231_body').html("");
+	$('#form231_foot').html("");
+	
+	if(pres_id!="")
+	{
+		show_loader();
+		var pres_columns="<prescriptions>" +
+				"<id>"+pres_id+"</id>" +
+				"<p_num></p_num>" +
+				"<patient></patient>" +
+				"<doctor></doctor>" +
+				"<date></date>" +
+				"<next_date></next_date>" +
+				"</prescriptions>";
+		
+		var filter_fields=document.getElementById('form231_master');
+
+		////separate fetch function to get plan details 
+		fetch_requested_data('',pres_columns,function(pres_results)
+		{
+			if (pres_results.length>0)
+			{
+				filter_fields.elements['p_num'].value=pres_results[0].p_num;
+				filter_fields.elements['patient'].value=pres_results[0].patient;
+				filter_fields.elements['doctor'].value=pres_results[0].doctor;
+				filter_fields.elements['date'].value=get_my_past_date(pres_results[0].date);
+				filter_fields.elements['next'].value=get_my_past_date(pres_results[0].next_date);
+				filter_fields.elements['pres_id'].value=pres_id;
+				var save_button=filter_fields.elements['save'];
+
+				$(save_button).off('click');
+				$(save_button).on("click", function(event)
+				{
+					event.preventDefault();
+					form231_update_form();
+				});
+			}
+
+			var plan_items_column="<prescription_items>" +
+					"<id></id>" +
+					"<p_id exact='yes'>"+pres_id+"</p_id>" +
+					"<item></item>" +
+					"<type></type>" +
+					"<dosage></dosage>" +
+					"<num_days></num_days>" +
+					"</prescription_items>";
+			
+			fetch_requested_data('',plan_items_column,function(results)
+			{
+				results.forEach(function(result)
+				{
+					var id=result.id;
+					var rowsHTML="<tr>";
+					rowsHTML+="<form id='form231_"+id+"'></form>";
+						rowsHTML+="<td data-th='Type'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form231_"+id+"' value='"+result.type+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Medicine'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form231_"+id+"' value='"+result.item+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Strength'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form231_"+id+"' value='"+result.dosage+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Frequency'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form231_"+id+"' value='"+result.frequency+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Days'>";
+							rowsHTML+="<input type='number' readonly='readonly' form='form231_"+id+"' value='"+result.num_days+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form231_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='save_icon' form='form231_"+id+"' id='save_form231_"+id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form231_"+id+"' id='delete_form231_"+id+"' onclick='form231_delete_item($(this));'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+				
+					$('#form231_body').prepend(rowsHTML);
+				});
+				
+				var bt=get_session_var('title');
+				$('#form231_share').show();
+				$('#form231_share').click(function()
+				{
+					modal101_action('Prescription from '+bt,filter_fields.elements['patient'].value,'customer',function (func) 
+					{
+						print_form231(func);
+					});
+				});
+
+				hide_loader();
+			});
+		});
+	}
+}
+
+/**
+ * @form Manage Prescriptions
+ * @formNo 232
+ * @Loading light
+ */
+function form232_ini()
+{
+	show_loader();
+	var fid=$("#form232_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form232_header');
+	
+	var fnum=filter_fields.elements[0].value;
+	var fdoctor=filter_fields.elements[1].value;
+	var fpatient=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form232_index');
+	var prev_element=document.getElementById('form232_prev');
+	var next_element=document.getElementById('form232_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<prescriptions count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<p_num>"+fnum+"</p_num>" +
+			"<doctor>"+fdoctor+"</doctor>" +
+			"<patient>"+fpatient+"</patient>" +
+			"<date></date>"+
+			"<next_date></next_date>"+
+			"</prescriptions>";
+
+	$('#form232_body').html("");
+
+	fetch_requested_data('form232',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form232_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Pres #'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form232_"+result.id+"' value='"+result.p_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Doctor'>";
+						rowsHTML+="<textarea readonly='readonly' form='form232_"+result.id+"'>"+result.doctor+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Patient'>";
+						rowsHTML+="<textarea readonly='readonly' form='form232_"+result.id+"'>"+result.patient+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form232_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Next Visit'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form232_"+result.id+"' value='"+get_my_past_date(result.next_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form232_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='button' class='edit_icon' form='form232_"+result.id+"' title='Edit/View'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form232_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form232_"+result.id+"' title='Delete' onclick='form232_delete_item($(this))'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+
+			$('#form232_body').append(rowsHTML);
+
+			var fields=document.getElementById("form232_"+result.id);
+			var edit_button=fields.elements[6];
+			
+			$(edit_button).on("click", function(event)
+			{
+				event.preventDefault();
+				element_display(result.id,'form231');
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'prescriptions');
+		});
+		hide_loader();
+	});	
+};

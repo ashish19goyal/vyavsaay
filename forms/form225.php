@@ -25,7 +25,7 @@
 					<th>Rate</th>
 					<th>Amount</th>
 					<th><input type='button' form='form225_header' title='Add item' class='add_icon' onclick='form225_add_item();'>
-</th>
+					</th>
 			</tr>
 		</thead>
 		<tbody id='form225_body'>

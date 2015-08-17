@@ -1506,6 +1506,29 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</treatment_plan_items>
+	<prescriptions>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<p_num index='yes' type="TEXT"></p_num>
+			<patient index='yes' type="TEXT"></patient>
+			<doctor index='yes' type="TEXT"></doctor>
+			<date index='yes' type="BIGINT"></date>
+			<next_date index='yes' type="BIGINT"></next_date>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</prescriptions>
+	<prescription_items>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<p_id index='yes' type="BIGINT"></p_id>
+			<item index='yes' type="TEXT"></item>
+			<type index='yes' type="TEXT"></type>
+			<dosage index='no' type="TEXT"></dosage>
+			<frequency index='no' type="TEXT"></frequency>
+			<from_time index='yes' type="BIGINT"></from_time>
+			<to_time index='yes' type="BIGINT"></to_time>
+			<num_days index='no' type="DECIMAL(12,2)"></num_days>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</prescription_items>
 	<testing_process>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<test_id index='yes' type="BIGINT"></test_id>

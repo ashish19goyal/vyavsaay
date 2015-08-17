@@ -11575,3 +11575,48 @@ function form226_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Create Prescription
+ * @param button
+ */
+function form231_update_form()
+{
+	if(is_update_access('form231'))
+	{
+		show_loader();
+		var form=document.getElementById("form231_master");
+		
+		var data_id=form.elements['pres_id'].value;
+		var date=get_raw_time(form.elements['date'].value);
+		var next_visit=get_raw_time(form.elements['next'].value);
+		var pres_num=form.elements['p_num'].value;
+		var patient=form.elements['patient'].value;
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var data_xml="<prescriptions>" +
+					"<id>"+data_id+"</id>" +
+					"<p_num>"+pres_num+"</p_num>" +
+					"<date>"+date+"</date>" +
+					"<next_date>"+next_visit+"</next_date>" +
+					"<patient>"+patient+"</patient>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</prescriptions>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>prescriptions</tablename>" +
+					"<link_to>form232</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Prescription # "+pres_num+" for "+patient+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		
+		$("[id^='save_form231_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
