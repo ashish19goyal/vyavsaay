@@ -1811,3 +1811,32 @@ function report85_header_ini()
 	start_date.value=get_my_past_date((get_my_time()-(7*86400000)));
 	end_date.value=get_my_date();	
 }
+
+/**
+ * @reportNo 86
+ * @report Sales report (Modern)
+ */
+function report86_header_ini()
+{	
+	var form=document.getElementById('report86_header');
+	var item_filter=form.elements[1];
+	var start_date=form.elements[2];
+	var end_date=form.elements[3];
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report86_ini();
+	});
+
+	var item_data="<product_master>"+
+				"<name></name>"+
+				"</product_master>";
+	set_my_filter(item_data,item_filter);
+				
+	$(start_date).datepicker();
+	$(end_date).datepicker();
+	start_date.value=get_my_past_date((get_my_time()-(7*86400000)));
+	end_date.value=get_my_date();
+}

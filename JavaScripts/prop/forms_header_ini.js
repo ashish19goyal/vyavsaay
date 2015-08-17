@@ -2344,6 +2344,20 @@ function form87_header_ini()
 	var filter_fields=document.getElementById('form87_header');
 	var name_filter=filter_fields.elements[0];
 	var make_filter=filter_fields.elements[1];
+	var add_filter=filter_fields.elements[2];
+
+	$(add_filter).off('click'); 	
+	$(add_filter).on('click',function () 
+	{
+		if(!is_read_access('form1') && !is_read_access('form155') && !is_read_access('form207') && !is_read_access('form183'))
+		{
+			modal112_action();
+		}
+		else
+		{
+			modal14_action();
+		}
+	});
 	
 	var make_data="<product_master>" +
 			"<make></make>" +
@@ -8030,4 +8044,107 @@ function form226_header_ini()
 	set_my_filter(person_data,person_filter);
 	
 	$(date_filter).datepicker();
+};
+
+/**
+ * @form Inventory Warehouse
+ * @formNo 227
+ */
+function form227_header_ini()
+{
+	var filter_fields=document.getElementById('form227_header');	
+	var item_filter=filter_fields.elements[0];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form227_ini();
+	});
+	//setting autocompletes 
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(products_data,item_filter);
+};
+
+/**
+ * @form Inventory Demo
+ * @formNo 228
+ */
+function form228_header_ini()
+{
+	var filter_fields=document.getElementById('form228_header');	
+	var item_filter=filter_fields.elements[0];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form228_ini();
+	});
+	//setting autocompletes 
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(products_data,item_filter);
+};
+
+/**
+ * @form Inventory Hiring
+ * @formNo 229
+ */
+function form229_header_ini()
+{
+	var filter_fields=document.getElementById('form229_header');	
+	var item_filter=filter_fields.elements[0];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form229_ini();
+	});
+	//setting autocompletes 
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(products_data,item_filter);
+};
+
+/**
+ * @form In-out
+ * @formNo 230
+ */
+function form230_header_ini()
+{
+	var filter_fields=document.getElementById('form230_header');	
+	var item_filter=filter_fields.elements[0];
+	var type_filter=filter_fields.elements[1];
+	var for_filter=filter_fields.elements[2];
+	var customer_filter=filter_fields.elements[3];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form227_ini();
+	});
+	//setting autocompletes 
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(products_data,item_filter);	
+
+	set_static_filter('bill_items','issue_type',type_filter);
+	set_static_filter('bill_items','hiring_type',for_filter);
+	
+	var customer_data="<customers>"+
+					"<acc_name></acc_name>"+
+					"</customers>";
+	set_my_filter(customer_data,customer_filter);
 };

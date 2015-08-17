@@ -461,6 +461,10 @@
 			<free_with index="no" type="TEXT"></free_with>
 			<storage index='yes' type="TEXT"></storage>
 			<hired index='yes' type="VARCHAR(25)"></hired><!--yes/no-->
+			<hiring_type index='yes' type="VARCHAR(25)"></hiring_type><!--hire/demo/sale/purchase-->
+			<customer index='yes' type="TEXT"></customer>
+			<issue_date index='yes' type="BIGINT"></issue_date>
+			<issue_type index='yes' type="VARCHAR(15)"></issue_type><!--in/out-->
 			<fresh index='yes' type="VARCHAR(25)"></fresh><!--yes/no-->
 			<picked_status index='yes' type="VARCHAR(25)"></picked_status><!--pending/picked-->
 			<packing_status index='yes' type="VARCHAR(25)"></packing_status><!--pending/packed-->

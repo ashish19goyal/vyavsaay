@@ -389,6 +389,13 @@
 	"create_bill_cps":"Create Bill (CPS)",
 	"num_deliveries":"# of Deliveries",
 	"num_drs":"# of DRS",
-	"delivery_run":"Delivery Run"
+	"delivery_run":"Delivery Run",
+	"inventory_warehouse":"Warehouse Inventory",
+	"inventory_demo":"Inventory on Demo",
+	"inventory_hiring":"Inventory on Hire",
+	"inventory_in_out":"Inventory In and Out",
+	"in_out":"In-out",
+	"sales_report_modern":"Sales Report (Modern)",
+	"sales_report":"Sales Report"
 	}
 }

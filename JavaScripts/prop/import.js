@@ -7514,3 +7514,48 @@ function form226_import(data_array,import_type)
 		update_batch(data_xml);
 	}
 };
+
+/**
+* @form In-out
+* @formNo 230
+*/
+function form230_import(data_array,import_type)
+{
+	var data_xml="<bill_items>";
+	var counter=1;
+	var last_updated=get_my_time();
+	
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</bill_items><separator></separator><bill_items>";
+		}
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<item_name>"+row.item+"</item_name>" +
+				"<quantity>"+row.quantity+"</quantity>" +
+				"<issue_date>"+get_raw_time(row.date)+"</issue_date>" +
+				"<issue_type>"+row.issue_type+"</issue_type>" +
+				"<hiring_type>"+row.for_from+"</hiring_type>" +
+				"<customer>"+row.to_from+"</customer>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</bill_items>";
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+};

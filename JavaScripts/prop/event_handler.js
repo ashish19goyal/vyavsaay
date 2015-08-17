@@ -22,6 +22,7 @@ function default_load()
 	progress_value=0;
 	vyavsaay_active_tab="";
 	storage_count_tracker=0;
+	total_export_requests=0;	
 	modal_forms_ini();
 	//fix_orientation();
 	
@@ -972,6 +973,8 @@ function import_data(form_name)
 		case 'form221':modal23_action(form221_import_template,form221_import);
 		break;
 		case 'form226':modal23_action(form226_import_template,form226_import);
+		break;
+		case 'form230':modal23_action(form230_import_template,form230_import);
 		break;
 	}
 }

@@ -7549,3 +7549,42 @@ function form226_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * formNo 230
+ * form In-out
+ * @param button
+ */
+function form230_delete_item(button)
+{
+	if(is_delete_access('form230'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var item=form.elements[0].value;
+			var issue_type=form.elements[2].value;
+			var data_id=form.elements[6].value;
+			var last_updated=get_my_time();
+			var data_xml="<bill_items>" +
+						"<id>"+data_id+"</id>" +
+						"</bill_items>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>bill_items</tablename>" +
+						"<link_to>form230</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>"+issue_type+" entry for "+item+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

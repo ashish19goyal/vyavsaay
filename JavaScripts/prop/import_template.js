@@ -1284,3 +1284,13 @@ function form226_import_template()
 	var data_array=['id','person','date','starting_km','ending_km','total_run'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form In-out
+* @formNo 230
+*/
+function form230_import_template()
+{
+	var data_array=['id','item','quantity','issue_type','for_from','date','to_from'];
+	my_array_to_csv(data_array);
+};

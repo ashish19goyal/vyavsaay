@@ -23157,7 +23157,469 @@ function form226_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'Delivery Run');
+			get_export_data(columns,'DeliveryRun');
+		});
+		hide_loader();
+	});
+};
+
+
+/**
+ * @form Warehouse Inventory
+ * @formNo 227
+ * @Loading heavy
+ */
+function form227_ini()
+{
+	show_loader();
+	var fid=$("#form227_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form227_header');
+	
+	var fname=filter_fields.elements[0].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form227_index');
+	var prev_element=document.getElementById('form227_prev');
+	var next_element=document.getElementById('form227_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	
+	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
+		"<id>"+fid+"</id>" +
+		"<product_name>"+fname+"</product_name>" +
+		"</product_instances>";
+
+	$('#form227_body').html("");
+	
+	fetch_requested_data('form227',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form227_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Item'>";
+						rowsHTML+="<textarea readonly='readonly' form='form227_"+result.id+"'>"+result.product_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form227_"+result.id+"' value=''>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form227_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form227_body').append(rowsHTML);
+			var fields=document.getElementById("form227_"+result.id);
+			var inventory_elem=fields.elements[1];
+			
+			get_inventory(result.product_name,'',function(inventory)
+			{
+				inventory_elem.value=-parseFloat(inventory);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+
+		var export_button=filter_fields.elements[1];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data_extended(columns,'WarehouseInventory',function(new_result)
+			{
+				get_inventory(new_result.product_name,'',function(inventory)
+				{
+					new_result.quantity=""+(-parseFloat(inventory));
+					total_export_requests-=1;
+				});
+			});
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Demo Inventory
+ * @formNo 228
+ * @Loading heavy
+ */
+function form228_ini()
+{
+	show_loader();
+	var fid=$("#form228_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form228_header');
+	
+	var fname=filter_fields.elements[0].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form228_index');
+	var prev_element=document.getElementById('form228_prev');
+	var next_element=document.getElementById('form228_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	
+	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
+		"<id>"+fid+"</id>" +
+		"<product_name>"+fname+"</product_name>" +
+		"</product_instances>";
+
+	$('#form228_body').html("");
+	
+	fetch_requested_data('form228',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form228_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Item'>";
+						rowsHTML+="<textarea readonly='readonly' form='form228_"+result.id+"'>"+result.product_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form228_"+result.id+"' value=''>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form228_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form228_body').append(rowsHTML);
+			var fields=document.getElementById("form228_"+result.id);
+			var inventory_filter=fields.elements[1];
+			
+			var item_quantity_xml="<bill_items sum='yes'>" +
+				"<quantity></quantity>"+
+				"<hiring_type exact='yes'>demo</hiring_type>"+
+				"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
+				"<item_name exact='yes'>"+result.product_name+"</item_name>" +
+				"</bill_items>";
+
+			set_my_value_func(item_quantity_xml,inventory_filter,function()
+			{
+				inventory_filter.value=-parseFloat(inventory_filter.value);
+			});
+
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+
+		var export_button=filter_fields.elements[1];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data_extended(columns,'InventoryOnDemo',function(new_result)
+			{
+				var item_quantity_xml="<bill_items sum='yes'>" +
+						"<quantity></quantity>"+
+						"<hiring_type exact='yes'>demo</hiring_type>"+
+						"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
+						"<item_name exact='yes'>"+new_result.product_name+"</item_name>" +
+						"</bill_items>";
+
+				get_single_column_data(function(inventories)
+				{
+					if(inventories.length>0)
+					{
+						new_result.quantity=""+(-parseFloat(inventories[0]));
+					}
+					else 
+					{
+						new_result.quantity=""+0;
+					}
+					total_export_requests-=1;
+				},item_quantity_xml);
+			});
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Hiring Inventory
+ * @formNo 229
+ * @Loading heavy
+ */
+function form229_ini()
+{
+	show_loader();
+	var fid=$("#form229_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	var filter_fields=document.getElementById('form229_header');
+	
+	var fname=filter_fields.elements[0].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form229_index');
+	var prev_element=document.getElementById('form229_prev');
+	var next_element=document.getElementById('form229_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+	
+	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
+		"<id>"+fid+"</id>" +
+		"<product_name>"+fname+"</product_name>" +
+		"</product_instances>";
+
+	$('#form229_body').html("");
+	
+	fetch_requested_data('form229',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form229_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Item'>";
+						rowsHTML+="<textarea readonly='readonly' form='form229_"+result.id+"'>"+result.product_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form229_"+result.id+"' value=''>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form229_"+result.id+"' value='"+result.id+"'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form229_body').append(rowsHTML);
+			var fields=document.getElementById("form229_"+result.id);
+			var inventory_filter=fields.elements[1];
+			
+			var item_quantity_xml="<bill_items sum='yes'>" +
+				"<quantity></quantity>"+
+				"<hiring_type exact='yes'>hire</hiring_type>"+
+				"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
+				"<item_name exact='yes'>"+result.product_name+"</item_name>" +
+				"</bill_items>";
+
+			set_my_value_func(item_quantity_xml,inventory_filter,function()
+			{
+				inventory_filter.value=-parseFloat(inventory_filter.value);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+
+		var export_button=filter_fields.elements[1];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			show_loader();
+			get_export_data_extended(columns,'InventoryOnHire',function(new_result)
+			{
+				var item_quantity_xml="<bill_items sum='yes'>" +
+						"<quantity></quantity>"+
+						"<hiring_type exact='yes'>hire</hiring_type>"+
+						"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
+						"<item_name exact='yes'>"+new_result.product_name+"</item_name>" +
+						"</bill_items>";
+
+				get_single_column_data(function(inventories)
+				{
+					if(inventories.length>0)
+					{
+						new_result.quantity=""+(-parseFloat(inventories[0]));
+					}
+					else 
+					{
+						new_result.quantity=""+0;
+					}
+					total_export_requests-=1;
+				},item_quantity_xml);
+			});
+		});
+		
+		hide_loader();
+	});
+};
+
+/**
+ * @form In-out
+ * @formNo 230
+ * @Loading light
+ */
+function form230_ini()
+{
+	show_loader();
+	var fid=$("#form230_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form230_header');
+	
+	var fitem=filter_fields.elements[0].value;
+	var fissue=filter_fields.elements[1].value;
+	var fhire=filter_fields.elements[2].value;
+	var fcustomer=filter_fields.elements[3].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form230_index');
+	var prev_element=document.getElementById('form230_prev');
+	var next_element=document.getElementById('form230_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<bill_items count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<item_name>"+fitem+"</item_name>" +
+			"<hiring_type>"+fhire+"</hiring_type>" +
+			"<customer>"+fcustomer+"</customer>" +
+			"<quantity></quantity>" +
+			"<issue_date></issue_date>" +
+			"<issue_type>"+fissue+"</issue_type>" +
+			"</bill_items>";
+
+	$('#form230_body').html("");
+
+	fetch_requested_data('form230',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form230_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Item'>";
+						rowsHTML+="<textarea readonly='readonly' form='form230_"+result.id+"'>"+result.item_name+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Quantity'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form230_"+result.id+"' value='"+result.quantity+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Type'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form230_"+result.id+"' value='"+result.issue_type+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='For/From'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form230_"+result.id+"' value='"+result.hiring_type+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='To/From'>";
+						rowsHTML+="<textarea readonly='readonly' form='form230_"+result.id+"'>"+result.customer+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form230_"+result.id+"' value='"+get_my_past_date(result.issue_date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form230_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='hidden' form='form230_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form230_"+result.id+"' value='saved' onclick='form230_delete_item($(this));'>";	
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form230_body').append(rowsHTML);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[5];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'In-out');
 		});
 		hide_loader();
 	});

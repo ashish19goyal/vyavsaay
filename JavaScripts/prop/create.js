@@ -15093,3 +15093,68 @@ function form226_create_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * formNo 230
+ * form In-out
+ * @param button
+ */
+function form230_create_item(form)
+{
+	if(is_create_access('form230'))
+	{
+		var item=form.elements[0].value;
+		var quantity=form.elements[1].value;
+		var issue_type=form.elements[2].value;
+		var negative="";		
+		if(issue_type=='out' && quantity>0)
+		{
+			negative="-";
+		}
+		var hiring_type=form.elements[3].value;
+		var customer=form.elements[4].value;
+		var date=get_raw_time(form.elements[5].value);
+		var data_id=form.elements[6].value;
+		var del_button=form.elements[8];
+		var last_updated=get_my_time();
+		var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+item+"</item_name>" +
+					"<hiring_type>"+hiring_type+"</hiring_type>" +
+					"<issue_type>"+issue_type+"</issue_type>" +
+					"<issue_date>"+date+"</issue_date>" +
+					"<customer>"+customer+"</customer>" +
+					"<quantity>"+negative+quantity+"</quantity>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bill_items>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bill_items</tablename>" +
+					"<link_to>form230</link_to>" +
+					"<title>"+issue_type+"</title>" +
+					"<notes>"+quantity+" pieces of "+item+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form230_delete_item(del_button);
+		});
+		$(form).off('submit');
+
+		$(form).on('submit',function(event)
+		{
+			event.preventDefault();
+			form230_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

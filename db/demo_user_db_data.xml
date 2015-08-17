@@ -1144,6 +1144,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report86</name>
+			<display_name>sales_report_modern</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -3200,6 +3210,50 @@
 			<tables>--delivery_run--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form227</name>
+			<display_name>inventory_warehouse</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_instances--inventory_adjust--bill_items--supplier_bill_items--customer_returns--customer_return_items--sale_prices--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form228</name>
+			<display_name>inventory_demo</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_instances--inventory_adjust--bill_items--supplier_bill_items--customer_returns--customer_return_items--sale_prices--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form229</name>
+			<display_name>inventory_hiring</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_instances--inventory_adjust--bill_items--supplier_bill_items--customer_returns--customer_return_items--sale_prices--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form230</name>
+			<display_name>inventory_in_out</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_instances--inventory_adjust--bill_items--supplier_bill_items--customer_returns--customer_return_items--sale_prices--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -3976,6 +4030,17 @@
 			<username>master</username>
 			<element_id>report85</element_id>
 			<element_name>num_drs</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report86</element_id>
+			<element_name>sales_report_modern</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -6033,6 +6098,50 @@
 			<username>master</username>
 			<element_id>form226</element_id>
 			<element_name>delivery_run</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form227</element_id>
+			<element_name>inventory_warehouse</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form228</element_id>
+			<element_name>inventory_demo</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form229</element_id>
+			<element_name>inventory_hiring</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form230</element_id>
+			<element_name>inventory_in_out</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

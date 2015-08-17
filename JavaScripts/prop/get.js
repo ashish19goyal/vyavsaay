@@ -599,6 +599,38 @@ function get_export_data(columns,filename)
 	});
 }
 
+/*
+* Fetches all records for a specified form and exports them to a csv
+*/
+function get_export_data_extended(columns,filename,func)
+{
+	var new_columns=columns.replace(" count='25'","");
+	new_columns=new_columns.replace(" count='100'","");
+	new_columns=new_columns.replace("start_index","dont_use_index");
+	//console.log(new_columns);
+	fetch_requested_data('',new_columns,function(results)
+	{
+		total_export_requests=results.length;
+		//console.log(total_export_requests);	
+		results.forEach(function(result)
+		{
+			func(result);
+		});
+
+		var export_complete=setInterval(function()
+		{
+			//console.log(total_export_requests);
+			if(total_export_requests===0)
+			{
+				clearInterval(export_complete);
+				//console.log(results);				
+				my_obj_array_to_csv(results,filename);
+			}
+		},1000);
+	});
+}
+
+
 /**
  * Converts an array of objects into a csv file
  */
@@ -614,7 +646,7 @@ function my_obj_array_to_csv(data_array,file_name)
 		header_array.push(p);	
 		header_string+=p+",";
 	}
-	console.log(header_array);
+	//console.log(header_array);
 	//console.log(data_array);
 	
     csvRows.push(header_string);
@@ -626,6 +658,8 @@ function my_obj_array_to_csv(data_array,file_name)
 		var data_string="";
 		for(var i=0;i<header_array.length;i++)
 		{
+			//console.log(header_array[i]);
+			//console.log(data_row[header_array[i]]);
 			if(typeof data_row[header_array[i]]!= 'undefined')
 			{
 				if(data_row[header_array[i]].search(","))
