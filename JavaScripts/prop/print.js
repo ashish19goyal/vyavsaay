@@ -3104,7 +3104,7 @@ function print_form231(func)
 	////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:95%;min-height:200px;line-height:40px;');
-		logo.setAttribute('style','float:left;width:30%;');
+		logo.setAttribute('style','float:left;width:30%;height:200px;');
 		business_title.setAttribute('style','float:left;width:65%;text-align:left;font-size:30px;');		
 		business_intro.setAttribute('style','float:left;width:65%;text-align:left;font-size:25px;');
 	doctor_line.setAttribute('style','width:95%;min-height:40px;font-size:20px;font-weight:600;');
@@ -3133,11 +3133,11 @@ function print_form231(func)
 	var age=master_form.elements['age'].value;
 	var sex=master_form.elements['sex'].value;
 	var next_visit=master_form.elements['next'].value;
-	if(master_form.elements['next'].value=="")
+	if(master_form.elements['next'].value=="01/01/1970")
 		next_visit="";
 	////////////////filling in the content into the containers//////////////////////////
 
-	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";	
+	logo.innerHTML="<img style='width:90%;height:90%;' src='https://vyavsaay.com/client_images/"+logo_image+"'>";	
 	business_title.innerHTML=bt;
 	business_intro.innerHTML="<i>"+business_intro_text+"</i>";
 	
