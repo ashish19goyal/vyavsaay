@@ -7551,6 +7551,92 @@ function form226_delete_item(button)
 }
 
 /**
+ * formNo 228
+ * form Demo
+ * @param button
+ */
+function form228_delete_item(button)
+{
+	if(is_delete_access('form228'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var item=form.elements[0].value;
+			var data_id=form.elements[6].value;
+			var last_updated=get_my_time();
+			var data_xml="<bill_items>" +
+						"<id>"+data_id+"</id>" +
+						"</bill_items>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>bill_items</tablename>" +
+						"<link_to>form228</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Demo entry for "+item+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var data2_xml="<bill_items>" +
+						"<issue_id>"+data_id+"</issue_id>" +
+						"</bill_items>";	
+						
+			delete_row(data_xml,activity_xml);
+			delete_simple(data2_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 229
+ * form Hire
+ * @param button
+ */
+function form229_delete_item(button)
+{
+	if(is_delete_access('form229'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var item=form.elements[0].value;
+			var data_id=form.elements[6].value;
+			var last_updated=get_my_time();
+			var data_xml="<bill_items>" +
+						"<id>"+data_id+"</id>" +
+						"</bill_items>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>bill_items</tablename>" +
+						"<link_to>form229</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Hire entry for "+item+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var data2_xml="<bill_items>" +
+						"<issue_id>"+data_id+"</issue_id>" +
+						"</bill_items>";	
+						
+			delete_row(data_xml,activity_xml);
+			delete_simple(data2_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * formNo 230
  * form In-out
  * @param button

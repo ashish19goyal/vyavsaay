@@ -8077,6 +8077,7 @@ function form228_header_ini()
 {
 	var filter_fields=document.getElementById('form228_header');	
 	var item_filter=filter_fields.elements[0];
+	var customer_filter=filter_fields.elements[1];
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -8090,6 +8091,12 @@ function form228_header_ini()
 			"</product_master>";
 	
 	set_my_filter(products_data,item_filter);
+
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	set_my_filter(customer_data,customer_filter);
 };
 
 /**
@@ -8100,6 +8107,7 @@ function form229_header_ini()
 {
 	var filter_fields=document.getElementById('form229_header');	
 	var item_filter=filter_fields.elements[0];
+	var customer_filter=filter_fields.elements[1];
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -8113,6 +8121,13 @@ function form229_header_ini()
 			"</product_master>";
 	
 	set_my_filter(products_data,item_filter);
+
+	var customer_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	
+	set_my_filter(customer_data,customer_filter);
+
 };
 
 /**

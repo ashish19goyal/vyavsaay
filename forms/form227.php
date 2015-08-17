@@ -4,7 +4,9 @@
 			<tr>
 				<form id='form227_header'></form>
 					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form227_header'></th>
-					<th>Quantity</th>
+					<th>Warehouse Qty</th>
+					<th>On Demo Qty</th>
+					<th>On Hire Qty</th>
 					<th><input type='button' form='form227_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form227_header' style='display:none;visibility: hidden;'>
 					</th>

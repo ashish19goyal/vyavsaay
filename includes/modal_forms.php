@@ -1283,5 +1283,16 @@
 			</fieldset>
 		</form>
 	</div>
+
+	<div id="modal147" title="Return Items">
+		<form id='modal147_form' autocomplete="off">
+			<fieldset>
+				<label>Date: <input type="text" required readonly='readonly'></label><br>
+				<label>Item: <input type="text" required></label><br>
+				<label>Quantity: <input type='number' required></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
 	
 </div>

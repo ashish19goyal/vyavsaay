@@ -15095,6 +15095,122 @@ function form226_create_item(form)
 }
 
 /**
+ * formNo 228
+ * form Demo
+ * @param button
+ */
+function form228_create_item(form)
+{
+	if(is_create_access('form228'))
+	{
+		var item=form.elements[0].value;
+		var quantity=form.elements[1].value;
+		var customer=form.elements[3].value;
+		var negative="";
+		if(parseFloat(quantity)>0)
+		{
+			negative="-";
+		}
+		var date=get_raw_time(form.elements[4].value);
+		var data_id=form.elements[6].value;
+		var del_button=form.elements[8];
+		var last_updated=get_my_time();
+		var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+item+"</item_name>" +
+					"<hiring_type>demo</hiring_type>" +
+					"<issue_type>out</issue_type>" +
+					"<issue_date>"+date+"</issue_date>" +
+					"<customer>"+customer+"</customer>" +
+					"<quantity>"+negative+quantity+"</quantity>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bill_items>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bill_items</tablename>" +
+					"<link_to>form228</link_to>" +
+					"<title>Out</title>" +
+					"<notes>"+quantity+" pieces of "+item+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form228_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 229
+ * form Hire
+ * @param button
+ */
+function form229_create_item(form)
+{
+	if(is_create_access('form229'))
+	{
+		var item=form.elements[0].value;
+		var quantity=form.elements[1].value;
+		var customer=form.elements[3].value;
+		var negative="";
+		if(parseFloat(quantity)>0)
+		{
+			negative="-";
+		}
+		var date=get_raw_time(form.elements[4].value);
+		var data_id=form.elements[6].value;
+		var del_button=form.elements[8];
+		var last_updated=get_my_time();
+		var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+item+"</item_name>" +
+					"<hiring_type>hire</hiring_type>" +
+					"<issue_type>out</issue_type>" +
+					"<issue_date>"+date+"</issue_date>" +
+					"<customer>"+customer+"</customer>" +
+					"<quantity>"+negative+quantity+"</quantity>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bill_items>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bill_items</tablename>" +
+					"<link_to>form229</link_to>" +
+					"<title>Out</title>" +
+					"<notes>"+quantity+" pieces of "+item+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form229_delete_item(del_button);
+		});
+		
+		$(form).off('submit');
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * formNo 230
  * form In-out
  * @param button
@@ -15107,7 +15223,7 @@ function form230_create_item(form)
 		var quantity=form.elements[1].value;
 		var issue_type=form.elements[2].value;
 		var negative="";		
-		if(issue_type=='out' && quantity>0)
+		if(issue_type=='out' && parseFloat(quantity)>0)
 		{
 			negative="-";
 		}

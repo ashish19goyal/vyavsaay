@@ -8,9 +8,9 @@
 			<li><a id='form155_link' href='#form155' onclick='form155_header_ini(); form155_ini();' data-i18n='form.update_inventory'></a></li>
 			<li><a id='form207_link' href='#form207' onclick='form207_header_ini(); form207_ini();' data-i18n='form.update_inventory'></a></li>
 			<li><a id='form183_link' href='#form183' onclick='form183_header_ini(); form183_ini();' data-i18n='form.update_inventory'></a></li>
-			<li><a id='form227_link' href='#form227' onclick='form227_header_ini(); form227_ini();' data-i18n='form.inventory_warehouse'></a></li>
-			<li><a id='form228_link' href='#form228' onclick='form228_header_ini(); form228_ini();' data-i18n='form.inventory_demo'></a></li>
-			<li><a id='form229_link' href='#form229' onclick='form229_header_ini(); form229_ini();' data-i18n='form.inventory_hiring'></a></li>
+			<li><a id='form227_link' href='#form227' onclick='form227_header_ini(); form227_ini();' data-i18n='form.update_inventory'></a></li>
+			<li><a id='form228_link' href='#form228' onclick='form228_header_ini(); form228_ini();' data-i18n='form.demo'></a></li>
+			<li><a id='form229_link' href='#form229' onclick='form229_header_ini(); form229_ini();' data-i18n='form.hiring'></a></li>
 			<li><a id='form230_link' href='#form230' onclick='form230_header_ini(); form230_ini();' data-i18n='form.in_out'></a></li>
 			<li><a id='form146_link' href='#form146' onclick='form146_header_ini(); form146_ini();' data-i18n='form.manufacturing'></a></li>
 			<li><a id='form59_link' href='#form59' onclick='form59_header_ini(); form59_ini();' data-i18n='form.manage_pre_requisites'></a></li>

@@ -10430,3 +10430,60 @@ function modal146_action(test_data_id,test_id,item)
 	
 	$("#modal146").dialog("open");
 }
+
+
+/**
+ * @modalNo 147
+ * @modal Return Items
+ * @param button
+ */
+function modal147_action(hiring_type,button)
+{
+	var form=document.getElementById('modal147_form');
+	var fdate=form.elements[1];
+	var fitem=form.elements[2];
+	var fquantity=form.elements[3];
+	
+	$(fdate).datepicker();
+	fdate.value=get_my_date();
+		
+	var form_id=$(button).attr('form');
+	var master_form=document.getElementById(form_id);
+	fitem.value=master_form.elements[0].value;
+	fquantity.value=master_form.elements[1].value;
+	
+	var item_name=master_form.elements[0].value;
+	var customer=master_form.elements[3].value;
+	var issue_id=master_form.elements[6].value;
+
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form224'))
+		{
+			var data_id=get_new_key();
+			var last_updated=get_my_time();
+			
+			var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+item_name+"</item_name>" +
+					"<hiring_type>"+hiring_type+"</hiring_type>" +
+					"<issue_type>in</issue_type>" +
+					"<issue_date>"+get_raw_time(fdate.value)+"</issue_date>" +
+					"<customer>"+customer+"</customer>" +
+					"<quantity>"+fquantity.value+"</quantity>"+
+					"<issue_id>"+issue_id+"</issue_id>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bill_items>";	
+			create_simple(data_xml);			
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal147").dialog("close");
+	});
+	
+	$("#modal147").dialog("open");
+}

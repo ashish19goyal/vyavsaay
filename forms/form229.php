@@ -5,7 +5,11 @@
 				<form id='form229_header'></form>
 					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form229_header'></th>
 					<th>Quantity</th>
-					<th><input type='button' form='form229_header' value='EXPORT' class='export_icon'>
+					<th>Customer <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form229_header'></th>
+					<th>Date</th>
+					<th>
+						<input type='button' form='form229_header' class='add_icon' title='Add record' onclick='form229_add_item();'>
+						<input type='button' form='form229_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form229_header' style='display:none;visibility: hidden;'>
 					</th>
 			</tr>

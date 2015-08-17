@@ -23204,8 +23204,14 @@ function form227_ini()
 					rowsHTML+="<td data-th='Item'>";
 						rowsHTML+="<textarea readonly='readonly' form='form227_"+result.id+"'>"+result.product_name+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Quantity'>";
-						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form227_"+result.id+"' value=''>";
+					rowsHTML+="<td data-th='Warehouse Qty'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form227_"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='On Demo Qty'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form227_"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='On Hire Qty'>";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form227_"+result.id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form227_"+result.id+"' value='"+result.id+"'>";
@@ -23214,11 +23220,37 @@ function form227_ini()
 			
 			$('#form227_body').append(rowsHTML);
 			var fields=document.getElementById("form227_"+result.id);
-			var inventory_elem=fields.elements[1];
+			var w_in=fields.elements[1];
+			var d_in=fields.elements[2];
+			var h_in=fields.elements[3];
 			
 			get_inventory(result.product_name,'',function(inventory)
 			{
-				inventory_elem.value=-parseFloat(inventory);
+				w_in.value=-parseFloat(inventory);
+			});
+			
+			var demo_quantity_xml="<bill_items sum='yes'>" +
+				"<quantity></quantity>"+
+				"<hiring_type exact='yes'>demo</hiring_type>"+
+				"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
+				"<item_name exact='yes'>"+result.product_name+"</item_name>" +
+				"</bill_items>";
+
+			set_my_value_func(demo_quantity_xml,d_in,function()
+			{
+				d_in.value=-parseFloat(d_in.value);
+			});
+
+			var hire_quantity_xml="<bill_items sum='yes'>" +
+				"<quantity></quantity>"+
+				"<hiring_type exact='yes'>hire</hiring_type>"+
+				"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
+				"<item_name exact='yes'>"+result.product_name+"</item_name>" +
+				"</bill_items>";
+
+			set_my_value_func(hire_quantity_xml,h_in,function()
+			{
+				h_in.value=-parseFloat(h_in.value);
 			});
 		});
 
@@ -23255,11 +23287,53 @@ function form227_ini()
 		{
 			get_export_data_extended(columns,'WarehouseInventory',function(new_result)
 			{
+				total_export_requests+=3;
+
 				get_inventory(new_result.product_name,'',function(inventory)
 				{
-					new_result.quantity=""+(-parseFloat(inventory));
+					new_result.warehouse_quantity=""+(-parseFloat(inventory));
 					total_export_requests-=1;
 				});
+				
+				var demo_quantity_xml="<bill_items sum='yes'>" +
+					"<quantity></quantity>"+
+					"<hiring_type exact='yes'>demo</hiring_type>"+
+					"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
+					"<item_name exact='yes'>"+new_result.product_name+"</item_name>" +
+					"</bill_items>";
+	
+				get_single_column_data(function(inventories)
+				{
+					if(inventories.length>0)
+					{
+						new_result.demo_quantity=""+(-parseFloat(inventories[0]));
+					}
+					else 
+					{
+						new_result.demo_quantity=""+0;
+					}
+					total_export_requests-=1;
+				},demo_quantity_xml);
+
+				var hire_quantity_xml="<bill_items sum='yes'>" +
+					"<quantity></quantity>"+
+					"<hiring_type exact='yes'>hire</hiring_type>"+
+					"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
+					"<item_name exact='yes'>"+new_result.product_name+"</item_name>" +
+					"</bill_items>";
+	
+				get_single_column_data(function(inventories)
+				{
+					if(inventories.length>0)
+					{
+						new_result.hire_quantity=""+(-parseFloat(inventories[0]));
+					}
+					else 
+					{
+						new_result.hire_quantity=""+0;
+					}
+					total_export_requests-=1;
+				},hire_quantity_xml);
 			});
 		});
 		hide_loader();
@@ -23267,20 +23341,21 @@ function form227_ini()
 };
 
 /**
- * @form Demo Inventory
+ * @form Demo
  * @formNo 228
- * @Loading heavy
+ * @Loading light
  */
 function form228_ini()
 {
 	show_loader();
 	var fid=$("#form228_link").attr('data_id');
 	if(fid==null)
-		fid="";
+		fid="";	
 	
 	var filter_fields=document.getElementById('form228_header');
 	
-	var fname=filter_fields.elements[0].value;
+	var fitem=filter_fields.elements[0].value;
+	var fcustomer=filter_fields.elements[1].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form228_index');
@@ -23288,48 +23363,80 @@ function form228_ini()
 	var next_element=document.getElementById('form228_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-	
-	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
-		"<id>"+fid+"</id>" +
-		"<product_name>"+fname+"</product_name>" +
-		"</product_instances>";
+
+	var columns="<bill_items count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<item_name>"+fitem+"</item_name>" +
+			"<customer>"+fcustomer+"</customer>" +
+			"<quantity></quantity>" +
+			"<issue_date></issue_date>" +
+			"<issue_type exact='yes'>out</issue_type>" +
+			"<hiring_type exact='yes'>demo</hiring_type>" +
+			"</bill_items>";
 
 	$('#form228_body').html("");
-	
+
 	fetch_requested_data('form228',columns,function(results)
 	{
 		results.forEach(function(result)
 		{
+			result.quantity=-parseFloat(result.quantity);
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form228_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Item'>";
-						rowsHTML+="<textarea readonly='readonly' form='form228_"+result.id+"'>"+result.product_name+"</textarea>";
+						rowsHTML+="<textarea readonly='readonly' form='form228_"+result.id+"'>"+result.item_name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Quantity'>";
-						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form228_"+result.id+"' value=''>";
+						rowsHTML+="Issued: <input type='number' step='any' readonly='readonly' form='form228_"+result.id+"' value='"+result.quantity+"'>";
+						rowsHTML+="<br>Returned: <input type='number' step='any' readonly='readonly' form='form228_"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form228_"+result.id+"'>"+result.customer+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+="Issued: <input type='text' readonly='readonly' form='form228_"+result.id+"' value='"+get_my_past_date(result.issue_date)+"'>";
+						rowsHTML+="<br>Returned: <input type='text' readonly='readonly' form='form228_"+result.id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form228_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='hidden' form='form228_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form228_"+result.id+"' onclick='form228_delete_item($(this));'>";
+						rowsHTML+="<input type='button' class='generic_icon' form='form228_"+result.id+"' value='Return' onclick=\"modal147_action('demo',$(this));\">";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form228_body').append(rowsHTML);
 			var fields=document.getElementById("form228_"+result.id);
-			var inventory_filter=fields.elements[1];
+			var issue_quantity_filter=fields.elements[1];
+			var return_quantity_filter=fields.elements[2];
+			var return_date_filter=fields.elements[5];
+			var return_button=fields.elements[9];
 			
-			var item_quantity_xml="<bill_items sum='yes'>" +
-				"<quantity></quantity>"+
-				"<hiring_type exact='yes'>demo</hiring_type>"+
-				"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
-				"<item_name exact='yes'>"+result.product_name+"</item_name>" +
-				"</bill_items>";
-
-			set_my_value_func(item_quantity_xml,inventory_filter,function()
+			var columns="<bill_items>" +
+					"<quantity></quantity>" +
+					"<issue_date></issue_date>" +
+					"<issue_type exact='yes'>in</issue_type>" +
+					"<hiring_type exact='yes'>demo</hiring_type>" +
+					"<issue_id exact='yes'>"+result.id+"</issue_id>" +
+					"</bill_items>";
+			fetch_requested_data('form228',columns,function(return_results)
 			{
-				inventory_filter.value=-parseFloat(inventory_filter.value);
+				var returned_quantity=0;
+				var return_date="";
+				return_results.forEach(function(r_result)
+				{
+					returned_quantity+=parseFloat(r_result.quantity);
+					return_date=r_result.issue_date;
+				});
+				return_quantity_filter.value=returned_quantity;
+				return_date_filter.value=get_my_past_date(return_date);
+				
+				if(return_quantity_filter.value==issue_quantity_filter.value)
+				{
+					$(return_button).hide();
+				}
 			});
-
 		});
 
 		////indexing///
@@ -23355,36 +23462,15 @@ function form228_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-
-		var export_button=filter_fields.elements[1];
+		
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data_extended(columns,'InventoryOnDemo',function(new_result)
-			{
-				var item_quantity_xml="<bill_items sum='yes'>" +
-						"<quantity></quantity>"+
-						"<hiring_type exact='yes'>demo</hiring_type>"+
-						"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
-						"<item_name exact='yes'>"+new_result.product_name+"</item_name>" +
-						"</bill_items>";
-
-				get_single_column_data(function(inventories)
-				{
-					if(inventories.length>0)
-					{
-						new_result.quantity=""+(-parseFloat(inventories[0]));
-					}
-					else 
-					{
-						new_result.quantity=""+0;
-					}
-					total_export_requests-=1;
-				},item_quantity_xml);
-			});
+			get_export_data(columns,'demo');
 		});
 		hide_loader();
 	});
@@ -23400,11 +23486,12 @@ function form229_ini()
 	show_loader();
 	var fid=$("#form229_link").attr('data_id');
 	if(fid==null)
-		fid="";
+		fid="";	
 	
 	var filter_fields=document.getElementById('form229_header');
 	
-	var fname=filter_fields.elements[0].value;
+	var fitem=filter_fields.elements[0].value;
+	var fcustomer=filter_fields.elements[1].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form229_index');
@@ -23412,46 +23499,78 @@ function form229_ini()
 	var next_element=document.getElementById('form229_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-	
-	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
-		"<id>"+fid+"</id>" +
-		"<product_name>"+fname+"</product_name>" +
-		"</product_instances>";
+
+	var columns="<bill_items count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<item_name>"+fitem+"</item_name>" +
+			"<customer>"+fcustomer+"</customer>" +
+			"<quantity></quantity>" +
+			"<issue_date></issue_date>" +
+			"<issue_type exact='yes'>out</issue_type>" +
+			"<hiring_type exact='yes'>hire</hiring_type>" +
+			"</bill_items>";
 
 	$('#form229_body').html("");
-	
+
 	fetch_requested_data('form229',columns,function(results)
 	{
 		results.forEach(function(result)
 		{
-			var rowsHTML="";
-			rowsHTML+="<tr>";
+			result.quantity=-parseFloat(result.quantity);
+			var rowsHTML="<tr>";
 				rowsHTML+="<form id='form229_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Item'>";
-						rowsHTML+="<textarea readonly='readonly' form='form229_"+result.id+"'>"+result.product_name+"</textarea>";
+						rowsHTML+="<textarea readonly='readonly' form='form229_"+result.id+"'>"+result.item_name+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Quantity'>";
-						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form229_"+result.id+"' value=''>";
+						rowsHTML+="Issued: <input type='number' step='any' readonly='readonly' form='form229_"+result.id+"' value='"+result.quantity+"'>";
+						rowsHTML+="<br>Returned: <input type='number' step='any' readonly='readonly' form='form229_"+result.id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Customer'>";
+						rowsHTML+="<textarea readonly='readonly' form='form229_"+result.id+"'>"+result.customer+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+="Issued: <input type='text' readonly='readonly' form='form229_"+result.id+"' value='"+get_my_past_date(result.issue_date)+"'>";
+						rowsHTML+="<br>Returned: <input type='text' readonly='readonly' form='form229_"+result.id+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form229_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='hidden' form='form229_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form229_"+result.id+"' onclick='form229_delete_item($(this));'>";
+						rowsHTML+="<input type='button' class='generic_icon' form='form229_"+result.id+"' value='Return' onclick=\"modal147_action('hire',$(this));\">";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form229_body').append(rowsHTML);
 			var fields=document.getElementById("form229_"+result.id);
-			var inventory_filter=fields.elements[1];
+			var issue_quantity_filter=fields.elements[1];
+			var return_quantity_filter=fields.elements[2];
+			var return_date_filter=fields.elements[5];
+			var return_button=fields.elements[9];
 			
-			var item_quantity_xml="<bill_items sum='yes'>" +
-				"<quantity></quantity>"+
-				"<hiring_type exact='yes'>hire</hiring_type>"+
-				"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
-				"<item_name exact='yes'>"+result.product_name+"</item_name>" +
-				"</bill_items>";
-
-			set_my_value_func(item_quantity_xml,inventory_filter,function()
+			var columns="<bill_items>" +
+					"<quantity></quantity>" +
+					"<issue_date></issue_date>" +
+					"<issue_type exact='yes'>in</issue_type>" +
+					"<hiring_type exact='yes'>hire</hiring_type>" +
+					"<issue_id exact='yes'>"+result.id+"</issue_id>" +
+					"</bill_items>";
+			fetch_requested_data('form229',columns,function(return_results)
 			{
-				inventory_filter.value=-parseFloat(inventory_filter.value);
+				var returned_quantity=0;
+				var return_date="";
+				return_results.forEach(function(r_result)
+				{
+					returned_quantity+=parseFloat(r_result.quantity);
+					return_date=r_result.issue_date;
+				});
+				return_quantity_filter.value=returned_quantity;
+				return_date_filter.value=get_my_past_date(return_date);
+				
+				if(return_quantity_filter.value==issue_quantity_filter.value)
+				{
+					$(return_button).hide();
+				}
 			});
 		});
 
@@ -23478,39 +23597,16 @@ function form229_ini()
 			$(prev_element).show();
 		}
 		/////////////
-		
+
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-
-		var export_button=filter_fields.elements[1];
+		
+		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			show_loader();
-			get_export_data_extended(columns,'InventoryOnHire',function(new_result)
-			{
-				var item_quantity_xml="<bill_items sum='yes'>" +
-						"<quantity></quantity>"+
-						"<hiring_type exact='yes'>hire</hiring_type>"+
-						"<issue_date upperbound='yes'>"+get_my_time()+"</issue_date>"+
-						"<item_name exact='yes'>"+new_result.product_name+"</item_name>" +
-						"</bill_items>";
-
-				get_single_column_data(function(inventories)
-				{
-					if(inventories.length>0)
-					{
-						new_result.quantity=""+(-parseFloat(inventories[0]));
-					}
-					else 
-					{
-						new_result.quantity=""+0;
-					}
-					total_export_requests-=1;
-				},item_quantity_xml);
-			});
+			get_export_data(columns,'hire');
 		});
-		
 		hide_loader();
 	});
 };

@@ -465,6 +465,7 @@
 			<customer index='yes' type="TEXT"></customer>
 			<issue_date index='yes' type="BIGINT"></issue_date>
 			<issue_type index='yes' type="VARCHAR(15)"></issue_type><!--in/out-->
+			<issue_id index='no' type="BIGINT"></issue_id>
 			<fresh index='yes' type="VARCHAR(25)"></fresh><!--yes/no-->
 			<picked_status index='yes' type="VARCHAR(25)"></picked_status><!--pending/picked-->
 			<packing_status index='yes' type="VARCHAR(25)"></packing_status><!--pending/packed-->

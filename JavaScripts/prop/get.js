@@ -614,7 +614,7 @@ function get_export_data_extended(columns,filename,func)
 	//console.log(new_columns);
 	fetch_requested_data('',new_columns,function(results)
 	{
-		total_export_requests=results.length;
+		//total_export_requests=results.length;
 		//console.log(total_export_requests);	
 		results.forEach(function(result)
 		{

@@ -12704,6 +12704,206 @@ function form226_add_item()
 }
 
 /**
+ * @form Demo
+ * @formNo 228
+ */
+function form228_add_item()
+{
+	if(is_create_access('form228'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form228_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' form='form228_"+id+"' required>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form228_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' step='any' required form='form228_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form228_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' form='form228_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' id='form228_add_customer_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date' required>";
+				rowsHTML+="<input type='text' form='form228_"+id+"' value='"+get_my_date()+"'>";
+				rowsHTML+="<input type='hidden' form='form228_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form228_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form228_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form228_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form228_body').prepend(rowsHTML);
+		var fields=document.getElementById("form228_"+id);
+		var item_filter=fields.elements[0];
+		var customer_filter=fields.elements[3];
+		var date_filter=fields.elements[4];
+		
+		$(date_filter).datepicker();
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form228_create_item(fields);
+		});
+	
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,item_filter,function () 
+		{
+			$(item_filter).focus();
+		});
+
+		var add_product=document.getElementById('form228_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal112_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,item_filter,function () 
+				{
+					$(item_filter).focus();
+				});
+			});
+		});
+
+		var customer_data="<accounts>" +
+				"<acc_name></acc_name>" +
+				"</accounts>";
+		set_my_value_list(customer_data,customer_filter);
+		
+		var add_customer=document.getElementById('form228_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal11_action(function()
+			{	
+				var customer_data="<customers>" +
+						"<acc_name></acc_name>" +
+						"</customers>";
+				set_my_value_list_func(customer_data,customer_filter,function () 
+				{
+					$(customer_filter).focus();
+				});
+			});
+		});
+
+		$('textarea').autosize();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Hire
+ * @formNo 229
+ */
+function form229_add_item()
+{
+	if(is_create_access('form229'))
+	{
+		var rowsHTML="";
+		var id=get_new_key();
+		rowsHTML+="<tr>";
+		rowsHTML+="<form id='form229_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' form='form229_"+id+"' required>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form229_add_product_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' step='any' required form='form229_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form229_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Customer'>";
+				rowsHTML+="<input type='text' form='form229_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' id='form229_add_customer_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Date' required>";
+				rowsHTML+="<input type='text' form='form229_"+id+"' value='"+get_my_date()+"'>";
+				rowsHTML+="<input type='hidden' form='form229_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form229_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form229_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form229_"+id+"' onclick='$(this).parent().parent().remove();'>";	
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+	
+		$('#form229_body').prepend(rowsHTML);
+		var fields=document.getElementById("form229_"+id);
+		var item_filter=fields.elements[0];
+		var customer_filter=fields.elements[3];
+		var date_filter=fields.elements[4];
+		
+		$(date_filter).datepicker();
+
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form229_create_item(fields);
+		});
+	
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list_func(product_data,item_filter,function () 
+		{
+			$(item_filter).focus();
+		});
+
+		var add_product=document.getElementById('form229_add_product_'+id);
+		$(add_product).on('click',function()
+		{
+			modal112_action(function()
+			{	
+				var product_data="<product_master>" +
+						"<name></name>" +
+						"</product_master>";
+				set_my_value_list_func(product_data,item_filter,function () 
+				{
+					$(item_filter).focus();
+				});
+			});
+		});
+
+		var customer_data="<accounts>" +
+				"<acc_name></acc_name>" +
+				"</accounts>";
+		set_my_value_list(customer_data,customer_filter);
+		
+		var add_customer=document.getElementById('form229_add_customer_'+id);
+		$(add_customer).on('click',function()
+		{
+			modal11_action(function()
+			{	
+				var customer_data="<customers>" +
+						"<acc_name></acc_name>" +
+						"</customers>";
+				set_my_value_list_func(customer_data,customer_filter,function () 
+				{
+					$(customer_filter).focus();
+				});
+			});
+		});
+
+		$('textarea').autosize();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form In-out
  * @formNo 230
  */
