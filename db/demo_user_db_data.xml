@@ -1154,6 +1154,16 @@
 			<last_updated>1</last_updated>
 		</row>
 		<row>
+			<name>report87</name>
+			<display_name>delivery_run_report</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
 			<status>active</status>
@@ -4063,6 +4073,17 @@
 			<username>master</username>
 			<element_id>report86</element_id>
 			<element_name>sales_report_modern</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report87</element_id>
+			<element_name>delivery_run_report</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

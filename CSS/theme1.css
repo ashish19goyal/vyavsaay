@@ -775,6 +775,17 @@ tbody tr:hover{
 	vertical-align:middle;
 }
 
+.csv_icon{
+	height:25px;
+	width: 25px;
+	background:url('/images/csv_icon.png') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+	vertical-align:middle;
+}
+
 a.small_cross_icon{
 	width:10px;
 	height:10px;
@@ -1238,7 +1249,7 @@ input.ultrawidebox{
 		min-width:1px;
 	}
 	
-	.save_icon,.delete_icon,.share_icon,.edit_icon,.copy_icon,.add_icon,.add_image,.print_icon{
+	.save_icon,.delete_icon,.share_icon,.edit_icon,.copy_icon,.add_icon,.add_image,.print_icon,.csv_icon{
 		min-width:40px;		
 		height:40px;
 		width:40px;

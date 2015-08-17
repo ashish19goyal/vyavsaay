@@ -1791,7 +1791,7 @@ function report84_header_ini()
 
 /**
  * @reportNo 85
- * @report # deliveries
+ * @report # DRS
  */
 function report85_header_ini()
 {	
@@ -1838,5 +1838,34 @@ function report86_header_ini()
 	$(start_date).datepicker();
 	$(end_date).datepicker();
 	start_date.value=get_my_past_date((get_my_time()-(7*86400000)));
+	end_date.value=get_my_date();
+}
+
+/**
+ * @reportNo 87
+ * @report Delivery Run Report
+ */
+function report87_header_ini()
+{	
+	var form=document.getElementById('report87_header');
+	var person_filter=form.elements[1];
+	var start_date=form.elements[2];
+	var end_date=form.elements[3];
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report87_ini();
+	});
+
+	var person_data="<staff>"+
+				"<acc_name></acc_name>"+
+				"</staff>";
+	set_my_filter(person_data,person_filter);
+				
+	$(start_date).datepicker();
+	$(end_date).datepicker();
+	start_date.value=get_my_past_date((get_my_time()-(7*87400000)));
 	end_date.value=get_my_date();
 }

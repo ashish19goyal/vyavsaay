@@ -6354,11 +6354,18 @@ function report85_ini()
 	
 	var drs_data="<drs>" +
 			"<id></id>" +
+			"<drs_num></drs_num>" +
 			"<drs_time lowerbound='yes'>"+get_raw_time(start_date)+"</drs_time>" +
 			"<drs_time upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</drs_time>" +
 			"</drs>";
 	fetch_requested_data('report85',drs_data,function(orders)
 	{
+		var drs_num_array="--";
+		for(var i=0;i<orders.length;i++)
+		{
+			drs_num_array+=orders[i].drs_num+"--";
+		}
+
 		for(var i=0;i<orders.length;i++)
 		{
 			orders[i].drs_count=1;
@@ -6384,7 +6391,59 @@ function report85_ini()
 
 		var print_button=form.elements[4];
 		print_graphical_report('report85','# DRS',print_button,mybarchart);
-		hide_loader();
+		
+		var csv_button=form.elements[5];
+		$(csv_button).off("click");
+		$(csv_button).on("click", function(event)
+		{
+			var columns="<logistics_orders>"+
+						"<id></id>"+
+						"<awb_num></awb_num>"+
+                        "<type></type>"+
+                        "<order_num></order_num>"+
+                        "<manifest_id></manifest_id>"+
+                        "<merchant_name></merchant_name>"+
+                        "<ship_to></ship_to>"+
+                        "<address1></address1>"+
+                        "<address2></address2>"+
+                        "<city></city>"+
+                        "<state></state>"+
+                        "<pincode></pincode>"+
+                        "<phone></phone>"+
+                        "<telephone></telephone>"+
+                        "<weight></weight>"+
+                        "<declared_value></declared_value>"+
+                        "<collectable_value></collectable_value>"+
+                        "<vendor_code></vendor_code>"+
+                        "<shipper_name></shipper_name>"+
+                        "<return_address1></return_address1>"+
+                        "<return_address2></return_address2>"+
+                        "<return_address3></return_address3>"+
+                        "<return_pincode></return_pincode>"+
+                        "<len></len>"+
+                        "<breadth></breadth>"+
+                        "<height></height>"+
+                        "<pieces></pieces>"+
+                        "<carrier_account></carrier_account>"+
+                        "<carrier_name></carrier_name>"+
+                        "<manifest_type></manifest_type>"+
+                        "<dispatch_date></dispatch_date>"+
+                        "<import_date></import_date>"+
+                        "<notes></notes>"+
+                        "<pickup_location></pickup_location>"+
+                        "<pickup_by></pickup_by>"+
+                        "<sku></sku>"+
+                        "<product_name></product_name>"+
+                        "<status></status>"+
+                        "<current_location></current_location>"+
+                        "<delivery_person></delivery_person>"+
+                        "<order_history></order_history>"+
+                        "<comments></comments>"+
+                        "<drs_num array='yes'>"+drs_num_array+"</drs_num>"+
+						"</logistics_orders>";
+			get_export_data(columns,'drs_details');
+		});
+		hide_loader();		
 	});
 };
 
@@ -6473,4 +6532,55 @@ function report86_ini()
 	
 	var print_button=form.elements[5];
 	print_tabular_report('report86','Sales',print_button);
+};
+
+/**
+ * @reportNo 87
+ * @report Delivery Run Report
+ */
+function report87_ini()
+{
+	show_loader();
+	var form=document.getElementById('report87_header');
+	var person=form.elements['person'].value;
+	var start=get_raw_time(form.elements['start'].value);
+	var end=get_raw_time(form.elements['end'].value);
+	
+	$('#report87_body').html('');
+
+	var delivery_data="<delivery_run>" +
+			"<person>"+person+"</person>" +
+			"<total_run></total_run>" +
+			"<date lowerbound='yes'>"+start+"</date>"+
+			"<date upperbound='yes'>"+end+"</date>"+
+			"</delivery_run>";
+	
+	fetch_requested_data('report87',delivery_data,function(deliveries)
+	{
+		var total_kms=0;
+		deliveries.forEach(function(result)
+		{	
+			total_kms+=parseFloat(result.total_run);
+			var rowsHTML="<tr>";
+				rowsHTML+="<td data-th='Person'>";
+					rowsHTML+=result.person;
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Date'>";
+					rowsHTML+=get_my_past_date(result.date);
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Kms'>";
+					rowsHTML+=result.total_run+" kms";
+				rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+
+			$('#report87_body').append(rowsHTML);
+		});
+		
+		var total_row="<tr><td data-th='Total' colspan='2'>Total</td><td data-th='Total Kms'>"+total_kms+"Kms</td></tr>";
+		$('#report87_foot').html(total_row);
+		
+		var print_button=form.elements[5];
+		print_tabular_report('report87','Delivery Run Report',print_button);
+		hide_loader();
+	});
 };

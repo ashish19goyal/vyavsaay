@@ -14,6 +14,7 @@
 		<li><a id='report84_link' href='#report84' onclick='report84_header_ini();' data-i18n='form.num_deliveries'></a></li>
 		<li><a id='report85_link' href='#report85' onclick='report85_header_ini();' data-i18n='form.num_drs'></a></li>
 		<li><a id='report86_link' href='#report86' onclick='report86_header_ini();' data-i18n='form.sales_report'></a></li>
+		<li><a id='report87_link' href='#report87' onclick='report87_header_ini();' data-i18n='form.delivery_run_report'></a></li>
 	</ul>
 
 	<?php
@@ -30,6 +31,7 @@
 			include "reports/report84.php";			
 			include "reports/report85.php";
 			include "reports/report86.php";			
+			include "reports/report87.php";			
 	?>
 	
 </div>

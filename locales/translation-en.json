@@ -390,6 +390,7 @@
 	"num_deliveries":"# of Deliveries",
 	"num_drs":"# of DRS",
 	"delivery_run":"Delivery Run",
+	"delivery_run_report":"Delivery Run Report",
 	"inventory_warehouse":"Warehouse Inventory",
 	"inventory_demo":"Inventory on Demo",
 	"inventory_hiring":"Inventory on Hire",
