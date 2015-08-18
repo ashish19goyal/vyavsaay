@@ -1,0 +1,345 @@
+<!-- This html file is for creating a page to quickly
+create newsletters. The page gives user capability to 
+have his own layout for newsletter by "drag and drop"
+of predefined elements -->
+
+<!DOCTYPE HTML>
+
+<html>
+<head>
+
+<title> NEWSLETTER CREATOR </title>
+<meta name="description" content="Create your own newsletter">
+<meta name="author" content="Ashish" >
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../CSS/jquery-ui.css">
+
+<style>
+#header {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:1px;
+}
+#navigation {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:550px;
+    width:300px;
+    float:left;
+    padding:5px;
+}
+#section {
+    width:1000px;
+    float:left;
+    padding:10px;
+}
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px;
+}
+
+</style>
+
+<script src="../JavaScripts/open/jquery-1.11.1.min.js"></script>
+<script src="../JavaScripts/open/jquery-ui.min.js"></script>
+
+<script>
+
+var newsletter_element_4_deeletion = [];
+
+/*******************************************************************
+* Purpose:     A handler for text button selection in the
+*              navigation pane   
+* Description: 1) Creates a parent div which is draggable and child 
+*                 div which are editable and resizable
+*              2) Makes sure that mouse action inside editable area
+*                 selects text and doesn't drag the divs.
+*              3) Makes sure that parent div get resized according
+*                 to child div.
+*********************************************************************/
+function text_button_handler(  ) 
+{
+    /* Unique id generated for all div elements*/
+    var unique_id = Math.round(Math.random()*100);
+    
+    /* Adding draggable and resizable div elements */
+    var new_parent = document.createElement("div");
+    new_parent.setAttribute("id", "parent_" + unique_id);
+    new_parent.setAttribute("class", "draggable");
+    new_parent.setAttribute("style", "padding: 10px; width:200px; border:1px solid #000000;");
+
+    var new_child = document.createElement("div");
+    new_child.setAttribute("id", unique_id);
+    new_child.setAttribute("class", "editable");
+    new_child.setAttribute("contenteditable", "true");
+    new_child.setAttribute("style", "width:200px; height:100px;");
+
+    //Append these elemnts id DOM hierarchy under section area
+    var section_elem = document.getElementById("section");
+    section_elem.appendChild(new_parent);
+    new_parent.appendChild(new_child);
+    	
+    /* Fuction to store element value for deletion */
+    $("#parent_" + unique_id).click(function () {
+        set_html_elem_4_del(this);
+    });
+	    
+    /* Make editable(child) element resizable and 
+       draggable(parent) element draggable*/
+    $(".editable").resizable();
+    $(".draggable").draggable();
+
+    /********* Code so that the text in editable area can be 
+     selected without dragging the divs. The common area which
+     is both editable and draggable has been disabled for dragging*/
+    var draggableDiv = $('#parent_' + unique_id).draggable();
+
+    $('#' + unique_id, "#parent_" + unique_id).mousedown(function(ev) {
+         draggableDiv.draggable('disable');
+    }).mouseup(function(ev) {
+         draggableDiv.draggable('enable');
+    });
+    /********************* END************************/
+
+    /* Adjust the width of the Parent DIV as soon as the child resizable 
+       div's width is changed. */
+    $("#" + unique_id).mouseup(function() {
+        $('#parent_' + unique_id).css('width', $('#' + unique_id).width());
+    });
+};
+ 
+/*******************************************************************
+* Purpose:     Fuction to add buttons for formatting text   
+* Description: Adds buutons and appends it to the navigation pane
+*********************************************************************/
+function add_button_4_txt_formatting(format_specifier, formatting_type, button_name) 
+{
+    var elem = document.createElement("button");
+    elem.id       = "txt_formatting_button";
+    elem.setAttribute("onclick",   "format_selected_text('" + format_specifier + "')");
+    elem.title    = formatting_type;
+    elem.innerHTML= button_name;
+
+    var nav_elem = document.getElementById('navigation');
+    nav_elem.appendChild(elem);
+}
+
+/*******************************************************************
+* Purpose:     Fuction to format selected text   
+* Description: This function formats the selected text in the browser
+*              window
+*********************************************************************/
+function format_selected_text( format_specifier) 
+{
+    var range, html;
+    if (window.getSelection && window.getSelection().getRangeAt) {
+	html  = window.getSelection();    
+	strg  = extract_html();    
+        range = window.getSelection().getRangeAt(0);
+        range.deleteContents();
+
+        var elem_4_insertion = document.createElement("div");
+
+	elem_4_insertion.innerHTML = "<"+ format_specifier + " contenteditable='false'><" + format_specifier + " class='format_class' contenteditable='true'>" + strg + "</" + format_specifier + "></" + format_specifier + ">";
+	console.log(elem_4_insertion.innerHTML);
+
+        var frag = document.createDocumentFragment(), child;
+        while ( (child = elem_4_insertion.firstChild) ) {
+            frag.appendChild(child);
+        }
+
+        range.insertNode(frag);
+
+	$(".format_class").keyup(function(e) {
+	    //e.stopPropagation();		
+	    console.log('CHILD ASHU');
+            console.log(this.textContent);	
+            if( this.textContent.trim() === '' ) {
+	        var parent_node = this.parentNode; 
+                parent_node.removeChild(this);
+                parent_node.parentNode.removeChild(parent_node);
+            }
+
+        });
+    } else if (document.selection && document.selection.createRange) {
+        //range = document.selection.createRange();
+        //range.pasteHTML(html);
+    }
+}
+
+/*******************************************************************
+* Purpose:     Fuction to extract html from selected text   
+*********************************************************************/
+function extract_html(  ) {
+    var html = "";
+    if (typeof window.getSelection != "undefined") {
+        var sel = window.getSelection();
+        if (sel.rangeCount) {
+            var container = document.createElement("div");
+
+            for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                container.appendChild(sel.getRangeAt(i).cloneContents());
+            }
+
+            html = container.innerHTML;
+
+	    console.log(container);
+	    console.log(html);
+
+        }
+    } else if (typeof document.selection != "undefined") {
+        if (document.selection.type == "Text") {
+            html = document.selection.createRange().htmlText;
+        }
+    }
+
+    return html;
+}
+
+/*******************************************************************
+* Purpose: Function to deleted selected elements  
+*********************************************************************/
+function delete_sel_elem_4m_canvas() 
+{ 
+    if (newsletter_element_4_deeletion.length != 0) {	
+
+        for (var i = 0; i < newsletter_element_4_deeletion.length; i++) {
+            newsletter_element_4_deeletion[i].parentNode.removeChild(newsletter_element_4_deeletion[i]);
+	}
+
+	newsletter_element_4_deeletion = [];
+    }
+}	
+
+/*******************************************************************
+* Purpose: Function to store HTML element when they are clicked
+*          so that if Delete is selcted then the element could 
+*          deleted
+*********************************************************************/
+function set_html_elem_4_del()
+{ 
+     newsletter_element_4_deeletion = [];
+
+     for (var i = 0; i < arguments.length; i++) {
+         /* Without 'var' keyword it will become global */	
+	 newsletter_element_4_deeletion[i] = arguments[i];
+     }	 
+}
+
+/*******************************************************************
+* Purpose:  Function to add buttons  for text formatting after the
+*           document is loaded.   
+*
+*
+*********************************************************************/
+$(function()
+{    
+    /***************** Add buttons for text formatting ***************************/
+    //Button for making text bold
+    add_button_4_txt_formatting('b',    'Make the selected text bold', '<b>B</b>');
+    add_button_4_txt_formatting('i',    'Italicize the selected text', '<i>I</i>');
+    add_button_4_txt_formatting('ins',  'Underline the selected text', '<ins>U</ins>');
+    add_button_4_txt_formatting('mark', 'Highlight  the selected text', '<mark>H</mark>' );
+    add_button_4_txt_formatting('del',  'Strikethrough the selected text', '<del>ABC</del>');
+    add_button_4_txt_formatting('sub',  'Subscript', 'X<sub>2</sub>');
+    add_button_4_txt_formatting('sup',  'Superscript', 'X<sup>2</sup>');
+    add_button_4_txt_formatting('small', 'Reduce font for selected text', '<small>ABC</small>');
+    //add_button_4_txt_formatting('strong','Strong formatting', '');
+    /***************** Add buttons for text formatting ***************************/
+
+    /* Call click method for file type input when picture button is clicked */
+    $("#image_input").hide();
+
+    $("#image_button").click(function() {
+        $("#image_input").trigger('click');		 
+    });
+
+    //Handle file selection by file type input. The problem is to make
+    document.getElementById("image_input").addEventListener("change", function(evt)
+    {
+        select_document(evt,function(dataURL)
+        {
+            var new_div_elem = document.createElement("div");
+            new_div_elem.setAttribute("style", "width:100px; height:100px;");
+	    new_div_elem.setAttribute("onclick", "set_html_elem_4_del(this)")
+
+            var new_elem = document.createElement("img");
+            new_elem.setAttribute("src", dataURL);
+            new_elem.setAttribute("class", "ui-widget-content");
+            new_elem.setAttribute("alt", "Image Not Found");
+            new_elem.setAttribute("style", "width:100px; height:100px;");
+
+            $('#section').append(new_div_elem);
+	    $(new_div_elem).append(new_elem);
+
+	    $(new_elem).resizable({aspectRatio: true});
+            $(new_div_elem).draggable({ containment: "window" });
+
+        });
+    }, false);
+});
+
+/*******************************************************************
+* Purpose: Read file which has been selected from file input
+*          (Picture button)    
+*
+*
+*********************************************************************/
+function select_document(evt,func)
+{
+    var file=evt.target.files[0];
+    var reader = new FileReader();
+                    
+    reader.onloadend=function()
+    {
+        var dataURL = reader.result;
+        func(dataURL);
+    };
+
+    reader.readAsDataURL(file);
+}    
+
+</script>
+
+</head>
+
+<body>
+
+<div id="header">
+<h1> NEWSLETTER CREATOR </h1>
+</div>
+
+<div id="navigation">
+<button type="button" onclick="text_button_handler()" 
+    title="This button is used to create a textbox">Text</button>
+	
+<button id="image_button" type="button" 
+	title="This button is used to select an image">Pictures</button>
+
+<input id="image_input" type="file">
+	
+<button type="button" onclick="delete_sel_elem_4m_canvas()" 
+	title="Delete selected element from canvas">Delete</button>
+
+<button type="button" onclick="header_button_handler()">Header</button>
+
+<button type="button" onclick="footer_button_hanlder()">Footer</button>
+
+
+</div>
+
+<div id="section">
+<!--<canvas style="width:1350px; height:520px; border:1px solid #000000;"></canvas> -->
+</div>
+
+<div id="footer">
+<h1> Vyavsaay </h1>
+</div>
+
+</body>
+
+</html>

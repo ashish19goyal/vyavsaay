@@ -197,7 +197,7 @@ function select_document(evt,func)
 	reader.onloadend=function()
 	{
         var dataURL = reader.result;
-        func(dataURL);
+        func(dataURL);	
 	};
 	reader.readAsDataURL(file);
 }
@@ -629,7 +629,7 @@ function get_export_data_extended(columns,filename,func)
 			{
 				clearInterval(export_complete);
 				//console.log(results);				
-				hide_loader();				
+				hide_loader();
 				my_obj_array_to_csv(results,filename);
 			}
 		},1000);

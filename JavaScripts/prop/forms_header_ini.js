@@ -8300,3 +8300,71 @@ function form232_header_ini()
 		form232_ini();
 	});
 };
+
+/**
+ * @form Newsletter Creator
+ * @formNo 233
+ */
+function form233_header_ini()
+{
+	$('#form233_navigation').html("");
+	$('#form233_section').html("");
+	
+	var master_form=document.getElementById('form233_form');
+	master_form.elements['name'].value="";
+	master_form.elements['description'].value="";
+	master_form.elements['id'].value=get_new_key();
+
+	$(master_form).off('submit');
+	$(master_form).on('submit',function (e) 
+	{
+		e.preventDefault();
+		form233_create_item();
+	});
+	
+	/***************** Add buttons for text formatting ***************************/
+    //Button for making text bold
+    add_button_4_txt_formatting('form233_navigation','b',    'Make the selected text bold', '<b>B</b>');
+    add_button_4_txt_formatting('form233_navigation','i',    'Italicize the selected text', '<i>I</i>');
+    add_button_4_txt_formatting('form233_navigation','ins',  'Underline the selected text', '<ins>U</ins>');
+    add_button_4_txt_formatting('form233_navigation','mark', 'Highlight  the selected text', '<mark>H</mark>' );
+    add_button_4_txt_formatting('form233_navigation','del',  'Strikethrough the selected text', '<del>ABC</del>');
+    add_button_4_txt_formatting('form233_navigation','sub',  'Subscript', 'X<sub>2</sub>');
+    add_button_4_txt_formatting('form233_navigation','sup',  'Superscript', 'X<sup>2</sup>');
+    add_button_4_txt_formatting('form233_navigation','small', 'Reduce font for selected text', '<small>ABC</small>');
+    //add_button_4_txt_formatting('strong','Strong formatting', '');
+    /***************** Add buttons for text formatting ***************************/
+
+    /* Call click method for file type input when picture button is clicked */
+    $("#form233_image_input").hide();
+
+	$("#form233_image_button").off('click');
+    $("#form233_image_button").on('click',function() {
+        $("#form233_image_input").trigger('click');		 
+    });
+
+    //Handle file selection by file type input. The problem is to make
+    $("#form233_image_input").off("change");
+    $("#form233_image_input").on("change", function(evt)
+    {
+    	//console.log(evt);
+        select_document(evt,function(dataURL)
+        {
+            var new_div_elem = document.createElement("div");
+            new_div_elem.setAttribute("style", "width:100px; height:100px;");
+	    	new_div_elem.setAttribute("onclick", "set_html_elem_4_del(this)")
+
+            var new_elem = document.createElement("img");
+            new_elem.setAttribute("src", dataURL);
+            new_elem.setAttribute("class", "ui-widget-content");
+            new_elem.setAttribute("alt", "Image Not Found");
+            new_elem.setAttribute("style", "width:100px; height:100px;");
+
+            $('#form233_section').append(new_div_elem);
+	    	$(new_div_elem).append(new_elem);
+
+		    $(new_elem).resizable({aspectRatio: true});
+            $(new_div_elem).draggable({ containment: "window" });
+        });
+    });
+};

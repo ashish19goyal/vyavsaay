@@ -143,7 +143,7 @@ function form2_ini()
 		newsletter_id="";	
 	$('#form2_body').html("");
 	
-	console.log(newsletter_id);
+	//console.log(newsletter_id);
 	if(newsletter_id!="")
 	{
 		show_loader();
@@ -3422,7 +3422,7 @@ function form44_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' readonly='readonly' form='form44_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='button' class='edit_icon' form='form44_"+result.id+"' title='Edit' onclick=\"element_display('"+result.id+"','form2');\">";
+						rowsHTML+="<input type='button' class='edit_icon' form='form44_"+result.id+"' title='Edit' onclick=\"element_display('"+result.id+"','form2',['form233']);\">";
 						rowsHTML+="<input type='button' class='delete_icon' form='form44_"+result.id+"' title='Delete' onclick='form44_delete_item($(this));'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
@@ -23951,4 +23951,50 @@ function form232_ini()
 		});
 		hide_loader();
 	});	
+};
+
+
+/**
+ * @form Newsletter Creator
+ * @formNo 233
+ * @Loading light
+ */
+function form233_ini()
+{
+	var fid=$("#form233_link").attr('data_id');
+	if(fid==null)
+		fid="";
+	
+	if(fid!="")
+	{
+		show_loader();
+
+		var columns="<newsletter count='1'>" +
+			"<id>"+fid+"</id>" +
+			"<name></name>" +
+			"<description></description>" +
+			"<html_content></html_content>" +
+			"</newsletter>";
+		fetch_requested_data('form233',columns,function(newsletters)
+		{
+			if(newsletters.length>0)
+			{
+				var master_form=document.getElementById('form233_form');
+				master_form.elements['name'].value=newsletters[0].name;
+				master_form.elements['description'].value=newsletters[0].description;
+				master_form.elements['id'].value=newsletters[0].id;
+
+				$(master_form).off('submit');
+				$(master_form).on('submit',function (e) 
+				{
+					e.preventDefault();
+					form233_update_item();
+				});
+				console.log(revert_htmlentities(newsletters[0].html_content));
+				var updated_content=revert_htmlentities(newsletters[0].html_content).replace(/ /g,"+");
+				$('#form233_section').html(updated_content);
+			}
+			hide_loader();
+		});	
+	}
 };

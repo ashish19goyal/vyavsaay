@@ -42,6 +42,7 @@
 <script src='./JavaScripts/prop/numeral.js'></script>
 <script src='./JavaScripts/prop/my_chart.js'></script>
 <script src='./JavaScripts/prop/print.js'></script>
+<script src='./JavaScripts/prop/print_dynamic.js'></script>
 <script src='./JavaScripts/prop/questionnaire.js'></script>
 <script src='./JavaScripts/prop/reports_ini.js'></script>
 <script src='./JavaScripts/prop/reports_header_ini.js'></script>

@@ -15395,3 +15395,51 @@ function form231_create_form()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Newsletter Creator
+ * @param button
+ */
+function form233_create_item()
+{
+	if(is_create_access('form233'))
+	{
+		show_loader();
+		var form=document.getElementById("form233_form");
+		
+		var data_id=form.elements['id'].value;
+		var name=form.elements['name'].value;
+		var description=form.elements['description'].value;
+		var html_content=htmlentities(document.getElementById('form233_section').innerHTML);
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var data_xml="<newsletter>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+name+"</name>" +
+					"<description>"+description+"</description>" +
+					"<html_content>"+html_content+"</html_content>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</newsletter>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>newsletter</tablename>" +
+					"<link_to>form2</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Newsletter "+name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(data_xml,activity_xml);
+		
+		$(save_button).off('click');
+		$(save_button).on('click',function(event)
+		{
+			event.preventDefault();
+			form233_update_item();
+		});		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

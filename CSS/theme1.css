@@ -964,73 +964,22 @@ input.ultrawidebox{
 	width:400px;
 }
 
-@media screen and (min-width: 1300px) {
-	#content_box{
-		min-width:1050px;
-	}
-	.customers_pane{
-		max-width:1050px;
-	}
+.print_navigation {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:500px;
+    width:20%;
+    float:left;
+    padding:5px;
 }
 
-@media screen and (min-width: 1100px) {
-	.questionnaire_form input,.questionnaire_form textarea,.questionnaire_form select
-	{
-		float:right;	
-		width: 500px;
-	}
-
-	#content_box{
-		min-width:900px;
-	}
-	.customers_pane{
-		max-width:900px;
-	}
-	
-}
-
-@media screen and (min-width: 900px) {
-	#content_box{
-		min-width:700px;
-	}
-	.customers_pane{
-		max-width:700px;
-	}
-}
-
-
-@media (min-width: 850px)
-{
-	.questionnaire_form input,.questionnaire_form textarea, .questionnaire_form select
-	{
-		float:right;	
-		width: 400px;
-	}
-	
-  .rwd-table td:before {
-    display: none;
-  }
-	.rwd-table th, .rwd-table td {
-	    display: table-cell;
-	    padding: .25em .5em;
-		padding: 1em !important;
-	}
-	.rwd-table thead tr th:last-child{
-		display: table-cell;
-	    padding: .25em .5em;
-	    width:100px;
-	}
-	.rwd-table th:first-child, .rwd-table td:first-child {
-		padding-left: 0;
-  	}
-  	.rwd-table th:last-child, .rwd-table td:last-child {
-    	padding-right: 0;
-    	width:100px;
-  	}
-  	.rwd-table tfoot tr{
-		background-color:#fff;
-		font-weight: bold;
-	}
+.print_section {
+    width:1000px;
+    height:500px;
+    float:left;
+    padding:5px;
+    margin:5px;
+    border:1px solid #000000;
 }
 
 
@@ -1101,8 +1050,101 @@ input.ultrawidebox{
 		overflow-y: auto;
 		overflow-x: hidden;
 	}
+	.print_section {
+	    width:300px;
+	}
 }
 
+@media (min-width: 850px)
+{
+	.questionnaire_form input,.questionnaire_form textarea, .questionnaire_form select
+	{
+		float:right;	
+		width: 400px;
+	}
+	
+  .rwd-table td:before {
+    display: none;
+  }
+	.rwd-table th, .rwd-table td {
+	    display: table-cell;
+	    padding: .25em .5em;
+		padding: 1em !important;
+	}
+	.rwd-table thead tr th:last-child{
+		display: table-cell;
+	    padding: .25em .5em;
+	    width:100px;
+	}
+	.rwd-table th:first-child, .rwd-table td:first-child {
+		padding-left: 0;
+  	}
+  	.rwd-table th:last-child, .rwd-table td:last-child {
+    	padding-right: 0;
+    	width:100px;
+  	}
+  	.rwd-table tfoot tr{
+		background-color:#fff;
+		font-weight: bold;
+	}
+	.print_section {
+	    width:450px;
+	}
+}
+
+@media screen and (min-width: 900px) {
+	#content_box{
+		min-width:700px;
+	}
+	.customers_pane{
+		max-width:700px;
+	}
+	.print_section {
+	    width:520px;
+	}
+}
+
+@media screen and (min-width: 1100px) {
+	.questionnaire_form input,.questionnaire_form textarea,.questionnaire_form select
+	{
+		float:right;	
+		width: 500px;
+	}
+
+	#content_box{
+		min-width:900px;
+	}
+	.customers_pane{
+		max-width:900px;
+	}
+	.print_section {
+	    width:700px;
+	}
+}
+
+@media screen and (min-width: 1300px) {
+	#content_box{
+		min-width:1050px;
+	}
+	.customers_pane{
+		max-width:1050px;
+	}
+	.print_section {
+	    width:750px;
+	}
+}
+
+@media screen and (min-width: 1500px) {
+	#content_box{
+		min-width:1050px;
+	}
+	.customers_pane{
+		max-width:1050px;
+	}
+	.print_section {
+	    width:950px;
+	}
+}
 
 @media (max-width: 850px)
 {
@@ -1290,4 +1332,18 @@ input.ultrawidebox{
 		width:300px;
 	}
 
+	.print_navigation {
+	    line-height:30px;
+	    background-color:#eeeeee;
+	    height:150px;
+	    width:100%;
+	    float:left;
+	    padding:5px;
+	}
+	.print_section {
+	    width:100%;
+	    height:500px;
+	    float:left;
+	    padding:10px;
+	}
 }

@@ -699,6 +699,7 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT" unique='yes'></name>
 			<description index='no' type="TEXT"></description>
+			<html_content index='no' type="BLOB"></html_content>
 			<count_items index='no' type="INT"></count_items>
 			<valid_until index='yes' type="BIGINT"></valid_until>
 			<last_updated index='yes' type="BIGINT"></last_updated>

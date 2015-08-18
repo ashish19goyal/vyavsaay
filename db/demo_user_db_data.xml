@@ -3286,6 +3286,17 @@
 			<tables>--prescriptions--prescription_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form233</name>
+			<display_name>newsletter_creator</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--newsletter--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -6185,6 +6196,39 @@
 			<username>master</username>
 			<element_id>form230</element_id>
 			<element_name>inventory_in_out</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form231</element_id>
+			<element_name>create_prescription</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form232</element_id>
+			<element_name>manage_prescriptions</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form233</element_id>
+			<element_name>newsletter_creator</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

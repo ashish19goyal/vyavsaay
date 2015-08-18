@@ -13,17 +13,10 @@ function default_load()
 		window.location.assign("index.html");
 	}
 	
-	localdb_open_requests=0;
-	number_active_ajax=0;
-	loaderTimer=0;
-	count_notif_timer=0;
-	count_sync_timer=0;
-	show_notif_timer=0;
-	progress_value=0;
-	vyavsaay_active_tab="";
-	storage_count_tracker=0;
-	total_export_requests=0;	
+	declaring_global_variables();
+	
 	modal_forms_ini();
+	
 	//fix_orientation();
 	
 	if(is_set_session())
@@ -61,6 +54,21 @@ function default_load()
 	{
 		hide_loader();
 	}
+}
+
+function declaring_global_variables()
+{
+	localdb_open_requests=0;
+	number_active_ajax=0;
+	loaderTimer=0;
+	count_notif_timer=0;
+	count_sync_timer=0;
+	show_notif_timer=0;
+	progress_value=0;
+	vyavsaay_active_tab="";
+	storage_count_tracker=0;
+	total_export_requests=0;	
+ 	newsletter_element_4_deletion = [];
 }
 
 function fix_orientation()

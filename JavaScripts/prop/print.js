@@ -3213,6 +3213,16 @@ function print_form231(func)
 	func(container);
 }
 
+/**
+ * @form Newsletter Creator
+ * @formNo 233
+ */
+function form233_print()
+{
+	var container=document.getElementById('form233_section');
+	$.print(container);
+}
+
 
 /**
  * @form Issue GRN without QC

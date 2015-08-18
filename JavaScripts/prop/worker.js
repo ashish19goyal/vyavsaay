@@ -826,7 +826,6 @@ function notifications9_add()
  */
 function notifications10_add()
 {
-	var last_updated=get_my_time();
 	////////overdue demo/hire/////////////
 	var item_data="<bill_items>" +
 			"<id></id>" +
@@ -835,7 +834,7 @@ function notifications10_add()
 			"<customer></customer>" +
 			"<hiring_type></hiring_type>" +
 			"<issue_type exact='yes'>out</issue_type>" +
-			"<issue_date upperbound='yes'>"+(parseFloat(get_my_time())+86400000)+"</issue_date>" +
+			"<issue_date upperbound='yes'>"+(parseFloat(get_my_time())-(14*86400000))+"</issue_date>" +
 			"<issue_date lowerbound='yes'>"+(parseFloat(get_my_time())-(20*86400000))+"</issue_date>" +
 			"</bill_items>";
 	fetch_requested_data('',item_data,function(items)
@@ -854,6 +853,7 @@ function notifications10_add()
 					"</bill_items>";
 			fetch_requested_data('',return_item_data,function(return_items)
 			{
+				console.log(return_items);
 				var returned_quantity=0;
 				for (var j in return_items)
 				{
@@ -864,8 +864,8 @@ function notifications10_add()
 					var id=get_new_key();
 					var	title="Demo return overdue";
 					var	form_id='form228';
-					var	notes=item.quantity+" pieces of "+item.item_name+" were sent for "+
-								item.hiring_type+". Please follow up.";
+					var	notes=""+(-parseFloat(item.quantity))+" pieces of "+item.item_name+" were sent for "+
+								item.hiring_type+" on "+get_my_past_date(item.issue_date)+". Please follow up.";
 					if(item.hiring_type=='hire')
 					{
 						title="Hiring return overdue";
@@ -881,7 +881,7 @@ function notifications10_add()
 							"<link_to>"+form_id+"</link_to>" +
 							"<status>pending</status>" +
 							"<target_user></target_user>"+
-							"<last_updated>"+last_updated+"</last_updated>" +
+							"<last_updated>"+get_my_time()+"</last_updated>" +
 							"</notifications>";
 					create_simple_no_warning(item_xml);
 				}
