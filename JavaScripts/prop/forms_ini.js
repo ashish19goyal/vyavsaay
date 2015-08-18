@@ -23378,6 +23378,7 @@ function form228_ini()
 
 	fetch_requested_data('form228',columns,function(results)
 	{
+		//console.log('form228_ini');
 		results.forEach(function(result)
 		{
 			result.quantity=-parseFloat(result.quantity);
@@ -23420,6 +23421,7 @@ function form228_ini()
 					"<hiring_type exact='yes'>demo</hiring_type>" +
 					"<issue_id exact='yes'>"+result.id+"</issue_id>" +
 					"</bill_items>";
+			
 			fetch_requested_data('form228',columns,function(return_results)
 			{
 				var returned_quantity=0;
@@ -23465,7 +23467,7 @@ function form228_ini()
 
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
-		
+
 		var export_button=filter_fields.elements[3];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)

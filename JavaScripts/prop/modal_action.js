@@ -9510,21 +9510,14 @@ function modal139_action(id,name,description,button)
 		
 		var id=id_filter.value;
 		var barcode=barcode_filter.value;
-		
+
 		var last_updated=get_my_time();
 		var data_xml="<product_master>" +
 					"<id>"+id+"</id>" +
 					"<bar_code>"+barcode+"</bar_code>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</product_master>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}
+		update_simple(data_xml);
 
 		$("#modal139").dialog("close");
 
@@ -9535,7 +9528,7 @@ function modal139_action(id,name,description,button)
 		});
 		$(button).attr('title','Print Barcode - '+barcode);
 	});
-	
+
 	$("#modal139").dialog("open");
 }
 

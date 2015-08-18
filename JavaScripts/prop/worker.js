@@ -821,6 +821,79 @@ function notifications9_add()
 	setTimeout(notifications9_add,get_worker_repeat());
 }
 
+/**
+ * Overdue demo/hire
+ */
+function notifications10_add()
+{
+	var last_updated=get_my_time();
+	////////overdue demo/hire/////////////
+	var item_data="<bill_items>" +
+			"<id></id>" +
+			"<item_name></item_name>" +
+			"<quantity></quantity>" +
+			"<customer></customer>" +
+			"<hiring_type></hiring_type>" +
+			"<issue_type exact='yes'>out</issue_type>" +
+			"<issue_date upperbound='yes'>"+(parseFloat(get_my_time())-(15*86400000))+"</issue_date>" +
+			"<issue_date lowerbound='yes'>"+(parseFloat(get_my_time())-(20*86400000))+"</issue_date>" +
+			"</bill_items>";
+	fetch_requested_data('',item_data,function(items)
+	{
+		var item_data="<bill_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<quantity></quantity>" +
+				"<customer></customer>" +
+				"<hiring_type></hiring_type>" +
+				"<issue_type exact='yes'>in</issue_type>" +
+				"<issue_date></issue_date>" +
+				"<issue_id exact='yes'>"+item.id+"</issue_id>" +
+				"</bill_items>";
+		fetch_requested_data('',item_data,function(items)
+		{
+			var item_xml="<notifications>";
+			var counter=1;
+			var id=parseFloat(get_new_key());
+			items.forEach(function(item)
+			{
+				if((counter%500)===0)
+				{
+					item_xml+="</notifications><separator></separator><notifications>";
+				}
+				counter+=1;
+				var	title="Demo return overdue";
+				var	form_id='form228';
+				var	notes=item.quantity+" pieces of "+item.item_name+" were sent for "+
+							item.hiring_type+". Please follow up.";
+				if(item.hiring_type=='hire')
+				{
+					title="Hiring return overdue";
+					form_id='form229';				
+				}
+				item_xml+="<row>" +
+						"<id>"+(id+counter)+"</id>" +
+						"<t_generated>"+get_my_time()+"</t_generated>" +
+						"<data_id unique='yes'>"+item.id+"</data_id>" +
+						"<title>"+title+"</title>" +
+						"<notes>"+notes+"</notes>" +
+						"<link_to>"+form_id+"</link_to>" +
+						"<status>pending</status>" +
+						"<target_user></target_user>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</row>";
+			});
+			item_xml+="</notifications>";
+			
+			create_batch_noloader(item_xml);
+			
+		});
+	});
+	//////////overdue demo/hire//////
+
+	setTimeout(notifications10_add,get_worker_repeat());
+}
+
 
 /**
  * This function checks for favourable scenarios to generate sale leads in the background

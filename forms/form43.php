@@ -10,6 +10,7 @@
 					<th>Quantity</th>
 					<th>
 						<input type='button' form='form43_header' value='EXPORT' class='export_icon'>
+						<input type='button' form='form43_header' value='IMPORT' name='import' class='import_icon'>
 						<input type='submit' form='form43_header' style='visibility: hidden;'>
 					</th>
 			</tr>
