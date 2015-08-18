@@ -116,7 +116,16 @@ function form1_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'inventory');
+			get_export_data_extended(columns,'inventory',function(new_result)
+			{
+				total_export_requests+=1;
+
+				get_inventory(new_result.product_name,new_result.batch,function(inventory)
+				{
+					new_result.quantity=inventory;
+					total_export_requests-=1;
+				});	
+			});
 		});
 		hide_loader();
 	});

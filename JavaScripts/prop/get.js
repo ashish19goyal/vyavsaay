@@ -608,6 +608,7 @@ function get_export_data(columns,filename)
 */
 function get_export_data_extended(columns,filename,func)
 {
+	show_loader();
 	var new_columns=columns.replace(" count='25'","");
 	new_columns=new_columns.replace(" count='100'","");
 	new_columns=new_columns.replace("start_index","dont_use_index");
@@ -628,6 +629,7 @@ function get_export_data_extended(columns,filename,func)
 			{
 				clearInterval(export_complete);
 				//console.log(results);				
+				hide_loader();				
 				my_obj_array_to_csv(results,filename);
 			}
 		},1000);
