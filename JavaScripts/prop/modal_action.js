@@ -9586,6 +9586,10 @@ function modal140_action(i_func)
 			
 			data_array.forEach(function (data_row) 
 			{
+				//console.log(data_row.tax_rate);
+                //console.log(data_row.item_price);
+                //console.log(data_row);
+                
 				counter+=1;
 				var supplier=data_row.supplier_name+" ("+data_row.phone+")";
 				var supplier_object=new Object();
@@ -9646,8 +9650,7 @@ function modal140_action(i_func)
                 {
                 	order_array.push(order_object);
                 }
-				
-                var order_item_object=new Object();
+				var order_item_object=new Object();
 				order_item_object.id=last_updated+counter;
 				order_item_object.order_id=data_row.order_system_id;
                 order_item_object.item_name=data_row.system_sku;
