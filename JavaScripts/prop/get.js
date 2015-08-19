@@ -727,6 +727,7 @@ function csv_string_to_obj_array(csvString)
 						columns[j]+=","+columns[k];
 						var second_dquotes=columns[k].match(/"/g);
 						columns.splice(k,1);
+						k-=1;
 						if(second_dquotes!=null && second_dquotes.length===1)
 						{
 							break;
@@ -738,6 +739,7 @@ function csv_string_to_obj_array(csvString)
 				columns[j]=columns[j].replace(/&/g, "and");
 				col_result[header_cols[j]]=columns[j];
 			}
+			//console.log(col_result);
 			results.push(col_result);
 		}
 	}

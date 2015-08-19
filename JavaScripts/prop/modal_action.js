@@ -9620,11 +9620,11 @@ function modal140_action(i_func)
                 order_object.supplier=supplier;
                 order_object.order_date=data_row.order_date;
                 order_object.tax_rate=data_row.tax_rate;
-                order_object.tax=Math.round(parseFloat(data_row.item_price)*parseFloat(data_row.tax_rate)/100);
                 order_object.total_quantity=data_row.quantity;
                 order_object.status=data_row.order_status;
-                order_object.amount=parseFloat(data_row.item_price);
-				order_object.total=parseFloat(data_row.item_price)+parseFloat(order_object.tax);
+                order_object.amount=parseFloat(data_row.item_price)*parseFloat(data_row.quantity);
+                order_object.tax=Math.round(parseFloat(order_object.amount)*parseFloat(data_row.tax_rate)/100);
+				order_object.total=parseFloat(order_object.amount)+parseFloat(order_object.tax);
 				data_row.order_system_id=order_object.id;
 				
 				for(var j=0;j<order_array.length;j++)
@@ -9657,10 +9657,10 @@ function modal140_action(i_func)
                 order_item_object.make=data_row.brand;
                 order_item_object.mrp=data_row.item_mrp;
                 order_item_object.tax_rate=data_row.tax_rate;
-                order_item_object.price=parseFloat(data_row.item_mrp)/parseFloat(data_row.quantity);
-                order_item_object.amount=data_row.item_price;
-                order_item_object.tax=Math.round(parseFloat(data_row.item_price)*parseFloat(data_row.tax_rate)/100);
-                order_item_object.total=parseFloat(data_row.item_price)+parseFloat(data_row.tax);
+                order_item_object.price=data_row.item_price;
+                order_item_object.amount=parseFloat(data_row.item_price)*parseFloat(data_row.quantity);
+                order_item_object.tax=Math.round(parseFloat(order_item_object.amount)*parseFloat(data_row.tax_rate)/100);
+                order_item_object.total=parseFloat(order_item_object.amount)+parseFloat(order_item_object.tax);
                
                 order_item_array.push(order_item_object);
 			});
@@ -9678,7 +9678,7 @@ function modal140_action(i_func)
 						"<supplier>"+row.supplier+"</supplier>"+
 						"<order_date>"+get_raw_time(row.order_date)+"</order_date>"+
 						"<amount>"+row.amount+"</amount>"+
-						"<tax>"+row.amount+"</tax>"+
+						"<tax>"+row.tax+"</tax>"+
 						"<total>"+row.total+"</total>"+
 						"<total_quantity>"+row.total_quantity+"</total_quantity>"+
 						"<status>"+row.status+"</status>"+
