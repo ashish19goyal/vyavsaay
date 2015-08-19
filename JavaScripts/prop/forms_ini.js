@@ -7415,6 +7415,8 @@ function form87_ini()
 					rowsHTML+="<td data-th='Tax'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form87_"+result.id+"' class='dblclick_editable' value='"+result.tax+"'>";
 					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details' id='form87_"+result.id+"_details'>";
+					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form87_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form87_"+result.id+"' value='saved'>";
@@ -7431,6 +7433,23 @@ function form87_ini()
 			{
 				event.preventDefault();
 				form87_update_item(fields);
+			});
+			
+			var attributes_data="<attributes>"+
+								"<name exact='yes'>"+result.name+"</name>" +
+								"<type exact='yes'>product</type>" +
+								"<attribute></attribute>" +
+								"<value></value>" +
+								"</attributes>";
+			fetch_requested_data('',attributes_data,function(attributes)
+			{
+				var attribute_content="";
+				attributes.forEach(function(attribute)
+				{
+					attribute_content+=attribute.attribute+": "+attribute.value+"<br>";
+				});
+				var td_elem=document.getElementById('form87_'+result.id+'_details');
+				td_elem.innerHTML=attribute_content;
 			});
 		});
 
@@ -17010,7 +17029,7 @@ function form166_ini()
 	var filter_fields=document.getElementById('form166_header');
 	
 	var fname=filter_fields.elements[0].value;
-	var fbatch=filter_fields.elements[1].value;
+	//var fbatch=filter_fields.elements[1].value;
 
 	////indexing///
 	var index_element=document.getElementById('form166_index');
@@ -17021,7 +17040,7 @@ function form166_ini()
 	
 	var columns="<product_instances count='25' start_index='"+start_index+"'>" +
 		"<id>"+fid+"</id>" +
-		"<batch>"+fbatch+"</batch>" +
+		//"<batch>"+fbatch+"</batch>" +
 		"<product_name>"+fname+"</product_name>" +
 		"<cost_price></cost_price>" +
 		"<sale_price></sale_price>" +
@@ -17040,9 +17059,9 @@ function form166_ini()
 					rowsHTML+="<td data-th='Name'>";
 						rowsHTML+="<textarea readonly='readonly' form='form166_"+result.id+"'>"+result.product_name+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Batch'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form166_"+result.id+"' value='"+result.batch+"'>";
-					rowsHTML+="</td>";
+					//rowsHTML+="<td data-th='Batch'>";
+					//	rowsHTML+="<input type='text' readonly='readonly' form='form166_"+result.id+"' value='"+result.batch+"'>";
+					//rowsHTML+="</td>";
 					rowsHTML+="<td data-th='MRP'>";
 						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form166_"+result.id+"' class='dblclick_editable' value='"+result.mrp+"'>";
 					rowsHTML+="</td>";
@@ -17050,8 +17069,8 @@ function form166_ini()
 						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form166_"+result.id+"' class='dblclick_editable' value='"+result.cost_price+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Sale price'>";
-						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form166_"+result.id+"' value='"+result.sale_price+"'>";
-						rowsHTML+="<img src='./images/edit.png' class='edit_icon' onclick=\"modal38_action('"+result.id+"','"+result.sale_price+"');\">";
+						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form166_"+result.id+"' value='"+result.sale_price+"' class='dblclick_editable'>";
+					//	rowsHTML+="<img src='./images/edit.png' class='edit_icon' onclick=\"modal38_action('"+result.id+"','"+result.sale_price+"');\">";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form166_"+result.id+"' value='"+result.id+"'>";
@@ -17095,11 +17114,11 @@ function form166_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 
-		var export_button=filter_fields.elements[2];
+		var export_button=filter_fields.elements[1];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'sale_prices');
+			get_export_data(columns,'pricing');
 		});
 		
 		hide_loader();

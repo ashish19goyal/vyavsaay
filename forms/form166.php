@@ -4,7 +4,6 @@
 			<tr>
 				<form id='form166_header'></form>
 					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form166_header'></th>
-					<th>Batch <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form166_header'></th>
 					<th>MRP</th>
 					<th>Cost Price</th>
 					<th>Sale Price</th>

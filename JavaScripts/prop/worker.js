@@ -853,7 +853,7 @@ function notifications10_add()
 					"</bill_items>";
 			fetch_requested_data('',return_item_data,function(return_items)
 			{
-				console.log(return_items);
+				//console.log(return_items);
 				var returned_quantity=0;
 				for (var j in return_items)
 				{

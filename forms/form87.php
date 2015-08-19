@@ -7,6 +7,7 @@
 					<th>Make <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form87_header'></th>
 					<th>Description</th>
 					<th>Tax</th>
+					<th>Details</th>
 					<th><input type='button' form='form87_header' title='Add new product' class='add_icon'>
 						<input type='button' form='form87_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form87_header' style='visibility: hidden;'>

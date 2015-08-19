@@ -6048,7 +6048,7 @@ function form166_header_ini()
 {
 	var filter_fields=document.getElementById('form166_header');	
 	var names_filter=filter_fields.elements[0];
-	var batches_filter=filter_fields.elements[1];
+	//var batches_filter=filter_fields.elements[1];
 	
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
@@ -6061,12 +6061,12 @@ function form166_header_ini()
 			"<name></name>" +
 			"</product_master>";
 	
-	var batch_data="<product_instances>" +
+	/*var batch_data="<product_instances>" +
 			"<batch></batch>" +
 			"</product_instances>";
-
+*/
 	set_my_filter(products_data,names_filter);
-	set_my_filter(batch_data,batches_filter);
+	//set_my_filter(batch_data,batches_filter);
 };
 
 /**
