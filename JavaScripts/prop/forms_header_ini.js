@@ -8146,7 +8146,7 @@ function form230_header_ini()
 	$(filter_fields).on('submit',function(event)
 	{
 		event.preventDefault();
-		form227_ini();
+		form230_ini();
 	});
 	//setting autocompletes 
 	var products_data="<product_master>" +
