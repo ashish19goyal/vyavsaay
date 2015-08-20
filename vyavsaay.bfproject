@@ -1,9 +1,7 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report88.php:598:0:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/reports_header_ini.js:42359:41189:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report89.php:734:0:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/reports_ini.js:192680:192000:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:778278:777991:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:290915:289860:1:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -18,7 +16,7 @@ c2e.convert_iso: 0
 opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: 88_
+ssearch_text: 227
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -52,7 +50,6 @@ e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_header_ini.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form166.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/add_items.js
@@ -71,16 +68,17 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/index.html
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/questionnaire.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/footer.html
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report87.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report88.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/reports_header_ini.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/demo_user_db_data.xml
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/locales/translation-en.json
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/functions/sale_reports.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report89.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/reports_ini.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/db/demo_user_db_data.xml
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_header_ini.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 spell_check_default: 1
@@ -92,10 +90,6 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: t9
-searchlist: t88
-searchlist: t87
-searchlist: search
 searchlist: report87
 searchlist: 87_
 searchlist: 87
@@ -107,6 +101,10 @@ searchlist: 227
 searchlist: t88
 searchlist: 88_
 searchlist: 88
+searchlist: capture
+searchlist: 230_
+searchlist: return items
+searchlist: 227
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0

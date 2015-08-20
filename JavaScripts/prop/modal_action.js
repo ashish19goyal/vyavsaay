@@ -10445,14 +10445,33 @@ function modal147_action(hiring_type,button)
 		
 	var form_id=$(button).attr('form');
 	var master_form=document.getElementById(form_id);
-	fitem.value=master_form.elements[0].value;
-	fquantity.value=master_form.elements[1].value;
-	fquantity.setAttribute('max',master_form.elements[1].value);	
-	
 	var item_name=master_form.elements[0].value;
 	var customer=master_form.elements[3].value;
 	var issue_id=master_form.elements[6].value;
 
+	fitem.value=item_name;
+	
+	var columns="<bill_items>" +
+				"<quantity></quantity>" +
+				"<issue_date></issue_date>" +
+				"<issue_type exact='yes'>in</issue_type>" +
+				"<hiring_type exact='yes'>"+hiring_type+"</hiring_type>" +
+				"<issue_id exact='yes'>"+issue_id+"</issue_id>" +
+				"</bill_items>";
+			
+	fetch_requested_data('',columns,function(return_results)
+	{
+		var returned_quantity=0;
+		var return_date="";
+		return_results.forEach(function(r_result)
+		{
+			returned_quantity+=parseFloat(r_result.quantity);
+		});
+		var left_quantity=parseFloat(master_form.elements[1].value)-returned_quantity;
+		fquantity.setAttribute('max',left_quantity);
+		fquantity.value=left_quantity;
+	});
+	
 	$(form).off("submit");
 	$(form).on("submit",function(event)
 	{

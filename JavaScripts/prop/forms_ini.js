@@ -23266,7 +23266,7 @@ function form227_ini()
 
 			set_my_value_func(demo_quantity_xml,d_in,function()
 			{
-				d_in.value=-parseFloat(d_in.value);
+				d_in.value=(-parseFloat(d_in.value));
 			});
 
 			var hire_quantity_xml="<bill_items sum='yes'>" +
@@ -23441,7 +23441,7 @@ function form228_ini()
 			var return_quantity_filter=fields.elements[2];
 			var return_date_filter=fields.elements[5];
 			var return_button=fields.elements[9];
-			
+
 			var columns="<bill_items>" +
 					"<quantity></quantity>" +
 					"<issue_date></issue_date>" +
@@ -23457,12 +23457,13 @@ function form228_ini()
 				return_results.forEach(function(r_result)
 				{
 					returned_quantity+=parseFloat(r_result.quantity);
-					return_date=r_result.issue_date;
+					if(return_date=="")					
+						return_date=r_result.issue_date;
 				});
 				return_quantity_filter.value=returned_quantity;
 				return_date_filter.value=get_my_past_date(return_date);
 				
-				if(return_quantity_filter.value==issue_quantity_filter.value)
+				if(parseFloat(return_quantity_filter.value)>=parseFloat(issue_quantity_filter.value))
 				{
 					$(return_button).hide();
 				}
@@ -23592,12 +23593,13 @@ function form229_ini()
 				return_results.forEach(function(r_result)
 				{
 					returned_quantity+=parseFloat(r_result.quantity);
-					return_date=r_result.issue_date;
+					if(return_date=="")					
+						return_date=r_result.issue_date;
 				});
 				return_quantity_filter.value=returned_quantity;
 				return_date_filter.value=get_my_past_date(return_date);
 				
-				if(return_quantity_filter.value==issue_quantity_filter.value)
+				if(parseFloat(return_quantity_filter.value)==parseFloat(issue_quantity_filter.value))
 				{
 					$(return_button).hide();
 				}
