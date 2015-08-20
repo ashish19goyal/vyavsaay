@@ -2379,7 +2379,7 @@ function print_form200(func)
 		//}
 		counter+=1;
 		var form=$(this)[0];
-		var mob_seal="<table style='width:95%;height:40px;'>"+tr_text+tr_text+"</table><br>"+form.elements[2].value;
+		var mob_seal="<table style='width:95%;height:40px;'>"+tr_text+tr_text+"</table><br><div style='font-size:14px;'>"+form.elements[2].value+"</div>";
 		
 		var awb_num=""+form.elements[0].value;
 		var manifest_type=form.elements[6].value.replace(/manifest/g,"");
@@ -2393,9 +2393,9 @@ function print_form200(func)
 		var merchant_value=document.createElement('div');
 		
 		barcode_image.setAttribute('style','width:130px;height:30px;');
-		barcode_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:center;');
+		barcode_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:center;');
 		type_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');	
-		merchant_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');
+		merchant_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:left;');
 		
 		barcode_value.innerHTML=awb_num;
 		type_value.innerHTML="Type: "+manifest_type+" O-ID: "+order_id;
@@ -2672,7 +2672,7 @@ function print_form219(func)
 	{
 		counter+=1;
 		var form=$(this)[0];
-		var mob_seal="<table style='width:95%;height:40px;'>"+tr_text+tr_text+"</table><br>"+form.elements[2].value;
+		var mob_seal="<table style='width:95%;height:40px;'>"+tr_text+tr_text+"</table><br><div style='font-size:14px;'>"+form.elements[2].value+"</div>";
 		
 		var awb_num=""+form.elements[0].value;
 		var manifest_type=form.elements[7].value.replace(/manifest/g,"");
@@ -2686,9 +2686,9 @@ function print_form219(func)
 		var merchant_value=document.createElement('div');
 		
 		barcode_image.setAttribute('style','width:130px;height:30px;');
-		barcode_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:center;');
+		barcode_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:center;');
 		type_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');	
-		merchant_value.setAttribute('style','width:130px;font-size:9px;margin:1px;text-align:left;');
+		merchant_value.setAttribute('style','width:130px;font-size:14px;margin:1px;text-align:left;');
 		
 		barcode_value.innerHTML=awb_num;
 		type_value.innerHTML="Type: "+manifest_type+" O-ID: "+order_id;

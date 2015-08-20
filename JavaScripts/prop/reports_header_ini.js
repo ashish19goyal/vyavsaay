@@ -22,7 +22,6 @@ function report1_header_ini()
 	
 	$(date_since).datepicker();
 	$(date_since).val(get_my_date());
-	
 }
 
 /**
@@ -1868,4 +1867,61 @@ function report87_header_ini()
 	$(end_date).datepicker();
 	start_date.value=get_my_past_date((get_my_time()-(7*87400000)));
 	end_date.value=get_my_date();
+}
+
+/**
+ * @reportNo 88
+ * @report Search Inventory
+ */
+function report88_header_ini()
+{	
+	var form=document.getElementById('report88_header');
+	var keyword_filter=form.elements['key'];
+	var item_filter=form.elements['name'];
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report88_ini();
+	});
+
+/*	var company_data="<product_master>"+
+				"<make></make>"+
+				"</product_master>";
+	set_my_filter(company_data,company_filter);
+*/
+	var item_data="<product_master>"+
+				"<name></name>"+
+				"</product_master>";
+	set_my_filter(item_data,item_filter);
+}
+
+/**
+ * @reportNo 89
+ * @report Deliveries by person
+ */
+function report89_header_ini()
+{	
+	var form=document.getElementById('report89_header');
+	var person_filter=form.elements['person'];
+	var start_filter=form.elements['start'];
+	var end_filter=form.elements['end'];
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report89_ini();
+	});
+
+	var person_data="<staff>"+
+				"<acc_name></acc_name>"+
+				"</staff>";
+	set_my_filter(person_data,person_filter);
+	
+	$(start_filter).datepicker();
+	$(end_filter).datepicker();
+	start_filter.value=get_my_past_date(get_my_time()-7*86400000);
+	end_filter.value=get_my_date();
 }

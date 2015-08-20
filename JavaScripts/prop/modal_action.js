@@ -10447,6 +10447,7 @@ function modal147_action(hiring_type,button)
 	var master_form=document.getElementById(form_id);
 	fitem.value=master_form.elements[0].value;
 	fquantity.value=master_form.elements[1].value;
+	fquantity.setAttribute('max',master_form.elements[1].value);	
 	
 	var item_name=master_form.elements[0].value;
 	var customer=master_form.elements[3].value;

@@ -1,6 +1,7 @@
 <div id='sale_reports_main' class='vy_tabs function_main'>
 
 	<ul>
+		<li><a id='report88_link' href='#report88' onclick='report88_header_ini();' data-i18n='form.search_inventory'></a></li>
 		<li><a id='report73_link' href='#report73' onclick='report73_header_ini();' data-i18n='form.stock_laundry'></a></li>
 		<li><a id='report74_link' href='#report74' onclick='report74_header_ini();' data-i18n='form.feedback'></a></li>
 		<li><a id='report26_link' href='#report26' onclick='report26_header_ini();' data-i18n='form.sales_by_customers'></a></li>
@@ -12,12 +13,14 @@
 		<li><a id='report76_link' href='#report76' onclick='report76_header_ini();' data-i18n='form.order_status'></a></li>
 		<li><a id='report80_link' href='#report80' onclick='report80_header_ini();' data-i18n='form.total_sales'></a></li>
 		<li><a id='report84_link' href='#report84' onclick='report84_header_ini();' data-i18n='form.num_deliveries'></a></li>
+		<li><a id='report89_link' href='#report89' onclick='report89_header_ini();' data-i18n='form.deliveries_by_person'></a></li>
 		<li><a id='report85_link' href='#report85' onclick='report85_header_ini();' data-i18n='form.num_drs'></a></li>
 		<li><a id='report86_link' href='#report86' onclick='report86_header_ini();' data-i18n='form.sales_report'></a></li>
 		<li><a id='report87_link' href='#report87' onclick='report87_header_ini();' data-i18n='form.delivery_run_report'></a></li>
 	</ul>
 
 	<?php
+			include "reports/report88.php";
 			include "reports/report73.php";
 			include "reports/report74.php"; 
 			include "reports/report26.php";
@@ -27,8 +30,9 @@
 			include "reports/report54.php";
 			include "reports/report55.php";
 			include "reports/report76.php";
-			include "reports/report80.php";			
-			include "reports/report84.php";			
+			include "reports/report80.php";
+			include "reports/report84.php";
+			include "reports/report89.php";
 			include "reports/report85.php";
 			include "reports/report86.php";			
 			include "reports/report87.php";			

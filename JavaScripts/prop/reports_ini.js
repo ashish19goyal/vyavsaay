@@ -6547,6 +6547,7 @@ function report87_ini()
 	var end=get_raw_time(form.elements['end'].value);
 	
 	$('#report87_body').html('');
+	$('#report87_foot').html('');
 
 	var delivery_data="<delivery_run>" +
 			"<person>"+person+"</person>" +
@@ -6581,6 +6582,132 @@ function report87_ini()
 		
 		var print_button=form.elements[5];
 		print_tabular_report('report87','Delivery Run Report',print_button);
+		hide_loader();
+	});
+};
+
+/**
+ * @reportNo 88
+ * @report Delivery Run Report
+ */
+function report88_ini()
+{
+	show_loader();
+	var form=document.getElementById('report88_header');
+	var keyword=form.elements['key'].value;
+	var item=form.elements['name'].value;
+	
+	$('#report88_body').html('');
+
+	var attribute_data="<attributes>" +
+			"<name>"+item+"</name>" +
+			"<type exact='yes'>product</type>" +
+			"<value>"+keyword+"</value>"+
+			"<attribute></attribute>"+
+			"</attributes>";
+	
+	fetch_requested_data('report88',attribute_data,function(attributes)
+	{
+		for (var i=0;i<attributes.length;i++)
+		{
+			attributes[i].attribute_content=attributes[i].attribute+": "+attributes[i].value+"<br>";
+			for(var j=i+1;j<attributes.length;j++)
+			{
+				if(attributes[i].name==attributes[j].name)
+				{
+					attributes[i].attribute_content+=attributes[j].attribute+": "+attributes[j].value+"<br>";
+					attributes.splice(j,1);
+					j-=1;
+				}
+			}
+		}
+
+		attributes.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<td data-th='Item'>";
+					rowsHTML+=result.name;
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Details'>";
+					rowsHTML+=result.attribute_content;
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Inventory' id='report88_inventory_"+result.id+"'>";
+				rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+
+			$('#report88_body').append(rowsHTML);
+			
+			get_inventory(result.name,'',function(inventory)
+			{
+				document.getElementById('report88_inventory_'+result.id).innerHTML=-parseFloat(inventory);
+			});
+		});
+		
+		var print_button=form.elements[5];
+		print_tabular_report('report88','Inventory Report',print_button);
+		hide_loader();
+	});
+};
+
+/**
+ * @reportNo 89
+ * @report Deliveries by person
+ */
+function report89_ini()
+{
+	show_loader();
+	var form=document.getElementById('report89_header');
+	var person=form.elements['person'].value;
+	var start_date=get_raw_time(form.elements['start'].value);
+	var end_date=get_raw_time(form.elements['end'].value);
+	
+	$('#report89_body').html('');
+
+	var deliveries_data="<logistics_orders>" +
+			"<awb_num></awb_num>" +
+			"<delivery_person></delivery_person>" +
+			"<import_date lowerbound='yes'>"+start_date+"</import_date>"+
+			"<import_date upperbound='yes'>"+end_date+"</import_date>"+
+			"<order_history></order_history>"+
+			"</logistics_orders>";
+	
+	fetch_requested_data('report89',deliveries_data,function(deliveries)
+	{
+		deliveries.forEach(function(result)
+		{
+			var order_history_object=JSON.parse(result.order_history);
+			for(var i in order_history_object)
+			{
+				if(order_history_object[i].status=='delivered')
+				{
+					result.delivery_date=order_history_object[i].timeStamp;
+					break;
+				}
+			}
+			
+			if(typeof result.delivery_date!='undefined')
+			{
+				var rowsHTML="<tr>";
+					rowsHTML+="<td data-th='Person'>";
+						rowsHTML+=result.delivery_person;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='AWB #'>";
+						rowsHTML+=result.awb_num;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+=get_my_past_date(result.import_date);
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Delivery Date'>";
+						rowsHTML+=get_my_past_date(result.delivery_date);
+					rowsHTML+="</td>";
+				rowsHTML+="</tr>";
+			}
+
+			$('#report89_body').append(rowsHTML);			
+		});
+		
+		var print_button=form.elements[5];
+		print_tabular_report('report89','Deliveries by person',print_button);
 		hide_loader();
 	});
 };

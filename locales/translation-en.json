@@ -402,6 +402,8 @@
 	"manage_prescriptions":"Manage Prescriptions",
 	"demo":"Demo",
 	"hiring":"Hiring",
-	"newsletter_creator":"Newsletter Creator"
+	"newsletter_creator":"Newsletter Creator",
+	"search_inventory":"Search Inventory",
+	"deliveries_by_person":"Deliveries by person"
 	}
 }
