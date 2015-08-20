@@ -60,10 +60,9 @@
 	                    <li class="project__item">
 	                		<h5 class="project__item__title">Product Detail</h5>
 	                    	<ul class="feature-list">
-	                    		<li><span class="feature-list__category">Product:</span>Buyer and seller app with backend SaaS</li>
-	                    		<li><span class="feature-list__category">Whitelabeling (Your Branding):</span> Free</li>
-	                    		<li><span class="feature-list__category">Add Ons:</span> ERP solution, web interfaces</li>
-	                        	<li><span class="feature-list__category">Customization:</span> Available on demand</li>
+	                    		<li><span class="feature-list__category">Product:</span>ERP solution, with web and mobile interfaces</li>
+	                    		<li><span class="feature-list__category">Add Ons:</span>Buyer and seller app with backend SaaS</li>
+	                        	<li><span class="feature-list__category">Custom	ization:</span> Available on demand</li>
 	                            <li><span class="feature-list__category">Tech Support:</span> Free for 3 months</li>
 	                            <li><span class="feature-list__category">Pricing:</span> Available on demand</li>
 	                            <li><span class="feature-list__category">Future Upgrades:</span> Free for non customized projects</li>
@@ -122,6 +121,17 @@
 <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-536c916f5d4a9397"></script>	-->	<!--Script AddThis -->	
 <script src="appic/external/swiper/idangerous.swiper.min.js"></script>			<!--Script Swiper slider -->	
 
+<script src='./JavaScripts/open/bcrypt.js'></script>
+<script src='./JavaScripts/open/indexeddb.js'></script>
+<script src='./JavaScripts/open/jquery.autosize.min.js'></script>
+<script src='./JavaScripts/open/jquery-ui.min.js'></script>
+<script src='./JavaScripts/prop/event_handler.js'></script>
+<script src='./JavaScripts/prop/ajax.js'></script>
+<script src='./JavaScripts/prop/get.js'></script>
+<script src='./JavaScripts/prop/local_db_handling.js'></script>
+<script src='./JavaScripts/prop/login_helper.js'></script>
+<script src='./JavaScripts/prop/sessions.js'></script>
+
 <script>
 	$(window).load(function()
 	{
@@ -143,6 +153,8 @@
 			init_DecoratedSlider();
 	
 			init_QoutationSlider();
+			
+			hide_loader();
 
 		});	
 	});
