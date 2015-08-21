@@ -5522,7 +5522,7 @@ function form122_add_item()
 			set_my_value(desc_data,desc_filter);
 			fetch_requested_data('',desc_data,function(descriptions)
 			{
-				if(description.length>0)
+				if(descriptions.length>0)
 				{
 					desc_filter.value=descriptions[0].description;
 					if(descriptions[0].bar_code!="" && descriptions[0].bar_code!="null")
