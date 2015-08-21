@@ -8856,7 +8856,7 @@ function modal133_action(order_id,sale_channel,order_num,customer)
 				"<td>Select</td>"+
 				"</tr>";
 	$('#modal133_item_table').html(headHTML);
-				
+		
 	var order_items_xml="<sale_order_items>"+
 					"<id></id>"+
 					"<order_id exact='yes'>"+order_id+"</order_id>"+
@@ -8890,6 +8890,8 @@ function modal133_action(order_id,sale_channel,order_num,customer)
 		{
 			order_items.forEach(function (order_item) 
 			{
+				var tr_elem_title=[];
+				var tr_elem_selection=[];
 				if(order_item.item_name=="" || order_item.item_desc=="")
 				{
 					for(var i in skus)
@@ -8901,23 +8903,17 @@ function modal133_action(order_id,sale_channel,order_num,customer)
 						}
 					}
 				}
-	
-				var rowsHTML="<tr title='' id='modal133_item_row_"+order_item.id+"'>"+
-						"<td>"+order_item.item_name+"</td>"+
-						"<td>"+order_item.quantity+"</td>"+
-						"<td><input checked type='checkbox' id='modal133_item_check_"+order_item.id+"'></td>"+
-						"</tr>";
-				$('#modal133_item_table').append(rowsHTML);
-		
+				
+				var order_item_timer=3;
+				
 				get_inventory(order_item.item_name,'',function(quantity)
 				{
 					if(parseFloat(quantity)<parseFloat(order_item.quantity))
 					{
-						var checkbox=document.getElementById("modal133_item_check_"+order_item.id);
-						checkbox.checked=false;
-						var tr_elem=document.getElementById("modal133_item_row_"+order_item.id);
-						tr_elem.title='Insufficient Inventory';
+						tr_elem_title.push('Insufficient Inventory');
+						tr_elem_selection.push('maybe');
 					}
+					order_item_timer-=1;
 				});
 				
 				var price_data="<channel_prices count='1'>" +
@@ -8941,15 +8937,82 @@ function modal133_action(order_id,sale_channel,order_num,customer)
 					{
 						var total_sale_price=parseFloat(sale_prices[0].sale_price)+parseFloat(sale_prices[0].freight);
 						var order_total_price=parseFloat(order_item.total)/parseFloat(order_item.quantity);
-						if(total_sale_price>order_total_price)
+						if(total_sale_price>(order_total_price+1) || total_sale_price<(order_total_price-1))
 						{
-							var checkbox=document.getElementById("modal133_item_check_"+order_item.id);
-							checkbox.checked=false;
-							var tr_elem=document.getElementById("modal133_item_row_"+order_item.id);
-							tr_elem.title='Over priced';
+							tr_elem_title.push('Price Mismatch');
+							tr_elem_selection.push('no');
 						}
 					}
+					else 
+					{
+						tr_elem_title.push('Pricing not defined for this item and channel');
+						tr_elem_selection.push('no');
+					}
+					order_item_timer-=1;
 				});
+				
+				var tax_data="<product_master count='1'>" +
+							"<name exact='yes'>"+order_item.item_name+"</name>" +
+							"<description></description>"+
+							"<tax></tax>" +
+							"</product_master>";
+				fetch_requested_data('',tax_data,function(taxes)
+				{
+					if(taxes.length>0)
+					{
+						if(taxes[0].tax)
+						{
+							tr_elem_title.push('Tax Rate not set');
+							tr_elem_selection.push('maybe');
+						}
+					}
+					order_item_timer-=1;
+				});	
+				
+				
+				var order_item_analysis_complete=setInterval(function()
+				{
+			  	   if(order_item_timer===0)
+			  	   {
+		  			   clearInterval(order_item_analysis_complete);
+						var item_checked="checked";
+		  			   var item_title="";
+		  			   var hide_checkbox=false;
+		  			   
+						for (var y in tr_elem_title)
+						{
+							item_title+=tr_elem_title[y]+"\n";
+						}
+						
+						for (var z in tr_elem_selection)
+						{
+							if(tr_elem_selection[z]=='maybe')
+							{
+								item_checked="";
+							}
+							else if(tr_elem_selection[z]=='no')
+							{
+								item_checked="";
+								hide_checkbox=true;
+								break;
+							}
+						}				
+		  			   
+				  	   var rowsHTML="<tr title='"+item_title+"' id='modal133_item_row_"+order_item.id+"'>"+
+							"<td>"+order_item.item_name+"</td>"+
+							"<td>"+order_item.quantity+"</td>";
+						if(hide_checkbox)
+						{
+							rowsHTML+="<td><input "+item_checked+" style='display:none;' type='checkbox' id='modal133_item_check_"+order_item.id+"'></td>";
+						}
+						else
+						{			
+							rowsHTML+="<td><input "+item_checked+" type='checkbox' id='modal133_item_check_"+order_item.id+"'></td>";
+						}
+							rowsHTML+="</tr>";
+						$('#modal133_item_table').append(rowsHTML);
+			  	   }
+			     },100);	
 			});
 		});
 	});				

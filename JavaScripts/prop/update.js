@@ -1506,8 +1506,8 @@ function form24_update_form()
 		if(form.elements['cst'].checked)
 		{
 			cst='yes';
-			tax+=.02*amount;
-			total+=.02*amount;
+			tax+=my_round(.02*amount,2);
+			total+=my_round(.02*amount,2);
 		}
 
 		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +

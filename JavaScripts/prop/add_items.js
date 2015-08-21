@@ -1125,7 +1125,9 @@ function form24_add_item()
 		var master_form=document.getElementById("form24_master");		
 		var supplier_name_filter=master_form.elements['supplier'];
 		var supplier_name=supplier_name_filter.value;
-		
+		var cst_checked=false;
+		if(master_form.elements['cst'].checked)
+			cst_checked=true;
 		var fields=document.getElementById("form24_"+id);
 		var name_filter=fields.elements[0];
 		var desc_filter=fields.elements[1];
@@ -1189,8 +1191,16 @@ function form24_add_item()
 				if(makes.length>0)
 				{
 					make_filter.value=makes[0].make;
-					tax_rate_filter.value=makes[0].tax;
 					desc_filter.value=makes[0].description;
+
+					if(cst_checked)					
+					{
+						tax_rate_filter.value=0;
+					}
+					else 
+					{					
+						tax_rate_filter.value=makes[0].tax;
+					}
 				}
 			});			
 			
@@ -5350,6 +5360,12 @@ function form122_add_item()
 		var master_form=document.getElementById('form122_master');
 		var supplier_name=master_form.elements['supplier'].value;
 		var order_id=master_form.elements['order_id'].value;
+
+		var cst_checked=false;
+		if(master_form.elements['cst'].checked)
+		{
+			cst_checked=true;
+		}
 		
 		var accepted_readonly="";
 		var accepted_editable=get_session_var('grn_item_accept_editable');		
@@ -5362,7 +5378,6 @@ function form122_add_item()
 		rowsHTML+="<form id='form122_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
 				rowsHTML+="<input type='text' form='form122_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new item' id='form122_add_product_"+id+"'>";
 				rowsHTML+="<br>SKU: <input type='text' form='form122_"+id+"' required>";
 				rowsHTML+="<br>Name: <input type='text' readonly='readonly' form='form122_"+id+"'>";
 			rowsHTML+="</td>";
@@ -5432,24 +5447,11 @@ function form122_add_item()
 
 		set_static_value_list('supplier_bill_items','qc',qc_filter);
 		
-		var add_product=document.getElementById('form122_add_product_'+id);
-		
 		var products_data="<product_master>" +
 			"<name></name>" +
 			"</product_master>";
 		set_my_value_list(products_data,name_filter); 
 	
-		$(add_product).on('click',function()
-		{
-			modal122_action(function()
-			{
-				var products_data="<product_master>" +
-					"<name></name>" +
-					"</product_master>";
-				set_my_value_list(products_data,name_filter); 
-			});
-		});
-		
 		var add_batch=document.getElementById('form122_add_batch_'+id);
 		$(add_batch).on('click',function()
 		{
@@ -5471,15 +5473,18 @@ function form122_add_item()
 		
 		$(barcode_filter).on('blur',function()
 		{
-			var item_data="<product_master>"+
-						"<name></name>"+
-						"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
-						"</product_master>";
-			set_my_value(item_data,name_filter,function () 
+			if(barcode_filter.value!="" && barcode_filter.value!=null)
 			{
-				$(name_filter).trigger('blur');
-			});
-			$(batch_filter).focus();
+				var item_data="<product_master>"+
+							"<name></name>"+
+							"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
+							"</product_master>";
+				set_my_value(item_data,name_filter,function () 
+				{
+					$(name_filter).trigger('blur');
+				});
+				$(batch_filter).focus();
+			}
 		});
 		
 		$(barcode_filter).on('keydown',function (event) 
@@ -5519,12 +5524,19 @@ function form122_add_item()
 				"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
 			
-			var tax_unit_data="<product_master>"+
-							"<tax></tax>"+
-							"<name exact='yes'>"+name_filter.value+"</name>"+
-							"</product_master>";
-			set_my_value(tax_unit_data,tax_unit_filter);
-			
+			if(cst_checked)
+			{
+				tax_unit_filter.value=0;
+			}
+			else 
+			{
+				var tax_unit_data="<product_master>"+
+								"<tax></tax>"+
+								"<name exact='yes'>"+name_filter.value+"</name>"+
+								"</product_master>";
+				set_my_value(tax_unit_data,tax_unit_filter);
+			}	
+
 			var last_batch_data="<supplier_bill_items count='1'>" +
 					"<batch></batch>" +
 					"<storage></storage>"+
