@@ -7930,6 +7930,7 @@ function form122_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
+			console.log(subform.elements[10].value);			
 			if(subform.elements[10].value=='accepted')
 			{
 				if(!isNaN(parseFloat(subform.elements[7].value)))
@@ -7949,11 +7950,11 @@ function form122_create_form()
 		var cst='no';
 		if(form.elements['cst'].checked)
 		{
-			tax+=.02*amount;
-			total+=.02*amount;
+			tax+=my_round(.02*amount,2);
+			total+=my_round(.02*amount,2);
 			cst='yes';
 		}
-			
+	
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:</br>Tax: </br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +

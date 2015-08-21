@@ -5548,12 +5548,14 @@ function form122_update_form()
 		var tax=0;
 		var amount=0;
 		var total_quantity=0;
+		var total_quantity_in_rej=0;
 		
 		$("[id^='save_form122']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			if(subform.elements[9].value=='accepted')
+			console.log(subform.elements[10].value);			
+			if(subform.elements[10].value=='accepted')
 			{
 				if(!isNaN(parseFloat(subform.elements[7].value)))
 					amount+=parseFloat(subform.elements[7].value);
@@ -5562,20 +5564,21 @@ function form122_update_form()
 				if(!isNaN(parseFloat(subform.elements[4].value)))
 					total_quantity+=subform.elements[4].value;			
 			}
+			if(!isNaN(parseFloat(subform.elements[4].value)))
+				total_quantity_in_rej+=subform.elements[4].value;
 		});
-
+		
 		total=amount+tax;
 		
 		var discount=0;
-		
 		var cst='no';
 		if(form.elements['cst'].checked)
 		{
-			tax+=.02*amount;
-			total+=.02*amount;
+			tax+=my_round(.02*amount,2);
+			total+=my_round(.02*amount,2);
 			cst='yes';
 		}
-		
+	
 		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
 				"<td>Amount:</br>Tax: </br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
