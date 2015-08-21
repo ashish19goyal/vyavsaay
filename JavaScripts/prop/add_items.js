@@ -5380,6 +5380,7 @@ function form122_add_item()
 				rowsHTML+="<input type='text' form='form122_"+id+"'>";
 				rowsHTML+="<br>SKU: <input type='text' form='form122_"+id+"' required>";
 				rowsHTML+="<br>Name: <input type='text' readonly='readonly' form='form122_"+id+"'>";
+				rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Barcode' id='form122_bracode_image_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' form='form122_"+id+"' required>";
@@ -5513,11 +5514,29 @@ function form122_add_item()
 		$(name_filter).on('blur',function(event)
 		{
 			var desc_data="<product_master>" +
+				"<id></id>"+
 				"<description></description>" +
+				"<bar_code></bar_code>"+
 				"<name exact='yes'>"+name_filter.value+"</name>" +
 				"</product_master>";
 			set_my_value(desc_data,desc_filter);
-			
+			fetch_requested_data('',desc_data,function(descriptions)
+			{
+				if(description.length>0)
+				{
+					desc_filter.value=descriptions[0].description;
+					if(descriptions[0].bar_code!="" && descriptions[0].bar_code!="null")
+					{
+						var barcode_image=document.getElementById('form122_bracode_image_'+id);
+						barcode_image.onclick=print_product_barcode(descriptions[0].bar_code,name_filter.value,desc_filter.value);
+					}
+					else
+					{
+						var barcode_image=document.getElementById('form122_bracode_image_'+id);
+						barcode_image.onclick=modal139_action(descriptions[0].id,name_filter.value,desc_filter.value,this);
+					}	
+				}
+			});
 			var batch_data="<product_instances>" +
 				"<batch></batch>" +
 				"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
