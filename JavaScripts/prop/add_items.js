@@ -5528,12 +5528,18 @@ function form122_add_item()
 					if(descriptions[0].bar_code!="" && descriptions[0].bar_code!="null")
 					{
 						var barcode_image=document.getElementById('form122_bracode_image_'+id);
-						barcode_image.onclick=print_product_barcode(descriptions[0].bar_code,name_filter.value,desc_filter.value);
+						$(barcode_image).on('click',function()
+						{
+							print_product_barcode(descriptions[0].bar_code,name_filter.value,desc_filter.value);
+						});
 					}
 					else
 					{
 						var barcode_image=document.getElementById('form122_bracode_image_'+id);
-						barcode_image.onclick=modal139_action(descriptions[0].id,name_filter.value,desc_filter.value,this);
+						$(barcode_image).on('click',function()
+						{
+							modal139_action(descriptions[0].id,name_filter.value,desc_filter.value,$(this));
+						});
 					}	
 				}
 			});
