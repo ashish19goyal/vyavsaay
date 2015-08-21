@@ -7930,7 +7930,7 @@ function form122_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			console.log(subform.elements[10].value);			
+			console.log(subform.elements[4].value);			
 			if(subform.elements[10].value=='accepted')
 			{
 				if(!isNaN(parseFloat(subform.elements[7].value)))
@@ -8014,7 +8014,7 @@ function form122_create_form()
 						"</purchase_orders>";
 				update_simple(po_xml);
 			}
-		});		
+		});
 		
 		var transaction_xml="<transactions>" +
 					"<id>"+transaction_id+"</id>" +

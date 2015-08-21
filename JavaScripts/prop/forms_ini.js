@@ -3045,15 +3045,21 @@ function form43_ini()
 						rowsHTML+="<input type='button' class='delete_icon' form='form43_"+result.id+"' title='Delete order' onclick='form43_delete_item($(this));'>";
 					if(result.status=='order placed' || result.status=='partially received')
 					{
-						rowsHTML+="<br><input type='button' name='issue_quantity' class='generic_icon' form='form43_"+result.id+"' value='GRN without QC'>";
-						rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form43_"+result.id+"' value='GRN with QC'>";
+						if(result.quantity_accepted!=result.total_quantity)
+						{
+							rowsHTML+="<br><input type='button' name='issue_quantity' class='generic_icon' form='form43_"+result.id+"' value='GRN without QC'>";
+							rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form43_"+result.id+"' value='GRN with QC'>";
+						}
 						if(result.qc_pending==0 || result.qc_pending=='0')
 							rowsHTML+="<br><input type='button' name='new_order' class='generic_icon' form='form43_"+result.id+"' value='New Order'>";						
 					}
 					else if(result.status=='completely received')
 					{
-						rowsHTML+="<br><input type='button' name='issue_quantity' class='generic_icon' form='form43_"+result.id+"' value='GRN without QC'>";
-						rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form43_"+result.id+"' value='GRN with QC'>";
+						if(result.quantity_accepted!=result.total_quantity)
+						{
+							rowsHTML+="<br><input type='button' name='issue_quantity' class='generic_icon' form='form43_"+result.id+"' value='GRN without QC'>";
+							rowsHTML+="<br><input type='button' name='issue_grn' class='generic_icon' form='form43_"+result.id+"' value='GRN with QC'>";
+						}
 					}
 					
 					if(result.bill_id!='' && result.bill_id!='null')
