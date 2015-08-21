@@ -7842,8 +7842,6 @@ function modal120_action(func,product_name)
 	$(form).on("submit",function(event)
 	{
 		event.preventDefault();
-		if(is_create_access('form1'))
-		{
 			var name=fname.value;
 			var batch=fbatch.value;
 			var expiry=get_raw_time(fexpiry.value);
@@ -7874,11 +7872,6 @@ function modal120_action(func,product_name)
 			{
 				local_create_row_func(data_xml,activity_xml,func);
 			}			
-		}
-		else
-		{
-			$("#modal2").dialog("open");
-		}
 		$("#modal120").dialog("close");
 	});
 	
