@@ -6643,7 +6643,7 @@ function report88_ini()
 			});
 		});
 		
-		var print_button=form.elements[5];
+		var print_button=form.elements[4];
 		print_tabular_report('report88','Inventory Report',print_button);
 		hide_loader();
 	});
