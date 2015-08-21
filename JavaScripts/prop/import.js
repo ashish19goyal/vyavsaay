@@ -7559,3 +7559,45 @@ function form230_import(data_array,import_type)
 		update_batch(data_xml);
 	}
 };
+
+/**
+* @form Manage Products (without tax)
+* @formNo 234
+*/
+function form234_import(data_array,import_type)
+{
+	var data_xml="<product_master>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</product_master><separator></separator><product_master>";
+		}
+				counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name unique='yes'>"+row.name+"</name>" +
+				"<make>"+row.make+"</make>" +
+				"<description>"+row.description+"</description>" +
+				"<bar_code>"+row.bar_code+"</bar_code>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</product_master>";
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+};

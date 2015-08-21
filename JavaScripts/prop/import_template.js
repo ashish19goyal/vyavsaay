@@ -1294,3 +1294,13 @@ function form230_import_template()
 	var data_array=['id','item','quantity','issue_type','for_from','date','to_from'];
 	my_array_to_csv(data_array);
 };
+
+/**
+* @form Manage Products (without tax)
+* @formNo 87
+*/
+function form234_import_template()
+{
+	var data_array=['id','name','make','description','bar_code'];
+	my_array_to_csv(data_array);
+};

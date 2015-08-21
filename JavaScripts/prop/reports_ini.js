@@ -3321,7 +3321,7 @@ function report52_ini()
 					}
 					for(var k in return_ids)
 					{
-						product_string+=return_ids[j].item_name+"--";
+						product_string+=return_ids[k].item_name+"--";
 					}
 					
 					var make_data="<product_master>" +

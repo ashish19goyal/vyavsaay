@@ -404,6 +404,7 @@
 	"hiring":"Hiring",
 	"newsletter_creator":"Newsletter Creator",
 	"search_inventory":"Search Inventory",
-	"deliveries_by_person":"Deliveries by person"
+	"deliveries_by_person":"Deliveries by person",
+	"manage_products_wo_tax":"Manage Products (without tax)"
 	}
 }
