@@ -1291,7 +1291,7 @@ function form226_import_template()
 */
 function form230_import_template()
 {
-	var data_array=['id','item','quantity','issue_type','for_from','date','to_from'];
+	var data_array=['id','item','quantity','issue_type','for_from','date','to_from','notes'];
 	my_array_to_csv(data_array);
 };
 

@@ -7556,6 +7556,29 @@ function form209_header_ini()
 function form211_header_ini()
 {
 	$('#form211_body').html("");
+	
+	var fields=document.getElementById('form211_master');
+	
+	var drs_filter=fields.elements['drs'];
+	var refresh_button=fields.elements['refresh'];
+	var save_button=fields.elements['save'];
+
+	drs_filter.value="";
+	$(drs_filter).focus();
+
+	$(refresh_button).off('click');
+	$(refresh_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form211_ini();
+	});
+
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		$("[id^='save_form211_']").click();
+	});
 }
 
 /**

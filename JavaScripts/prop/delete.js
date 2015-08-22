@@ -7652,7 +7652,7 @@ function form230_delete_item(button)
 			
 			var item=form.elements[0].value;
 			var issue_type=form.elements[2].value;
-			var data_id=form.elements[6].value;
+			var data_id=form.elements[7].value;
 			var last_updated=get_my_time();
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +

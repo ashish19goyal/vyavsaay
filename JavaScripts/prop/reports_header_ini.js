@@ -1566,6 +1566,8 @@ function report76_header_ini()
 	var awb_filter=form.elements[1];
 	var delivery_filter=form.elements[2];
 	var status_filter=form.elements[3];
+	var start_filter=form.elements[4];
+	var end_filter=form.elements[5];
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -1585,6 +1587,11 @@ function report76_header_ini()
 	set_my_filter(delivery_data,delivery_filter);
 	
 	set_static_filter('logistics_orders','status',status_filter);	
+	
+	$(start_filter).datepicker();
+	$(end_filter).datepicker();
+	start_filter.value=get_my_past_date(get_my_time()-(7*86400000));
+	end_filter.value=get_my_date();
 }
 
 /**

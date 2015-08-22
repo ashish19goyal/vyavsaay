@@ -5584,6 +5584,8 @@ function report76_ini()
 	var awb_filter=form.elements[1].value;
 	var delivery_filter=form.elements[2].value;
 	var status_filter=form.elements[3].value;
+	var start_filter=get_raw_time(form.elements[4].value);
+	var end_filter=get_raw_time(form.elements[5].value);
 	
 	show_loader();
 	$('#report76_body').html('');	
@@ -5598,7 +5600,8 @@ function report76_ini()
 	var orders_data="<logistics_orders count='25' start_index='"+start_index+"'>" +
 		"<id></id>"+
 		"<awb_num>"+awb_filter+"</awb_num>" +
-		"<import_date></import_date>"+
+		"<import_date lowerbound='yes'>"+start_filter+"</import_date>"+
+		"<import_date upperbound='yes'>"+end_filter+"</import_date>"+
 		"<delivery_person>"+delivery_filter+"</delivery_person>"+
 		"<status>"+status_filter+"</status>"+
 		"</logistics_orders>";
@@ -5655,7 +5658,7 @@ function report76_ini()
 		hide_loader();
 	});
 	
-	var print_button=form.elements[5];
+	var print_button=form.elements[7];
 	print_tabular_report('report76','Orders',print_button);
 };
 

@@ -52,8 +52,10 @@
 			$num_records=500;
 			$end_table='end_syncing';
 			
-			$tables_query=$conn->conn->prepare("select tables from user_preferences where value=? and sync=?");
-			$tables_query->execute(array('checked','checked'));
+			//$tables_query=$conn->conn->prepare("select tables from user_preferences where value=? and sync=?");
+			//$tables_query->execute(array('checked','checked'));
+			$tables_query=$conn->conn->prepare("select tables from user_preferences");
+			$tables_query->execute(array());
 			$tables_res=$tables_query->fetchAll(PDO::FETCH_NUM);
 			$selected_tables='';
 

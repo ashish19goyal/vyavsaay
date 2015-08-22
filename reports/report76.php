@@ -5,6 +5,8 @@
 			<label>AWB #<br><input type='text' name='awb'></label>
 			<label>Delivery Person<br><input name='delivery' type='text'></label>
 			<label>Status<br><input type='text' name='status'></label>
+			<label>Start Date<br><input type='text' required name='start'></label>
+			<label>End Date<br><input type='text' required name='end'></label>
 			<label>	
 				<input type='submit' value='Refresh' name='refresh' class='generic_icon'>
 				<input type='button' title='Print' name='print' class='print_icon'>

@@ -7545,6 +7545,7 @@ function form230_import(data_array,import_type)
 				"<issue_type>"+row.issue_type+"</issue_type>" +
 				"<hiring_type>"+row.for_from+"</hiring_type>" +
 				"<customer>"+row.to_from+"</customer>" +
+				"<notes>"+row.notes+"</notes>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});

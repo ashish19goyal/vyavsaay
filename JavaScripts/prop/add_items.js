@@ -12969,8 +12969,9 @@ function form230_add_item()
 				rowsHTML+="<input type='text' form='form230_"+id+"'>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' id='form230_add_customer_"+id+"'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Date' required>";
-				rowsHTML+="<input type='text' readonly='readonly' form='form230_"+id+"' value='"+get_my_date()+"'>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="Date: <input type='text' required readonly='readonly' form='form230_"+id+"' value='"+get_my_date()+"'>";
+				rowsHTML+="<br><textarea placeholder='Notes' form='form230_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form230_"+id+"' value='"+id+"'>";
@@ -13020,7 +13021,7 @@ function form230_add_item()
 
 		set_static_value_list('bill_items','issue_type',issue_filter);
 		set_static_value_list('bill_items','hiring_type',hiring_filter);
-		
+
 		var customer_data="<accounts>" +
 				"<acc_name></acc_name>" +
 				"</accounts>";

@@ -7,7 +7,10 @@
 					<th>Order #</th>
 					<th>Status</th>
 					<th>Remark</th>
-					<th><input type='button' form='form212_header' title='Add item' class='add_icon' onclick='form212_add_item();'></th>
+					<th>
+						<input type='button' form='form212_header' title='Add item' class='add_icon' onclick='form212_add_item();'>
+						<input type='button' form='form212_header' title='Import' value='IMPORT' class='import_icon' onclick='modal148_action();'>
+					</th>
 			</tr>
 		</thead>
 		<tbody id='form212_body'>

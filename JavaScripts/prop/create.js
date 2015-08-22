@@ -15235,8 +15235,9 @@ function form230_create_item(form)
 		var hiring_type=form.elements[3].value;
 		var customer=form.elements[4].value;
 		var date=get_raw_time(form.elements[5].value);
-		var data_id=form.elements[6].value;
-		var del_button=form.elements[8];
+		var notes=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		var del_button=form.elements[9];
 		var last_updated=get_my_time();
 		var data_xml="<bill_items>" +
 					"<id>"+data_id+"</id>" +
@@ -15245,6 +15246,7 @@ function form230_create_item(form)
 					"<issue_type>"+issue_type+"</issue_type>" +
 					"<issue_date>"+date+"</issue_date>" +
 					"<customer>"+customer+"</customer>" +
+					"<notes>"+notes+"</notes>" +
 					"<quantity>"+negative+quantity+"</quantity>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bill_items>";	
@@ -15257,7 +15259,7 @@ function form230_create_item(form)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		create_row(data_xml,activity_xml);
-		for(var i=0;i<6;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -15266,8 +15268,8 @@ function form230_create_item(form)
 		{
 			form230_delete_item(del_button);
 		});
-		$(form).off('submit');
 
+		$(form).off('submit');
 		$(form).on('submit',function(event)
 		{
 			event.preventDefault();

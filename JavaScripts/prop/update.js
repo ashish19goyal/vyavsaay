@@ -10845,58 +10845,67 @@ function form211_update_item(form)
 	if(is_update_access('form211'))
 	{
 		var awb_num=form.elements[0].value;
-		var status=form.elements[1].value;
-		var remarks=form.elements[2].value;
-		var id=form.elements[3].value;
+		var status=form.elements[2].value;
+		var remarks=form.elements[3].value;
+		var id=form.elements[4].value;
 		var last_updated=get_my_time();
 		
-		var old_order_history=form.elements[5].value;
-		var order_history=JSON.parse(old_order_history);
-		var history_object=new Object();
-		history_object.timeStamp=get_my_time();
-		history_object.details=remarks;
-		history_object.status=status;
-		
-		if(status=='received')
+		if(status!="")
 		{
-			history_object.location=get_session_var('official_address');
-		}
-		else if(status=='pending')
-		{
-			history_object.location=get_session_var('official_address');
-		}
-		else if(status=='delivered')
-		{
-			history_object.location="";
-		}
-		else if(status=='undelivered')
-		{
-			history_object.location="";
-		}
-		
-		order_history.push(history_object);
-		var order_history_string=JSON.stringify(order_history);		
-		
-		var data_xml="<logistics_orders>" +
-					"<id>"+id+"</id>" +
-					"<awb_num>"+awb_num+"</awb_num>" +
-					"<status>"+status+"</status>" +
-					"<comments>"+remarks+"</comments>" +
-					"<order_history>"+order_history_string+"</order_history>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</logistics_orders>";
-		var activity_xml="<activity>" +
-					"<data_id>"+id+"</data_id>" +
-					"<tablename>logistics_orders</tablename>" +
-					"<link_to>form198</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>AWB # "+awb_num+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		update_row(data_xml,activity_xml);
-		for(var i=0;i<3;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
+			var old_order_history=form.elements[6].value;
+			var order_history=JSON.parse(old_order_history);
+			var history_object=new Object();
+			history_object.timeStamp=get_my_time();
+			history_object.details=remarks;
+			history_object.status=status;
+			
+			if(status=='received')
+			{
+				history_object.location=get_session_var('official_address');
+			}
+			else if(status=='pending')
+			{
+				history_object.location=get_session_var('official_address');
+			}
+			else if(status=='delivered')
+			{
+				history_object.location="";
+			}
+			else if(status=='undelivered')
+			{
+				history_object.location="";
+			}
+			
+			order_history.push(history_object);
+			var order_history_string=JSON.stringify(order_history);		
+			
+			var data_xml="<logistics_orders>" +
+						"<id>"+id+"</id>" +
+						"<status>"+status+"</status>" +
+						"<comments>"+remarks+"</comments>" +
+						"<order_history>"+order_history_string+"</order_history>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</logistics_orders>";
+			var activity_xml="<activity>" +
+						"<data_id>"+id+"</data_id>" +
+						"<tablename>logistics_orders</tablename>" +
+						"<link_to>form198</link_to>" +
+						"<title>Updated</title>" +
+						"<notes>AWB # "+awb_num+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			update_row(data_xml,activity_xml);
+			for(var i=0;i<4;i++)
+			{
+				$(form.elements[i]).attr('readonly','readonly');
+			}
+			
+			$(form).off('submit');
+			$(form).on('submit',function (e) 
+			{
+				e.preventDefault();
+			});
+			
 		}
 	}
 	else
@@ -11651,6 +11660,55 @@ function form233_update_item()
 }
 
 /**
+ * formNo 230
+ * form In-out
+ * @param button
+ */
+function form230_update_item(form)
+{
+	if(is_update_access('form230'))
+	{
+		var item=form.elements[0].value;
+		var quantity=form.elements[1].value;
+		var issue_type=form.elements[2].value;
+		var hiring_type=form.elements[3].value;
+		var customer=form.elements[4].value;
+		var date=get_raw_time(form.elements[5].value);
+		var notes=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		var last_updated=get_my_time();
+		var data_xml="<bill_items>" +
+					"<id>"+data_id+"</id>" +
+					"<item_name>"+item+"</item_name>" +
+					"<hiring_type>"+hiring_type+"</hiring_type>" +
+					"<issue_type>"+issue_type+"</issue_type>" +
+					"<issue_date>"+date+"</issue_date>" +
+					"<customer>"+customer+"</customer>" +
+					"<notes>"+notes+"</notes>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</bill_items>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>bill_items</tablename>" +
+					"<link_to>form230</link_to>" +
+					"<title>"+issue_type+"</title>" +
+					"<notes>"+quantity+" pieces of "+item+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form Manage Products (without tax)
  * @param button
  */
@@ -11690,3 +11748,4 @@ function form234_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
+

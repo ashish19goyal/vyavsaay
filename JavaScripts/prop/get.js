@@ -578,6 +578,8 @@ function set_my_max_value(filter_data,filter_element)
 function my_array_to_csv(data_array)
 {
 	var csvString = data_array.join();
+	csvString=escape(csvString);
+
 	var a = document.createElement('a');
 	a.href = 'data:attachment/csv,' + csvString;
 	//a.href = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);

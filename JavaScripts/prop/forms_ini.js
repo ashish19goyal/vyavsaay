@@ -21884,6 +21884,72 @@ function form209_ini()
 	}
 }
 
+/**
+ * @form Update Logistics Orders (by drs)
+ * @formNo 211
+ * @Loading light
+ */
+function form211_ini()
+{
+	$('#form211_body').html("");
+
+	var filter_fields=document.getElementById('form211_master');
+	var drs_num=filter_fields['drs'].value;
+		
+	if(drs_num!="")
+	{
+		show_loader();
+		var logistics_column="<logistics_orders>" +
+				"<id></id>" +
+				"<awb_num></awb_num>" +
+				"<status></status>" +
+				"<order_history></order_history>"+
+				"<drs_num exact='yes'>"+drs_num+"</drs_num>"+
+				"</logistics_orders>";
+		
+		fetch_requested_data('',logistics_column,function(results)
+		{
+			results.forEach(function(result)
+			{
+				var id=result.id;
+				var rowsHTML="<tr>";
+				rowsHTML+="<form id='form211_"+id+"'></form>";
+					rowsHTML+="<td data-th='AWB #'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form211_"+id+"' value='"+result.awb_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Current Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form211_"+id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Updated Status'>";
+						rowsHTML+="<input type='text' form='form211_"+id+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Remark'>";
+						rowsHTML+="<textarea form='form211_"+id+"'></textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form211_"+id+"' value='"+id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form211_"+id+"' id='save_form211_"+id+"'>";
+						rowsHTML+="<input type='hidden' form='form211_"+id+"' value='"+result.order_history+"'>";
+					rowsHTML+="</td>";			
+				rowsHTML+="</tr>";
+			
+				$('#form211_body').prepend(rowsHTML);
+				var fields=document.getElementById("form211_"+id);
+				var status_filter=fields.elements[2];
+				
+				set_static_value_list('logistics_orders','status',status_filter);
+						
+				$(fields).on("submit", function(event)
+				{
+					event.preventDefault();
+					form211_update_item(fields);
+				});
+			});
+			hide_loader();
+		});
+	}
+}
+
 
 /**
  * @form Sale Leads (followup)
@@ -23683,6 +23749,7 @@ function form230_ini()
 			"<quantity></quantity>" +
 			"<issue_date></issue_date>" +
 			"<issue_type>"+fissue+"</issue_type>" +
+			"<notes></notes>"+
 			"</bill_items>";
 
 	$('#form230_body').html("");
@@ -23709,17 +23776,26 @@ function form230_ini()
 					rowsHTML+="<td data-th='To/From'>";
 						rowsHTML+="<textarea readonly='readonly' form='form230_"+result.id+"'>"+result.customer+"</textarea>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Date'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form230_"+result.id+"' value='"+get_my_past_date(result.issue_date)+"'>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+="Date: <input type='text' readonly='readonly' form='form230_"+result.id+"' value='"+get_my_past_date(result.issue_date)+"'>";
+						rowsHTML+="<br><textarea placeholder='Notes' readonly='readonly' class='dblclick_editable' form='form230_"+result.id+"'>"+result.notes+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form230_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='hidden' form='form230_"+result.id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form230_"+result.id+"' value='saved' onclick='form230_delete_item($(this));'>";	
+						rowsHTML+="<input type='button' class='save_icon' form='form230_"+result.id+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form230_"+result.id+"' onclick='form230_delete_item($(this));'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form230_body').append(rowsHTML);
+			var fields=document.getElementById('form230_'+result.id);
+			
+			$(fields).on('submit',function (ev) 
+			{
+				ev.preventDefault();
+				form230_update_item(fields);
+			});
+			
 		});
 
 		////indexing///
@@ -24083,7 +24159,6 @@ function form234_ini()
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form234_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='submit' class='save_icon' form='form234_"+result.id+"' value='saved'>";
-						rowsHTML+="<input type='button' class='copy_icon' form='form234_"+result.id+"' value='saved' onclick='modal19_action($(this));'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form234_"+result.id+"' value='saved' onclick='form234_delete_item($(this));'>";	
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
