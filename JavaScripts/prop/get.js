@@ -948,7 +948,7 @@ function send_sms(to,message,type)
 	else 
 	{
 		hide_loader();
-		$("#modal60").dialog("open");
+		//$("#modal60").dialog("open");
 	}
 }
 
@@ -1003,7 +1003,7 @@ function send_email(to,from,from_name,subject,message,func)
 	else
 	{
 		hide_loader();
-		$("#modal59").dialog("open");
+		//$("#modal59").dialog("open");
 	}
 }
 
