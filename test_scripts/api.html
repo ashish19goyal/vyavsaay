@@ -2,19 +2,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>API Testing</title>
+<title>Shipment Tracking</title>
 </head>
 <body>
-	<input type='text' name='awb_num' id='awb_num'>
-	<button onclick="my_func();">Request</button>
-	<div id='myresult'>
+	<form id='tracking_form'>	
+		<input class="tracktext" type='text' name='awb_num' id='awb_num' placeholder="Enter AWB Number">
+		<input type='submit' value='Get Details'>
+	</form>
+	<div class="order_details" id="result">       
 	</div>
 </body>
-<script src='../JavaScripts/open/jquery-1.11.1.min.js'></script>
+<script src='https://code.jquery.com/jquery-1.11.3.min.js'></script>
 <script>
-	function my_func()
+	
+	$(window).load(function()
 	{
-		var my_div=document.getElementById('myresult');
+		var tracking_form=document.getElementById('tracking_form');
+		$(tracking_form).on('submit',function (e) {
+			e.preventDefault();
+			api_func();
+		});
+	});
+	
+	function api_func()
+	{
+		var my_div=document.getElementById('result');
 		var awb_num=document.getElementById('awb_num').value;
 
 		$.ajax(
@@ -24,18 +36,116 @@
 			data: {awb_num:awb_num},
 			error:function(xhr)
 			{
-				my_div.innerHTML="failure in ajax request";
+				my_div.innerHTML="Result not found. Enter a valid AWB number";
 				console.log(xhr.responseText);
 			},
 			success: function(return_data,return_status,e)
 			{
-				my_div.innerHTML="ajax request successful";
+				$("#result").html;
 				console.log(e.responseText);
-				////e.responseText will be a JSON string
-				////decode and extract data
-				///present this data to the user on the website 
+								
+				var result_div=document.getElementById('result');
+				$(result_div).html('');
+								
+				var response_object=JSON.parse(e.responseText);
+				
+				if(response_object.status=='success')
+				{
+					var result_rows=response_object.rows;
+					if(result_rows.length>0)
+					{ 
+						var result_table=document.createElement('table');
+						//add styling to the table here.	Styling can be added directly or through classes				
+						//result_table.setAttribute('style','width:100%');
+						//result_table.setAttribute('class','style_class');
+						
+						var result_table_heading=document.createElement('tr');
+						result_table.innerHTML="<td>Time</td><td>Details</td><td>Location</td><td>Status</td>";					
+						//add styling to the header row here.	Styling can be added directly or through classes				
+						//result_table_heading.setAttribute('style','width:100%');
+						//result_table_heading.setAttribute('class','style_class');
+	
+						result_table.appendChild(result_table_heading);
+						
+						var order_history=result_rows[0].order_history;
+						order_history.forEach(function(history)
+						{
+							var result_table_row=document.createElement('tr');
+							result_table_row.innerHTML="<td>"+get_my_datetime(history.timeStamp)+"</td><td>"+history.details+"</td><td>"+history.location+"</td><td>"+history.status+"</td>";					
+	
+							//add styling to the data row here.	Styling can be added directly or through classes				
+							//result_table_row.setAttribute('style','width:100%');
+							//result_table_row.setAttribute('class','style_class');
+							
+							result_table.appendChild(result_table_row);
+						});
+	
+						result_div.appendChild(result_table);
+					}
+					else {
+						result_div.innerHTML="Sorry! we couldn't find any orders corresponding to this tracking number. Please re-verify and try again.";
+					}
+				}
+				else {
+					result_div.innerHTML="oops!. Something weird happened. Please bear with us. We will be there soon.";
+				}
 			}
 		});
 	}
+	
+	function get_my_datetime(raw_time)
+	{
+		if(!raw_time)
+		{
+			var d=new Date();
+			var year = d.getFullYear();
+			var month =d.getMonth()+1;
+			if (month < 10) {
+			    month = "0" + month;
+			}
+			var date = d.getDate();
+			if (date < 10) {
+			    date = "0" + date;
+			}
+			var hour=d.getHours();
+			if (hour < 10) {
+			    hour = "0" + hour;
+			}
+			var minutes=d.getMinutes();
+			if (minutes < 10) {
+			    minutes = "0" + minutes;
+			}	
+			var time=date+"/"+month+"/"+year+" "+hour+":"+minutes;
+			return time;
+		}
+		else if(raw_time=="")	
+		{
+			return "";
+		}
+		else
+		{
+			var d= new Date(parseFloat(raw_time));
+			var year = d.getFullYear();
+			var month =d.getMonth()+1;
+			if (month < 10) {
+			    month = "0" + month;
+			}
+			var date = d.getDate();
+			if (date < 10) {
+			    date = "0" + date;
+			}
+			var hour=d.getHours();
+			if (hour < 10) {
+			    hour = "0" + hour;
+			}
+			var minutes=d.getMinutes();
+			if (minutes < 10) {
+			    minutes = "0" + minutes;
+			}	
+			var time=date+"/"+month+"/"+year+" "+hour+":"+minutes;
+			return time;
+		}
+	}
+
 </script>
 </html>
