@@ -1,5 +1,5 @@
 <div id='form214' class='function_detail'>
-	<div><img id='form214_logo' style='width:90%;height:100px;'></div>
+	<div><img id='form214_logo' style='width:90%;max-height:200px;'></div>
 	<br>
 	<form id='form214_master' autocomplete="off" class='questionnaire_form'>
 		<label>Name: <input name='name' type='text' class='widebox' required></label><br>
