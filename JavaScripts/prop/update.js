@@ -11749,3 +11749,58 @@ function form234_update_item(form)
 	}
 }
 
+/**
+ * @form Manage Products (Grid)
+ * @param button
+ */
+function form235_update_item(form)
+{
+	if(is_update_access('form235'))
+	{
+		var pic_id=$("#img_form235_"+data_id).parent().attr('name');
+		var url=$("#img_form235_"+data_id).attr('src');
+		var name=form.elements[3].value;
+		var make=form.elements[4].value;
+		var description=form.elements[5].value;
+		var tax=form.elements[6].value;
+		var data_id=form.elements[7].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<product_master>" +
+					"<id>"+data_id+"</id>" +
+					"<make>"+make+"</make>" +
+					"<name>"+name+"</name>" +
+					"<description>"+description+"</description>" +
+					"<tax>"+tax+"</tax>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</product_master>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>product_master</tablename>" +
+					"<link_to>form235</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>Product "+name+" from inventory</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		var pic_xml="<documents>" +
+					"<id>"+pic_id+"</id>" +
+					"<url>"+url+"</url>" +
+					"<doc_type>product_master</doc_type>" +
+					"<target_id>"+data_id+"</target_id>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</documents>";
+		
+		update_row(data_xml,activity_xml);
+		update_simple(pic_xml);
+		create_simple(pic_xml);
+		
+		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

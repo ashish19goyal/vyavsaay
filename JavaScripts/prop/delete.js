@@ -7830,3 +7830,74 @@ function form234_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage Products (grid)
+ * @param button
+ */
+function form235_delete_item(button)
+{
+	if(is_delete_access('form235'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			
+			var name=form.elements[3].value;
+			var make=form.elements[4].value;
+			var description=form.elements[2].value;
+			var tax=form.elements[5].value;
+			var data_id=form.elements[7].value;
+			var last_updated=get_my_time();
+			var data_xml="<product_master>" +
+						"<id>"+data_id+"</id>" +
+						"</product_master>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>product_master</tablename>" +
+						"<link_to>form235</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Product "+name+" from inventory</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			var other_delete="<product_instances>" +
+					"<product_name>"+name+"</product_name>" +
+					"</product_instances>";
+			var other_delete2="<documents>" +
+					"<doc_type>product_master</doc_type>" +
+					"<target_id>"+data_id+"</target_id>" +
+					"</documents>";
+			var other_delete3="<pre_requisites>" +
+					"<name>"+name+"</name>" +
+					"<type>product</type>" +
+					"</pre_requisites>";
+			var other_delete4="<attributes>" +
+					"<name exact='yes'>"+name+"</name>" +
+					"<type>product</type>" +
+					"</attributes>";
+			var other_delete5="<cross_sells>" +
+					"<name>"+name+"</name>" +
+					"<type>product</type>" +
+					"</cross_sells>";
+			var other_delete6="<reviews>" +
+					"<name>"+name+"</name>" +
+					"<type>product</type>" +
+					"</reviews>";
+	
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
+			delete_simple(other_delete2);
+			delete_simple(other_delete3);
+			delete_simple(other_delete4);
+			delete_simple(other_delete5);
+			delete_simple(other_delete6);
+			
+			$(button).parent().parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

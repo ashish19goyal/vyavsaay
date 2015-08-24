@@ -24263,7 +24263,7 @@ function form235_ini()
 			"<last_updated></last_updated>" +
 			"</product_master>";
 
-	$('#form235_body').html("");
+	$('#form235_grid').html("");
 
 	fetch_requested_data('form235',columns,function(results)
 	{
