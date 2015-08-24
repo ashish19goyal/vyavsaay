@@ -8433,3 +8433,46 @@ function form234_header_ini()
 		form234_ini();
 	});
 };
+
+
+/**
+ * @form Manage Products (Grid)
+ * @formNo 235
+ */
+function form235_header_ini()
+{
+	var filter_fields=document.getElementById('form235_header');
+	var name_filter=filter_fields.elements[1];
+	var make_filter=filter_fields.elements[2];
+	var add_filter=filter_fields.elements[3];
+
+	$(add_filter).off('click'); 	
+	$(add_filter).on('click',function () 
+	{
+		if(!is_read_access('form1') && !is_read_access('form155') && !is_read_access('form207') && !is_read_access('form183'))
+		{
+			modal112_action();
+		}
+		else
+		{
+			modal14_action();
+		}
+	});
+	
+	var make_data="<product_master>" +
+			"<make></make>" +
+			"</product_master>";
+	var products_data="<product_master>" +
+			"<name></name>" +
+			"</product_master>";
+	
+	set_my_filter(make_data,make_filter);
+	set_my_filter(products_data,name_filter);
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form235_ini();
+	});
+};

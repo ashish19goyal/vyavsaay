@@ -24227,3 +24227,161 @@ function form234_ini()
 		hide_loader();
 	});	
 };
+
+
+/**
+ * @form Manage Products (Grid)
+ * @formNo 235
+ * @Loading heavy
+ */
+function form235_ini()
+{
+	show_loader();
+	var fid=$("#form235_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form235_header');
+	
+	var fname=filter_fields.elements[1].value;
+	var fmakes=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form235_index');
+	var prev_element=document.getElementById('form235_prev');
+	var next_element=document.getElementById('form235_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<product_master count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<name>"+fname+"</name>" +
+			"<make>"+fmakes+"</make>" +
+			"<description></description>" +
+			"<bar_code></bar_code>" +
+			"<tax></tax>" +
+			"<last_updated></last_updated>" +
+			"</product_master>";
+
+	$('#form235_body').html("");
+
+	fetch_requested_data('form235',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var picture_column="<documents>" +
+					"<id></id>" +
+					"<url></url>" +
+					"<doc_type exact='yes'>product_master</doc_type>" +
+					"<target_id exact='yes'>"+result.id+"</target_id>" +
+					"</documents>";
+			fetch_requested_data('form235',picture_column,function(pic_results)
+			{
+				var pic_results_url="";
+				var pic_results_id="";
+				for (var j in pic_results)
+				{
+					pic_results_id=pic_results[j].id;
+					pic_results_url=pic_results[j].url;
+				}
+				if(pic_results.length===0)
+				{
+					pic_results_id=get_new_key();
+					pic_results_url="";
+				}
+				
+				updated_url=pic_results_url.replace(/ /g,"+");
+				
+				var rowsHTML="<li><ul class='form_grid_item'>";
+					rowsHTML+="<form id='form235_"+result.id+"'></form>";
+						rowsHTML+="<li>";
+							rowsHTML+="<output form='form235_"+result.id+"'><div class='form_grid_item' name='"+pic_results_id+"'><img id='img_form235_"+result.id+"' src='"+updated_url+"'></div></output>";
+							rowsHTML+="<input type='file' form='form235_"+result.id+"'>";
+							rowsHTML+="<input type='button' class='generic_icon' value='Change Picture' form='form235_"+result.id+"'>";
+						rowsHTML+="</li>";
+						rowsHTML+="<li>";
+							rowsHTML+="Name: <textarea readonly='readonly' form='form235_"+result.id+"'>"+result.name+"</textarea>";
+						rowsHTML+="</li>";
+						rowsHTML+="<li>";
+							rowsHTML+="Make: <textarea readonly='readonly' form='form235_"+result.id+"' class='dblclick_editable'>"+result.make+"</textarea>";
+						rowsHTML+="</li>";
+						rowsHTML+="<li>";
+							rowsHTML+="Description: <textarea readonly='readonly' form='form235_"+result.id+"' class='dblclick_editable'>"+result.description+"</textarea>";
+						rowsHTML+="</li>";
+						rowsHTML+="<li>";
+							rowsHTML+="Tax: <input type='text' readonly='readonly' form='form235_"+result.id+"' class='dblclick_editable' value='"+result.tax+"'>";
+						rowsHTML+="</li>";
+						rowsHTML+="<li data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form235_"+result.id+"' value='"+result.id+"'>";
+							rowsHTML+="<input type='submit' class='save_icon' form='form235_"+result.id+"'>";
+							rowsHTML+="<input type='button' class='delete_icon' form='form235_"+result.id+"' onclick='form235_delete_item($(this));'>";	
+						rowsHTML+="</li>";			
+				rowsHTML+="</ul></li>";
+			
+				$('#form235_grid').append(rowsHTML);
+
+				var fields=document.getElementById("form235_"+result.id);
+				var pictureinfo=fields.elements[0];
+				var picture=fields.elements[1];
+				var dummy_button=fields.elements[2];
+
+				$(fields).on("submit",function(event)
+				{
+					event.preventDefault();
+					form235_update_item(fields);
+				});
+				
+				$(dummy_button).on('click',function (e) 
+				{
+					e.preventDefault();
+					$(picture).trigger('click');
+				});
+				
+				picture.addEventListener('change',function(evt)
+				{
+					select_picture(evt,pictureinfo,function(dataURL)
+					{
+						pictureinfo.innerHTML="<div class='form_grid_item' name='"+pic_results_id+"'><img id='img_form235_"+result.id+"' src='"+dataURL+"'></div>";			
+					});
+				},false);
+				
+				longPressEditable($('.dblclick_editable'));
+				
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		$('textarea').autosize();
+
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'products');
+		});
+		hide_loader();
+	});	
+};

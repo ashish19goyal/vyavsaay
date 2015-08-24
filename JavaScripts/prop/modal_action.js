@@ -8476,7 +8476,7 @@ function modal127_action()
 		});
 
 		var container=document.createElement('div');
-		container.setAttribute('style','width:95%;font-size:14px;line-height:16px;');
+		container.setAttribute('style','width:95%;font-size:14px;line-height:20px;');
 		
 		items.forEach(function(item)
 		{
@@ -8489,8 +8489,8 @@ function modal127_action()
 				//var address_elem=document.createElement('div');
 
 			item_container.setAttribute('style','width:95%;height:90%;margin:0px;margin-top:5%;margin-bottom:5%;font-size:14px');
-			bill_num_elem.setAttribute('style','font-size:15px;margin:5px;');
-			item_name_elem.setAttribute('style','font-size:12px;margin:5px;');
+			bill_num_elem.setAttribute('style','font-size:22px;margin:5px;');
+			item_name_elem.setAttribute('style','font-size:18px;margin:5px;');
 			
 			item_count_elem.innerHTML="<hr style='border: 1px solid #000;margin:0px;'>"+item.number+" of "+total_quantity;
 			//business_title_elem.innerHTML=bus_title;

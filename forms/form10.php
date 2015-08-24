@@ -3,7 +3,7 @@
 		<fieldset>
 			<label>Customer <img src='./images/add_image.png' class='add_image' id='form10_add_customer'><br>
 			<input type='text' required name='customer'></label>
-			<label>Order #<br><input type='text' name='order_num'></label>
+			<label>Order #<br><input type='text' name='order_num' readonly="readonly"></label>
 			<label>Bill #<br><input type='text' name='bill_num' readonly="readonly"></label>
 			<label>Bill Date<br><input type='text' name='bill_date' required></label>
 			<label>Due Date<br><input type='text' name='due_date' required></label>

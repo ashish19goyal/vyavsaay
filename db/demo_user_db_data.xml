@@ -3330,6 +3330,17 @@
 			<tables>--product_master--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form235</name>
+			<display_name>manage_products_grid</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_master--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -6295,6 +6306,17 @@
 			<username>master</username>
 			<element_id>form234</element_id>
 			<element_name>manage_products_wo_tax</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form235</element_id>
+			<element_name>manage_products_grid</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

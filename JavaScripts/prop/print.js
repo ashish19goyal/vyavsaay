@@ -2312,12 +2312,13 @@ function print_form200(func)
 
 	////////////setting styles for containers/////////////////////////
 
-	header.setAttribute('style','display:block;width:100%;min-height:70px;margin-top:10px;');
+	container.setAttribute('style','width:98%;height:90%;margin:0px;padding:0px;');
+	header.setAttribute('style','display:block;width:98%;height:70px;margin-top:10px;');
 		logo.setAttribute('style','float:left;width:35%;height:60px;');
 		business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
-		drs_barcode.setAttribute('style','float:right;width:20%;height:60px;padding:left:5px;padding-right:5px;');
-	drs_title.setAttribute('style','display:block;width:100%;min-height:20px;text-align:center');	
-	detail_section.setAttribute('style','display:block;width:100%;min-height:30px;text-align:center;');
+		drs_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
+	drs_title.setAttribute('style','display:block;width:98%;height:20px;text-align:center');	
+	detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
 	
 	///////////////getting the content////////////////////////////////////////
 
@@ -2331,39 +2332,39 @@ function print_form200(func)
 	//var print_date=master_form.elements['pdate'].value;
 	var drs_num=master_form.elements['drs_num'].value;
 	var page_num=1;
-	
+
 	////////////////filling in the content into the containers//////////////////////////
 	
 	var table_element=document.getElementById(form_id+'_body');
 		
 	var total_items=$(table_element).find('tr').length;
 
-	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"' style='height:120%;margin-left:20%'>";
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"' style='height:98%;margin-left:10%'>";
 	business_title.innerHTML=bt;
 
-	$(drs_barcode).JsBarcode(drs_num,{displayValue:true});
+	$(drs_barcode).JsBarcode(drs_num,{displayValue:false});
 		
 	drs_title.innerHTML="Delivery Run Sheet";
 
 	employee_text="<td>Employee: "+employee_name+"</td><td>Total Items: "+total_items+"</td>";
 	drs_text="<td>DRS #: "+drs_num+"</td><td>DRS Date: "+drs_date+"</td>";
-	detail_text="<table style='border:none;width:100%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+drs_text+"</tr></table>";
+	detail_text="<table style='border:none;width:98%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+drs_text+"</tr></table>";
 	
 	detail_section.innerHTML=detail_text;
-	
+
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
 
 	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:4%'>S.No.</td>"+
-				"<td style='text-align:left;width:20%'>C-Note No.</td>"+
-				"<td style='text-align:left;width:12%'>Address</td>"+
+				"<td style='text-align:left;width:19%'>C-Note No.</td>"+
+				"<td style='text-align:left;width:11%'>Address</td>"+
 				"<td style='text-align:left;width:5%'>Wt.</td>"+
 				"<td style='text-align:left;width:5%'>P</td>"+
 				"<td style='text-align:left;width:5%'>Time</td>"+
 				"<td style='text-align:left;width:30%'>Receiver/Comp Seal</td>"+
 				"<td style='text-align:left;width:4%'>RC</td>"+
 				"<td style='text-align:left;width:15%'>Sign</td></tr>";
-				
+
 	var table_rows=table_header;
 	var counter=0;
 
@@ -2373,10 +2374,6 @@ function print_form200(func)
 
 	$(table_element).find('form').each(function(index)
 	{
-		//if((counter%10)==0)
-		//{
-		//	table_rows+=table_header;
-		//}
 		counter+=1;
 		var form=$(this)[0];
 		var mob_seal="<table style='width:95%;height:40px;'>"+tr_text+tr_text+"</table><br><div style='font-size:14px;'>"+form.elements[2].value+"</div>";
@@ -2608,6 +2605,7 @@ function print_form219(func)
 
 	////////////setting styles for containers/////////////////////////
 
+	container.setAttribute('style','width:98%;height:90%;max-height:90%;margin:0px;padding:0px;');
 	header.setAttribute('style','display:block;width:100%;min-height:70px;margin-top:10px;');
 		logo.setAttribute('style','float:left;width:35%;height:60px;');
 		business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
@@ -2652,8 +2650,8 @@ function print_form219(func)
 	new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
 
 	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:4%'>S.No.</td>"+
-				"<td style='text-align:left;width:20%'>C-Note No.</td>"+
-				"<td style='text-align:left;width:12%'>Address</td>"+
+				"<td style='text-align:left;width:19%'>C-Note No.</td>"+
+				"<td style='text-align:left;width:11%'>Address</td>"+
 				"<td style='text-align:left;width:5%'>Wt.</td>"+
 				"<td style='text-align:left;width:5%'>P</td>"+
 				"<td style='text-align:left;width:5%'>Time</td>"+
