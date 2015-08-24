@@ -1564,4 +1564,12 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</delivery_run>
+	<export_log>  
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<acc_name index='yes' type="TEXT"></acc_name>
+			<filename index='yes' type="TEXT"></filename>
+			<export_time index='yes' type="BIGINT"></export_time>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</export_log>
 </re_xml>

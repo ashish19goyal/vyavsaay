@@ -1,7 +1,6 @@
 <div id='form235' class='function_detail'>
 	<form id='form235_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Name<br><input type='text'></label>
 			<label>Make<br><input type='text'></label>
 			<label><input type='button' form='form235_header' title='Add new product' class='add_icon'></label>

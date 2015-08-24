@@ -7032,16 +7032,25 @@ function form196_header_ini()
 	var list_filter=fields.elements['list'];
 	var value_filter=fields.elements['value'];
 	var id_filter=fields.elements['nl_id'];
+	var send_button=fields.elements['send'];
+	var send_all_button=fields.elements['send_all'];
 	id_filter.value="";
 	name_filter.value="";
 	list_filter.value="";
 	fields.elements['nl_id'].value="";
 	
-	$(fields).off('submit');
-	$(fields).on('submit',function(event)
+	$(send_button).off('click');
+	$(send_button).on('click',function(event)
 	{
 		event.preventDefault();
 		form196_ini();
+	});
+
+	$(send_all_button).off('click');
+	$(send_all_button).on('click',function(event)
+	{
+		event.preventDefault();
+		form196_ini_all();
 	});
 
 	var list_data="<attributes>"+

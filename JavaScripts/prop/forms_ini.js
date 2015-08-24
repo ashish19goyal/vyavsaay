@@ -20716,17 +20716,6 @@ function form196_ini()
 					"<phone></phone>"+
 					"<acc_name array='yes'>"+customer_string+"</acc_name>" +
 					"</customers>";
-			if(customer_string=="--")
-			{
-				customer_columns="<customers>" +
-					"<id></id>" +
-					"<name></name>" +
-					"<email></email>" +
-					"<phone></phone>"+
-					"<acc_name></acc_name>" +
-					"</customers>";
-			}
-			
 			fetch_requested_data('',customer_columns,function(results)
 			{
 				print_newsletter(nl_name,nl_id,'mail',function(container)
@@ -20762,6 +20751,70 @@ function form196_ini()
 					});
 				});		
 			});
+		});
+	}
+}
+
+/**
+ * @form Promotion by list
+ * @formNo 196
+ * @Loading heavy
+ */
+function form196_ini_all()
+{
+	var master_form=document.getElementById('form196_master');
+	var nl_name=master_form.elements['newsletter'].value;
+	var nl_id=master_form.elements['nl_id'].value;	
+	var sms_content=master_form.elements['sms'].value;	
+	var list=master_form.elements['list'].value;	
+	var list_value=master_form.elements['value'].value;	
+	
+	if(nl_id!="" && nl_name!="" || sms_content!="")
+	{
+		show_loader();
+		
+		var customer_columns="<customers>" +
+				"<id></id>" +
+				"<name></name>" +
+				"<email></email>" +
+				"<phone></phone>"+
+				"<acc_name></acc_name>" +
+				"</customers>";
+		
+		fetch_requested_data('',customer_columns,function(results)
+		{
+			print_newsletter(nl_name,nl_id,'mail',function(container)
+			{
+				var business_title=get_session_var('title');
+				var subject=nl_name;
+				
+				var email_id_string="";
+				var email_message=container.innerHTML;
+				var from=get_session_var('email');
+				
+				results.forEach(function (result) 
+				{
+					var to=result.email;
+					var customer_phone=result.phone;
+					var customer_name=result.name;
+					email_id_string+=customer_name+":"+to;
+					var message=sms_content.replace(/customer_name/g,customer_name);
+					message=message.replace(/business_title/g,business_title);
+						
+					send_sms(customer_phone,message,'transaction');
+					if(to!="")
+					{
+						email_id_string+=";";				
+					}						
+				});
+		
+				var email_to=email_id_string;
+				send_email(email_to,from,business_title,subject,email_message,function()
+				{
+					$("#modal58").dialog("open");
+					hide_loader();			
+				});
+			});		
 		});
 	}
 }
