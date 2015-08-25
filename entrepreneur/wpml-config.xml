@@ -1,0 +1,82 @@
+<wpml-config>
+    <custom-fields>
+        <custom-field action="ignore">_align_content</custom-field>
+        <custom-field action="ignore">_at_widget</custom-field>
+        <custom-field action="ignore">_content_align</custom-field>
+        <custom-field action="ignore">_dp_original</custom-field>
+        <custom-field action="ignore">_featured</custom-field>
+        <custom-field action="ignore">_format_gallery</custom-field>
+        <custom-field action="ignore">_format_link_url</custom-field>
+        <custom-field action="translate">_format_quote_source_name</custom-field>
+        <custom-field action="ignore">_format_video_embed</custom-field>
+        <custom-field action="ignore">_form_shortcode</custom-field>
+        <custom-field action="ignore">_hide_title</custom-field>
+        <custom-field action="translate">_job_title</custom-field>
+        <custom-field action="ignore">_large_styling</custom-field>
+        <custom-field action="ignore">_menu_item_classes</custom-field>
+        <custom-field action="ignore">_menu_item_menu_item_parent</custom-field>
+        <custom-field action="ignore">_menu_item_object</custom-field>
+        <custom-field action="ignore">_menu_item_object_id</custom-field>
+        <custom-field action="ignore">_menu_item_orphaned</custom-field>
+        <custom-field action="ignore">_menu_item_target</custom-field>
+        <custom-field action="ignore">_menu_item_type</custom-field>
+        <custom-field action="ignore">_menu_item_url</custom-field>
+        <custom-field action="ignore">_menu_item_xfn</custom-field>
+        <custom-field action="translate">_quote</custom-field>
+        <custom-field action="ignore">_show_tooltip</custom-field>
+        <custom-field action="ignore">_social_icon</custom-field>
+        <custom-field action="ignore">_social_link</custom-field>
+        <custom-field action="translate">_title</custom-field>
+        <custom-field action="translate">_tooltip_text</custom-field>
+        <custom-field action="ignore">_wp_old_slug</custom-field>
+        <custom-field action="ignore">_wp_trash_meta_comments_status</custom-field>
+        <custom-field action="ignore">_wp_trash_meta_status</custom-field>
+        <custom-field action="ignore">_wp_trash_meta_time</custom-field>
+        <custom-field action="ignore">__animate</custom-field>
+        <custom-field action="ignore">__animate_style</custom-field>
+        <custom-field action="ignore">__background_color</custom-field>
+        <custom-field action="ignore">__background_image</custom-field>
+        <custom-field action="ignore">__border_full_width</custom-field>
+        <custom-field action="ignore">__bottom_padding</custom-field>
+        <custom-field action="ignore">__button_link</custom-field>
+        <custom-field action="ignore">__button_style</custom-field>
+        <custom-field action="translate">__button_text</custom-field>
+        <custom-field action="ignore">__glyphicons-icon</custom-field>
+        <custom-field action="ignore">__glyphicons_icon_set</custom-field>
+        <custom-field action="ignore">__hide_title</custom-field>
+        <custom-field action="ignore">__hover</custom-field>
+        <custom-field action="ignore">__large_styling</custom-field>
+        <custom-field action="ignore">__link</custom-field>
+        <custom-field action="ignore">__padding</custom-field>
+        <custom-field action="ignore">__parallax</custom-field>
+        <custom-field action="ignore">__photo_align</custom-field>
+        <custom-field action="ignore">__photo_size</custom-field>
+        <custom-field action="ignore">__photo_sticky</custom-field>
+        <custom-field action="ignore">__show_background</custom-field>
+        <custom-field action="ignore">__show_border</custom-field>
+        <custom-field action="ignore">__show_button</custom-field>
+        <custom-field action="ignore">__show_link</custom-field>
+        <custom-field action="ignore">__social_link_target</custom-field>
+        <custom-field action="ignore">__text_contrast</custom-field>
+        <custom-field action="ignore">__top_padding</custom-field>
+
+    </custom-fields>
+    <custom-types>
+        <custom-type translate="1">themo_portfolio</custom-type>
+        <custom-type translate="1">themo_accordion</custom-type>
+        <custom-type translate="1">themo_brands</custom-type>
+        <custom-type translate="1">themo_faq</custom-type>
+        <custom-type translate="1">themo_featured</custom-type>
+        <custom-type translate="1">themo_pricing_plans</custom-type>
+        <custom-type translate="1">themo_slider</custom-type>
+        <custom-type translate="1">themo_team</custom-type>
+        <custom-type translate="1">themo_testimonials</custom-type>
+        <custom-type translate="1">themo_thumb_slider</custom-type>
+        <custom-type translate="1">themo_tour</custom-type>
+        <custom-type translate="1">themo_service_block</custom-type>
+    </custom-types>
+
+
+</wpml-config>
+
+

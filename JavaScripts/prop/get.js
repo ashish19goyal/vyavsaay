@@ -748,8 +748,28 @@ function csv_string_to_obj_array(csvString)
 
 	var rows=csvString.split("\n");	
 	var results=[];
+
+	for(var x=0;x<rows.length;x++)
+	{
+		var dquotes=rows[x].match(/"/g);
+		if(dquotes!=null && dquotes.length===1)
+		{
+			for(var y=x+1;y<rows.length;y++)
+			{
+				rows[x]+="\n"+rows[y];
+				var second_dquotes=rows[y].match(/"/g);
+				rows.splice(y,1);
+				y-=1;
+				if(second_dquotes!=null && second_dquotes.length===1)
+				{
+					break;
+				}
+			}
+		}
+	}
+
 	var header_cols=rows[0].split(',');
-	
+
 	for(var i=1;i<rows.length;i++)
 	{
 		if(rows[i]!="")
@@ -785,6 +805,7 @@ function csv_string_to_obj_array(csvString)
 	}
 	return results;
 }
+
 
 function my_round(any_number,decimal_p)
 {

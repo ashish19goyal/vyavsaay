@@ -13,7 +13,7 @@ class send_mailer
 	public $password=null;
 	public $sender_id=null;
 	public $url=null;
-	
+
 	public function __construct()
 	{
 		$this->api_key='Ub0h4w5NVLE6GdyXrYFlZw';

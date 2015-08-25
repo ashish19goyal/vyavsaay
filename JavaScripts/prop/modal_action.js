@@ -9283,9 +9283,10 @@ function modal138_action()
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
-		var data_array=['order_id','order_date','payment mode','customer_firstname','customer_lastname',
-						'customer_email','phone','address','city','state','pincode','item_name','channel_sku',
-						'system_sku','item_mrp','item_price','quantity','shipping_amount','estimated_shipping_date'];
+		var data_array=['order_id','order_date','payment mode','customer_name','customer_email','phone',
+						'address','pincode','tin','item_name','channel_sku','system_sku',
+						'item_mrp','item_price','quantity','shipping_amount','estimated_shipping_date',
+						'tax_type'];
 		my_array_to_csv(data_array);
 	});
 	

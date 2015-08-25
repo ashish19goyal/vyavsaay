@@ -883,6 +883,17 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</appointments>
+	<appointment_slots>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+                        <day_of_week index='yes' type="TEXT"></day_of_week>
+			<start_time index='no' type="TEXT"></start_time>
+			<end_time index='no' type="TEXT"></end_time>
+			<status index='yes' type="VARCHAR(45)"></status><!-- active/disabled -->
+			<assignee index='yes' type="TEXT"></assignee>
+			<notes index='no' type="TEXT"></notes>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</appointment_slots>
 	<bill_types>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<name index='yes' type="TEXT"></name>
