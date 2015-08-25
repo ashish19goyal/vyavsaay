@@ -7569,12 +7569,38 @@ function form211_header_ini()
 	var fields=document.getElementById('form211_master');
 	
 	var drs_filter=fields.elements['drs'];
+	var status_filter=fields.elements['status'];
+	var remark_filter=fields.elements['remark'];
 	var refresh_button=fields.elements['refresh'];
 	var save_button=fields.elements['save'];
 
 	drs_filter.value="";
 	$(drs_filter).focus();
 
+	set_static_value_list('logistics_orders','status',status_filter);
+
+	$(status_filter).off('blur');
+	$(status_filter).on('blur',function () 
+	{
+		$("[id^='save_form211']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			subform.elements[2].value=status_filter.value;
+		});
+	});
+	
+	$(remark_filter).off('blur');
+	$(remark_filter).on('blur',function () 
+	{
+		$("[id^='save_form211']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			subform.elements[3].value=remark_filter.value;
+		});		
+	});
+	
 	$(refresh_button).off('click');
 	$(refresh_button).on("click", function(event)
 	{

@@ -1,7 +1,9 @@
 <div id='form211' class='function_detail'>
 	<form id='form211_master' autocomplete="off">
 		<fieldset>
-			<label>DRS #: <input type='text' class='widebox' name='drs'></label>
+			<label>DRS #<br><input type='text' name='drs'></label>
+			<label>Set Status<br><input type='text' name='status'></label>
+			<label>Set Remark<br><textarea name='remark'></textarea></label>
 			<label>
 				<input type='submit' class='generic_icon' name='refresh' value="Refresh">
 				<input type='button' class='save_icon' name='save' title="Save All">

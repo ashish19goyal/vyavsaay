@@ -21948,6 +21948,8 @@ function form211_ini()
 
 	var filter_fields=document.getElementById('form211_master');
 	var drs_num=filter_fields['drs'].value;
+	var all_status=filter_fields['status'].value;
+	var all_remark=filter_fields['remark'].value;
 		
 	if(drs_num!="")
 	{
@@ -21974,10 +21976,10 @@ function form211_ini()
 						rowsHTML+="<input type='text' readonly='readonly' form='form211_"+id+"' value='"+result.status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Updated Status'>";
-						rowsHTML+="<input type='text' form='form211_"+id+"'>";
+						rowsHTML+="<input type='text' form='form211_"+id+"' value='"+all_status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Remark'>";
-						rowsHTML+="<textarea form='form211_"+id+"'></textarea>";
+						rowsHTML+="<textarea form='form211_"+id+"'>"+all_remark+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form211_"+id+"' value='"+id+"'>";
