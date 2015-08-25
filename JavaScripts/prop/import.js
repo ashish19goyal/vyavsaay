@@ -7568,6 +7568,7 @@ function form230_import(data_array,import_type)
 function form234_import(data_array,import_type)
 {
 	var data_xml="<product_master>";
+	var data2_xml="<product_instances>";
 	var counter=1;
 	var last_updated=get_my_time();
 	data_array.forEach(function(row)
@@ -7575,8 +7576,10 @@ function form234_import(data_array,import_type)
 		if((counter%500)===0)
 		{
 			data_xml+="</product_master><separator></separator><product_master>";
+			data2_xml+="</product_instances><separator></separator><product_instances>";
 		}
-				counter+=1;
+		
+		counter+=1;
 		if(import_type=='create_new')
 		{
 			row.id=last_updated+counter;
@@ -7590,15 +7593,27 @@ function form234_import(data_array,import_type)
 				"<bar_code>"+row.bar_code+"</bar_code>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
+		data2_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<product_name>"+row.name+"</product_name>" +
+				"<batch>"+row.name+"</batch>" +
+				"<cost_price>"+row.cost_price+"</cost_price>" +
+				"<sale_price>"+row.sale_price+"</sale_price>" +
+				"<mrp>"+row.mrp+"</mrp>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
 	});
 	
 	data_xml+="</product_master>";
+	data2_xml+="</product_instances>";
 	if(import_type=='create_new')
 	{
 		create_batch(data_xml);
+		create_batch(data2_xml);
 	}
 	else
 	{
 		update_batch(data_xml);
+		update_batch(data2_xml);
 	}
 };

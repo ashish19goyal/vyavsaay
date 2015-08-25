@@ -7768,7 +7768,6 @@ function form234_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
 						"<id>"+data_id+"</id>" +
-						"<tax>"+tax+"</tax>" +
 						"</product_master>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
