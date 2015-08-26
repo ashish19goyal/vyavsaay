@@ -2379,7 +2379,7 @@ function print_form200(func)
 		var mob_seal="<table style='width:95%;height:40px;'>"+tr_text+tr_text+"</table><br><div style='font-size:14px;'>"+form.elements[2].value+"</div>";
 		
 		var awb_num=""+form.elements[0].value;
-		var manifest_type=form.elements[6].value.replace(/manifest/g,"");
+		var manifest_type=form.elements[6].value;//.replace(/manifest/g,"");
 		var order_id=form.elements[7].value;
 		var merchant_name=form.elements[8].value;
 		var ship_to=form.elements[12].value;
@@ -2681,7 +2681,7 @@ function print_form219(func)
 		var mob_seal="<table style='width:95%;height:40px;'>"+tr_text+tr_text+"</table><br><div style='font-size:14px;'>"+form.elements[2].value+"</div>";
 		
 		var awb_num=""+form.elements[0].value;
-		var manifest_type=form.elements[7].value.replace(/manifest/g,"");
+		var manifest_type=form.elements[7].value;//.replace(/manifest/g,"");
 		var order_id=form.elements[8].value;
 		var merchant_name=form.elements[9].value;
 		var ship_to=form.elements[13].value;
