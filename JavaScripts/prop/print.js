@@ -2382,6 +2382,7 @@ function print_form200(func)
 		var manifest_type=form.elements[6].value.replace(/manifest/g,"");
 		var order_id=form.elements[7].value;
 		var merchant_name=form.elements[8].value;
+		var ship_to=form.elements[12].value;
 
 		var cnote_no=document.createElement('div');
 		var barcode_image=document.createElement('img');
@@ -2396,7 +2397,14 @@ function print_form200(func)
 		
 		barcode_value.innerHTML=awb_num;
 		type_value.innerHTML="Type: "+manifest_type+" O-ID: "+order_id;
-		merchant_value.innerHTML=merchant_name;
+		if(manifest_type=='PREPAID')
+		{
+			merchant_value.innerHTML=ship_to;
+		}		
+		else
+		{	
+			merchant_value.innerHTML=merchant_name;
+		}
 		$(barcode_image).JsBarcode(awb_num,{displayValue:false});
 		
 		cnote_no.appendChild(barcode_image);
@@ -2676,6 +2684,7 @@ function print_form219(func)
 		var manifest_type=form.elements[7].value.replace(/manifest/g,"");
 		var order_id=form.elements[8].value;
 		var merchant_name=form.elements[9].value;
+		var ship_to=form.elements[13].value;
 
 		var cnote_no=document.createElement('div');
 		var barcode_image=document.createElement('img');
@@ -2690,7 +2699,7 @@ function print_form219(func)
 		
 		barcode_value.innerHTML=awb_num;
 		type_value.innerHTML="Type: "+manifest_type+" O-ID: "+order_id;
-		merchant_value.innerHTML=merchant_name;
+		merchant_value.innerHTML=ship_to;
 		$(barcode_image).JsBarcode(awb_num,{displayValue:false});
 		
 		cnote_no.appendChild(barcode_image);

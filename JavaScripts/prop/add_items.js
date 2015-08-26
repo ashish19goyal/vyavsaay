@@ -11111,7 +11111,26 @@ function form199_add_item()
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
-			form199_add_item();
+			
+			var double_entry=0;
+			$("[id^='save_form199']").each(function(index)
+			{
+				var subform_id=$(this).attr('form');
+				var subform=document.getElementById(subform_id);
+				
+				if(subform.elements[0].value==awb_filter.value)	
+					double_entry+=1;
+			});
+
+			if(double_entry<2)
+			{
+				form199_add_item();
+			}
+			else 
+			{
+				awb_filter.value="";
+				$("#modal65").dialog("open");
+			}
 		});
 
 		var awb_data="<logistics_orders>"+
@@ -11127,22 +11146,44 @@ function form199_add_item()
 		{
 			if(event.keyCode == 13 ) 
 			{
-				var order_data="<logistics_orders count='1'>"+
+				event.preventDefault();
+			
+				var double_entry=0;
+				$("[id^='save_form199']").each(function(index)
+				{
+					var subform_id=$(this).attr('form');
+					var subform=document.getElementById(subform_id);
+					
+					if(subform.elements[0].value==awb_filter.value)	
+						double_entry+=1;
+				});
+	
+				if(double_entry<2)
+				{
+					form199_add_item();
+					var order_data="<logistics_orders count='1'>"+
 							"<id></id>"+
 							"<order_num></order_num>"+
 							"<order_history></order_history>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
-				fetch_requested_data('',order_data,function(orders)
-				{
-					if(orders.length>0)
+					fetch_requested_data('',order_data,function(orders)
 					{
-						order_filter.value=orders[0].order_num;
-						id_filter.value=orders[0].id;
-						order_history.value=orders[0].order_history;
-						form199_update_item(fields);
-					}
-				});				
+						if(orders.length>0)
+						{
+							order_filter.value=orders[0].order_num;
+							id_filter.value=orders[0].id;
+							order_history.value=orders[0].order_history;
+							form199_update_item(fields);						
+						}
+					});
+				}
+				else 
+				{
+					awb_filter.value="";
+					$("#modal65").dialog("open");
+				}
+								
 			}
 		});
 	}
@@ -11166,7 +11207,7 @@ function form200_add_item()
 			rowsHTML+="<td data-th='S.No.'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='AWB #'>";
-				rowsHTML+="<input type='text' required form='form200_"+id+"'>";
+				rowsHTML+="<input type='text' required form='form200_"+id+"' oninvalid=\"setCustomValidity('This AWB # is invalid')\">";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Address'>";
 				rowsHTML+="<textarea readonly='readonly' form='form200_"+id+"'></textarea>";
@@ -11186,6 +11227,7 @@ function form200_add_item()
 				rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form200_"+id+"' id='save_form200_"+id+"'>";
 				rowsHTML+="<input type='button' class='delete_icon' form='form200_"+id+"' id='delete_form200_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='hidden' form='form200_"+id+"' name='ship_to'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form200_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form200_"+id+"' name='order_history'>";
 			rowsHTML+="</td>";			
@@ -11205,12 +11247,13 @@ function form200_add_item()
 		var merchant_filter=item_form.elements[8];
 		var id_filter=item_form.elements[9];
 		var save_button=item_form.elements[10];
-		var order_history=item_form.elements[13];
+		var ship_to=item_form.elements[12];
+		var order_history=item_form.elements[14];
 		
 		var awb_data="<logistics_orders>"+
 					"<awb_num></awb_num>"+
-					"<status exact='yes'>received</status>"+
-					"<type exact='yes'>NONCOD</type>"+
+					"<status array='yes'>--received--undelivered--pending--</status>"+
+					"<type array='yes'>--RTM--PREPAID--</type>"+
 					"</logistics_orders>";
 		set_my_value_list(awb_data,awb_filter,function () 
 		{
@@ -11219,6 +11262,7 @@ function form200_add_item()
 		
 		$(awb_filter).on('blur',function () 
 		{
+		
 			var orders_data="<logistics_orders count='1'>"+
 							"<id></id>"+
 							"<address1></address1>"+
@@ -11253,6 +11297,7 @@ function form200_add_item()
 					id_filter.value=orders[0].id;
 					merchant_filter.value=orders[0].merchant_name;
 					order_history.value=orders[0].order_history;
+					ship_to.value=orders[0].ship_to;
 				}
 			});
 		});
@@ -11266,7 +11311,26 @@ function form200_add_item()
 		$(item_form).on('submit',function (e) 
 		{
 			e.preventDefault();
-			form200_add_item();
+			
+			var double_entry=0;
+			$("[id^='save_form200']").each(function(index)
+			{
+				var subform_id=$(this).attr('form');
+				var subform=document.getElementById(subform_id);
+				
+				if(subform.elements[0].value==awb_filter.value)	
+					double_entry+=1;
+			});
+
+			if(double_entry<2)
+			{
+				form200_add_item();
+			}
+			else 
+			{
+				awb_filter.value="";
+				$("#modal65").dialog("open");
+			}
 		});
 		
 		$('textarea').autosize();
@@ -11400,7 +11464,27 @@ function form204_add_item()
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
-			form204_add_item();
+			
+			var double_entry=0;
+			$("[id^='save_form204']").each(function(index)
+			{
+				var subform_id=$(this).attr('form');
+				var subform=document.getElementById(subform_id);
+				
+				if(subform.elements[0].value==awb_filter.value)	
+					double_entry+=1;
+			});
+
+			if(double_entry<2)
+			{
+				form204_update_item(fields);
+				form204_add_item();
+			}
+			else 
+			{
+				awb_filter.value="";
+				$("#modal65").dialog("open");
+			}
 		});
 
 		var awb_data="<logistics_orders>"+
@@ -11416,21 +11500,44 @@ function form204_add_item()
 		{
 			if(event.keyCode == 13 ) 
 			{
-				var order_data="<logistics_orders count='1'>"+
+				event.preventDefault();
+			
+				var double_entry=0;
+				$("[id^='save_form204']").each(function(index)
+				{
+					var subform_id=$(this).attr('form');
+					var subform=document.getElementById(subform_id);
+					
+					if(subform.elements[0].value==awb_filter.value)	
+						double_entry+=1;
+				});
+	
+				if(double_entry<2)
+				{
+					form204_add_item();
+					var order_data="<logistics_orders count='1'>"+
+							"<id></id>"+
 							"<order_num></order_num>"+
 							"<order_history></order_history>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
-				fetch_requested_data('',order_data,function(orders)
-				{
-					if(orders.length>0)
+					fetch_requested_data('',order_data,function(orders)
 					{
-						order_filter.value=orders[0].order_num;
-						id_filter.value=orders[0].id;
-						order_history.value=orders[0].order_history;
-						form204_update_item(fields);
-					}
-				});					
+						if(orders.length>0)
+						{
+							order_filter.value=orders[0].order_num;
+							id_filter.value=orders[0].id;
+							order_history.value=orders[0].order_history;
+							form204_update_item(fields);						
+						}
+					});
+				}
+				else 
+				{
+					awb_filter.value="";
+					$("#modal65").dialog("open");
+				}
+								
 			}
 		});
 	}
@@ -11476,7 +11583,27 @@ function form205_add_item()
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
-			form205_add_item();
+			
+			var double_entry=0;
+			$("[id^='save_form205']").each(function(index)
+			{
+				var subform_id=$(this).attr('form');
+				var subform=document.getElementById(subform_id);
+				
+				if(subform.elements[0].value==awb_filter.value)	
+					double_entry+=1;
+			});
+
+			if(double_entry<2)
+			{
+				form205_update_item(fields);
+				form205_add_item();
+			}
+			else 
+			{
+				awb_filter.value="";
+				$("#modal65").dialog("open");
+			}
 		});
 
 		var awb_data="<logistics_orders>"+
@@ -11492,21 +11619,44 @@ function form205_add_item()
 		{
 			if(event.keyCode == 13 ) 
 			{
-				var order_data="<logistics_orders count='1'>"+
+				event.preventDefault();
+			
+				var double_entry=0;
+				$("[id^='save_form205']").each(function(index)
+				{
+					var subform_id=$(this).attr('form');
+					var subform=document.getElementById(subform_id);
+					
+					if(subform.elements[0].value==awb_filter.value)	
+						double_entry+=1;
+				});
+	
+				if(double_entry<2)
+				{
+					form205_add_item();
+					var order_data="<logistics_orders count='1'>"+
+							"<id></id>"+
 							"<order_num></order_num>"+
 							"<order_history></order_history>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
-				fetch_requested_data('',order_data,function(orders)
-				{
-					if(orders.length>0)
+					fetch_requested_data('',order_data,function(orders)
 					{
-						order_filter.value=orders[0].order_num;
-						id_filter.value=orders[0].id;
-						order_history.value=orders[0].order_history;
-						form205_update_item(fields);
-					}
-				});				
+						if(orders.length>0)
+						{
+							order_filter.value=orders[0].order_num;
+							id_filter.value=orders[0].id;
+							order_history.value=orders[0].order_history;
+							form205_update_item(fields);						
+						}
+					});
+				}
+				else 
+				{
+					awb_filter.value="";
+					$("#modal65").dialog("open");
+				}
+								
 			}
 		});
 	}
@@ -11552,7 +11702,27 @@ function form206_add_item()
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
-			form206_add_item();
+			
+			var double_entry=0;
+			$("[id^='save_form206']").each(function(index)
+			{
+				var subform_id=$(this).attr('form');
+				var subform=document.getElementById(subform_id);
+				
+				if(subform.elements[0].value==awb_filter.value)	
+					double_entry+=1;
+			});
+
+			if(double_entry<2)
+			{
+				form206_update_item(fields);
+				form206_add_item();
+			}
+			else 
+			{
+				awb_filter.value="";
+				$("#modal65").dialog("open");
+			}
 		});
 
 		var awb_data="<logistics_orders>"+
@@ -11568,21 +11738,44 @@ function form206_add_item()
 		{
 			if(event.keyCode == 13 ) 
 			{
-				var order_data="<logistics_orders count='1'>"+
+				event.preventDefault();
+			
+				var double_entry=0;
+				$("[id^='save_form206']").each(function(index)
+				{
+					var subform_id=$(this).attr('form');
+					var subform=document.getElementById(subform_id);
+					
+					if(subform.elements[0].value==awb_filter.value)	
+						double_entry+=1;
+				});
+	
+				if(double_entry<2)
+				{
+					form206_add_item();
+					var order_data="<logistics_orders count='1'>"+
+							"<id></id>"+
 							"<order_num></order_num>"+
 							"<order_history></order_history>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
-				fetch_requested_data('',order_data,function(orders)
-				{
-					if(orders.length>0)
+					fetch_requested_data('',order_data,function(orders)
 					{
-						order_filter.value=orders[0].order_num;
-						id_filter.value=orders[0].id;
-						order_history.value=orders[0].order_history;					
-						form206_update_item(fields);
-					}
-				});					
+						if(orders.length>0)
+						{
+							order_filter.value=orders[0].order_num;
+							id_filter.value=orders[0].id;
+							order_history.value=orders[0].order_history;
+							form206_update_item(fields);						
+						}
+					});
+				}
+				else 
+				{
+					awb_filter.value="";
+					$("#modal65").dialog("open");
+				}
+								
 			}
 		});
 	}
@@ -12070,6 +12263,7 @@ function form219_add_item()
 				rowsHTML+="<input type='hidden' form='form219_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form219_"+id+"' id='save_form219_"+id+"'>";
 				rowsHTML+="<input type='button' class='delete_icon' form='form219_"+id+"' id='delete_form219_"+id+"' onclick='$(this).parent().parent().remove(); form219_update_serial_numbers();'>";
+				rowsHTML+="<input type='hidden' form='form219_"+id+"' name='ship_to'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form219_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form219_"+id+"' name='order_history'>";
 			rowsHTML+="</td>";			
@@ -12090,11 +12284,12 @@ function form219_add_item()
 		var merchant_filter=item_form.elements[9];
 		var id_filter=item_form.elements[10];
 		var save_button=item_form.elements[11];
-		var order_history=item_form.elements[14];
+		var ship_to=item_form.elements[13];
+		var order_history=item_form.elements[15];
 		
 		var awb_data="<logistics_orders>"+
 					"<awb_num></awb_num>"+
-					"<status exact='yes'>received</status>"+
+					"<status array='yes'>--received--undelivered--pending--</status>"+
 					"<type exact='yes'>COD</type>"+
 					"</logistics_orders>";
 		set_my_value_list(awb_data,awb_filter,function () 
@@ -12139,6 +12334,7 @@ function form219_add_item()
 					order_num_filter.value=orders[0].order_num;
 					id_filter.value=orders[0].id;
 					merchant_filter.value=orders[0].merchant_name;
+					ship_to.value=orders[0].ship_to;
 					order_history.value=orders[0].order_history;
 				}
 			});
@@ -12153,9 +12349,28 @@ function form219_add_item()
 		$(item_form).on('submit',function (e) 
 		{
 			e.preventDefault();
-			form219_add_item();
+			
+			var double_entry=0;
+			$("[id^='save_form219']").each(function(index)
+			{
+				var subform_id=$(this).attr('form');
+				var subform=document.getElementById(subform_id);
+				
+				if(subform.elements[0].value==awb_filter.value)	
+					double_entry+=1;
+			});
+
+			if(double_entry<2)
+			{
+				form219_add_item();
+			}
+			else 
+			{
+				awb_filter.value="";
+				$("#modal65").dialog("open");
+			}
 		});
-		
+				
 		$('textarea').autosize();
 		form219_update_serial_numbers();
 	}

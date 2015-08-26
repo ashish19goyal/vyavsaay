@@ -9844,6 +9844,7 @@ function form108_ini()
 			"<status>"+fstatus+"</status>" +
 			"<bill_id></bill_id>"+
 			"<return_id></return_id>"+
+			"<billing_type></billing_type>"+
 			"</sale_orders>";
 
 	$('#form108_body').html("");
@@ -9903,7 +9904,7 @@ function form108_ini()
 			{
 				$(bill_button).on('click',function(event)
 				{
-					modal133_action(result.id,result.channel,result.order_num,result.customer_name);
+					modal133_action(result.id,result.channel,result.order_num,result.customer_name,result.billing_type);
 				});
 			}
 			else
@@ -21266,6 +21267,7 @@ function form200_ini()
 								rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+id+"'>";
 								rowsHTML+="<input type='button' class='submit_hidden' form='form200_"+id+"' id='save_form200_"+id+"'>";
 								rowsHTML+="<input type='button' class='delete_icon' form='form200_"+id+"' id='delete_form200_"+id+"' onclick='form200_delete_item($(this));'>";
+								rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+result.ship_to+"'>";
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 	
@@ -21945,22 +21947,26 @@ function form209_ini()
 function form211_ini()
 {
 	$('#form211_body').html("");
+	$('#form211_foot').html("");
 
 	var filter_fields=document.getElementById('form211_master');
 	var drs_num=filter_fields['drs'].value;
 	var all_status=filter_fields['status'].value;
 	var all_remark=filter_fields['remark'].value;
+	var awb_filter=filter_fields['awb_num'];
 		
 	if(drs_num!="")
 	{
 		show_loader();
+		
 		var logistics_column="<logistics_orders>" +
-				"<id></id>" +
 				"<awb_num></awb_num>" +
+				"<id></id>" +
 				"<status></status>" +
 				"<order_history></order_history>"+
 				"<drs_num exact='yes'>"+drs_num+"</drs_num>"+
 				"</logistics_orders>";
+		set_my_value_list(logistics_column,awb_filter);
 		
 		fetch_requested_data('',logistics_column,function(results)
 		{
@@ -21968,28 +21974,28 @@ function form211_ini()
 			{
 				var id=result.id;
 				var rowsHTML="<tr>";
-				rowsHTML+="<form id='form211_"+id+"'></form>";
+				rowsHTML+="<form id='form211_"+result.awb_num+"'></form>";
 					rowsHTML+="<td data-th='AWB #'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form211_"+id+"' value='"+result.awb_num+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form211_"+result.awb_num+"' value='"+result.awb_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Current Status'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form211_"+id+"' value='"+result.status+"'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form211_"+result.awb_num+"' value='"+result.status+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Updated Status'>";
-						rowsHTML+="<input type='text' form='form211_"+id+"' value='"+all_status+"'>";
+						rowsHTML+="<input type='text' form='form211_"+result.awb_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Remark'>";
-						rowsHTML+="<textarea form='form211_"+id+"'>"+all_remark+"</textarea>";
+						rowsHTML+="<textarea form='form211_"+result.awb_num+"'></textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
-						rowsHTML+="<input type='hidden' form='form211_"+id+"' value='"+id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form211_"+id+"' id='save_form211_"+id+"'>";
-						rowsHTML+="<input type='hidden' form='form211_"+id+"' value='"+result.order_history+"'>";
+						rowsHTML+="<input type='hidden' form='form211_"+result.awb_num+"' value='"+id+"'>";
+						rowsHTML+="<input type='submit' class='save_icon' form='form211_"+result.awb_num+"' id='save_form211_"+id+"'>";
+						rowsHTML+="<input type='hidden' form='form211_"+result.awb_num+"' value='"+result.order_history+"'>";
 					rowsHTML+="</td>";			
 				rowsHTML+="</tr>";
 			
 				$('#form211_body').prepend(rowsHTML);
-				var fields=document.getElementById("form211_"+id);
+				var fields=document.getElementById("form211_"+result.awb_num);
 				var status_filter=fields.elements[2];
 				
 				set_static_value_list('logistics_orders','status',status_filter);
@@ -22000,6 +22006,7 @@ function form211_ini()
 					form211_update_item(fields);
 				});
 			});
+			form211_get_totals();
 			hide_loader();
 		});
 	}
@@ -22395,6 +22402,7 @@ function form219_ini()
 								rowsHTML+="<input type='hidden' form='form219_"+id+"' value='"+id+"'>";
 								rowsHTML+="<input type='button' class='submit_hidden' form='form219_"+id+"' id='save_form219_"+id+"'>";
 								rowsHTML+="<input type='button' class='delete_icon' form='form219_"+id+"' id='delete_form219_"+id+"' onclick='form219_delete_item($(this));form219_update_serial_numbers();'>";
+								rowsHTML+="<input type='hidden' form='form219_"+id+"' value='"+result.ship_to+"'>";
 							rowsHTML+="</td>";			
 						rowsHTML+="</tr>";
 	

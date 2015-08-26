@@ -8815,19 +8815,20 @@ function modal132_action(tab_id,func)
  * @modal Analyze Order
  * @modalNo 133
  */
-function modal133_action(order_id,sale_channel,order_num,customer)
+function modal133_action(order_id,sale_channel,order_num,customer,billing_type)
 {
 	var form=document.getElementById("modal133_form");
 	var type_filter=form.elements[0];
 	var cancel_button=form.elements[2];
 	
+	type_filter.value=billing_type;
+
 	var type_data="<bill_types>" +
 			"<name></name>" +
 			"<status exact='yes'>active</status>" +
 			"</bill_types>";
 	set_my_value_list(type_data,type_filter);
-	set_my_value(type_data,type_filter);	
-	
+		
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
@@ -8904,7 +8905,7 @@ function modal133_action(order_id,sale_channel,order_num,customer)
 					if(parseFloat(quantity)<parseFloat(order_item.quantity))
 					{
 						tr_elem_title.push('Insufficient Inventory');
-						tr_elem_selection.push('maybe');
+						tr_elem_selection.push(get_session_var('billing_on_inventory'));
 					}
 					order_item_timer-=1;
 				});
@@ -8933,7 +8934,7 @@ function modal133_action(order_id,sale_channel,order_num,customer)
 						if(total_sale_price>(order_total_price+1) || total_sale_price<(order_total_price-1))
 						{
 							tr_elem_title.push('Price Mismatch');
-							tr_elem_selection.push('no');
+							tr_elem_selection.push(get_session_var('billing_on_price'));
 						}
 					}
 					else 
@@ -8956,7 +8957,7 @@ function modal133_action(order_id,sale_channel,order_num,customer)
 						if(taxes[0].tax)
 						{
 							tr_elem_title.push('Tax Rate not set');
-							tr_elem_selection.push('maybe');
+							tr_elem_selection.push(get_session_var('billing_on_tax'));
 						}
 					}
 					order_item_timer-=1;
@@ -9323,17 +9324,17 @@ function modal138_action()
 			data_array.forEach(function (data_row) 
 			{
 				counter+=1;
-				var customer=data_row.customer_firstname+" "+data_row.customer_lastname+" ("+data_row.phone+")";
+				var customer=data_row.customer_name+" ("+data_row.phone+")";
 				var customer_object=new Object();
 				customer_object.id=last_updated+counter;
-				customer_object.name=data_row.customer_firstname+" "+data_row.customer_lastname;
+				customer_object.name=data_row.customer_name;
 				customer_object.acc_name=customer;
                 customer_object.email=data_row.customer_email;
                 customer_object.phone=data_row.phone;
                 customer_object.address=data_row.address;
-                customer_object.city=data_row.city;
+                customer_object.city="";
                 customer_object.pincode=data_row.pincode;
-                customer_object.state=data_row.state;
+                customer_object.state="";
                 customer_object.country="India";
 
                 var add_customer=true;
@@ -9360,6 +9361,7 @@ function modal138_action()
                 order_object.customer=customer;
                 order_object.pincode=data_row.pincode;
                 order_object.order_date=data_row.order_date;
+                order_object.tax_type=data_row.tax_type;
                 order_object.freight=data_row.shipping_amount;
                 order_object.item_price=data_row.item_price;
                 order_object.total=parseFloat(order_object.freight)+parseFloat(order_object.item_price);;
@@ -9420,6 +9422,7 @@ function modal138_action()
 						"<tax></tax>"+
 						"<total>"+row.total+"</total>"+
 						"<status>pending</status>"+
+						"<billing_type>"+row.tax_type+"</billing_type>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</row>";
 			});
@@ -10559,6 +10562,7 @@ function modal147_action(hiring_type,button)
 	$("#modal147").dialog("open");
 }
 
+
 /**
  * @modal Import logistics orders status
  */
@@ -10707,4 +10711,156 @@ function modal148_action()
     });
 	
 	$("#modal148").dialog("open");
+}
+
+/**
+ * @modal Import logistics orders
+ */
+function modal149_action()
+{
+	var form=document.getElementById('modal149_form');
+	
+	var template_button=form.elements[1];
+	var type_filter=form.elements[2];
+	var select_file=form.elements[3];
+	var selected_file=form.elements[4];
+	var import_button=form.elements[5];
+
+	set_static_value_list('logistics_orders','type',type_filter);
+	
+	$(template_button).off("click");
+	$(template_button).on("click",function(event)
+	{
+		var data_array=['id','AWB No.','Type','Order No.','Manifest ID','Merchant Name','Ship To',
+						'Address1','Address2','City','State','Pincode','Mobile number','Tel. Number',
+						'Prod/SKU code','Product name','Weight','Declared Value','Collectable Value',
+						'Vendor Code','Shipper Name','Return Address1','Return Address2','Return Address3',
+						'Return Pin','Length ( Cms )','Breadth ( Cms )','Height ( Cms )','Pieces',
+						'Carrier Account','Carrier Name','Manifest Type','Dispatch Date','Notes',
+						'Pickup Location','Pickup By'];
+	
+		my_array_to_csv(data_array);
+	});
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		show_progress();
+		var file=select_file.files[0];
+        var fileType = /csv/gi;
+		
+        selected_file.value = "Uploading!! Please don't refresh";
+    	var reader = new FileReader();
+        reader.onload = function(e)
+        {
+        	progress_value=5;
+        	var content=reader.result;
+        	var data_array=csv_string_to_obj_array(content);
+
+        	progress_value=10;
+           
+           	//////////////////
+           	
+       		var data_xml="<logistics_orders>";
+			var counter=1;
+			var last_updated=get_my_time();
+			var order_array=[];
+			
+			//console.log(data_array);					
+			
+			data_array.forEach(function(row)
+			{
+				if((counter%500)===0)
+				{
+					data_xml+="</logistics_orders><separator></separator><logistics_orders>";
+				}
+				counter+=1;
+				
+				row.id=last_updated+counter;
+				var order_history=[];
+				var history_object=new Object();
+				history_object.timeStamp=get_raw_time(row['Dispatch Date']);
+				history_object.details="Order dispatched from merchant";
+				history_object.location=row['Merchant Name'];
+				history_object.status="dispatched";
+				order_history.push(history_object);
+				var order_history_string=JSON.stringify(order_history);
+				
+				data_xml+="<row>" +
+						"<id>"+row.id+"</id>" +
+						"<awb_num>"+row['AWB No.']+"</awb_num>"+
+		                "<type>"+type_filter.value+"</type>"+
+		                "<order_num>"+row['Order No.']+"</order_num>"+
+		                "<manifest_id>"+row['Manifest ID']+"</manifest_id>"+
+		                "<merchant_name>"+row['Merchant Name']+"</merchant_name>"+
+		                "<ship_to>"+row['Ship To']+"</ship_to>"+
+		                "<address1>"+row['Address1']+"</address1>"+
+		                "<address2>"+row['Address2']+"</address2>"+
+		                "<city>"+row['City']+"</city>"+
+		                "<state>"+row['State']+"</state>"+
+		                "<pincode>"+row['Pincode']+"</pincode>"+
+		                "<phone>"+row['Mobile number']+"</phone>"+
+		                "<telephone>"+row['Tel. Number']+"</telephone>"+
+		                "<weight>"+row['Weight']+"</weight>"+
+		                "<declared_value>"+row['Declared Value']+"</declared_value>"+
+		                "<collectable_value>"+row['Collectable Value']+"</collectable_value>"+
+		                "<vendor_code>"+row['Vendor Code']+"</vendor_code>"+
+		                "<shipper_name>"+row['Shipper Name']+"</shipper_name>"+
+		                "<return_address1>"+row['Return Address1']+"</return_address1>"+
+		                "<return_address2>"+row['Return Address2']+"</return_address2>"+
+		                "<return_address3>"+row['Return Address3']+"</return_address3>"+
+		                "<return_pincode>"+row['Return Pin']+"</return_pincode>"+
+		                "<len>"+row['Length ( Cms )']+"</len>"+
+		                "<breadth>"+row['Breadth ( Cms )']+"</breadth>"+
+		                "<height>"+row['Height ( Cms )']+"</height>"+
+		                "<pieces>"+row['Pieces']+"</pieces>"+
+		                "<carrier_account>"+row['Carrier Account']+"</carrier_account>"+
+		                "<carrier_name>"+row['Carrier Name']+"</carrier_name>"+
+		                "<manifest_type>"+row['Manifest Type']+"</manifest_type>"+
+		                "<dispatch_date>"+get_raw_time(row['Dispatch Date'])+"</dispatch_date>"+
+		                "<import_date>"+get_raw_time(get_my_date())+"</import_date>"+
+		                "<notes>"+row['Notes']+"</notes>"+
+		                "<pickup_location>"+row['Pickup Location']+"</pickup_location>"+
+		                "<pickup_by>"+row['Pickup By']+"</pickup_by>"+
+		                "<sku>"+row['Prod/SKU code']+"</sku>"+
+		                "<product_name>"+row['Product name']+"</product_name>"+
+		                "<order_history>"+order_history_string+"</order_history>"+
+		                "<status>picked</status>"+
+		                "<last_updated>"+last_updated+"</last_updated>" +
+						"</row>";							
+			});
+			
+			data_xml+="</logistics_orders>";
+			create_batch(data_xml);
+
+           	////////////////////
+        	progress_value=15;
+        	        	
+        	var ajax_complete=setInterval(function()
+        	{
+        		//console.log(number_active_ajax);
+        		if(number_active_ajax===0)
+        		{
+        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
+        		}
+        		else if(localdb_open_requests===0)
+        		{
+        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
+        		}
+        		
+        		if(number_active_ajax===0 && localdb_open_requests===0)
+        		{
+        			hide_progress();
+        			selected_file.value="Upload complete";
+        			$(select_file).val('');
+        			$("#modal149").dialog("close");
+        			clearInterval(ajax_complete);
+        		}
+        	},1000); 
+        }
+        reader.readAsText(file);    
+    });
+	
+	$("#modal149").dialog("open");
 }

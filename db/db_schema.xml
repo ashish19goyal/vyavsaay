@@ -376,6 +376,7 @@
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<status index='yes' type='VARCHAR(25)'></status><!-- billed/cancelled/pending -->
+			<billing_type index='yes' type='TEXT'></billing_type>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</sale_orders>
@@ -535,6 +536,7 @@
 			<cost_price index='no' type="DECIMAL(12,2)"></cost_price>
 			<sale_price index='yes' type="DECIMAL(12,2)"></sale_price>
 			<mrp index='no' type="DECIMAL(12,2)"></mrp>
+			<status index='yes' type="VARCHAR(30)"></status><!--available/unavailable-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</product_instances>
@@ -1441,7 +1443,7 @@
 	<logistics_orders>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<awb_num index='yes' type="VARCHAR(20)"></awb_num>
-			<type index='yes' type="VARCHAR(10)"></type>
+			<type index='yes' type="VARCHAR(10)"></type><!--COD/RTM/PREPAID-->
 			<order_num index='yes' type="VARCHAR(20)"></order_num>
 			<manifest_id index='yes' type="VARCHAR(20)"></manifest_id>
 			<merchant_name index='yes' type="TEXT"></merchant_name>

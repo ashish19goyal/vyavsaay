@@ -10314,7 +10314,7 @@ function form199_update_item(form)
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details=comments;
-		history_object.location=get_session_var('official_address');
+		history_object.location=get_session_var('address');
 		history_object.status=status;
 		order_history.push(history_object);
 		var order_history_string=JSON.stringify(order_history);		
@@ -10504,7 +10504,7 @@ function form204_update_item(form)
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details=comments;
-		history_object.location=get_session_var('official_address');
+		history_object.location=get_session_var('address');
 		history_object.status=status;
 		order_history.push(history_object);
 		var order_history_string=JSON.stringify(order_history);		
@@ -10861,11 +10861,11 @@ function form211_update_item(form)
 			
 			if(status=='received')
 			{
-				history_object.location=get_session_var('official_address');
+				history_object.location=get_session_var('address');
 			}
 			else if(status=='pending')
 			{
-				history_object.location=get_session_var('official_address');
+				history_object.location=get_session_var('address');
 			}
 			else if(status=='delivered')
 			{
@@ -10937,11 +10937,11 @@ function form212_update_item(form)
 		
 		if(status=='received')
 		{
-			history_object.location=get_session_var('official_address');
+			history_object.location=get_session_var('address');
 		}
 		else if(status=='pending')
 		{
-			history_object.location=get_session_var('official_address');
+			history_object.location=get_session_var('address');
 		}
 		else if(status=='delivered')
 		{

@@ -7355,7 +7355,7 @@ function form203_header_ini()
 
 	$(import_button).on("click",function(event)
 	{
-		import_data('form203');
+		modal149_action();
 	});
 
 	set_my_filter(order_data,order_filter);
@@ -7571,7 +7571,7 @@ function form211_header_ini()
 	var drs_filter=fields.elements['drs'];
 	var status_filter=fields.elements['status'];
 	var remark_filter=fields.elements['remark'];
-	var refresh_button=fields.elements['refresh'];
+	var awb_filter=fields.elements['awb_num'];
 	var save_button=fields.elements['save'];
 
 	drs_filter.value="";
@@ -7579,6 +7579,30 @@ function form211_header_ini()
 
 	set_static_value_list('logistics_orders','status',status_filter);
 
+	$(awb_filter).off('keyup');
+	$(awb_filter).on('keyup',function (event) 
+	{
+		if(event.keyCode == 13) 
+		{
+	    	event.preventDefault();
+	    	var subform=document.getElementById('form211_'+awb_filter.value);
+	    	subform.elements[2].value=status_filter.value;
+	    	subform.elements[3].value=remark_filter.value;
+	    	form211_get_totals();
+	    	awb_filter.value="";
+	    }
+	});
+	
+	$(drs_filter).off('keyup');
+	$(drs_filter).on('keyup',function (event) 
+	{
+		if(event.keyCode == 13) 
+		{
+	    	event.preventDefault();
+	    	form211_ini();
+	    }
+	});
+/*
 	$(status_filter).off('blur');
 	$(status_filter).on('blur',function () 
 	{
@@ -7600,14 +7624,15 @@ function form211_header_ini()
 			subform.elements[3].value=remark_filter.value;
 		});		
 	});
-	
+*/	
+/*
 	$(refresh_button).off('click');
 	$(refresh_button).on("click", function(event)
 	{
 		event.preventDefault();
 		form211_ini();
 	});
-
+*/
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
 	{

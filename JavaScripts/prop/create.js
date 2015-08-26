@@ -5974,6 +5974,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 													
 		var pending_items_count=0;
 
+		var actual_order_items=[];
 		var order_items=[];
 
 		$("#modal133_item_table tr").each(function(index)
@@ -5989,241 +5990,287 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 				//console.log(order_item);
 				order_items.push(order_item);
 			}
+			actual_order_items.push(order_item);
 		});
-		
-		if(order_items.length>0)
+
+		if(!(order_items.length!=actual_order_items.length && get_session_var('allow_partial_billing')=='no'))
 		{
-			pending_items_count=order_items.length;
-			//console.log(order_items);
-			order_items.forEach(function(order_item)
+			if(order_items.length>0)
 			{
-				var item_amount=0;
-				var item_total=0;
-				var item_freight=0;
-				var item_tax=0;
-				var item_channel_charges=0;
-								
-				var batch_data="<product_instances count='1'>" +
-						"<batch></batch>" +
-						"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
-						"</product_instances>";
-				fetch_requested_data('',batch_data,function(batches)
+				pending_items_count=order_items.length;
+				//console.log(order_items);
+				
+				var bill_items_xml_array=[];
+				var order_items_xml_array=[];
+				
+				order_items.forEach(function(order_item)
 				{
-					//console.log(batches);
-					var batch="";
-					if(batches.length>0)
+					var item_amount=0;
+					var item_total=0;
+					var item_freight=0;
+					var item_tax=0;
+					var item_channel_charges=0;
+									
+					var batch_data="<product_instances count='1'>" +
+							"<batch></batch>" +
+							"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
+							"<status exact='yes'>available</status>"+
+							"</product_instances>";
+					fetch_requested_data('',batch_data,function(batches)
 					{
-						batch=batches[0].batch;
-					}
-		
-					var price_data="<channel_prices count='1'>" +
-							"<latest exact='yes'>yes</latest>"+
-							"<channel exact='yes'>"+sale_channel+"</channel>"+
-	                        "<item exact='yes'>"+order_item.item_name+"</item>"+
-							"<sale_price></sale_price>"+
-							"<freight></freight>"+
-							"<discount_customer></discount_customer>"+
-	        				"<gateway_charges></gateway_charges>"+
-	        				"<storage_charges></storage_charges>"+
-	        				"<channel_commission></channel_commission>"+
-							"<total_charges></total_charges>"+
-							"<service_tax></service_tax>"+
-							"<total_payable></total_payable>"+
-							"<total_receivable></total_receivable>"+
-							"</channel_prices>";
-					fetch_requested_data('',price_data,function(sale_prices)
-					{
-						if(sale_prices.length>0)
+						//console.log(batches);
+						var batch="";
+						if(batches.length>0)
 						{
-							//////adding offer details
-							var pickup_data="<pickup_charges>"+
-											"<rate></rate>"+
-											"<min_charges></min_charges>"+
-											"<max_charges></max_charges>"+
-											"<pincode exact='yes'>all</pincode>"+
-											"<channel exact='yes'>"+sale_channel+"</channel>"+
-											"</pickup_charges>";
-							fetch_requested_data('',pickup_data,function(pickups)
-							{
-								var pickup_charges=0;
-								var item_dead_weight=100;
-								if(pickups.length>0)
-								{
-									pickup_charges=parseFloat(pickups[0].rate)*parseFloat(item_dead_weight);
-									if(pickup_charges>parseFloat(pickups[0].max_charges))
-									{
-										pickup_charges=parseFloat(pickups[0].max_charges);
-									}
-									else if(pickup_charges<parseFloat(pickups[0].min_charges))
-									{
-										pickup_charges=parseFloat(pickups[0].min_charges);
-									}
-								}
-	
-								item_freight=parseFloat(order_item.quantity)*parseFloat(sale_prices[0].freight);
-								item_total=(parseFloat(order_item.quantity)*parseFloat(sale_prices[0].sale_price))+item_freight;
-								item_channel_charges=(parseFloat(order_item.quantity)*(parseFloat(sale_prices[0].channel_commission)+pickup_charges));
-								item_channel_tax=item_channel_charges*.14;
-								item_channel_payable=item_channel_charges*1.14;												
-								
-								var tax_data="<product_master count='1'>" +
-										"<name exact='yes'>"+order_item.item_name+"</name>" +
-										"<description></description>"+
-										"<tax></tax>" +
-										"</product_master>";
-								fetch_requested_data('',tax_data,function(taxes)
-								{
-									order_item.item_desc=taxes[0].description;
-									if(taxes.length>0)
-									{
-										item_amount=my_round((item_total-item_freight)/(1+(parseFloat(taxes[0].tax)/100)),2);
-										item_tax=my_round((item_total-item_amount-item_freight),2);
-	
-										var unit_price=item_amount/parseFloat(order_item.quantity);
-		
-										/////saving to bill item
-										var bill_item_id=get_new_key();
-						                var data_xml="<bill_items>" +
-												"<id>"+bill_item_id+"</id>" +
-												"<item_name>"+order_item.item_name+"</item_name>" +
-												"<item_desc>"+order_item.item_desc+"</item_desc>" +
-												"<batch>"+batch+"</batch>" +
-												"<unit_price>"+unit_price+"</unit_price>" +
-												"<quantity>"+order_item.quantity+"</quantity>" +
-												"<amount>"+item_amount+"</amount>" +
-												"<total>"+item_total+"</total>" +
-												"<channel_charges>"+item_channel_charges+"</channel_charges>" +
-												"<freight>"+item_freight+"</freight>" +
-												"<tax>"+item_tax+"</tax>" +
-												"<bill_id>"+order_id+"</bill_id>" +
-												"<storage></storage>"+
-												"<picked_status>pending</picked_status>"+
-												"<packing_status>pending</packing_status>"+
-												"<last_updated>"+get_my_time()+"</last_updated>" +
-												"</bill_items>";	
-										var order_item_xml="<sale_order_items>" +
-												"<id>"+order_item.id+"</id>" +
-												"<item_name>"+order_item.item_name+"</item_name>" +
-												"<item_desc>"+order_item.item_desc+"</item_desc>" +
-												"<last_updated>"+get_my_time()+"</last_updated>" +
-												"</sale_order_items>";	
-										bill_amount+=item_amount;
-										bill_freight+=item_freight;
-										bill_total+=item_total;
-										bill_tax+=item_tax;
-										bill_channel_charges+=item_channel_charges;
-										bill_channel_tax+=item_channel_tax;
-										bill_channel_payable+=item_channel_payable;
-										pending_items_count-=1;
-										
-										create_simple(data_xml);
-									}
-								});
-							});
+							////get inventory iteratively until a stock of greater than quantity is found
+							////mark as unavialable where inventory is found 0
+							batch=batches[batches.length-1].batch;
 						}
+			
+						var price_data="<channel_prices count='1'>" +
+								"<latest exact='yes'>yes</latest>"+
+								"<channel exact='yes'>"+sale_channel+"</channel>"+
+		                        "<item exact='yes'>"+order_item.item_name+"</item>"+
+								"<sale_price></sale_price>"+
+								"<freight></freight>"+
+								"<discount_customer></discount_customer>"+
+		        				"<gateway_charges></gateway_charges>"+
+		        				"<storage_charges></storage_charges>"+
+		        				"<channel_commission></channel_commission>"+
+								"<total_charges></total_charges>"+
+								"<service_tax></service_tax>"+
+								"<total_payable></total_payable>"+
+								"<total_receivable></total_receivable>"+
+								"</channel_prices>";
+						fetch_requested_data('',price_data,function(sale_prices)
+						{
+							if(sale_prices.length>0)
+							{
+								//////adding offer details
+								var pickup_data="<pickup_charges>"+
+												"<rate></rate>"+
+												"<min_charges></min_charges>"+
+												"<max_charges></max_charges>"+
+												"<pincode exact='yes'>all</pincode>"+
+												"<channel exact='yes'>"+sale_channel+"</channel>"+
+												"</pickup_charges>";
+								fetch_requested_data('',pickup_data,function(pickups)
+								{
+									var pickup_charges=0;
+									var item_dead_weight=100;
+									if(pickups.length>0)
+									{
+										pickup_charges=parseFloat(pickups[0].rate)*parseFloat(item_dead_weight);
+										if(pickup_charges>parseFloat(pickups[0].max_charges))
+										{
+											pickup_charges=parseFloat(pickups[0].max_charges);
+										}
+										else if(pickup_charges<parseFloat(pickups[0].min_charges))
+										{
+											pickup_charges=parseFloat(pickups[0].min_charges);
+										}
+									}
+		
+									item_freight=parseFloat(order_item.quantity)*parseFloat(sale_prices[0].freight);
+									item_total=(parseFloat(order_item.quantity)*parseFloat(sale_prices[0].sale_price))+item_freight;
+									item_channel_charges=(parseFloat(order_item.quantity)*(parseFloat(sale_prices[0].channel_commission)+pickup_charges));
+									item_channel_tax=item_channel_charges*.14;
+									item_channel_payable=item_channel_charges*1.14;												
+									
+									var tax_data="<product_master count='1'>" +
+											"<name exact='yes'>"+order_item.item_name+"</name>" +
+											"<description></description>"+
+											"<tax></tax>" +
+											"</product_master>";
+									fetch_requested_data('',tax_data,function(taxes)
+									{
+										order_item.item_desc=taxes[0].description;
+										if(taxes.length>0)
+										{
+											item_amount=my_round((item_total-item_freight)/(1+(parseFloat(taxes[0].tax)/100)),2);
+											item_tax=my_round((item_total-item_amount-item_freight),2);
+		
+											var unit_price=item_amount/parseFloat(order_item.quantity);
+											
+											var storage_xml="<area_utilization>"+
+															"<name></name>"+
+															"<item_name exact='yes'>"+order_item.item_name+"</item_name>"+
+															"<batch>"+batch+"</batch>"+
+															"</area_utilization>";
+											fetch_requested_data('',storage_xml,function (storages) 
+											{
+												var item_storage="";
+												if(storages.length>0)
+												{
+													////check inventory iteratively until a stock of greater than 0 is found
+													////delete storage records where 0 inventory is found
+													item_storage=storages[storages.length-1].name;
+												}
+												/////saving to bill item
+												var bill_item_id=get_new_key();
+								                var data_xml="<bill_items>" +
+														"<id>"+bill_item_id+"</id>" +
+														"<item_name>"+order_item.item_name+"</item_name>" +
+														"<item_desc>"+order_item.item_desc+"</item_desc>" +
+														"<batch>"+batch+"</batch>" +
+														"<unit_price>"+unit_price+"</unit_price>" +
+														"<quantity>"+order_item.quantity+"</quantity>" +
+														"<amount>"+item_amount+"</amount>" +
+														"<total>"+item_total+"</total>" +
+														"<channel_charges>"+item_channel_charges+"</channel_charges>" +
+														"<freight>"+item_freight+"</freight>" +
+														"<tax>"+item_tax+"</tax>" +
+														"<bill_id>"+order_id+"</bill_id>" +
+														"<storage>"+item_storage+"</storage>"+
+														"<picked_status>pending</picked_status>"+
+														"<packing_status>pending</packing_status>"+
+														"<last_updated>"+get_my_time()+"</last_updated>" +
+														"</bill_items>";	
+												var order_item_xml="<sale_order_items>" +
+														"<id>"+order_item.id+"</id>" +
+														"<item_name>"+order_item.item_name+"</item_name>" +
+														"<item_desc>"+order_item.item_desc+"</item_desc>" +
+														"<last_updated>"+get_my_time()+"</last_updated>" +
+														"</sale_order_items>";
+														
+												bill_items_xml_array.push(data_xml);
+												order_items_xml_array.push(order_item_xml);
+					
+												bill_amount+=item_amount;
+												bill_freight+=item_freight;
+												bill_total+=item_total;
+												bill_tax+=item_tax;
+												bill_channel_charges+=item_channel_charges;
+												bill_channel_tax+=item_channel_tax;
+												bill_channel_payable+=item_channel_payable;
+											});											
+										}
+										pending_items_count-=1;										
+									});
+								});
+							}
+						});
 					});
 				});
-			});
-		
-			/////saving bill details
-			var bill_items_complete=setInterval(function()
-			{
-		  	   if(pending_items_count===0)
-		  	   {
-		  		   	clearInterval(bill_items_complete);
-		  		   	
-	  		   		var num_data="<user_preferences>"+
-								"<id></id>"+						
-								"<value></value>"+										
-								"<name exact='yes'>"+bill_type+"_bill_num</name>"+												
-								"</user_preferences>";
-					fetch_requested_data('',num_data,function (bill_num_ids)
-					{
-						if(bill_num_ids.length>0)
-						{
-							var sale_order_xml="<sale_orders>" +
-									"<id>"+order_id+"</id>" +
-									"<bill_id>"+order_id+"</bill_id>"+
-									"<status>billed</status>" +
-									"</sale_orders>";
-	  						var num_xml="<user_preferences>"+
-									"<id>"+bill_num_ids[0].id+"</id>"+
-									"<value>"+(parseInt(bill_num_ids[0].value)+1)+"</value>"+
-									"<last_updated>"+get_my_time()+"</last_updated>"+
+			
+				/////saving bill details
+				var bill_items_complete=setInterval(function()
+				{
+			  	   if(pending_items_count===0)
+			  	   {
+			  		   	clearInterval(bill_items_complete);
+			  		   	
+		  		   		var num_data="<user_preferences>"+
+									"<id></id>"+						
+									"<value></value>"+										
+									"<name exact='yes'>"+bill_type+"_bill_num</name>"+												
 									"</user_preferences>";
-							var bill_xml="<bills>" +
-									"<id>"+order_id+"</id>" +
-									"<bill_num>"+bill_num_ids[0].value+"</bill_num>"+										
-									"<order_num>"+order_num+"</order_num>"+										
-									"<customer_name>"+customer+"</customer_name>" +
-									"<bill_date>"+get_my_time()+"</bill_date>" +
-									"<billing_type>"+bill_type+"</billing_type>" +
-									"<amount>"+bill_amount+"</amount>" +
-									"<freight>"+bill_freight+"</freight>"+									
-									"<total>"+bill_total+"</total>" +
-									"<discount>0</discount>" +
-									"<channel>"+sale_channel+"</channel>"+									
-									"<channel_charges>"+bill_channel_charges+"</channel_charges>"+
-									"<channel_tax>"+bill_channel_tax+"</channel_tax>"+
-									"<channel_payable>"+bill_channel_payable+"</channel_payable>"+
-									"<tax>"+bill_tax+"</tax>" +
-									"<transaction_id>"+order_id+"</transaction_id>" +
-									"<last_updated>"+get_my_time()+"</last_updated>" +
-									"</bills>";			
-							var activity_xml="<activity>" +
-									"<data_id>"+order_id+"</data_id>" +
-									"<tablename>bills</tablename>" +
-									"<link_to>form42</link_to>" +
-									"<title>Saved</title>" +
-									"<notes>Billed order# "+order_num+"</notes>" +
-									"<updated_by>"+get_name()+"</updated_by>" +
-									"</activity>";
-							var transaction_xml="<transactions>" +
-									"<id>"+order_id+"</id>" +
-									"<trans_date>"+get_my_time()+"</trans_date>" +
-									"<amount>"+bill_total+"</amount>" +
-									"<receiver>"+customer+"</receiver>" +
-									"<giver>master</giver>" +
-									"<tax>"+bill_tax+"</tax>" +
-									"<last_updated>"+get_my_time()+"</last_updated>" +
-									"</transactions>";
-							var pt_tran_id=get_new_key();
-							var payment_xml="<payments>" +
-									"<id>"+pt_tran_id+"</id>" +
-									"<status>pending</status>" +
-									"<type>received</type>" +
-									"<date>"+get_my_time()+"</date>" +
-									"<total_amount>"+bill_total+"</total_amount>" +
-									"<paid_amount>0</paid_amount>" +
-									"<acc_name>"+customer+"</acc_name>" +
-									"<due_date>"+get_credit_period()+"</due_date>" +
-									"<mode>"+get_payment_mode()+"</mode>" +
-									"<transaction_id>"+pt_tran_id+"</transaction_id>" +
-									"<bill_id>"+order_id+"</bill_id>" +
-									"<last_updated>"+get_my_time()+"</last_updated>" +
-									"</payments>";
-							var pt_xml="<transactions>" +
-									"<id>"+pt_tran_id+"</id>" +
-									"<trans_date>"+get_my_time()+"</trans_date>" +
-									"<amount>"+bill_total+"</amount>" +
-									"<receiver>master</receiver>" +
-									"<giver>"+customer+"</giver>" +
-									"<tax>0</tax>" +
-									"<last_updated>"+get_my_time()+"</last_updated>" +
-									"</transactions>";
-							
-							update_simple(sale_order_xml);					
-							create_simple(transaction_xml);
-							create_simple(pt_xml);
-							create_simple(payment_xml);
-							update_simple(num_xml);
-							create_row(bill_xml,activity_xml);
-						}
-					});
-					hide_loader();
-		  		   	///////////////////////////////////////////////////////////
-		  	   }
-		    },100);		
+						fetch_requested_data('',num_data,function (bill_num_ids)
+						{
+							if(bill_num_ids.length>0)
+							{
+								var sale_order_xml="<sale_orders>" +
+										"<id>"+order_id+"</id>" +
+										"<bill_id>"+order_id+"</bill_id>"+
+										"<status>billed</status>" +
+										"</sale_orders>";
+		  						var num_xml="<user_preferences>"+
+										"<id>"+bill_num_ids[0].id+"</id>"+
+										"<value>"+(parseInt(bill_num_ids[0].value)+1)+"</value>"+
+										"<last_updated>"+get_my_time()+"</last_updated>"+
+										"</user_preferences>";
+								var bill_xml="<bills>" +
+										"<id>"+order_id+"</id>" +
+										"<bill_num>"+bill_num_ids[0].value+"</bill_num>"+										
+										"<order_num>"+order_num+"</order_num>"+										
+										"<customer_name>"+customer+"</customer_name>" +
+										"<bill_date>"+get_my_time()+"</bill_date>" +
+										"<billing_type>"+bill_type+"</billing_type>" +
+										"<amount>"+bill_amount+"</amount>" +
+										"<freight>"+bill_freight+"</freight>"+									
+										"<total>"+bill_total+"</total>" +
+										"<discount>0</discount>" +
+										"<channel>"+sale_channel+"</channel>"+									
+										"<channel_charges>"+bill_channel_charges+"</channel_charges>"+
+										"<channel_tax>"+bill_channel_tax+"</channel_tax>"+
+										"<channel_payable>"+bill_channel_payable+"</channel_payable>"+
+										"<tax>"+bill_tax+"</tax>" +
+										"<transaction_id>"+order_id+"</transaction_id>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</bills>";			
+								var activity_xml="<activity>" +
+										"<data_id>"+order_id+"</data_id>" +
+										"<tablename>bills</tablename>" +
+										"<link_to>form42</link_to>" +
+										"<title>Saved</title>" +
+										"<notes>Billed order# "+order_num+"</notes>" +
+										"<updated_by>"+get_name()+"</updated_by>" +
+										"</activity>";
+								var transaction_xml="<transactions>" +
+										"<id>"+order_id+"</id>" +
+										"<trans_date>"+get_my_time()+"</trans_date>" +
+										"<amount>"+bill_total+"</amount>" +
+										"<receiver>"+customer+"</receiver>" +
+										"<giver>master</giver>" +
+										"<tax>"+bill_tax+"</tax>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</transactions>";
+								var pt_tran_id=get_new_key();
+								var payment_xml="<payments>" +
+										"<id>"+pt_tran_id+"</id>" +
+										"<status>pending</status>" +
+										"<type>received</type>" +
+										"<date>"+get_my_time()+"</date>" +
+										"<total_amount>"+bill_total+"</total_amount>" +
+										"<paid_amount>0</paid_amount>" +
+										"<acc_name>"+customer+"</acc_name>" +
+										"<due_date>"+get_credit_period()+"</due_date>" +
+										"<mode>"+get_payment_mode()+"</mode>" +
+										"<transaction_id>"+pt_tran_id+"</transaction_id>" +
+										"<bill_id>"+order_id+"</bill_id>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</payments>";
+								var pt_xml="<transactions>" +
+										"<id>"+pt_tran_id+"</id>" +
+										"<trans_date>"+get_my_time()+"</trans_date>" +
+										"<amount>"+bill_total+"</amount>" +
+										"<receiver>master</receiver>" +
+										"<giver>"+customer+"</giver>" +
+										"<tax>0</tax>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</transactions>";
+								
+								update_simple(sale_order_xml);					
+								create_simple(transaction_xml);
+								create_simple(pt_xml);
+								create_simple(payment_xml);
+								update_simple(num_xml);
+								create_row(bill_xml,activity_xml);
+								
+								bill_items_xml_array.forEach(function (bill_item_xml) 
+								{
+									create_simple(bill_item_xml);
+								});
+								order_items_xml_array.forEach(function (order_item_xml) 
+								{
+									update_simple(order_item_xml);
+								});
+							}
+						});
+						hide_loader();
+					}
+			    },100);		
+			}
+			else
+			{
+				hide_loader();
+				$("#modal63").dialog("open");
+			}
+		}
+		else
+		{
+			hide_loader();
+			$("#modal64").dialog("open");			
 		}
 	}
 	else
@@ -7800,15 +7847,9 @@ function form122_create_item(form)
 					"<put_away_status>pending</put_away_status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</supplier_bill_items>";
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}	
-
+				
+		create_simple(data_xml);
+		
 		if(qc=='rejected')
 		{
 			var return_xml="<supplier_returns>" +
@@ -7832,6 +7873,22 @@ function form122_create_item(form)
 			create_simple(return_data_xml);
 			create_simple_no_warning(return_xml);
 		}
+		else 
+		{
+			var product_instances_xml="<product_instances>"+
+								"<id></id>"+								
+								"<product_name exact='yes'>"+item_name+"</product_name>"+
+								"<batch exact='yes'>"+batch+"</batch>"+
+								"</product_instances>";
+			fetch_requested_data('',product_instances_xml,function(batches)
+			{
+				var product_instances_xml="<product_instances>"+
+								"<id>"+batches[0].id+"</id>"+
+								"<status>available</status>"+								
+								"</product_instances>";
+				update_simple(product_instances_xml);
+			});
+		}
 				
 		for(var i=0;i<12;i++)
 		{
@@ -7851,14 +7908,7 @@ function form122_create_item(form)
 							"<id>"+unbilled_id+"</id>"+
 							"<bill_status>completed</bill_status>"+
 							"</unbilled_purchase_items>";
-			if(is_online())
-			{
-				server_update_simple(unbilled_xml);
-			}
-			else
-			{
-				local_update_simple(unbilled_xml);
-			}				
+			update_simple(unbilled_xml);				
 		}		
 		
 		///////////adding store placement////////
@@ -7879,14 +7929,7 @@ function form122_create_item(form)
 						"<batch>"+batch+"</batch>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +
 						"</area_utilization>";
-				if(is_online())
-				{
-					server_create_simple(storage_xml);
-				}
-				else
-				{
-					local_create_simple(storage_xml);
-				}
+				create_simple(storage_xml);
 			}
 		});		
 		
@@ -10724,14 +10767,7 @@ function form151_create_expense(form)
 					"<notes>Expense of Rs. "+amount+" for SR# "+request_id+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}	
+		create_row(data_xml,activity_xml);
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -13742,13 +13778,13 @@ function form200_create_item(form)
 		var data_id=form.elements[9].value;
 		var save_button=form.elements[10];
 		var del_button=form.elements[11];
-		var old_order_history=form.elements[13].value;
+		var old_order_history=form.elements[14].value;
 
 		var order_history=JSON.parse(old_order_history);
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details="Order Out for delivery";
-		history_object.location=get_session_var('official_address');
+		history_object.location=get_session_var('address');
 		history_object.status="Out for delivery";
 		order_history.push(history_object);
 		var order_history_string=JSON.stringify(order_history);		
@@ -13998,6 +14034,52 @@ function form209_create_form()
 	{
 		$("#modal2").dialog("open");
 	}
+}
+
+function form211_get_totals()
+{
+	var out_for_delivery=0;
+	var delivered=0;
+	var pending=0;
+	var undelivered=0;	
+	
+	$("[id^='save_form211']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		var updated_status=subform.elements[2].value;
+		var current_status=subform.elements[1].value;
+		
+		if(updated_status!="")
+		{
+			if(updated_status=='delivered')
+				delivered+=1;
+			else if(updated_status=='undelivered')	
+				undelivered+=1;
+			else if(updated_status=='out for delivery')	
+				out_for_delivery+=1;
+			else if(updated_status=='pending')	
+				pending+=1;	
+		}
+		else 
+		{
+			if(current_status=='delivered')
+				delivered+=1;
+			else if(current_status=='undelivered')	
+				undelivered+=1;
+			else if(current_status=='out for delivery')	
+				out_for_delivery+=1;
+			else if(current_status=='pending')	
+				pending+=1;	
+		}
+	});
+	
+	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+							"<td>Out for Delivery:<br>Delivered:<br>Undelivered:<br>Pending:</td>" +
+							"<td>"+out_for_delivery+"<br>"+delivered+"<br>" +undelivered+"<br> " +pending+"</td>" +
+							"<td></td>" +
+							"</tr>";
+	$('#form211_foot').html(total_row);
 }
 
 
@@ -14297,13 +14379,13 @@ function form219_create_item(form)
 		var del_button=form.elements[12];
 		var last_updated=get_my_time();
 	
-		var old_order_history=form.elements[14].value;
+		var old_order_history=form.elements[15].value;
 
 		var order_history=JSON.parse(old_order_history);
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details="Order Out for delivery";
-		history_object.location=get_session_var('official_address');
+		history_object.location=get_session_var('address');
 		history_object.status="Out for delivery";
 		order_history.push(history_object);
 		var order_history_string=JSON.stringify(order_history);		

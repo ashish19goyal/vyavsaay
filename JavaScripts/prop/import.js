@@ -6907,11 +6907,7 @@ function form203_import(data_array,import_type)
 			data_xml+="</logistics_orders><separator></separator><logistics_orders>";
 		}
 				counter+=1;
-		if(import_type=='create_new')
-		{
-			row.id=last_updated+counter;
-		}
-
+		
 		if(import_type=='create_new')
 		{
 			row.id=last_updated+counter;
@@ -7151,27 +7147,14 @@ function form213_import(data_array,import_type)
 				"</row>";
 	});
 	data_xml+="</sale_leads>";
+	console.log(data_xml);
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 }
 

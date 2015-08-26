@@ -666,6 +666,18 @@
 		Thanks! Your details have been saved. We will reach out to you on the suggested follow-up date.
 	</div>
 
+	<div id="modal63" title="Billing Aborted">
+		Bill could not be generated as none of the items were found billable.
+	</div>
+
+	<div id="modal64" title="Partial Billing Not Allowed">
+		Bill could not be generated as partial billing of items is disabled.
+	</div>
+
+	<div id="modal65" title="Repeated Entry">
+		This is a repeated entry. Please check again and continue.
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>
@@ -1303,6 +1315,22 @@
 				<br>
 				<br>
 				<b>Import pre-filled template</b><br>
+				<input type="file" value='Select file' accept=".csv"><br>
+				<output name='selected_file'></output><br>
+				<input type="submit" value='Import' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="modal149" title="Import Manifest">
+		<form id='modal149_form' autocomplete="off">
+			<fieldset>
+				<input type="button" value='Download import template' class='modal_submit'>
+				<br>
+				<br>
+				<br>
+				<b>Import pre-filled template</b><br>
+				Type: <input type="text" required><br>
 				<input type="file" value='Select file' accept=".csv"><br>
 				<output name='selected_file'></output><br>
 				<input type="submit" value='Import' class='modal_submit'>

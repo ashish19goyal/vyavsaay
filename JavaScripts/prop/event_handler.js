@@ -303,7 +303,7 @@ function modal_forms_ini()
 	   		}
 		});
 	}
-	for(var i=50;i<63;i++)
+	for(var i=50;i<66;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -320,7 +320,7 @@ function modal_forms_ini()
 		});
 	}
 
-	for(var i=101;i<149;i++)
+	for(var i=101;i<150;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({

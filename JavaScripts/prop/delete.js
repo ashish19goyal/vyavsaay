@@ -6820,15 +6820,15 @@ function form203_delete_item(button)
 			var awb_num=form.elements[0].value;
 			var data_id=form.elements[2].value;
 			var last_updated=get_my_time();
-			var data_xml="<logisitcs_orders>" +
+			var data_xml="<logistics_orders>" +
 						"<id>"+data_id+"</id>" +
-						"</logisitcs_orders>";	
-			var sku_xml="<logisitcs_sku_mapping>" +
+						"</logistics_orders>";	
+			var sku_xml="<logistics_sku_mapping>" +
 						"<awb_num>"+awb_num+"</awb_num>" +
-						"</logisitcs_sku_mapping>";
+						"</logistics_sku_mapping>";
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>logisitcs_orders</tablename>" +
+						"<tablename>logistics_orders</tablename>" +
 						"<link_to>form203</link_to>" +
 						"<title>Deleted</title>" +
 						"<notes>AWB # "+awb_num+"</notes>" +
