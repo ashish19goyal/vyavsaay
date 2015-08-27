@@ -5,14 +5,14 @@
 	$data_object['api_key']="12345";
 	$data_object['username']="vyavsaay";
 	$data_object['data_store']="logistics_orders";
-	$data_object['count']="1";
+	//$data_object['count']="1";
 	$data_object['start_index']="0";
 	$data_object['indexes']=[];
 	$data_object['indexes'][0]=[];
 	$data_object['indexes'][0]['index']='awb_num';
 	$data_object['indexes'][0]['value']=$awb_num;
-	$data_object['indexes'][0]['exact']='yes';
-		
+	$data_object['indexes'][0]['array']='yes';
+
     $data_string="data=".json_encode($data_object);
 	
 	$url="localhost/api/get_data.php";

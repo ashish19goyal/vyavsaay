@@ -6016,141 +6016,161 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 							"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
 							"<status exact='yes'>available</status>"+
 							"</product_instances>";
-					fetch_requested_data('',batch_data,function(batches)
+					get_single_column_data(function(batches)
 					{
 						//console.log(batches);
 						var batch="";
 						if(batches.length>0)
 						{
-							////get inventory iteratively until a stock of greater than quantity is found
-							////mark as unavialable where inventory is found 0
-							batch=batches[batches.length-1].batch;
-						}
-			
-						var price_data="<channel_prices count='1'>" +
-								"<latest exact='yes'>yes</latest>"+
-								"<channel exact='yes'>"+sale_channel+"</channel>"+
-		                        "<item exact='yes'>"+order_item.item_name+"</item>"+
-								"<sale_price></sale_price>"+
-								"<freight></freight>"+
-								"<discount_customer></discount_customer>"+
-		        				"<gateway_charges></gateway_charges>"+
-		        				"<storage_charges></storage_charges>"+
-		        				"<channel_commission></channel_commission>"+
-								"<total_charges></total_charges>"+
-								"<service_tax></service_tax>"+
-								"<total_payable></total_payable>"+
-								"<total_receivable></total_receivable>"+
-								"</channel_prices>";
-						fetch_requested_data('',price_data,function(sale_prices)
-						{
-							if(sale_prices.length>0)
+							batches.reverse();
+							var batches_result_array=[];
+							get_available_batch(order_item.item_name,batches,order_item.quantity,batches_result_array,function()
 							{
-								//////adding offer details
-								var pickup_data="<pickup_charges>"+
-												"<rate></rate>"+
-												"<min_charges></min_charges>"+
-												"<max_charges></max_charges>"+
-												"<pincode exact='yes'>all</pincode>"+
-												"<channel exact='yes'>"+sale_channel+"</channel>"+
-												"</pickup_charges>";
-								fetch_requested_data('',pickup_data,function(pickups)
+								var price_data="<channel_prices count='1'>" +
+										"<latest exact='yes'>yes</latest>"+
+										"<channel exact='yes'>"+sale_channel+"</channel>"+
+				                        "<item exact='yes'>"+order_item.item_name+"</item>"+
+										"<sale_price></sale_price>"+
+										"<freight></freight>"+
+										"<discount_customer></discount_customer>"+
+				        				"<gateway_charges></gateway_charges>"+
+				        				"<storage_charges></storage_charges>"+
+				        				"<channel_commission></channel_commission>"+
+										"<total_charges></total_charges>"+
+										"<service_tax></service_tax>"+
+										"<total_payable></total_payable>"+
+										"<total_receivable></total_receivable>"+
+										"</channel_prices>";
+								fetch_requested_data('',price_data,function(sale_prices)
 								{
-									var pickup_charges=0;
-									var item_dead_weight=100;
-									if(pickups.length>0)
+									if(sale_prices.length>0)
 									{
-										pickup_charges=parseFloat(pickups[0].rate)*parseFloat(item_dead_weight);
-										if(pickup_charges>parseFloat(pickups[0].max_charges))
+										//////adding offer details
+										var pickup_data="<pickup_charges>"+
+														"<rate></rate>"+
+														"<min_charges></min_charges>"+
+														"<max_charges></max_charges>"+
+														"<pincode exact='yes'>all</pincode>"+
+														"<channel exact='yes'>"+sale_channel+"</channel>"+
+														"</pickup_charges>";
+										fetch_requested_data('',pickup_data,function(pickups)
 										{
-											pickup_charges=parseFloat(pickups[0].max_charges);
-										}
-										else if(pickup_charges<parseFloat(pickups[0].min_charges))
-										{
-											pickup_charges=parseFloat(pickups[0].min_charges);
-										}
-									}
-		
-									item_freight=parseFloat(order_item.quantity)*parseFloat(sale_prices[0].freight);
-									item_total=(parseFloat(order_item.quantity)*parseFloat(sale_prices[0].sale_price))+item_freight;
-									item_channel_charges=(parseFloat(order_item.quantity)*(parseFloat(sale_prices[0].channel_commission)+pickup_charges));
-									item_channel_tax=item_channel_charges*.14;
-									item_channel_payable=item_channel_charges*1.14;												
-									
-									var tax_data="<product_master count='1'>" +
-											"<name exact='yes'>"+order_item.item_name+"</name>" +
-											"<description></description>"+
-											"<tax></tax>" +
-											"</product_master>";
-									fetch_requested_data('',tax_data,function(taxes)
-									{
-										order_item.item_desc=taxes[0].description;
-										if(taxes.length>0)
-										{
-											item_amount=my_round((item_total-item_freight)/(1+(parseFloat(taxes[0].tax)/100)),2);
-											item_tax=my_round((item_total-item_amount-item_freight),2);
-		
-											var unit_price=item_amount/parseFloat(order_item.quantity);
-											
-											var storage_xml="<area_utilization>"+
-															"<name></name>"+
-															"<item_name exact='yes'>"+order_item.item_name+"</item_name>"+
-															"<batch>"+batch+"</batch>"+
-															"</area_utilization>";
-											fetch_requested_data('',storage_xml,function (storages) 
+											var pickup_charges=0;
+											var item_dead_weight=100;
+											if(pickups.length>0)
 											{
-												var item_storage="";
-												if(storages.length>0)
+												pickup_charges=parseFloat(pickups[0].rate)*parseFloat(item_dead_weight);
+												if(pickup_charges>parseFloat(pickups[0].max_charges))
 												{
-													////check inventory iteratively until a stock of greater than 0 is found
-													////delete storage records where 0 inventory is found
-													item_storage=storages[storages.length-1].name;
+													pickup_charges=parseFloat(pickups[0].max_charges);
 												}
-												/////saving to bill item
-												var bill_item_id=get_new_key();
-								                var data_xml="<bill_items>" +
-														"<id>"+bill_item_id+"</id>" +
-														"<item_name>"+order_item.item_name+"</item_name>" +
-														"<item_desc>"+order_item.item_desc+"</item_desc>" +
-														"<batch>"+batch+"</batch>" +
-														"<unit_price>"+unit_price+"</unit_price>" +
-														"<quantity>"+order_item.quantity+"</quantity>" +
-														"<amount>"+item_amount+"</amount>" +
-														"<total>"+item_total+"</total>" +
-														"<channel_charges>"+item_channel_charges+"</channel_charges>" +
-														"<freight>"+item_freight+"</freight>" +
-														"<tax>"+item_tax+"</tax>" +
-														"<bill_id>"+order_id+"</bill_id>" +
-														"<storage>"+item_storage+"</storage>"+
-														"<picked_status>pending</picked_status>"+
-														"<packing_status>pending</packing_status>"+
-														"<last_updated>"+get_my_time()+"</last_updated>" +
-														"</bill_items>";	
-												var order_item_xml="<sale_order_items>" +
-														"<id>"+order_item.id+"</id>" +
-														"<item_name>"+order_item.item_name+"</item_name>" +
-														"<item_desc>"+order_item.item_desc+"</item_desc>" +
-														"<last_updated>"+get_my_time()+"</last_updated>" +
-														"</sale_order_items>";
+												else if(pickup_charges<parseFloat(pickups[0].min_charges))
+												{
+													pickup_charges=parseFloat(pickups[0].min_charges);
+												}
+											}
+				
+											item_freight=parseFloat(order_item.quantity)*parseFloat(sale_prices[0].freight);
+											item_total=(parseFloat(order_item.quantity)*parseFloat(sale_prices[0].sale_price))+item_freight;
+											item_channel_charges=(parseFloat(order_item.quantity)*(parseFloat(sale_prices[0].channel_commission)+pickup_charges));
+											item_channel_tax=item_channel_charges*.14;
+											item_channel_payable=item_channel_charges*1.14;												
+											
+											var tax_data="<product_master count='1'>" +
+													"<name exact='yes'>"+order_item.item_name+"</name>" +
+													"<description></description>"+
+													"<tax></tax>" +
+													"</product_master>";
+											fetch_requested_data('',tax_data,function(taxes)
+											{
+												order_item.item_desc=taxes[0].description;
+												if(taxes.length>0)
+												{
+													item_amount=my_round((item_total-item_freight)/(1+(parseFloat(taxes[0].tax)/100)),2);
+													item_tax=my_round((item_total-item_amount-item_freight),2);
+				
+													var unit_price=item_amount/parseFloat(order_item.quantity);
+													
+													var batches_string="--";
+													batches_result_array.forEach(function(batch_result)
+													{
+														batches_string+=batch_result.batch+"--";
+													});
+
+													var storage_xml="<area_utilization>"+
+																	"<name></name>"+
+																	"<item_name exact='yes'>"+order_item.item_name+"</item_name>"+
+																	"<batch array='yes'>"+batches_string+"</batch>"+
+																	"</area_utilization>";
+													fetch_requested_data('',storage_xml,function (storages) 
+													{
+														var item_storage="";
+														if(storages.length>0)
+														{
+															////check inventory iteratively until a stock of greater than 0 is found
+															////delete storage records where 0 inventory is found
+															item_storage=storages[storages.length-1].name;
+														}
+														/////saving to bill item
+														var bill_item_id=get_new_key();
+										                var data_xml="<bill_items>" +
+																"<id>"+bill_item_id+"</id>" +
+																"<item_name>"+order_item.item_name+"</item_name>" +
+																"<item_desc>"+order_item.item_desc+"</item_desc>" +
+																"<batch>"+batch+"</batch>" +
+																"<unit_price>"+unit_price+"</unit_price>" +
+																"<quantity>"+order_item.quantity+"</quantity>" +
+																"<amount>"+item_amount+"</amount>" +
+																"<total>"+item_total+"</total>" +
+																"<channel_charges>"+item_channel_charges+"</channel_charges>" +
+																"<freight>"+item_freight+"</freight>" +
+																"<tax>"+item_tax+"</tax>" +
+																"<bill_id>"+order_id+"</bill_id>" +
+																"<storage>"+item_storage+"</storage>"+
+																"<picked_status>pending</picked_status>"+
+																"<packing_status>pending</packing_status>"+
+																"<last_updated>"+get_my_time()+"</last_updated>" +
+																"</bill_items>";	
+														var order_item_xml="<sale_order_items>" +
+																"<id>"+order_item.id+"</id>" +
+																"<item_name>"+order_item.item_name+"</item_name>" +
+																"<item_desc>"+order_item.item_desc+"</item_desc>" +
+																"<last_updated>"+get_my_time()+"</last_updated>" +
+																"</sale_order_items>";
+																
+														bill_items_xml_array.push(data_xml);
+														order_items_xml_array.push(order_item_xml);
+							
+														bill_amount+=item_amount;
+														bill_freight+=item_freight;
+														bill_total+=item_total;
+														bill_tax+=item_tax;
+														bill_channel_charges+=item_channel_charges;
+														bill_channel_tax+=item_channel_tax;
+														bill_channel_payable+=item_channel_payable;
 														
-												bill_items_xml_array.push(data_xml);
-												order_items_xml_array.push(order_item_xml);
-					
-												bill_amount+=item_amount;
-												bill_freight+=item_freight;
-												bill_total+=item_total;
-												bill_tax+=item_tax;
-												bill_channel_charges+=item_channel_charges;
-												bill_channel_tax+=item_channel_tax;
-												bill_channel_payable+=item_channel_payable;
-											});											
-										}
-										pending_items_count-=1;										
-									});
+														pending_items_count-=1;
+													});											
+												}
+												else 
+												{
+													pending_items_count-=1;
+												}																				
+											});
+										});
+									}
+									else 
+									{
+										pending_items_count-=1;
+									}
 								});
-							}
-						});
-					});
+							});
+						}
+						else
+						{
+							pending_items_count-=1;
+						}
+					},batch_data);
 				});
 			
 				/////saving bill details

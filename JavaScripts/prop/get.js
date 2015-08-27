@@ -1,143 +1,4 @@
 /**
- * @returns {Array}
- */
-function get_single_column_data(callback,request_data)
-{	
-	var results=new Array();
-
-	if(is_online())
-	{
-		server_read_single_column(request_data,callback,results);
-	}
-	else
-	{
-		local_read_single_column(request_data,callback,results);
-	}
-}
-
-/**
- * @returns {Array}
- */
-function get_single_column_data_array(request_data_array,callback)
-{	
-	var results=new Array();
-	var array_count=request_data_array.length;
-	request_data_array.forEach(function(request_data)
-	{
-		if(is_online())
-		{
-			server_read_single_column(request_data,function(dummy)
-			{
-				array_count-=1;
-			},results);
-		}
-		else
-		{
-			local_read_single_column(request_data,function(dummy)
-			{
-				array_count-=1;
-			},results);
-		}
-	});
-	
-	var get_data_array_timer=setInterval(function()
-	{
-  	   if(array_count===0)
-  	   {
-  		   	clearInterval(get_data_array_timer);
-  		   	callback(results);
-  	   }
-    },10);			
-}
-
-
-/**
- * @param columns
- * @param callback
- */
-function fetch_requested_data(element_id,columns,callback)
-{
-	if(is_read_access(element_id))
-	{
-		var results=new Array();
-		if(is_online())
-		{
-			server_read_multiple_column(columns,callback,results);
-		}
-		else
-		{
-			local_read_multi_column(columns,callback,results);
-		}
-	}
-	else
-	{
-		hide_loader();
-		$("#modal2").dialog("open");
-	}
-}
-
-function get_inventory(product,batch,callback)
-{	
-	if(is_online())
-	{
-		server_get_inventory(product,batch,callback);
-	}
-	else
-	{
-		local_get_inventory(product,batch,callback);
-	}
-}
-
-
-function get_store_inventory(store,product,batch,callback)
-{	
-	if(is_online())
-	{
-		server_get_store_inventory(store,product,batch,callback);
-	}
-	else
-	{
-		local_get_store_inventory(store,product,batch,callback);
-	}
-}
-
-function get_available_inventory(product,batch,data_array,callback)
-{	
-	if(is_online())
-	{
-		server_get_available_inventory(product,batch,data_array,callback);
-	}
-	else
-	{
-		local_get_available_inventory(product,batch,data_array,callback);
-	}
-}
-
-/**
- * @returns {Array}
- */
-function generate_report(report_id)
-{	
-	var results=new Array();
-
-	if(is_online())
-	{
-		server_generate_report(report_id,results,function()
-		{
-			my_obj_array_to_csv(results,'report');
-		});
-	}
-	else
-	{
-		local_generate_report(report_id,results,function()
-		{
-			my_obj_array_to_csv(results,'report');
-		});
-	}
-}
-
-
-/**
  * this function resizes and sets the preview of the picture
  * @param evt Event that is called when image is selected
  * @param pictureinfo the html element to display the preview of the image
@@ -210,365 +71,6 @@ function get_new_key()
 	seconds=(seconds*1000)+Math.floor(Math.random()*1000);
 	return seconds;
 }
-
-
-function set_my_filter(filter_data,filter_element,func)
-{
-	get_single_column_data(function(data)
-	{
-		var form=filter_element.form;
-		var datalist=document.createElement('datalist');
-		data.forEach(function(d)
-		{
-			var option=document.createElement('option');
-			option.setAttribute('value',d);
-			datalist.appendChild(option);
-		});
-		
-		var list_id=filter_element.getAttribute('list');
-		if(list_id=='' || list_id==null)
-		{
-			list_id="list_"+get_new_key();
-			filter_element.setAttribute('list',list_id);
-		}
-		else
-		{
-			var oldlist=document.getElementById(list_id);
-			form.removeChild(oldlist);
-		}
-		
-		form.appendChild(datalist);
-		datalist.setAttribute('id',list_id);
-		
-		if(typeof func!='undefined')
-		{
-			func();
-		}
-	},filter_data);		
-}
-
-
-function set_static_filter(table,list,filter_element)
-{
-	var list_id='datalist-'+table+list;
-	filter_element.setAttribute("list",list_id);
-	
-	var datalist_element=document.getElementById(list_id);
-	
-	if(datalist_element==null || datalist_element==undefined)
-	{
-		var list_data="<values_list>" +
-			"<name></name>" +
-			"<tablename exact='yes'>"+table+"</tablename>" +
-			"<listname exact='yes'>"+list+"</listname>" +
-			"<status>active</status>" +
-			"</values_list>";
-		get_single_column_data(function(data)
-		{
-			var form=document.getElementById('master_datalist_form');
-			var datalist=document.createElement('datalist');
-			data.forEach(function(d)
-			{
-				var option=document.createElement('option');
-				option.setAttribute('value',d);
-				datalist.appendChild(option);
-			});
-			
-			var recheck=document.getElementById(list_id);
-			if(recheck==null || recheck==undefined)
-			{
-				form.appendChild(datalist);
-				datalist.setAttribute('id',list_id);
-			}
-		},list_data);		
-	}
-}
-
-function set_static_value_list(table,list,filter_element,func)
-{
-	var list_id='datalist-'+table+list;
-	filter_element.setAttribute("list",list_id);
-	
-	var datalist_element=document.getElementById(list_id);
-	
-	if(datalist_element==null || datalist_element==undefined)
-	{
-		var list_data="<values_list>" +
-			"<name></name>" +
-			"<tablename exact='yes'>"+table+"</tablename>" +
-			"<listname exact='yes'>"+list+"</listname>" +
-			"<status>active</status>" +
-			"</values_list>";
-		get_single_column_data(function(data)
-		{
-			var form=document.getElementById('master_datalist_form');
-			var datalist=document.createElement('datalist');
-			data.forEach(function(d)
-			{
-				var option=document.createElement('option');
-				option.setAttribute('value',d);
-				datalist.appendChild(option);
-			});
-					
-			var recheck=document.getElementById(list_id);
-			if(recheck==null || recheck==undefined)
-			{
-				form.appendChild(datalist);
-				datalist.setAttribute('id',list_id);
-			}
-		
-			$(filter_element).off("change");
-			$(filter_element).on("change",function(event)
-			{
-				var found = $.inArray(filter_element.value, data) > -1;
-				if(!found)
-				{
-		            filter_element.value="";
-		        }
-			});
-			
-			if(typeof func!='undefined')
-			{
-				func();
-			}
-		},list_data);
-	}
-	else
-	{
-		$(filter_element).off("change");
-		$(filter_element).on("change",function(event)
-		{
-			var options=new Array();
-			for(var i=0;i<datalist_element.options.length;i++)
-			{
-			    options[i]=datalist_element.options[i].value;
-			}
-			var found = $.inArray(filter_element.value,options) > -1;
-			if(!found)
-			{
-	            filter_element.value="";
-	        }
-		});
-		if(typeof func!='undefined')
-		{
-			func();
-		}
-	}
-}
-
-function set_my_value_list(filter_data,filter_element,func)
-{	
-	get_single_column_data(function(data)
-	{
-		var form=filter_element.form;
-		var datalist=document.createElement('datalist');
-		data.forEach(function(d)
-		{
-			var option=document.createElement('option');
-			option.setAttribute('value',d);
-			datalist.appendChild(option);
-		});
-		
-		var list_id=filter_element.getAttribute('list');
-		if(list_id=='' || list_id==null)
-		{
-			list_id="list_"+get_new_key();
-			filter_element.setAttribute("list",list_id);
-		}
-		else
-		{
-			var oldlist=document.getElementById(list_id);
-			form.removeChild(oldlist);
-		}
-		
-		form.appendChild(datalist);
-		datalist.setAttribute('id',list_id);
-
-		var active_element=document.activeElement;
-				
-		if(active_element==filter_element)
-		{
-			$(filter_element).blur();
-			$(filter_element).focus();
-		}
-
-		$(filter_element).off("change");
-		$(filter_element).on("change",function(event)
-		{
-			var found = $.inArray($(this).val(), data) > -1;
-			if(!found)
-			{
-	            $(this).val('');
-	        }
-		});
-		if(typeof func!='undefined')
-		{
-			func();
-		}
-	},filter_data);
-}
-
-function set_my_value_list_func(filter_data,filter_element,func)
-{	
-	get_single_column_data(function(data)
-	{
-		var form=filter_element.form;
-		var datalist=document.createElement('datalist');
-		data.forEach(function(d)
-		{
-			var option=document.createElement('option');
-			option.setAttribute('value',d);
-			datalist.appendChild(option);
-		});
-		
-		var list_id=filter_element.getAttribute('list');
-		if(list_id=='' || list_id==null)
-		{
-			list_id="list_"+get_new_key();
-			filter_element.setAttribute("list",list_id);
-		}
-		else
-		{
-			var oldlist=document.getElementById(list_id);
-			form.removeChild(oldlist);
-		}
-		
-		form.appendChild(datalist);
-		datalist.setAttribute('id',list_id);
-
-		if(document.activeElement==filter_element)
-		{
-			$(filter_element).blur();
-			$(filter_element).focus();
-		}
-		
-		$(filter_element).off("change");
-		$(filter_element).on("change",function(event)
-		{
-			var found = $.inArray($(this).val(), data) > -1;
-			if(!found)
-			{
-	            $(this).val('');
-	        }
-		});
-		if(typeof func!='undefined')
-		{
-			func();
-		}
-	},filter_data);
-}
-
-
-function set_multiple_value_list(filter_data_array,filter_element)
-{	
-	var form=filter_element.form;
-	var datalist=document.createElement('datalist');
-	
-	var list_id=filter_element.getAttribute('list');
-	if(list_id=='' || list_id==null)
-	{
-		list_id="list_"+get_new_key();
-		filter_element.setAttribute("list",list_id);
-	}
-	else
-	{
-		var oldlist=document.getElementById(list_id);
-		form.removeChild(oldlist);
-	}
-	
-	form.appendChild(datalist);
-	datalist.setAttribute('id',list_id);
-
-	if(document.activeElement==filter_element)
-	{
-		$(filter_element).blur();
-		$(filter_element).focus();
-	}
-
-	$(filter_element).off("change");
-	$(filter_element).on("change",function(event)
-	{
-		var found = false;
-		var iski_list=this.list;
-		
-		for(var j = 0; j < iski_list.options.length; j++)
-		{
-	        if(this.value==iski_list.options[j].value)
-	        {
-	           found=true;
-	            break;
-	        }
-	    }
-		
-		if(!found)
-		{
-            $(this).val('');
-        }
-	});
-	
-	filter_data_array.forEach(function(filter_data)
-	{
-		get_single_column_data(function(data)
-		{
-			data.forEach(function(d)
-			{
-				var option=document.createElement('option');
-				option.setAttribute('value',d);
-				datalist.appendChild(option);
-			});
-
-		},filter_data);
-	});
-}
-
-function set_my_value(filter_data,filter_element,func)
-{
-	get_single_column_data(function(data)
-	{
-		if(data.length>0)
-		{
-			filter_element.value=data[0];
-		}
-		else 
-		{
-			filter_element.value="";
-		}
-		if(typeof func!='undefined')
-		{
-			func();
-		}
-	},filter_data);
-}
-
-function set_my_value_func(filter_data,filter_element,func)
-{
-	get_single_column_data(function(data)
-	{
-		if(data.length>0)
-		{
-			filter_element.value=data[0];
-		}
-		if(typeof func!='undefined')
-		{
-			func();
-		}
-	},filter_data);
-}
-
-function set_my_max_value(filter_data,filter_element)
-{
-	get_single_column_data(function(data)
-	{
-		var value=0;
-		for(var i=0;i<data.length;i++)
-		{
-			value+=parseFloat(data[i]);
-		}
-		$(filter_element).attr('max',value);
-		$(filter_element).attr('min',"0");
-	},filter_data);
-}
-
 
 
 /**
@@ -1077,174 +579,6 @@ function revert_htmlentities(str)
 }
 
 
-function create_row(data_xml,activity_xml)
-{
-	if(is_online())
-	{
-		server_create_row(data_xml,activity_xml);
-	}
-	else
-	{
-		local_create_row(data_xml,activity_xml);
-	}
-}
-
-function create_row_func(data_xml,activity_xml,func)
-{
-	if(is_online())
-	{
-		server_create_row_func(data_xml,activity_xml,func);
-	}
-	else
-	{
-		local_create_row_func(data_xml,activity_xml,func);
-	}
-}
-
-function create_simple(data_xml)
-{
-	if(is_online())
-	{
-		server_create_simple(data_xml);
-	}
-	else
-	{
-		local_create_simple(data_xml);
-	}
-}
-
-function create_simple_func(data_xml,func)
-{
-	if(is_online())
-	{
-		server_create_simple_func(data_xml,func);
-	}
-	else
-	{
-		local_create_simple_func(data_xml,func);
-	}
-}
-
-function create_simple_no_warning(data_xml)
-{
-	if(is_online())
-	{
-		server_create_simple_no_warning(data_xml);
-	}
-	else
-	{
-		local_create_simple_no_warning(data_xml);
-	}
-}
-
-function create_batch(data_xml)
-{
-	if(is_online())
-	{
-		server_create_batch(data_xml);
-	}
-	else
-	{
-		local_create_batch(data_xml);
-	}
-}
-
-function create_batch_noloader(data_xml)
-{
-	if(is_online())
-	{
-		server_create_batch_noloader(data_xml);
-	}
-	else
-	{
-		local_create_batch_noloader(data_xml);
-	}
-}
-
-function delete_row(data_xml,activity_xml)
-{
-	if(is_online())
-	{
-		server_delete_row(data_xml,activity_xml);
-	}
-	else
-	{
-		local_delete_row(data_xml,activity_xml)
-	}
-}
-
-function delete_simple(data_xml)
-{
-	if(is_online())
-	{
-		server_delete_simple(data_xml);
-	}
-	else
-	{
-		local_delete_simple(data_xml);
-	}
-}
-
-function delete_simple_func(data_xml,func)
-{
-	if(is_online())
-	{
-		server_delete_simple_func(data_xml,func);
-	}
-	else
-	{
-		local_delete_simple_func(data_xml,func);
-	}
-}
-
-function update_row(data_xml,activity_xml)
-{
-	if(is_online())
-	{
-		server_update_row(data_xml,activity_xml);
-	}
-	else
-	{
-		local_update_row(data_xml,activity_xml);
-	}
-}
-
-function update_simple(data_xml)
-{
-	if(is_online())
-	{
-		server_update_simple(data_xml);
-	}
-	else
-	{
-		local_update_simple(data_xml);
-	}
-}
-
-function update_simple_func(data_xml,func)
-{
-	if(is_online())
-	{
-		server_update_simple_func(data_xml,func);
-	}
-	else
-	{
-		local_update_simple_func(data_xml,func);
-	}
-}
-
-function update_batch(data_xml)
-{
-	if(is_online())
-	{
-		server_update_batch(data_xml);
-	}
-	else
-	{
-		local_update_batch(data_xml);
-	}
-}
-
 function get_all_child_storage(store_area,area_array)
 {
 	var child_data="<store_areas>"+
@@ -1266,4 +600,84 @@ function get_all_child_storage(store_area,area_array)
 		storage_count_tracker-=1;
 		//console.log(storage_count_tracker);		
 	});
+}
+
+function get_available_batch(item_name,batch_array,min_quantity,result_array,success_func)
+{
+	if(batch_array.length>0)
+	{
+		get_inventory(item_name,batch_array[0],function(inventory)
+		{	
+			if(parseFloat(inventory)>0)
+			{	
+				if(parseFloat(inventory)>=parseFloat(min_quantity))
+				{
+					var result_item=new Object();
+					result_item.batch=batch_array[0];
+					result_item.quantity=min_quantity;
+					result_array.push(result_item);
+					success_func();	
+				}
+				else 
+				{
+					var result_item=new Object();
+					result_item.batch=batch_array[0];
+					result_item.quantity=inventory;
+					result_array.push(result_item);
+					min_quantity=parseFloat(min_quantity)-parseFloat(inventory);
+					batch_array.splice(0,1);
+					get_available_batch(item_name,batch_array,min_quantity,result_array,success_func);
+				}
+			}
+			else
+			{
+				batch_array.splice(0,1);
+				get_available_batch(item_name,batch_array,min_quantity,result_array,success_func);
+			}
+		});
+	}
+	else 
+	{
+		success_func();
+	}
+}
+
+function get_available_storage(item_name,batch,storage_array,min_quantity,result_array,success_func)
+{
+	if(storage_array.length>0)
+	{
+		get_store_inventory(storage_array[0],item_name,batch,function(inventory)
+		{	
+			if(parseFloat(inventory)>0)
+			{	
+				if(parseFloat(inventory)>=parseFloat(min_quantity))
+				{
+					var result_item=new Object();
+					result_item.storage=storage_array[0];
+					result_item.quantity=min_quantity;
+					result_array.push(result_item);
+					success_func();	
+				}
+				else 
+				{
+					var result_item=new Object();
+					result_item.storage=storage_array[0];
+					result_item.quantity=inventory;
+					result_array.push(result_item);
+					min_quantity=parseFloat(min_quantity)-parseFloat(inventory);
+					storage_array.splice(0,1);
+					get_available_storage(item_name,batch,storage_array,min_quantity,result_array,success_func);
+				}
+			}
+			else
+			{
+				storage_array.splice(0,1);
+				get_available_storage(item_name,batch,storage_array,min_quantity,result_array,success_func);
+			}
+		});
+	}
+	else 
+	{
+		success_func();
+	}
 }

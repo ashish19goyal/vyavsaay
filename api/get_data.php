@@ -58,7 +58,6 @@
 	$api_key=$input_object['api_key'];
 	$username=$input_object['username'];
 	$table=$input_object['data_store'];
-	$count=$input_object['count'];
 	$start_index=$input_object['start_index'];
 	$columns_array=(array)$input_object['indexes'];
 
@@ -80,39 +79,39 @@
 			$query="select * from $table where ";
 			$order_by=" ORDER BY last_updated DESC, ";
 			$limit=" limit ?,?";
-			$limit_count=1;
-					
-			if(isset($count))
+			$limit_count=0;
+
+			if(isset($input_object['count']))
 			{
-				$limit_count=$count;
+				$limit_count=$input_object['count'];
 			}
-			
+
 			$limit_start_index=0;
 			if(isset($start_index))
 			{
 				$limit_start_index=$start_index;
 			}
-			
+
 			///////
 			foreach($columns_array as $col)
 			{
 				if(isset($col['upperbound']))
 				{
-					$query.=$col->index." <= ? and ";
-					$values_array[]=$col->value;
+					$query.=$col['index']." <= ? and ";
+					$values_array[]=$col['value'];
 				}
 				
 				if(isset($col['lowerbound']))
 				{
-					$query.=$col->index." >= ? and ";
-					$values_array[]=$col->value;
+					$query.=$col['index']." >= ? and ";
+					$values_array[]=$col['value'];
 				}
 				
 				if(isset($col['array']))
 				{
-					$query.=$col->index." in (";
-					$string=rtrim($col->value,"-");
-					$exploded_values=explode("--",$string);
+					$query.=$col['index']." in (";
+					$string=$col['value'];
+					$exploded_values=explode(",",$string);
 					foreach($exploded_values as $value)
 					{
 						$query.="?,";
@@ -144,12 +143,14 @@
 			
 			////////////////				
 			$query=rtrim($query,"and ");
-	
+			
 			if(count($values_array)===0)
 			{
 				$query="select * from $table";
 			}
 			$query.=$order_by."id DESC";
+
+			//echo $query;
 	
 			if($limit_count!==0)
 			{
@@ -173,10 +174,18 @@
 	
 			for($i=0;$i<count($struct_res);$i++)
 			{
+				//echo "new row<br>";
 				$response_rows[$i]=[];
 				foreach($struct_res[$i] as $key => $value)
 				{
-					$response_rows[$i][$key]=json_decode($value,true);
+					if(json_decode($value,true))
+					{
+						$response_rows[$i][$key]=json_decode($value,true);
+					}
+					else {
+						$response_rows[$i][$key]=$value;
+					}
+					//echo $value."<br>";
 				}
 			}
 

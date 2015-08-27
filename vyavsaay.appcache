@@ -188,6 +188,7 @@ JavaScripts/prop/forms_ini.js
 JavaScripts/prop/get.js
 JavaScripts/prop/import_template.js
 JavaScripts/prop/import.js
+JavaScripts/prop/local_online.js
 JavaScripts/prop/local_db_handling.js
 JavaScripts/prop/login_helper.js
 JavaScripts/prop/modal_action.js
@@ -199,6 +200,7 @@ JavaScripts/prop/questionnaire.js
 JavaScripts/prop/reports_header_ini.js
 JavaScripts/prop/reports_ini.js
 JavaScripts/prop/responsive_menu.js
+JavaScripts/prop/set.js
 JavaScripts/prop/sessions.js
 JavaScripts/prop/sync.js
 JavaScripts/prop/time.js

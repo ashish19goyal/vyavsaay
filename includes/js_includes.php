@@ -36,6 +36,7 @@
 <script src='./JavaScripts/prop/get.js'></script>
 <script src='./JavaScripts/prop/import_template.js'></script>
 <script src='./JavaScripts/prop/import.js'></script>
+<script src='./JavaScripts/prop/local_online.js'></script>
 <script src='./JavaScripts/prop/local_db_handling.js'></script>
 <script src='./JavaScripts/prop/login_helper.js'></script>
 <script src='./JavaScripts/prop/modal_action.js'></script>
@@ -48,6 +49,7 @@
 <script src='./JavaScripts/prop/reports_header_ini.js'></script>
 <script src='./JavaScripts/prop/responsive_menu.js'></script>
 <script src='./JavaScripts/prop/sessions.js'></script>
+<script src='./JavaScripts/prop/set.js'></script>
 <script src='./JavaScripts/prop/access.js'></script>
 <script src='./JavaScripts/prop/sync.js'></script>
 <script src='./JavaScripts/prop/update.js'></script>
