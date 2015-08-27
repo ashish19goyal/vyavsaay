@@ -273,7 +273,9 @@
 				<b>Import pre-filled template</b><br>
 				<label><input type="radio" name='upload_option' value='new'>Create New Records</label><br>
 				<label><input type="radio" name='upload_option' value='existing' checked>Update existing Records</label><br>
-				<input type="file" value='Select file' accept=".csv"><br>
+				<input type="file" value='Select file' accept=".csv" style='display:none'>
+				<input type='button' class='generic_red_icon' value='Select File'>
+				<br>
 				<output name='selected_file'></output><br>
 				<input type="submit" value='Import' class='modal_submit'>
 			</fieldset>
@@ -1176,7 +1178,9 @@
 				<br>
 				<b>Import pre-filled template</b><br>
 				Channel: <input type="text" required><br>
-				<input type="file" value='Select file' accept=".csv"><br>
+				<input type="file" value='Select file' accept=".csv" style='display:none'>
+				<input type='button' class='generic_red_icon' value='Select File'>
+				<br>
 				<output name='selected_file'></output><br>
 				<input type="submit" value='Import' class='modal_submit'>
 			</fieldset>
@@ -1206,7 +1210,9 @@
 				<br>
 				<br>
 				<b>Import pre-filled template</b><br>
-				<input type="file" value='Select file' accept=".csv"><br>
+				<input type="file" value='Select file' accept=".csv" style='display:none'>
+				<input type='button' class='generic_red_icon' value='Select File'>
+				<br>				
 				<output name='selected_file'></output><br>
 				<input type="submit" value='Import' class='modal_submit'>
 			</fieldset>
@@ -1315,7 +1321,9 @@
 				<br>
 				<br>
 				<b>Import pre-filled template</b><br>
-				<input type="file" value='Select file' accept=".csv"><br>
+				<input type="file" value='Select file' accept=".csv" style='display:none'>
+				<input type='button' class='generic_red_icon' value='Select File'>
+				<br>				
 				<output name='selected_file'></output><br>
 				<input type="submit" value='Import' class='modal_submit'>
 			</fieldset>
@@ -1331,7 +1339,9 @@
 				<br>
 				<b>Import pre-filled template</b><br>
 				Type: <input type="text" required><br>
-				<input type="file" value='Select file' accept=".csv"><br>
+				<input type="file" value='Select file' accept=".csv" style='display:none'>
+				<input type='button' class='generic_red_icon' value='Select File'>
+				<br>
 				<output name='selected_file'></output><br>
 				<input type="submit" value='Import' class='modal_submit'>
 			</fieldset>

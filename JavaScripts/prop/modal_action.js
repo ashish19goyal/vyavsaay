@@ -2298,9 +2298,16 @@ function modal23_action(t_func,i_func)
 	var new_records=form.elements[2];
 	var update_records=form.elements[3];
 	var select_file=form.elements[4];
-	var selected_file=form.elements[5];
-	var import_button=form.elements[6];
+	var dummy_button=form.elements[5];
+	var selected_file=form.elements[6];
+	var import_button=form.elements[7];
 
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(select_file).trigger('click');
+	});
+				
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
@@ -7219,7 +7226,7 @@ function modal114_action(func)
 							"</row>";
 					cat_sku_mapping_xml+="<row>" +
 							"<id>"+id+"</id>" +
-							"<channel>"+channelname+"</channel>" +
+							"<channel>"+channel.name+"</channel>" +
 							"<sku>"+name+"</sku>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</row>";
@@ -7238,18 +7245,10 @@ function modal114_action(func)
 				cat_sku_mapping_xml+="</category_sku_mapping>";
 				channel_price_xml+="</channel_prices>";
 				
-				if(is_online())
-				{
-					server_create_batch(sku_mapping_xml);
-					server_create_batch(cat_sku_mapping_xml);
-					server_create_batch(channel_price_xml);
-				}
-				else
-				{
-					local_create_batch(sku_mapping_xml);
-					local_create_batch(cat_sku_mapping_xml);
-					local_create_batch(channel_price_xml);
-				}
+				create_batch(sku_mapping_xml);
+				create_batch(cat_sku_mapping_xml);
+				create_batch(channel_price_xml);
+				
 			});
 
 		}
@@ -7854,6 +7853,7 @@ function modal120_action(func,product_name)
 						"<batch>"+batch+"</batch>" +
 						"<expiry>"+expiry+"</expiry>" +
 						"<mrp>"+mrp+"</mrp>" +
+						"<status>available</status>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</product_instances>";
 			var activity_xml="<activity>" +
@@ -8952,13 +8952,10 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type)
 							"</product_master>";
 				fetch_requested_data('',tax_data,function(taxes)
 				{
-					if(taxes.length>0)
+					if(taxes.length==0)
 					{
-						if(taxes[0].tax)
-						{
-							tr_elem_title.push('Tax Rate not set');
-							tr_elem_selection.push(get_session_var('billing_on_tax'));
-						}
+						tr_elem_title.push('Tax Rate not set');
+						tr_elem_selection.push(get_session_var('billing_on_tax'));
 					}
 					order_item_timer-=1;
 				});	
@@ -8992,7 +8989,7 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type)
 							}
 						}				
 		  			   
-				  	   var rowsHTML="<tr title='"+item_title+"' id='modal133_item_row_"+order_item.id+"'>"+
+				  	   var rowsHTML="<tr title='"+item_title+"' data-id='"+order_item.id+"' id='modal133_item_row_"+order_item.id+"'>"+
 							"<td>"+order_item.item_name+"</td>"+
 							"<td>"+order_item.quantity+"</td>";
 						if(hide_checkbox)
@@ -9273,8 +9270,15 @@ function modal138_action()
 	var template_button=form.elements[1];
 	var channel_filter=form.elements[2];
 	var select_file=form.elements[3];
-	var selected_file=form.elements[4];
-	var import_button=form.elements[5];
+	var dummy_button=form.elements[4];
+	var selected_file=form.elements[5];
+	var import_button=form.elements[6];
+
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(select_file).trigger('click');
+	});
 
 	var channel_data="<sale_channels>"+
 					"<name></name>"+
@@ -9601,9 +9605,16 @@ function modal140_action(i_func)
 	
 	var template_button=form.elements[1];
 	var select_file=form.elements[2];
-	var selected_file=form.elements[3];
-	var import_button=form.elements[4];
-				
+	var dummy_button=form.elements[3];
+	var selected_file=form.elements[4];
+	var import_button=form.elements[5];
+	
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(select_file).trigger('click');
+	});
+			
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
@@ -10572,8 +10583,15 @@ function modal148_action()
 	
 	var template_button=form.elements[1];
 	var select_file=form.elements[2];
-	var selected_file=form.elements[3];
-	var import_button=form.elements[4];
+	var dummy_button=form.elements[3];
+	var selected_file=form.elements[4];
+	var import_button=form.elements[5];
+
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(select_file).trigger('click');
+	});
 
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
@@ -10723,8 +10741,15 @@ function modal149_action()
 	var template_button=form.elements[1];
 	var type_filter=form.elements[2];
 	var select_file=form.elements[3];
-	var selected_file=form.elements[4];
-	var import_button=form.elements[5];
+	var dummy_button=form.elements[4];
+	var selected_file=form.elements[5];
+	var import_button=form.elements[6];
+
+	$(dummy_button).on('click',function (e) 
+	{
+		e.preventDefault();
+		$(select_file).trigger('click');
+	});
 
 	set_static_value_list('logistics_orders','type',type_filter);
 	
@@ -10789,7 +10814,7 @@ function modal149_action()
 				
 				data_xml+="<row>" +
 						"<id>"+row.id+"</id>" +
-						"<awb_num>"+row['AWB No.']+"</awb_num>"+
+						"<awb_num unique='yes'>"+row['AWB No.']+"</awb_num>"+
 		                "<type>"+type_filter.value+"</type>"+
 		                "<order_num>"+row['Order No.']+"</order_num>"+
 		                "<manifest_id>"+row['Manifest ID']+"</manifest_id>"+

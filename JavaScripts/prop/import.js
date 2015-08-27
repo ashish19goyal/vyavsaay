@@ -6923,7 +6923,7 @@ function form203_import(data_array,import_type)
 		
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
-				"<awb_num>"+row['AWB No.']+"</awb_num>"+
+				"<awb_num unique='yes'>"+row['AWB No.']+"</awb_num>"+
                 "<type>"+row['Type']+"</type>"+
                 "<order_num>"+row['Order No.']+"</order_num>"+
                 "<manifest_id>"+row['Manifest ID']+"</manifest_id>"+
@@ -6967,25 +6967,12 @@ function form203_import(data_array,import_type)
 	data_xml+="</logistics_orders>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
+		
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 };
 

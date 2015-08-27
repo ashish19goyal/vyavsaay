@@ -8943,14 +8943,7 @@ function form172_update_item(form)
 					"<to_time>"+last_updated+"</to_time>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</channel_prices>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
+		update_simple(data_xml);
 	}
 	else
 	{
