@@ -6097,6 +6097,10 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 											order_item.item_desc=taxes[0].description;
 											if(taxes.length>0)
 											{
+												if(bill_type=='Retail-CST')
+												{
+													taxes[0].tax=get_session_var('cst_rate');
+												}
 												item_amount=my_round((item_total-item_freight)/(1+(parseFloat(taxes[0].tax)/100)),2);
 												item_tax=my_round((item_total-item_amount-item_freight),2);
 			
@@ -13695,7 +13699,9 @@ function form200_create_item(form)
 		var del_button=form.elements[11];
 		var old_order_history=form.elements[14].value;
 
-		var order_history=JSON.parse(old_order_history);
+		var order_history=[];
+		if(old_order_history!="")
+			order_history=JSON.parse(old_order_history);
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details="Order Out for delivery";
@@ -14265,7 +14271,10 @@ function form219_create_item(form)
 	
 		var old_order_history=form.elements[15].value;
 
-		var order_history=JSON.parse(old_order_history);
+		var order_history=[];
+		if(old_order_history!="")
+			order_history=JSON.parse(old_order_history);
+
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
 		history_object.details="Order Out for delivery";
