@@ -3212,7 +3212,7 @@ function form90_add_item()
 }
 
 /**
- * @form Create Bill(bakery)
+ * @form Create Bill(nikki)
  * @formNo 91
  */
 function form91_add_item()
@@ -3319,7 +3319,14 @@ function form91_add_item()
 			{
 				if(products.length>0)
 				{
-					tax_unit_filter.value=products[0].tax;
+					if(bill_type=='Retail-CST')
+					{
+						tax_unit_filter.value=get_session_var('cst_rate');
+					}
+					else
+					{
+						tax_unit_filter.value=products[0].tax;
+					}
 					desc_filter.value=products[0].description;
 				}
 			});

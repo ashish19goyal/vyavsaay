@@ -5995,7 +5995,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 		});
 
 		console.log(order_items);
-		console.log(actual_order_items);
+		//console.log(actual_order_items);
 		
 		if(!(order_items.length!=(actual_order_items.length-1) && get_session_var('allow_partial_billing')=='no'))
 		{
@@ -6092,7 +6092,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 												"</product_master>";
 										fetch_requested_data('',tax_data,function(taxes)
 										{
-											console.log(taxes);
+											//console.log(taxes);
 		
 											order_item.item_desc=taxes[0].description;
 											if(taxes.length>0)

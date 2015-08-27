@@ -468,6 +468,7 @@
 			<issue_type index='yes' type="VARCHAR(15)"></issue_type><!--in/out-->
 			<issue_id index='yes' type="BIGINT"></issue_id>
 			<fresh index='yes' type="VARCHAR(25)"></fresh><!--yes/no-->
+			<picked_quantity index='no' type="DECIMAL(12,2)"></picked_quantity>
 			<picked_status index='yes' type="VARCHAR(25)"></picked_status><!--pending/picked-->
 			<packing_status index='yes' type="VARCHAR(25)"></packing_status><!--pending/packed-->
 			<dispatch_status index='yes' type="VARCHAR(25)"></dispatch_status><!--pending/dispatched-->
@@ -1093,6 +1094,7 @@
 			<notes index='no' type='TEXT'></notes>
 			<storage index='yes' type="TEXT"></storage>
 			<bill_status index='yes' type="VARCHAR(25)"></bill_status><!--pending/completed-->
+			<picked_quantity index='no' type="DECIMAL(12,2)"></picked_quantity>
 			<picked_status index='yes' type="VARCHAR(25)"></picked_status><!--pending/picked-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

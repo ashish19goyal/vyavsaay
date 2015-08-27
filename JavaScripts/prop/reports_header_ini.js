@@ -1161,9 +1161,9 @@ function report60_header_ini()
 function report63_header_ini()
 {	
 	var form=document.getElementById('report63_header');
-	var type_filter=form.elements[1];
-	var sku_filter=form.elements[2];
-	var item_name_filter=form.elements[3];
+	var sku_filter=form.elements['sku'];
+	var item_name_filter=form.elements['item_name'];
+	var rack_filter=form.elements['rack'];
 	
 	$(form).off('submit');
 	$(form).on('submit',function(event)
@@ -1171,25 +1171,26 @@ function report63_header_ini()
 		event.preventDefault();
 		report63_ini();
 	});
-	
-	set_static_value_list('item_picklist','pick_type',type_filter,function ()
-	{
-		$(type_filter).focus();
-	});
-	
-	$(type_filter).off('blur');
-	$(type_filter).on('blur',function () 
-	{	
-		var sku_data="<product_master>"+
-			"<name></name>"+
-			"</product_master>";
-		set_my_filter(sku_data,sku_filter);	
+		
+	var sku_data="<product_master>"+
+		"<name></name>"+
+		"</product_master>";
+	set_my_filter(sku_data,sku_filter);	
 
-		var name_data="<product_master>"+
-			"<description></description>"+
-			"</product_master>";
-		set_my_filter(name_data,item_name_filter);	
-	});				
+	var name_data="<product_master>"+
+		"<description></description>"+
+		"</product_master>";
+	set_my_filter(name_data,item_name_filter);					
+	
+	$(rack_filter).off('keyup');
+	$(rack_filter).on('keyup',function (event) 
+	{
+		if(event.keycode==13)
+		{
+			event.preventDefault();
+			modal150_action(rack_filter.value,'report63');
+		}
+	});
 }
 
 /**
@@ -1931,4 +1932,43 @@ function report89_header_ini()
 	$(end_filter).datepicker();
 	start_filter.value=get_my_past_date(get_my_time()-7*86400000);
 	end_filter.value=get_my_date();
+}
+
+/**
+ * @reportNo 90
+ * @report Order Picklist
+ */
+function report90_header_ini()
+{	
+	var form=document.getElementById('report90_header');
+	var sku_filter=form.elements['sku'];
+	var item_name_filter=form.elements['item_name'];
+	var rack_filter=form.elements['rack'];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report90_ini();
+	});
+		
+	var sku_data="<product_master>"+
+		"<name></name>"+
+		"</product_master>";
+	set_my_filter(sku_data,sku_filter);	
+
+	var name_data="<product_master>"+
+		"<description></description>"+
+		"</product_master>";
+	set_my_filter(name_data,item_name_filter);					
+	
+	$(rack_filter).off('keyup');
+	$(rack_filter).on('keyup',function (event) 
+	{
+		if(event.keycode==13)
+		{
+			event.preventDefault();
+			modal150_action(rack_filter.value,'report90');
+		}
+	});
 }
