@@ -1422,3 +1422,10 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	    padding:10px;
 	}
 }
+
+table.printing_tables{
+}
+table.printing_tables tr{ 
+	page-break-inside:avoid; 
+	page-break-after:auto;
+}

@@ -2354,6 +2354,7 @@ function print_form200(func)
 
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
+	new_table.setAttribute('class','printing_tables');
 
 	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:4%'>S.No.</td>"+
 				"<td style='text-align:left;width:19%'>C-Note No.</td>"+
@@ -2412,7 +2413,7 @@ function print_form200(func)
 		cnote_no.appendChild(type_value);
 		cnote_no.appendChild(merchant_value);
 
-		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td>"+counter+"</td>"+
+		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;page-break-inside:avoid;page-break-after:auto;'><td>"+counter+"</td>"+
 				"<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
 				"<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
 				"<td>"+form.elements[3].value+"</td>"+
@@ -2656,6 +2657,7 @@ function print_form219(func)
 	
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
+	new_table.setAttribute('class','printing_tables');
 
 	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:4%'>S.No.</td>"+
 				"<td style='text-align:left;width:19%'>C-Note No.</td>"+
@@ -2707,7 +2709,7 @@ function print_form219(func)
 		cnote_no.appendChild(type_value);
 		cnote_no.appendChild(merchant_value);
 
-		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td>"+counter+"</td>"+
+		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;page-break-inside:avoid;page-break-after:auto;'><td>"+counter+"</td>"+
 				"<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
 				"<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
 				"<td>"+form.elements[4].value+"</td>"+
