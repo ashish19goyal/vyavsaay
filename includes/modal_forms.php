@@ -625,6 +625,7 @@
 		<table id='modal53_table'>
 		</table>
 	</div>
+	
 	<div id="modal54" title="Scheme from supplier">
 		<table id='modal54_table'>
 		</table>
@@ -1348,4 +1349,15 @@
 		</form>
 	</div>
 
+	<div id="modal150" title="Scan Picked Items">
+		<form id='modal150_form' autocomplete="off">
+			<fieldset>
+				<label>Scan Barcode: <input type="text" required></label>
+				<input type="submit" class='submit_hidden'>
+			</fieldset>
+		</form>
+		<table id='modal150_table'>
+		</table>		
+	</div>
+	
 </div>

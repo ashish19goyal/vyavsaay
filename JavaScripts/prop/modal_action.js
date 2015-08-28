@@ -10665,7 +10665,7 @@ function modal148_action()
 						
 						var history_object=JSON.parse(data_row.order_history);
 						var new_history_object=new Object();
-						new_history_object.timestamp=get_raw_time(data_row.date);
+						new_history_object.timeStamp=get_raw_time(data_row.date);
 						new_history_object.location=data_row['received by'];
 						new_history_object.status=data_row.status;
 						new_history_object.details=data_row.remark;
@@ -10805,7 +10805,7 @@ function modal149_action()
 				row.id=last_updated+counter;
 				var order_history=[];
 				var history_object=new Object();
-				history_object.timeStamp=get_raw_time(row['Dispatch Date']);
+				history_object.timeStamp=get_my_time();
 				history_object.details="Order dispatched from merchant";
 				history_object.location=row['Merchant Name'];
 				history_object.status="dispatched";
@@ -10889,3 +10889,5 @@ function modal149_action()
 	
 	$("#modal149").dialog("open");
 }
+
+

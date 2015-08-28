@@ -4361,7 +4361,7 @@ function report63_ini()
 					}
 				}
 			}
-			
+
 			items.forEach(function(item)
 			{
 				var rowsHTML="<tr>";

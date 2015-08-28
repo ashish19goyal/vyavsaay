@@ -6914,7 +6914,7 @@ function form203_import(data_array,import_type)
 		}
 		var order_history=[];
 		var history_object=new Object();
-		history_object.timeStamp=get_raw_time(row['Dispatch Date']);
+		history_object.timeStamp=get_my_time();
 		history_object.details="Order dispatched from merchant";
 		history_object.location=row['Merchant Name'];
 		history_object.status="dispatched";

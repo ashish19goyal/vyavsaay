@@ -7353,6 +7353,7 @@ function form203_header_ini()
 		form203_ini();
 	});
 
+	$(import_button).off("click");
 	$(import_button).on("click",function(event)
 	{
 		modal149_action();

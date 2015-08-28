@@ -17797,8 +17797,8 @@ function form172_ini()
 						var average_pickup=(parseFloat(pickups[0].min_charges)+parseFloat(pickups[0].max_charges))/2;
 						pickup_filter.value=Math.max(parseFloat(pickups[0].min_charges),average_pickup);
 						commission_charges_filter.value=my_round((parseFloat(commission_filter.value)*parseFloat(sp_filter.value)/100),2);
-						tax_filter.value=my_round((.14*(parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value))),2);						
-						total_charges_filter.value=parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value)+parseFloat(tax_filter.value);
+						total_charges_filter.value=parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value);
+						tax_filter.value=my_round((.14*(parseFloat(total_charges_filter.value))),2);						
 					});
 				});							
 			});
@@ -17812,9 +17812,9 @@ function form172_ini()
 			$(sp_filter).add(freight_filter).add(cp_filter).on('change',function ()
 			{
 				commission_charges_filter.value=my_round((parseFloat(commission_filter.value)*parseFloat(sp_filter.value)/100),2);
-				tax_filter.value=my_round((.14*(parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value))),2);						
-				total_charges_filter.value=parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value)+parseFloat(tax_filter.value);					
-				profit_filter.value=my_round((parseFloat(sp_filter.value)+parseFloat(freight_filter.value)-parseFloat(total_charges_filter.value)-parseFloat(cp_filter.value)),2);
+				total_charges_filter.value=parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value);
+				tax_filter.value=my_round((.14*(parseFloat(total_charges_filter.value))),2);						
+				profit_filter.value=my_round((parseFloat(sp_filter.value)+parseFloat(freight_filter.value)-parseFloat(total_charges_filter.value)-parseFloat(tax_filter.value)-parseFloat(cp_filter.value)),2);
 				profit_mrp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(mrp_filter.value)*100),2);
 				profit_sp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(sp_filter.value)*100),2);
 			});			
@@ -21114,7 +21114,7 @@ function form198_ini()
 			
 			for(var k in order_history)
 			{
-				rowsHTML+="<tr><td>"+get_my_datetime(order_history[k].timestamp)+"</td><td>"+order_history[k].details+"</td><td>"+order_history[k].location+"</td><td>"+order_history[k].status+"</td></tr>";
+				rowsHTML+="<tr><td>"+get_my_datetime(order_history[k].timeStamp)+"</td><td>"+order_history[k].details+"</td><td>"+order_history[k].location+"</td><td>"+order_history[k].status+"</td></tr>";
 			}
 			rowsHTML+="</table><br>";
 
