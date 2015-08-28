@@ -10849,7 +10849,7 @@ function modal149_action()
 		                "<pickup_location>"+row['Pickup Location']+"</pickup_location>"+
 		                "<pickup_by>"+row['Pickup By']+"</pickup_by>"+
 		                "<sku>"+row['Prod/SKU code']+"</sku>"+
-		                "<product_name>"+row['Product name']+"</product_name>"+
+		                "<product_name></product_name>"+
 		                "<order_history>"+order_history_string+"</order_history>"+
 		                "<status>picked</status>"+
 		                "<last_updated>"+last_updated+"</last_updated>" +

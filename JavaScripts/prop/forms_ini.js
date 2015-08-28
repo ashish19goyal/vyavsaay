@@ -21508,7 +21508,7 @@ function form203_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[6];
+		var export_button=filter_fields.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
