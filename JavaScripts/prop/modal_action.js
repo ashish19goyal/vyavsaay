@@ -10815,7 +10815,7 @@ function modal149_action()
 				data_xml+="<row>" +
 						"<id>"+row.id+"</id>" +
 						"<awb_num unique='yes'>"+row['AWB No.']+"</awb_num>"+
-		                "<type>"+type_filter.value+"</type>"+
+		                "<type>"+row['Type']+"</type>"+
 		                "<order_num>"+row['Order No.']+"</order_num>"+
 		                "<manifest_id>"+row['Manifest ID']+"</manifest_id>"+
 		                "<merchant_name>"+row['Merchant Name']+"</merchant_name>"+
@@ -10842,7 +10842,7 @@ function modal149_action()
 		                "<pieces>"+row['Pieces']+"</pieces>"+
 		                "<carrier_account>"+row['Carrier Account']+"</carrier_account>"+
 		                "<carrier_name>"+row['Carrier Name']+"</carrier_name>"+
-		                "<manifest_type>"+row['Manifest Type']+"</manifest_type>"+
+		                "<manifest_type>"+type_filter.value+"</manifest_type>"+
 		                "<dispatch_date>"+get_raw_time(row['Dispatch Date'])+"</dispatch_date>"+
 		                "<import_date>"+get_raw_time(get_my_date())+"</import_date>"+
 		                "<notes>"+row['Notes']+"</notes>"+

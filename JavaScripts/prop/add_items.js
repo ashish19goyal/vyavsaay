@@ -11260,7 +11260,7 @@ function form200_add_item()
 		var awb_data="<logistics_orders>"+
 					"<awb_num></awb_num>"+
 					"<status array='yes'>--received--undelivered--pending--</status>"+
-					"<type array='yes'>--RTM--PREPAID--</type>"+
+					"<type exact='yes'>NONCOD</type>"+
 					"</logistics_orders>";
 		set_my_value_list(awb_data,awb_filter,function () 
 		{
