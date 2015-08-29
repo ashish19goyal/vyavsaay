@@ -5891,7 +5891,7 @@ function form172_import(data_array,import_type)
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<channel>"+row.channel+"</channel>" +
-				"<item>"+row.sku+"</item>" +
+				"<item>"+row.item+"</item>" +
 				"<sale_price>"+row.price+"</sale_price>"+
 				"<freight>"+row.freight+"</freight>"+
 				"<discount_customer>"+row.discount_customer+"</discount_customer>"+

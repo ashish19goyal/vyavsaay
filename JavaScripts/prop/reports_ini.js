@@ -6577,7 +6577,7 @@ function report90_ini()
 			{
 				unbilled_items[y].table_type='unbilled_sale_items';
 				items.push(unbilled_items[y]);
-			}				
+			}
 
 			items.forEach(function(item)
 			{
