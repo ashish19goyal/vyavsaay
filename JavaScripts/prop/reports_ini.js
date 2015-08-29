@@ -4294,6 +4294,7 @@ function report60_ini()
  */
 function report63_ini()
 {
+	console.log('report63_ini');
 	var form=document.getElementById('report63_header');
 	var sku=form.elements['sku'].value;
 	var item=form.elements['item_name'].value;
@@ -4365,27 +4366,27 @@ function report63_ini()
 			items.forEach(function(item)
 			{
 				var rowsHTML="<tr>";
-				rowsHTML+="<form id='report63_"+item.id+"'></form>";
+				rowsHTML+="<form id='row_report63_"+item.id+"'></form>";
 				rowsHTML+="<td data-th='Item'>";
-					rowsHTML+=item.item_name+"<br>"+item.item_desc;
+					rowsHTML+="<textarea readonly='readonly' form='row_report63_"+item.id+"'>"+item.item_name+"\n"+item.item_desc+"</textarea>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Batch'>";
-					rowsHTML+=item.batch;
+					rowsHTML+="<input type='text' readonly='readonly' form='row_report63_"+item.id+"' value='"+item.batch+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Quantity'>";
-					rowsHTML+="To pick: "+item.quantity;
-					rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='report63_"+item.id+"' value='"+item.picked_quantity+"'>";
+					rowsHTML+="To Pick: <input type='number' readonly='readonly' form='row_report63_"+item.id+"' value='"+item.quantity+"'>";
+					rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='row_report63_"+item.id+"' value='"+item.picked_quantity+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Storage'>";
-					rowsHTML+="<input type='text' form='report63_"+item.id+"' value='"+item.storage+"'>";
-					rowsHTML+="<input type='hidden' form='report63_"+item.id+"' value='"+item.id+"'>";
-					rowsHTML+="<input type='hidden' form='report63_"+item.id+"' value='"+item.table_type+"'>";
+					rowsHTML+="<input type='text' form='row_report63_"+item.id+"' value='"+item.storage+"'>";
+					rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.id+"'>";
+					rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.table_type+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="</tr>";
 						
 				$('#report63_body').append(rowsHTML);
-				var report63_form=document.getElementById('report63_'+item.id);
-				var storage_filter=report63_form.elements[1];
+				var report63_form=document.getElementById('row_report63_'+item.id);
+				var storage_filter=report63_form.elements[4];
 				
 				var storage_data="<store_areas>"+
 								"<name></name>"+
@@ -4396,12 +4397,6 @@ function report63_ini()
 				$(storage_filter).on('click',function()
 				{
 					this.select();
-				});
-
-				$(report63_form).on('submit',function(event)
-				{
-					event.preventDefault();
-					report63_update(report63_form);
 				});
 			});
 			
@@ -6589,28 +6584,28 @@ function report90_ini()
 				var picked_quantity=item.picked_quantity;
 				if(item.picked_quantity=='null' || item.picked_quantity=='' || isNaN(item.picked_quantity))
 					picked_quantity=0;
-					
+				
 				var rowsHTML="<tr>";
-				rowsHTML+="<form id='report90_"+item.id+"'></form>";
+				rowsHTML+="<form id='row_report90_"+item.id+"'></form>";
 				rowsHTML+="<td data-th='Order' id='report90_order_"+item.id+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Item'>";
-					rowsHTML+=item.item_name+"<br>"+item.item_desc;
+					rowsHTML+="<textarea readonly='readonly' form='row_report90_"+item.id+"'>"+item.item_name+"\n"+item.item_desc+"</textarea>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Batch'>";
-					rowsHTML+=item.batch;
+					rowsHTML+="<input type='text' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.batch+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Quantity'>";
-					rowsHTML+="To pick: "+item.quantity;
-					rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='report90_"+item.id+"' value='"+picked_quantity+"'>";
+					rowsHTML+="To Pick: <input type='number' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.quantity+"'>";
+					rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='row_report90_"+item.id+"' value='"+picked_quantity+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Storage'>";
-					rowsHTML+="<input type='text' form='report90_"+item.id+"' value='"+item.storage+"'>";
-					rowsHTML+="<input type='hidden' form='report90_"+item.id+"' value='"+item.id+"'>";
-					rowsHTML+="<input type='hidden' form='report90_"+item.id+"' value='"+item.table_type+"'>";
+					rowsHTML+="<input type='text' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
+					rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.id+"'>";
+					rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.table_type+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-				
+									
 				$('#report90_body').append(rowsHTML);
 
 				if(item.table_type=='bill_items')
@@ -6633,12 +6628,12 @@ function report90_ini()
 				}
 				else 
 				{
-					var order_td=document.getElementById('report90_order_'+item.id);
+					var order_td=document.getElementById('row_report90_order_'+item.id);
 					order_td.innerHTML="Challan #: "+item.id+"<br>"+item.customer;
 				}
 
-				var report90_form=document.getElementById('report90_'+item.id);
-				var storage_filter=report90_form.elements[1];
+				var report90_form=document.getElementById('row_report90_'+item.id);
+				var storage_filter=report90_form.elements[4];
 				
 				var storage_data="<store_areas>"+
 								"<name></name>"+

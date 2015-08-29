@@ -1352,7 +1352,7 @@
 	<div id="modal150" title="Scan Picked Items">
 		<form id='modal150_form' autocomplete="off">
 			<fieldset>
-				<label>Scan Barcode: <input type="text" required></label>
+				<label>Scan Barcode: <input type="text" name='barcode' required></label>
 				<input type="submit" class='submit_hidden'>
 			</fieldset>
 		</form>

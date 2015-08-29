@@ -10890,4 +10890,106 @@ function modal149_action()
 	$("#modal149").dialog("open");
 }
 
+/**
+ * @modalNo 150
+ * @modal Scan picked items
+ */
+function modal150_action(rack,report_id)
+{
+	///////table initialization/////////////
+	var item_table=document.getElementById("modal150_table");
+	item_table.innerHTML="";
+	var item_head=document.createElement('tr');
+	item_head.innerHTML="<th>Item</th><th>Batch</th><th>Quantity</th>";
+	item_table.appendChild(item_head);
+			
+	$("[id^='row_"+report_id+"_']").each(function(index)
+	{
+		var subform=$(this)[0];
+		var storage=subform.elements[4].value;
+		if(storage==rack)
+		{
+			var item_name=subform.elements[0].value;
+			var batch=subform.elements[1].value;
+			var quantity=parseFloat(subform.elements[2].value);
+			var picked_quantity=parseFloat(subform.elements[3].value);
+			var row_id=subform.elements[5].value;
+			
+			var item_row=document.createElement('tr');
+			item_row.setAttribute('id','modal150_row_'+row_id);
+			item_row.innerHTML="<td>"+item_name+"</td><td>"+batch+"</td><td>"+(quantity-picked_quantity)+"</td>";
+			item_table.appendChild(item_row);				
+		}								
+	});	
+	//////////////////////////////
+	
+	var form=document.getElementById('modal150_form');
+	
+	var barcode_filter=form.elements['barcode'];
+	
+	$(form).off('submit');
+	$(form).on('submit',function (event) 
+	{
+		event.preventDefault();
+		console.log('barcode_scanned');		
+		var product_xml="<product_master>"+
+						"<name></name>"+
+						"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
+						"</product_master>";
+		get_single_column_data(function (products)
+		{
+			if(products.length>0)
+			{
+				var product_picked=false;
+				var master_product_picked=false;
+				
+				var product_name=products[0];
+
+				$("[id^='modal150_row_']").each(function(index)
+				{
+					//console.log('modal_row_parsed');
+					var row_elem=$(this);
+					if($(this).find('td:first').innerHTML==product_name && !product_picked && parseFloat($(this).find('td:nth-child(3)').innerHTML)>0)
+					{
+						product_picked=true;
+						$(this).find('td:nth-child(3)').innerHTML=parseFloat($(this).find('td:nth-child(3)').innerHTML)-1;
+					}
+				});
+				
+				$("[id^='row_"+report_id+"_']").each(function(index)
+				{
+					//console.log('master_row_parsed');
+
+					var subform=$(this)[0];
+					var storage=subform.elements[4].value;
+					if(storage==rack)
+					{
+						var item_name=subform.elements[0].value;
+						var quantity=parseFloat(subform.elements[2].value);
+						var picked_quantity=parseFloat(subform.elements[3].value);
+						if(item_name==product_name && (quantity-picked_quantity)>0 && !master_product_picked)
+						{
+							master_product_picked=true;
+							subform.elements[3].value=picked_quantity+1;
+						}
+					}
+				});
+				
+				if(!product_picked)
+				{
+					$("#modal67").dialog("open");
+				}
+			}
+			else 
+			{
+				$("#modal66").dialog("open");
+			}
+			barcode_filter.value="";
+		},product_xml);						
+	});
+	
+	
+	///////////////////////////
+	$("#modal150").dialog("open");	
+}
 

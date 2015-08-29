@@ -1182,10 +1182,10 @@ function report63_header_ini()
 		"</product_master>";
 	set_my_filter(name_data,item_name_filter);					
 	
-	$(rack_filter).off('keyup');
-	$(rack_filter).on('keyup',function (event) 
+	$(rack_filter).off('keydown');
+	$(rack_filter).on('keydown',function (event) 
 	{
-		if(event.keycode==13)
+		if(event.keyCode==13)
 		{
 			event.preventDefault();
 			modal150_action(rack_filter.value,'report63');
@@ -1962,10 +1962,10 @@ function report90_header_ini()
 		"</product_master>";
 	set_my_filter(name_data,item_name_filter);					
 	
-	$(rack_filter).off('keyup');
-	$(rack_filter).on('keyup',function (event) 
+	$(rack_filter).off('keydown');
+	$(rack_filter).on('keydown',function (event) 
 	{
-		if(event.keycode==13)
+		if(event.keyCode==13)
 		{
 			event.preventDefault();
 			modal150_action(rack_filter.value,'report90');
