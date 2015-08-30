@@ -1,19 +1,55 @@
-/*******************************************************************
-* Purpose:     Fuction to add buttons for formatting text   
-* Description: Adds buutons and appends it to the navigation pane
-*********************************************************************/
-function add_button_4_txt_formatting(nav_id,format_specifier, formatting_type, button_name) 
-{
-    var elem = document.createElement("button");
-    elem.id       = "txt_formatting_button";
-    elem.setAttribute("onclick","format_selected_text('" + format_specifier + "', '"+ format_specifier +"')");
-    elem.title    = formatting_type;
-    elem.innerHTML= button_name;
+<!-- This html file is for creating a page to quickly
+create newsletters. The page gives user capability to 
+have his own layout for newsletter by "drag and drop"
+of predefined elements -->
 
-	var nav_elem=document.getElementById(nav_id);
-    nav_elem.appendChild(elem);
+<!DOCTYPE HTML>
+
+<html>
+<head>
+
+<title> NEWSLETTER CREATOR </title>
+<meta name="description" content="Create your own newsletter">
+<meta name="author" content="Ashish" >
+<meta charset="UTF-8">
+<link rel="stylesheet" href="jquery-ui.css">
+
+<style>
+#header {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:1px;
+}
+#navigation {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:550px;
+    width:300px;
+    float:left;
+    padding:5px;
+}
+#section {
+    width:1000px;
+    float:left;
+    padding:10px;
+}
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px;
 }
 
+</style>
+
+<script src="jquery-1.11.1.min.js"></script>
+<script src="jquery-ui.min.js"></script>
+
+<script>
+
+var newsletter_element_4_deeletion = [];
 
 /*******************************************************************
 * Purpose:     A handler for text button selection in the
@@ -25,7 +61,7 @@ function add_button_4_txt_formatting(nav_id,format_specifier, formatting_type, b
 *              3) Makes sure that parent div get resized according
 *                 to child div.
 *********************************************************************/
-function text_button_handler(section_elem) 
+function text_button_handler(  ) 
 {
     /* Unique id generated for all div elements*/
     var unique_id = Math.round(Math.random()*100);
@@ -43,6 +79,7 @@ function text_button_handler(section_elem)
     new_child.setAttribute("style", "width:200px; height:100px;");
 
     //Append these elemnts id DOM hierarchy under section area
+    var section_elem = document.getElementById("section");
     section_elem.appendChild(new_parent);
     new_parent.appendChild(new_child);
     	
@@ -74,13 +111,30 @@ function text_button_handler(section_elem)
         $('#parent_' + unique_id).css('width', $('#' + unique_id).width());
     });
 };
+ 
+/*******************************************************************
+* Purpose:     Fuction to add buttons for formatting text   
+* Description: Adds buutons and appends it to the navigation pane
+*********************************************************************/
+function add_button_4_txt_formatting(format_specifier, formatting_type, button_name) 
+{
+    var elem = document.createElement("button");
+    elem.id       = "txt_formatting_button";
 
-/*********************************************************************
+    elem.setAttribute("onclick",   "format_selected_text('" + format_specifier + "', '"+ format_specifier +"')");
+    elem.title    = formatting_type;
+    elem.innerHTML= button_name;
+
+    var nav_elem = document.getElementById('navigation');
+    nav_elem.appendChild(elem);
+}
+ 
+/**********************************************************************
 * Purpose:     Fuction to add selection list for adjusting font size 
                of text   
 * Description: Adds select list and appends it to the navigation pane
 *********************************************************************/
-function add_font_selection_button(nav_id) 
+function add_font_selection_button() 
 {
     var elem = document.createElement('select');
     
@@ -100,7 +154,7 @@ function add_font_selection_button(nav_id)
     elem.setAttribute("onchange",   'font_formatting(this)');
 
 
-	var nav_elem=document.getElementById(nav_id);
+    var nav_elem = document.getElementById('navigation');
     nav_elem.appendChild(elem);
 }	
  
@@ -124,7 +178,7 @@ function font_formatting(elem) {
                of text   
 * Description: Adds select list and appends it to the navigation pane
 *********************************************************************/
-function add_color_selection_button(nav_id) 
+function add_color_selection_button() 
 {
     var elem = document.createElement('select');
     elem.id = "text_color";
@@ -150,7 +204,7 @@ function add_color_selection_button(nav_id)
     elem.setAttribute("onchange",   'color_formatting(this)');
 
 
-	var nav_elem=document.getElementById(nav_id);
+    var nav_elem = document.getElementById('navigation');
     nav_elem.appendChild(elem);
 }	
 
@@ -169,8 +223,8 @@ function color_formatting(elem) {
     
     format_selected_text( format_specifier , "span");
 }	
- 
- 
+
+
 /*******************************************************************
 * Purpose:     Fuction to format selected text   
 * Description: This function formats the selected text in the browser
@@ -214,11 +268,10 @@ function format_selected_text( format_specifier, element_name)
     }
 }
 
-
 /*******************************************************************
 * Purpose:     Fuction to extract html from selected text   
 *********************************************************************/
-function extract_html() {
+function extract_html(  ) {
     var html = "";
     if (typeof window.getSelection != "undefined") {
         var sel = window.getSelection();
@@ -230,25 +283,21 @@ function extract_html() {
             }
 
             html = container.innerHTML;
-
-	    console.log(container);
-	    console.log(html);
-
         }
-    	} else if (typeof document.selection != "undefined") {
-        	if (document.selection.type == "Text") {
-            	html = document.selection.createRange().htmlText;
+    } else if (typeof document.selection != "undefined") {
+        if (document.selection.type == "Text") {
+            html = document.selection.createRange().htmlText;
         }
     }
 
     return html;
 }
-
+   
 /**********************************************************************
 *  FUNCTIONS TO ADD SELECTION LIST FOR OUTLINE FORMATTING
 *  THERE ARE 3 SUCH LISTS PROVIDED
 *********************************************************************/
-function add_outline_border_selection_button(nav_id) 
+function add_outline_border_selection_button() 
 {
     var elem = document.createElement('select');
     elem.id = "border-style";
@@ -275,12 +324,12 @@ function add_outline_border_selection_button(nav_id)
     elem.setAttribute("onchange",   'border_formatting_cbk(this, "border-style")');
 
 
-	var nav_elem=document.getElementById(nav_id);
+    var nav_elem = document.getElementById('navigation');
     nav_elem.appendChild(elem);
 }	
 
 
-function add_outline_color_selection_button(nav_id) 
+function add_outline_color_selection_button() 
 {
 
     var elem = document.createElement('select');
@@ -308,11 +357,11 @@ function add_outline_color_selection_button(nav_id)
     elem.setAttribute("onchange",   'border_formatting_cbk(this, "border-color")');
 
 
-	var nav_elem=document.getElementById(nav_id);
+    var nav_elem = document.getElementById('navigation');
     nav_elem.appendChild(elem);
 }	
 
-function add_outline_width_selection_button(nav_id) 
+function add_outline_width_selection_button() 
 {
     var elem = document.createElement('select');
     elem.id = "border-width";
@@ -339,7 +388,7 @@ function add_outline_width_selection_button(nav_id)
     elem.setAttribute("onchange",   'border_formatting_cbk(this, "border-width")');
 
 
-	var nav_elem=document.getElementById(nav_id);
+    var nav_elem = document.getElementById('navigation');
     nav_elem.appendChild(elem);
 }	
 
@@ -351,29 +400,28 @@ function border_formatting_cbk (elem, format_type) {
 
     $("#" + format_type).css(format_type, elem.value);
 
-    if (newsletter_element_4_deletion.length != 0) {	
+    if (newsletter_element_4_deeletion.length != 0) {	
 
-        for (var i = 0; i < newsletter_element_4_deletion.length; i++) {
-            $(newsletter_element_4_deletion[i]).css(format_type , elem.value);
+        for (var i = 0; i < newsletter_element_4_deeletion.length; i++) {
+            $(newsletter_element_4_deeletion[i]).css(format_type , elem.value);
 	}
 
-	newsletter_element_4_deletion = [];
+	newsletter_element_4_deeletion = [];
     }
 }	
-
 
 /*******************************************************************
 * Purpose: Function to deleted selected elements  
 *********************************************************************/
 function delete_sel_elem_4m_canvas() 
 { 
-    if (newsletter_element_4_deletion.length != 0) {	
+    if (newsletter_element_4_deeletion.length != 0) {	
 
-        for (var i = 0; i < newsletter_element_4_deletion.length; i++) {
-            newsletter_element_4_deletion[i].parentNode.removeChild(newsletter_element_4_deletion[i]);
-		}
+        for (var i = 0; i < newsletter_element_4_deeletion.length; i++) {
+            newsletter_element_4_deeletion[i].parentNode.removeChild(newsletter_element_4_deeletion[i]);
+	}
 
-	newsletter_element_4_deletion = [];
+	newsletter_element_4_deeletion = [];
     }
 }	
 
@@ -384,10 +432,130 @@ function delete_sel_elem_4m_canvas()
 *********************************************************************/
 function set_html_elem_4_del()
 { 
-     newsletter_element_4_deletion = [];
+     newsletter_element_4_deeletion = [];
 
      for (var i = 0; i < arguments.length; i++) {
          /* Without 'var' keyword it will become global */	
-	 newsletter_element_4_deletion[i] = arguments[i];
+	 newsletter_element_4_deeletion[i] = arguments[i];
      }	 
 }
+
+/*******************************************************************
+* Purpose:  Function to add buttons  for text formatting after the
+*           document is loaded.   
+*
+*
+*********************************************************************/
+$(function()
+{    
+    /***************** Add buttons for text formatting ***************************/
+    //Button for making text bold
+    add_button_4_txt_formatting('b',    'Make the selected text bold', '<b>B</b>');
+    add_button_4_txt_formatting('i',    'Italicize the selected text', '<i>I</i>');
+    add_button_4_txt_formatting('ins',  'Underline the selected text', '<ins>U</ins>');
+    add_button_4_txt_formatting('mark', 'Highlight  the selected text', '<mark>H</mark>' );
+    add_button_4_txt_formatting('del',  'Strikethrough the selected text', '<del>ABC</del>');
+    add_button_4_txt_formatting('sub',  'Subscript', 'X<sub>2</sub>');
+    add_button_4_txt_formatting('sup',  'Superscript', 'X<sup>2</sup>');
+    add_button_4_txt_formatting('small', 'Reduce font for selected text', '<small>ABC</small>');
+    add_font_selection_button(); 
+    add_color_selection_button();
+    add_outline_border_selection_button(); 
+    add_outline_color_selection_button(); 
+    add_outline_width_selection_button(); 
+
+    //add_button_4_txt_formatting('strong','Strong formatting', '');
+    /***************** Add buttons for text formatting ***************************/
+
+    /* Call click method for file type input when picture button is clicked */
+    $("#image_input").hide();
+
+    $("#image_button").click(function() {
+        $("#image_input").trigger('click');		 
+    });
+
+    //Handle file selection by file type input. The problem is to make
+    document.getElementById("image_input").addEventListener("change", function(evt)
+    {
+        select_document(evt,function(dataURL)
+        {
+            var new_div_elem = document.createElement("div");
+            new_div_elem.setAttribute("style", "width:100px; height:100px;");
+	    	new_div_elem.setAttribute("onclick", "set_html_elem_4_del(this)")
+
+            var new_elem = document.createElement("img");
+            new_elem.setAttribute("src", dataURL);
+            new_elem.setAttribute("class", "ui-widget-content");
+            new_elem.setAttribute("alt", "Image Not Found");
+            new_elem.setAttribute("style", "width:100px; height:100px;");
+
+            $('#section').append(new_div_elem);
+	    $(new_div_elem).append(new_elem);
+
+	    $(new_elem).resizable({aspectRatio: true});
+            $(new_div_elem).draggable({ containment: "window" });
+
+        });
+    }, false);
+});
+
+/*******************************************************************
+* Purpose: Read file which has been selected from file input
+*          (Picture button)    
+*
+*
+*********************************************************************/
+function select_document(evt,func)
+{
+    var file=evt.target.files[0];
+    var reader = new FileReader();
+                    
+    reader.onloadend=function()
+    {
+        var dataURL = reader.result;
+        func(dataURL);
+    };
+
+    reader.readAsDataURL(file);
+}    
+
+</script>
+
+</head>
+
+<body>
+
+<div id="header">
+<h1> NEWSLETTER CREATOR </h1>
+</div>
+
+<div id="navigation">
+<button type="button" onclick="text_button_handler()" 
+    title="This button is used to create a textbox">Text</button>
+	
+<button id="image_button" type="button" 
+	title="This button is used to select an image">Pictures</button>
+
+<input id="image_input" type="file">
+	
+<button type="button" onclick="delete_sel_elem_4m_canvas()" 
+	title="Delete selected element from canvas">Delete</button>
+<!--
+<button type="button" onclick="header_button_handler()">Header</button>
+
+<button type="button" onclick="footer_button_hanlder()">Footer</button>
+-->
+
+</div>
+
+<div id="section">
+<!--<canvas style="width:1350px; height:520px; border:1px solid #000000;"></canvas> -->
+</div>
+
+<div id="footer">
+<h1> Vyavsaay </h1>
+</div>
+
+</body>
+
+</html>

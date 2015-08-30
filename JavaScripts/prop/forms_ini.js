@@ -24164,7 +24164,7 @@ function form233_ini()
 					form233_update_item();
 				});
 				console.log(revert_htmlentities(newsletters[0].html_content));
-				var updated_content=revert_htmlentities(newsletters[0].html_content).replace(/ /g,"+");
+				var updated_content=revert_htmlentities(newsletters[0].html_content);
 				$('#form233_section').html(updated_content);
 			}
 			hide_loader();

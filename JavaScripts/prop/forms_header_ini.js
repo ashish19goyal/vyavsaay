@@ -8416,8 +8416,14 @@ function form233_header_ini()
     add_button_4_txt_formatting('form233_navigation','sub',  'Subscript', 'X<sub>2</sub>');
     add_button_4_txt_formatting('form233_navigation','sup',  'Superscript', 'X<sup>2</sup>');
     add_button_4_txt_formatting('form233_navigation','small', 'Reduce font for selected text', '<small>ABC</small>');
-    //add_button_4_txt_formatting('strong','Strong formatting', '');
-    /***************** Add buttons for text formatting ***************************/
+    
+    add_font_selection_button('form233_navigation'); 
+    add_color_selection_button('form233_navigation');
+    add_outline_border_selection_button('form233_navigation'); 
+    add_outline_color_selection_button('form233_navigation'); 
+    add_outline_width_selection_button('form233_navigation'); 
+
+   	/***************** Add buttons for text formatting ***************************/
 
     /* Call click method for file type input when picture button is clicked */
     $("#form233_image_input").hide();

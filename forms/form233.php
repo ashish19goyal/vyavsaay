@@ -14,8 +14,6 @@
 			<button id="form233_image_button" type="button" title="Add an image">Pictures</button>
 			<input id="form233_image_input" type="file">
 			<button type="button" onclick="delete_sel_elem_4m_canvas();" title="Delete selected element">Delete</button>
-			<button type="button" onclick="header_button_handler();">Header</button>
-			<button type="button" onclick="footer_button_hanlder();">Footer</button>
 		</div>
 		<div id="form233_navigation">
 		</div>
