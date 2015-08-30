@@ -375,7 +375,7 @@
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
-			<status index='yes' type='VARCHAR(25)'></status><!-- billed/cancelled/pending -->
+			<status index='yes' type='VARCHAR(25)'></status><!-- billed/cancelled/pending/picked/packed/dispatched/closed -->
 			<billing_type index='yes' type='TEXT'></billing_type>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

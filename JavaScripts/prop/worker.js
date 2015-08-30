@@ -893,6 +893,60 @@ function notifications10_add()
 	setTimeout(notifications10_add,get_worker_repeat());
 }
 
+/**
+ * Insufficient stock for sale orders
+ */
+function notifications11_add()
+{
+	var last_updated=get_my_time();
+	
+	/////sale orders //////////
+
+	var sale_order_data="<sale_orders>" +
+			"<id></id>" +
+			"<channel></channel>" +
+			"<order_date lowerbound='yes'>"+(get_my_time()-7*86400000)+"</order_date>"+
+			"<order_num></order_num>"+
+			"<status array='yes'>--pending--billed--picked--packed--dispatched--</status>" +
+			"</sale_orders>";
+	
+	fetch_requested_data('',sale_order_data,function(sale_orders)
+	{
+		sale_orders.forEach(function(sale_order)
+		{
+			var channel=sale_order.channel;
+			var channel_limit=48*3600000;
+			if(get_session_var(channel+"_order_time_limit")!='undefined')
+				channel_limit=parseFloat(3600000*get_session_var(channel+"_order_time_limit"));
+			var timestamp_limit=get_my_time()-channel_limit;
+			if(parseFloat(sale_order.order_date)>timestamp_limit)
+			{
+				var id=get_new_key();
+				var	title="Sale Order time line breached for "+sale_order.channel;
+				var	form_id='form108';
+				var	notes="Sale order # "+sale_order.order_num+" has not been closed. It has breached the time limits of "+sale_order.channel+". Please follow up.";
+
+				var item_xml="<notifications>"+
+						"<id>"+id+"</id>" +
+						"<t_generated>"+get_my_time()+"</t_generated>" +
+						"<data_id unique='yes'>"+sale_order.id+"</data_id>" +
+						"<title>"+title+"</title>" +
+						"<notes>"+notes+"</notes>" +
+						"<link_to>"+form_id+"</link_to>" +
+						"<status>pending</status>" +
+						"<target_user></target_user>"+
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</notifications>";
+				create_simple_no_warning(item_xml);
+			}			
+		});
+	});
+	
+	///////////sale orders end//////////
+	
+	setTimeout(notifications11_add,get_worker_repeat());
+}
+
 
 /**
  * This function checks for favourable scenarios to generate sale leads in the background

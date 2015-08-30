@@ -8973,7 +8973,7 @@ function form171_update_item(form)
  * @formNo 172
  * @param button
  */
-function form172_update_item(form)
+/*function form172_update_item(form)
 {
 	if(is_update_access('form172'))
 	{
@@ -8992,7 +8992,7 @@ function form172_update_item(form)
 		$("#modal2").dialog("open");
 	}
 }
-
+*/
 /**
  * @form Sku mapping
  * @formNo 173

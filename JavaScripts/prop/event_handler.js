@@ -206,6 +206,9 @@ function start_workers()
 	{notifications10_add();});
 
 	deferred_execute(function()
+	{notifications11_add();});
+
+	deferred_execute(function()
 	{sale_leads_add();});
 
 	deferred_execute(function()

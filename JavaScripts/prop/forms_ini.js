@@ -9844,6 +9844,7 @@ function form108_ini()
 			"<status>"+fstatus+"</status>" +
 			"<bill_id></bill_id>"+
 			"<return_id></return_id>"+
+			"<order_date></order_date>"+
 			"<billing_type></billing_type>"+
 			"</sale_orders>";
 
@@ -9904,7 +9905,7 @@ function form108_ini()
 			{
 				$(bill_button).on('click',function(event)
 				{
-					modal133_action(result.id,result.channel,result.order_num,result.customer_name,result.billing_type);
+					modal133_action(result.id,result.channel,result.order_num,result.customer_name,result.billing_type,result.order_date);
 				});
 			}
 			else
@@ -17682,7 +17683,8 @@ function form172_ini()
 			"<profit_mrp></profit_mrp>"+
 			"<profit_sp></profit_sp>"+
 			"<profit></profit>"+
-			"<latest exact='yes'>yes</latest>"+				
+			"<from_time></from_time>"+
+			//"<latest exact='yes'>yes</latest>"+				
 			"</channel_prices>";
 
 	$('#form172_body').html("");
@@ -17692,7 +17694,7 @@ function form172_ini()
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
-			rowsHTML+="<tr>";
+			rowsHTML+="<tr title='Applicable from: "+get_my_datetime(result.from_time)+"'>";
 				rowsHTML+="<form id='form172_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Channel'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form172_"+result.id+"' value='"+result.channel+"'>";
@@ -17828,7 +17830,7 @@ function form172_ini()
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
-				form172_update_item(fields);
+				//form172_update_item(fields);
 				form172_create_item(fields);
 			});
 		});

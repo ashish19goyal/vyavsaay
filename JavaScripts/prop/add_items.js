@@ -2264,7 +2264,8 @@ function form69_add_item()
 								"<sale_price></sale_price>"+
 								"<freight></freight>"+
 								"<channel exact='yes'>"+channel_name+"</channel>"+
-								"<latest exact='yes'>yes</latest>"+
+								//"<latest exact='yes'>yes</latest>"+
+								"<from_time upperbound='yes'>"+get_my_time()+"</from_time>"+
 								"<item exact='yes'>"+name_filter.value+"</item>"+
 								"</channel_prices>";				
 				fetch_requested_data('',price_data,function (prices) 
@@ -3319,7 +3320,7 @@ function form91_add_item()
 			{
 				if(products.length>0)
 				{
-					if(bill_type=='Retail-CST')
+					if(bill_type=='Retail-CST/C')
 					{
 						tax_unit_filter.value=get_session_var('cst_rate');
 					}
@@ -3346,7 +3347,8 @@ function form91_add_item()
 								"<sale_price></sale_price>" +
 								"<freight></freight>" +
 								"<channel exact='yes'>"+channel+"</channel>" +
-								"<latest exact='yes'>yes</latest>" +
+								//"<latest exact='yes'>yes</latest>" +
+								"<from_time upperbound='yes'>"+get_my_time()+"</from_time>"+
 								"<item exact='yes'>"+name_filter.value+"</item>" +
 								"</channel_prices>";
 					fetch_requested_data('',price_data,function (prices) 
@@ -3398,7 +3400,8 @@ function form91_add_item()
 						"<sale_price></sale_price>" +
 						"<freight></freight>" +
 						"<channel exact='yes'>"+channel+"</channel>" +
-						"<latest exact='yes'>yes</latest>" +
+						//"<latest exact='yes'>yes</latest>" +
+						"<from_time upperbound='yes'>"+get_my_time()+"</from_time>"+
 						"<item exact='yes'>"+name_filter.value+"</item>" +
 						"</channel_prices>";
 			fetch_requested_data('',price_data,function (prices) 
@@ -4279,8 +4282,9 @@ function form112_add_item()
 		
 					var sale_price_data="<channel_prices>" +
 									"<sale_price></sale_price>"+
-									"<latest exact='yes'>yes</latest>" +
+									//"<latest exact='yes'>yes</latest>" +
 									"<channel exact='yes'>Retail</channel>"+
+									"<from_time upperbound='yes'>"+get_my_time()+"</from_time>"+
 									"<item exact='yes'>"+name_filter.value+"</item>" +
 									"</channel_prices>";
 					set_my_value(sale_price_data,unit_filter,function () 
@@ -4312,8 +4316,9 @@ function form112_add_item()
 
 			var sale_price_data="<channel_prices>" +
 							"<sale_price></sale_price>"+
-							"<latest exact='yes'>yes</latest>" +
+							//"<latest exact='yes'>yes</latest>" +
 							"<channel exact='yes'>Retail</channel>"+
+							"<from_time upperbound='yes'>"+get_my_time()+"</from_time>"+
 							"<item exact='yes'>"+name_filter.value+"</item>" +
 							"</channel_prices>";
 			set_my_value(sale_price_data,unit_filter,function () 

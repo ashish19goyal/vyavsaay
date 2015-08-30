@@ -4,10 +4,9 @@
 			<legend>Select Filters</legend>
 			<label>Channel<br><input type='text'></label>
 			<label>Item<br><input type='text'></label>
-			<label>Latest<br><input type='checkbox'></label>
 			<label>	
 				<input type='submit' value='Refresh' class='generic_icon'>
-				<input type='button' title='Print' class='print_icon'>
+				<input type='button' title='Print' name='print' class='print_icon'>
 			</label>	
 		</fieldset>
 	</form>

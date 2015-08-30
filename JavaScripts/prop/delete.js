@@ -2688,18 +2688,9 @@ function form90_delete_item(button)
 						"<type>accounting</type>"+
 						"</user_preferences>";
 			
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(sale_prices_xml);
-				server_delete_simple(num_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(sale_prices_xml);
-				local_delete_simple(num_xml);			
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(sale_prices_xml);
+			delete_simple(num_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -5756,6 +5747,11 @@ function form171_delete_item(button)
 			var cat_sku_xml="<category_sku_mapping>" +
 						"<channel exact='yes'>"+name+"</channel>" +
 						"</category_sku_mapping>";
+			var time_xml="<user_preferences>" +
+						"<id>"+data_id+"</id>" +
+						"<name unique='yes'>"+name+"_order_time_limit</name>" +
+						"<type>accounting</type>"+
+						"</user_preferences>";
 			
 			delete_row(data_xml,activity_xml);
 			delete_simple(pickup_xml);
@@ -5763,6 +5759,7 @@ function form171_delete_item(button)
 			delete_simple(channel_prices_xml);
 			delete_simple(category_xml);
 			delete_simple(cat_sku_xml);
+			delete_simple(time_xml);
 			$(button).parent().parent().remove();
 		});
 	}

@@ -5904,9 +5904,7 @@ function form172_import(data_array,import_type)
 				"<profit_mrp>"+row.profit_mrp+"</profit_mrp>"+
 				"<profit_sp>"+row.profit_sp+"</profit_sp>"+
 				"<profit>"+row.profit+"</profit>"+
-				"<latest>"+row.latest+"</latest>"+				
 				"<from_time>"+get_raw_time(row.from_time)+"</from_time>" +
-				"<to_time>"+get_raw_time(row.to_time)+"</to_time>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});

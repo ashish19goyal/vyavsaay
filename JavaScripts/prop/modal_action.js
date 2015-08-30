@@ -4600,6 +4600,7 @@ function modal42_action(order_id)
 	{
 		event.preventDefault();
 		form108_bill(order_id,type_filter.value);
+		//form108_bill(order_id,type_filter.value,order_num,sale_channel,customer,order_time);		
 		$("#modal42").dialog("close");
 	});
 	
@@ -7235,7 +7236,7 @@ function modal114_action(func)
 							"<id>"+id+"</id>" +
 							"<channel>"+channel.name+"</channel>" +
 							"<item>"+name+"</item>" +
-							"<latest>yes</latest>"+
+							//"<latest>yes</latest>"+
 							"<from_time>"+last_updated+"</from_time>"+
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</row>";
@@ -8816,12 +8817,12 @@ function modal132_action(tab_id,func)
  * @modal Analyze Order
  * @modalNo 133
  */
-function modal133_action(order_id,sale_channel,order_num,customer,billing_type)
+function modal133_action(order_id,sale_channel,order_num,customer,billing_type,order_time)
 {
 	var form=document.getElementById("modal133_form");
 	var type_filter=form.elements[0];
 	var cancel_button=form.elements[2];
-	
+
 	type_filter.value=billing_type;
 
 	var type_data="<bill_types>" +
@@ -8834,7 +8835,7 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type)
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
-		form108_bill(order_id,type_filter.value,order_num,sale_channel,customer);
+		form108_bill(order_id,type_filter.value,order_num,sale_channel,customer,order_time);
 		$("#modal133").dialog("close");
 	});
 
@@ -8910,9 +8911,10 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type)
 					}
 					order_item_timer-=1;
 				});
-				
+
 				var price_data="<channel_prices count='1'>" +
-						"<latest exact='yes'>yes</latest>"+
+						//"<latest exact='yes'>yes</latest>"+
+						"<from_time upperbound='yes'>"+order_time+"</from_time>"+
 						"<channel exact='yes'>"+sale_channel+"</channel>"+
                         "<item exact='yes'>"+order_item.item_name+"</item>"+
 						"<sale_price></sale_price>"+

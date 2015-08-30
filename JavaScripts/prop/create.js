@@ -5132,17 +5132,9 @@ function form90_create_item(form)
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</user_preferences>";
 
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-			server_create_simple(num_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-			local_create_simple(num_xml);
-		}
-
+		create_row(data_xml,activity_xml);
+		create_simple(num_xml);
+		
 		var product_instance_data="<product_instances>" +
 					"<id></id>" +
 					"<product_name></product_name>" +
@@ -5174,14 +5166,7 @@ function form90_create_item(form)
 				counter+=1;
 			});
 			prices_xml+="</sale_prices>";
-			if(is_online())
-			{
-				server_create_batch(prices_xml);
-			}
-			else
-			{
-				local_create_batch(prices_xml);
-			}
+			create_batch(prices_xml);
 		});
 
 		for(var i=0;i<2;i++)
@@ -5948,7 +5933,7 @@ function form105_create_form()
  * @form 108
  * @param order_id
  */
-function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
+function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_time)
 {
 	
 	///check following data is adequately updated
@@ -5988,7 +5973,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 			actual_order_items.push(order_item);
 		});
 
-		console.log(order_items);
+		//console.log(order_items);
 		//console.log(actual_order_items);
 		
 		if(!(order_items.length!=(actual_order_items.length-1) && get_session_var('allow_partial_billing')=='no'))
@@ -6017,14 +6002,14 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 							"</product_instances>";
 					get_single_column_data(function(batches)
 					{
-						console.log(batches);
+						//console.log(batches);
 		
 						batches.reverse();
 						var batches_result_array=[];
 						get_available_batch(order_item.item_name,batches,order_item.quantity,batches_result_array,function()
 						{
 							var price_data="<channel_prices count='1'>" +
-									"<latest exact='yes'>yes</latest>"+
+									"<from_time upperbound='yes'>"+order_time+"</from_time>"+
 									"<channel exact='yes'>"+sale_channel+"</channel>"+
 			                        "<item exact='yes'>"+order_item.item_name+"</item>"+
 									"<sale_price></sale_price>"+
@@ -6041,7 +6026,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 									"</channel_prices>";
 							fetch_requested_data('',price_data,function(sale_prices)
 							{
-								console.log(sale_prices);
+								//console.log(sale_prices);
 		
 								if(sale_prices.length>0)
 								{
@@ -6055,7 +6040,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 													"</pickup_charges>";
 									fetch_requested_data('',pickup_data,function(pickups)
 									{
-										console.log(pickups);
+										//console.log(pickups);
 		
 										var pickup_charges=0;
 										var item_dead_weight=100;
@@ -6091,7 +6076,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 											order_item.item_desc=taxes[0].description;
 											if(taxes.length>0)
 											{
-												if(bill_type=='Retail-CST')
+												if(bill_type=='Retail-CST/C')
 												{
 													taxes[0].tax=get_session_var('cst_rate');
 												}
@@ -6102,7 +6087,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 												
 												pending_items_count+=batches_result_array.length-1;
 												
-												console.log(batches_result_array);
+												//console.log(batches_result_array);
 		
 												batches_result_array.forEach(function(batch_result)
 												{
@@ -6117,7 +6102,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 														var storage_result_array=[];
 														get_available_storage(order_item.item_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function () 
 														{
-															console.log(storage_result_array);
+															//console.log(storage_result_array);
 		
 															var item_storage="";
 															if(storage_result_array.length>0)
@@ -6290,8 +6275,8 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer)
 								update_simple(num_xml);
 								create_row(bill_xml,activity_xml);
 								
-								console.log(bill_items_xml_array);
-								console.log(order_items_xml_array);
+								//console.log(bill_items_xml_array);
+								//console.log(order_items_xml_array);
 		
 								bill_items_xml_array.forEach(function (bill_item_xml) 
 								{
@@ -12327,9 +12312,21 @@ function form171_create_item(form)
 					"<pincode>all</pincode>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</pickup_charges>";
+		var time_xml="<user_preferences>" +
+					"<id>"+data_id+"</id>" +
+					"<name unique='yes'>"+name+"_order_time_limit</name>" +
+					"<display_name>Sale order time limit for "+name+" (in hours)</display_name>"+					
+					"<value>48</value>" +
+					"<status>active</status>" +
+					"<type>accounting</type>"+
+					"<shortcut></shortcut>"+
+					"<sync>checked</sync>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</user_preferences>";
 
 		create_row(data_xml,activity_xml);
 		create_simple(pickup_xml);
+		create_simple(time_xml);
 		
 		var product_data="<product_master>" +
 					"<id></id>" +
@@ -12370,7 +12367,7 @@ function form171_create_item(form)
 						"<id>"+id+"</id>" +
 						"<channel>"+name+"</channel>" +
 						"<item>"+item.name+"</item>" +
-						"<latest>yes</latest>"+
+						//"<latest>yes</latest>"+
 						"<from_time>"+last_updated+"</from_time>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</row>";
@@ -12453,9 +12450,9 @@ function form172_create_item(fields)
 				"<profit_mrp>"+profit_mrp+"</profit_mrp>"+
 				"<profit_sp>"+profit_sp+"</profit_sp>"+
 				"<profit>"+profit+"</profit>"+
-				"<latest>yes</latest>"+				
+				//"<latest>yes</latest>"+				
 				"<from_time>"+last_updated+"</from_time>" +
-				"<to_time></to_time>" +
+				//"<to_time></to_time>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</channel_prices>";
 

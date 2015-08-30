@@ -4637,9 +4637,6 @@ function report65_ini()
 	var form=document.getElementById('report65_header');
 	var channel_filter=form.elements[1].value;
 	var item_filter=form.elements[2].value;
-	var latest='no'
-	if(form.elements[3].checked)
-		latest='yes';
 	
 	show_loader();
 	$('#report65_body').html('');
@@ -4660,20 +4657,13 @@ function report65_ini()
 			"<service_tax></service_tax>"+
 			"<total_payable></total_payable>"+
 			"<total_receivable></total_receivable>"+
-			"<latest>"+latest+"</latest>"+
 			"<from_time></from_time>"+
-			"<to_time></to_time>"+
 			"</channel_prices>";
 
 	fetch_requested_data('report65',prices_data,function(prices)
 	{
 		prices.forEach(function(price)
 		{
-			var to_string=get_my_datetime(price.to_time);
-			if(price.to_time=='0' || price.to_time=="")
-			{
-				to_string=get_my_datetime();				
-			}
 			var rowsHTML="<tr>";
 			rowsHTML+="<td data-th='Channel'>";
 				rowsHTML+=price.channel;
@@ -4689,8 +4679,7 @@ function report65_ini()
 				rowsHTML+="<br>Profit: Rs."+price.profit;
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Time'>";
-				rowsHTML+=get_my_datetime(price.from_time);
-				rowsHTML+="<br>"+to_string;
+				rowsHTML+="From: "+get_my_datetime(price.from_time);
 			rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 			$('#report65_body').append(rowsHTML);
@@ -4698,7 +4687,7 @@ function report65_ini()
 		hide_loader();				
 	});
 			
-	var print_button=form.elements[3];
+	var print_button=form.elements['print'];
 	print_tabular_report('report65','Pricing Timestamps',print_button);
 };
 
