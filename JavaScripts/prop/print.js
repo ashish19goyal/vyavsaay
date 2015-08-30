@@ -2407,20 +2407,20 @@ function print_form200(func)
 			merchant_value.innerHTML=merchant_name;
 		}
 		$(barcode_image).JsBarcode(awb_num,{displayValue:false});
-		
+
 		cnote_no.appendChild(barcode_image);
 		cnote_no.appendChild(barcode_value);
 		cnote_no.appendChild(type_value);
 		cnote_no.appendChild(merchant_value);
 
-		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;page-break-inside:avoid;page-break-after:auto;'><td>"+counter+"</td>"+
+		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
 				"<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
 				"<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
-				"<td>"+form.elements[3].value+"</td>"+
-				"<td>"+form.elements[4].value+"</td>"+
+				"<td><div>"+form.elements[3].value+"</div></td>"+
+				"<td><div>"+form.elements[4].value+"</div></td>"+
 				"<td></td>"+
 				"<td><div style='text-align:left;'>"+mob_seal+"</div></td>"+
-				"<td>"+rc+"</td>"+
+				"<td><div>"+rc+"</div></td>"+
 				"<td></td></tr>";				
 	});
 	new_table.innerHTML=table_rows;
@@ -2709,16 +2709,15 @@ function print_form219(func)
 		cnote_no.appendChild(type_value);
 		cnote_no.appendChild(merchant_value);
 
-		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;page-break-inside:avoid;page-break-after:auto;'><td>"+counter+"</td>"+
+		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;><td><div>"+counter+"</div></td>"+
 				"<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
 				"<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
-				"<td>"+form.elements[4].value+"</td>"+
-				"<td>"+form.elements[5].value+"</td>"+
-				"<td>Rs. "+form.elements[3].value+"</td>"+
+				"<td><div>"+form.elements[4].value+"</div></td>"+
+				"<td><div>"+form.elements[5].value+"</div></td>"+
+				"<td><div>Rs. "+form.elements[3].value+"</div></td>"+
 				"<td><div style='text-align:left;'>"+mob_seal+"</div></td>"+
-				"<td>"+rc+"</td>"+
+				"<td><div>"+rc+"</div></td>"+
 				"<td></td></tr>";
-				
 	});
 	new_table.innerHTML=table_rows;
 	/////////////placing the containers //////////////////////////////////////////////////////	

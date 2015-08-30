@@ -5907,14 +5907,8 @@ function form105_create_item(form)
 					"<criteria_value>"+criteria_value+"</criteria_value>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}	
+		create_simple(data_xml);
+		
 		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');

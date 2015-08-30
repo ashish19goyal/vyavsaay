@@ -44,9 +44,7 @@ function report63_update(form)
 		});
 	
 		data_xml+="</"+table_type+">";
-		
-		console.log(data_xml);
-		
+
 		update_batch(data_xml);
 		
 		for(var i=0;i<6;i++)
