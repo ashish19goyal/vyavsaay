@@ -5,7 +5,6 @@
 			<label>Item Name<br><input type='text' name='item_name'></label>
 			<label>	
 				<input type='submit' name='refresh' value='Refresh' class='generic_icon'>
-				<input type='button' name='save' title='Save' class='save_icon'>
 				<input type='button' name='print' title='Print' class='print_icon'>
 			</label>
 			<br>

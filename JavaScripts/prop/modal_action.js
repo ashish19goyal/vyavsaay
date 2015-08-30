@@ -10906,17 +10906,18 @@ function modal150_action(rack,report_id)
 	$("[id^='row_"+report_id+"_']").each(function(index)
 	{
 		var subform=$(this)[0];
-		var storage=subform.elements[4].value;
+		var storage=subform.elements[5].value;
 		if(storage==rack)
 		{
 			var item_name=subform.elements[0].value;
-			var batch=subform.elements[1].value;
-			var quantity=parseFloat(subform.elements[2].value);
-			var picked_quantity=parseFloat(subform.elements[3].value);
-			var row_id=subform.elements[5].value;
+			var batch=subform.elements[2].value;
+			var quantity=parseFloat(subform.elements[3].value);
+			var picked_quantity=parseFloat(subform.elements[4].value);
+			var row_id=subform.elements[6].value;
 			
 			var item_row=document.createElement('tr');
 			item_row.setAttribute('id','modal150_row_'+row_id);
+			item_row.setAttribute('data-id',row_id);
 			item_row.innerHTML="<td>"+item_name+"</td><td>"+batch+"</td><td>"+(quantity-picked_quantity)+"</td>";
 			item_table.appendChild(item_row);				
 		}								
@@ -10926,12 +10927,37 @@ function modal150_action(rack,report_id)
 	var form=document.getElementById('modal150_form');
 	
 	var barcode_filter=form.elements['barcode'];
+	var save_button=form.elements['save'];
+
+	$(save_button).off('click');
+	$(save_button).on('click',function (event) 
+	{
+		event.preventDefault();
+				
+		$("[id^='modal150_row_']").each(function(index)
+		{
+			//console.log('modal_row_parsed');
+			var record_id=$(this).attr('data-id');
+			
+			var unpicked_quantity=parseFloat($(this).find('td:nth-child(3)').html());
+			
+			var master_form=document.getElementById("row_"+report_id+"_"+record_id);
+			var to_pick_quantity=parseFloat(master_form.elements[3].value);
+			var old_pick_quantity=parseFloat(master_form.elements[4].value);
+			var new_pick_quantity=to_pick_quantity-old_pick_quantity-unpicked_quantity;
+			master_form.elements[4].value=new_pick_quantity;
+
+			$(master_form).trigger('submit');
+		});
+		
+		$("#modal150").dialog("close");		
+	});
 	
 	$(form).off('submit');
 	$(form).on('submit',function (event) 
 	{
 		event.preventDefault();
-		console.log('barcode_scanned');		
+		//console.log('barcode_scanned');		
 		var product_xml="<product_master>"+
 						"<name></name>"+
 						"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
@@ -10940,38 +10966,21 @@ function modal150_action(rack,report_id)
 		{
 			if(products.length>0)
 			{
-				var product_picked=false;
-				var master_product_picked=false;
-				
+				var product_picked=false;				
 				var product_name=products[0];
 
 				$("[id^='modal150_row_']").each(function(index)
 				{
+					//console.log($(this));
+					//console.log($(this).find('td:first').html());
+					//console.log(product_name);
 					//console.log('modal_row_parsed');
 					var row_elem=$(this);
-					if($(this).find('td:first').innerHTML==product_name && !product_picked && parseFloat($(this).find('td:nth-child(3)').innerHTML)>0)
+					if($(this).find('td:first').html()==product_name && !product_picked && parseFloat($(this).find('td:nth-child(3)').html())>0)
 					{
+						//console.log('picked');
 						product_picked=true;
-						$(this).find('td:nth-child(3)').innerHTML=parseFloat($(this).find('td:nth-child(3)').innerHTML)-1;
-					}
-				});
-				
-				$("[id^='row_"+report_id+"_']").each(function(index)
-				{
-					//console.log('master_row_parsed');
-
-					var subform=$(this)[0];
-					var storage=subform.elements[4].value;
-					if(storage==rack)
-					{
-						var item_name=subform.elements[0].value;
-						var quantity=parseFloat(subform.elements[2].value);
-						var picked_quantity=parseFloat(subform.elements[3].value);
-						if(item_name==product_name && (quantity-picked_quantity)>0 && !master_product_picked)
-						{
-							master_product_picked=true;
-							subform.elements[3].value=picked_quantity+1;
-						}
+						$(this).find('td:nth-child(3)').html((parseFloat($(this).find('td:nth-child(3)').html())-1));
 					}
 				});
 				
@@ -10986,9 +10995,7 @@ function modal150_action(rack,report_id)
 			}
 			barcode_filter.value="";
 		},product_xml);						
-	});
-	
-	
+	});	
 	///////////////////////////
 	$("#modal150").dialog("open");	
 }

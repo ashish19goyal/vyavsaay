@@ -681,6 +681,14 @@
 		This is a repeated entry. Please check again and continue.
 	</div>
 
+	<div id="modal66" title="Incorrect Barcode">
+		Sorry, we could not find any item corresponding to this bar code. Please try again.
+	</div>
+
+	<div id="modal67" title="Wrong Pick">
+		This item is not desired to be picked. Please put it back
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>
@@ -1354,6 +1362,7 @@
 			<fieldset>
 				<label>Scan Barcode: <input type="text" name='barcode' required></label>
 				<input type="submit" class='submit_hidden'>
+				<input type="button" value='Save Pickings' name='save' class='modal_submit'>
 			</fieldset>
 		</form>
 		<table id='modal150_table'>

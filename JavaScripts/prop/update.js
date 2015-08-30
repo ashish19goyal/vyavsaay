@@ -6,24 +6,38 @@ function report63_update(form)
 {
 	if(is_update_access('report63'))
 	{
-		var storage=form.elements[0].value;
-		var data_ids=form.elements[1].value;
-		var table_type=form.elements[2].value;
+		console.log('update63');
+		var item=form.elements[0].value;
+		var batch=form.elements[2].value;
+		var to_pick=parseFloat(form.elements[3].value);
+		var picked=parseFloat(form.elements[4].value);
+		var storage=form.elements[5].value;
+		var data_ids=form.elements[6].value;
+		var table_type=form.elements[7].value;
 		var last_updated=get_my_time();
-		var ids=data_ids.split("--");
+		var ids_object=JSON.parse(data_ids);
 
 		var data_xml="<"+table_type+">";
 		var counter=1;
 
-		ids.forEach(function(id)
+		ids_object.forEach(function(id_object)
 		{
 			if((counter%500)===0)
 			{
 				data_xml+="</"+table_type+"><separator></separator><"+table_type+">";
 			}
+			var status='pending';
+			var pending_quantity=parseFloat(id_object.quantity)-parseFloat(id_object.picked);
+			if(pending_quantity<=picked)
+			{
+				status='picked';
+				picked=picked-pending_quantity;
+				id_object.picked=parseFloat(id_object.picked)+pending_quantity;
+			}
 			data_xml+="<row>" +
-					"<id>"+id+"</id>" +
-					"<picked_status>picked</picked_status>" +
+					"<id>"+id_object.id+"</id>" +
+					"<picked_status>"+status+"</picked_status>" +
+					"<picked_quantity>"+id_object.picked+"</picked_quantity>" +
 					"<storage>"+storage+"</storage>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</row>";
@@ -31,16 +45,11 @@ function report63_update(form)
 	
 		data_xml+="</"+table_type+">";
 		
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}		
+		console.log(data_xml);
 		
-		for(var i=0;i<2;i++)
+		update_batch(data_xml);
+		
+		for(var i=0;i<6;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -137,13 +146,48 @@ function report72_update(form)
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_orders>";
 
-		if(is_online())
-		{	
-			server_update_simple(data_xml);
-		}
-		else
+		update_simple(data_xml);
+		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @report Order Picklist
+ * @param form
+ */
+function report90_update(form)
+{
+	if(is_update_access('report90'))
+	{
+		var item=form.elements[0].value;
+		var batch=form.elements[2].value;
+		var to_pick=form.elements[3].value;
+		var picked=form.elements[4].value;
+		var storage=form.elements[5].value;
+		var data_id=form.elements[6].value;
+		var table_type=form.elements[7].value;
+		var last_updated=get_my_time();
+		
+		var status="picked";
+		if(parseFloat(picked)!=parseFloat(to_pick))
+			status='pending';		
+		var data_xml="<"+table_type+">";
+			data_xml+="<id>"+data_id+"</id>" +
+				"<picked_status>"+status+"</picked_status>" +
+				"<picked_quantity>"+picked+"</picked_quantity>" +
+				"<storage>"+storage+"</storage>"+
+				"<last_updated>"+last_updated+"</last_updated>";
+			data_xml+="</"+table_type+">";
+		
+		update_simple(data_xml);
+		
+		for(var i=0;i<6;i++)
 		{
-			local_update_simple(data_xml);
+			$(form.elements[i]).attr('readonly','readonly');
 		}
 	}
 	else
