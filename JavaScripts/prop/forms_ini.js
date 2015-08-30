@@ -21512,7 +21512,12 @@ function form203_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'logistics_orders');
+			get_export_data_extended(columns,'logistics_orders',function(new_result)
+			{
+				new_result.dispatch_date=get_my_datetime(new_result.dispatch_date);				
+				new_result.import_date=get_my_datetime(new_result.import_date);
+				new_result.last_updated=get_my_datetime(new_result.last_updated);				
+			});
 		});
 		hide_loader();
 	});

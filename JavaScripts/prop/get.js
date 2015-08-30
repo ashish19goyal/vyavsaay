@@ -73,25 +73,6 @@ function get_new_key()
 }
 
 
-/**
- * Converts a two dimensional array to csv file
- * @param data_array
- */
-function my_array_to_csv(data_array)
-{
-	var csvString = data_array.join();
-	csvString=escape(csvString);
-
-	var a = document.createElement('a');
-	a.href = 'data:attachment/csv,' + csvString;
-	//a.href = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
-	a.target = '_blank';
-	a.download = 'import_template.csv';
-
-	document.body.appendChild(a);
-	a.click();
-}
-
 /*
 * Fetches all records for a specified form and exports them to a csv
 */
@@ -101,6 +82,7 @@ function get_export_data(columns,filename)
 	new_columns=new_columns.replace(" count='100'","");
 	new_columns=new_columns.replace("start_index","dont_use_index");
 	//console.log(new_columns);
+	show_loader();
 	fetch_requested_data('',new_columns,function(results)
 	{
 		var data_id=get_new_key();
@@ -121,7 +103,13 @@ function get_export_data(columns,filename)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		create_row(export_xml,activity_xml);
-					
+		
+		results.forEach(function(result)
+		{
+			result.last_updated=get_my_datetime(result.last_updated);
+		});
+
+		hide_loader();			
 		my_obj_array_to_csv(results,filename);
 	});
 }
@@ -178,6 +166,34 @@ function get_export_data_extended(columns,filename,func)
 	});
 }
 
+/**
+ * Converts a two dimensional array to csv file
+ * @param data_array
+ */
+function my_array_to_csv(data_array)
+{
+	var csvString = data_array.join(",");
+	//csvString=escape(csvString);
+
+	var a = document.createElement('a');
+	//a.href = 'data:attachment/csv,' + csvString;
+	//a.href = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
+	//a.target = '_blank';
+	//a.download = 'import_template.csv';
+
+	var type = 'text/csv;';
+	var blob = new Blob([csvString], { type: type });			
+	var URL = window.URL || window.webkitURL;
+	var downloadUrl = URL.createObjectURL(blob);	
+			
+	a.setAttribute('href',downloadUrl);
+	a.download = 'import_template.csv';
+	a.target = '_blank';
+
+	document.body.appendChild(a);
+	a.click();
+}
+
 
 /**
  * Converts an array of objects into a csv file
@@ -194,20 +210,15 @@ function my_obj_array_to_csv(data_array,file_name)
 		header_array.push(p);	
 		header_string+=p+",";
 	}
-	//console.log(header_array);
-	//console.log(data_array);
 	
     csvRows.push(header_string);
 	
 	/////for data rows
 	data_array.forEach(function(data_row)
 	{
-		//console.log(data_row);
 		var data_string="";
 		for(var i=0;i<header_array.length;i++)
 		{
-			//console.log(header_array[i]);
-			//console.log(data_row[header_array[i]]);
 			if(typeof data_row[header_array[i]]!= 'undefined')
 			{
 				if(data_row[header_array[i]].search(","))
@@ -221,18 +232,21 @@ function my_obj_array_to_csv(data_array,file_name)
 				data_string+=",";
 			}
 		}
-		data_string=escape(data_string);
-		//console.log(data_string);
 		csvRows.push(data_string);
 	});
 
-	var csvString = csvRows.join("%0D%0A");
+	var csvString = csvRows.join("\n");
 	var a = document.createElement('a');
-	a.href = 'data:attachment/csv,' + csvString;
-	//a.href = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
-	a.target = '_blank';
-	a.download = file_name+'.csv';
 
+	var type = 'text/csv;';
+	var blob = new Blob([csvString], { type: type });			
+	var URL = window.URL || window.webkitURL;
+	var downloadUrl = URL.createObjectURL(blob);	
+			
+	a.setAttribute('href',downloadUrl);
+	a.download = file_name+'.csv';
+	a.target = '_blank';
+	
 	document.body.appendChild(a);
 	a.click();
 	document.body.removeChild(a);

@@ -2302,6 +2302,7 @@ function modal23_action(t_func,i_func)
 	var selected_file=form.elements[6];
 	var import_button=form.elements[7];
 
+	$(dummy_button).off('click'); 
 	$(dummy_button).on('click',function (e) 
 	{
 		e.preventDefault();
@@ -9274,6 +9275,7 @@ function modal138_action()
 	var selected_file=form.elements[5];
 	var import_button=form.elements[6];
 
+	$(dummy_button).off('click'); 
 	$(dummy_button).on('click',function (e) 
 	{
 		e.preventDefault();
@@ -9608,7 +9610,8 @@ function modal140_action(i_func)
 	var dummy_button=form.elements[3];
 	var selected_file=form.elements[4];
 	var import_button=form.elements[5];
-	
+
+	$(dummy_button).off('click'); 
 	$(dummy_button).on('click',function (e) 
 	{
 		e.preventDefault();
@@ -10587,6 +10590,7 @@ function modal148_action()
 	var selected_file=form.elements[4];
 	var import_button=form.elements[5];
 
+	$(dummy_button).off('click'); 
 	$(dummy_button).on('click',function (e) 
 	{
 		e.preventDefault();
@@ -10745,6 +10749,7 @@ function modal149_action()
 	var selected_file=form.elements[5];
 	var import_button=form.elements[6];
 
+	$(dummy_button).off('click'); 
 	$(dummy_button).on('click',function (e) 
 	{
 		e.preventDefault();
@@ -10844,7 +10849,7 @@ function modal149_action()
 		                "<carrier_name>"+row['Carrier Name']+"</carrier_name>"+
 		                "<manifest_type>"+type_filter.value+"</manifest_type>"+
 		                "<dispatch_date>"+get_raw_time(row['Dispatch Date'])+"</dispatch_date>"+
-		                "<import_date>"+get_raw_time(get_my_date())+"</import_date>"+
+		                "<import_date>"+get_my_time()+"</import_date>"+
 		                "<notes>"+row['Notes']+"</notes>"+
 		                "<pickup_location>"+row['Pickup Location']+"</pickup_location>"+
 		                "<pickup_by>"+row['Pickup By']+"</pickup_by>"+
