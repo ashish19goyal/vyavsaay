@@ -403,7 +403,7 @@ function local_read_single_column(columns,callback,results)
 				console.log(table+" "+sort_index+" "+columns);				
 				localdb_open_requests-=1;
 			};			
-						
+
 			read_request.onsuccess=function(e)
 			{
 				var result=e.target.result;
@@ -1570,6 +1570,7 @@ function local_create_batch(data_xml)
 						data_id:'',
 						tablename:'',
 						link_to:'',
+						updated_by:""+get_session_var('name'),
 						last_updated:""+get_my_time()};
 				var transaction=static_local_db.transaction([table,'activities'],"readwrite");		
 				var os3=transaction.objectStore('activities');		

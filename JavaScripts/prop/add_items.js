@@ -3320,7 +3320,7 @@ function form91_add_item()
 			{
 				if(products.length>0)
 				{
-					if(bill_type=='Retail-CST/C')
+					if(bill_type=='Retail-CST-C')
 					{
 						tax_unit_filter.value=get_session_var('cst_rate');
 					}
@@ -8249,7 +8249,7 @@ function form153_add_product()
 				set_my_value(price_data,price_filter);
 			}
 			
-			if(bill_type=='Retail' || bill_type=='Tax')
+			if(bill_type=='' || bill_type=='Tax')
 			{
 				var hireable_data="<bill_items sum='yes'>"+
 								"<quantity></quantity>"+

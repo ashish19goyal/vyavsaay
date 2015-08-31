@@ -6076,7 +6076,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 											order_item.item_desc=taxes[0].description;
 											if(taxes.length>0)
 											{
-												if(bill_type=='Retail-CST/C')
+												if(bill_type=='Retail-CST-C')
 												{
 													taxes[0].tax=get_session_var('cst_rate');
 												}
