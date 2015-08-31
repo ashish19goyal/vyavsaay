@@ -1447,22 +1447,22 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<awb_num index='yes' type="VARCHAR(20)"></awb_num>
 			<type index='yes' type="VARCHAR(10)"></type><!--COD/RTM/PREPAID-->
-			<order_num index='yes' type="VARCHAR(20)"></order_num>
-			<manifest_id index='yes' type="VARCHAR(20)"></manifest_id>
-			<merchant_name index='yes' type="TEXT"></merchant_name>
-			<ship_to index='yes' type="TEXT"></ship_to>
+			<order_num index='no' type="VARCHAR(20)"></order_num>
+			<manifest_id index='no' type="VARCHAR(20)"></manifest_id>
+			<merchant_name index='no' type="TEXT"></merchant_name>
+			<ship_to index='no' type="TEXT"></ship_to>
 			<address1 index='no' type="TEXT"></address1>
 			<address2 index='no' type="TEXT"></address2>
 			<city index='no' type="TEXT"></city>
 			<state index='no' type="TEXT"></state>
-			<pincode index='yes' type="TEXT"></pincode>
-			<phone index='yes' type="TEXT"></phone>
-			<telephone index='yes' type="TEXT"></telephone>
+			<pincode index='no' type="TEXT"></pincode>
+			<phone index='no' type="TEXT"></phone>
+			<telephone index='no' type="TEXT"></telephone>
 			<weight index='no' type="DECIMAL(12,2)"></weight>
 			<declared_value index='no' type="DECIMAL(12,2)"></declared_value>
 			<collectable_value index='no' type="DECIMAL(12,2)"></collectable_value>
-			<vendor_code index='yes' type="TEXT"></vendor_code>
-			<shipper_name index='yes' type="TEXT"></shipper_name>
+			<vendor_code index='no' type="TEXT"></vendor_code>
+			<shipper_name index='no' type="TEXT"></shipper_name>
 			<return_address1 index='no' type="TEXT"></return_address1>
 			<return_address2 index='no' type="TEXT"></return_address2>
 			<return_address3 index='no' type="TEXT"></return_address3>
@@ -1472,22 +1472,22 @@
 			<height index='no' type="DECIMAL(12,2)"></height>
 			<pieces index='no' type="DECIMAL(12,0)"></pieces>
 			<carrier_account index='no' type="TEXT"></carrier_account>
-			<carrier_name index='yes' type="TEXT"></carrier_name>
+			<carrier_name index='no' type="TEXT"></carrier_name>
 			<manifest_type index='yes' type="TEXT"></manifest_type>
-			<dispatch_date index='yes' type="BIGINT"></dispatch_date>
+			<dispatch_date index='no' type="BIGINT"></dispatch_date>
 			<import_date index='yes' type="BIGINT"></import_date>
 			<notes index='no' type="TEXT"></notes>
 			<pickup_location index='no' type="TEXT"></pickup_location>
-			<pickup_by index='yes' type="TEXT"></pickup_by>
-			<sku index='yes' type="TEXT"></sku>
+			<pickup_by index='no' type="TEXT"></pickup_by>
+			<sku index='no' type="TEXT"></sku>
 			<product_name index='no' type="TEXT"></product_name>
 			<status index='yes' type="VARCHAR(20)"></status><!--picked/out for delivery/received/delivered/pending/undelivered-->
-			<current_location index='yes' type="TEXT"></current_location>
+			<current_location index='no' type="TEXT"></current_location>
 			<delivery_person index='yes' type="TEXT"></delivery_person>
 			<order_history index='no' type="TEXT"></order_history>
 			<comments index='no' type="TEXT"></comments>
 			<drs_num index='yes' type="VARCHAR(20)"></drs_num>
-			<received_by index='yes' type="TEXT"></received_by>
+			<received_by index='no' type="TEXT"></received_by>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</logistics_orders>

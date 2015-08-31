@@ -394,7 +394,16 @@ function local_read_single_column(columns,callback,results)
 			
 			localdb_open_requests+=1;
 	
+			//console.log(table+" "+sort_index+" "+columns);				
 			var read_request=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order);
+			
+			read_request.onerror=function(e)
+			{
+				console.error('db error',e);
+				console.log(table+" "+sort_index+" "+columns);				
+				localdb_open_requests-=1;
+			};			
+						
 			read_request.onsuccess=function(e)
 			{
 				var result=e.target.result;
@@ -450,6 +459,7 @@ function local_read_single_column(columns,callback,results)
 					
 					if(match_word===true)
 					{
+						//console.log(columns);
 						if(sum)
 						{
 							sum_result+=parseFloat(record[result_column_name]);

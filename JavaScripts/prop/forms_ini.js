@@ -21433,11 +21433,17 @@ function form203_ini()
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
 
+	var awb_string="<awb_num></awb_num>";
+	if(fawb!="")
+	{
+		awb_string="<awb_num exact='yes'>"+fawb+"</awb_num>";
+	}
+
 	var columns="<logistics_orders count='25' start_index='"+start_index+"'>" +
 			"<id>"+fid+"</id>" +
-			"<order_num>"+forder+"</order_num>"+
-			"<awb_num>"+fawb+"</awb_num>"+
-			"<merchant_name></merchant_name>" +
+			"<order_num>"+forder+"</order_num>";
+	columns+=awb_string;				
+	columns+="<merchant_name></merchant_name>" +
 			"<ship_to></ship_to>" +
 			"<import_date>"+fdate+"</import_date>" +
 			"<type></type>"+

@@ -11145,15 +11145,8 @@ function form199_add_item()
 			}
 		});
 
-		var awb_data="<logistics_orders>"+
-					"<awb_num></awb_num>"+
-					"<status exact='yes'>picked</status>"+
-					"</logistics_orders>";
-		set_my_value_list(awb_data,awb_filter,function () 
-		{
-			$(awb_filter).focus();		
-		});
-
+		$(awb_filter).focus();
+		
 		$(awb_filter).on('keydown',function (event) 
 		{
 			if(event.keyCode == 13 ) 
@@ -11172,21 +11165,31 @@ function form199_add_item()
 	
 				if(double_entry<2)
 				{
-					form199_add_item();
 					var order_data="<logistics_orders count='1'>"+
 							"<id></id>"+
 							"<order_num></order_num>"+
 							"<order_history></order_history>"+
+							"<status exact='yes'>picked</status>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
 					fetch_requested_data('',order_data,function(orders)
 					{
+						//console.log('form199 double entry checked');
 						if(orders.length>0)
 						{
 							order_filter.value=orders[0].order_num;
 							id_filter.value=orders[0].id;
 							order_history.value=orders[0].order_history;
-							form199_update_item(fields);						
+							form199_update_item(fields);
+							form199_add_item();
+						}
+						else 
+						{
+							order_filter.value="";
+							id_filter.value="";
+							order_history.value="";
+							awb_filter.value="";
+							$("#modal65").dialog("open");
 						}
 					});
 				}
@@ -11262,7 +11265,7 @@ function form200_add_item()
 		var ship_to=item_form.elements[12];
 		var order_history=item_form.elements[14];
 		
-		var awb_data="<logistics_orders>"+
+/*		var awb_data="<logistics_orders>"+
 					"<awb_num></awb_num>"+
 					"<status array='yes'>--received--undelivered--pending--</status>"+
 					"<type exact='yes'>NONCOD</type>"+
@@ -11271,58 +11274,16 @@ function form200_add_item()
 		{
 			$(awb_filter).focus();
 		});
-		
-		$(awb_filter).on('blur',function () 
-		{
-		
-			var orders_data="<logistics_orders count='1'>"+
-							"<id></id>"+
-							"<address1></address1>"+
-							"<address2></address2>"+
-							"<city></city>"+
-							"<pincode></pincode>"+
-							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
-							"<manifest_type></manifest_type>" +
-							"<order_num></order_num>" +
-							"<merchant_name></merchant_name>" +
-							"<ship_to></ship_to>" +
-							"<phone></phone>" +
-							"<weight></weight>" +
-							"<pieces></pieces>" +
-							"<drs_num></drs_num>" +
-							"<status></status>"+
-							"<order_history></order_history>"+
-							"</logistics_orders>";
-			//console.log(orders_data);				
-			fetch_requested_data('',orders_data,function (orders) 
-			{
-				//console.log(orders);
-				if(orders.length>0)
-				{
-					address_filter.value=orders[0].ship_to+"\n"+orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
-					phone_filter.value=orders[0].phone;
-					weight_filter.value=orders[0].weight;
-					pieces_filter.value=orders[0].pieces;
-					status_filter.value=orders[0].status;
-					manifest_type_filter.value=orders[0].manifest_type;
-					order_num_filter.value=orders[0].order_num;
-					id_filter.value=orders[0].id;
-					merchant_filter.value=orders[0].merchant_name;
-					order_history.value=orders[0].order_history;
-					ship_to.value=orders[0].ship_to;
-				}
-			});
-		});
-
+*/
 		$(save_button).on('click',function (e) 
 		{
 			e.preventDefault();
 			form200_create_item(item_form);
 		});
 
-		$(item_form).on('submit',function (e) 
+		$(item_form).on("submit", function(event)
 		{
-			e.preventDefault();
+			event.preventDefault();
 			
 			var double_entry=0;
 			$("[id^='save_form200']").each(function(index)
@@ -11344,7 +11305,91 @@ function form200_add_item()
 				$("#modal65").dialog("open");
 			}
 		});
-		
+
+		$(awb_filter).focus();
+				
+		$(awb_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();
+			
+				var double_entry=0;
+				$("[id^='save_form200']").each(function(index)
+				{
+					var subform_id=$(this).attr('form');
+					var subform=document.getElementById(subform_id);
+					
+					if(subform.elements[0].value==awb_filter.value)	
+						double_entry+=1;
+				});
+	
+				if(double_entry<2)
+				{
+					var orders_data="<logistics_orders count='1'>"+
+									"<id></id>"+
+									"<address1></address1>"+
+									"<address2></address2>"+
+									"<city></city>"+
+									"<pincode></pincode>"+
+									"<type exact='yes'>NONCOD</type>"+
+									"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
+									"<manifest_type></manifest_type>" +
+									"<order_num></order_num>" +
+									"<merchant_name></merchant_name>" +
+									"<ship_to></ship_to>" +
+									"<phone></phone>" +
+									"<weight></weight>" +
+									"<pieces></pieces>" +
+									"<drs_num></drs_num>" +
+									"<status array='yes'>--received--undelivered--pending--</status>"+
+									"<order_history></order_history>"+
+									"</logistics_orders>";
+					//console.log(orders_data);				
+					fetch_requested_data('',orders_data,function (orders) 
+					{
+						//console.log(orders);
+						if(orders.length>0)
+						{
+							address_filter.value=orders[0].ship_to+"\n"+orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
+							phone_filter.value=orders[0].phone;
+							weight_filter.value=orders[0].weight;
+							pieces_filter.value=orders[0].pieces;
+							status_filter.value=orders[0].status;
+							manifest_type_filter.value=orders[0].manifest_type;
+							order_num_filter.value=orders[0].order_num;
+							id_filter.value=orders[0].id;
+							merchant_filter.value=orders[0].merchant_name;
+							order_history.value=orders[0].order_history;
+							ship_to.value=orders[0].ship_to;
+							form200_add_item();
+						}
+						else 
+						{
+							address_filter.value="";
+							phone_filter.value="";
+							weight_filter.value="";
+							pieces_filter.value="";
+							status_filter.value="";
+							manifest_type_filter.value="";
+							order_num_filter.value="";
+							id_filter.value="";
+							merchant_filter.value="";
+							order_history.value="";
+							ship_to.value="";
+							awb_filter.value="";
+							$("#modal65").dialog("open");
+						}
+					});
+				}
+				else 
+				{
+					awb_filter.value="";
+					$("#modal65").dialog("open");
+				}
+			}
+		});
+
 		$('textarea').autosize();
 		form200_update_serial_numbers();
 	}
@@ -11390,48 +11435,94 @@ function form202_add_item()
 		var address_filter=fields.elements[2];
 		var id_filter=fields.elements[3];
 		var order_history=fields.elements[6];
-		
+
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
-			form202_add_item();
+			
+			var double_entry=0;
+			$("[id^='save_form202']").each(function(index)
+			{
+				var subform_id=$(this).attr('form');
+				var subform=document.getElementById(subform_id);
+				
+				if(subform.elements[0].value==awb_filter.value)	
+					double_entry+=1;
+			});
+
+			if(double_entry<2)
+			{
+				form202_add_item();
+			}
+			else 
+			{
+				awb_filter.value="";
+				$("#modal65").dialog("open");
+			}
 		});
 
-		var awb_data="<logistics_orders>"+
-					"<awb_num></awb_num>"+
-					"<status exact='yes'>received</status>"+
-					"</logistics_orders>";
-		set_my_value_list(awb_data,awb_filter,function () 
-		{
-			$(awb_filter).focus();		
-		});
-
+		$(awb_filter).focus();
+		
 		$(awb_filter).on('keydown',function (event) 
 		{
 			if(event.keyCode == 13 ) 
 			{
-				var order_data="<logistics_orders count='1'>"+
+				event.preventDefault();
+			
+				var double_entry=0;
+				$("[id^='save_form202']").each(function(index)
+				{
+					var subform_id=$(this).attr('form');
+					var subform=document.getElementById(subform_id);
+					
+					if(subform.elements[0].value==awb_filter.value)	
+						double_entry+=1;
+				});
+	
+				if(double_entry<2)
+				{
+					var order_data="<logistics_orders count='1'>"+
+							"<id></id>"+
 							"<order_num></order_num>"+
 							"<address1></address1>"+
 							"<address2></address2>"+
 							"<city></city>"+
 							"<pincode></pincode>"+
-							"<order_history></order_history>"+							
+							"<order_history></order_history>"+
+							"<status exact='yes'>picked</status>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
-				fetch_requested_data('',order_data,function(orders)
-				{
-					if(orders.length>0)
+					fetch_requested_data('',order_data,function(orders)
 					{
-						address_filter.value=orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
-						order_filter.value=orders[0].order_num;
-						id_filter.value=orders[0].id;
-						order_history.value=orders[0].order_history;
-						form202_update_item(fields);
-					}
-				});					
+						if(orders.length>0)
+						{
+							address_filter.value=orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
+							order_filter.value=orders[0].order_num;
+							id_filter.value=orders[0].id;
+							order_history.value=orders[0].order_history;
+							form202_update_item(fields);
+							form202_add_item();
+						}
+						else 
+						{
+							address_filter.value="";
+							order_filter.value="";
+							id_filter.value="";
+							order_history.value="";
+							awb_filter.value="";
+							$("#modal65").dialog("open");
+						}						
+					});
+				}
+				else 
+				{
+					awb_filter.value="";
+					$("#modal65").dialog("open");
+				}
+								
 			}
 		});
+		
 		$('textarea').autosize();
 	}
 	else
@@ -11489,7 +11580,6 @@ function form204_add_item()
 
 			if(double_entry<2)
 			{
-				form204_update_item(fields);
 				form204_add_item();
 			}
 			else 
@@ -11499,15 +11589,8 @@ function form204_add_item()
 			}
 		});
 
-		var awb_data="<logistics_orders>"+
-					"<awb_num></awb_num>"+
-					"<status exact='yes'>out for delivery</status>"+
-					"</logistics_orders>";
-		set_my_value_list(awb_data,awb_filter,function () 
-		{
-			$(awb_filter).focus();		
-		});
-
+		$(awb_filter).focus();		
+		
 		$(awb_filter).on('keydown',function (event) 
 		{
 			if(event.keyCode == 13 ) 
@@ -11526,11 +11609,11 @@ function form204_add_item()
 	
 				if(double_entry<2)
 				{
-					form204_add_item();
 					var order_data="<logistics_orders count='1'>"+
 							"<id></id>"+
 							"<order_num></order_num>"+
 							"<order_history></order_history>"+
+							"<status exact='yes'>out for delivery</status>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
 					fetch_requested_data('',order_data,function(orders)
@@ -11540,7 +11623,16 @@ function form204_add_item()
 							order_filter.value=orders[0].order_num;
 							id_filter.value=orders[0].id;
 							order_history.value=orders[0].order_history;
-							form204_update_item(fields);						
+							form204_update_item(fields);
+							form204_add_item();						
+						}
+						else
+						{
+							order_filter.value="";
+							id_filter.value="";
+							order_history.value="";
+							awb_filter.value="";
+							$("#modal65").dialog("open");					
 						}
 					});
 				}
@@ -11608,7 +11700,6 @@ function form205_add_item()
 
 			if(double_entry<2)
 			{
-				form205_update_item(fields);
 				form205_add_item();
 			}
 			else 
@@ -11618,14 +11709,8 @@ function form205_add_item()
 			}
 		});
 
-		var awb_data="<logistics_orders>"+
-					"<awb_num></awb_num>"+
-					"<status exact='yes'>out for delivery</status>"+
-					"</logistics_orders>";
-		set_my_value_list(awb_data,awb_filter,function () 
-		{
-			$(awb_filter).focus();		
-		});
+
+		$(awb_filter).focus();		
 
 		$(awb_filter).on('keydown',function (event) 
 		{
@@ -11645,11 +11730,11 @@ function form205_add_item()
 	
 				if(double_entry<2)
 				{
-					form205_add_item();
 					var order_data="<logistics_orders count='1'>"+
 							"<id></id>"+
 							"<order_num></order_num>"+
 							"<order_history></order_history>"+
+							"<status exact='yes'>out for delivery</status>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
 					fetch_requested_data('',order_data,function(orders)
@@ -11659,7 +11744,16 @@ function form205_add_item()
 							order_filter.value=orders[0].order_num;
 							id_filter.value=orders[0].id;
 							order_history.value=orders[0].order_history;
-							form205_update_item(fields);						
+							form205_update_item(fields);
+							form205_add_item();						
+						}
+						else
+						{
+							order_filter.value="";
+							id_filter.value="";
+							order_history.value="";
+							awb_filter.value="";
+							$("#modal65").dialog("open");					
 						}
 					});
 				}
@@ -11727,7 +11821,6 @@ function form206_add_item()
 
 			if(double_entry<2)
 			{
-				form206_update_item(fields);
 				form206_add_item();
 			}
 			else 
@@ -11737,14 +11830,7 @@ function form206_add_item()
 			}
 		});
 
-		var awb_data="<logistics_orders>"+
-					"<awb_num></awb_num>"+
-					"<status exact='yes'>out for delivery</status>"+
-					"</logistics_orders>";
-		set_my_value_list(awb_data,awb_filter,function () 
-		{
-			$(awb_filter).focus();		
-		});
+		$(awb_filter).focus();		
 
 		$(awb_filter).on('keydown',function (event) 
 		{
@@ -11764,11 +11850,11 @@ function form206_add_item()
 	
 				if(double_entry<2)
 				{
-					form206_add_item();
 					var order_data="<logistics_orders count='1'>"+
 							"<id></id>"+
 							"<order_num></order_num>"+
 							"<order_history></order_history>"+
+							"<status exact='yes'>out for delivery</status>"+
 							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>"+
 							"</logistics_orders>";
 					fetch_requested_data('',order_data,function(orders)
@@ -11779,6 +11865,15 @@ function form206_add_item()
 							id_filter.value=orders[0].id;
 							order_history.value=orders[0].order_history;
 							form206_update_item(fields);						
+							form206_add_item();					
+						}
+						else
+						{
+							order_filter.value="";
+							id_filter.value="";
+							order_history.value="";
+							awb_filter.value="";
+							$("#modal65").dialog("open");					
 						}
 					});
 				}
@@ -12299,68 +12394,9 @@ function form219_add_item()
 		var ship_to=item_form.elements[13];
 		var order_history=item_form.elements[15];
 		
-		var awb_data="<logistics_orders>"+
-					"<awb_num></awb_num>"+
-					"<status array='yes'>--received--undelivered--pending--</status>"+
-					"<type exact='yes'>COD</type>"+
-					"</logistics_orders>";
-		set_my_value_list(awb_data,awb_filter,function () 
+		$(item_form).on("submit", function(event)
 		{
-			$(awb_filter).focus();
-		});
-		
-		$(awb_filter).on('blur',function () 
-		{
-			var orders_data="<logistics_orders count='1'>"+
-							"<id></id>"+
-							"<address1></address1>"+
-							"<address2></address2>"+
-							"<city></city>"+
-							"<pincode></pincode>"+
-							"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
-							"<manifest_type></manifest_type>" +
-							"<order_num></order_num>" +
-							"<merchant_name></merchant_name>" +
-							"<ship_to></ship_to>" +
-							"<phone></phone>" +
-							"<weight></weight>" +
-							"<collectable_value></collectable_value>" +
-							"<pieces></pieces>" +
-							"<drs_num></drs_num>" +
-							"<status></status>"+
-							"<order_history></order_history>"+
-							"</logistics_orders>";
-			//console.log(orders_data);				
-			fetch_requested_data('',orders_data,function (orders) 
-			{
-				//console.log(orders);
-				if(orders.length>0)
-				{
-					address_filter.value=orders[0].ship_to+"\n"+orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
-					phone_filter.value=orders[0].phone;
-					cod_filter.value=orders[0].collectable_value;
-					weight_filter.value=orders[0].weight;
-					pieces_filter.value=orders[0].pieces;
-					status_filter.value=orders[0].status;
-					manifest_type_filter.value=orders[0].manifest_type;
-					order_num_filter.value=orders[0].order_num;
-					id_filter.value=orders[0].id;
-					merchant_filter.value=orders[0].merchant_name;
-					ship_to.value=orders[0].ship_to;
-					order_history.value=orders[0].order_history;
-				}
-			});
-		});
-
-		$(save_button).on('click',function (e) 
-		{
-			e.preventDefault();
-			form219_create_item(item_form);
-		});
-
-		$(item_form).on('submit',function (e) 
-		{
-			e.preventDefault();
+			event.preventDefault();
 			
 			var double_entry=0;
 			$("[id^='save_form219']").each(function(index)
@@ -12381,6 +12417,99 @@ function form219_add_item()
 				awb_filter.value="";
 				$("#modal65").dialog("open");
 			}
+		});
+
+		$(awb_filter).focus();
+				
+		$(awb_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();
+			
+				var double_entry=0;
+				$("[id^='save_form219']").each(function(index)
+				{
+					var subform_id=$(this).attr('form');
+					var subform=document.getElementById(subform_id);
+					
+					if(subform.elements[0].value==awb_filter.value)	
+						double_entry+=1;
+				});
+	
+				if(double_entry<2)
+				{
+					var orders_data="<logistics_orders count='1'>"+
+									"<id></id>"+
+									"<address1></address1>"+
+									"<address2></address2>"+
+									"<city></city>"+
+									"<pincode></pincode>"+
+									"<type exact='yes'>COD</type>"+
+									"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
+									"<manifest_type></manifest_type>" +
+									"<order_num></order_num>" +
+									"<merchant_name></merchant_name>" +
+									"<ship_to></ship_to>" +
+									"<phone></phone>" +
+									"<weight></weight>" +
+									"<pieces></pieces>" +
+									"<drs_num></drs_num>" +
+									"<status array='yes'>--received--undelivered--pending--</status>"+
+									"<order_history></order_history>"+
+									"</logistics_orders>";
+					//console.log(orders_data);				
+					fetch_requested_data('',orders_data,function (orders) 
+					{
+						//console.log(orders);
+						if(orders.length>0)
+						{
+							address_filter.value=orders[0].ship_to+"\n"+orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
+							phone_filter.value=orders[0].phone;
+							weight_filter.value=orders[0].weight;
+							pieces_filter.value=orders[0].pieces;
+							status_filter.value=orders[0].status;
+							cod_filter.value=orders[0].collectable_value;
+							manifest_type_filter.value=orders[0].manifest_type;
+							order_num_filter.value=orders[0].order_num;
+							id_filter.value=orders[0].id;
+							merchant_filter.value=orders[0].merchant_name;
+							order_history.value=orders[0].order_history;
+							ship_to.value=orders[0].ship_to;
+							
+							form219_add_item();
+						}
+						else 
+						{
+							address_filter.value="";
+							phone_filter.value="";
+							weight_filter.value="";
+							pieces_filter.value="";
+							status_filter.value="";
+							cod_filter.value="";
+							manifest_type_filter.value="";
+							order_num_filter.value="";
+							id_filter.value="";
+							merchant_filter.value="";
+							order_history.value="";
+							ship_to.value="";
+							awb_filter.value="";
+							$("#modal65").dialog("open");
+						}
+					});
+				}
+				else 
+				{
+					awb_filter.value="";
+					$("#modal65").dialog("open");
+				}
+			}
+		});
+		
+		$(save_button).on('click',function (e) 
+		{
+			e.preventDefault();
+			form219_create_item(item_form);
 		});
 				
 		$('textarea').autosize();

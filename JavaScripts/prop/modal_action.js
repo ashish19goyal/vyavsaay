@@ -8554,10 +8554,10 @@ function modal128_action()
 			var raddress=form.elements['raddress'].value;
 			var date=get_raw_time(form.elements['date'].value);
 			var last_updated=get_my_time();
-			
+
 			var orders_xml="<logistics_orders>"+
 						"<id>"+get_new_key()+"</id>"+
-						"<awb_num>"+awb+"</awb_num>"+
+						"<awb_num unique='yes'>"+awb+"</awb_num>"+
 		                "<type>"+type+"</type>"+
 		                "<order_num>"+order+"</order_num>"+
 		                "<merchant_name>"+merchant+"</merchant_name>"+
@@ -8574,14 +8574,7 @@ function modal128_action()
 		                "<status>picked</status>"+
 		                "<last_updated>"+last_updated+"</last_updated>"+
 						"</logistics_orders>";
-			if(is_online())
-			{
-				server_create_simple(orders_xml);
-			}
-			else
-			{
-				local_create_simple(orders_xml);
-			}	
+			create_simple(orders_xml);
 		}
 		else
 		{

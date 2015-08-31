@@ -6647,28 +6647,24 @@ function form199_delete_item(button)
 		var status='picked';
 		var id=form.elements[2].value;
 		var last_updated=get_my_time();
-		var data_xml="<logistics_orders>" +
-					"<id>"+id+"</id>" +
-					"<awb_num>"+awb_num+"</awb_num>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</logistics_orders>";
-		var activity_xml="<activity>" +
-					"<data_id>"+id+"</data_id>" +
-					"<tablename>logistics_orders</tablename>" +
-					"<link_to>form198</link_to>" +
-					"<title>Unmarked</title>" +
-					"<notes>AWB # "+awb_num+" from received</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		if(id!="")
+		{		
+			var data_xml="<logistics_orders>" +
+						"<id>"+id+"</id>" +
+						//"<awb_num>"+awb_num+"</awb_num>" +
+						"<status>"+status+"</status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</logistics_orders>";
+			var activity_xml="<activity>" +
+						"<data_id>"+id+"</data_id>" +
+						"<tablename>logistics_orders</tablename>" +
+						"<link_to>form198</link_to>" +
+						"<title>Unmarked</title>" +
+						"<notes>AWB # "+awb_num+" from received</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			update_row(data_xml,activity_xml);
+		}	
 		$(button).parent().parent().remove();
 	}
 	else
@@ -6700,14 +6696,7 @@ function form200_delete_item(button)
 						"<delivery_person></delivery_person>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</logistics_orders>";
-			if(is_online())
-			{
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}	
+			update_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -6773,25 +6762,11 @@ function form201_delete_item(button)
 				});
 				data_xml+="</logistics_orders>";
 				//console.log(data_xml);
-				if(is_online())
-				{	
-					server_update_batch(data_xml);
-				}
-				else
-				{
-					local_update_batch(data_xml);
-				}
-
+				update_batch(data_xml);
+				
 			},drs_items_xml);
 			
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -6868,29 +6843,25 @@ function form202_delete_item(button)
 		var status='received';
 		var id=form.elements[3].value;
 		var last_updated=get_my_time();
-		var data_xml="<logistics_orders>" +
-					"<id>"+id+"</id>" +
-					"<awb_num>"+awb_num+"</awb_num>" +
-					"<status>"+status+"</status>" +
-					"<current_location></current_location>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</logistics_orders>";
-		var activity_xml="<activity>" +
-					"<data_id>"+id+"</data_id>" +
-					"<tablename>logistics_orders</tablename>" +
-					"<link_to>form198</link_to>" +
-					"<title>Cancelled Transfer</title>" +
-					"<notes>AWB # "+awb_num+" to "+target+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
+		if(id!="")
 		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+			var data_xml="<logistics_orders>" +
+						"<id>"+id+"</id>" +
+						//"<awb_num>"+awb_num+"</awb_num>" +
+						"<status>"+status+"</status>" +
+						"<current_location></current_location>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</logistics_orders>";
+			var activity_xml="<activity>" +
+						"<data_id>"+id+"</data_id>" +
+						"<tablename>logistics_orders</tablename>" +
+						"<link_to>form198</link_to>" +
+						"<title>Cancelled Transfer</title>" +
+						"<notes>AWB # "+awb_num+" to "+target+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			update_row(data_xml,activity_xml);
+		}	
 		$(button).parent().parent().remove();
 	}
 	else
@@ -6914,28 +6885,24 @@ function form204_delete_item(button)
 		var status='out for delivery';
 		var id=form.elements[2].value;
 		var last_updated=get_my_time();
-		var data_xml="<logistics_orders>" +
-					"<id>"+id+"</id>" +
-					"<awb_num>"+awb_num+"</awb_num>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</logistics_orders>";
-		var activity_xml="<activity>" +
-					"<data_id>"+id+"</data_id>" +
-					"<tablename>logistics_orders</tablename>" +
-					"<link_to>form198</link_to>" +
-					"<title>Unmarked</title>" +
-					"<notes>AWB # "+awb_num+" from pending</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		if(id!="")
+		{		
+			var data_xml="<logistics_orders>" +
+						"<id>"+id+"</id>" +
+						//"<awb_num>"+awb_num+"</awb_num>" +
+						"<status>"+status+"</status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</logistics_orders>";
+			var activity_xml="<activity>" +
+						"<data_id>"+id+"</data_id>" +
+						"<tablename>logistics_orders</tablename>" +
+						"<link_to>form198</link_to>" +
+						"<title>Unmarked</title>" +
+						"<notes>AWB # "+awb_num+" from pending</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			update_row(data_xml,activity_xml);
+		}		
 		$(button).parent().parent().remove();
 	}
 	else
@@ -6959,27 +6926,23 @@ function form205_delete_item(button)
 		var status='out for delivery';
 		var id=form.elements[2].value;
 		var last_updated=get_my_time();
-		var data_xml="<logistics_orders>" +
-					"<id>"+id+"</id>" +
-					"<awb_num>"+awb_num+"</awb_num>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</logistics_orders>";
-		var activity_xml="<activity>" +
-					"<data_id>"+id+"</data_id>" +
-					"<tablename>logistics_orders</tablename>" +
-					"<link_to>form198</link_to>" +
-					"<title>Unmarked</title>" +
-					"<notes>AWB # "+awb_num+" from undelivered</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
+		if(id!="")
 		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
+			var data_xml="<logistics_orders>" +
+						"<id>"+id+"</id>" +
+						//"<awb_num>"+awb_num+"</awb_num>" +
+						"<status>"+status+"</status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</logistics_orders>";
+			var activity_xml="<activity>" +
+						"<data_id>"+id+"</data_id>" +
+						"<tablename>logistics_orders</tablename>" +
+						"<link_to>form198</link_to>" +
+						"<title>Unmarked</title>" +
+						"<notes>AWB # "+awb_num+" from undelivered</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			update_row(data_xml,activity_xml);
 		}
 		$(button).parent().parent().remove();
 	}
@@ -7004,28 +6967,24 @@ function form206_delete_item(button)
 		var status='out for delivery';
 		var id=form.elements[2].value;
 		var last_updated=get_my_time();
-		var data_xml="<logistics_orders>" +
-					"<id>"+id+"</id>" +
-					"<awb_num>"+awb_num+"</awb_num>" +
-					"<status>"+status+"</status>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</logistics_orders>";
-		var activity_xml="<activity>" +
-					"<data_id>"+id+"</data_id>" +
-					"<tablename>logistics_orders</tablename>" +
-					"<link_to>form198</link_to>" +
-					"<title>Unmarked</title>" +
-					"<notes>AWB # "+awb_num+" from delivered</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		if(id!="")
+		{		
+			var data_xml="<logistics_orders>" +
+						"<id>"+id+"</id>" +
+						//"<awb_num>"+awb_num+"</awb_num>" +
+						"<status>"+status+"</status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</logistics_orders>";
+			var activity_xml="<activity>" +
+						"<data_id>"+id+"</data_id>" +
+						"<tablename>logistics_orders</tablename>" +
+						"<link_to>form198</link_to>" +
+						"<title>Unmarked</title>" +
+						"<notes>AWB # "+awb_num+" from delivered</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			update_row(data_xml,activity_xml);
+		}	
 		$(button).parent().parent().remove();
 	}
 	else

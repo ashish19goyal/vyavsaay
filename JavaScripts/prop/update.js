@@ -10335,6 +10335,7 @@ function form199_update_item(form)
 {
 	if(is_update_access('form199'))
 	{
+		//console.log('199 update');
 		var master_form=document.getElementById("form199_master");		
 		var comments=master_form.elements['comments'].value;
 		
@@ -10356,7 +10357,7 @@ function form199_update_item(form)
 		
 		var data_xml="<logistics_orders>" +
 					"<id>"+id+"</id>" +
-					"<awb_num>"+awb_num+"</awb_num>" +
+					//"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
 					"<comments>"+comments+"</comments>" +
 					"<order_history>"+order_history_string+"</order_history>" +
@@ -10490,7 +10491,7 @@ function form202_update_item(form)
 		
 		var data_xml="<logistics_orders>" +
 					"<id>"+id+"</id>" +
-					"<awb_num>"+awb_num+"</awb_num>" +
+					//"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
 					"<order_history>"+order_history_string+"</order_history>" +
 					"<current_location>"+target+"</current_location>" +
@@ -10546,7 +10547,7 @@ function form204_update_item(form)
 		
 		var data_xml="<logistics_orders>" +
 					"<id>"+id+"</id>" +
-					"<awb_num>"+awb_num+"</awb_num>" +
+					//"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
 					"<order_history>"+order_history_string+"</order_history>" +
 					"<comments>"+comments+"</comments>" +
@@ -10603,7 +10604,7 @@ function form205_update_item(form)
 		
 		var data_xml="<logistics_orders>" +
 					"<id>"+id+"</id>" +
-					"<awb_num>"+awb_num+"</awb_num>" +
+					//"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
 					"<order_history>"+order_history_string+"</order_history>" +
 					"<comments>"+comments+"</comments>" +
@@ -10659,7 +10660,7 @@ function form206_update_item(form)
 		
 		var data_xml="<logistics_orders>" +
 					"<id>"+id+"</id>" +
-					"<awb_num>"+awb_num+"</awb_num>" +
+					//"<awb_num>"+awb_num+"</awb_num>" +
 					"<status>"+status+"</status>" +
 					"<order_history>"+order_history_string+"</order_history>" +
 					"<comments>"+comments+"</comments>" +
