@@ -1545,6 +1545,7 @@ function form24_update_form()
 		
 		});
 		
+		amount=my_round(amount,2);
 		total=amount+tax;
 		if(form.elements['cst'].checked)
 		{
