@@ -7359,6 +7359,12 @@ function form203_header_ini()
 		modal149_action();
 	});
 
+	$(awb_filter).on('click',function()
+	{
+	///write code to select all text in the field
+		this.select();
+	});
+	
 	//set_my_filter(order_data,order_filter);
 	//set_my_filter(awb_data,awb_filter);
 	set_static_filter('logistics_orders','status',status_filter);
