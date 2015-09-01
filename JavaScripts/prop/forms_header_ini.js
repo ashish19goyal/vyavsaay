@@ -7220,12 +7220,19 @@ function form200_header_ini()
 	var save_button=fields.elements['save'];
 	drs_filter.value="";
 	employee.value="";
-	
-	var drs_num_data="<user_preferences count='1'>"+
-					"<value></value>"+
-					"<name exact='yes'>drs_num</name>"+
-					"</user_preferences>";
-	set_my_value(drs_num_data,drs_filter);	
+
+	var drs_id=$("#form200_link").attr('data_id');
+	if(drs_id==null)
+		drs_id="";	
+		
+	if(drs_id=="")
+	{
+		var drs_num_data="<user_preferences count='1'>"+
+						"<value></value>"+
+						"<name exact='yes'>drs_num</name>"+
+						"</user_preferences>";
+		set_my_value(drs_num_data,drs_filter);	
+	}
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -7794,12 +7801,19 @@ function form219_header_ini()
 	drs_filter.value="";
 	employee.value="";
 	
-	var drs_num_data="<user_preferences count='1'>"+
-					"<value></value>"+
-					"<name exact='yes'>drs_num</name>"+
-					"</user_preferences>";
-	set_my_value(drs_num_data,drs_filter);	
-	
+	var drs_id=$("#form219_link").attr('data_id');
+	if(drs_id==null)
+		drs_id="";	
+		
+	if(drs_id=="")
+	{	
+		var drs_num_data="<user_preferences count='1'>"+
+						"<value></value>"+
+						"<name exact='yes'>drs_num</name>"+
+						"</user_preferences>";
+		set_my_value(drs_num_data,drs_filter);	
+	}
+		
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
 	{
