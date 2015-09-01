@@ -17284,6 +17284,7 @@ function form169_ini()
 
 	fetch_requested_data('form169',columns,function(results)
 	{
+		var smaller_barcodes=get_session_var('brands_small_barcode');
 		results.forEach(function(result)
 		{
 			var picture_column="<documents>" +
@@ -17315,7 +17316,14 @@ function form169_ini()
 							rowsHTML+="<textarea readonly='readonly' form='form169_"+result.id+"'>"+result.name+"</textarea>";
 							if(result.bar_code!="" && result.bar_code!="null")
 							{
-								rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+result.bar_code+"' onclick=\"print_product_barcode('"+result.bar_code+"','"+result.name+"','"+result.description+"');\">";
+								if(smaller_barcodes!=null && smaller_barcodes.indexOf(result.make)>-1)
+								{
+									rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+result.bar_code+"' onclick=\"print_smaller_product_barcode('"+result.bar_code+"','"+result.name+"','"+result.description+"');\">";
+								}
+								else 
+								{
+									rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+result.bar_code+"' onclick=\"print_product_barcode('"+result.bar_code+"','"+result.name+"','"+result.description+"');\">";
+								}
 							}
 							else
 							{
