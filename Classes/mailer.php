@@ -51,7 +51,7 @@ class send_mailer
 				array_push($merge_vars, $merge_var);
 				array_push($to, $to_var);
 			}
-			else if($r_item!=';')
+			else if($r_item!=';' && count($receiver_var)==1)
 			{
 				$merge_var=array(
 		       		'rcpt' => $receiver_var[0],

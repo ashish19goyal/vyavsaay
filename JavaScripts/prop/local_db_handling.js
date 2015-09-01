@@ -392,18 +392,13 @@ function local_read_single_column(columns,callback,results)
 			
 			var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
 			
+			//console.log(table+" "+sort_index+" "+columns);	
+			var read_tx=static_local_db.transaction([table],"readonly");		
+			var read_index=read_tx.objectStore(table).index(sort_index);		
+			var read_request=read_index.openCursor(sort_key,sort_order);
+			
 			localdb_open_requests+=1;
 	
-			//console.log(table+" "+sort_index+" "+columns);				
-			var read_request=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index).openCursor(sort_key,sort_order);
-			
-			read_request.onerror=function(e)
-			{
-				console.error('db error',e);
-				console.log(table+" "+sort_index+" "+columns);				
-				localdb_open_requests-=1;
-			};			
-
 			read_request.onsuccess=function(e)
 			{
 				var result=e.target.result;
@@ -607,7 +602,6 @@ function local_read_multi_column(columns,callback,results)
 		}
 	
 		var sort_key=IDBKeyRange.bound(lowerbound,upperbound);
-		localdb_open_requests+=1;
 		var objectstore=static_local_db.transaction([table],"readonly").objectStore(table).index(sort_index);
 		
 		if(filter.length>0)
@@ -619,7 +613,12 @@ function local_read_multi_column(columns,callback,results)
 			}
 		}
 		
-		objectstore.openCursor(sort_key,sort_order).onsuccess=function(e)
+		
+		var read_request=objectstore.openCursor(sort_key,sort_order);
+		
+		localdb_open_requests+=1;
+
+		read_request.onsuccess=function(e)
 		{
 			var result=e.target.result;
 			if(result)
