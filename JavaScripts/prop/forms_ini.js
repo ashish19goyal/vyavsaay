@@ -4632,7 +4632,7 @@ function form59_ini()
 					rowsHTML+="<td data-th='Requisite Type'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form59_"+result.id+"' value='"+result.requisite_type+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Requisite Name'>";
+					rowsHTML+="<td data-th='Required Material'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form59_"+result.id+"' value='"+result.requisite_name+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Quantity'>";

@@ -1545,6 +1545,7 @@ function form24_update_form()
 		
 		});
 		
+		total=amount+tax;
 		if(form.elements['cst'].checked)
 		{
 			cst='yes';
@@ -1584,14 +1585,7 @@ function form24_update_form()
 					"<notes>Purchase order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
 		$("[id^='save_form24_']").click();
 	}
 	else

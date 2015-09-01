@@ -1733,14 +1733,7 @@ function form24_create_item(form)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</purchase_order_items>";	
 	
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}
+		create_simple(data_xml);
 		
 		for(var i=0;i<11;i++)
 		{

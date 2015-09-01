@@ -41,10 +41,6 @@ function print_product_barcode(barcode,sku,name)
 	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:24});
 	name_element.innerHTML=name;	   
 	
-	//var container_html=container.innerHTML;
-	//var my_con=document.getElementById('pdf_print_div');
-	//my_con.innerHTML=container_html;
-	
 	$.print(container);	
 }
 

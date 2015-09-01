@@ -5,7 +5,7 @@
 				<form id='form59_header'></form>
 					<th>Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form59_header'></th>
 					<th>Requisite Type <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form59_header'></th>
-					<th>Requisite Name <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form59_header'></th>
+					<th>Required Material <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form59_header'></th>
 					<th>Quantity</th>
 					<th><input type="button" value='Add new requisite' form='form59_header' class='add_icon' onclick="form59_add_item();">
 						<input type='button' form='form59_header' value='EXPORT' class='export_icon'>

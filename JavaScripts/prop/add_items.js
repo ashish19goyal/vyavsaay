@@ -1579,7 +1579,7 @@ function form59_add_item()
 			rowsHTML+="<td data-th='Requisite Type'>";
 				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Requisite Name'>";
+			rowsHTML+="<td data-th='Required Material'>";
 				rowsHTML+="<input type='text' form='form59_"+id+"' value=''>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
