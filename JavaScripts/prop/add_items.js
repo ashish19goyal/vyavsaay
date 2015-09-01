@@ -5523,12 +5523,14 @@ function form122_add_item()
 			}
 		});
 		
+		var smaller_barcodes=get_session_var('brands_small_barcode');
 		$(name_filter).on('blur',function(event)
 		{
 			var desc_data="<product_master>" +
 				"<id></id>"+
 				"<description></description>" +
 				"<bar_code></bar_code>"+
+				"<make></make>"+
 				"<name exact='yes'>"+name_filter.value+"</name>" +
 				"</product_master>";
 			set_my_value(desc_data,desc_filter);
@@ -5542,7 +5544,14 @@ function form122_add_item()
 						var barcode_image=document.getElementById('form122_bracode_image_'+id);
 						$(barcode_image).on('click',function()
 						{
-							print_product_barcode(descriptions[0].bar_code,name_filter.value,desc_filter.value);
+							if(smaller_barcodes!=null && smaller_barcodes.indexOf(descriptions[0].make)>-1)
+							{
+								print_smaller_product_barcode(descriptions[0].bar_code,name_filter.value,desc_filter.value);
+							}
+							else 
+							{
+								print_product_barcode(descriptions[0].bar_code,name_filter.value,desc_filter.value);
+							}
 						});
 					}
 					else
@@ -10919,11 +10928,14 @@ function form193_add_item()
 				"</product_master>";
 		set_my_value_list(product_data,name_filter);
 
+		var smaller_barcodes=get_session_var('brands_small_barcode');
+		
 		$(name_filter).on('blur',function(event)
 		{
 			var desc_data="<product_master>"+
 						"<description></description>"+
 						"<bar_code></bar_code>"+
+						"<make></make>"+
 						"<name exact='yes'>"+name_filter.value+"</name>"+						
 						"</product_master>";
 			fetch_requested_data('',desc_data,function (descs) 
@@ -10936,13 +10948,30 @@ function form193_add_item()
 					if(barcode_filter.value!="")
 					{	
 						var barcode_td=document.getElementById('form193_barcode_'+id);
-						$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+descs[0].bar_code+"' onclick=\"print_product_barcode('"+descs[0].bar_code+"','"+name_filter.value+"','"+descs[0].description+"');\">");
+						
+						if(smaller_barcodes!=null && smaller_barcodes.indexOf(descs[0].make)>-1)
+						{
+							$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+descs[0].bar_code+"' onclick=\"print_smaller_product_barcode('"+descs[0].bar_code+"','"+name_filter.value+"','"+descs[0].description+"');\">");
+						}
+						else 
+						{
+							$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+descs[0].bar_code+"' onclick=\"print_product_barcode('"+descs[0].bar_code+"','"+name_filter.value+"','"+descs[0].description+"');\">");
+						}						
+						
 					}
 					else 
 					{
 						var string=""+get_my_time();
 						modal116_action(string,name_filter.value);
-						$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+string+"' onclick=\"print_product_barcode('"+string+"','"+name_filter.value+"','"+descs[0].description+"');\">");
+						if(smaller_barcodes!=null && smaller_barcodes.indexOf(descs[0].make)>-1)
+						{
+							$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+string+"' onclick=\"print_smaller_product_barcode('"+string+"','"+name_filter.value+"','"+descs[0].description+"');\">");
+						}
+						else 
+						{
+							$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+string+"' onclick=\"print_product_barcode('"+string+"','"+name_filter.value+"','"+descs[0].description+"');\">");
+						}						
+						
 					}
 				}
 			});
