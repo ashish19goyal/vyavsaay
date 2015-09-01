@@ -8440,15 +8440,19 @@ function form233_header_ini()
     	//console.log(evt);
         select_document(evt,function(dataURL)
         {
+			//var unique_id="vyavsaay_picture_box"+Math.round(Math.random()*100);
+   
             var new_div_elem = document.createElement("div");
             new_div_elem.setAttribute("style", "width:100px; height:100px;");
 	    	new_div_elem.setAttribute("onclick", "set_html_elem_4_del(this)")
+			new_div_elem.setAttribute("class", "draggable-containment");
 
             var new_elem = document.createElement("img");
             new_elem.setAttribute("src", dataURL);
             new_elem.setAttribute("class", "ui-widget-content");
             new_elem.setAttribute("alt", "Image Not Found");
             new_elem.setAttribute("style", "width:100px; height:100px;");
+			new_elem.setAttribute("class", "resizable-aspect-ration");
 
             $('#form233_section').append(new_div_elem);
 	    	$(new_div_elem).append(new_elem);

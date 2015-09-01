@@ -21097,6 +21097,7 @@ function form198_ini()
                 "<delivery_person></delivery_person>"+
                 "<order_history></order_history>"+
                 "<comments></comments>"+
+                "<drs_num></drs_num>"+
                 "</logistics_orders>";
 
 	$('#form198_body').html("");
@@ -21158,6 +21159,7 @@ function form198_ini()
 				rowsHTML+="<label>Status: <input type='text' name='status'  required value='"+result.status+"'></label>";
 				rowsHTML+="<label>Current Location: <input type='text' name='current_location'  value='"+result.current_location+"'></label>";
 				rowsHTML+="<label>Delivery Person: <input type='text' name='delivery_person'  value='"+result.delivery_person+"'></label>";
+				rowsHTML+="<label>DRS #: <input type='text' name='drs_num'  value='"+result.drs_num+"'></label>";
 				//rowsHTML+="<label>Comments: <textarea name='comments' >"+result.comments+"</textarea></label>";
 				rowsHTML+="<label><input type='button' value='Update' class='generic_icon' name='update' onclick='form198_update_item();'></label>";
 
@@ -24169,9 +24171,17 @@ function form233_ini()
 					e.preventDefault();
 					form233_update_item();
 				});
-				console.log(revert_htmlentities(newsletters[0].html_content));
+				
+				//console.log(revert_htmlentities(newsletters[0].html_content));
 				var updated_content=revert_htmlentities(newsletters[0].html_content);
 				$('#form233_section').html(updated_content);
+				
+				$(".editable").resizable();
+			    $(".draggable").draggable();
+
+			    $('.resizable-aspect-ration').resizable({aspectRatio: true});
+    	        $('.draggable-containment').draggable({ containment: "window" });
+
 			}
 			hide_loader();
 		});	

@@ -10257,6 +10257,7 @@ function form198_update_item()
 		var status=form.elements['status'].value;
 		var current_location=form.elements['current_location'].value;
 		var delivery_person=form.elements['delivery_person'].value;
+		var drs_num=form.elements['drs_num'].value;
 
 		var id=form.elements['id'].value;
 		var last_updated=get_my_time();
@@ -10300,6 +10301,7 @@ function form198_update_item()
                 "<status>"+status+"</status>"+
                 "<current_location>"+current_location+"</current_location>"+
                 "<delivery_person>"+delivery_person+"</delivery_person>"+
+                "<drs_num>"+drs_num+"</drs_num>"+
                 "<last_updated>"+last_updated+"</last_updated>" +
 				"</logistics_orders>";
 		var activity_xml="<activity>" +
@@ -10310,14 +10312,7 @@ function form198_update_item()
 				"<notes>AWB # "+awb_num+"</notes>" +
 				"<updated_by>"+get_name()+"</updated_by>" +
 				"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
 		
 		$('#form198_fieldset').html("Order details have been updated.");
 	}

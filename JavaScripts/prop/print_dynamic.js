@@ -28,7 +28,7 @@ function add_button_4_txt_formatting(nav_id,format_specifier, formatting_type, b
 function text_button_handler(section_elem) 
 {
     /* Unique id generated for all div elements*/
-    var unique_id = Math.round(Math.random()*100);
+    var unique_id="vyavsaay_text_box"+Math.round(Math.random()*100);
     
     /* Adding draggable and resizable div elements */
     var new_parent = document.createElement("div");
@@ -60,6 +60,8 @@ function text_button_handler(section_elem)
      selected without dragging the divs. The common area which
      is both editable and draggable has been disabled for dragging*/
     var draggableDiv = $('#parent_' + unique_id).draggable();
+
+	/****change following two events to native dom*****/
 
     $('#' + unique_id, "#parent_" + unique_id).mousedown(function(ev) {
          draggableDiv.draggable('disable');
