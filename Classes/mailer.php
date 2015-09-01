@@ -30,6 +30,7 @@ class send_mailer
 		foreach($receivers_array as $r_item)
 		{
 			$receiver_var=explode(':',$r_item);
+			
 			if($r_item!=';' && count($receiver_var)>1)
 			{
 				$merge_var=array(
@@ -50,8 +51,27 @@ class send_mailer
 				array_push($merge_vars, $merge_var);
 				array_push($to, $to_var);
 			}
-		}
-		
+			else if($r_item!=';')
+			{
+				$merge_var=array(
+		       		'rcpt' => $receiver_var[0],
+		            'vars' => array(
+		            	array(
+		                	'customer_name' => 'Sir',
+		                	'business_title'=> $from_name
+		            	)
+		        	)
+		        );
+		    	$to_var=array(
+		        	'email' => $receiver_var[0],
+		            'name' => $receiver_var[0],
+		            'type' => 'to'
+		        );
+	
+				array_push($merge_vars, $merge_var);
+				array_push($to, $to_var);
+			}
+		}		
 		
 		$final_message = array(
 	        'html' => $message,
