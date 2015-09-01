@@ -11265,16 +11265,6 @@ function form200_add_item()
 		var ship_to=item_form.elements[12];
 		var order_history=item_form.elements[14];
 		
-/*		var awb_data="<logistics_orders>"+
-					"<awb_num></awb_num>"+
-					"<status array='yes'>--received--undelivered--pending--</status>"+
-					"<type exact='yes'>NONCOD</type>"+
-					"</logistics_orders>";
-		set_my_value_list(awb_data,awb_filter,function () 
-		{
-			$(awb_filter).focus();
-		});
-*/
 		$(save_button).on('click',function (e) 
 		{
 			e.preventDefault();

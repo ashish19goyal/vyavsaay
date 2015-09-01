@@ -689,6 +689,10 @@
 		This item is not desired to be picked. Please put it back
 	</div>
 
+	<div id="modal68" title="Change DRS number">
+		This DRS number has already been taken. Please use a different number.
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>

@@ -21230,6 +21230,7 @@ function form200_ini()
 									"<weight></weight>" +
 									"<pieces></pieces>" +
 									"<drs_num exact='yes'>"+drs_results[0].drs_num+"</drs_num>" +
+									"<drs_id exact='yes'>"+drs_id+"</drs_id>" +
 									"<tax></tax>" +
 									"</logistics_orders>";
 
@@ -21276,6 +21277,15 @@ function form200_ini()
 						rowsHTML+="</tr>";
 	
 						$('#form200_body').append(rowsHTML);
+						
+						var item_form=document.getElementById('form200_'+id);
+						var save_button=item_form.elements[10];
+						
+						$(save_button).on('click',function (e) 
+						{
+							e.preventDefault();
+							form200_create_item(item_form);
+						});
 					});
 					
 					$('#form200_share').show();
@@ -22375,6 +22385,7 @@ function form219_ini()
 									"<pieces></pieces>" +
 									"<collectable_value></collectable_value>"+
 									"<drs_num exact='yes'>"+drs_results[0].drs_num+"</drs_num>" +
+									"<drs_id exact='yes'>"+drs_id+"</drs_id>" +
 									"<tax></tax>" +
 									"</logistics_orders>";
 

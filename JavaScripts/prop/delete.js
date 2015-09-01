@@ -6693,6 +6693,7 @@ function form200_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<status>received</status>" +
 						"<drs_num></drs_num>"+
+						"<drs_id></drs_id>"+
 						"<delivery_person></delivery_person>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</logistics_orders>";
@@ -7217,17 +7218,11 @@ function form219_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<status>received</status>" +
 						"<drs_num></drs_num>"+
+						"<drs_id></drs_id>"+
 						"<delivery_person></delivery_person>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</logistics_orders>";
-			if(is_online())
-			{
-				server_update_simple(data_xml);
-			}
-			else
-			{
-				local_update_simple(data_xml);
-			}	
+			update_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
 	}

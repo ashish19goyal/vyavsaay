@@ -6,6 +6,7 @@
 			<label>DRS Date<br><input type='text' name='date'></label>
 			<br><label>Total COD<br>Rs: <input type='number' readonly='readonly' step='any' name='total'></label>
 			<label>COD collected<br>Rs: <input type='number' step="any" name='collected'></label>
+			<label># of Orders<br><input type='number' readonly='readonly' name='num_orders'></label>
 			<label>	<input type='button' title='Save DRS' name='save' class='save_icon'></label>
 			<label>	<input type='button' title='Print DRS' name='print' class='print_icon' onclick='form219_print_form();'></label>
 			<label>	<input type='button' title='Email DRS' name='share' class='share_icon' id='form219_share'></label>

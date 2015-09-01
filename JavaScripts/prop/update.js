@@ -10379,6 +10379,35 @@ function form199_update_item(form)
 	}
 }
 
+/**
+ * formNo 200
+ * form Create DRS
+ * @param button
+ */
+function form200_update_item(form)
+{
+	if(is_update_access('form200'))
+	{
+		var drs_num=document.getElementById('form200_master').elements['drs_num'].value;
+		var delivery_person=document.getElementById('form200_master').elements['employee'].value;
+		var data_id=form.elements[9].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<logistics_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<drs_num>"+drs_num+"</drs_num>"+
+					"<delivery_person>"+delivery_person+"</delivery_person>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		update_simple(data_xml);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
 function form200_update_serial_numbers()
 {
 	$('#form200_body').find('tr').each(function(index)
@@ -10414,42 +10443,38 @@ function form200_update_form()
 		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
 		
-		var data_xml="<drs>" +
-					"<id>"+data_id+"</id>" +
-					"<drs_num>"+drs_num+"</drs_num>"+
-					"<employee>"+employee+"</employee>"+
-					"<drs_time>"+ddate+"</drs_time>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</drs>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>drs</tablename>" +
-					"<link_to>form201</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>DRS # "+drs_num+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var num_data="<user_preferences>"+
-					"<id></id>"+						
-					"<name exact='yes'>drs_num</name>"+												
-					"</user_preferences>";
-		get_single_column_data(function (drs_num_ids)
+		var drs_columns="<drs count='1'>" +
+					"<drs_num exact='yes'>"+drs_num+"</drs_num>"+
+					"</drs>";		
+		get_single_column_data(function(drses)
 		{
-			if(drs_num_ids.length>0)
+			if(drses.length==0)
 			{
-				var num_xml="<user_preferences>"+
-								"<id>"+drs_num_ids[0]+"</id>"+
-								"<value>"+(parseInt(drs_num)+1)+"</value>"+
-								"</user_preferences>";
-				update_simple(num_xml);
+				var data_xml="<drs>" +
+							"<id>"+data_id+"</id>" +
+							"<drs_num>"+drs_num+"</drs_num>"+
+							"<employee>"+employee+"</employee>"+
+							"<drs_time>"+ddate+"</drs_time>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</drs>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>drs</tablename>" +
+							"<link_to>form201</link_to>" +
+							"<title>Updated</title>" +
+							"<notes>DRS # "+drs_num+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				update_row(data_xml,activity_xml);
 				
-			}
-		},num_data);
-
-		update_row(data_xml,activity_xml);
 		
-
-		$("[id^='save_form200_']").click();
+				$("[id^='save_form200_']").click();
+			}
+			else 
+			{
+				$("#modal68").dialog("open");
+			}
+		},drs_columns);
 	}
 	else
 	{
@@ -11109,6 +11134,37 @@ function form217_update_item(form)
 	}
 }
 
+/**
+ * formNo 219
+ * form Create COD DRS
+ * @param button
+ */
+function form219_update_item(form)
+{
+	if(is_update_access('form219'))
+	{
+		var drs_num=document.getElementById('form219_master').elements['drs_num'].value;
+		var delivery_person=document.getElementById('form219_master').elements['employee'].value;
+		var data_id=form.elements[10].value;
+		var save_button=form.elements[11];
+		var del_button=form.elements[12];
+		var last_updated=get_my_time();
+	
+		var data_xml="<logistics_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<drs_num>"+drs_num+"</drs_num>"+
+					"<delivery_person>"+delivery_person+"</delivery_person>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		update_simple(data_xml);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
 function form219_update_serial_numbers()
 {
 	$('#form219_body').find('tr').each(function(index)
@@ -11167,56 +11223,40 @@ function form219_update_form()
 		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
 		
-		var data_xml="<drs>" +
-					"<id>"+data_id+"</id>" +
-					"<drs_num>"+drs_num+"</drs_num>"+
-					"<employee>"+employee+"</employee>"+
-					"<collectable_amount>"+collectable_amount+"</collectable_amount>"+
-					"<collected_amount>"+collected_amount+"</collected_amount>"+
-					"<drs_time>"+ddate+"</drs_time>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</drs>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>drs</tablename>" +
-					"<link_to>form201</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>DRS # "+drs_num+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		var num_data="<user_preferences>"+
-					"<id></id>"+						
-					"<name exact='yes'>drs_num</name>"+												
-					"</user_preferences>";
-		get_single_column_data(function (drs_num_ids)
+		var drs_columns="<drs count='1'>" +
+					"<drs_num exact='yes'>"+drs_num+"</drs_num>"+
+					"</drs>";		
+		get_single_column_data(function(drses)
 		{
-			if(drs_num_ids.length>0)
+			if(drses.length==0)
 			{
-				var num_xml="<user_preferences>"+
-								"<id>"+drs_num_ids[0]+"</id>"+
-								"<value>"+(parseInt(drs_num)+1)+"</value>"+
-								"</user_preferences>";
-				if(is_online())
-				{
-					server_update_simple(num_xml);
-				}
-				else 
-				{
-					local_update_simple(num_xml);
-				}
+				var data_xml="<drs>" +
+							"<id>"+data_id+"</id>" +
+							"<drs_num>"+drs_num+"</drs_num>"+
+							"<employee>"+employee+"</employee>"+
+							"<collectable_amount>"+collectable_amount+"</collectable_amount>"+
+							"<collected_amount>"+collected_amount+"</collected_amount>"+
+							"<drs_time>"+ddate+"</drs_time>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</drs>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>drs</tablename>" +
+							"<link_to>form201</link_to>" +
+							"<title>Updated</title>" +
+							"<notes>DRS # "+drs_num+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				
+				update_row(data_xml,activity_xml);
+				
+				$("[id^='save_form219_']").click();
 			}
-		},num_data);
-
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
-
-		$("[id^='save_form219_']").click();
+			else 
+			{
+				$("#modal68").dialog("open");
+			}
+		},drs_columns);	
 	}
 	else
 	{

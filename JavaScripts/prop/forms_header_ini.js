@@ -7214,9 +7214,9 @@ function form200_header_ini()
 	var drs_filter=fields.elements['drs_num'];
 	var employee=fields.elements['employee'];
 	var drs_date=fields.elements['date'];
-	
+
 	fields.elements['id'].value=get_new_key();
-	
+
 	var save_button=fields.elements['save'];
 	drs_filter.value="";
 	employee.value="";
@@ -7224,7 +7224,7 @@ function form200_header_ini()
 	var drs_id=$("#form200_link").attr('data_id');
 	if(drs_id==null)
 		drs_id="";	
-		
+
 	if(drs_id=="")
 	{
 		var drs_num_data="<user_preferences count='1'>"+
