@@ -5974,7 +5974,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 			if(order_items.length>0)
 			{
 				pending_items_count=order_items.length;
-				//console.log(order_items);
+				console.log(order_items);
 				
 				var bill_items_xml_array=[];
 				var order_items_xml_array=[];
@@ -5995,8 +5995,8 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 							"</product_instances>";
 					get_single_column_data(function(batches)
 					{
-						//console.log(batches);
-		
+						console.log(batches);
+						var single_batch=batches[0];
 						batches.reverse();
 						var batches_result_array=[];
 						get_available_batch(order_item.item_name,batches,order_item.quantity,batches_result_array,function()
@@ -6019,7 +6019,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 									"</channel_prices>";
 							fetch_requested_data('',price_data,function(sale_prices)
 							{
-								//console.log(sale_prices);
+								console.log(sale_prices);
 		
 								if(sale_prices.length>0)
 								{
@@ -6064,7 +6064,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 												"</product_master>";
 										fetch_requested_data('',tax_data,function(taxes)
 										{
-											//console.log(taxes);
+											console.log(taxes);
 		
 											order_item.item_desc=taxes[0].description;
 											if(taxes.length>0)
@@ -6078,10 +6078,18 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 			
 												var unit_price=item_amount/parseFloat(order_item.quantity);
 												
+												console.log(batches_result_array);
+												if(batches_result_array.length===0)
+												{
+													var single_batch_object=new Object();
+													single_batch_object.batch=single_batch;
+													single_batch_object.quantity=order_item.quantity;
+													
+													batches_result_array.push(single_batch_object);
+												}
+												
 												pending_items_count+=batches_result_array.length-1;
 												
-												//console.log(batches_result_array);
-		
 												batches_result_array.forEach(function(batch_result)
 												{
 													var storage_xml="<area_utilization>"+
@@ -6095,7 +6103,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 														var storage_result_array=[];
 														get_available_storage(order_item.item_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function () 
 														{
-															//console.log(storage_result_array);
+															console.log(storage_result_array);
 		
 															var item_storage="";
 															if(storage_result_array.length>0)

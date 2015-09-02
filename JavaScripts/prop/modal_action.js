@@ -8923,6 +8923,7 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 						"</channel_prices>";
 				fetch_requested_data('',price_data,function(sale_prices)
 				{
+					//console.log(sale_prices);
 					if(sale_prices.length>0)
 					{
 						var total_sale_price=parseFloat(sale_prices[0].sale_price)+parseFloat(sale_prices[0].freight);
