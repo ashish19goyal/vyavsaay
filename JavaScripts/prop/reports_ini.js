@@ -6266,7 +6266,12 @@ function report85_ini()
                         "<comments></comments>"+
                         "<drs_num array='yes'>"+drs_num_array+"</drs_num>"+
 						"</logistics_orders>";
-			get_export_data(columns,'drs_details');
+			get_export_data_extended(columns,'drs_details',function(new_result)
+			{
+				new_result.dispatch_date=get_my_datetime(new_result.dispatch_date);				
+				new_result.import_date=get_my_datetime(new_result.import_date);
+				new_result.last_updated=get_my_datetime(new_result.last_updated);				
+			});
 		});
 		hide_loader();		
 	});
