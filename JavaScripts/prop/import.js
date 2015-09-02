@@ -5892,7 +5892,7 @@ function form172_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<channel>"+row.channel+"</channel>" +
 				"<item>"+row.item+"</item>" +
-				"<sale_price>"+row.price+"</sale_price>"+
+				"<sale_price>"+row.sale_price+"</sale_price>"+
 				"<freight>"+row.freight+"</freight>"+
 				"<discount_customer>"+row.discount_customer+"</discount_customer>"+
 				"<gateway_charges>"+row.gateway_charges+"</gateway_charges>"+
@@ -5911,25 +5911,11 @@ function form172_import(data_array,import_type)
 	data_xml+="</channel_prices>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 				
 };
@@ -5969,25 +5955,11 @@ function form173_import(data_array,import_type)
 	data_xml+="</sku_mapping>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}
 				
 };
@@ -6027,25 +5999,11 @@ function form174_import(data_array,import_type)
 	data_xml+="</pickup_charges>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}			
 };
 
@@ -6084,25 +6042,11 @@ function form175_import(data_array,import_type)
 	data_xml+="</channel_category>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}			
 };
 
@@ -6140,25 +6084,11 @@ function form176_import(data_array,import_type)
 	data_xml+="</category_sku_mapping>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}			
 };
 
@@ -6196,25 +6126,11 @@ function form177_import(data_array,import_type)
 	data_xml+="</prioritization_parameters>";
 	if(import_type=='create_new')
 	{
-		if(is_online())
-		{
-			server_create_batch(data_xml);
-		}
-		else
-		{
-			local_create_batch(data_xml);
-		}
+		create_batch(data_xml);
 	}
 	else
 	{
-		if(is_online())
-		{	
-			server_update_batch(data_xml);
-		}
-		else
-		{
-			local_update_batch(data_xml);
-		}
+		update_batch(data_xml);
 	}			
 };
 

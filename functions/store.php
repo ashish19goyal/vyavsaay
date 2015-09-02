@@ -3,8 +3,6 @@
 		<li><a id='form38_link' href='#form38' onclick='form38_header_ini(); form38_ini();' data-i18n='form.store_placement'></a></li>
 		<li><a id='form156_link' href='#form156' onclick='form156_header_ini(); form156_ini();' data-i18n='form.store_placement'></a></li>
 		<li><a id='form165_link' href='#form165' onclick='form165_header_ini(); form165_ini();' data-i18n='form.put_away'></a></li>
-		<li><a id='report66_link' href='#report66' onclick='report66_header_ini();' data-i18n='form.inventory_level_store'></a></li>
-		<li><a id='report77_link' href='#report77' onclick='report77_header_ini();' data-i18n='form.inventory_storage_by_item'></a></li>
 		<li><a id='report63_link' href='#report63' onclick='report63_header_ini();' data-i18n='form.item_picklist'></a></li>		
 		<li><a id='report90_link' href='#report90' onclick='report90_header_ini(); ' data-i18n='form.order_picklist'></a></li>
 		<li><a id='report64_link' href='#report64' onclick='report64_header_ini();' data-i18n='form.packing_instructions'></a></li>		
@@ -28,8 +26,6 @@
 			include "forms/form38.php";
 			include "forms/form156.php";
 			include "forms/form165.php";
-			include "reports/report66.php";
-			include "reports/report77.php";
 			include "reports/report63.php";
 			include "reports/report90.php";
 			include "reports/report64.php";

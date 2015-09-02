@@ -1972,3 +1972,30 @@ function report90_header_ini()
 		}
 	});
 }
+
+/**
+ * @reportNo 91
+ * @report Inventory (by brand)
+ */
+function report91_header_ini()
+{	
+	var form=document.getElementById('report91_header');
+	var brand_filter=form.elements['brand'];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report91_ini();
+	});
+
+/*	var company_data="<product_master>"+
+				"<make></make>"+
+				"</product_master>";
+	set_my_filter(company_data,company_filter);
+*/
+	var brand_data="<product_master>"+
+				"<make></make>"+
+				"</product_master>";
+	set_my_filter(brand_data,brand_filter);
+}

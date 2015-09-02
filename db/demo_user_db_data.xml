@@ -1196,6 +1196,17 @@
 			<tables>--area_utilization--bill_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>		
+			<name>report91</name>
+			<display_name>inventory_by_brand</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_master--product_instances--inventory_adjust--bill_items--supplier_bill_items--customer_return_items--supplier_return_items--</tables>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
@@ -4183,6 +4194,17 @@
 			<username>master</username>
 			<element_id>report90</element_id>
 			<element_name>order_picklist</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report91</element_id>
+			<element_name>inventory_by_brand</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
