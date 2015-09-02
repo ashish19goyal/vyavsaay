@@ -10595,7 +10595,7 @@ function modal148_action()
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
-		var data_array=['awb','date','status','received by','remark'];
+		var data_array=['awb','date','order_status','received by','remark'];
 		my_array_to_csv(data_array);
 	});
 	
@@ -10641,7 +10641,7 @@ function modal148_action()
 				{
 					for(var l=0;l<order_ids.length;l++)
 					{
-						if(data_array[k].awb_num==order_ids[l].awb)
+						if(data_array[k].awb==order_ids[l].awb_num)
 						{
 							data_array[k].id=order_ids[l].id;
 							data_array[k].order_history=order_ids[l].order_history;
@@ -10654,25 +10654,31 @@ function modal148_action()
 				//console.log(data_array);					
 				data_array.forEach(function (data_row) 
 				{
-					//console.log(data_row.id);
+					//console.log(data_row);
+					//console.log(data_row.order_status);
+					//console.log(data_row.date);
+					//console.log(data_row['received by']);
 					if(typeof data_row.id!='undefined')
 					{
 						var order_object=new Object();
 						order_object.id=data_row.id;
-						order_object.status=data_row.status;
+						order_object.status=data_row['order_status'];
 						order_object.received_by=data_row['received by'];
+						
+						//console.log(order_object);
 						
 						var history_object=JSON.parse(data_row.order_history);
 						var new_history_object=new Object();
 						new_history_object.timeStamp=get_raw_time(data_row.date);
 						new_history_object.location=data_row['received by'];
-						new_history_object.status=data_row.status;
+						new_history_object.status=data_row['order_status'];
 						new_history_object.details=data_row.remark;
 						
 						history_object.push(new_history_object);
 						order_object.order_history=JSON.stringify(history_object);
 	                	order_array.push(order_object);
-	                	//console.log(order_object);
+	                	
+	          //      	console.log(order_object);
 	                }
 				});
 	
@@ -10694,7 +10700,7 @@ function modal148_action()
 							"</row>";		
 				});
 			
-				console.log(data_xml);
+				//console.log(data_xml);
 				data_xml+="</logistics_orders>";
 				update_batch(data_xml);
 	

@@ -21,27 +21,18 @@
                         <last_updated index='yes' type="BIGINT"></last_updated>
                         <last_sync_time index='yes' type="BIGINT"></last_sync_time>
         </centers>
-	<centers>
+	<diagnostic_tests>
                         <id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
                         <display_name index='yes' type='TEXT'></display_name>
                         <name index='yes' type='TEXT' unique='yes' required='yes'></name>
-                        <email index='yes' type="TEXT"></email>
-                        <phone index='yes' type="TEXT"></phone>
+			<assignee index='yes' type="TEXT"></assignee>
                         <status index='yes' type='VARCHAR(45)'></status><!--active/archived-->
-                        <promotion_status index='yes' type='VARCHAR(45)'></promotion_status><!--active/suspended-->
-                        <notes index='no' type='TEXT'></notes>
-                        <address index='yes' type="TEXT"></address>
-                        <city index='no' type="TEXT"></city>
-                        <pincode index='no' type='VARCHAR(15)'></pincode>
-                        <state index='no' type="VARCHAR(45)"></state>
-                        <country index='no' type="VARCHAR(45)"></country>
-                        <address_status index='yes' type="VARCHAR(45)"></address_status><!-- pending analysis/unconfirmed/confirmed/incorrect -->
-                        <lat index='no' type="DECIMAL(14,10)"></lat>
-                        <lng index='no' type="DECIMAL(14,10)"></lng>
-                        <business_type index='yes' type="TEXT"></business_type>
+			<hours index='no' type="DECIMAL(5,2)"></hours>
+			<capacity index='no' type="INT"></capacity>
+                        <details index='no' type='TEXT'></details>
                         <last_updated index='yes' type="BIGINT"></last_updated>
                         <last_sync_time index='yes' type="BIGINT"></last_sync_time>
-        </centers>
+        </diagnostic_tests>
 	<customers>
 			<id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
 			<name index='yes' type='TEXT'></name>
