@@ -261,9 +261,10 @@ function csv_string_to_obj_array(csvString)
 {
 	csvString = csvString.replace(/[^a-z0-9A-Z<>\s\!\@\$\%\^\&\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
 	csvString = csvString.replace(/â/g,'');
-
+	
 	var rows=csvString.split("\n");	
 	var results=[];
+
 
 	for(var x=0;x<rows.length;x++)
 	{
@@ -285,7 +286,7 @@ function csv_string_to_obj_array(csvString)
 	}
 
 	var header_cols=rows[0].split(',');
-
+	
 	for(var i=1;i<rows.length;i++)
 	{
 		if(rows[i]!="")
