@@ -6686,6 +6686,7 @@ function report91_ini()
 
 	var master_data="<product_master>" +
 			"<name></name>" +
+			"<description></description>"+
 			"<make exact='yes'>"+brand+"</make>" +
 			"</product_master>";
 	
@@ -6695,8 +6696,11 @@ function report91_ini()
 		products.forEach(function(result)
 		{
 			var rowsHTML="<tr>";
-				rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<td data-th='SKU'>";
 					rowsHTML+=result.name;
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Item Name'>";
+					rowsHTML+=result.description;
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Inventory' id='report91_inventory_"+result.id+"'>";
 				rowsHTML+="</td>";

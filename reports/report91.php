@@ -12,7 +12,8 @@
 	<table class='rwd-table'>
 		<thead>
 			<tr>
-				<th>Item</th>
+				<th>SKU</th>
+				<th>Item Name</th>
 				<th>Quantity</th>
 			</tr>
 		</thead>
