@@ -1997,5 +1997,5 @@ function report91_header_ini()
 	var brand_data="<product_master>"+
 				"<make></make>"+
 				"</product_master>";
-	set_my_filter(brand_data,brand_filter);
+	set_my_value_list(brand_data,brand_filter);
 }

@@ -6413,7 +6413,7 @@ function report87_ini()
 
 /**
  * @reportNo 88
- * @report Delivery Run Report
+ * @report Search Inventory
  */
 function report88_ini()
 {
@@ -6670,4 +6670,57 @@ function report90_ini()
 
 	var print_button=form.elements['print'];
 	print_tabular_report('report90','Order Picklist',print_button);
+};
+
+/**
+ * @reportNo 91
+ * @report Inventory (by brand)
+ */
+function report91_ini()
+{
+	show_loader();
+	var form=document.getElementById('report91_header');
+	var brand=form.elements['brand'].value;
+	
+	$('#report91_body').html('');
+
+	var master_data="<product_master>" +
+			"<name></name>" +
+			"<make exact='yes'>"+brand+"</make>" +
+			"</product_master>";
+	
+	fetch_requested_data('report91',master_data,function(products)
+	{
+		var report91_count=products.length;
+		products.forEach(function(result)
+		{
+			var rowsHTML="<tr>";
+				rowsHTML+="<td data-th='Item'>";
+					rowsHTML+=result.name;
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Inventory' id='report91_inventory_"+result.id+"'>";
+				rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+
+			$('#report91_body').append(rowsHTML);
+			
+			get_inventory(result.name,'',function(inventory)
+			{
+				document.getElementById('report91_inventory_'+result.id).innerHTML=inventory;
+				report91_count-=1;
+			});
+		});
+		
+		var report91_complete=setInterval(function()
+		{
+	  	   if(report91_count===0)
+	  	   {
+				clearInterval(report91_complete);
+				hide_loader();	  		   
+	  	   }
+	     },1000);
+	     
+	     var print_button=form.elements['print'];
+		print_tabular_report('report91','Inventory Report by Brand',print_button);
+	});
 };

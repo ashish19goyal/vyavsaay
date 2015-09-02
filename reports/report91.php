@@ -5,7 +5,7 @@
 			<label>Brand<br><input type='text' name='brand' required></label>
 			<label>
 				<input type='submit' value='Refresh' class='generic_icon'>
-				<input type='button' title='Print' class='print_icon'>
+				<input type='button' title='Print' name='print' class='print_icon'>
 			</label>
 		</fieldset>
 	</form>
@@ -13,7 +13,6 @@
 		<thead>
 			<tr>
 				<th>Item</th>
-				<th>Batch</th>
 				<th>Quantity</th>
 			</tr>
 		</thead>
