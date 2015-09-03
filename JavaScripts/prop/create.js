@@ -13736,7 +13736,7 @@ function form200_create_item(form)
  * @form Create DRS
  * @param button
  */
-function form200_create_form()
+function form200_create_form(func)
 {
 	if(is_create_access('form200'))
 	{
@@ -13802,6 +13802,11 @@ function form200_create_form()
 				create_row(data_xml,activity_xml);
 				
 				$(save_button).show();
+				
+				if(typeof func!='undefined')
+				{
+					func();
+				}
 		/*
 				$(save_button).off('click');
 				$(save_button).on('click',function(event)
@@ -14325,7 +14330,7 @@ function form219_create_item(form)
  * @form Create COD DRS
  * @param button
  */
-function form219_create_form()
+function form219_create_form(func)
 {
 	if(is_create_access('form219'))
 	{
@@ -14394,8 +14399,14 @@ function form219_create_form()
 				},num_data);
 		
 				create_row(data_xml,activity_xml);
-		
-				$(save_button).off('click');
+				
+				$(save_button).show();
+				
+				if(typeof func!='undefined')
+				{
+					func();
+				}
+		/*		$(save_button).off('click');
 				$(save_button).on('click',function(event)
 				{
 					event.preventDefault();
@@ -14403,6 +14414,7 @@ function form219_create_form()
 				});
 				
 				$("[id^='save_form219_']").click();
+		*/		
 			}
 			else 
 			{

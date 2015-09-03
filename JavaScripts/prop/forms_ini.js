@@ -22371,14 +22371,16 @@ function form219_ini()
 				filter_fields.elements['collected'].value=drs_results[0].collected_amount;
 				
 				var save_button=filter_fields.elements['save'];
-				
+				/*
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form219_update_form();
 				});
-
+*/
+				$(save_button).show();
+				
 				var drs_items_column="<logistics_orders>" +
 									"<id></id>" +
 									"<awb_num></awb_num>" +
