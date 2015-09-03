@@ -21215,14 +21215,16 @@ function form200_ini()
 				filter_fields.elements['id'].value=drs_results[0].id;
 				
 				var save_button=filter_fields.elements['save'];
-				
+				/*
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form200_update_form();
 				});
-
+*/
+				$(save_button).show();
+				
 				var drs_items_column="<logistics_orders>" +
 									"<id></id>" +
 									"<awb_num></awb_num>" +
@@ -21292,7 +21294,7 @@ function form200_ini()
 						$(save_button).on('click',function (e) 
 						{
 							e.preventDefault();
-							form200_create_item(item_form);
+							form200_update_item(item_form);
 						});
 					});
 					
@@ -22441,6 +22443,15 @@ function form219_ini()
 						rowsHTML+="</tr>";
 	
 						$('#form219_body').append(rowsHTML);
+						
+						var item_form=document.getElementById('form219_'+id);
+						var save_button=item_form.elements[11];
+						
+						$(save_button).on('click',function (e) 
+						{
+							e.preventDefault();
+							form219_update_item(item_form);
+						});
 					});
 					
 					$('#form219_share').show();

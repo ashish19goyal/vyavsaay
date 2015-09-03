@@ -7238,9 +7238,11 @@ function form200_header_ini()
 	$(save_button).on("click", function(event)
 	{
 		event.preventDefault();
-		form200_create_form();
+		form200_update_form();
 	});
 
+	$(save_button).hide();
+	
 	$(document).off('keydown');
 	$(document).on('keydown', function(event) {
 		if( event.keyCode == 83 && event.ctrlKey) {

@@ -10409,6 +10409,21 @@ function form200_update_serial_numbers()
 	{
 		$(this).find('td:nth-child(2)').html(index+1);
 	});
+	
+	var num_orders=0;
+	$("[id^='save_form200']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+
+		if(subform.elements[0].value!="")
+		{
+			num_orders+=1;			
+		}
+	});
+	
+	var form=document.getElementById("form200_master");
+	form.elements['num_orders'].value=num_orders;
 }
 
 /**
@@ -10438,12 +10453,13 @@ function form200_update_form()
 		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
 		
-		var drs_columns="<drs count='1'>" +
+		var drs_columns="<drs count='2'>" +
+					"<id></id>"+
 					"<drs_num exact='yes'>"+drs_num+"</drs_num>"+
 					"</drs>";		
-		get_single_column_data(function(drses)
+		fetch_requested_data('',drs_columns,function(drses)
 		{
-			if(drses.length==0)
+			if(drses.length==0 || (drses.length==1 && drses[0].id==data_id))
 			{
 				var data_xml="<drs>" +
 							"<id>"+data_id+"</id>" +
@@ -10469,7 +10485,7 @@ function form200_update_form()
 			{
 				$("#modal68").dialog("open");
 			}
-		},drs_columns);
+		});
 	}
 	else
 	{
@@ -11169,23 +11185,30 @@ function form219_update_serial_numbers()
 	
 	var total_amount=0;
 	var collected_amount=0;
+	var num_orders=0;
 	
 	$("[id^='save_form219']").each(function(index)
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
-		
+
+		if(subform.elements[0].value!="")
+		{
+			num_orders+=1;			
+		}
 		if(!isNaN(parseFloat(subform.elements[3].value)))
 		{
 			total_amount+=parseFloat(subform.elements[3].value);
 			if(subform.elements[6].value=='delivered')
 				collected_amount+=parseFloat(subform.elements[3].value);
-		}		
+		}
+		
 	});
 	
 	var form=document.getElementById("form219_master");
 	form.elements['total'].value=total_amount;
-	form.elements['collected'].value=collected_amount;		
+	form.elements['collected'].value=collected_amount;
+	form.elements['num_orders'].value=num_orders;		
 }
 
 /**
@@ -11218,12 +11241,13 @@ function form219_update_form()
 		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
 		
-		var drs_columns="<drs count='1'>" +
+		var drs_columns="<drs count='2'>" +
+					"<id></id>"+
 					"<drs_num exact='yes'>"+drs_num+"</drs_num>"+
 					"</drs>";		
-		get_single_column_data(function(drses)
+		fetch_requested_data('',drs_columns,function(drses)
 		{
-			if(drses.length==0)
+			if(drses.length==0 || (drses.length==1 && drses[0].id==data_id))
 			{
 				var data_xml="<drs>" +
 							"<id>"+data_id+"</id>" +
@@ -11244,14 +11268,14 @@ function form219_update_form()
 							"</activity>";
 				
 				update_row(data_xml,activity_xml);
-				
+		
 				$("[id^='save_form219_']").click();
 			}
 			else 
 			{
 				$("#modal68").dialog("open");
 			}
-		},drs_columns);	
+		});				
 	}
 	else
 	{

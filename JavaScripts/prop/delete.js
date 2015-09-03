@@ -6699,6 +6699,7 @@ function form200_delete_item(button)
 						"</logistics_orders>";
 			update_simple(data_xml);
 			$(button).parent().parent().remove();
+			form200_update_serial_numbers();
 		});
 	}
 	else
@@ -7224,6 +7225,7 @@ function form219_delete_item(button)
 						"</logistics_orders>";
 			update_simple(data_xml);
 			$(button).parent().parent().remove();
+			form219_update_serial_numbers();
 		});
 	}
 	else

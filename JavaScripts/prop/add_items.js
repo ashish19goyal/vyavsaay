@@ -11270,7 +11270,7 @@ function form200_add_item()
 				rowsHTML+="<input type='hidden' form='form200_"+id+"' name='merchant_name'>";
 				rowsHTML+="<input type='hidden' form='form200_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form200_"+id+"' id='save_form200_"+id+"'>";
-				rowsHTML+="<input type='button' class='delete_icon' form='form200_"+id+"' id='delete_form200_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form200_"+id+"' id='delete_form200_"+id+"' onclick='$(this).parent().parent().remove(); form200_update_serial_numbers();'>";
 				rowsHTML+="<input type='hidden' form='form200_"+id+"' name='ship_to'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form200_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form200_"+id+"' name='order_history'>";
@@ -11293,29 +11293,34 @@ function form200_add_item()
 		var save_button=item_form.elements[10];
 		var ship_to=item_form.elements[12];
 		var order_history=item_form.elements[14];
-		
+		/*
 		$(save_button).on('click',function (e) 
 		{
 			e.preventDefault();
 			form200_create_item(item_form);
 		});
-
+*/
 		$(item_form).on("submit", function(event)
 		{
 			event.preventDefault();
-			
+			var total_entries=0;
 			var double_entry=0;
 			$("[id^='save_form200']").each(function(index)
 			{
 				var subform_id=$(this).attr('form');
 				var subform=document.getElementById(subform_id);
-				
+				total_entries+=1;
 				if(subform.elements[0].value==awb_filter.value)	
 					double_entry+=1;
 			});
 
+			if(total_entries==1)
+			{
+				form200_create_form();
+			}
 			if(double_entry<2)
 			{
+				form200_create_item(item_form);
 				form200_add_item();
 			}
 			else 
@@ -11332,17 +11337,25 @@ function form200_add_item()
 			if(event.keyCode == 13 ) 
 			{
 				event.preventDefault();
-			
+				
+				var total_entries=0;
 				var double_entry=0;
 				$("[id^='save_form200']").each(function(index)
 				{
 					var subform_id=$(this).attr('form');
 					var subform=document.getElementById(subform_id);
 					
+					total_entries+=1;
+				
 					if(subform.elements[0].value==awb_filter.value)	
 						double_entry+=1;
 				});
-	
+				
+				if(total_entries==1)
+				{
+					form200_create_form();
+				}
+				
 				if(double_entry<2)
 				{
 					var orders_data="<logistics_orders count='1'>"+
@@ -11381,6 +11394,7 @@ function form200_add_item()
 							merchant_filter.value=orders[0].merchant_name;
 							order_history.value=orders[0].order_history;
 							ship_to.value=orders[0].ship_to;
+							form200_create_item(item_form);
 							form200_add_item();
 						}
 						else 
@@ -12429,6 +12443,7 @@ function form219_add_item()
 
 			if(double_entry<2)
 			{
+				form219_create_item(item_form);
 				form219_add_item();
 			}
 			else 
@@ -12495,7 +12510,7 @@ function form219_add_item()
 							merchant_filter.value=orders[0].merchant_name;
 							order_history.value=orders[0].order_history;
 							ship_to.value=orders[0].ship_to;
-							
+							form219_create_item(item_form);
 							form219_add_item();
 						}
 						else 
@@ -12524,13 +12539,13 @@ function form219_add_item()
 				}
 			}
 		});
-		
+		/*
 		$(save_button).on('click',function (e) 
 		{
 			e.preventDefault();
 			form219_create_item(item_form);
 		});
-				
+		*/	
 		$('textarea').autosize();
 		form219_update_serial_numbers();
 	}

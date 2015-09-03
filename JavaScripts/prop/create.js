@@ -5810,16 +5810,10 @@ function form103_create_item(form)
 					"<user>"+get_account_name()+"</user>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</data_access>";
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-			server_create_simple(access_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-			local_create_simple(access_xml);
-		}	
+		
+		create_simple(data_xml);
+		create_simple(access_xml);
+		
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -13806,15 +13800,17 @@ function form200_create_form()
 				},num_data);
 		
 				create_row(data_xml,activity_xml);
-		
+				
+				$(save_button).show();
+		/*
 				$(save_button).off('click');
 				$(save_button).on('click',function(event)
 				{
 					event.preventDefault();
 					form200_update_form();
 				});
-				
-				$("[id^='save_form200_']").click();
+		*/		
+				//$("[id^='save_form200_']").click();
 			}
 			else 
 			{
