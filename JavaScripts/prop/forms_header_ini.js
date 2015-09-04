@@ -7739,6 +7739,28 @@ function form214_header_ini()
 }
 
 /**
+ * @form Dispatch Items (Nikki)
+ * @formNo 215
+ */
+function form215_header_ini()
+{
+	var fields=document.getElementById('form215_master');
+	
+	var comments_filter=fields.elements['comments'];
+
+	comments_filter.value="";	
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form215_add_item();
+	});
+
+	$('#form215_body').html("");
+}
+
+
+/**
  * @form SKU mapping (Supplier)
  * @formNo 217
  */

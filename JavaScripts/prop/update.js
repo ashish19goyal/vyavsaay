@@ -11088,6 +11088,50 @@ function form213_update_item(form)
 }
 
 /**
+ * @form Dispatch items
+ * @param button
+ */
+function form215_update_item(form)
+{
+	if(is_update_access('form215'))
+	{
+		var master_form=document.getElementById("form215_master");		
+		var comments=master_form.elements['comments'].value;
+		
+		var order_num=form.elements[0].value;
+		var status='dispatched';
+		var id=form.elements[2].value;
+		var last_updated=get_my_time();
+				
+		var data_xml="<sale_orders>" +
+					"<id>"+id+"</id>" +
+					//"<awb_num>"+awb_num+"</awb_num>" +
+					"<dispatch_status>"+status+"</dispatch_status>" +
+					"<comments>"+comments+"</comments>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_orders>";
+		var activity_xml="<activity>" +
+					"<data_id>"+id+"</data_id>" +
+					"<tablename>sale_orders</tablename>" +
+					"<link_to>form108</link_to>" +
+					"<title>Dispatched</title>" +
+					"<notes>Order # "+order_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		
+		for(var i=0;i<2;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * formNo 217
  * form SKU mapping (Supplier)
  * @param button

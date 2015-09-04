@@ -12378,6 +12378,122 @@ function form213_add_item()
 }
 
 /**
+ * @form Dispatch items nikki
+ * @formNo 215
+ */
+function form215_add_item()
+{
+	if(is_create_access('form215'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form215_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td data-th='Order #'>";
+				rowsHTML+="<input type='text' required form='form215_"+id+"' oninvalid=\"setCustomValidity('This Order # is invalid')\">";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Details'>";
+				rowsHTML+="<input type='text' form='form215_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form215_"+id+"'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form215_"+id+"' id='save_form215_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='form215_"+id+"' id='delete_form215_"+id+"' onclick='form215_delete_item($(this));'>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+
+		$('#form215_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("form215_"+id);
+		var order_filter=fields.elements[0];
+		var details_filter=fields.elements[1];
+		var id_filter=fields.elements[2];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			
+			var double_entry=0;
+			$("[id^='save_form215']").each(function(index)
+			{
+				var subform_id=$(this).attr('form');
+				var subform=document.getElementById(subform_id);
+				
+				if(subform.elements[0].value==order_filter.value)	
+					double_entry+=1;
+			});
+
+			if(double_entry<2)
+			{
+				form215_add_item();
+			}
+			else 
+			{
+				order_filter.value="";
+				$("#modal65").dialog("open");
+			}
+		});
+
+
+		$(order_filter).focus();		
+
+		$(order_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();
+			
+				var double_entry=0;
+				$("[id^='save_form215']").each(function(index)
+				{
+					var subform_id=$(this).attr('form');
+					var subform=document.getElementById(subform_id);
+					
+					if(subform.elements[0].value==order_filter.value)	
+						double_entry+=1;
+				});
+	
+				if(double_entry<2)
+				{
+					var order_data="<sale_orders count='1'>"+
+							"<id></id>"+
+							"<order_num exact='yes'>"+order_filter.value+"</order_num>"+
+							"<dispatch_status exact='yes'>pending</dispatch_status>"+
+							"</sale_orders>";
+					fetch_requested_data('',order_data,function(orders)
+					{
+						if(orders.length>0)
+						{
+							id_filter.value=orders[0].id;
+							details_filter.value=orders[0].status;							
+							form215_update_item(fields);
+							form215_add_item();						
+						}
+						else
+						{
+							order_filter.value="";
+							id_filter.value="";
+							details_filter.value="";
+							$("#modal65").dialog("open");					
+						}
+					});
+				}
+				else 
+				{
+					order_filter.value="";
+					$("#modal65").dialog("open");
+				}
+								
+			}
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
  * @form SKU Mapping (Supplier)
  * @formNo 217
  */
