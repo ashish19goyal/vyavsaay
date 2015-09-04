@@ -8651,14 +8651,7 @@ function form165_place_item(form)
 					"<put_away_status>completed</put_away_status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</"+table_type+">";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}
+		update_simple(data_xml);
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -8682,14 +8675,7 @@ function form165_place_item(form)
 						"<batch>"+batch+"</batch>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +
 						"</area_utilization>";
-				if(is_online())
-				{
-					server_create_simple(storage_xml);
-				}
-				else
-				{
-					local_create_simple(storage_xml);
-				}
+				create_simple(storage_xml);
 			}
 		});
 	}

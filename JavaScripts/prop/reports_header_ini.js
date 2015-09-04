@@ -1239,6 +1239,8 @@ function report64_header_ini()
 		{
 			var bill_items="<bill_items count='1'>"+
 					"<id></id>"+
+					"<batch></batch>"+
+					"<quantity></quantity>"+
 					"<item_name exact='yes'>"+products[0].name+"</item_name>"+
 					"<picked_status exact='yes'>picked</picked_status>"+
 					"<packing_status exact='yes'>pending</packing_status>"+
@@ -1247,18 +1249,28 @@ function report64_header_ini()
 			{
 				var items_xml="<bill_items>"+
 						"<id>"+items[0].id+"</id>"+					
-						"<picked_status exact='yes'>pending</picked_status>"+
-						"<packing_status exact='yes'>pending</packing_status>"+
+						"<picked_status>pending</picked_status>"+
+						"<packing_status>pending</packing_status>"+
 						"<last_updated>"+get_my_time()+"</last_updated>"+						
 						"</bill_items>";
-				if(is_online())
-				{
-					server_update_simple(items_xml);
-				}
-				else 
-				{
-					local_update_simple(items_xml);
-				}		
+				update_simple(items_xml);
+
+				var discarded_xml="<discarded>"+
+						"<id>"+get_new_key()+"</id>"+					
+						"<batch>"+items[0].batch+"</batch>"+
+                        "<quantity>"+items[0].quantity+"</quantity>"+
+                        "<product_name>"+items[0].item_name+"</product_name>"+
+                        "<source>manual</source>"+
+                        "<source_link></source_link>"+
+                        "<source_id></source_id>"+
+                        "<put_away_status>pending</put_away_status>"+
+                        "<storage>"+get_session_var('discard_items_store')+"</storage>"+
+						"<last_updated>"+get_my_time()+"</last_updated>"+						
+						"</discarded>";
+				create_simple(discarded_xml);
+				
+				report64_header_ini();
+				$("#modal70").dialog("open");
 			});		
 		});
 	});
@@ -1282,17 +1294,14 @@ function report64_header_ini()
 			{
 				var items_xml="<bill_items>"+
 						"<id>"+items[0].id+"</id>"+					
-						"<packing_status exact='yes'>packed</packing_status>"+
+						"<packing_status>packed</packing_status>"+
+						"<dispatch_status>pending</dispatch_status>"+
 						"<last_updated>"+get_my_time()+"</last_updated>"+						
 						"</bill_items>";
-				if(is_online())
-				{
-					server_update_simple(items_xml);
-				}
-				else 
-				{
-					local_update_simple(items_xml);
-				}				
+				update_simple(items_xml);
+				
+				report64_header_ini();
+				$("#modal69").dialog("open");				
 			});		
 		});
 	});

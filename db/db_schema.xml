@@ -605,6 +605,7 @@
 			<source_link index='no' type="VARCHAR(25)"></source_link>
 			<source_id index='yes' type='BIGINT'></source_id>
 			<storage index='yes' type="TEXT"></storage>
+			<put_away_status index='yes' type="VARCHAR(25)"></put_away_status><!--pending/completed-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</discarded>

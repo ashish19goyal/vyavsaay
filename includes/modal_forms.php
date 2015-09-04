@@ -693,6 +693,14 @@
 		This DRS number has already been taken. Please use a different number.
 	</div>
 
+	<div id="modal69" title="Item packed">
+		Item packed and ready for dispatch.
+	</div>
+
+	<div id="modal70" title="Item rejected">
+		Item rejected. Please put it in the rejected section.
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>

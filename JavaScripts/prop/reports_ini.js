@@ -4294,6 +4294,7 @@ function report60_ini()
  */
 function report63_ini()
 {
+	console.log('report63');
 	var form=document.getElementById('report63_header');
 	var sku=form.elements['sku'].value;
 	var item=form.elements['item_name'].value;
