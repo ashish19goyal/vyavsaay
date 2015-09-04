@@ -5573,7 +5573,7 @@ function form166_import(data_array,import_type)
 	var counter=1;
 	var new_id=parseFloat(get_new_key());
 	var last_updated=get_my_time();
-	console.log(data_array);
+	//console.log(data_array);
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)
@@ -5600,7 +5600,7 @@ function form166_import(data_array,import_type)
 
 	data_xml+="</product_instances>";
 	
-	console.log(data_xml);
+	//console.log(data_xml);
 	if(import_type=='create_new')
 	{
 		create_batch(data_xml);
@@ -5880,15 +5880,19 @@ function form172_import(data_array,import_type)
 				"<id>"+row.id+"</id>" +
 				"<channel>"+row.channel+"</channel>" +
 				"<item>"+row.item+"</item>" +
+				"<mrp>"+row.mrp+"</mrp>"+
 				"<sale_price>"+row.sale_price+"</sale_price>"+
 				"<freight>"+row.freight+"</freight>"+
 				"<discount_customer>"+row.discount_customer+"</discount_customer>"+
+				"<channel_commission>"+row.channel_commission+"</channel_commission>"+
+				"<pickup_charges>"+row.gateway_charges+"</pickup_charges>"+
 				"<gateway_charges>"+row.gateway_charges+"</gateway_charges>"+
 				"<storage_charges>"+row.storage_charges+"</storage_charges>"+
 				"<total_charges>"+row.total_charges+"</total_charges>"+
 				"<service_tax>"+row.service_tax+"</service_tax>"+
 				"<total_payable>"+row.total_payable+"</total_payable>"+
 				"<total_receivable>"+row.total_receivable+"</total_receivable>"+
+				"<cost_price>"+row.cost_price+"</cost_price>"+
 				"<profit_mrp>"+row.profit_mrp+"</profit_mrp>"+
 				"<profit_sp>"+row.profit_sp+"</profit_sp>"+
 				"<profit>"+row.profit+"</profit>"+
@@ -5897,6 +5901,7 @@ function form172_import(data_array,import_type)
 				"</row>";
 	});
 	data_xml+="</channel_prices>";
+	console.log(data_xml);
 	if(import_type=='create_new')
 	{
 		create_batch(data_xml);
