@@ -5580,7 +5580,8 @@ function form166_import(data_array,import_type)
 		{
 			data_xml+="</product_instances><separator></separator><product_instances>";
 		}
-				counter+=1;
+		
+		counter+=1;
 		if(import_type=='create_new')
 		{
 			row.id=last_updated+counter;
@@ -5599,6 +5600,7 @@ function form166_import(data_array,import_type)
 
 	data_xml+="</product_instances>";
 	
+	console.log(data_xml);
 	if(import_type=='create_new')
 	{
 		create_batch(data_xml);
