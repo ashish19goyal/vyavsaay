@@ -56,8 +56,8 @@ function print_smaller_product_barcode(barcode,sku,name)
 	var image_element=document.createElement('img');
 	//var name_element=document.createElement('div');
 	
-	container.setAttribute('style','width:90%;height:90%;max-height:90%;margin:0px;padding:0px;');
-	sku_element.setAttribute('style','width:90%;height:20px;text-align:center;font-size:10px;margin:0px;padding:0px;');
+	container.setAttribute('style','width:95%;height:90%;max-height:90%;margin:0px;padding:0px;');
+	sku_element.setAttribute('style','width:95%;height:25px;text-align:center;font-size:12px;margin:0px;padding:0px;');
 	image_element.setAttribute('style','width:150px;height:50px;margin:0px;padding:0px;');
 	//name_element.setAttribute('style','width:90%;height:15px;font-size:9px;margin:0px;padding:0px;');
 	
@@ -66,9 +66,8 @@ function print_smaller_product_barcode(barcode,sku,name)
 	//container.appendChild(name_element);
 
 	sku_element.innerHTML=sku;
-	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:24});
-	//name_element.innerHTML=name;	   
-	
+	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:30});
+	//name_element.innerHTML=name;
 	$.print(container);	
 }
 
