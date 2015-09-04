@@ -56,8 +56,8 @@ function print_smaller_product_barcode(barcode,sku,name)
 	var image_element=document.createElement('img');
 	//var name_element=document.createElement('div');
 	
-	container.setAttribute('style','width:95%;height:90%;max-height:90%;margin:0px;padding:0px;');
-	sku_element.setAttribute('style','width:95%;height:25px;text-align:center;font-size:12px;margin:0px;padding:0px;');
+	container.setAttribute('style','width:95%;height:80%;max-height:90%;margin:0px;padding:0px;');
+	sku_element.setAttribute('style','width:95%;height:25px;text-align:center;font-size:12px;margin:0px;margin-top:2px;padding:0px;');
 	image_element.setAttribute('style','width:150px;height:50px;margin:0px;padding:0px;');
 	//name_element.setAttribute('style','width:90%;height:15px;font-size:9px;margin:0px;padding:0px;');
 	
