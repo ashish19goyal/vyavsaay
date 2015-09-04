@@ -50,24 +50,24 @@ function print_product_barcode(barcode,sku,name)
 */
 function print_smaller_product_barcode(barcode,sku,name)
 {
-	console.log('printing smaller barcode');
+	//console.log('printing smaller barcode');
 	var container=document.createElement('div');
 	var sku_element=document.createElement('div');
 	var image_element=document.createElement('img');
-	var name_element=document.createElement('div');
+	//var name_element=document.createElement('div');
 	
 	container.setAttribute('style','width:90%;height:90%;max-height:90%;margin:0px;padding:0px;');
 	sku_element.setAttribute('style','width:90%;height:20px;text-align:center;font-size:10px;margin:0px;padding:0px;');
-	image_element.setAttribute('style','width:100px;height:50px;margin:0px;padding:0px;');
-	name_element.setAttribute('style','width:90%;height:15px;font-size:9px;margin:0px;padding:0px;');
+	image_element.setAttribute('style','width:150px;height:50px;margin:0px;padding:0px;');
+	//name_element.setAttribute('style','width:90%;height:15px;font-size:9px;margin:0px;padding:0px;');
 	
 	container.appendChild(sku_element);
 	container.appendChild(image_element);
-	container.appendChild(name_element);
+	//container.appendChild(name_element);
 
 	sku_element.innerHTML=sku;
-	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:18});
-	name_element.innerHTML=name;	   
+	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:24});
+	//name_element.innerHTML=name;	   
 	
 	$.print(container);	
 }
