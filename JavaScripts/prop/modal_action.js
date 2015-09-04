@@ -6995,8 +6995,11 @@ function modal114_action(func)
 	var fbarcode=form.elements[14];
 	var auto_generate=form.elements[15];
 	
-	fbarcode.value=get_my_time()*10+Math.round(Math.random()*10);
-	auto_generate.checked=true;
+	//fbarcode.value=get_my_time()*10+Math.round(Math.random()*10);
+	//auto_generate.checked=true;
+	
+	fbarcode.value="";
+	auto_generate.checked=false;
 	
 	$(auto_generate).off('click');
 	$(auto_generate).on('click',function(event)

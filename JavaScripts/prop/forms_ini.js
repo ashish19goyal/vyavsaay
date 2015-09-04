@@ -1906,12 +1906,18 @@ function form24_ini()
 					form24_update_form();
 				});
 				
-				var supplier_address_xml="<suppliers>"+
-										"<address></address>"+
-										"<acc_name exact='yes'>"+order_results[i].supplier+"</acc_name>"+
-										"</suppliers>";
-				set_my_value(supplier_address_xml,filter_fields.elements['address']);
-				
+				var supplier_address="<suppliers>"+
+									"<address></address>"+
+									"<pincode></pincode>"+
+									"<acc_name exact='yes'>"+order_results[i].supplier+"</acc_name>"+
+									"</suppliers>";
+				fetch_requested_data('',supplier_address,function(addresses)
+				{
+					if(addresses.length>0)
+					{
+						filter_fields.elements['address'].value=addresses[0].address+"-"+addresses[0].pincode;
+					}
+				});
 				var supplier_tin_xml="<attributes>"+
 									"<value></value>"+
 									"<type exact='yes'>supplier</type>"+

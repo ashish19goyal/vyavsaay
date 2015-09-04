@@ -637,8 +637,8 @@ function print_form24(func)
 	
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Purchase Order</b></div><hr style='border: 1px solid #00f;'>";
 	
-	customer_info.innerHTML="<b>To</b><br>"+supplier_name+"<br>"+supplier_address+"<br>TIN#: "+supplier_tin;
-	business_info.innerHTML="VAT #: "+vat_no+"<br>Date: "+date+"<br>Order No: "+order_no+"<br>Payment Mode: "+payment_mode;
+	customer_info.innerHTML="<b>Supplier: </b><br>"+supplier_name+"<br>"+supplier_address+"<br>TIN#: "+supplier_tin;
+	business_info.innerHTML="Buyer VAT #: "+vat_no+"<br>Date: "+date+"<br>Purchase Order No: "+order_no+"<br>Payment Mode: "+payment_mode;
 	
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
 	signature.innerHTML=signature_text;

@@ -13764,6 +13764,8 @@ function form200_create_form(func)
 					"</drs>";		
 		get_single_column_data(function(drses)
 		{
+			//console.log(drses);
+			
 			if(drses.length==0)
 			{	
 				var data_xml="<drs>" +
@@ -13805,6 +13807,8 @@ function form200_create_form(func)
 				
 				if(typeof func!='undefined')
 				{
+					//console.log('fun');
+			
 					func();
 				}
 		/*
@@ -14358,9 +14362,12 @@ function form219_create_form(func)
 		
 		var drs_columns="<drs count='1'>" +
 					"<drs_num exact='yes'>"+drs_num+"</drs_num>"+
-					"</drs>";		
+					"</drs>";	
+					
+		console.log(drs_columns);			
 		get_single_column_data(function(drses)
 		{
+			//console.log(drses);
 			if(drses.length==0)
 			{
 				var data_xml="<drs>" +
@@ -14404,6 +14411,7 @@ function form219_create_form(func)
 				
 				if(typeof func!='undefined')
 				{
+					//console.log('executing func');
 					func();
 				}
 		/*		$(save_button).off('click');

@@ -10434,6 +10434,7 @@ function form200_update_form()
 {
 	if(is_create_access('form200'))
 	{
+		console.log('form200_update');
 		var form=document.getElementById("form200_master");
 		
 		var drs_num=form.elements['drs_num'].value;

@@ -904,9 +904,16 @@ function form24_header_ini()
 	{
 		var supplier_address="<suppliers>"+
 							"<address></address>"+
+							"<pincode></pincode>"+
 							"<acc_name exact='yes'>"+supplier_filter.value+"</acc_name>"+
 							"</suppliers>";
-		set_my_value(supplier_address,fields.elements['address']);					
+		fetch_requested_data('',supplier_address,function(addresses)
+		{
+			if(addresses.length>0)
+			{
+				fields.elements['address'].value=addresses[0].address+"-"+addresses[0].pincode;
+			}
+		});					
 		var supplier_attributes="<attributes>"+
 								"<type exact='yes'>supplier</type>"+
 								"<name exact='yes'>"+supplier_filter.value+"</name>"+

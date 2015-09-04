@@ -1166,7 +1166,7 @@ function form24_add_item()
 		var add_product=document.getElementById('form24_add_product_'+id);
 		$(add_product).on('click',function()
 		{
-			modal14_action(function()
+			modal114_action(function()
 			{	
 				var product_data="<product_master>" +
 						"<name></name>" +

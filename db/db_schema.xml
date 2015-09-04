@@ -961,12 +961,14 @@
 			<channel index='yes' type='TEXT'></channel>
 			<item index='yes' type="TEXT"></item>
 			<sale_price index='no' type="DECIMAL(12,2)"></sale_price>
+			<cost_price index='no' type="DECIMAL(12,2)"></cost_price>
 			<mrp index='no' type="DECIMAL(12,2)"></mrp>
 			<freight index='no' type="DECIMAL(12,2)"></freight>
 			<discount_customer index='no' type="DECIMAL(12,2)"></discount_customer>
 			<profit_mrp index='no' type="DECIMAL(5,2)"></profit_mrp>
 			<profit_sp index='no' type="DECIMAL(5,2)"></profit_sp>
 			<profit index='no' type="DECIMAL(12,2)"></profit>
+			<pickup_charges index='no' type="DECIMAL(12,2)"></pickup_charges>
 			<gateway_charges index='no' type="DECIMAL(12,2)"></gateway_charges>
 			<storage_charges index='no' type="DECIMAL(12,2)"></storage_charges>
 			<channel_commission index='no' type="DECIMAL(12,2)"></channel_commission>

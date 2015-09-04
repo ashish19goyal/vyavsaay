@@ -879,7 +879,7 @@
 				<label>Unit: <input type="text"></label><br>
 				<label>Weight(in gms): <input type="number" step='any'></label><br>
 				<label>Packing: <textarea></textarea></label><br>
-				<label>Bar Code: <input type="text" required></label>
+				<label>Bar Code: <input type="text"></label>
 				<label><input type='checkbox'>Auto generate</label><br>
 				<label id='modal114_attributes'></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
