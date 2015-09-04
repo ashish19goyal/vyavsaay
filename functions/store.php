@@ -3,8 +3,8 @@
 		<li><a id='form38_link' href='#form38' onclick='form38_header_ini(); form38_ini();' data-i18n='form.store_placement'></a></li>
 		<li><a id='form156_link' href='#form156' onclick='form156_header_ini(); form156_ini();' data-i18n='form.store_placement'></a></li>
 		<li><a id='form165_link' href='#form165' onclick='form165_header_ini(); form165_ini();' data-i18n='form.put_away'></a></li>
-		<li><a id='report63_link' href='#report63' onclick='report63_header_ini();' data-i18n='form.item_picklist'></a></li>		
-		<li><a id='report90_link' href='#report90' onclick='report90_header_ini(); ' data-i18n='form.order_picklist'></a></li>
+		<li><a id='report63_link' href='#report63' onclick='report63_header_ini(); report63_ini();' data-i18n='form.item_picklist'></a></li>		
+		<li><a id='report90_link' href='#report90' onclick='report90_header_ini(); report90_ini();' data-i18n='form.order_picklist'></a></li>
 		<li><a id='report64_link' href='#report64' onclick='report64_header_ini();' data-i18n='form.packing_instructions'></a></li>		
 		<li><a id='form210_link' href='#form210' onclick='form210_header_ini(); form210_ini();' data-i18n='form.packing_instructions_invoice'></a></li>		
 		<li><a id='form145_link' href='#form145' onclick='form145_header_ini(); form145_ini();' data-i18n='form.store_movement'></a></li>
