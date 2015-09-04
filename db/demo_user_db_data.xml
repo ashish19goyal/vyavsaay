@@ -2678,7 +2678,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--sale_prices--</tables>
+			<tables>--sale_prices--channel_prices--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>

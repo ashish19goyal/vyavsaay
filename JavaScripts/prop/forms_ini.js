@@ -9881,7 +9881,7 @@ function form108_ini()
 						rowsHTML+="<input type='button' class='edit_icon' form='form108_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form69');\">";
 						rowsHTML+="<input type='button' class='submit_hidden' form='form108_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form108_"+result.id+"' title='Delete order' onclick='form108_delete_item($(this));'>";
-					if(result.bill_id=='' || result.bill_id=='null' || result.bill_id=='0')
+					if(result.bill_id=='' || result.bill_id=='null' || result.bill_id=='0' || result.bill_id=='undefined')
 					{
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form108_"+result.id+"' value='Create Bill'>";
 					}
@@ -9907,7 +9907,7 @@ function form108_ini()
 			
 			//set_static_value_list('sale_orders','status',status_filter);
 			
-			if(result.bill_id=='' || result.bill_id=='null' || result.bill_id=='0')
+			if(result.bill_id=='' || result.bill_id=='null' || result.bill_id=='0' || result.bill_id=='undefined')
 			{
 				$(bill_button).on('click',function(event)
 				{

@@ -4311,6 +4311,7 @@ function report63_ini()
 		"<quantity></quantity>"+
 		"<picked_quantity></picked_quantity>"+
 		"<storage></storage>"+
+		"<bill_id></bill_id>"+
 		"<picked_status exact='yes'>pending</picked_status>"+
 		"</bill_items>";
 
@@ -4443,6 +4444,8 @@ function report64_ini()
 	var reject_button=form.elements['reject'];
 	var accept_button=form.elements['accept'];
 	var print_button=form.elements['print'];
+	
+	$('#report64_invoice').html('');
 
 	show_loader();
 
@@ -6590,6 +6593,24 @@ function report90_ini()
 				"</unbilled_sale_items>";
 		fetch_requested_data('report90',unbilled_items_data,function(unbilled_items)
 		{
+			/* unique items orders
+			for(var i=0;i<items.length;i++)
+			{
+				items[i].item_count=1;
+
+				for(var j=i+1;j<items.length;j++)
+				{
+					if(items[i].bill_id==items[j].bill_id)
+					{
+						items[i].item_count+=1;
+						items[j].item_count+=1;
+					}
+				}
+
+				if(items[i].bill_id)
+			}
+			*/
+			
 			items.forEach(function(item)
 			{
 				item.table_type='bill_items';
