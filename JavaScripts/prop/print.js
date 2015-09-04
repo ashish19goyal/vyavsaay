@@ -917,6 +917,19 @@ function form82_print_form()
  * @formNo 91
  */
 function form91_print_form()
+{	
+	print_form91(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	});	
+}
+
+/**
+ * @form Create bills(multi-register)
+ * @formNo 91
+ */
+function form91_print_form()
 {
 	var new_thead="<tr>"+
 		"<th colspan='2'>Item</th>"+

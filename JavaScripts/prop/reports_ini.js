@@ -4486,8 +4486,14 @@ function report64_ini()
 			});
 			
 			////////populate packing instructions and invoice template///////
-			$('#report64_packing').html("<b>"+products[0].packing+"</b>");
-			
+			if(products.length>0 && products[0].packing!='undefined')
+			{
+				$('#report64_packing').html("Packing Instructions:<br><b>"+products[0].packing+"</b>");
+			}			
+			else 
+			{
+				$('#report64_packing').html("Packing Instructions not available");
+			}
 			//////////provide a preview of the invoice//////////////////////
 			var bill_items="<bill_items count='1'>"+
 					"<id></id>"+
