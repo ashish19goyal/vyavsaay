@@ -6,6 +6,7 @@
 			<label>
 				<input type='submit' value='Refresh' class='generic_icon'>
 				<input type='button' title='Print' name='print' class='print_icon'>
+				<input type='button' title='Download CSV' class='csv_icon' name='csv'>
 			</label>
 		</fieldset>
 	</form>

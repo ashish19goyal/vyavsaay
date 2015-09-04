@@ -6729,7 +6729,22 @@ function report91_ini()
 	  	   }
 	     },1000);
 	     
-	     var print_button=form.elements['print'];
+	    var print_button=form.elements['print'];
 		print_tabular_report('report91','Inventory Report by Brand',print_button);
+	});
+	
+	var csv_button=form.elements['csv'];
+	$(csv_button).off("click");
+	$(csv_button).on("click", function(event)
+	{
+		get_export_data_extended(master_data,'Brand_wise_inventory',function(new_result)
+		{
+			total_export_requests+=1;
+			get_inventory(new_result.name,'',function(inventory)
+			{
+				new_result.quantity=inventory;
+				total_export_requests-=1;
+			});
+		});
 	});
 };
