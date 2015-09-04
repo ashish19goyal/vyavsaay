@@ -15,6 +15,7 @@
 			<tr>
 				<th>SKU</th>
 				<th>Item Name</th>
+				<th>Brand</th>
 				<th>Quantity</th>
 			</tr>
 		</thead>

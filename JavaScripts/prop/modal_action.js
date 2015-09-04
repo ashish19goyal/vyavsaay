@@ -8819,6 +8819,8 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 	var type_filter=form.elements[0];
 	var cancel_button=form.elements[2];
 
+	document.getElementById('modal133_order_id').innerHTML="Order #: "+order_num;
+	
 	type_filter.value=billing_type;
 
 	var type_data="<bill_types>" +

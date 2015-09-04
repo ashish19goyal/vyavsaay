@@ -6707,6 +6707,9 @@ function report91_ini()
 				rowsHTML+="<td data-th='Item Name'>";
 					rowsHTML+=result.description;
 				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Brand'>";
+					rowsHTML+=result.make;
+				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Inventory' id='report91_inventory_"+result.id+"'>";
 				rowsHTML+="</td>";
 			rowsHTML+="</tr>";

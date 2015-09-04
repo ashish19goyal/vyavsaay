@@ -5573,6 +5573,7 @@ function form166_import(data_array,import_type)
 	var counter=1;
 	var new_id=parseFloat(get_new_key());
 	var last_updated=get_my_time();
+	console.log(data_array);
 	data_array.forEach(function(row)
 	{
 		if((counter%500)===0)

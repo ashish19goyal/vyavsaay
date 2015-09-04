@@ -1123,7 +1123,7 @@
 	</div>
 
 	<div id="modal133" title="Analyze Order">
-		<br>		
+		<label id='modal133_order_id'>Order #:</label><br>	
 		<table id='modal133_item_table'>
 		</table>
 		<br>
