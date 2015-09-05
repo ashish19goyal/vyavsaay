@@ -4811,7 +4811,7 @@ function report66_ini()
 								$(csv_button).off("click");
 								$(csv_button).on("click", function(event)
 								{
-									var new_items=[];
+									var new_products=[];
 									items.forEach(function(product)
 									{
 										var new_product=new Object();
@@ -5587,7 +5587,7 @@ function report77_ini()
 				$(csv_button).off("click");
 				$(csv_button).on("click", function(event)
 				{
-					var new_items=[];
+					var new_products=[];
 					items.forEach(function(product)
 					{
 						var new_product=new Object();
