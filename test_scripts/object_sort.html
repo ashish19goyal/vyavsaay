@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Object sort testing</title>
+<script>
+	var my_object = new Object();
+	
+	my_object.age=45;
+	my_object.name='ashish';
+	my_object.language='eng';
+	
+	console.log(my_object);
+	
+	var my_second=new Object();
+	
+	my_second.name=my_object.name;
+	my_second.language=my_object.language;
+	my_second.age=my_object.age;
+
+	console.log(my_second);
+	
+	my_object=my_second;
+	console.log(my_object);
+	
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

@@ -6274,13 +6274,32 @@ function report85_ini()
                         "<delivery_person></delivery_person>"+
                         "<order_history></order_history>"+
                         "<comments></comments>"+
+                        "<drs_time></drs_time>" +
                         "<drs_num array='yes'>"+drs_num_array+"</drs_num>"+
 						"</logistics_orders>";
-			get_export_data_extended(columns,'drs_details',function(new_result)
+			get_export_data_restructured(columns,'drs_details',function(new_results)
 			{
-				new_result.dispatch_date=get_my_datetime(new_result.dispatch_date);				
-				new_result.import_date=get_my_datetime(new_result.import_date);
-				new_result.last_updated=get_my_datetime(new_result.last_updated);				
+				var sorted_array=[];
+				new_results.forEach(function(new_result)
+				{
+					var sorted_element=new Object();
+					sorted_element['DRS No']=new_result.drs_num;
+					sorted_element['DRS Date']=get_my_datetime(new_result.drs_time);
+					sorted_element['Order Id']=new_result.order_num;
+					sorted_element['AWB No']=new_result.awb_num;
+					sorted_element['Wt']=new_result.weight;
+					sorted_element['Pcs']=new_result.pieces;
+					sorted_element['status']=new_result.status;
+					sorted_element['Delivery Boy']=new_result.delivery_person;
+					sorted_element['AWB Type']=new_result.manifest_type;
+					sorted_element['Merchant']=new_result.merchant_name;
+					sorted_element['Merchant Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
+					sorted_element['Mobile No']=new_result.phone;
+					sorted_element['Product Name']=new_result.sku;
+
+					sorted_array.push(sorted_element);
+				});
+				return sorted_array;
 			});
 		});
 		hide_loader();		

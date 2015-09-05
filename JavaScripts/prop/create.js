@@ -13705,6 +13705,7 @@ function form200_create_item(form)
 					"<drs_id>"+drs_id+"</drs_id>"+
 					"<delivery_person>"+delivery_person+"</delivery_person>"+
 					"<order_history>"+order_history_string+"</order_history>"+
+					"<drs_time>"+last_updated+"</drs_time>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
 		update_simple(data_xml);
@@ -14303,6 +14304,7 @@ function form219_create_item(form)
 					"<drs_id>"+drs_id+"</drs_id>"+
 					"<delivery_person>"+delivery_person+"</delivery_person>"+
 					"<order_history>"+order_history_string+"</order_history>"+
+					"<drs_time>"+last_updated+"</drs_time>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
 		update_simple(data_xml);

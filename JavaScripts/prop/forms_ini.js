@@ -21391,8 +21391,10 @@ function form201_ini()
 
 	fetch_requested_data('form201',columns,function(results)
 	{	
+		var drs_num_array="--";
 		results.forEach(function(result)
 		{
+			drs_num_array+=result.drs_num+"--";
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form201_"+result.id+"'></form>";
@@ -21455,7 +21457,76 @@ function form201_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data(columns,'DRS');
+			var columns="<logistics_orders>"+
+						"<id></id>"+
+						"<awb_num></awb_num>"+
+                        "<type></type>"+
+                        "<order_num></order_num>"+
+                        "<manifest_id></manifest_id>"+
+                        "<merchant_name></merchant_name>"+
+                        "<ship_to></ship_to>"+
+                        "<address1></address1>"+
+                        "<address2></address2>"+
+                        "<city></city>"+
+                        "<state></state>"+
+                        "<pincode></pincode>"+
+                        "<phone></phone>"+
+                        "<telephone></telephone>"+
+                        "<weight></weight>"+
+                        "<declared_value></declared_value>"+
+                        "<collectable_value></collectable_value>"+
+                        "<vendor_code></vendor_code>"+
+                        "<shipper_name></shipper_name>"+
+                        "<return_address1></return_address1>"+
+                        "<return_address2></return_address2>"+
+                        "<return_address3></return_address3>"+
+                        "<return_pincode></return_pincode>"+
+                        "<len></len>"+
+                        "<breadth></breadth>"+
+                        "<height></height>"+
+                        "<pieces></pieces>"+
+                        "<carrier_account></carrier_account>"+
+                        "<carrier_name></carrier_name>"+
+                        "<manifest_type></manifest_type>"+
+                        "<dispatch_date></dispatch_date>"+
+                        "<import_date></import_date>"+
+                        "<notes></notes>"+
+                        "<pickup_location></pickup_location>"+
+                        "<pickup_by></pickup_by>"+
+                        "<sku></sku>"+
+                        "<product_name></product_name>"+
+                        "<status></status>"+
+                        "<current_location></current_location>"+
+                        "<delivery_person></delivery_person>"+
+                        "<order_history></order_history>"+
+                        "<comments></comments>"+
+                        "<drs_time></drs_time>"+
+                        "<drs_num array='yes'>"+drs_num_array+"</drs_num>"+
+						"</logistics_orders>";
+			get_export_data_restructured(columns,'drs_details',function(new_results)
+			{
+				var sorted_array=[];
+				new_results.forEach(function(new_result)
+				{
+					var sorted_element=new Object();
+					sorted_element['DRS No']=new_result.drs_num;
+					sorted_element['DRS Date']=get_my_datetime(new_result.drs_time);
+					sorted_element['Order Id']=new_result.order_num;
+					sorted_element['AWB No']=new_result.awb_num;
+					sorted_element['Wt']=new_result.weight;
+					sorted_element['Pcs']=new_result.pieces;
+					sorted_element['status']=new_result.status;
+					sorted_element['Delivery Boy']=new_result.delivery_person;
+					sorted_element['AWB Type']=new_result.manifest_type;
+					sorted_element['Merchant']=new_result.merchant_name;
+					sorted_element['Merchant Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
+					sorted_element['Mobile No']=new_result.phone;
+					sorted_element['Product Name']=new_result.sku;
+
+					sorted_array.push(sorted_element);
+				});
+				return sorted_array;
+			});
 		});
 		hide_loader();
 	});

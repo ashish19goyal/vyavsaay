@@ -1524,6 +1524,7 @@
 			<comments index='no' type="TEXT"></comments>
 			<drs_num index='yes' type="VARCHAR(20)"></drs_num>
 			<drs_id index='yes' type="BIGINT"></drs_id>
+			<drs_time index='no' type="BIGINT"></drs_time>
 			<received_by index='no' type="TEXT"></received_by>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

@@ -177,8 +177,9 @@ function get_my_datetime(raw_time)
 		var time=date+"/"+month+"/"+year+" "+hour+":"+minutes;
 		return time;
 	}
-	else if(raw_time=="")	
+	else if(raw_time=="" || raw_time=="null" || raw_time=="undefined" || raw_time=="NULL")	
 	{
+		//console.log('blank');
 		return "";
 	}
 	else
