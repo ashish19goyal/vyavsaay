@@ -6296,8 +6296,11 @@ function report85_ini()
 					sorted_element['Merchant Address']=new_result.return_address1+", "+new_result.return_address2+", "+new_result.return_address3;
 					sorted_element['Mobile No']=new_result.phone;
 					sorted_element['Product Name']=new_result.sku;
-
-					sorted_array.push(sorted_element);
+					
+					if(new_result.drs_num!="")
+					{
+						sorted_array.push(sorted_element);
+					}
 				});
 				return sorted_array;
 			});
