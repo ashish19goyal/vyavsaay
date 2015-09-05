@@ -4806,6 +4806,23 @@ function report66_ini()
 								});	
 								$('#report66_body').html(rowsHTML);
 								hide_loader();
+								
+								var csv_button=form.elements['csv'];
+								$(csv_button).off("click");
+								$(csv_button).on("click", function(event)
+								{
+									var new_items=[];
+									items.forEach(function(item)
+									{
+										var new_product=new Object();
+										new_product.Storage=product.name;
+										new_product.Item=product.item_name;
+										new_product.Batch=product.batch;
+										new_product.Quantity=product.quantity;
+										new_products.push(new_product);
+									});
+									csv_download_report(new_products,'inventory_level_by_store');
+								});
 							}
 					     },50);					
 					});
@@ -5565,6 +5582,23 @@ function report77_ini()
 					rowsHTML+="</tr>";					
 				});
 				$('#report77_body').html(rowsHTML);
+				
+				var csv_button=form.elements['csv'];
+				$(csv_button).off("click");
+				$(csv_button).on("click", function(event)
+				{
+					var new_items=[];
+					items.forEach(function(item)
+					{
+						var new_product=new Object();
+						new_product.Storage=product.name;
+						new_product.Item=product.item_name;
+						new_product.Batch=product.batch;
+						new_product.Quantity=product.quantity;
+						new_products.push(new_product);
+					});
+					csv_download_report(new_products,'inventory_storage_by_item');
+				});
 				hide_loader();
 			}
 	     },50);		
