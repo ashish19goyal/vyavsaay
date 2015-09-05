@@ -6800,7 +6800,7 @@ function report91_ini()
 				new_product.inventory=product.inventory;
 				new_products.push(new_product);
 			});
-			csv_download_report(new_products,Brand_wise_inventory);
+			csv_download_report(new_products,'Brand_wise_inventory');
 		});
 	});
 	
