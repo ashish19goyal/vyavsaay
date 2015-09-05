@@ -6769,6 +6769,7 @@ function report91_ini()
 			get_inventory(result.name,'',function(inventory)
 			{
 				document.getElementById('report91_inventory_'+result.id).innerHTML=inventory;
+				result.inventory=inventory;
 				report91_count-=1;
 			});
 		});
@@ -6790,14 +6791,16 @@ function report91_ini()
 	$(csv_button).off("click");
 	$(csv_button).on("click", function(event)
 	{
-		get_export_data_extended(master_data,'Brand_wise_inventory',function(new_result)
+		var new_products=[];
+		products.forEach(function(product)
 		{
-			total_export_requests+=1;
-			get_inventory(new_result.name,'',function(inventory)
-			{
-				new_result.quantity=inventory;
-				total_export_requests-=1;
-			});
+			var new_product=new Object();
+			new_product.sku=product.name;
+			new_product.description=product.description;
+			new_product.make=product.make;
+			new_product.inventory=product.inventory;
+			new_products.push(new_product);
 		});
+		csv_download_report(new_products,Brand_wise_inventory);
 	});
 };

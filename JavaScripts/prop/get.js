@@ -215,6 +215,36 @@ function get_export_data_restructured(columns,filename,func)
 	});
 }
 
+
+/*
+* Fetches all records for a specified report and exports them to a csv
+*/
+function csv_download_report(result_array,filename)
+{
+	var data_id=get_new_key();
+	var last_updated=get_my_time();
+	var export_xml="<export_log>"+
+				"<id>"+data_id+"</id>"+
+				"<acc_name>"+get_account_name()+"</acc_name>"+
+				"<filename>"+filename+"</filename>"+
+				"<export_time>"+last_updated+"</export_time>"+
+				"<last_updated>"+last_updated+"</last_updated>"+
+				"</export_log>";
+	var activity_xml="<activity>" +
+				"<data_id>"+data_id+"</data_id>" +
+				"<tablename>export_log</tablename>" +
+				"<link_to></link_to>" +
+				"<title>Exported</title>" +
+				"<notes>"+filename+" report</notes>" +
+				"<updated_by>"+get_name()+"</updated_by>" +
+				"</activity>";
+	create_row(export_xml,activity_xml);
+
+	hide_loader();			
+	my_obj_array_to_csv(results,filename);
+}
+
+
 /**
  * Converts a two dimensional array to csv file
  * @param data_array
