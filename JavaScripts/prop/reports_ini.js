@@ -6785,22 +6785,23 @@ function report91_ini()
 	     
 	    var print_button=form.elements['print'];
 		print_tabular_report('report91','Inventory Report by Brand',print_button);
+
+		var csv_button=form.elements['csv'];
+		$(csv_button).off("click");
+		$(csv_button).on("click", function(event)
+		{
+			var new_products=[];
+			products.forEach(function(product)
+			{
+				var new_product=new Object();
+				new_product.sku=product.name;
+				new_product.description=product.description;
+				new_product.make=product.make;
+				new_product.inventory=product.inventory;
+				new_products.push(new_product);
+			});
+			csv_download_report(new_products,Brand_wise_inventory);
+		});
 	});
 	
-	var csv_button=form.elements['csv'];
-	$(csv_button).off("click");
-	$(csv_button).on("click", function(event)
-	{
-		var new_products=[];
-		products.forEach(function(product)
-		{
-			var new_product=new Object();
-			new_product.sku=product.name;
-			new_product.description=product.description;
-			new_product.make=product.make;
-			new_product.inventory=product.inventory;
-			new_products.push(new_product);
-		});
-		csv_download_report(new_products,Brand_wise_inventory);
-	});
 };
