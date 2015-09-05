@@ -241,7 +241,7 @@ function csv_download_report(result_array,filename)
 	create_row(export_xml,activity_xml);
 
 	hide_loader();			
-	my_obj_array_to_csv(results,filename);
+	my_obj_array_to_csv(result_array,filename);
 }
 
 
