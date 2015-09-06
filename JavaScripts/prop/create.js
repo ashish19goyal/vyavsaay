@@ -6134,7 +6134,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 										item_channel_tax=item_channel_charges*.14;
 										item_channel_payable=item_channel_charges*1.14;												
 										item_mrp=sale_prices[0].mrp;
-										
+										item_tax_rate=0;
 										var tax_data="<product_master count='1'>" +
 												"<name exact='yes'>"+order_item.item_name+"</name>" +
 												"<description></description>"+
@@ -6151,6 +6151,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 												{
 													taxes[0].tax=get_session_var('cst_rate');
 												}
+												item_tax_rate=taxes[0].tax;
 												item_amount=my_round((item_total-item_freight)/(1+(parseFloat(taxes[0].tax)/100)),2);
 												item_tax=my_round((item_total-item_amount-item_freight),2);
 			
@@ -6212,6 +6213,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 																	"<channel_charges>"+bill_item_channel_charges+"</channel_charges>" +
 																	"<freight>"+bill_item_freight+"</freight>" +
 																	"<tax>"+bill_item_tax+"</tax>" +
+																	"<tax_rate>"+item_tax_rate+"</tax_rate>" +
 																	"<bill_id>"+order_id+"</bill_id>" +
 																	"<storage>"+item_storage+"</storage>"+
 																	"<picked_status>pending</picked_status>"+
