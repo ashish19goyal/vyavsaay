@@ -928,58 +928,171 @@ function form91_print_form()
  * @form Create bills(multi-register)
  * @formNo 91
  */
-function form91_print_form()
+function print_form91(func)
 {
-	var new_thead="<tr>"+
-		"<th colspan='2'>Item</th>"+
-		"<th>Qty.</th>" +
-		"<th>Total</th>" +
-		"<th></th>"+
-		"</tr>";
+	var form_id='form91';
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var invoice_info=document.createElement('div');
+		var business_title=document.createElement('div');
+		var business_contact=document.createElement('div');
+		
+	var info_section=document.createElement('div');	
+		var customer_info=document.createElement('div');
+		var business_info=document.createElement('div');
+
+	var table_container=document.createElement('div');
+
+	var footer=document.createElement('div');
+		var tandc=document.createElement('div');
+		var signature=document.createElement('div');
+
+////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','border: 1px solid #000000;width:98%;min-height:100px;text-align:center');
+		invoice_info.setAttribute('style','margin:5px;width:98%;text-align:center');
+		business_title.setAttribute('style','margin:5px;width:100%;text-align:center;font-size:24px;');
+		business_contact.setAttribute('style','width:100%;text-align:center;');
+	info_section.setAttribute('style','width:98%;min-height:100px');
+		customer_info.setAttribute('style','padding:5px;float:left;width:48%;height:100px;border: 1px solid #000;');
+		business_info.setAttribute('style','padding:5px;float:right;width:48%;height:100px;border: 1px solid #000;');
+	footer.setAttribute('style','margin:10px;width:98%;min-height:100px');
+		tandc.setAttribute('style','float:left;width:44%;min-height:60px');
+		signature.setAttribute('style','float:right;width:54%;min-height:60px;text-align:right;');
+
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	//var font_size=get_session_var('print_size');
+	//var logo_image=get_session_var('logo');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+
+	var master_form=document.getElementById(form_id+'_master');
+	var customer_name=master_form.elements['customer'].value;
+	var date=master_form.elements['date'].value;
+	var channel=master_form.elements['channel'].value;	
+	var bill_type=master_form.elements['bill_type'].value;
+	var order_no=master_form.elements['order_num'].value;
+	var bill_num=master_form.elements['bill_num'].value;
+	var customer_address=document.getElementById('form91_customer_info').innerHTML;
+	var tin_no=get_session_var('tin');
+		
+	var tandc_text=get_session_var('bill_message');
+	var signature_text="<br>for "+bt+"<br><br><br>Authorised Signatory<br>";
 	
-	var table_element=document.getElementById('form91_body').parentNode;
-	var table_copy=table_element.cloneNode(true);
-	$(table_copy).find('datalist,form').remove();
-	
-	$(table_copy).find('input,textarea').each(function(index)
+	////////////////filling in the content into the containers//////////////////////////
+
+	if(bill_type="Tax")	
 	{
-		$(this).attr('value',$(this).val());
+		invoice_info.innerHTML="TAX INVOICE";
+	}
+	else 
+	{
+		invoice_info.innerHTML="RETAIL INVOICE";
+	}
+
+	business_title.innerHTML=bt;
+	business_contact.innerHTML=business_address+"<br>Tel: "+business_phone+" emial: "+business_email;
+	
+	customer_info.innerHTML=customer_name+"<br>"+customer_address;
+	business_info.innerHTML="Invoice #: "+bill_num+"<br>Dated: "+date+"<br>TIN: "+tin_no;
+	
+	tandc.innerHTML="<b><u>Terms and Conditions</u></b><br>"+tandc_text;
+	signature.innerHTML=signature_text;
+
+	var table_element=document.getElementById(form_id+'_body');
+	
+	/////////////adding new table //////////////////////////////////////////////////////	
+	var new_table=document.createElement('table');
+	new_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
+	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
+				"<td style='text-align:left;width:30px;'>S.No.</td>"+
+				"<td style='text-align:left;width:60px;'>SKU</td>"+
+				"<td style='text-align:left;width:100px'>Item Name</td>"+
+				"<td style='text-align:left;width:60px'>Batch</td>"+
+				"<td style='text-align:left;width:45px'>Qty</td>"+
+				"<td style='text-align:left;width:45px'>MRP</td>"+
+				"<td style='text-align:left;width:45px'>Price</td>"+
+				"<td style='text-align:left;width:45px'>Amount</td>"+
+				"<td style='text-align:left;width:45px'>Tax%</td>"+
+				"<td style='text-align:left;width:45px'>Freight</td>"+
+				"<td style='text-align:left;width:80px'>Total</td></tr>";
+				
+	var table_rows=table_header;
+	var counter=0;
+	
+	$(table_element).find('form').each(function(index)
+	{
+		counter+=1;
+		var form=$(this)[0];
+		var sku=form.elements[0].value;
+		var item_name=form.elements[1].value;
+		var batch=form.elements[2].value;
+		var quantity=""+form.elements[3].value;
+		var mrp=""+form.elements[4].value;
+		var price=form.elements[5].value;
+		var tax_rate=form.elements[11].value;		
+		var amount=form.elements[7].value;		
+		var tax=form.elements[8].value;		
+		var total=form.elements[9].value;
+		var freight=form.elements[6].value;
+
+		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
+				"<td style='text-align:left;'>"+counter+"</td>"+
+				"<td style='text-align:left;'>"+sku+"</td>"+
+				"<td style='text-align:left;'>"+sku+"</td>"+
+				"<td style='text-align:left;'>"+batch+"</td>"+
+				"<td style='text-align:left;'>"+quantity+"</td>"+
+				"<td style='text-align:left;'>"+mrp+"</td>"+
+				"<td style='text-align:left;'>"+price+"</td>"+
+				"<td style='text-align:left;'>"+amount+"</td>"+
+				"<td style='text-align:left;'>"+tax_rate+"</td>"+
+				"<td style='text-align:left;'>"+freight+"</td>"+
+				"<td style='text-align:left;'>"+total+"</td></tr>";
 	});
 	
-	var tfoot=table_copy.children[2].innerHTML;
-	var new_tfoot=tfoot.replace(/<td colspan='3'/g,"<td colspan='2'");
-	var new_tfoot=new_tfoot.replace(/<td colspan=\"3\"/g,"<td colspan='2'");
-	
-	//console.log(tbody);
-	table_copy.children[0].innerHTML=new_thead;
-	table_copy.children[2].innerHTML=new_tfoot;
-	
-	var single_bill_items=parseInt(get_session_var('bill_print_items'));
-	var rows=table_copy.children[1].children.length;
-	
-	for(var i=0;i<rows;i++)
+	var row_count=$(table_element).find('tbody>tr').length;
+	var rows_to_add=20-row_count;
+	for(var i=0;i<rows_to_add;i++)
 	{
-		table_copy.children[1].children[i].children[0].setAttribute('colspan','2');
-		
-		table_copy.children[1].children[i].removeChild(table_copy.children[1].children[i].children[1]);
-		table_copy.children[1].children[i].removeChild(table_copy.children[1].children[i].children[2]);
+		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 	}
+
+	var table_foot=document.getElementById(form_id+'_foot');
+	var total_quantity=$(table_foot).find('tr>td:first')[0].innerHTML;
+	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
+	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
 	
-	while(rows>0)
-	{
-		var new_table_copy=table_copy.cloneNode(true);
+	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
+				"<td colspan='7' style='text-align:left;'>"+total_quantity+"</td>"+
+				"<td colspan='2' style='text-align:left;'>"+total_text+"</td>"+
+				"<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr>";
 		
-		for(var j=single_bill_items;j<rows;j++)
-		{
-			new_table_copy.children[1].removeChild(new_table_copy.children[1].children[single_bill_items]);
-		}
-		for(var i=0;i<single_bill_items && i<rows;i++)
-		{
-			table_copy.children[1].removeChild(table_copy.children[1].children[0]);
-		}
-		rows=table_copy.children[1].children.length;
-		print_tabular_form('form91','Sale Bill',new_table_copy);
-	}
+	table_rows+=table_foot_row;
+	new_table.innerHTML=table_rows;
+	
+	/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	container.appendChild(header);
+	container.appendChild(info_section);
+	
+	container.appendChild(new_table);
+	container.appendChild(footer);
+	
+	header.appendChild(invoice_info);
+	header.appendChild(business_title);
+	header.appendChild(business_contact);
+	
+	info_section.appendChild(customer_info);
+	info_section.appendChild(business_info);
+	
+	footer.appendChild(tandc);
+	footer.appendChild(signature);
+	
+	func(container);
 }
 
 /**

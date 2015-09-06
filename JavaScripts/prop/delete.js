@@ -2715,22 +2715,16 @@ function form91_delete_item(button)
 			
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var data_id=form.elements[11].value;
+			var data_id=form.elements[12].value;
 					
 			var data_xml="<bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
 						"</bill_items>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}
+			delete_simple(data_xml);
 					
 			$(button).parent().parent().remove();
+			form91_get_totals();
 		});
 	}
 	else

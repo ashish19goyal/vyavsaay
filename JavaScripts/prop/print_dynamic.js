@@ -46,32 +46,13 @@ function text_button_handler(section_elem)
     new_parent.appendChild(new_child);
     	
     /* Fuction to store element value for deletion */
-	/*    
-    $("#parent_" + unique_id).click(function () {
-        set_html_elem_4_del(this);
-    });
-	*/
-	
 	document.getElementById('parent_'+unique_id).setAttribute('onclick',"set_html_elem_4_del(this);");	
-	    
-    /* Make editable(child) element resizable and 
-       draggable(parent) element draggable*/
-   // $(".editable").resizable();
+
     $(".draggable").draggable();
 
-    /********* Code so that the text in editable area can be 
+    /* Code so that the text in editable area can be 
      selected without dragging the divs. The common area which
      is both editable and draggable has been disabled for dragging*/
-   
-/*   
-    var draggableDiv = $('#parent_' + unique_id).draggable();
-	
-    $('#' + unique_id, "#parent_" + unique_id).mousedown(function(ev) {
-         draggableDiv.draggable('disable');
-    }).mouseup(function(ev) {
-         draggableDiv.draggable('enable');
-    });
-*/    /********************* END************************/
 
 	var onmousedown_func="var draggableDiv = $('#parent_"+unique_id+"').draggable();"+
 		"draggableDiv.draggable('disable');";
@@ -79,22 +60,15 @@ function text_button_handler(section_elem)
 	var onmouseup_func="var draggableDiv = $('#parent_"+unique_id+"').draggable();"+
 		"draggableDiv.draggable('enable');"+
         "$('#parent_"+unique_id+"').css('width', $('#"+unique_id+"').width());";
-		
-	document.getElementById(unique_id).setAttribute('onmousedown',onmousedown_func);	
 
+	document.getElementById(unique_id).setAttribute('onmousedown',onmousedown_func);
 	document.getElementById(unique_id).setAttribute("onmouseup",onmouseup_func);
 
- $(".editable").resizable();
-    /* Adjust the width of the Parent DIV as soon as the child resizable 
-       div's width is changed. */
-/*    $("#" + unique_id).mouseup(function() {
-        $('#parent_' + unique_id).css('width', $('#' + unique_id).width());
-    });
-*/    
+	$(".editable").resizable();
 };
 
 /*********************************************************************
-* Purpose:     Fuction to add selection list for adjusting font size 
+* Purpose:     Function to add selection list for adjusting font size 
                of text   
 * Description: Adds select list and appends it to the navigation pane
 *********************************************************************/
@@ -131,7 +105,7 @@ function font_formatting(elem) {
         return; 
     }
 
-    var format_specifier = "span style='font-size:" + elem.value + "px;'";
+    var format_specifier = "span style='line-height:" + elem.value + "px;font-size:" + elem.value + "px;'";
     
     format_selected_text( format_specifier , "span");
 }	

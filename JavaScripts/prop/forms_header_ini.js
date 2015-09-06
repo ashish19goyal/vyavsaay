@@ -2504,6 +2504,7 @@ function form91_header_ini()
 	var order_num=fields.elements['order_num'];
 	var order_id=fields.elements['order_id'];
 	var channel=fields.elements['channel'];
+	var share_button=fields.elements['share'];
 	customers_filter.value='';	
 	channel.value="";
 	order_id.value="";
@@ -2512,6 +2513,8 @@ function form91_header_ini()
 	fields.elements['t_id'].value=fields.elements['bill_id'].value;
 	var save_button=fields.elements['save'];
 	
+	$(share_button).hide();
+
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
 	{
@@ -2539,7 +2542,7 @@ function form91_header_ini()
 					"<name></name>"+
 					"</sale_channels>";
 	set_my_value_list(channel_data,channel);	
-					
+
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
 		"</customers>";
@@ -2626,7 +2629,7 @@ function form91_header_ini()
 	});
 
 	$(bill_date).datepicker();
-	$(bill_date).val(get_my_date());	
+	bill_date.value=get_my_date();	
 }
 
 

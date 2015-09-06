@@ -1974,6 +1974,7 @@ function form24_ini()
 				
 					$('#form24_body').append(rowsHTML);
 				});
+				
 				var bt=get_session_var('title');
 				$('#form24_share').show();
 				$('#form24_share').click(function()
@@ -7973,6 +7974,9 @@ function form91_ini()
 				"<quantity></quantity>" +
 				"<amount></amount>" +
 				"<tax></tax>" +
+				"<vat></vat>" +
+				"<cst></cst>" +
+				"<tax_rate></tax_rate>" +
 				"<freight></freight>"+
 				"<total></total>" +
 				"<storage></storage>" +
@@ -8019,16 +8023,6 @@ function form91_ini()
 					form91_update_form();
 				});
 
-				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-							"<td>Amount:</br>Tax: <br>Freight: </br>Total: </td>" +
-							"<td>Rs. "+bill_results[i].amount+"</br>" +
-							"Rs. "+bill_results[i].tax+"</br>" +
-							"Rs. "+bill_results[i].freight+"</br>" +
-							"Rs. "+bill_results[i].total+"</td>" +
-							"<td></td>" +
-							"</tr>";
-				$('#form91_foot').html(total_row);
-
 				break;
 			}
 		
@@ -8050,18 +8044,19 @@ function form91_ini()
 						rowsHTML+="<td data-th='Quantity'>";
 							rowsHTML+="<input type='number' readonly='readonly' form='form91_"+id+"' value='"+result.quantity+"'>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Amount'>";
-							rowsHTML+="Price: <input type='number' readonly='readonly' form='form91_"+id+"' value='"+result.unit_price+"' step='any'>";
-							rowsHTML+="<br>MRP: <input type='number' readonly='readonly' form='form91_"+id+"' value='"+result.mrp+"' step='any'>";
-							rowsHTML+="<br>Amount: <input type='number' readonly='readonly' form='form91_"+id+"' value='"+result.amount+"' step='any'>";
-							rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form91_"+id+"' value='"+result.tax+"' step='any'>";
+						rowsHTML+="<td data-th='Rate'>";
+							rowsHTML+="MRP: <input type='number' readonly='readonly' form='form91_"+id+"' value='"+result.mrp+"' step='any'>";
+							rowsHTML+="<br>Price: <input type='number' readonly='readonly' form='form91_"+id+"' value='"+result.unit_price+"' step='any'>";
+							rowsHTML+="<br>Freight: <input type='number' readonly='readonly' step='any' form='form91_"+id+"' value='"+result.freight+"'>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Storage'>";
-							rowsHTML+="<input type='text' readonly='readonly' form='form91_"+id+"' value='"+result.storage+"'>";
+						rowsHTML+="<td data-th='Total'>";
+							rowsHTML+="Amount: <input type='number' readonly='readonly' form='form91_"+id+"' value='"+result.amount+"' step='any'>";
+							rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form91_"+id+"' value='"+result.tax+"' step='any'>";
+							rowsHTML+="<br>Total: <input type='number' step='any' readonly='readonly' form='form91_"+id+"' value='"+result.total+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+result.freight+"'>";
-							rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+result.total+"'>";
+							rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+result.storage+"' name='storage'>";
+							rowsHTML+="<input type='hidden' readonly='readonly' form='form91_"+id+"' step='.01' value='"+result.tax_rate+"'>";
 							rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form91_"+id+"' id='save_form91_"+id+"'>";
 							rowsHTML+="<input type='button' class='delete_icon' form='form91_"+id+"' id='delete_form91_"+id+"' onclick='form91_delete_item($(this));'>";
@@ -8069,6 +8064,18 @@ function form91_ini()
 					rowsHTML+="</tr>";
 				
 					$('#form91_body').append(rowsHTML);					
+				});
+				
+				form91_get_totals();
+
+				var bt=get_session_var('title');
+				$('#form91_share').show();
+				$('#form91_share').click(function()
+				{
+					modal101_action(bt+' - Invoice# '+filter_fields.elements['bill_num'].value,filter_fields.elements['customer'].value,'customer',function (func) 
+					{
+						print_form91(func);
+					});
 				});
 				
 				hide_loader();

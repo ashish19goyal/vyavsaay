@@ -3237,22 +3237,22 @@ function form91_add_item()
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="<input type='number' min='0' required form='form91_"+id+"' step='any'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="Price: <input type='number' required readonly='readonly' form='form91_"+id+"' step='any'>";
+			rowsHTML+="<td data-th='Rate'>";
 				rowsHTML+="MRP: <input type='number' required readonly='readonly' form='form91_"+id+"' step='any'>";
-				rowsHTML+="Amount: <input type='number' required readonly='readonly' form='form91_"+id+"' step='any'>";
-				rowsHTML+="Tax: <input type='number' required readonly='readonly' form='form91_"+id+"' step='any'>";
+				rowsHTML+="<br>Price: <input type='number' required readonly='readonly' form='form91_"+id+"' step='any'>";
+				rowsHTML+="<br>Freight: <input type='number' step='any' form='form91_"+id+"' value='0'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Storage'>";
-				rowsHTML+="<input type='text' form='form91_"+id+"'>";
+			rowsHTML+="<td data-th='Total'>";
+				rowsHTML+="Amount: <input type='number' required readonly='readonly' form='form91_"+id+"' step='any'>";
+				rowsHTML+="<br>Tax: <input type='number' required readonly='readonly' form='form91_"+id+"' step='any'>";
+				rowsHTML+="<br>Total: <input type='number' step='any' readonly='readonly' required form='form91_"+id+"'>";	
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form91_"+id+"' name='freight'>";
-				rowsHTML+="<input type='hidden' form='form91_"+id+"' name='total'>";
+				rowsHTML+="<input type='hidden' form='form91_"+id+"' name='storage'>";
+				rowsHTML+="<input type='hidden' form='form91_"+id+"' step='.01' name='tax_unit'>";
 				rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form91_"+id+"' id='save_form91_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form91_"+id+"' id='delete_form91_"+id+"' onclick='$(this).parent().parent().remove();'>";
-				rowsHTML+="<input type='hidden' form='form91_"+id+"' name='tax_unit'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form91_"+id+"' id='delete_form91_"+id+"' onclick='$(this).parent().parent().remove();form91_get_totals();'>";
 				rowsHTML+="<input type='hidden' form='form91_"+id+"' name='freight_unit'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form91_"+id+"'>";
 			rowsHTML+="</td>";			
@@ -3265,30 +3265,30 @@ function form91_add_item()
 		var desc_filter=fields.elements[1];
 		var batch_filter=fields.elements[2];
 		var quantity_filter=fields.elements[3];
-		var price_filter=fields.elements[4];
-		var mrp_filter=fields.elements[5];
-		var amount_filter=fields.elements[6];
-		var tax_filter=fields.elements[7];
-		var storage_filter=fields.elements[8];
-		var freight_filter=fields.elements[9];
-		var total_filter=fields.elements[10];
-		var id_filter=fields.elements[11];
-		var save_button=fields.elements[12];
+		var mrp_filter=fields.elements[4];
+		var price_filter=fields.elements[5];
+		var freight_filter=fields.elements[6];
+		var amount_filter=fields.elements[7];
+		var tax_filter=fields.elements[8];
+		var total_filter=fields.elements[9];
+		var storage_filter=fields.elements['storage'];
 		var tax_unit_filter=fields.elements['tax_unit'];
+		var id_filter=fields.elements[12];
+		var save_button=fields.elements[13];
 		var freight_unit_filter=fields.elements['freight_unit'];
-		
+
 		$(save_button).on("click", function(event)
 		{
 			event.preventDefault();
 			form91_create_item(fields);
 		});
-		
+
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
 			form91_add_item();
 		});
-		
+
 		var product_data="<product_master>" +
 				"<name></name>" +
 				"</product_master>";
@@ -3409,7 +3409,7 @@ function form91_add_item()
 				if(prices.length>0)
 				{
 					price_filter.value=prices[0].sale_price;
-					freight_filter.value=prices[0].freight;
+					freight_unit_filter.value=prices[0].freight;
 				}
 			});					
 			
@@ -3432,6 +3432,8 @@ function form91_add_item()
 			tax_filter.value=my_round(((parseFloat(tax_unit_filter.value)*amount)/100),2);			
 			total_filter.value=Math.round(parseFloat(amount_filter.value)+parseFloat(tax_filter.value)+parseFloat(freight_filter.value));
 		});
+
+		form91_get_totals();
 	}
 	else
 	{

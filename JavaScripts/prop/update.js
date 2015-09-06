@@ -4059,14 +4059,7 @@ function form90_update_item(form)
 					"<notes>Billing type "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
 		
 		for(var i=0;i<2;i++)
 		{
@@ -4096,19 +4089,67 @@ function form91_update_form()
 		var bill_num=form.elements['bill_num'].value;
 		
 		var amount=0;
+		var tax_name="VAT";
+		var tax_array=[];
 		var freight=0;
-		var tax=0;
 		var total=0;
+		var total_quantity=0;
+		var tax=0;
 		
 		$("[id^='save_form91']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			amount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[7].value);
-			freight+=parseFloat(subform.elements[9].value);
-			total+=parseFloat(subform.elements[10].value);						
+			
+			if(!isNaN(parseFloat(subform.elements[3].value)))
+			{
+				total_quantity+=parseFloat(subform.elements[3].value);
+			}
+			if(!isNaN(parseFloat(subform.elements[7].value)))
+			{
+				amount+=parseFloat(subform.elements[7].value);
+			}
+			if(!isNaN(parseFloat(subform.elements[8].value)))
+			{
+				if(typeof tax_array[subform.elements[11].value]=='undefined')
+				{
+					tax_array[subform.elements[11].value]=0;
+				}
+				tax_array[subform.elements[11].value]+=parseFloat(subform.elements[8].value);
+			}
+			if(!isNaN(parseFloat(subform.elements[9].value)))
+			{
+				total+=parseFloat(subform.elements[9].value);
+			}
 		});
+		
+		var form=document.getElementById("form91_master");
+		var tax_type_string="<cst>0</cst>"+
+							"<vat>"+tax+"</vat>";
+
+		if(form.elements['bill_type'].value=='Retail-CST' || form.elements['bill_type'].value=='Retail-CST-C')
+		{
+			tax_name="CST";
+			tax_type_string="<cst>"+tax+"</cst>"+
+							"<vat>0</vat>";
+		}
+
+		var tax_string="";
+		var tax_amount_string="";
+		for(var x in tax_array)
+		{
+			tax_string+=tax_name+" @"+x+"%: <br>";
+			tax_amount_string+="Rs. "+tax_array[x]+": <br>";
+		}
+
+		var total_row="<tr><td colspan='3' data-th='Total'>Total<br>Total Quantity: "+total_quantity+"</td>" +
+								"<td>Amount:</br>"+tax_string+"Freight: </br>Total: </td>" +
+								"<td>Rs. "+amount+"</br>" +tax_amount_string+
+								"Rs. "+freight+"</br>" +
+								"Rs. "+total+"</td>" +
+								"<td></td>" +
+								"</tr>";
+		$('#form91_foot').html(total_row);
 
 		var data_id=form.elements['bill_id'].value;
 		var order_id=form.elements['order_id'].value;
@@ -4117,7 +4158,7 @@ function form91_update_form()
 		var transaction_id=form.elements['t_id'].value;
 		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
-				
+		
 		var data_xml="<bills>" +
 					"<id>"+data_id+"</id>" +
 					"<bill_num>"+bill_num+"</bill_num>"+
@@ -4130,8 +4171,9 @@ function form91_update_form()
 					"<total>"+total+"</total>" +
 					"<billing_type>"+bill_type+"</billing_type>" +
 					"<freight>"+freight+"</freight>" +
-					"<tax>"+tax+"</tax>" +
-					"<transaction_id>"+transaction_id+"</transaction_id>" +
+					"<tax>"+tax+"</tax>";
+		data_xml+=tax_type_string;
+		data_xml+="<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bills>";
 		var activity_xml="<activity>" +
@@ -4151,26 +4193,8 @@ function form91_update_form()
 					"<tax>"+tax+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-			server_update_simple(transaction_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-			local_update_simple(transaction_xml);
-		}
-		
-		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-					"<td>Amount:</br>Tax: </br>Freight: </br>Total: </td>" +
-					"<td>Rs. "+amount+"</br>" +
-					"Rs. "+tax+"</br>" +
-					"Rs. "+freight+"</br>" +
-					"Rs. "+total+"</td>" +
-					"<td></td>" +
-					"</tr>";
-		$('#form91_foot').html(total_row);
+		update_row(data_xml,activity_xml);
+		update_simple(transaction_xml);
 
 		var payment_data="<payments>" +
 				"<id></id>" +
@@ -4197,20 +4221,10 @@ function form91_update_form()
 							"<tax>0</tax>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</transactions>";
-				if(is_online())
+				update_simple_func(payment_xml,function()
 				{
-					server_update_simple_func(payment_xml,function()
-					{
-						//modal26_action(payments[y]);
-					});
-				}
-				else
-				{
-					local_update_simple_func(payment_xml,function()
-					{
-						//modal26_action(payments[y]);
-					});
-				}
+					//modal26_action(payments[y]);
+				});
 				break;
 			}
 		},payment_data);

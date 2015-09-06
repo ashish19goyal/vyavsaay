@@ -5206,24 +5206,33 @@ function form91_create_item(form)
 	if(is_create_access('form91'))
 	{
 		var bill_id=document.getElementById("form91_master").elements['bill_id'].value;
+		var bill_type=document.getElementById("form91_master").elements['bill_type'].value;
 		
 		var name=form.elements[0].value;
 		var desc=form.elements[1].value;
 		var batch=form.elements[2].value;
 		var quantity=form.elements[3].value;
-		var price=form.elements[4].value;
-		var mrp=form.elements[5].value;
-		var amount=form.elements[6].value;
-		var tax=form.elements[7].value;
-		var storage=form.elements[8].value;
-		var freight=form.elements[9].value;
-		var total=form.elements[10].value;
-		var data_id=form.elements[11].value;
-		var save_button=form.elements[12];		
-		var del_button=form.elements[13];
-
+		var mrp=form.elements[4].value;
+		var price=form.elements[5].value;
+		var freight=form.elements[6].value;
+		var amount=form.elements[7].value;
+		var tax=form.elements[8].value;
+		var total=form.elements[9].value;
+		var storage=form.elements['storage'].value;
+		var tax_rate=form.elements['tax_unit'].value;
+		var data_id=form.elements[12].value;
+		var save_button=form.elements[13];		
+		var del_button=form.elements[14];
 		var last_updated=get_my_time();
 		
+		var tax_type_string="<cst>0</cst>"+
+							"<vat>"+tax+"</vat>";
+		if(bill_type=='Retail-CST' || bill_type=='Retail-CST-C')					
+		{
+			tax_type_string="<cst>"+tax+"</cst>"+
+							"<vat>0</vat>";
+		}
+							
 		var data_xml="<bill_items>" +
 				"<id>"+data_id+"</id>" +
 				"<item_name>"+name+"</item_name>" +
@@ -5235,22 +5244,17 @@ function form91_create_item(form)
 				"<amount>"+amount+"</amount>" +
 				"<total>"+total+"</total>" +
 				"<freight>"+freight+"</freight>" +
-				"<tax>"+tax+"</tax>" +
-				"<storage>"+storage+"</storage>" +
+				"<tax>"+tax+"</tax>";
+		data_xml+=tax_type_string;		
+		data_xml+="<storage>"+storage+"</storage>" +
+				"<tax_rate>"+tax_rate+"</tax_rate>" +
 				"<bill_id>"+bill_id+"</bill_id>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</bill_items>";	
-	
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}
-		
-		for(var i=0;i<11;i++)
+
+		create_simple(data_xml);
+
+		for(var i=0;i<12;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -5266,6 +5270,67 @@ function form91_create_item(form)
 	{
 		$("#modal2").dialog("open");
 	}
+}
+
+function form91_get_totals()
+{
+	var amount=0;
+	var tax_name="VAT";
+	var tax_array=[];
+	var freight=0;
+	var total=0;
+	var total_quantity=0;
+	
+	$("[id^='save_form91']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		
+		if(!isNaN(parseFloat(subform.elements[3].value)))
+		{
+			total_quantity+=parseFloat(subform.elements[3].value);
+		}
+		if(!isNaN(parseFloat(subform.elements[7].value)))
+		{
+			amount+=parseFloat(subform.elements[7].value);
+		}
+		if(!isNaN(parseFloat(subform.elements[8].value)))
+		{
+			if(typeof tax_array[subform.elements[11].value]=='undefined')
+			{
+				tax_array[subform.elements[11].value]=0;
+			}
+			tax_array[subform.elements[11].value]+=parseFloat(subform.elements[8].value);
+		}
+		if(!isNaN(parseFloat(subform.elements[9].value)))
+		{
+			total+=parseFloat(subform.elements[9].value);
+		}					
+	});
+	
+	var form=document.getElementById("form91_master");
+
+	if(form.elements['bill_type'].value=='Retail-CST' || form.elements['bill_type'].value=='Retail-CST-C')
+	{
+		tax_name="CST";
+	}
+
+	var tax_string="";
+	var tax="";
+	for(var x in tax_array)
+	{
+		tax_string+=tax_name+" @"+x+"%: <br>";
+		tax+="Rs. "+tax_array[x]+": <br>";
+	}
+
+	var total_row="<tr><td colspan='3' data-th='Total'>Total<br>Total Quantity: "+total_quantity+"</td>" +
+							"<td>Amount:</br>"+tax_string+"Freight: </br>Total: </td>" +
+							"<td>Rs. "+amount+"</br>" +tax+
+							"Rs. "+freight+"</br>" +
+							"Rs. "+total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+	$('#form91_foot').html(total_row);
 }
 
 
@@ -5286,19 +5351,67 @@ function form91_create_form()
 		var bill_num=form.elements['bill_num'].value;
 		
 		var amount=0;
+		var tax_name="VAT";
+		var tax_array=[];
 		var freight=0;
-		var tax=0;
 		var total=0;
+		var total_quantity=0;
+		var tax=0;
 		
 		$("[id^='save_form91']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			amount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[7].value);
-			freight+=parseFloat(subform.elements[9].value);
-			total+=parseFloat(subform.elements[10].value);						
+			
+			if(!isNaN(parseFloat(subform.elements[3].value)))
+			{
+				total_quantity+=parseFloat(subform.elements[3].value);
+			}
+			if(!isNaN(parseFloat(subform.elements[7].value)))
+			{
+				amount+=parseFloat(subform.elements[7].value);
+			}
+			if(!isNaN(parseFloat(subform.elements[8].value)))
+			{
+				if(typeof tax_array[subform.elements[11].value]=='undefined')
+				{
+					tax_array[subform.elements[11].value]=0;
+				}
+				tax_array[subform.elements[11].value]+=parseFloat(subform.elements[8].value);
+			}
+			if(!isNaN(parseFloat(subform.elements[9].value)))
+			{
+				total+=parseFloat(subform.elements[9].value);
+			}					
 		});
+		
+		var form=document.getElementById("form91_master");
+		var tax_type_string="<cst>0</cst>"+
+							"<vat>"+tax+"</vat>";
+
+		if(form.elements['bill_type'].value=='Retail-CST' || form.elements['bill_type'].value=='Retail-CST-C')
+		{
+			tax_name="CST";
+			tax_type_string="<cst>"+tax+"</cst>"+
+							"<vat>0</vat>";
+		}
+
+		var tax_string="";
+		var tax_amount_string="";
+		for(var x in tax_array)
+		{
+			tax_string+=tax_name+" @"+x+"%: <br>";
+			tax_amount_string+="Rs. "+tax_array[x]+": <br>";
+		}
+
+		var total_row="<tr><td colspan='3' data-th='Total'>Total<br>Total Quantity: "+total_quantity+"</td>" +
+								"<td>Amount:</br>"+tax_string+"Freight: </br>Total: </td>" +
+								"<td>Rs. "+amount+"</br>" +tax_amount_string+
+								"Rs. "+freight+"</br>" +
+								"Rs. "+total+"</td>" +
+								"<td></td>" +
+								"</tr>";
+		$('#form91_foot').html(total_row);
 
 		var data_id=form.elements['bill_id'].value;
 		var order_id=form.elements['order_id'].value;
@@ -5320,8 +5433,9 @@ function form91_create_form()
 					"<total>"+total+"</total>" +
 					"<billing_type>"+bill_type+"</billing_type>" +
 					"<freight>"+freight+"</freight>" +
-					"<tax>"+tax+"</tax>" +
-					"<transaction_id>"+transaction_id+"</transaction_id>" +
+					"<tax>"+tax+"</tax>";
+		data_xml+=tax_type_string;
+		data_xml+="<transaction_id>"+transaction_id+"</transaction_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bills>";
 		var activity_xml="<activity>" +
@@ -5379,47 +5493,17 @@ function form91_create_form()
 								"<value>"+(parseInt(bill_num)+1)+"</value>"+
 								"<last_updated>"+last_updated+"</last_updated>"+
 								"</user_preferences>";
-				if(is_online())
-				{
-					server_update_simple(num_xml);
-				}
-				else 
-				{
-					local_update_simple(num_xml);
-				}
+				update_simple(num_xml);
 			}
 		},num_data);
 
-		if(is_online())
+		create_row(data_xml,activity_xml);
+		create_simple(transaction_xml);
+		create_simple(pt_xml);
+		create_simple_func(payment_xml,function()
 		{
-			server_create_row(data_xml,activity_xml);
-			server_create_simple(transaction_xml);
-			server_create_simple(pt_xml);
-			server_create_simple_func(payment_xml,function()
-			{
-				//modal26_action(pt_tran_id);
-			});
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-			local_create_simple(transaction_xml);
-			local_create_simple(pt_xml);
-			local_create_simple_func(payment_xml,function()
-			{
-				//modal26_action(pt_tran_id);
-			});
-		}
-		
-		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-					"<td>Amount:</br>Tax: </br>Freight: </br>Total: </td>" +
-					"<td>Rs. "+amount+"</br>" +
-					"Rs. "+tax+"</br>" +
-					"Rs. "+freight+"</br>" +
-					"Rs. "+total+"</td>" +
-					"<td></td>" +
-					"</tr>";
-		$('#form91_foot').html(total_row);
+			//modal26_action(pt_tran_id);
+		});
 		
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)

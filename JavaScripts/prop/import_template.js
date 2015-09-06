@@ -493,7 +493,7 @@ function form90_import_template()
 function form91_import_template()
 {
 	var data_array=['id','bill_id','item_name','item_desc','quantity','unit_price','mrp','amount',
-	                'total','freight','batch','tax','storage'];
+	                'total','freight','batch','tax_rate','tax','cst','vat','storage'];
 	my_array_to_csv(data_array);
 };
 

@@ -28,8 +28,8 @@
 				<th>Item</th>
 				<th>Batch</th>
 				<th>Quantity</th>
-				<th>Amount</th>
-				<th>Storage</th>
+				<th>Rate</th>
+				<th>Total</th>
 				<th><input type='button' title='Add item' class='add_icon' onclick='form91_add_item();'></th>
 			</tr>
 		</thead>

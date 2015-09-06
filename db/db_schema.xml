@@ -452,6 +452,8 @@
 			<cartage index='no' type="DECIMAL(12,2)"></cartage>
 			<freight index='no' type="DECIMAL(12,2)"></freight>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<cst index='no' type="DECIMAL(12,2)"></cst>
+			<vat index='no' type="DECIMAL(12,2)"></vat>
 			<tax_rate index='no' type="DECIMAL(12,2)"></tax_rate>
 			<service_tax index='no' type="DECIMAL(12,2)"></service_tax>
 			<channel_charges index='no' type="DECIMAL(12,2)"></channel_charges>
@@ -489,6 +491,9 @@
 			<notes index='no' type="TEXT"></notes>
 			<staff index='yes' type="TEXT"></staff>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<vat index='no' type="DECIMAL(12,2)"></vat>
+			<tax_rate index='no' type="DECIMAL(12,2)"></tax_rate>
+			<cst index='no' type="DECIMAL(12,2)"></cst>
 			<service_tax index='no' type="DECIMAL(12,2)"></service_tax>
 			<from_date index='yes' type="BIGINT"></from_date>
 			<to_date index='yes' type="BIGINT"></to_date>
