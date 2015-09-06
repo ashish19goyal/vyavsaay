@@ -967,17 +967,54 @@ input.ultrawidebox{
 .print_navigation {
     line-height:30px;
     background-color:#eeeeee;
-    height:500px;
+    height:11.69in;
     width:20%;
     float:left;
     padding:5px;
 }
 
+.print_navigation button{
+	-moz-box-shadow: 3px -1px 50px -2px #3dc21b;
+	-webkit-box-shadow: 3px -1px 50px -2px #3dc21b;
+	box-shadow: 3px -1px 50px -2px #3dc21b;
+	background-color:#44c767;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:18px;
+	padding:2px 5px;
+	margin:5px 5px;
+	text-decoration:none;
+	text-shadow:2px 2px 2px #2f6627;
+}
+
+.print_navigation button:hover {
+	background-color:#4e8033;
+}
+.print_navigation button:active {
+	position:relative;
+	top:1px;
+}
+
+.print_navigation select {
+	background: white;
+	width: 90%;
+	padding: 2px;
+	margin: 5px;
+	font-size: 16px;
+ 	line-height: 1;
+	border: 0;
+	border-radius: 0;
+	height: 34px;
+	-webkit-appearance: none;
+}
+
 .print_section {
-    width:1000px;
-    height:500px;
+    width:8.27in;
+    height:11.69in;
     float:left;
-    padding:5px;
+    /*padding:5px;*/
     margin:5px;
     border:1px solid #000000;
 }
@@ -1125,9 +1162,6 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 		overflow-y: auto;
 		overflow-x: hidden;
 	}
-	.print_section {
-	    width:300px;
-	}
 }
 
 @media (min-width: 850px)
@@ -1162,9 +1196,6 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 		background-color:#fff;
 		font-weight: bold;
 	}
-	.print_section {
-	    width:450px;
-	}
 }
 
 @media screen and (min-width: 900px) {
@@ -1173,9 +1204,6 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	}
 	.customers_pane{
 		max-width:700px;
-	}
-	.print_section {
-	    width:520px;
 	}
 }
 
@@ -1192,9 +1220,6 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	.customers_pane{
 		max-width:900px;
 	}
-	.print_section {
-	    width:700px;
-	}
 }
 
 @media screen and (min-width: 1300px) {
@@ -1204,9 +1229,6 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	.customers_pane{
 		max-width:1050px;
 	}
-	.print_section {
-	    width:750px;
-	}
 }
 
 @media screen and (min-width: 1500px) {
@@ -1215,9 +1237,6 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	}
 	.customers_pane{
 		max-width:1050px;
-	}
-	.print_section {
-	    width:950px;
 	}
 }
 
@@ -1410,7 +1429,6 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	.print_navigation {
 	    line-height:30px;
 	    background-color:#eeeeee;
-	    height:150px;
 	    width:100%;
 	    float:left;
 	    padding:5px;

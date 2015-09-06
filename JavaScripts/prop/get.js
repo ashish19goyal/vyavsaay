@@ -46,6 +46,28 @@ function select_picture(evt,pictureinfo,func)
 	}
 }
 
+function resize_picture(picture_tag,pic_width)
+{
+    var tempW = picture_tag.width;
+    var tempH = picture_tag.height;
+    if (tempW > tempH) 
+    {
+        if (tempW > pic_width) 
+        {
+           tempH *= pic_width / tempW;
+           tempW = pic_width;
+        }
+    } 
+ 
+    var canvas = document.createElement('canvas');
+    canvas.width = tempW;
+    canvas.height = tempH;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(picture_tag, 0, 0, tempW, tempH);
+    var dataURL = canvas.toDataURL("image/jpeg");
+    picture_tag.setAttribute("src", dataURL);
+}
+
 /**
  * this function saves the document
  * @param evt Event that is called when document selected

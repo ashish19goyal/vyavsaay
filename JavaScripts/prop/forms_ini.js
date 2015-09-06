@@ -24288,6 +24288,7 @@ function form233_ini()
 	
 	if(fid!="")
 	{
+		console.log('loading');
 		show_loader();
 
 		var columns="<newsletter count='1'>" +
@@ -24317,9 +24318,9 @@ function form233_ini()
 				$('#form233_section').html(updated_content);
 				
 				$(".editable").resizable();
-			    $(".draggable").draggable();
+			   // $(".draggable").draggable();
 
-			    $('.resizable-aspect-ration').resizable({aspectRatio: true});
+			    $('.resizable-aspect-ratio').resizable({aspectRatio: true});
     	        $('.draggable-containment').draggable({ containment: "window" });
 
 			}

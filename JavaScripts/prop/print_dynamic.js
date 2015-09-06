@@ -14,7 +14,6 @@ function add_button_4_txt_formatting(nav_id,format_specifier, formatting_type, b
     nav_elem.appendChild(elem);
 }
 
-
 /*******************************************************************
 * Purpose:     A handler for text button selection in the
 *              navigation pane   
@@ -28,7 +27,7 @@ function add_button_4_txt_formatting(nav_id,format_specifier, formatting_type, b
 function text_button_handler(section_elem) 
 {
     /* Unique id generated for all div elements*/
-    var unique_id="vyavsaay_text_box"+Math.round(Math.random()*100);
+    var unique_id="vyavsaay_text_box"+Math.round(Math.random()*10000);
     
     /* Adding draggable and resizable div elements */
     var new_parent = document.createElement("div");
@@ -47,34 +46,51 @@ function text_button_handler(section_elem)
     new_parent.appendChild(new_child);
     	
     /* Fuction to store element value for deletion */
+	/*    
     $("#parent_" + unique_id).click(function () {
         set_html_elem_4_del(this);
     });
+	*/
+	
+	document.getElementById('parent_'+unique_id).setAttribute('onclick',"set_html_elem_4_del(this);");	
 	    
     /* Make editable(child) element resizable and 
        draggable(parent) element draggable*/
-    $(".editable").resizable();
+   // $(".editable").resizable();
     $(".draggable").draggable();
 
     /********* Code so that the text in editable area can be 
      selected without dragging the divs. The common area which
      is both editable and draggable has been disabled for dragging*/
+   
+/*   
     var draggableDiv = $('#parent_' + unique_id).draggable();
-
-	/****change following two events to native dom*****/
-
+	
     $('#' + unique_id, "#parent_" + unique_id).mousedown(function(ev) {
          draggableDiv.draggable('disable');
     }).mouseup(function(ev) {
          draggableDiv.draggable('enable');
     });
-    /********************* END************************/
+*/    /********************* END************************/
 
+	var onmousedown_func="var draggableDiv = $('#parent_"+unique_id+"').draggable();"+
+		"draggableDiv.draggable('disable');";
+
+	var onmouseup_func="var draggableDiv = $('#parent_"+unique_id+"').draggable();"+
+		"draggableDiv.draggable('enable');"+
+        "$('#parent_"+unique_id+"').css('width', $('#"+unique_id+"').width());";
+		
+	document.getElementById(unique_id).setAttribute('onmousedown',onmousedown_func);	
+
+	document.getElementById(unique_id).setAttribute("onmouseup",onmouseup_func);
+
+ $(".editable").resizable();
     /* Adjust the width of the Parent DIV as soon as the child resizable 
        div's width is changed. */
-    $("#" + unique_id).mouseup(function() {
+/*    $("#" + unique_id).mouseup(function() {
         $('#parent_' + unique_id).css('width', $('#' + unique_id).width());
     });
+*/    
 };
 
 /*********************************************************************
@@ -324,7 +340,7 @@ function add_outline_width_selection_button(nav_id)
     option_elem.innerHTML = "Outline-Width";
     elem.appendChild(option_elem);
     
-    var border_width = ["1px", "2px", "3px", "4px", "5px", "6px", "7px", "8px"];
+    var border_width = ["0px","1px", "2px", "3px", "4px", "5px", "6px", "7px", "8px"];
 
     var idx = 0;
 
@@ -386,6 +402,7 @@ function delete_sel_elem_4m_canvas()
 *********************************************************************/
 function set_html_elem_4_del()
 { 
+	//console.log('element selected for delete');
      newsletter_element_4_deletion = [];
 
      for (var i = 0; i < arguments.length; i++) {

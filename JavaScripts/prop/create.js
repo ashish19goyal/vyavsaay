@@ -15401,10 +15401,17 @@ function form233_create_item()
 		var data_id=form.elements['id'].value;
 		var name=form.elements['name'].value;
 		var description=form.elements['description'].value;
+		
+		$("[id^='vyavsaay_image_box_']").each(function(index)
+		{
+			var image_elem=$(this)[0];
+			resize_picture(image_elem,image_elem.width);			
+		});
+
 		var html_content=htmlentities(document.getElementById('form233_section').innerHTML);
 		var save_button=form.elements['save'];
 		var last_updated=get_my_time();
-		
+		//console.log(html_content);
 		var data_xml="<newsletter>" +
 					"<id>"+data_id+"</id>" +
 					"<name>"+name+"</name>" +
@@ -15420,10 +15427,11 @@ function form233_create_item()
 					"<notes>Newsletter "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
+		//console.log(data_xml);			
 		create_row(data_xml,activity_xml);
 		
-		$(save_button).off('click');
-		$(save_button).on('click',function(event)
+		$(form).off('submit');
+		$(form).on('submit',function(event)
 		{
 			event.preventDefault();
 			form233_update_item();

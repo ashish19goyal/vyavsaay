@@ -11749,7 +11749,13 @@ function form233_update_item()
 	{
 		show_loader();
 		var form=document.getElementById("form233_form");
-		
+
+		$("[id^='vyavsaay_image_box_']").each(function(index)
+		{
+			var image_elem=$(this)[0];
+			resize_picture(image_elem,image_elem.width);			
+		});
+
 		var data_id=form.elements['id'].value;
 		var name=form.elements['name'].value;
 		var description=form.elements['description'].value;

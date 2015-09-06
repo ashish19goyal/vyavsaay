@@ -8501,16 +8501,17 @@ function form233_header_ini()
 			new_div_elem.setAttribute("class", "draggable-containment");
 
             var new_elem = document.createElement("img");
+            new_elem.setAttribute("id","vyavsaay_image_box_"+Math.round(Math.random()*10000));
             new_elem.setAttribute("src", dataURL);
             new_elem.setAttribute("class", "ui-widget-content");
             new_elem.setAttribute("alt", "Image Not Found");
             new_elem.setAttribute("style", "width:100px; height:100px;");
-			new_elem.setAttribute("class", "resizable-aspect-ration");
+			new_elem.setAttribute("class", "resizable-aspect-ratio");
 
             $('#form233_section').append(new_div_elem);
 	    	$(new_div_elem).append(new_elem);
 
-		    $(new_elem).resizable({aspectRatio: true});
+		    $(new_elem).resizable({aspectRatio:true});
             $(new_div_elem).draggable({ containment: "window" });
         });
     });
