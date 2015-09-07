@@ -1,7 +1,7 @@
 <div id='report90' class='function_detail'>
 	<form id='report90_header' autocomplete="off">
 		<fieldset>
-			<label>Order Number<br><input type='text' name='order_num'></label>
+			<label>Order Number<br><input type='text' name='order'></label>
 			<label>
 				<input type='submit' name='refresh' value='Refresh' class='generic_icon'>
 				<input type='button' name='print' title='Print' class='print_icon'>

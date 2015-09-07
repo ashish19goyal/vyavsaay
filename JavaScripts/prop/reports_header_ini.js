@@ -1956,7 +1956,7 @@ function report89_header_ini()
 function report90_header_ini()
 {	
 	var form=document.getElementById('report90_header');
-	var order_filter=form.elements['order_num'];
+	var order_filter=form.elements['order'];
 	var rack_filter=form.elements['rack'];
 
 	$(form).off('submit');

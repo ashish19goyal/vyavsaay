@@ -6636,8 +6636,8 @@ function report89_ini()
 function report90_ini()
 {
 	var form=document.getElementById('report90_header');
-	var order_num=form.elements['order_num'].value;
-	
+	var order_num=form.elements['order'].value;
+
 	show_loader();
 	
 	$('#report90_body').html('');
