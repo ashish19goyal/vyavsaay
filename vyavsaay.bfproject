@@ -1,14 +1,13 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/forms/form91.php:292:0:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:563034:562262:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/print.js:36940:36063:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report90.php:490:18:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/reports_ini.js:195860:193769:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:308081:307041:1:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php:53164:52201:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/reports_ini.js:129870:129356:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:308081:307041:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php:53409:52201:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:163094:162951:0:
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:1826:1959:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report64.php:564:0:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -20,10 +19,10 @@ view_left_panel: 1
 default_mime_type: text/plain
 e2c.convert_xml: 1
 c2e.convert_iso: 0
-opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
+opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: bills[0].order_num
+ssearch_text: 64_
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -56,8 +55,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/generate_report.php
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/ajax/get_rows.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report66.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report77.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report91.php
@@ -86,6 +83,8 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/event_handler.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/locales/translation-en.json
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report64.php
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 spell_check_default: 1
@@ -97,8 +96,6 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: 91-
-searchlist: 108_
 searchlist: 91_
 searchlist: m91_
 searchlist: 91_
@@ -112,6 +109,8 @@ searchlist: 150_
 searchlist: 150
 searchlist: order_num
 searchlist: bills[0].order_num
+searchlist: packing
+searchlist: 64_
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0

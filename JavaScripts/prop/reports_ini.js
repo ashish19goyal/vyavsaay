@@ -4497,7 +4497,7 @@ function report64_ini()
 					pic_results_url=pic_results[0].url;
 				}
 				updated_url=pic_results_url.replace(/ /g,"+");
-				var imgHTML="<img src='"+updated_url+"'>";
+				var imgHTML="<img style='width:98%;height:auto;' src='"+updated_url+"'>";
 				
 				$('#report64_image').html(imgHTML);	
 				
@@ -4509,15 +4509,6 @@ function report64_ini()
 
 			});
 			
-			////////populate packing instructions and invoice template///////
-			if(products.length>0 && products[0].packing!='undefined')
-			{
-				$('#report64_packing').html("Packing Instructions:<br><b>"+products[0].packing+"</b>");
-			}			
-			else 
-			{
-				$('#report64_packing').html("Packing Instructions not available");
-			}
 			//////////provide a preview of the invoice//////////////////////
 			var bill_items="<bill_items count='1'>"+
 					"<id></id>"+
@@ -4526,6 +4517,7 @@ function report64_ini()
 					"<item_desc></item_desc>"+
 					"<quantity></quantity>"+
 					"<total></total>"+
+					"<batch></batch>"+
 					"<picked_status exact='yes'>picked</picked_status>"+
 					"<packing_status exact='yes'>pending</packing_status>"+
 					"</bill_items>";
@@ -4544,66 +4536,33 @@ function report64_ini()
 					{        	
 							////////////setting up containers///////////////////////	
 						var container=document.getElementById('report64_invoice');
-						var header=document.createElement('div');
-							var logo=document.createElement('div');
-							var business_title=document.createElement('div');
-						
+												
 						var invoice_line=document.createElement('div');
-						
-						var info_section=document.createElement('div');	
-							var customer_info=document.createElement('div');
-					
 						var table_container=document.createElement('div');
-					
-						var footer=document.createElement('div');
-							var tandc=document.createElement('div');
-							var address=document.createElement('div');
-					
+						var packing_box=document.createElement('div');
+						
 						////////////setting styles for containers/////////////////////////
 					
-						header.setAttribute('style','width:100%;min-height:60px;');
-							logo.setAttribute('style','float:left;width:49%;');
-							business_title.setAttribute('style','float:right;width:49%;text-align:right;');
-						invoice_line.setAttribute('style','width:98%;min-height:50px;background-color:#bbbbbb;');
-						info_section.setAttribute('style','width:98%;min-height:50px;text-align:left;');
-							customer_info.setAttribute('style','padding:5px;margin:5px;float:left;width:98%;height:50px;');
-						footer.setAttribute('style','width:100%;min-height:50px');
-							tandc.setAttribute('style','width:100%;min-height:50px;background-color:#bbbbbb;');
-							address.setAttribute('style','width:100%;min-height:50px;text-align:center;');
+						invoice_line.setAttribute('style','font-size:1em;width:100%;min-height:50px;background-color:#bbbbbb;');
+						packing_box.setAttribute('style','border:1px solid #000;margin:10px;width:95%;min-height:50px;font-weight:600;');
 					
 						///////////////getting the content////////////////////////////////////////
-					
-						var bt=get_session_var('title');
-						var font_size=get_session_var('print_size');
-						var logo_image=get_session_var('logo');
-						var business_intro_text=get_session_var('business_intro');
-						var business_address=get_session_var('address');
-						var business_phone=get_session_var('phone');
-						var business_email=get_session_var('email');
-						var business_website=get_session_var('website');
-					
-										
-						var customer_name=bills[0].customer_name;
 						var date=get_my_past_date(bills[0].bill_date);				
 						var invoice_no=bills[0].bill_num;
 						var order_no=bills[0].order_num;
 						
-						var tin=get_session_var('tin');	
-						var tax_text="Tax No: "+tin;
-					
-						var tandc_text=get_session_var('bill_message');
-						
-						////////////////filling in the content into the containers//////////////////////////
-					
-						logo.innerHTML="<img src='./client_images/"+logo_image+"'>";
-						business_title.innerHTML=bt;
 						invoice_line.innerHTML="<div style='float:left;width:50%'>Invoice #: "+invoice_no+"<br>Order #: "+order_no+"</div><div style='float:right;text-align:right;width:50%'>Invoice Date: "+date+"</div>";
-						
-						customer_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Customer</b><br>"+customer_name+"<hr style='border: 1px solid #000;margin:2px'>";
-						
-						tandc.innerHTML=tandc_text;
-						address.innerHTML=tax_text+" | Address: "+business_address;
-					
+												
+								////////populate packing instructions and invoice template///////
+						if(products[0].packing!='undefined')
+						{
+							packing_box.innerHTML="Packing Instructions:<br><b>"+products[0].packing+"</b>";
+						}			
+						else 
+						{
+							packing_box.innerHTML="Packing Instructions not available";
+						}
+
 						var table_copy=document.createElement('table');
 						
 						table_copy.setAttribute('width','100%');
@@ -4614,38 +4573,17 @@ function report64_ini()
 						{
 							$(table_copy).append("<tr><th>"+item.item_desc+"</th><th>"+item.quantity+"</th><th>"+item.total+"</th></tr>");	
 						});
-								
-						$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
-						$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
+
+						$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:1em");
+						$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:1em");
 						$(table_copy).find("tr").attr('style','flex:1;height:30px');
-						
-					/*	$(table_copy).find("th:first, td:first").css('width','300px');
-						var row_count=$(table_copy).find('tbody>tr').length;
-						var rows_to_add=5-row_count;
-						for(var i=0;i<rows_to_add;i++)
-						{
-							$(table_copy).find("tbody").append("<tr style='flex:2;border-right:2px solid black;border-left:2px solid black;'><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td><td style='border-right:2px solid black;border-left:2px solid black;'></td></tr>");
-						}
-					*/	
-						/////////////placing the containers //////////////////////////////////////////////////////	
-					
-						container.appendChild(header);
+											
 						container.appendChild(invoice_line);
-						container.appendChild(info_section);
-					
-						container.appendChild(table_copy);
-						container.appendChild(footer);
-					
-						header.appendChild(logo);
-						header.appendChild(business_title);
-					
-						info_section.appendChild(customer_info);
-					
-						footer.appendChild(tandc);
-						footer.appendChild(address);
 						
-						$(print_button).show();			
-	
+						container.appendChild(table_copy);
+						container.appendChild(packing_box);
+						
+						$(print_button).show();					
 					});
 				}
 				else 
