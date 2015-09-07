@@ -10930,7 +10930,7 @@ function modal150_action(rack,report_id)
 			var item_row=document.createElement('tr');
 			item_row.setAttribute('id','modal150_row_'+row_id);
 			item_row.setAttribute('data-id',row_id);
-			item_row.innerHTML="<td>"+item_name+"</td><td>"+batch+"</td><td>"+(quantity-picked_quantity)+"</td>";
+			item_row.innerHTML="<td style='word-wrap: break-word;'>"+item_name+"</td><td style='word-wrap: break-word;'>"+batch+"</td><td>"+(quantity-picked_quantity)+"</td>";
 			item_table.appendChild(item_row);				
 		}								
 	});	

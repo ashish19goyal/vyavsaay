@@ -4410,7 +4410,7 @@ function report63_ini()
 				rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' form='row_report63_"+item.id+"' value='"+item.storage+"'>";
 				rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='report63_edit_location_"+item.id+"'>";
 				if(item.storage=='')
-					rowsHTML+="<img src='./images/refresh.png' class='refresh_image' title='Refresh Location Calculation' id='report63_refresh_location_"+item.id+"'>";
+					rowsHTML+="<img src='./images/refresh.png' class='refresh_icon' title='Refresh Location Calculation' id='report63_refresh_location_"+item.id+"'>";
 				rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.id+"'>";
 				rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.table_type+"'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='row_report63_"+item.id+"'>";
@@ -6739,7 +6739,7 @@ function report90_ini()
 					rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
 					rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='report90_edit_location_"+item.id+"'>";
 					if(item.storage=='')
-						rowsHTML+="<img src='./images/refresh.png' class='refresh_image' title='Refresh Location Calculation' id='report90_refresh_location_"+item.id+"'>";
+						rowsHTML+="<img src='./images/refresh.png' class='refresh_icon' title='Refresh Location Calculation' id='report90_refresh_location_"+item.id+"'>";
 					rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.id+"'>";
 					rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.table_type+"'>";
 					rowsHTML+="<input type='submit' class='submit_hidden' form='row_report90_"+item.id+"'>";

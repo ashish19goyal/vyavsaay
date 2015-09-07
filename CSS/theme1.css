@@ -685,6 +685,17 @@ tbody tr:hover{
 	vertical-align:middle;
 }
 
+.refresh_icon{
+	height:25px;
+	width: 25px;
+	background:url('/images/refresh.png') no-repeat left top;
+	border: 0;
+	cursor: pointer;
+	background-size: 25px 25px;
+	color:transparent;
+	vertical-align:middle;
+}
+
 .green_circle
 {
 	height:25px;
@@ -1385,7 +1396,7 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 		min-width:1px;
 	}
 	
-	.save_icon,.delete_icon,.share_icon,.edit_icon,.copy_icon,.add_icon,.add_image,.print_icon,.csv_icon{
+	.save_icon,.delete_icon,.share_icon,.edit_icon,.refresh_icon,.copy_icon,.add_icon,.add_image,.print_icon,.csv_icon{
 		min-width:40px;		
 		height:40px;
 		width:40px;
