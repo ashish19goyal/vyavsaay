@@ -17,7 +17,7 @@
 				<th>Item</th>
 				<th>Batch</th>
 				<th>Quantity</th>
-				<th>Storage</th>
+				<th style='width:250px;'>Storage</th>
 			</tr>
 		</thead>
 		<tbody id='report63_body'>

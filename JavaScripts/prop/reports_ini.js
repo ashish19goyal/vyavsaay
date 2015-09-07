@@ -4316,115 +4316,136 @@ function report63_ini()
 		"</bill_items>";
 
 	fetch_requested_data('report63',items_data,function(items)
-	{
-		var unbilled_items_data="<unbilled_sale_items>" +
-			"<id></id>"+
-			"<item_name>"+sku+"</item_name>" +
-			"<item_desc>"+item+"</item_desc>"+
-			"<batch></batch>" +
-			"<quantity></quantity>"+
-			"<picked_quantity></picked_quantity>"+
-			"<storage></storage>"+
-			"<picked_status exact='yes'>pending</picked_status>"+
-			"</unbilled_sale_items>";
-		
-		fetch_requested_data('report63',unbilled_items_data,function(unbilled_items)
+	{	
+		items.forEach(function(item)
 		{
-			var num_items=items.length+1;
-			
-			items.forEach(function(item)
-			{
-				item.table_type='bill_items';
-			});
-			for(var y in unbilled_items)
-			{
-				unbilled_items[y].table_type='unbilled_sale_items';
-				items.push(unbilled_items[y]);
-			}
-
-			for(var i=0;i<items.length;i++)
-			{
-				var data_object_array=[];
-				
-				if(items[i].picked_quantity=='null' || items[i].picked_quantity=='' || isNaN(items[i].picked_quantity))
-					items[i].picked_quantity=0;
-				
-				var data_object=new Object();
-				data_object.id=items[i].id;
-				data_object.quantity=items[i].quantity;
-				data_object.picked=items[i].picked_quantity;
-				data_object_array.push(data_object);
-				
-				for(var j=i+1;j<items.length;j++)
-				{
-					if(items[j].picked_quantity=='null' || items[j].picked_quantity=='' || isNaN(items[j].picked_quantity))
-						items[j].picked_quantity=0;
-
-					if(items[i].item_name==items[j].item_name && items[i].batch==items[j].batch && items[i].storage==items[j].storage && items[i].table_type==items[j].table_type)
-					{
-						items[i].quantity=parseFloat(items[i].quantity)+parseFloat(items[j].quantity);
-						items[i].picked_quantity=parseFloat(items[i].picked_quantity)+parseFloat(items[j].picked_quantity);
-						
-						var data_object=new Object();
-						data_object.id=items[j].id;
-						data_object.quantity=items[j].quantity;
-						data_object.picked=items[j].picked_quantity;
-						data_object_array.push(data_object);
-	
-						items.splice(j,1);
-						j--;
-					}
-				}
-				items[i].id=JSON.stringify(data_object_array);
-			}
-
-			items.forEach(function(item)
-			{
-				var rowsHTML="<tr>";
-				rowsHTML+="<form id='row_report63_"+item.id+"'></form>";
-				rowsHTML+="<td data-th='Item'>";
-					rowsHTML+="<input type='text' readonly='readonly' form='row_report63_"+item.id+"' value='"+item.item_name+"'>";
-					rowsHTML+="<br><textarea readonly='readonly' form='row_report63_"+item.id+"'>"+item.item_desc+"</textarea>";
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Batch'>";
-					rowsHTML+="<input type='text' readonly='readonly' form='row_report63_"+item.id+"' value='"+item.batch+"'>";
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Quantity'>";
-					rowsHTML+="To Pick: <input type='number' readonly='readonly' form='row_report63_"+item.id+"' value='"+item.quantity+"'>";
-					rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='row_report63_"+item.id+"' value='"+item.picked_quantity+"'>";
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Storage'>";
-					rowsHTML+="<input type='text' form='row_report63_"+item.id+"' value='"+item.storage+"'>";
-					rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.id+"'>";
-					rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.table_type+"'>";
-					rowsHTML+="<input type='submit' class='submit_hidden' form='row_report63_"+item.id+"'>";
-				rowsHTML+="</td>";
-				rowsHTML+="</tr>";
-						
-				$('#report63_body').append(rowsHTML);
-				var report63_form=document.getElementById('row_report63_'+item.id);
-				var storage_filter=report63_form.elements[5];
-				
-				var storage_data="<store_areas>"+
-								"<name></name>"+
-								"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
-								"</store_areas>";
-				set_my_value_list(storage_data,storage_filter);
-					
-				$(storage_filter).on('click',function()
-				{
-					this.select();
-				});
-				
-				$(report63_form).on('submit',function (event) 
-				{
-					event.preventDefault();
-					report63_update(report63_form);
-				});
-			});
-			
-			hide_loader();
+			item.table_type='bill_items';
 		});
+		
+		var num_items=items.length+1;
+
+		for(var i=0;i<items.length;i++)
+		{
+			if(typeof items[i].item_count=='undefined')
+			{
+				items[i].item_count=1;			
+			}
+
+			for(var j=i+1;j<items.length;j++)
+			{
+				if(typeof items[j].item_count=='undefined')
+				{
+					items[j].item_count=1;			
+				}
+				
+				if(items[i].bill_id==items[j].bill_id)
+				{
+					items[i].item_count+=1;
+					items[j].item_count+=1;
+				}
+			}
+		}
+		
+		for(var i=0;i<items.length;i++)
+		{
+			if(items[i].item_count>1)
+			{
+				items.splice(i,1);
+				i--;
+			}
+		}		
+		
+		for(var i=0;i<items.length;i++)
+		{
+			var data_object_array=[];
+			
+			if(items[i].picked_quantity=='null' || items[i].picked_quantity=='' || isNaN(items[i].picked_quantity))
+				items[i].picked_quantity=0;
+			
+			var data_object=new Object();
+			data_object.id=items[i].id;
+			data_object.quantity=items[i].quantity;
+			data_object.picked=items[i].picked_quantity;
+			data_object_array.push(data_object);
+			
+			for(var j=i+1;j<items.length;j++)
+			{
+				if(items[j].picked_quantity=='null' || items[j].picked_quantity=='' || isNaN(items[j].picked_quantity))
+					items[j].picked_quantity=0;
+
+				if(items[i].item_name==items[j].item_name && items[i].batch==items[j].batch && items[i].storage==items[j].storage && items[i].table_type==items[j].table_type)
+				{
+					items[i].quantity=parseFloat(items[i].quantity)+parseFloat(items[j].quantity);
+					items[i].picked_quantity=parseFloat(items[i].picked_quantity)+parseFloat(items[j].picked_quantity);
+					
+					var data_object=new Object();
+					data_object.id=items[j].id;
+					data_object.quantity=items[j].quantity;
+					data_object.picked=items[j].picked_quantity;
+					data_object_array.push(data_object);
+
+					items.splice(j,1);
+					j--;
+				}
+			}
+			items[i].id=JSON.stringify(data_object_array);
+		}
+
+		items.forEach(function(item)
+		{
+			var rowsHTML="<tr>";
+			rowsHTML+="<form id='row_report63_"+item.id+"'></form>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='row_report63_"+item.id+"' value='"+item.item_name+"'>";
+				rowsHTML+="<br><textarea readonly='readonly' form='row_report63_"+item.id+"'>"+item.item_desc+"</textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='row_report63_"+item.id+"' value='"+item.batch+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="To Pick: <input type='number' readonly='readonly' form='row_report63_"+item.id+"' value='"+item.quantity+"'>";
+				rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='row_report63_"+item.id+"' value='"+item.picked_quantity+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Storage'>";
+				rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' form='row_report63_"+item.id+"' value='"+item.storage+"'>";
+				rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='report63_edit_location_"+item.id+"'>";
+				if(item.storage=='')
+					rowsHTML+="<img src='./images/refresh.png' class='refresh_image' title='Refresh Location Calculation' id='report63_refresh_location_"+item.id+"'>";
+				rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.id+"'>";
+				rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.table_type+"'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='row_report63_"+item.id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="</tr>";
+					
+			$('#report63_body').append(rowsHTML);
+			var report63_form=document.getElementById('row_report63_'+item.id);
+			var storage_filter=report63_form.elements[5];
+			
+			var storage_data="<store_areas>"+
+							"<name></name>"+
+							"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+							"</store_areas>";
+			set_my_value_list(storage_data,storage_filter);
+				
+			$(storage_filter).on('click',function()
+			{
+				this.select();
+			});
+			
+			var edit_button=document.getElementById("report63_edit_location_"+item.id);
+			$(edit_button).on('click',function ()
+			{
+				storage_filter.removeAttribute('readonly');
+			});
+
+			$(report63_form).on('submit',function (event) 
+			{
+				event.preventDefault();
+				report63_update(report63_form);
+			});
+		});
+		
+		hide_loader();
 	});
 
 	var print_button=form.elements['print'];
@@ -6615,8 +6636,7 @@ function report89_ini()
 function report90_ini()
 {
 	var form=document.getElementById('report90_header');
-	var sku=form.elements['sku'].value;
-	var item=form.elements['item_name'].value;
+	var order_num=form.elements['order_num'].value;
 	
 	show_loader();
 	
@@ -6624,8 +6644,8 @@ function report90_ini()
 	
 	var items_data="<bill_items>" +
 			"<id></id>"+
-			"<item_name>"+sku+"</item_name>" +
-			"<item_desc>"+item+"</item_desc>"+
+			"<item_name></item_name>" +
+			"<item_desc></item_desc>"+
 			"<batch></batch>" +
 			"<quantity></quantity>"+
 			"<picked_quantity></picked_quantity>"+
@@ -6638,8 +6658,8 @@ function report90_ini()
 	{
 		var unbilled_items_data="<unbilled_sale_items>" +
 				"<id></id>"+
-				"<item_name>"+sku+"</item_name>" +
-				"<item_desc>"+item+"</item_desc>"+
+				"<item_name></item_name>" +
+				"<item_desc></item_desc>"+
 				"<batch></batch>" +
 				"<quantity></quantity>"+
 				"<picked_quantity></picked_quantity>"+
@@ -6649,24 +6669,39 @@ function report90_ini()
 				"</unbilled_sale_items>";
 		fetch_requested_data('report90',unbilled_items_data,function(unbilled_items)
 		{
-			/* unique items orders
+			// unique items orders
+			/*			
 			for(var i=0;i<items.length;i++)
 			{
-				items[i].item_count=1;
-
+				if(typeof items[i].item_count=='undefined')
+				{
+					items[i].item_count=1;			
+				}
+	
 				for(var j=i+1;j<items.length;j++)
 				{
+					if(typeof items[j].item_count=='undefined')
+					{
+						items[j].item_count=1;			
+					}
+					
 					if(items[i].bill_id==items[j].bill_id)
 					{
 						items[i].item_count+=1;
 						items[j].item_count+=1;
 					}
 				}
-
-				if(items[i].bill_id)
 			}
-			*/
 			
+			for(var i=0;i<items.length;i++)
+			{
+				if(items[i].item_count==1)
+				{
+					items.splice(i,1);
+					i--;
+				}
+			}		
+			*/
 			items.forEach(function(item)
 			{
 				item.table_type='bill_items';
@@ -6681,8 +6716,10 @@ function report90_ini()
 			{
 				var picked_quantity=item.picked_quantity;
 				if(item.picked_quantity=='null' || item.picked_quantity=='' || isNaN(item.picked_quantity))
+				{
 					picked_quantity=0;
-				
+				}
+
 				var rowsHTML="<tr>";
 				rowsHTML+="<form id='row_report90_"+item.id+"'></form>";
 				rowsHTML+="<td data-th='Order' id='report90_order_"+item.id+"'>";
@@ -6699,14 +6736,15 @@ function report90_ini()
 					rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='row_report90_"+item.id+"' value='"+picked_quantity+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Storage'>";
-					rowsHTML+="<input type='text' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
+					rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
+					rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='report90_edit_location_"+item.id+"'>";
+					if(item.storage=='')
+						rowsHTML+="<img src='./images/refresh.png' class='refresh_image' title='Refresh Location Calculation' id='report90_refresh_location_"+item.id+"'>";
 					rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.id+"'>";
 					rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.table_type+"'>";
 					rowsHTML+="<input type='submit' class='submit_hidden' form='row_report90_"+item.id+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="</tr>";
-
-				$('#report90_body').append(rowsHTML);
 
 				if(item.table_type=='bill_items')
 				{
@@ -6714,6 +6752,7 @@ function report90_ini()
 						"<id>"+item.bill_id+"</id>"+
 						"<bill_num></bill_num>"+
 						"<order_num></order_num>"+
+						"<identification_num></identification_num>"+
 						"<billing_type></billing_type>"+
 						"<channel></channel>"+
 						"</bills>";
@@ -6721,36 +6760,50 @@ function report90_ini()
 					{
 						if(bills.length>0)
 						{
-							var order_td=document.getElementById('report90_order_'+item.id);
-							order_td.innerHTML=bills[0].channel+" Order #: "+bills[0].order_num+"<br>"+bills[0].billing_type+" Invoice #: "+bills[0].bill_num;
+							if(bills[0].order_num==order_num || order_num=="")
+							{
+								$('#report90_body').append(rowsHTML);
+							
+								var order_td=document.getElementById('report90_order_'+item.id);
+								order_td.innerHTML=bills[0].channel+" Order #: "+bills[0].order_num+"<br>"+bills[0].billing_type+" Invoice #: "+bills[0].bill_num;
+								
+								var report90_form=document.getElementById('row_report90_'+item.id);
+								var storage_filter=report90_form.elements[5];
+				
+								var edit_button=document.getElementById("report90_edit_location_"+item.id);
+								$(edit_button).on('click',function ()
+								{
+									storage_filter.removeAttribute('readonly');
+								});
+				
+								$(report90_form).on('submit',function (event) 
+								{
+									event.preventDefault();
+									report90_update(report90_form);
+								});
+				
+								var storage_data="<store_areas>"+
+												"<name></name>"+
+												"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+												"</store_areas>";
+								set_my_value_list(storage_data,storage_filter);
+									
+								$(storage_filter).on('click',function()
+								{
+									this.select();
+								});
+								
+							}
 						}
 					});
 				}
-				else 
+/*				else 
 				{
 					var order_td=document.getElementById('row_report90_order_'+item.id);
 					order_td.innerHTML="Challan #: "+item.id+"<br>"+item.customer;
 				}
-
-				var report90_form=document.getElementById('row_report90_'+item.id);
-				var storage_filter=report90_form.elements[5];
-
-				$(report90_form).on('submit',function (event) 
-				{
-					event.preventDefault();
-					report90_update(report90_form);
-				});
-
-				var storage_data="<store_areas>"+
-								"<name></name>"+
-								"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
-								"</store_areas>";
-				set_my_value_list(storage_data,storage_filter);
-					
-				$(storage_filter).on('click',function()
-				{
-					this.select();
-				});
+*/
+				
 			});
 			
 			hide_loader();

@@ -1172,6 +1172,12 @@ function report63_header_ini()
 		report63_ini();
 	});
 		
+	$(rack_filter).off('click');
+	$(rack_filter).on('click',function()
+	{
+		this.select();
+	});
+
 	var sku_data="<product_master>"+
 		"<name></name>"+
 		"</product_master>";
@@ -1950,26 +1956,26 @@ function report89_header_ini()
 function report90_header_ini()
 {	
 	var form=document.getElementById('report90_header');
-	var sku_filter=form.elements['sku'];
-	var item_name_filter=form.elements['item_name'];
+	var order_filter=form.elements['order_num'];
 	var rack_filter=form.elements['rack'];
-	
+
 	$(form).off('submit');
 	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
 		report90_ini();
 	});
-		
-	var sku_data="<product_master>"+
-		"<name></name>"+
-		"</product_master>";
-	set_my_filter(sku_data,sku_filter);	
+	
+	$(rack_filter).off('click');
+	$(rack_filter).on('click',function()
+	{
+		this.select();
+	});
 
-	var name_data="<product_master>"+
-		"<description></description>"+
-		"</product_master>";
-	set_my_filter(name_data,item_name_filter);					
+	var order_data="<sale_orders>"+
+		"<order_num></order_num>"+
+		"</sale_orders>";
+	set_my_filter(order_data,order_filter);					
 	
 	$(rack_filter).off('keydown');
 	$(rack_filter).on('keydown',function (event) 

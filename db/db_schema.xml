@@ -438,6 +438,7 @@
 			<bill_num index='yes' type="VARCHAR(20)"></bill_num>
 			<order_id index='yes' type="BIGINT"></order_id>
 			<order_num index='yes' type="VARCHAR(20)"></order_num>
+			<identification_num index='yes' type="VARCHAR(20)"></identification_num>
 			<bill_date index='yes' type="BIGINT"></bill_date>
 			<due_date index='yes' type="BIGINT"></due_date>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
