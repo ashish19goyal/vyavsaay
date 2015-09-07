@@ -9372,7 +9372,7 @@ function modal138_action()
                 order_object.freight=data_row.shipping_amount;
                 order_object.item_price=data_row.item_price;
                 order_object.amount=parseFloat(data_row.item_price)*parseFloat(data_row.quantity);
-                order_object.total=(parseFloat(order_object.freight)+(parseFloat(order_object.item_price))*parseFloat(data_row.quantity);
+                order_object.total=parseFloat(order_object.freight)+parseFloat(order_object.amount);
 
 				data_row.order_system_id=order_object.id;
 				for(var j=0;j<order_array.length;j++)
@@ -9381,7 +9381,7 @@ function modal138_action()
                 	{
                 		add_order=false;
                 		order_array[j].freight=parseFloat(order_array[j].freight)+parseFloat(order_object.freight);
-						order_array[j].item_price=parseFloat(order_array[j].item_price)+parseFloat(order_object.item_price);
+						order_array[j].amount=parseFloat(order_array[j].amount)+parseFloat(order_object.amount);
 						order_array[j].total=parseFloat(order_array[j].total)+parseFloat(order_object.total);
 						data_row.order_system_id=order_array[j].id;
                 		break;
@@ -9405,7 +9405,7 @@ function modal138_action()
                 order_item_object.unit_price=data_row.item_price;
                 order_item_object.amount=parseFloat(data_row.item_price)*parseFloat(data_row.quantity);
                 order_item_object.freight=data_row.shipping_amount;
-                order_item_object.total=parseFloat(order_item_object.amount)+(parseFloat(data_row.quantity)*parseFloat(data_row.shipping_amount));
+                order_item_object.total=parseFloat(order_item_object.amount)+parseFloat(data_row.shipping_amount);
                 order_item_array.push(order_item_object);
 			});
 
