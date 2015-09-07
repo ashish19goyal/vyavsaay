@@ -438,7 +438,6 @@
 			<bill_num index='yes' type="VARCHAR(20)"></bill_num>
 			<order_id index='yes' type="BIGINT"></order_id>
 			<order_num index='yes' type="VARCHAR(20)"></order_num>
-			<identification_num index='yes' type="VARCHAR(20)"></identification_num>
 			<bill_date index='yes' type="BIGINT"></bill_date>
 			<due_date index='yes' type="BIGINT"></due_date>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
@@ -467,6 +466,7 @@
 			<notes index='no' type="TEXT"></notes>
 			<status index='no' type="VARCHAR(30)"></status><!--cancelled-->
 			<cform index='no' type="VARCHAR(30)"></cform><!--yes/no-->
+			<pick_bag_num index='yes' type="VARCHAR(20)"></pick_bag_num>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</bills>

@@ -7,7 +7,7 @@
 				<input type='button' name='print' title='Print' class='print_icon'>
 			</label>	
 			<br>
-			<label>Scan Rack<br><input type='text' name='rack'></label>
+			<label style='background-color:#B93C42;color:#fff;padding:3px;'>Scan Rack<br><input type='text' style='color:#000;' name='rack'></label>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>

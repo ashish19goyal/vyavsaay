@@ -10911,7 +10911,7 @@ function modal150_action(rack,report_id)
 	var item_table=document.getElementById("modal150_table");
 	item_table.innerHTML="";
 	var item_head=document.createElement('tr');
-	item_head.innerHTML="<th>Item</th><th>Batch</th><th>Quantity</th>";
+	item_head.innerHTML="<th>Item</th><th>Batch</th><th>Quantity To pick</th>";
 	item_table.appendChild(item_head);
 			
 	$("[id^='row_"+report_id+"_']").each(function(index)
@@ -10925,10 +10925,14 @@ function modal150_action(rack,report_id)
 			var quantity=parseFloat(subform.elements[3].value);
 			var picked_quantity=parseFloat(subform.elements[4].value);
 			var row_id=subform.elements[6].value;
+			var order_num=subform.elements[9].value;
+			var bill_id=subform.elements[10].value;
 			
 			var item_row=document.createElement('tr');
 			item_row.setAttribute('id','modal150_row_'+row_id);
 			item_row.setAttribute('data-id',row_id);
+			item_row.setAttribute('data-order-num',order_num);
+			item_row.setAttribute('data-bill-id',bill_id);
 			item_row.innerHTML="<td style='margin:2px;word-wrap: break-word;'>"+item_name+"</td><td style='margin:2px;word-wrap: break-word;'>"+batch+"</td><td style='margin:2px;'>"+(quantity-picked_quantity)+"</td>";
 			item_table.appendChild(item_row);				
 		}								
@@ -10992,6 +10996,12 @@ function modal150_action(rack,report_id)
 						//console.log('picked');
 						product_picked=true;
 						$(this).find('td:nth-child(3)').html((parseFloat($(this).find('td:nth-child(3)').html())-1));
+						if(report_id=='report90')
+						{
+							var bill_id=$(this).attr('data-bill-id');
+							var order_num=$(this).attr('data-order-num');
+							modal151_action(bill_id,order_num);
+						}
 					}
 				});
 				
@@ -11011,3 +11021,41 @@ function modal150_action(rack,report_id)
 	$("#modal150").dialog("open");	
 }
 
+/**
+ * @modalNo 151
+ * @modal Bag Number for picked items
+ */
+function modal151_action(bill_id,order_num)
+{
+	var form=document.getElementById('modal151_form');
+	
+	var order_filter=form.elements['order_num'];
+	var bag_filter=form.elements['bag_num'];
+
+	order_filter.value=order_num;
+
+	$(form).off('submit');
+	$(form).on('submit',function(event) 
+	{
+		event.preventDefault();
+		
+		var bill_xml="<bills>"+
+					"<id>"+bill_id+"</id>"+
+					"<pick_bag_num>"+bag_filter.value+"</pick_bag_num>"+
+					"<last_updated>"+get_my_time()+"</last_updated>"+
+					"</bills>";
+		update_simple(bill_xml);			
+
+		$("#modal151").dialog("close");		
+	});	
+
+	var bag_num_xml="<bills>"+
+					"<pick_bag_num></pick_bag_num>"+
+					"<id>"+bill_id+"</id>"+
+					"<order_num exact='yes'>"+order_num+"</order_num>"+
+					"</bills>";
+	set_my_value(bag_num_xml,bag_filter);
+					
+	///////////////////////////
+	$("#modal151").dialog("open");	
+}

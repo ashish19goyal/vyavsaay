@@ -3423,7 +3423,7 @@ function form91_add_item()
 			amount_filter.value=0;
 			tax_filter.value=0;
 		});
-		
+
 		$(quantity_filter).on('blur',function(event)
 		{
 			var amount=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);

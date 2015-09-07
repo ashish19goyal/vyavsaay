@@ -6669,39 +6669,6 @@ function report90_ini()
 				"</unbilled_sale_items>";
 		fetch_requested_data('report90',unbilled_items_data,function(unbilled_items)
 		{
-			// unique items orders
-			/*			
-			for(var i=0;i<items.length;i++)
-			{
-				if(typeof items[i].item_count=='undefined')
-				{
-					items[i].item_count=1;			
-				}
-	
-				for(var j=i+1;j<items.length;j++)
-				{
-					if(typeof items[j].item_count=='undefined')
-					{
-						items[j].item_count=1;			
-					}
-					
-					if(items[i].bill_id==items[j].bill_id)
-					{
-						items[i].item_count+=1;
-						items[j].item_count+=1;
-					}
-				}
-			}
-			
-			for(var i=0;i<items.length;i++)
-			{
-				if(items[i].item_count==1)
-				{
-					items.splice(i,1);
-					i--;
-				}
-			}		
-			*/
 			items.forEach(function(item)
 			{
 				item.table_type='bill_items';
@@ -6719,40 +6686,13 @@ function report90_ini()
 				{
 					picked_quantity=0;
 				}
-
-				var rowsHTML="<tr>";
-				rowsHTML+="<form id='row_report90_"+item.id+"'></form>";
-				rowsHTML+="<td data-th='Order' id='report90_order_"+item.id+"'>";
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Item'>";
-					rowsHTML+="<input type='text' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.item_name+"'>";
-					rowsHTML+="<br><textarea readonly='readonly' form='row_report90_"+item.id+"'>"+item.item_desc+"</textarea>";
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Batch'>";
-					rowsHTML+="<input type='text' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.batch+"'>";
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Quantity'>";
-					rowsHTML+="To Pick: <input type='number' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.quantity+"'>";
-					rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='row_report90_"+item.id+"' value='"+picked_quantity+"'>";
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Storage'>";
-					rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
-					rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='report90_edit_location_"+item.id+"'>";
-					if(item.storage=='')
-						rowsHTML+="<img src='./images/refresh.png' class='refresh_icon' title='Refresh Location Calculation' id='report90_refresh_location_"+item.id+"'>";
-					rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.id+"'>";
-					rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.table_type+"'>";
-					rowsHTML+="<input type='submit' class='submit_hidden' form='row_report90_"+item.id+"'>";
-				rowsHTML+="</td>";
-				rowsHTML+="</tr>";
-
+				
 				if(item.table_type=='bill_items')
 				{
 					var bills_data="<bills>"+
 						"<id>"+item.bill_id+"</id>"+
 						"<bill_num></bill_num>"+
 						"<order_num></order_num>"+
-						"<identification_num></identification_num>"+
 						"<billing_type></billing_type>"+
 						"<channel></channel>"+
 						"</bills>";
@@ -6762,10 +6702,37 @@ function report90_ini()
 						{
 							if(bills[0].order_num==order_num || order_num=="")
 							{
+								var rowsHTML="<tr>";
+									rowsHTML+="<form id='row_report90_"+item.id+"'></form>";
+									rowsHTML+="<td data-th='Order' id='report90_order_"+item.id+"'>";
+										rowsHTML+=bills[0].channel+" Order #: "+bills[0].order_num+"<br>"+bills[0].billing_type+" Invoice #: "+bills[0].bill_num;
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Item'>";
+										rowsHTML+="<input type='text' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.item_name+"'>";
+										rowsHTML+="<br><textarea readonly='readonly' form='row_report90_"+item.id+"'>"+item.item_desc+"</textarea>";
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Batch'>";
+										rowsHTML+="<input type='text' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.batch+"'>";
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Quantity'>";
+										rowsHTML+="To Pick: <input type='number' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.quantity+"'>";
+										rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='row_report90_"+item.id+"' value='"+picked_quantity+"'>";
+									rowsHTML+="</td>";
+									rowsHTML+="<td data-th='Storage'>";
+										rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
+										rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='report90_edit_location_"+item.id+"'>";
+										if(item.storage=='')
+											rowsHTML+="<img src='./images/refresh.png' class='refresh_icon' title='Refresh Location Calculation' id='report90_refresh_location_"+item.id+"'>";
+										rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.id+"'>";
+										rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.table_type+"'>";
+										rowsHTML+="<input type='submit' class='submit_hidden' form='row_report90_"+item.id+"'>";
+										rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='order_num' value='"+bills[0].order_num+"'>";
+										rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='bill_id' value='"+item.bill_id+"'>";
+									rowsHTML+="</td>";
+									rowsHTML+="</tr>";
+
 								$('#report90_body').append(rowsHTML);
 							
-								var order_td=document.getElementById('report90_order_'+item.id);
-								order_td.innerHTML=bills[0].channel+" Order #: "+bills[0].order_num+"<br>"+bills[0].billing_type+" Invoice #: "+bills[0].bill_num;
 								
 								var report90_form=document.getElementById('row_report90_'+item.id);
 								var storage_filter=report90_form.elements[5];
@@ -6783,9 +6750,9 @@ function report90_ini()
 								});
 				
 								var storage_data="<store_areas>"+
-												"<name></name>"+
-												"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
-												"</store_areas>";
+											"<name></name>"+
+											"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+											"</store_areas>";
 								set_my_value_list(storage_data,storage_filter);
 									
 								$(storage_filter).on('click',function()
@@ -6797,13 +6764,6 @@ function report90_ini()
 						}
 					});
 				}
-/*				else 
-				{
-					var order_td=document.getElementById('row_report90_order_'+item.id);
-					order_td.innerHTML="Challan #: "+item.id+"<br>"+item.customer;
-				}
-*/
-				
 			});
 			
 			hide_loader();

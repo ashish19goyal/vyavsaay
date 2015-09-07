@@ -1380,5 +1380,17 @@
 		<table id='modal150_table'>
 		</table>		
 	</div>
+
+	<div id="modal151" title="Bag Number">
+		<form id='modal151_form' autocomplete="off">
+			<fieldset>
+				<label>Order #: <input type="text" name='order_num' readonly='readonly' required></label>
+				<label>Bag #: <input type="text" name='bag_num' required></label>
+				<input type="submit" value='Save' name='save' class='modal_submit'>
+			</fieldset>
+		</form>
+		<table id='modal150_table'>
+		</table>		
+	</div>
 	
 </div>

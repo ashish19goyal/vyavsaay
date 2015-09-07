@@ -72,15 +72,8 @@ function report67_update(data_id)
 					"<collection_status>received</collection_status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bills>";
-		
-		if(is_online())
-		{	
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}		
+		update_simple(data_xml);
+				
 	}
 	else
 	{
