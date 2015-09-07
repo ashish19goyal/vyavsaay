@@ -9371,7 +9371,8 @@ function modal138_action()
                 order_object.tax_type=data_row.tax_type;
                 order_object.freight=data_row.shipping_amount;
                 order_object.item_price=data_row.item_price;
-                order_object.total=parseFloat(order_object.freight)+parseFloat(order_object.item_price);;
+                order_object.amount=parseFloat(data_row.item_price)*parseFloat(data_row.quantity);
+                order_object.total=(parseFloat(order_object.freight)+(parseFloat(order_object.item_price))*parseFloat(data_row.quantity);
 
 				data_row.order_system_id=order_object.id;
 				for(var j=0;j<order_array.length;j++)
@@ -9401,13 +9402,11 @@ function modal138_action()
                 order_item_object.vendor_sku="";
                 order_item_object.quantity=data_row.quantity;
                 order_item_object.mrp=data_row.item_mrp;
-                order_item_object.unit_price=parseFloat(data_row.item_mrp)/parseFloat(data_row.quantity);
-                order_item_object.amount=data_row.item_price;
+                order_item_object.unit_price=data_row.item_price;
+                order_item_object.amount=parseFloat(data_row.item_price)*parseFloat(data_row.quantity);
                 order_item_object.freight=data_row.shipping_amount;
-                order_item_object.total=parseFloat(data_row.item_price)+parseFloat(data_row.shipping_amount);
-               
+                order_item_object.total=parseFloat(order_item_object.amount)+(parseFloat(data_row.quantity)*parseFloat(data_row.shipping_amount));
                 order_item_array.push(order_item_object);
-
 			});
 
 			order_array.forEach(function(row)
@@ -9425,7 +9424,7 @@ function modal138_action()
 						"<pincode>"+row.pincode+"</pincode>"+
 						"<order_date>"+get_raw_time(row.order_date)+"</order_date>"+
 						"<freight>"+row.freight+"</freight>"+
-						"<amount>"+row.item_price+"</amount>"+
+						"<amount>"+row.amount+"</amount>"+
 						"<tax></tax>"+
 						"<total>"+row.total+"</total>"+
 						"<status>pending</status>"+
@@ -10930,7 +10929,7 @@ function modal150_action(rack,report_id)
 			var item_row=document.createElement('tr');
 			item_row.setAttribute('id','modal150_row_'+row_id);
 			item_row.setAttribute('data-id',row_id);
-			item_row.innerHTML="<td style='word-wrap: break-word;'>"+item_name+"</td><td style='word-wrap: break-word;'>"+batch+"</td><td>"+(quantity-picked_quantity)+"</td>";
+			item_row.innerHTML="<td style='margin:2px;word-wrap: break-word;'>"+item_name+"</td><td style='margin:2px;word-wrap: break-word;'>"+batch+"</td><td style='margin:2px;'>"+(quantity-picked_quantity)+"</td>";
 			item_table.appendChild(item_row);				
 		}								
 	});	

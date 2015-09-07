@@ -4136,11 +4136,17 @@ function form91_update_form()
 
 		var tax_string="";
 		var tax_amount_string="";
+		
 		for(var x in tax_array)
 		{
-			tax_string+=tax_name+" @"+x+"%: <br>";
+			tax_array[x]=my_round(tax_array[x],2);
+			tax_string+=tax_name+" @"+x+"%: <br>";		
 			tax_amount_string+="Rs. "+tax_array[x]+": <br>";
 		}
+
+		amount=my_round(amount,2);
+		freight=my_round(freight,2);
+		total=my_round(total,2);
 
 		var total_row="<tr><td colspan='3' data-th='Total'>Total<br>Total Quantity: "+total_quantity+"</td>" +
 								"<td>Amount:</br>"+tax_string+"Freight: </br>Total: </td>" +
