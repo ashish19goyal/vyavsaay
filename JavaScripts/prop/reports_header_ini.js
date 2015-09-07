@@ -1311,12 +1311,6 @@ function report64_header_ini()
 			});		
 		});
 	});
-
-	$(print_button).on('click',function () 
-	{
-		var container=document.getElementById('report64_invoice');
-		$.print(container);
-	});
 }
 
 /**

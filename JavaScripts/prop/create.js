@@ -6305,6 +6305,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 										"<id>"+order_id+"</id>" +
 										"<bill_num>"+bill_num_ids[0].value+"</bill_num>"+										
 										"<order_num>"+order_num+"</order_num>"+										
+										"<order_id>"+order_id+"</order_id>"+										
 										"<customer_name>"+customer+"</customer_name>" +
 										"<bill_date>"+get_my_time()+"</bill_date>" +
 										"<billing_type>"+bill_type+"</billing_type>" +

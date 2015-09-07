@@ -4517,6 +4517,7 @@ function report64_ini()
 					"<item_desc></item_desc>"+
 					"<quantity></quantity>"+
 					"<total></total>"+
+					"<mrp></mrp>"+
 					"<batch></batch>"+
 					"<picked_status exact='yes'>picked</picked_status>"+
 					"<packing_status exact='yes'>pending</packing_status>"+
@@ -4530,10 +4531,20 @@ function report64_ini()
 								"<customer_name></customer_name>"+
 	                        	"<bill_num></bill_num>"+
 	                       		"<order_num></order_num>"+
+	                       		"<order_id></order_id>"+
 	                        	"<bill_date></bill_date>"+
 	                        	"</bills>";
 	                fetch_requested_data('',bills_xml,function (bills) 
-					{        	
+					{
+						//console.log(bills);
+						$(print_button).off('click'); 
+						$(print_button).on('click',function () 
+						{
+							print_product_barcode(bills[0].order_id,"Order # "+bills[0].order_num,"Invoice # "+bills[0].bill_num);
+						});
+						
+        				$(print_button).show();
+
 							////////////setting up containers///////////////////////	
 						var container=document.getElementById('report64_invoice');
 												
@@ -4543,15 +4554,15 @@ function report64_ini()
 						
 						////////////setting styles for containers/////////////////////////
 					
-						invoice_line.setAttribute('style','font-size:1em;width:100%;min-height:50px;background-color:#bbbbbb;');
-						packing_box.setAttribute('style','border:1px solid #000;margin:10px;width:95%;min-height:50px;font-weight:600;');
+						invoice_line.setAttribute('style','padding:10px;font-size:1em;width:100%;min-height:50px;background-color:#bbbbbb;font-weight:600;');
+						packing_box.setAttribute('style','border:1px solid #000;margin:10px;width:100%;min-height:50px;font-weight:600;');
 					
 						///////////////getting the content////////////////////////////////////////
 						var date=get_my_past_date(bills[0].bill_date);				
 						var invoice_no=bills[0].bill_num;
 						var order_no=bills[0].order_num;
 						
-						invoice_line.innerHTML="<div style='float:left;width:50%'>Invoice #: "+invoice_no+"<br>Order #: "+order_no+"</div><div style='float:right;text-align:right;width:50%'>Invoice Date: "+date+"</div>";
+						invoice_line.innerHTML="<div style='float:left;width:50%;text-align:left'>Invoice #: "+invoice_no+"<br>Order #: "+order_no+"</div><div style='float:right;text-align:right;width:50%'>Invoice Date: "+date+"</div>";
 												
 								////////populate packing instructions and invoice template///////
 						if(products[0].packing!='undefined')
@@ -4566,12 +4577,12 @@ function report64_ini()
 						var table_copy=document.createElement('table');
 						
 						table_copy.setAttribute('width','100%');
-						table_copy.setAttribute('height','100px');
-						$(table_copy).append("<tr><th>Item</th><th>Quantity</th><th>Total</th></tr>");
+						//table_copy.setAttribute('height','100px');
+						$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>Quantity</th><th>MRP</th><th>Total</th></tr>");
 		
 						items.forEach(function (item) 
 						{
-							$(table_copy).append("<tr><th>"+item.item_desc+"</th><th>"+item.quantity+"</th><th>"+item.total+"</th></tr>");	
+							$(table_copy).append("<tr><th>"+item.item_name+"</th><th>"+item.item_desc+"</th><th>"+item.batch+"</th><th>"+item.quantity+"</th><th>"+item.mrp+	"</th><th>"+item.total+"</th></tr>");	
 						});
 
 						$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:1em");
@@ -4583,7 +4594,6 @@ function report64_ini()
 						container.appendChild(table_copy);
 						container.appendChild(packing_box);
 						
-						$(print_button).show();					
 					});
 				}
 				else 
@@ -4593,6 +4603,12 @@ function report64_ini()
 				}
 			});
 			////////////////////////////////////////////////////////////////
+		}
+		else 
+		{
+			var container=document.getElementById('report64_invoice');
+			container.innerHTML='<b>Incorrect Barcode.<b>';	
+			hide_loader();
 		}		
 	});		
 };

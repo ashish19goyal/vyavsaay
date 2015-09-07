@@ -22090,6 +22090,145 @@ function form209_ini()
 }
 
 /**
+ * @formNo 210
+ * @report Order Packing
+ */
+function form210_ini()
+{
+	var master_form=document.getElementById('form210_master');
+	var order_filter=master_form.elements['order'];
+	var print_button=master_form.elements['print'];
+	
+	$('#form210_invoice').html('');
+
+	show_loader();
+
+	var bills_xml="<bills count='1'>"+
+			"<id></id>"+
+			"<customer_name></customer_name>"+
+	       	"<bill_num></bill_num>"+
+	   		"<order_num exact='yes'>"+order_filter.value+"</order_num>"+
+	  		"<order_id></order_id>"+
+	       	"<bill_date></bill_date>"+
+	      	"</bills>";
+	fetch_requested_data('',bills_xml,function (bills) 
+	{
+	     if(bills.length>0)
+	     {
+	     	$(print_button).off('click'); 
+			$(print_button).on('click',function () 
+			{
+				print_product_barcode(bills[0].order_id,"Order # "+bills[0].order_num,"Invoice # "+bills[0].bill_num);
+			});
+						 	
+	      	//////////provide a preview of the invoice//////////////////////
+			var bill_items_xml="<bill_items>"+
+					"<id></id>"+
+					"<item_name></item_name>"+
+					"<item_desc></item_desc>"+
+					"<quantity></quantity>"+
+					"<total></total>"+
+					"<mrp></mrp>"+
+					"<batch></batch>"+
+					"<picked_status exact='yes'>picked</picked_status>"+
+					"<packing_status exact='yes'>pending</packing_status>"+
+					"<bill_id exact='yes'>"+bills[0].id+"</bill_id>"+		
+					"</bill_items>";
+			fetch_requested_data('',bill_items_xml,function (bill_items) 
+			{
+				if(bill_items.length>0)
+				{
+					////////////setting up containers///////////////////////	
+					var container=document.getElementById('form210_invoice');
+											
+					var invoice_line=document.createElement('div');
+					var table_container=document.createElement('div');
+					
+					////////////setting styles for containers/////////////////////////
+				
+					invoice_line.setAttribute('style','padding:10px;font-size:1em;width:100%;min-height:50px;background-color:#bbbbbb;font-weight:600;');
+					
+					///////////////getting the content////////////////////////////////////////
+					var date=get_my_past_date(bills[0].bill_date);				
+					var invoice_no=bills[0].bill_num;
+					var order_no=bills[0].order_num;
+					
+					invoice_line.innerHTML="<div style='float:left;width:50%;text-align:left'>Invoice #: "+invoice_no+"<br>Order #: "+order_no+"</div><div style='float:right;text-align:right;width:50%'>Invoice Date: "+date+"</div>";
+											
+					var table_copy=document.createElement('table');
+					
+					table_copy.setAttribute('width','100%');
+					table_copy.setAttribute('class','plain_table');
+					$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>Quantity</th><th>MRP</th><th>Total</th><th style='width:200px;'>Action</th></tr>");
+	
+					bill_items.forEach(function (item) 
+					{
+						$(table_copy).append("<tr><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td><td>"+item.quantity+"</td><td>"+item.mrp+"</td><td>"+item.total+"</td><td><input type='text' placeholder='Scan item to accept' style='width:150px'><br><input type='button' class='generic_icon' value='Reject'></td></tr>");	
+					});
+										
+					container.appendChild(invoice_line);
+					container.appendChild(table_copy);
+					
+					hide_loader();
+					/////////get images and packing instructions//////////					
+					bill_items.forEach(function(bill_item)
+					{
+						var product_columns="<product_master count='1'>" +
+								"<id></id>" +
+								"<name exact='yes'>"+bill_item.item_name+"</name>"+
+								"<description></description>"+								
+								"<packing></packing>"+
+								"</product_master>";
+						fetch_requested_data('',product_columns,function (products) 
+						{
+							if(products.length>0)
+							{
+								/////////get product image////////////
+								var picture_column="<documents>" +
+										"<id></id>" +
+										"<url></url>" +
+										"<doc_type exact='yes'>product_master</doc_type>" +
+										"<target_id exact='yes'>"+products[0].id+"</target_id>" +
+										"</documents>";
+								fetch_requested_data('',picture_column,function(pic_results)
+								{
+									var pic_results_url="";
+									var pic_results_id="";
+									if(pic_results.length>0)
+									{
+										pic_results_id=pic_results[0].id;
+										pic_results_url=pic_results[0].url;
+									}
+									updated_url=pic_results_url.replace(/ /g,"+");
+									var imgHTML="<div style='display:block;width:45%;margin:5px;float:left;'><b>"+products[0].name+"</b>: "+products[0].description+"<br>Packing Instructions: "+products[0].packing+"<br><img style='width:98%;height:auto;' src='"+updated_url+"'></div>";
+									
+									$('#form210_image').append(imgHTML);	
+									$('#form210_form').show();			
+									//hide_loader();
+								});
+							}
+						});											
+					});
+				}
+				else 
+				{
+					var container=document.getElementById('form210_invoice');
+					container.innerHTML='<b>No items are pending for packing for this Order.<b>';	
+					hide_loader();
+				}
+			});
+			////////////////////////////////////////////////////////////////
+		}
+		else 
+		{
+			var container=document.getElementById('form210_invoice');
+			container.innerHTML='<b>Incorrect Order #<b>';	
+			hide_loader();
+		}		
+	});		
+};
+
+/**
  * @form Update Logistics Orders (by drs)
  * @formNo 211
  * @Loading light

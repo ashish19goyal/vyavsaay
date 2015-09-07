@@ -1081,30 +1081,22 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 }
 
 
-/*
-.form_grid_item input[type='button']{
-	color: #08233E;
-    font-size: 9px;
-    padding: 2px;
-    background: #FC0 -moz-linear-gradient(center top , rgba(255, 255, 255, 0.3) 50%, #FC0 50%, #FC0) repeat scroll 0% 0%;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #FC0 #FC0 #9F9F9F;
-    -moz-border-top-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    border-image: none;
-    border-radius: 10px;
-    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5) inset;
-    cursor: pointer;
-    text-shadow: 0px 1px #FFF;
-}
-*/
 .form_grid_item input[type='file']{
 	display: none;
 }
 
+.plain_table th{
+	border: 1px solid #000;
+	text-align: left;
+	padding:1px;
+	font-weight: bold;
+}
+
+.plain_table td{
+	border: 1px solid #000;
+	text-align: left;
+	padding:1px;
+}
 
 @media screen and (min-width: 550px) {
 	#side_menu{

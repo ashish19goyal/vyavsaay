@@ -2,20 +2,16 @@
 	<form id='form210_master' autocomplete="off">
 		<fieldset>
 			<label>Bag #: <input type='text' class='widebox' name='bag'></label>
-			<label>Order #: <input type='text' class='widebox' name='order'></label>
-			<!--<label><input type='button' name='save' class='generic_icon' value='Update Status'></label>-->
+			<label>Order #: <input type='text' class='widebox' name='order' required></label>
+			<label><input type='submit' name='refresh' class='generic_icon' value='Refresh'></label>
+			<label><input type='submit' name='print' class='generic_icon' value='Print Barcode'></label>
 		</fieldset>
 	</form>
-	<table class='rwd-table'>
-		<thead id='form210_head'>
-			<tr>
-				<form id='form210_header'></form>
-				<th>AWB #</th>
-				<th>Order #</th>
-				<th><input type='button' form='form210_header' title='Add item' class='add_icon' onclick='form210_add_item();'></th>
-			</tr>
-		</thead>
-		<tbody id='form210_body'>
-		</tbody>
-	</table>
+
+	<br>
+	<div id='form210_body' style='display:block;width:100%'>
+		<div id='form210_invoice' style='display:block;width:95%;height:auto;'></div>
+		<br><br>
+		<div id='form210_image' style='display:block;margin:5px;width:95%;height:auto;'></div>
+	</div>
 </div>

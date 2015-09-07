@@ -6,9 +6,9 @@
 	</form>
 	<br>
 	<div id='report64_body' style='display:block;width:100%'>
-		<div id='report64_invoice' style='display:block;width:49%;height:300px;float:right;'></div>
-		<div id='report64_image' style='display:block;margin:5px;width:49%;height:300px;float:left;'></div>
-		<div style='display:block;width:98%'>		
+		<div id='report64_invoice' style='display:block;width:95%;height:auto;'></div>
+		<div id='report64_image' style='display:block;margin:5px;width:45%;height:auto;'></div>
+		<div style='display:block;width:98%'>
 			<form id='report64_form'>
 				<input type='button' value='Reject' name='reject' class='generic_icon'>
 				<input type='button' value='Accept' name='accept' class='generic_icon'>

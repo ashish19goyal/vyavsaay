@@ -10933,7 +10933,7 @@ function modal150_action(rack,report_id)
 			item_row.setAttribute('data-id',row_id);
 			item_row.setAttribute('data-order-num',order_num);
 			item_row.setAttribute('data-bill-id',bill_id);
-			item_row.innerHTML="<td style='margin:2px;word-wrap: break-word;'>"+item_name+"</td><td style='margin:2px;word-wrap: break-word;'>"+batch+"</td><td style='margin:2px;'>"+(quantity-picked_quantity)+"</td>";
+			item_row.innerHTML="<td style='margin:2px;word-wrap: break-word;'>"+item_name+"</td><td style='margin:2px;word-wrap: break-word;'>"+batch+"</td><td style='margin:2px;text-align:center;'>"+(quantity-picked_quantity)+"</td>";
 			item_table.appendChild(item_row);				
 		}								
 	});	

@@ -6,7 +6,7 @@
 		<li><a id='report63_link' href='#report63' onclick='report63_header_ini(); report63_ini();' data-i18n='form.item_picklist'></a></li>		
 		<li><a id='report90_link' href='#report90' onclick='report90_header_ini(); report90_ini();' data-i18n='form.order_picklist'></a></li>
 		<li><a id='report64_link' href='#report64' onclick='report64_header_ini();' data-i18n='form.packing_instructions'></a></li>		
-		<li><a id='form210_link' href='#form210' onclick='form210_header_ini(); form210_ini();' data-i18n='form.packing_instructions_invoice'></a></li>		
+		<li><a id='form210_link' href='#form210' onclick='form210_header_ini();' data-i18n='form.packing_instructions_invoice'></a></li>		
 		<li><a id='form145_link' href='#form145' onclick='form145_header_ini(); form145_ini();' data-i18n='form.store_movement'></a></li>
 		<li><a id='form157_link' href='#form157' onclick='form157_header_ini(); form157_ini();' data-i18n='form.store_movement'></a></li>
 		<li><a id='form193_link' href='#form193' onclick="form193_header_ini();" data-i18n='form.adjust_inventory'></a></li>

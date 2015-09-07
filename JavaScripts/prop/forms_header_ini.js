@@ -7585,6 +7585,67 @@ function form209_header_ini()
 }
 
 /**
+ * @formNo 210
+ * @report Order Packing
+ */
+function form210_header_ini()
+{	
+	var master_form=document.getElementById('form210_master');
+	var bag_filter=master_form.elements[1];
+	var order_filter=master_form.elements[2];
+	
+	$('#form210_image').html('');
+	$('#form210_invoice').html('');
+
+	$(bag_filter).focus();
+
+	$(master_form).off('submit');
+	$(master_form).on('submit',function(event)
+	{
+		event.preventDefault();
+		form210_ini();
+	});
+	
+	var bag_data="<bills>"+
+				"<pick_bag_num></pick_bag_num>"+
+				"</bills>";
+	set_my_value_list(bag_data,bag_filter);					
+
+	var order_data="<bills>"+
+				"<order_num></order_num>"+
+				"</bills>";
+	set_my_value_list(order_data,order_filter);					
+	
+	$(bag_filter).off('blur');
+	$(bag_filter).on('blur',function () 
+	{
+		if(bag_filter.value!="")
+		{
+			var order_data="<bills>"+
+				"<order_num></order_num>"+
+				"<pick_bag_num exact='yes'>"+bag_filter.value+"</pick_bag_num>"+
+				"</bills>";
+			set_my_value_list(order_data,order_filter);
+			set_my_value(order_data,order_filter);
+		}
+	});
+
+	$(order_filter).off('blur');
+	$(order_filter).on('blur',function () 
+	{
+		if(order_filter.value!="")
+		{
+			var order_data="<bills>"+
+				"<pick_bag_num></pick_bag_num>"+
+				"<order_num exact='yes'>"+order_filter.value+"</order_num>"+
+				"</bills>";
+			set_my_value(bag_data,bag_filter);
+		}
+	});
+}
+
+
+/**
  * @form Update Logisitcs Orders
  * @formNo 211
  */
