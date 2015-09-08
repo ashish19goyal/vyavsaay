@@ -20864,7 +20864,6 @@ function form196_ini_all()
 					var to=result.email;
 					var customer_phone=result.phone;
 					var customer_name=result.name;
-					email_id_string+=customer_name+":"+to;
 					var message=sms_content.replace(/customer_name/g,customer_name);
 					message=message.replace(/business_title/g,business_title);
 						
@@ -20877,7 +20876,7 @@ function form196_ini_all()
 				});
 					
 				var email_to=email_id_string.replace(/;\s*$/, "");		
-		
+				console.log(email_to);
 				send_email(email_to,from,business_title,subject,email_message,function()
 				{
 					$("#modal58").dialog("open");
