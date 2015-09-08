@@ -4444,7 +4444,7 @@ function report63_ini()
 				report63_update(report63_form);
 			});
 		});
-		$('.textarea').autosize();
+		$('textarea').autosize();
 		hide_loader();
 	});
 
@@ -4617,7 +4617,7 @@ function report64_ini()
 		  	   if(report64_count===0)
 		  	   {
 					clearInterval(report64_complete);
-					$('.textarea').autosize();
+					$('textarea').autosize();
 					hide_loader();   
 		  	   }
 			},200);
@@ -6749,7 +6749,7 @@ function report90_ini()
 		  	   if(report90_count===0)
 		  	   {
 					clearInterval(report90_complete);
-					$('.textarea').autosize();
+					$('textarea').autosize();
 					hide_loader();   
 		  	   }
 			},1000);		    

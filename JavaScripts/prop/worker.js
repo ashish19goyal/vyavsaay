@@ -69,6 +69,8 @@ function worker_update_orders_status()
 					
 					update_batch(data_xml);
 					hide_loader();
+					form108_ini();
+					
 				},packed_pending_xml);				
 			},picked_pending_xml);	
 		});

@@ -5330,11 +5330,11 @@ function form91_get_totals()
 	freight=my_round(freight,2);
 	total=my_round(total,2);
 
-	var total_row="<tr><td colspan='3' data-th='Total'>Total<br>Total Quantity: "+total_quantity+"</td>" +
+	var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:</br>"+tax_string+"Freight: </br>Total: </td>" +
 							"<td>Rs. "+amount+"</br>" +tax+
 							"Rs. "+freight+"</br>" +
-							"Rs. "+total+"</td>" +
+							"Rs. <vyavsaay_p id='form91_final_total'>"+total+"</vyavsaay_p></td>" +
 							"<td></td>" +
 							"</tr>";
 	$('#form91_foot').html(total_row);
@@ -5417,11 +5417,11 @@ function form91_create_form()
 		freight=my_round(freight,2);
 		total=my_round(total,2);
 
-		var total_row="<tr><td colspan='3' data-th='Total'>Total<br>Total Quantity: "+total_quantity+"</td>" +
+		var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 								"<td>Amount:</br>"+tax_string+"Freight: </br>Total: </td>" +
 								"<td>Rs. "+amount+"</br>" +tax_amount_string+
 								"Rs. "+freight+"</br>" +
-								"Rs. "+total+"</td>" +
+								"Rs. <vyavsaay_p id='form91_final_total'>"+total+"</vyavsaay_p></td>" +
 								"<td></td>" +
 								"</tr>";
 		$('#form91_foot').html(total_row);
@@ -6363,7 +6363,10 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 										"<last_updated>"+get_my_time()+"</last_updated>" +
 										"</transactions>";
 								
-								update_simple(sale_order_xml);					
+								update_simple_func(sale_order_xml,function () 
+								{
+									form108_ini();
+								});					
 								create_simple(transaction_xml);
 								create_simple(pt_xml);
 								create_simple(payment_xml);

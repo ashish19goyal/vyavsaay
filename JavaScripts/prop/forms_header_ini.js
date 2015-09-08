@@ -2512,6 +2512,7 @@ function form91_header_ini()
 	fields.elements['bill_id'].value=get_new_key();
 	fields.elements['t_id'].value=fields.elements['bill_id'].value;
 	var save_button=fields.elements['save'];
+	var tin_filter=fields.elements['customer_tin'];
 	
 	$(share_button).hide();
 
@@ -2626,6 +2627,13 @@ function form91_header_ini()
 				document.getElementById('form91_customer_info').innerHTML="";
 			}
 		});
+		var tin_data="<attributes>" +
+				"<value></value>" +
+				"<type exact='yes'>customer</type>"+
+				"<attribute array='yes'>--VAT#--CST#--</attribute>"+ 
+				"<name exact='yes'>"+customers_filter.value+"</name>" +
+				"</attributes>";
+		set_my_value(tin_data,tin_filter);		
 	});
 
 	$(bill_date).datepicker();

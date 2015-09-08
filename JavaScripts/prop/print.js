@@ -977,7 +977,10 @@ function print_form91(func)
 	var bill_type=master_form.elements['bill_type'].value;
 	var order_no=master_form.elements['order_num'].value;
 	var bill_num=master_form.elements['bill_num'].value;
+	var po_num=master_form.elements['order_num'].value;
+	var po_date=get_my_past_date(master_form.elements['po_date'].value);
 	var customer_address=document.getElementById('form91_customer_info').innerHTML;
+	var customer_tin=master_form.elements['customer_tin'].value;
 	var tin_no=get_session_var('tin');
 		
 	var tandc_text=get_session_var('bill_message');
@@ -985,7 +988,7 @@ function print_form91(func)
 	
 	////////////////filling in the content into the containers//////////////////////////
 
-	if(bill_type="Tax")	
+	if(bill_type=="Tax")	
 	{
 		invoice_info.innerHTML="TAX INVOICE";
 	}
@@ -997,8 +1000,8 @@ function print_form91(func)
 	business_title.innerHTML=bt;
 	business_contact.innerHTML=business_address+"<br>Tel: "+business_phone+" emial: "+business_email;
 	
-	customer_info.innerHTML=customer_name+"<br>"+customer_address;
-	business_info.innerHTML="Invoice #: "+bill_num+"<br>Dated: "+date+"<br>TIN: "+tin_no;
+	customer_info.innerHTML=customer_name+"<br>"+customer_address+"<br>TIN #:"+customer_tin;
+	business_info.innerHTML="Invoice #: "+bill_num+"<br>Dated: "+date+"<br>PO #: "+po_num+"<br>PO Date: "+po_date+"<br>TIN: "+tin_no;
 	
 	tandc.innerHTML="<b><u>Terms and Conditions</u></b><br>"+tandc_text;
 	signature.innerHTML=signature_text;
@@ -1042,9 +1045,9 @@ function print_form91(func)
 
 		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
 				"<td style='text-align:left;'>"+counter+"</td>"+
-				"<td style='text-align:left;'>"+sku+"</td>"+
-				"<td style='text-align:left;'>"+sku+"</td>"+
-				"<td style='text-align:left;'>"+batch+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word;'>"+sku+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word;'>"+sku+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word;'>"+batch+"</td>"+
 				"<td style='text-align:left;'>"+quantity+"</td>"+
 				"<td style='text-align:left;'>"+mrp+"</td>"+
 				"<td style='text-align:left;'>"+price+"</td>"+
@@ -1055,10 +1058,19 @@ function print_form91(func)
 	});
 	
 	var row_count=$(table_element).find('tbody>tr').length;
-	var rows_to_add=20-row_count;
+	var rows_to_add=15-row_count;
 	for(var i=0;i<rows_to_add;i++)
 	{
 		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+	}
+	
+	var bill_total=document.getElementById('form91_final_total').innerHTML;
+	var wording_total=number2text(bill_total);
+	
+	var against_c_form="";
+	if(bill_type=='Retail-CST-C')
+	{
+		against_c_form="<br>Against C-Form";
 	}
 
 	var table_foot=document.getElementById(form_id+'_foot');
@@ -1067,8 +1079,8 @@ function print_form91(func)
 	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
 	
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
-				"<td colspan='7' style='text-align:left;'>"+total_quantity+"</td>"+
-				"<td colspan='2' style='text-align:left;'>"+total_text+"</td>"+
+				"<td colspan='6' style='text-align:left;'>"+wording_total+"<br>"+total_quantity+against_c_form+"</td>"+
+				"<td colspan='3' style='text-align:left;'>"+total_text+"</td>"+
 				"<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr>";
 		
 	table_rows+=table_foot_row;

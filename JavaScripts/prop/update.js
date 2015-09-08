@@ -4141,11 +4141,11 @@ function form91_update_form()
 		freight=my_round(freight,2);
 		total=my_round(total,2);
 
-		var total_row="<tr><td colspan='3' data-th='Total'>Total<br>Total Quantity: "+total_quantity+"</td>" +
+		var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 								"<td>Amount:</br>"+tax_string+"Freight: </br>Total: </td>" +
 								"<td>Rs. "+amount+"</br>" +tax_amount_string+
 								"Rs. "+freight+"</br>" +
-								"Rs. "+total+"</td>" +
+								"Rs. <vyavsaay_p id='form91_final_total'>"+total+"<vyavsaay_p></td>" +
 								"<td></td>" +
 								"</tr>";
 		$('#form91_foot').html(total_row);

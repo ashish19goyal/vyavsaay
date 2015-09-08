@@ -8001,6 +8001,12 @@ function form91_ini()
 				filter_fields.elements['order_num'].value=bill_results[i].order_num;				
 				var save_button=filter_fields.elements['save'];
 				
+				var po_date_data="<sale_orders>"+
+								"<order_date></order_date>"+
+								"<order_num exact='yes'>"+bill_results[i].order_num+"</order_num>"+
+								"</sale_orders>";
+				set_my_value(po_date_data,filter_fields.elements['po_date']); 
+
 				var address_data="<customers>" +
 						"<address></address>" +
 						"<city></city>" +
@@ -8015,6 +8021,14 @@ function form91_ini()
 					}
 					document.getElementById('form91_customer_info').innerHTML="Address<br>"+address_string;
 				});
+				
+				var tin_data="<attributes>" +
+						"<value></value>" +
+						"<type exact='yes'>customer</type>"+
+						"<attribute array='yes'>--VAT#--CST#--</attribute>"+ 
+						"<name exact='yes'>"+bill_results[i].customer_name+"</name>" +
+						"</attributes>";
+				set_my_value(tin_data,filter_fields.elements['customer_tin']);
 				
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
@@ -8077,7 +8091,7 @@ function form91_ini()
 						print_form91(func);
 					});
 				});
-				
+				$('textarea').autosize();
 				hide_loader();
 			});
 		});
@@ -22127,6 +22141,7 @@ function form210_ini()
 					"<item_name></item_name>"+
 					"<item_desc></item_desc>"+
 					"<quantity></quantity>"+
+					"<packed_quantity></packed_quantity>"+
 					"<total></total>"+
 					"<mrp></mrp>"+
 					"<batch></batch>"+
@@ -22159,11 +22174,11 @@ function form210_ini()
 					
 					table_copy.setAttribute('width','100%');
 					table_copy.setAttribute('class','plain_table');
-					$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>Quantity</th><th>MRP</th><th>Total</th><th style='width:200px;'>Action</th></tr>");
+					$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>Quantity</th><th>MRP</th><th>Total</th><th>Action</th></tr>");
 	
 					bill_items.forEach(function (item) 
 					{
-						$(table_copy).append("<tr><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td><td>"+item.quantity+"</td><td>"+item.mrp+"</td><td>"+item.total+"</td><td><input type='text' placeholder='Scan item to accept' style='width:150px'><br><input type='button' class='generic_icon' value='Reject'></td></tr>");	
+						$(table_copy).append("<tr><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td><td>To Pack: "+item.quantity+"<br>Packed: <input type='text' value='"+item.packed_quantity+"' id='form210_packed_"+item.id+"'></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td><input type='button' class='generic_icon' value='Reject' ></td></tr>");	
 					});
 										
 					container.appendChild(invoice_line);
