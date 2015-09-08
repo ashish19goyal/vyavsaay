@@ -508,6 +508,7 @@
 			<issue_id index='yes' type="BIGINT"></issue_id>
 			<fresh index='yes' type="VARCHAR(25)"></fresh><!--yes/no-->
 			<picked_quantity index='no' type="DECIMAL(12,2)"></picked_quantity>
+			<packed_quantity index='no' type="DECIMAL(12,2)"></packed_quantity>
 			<picked_status index='yes' type="VARCHAR(25)"></picked_status><!--pending/picked-->
 			<packing_status index='yes' type="VARCHAR(25)"></packing_status><!--pending/packed-->
 			<dispatch_status index='yes' type="VARCHAR(25)"></dispatch_status><!--pending/dispatched-->

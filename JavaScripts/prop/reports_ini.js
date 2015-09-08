@@ -4444,7 +4444,7 @@ function report63_ini()
 				report63_update(report63_form);
 			});
 		});
-		
+		$('.textarea').autosize();
 		hide_loader();
 	});
 
@@ -4470,6 +4470,8 @@ function report64_ini()
 
 	show_loader();
 
+	var report64_count=0;
+	
 	var columns="<product_master count='1'>" +
 			"<id></id>" +
 			"<name></name>"+
@@ -4480,6 +4482,7 @@ function report64_ini()
 	{
 		if(products.length>0)
 		{
+			report64_count+=1;
 			/////////get product image////////////
 			var picture_column="<documents>" +
 					"<id></id>" +
@@ -4502,13 +4505,13 @@ function report64_ini()
 				$('#report64_image').html(imgHTML);	
 				
 				$('#report64_form').show();			
-				hide_loader();
 				
 				$(accept_button).show();			
 				$(reject_button).show();			
-
+				report64_count-=1;
 			});
 			
+			report64_count+=1;
 			//////////provide a preview of the invoice//////////////////////
 			var bill_items="<bill_items count='1'>"+
 					"<id></id>"+
@@ -4524,8 +4527,12 @@ function report64_ini()
 					"</bill_items>";
 			fetch_requested_data('',bill_items,function (items) 
 			{
+				report64_count-=1;
+			
 				if(items.length>0)
-				{				
+				{
+					report64_count+=1;
+							
 					var bills_xml="<bills>"+
 								"<id>"+items[0].bill_id+"</id>"+
 								"<customer_name></customer_name>"+
@@ -4536,6 +4543,8 @@ function report64_ini()
 	                        	"</bills>";
 	                fetch_requested_data('',bills_xml,function (bills) 
 					{
+						report64_count-=1;
+			
 						//console.log(bills);
 						$(print_button).off('click'); 
 						$(print_button).on('click',function () 
@@ -4602,6 +4611,16 @@ function report64_ini()
 					container.innerHTML='<b>This item is not pending for packing. Put it back in the warehouse.<b>';	
 				}
 			});
+			
+			var report64_complete=setInterval(function()
+			{
+		  	   if(report64_count===0)
+		  	   {
+					clearInterval(report64_complete);
+					$('.textarea').autosize();
+					hide_loader();   
+		  	   }
+			},200);
 			////////////////////////////////////////////////////////////////
 		}
 		else 
@@ -6632,7 +6651,9 @@ function report90_ini()
 				unbilled_items[y].table_type='unbilled_sale_items';
 				items.push(unbilled_items[y]);
 			}
-
+			
+			var report90_count=0;
+			
 			items.forEach(function(item)
 			{
 				var picked_quantity=item.picked_quantity;
@@ -6643,7 +6664,9 @@ function report90_ini()
 				
 				if(item.table_type=='bill_items')
 				{
-					var bills_data="<bills>"+
+					report90_count+=1;
+					
+					var bills_data="<bills count='1'>"+
 						"<id>"+item.bill_id+"</id>"+
 						"<bill_num></bill_num>"+
 						"<order_num></order_num>"+
@@ -6652,6 +6675,7 @@ function report90_ini()
 						"</bills>";
 					fetch_requested_data('',bills_data,function(bills)
 					{
+						report90_count-=1;
 						if(bills.length>0)
 						{
 							if(bills[0].order_num==order_num || order_num=="")
@@ -6720,7 +6744,15 @@ function report90_ini()
 				}
 			});
 			
-			hide_loader();
+			var report90_complete=setInterval(function()
+			{
+		  	   if(report90_count===0)
+		  	   {
+					clearInterval(report90_complete);
+					$('.textarea').autosize();
+					hide_loader();   
+		  	   }
+			},1000);		    
 		});
 	});
 
