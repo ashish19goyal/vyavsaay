@@ -20869,13 +20869,15 @@ function form196_ini_all()
 					message=message.replace(/business_title/g,business_title);
 						
 					send_sms(customer_phone,message,'transaction');
+				
 					if(to!="")
 					{
-						email_id_string+=";";				
-					}						
+						email_id_string+=customer_name+":"+to+";";
+					}				
 				});
+					
+				var email_to=email_id_string.replace(/;\s*$/, "");		
 		
-				var email_to=email_id_string;
 				send_email(email_to,from,business_title,subject,email_message,function()
 				{
 					$("#modal58").dialog("open");
