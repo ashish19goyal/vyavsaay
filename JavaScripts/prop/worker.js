@@ -11,7 +11,7 @@ function worker_update_orders_status()
 		var orders_xml="<sale_orders>"+
 						"<id></id>"+
 						"<bill_id></bill_id>"+
-						"<status exact='yes'>billed</status>"+
+						"<status array='yes'>--billed--picked--</status>"+
 						"</sale_orders>";
 		fetch_requested_data('',orders_xml,function (orders) 
 		{

@@ -701,6 +701,10 @@
 		Item rejected. Please put it in the rejected section.
 	</div>
 
+	<div id="modal71" title="Item mismatch">
+		<p style='color:#a00'>Scanned item doesn't match the list.</p>
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>

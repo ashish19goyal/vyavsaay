@@ -3140,7 +3140,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--bill_items--</tables>
+			<tables>--sale_orders--drs--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -3361,6 +3361,17 @@
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--product_master--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form236</name>
+			<display_name>manage_manifests</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--drs--sale_orders--</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -6368,5 +6379,16 @@
 			<del>checked</del>
 			<last_updated>1</last_updated>
 		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form236</element_id>
+			<element_name>manage_manifests</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
 	</access_control>
 </re_xml>

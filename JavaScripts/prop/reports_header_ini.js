@@ -1969,6 +1969,7 @@ function report90_header_ini()
 
 	var order_data="<sale_orders>"+
 		"<order_num></order_num>"+
+		"<status exact='yes'>billed</status>"+
 		"</sale_orders>";
 	set_my_filter(order_data,order_filter);					
 	

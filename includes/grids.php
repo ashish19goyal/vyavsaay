@@ -7,12 +7,6 @@
 			</ul>
 		</li>
 
-		<li id="logistics_link" onclick="grid_click('logistics');" style='background-color:#22a49b'>
-			<a><div style='background-color:#008279'><b data-i18n="function.logistics"></b></div></a>
-			<ul>
-			</ul>
-		</li>
-		
 		<li id="purchase_link" onclick="grid_click('purchase');" style='background-color:#74dfc5'>
 			<a><div style='background-color:#52bda3'><b data-i18n="function.purchase"></b></div></a>		
 			<ul>
@@ -48,6 +42,12 @@
 			</ul>
 		</li>
 
+		<li id="logistics_link" onclick="grid_click('logistics');" style='background-color:#22a49b'>
+			<a><div style='background-color:#008279'><b data-i18n="function.logistics"></b></div></a>
+			<ul>
+			</ul>
+		</li>
+		
 		<li id="people_link" onclick="grid_click('people');" style='background-color:#74dfc5'>
 			<a><div style='background-color:#52bda3'><b data-i18n="function.people"></b></div></a>		
 			<ul>

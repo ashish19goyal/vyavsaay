@@ -1926,15 +1926,6 @@ function form24_ini()
 									"</attributes>";
 				set_my_value(supplier_tin_xml,filter_fields.elements['tin']);
 				
-				var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
-							"<td>Amount:<br>Tax: <br>Total: </td>" +
-							"<td>Rs. "+order_results[i].amount+"<br>" +
-							"Rs. "+order_results[i].tax+"<br> " +
-							"Rs. "+order_results[i].total+"</td>" +
-							"<td></td>" +
-							"</tr>";
-					
-				$('#form24_foot').html(total_row);
 				break;
 			}
 		
@@ -1984,7 +1975,7 @@ function form24_ini()
 						print_form24(func);
 					});
 				});
-				
+				form24_get_totals();
 				hide_loader();
 			});
 		});
@@ -3041,9 +3032,9 @@ function form43_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Quantity'>";
 						rowsHTML+="Ordered: <input type='number' step='any' readonly='readonly' form='form43_"+result.id+"' value='"+result.total_quantity+"'>";
-						rowsHTML+="Received: <input type='number' step='any' readonly='readonly' form='form43_"+result.id+"' value='"+result.quantity_received+"'>";
-						rowsHTML+="Accepted: <input type='number' step='any' readonly='readonly' form='form43_"+result.id+"' value='"+result.quantity_accepted+"'>";
-						rowsHTML+="QC Pending: <input type='number' step='any' readonly='readonly' form='form43_"+result.id+"' value='"+result.quantity_qc_pending+"'>";
+						rowsHTML+="<br>Received: <input type='number' step='any' readonly='readonly' form='form43_"+result.id+"' value='"+result.quantity_received+"'>";
+						rowsHTML+="<br>Accepted: <input type='number' step='any' readonly='readonly' form='form43_"+result.id+"' value='"+result.quantity_accepted+"'>";
+						rowsHTML+="<br>QC Pending: <input type='number' step='any' readonly='readonly' form='form43_"+result.id+"' value='"+result.quantity_qc_pending+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form43_"+result.id+"' value='"+result.id+"'>";
@@ -22116,6 +22107,7 @@ function form210_ini()
 	var print_button=master_form.elements['print'];
 	
 	$('#form210_invoice').html('');
+	$('#form210_image').html('');
 
 	show_loader();
 
@@ -22184,7 +22176,7 @@ function form210_ini()
 						{
 							item.packed_quantity=0;
 						}
-						$(table_copy).append("<tr><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p></td><td><input type='button' id='form210_reject_"+item.id+"' class='generic_icon' value='Reject' onclick=\"form210_reject_item('"+item.id+"','"+item.item_name+"','"+item.batch+"','"+item.quantity+"')\"></td></tr>");	
+						$(table_copy).append("<tr id='form210_row_"+item.id+"' data-id='"+item.id+"'><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_topack_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p></td><td><input type='button' id='form210_reject_"+item.id+"' class='generic_icon' value='Reject' onclick=\"form210_reject_item('"+item.id+"','"+item.item_name+"','"+item.batch+"','"+item.quantity+"')\"></td></tr>");	
 					});
 										
 					container.appendChild(invoice_line);
@@ -22497,6 +22489,112 @@ function form214_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Create manifest
+ * @formNo 200
+ * @Loading light
+ */
+function form215_ini()
+{
+	var drs_id=$("#form215_link").attr('data_id');
+	if(drs_id==null)
+		drs_id="";	
+	$('#form215_body').html("");
+	$('#form215_foot').html("");
+	
+	if(drs_id!="")
+	{
+		show_loader();
+		var drs_columns="<drs>" +
+				"<id>"+drs_id+"</id>" +
+				"<drs_num></drs_num>"+
+				"<drs_time></drs_time>"+
+				"<num_orders></num_orders>"+
+				"</drs>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',drs_columns,function(drs_results)
+		{
+			var filter_fields=document.getElementById('form215_master');
+			if(drs_results.length>0)
+			{
+				filter_fields.elements['man_num'].value=drs_results[0].drs_num;
+				filter_fields.elements['num_orders'].value=drs_results[0].num_orders;
+				filter_fields.elements['date'].value=get_my_past_date(drs_results[0].drs_time);
+				filter_fields.elements['id'].value=drs_results[0].id;
+				
+				var save_button=filter_fields.elements['save'];
+				$(save_button).show();
+				
+				var drs_items_column="<sale_orders>" +
+									"<id></id>" +
+									"<order_num></order_num>" +
+									"<channel></channel>" +
+									"<status></status>" +
+									"<manifest_num exact='yes'>"+drs_results[0].drs_num+"</manifest_num>" +
+									"<manifest_id exact='yes'>"+drs_id+"</manifest_id>" +
+									"</sale_orders>";
+
+				/////////////////////////////////////////////////////////////////////////
+	
+				fetch_requested_data('',drs_items_column,function(results)
+				{
+					results.forEach(function(result)
+					{
+						var id=result.id;
+						var rowsHTML="<tr>";
+
+						rowsHTML+="<form id='form215_"+id+"'></form>";
+							rowsHTML+="<td data-th='S.No.'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Order #'>";
+								rowsHTML+="<input type='hidden' form='form215_"+id+"'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"' value='"+result.order_num+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Channel'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"' value='"+result.channel+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Status'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"' value='"+result.status+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form215_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='button' class='submit_hidden' form='form215_"+id+"' id='save_form215_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form215_"+id+"' id='delete_form215_"+id+"' onclick='form215_delete_item($(this));'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+	
+						$('#form215_body').append(rowsHTML);
+						
+						var item_form=document.getElementById('form215_'+id);
+						var save_button=item_form.elements[4];
+						
+						$(save_button).on('click',function (e) 
+						{
+							e.preventDefault();
+							form215_update_item(item_form);
+						});
+					});
+					
+					$('#form215_share').show();
+					$('#form215_share').click(function()
+					{
+						modal101_action('Order Manifest','','staff',function (func) 
+						{
+							print_form215(func);
+						});
+					});
+					
+					form215_update_serial_numbers();
+					$('textarea').autosize();
+					hide_loader();
+				});
+			}
+		});
+	}
+}
+
 
 /**
  * @form SKU mapping (Supplier)
@@ -24778,4 +24876,103 @@ function form235_ini()
 		});
 		hide_loader();
 	});	
+};
+
+/**
+ * @form Manage Manifest
+ * @formNo 236
+ * @Loading light
+ */
+function form236_ini()
+{
+	show_loader();
+	var fid=$("#form236_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form236_header');
+
+	//populating form 
+	var fdrs=filter_fields.elements[0].value;
+	var fdate=get_raw_time(filter_fields.elements[1].value);
+	
+	////indexing///
+	var index_element=document.getElementById('form236_index');
+	var prev_element=document.getElementById('form236_prev');
+	var next_element=document.getElementById('form236_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<drs count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<drs_num>"+fdrs+"</drs_num>"+
+			"<drs_time>"+fdate+"</drs_time>" +
+			"<num_orders></num_orders>" +
+			"</drs>";
+
+	$('#form236_body').html("");
+
+	fetch_requested_data('form236',columns,function(results)
+	{	
+		var drs_num_array="--";
+		results.forEach(function(result)
+		{
+			drs_num_array+=result.drs_num+"--";
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form236_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='DRS #'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form236_"+result.id+"' value='"+result.drs_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='DRS Time'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form236_"+result.id+"' value='"+get_my_past_date(result.drs_time)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='# Orders'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form236_"+result.id+"' value='"+result.num_orders+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form236_"+result.id+"' value='"+result.id+"' name='id'>";
+						rowsHTML+="<input type='button' form='form236_"+result.id+"' class='edit_icon' title='View Manifest' name='edit' onclick=\"element_display('"+result.id+"','form215');\">";
+						rowsHTML+="<input type='button' class='delete_icon' form='form236_"+result.id+"' title='Delete order' onclick='form236_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form236_body').append(rowsHTML);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'manifest_details');
+		});
+		hide_loader();
+	});
 };

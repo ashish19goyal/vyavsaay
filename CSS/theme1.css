@@ -1096,6 +1096,7 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	border: 1px solid #000;
 	text-align: left;
 	padding:1px;
+	word-wrap: break-word;
 }
 
 @media screen and (min-width: 550px) {

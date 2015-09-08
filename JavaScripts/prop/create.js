@@ -1759,6 +1759,7 @@ function form24_get_totals()
 	var amount=0;
 	var tax=0;
 	var total=0;
+	var total_quantity=0;
 	
 	$("[id^='save_form24']").each(function(index)
 	{
@@ -1770,7 +1771,9 @@ function form24_get_totals()
 			amount+=parseFloat(subform.elements[7].value);
 			tax+=parseFloat(subform.elements[9].value);
 			total+=parseFloat(subform.elements[10].value);
-		}		
+		}
+		if(!isNaN(parseFloat(subform.elements[2].value)))			
+			total_quantity+=parseFloat(subform.elements[2].value);		
 	});
 	
 	var form=document.getElementById("form24_master");
@@ -1779,8 +1782,12 @@ function form24_get_totals()
 		tax+=.02*amount;
 		total+=.02*amount;
 	}
-			
-	var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+	
+	amount=my_round(amount,2);
+	tax=my_round(tax,2);
+	total=my_round(total,2);
+		
+	var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:<br>Tax: <br>Total: </td>" +
 							"<td>Rs. "+amount+"<br>" +
 							"Rs. "+tax+"<br> " +
@@ -1845,14 +1852,19 @@ function form24_create_form()
 		
 		});
 		
+		
 		if(form.elements['cst'].checked)
 		{
 			cst='yes';
 			tax+=.02*amount;
 			total+=.02*amount;
 		}
-		
-		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+
+		amount=my_round(amount,2);
+		tax=my_round(tax,2);
+		total=my_round(total,2);
+			
+		var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 								"<td>Amount:<br>Tax: <br>Total: </td>" +
 								"<td>Rs. "+amount+"<br>" +
 								"Rs. "+tax+"<br> " +
@@ -14311,6 +14323,154 @@ function form214_create_item()
 
 		$('#modal62').dialog('open');
 		form214_ini();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * formNo 200
+ * form Create Manifest
+ * @param button
+ */
+function form215_create_item(form)
+{
+	//console.log('form215_create_form');
+	if(is_create_access('form215'))
+	{
+		var drs_num=document.getElementById('form215_master').elements['man_num'].value;
+		var drs_id=document.getElementById('form215_master').elements['id'].value;
+		var data_id=form.elements[4].value;
+		var save_button=form.elements[5];
+		var del_button=form.elements[6];
+		
+		var last_updated=get_my_time();
+		var data_xml="<sale_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<status>dispatched</status>" +
+					"<manifest_num>"+drs_num+"</manifest_num>"+
+					"<manifest_id>"+drs_id+"</manifest_id>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</sale_orders>";
+		update_simple(data_xml);
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form215_delete_item(del_button);
+		});
+
+		$(save_button).off('click');
+		$(save_button).on('click',function(event)
+		{
+			event.preventDefault();
+			form215_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create DRS
+ * @param button
+ */
+function form215_create_form(func)
+{
+	if(is_create_access('form215'))
+	{
+		var form=document.getElementById("form215_master");
+		
+		var drs_num=form.elements['man_num'].value;
+		var ddate=get_raw_time(form.elements['date'].value);
+		var data_id=form.elements['id'].value;
+		
+		$('#form215_share').show();
+		$('#form215_share').click(function()
+		{
+			modal101_action('Order Manifest','','staff',function (func) 
+			{
+				print_form215(func);
+			});
+		});
+
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var num_orders=0;
+		$("[id^='save_form215']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+	
+			if(subform.elements[1].value!="")
+			{
+				num_orders+=1;			
+			}
+		});
+		
+		var drs_columns="<drs count='1'>" +
+					"<drs_num exact='yes'>"+drs_num+"</drs_num>"+
+					"</drs>";		
+		get_single_column_data(function(drses)
+		{
+			if(drses.length==0)
+			{	
+				var data_xml="<drs>" +
+							"<id>"+data_id+"</id>" +
+							"<drs_num>"+drs_num+"</drs_num>"+
+							"<drs_time>"+ddate+"</drs_time>"+
+							"<num_orders>"+num_orders+"</num_orders>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</drs>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>drs</tablename>" +
+							"<link_to>form236</link_to>" +
+							"<title>Generated</title>" +
+							"<notes>Manifest # "+drs_num+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				var num_data="<user_preferences>"+
+							"<id></id>"+						
+							"<name exact='yes'>drs_num</name>"+												
+							"</user_preferences>";
+				get_single_column_data(function (drs_num_ids)
+				{
+					if(drs_num_ids.length>0)
+					{
+						var num_xml="<user_preferences>"+
+										"<id>"+drs_num_ids[0]+"</id>"+
+										"<value>"+(parseInt(drs_num)+1)+"</value>"+
+										"<last_updated>"+last_updated+"</last_updated>"+
+										"</user_preferences>";
+						update_simple(num_xml);
+					}
+				},num_data);
+		
+				create_row(data_xml,activity_xml);
+				
+				$(save_button).show();
+				
+				if(typeof func!='undefined')
+				{
+					func();
+				}
+			}
+			else 
+			{
+				$("#modal68").dialog("open");
+			}
+		},drs_columns);
 	}
 	else
 	{

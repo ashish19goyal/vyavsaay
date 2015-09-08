@@ -10,6 +10,10 @@
 			<li><a id='form205_link' href='#form205' onclick='form205_header_ini();' data-i18n='form.undelivered_orders'></a></li>
 			<li><a id='form206_link' href='#form206' onclick='form206_header_ini();' data-i18n='form.delivered_orders'></a></li>
 			<li><a id='form198_link' href='#form198' onclick='form198_header_ini(); form198_ini();' data-i18n='form.order_details'></a></li>
+			<li><a id='report64_link' href='#report64' onclick='report64_header_ini();' data-i18n='form.packing_instructions'></a></li>		
+			<li><a id='form210_link' href='#form210' onclick='form210_header_ini();' data-i18n='form.packing_instructions_invoice'></a></li>		
+			<li><a id='form215_link' href='#form215' onclick='form215_header_ini(); form215_ini();' data-i18n='form.create_manifest'></a></li>
+			<li><a id='form236_link' href='#form236' onclick='form236_header_ini(); form236_ini();' data-i18n='form.manage_manifests'></a></li>
 		</ul>
 
 	<?php
@@ -23,6 +27,10 @@
 			include "forms/form205.php";
 			include "forms/form206.php";
 			include "forms/form198.php";
+			include "reports/report64.php";
+			include "forms/form210.php";
+			include "forms/form215.php";
+			include "forms/form236.php";
 	?>
 	
 </div>

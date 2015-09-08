@@ -7616,8 +7616,8 @@ function form210_header_ini()
 		form210_ini();
 	});
 	
-	$(accepted_filter).off('keyup');
-	$(accepted_filter).on('keyup',function (event) 
+	$(accepted_filter).off('keydown');
+	$(accepted_filter).on('keydown',function (event) 
 	{
 		if(event.keyCode == 13) 
 		{
@@ -7635,9 +7635,10 @@ function form210_header_ini()
 				"</bills>";
 	set_my_value_list(bag_data,bag_filter);					
 
-	var order_data="<bills>"+
+	var order_data="<sale_orders>"+
 				"<order_num></order_num>"+
-				"</bills>";
+				"<status exact='yes'>picked</status>"+
+				"</sale_orders>";
 	set_my_value_list(order_data,order_filter);					
 	
 	$(bag_filter).off('blur');
@@ -7649,7 +7650,6 @@ function form210_header_ini()
 				"<order_num></order_num>"+
 				"<pick_bag_num exact='yes'>"+bag_filter.value+"</pick_bag_num>"+
 				"</bills>";
-			set_my_value_list(order_data,order_filter);
 			set_my_value(order_data,order_filter);
 		}
 	});
@@ -7690,8 +7690,8 @@ function form211_header_ini()
 
 	set_static_value_list('logistics_orders','status',status_filter);
 
-	$(awb_filter).off('keyup');
-	$(awb_filter).on('keyup',function (event) 
+	$(awb_filter).off('keydown');
+	$(awb_filter).on('keydown',function (event) 
 	{
 		if(event.keyCode == 13) 
 		{
@@ -7704,8 +7704,8 @@ function form211_header_ini()
 	    }
 	});
 	
-	$(drs_filter).off('keyup');
-	$(drs_filter).on('keyup',function (event) 
+	$(drs_filter).off('keydown');
+	$(drs_filter).on('keydown',function (event) 
 	{
 		if(event.keyCode == 13) 
 		{
@@ -7826,26 +7826,65 @@ function form214_header_ini()
 	
 }
 
+
 /**
- * @form Dispatch Items (Nikki)
+ * @form Create manifest
  * @formNo 215
  */
 function form215_header_ini()
 {
 	var fields=document.getElementById('form215_master');
-	
-	var comments_filter=fields.elements['comments'];
 
-	comments_filter.value="";	
+	var man_filter=fields.elements['man_num'];
+	var man_date=fields.elements['date'];
+
+	fields.elements['id'].value=get_new_key();
+
+	var save_button=fields.elements['save'];
+	man_filter.value="";
+	
+	var man_id=$("#form215_link").attr('data_id');
+	if(man_id==null)
+		man_id="";	
+
+	if(man_id=="")
+	{
+		var man_num_data="<user_preferences count='1'>"+
+						"<value></value>"+
+						"<name exact='yes'>drs_num</name>"+
+						"</user_preferences>";
+		set_my_value(man_num_data,man_filter);	
+	}
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form215_update_form();
+	});
+
+	$(save_button).hide();
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
 	$(fields).off('submit');
-	$(fields).on('submit',function(event)
+	$(fields).on("submit", function(event)
 	{
 		event.preventDefault();
 		form215_add_item();
 	});
-
-	$('#form215_body').html("");
+	
+	$(man_date).datepicker();
+	man_date.value=get_my_date();
+	$('#form215_share').hide();
 }
+
 
 
 /**
@@ -8688,4 +8727,30 @@ function form235_header_ini()
 		event.preventDefault();
 		form235_ini();
 	});
+};
+
+/**
+ * @form Manage Manifests
+ * @formNo 236
+ */
+function form236_header_ini()
+{
+	var filter_fields=document.getElementById('form236_header');
+	var man_filter=filter_fields.elements[0];
+	var date_filter=filter_fields.elements[1];
+		
+	var man_data="<drs>" +
+			"<drs_num></drs_num>" +
+			"</drs>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form236_ini();
+	});
+
+	set_my_filter(man_data,man_filter);
+	
+	$(date_filter).datepicker();
 };

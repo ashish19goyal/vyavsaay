@@ -596,6 +596,7 @@ function print_form24(func)
 ////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:100%;min-height:100px;text-align:center');
+		logo.setAttribute('style','width:100%;text-align:center;font-weight:600;font-size:32;');
 		business_intro.setAttribute('style','width:100%;text-align:center');
 		business_contact.setAttribute('style','width:100%;text-align:center');
 	info_section.setAttribute('style','width:100%;min-height:80px');
@@ -630,7 +631,8 @@ function print_form24(func)
 	
 	////////////////filling in the content into the containers//////////////////////////
 
-	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	//logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	logo.innerHTML=bt;
 	//business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text;
 	business_contact.innerHTML="<hr style='border: 1px solid #00f;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email;
 	
@@ -648,6 +650,7 @@ function print_form24(func)
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
 	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
+				"<td style='text-align:left;width:30px;'>S.No.</td>"+
 				"<td style='text-align:left;width:130px;'>Item Name</td>"+
 				"<td style='text-align:left;width:80px'>SKU</td>"+
 				"<td style='text-align:left;width:80px'>Supplier SKU</td>"+
@@ -674,6 +677,7 @@ function print_form24(func)
 		var total=form.elements[10].value;
 
 		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
+				"<td style='text-align:left;'>"+counter+"</td>"+
 				"<td style='text-align:left;'>"+item_desc+"</td>"+
 				"<td style='text-align:left;'>"+item_name+"</td>"+
 				"<td style='text-align:left;'>"+supplier_sku+"</td>"+

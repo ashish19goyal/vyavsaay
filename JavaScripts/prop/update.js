@@ -1538,8 +1538,8 @@ function form24_update_form()
 		
 		});
 		
-		amount=my_round(amount,2);
 		total=amount+tax;
+		
 		if(form.elements['cst'].checked)
 		{
 			cst='yes';
@@ -1547,7 +1547,11 @@ function form24_update_form()
 			total+=my_round(.02*amount,2);
 		}
 
-		var total_row="<tr><td colspan='2' data-th='Total'>Total</td>" +
+		amount=my_round(amount,2);
+		tax=my_round(tax,2);
+		total=my_round(total,2);
+	
+		var total_row="<tr><td colspan='2' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 								"<td>Amount:<br>Tax: <br>Total: </td>" +
 								"<td>Rs. "+amount+"<br>" +
 								"Rs. "+tax+"<br> " +
@@ -10912,7 +10916,7 @@ function form210_reject_item(item_id,item_name,item_batch,total_quantity)
 	if(is_update_access('form210'))
 	{
 		var packed_quantity=parseInt(document.getElementById("form210_packed_"+item_id).innerHTML);
-		var reject_button=document.getElementById("form210_reject_"+item.id);
+		var reject_button=document.getElementById("form210_reject_"+item_id);
 		
 		reject_button.removeAttribute('onclick');
 
@@ -10922,7 +10926,7 @@ function form210_reject_item(item_id,item_name,item_batch,total_quantity)
 					"<id>"+item_id+"</id>"+					
 					"<picked_status>pending</picked_status>"+
 					"<packing_status>pending</packing_status>"+
-					"<packed_quantity>"+packed_quantity+"</packing_quantity>"+
+					"<packed_quantity>"+packed_quantity+"</packed_quantity>"+
 					"<picked_quantity>"+packed_quantity+"</picked_quantity>"+
 					"<last_updated>"+get_my_time()+"</last_updated>"+						
 					"</bill_items>";
@@ -10932,7 +10936,7 @@ function form210_reject_item(item_id,item_name,item_batch,total_quantity)
 			
 			var discarded_xml="<discarded>"+
 					"<id>"+get_new_key()+"</id>"+					
-					"<batch>"+items_batch+"</batch>"+
+					"<batch>"+item_batch+"</batch>"+
 	                "<quantity>"+pending_quantity+"</quantity>"+
 	                "<product_name>"+item_name+"</product_name>"+
 	                "<source>manual</source>"+
@@ -10958,36 +10962,56 @@ function form210_reject_item(item_id,item_name,item_batch,total_quantity)
  * @formNo 210
  * @param button
  */
-function form210_accept_item(bar_code,order_num)
+function form210_accept_item(bar_code)
 {
 	if(is_update_access('form210'))
 	{
 		var columns="<product_master count='1'>" +
 			"<id></id>" +
 			"<name></name>"+
-			"<bar_code exact='yes'>"+barcode+"</bar_code>" +
+			"<bar_code exact='yes'>"+bar_code+"</bar_code>" +
 			"</product_master>";
 		fetch_requested_data('',columns,function (products) 
 		{
-			var bill_items="<bill_items count='1'>"+
-					"<id></id>"+					
-					"<item_name exact='yes'>"+products[0].name+"</item_name>"+
-					"<picked_status exact='yes'>picked</picked_status>"+
-					"<packing_status exact='yes'>pending</packing_status>"+
-					"</bill_items>";
-			fetch_requested_data('',bill_items,function (items) 
+			var first_match=false;
+			$("[id^='form210_row_']").each(function(index)
 			{
-				var items_xml="<bill_items>"+
-						"<id>"+items[0].id+"</id>"+					
-						"<packing_status>packed</packing_status>"+
-						"<dispatch_status>pending</dispatch_status>"+
-						"<last_updated>"+get_my_time()+"</last_updated>"+						
-						"</bill_items>";
-				update_simple(items_xml);
-				
-				report64_header_ini();
-				$("#modal69").dialog("open");				
-			});		
+				if(!first_match)
+				{
+					var data_id=$(this).attr('data-id');
+					var item_name=$(this).find('td:first').html();
+					var packed_quantity=parseFloat(document.getElementById('form210_packed_'+data_id).innerHTML)+1;
+					var total_quantity=parseFloat(document.getElementById('form210_topack_'+data_id).innerHTML);
+					console.log(item_name);
+					
+					if(item_name==products[0].name && packed_quantity<=total_quantity)
+					{
+						first_match=true;
+						var status='pending';
+						
+						if(packed_quantity==total_quantity)
+						{
+							status='packed';
+						}
+						
+						document.getElementById('form210_packed_'+data_id).innerHTML=packed_quantity;
+	
+						var items_xml="<bill_items>"+
+								"<id>"+data_id+"</id>"+					
+								"<packing_status>"+status+"</packing_status>"+
+								"<last_updated>"+get_my_time()+"</last_updated>"+						
+								"</bill_items>";
+						update_simple(items_xml);
+											
+						$("#modal69").dialog("open");
+					}
+				}					
+			});	
+			if(!first_match)
+			{
+				$("#modal71").dialog("open");
+			}
+	
 		});
 	}
 	else
@@ -11194,42 +11218,125 @@ function form213_update_item(form)
 }
 
 /**
- * @form Dispatch items
+ * formNo 215
+ * form Create Manifest
  * @param button
  */
 function form215_update_item(form)
 {
 	if(is_update_access('form215'))
 	{
-		var master_form=document.getElementById("form215_master");		
-		var comments=master_form.elements['comments'].value;
-		
-		var order_num=form.elements[0].value;
-		var status='dispatched';
-		var id=form.elements[2].value;
+		var drs_num=document.getElementById('form215_master').elements['drs_num'].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
-				
+		
 		var data_xml="<sale_orders>" +
-					"<id>"+id+"</id>" +
-					//"<awb_num>"+awb_num+"</awb_num>" +
-					"<dispatch_status>"+status+"</dispatch_status>" +
-					"<comments>"+comments+"</comments>" +
+					"<id>"+data_id+"</id>" +
+					"<manifest_num>"+drs_num+"</manifest_num>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_orders>";
-		var activity_xml="<activity>" +
-					"<data_id>"+id+"</data_id>" +
-					"<tablename>sale_orders</tablename>" +
-					"<link_to>form108</link_to>" +
-					"<title>Dispatched</title>" +
-					"<notes>Order # "+order_num+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		update_row(data_xml,activity_xml);
-		
-		for(var i=0;i<2;i++)
+		update_simple(data_xml);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+function form215_update_serial_numbers()
+{
+	$('#form215_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+	
+	var num_orders=0;
+	$("[id^='save_form215']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+
+		if(subform.elements[1].value!="")
 		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}		
+			num_orders+=1;			
+		}
+	});
+	
+	var form=document.getElementById("form215_master");
+	form.elements['num_orders'].value=num_orders;
+}
+
+/**
+ * @form Create DRS
+ * @param button
+ */
+function form215_update_form()
+{
+	if(is_create_access('form215'))
+	{
+		var form=document.getElementById("form215_master");
+		
+		var drs_num=form.elements['man_num'].value;
+		var ddate=get_raw_time(form.elements['date'].value);
+		var data_id=form.elements['id'].value;
+		
+		$('#form215_share').show();
+		$('#form215_share').click(function()
+		{
+			modal101_action('Order Manifest','','staff',function (func) 
+			{
+				print_form215(func);
+			});
+		});
+
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var num_orders=0;
+		$("[id^='save_form215']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+	
+			if(subform.elements[1].value!="")
+			{
+				num_orders+=1;			
+			}
+		});
+		
+		var drs_columns="<drs count='2'>" +
+					"<id></id>"+
+					"<drs_num exact='yes'>"+drs_num+"</drs_num>"+
+					"</drs>";		
+		fetch_requested_data('',drs_columns,function(drses)
+		{
+			if(drses.length==0 || (drses.length==1 && drses[0].id==data_id))
+			{
+				var data_xml="<drs>" +
+							"<id>"+data_id+"</id>" +
+							"<drs_num>"+drs_num+"</drs_num>"+
+							"<drs_time>"+ddate+"</drs_time>"+
+							"<num_orders>"+num_orders+"</num_orders>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</drs>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>drs</tablename>" +
+							"<link_to>form236</link_to>" +
+							"<title>Updated</title>" +
+							"<notes>Manifest # "+drs_num+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				update_row(data_xml,activity_xml);
+				
+				$("[id^='save_form215_']").click();
+			}
+			else 
+			{
+				$("#modal68").dialog("open");
+			}
+		});
 	}
 	else
 	{

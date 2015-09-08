@@ -5,8 +5,6 @@
 		<li><a id='form165_link' href='#form165' onclick='form165_header_ini(); form165_ini();' data-i18n='form.put_away'></a></li>
 		<li><a id='report63_link' href='#report63' onclick='report63_header_ini(); report63_ini();' data-i18n='form.item_picklist'></a></li>		
 		<li><a id='report90_link' href='#report90' onclick='report90_header_ini(); report90_ini();' data-i18n='form.order_picklist'></a></li>
-		<li><a id='report64_link' href='#report64' onclick='report64_header_ini();' data-i18n='form.packing_instructions'></a></li>		
-		<li><a id='form210_link' href='#form210' onclick='form210_header_ini();' data-i18n='form.packing_instructions_invoice'></a></li>		
 		<li><a id='form145_link' href='#form145' onclick='form145_header_ini(); form145_ini();' data-i18n='form.store_movement'></a></li>
 		<li><a id='form157_link' href='#form157' onclick='form157_header_ini(); form157_ini();' data-i18n='form.store_movement'></a></li>
 		<li><a id='form193_link' href='#form193' onclick="form193_header_ini();" data-i18n='form.adjust_inventory'></a></li>
@@ -19,7 +17,6 @@
 		<li><a id='report1_link' href='#report1' onclick='report1_header_ini();' data-i18n='form.signage_changes'></a></li>
 		<li><a id='form202_link' href='#form202' onclick='form202_header_ini();' data-i18n='form.exchanges'></a></li>
 		<li><a id='form212_link' href='#form212' onclick='form212_header_ini();' data-i18n='form.update_orders'></a></li>
-		<li><a id='form215_link' href='#form215' onclick='form215_header_ini();' data-i18n='form.dispatch_items'></a></li>
 	</ul>
 
 	<?php
@@ -28,8 +25,6 @@
 			include "forms/form165.php";
 			include "reports/report63.php";
 			include "reports/report90.php";
-			include "reports/report64.php";
-			include "forms/form210.php";
 			include "forms/form145.php";
 			include "forms/form157.php";
 			include "forms/form193.php";
@@ -42,6 +37,5 @@
 			include "reports/report1.php";
 			include "forms/form202.php";
 			include "forms/form212.php";
-			include "forms/form215.php";
 	?>
 </div>

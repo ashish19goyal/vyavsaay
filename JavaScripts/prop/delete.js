@@ -7158,6 +7158,40 @@ function form213_delete_item(button)
 }
 
 /**
+ * formNo 215
+ * form Create Manifest
+ * @param button
+ */
+function form215_delete_item(button)
+{
+	if(is_delete_access('form215'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[4].value;
+			var last_updated=get_my_time();
+			var data_xml="<sale_orders>" +
+						"<id>"+data_id+"</id>" +
+						"<status>packed</status>" +
+						"<manifest_num></manifest_num>"+
+						"<manifest_id></manifest_id>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</sale_orders>";
+			update_simple(data_xml);
+			$(button).parent().parent().remove();
+			form215_update_serial_numbers();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * formNo 217
  * form SKU Mapping (Supplier)
  * @param button
@@ -7840,6 +7874,76 @@ function form235_delete_item(button)
 			delete_simple(other_delete6);
 			
 			$(button).parent().parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage manifests
+ * @param button
+ */
+function form236_delete_item(button)
+{
+	if(is_delete_access('form236'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var drs_num=form.elements[0].value;
+			var data_id=form.elements[3].value;
+			var data_xml="<drs>" +
+						"<id>"+data_id+"</id>" +
+						"</drs>";	
+			var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>drs</tablename>" +
+					"<link_to>form236</link_to>" +
+					"<title>Delete</title>" +
+					"<notes>Manifest # "+drs_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+			
+			var drs_items_xml="<sale_orders>"+
+							"<id></id>"+
+							"<status exact='yes'>dispatched</status>"+
+							"<manifest_num exact='yes'>"+drs_num+"</manifest_num>"+
+							"</sale_orders>";			
+			get_single_column_data(function(drs_items)
+			{
+				var data_xml="<sale_orders>";
+				var counter=1;
+				var last_updated=get_my_time();
+				
+				drs_items.forEach(function(drs_item)
+				{
+					if((counter%500)===0)
+					{
+						data_xml+="</sale_orders><separator></separator><sale_orders>";
+					}
+						
+					counter+=1;
+				
+					data_xml+="<row>" +
+							"<id>"+drs_item+"</id>" +
+							"<manifest_num></manifest_num>" +
+							"<status>packed</status>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+				});
+				data_xml+="</sale_orders>";
+				//console.log(data_xml);
+				update_batch(data_xml);
+				
+			},drs_items_xml);
+			
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
 		});
 	}
 	else

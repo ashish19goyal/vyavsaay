@@ -369,10 +369,10 @@
 	"sale_leads_followup":"Sale Leads (with follow-up)",
 	"update_orders":"Update Status",
 	"sale_leads_self":"Sale Lead (self)",
-	"items_dispatch_nikki":"Items Dispatch (Nikki)",
+	"items_dispatch_nikki":"Create Manifest",
 	"order_picklist":"Order Picklist",
 	"pending_po_items":"Pending Purchase Order Items",
-	"dispatch_items":"Dispatch Items",
+	"create_manifest":"Create Manifest",
 	"self_entry":"Self Entry",
 	"total_sales":"Total Sales",
 	"grn_item_accept_editable":"Edit acceptability of GRN items",
@@ -407,6 +407,7 @@
 	"deliveries_by_person":"Deliveries by person",
 	"manage_products_wo_tax":"Manage Products (without tax)",
 	"manage_products_grid":"Manage Products (grid)",
-	"inventory_by_brand":"Inventory (By Brand)"
+	"inventory_by_brand":"Inventory (By Brand)",
+	"manage_manifests":"Manage Manifests"
 	}
 }

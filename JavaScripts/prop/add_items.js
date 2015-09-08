@@ -12387,7 +12387,7 @@ function form213_add_item()
 }
 
 /**
- * @form Dispatch items nikki
+ * @form Create manifest
  * @formNo 215
  */
 function form215_add_item()
@@ -12396,104 +12396,197 @@ function form215_add_item()
 	{
 		var id=get_new_key();
 		var rowsHTML="<tr>";
-		rowsHTML+="<form id='form215_"+id+"' autocomplete='off'></form>";
-			rowsHTML+="<td data-th='Order #'>";
-				rowsHTML+="<input type='text' required form='form215_"+id+"' oninvalid=\"setCustomValidity('This Order # is invalid')\">";
+		rowsHTML+="<form id='form215_"+id+"'></form>";
+			rowsHTML+="<td data-th='S.No.'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Details'>";
-				rowsHTML+="<input type='text' form='form215_"+id+"'>";
+			rowsHTML+="<td data-th='Order #'>";
+				rowsHTML+="<input type='text' form='form215_"+id+"' oninvalid=\"setCustomValidity('This Order # is invalid')\">";
+				rowsHTML+="<br><input type='text' required form='form215_"+id+"' oninvalid=\"setCustomValidity('This Order # is invalid')\">";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Channel'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form215_"+id+"'>";
-				rowsHTML+="<input type='submit' class='submit_hidden' form='form215_"+id+"' id='save_form215_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form215_"+id+"' id='delete_form215_"+id+"' onclick='form215_delete_item($(this));'>";
-			rowsHTML+="</td>";
+				rowsHTML+="<input type='hidden' form='form215_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form215_"+id+"' id='save_form215_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form215_"+id+"' id='delete_form215_"+id+"' onclick='$(this).parent().parent().remove(); form215_update_serial_numbers();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form215_"+id+"'>";
+			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 
 		$('#form215_body').prepend(rowsHTML);
+
+		var item_form=document.getElementById('form215_'+id);
+		var order_id_filter=item_form.elements[0];
+		var order_filter=item_form.elements[1];
+		var channel_filter=item_form.elements[2];
+		var status_filter=item_form.elements[3];
+		var id_filter=item_form.elements[4];
+		var save_button=item_form.elements[5];
 		
-		var fields=document.getElementById("form215_"+id);
-		var order_filter=fields.elements[0];
-		var details_filter=fields.elements[1];
-		var id_filter=fields.elements[2];
-		
-		$(fields).on("submit", function(event)
+		var order_data="<sale_orders>"+
+					"<order_num></order_num>"+
+					"<status exact='yes'>packed</status>"+
+					"</sale_orders>";
+		set_my_value_list(order_data,order_filter);
+					
+		$(item_form).on("submit", function(event)
 		{
 			event.preventDefault();
-			
+			var total_entries=0;
 			var double_entry=0;
 			$("[id^='save_form215']").each(function(index)
 			{
 				var subform_id=$(this).attr('form');
 				var subform=document.getElementById(subform_id);
-				
-				if(subform.elements[0].value==order_filter.value)	
+				total_entries+=1;
+				if(subform.elements[0].value==order_id_filter.value)	
 					double_entry+=1;
 			});
 
-			if(double_entry<2)
+			if(total_entries==1)
 			{
-				form215_add_item();
+				form215_create_form(function()
+				{
+					if(double_entry<2)
+					{
+						form215_create_item(item_form);
+						form215_add_item();
+					}
+					else 
+					{
+						order_id_filter.value="";
+						$("#modal65").dialog("open");
+					}
+				});
 			}
 			else 
 			{
-				order_filter.value="";
-				$("#modal65").dialog("open");
+				if(double_entry<2)
+				{
+					form215_create_item(item_form);
+					form215_add_item();
+				}
+				else 
+				{
+					order_id_filter.value="";
+					$("#modal65").dialog("open");
+				}
 			}
 		});
 
-
-		$(order_filter).focus();		
-
-		$(order_filter).on('keydown',function (event) 
+		$(order_id_filter).focus();
+				
+		$(order_id_filter).on('keydown',function (event) 
 		{
 			if(event.keyCode == 13 ) 
 			{
 				event.preventDefault();
-			
+				
+				var total_entries=0;
 				var double_entry=0;
 				$("[id^='save_form215']").each(function(index)
 				{
 					var subform_id=$(this).attr('form');
 					var subform=document.getElementById(subform_id);
 					
-					if(subform.elements[0].value==order_filter.value)	
+					total_entries+=1;
+				
+					if(subform.elements[0].value==order_id_filter.value)	
 						double_entry+=1;
 				});
-	
-				if(double_entry<2)
+				
+				if(total_entries==1)
 				{
-					var order_data="<sale_orders count='1'>"+
-							"<id></id>"+
-							"<order_num exact='yes'>"+order_filter.value+"</order_num>"+
-							"<dispatch_status exact='yes'>pending</dispatch_status>"+
-							"</sale_orders>";
-					fetch_requested_data('',order_data,function(orders)
+					form215_create_form(function () 
 					{
-						if(orders.length>0)
+						if(double_entry<2)
 						{
-							id_filter.value=orders[0].id;
-							details_filter.value=orders[0].status;							
-							form215_update_item(fields);
-							form215_add_item();						
+							var orders_data="<sale_orders count='1'>"+
+											"<id>"+order_id_filter.value+"</id>"+
+											"<order_num></order_num>" +
+											"<status exact='yes'>packed</status>" +
+											"<channel></channel>" +
+											"</sale_orders>";
+							//console.log(orders_data);				
+							fetch_requested_data('',orders_data,function (orders) 
+							{
+								//console.log(orders);
+								if(orders.length>0)
+								{
+									order_filter.value=orders[0].order_num;
+									channel_filter.value=orders[0].channel;
+									status_filter.value=orders[0].status;
+									id_filter.value=orders[0].id;
+									form215_create_item(item_form);
+									form215_add_item();
+								}
+								else 
+								{
+									order_filter.value="";
+									channel_filter.value="";
+									status_filter.value="";
+									id_filter.value=get_new_key();
+									order_id_filter.value="";
+									$("#modal65").dialog("open");
+								}
+							});
 						}
-						else
+						else 
 						{
-							order_filter.value="";
-							id_filter.value="";
-							details_filter.value="";
-							$("#modal65").dialog("open");					
+							order_id_filter.value="";
+							$("#modal65").dialog("open");
 						}
 					});
 				}
 				else 
 				{
-					order_filter.value="";
-					$("#modal65").dialog("open");
+					if(double_entry<2)
+					{
+						var orders_data="<sale_orders count='1'>"+
+										"<id>"+order_id_filter.value+"</id>"+
+										"<order_num></order_num>" +
+										"<status exact='yes'>packed</status>" +
+										"<channel></channel>" +
+										"</sale_orders>";
+						//console.log(orders_data);				
+						fetch_requested_data('',orders_data,function (orders) 
+						{
+							//console.log(orders);
+							if(orders.length>0)
+							{
+								order_filter.value=orders[0].order_num;
+								channel_filter.value=orders[0].channel;
+								status_filter.value=orders[0].status;
+								id_filter.value=orders[0].id;
+								form215_create_item(item_form);
+								form215_add_item();
+							}
+							else 
+							{
+								order_filter.value="";
+								channel_filter.value="";
+								status_filter.value="";
+								id_filter.value=get_new_key();
+								order_id_filter.value="";
+								$("#modal65").dialog("open");
+							}
+						});
+					}
+					else 
+					{
+						order_id_filter.value="";
+						$("#modal65").dialog("open");
+					}
 				}
-								
 			}
 		});
+
+		$('textarea').autosize();
+		form215_update_serial_numbers();
 	}
 	else
 	{
