@@ -7601,6 +7601,8 @@ function form210_header_ini()
 	var master_form=document.getElementById('form210_master');
 	var bag_filter=master_form.elements[1];
 	var order_filter=master_form.elements[2];
+
+	var accepted_filter=master_form.elements['accepted'];
 	
 	$('#form210_image').html('');
 	$('#form210_invoice').html('');
@@ -7612,6 +7614,20 @@ function form210_header_ini()
 	{
 		event.preventDefault();
 		form210_ini();
+	});
+	
+	$(accepted_filter).off('keyup');
+	$(accepted_filter).on('keyup',function (event) 
+	{
+		if(event.keyCode == 13) 
+		{
+	    	event.preventDefault();
+	    	if(accepted_filter.value!="")
+	    	{
+		    	form210_accept_item(accepted_filter.value);
+		    	accepted_filter.value="";
+		    }
+	    }
 	});
 	
 	var bag_data="<bills>"+

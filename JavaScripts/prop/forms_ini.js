@@ -20798,18 +20798,19 @@ function form196_ini()
 						var to=result.email;
 						var customer_phone=result.phone;
 						var customer_name=result.name;
-						email_id_string+=customer_name+":"+to;
 						var message=sms_content.replace(/customer_name/g,customer_name);
 						message=message.replace(/business_title/g,business_title);
 							
 						send_sms(customer_phone,message,'transaction');
 						if(to!="")
 						{
-							email_id_string+=";";				
-						}						
+							email_id_string+=customer_name+":"+to+";";
+						}				
 					});
-			
-					var email_to=email_id_string;
+					
+					var email_to=email_id_string.replace(/;\s*$/, "");
+					//console.log(email_to);
+										
 					send_email(email_to,from,business_title,subject,email_message,function()
 					{
 						$("#modal58").dialog("open");
@@ -22182,7 +22183,7 @@ function form210_ini()
 						{
 							item.packed_quantity=0;
 						}
-						$(table_copy).append("<tr><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p></td><td><input type='button' class='generic_icon' value='Reject' onclick=\"form210_reject_item('"+item.id+"')\"></td></tr>");	
+						$(table_copy).append("<tr><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p></td><td><input type='button' id='form210_reject_"+item.id+"' class='generic_icon' value='Reject' onclick=\"form210_reject_item('"+item.id+"','"+item.item_name+"','"+item.batch+"','"+item.quantity+"')\"></td></tr>");	
 					});
 										
 					container.appendChild(invoice_line);
