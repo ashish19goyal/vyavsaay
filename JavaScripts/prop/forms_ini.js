@@ -20809,7 +20809,7 @@ function form196_ini()
 					});
 					
 					var email_to=email_id_string.replace(/;\s*$/, "");
-					//console.log(email_to);
+					console.log(email_to);
 										
 					send_email(email_to,from,business_title,subject,email_message,function()
 					{
