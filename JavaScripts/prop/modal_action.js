@@ -10925,14 +10925,18 @@ function modal150_action(rack,report_id)
 			var quantity=parseFloat(subform.elements[3].value);
 			var picked_quantity=parseFloat(subform.elements[4].value);
 			var row_id=subform.elements[6].value;
-			var order_num=subform.elements[9].value;
-			var bill_id=subform.elements[10].value;
-			
 			var item_row=document.createElement('tr');
+			
 			item_row.setAttribute('id','modal150_row_'+row_id);
 			item_row.setAttribute('data-id',row_id);
-			item_row.setAttribute('data-order-num',order_num);
-			item_row.setAttribute('data-bill-id',bill_id);
+			
+			if(report_id=='report90')
+			{			
+				var order_num=subform.elements[9].value;
+				var bill_id=subform.elements[10].value;
+				item_row.setAttribute('data-order-num',order_num);
+				item_row.setAttribute('data-bill-id',bill_id);
+			}
 			item_row.innerHTML="<td style='margin:2px;word-wrap: break-word;'>"+item_name+"</td><td style='margin:2px;word-wrap: break-word;'>"+batch+"</td><td style='margin:2px;text-align:center;'>"+(quantity-picked_quantity)+"</td>";
 			item_table.appendChild(item_row);				
 		}								

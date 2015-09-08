@@ -10902,6 +10902,66 @@ function form209_update_serial_numbers()
 	});
 }
 
+/**
+ * @form Order packing
+ * @formNo 210
+ * @param button
+ */
+function form210_update_item(form)
+{
+	if(is_update_access('form210'))
+	{
+var columns="<product_master count='1'>" +
+			"<id></id>" +
+			"<name></name>"+
+			"<bar_code exact='yes'>"+item_filter.value+"</bar_code>" +
+			"</product_master>";
+		fetch_requested_data('',columns,function (products) 
+		{
+			var bill_items="<bill_items count='1'>"+
+					"<id></id>"+
+					"<batch></batch>"+
+					"<quantity></quantity>"+
+					"<item_name exact='yes'>"+products[0].name+"</item_name>"+
+					"<picked_status exact='yes'>picked</picked_status>"+
+					"<packing_status exact='yes'>pending</packing_status>"+
+					"</bill_items>";
+			fetch_requested_data('',bill_items,function (items) 
+			{
+				var items_xml="<bill_items>"+
+						"<id>"+items[0].id+"</id>"+					
+						"<picked_status>pending</picked_status>"+
+						"<packing_status>pending</packing_status>"+
+						"<last_updated>"+get_my_time()+"</last_updated>"+						
+						"</bill_items>";
+				update_simple(items_xml);
+
+				var discarded_xml="<discarded>"+
+						"<id>"+get_new_key()+"</id>"+					
+						"<batch>"+items[0].batch+"</batch>"+
+                        "<quantity>"+items[0].quantity+"</quantity>"+
+                        "<product_name>"+items[0].item_name+"</product_name>"+
+                        "<source>manual</source>"+
+                        "<source_link></source_link>"+
+                        "<source_id></source_id>"+
+                        "<put_away_status></put_away_status>"+
+                        "<storage>"+get_session_var('discard_items_store')+"</storage>"+
+                        "<status>pending approval</status>"+
+						"<last_updated>"+get_my_time()+"</last_updated>"+						
+						"</discarded>";
+				create_simple(discarded_xml);
+				
+				report64_header_ini();
+				$("#modal70").dialog("open");
+			});		
+		});		
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
 
 /**
  * @form Update Logistics orders

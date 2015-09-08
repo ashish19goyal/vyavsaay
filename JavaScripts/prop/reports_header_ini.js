@@ -1269,8 +1269,9 @@ function report64_header_ini()
                         "<source>manual</source>"+
                         "<source_link></source_link>"+
                         "<source_id></source_id>"+
-                        "<put_away_status>pending</put_away_status>"+
+                        "<put_away_status></put_away_status>"+
                         "<storage>"+get_session_var('discard_items_store')+"</storage>"+
+                        "<status>pending approval</status>"+
 						"<last_updated>"+get_my_time()+"</last_updated>"+						
 						"</discarded>";
 				create_simple(discarded_xml);

@@ -22174,11 +22174,15 @@ function form210_ini()
 					
 					table_copy.setAttribute('width','100%');
 					table_copy.setAttribute('class','plain_table');
-					$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>Quantity</th><th>MRP</th><th>Total</th><th>Action</th></tr>");
+					$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>MRP</th><th>Total</th><th>Quantity</th><th>Action</th></tr>");
 	
 					bill_items.forEach(function (item) 
 					{
-						$(table_copy).append("<tr><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td><td>To Pack: "+item.quantity+"<br>Packed: <input type='text' value='"+item.packed_quantity+"' id='form210_packed_"+item.id+"'></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td><input type='button' class='generic_icon' value='Reject' ></td></tr>");	
+						if(isNaN(item.packed_quantity) || item.packed_quantity=='null' || item.packed_quantity=='')
+						{
+							item.packed_quantity=0;
+						}
+						$(table_copy).append("<tr><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p></td><td><input type='button' class='generic_icon' value='Reject' onclick=\"form210_reject_item('"+item.id+"')\"></td></tr>");	
 					});
 										
 					container.appendChild(invoice_line);
