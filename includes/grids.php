@@ -42,8 +42,8 @@
 			</ul>
 		</li>
 
-		<li id="logistics_link" onclick="grid_click('logistics');" style='background-color:#22a49b'>
-			<a><div style='background-color:#008279'><b data-i18n="function.logistics"></b></div></a>
+		<li id="logistics_link" onclick="grid_click('logistics');" style='background-color:#FCA33B'>
+			<a><div style='background-color:#DA9110'><b data-i18n="function.logistics"></b></div></a>
 			<ul>
 			</ul>
 		</li>
