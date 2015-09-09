@@ -3299,7 +3299,8 @@ function form91_add_item()
 
 		var storage_data="<store_areas>"+
 						"<name></name>"+
-						"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+						//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+						"<area_type></area_type>"+
 						"</store_areas>";
 		set_my_value_list(storage_data,storage_filter);
 
@@ -4204,7 +4205,8 @@ function form112_add_item()
 		
 		var storage_data="<store_areas>"+
 						"<name></name>"+
-						"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+						//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+						"<area_type></area_type>"+						
 						"</store_areas>";
 		set_my_value_list(storage_data,storage_filter);
 		
@@ -4447,7 +4449,8 @@ function form114_add_item()
 	
 		var storage_data="<store_areas>"+
 						"<name></name>"+
-						"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+						//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+						"<area_type></area_type>"+
 						"</store_areas>";
 		set_my_value_list(storage_data,storage_filter);
 		
@@ -5482,7 +5485,8 @@ function form122_add_item()
 	
 		var storage_data="<store_areas>"+
 						"<name></name>"+
-						"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+						//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+						"<area_type></area_type>"+
 						"</store_areas>";
 		set_my_value_list(storage_data,storage_filter);
 		
@@ -5882,7 +5886,8 @@ function form122_add_item()
 	
 		var storage_data="<store_areas>"+
 						"<name></name>"+
-						"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+						//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+						"<area_type></area_type>"+
 						"</store_areas>";
 		set_my_value_list(storage_data,storage_filter);
 		
@@ -7762,7 +7767,8 @@ function form145_add_item()
 		var source_data="<store_areas>" +
 				"<name></name>" +
 				"<owner>"+get_account_name()+"</owner>"+
-				"<area_type exact='yes'>"+storage_level+"</area_type>" +
+				//"<area_type exact='yes'>"+storage_level+"</area_type>" +
+				"<area_type></area_type>"+
 				"</store_areas>";
 		set_my_value_list(source_data,source_filter);
 
@@ -7776,7 +7782,8 @@ function form145_add_item()
 
 		var target_data="<store_areas>" +
 				"<name></name>" +
-				"<area_type exact='yes'>"+storage_level+"</area_type>" +
+				//"<area_type exact='yes'>"+storage_level+"</area_type>" +
+				"<area_type></area_type>"+
 				"</store_areas>";
 		set_my_value_list(target_data,target_filter);
 

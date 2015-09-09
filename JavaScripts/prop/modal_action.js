@@ -4286,7 +4286,8 @@ function modal40_action(product,batch)
 	
 	var storage_data="<store_areas>"+
 					"<name></name>"+
-					"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+					//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+					"<area_type></area_type>"+
 					"</store_areas>";
 	set_my_value_list(storage_data,storage_filter);	
 		

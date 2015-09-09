@@ -4423,7 +4423,8 @@ function report63_ini()
 			
 			var storage_data="<store_areas>"+
 							"<name></name>"+
-							"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+							//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+							"<area_type></area_type>"+
 							"</store_areas>";
 			set_my_value_list(storage_data,storage_filter);
 				
@@ -6629,131 +6630,113 @@ function report90_ini()
 	
 	fetch_requested_data('report90',items_data,function(items)
 	{
-		var unbilled_items_data="<unbilled_sale_items>" +
-				"<id></id>"+
-				"<item_name></item_name>" +
-				"<item_desc></item_desc>"+
-				"<batch></batch>" +
-				"<quantity></quantity>"+
-				"<picked_quantity></picked_quantity>"+
-				"<storage></storage>"+
-				"<picked_status exact='yes'>pending</picked_status>"+
-				"<customer></customer>"+
-				"</unbilled_sale_items>";
-		fetch_requested_data('report90',unbilled_items_data,function(unbilled_items)
+		items.forEach(function(item)
 		{
-			items.forEach(function(item)
+			item.table_type='bill_items';
+		});
+		
+		var report90_count=0;
+		
+		items.forEach(function(item)
+		{
+			var picked_quantity=item.picked_quantity;
+			if(item.picked_quantity=='null' || item.picked_quantity=='' || isNaN(item.picked_quantity))
 			{
-				item.table_type='bill_items';
-			});
-			for(var y in unbilled_items)
-			{
-				unbilled_items[y].table_type='unbilled_sale_items';
-				items.push(unbilled_items[y]);
+				picked_quantity=0;
 			}
 			
-			var report90_count=0;
-			
-			items.forEach(function(item)
+			if(item.table_type=='bill_items')
 			{
-				var picked_quantity=item.picked_quantity;
-				if(item.picked_quantity=='null' || item.picked_quantity=='' || isNaN(item.picked_quantity))
-				{
-					picked_quantity=0;
-				}
+				report90_count+=1;
 				
-				if(item.table_type=='bill_items')
+				var bills_data="<bills count='1'>"+
+					"<id>"+item.bill_id+"</id>"+
+					"<bill_num></bill_num>"+
+					"<order_num></order_num>"+
+					"<billing_type></billing_type>"+
+					"<channel></channel>"+
+					"</bills>";
+				fetch_requested_data('',bills_data,function(bills)
 				{
-					report90_count+=1;
-					
-					var bills_data="<bills count='1'>"+
-						"<id>"+item.bill_id+"</id>"+
-						"<bill_num></bill_num>"+
-						"<order_num></order_num>"+
-						"<billing_type></billing_type>"+
-						"<channel></channel>"+
-						"</bills>";
-					fetch_requested_data('',bills_data,function(bills)
+					report90_count-=1;
+					if(bills.length>0)
 					{
-						report90_count-=1;
-						if(bills.length>0)
+						if(bills[0].order_num==order_num || order_num=="")
 						{
-							if(bills[0].order_num==order_num || order_num=="")
-							{
-								var rowsHTML="<tr>";
-									rowsHTML+="<form id='row_report90_"+item.id+"'></form>";
-									rowsHTML+="<td data-th='Order' id='report90_order_"+item.id+"'>";
-										rowsHTML+=bills[0].channel+" Order #: "+bills[0].order_num+"<br>"+bills[0].billing_type+" Invoice #: "+bills[0].bill_num;
-									rowsHTML+="</td>";
-									rowsHTML+="<td data-th='Item'>";
-										rowsHTML+="<input type='text' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.item_name+"'>";
-										rowsHTML+="<br><textarea readonly='readonly' form='row_report90_"+item.id+"'>"+item.item_desc+"</textarea>";
-									rowsHTML+="</td>";
-									rowsHTML+="<td data-th='Batch'>";
-										rowsHTML+="<input type='text' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.batch+"'>";
-									rowsHTML+="</td>";
-									rowsHTML+="<td data-th='Quantity'>";
-										rowsHTML+="To Pick: <input type='number' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.quantity+"'>";
-										rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='row_report90_"+item.id+"' value='"+picked_quantity+"'>";
-									rowsHTML+="</td>";
-									rowsHTML+="<td data-th='Storage'>";
-										rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
-										rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='report90_edit_location_"+item.id+"'>";
-										if(item.storage=='')
-											rowsHTML+="<img src='./images/refresh.png' class='refresh_icon' title='Refresh Location Calculation' id='report90_refresh_location_"+item.id+"'>";
-										rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.id+"'>";
-										rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.table_type+"'>";
-										rowsHTML+="<input type='submit' class='submit_hidden' form='row_report90_"+item.id+"'>";
-										rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='order_num' value='"+bills[0].order_num+"'>";
-										rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='bill_id' value='"+item.bill_id+"'>";
-									rowsHTML+="</td>";
-									rowsHTML+="</tr>";
+							var rowsHTML="<tr>";
+								rowsHTML+="<form id='row_report90_"+item.id+"'></form>";
+								rowsHTML+="<td data-th='Order' id='report90_order_"+item.id+"'>";
+									rowsHTML+=bills[0].channel+" Order #: "+bills[0].order_num+"<br>"+bills[0].billing_type+" Invoice #: "+bills[0].bill_num;
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Item'>";
+									rowsHTML+="<input type='text' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.item_name+"'>";
+									rowsHTML+="<br><textarea readonly='readonly' form='row_report90_"+item.id+"'>"+item.item_desc+"</textarea>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Batch'>";
+									rowsHTML+="<input type='text' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.batch+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Quantity'>";
+									rowsHTML+="To Pick: <input type='number' readonly='readonly' form='row_report90_"+item.id+"' value='"+item.quantity+"'>";
+									rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='row_report90_"+item.id+"' value='"+picked_quantity+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Storage'>";
+									rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
+									rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='report90_edit_location_"+item.id+"'>";
+									if(item.storage=='')
+										rowsHTML+="<img src='./images/refresh.png' class='refresh_icon' title='Refresh Location Calculation' id='report90_refresh_location_"+item.id+"'>";
+									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.id+"'>";
+									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.table_type+"'>";
+									rowsHTML+="<input type='submit' class='submit_hidden' form='row_report90_"+item.id+"'>";
+									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='order_num' value='"+bills[0].order_num+"'>";
+									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='bill_id' value='"+item.bill_id+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="</tr>";
 
-								$('#report90_body').append(rowsHTML);
+							$('#report90_body').append(rowsHTML);
+						
 							
-								
-								var report90_form=document.getElementById('row_report90_'+item.id);
-								var storage_filter=report90_form.elements[5];
-				
-								var edit_button=document.getElementById("report90_edit_location_"+item.id);
-								$(edit_button).on('click',function ()
-								{
-									storage_filter.removeAttribute('readonly');
-								});
-				
-								$(report90_form).on('submit',function (event) 
-								{
-									event.preventDefault();
-									report90_update(report90_form);
-								});
-				
-								var storage_data="<store_areas>"+
-											"<name></name>"+
-											"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
-											"</store_areas>";
-								set_my_value_list(storage_data,storage_filter);
-									
-								$(storage_filter).on('click',function()
-								{
-									this.select();
-								});
-								
-							}
-						}
-					});
-				}
-			});
+							var report90_form=document.getElementById('row_report90_'+item.id);
+							var storage_filter=report90_form.elements[5];
 			
-			var report90_complete=setInterval(function()
-			{
-		  	   if(report90_count===0)
-		  	   {
-					clearInterval(report90_complete);
-					$('textarea').autosize();
-					hide_loader();   
-		  	   }
-			},1000);		    
+							var edit_button=document.getElementById("report90_edit_location_"+item.id);
+							$(edit_button).on('click',function ()
+							{
+								storage_filter.removeAttribute('readonly');
+							});
+			
+							$(report90_form).on('submit',function (event) 
+							{
+								event.preventDefault();
+								report90_update(report90_form);
+							});
+			
+							var storage_data="<store_areas>"+
+										"<name></name>"+
+										//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+										"<area_type></area_type>"+
+										"</store_areas>";
+							set_my_value_list(storage_data,storage_filter);
+								
+							$(storage_filter).on('click',function()
+							{
+								this.select();
+							});
+							
+						}
+					}
+				});
+			}
 		});
+		
+		var report90_complete=setInterval(function()
+		{
+	  	   if(report90_count===0)
+	  	   {
+				clearInterval(report90_complete);
+				$('textarea').autosize();
+				hide_loader();   
+	  	   }
+		},1000);		    
 	});
 
 	var print_button=form.elements['print'];

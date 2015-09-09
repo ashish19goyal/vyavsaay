@@ -7969,6 +7969,12 @@ function form122_create_item(form)
 		var del_button=form.elements[14];
 		var is_unbilled=form.elements['unbilled'].value;
 		
+		var put_away_status='pending';
+		if(is_unbilled=='yes')
+		{
+			put_away_status='completed';
+		}
+		
 		var last_updated=get_my_time();
 		var data_xml="<supplier_bill_items>" +
 					"<id>"+data_id+"</id>" +
@@ -7985,7 +7991,7 @@ function form122_create_item(form)
 					"<storage>"+storage+"</storage>"+
 					"<qc>"+qc+"</qc>"+
 					"<qc_comments>"+qc_comments+"</qc_comments>"+
-					"<put_away_status>pending</put_away_status>"+
+					"<put_away_status>"+put_away_status+"</put_away_status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</supplier_bill_items>";
 				

@@ -6042,7 +6042,8 @@ function form165_header_ini()
 			"</product_instances>";
 	var storage_data="<store_areas>"+
 			"<name></name>"+
-			"<area_type exact='yes'>"+storage_level+"</area_type>"+
+			//"<area_type exact='yes'>"+storage_level+"</area_type>"+
+			"<area_type></area_type>"+
 			"</store_areas>";
 	
 	$(filter_fields).off('submit');
@@ -7020,7 +7021,8 @@ function form193_header_ini()
 	
 	var storage_data="<store_areas>"+
 					"<name></name>"+
-					"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+					//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
+					"<area_type></area_type>"+
 					"</store_areas>";
 	set_my_value_list_func(storage_data,storage_filter,function()
 	{
