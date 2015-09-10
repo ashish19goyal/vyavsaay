@@ -2930,51 +2930,6 @@ function form93_delete_item(button)
 	}
 }
 
-/**
- * @form Discard Items
- * @formN0 94
- * @param button
- */
-function form94_delete_item(button)
-{
-	if(is_delete_access('form94'))
-	{
-		modal115_action(function()
-		{
-			var form_id=$(button).attr('form');
-			var form=document.getElementById(form_id);
-			var name=form.elements[0].value;
-			var batch=form.elements[1].value;
-			var data_id=form.elements[4].value;
-			var last_updated=get_my_time();
-			var data_xml="<discarded>" +
-						"<id>"+data_id+"</id>" +
-						"<batch>"+batch+"</batch>" +
-						"</discarded>";	
-			var activity_xml="<activity>" +
-						"<data_id>"+data_id+"</data_id>" +
-						"<tablename>discarded</tablename>" +
-						"<link_to>form94</link_to>" +
-						"<title>Removed</title>" +
-						"<notes>Batch number "+batch+" of product "+name+" from discarded list</notes>" +
-						"<updated_by>"+get_name()+"</updated_by>" +
-						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
-			$(button).parent().parent().remove();
-		});
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
 
 /**
  * formNo 96

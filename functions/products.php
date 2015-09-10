@@ -23,7 +23,6 @@
 			<li><a id='report48_link' href='#report48' onclick='report48_header_ini();' data-i18n='form.resource_analysis'></a></li>
 			<li><a id='report50_link' href='#report50' onclick='report50_header_ini();' data-i18n='form.margin_by_products'></a></li>
 			<li><a id='report51_link' href='#report51' onclick='report51_header_ini();' data-i18n='form.dead_items'></a></li>
-			<li><a id='form94_link' href='#form94' onclick='form94_header_ini(); form94_ini();' data-i18n='form.discard_items'></a></li>
 			<li><a id='report28_link' href='#report28' onclick='report28_header_ini();' data-i18n='form.short_inventory'></a></li>
 			<li><a id='report40_link' href='#report40' onclick='report40_header_ini();' data-i18n='form.surplus_inventory'></a></li>
 			<li><a id='report27_link' href='#report27' onclick='report27_header_ini();' data-i18n='form.expiring_inventory'></a></li>
@@ -37,6 +36,7 @@
 			<li><a id='report70_link' href='#report70' onclick='report70_header_ini();' data-i18n='form.inventory_shortage'></a></li>
 			<li><a id='report71_link' href='#report71' onclick='report71_header_ini();' data-i18n='form.ordered_inventory'></a></li>		
 			<li><a id='report82_link' href='#report82' onclick='report82_header_ini();' data-i18n='form.inventory_report'></a></li>		
+			<li><a id='form193_link' href='#form193' onclick="form193_header_ini();" data-i18n='form.adjust_inventory'></a></li>
 		</ul>
 
 	<?php 
@@ -62,7 +62,6 @@
 			include "reports/report48.php";
 			include "reports/report50.php";
 			include "reports/report51.php";
-			include "forms/form94.php";
 			include "reports/report28.php";
 			include "reports/report40.php";
 			include "reports/report27.php";
@@ -76,6 +75,7 @@
 			include "reports/report70.php";	
 			include "reports/report71.php";	
 			include "reports/report82.php";	
-	?>
+			include "forms/form193.php";
+		?>
 	
 </div>

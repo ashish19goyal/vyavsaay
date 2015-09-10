@@ -487,6 +487,7 @@
 				<label>Batch: <input type="text" required></label><br>
 				<label>Quantity: <input type='number' required></label><br>
 				<label>Storage: <input type='text'></label><br>
+				<label>Reason: <textarea></textarea></label><br>
 				<input type="submit" value='Save' class='modal_submit'>
 			</fieldset>
 		</form>
@@ -1393,8 +1394,18 @@
 				<input type="submit" value='Save' name='save' class='modal_submit'>
 			</fieldset>
 		</form>
-		<table id='modal150_table'>
-		</table>		
 	</div>
 	
+	<div id="modal152" title="Scan item to place">
+		<form id='modal152_form' autocomplete="off">
+			<fieldset>
+				<label>Scan Barcode: <input type="text" name='barcode' required></label>
+				<input type="submit" class='submit_hidden'>
+				<input type="button" value='Save Placements' name='save' class='modal_submit'>
+			</fieldset>
+		</form>
+		<table id='modal152_table'>
+		</table>		
+	</div>
+
 </div>

@@ -4287,14 +4287,13 @@ function report60_ini()
 	print_tabular_report('report60','Trial Balance',print_button);
 };
 
-
 /**
  * @reportNo 63
  * @report Item picklist
  */
 function report63_ini()
 {
-	console.log('report63');
+	//console.log('report63');
 	var form=document.getElementById('report63_header');
 	var sku=form.elements['sku'].value;
 	var item=form.elements['item_name'].value;
@@ -4407,7 +4406,7 @@ function report63_ini()
 				rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='row_report63_"+item.id+"' value='"+item.picked_quantity+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Storage'>";
-				rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' form='row_report63_"+item.id+"' value='"+item.storage+"'>";
+				rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' required form='row_report63_"+item.id+"' value='"+item.storage+"'>";
 				rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='report63_edit_location_"+item.id+"'>";
 				if(item.storage=='')
 					rowsHTML+="<img src='./images/refresh.png' class='refresh_icon' title='Refresh Location Calculation' id='report63_refresh_location_"+item.id+"'>";
@@ -6695,7 +6694,7 @@ function report90_ini()
 									rowsHTML+="<br>Picked: <input readonly='readonly' type='number' form='row_report90_"+item.id+"' value='"+picked_quantity+"'>";
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Storage'>";
-									rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
+									rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' required form='row_report90_"+item.id+"' value='"+item.storage+"'>";
 									rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='report90_edit_location_"+item.id+"'>";
 									if(item.storage=='')
 										rowsHTML+="<img src='./images/refresh.png' class='refresh_icon' title='Refresh Location Calculation' id='report90_refresh_location_"+item.id+"'>";

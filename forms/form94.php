@@ -6,7 +6,6 @@
 					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form94_header'></th>
 					<th>Batch <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form94_header'></th>
 					<th>Quantity</th>
-					<th>Storage</th>
 					<th>Reason</th>
 					<th><input type='button' form='form94_header' title='Discard another item' class='add_icon' onclick="modal40_action('','');">
 						<input type='button' form='form94_header' value='EXPORT' class='export_icon'>

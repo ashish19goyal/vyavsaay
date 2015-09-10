@@ -269,6 +269,7 @@
 			<qc index='yes' type="VARCHAR(20)"></qc><!--accepted/rejected-->
 			<qc_comments index='yes' type="TEXT"></qc_comments>
 			<put_away_status index='yes' type="TEXT"></put_away_status><!--pending/completed-->
+			<placed_quantity index='no' type="DECIMAL(12,2)"></placed_quantity>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</supplier_bill_items>
@@ -596,10 +597,12 @@
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<batch index='yes' type="TEXT"></batch>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
+			<placed_quantity index='no' type="DECIMAL(12,2)"></placed_quantity>
 			<product_name index='yes' type="TEXT"></product_name>
 			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale_return/manual/manufacturing-->
 			<source_id index='yes' type="BIGINT"></source_id>
 			<storage index='yes' type="TEXT"></storage>
+			<put_away_status index='yes' type="VARCHAR(20)"></put_away_status><!--pending/completed-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</inventory_adjust>
@@ -614,7 +617,7 @@
 			<source_id index='yes' type='BIGINT'></source_id>
 			<storage index='yes' type="TEXT"></storage>
 			<put_away_status index='yes' type="VARCHAR(25)"></put_away_status><!--pending/completed-->
-			<status index='yes' type="VARCHAR(25)"></status><!--pending approval/approved-->
+			<status index='yes' type="VARCHAR(25)"></status><!--pending approval/approved/rejected-->
 			<reason index='no' type="TEXT"></reason>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

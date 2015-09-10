@@ -6028,34 +6028,43 @@ function form163_header_ini()
  */
 function form165_header_ini()
 {
-	var filter_fields=document.getElementById('form165_header');
-	var product_filter=filter_fields.elements[0];
-	var batch_filter=filter_fields.elements[1];
-	var storage_filter=filter_fields.elements[2];
-	var storage_level=get_session_var('storage_level');
-	
-	var products_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
-	var batch_data="<product_instances>" +
-			"<batch></batch>" +
-			"</product_instances>";
-	var storage_data="<store_areas>"+
-			"<name></name>"+
-			//"<area_type exact='yes'>"+storage_level+"</area_type>"+
-			"<area_type></area_type>"+
-			"</store_areas>";
-	
-	$(filter_fields).off('submit');
-	$(filter_fields).on('submit',function(event)
+	var form=document.getElementById('form165_master');
+	var sku_filter=form.elements['sku'];
+	var batch_filter=form.elements['batch'];
+	var rack_filter=form.elements['rack'];
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
 	{
 		event.preventDefault();
 		form165_ini();
 	});
+		
+	$(rack_filter).off('click');
+	$(rack_filter).on('click',function()
+	{
+		this.select();
+	});
 
-	set_my_filter(products_data,product_filter);
-	set_my_filter(batch_data,batch_filter);
-	set_my_filter(storage_data,storage_filter);
+	var sku_data="<product_master>"+
+		"<name></name>"+
+		"</product_master>";
+	set_my_filter(sku_data,sku_filter);	
+
+	var batch_data="<product_instances>"+
+		"<batch></batch>"+
+		"</product_instances>";
+	set_my_filter(batch_data,batch_filter);					
+	
+	$(rack_filter).off('keydown');
+	$(rack_filter).on('keydown',function (event) 
+	{
+		if(event.keyCode==13)
+		{
+			event.preventDefault();
+			modal152_action(rack_filter.value);
+		}
+	});
 };
 
 

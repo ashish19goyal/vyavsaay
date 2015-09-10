@@ -4354,13 +4354,13 @@ function form94_update_item(form)
 	{
 		var item_name=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var storage=form.elements[3].value;
-		var reason=form.elements[4].value;
-		var data_id=form.elements[5].value;
+		//var storage=form.elements[3].value;
+		var reason=form.elements[3].value;
+		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		var data_xml="<discarded>" +
 					"<id>"+data_id+"</id>" +
-					"<storage>"+storage+"</storage>" +
+					//"<storage>"+storage+"</storage>" +
 					"<reason>"+reason+"</reason>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</discarded>";	
@@ -4373,7 +4373,115 @@ function form94_update_item(form)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 		update_row(data_xml,activity_xml);
-		for(var i=0;i<5;i++)
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Discard Items
+ * @formN0 94
+ * @param button
+ */
+function form94_accept_item(form)
+{
+	if(is_delete_access('form94'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+			var name=form.elements[0].value;
+			var batch=form.elements[1].value;
+			var quantity=form.elements[2].value;
+			var storage=form.elements[5].value;
+			var data_id=form.elements[4].value;
+			var last_updated=get_my_time();
+			var data_xml="<discarded>" +
+						"<id>"+data_id+"</id>" +
+						"</discarded>";	
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>discarded</tablename>" +
+						"<link_to>form94</link_to>" +
+						"<title>Approved</title>" +
+						"<notes>"+item_name+" not discarded</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+			
+			var adjust_id=get_new_key();
+			var adjust1_xml="<inventory_adjust>"+
+							"<id>"+adjust_id+"</id>"+
+							"<batch>"+batch+"</batch>"+
+							"<quantity>"+quantity+"</quantity>"+
+							"<product_name>"+name+"</product_name>"+
+							"<storage>"+storage+"</storage>"+
+							"<source>discarded</source>"+
+							"<source_id>"+data_id+"</source_id>"+
+							"<put_away_status>completed</put_away_status>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</inventory_adjust>";
+			var adjust2_xml="<inventory_adjust>"+
+							"<id>"+(adjust_id+1)+"</id>"+
+							"<batch>"+batch+"</batch>"+
+							"<quantity>-"+quantity+"</quantity>"+
+							"<product_name>"+name+"</product_name>"+
+							"<storage>"+storage+"</storage>"+
+							"<source>discarded</source>"+
+							"<source_id>"+data_id+"</source_id>"+
+							"<put_away_status>pending</put_away_status>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</inventory_adjust>";
+			create_simple(adjust1_xml);
+			create_simple(adjust2_xml);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 94
+ * form Discarded Items
+ * @param button
+ */
+function form94_reject_item(form)
+{
+	if(is_update_access('form94'))
+	{
+		var item_name=form.elements[0].value;
+		var batch=form.elements[1].value;
+		//var storage=form.elements[3].value;
+		var reason=form.elements[3].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		var data_xml="<discarded>" +
+					"<id>"+data_id+"</id>" +
+					//"<storage>"+storage+"</storage>" +
+					"<reason>"+reason+"</reason>" +
+					"<status>rejected</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</discarded>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>discarded</tablename>" +
+					"<link_to>form94</link_to>" +
+					"<title>discarded</title>" +
+					"<notes>"+item_name+" discarded</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -4414,14 +4522,8 @@ function form96_update_item(form)
 					"<notes>Attribute "+attribute+" for customer "+customer+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+
+		update_row(data_xml,activity_xml);
 		for(var i=0;i<3;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -8689,33 +8791,118 @@ function form163_update_item(form)
 }
 
 
-/**
- * @form Put-away suggestions
- * @param button
- */
-function form165_place_item(form)
+function form165_update_item(form)
 {
 	if(is_update_access('form165'))
 	{
 		var item=form.elements[0].value;
 		var batch=form.elements[1].value;
-		var storage=form.elements[3].value;
-		var data_id=form.elements[4].value;
-		var table_type=form.elements[5].value;
+		var to_place=form.elements[2].value;
+		var placed=form.elements[3].value;
+		var storage=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var table_type=form.elements[6].value;
 		var last_updated=get_my_time();
-		var data_xml="<"+table_type+">" +
-					"<id>"+data_id+"</id>" +
-					"<storage>"+storage+"</storage>"+
-					"<put_away_status>completed</put_away_status>"+
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</"+table_type+">";
-		update_simple(data_xml);
-		for(var i=0;i<4;i++)
+		var old_storage=form.elements[8].value;
+		var old_placed=form.elements[9].value;
+		
+		if(storage==old_storage)
+		{
+			var status="completed";
+			if(parseFloat(placed)!=parseFloat(to_place))
+				status='pending';		
+			var data_xml="<"+table_type+">";
+				data_xml+="<id>"+data_id+"</id>" +
+					"<put_away_status>"+status+"</put_away_status>" +
+					"<placed_quantity>"+placed+"</placed_quantity>" +
+					"<storage>"+old_storage+"</storage>"+
+					"<last_updated>"+last_updated+"</last_updated>";
+				data_xml+="</"+table_type+">";
+			
+			update_simple(data_xml);
+			form.elements[8].value=storage;
+			form.elements[9].value=placed;					
+		}
+		else
+		{
+			if(placed==0)
+			{
+				var status="completed";
+				if(parseFloat(placed)!=parseFloat(to_place))
+					status='pending';		
+				
+				var data_xml="<"+table_type+">"+
+						"<id>"+data_id+"</id>" +
+						"<put_away_status>"+status+"</put_away_status>" +
+						"<placed_quantity>"+placed+"</placed_quantity>" +
+						"<storage>"+storage+"</storage>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</"+table_type+">";
+				
+				update_simple(data_xml);
+				form.elements[8].value=storage;
+				form.elements[9].value=placed;
+			}
+			else
+			{
+				var status="completed";				
+				var data_xml="<"+table_type+">"+
+						"<id>"+data_id+"</id>" +
+						"<put_away_status>completed</put_away_status>" +
+						"<placed_quantity>"+to_place+"</placed_quantity>" +
+						"<storage>"+old_storage+"</storage>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</"+table_type+">";
+				
+				update_simple(data_xml);
+			
+			
+				if(parseFloat(placed)!=parseFloat(to_place))
+				{	
+					var old_pending_quantity=parseFloat(to_place)-parseFloat(old_placed);
+					var new_placed_quantity=parseFloat(placed)-parseFloat(old_placed);
+					var new_key=get_new_key();
+					form.elements[6].value='inventory_adjust';
+					form.elements[5].value=new_key;
+					form.elements[8].value=storage;
+					form.elements[9].value=new_placed_quantity;
+					form.elements[2].value=old_pending_quantity;
+					form.elements[3].value=new_placed_quantity;
+			
+					var adjust1_xml="<inventory_adjust>"+
+						"<id>"+(new_key-1)+"</id>" +
+						"<product_name>"+item+"</product_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<put_away_status>completed</put_away_status>" +
+						"<quantity>-"+old_pending_quantity+"</quantity>" +
+						"<placed_quantity>-"+old_pending_quantity+"</placed_quantity>" +
+						"<storage>"+old_storage+"</storage>"+
+						"<source>put away</source>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</inventory_adjust>";
+					create_simple(adjust1_xml);
+					
+					var adjust2_xml="<inventory_adjust>"+
+						"<id>"+new_key+"</id>" +
+						"<product_name>"+item+"</product_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<put_away_status>pending</put_away_status>" +
+						"<quantity>"+old_pending_quantity+"</quantity>" +
+						"<placed_quantity>"+new_placed_quantity+"</placed_quantity>" +
+						"<storage>"+storage+"</storage>"+
+						"<source>put away</source>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</inventory_adjust>";
+					create_simple(adjust2_xml);
+				}
+			}
+		}
+		
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
-		
-		///////////adding store placement////////
+
 		var storage_data="<area_utilization>" +
 				"<id></id>" +
 				"<name exact='yes'>"+storage+"</name>" +
@@ -8724,7 +8911,7 @@ function form165_place_item(form)
 				"</area_utilization>";
 		fetch_requested_data('',storage_data,function(placements)
 		{
-			if(placements.length===0 && storage!="")
+			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
 						"<id>"+get_new_key()+"</id>" +
@@ -10172,7 +10359,7 @@ function form193_update_form()
 							"</area_utilization>";
 					fetch_requested_data('',storage_data,function(placements)
 					{
-						if(placements.length===0 && storage!="")
+						if(placements.length===0)
 						{
 							var storage_xml="<area_utilization>" +
 									"<id>"+get_new_key()+"</id>" +
@@ -10952,7 +11139,7 @@ function form209_update_serial_numbers()
  * @formNo 210
  * @param button
  */
-function form210_reject_item(item_id,item_name,item_batch,total_quantity)
+function form210_reject_item(item_id,item_name,item_batch,total_quantity,item_storage)
 {
 	if(is_update_access('form210'))
 	{
@@ -10984,7 +11171,7 @@ function form210_reject_item(item_id,item_name,item_batch,total_quantity)
 	                "<source_link></source_link>"+
 	                "<source_id></source_id>"+
 	                "<put_away_status></put_away_status>"+
-	                "<storage>"+get_session_var('discard_items_store')+"</storage>"+
+	                "<storage>"+item_storage+"</storage>"+
 	                "<status>pending approval</status>"+
 					"<last_updated>"+get_my_time()+"</last_updated>"+						
 					"</discarded>";

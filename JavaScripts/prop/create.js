@@ -1111,7 +1111,7 @@ function form15_create_item(form)
 				"</area_utilization>";
 		fetch_requested_data('',storage_data,function(placements)
 		{
-			if(placements.length===0 && storage!="")
+			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
 						"<id>"+get_new_key()+"</id>" +
@@ -6750,7 +6750,7 @@ function form114_create_item(form)
 				"</area_utilization>";
 		fetch_requested_data('',storage_data,function(placements)
 		{
-			if(placements.length===0 && storage!="")
+			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
 						"<id>"+get_new_key()+"</id>" +
@@ -8067,7 +8067,7 @@ function form122_create_item(form)
 				"</area_utilization>";
 		fetch_requested_data('',storage_data,function(placements)
 		{
-			if(placements.length===0 && storage!="")
+			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
 						"<id>"+get_new_key()+"</id>" +
@@ -9797,7 +9797,7 @@ function form136_create_item(form)
 				"</area_utilization>";
 		fetch_requested_data('',storage_data,function(placements)
 		{
-			if(placements.length===0 && storage!="")
+			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
 						"<id>"+get_new_key()+"</id>" +
@@ -11967,7 +11967,7 @@ function form158_create_item(form)
 				"</area_utilization>";
 		fetch_requested_data('',storage_data,function(placements)
 		{
-			if(placements.length===0 && storage!="")
+			if(placements.length===0)
 			{
 				var storage_xml="<area_utilization>" +
 						"<id>"+get_new_key()+"</id>" +
