@@ -115,7 +115,7 @@ function transform_to_bar_sum(data_array,label_display,sum_column,label_column)
 			}
 		}
 	}
-	
+	/*
 	data_array.sort(function(a,b)
 	{
 		if(parseFloat(a[sum_column])>parseFloat(b[sum_column]))
@@ -123,7 +123,7 @@ function transform_to_bar_sum(data_array,label_display,sum_column,label_column)
 		else
 			return 1;
 	});
-	
+	*/
 	for(var i=0; i<data_array.length && i<11;i++)
 	{
 		result.labels.push(data_array[i][label_column]);

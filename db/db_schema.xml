@@ -615,6 +615,7 @@
 			<storage index='yes' type="TEXT"></storage>
 			<put_away_status index='yes' type="VARCHAR(25)"></put_away_status><!--pending/completed-->
 			<status index='yes' type="VARCHAR(25)"></status><!--pending approval/approved-->
+			<reason index='no' type="TEXT"></reason>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</discarded>

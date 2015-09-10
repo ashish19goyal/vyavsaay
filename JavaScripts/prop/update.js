@@ -4344,6 +4344,47 @@ function form93_update_item(form)
 }
 
 /**
+ * formNo 94
+ * form Discarded Items
+ * @param button
+ */
+function form94_update_item(form)
+{
+	if(is_update_access('form94'))
+	{
+		var item_name=form.elements[0].value;
+		var batch=form.elements[1].value;
+		var storage=form.elements[3].value;
+		var reason=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		var last_updated=get_my_time();
+		var data_xml="<discarded>" +
+					"<id>"+data_id+"</id>" +
+					"<storage>"+storage+"</storage>" +
+					"<reason>"+reason+"</reason>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</discarded>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>discarded</tablename>" +
+					"<link_to>form94</link_to>" +
+					"<title>Updated</title>" +
+					"<notes>The reason for discarding "+item_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		update_row(data_xml,activity_xml);
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * formNo 96
  * form Customer Attributes
  * @param button

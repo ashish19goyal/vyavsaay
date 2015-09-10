@@ -6244,6 +6244,14 @@ function report85_ini()
 			}
 		}
 
+		orders.sort(function(a,b)
+		{
+			if(parseFloat(a.drs_time)<parseFloat(b.drs_time))
+				return -1;
+			else
+				return 1;
+		});
+
 		for(var i=0;i<orders.length;i++)
 		{
 			orders[i].drs_time=get_my_past_date(orders[i].drs_time);
@@ -6313,7 +6321,14 @@ function report85_ini()
 				{
 					var sorted_element=new Object();
 					sorted_element['DRS No']=new_result.drs_num;
-					sorted_element['DRS Date']=get_my_datetime(new_result.drs_time);
+					if(new_result.drs_time!="" && new_result.drs_time!="NULL")
+					{	
+						sorted_element['DRS Date']=get_my_datetime(new_result.drs_time);
+					}
+					else 
+					{
+						sorted_element['DRS Date']="";
+					}					
 					sorted_element['Order Id']=new_result.order_num;
 					sorted_element['AWB No']=new_result.awb_num;
 					sorted_element['Wt']=new_result.weight;

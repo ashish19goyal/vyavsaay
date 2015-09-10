@@ -9295,7 +9295,7 @@ function modal138_action()
 		var data_array=['order_id','order_date','payment mode','customer_name','customer_email','phone',
 						'address','pincode','tin','item_name','channel_sku','system_sku',
 						'item_mrp','item_price','quantity','shipping_amount','estimated_shipping_date',
-						'tax_type'];
+						'tax_type','last_updated'];
 		my_array_to_csv(data_array);
 	});
 	
@@ -9624,7 +9624,7 @@ function modal140_action(i_func)
 	{
 		var data_array=['order_num','order_date','supplier_name','supplier_email','phone','address',
 						'item_name','supplier_sku','system_sku','item_mrp','item_price',
-						'brand','quantity','order_status','tax_rate'];
+						'brand','quantity','order_status','tax_rate','last_updated'];
 		my_array_to_csv(data_array);
 	});
 	
@@ -9651,11 +9651,16 @@ function modal140_action(i_func)
        		var data_xml="<purchase_orders>";
        		var data2_xml="<purchase_order_items>";
 			var data3_xml="<suppliers>";
+			//var data4_xml="<product_master>";
+			//var data5_xml="<product_instances>";
+			
 			var counter=1;
 			var last_updated=get_my_time();
 			var order_array=[];
 			var order_item_array=[];
 			var supplier_array=[];
+			//var product_master_array=[];			
+			//var product_instance_array=[];
 			
 			data_array.forEach(function (data_row) 
 			{
@@ -9688,7 +9693,58 @@ function modal140_action(i_func)
             	{
             		supplier_array.push(supplier_object);
             	}
-				
+            	
+				//////////////////////////////////
+				/*
+				var product_object=new Object();
+				product_object.id=last_updated+counter;
+				product_object.name=data_row.system_sku;
+				product_object.description=data_row.item_name;
+                product_object.make=data_row.brand;
+                product_object.tax=data_row.tax_rate;
+                
+                var add_product=true;
+                
+                for(var i=0;i<product_master_array.length;i++)
+                {
+                	if(product_master_array[i].name==product_object.name)
+                	{
+                		add_product=false;
+                		break;
+                	}
+                }
+
+            	if(add_product)
+            	{
+            		product_master_array.push(product_object);
+            	}
+
+
+				//////////////////////////////////
+				var instance_object=new Object();
+				instance_object.id=last_updated+counter;
+				instance_object.product_name=data_row.system_sku;
+				instance_object.batch=data_row.batch;
+                instance_object.status='unavailable';
+                instance_object.mrp=data_row.item_mrp;
+                
+                var add_instance=true;
+                
+                for(var i=0;i<product_instance_array.length;i++)
+                {
+                	if(product_instance_array[i].name==instance_object.name)
+                	{
+                		add_instance=false;
+                		break;
+                	}
+                }
+
+            	if(add_instance)
+            	{
+            		product_instance_array.push(instance_object);
+            	}
+				*////////////////////////////////
+
 				var add_order=true;
 				
 				var order_object=new Object();

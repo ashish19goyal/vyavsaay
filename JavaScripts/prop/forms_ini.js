@@ -8399,6 +8399,7 @@ function form94_ini()
 		"<source_link></source_link>" +
 		"<source_id></source_id>" +
 		"<storage></storage>"+
+		"<status exact='yes'>pending approval</status>"+
 		"<last_updated></last_updated>" +
 		"</discarded>";
 	
@@ -8422,19 +8423,33 @@ function form94_ini()
 						rowsHTML+="<input type='number' step='any' readonly='readonly' form='form94_"+result.id+"' value='"+result.quantity+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Storage'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form94_"+result.id+"' value='"+result.storage+"'>";
+						rowsHTML+="<input type='text' class='dblclick_editable' readonly='readonly' form='form94_"+result.id+"' value='"+result.storage+"'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Source'>";
-						rowsHTML+=source_string;
+					rowsHTML+="<td data-th='Reason'>";
+						rowsHTML+="<textarea class='dblclick_editable' readonly='readonly' form='form94_"+result.id+"'>"+result.reason+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form94_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='save_icon' title='Save' form='form94_"+result.id+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form94_"+result.id+"' onclick='form94_delete_item($(this));'>";
+						//rowsHTML+="<input type='button' class='delete_icon' title='Delete' form='form94_"+result.id+"' onclick='form94_delete_item($(this));'>";
+						rowsHTML+="<input type='button' class='generic_icon' title='Don't Reject' value='Approve' form='form94_"+result.id+"' onclick='form94_approve_item($(this));'>";
+						rowsHTML+="<input type='button' class='generic_icon' title='Reject' value='Reject' form='form94_"+result.id+"' onclick='form94_reject_item($(this));'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form94_body').append(rowsHTML);
+			var fields=document.getElementById("form94_"+result.id);
+			var storage_filter=fields.elements[3];
+			var storage_xml="<store_areas>"+
+							"<name></name>"+
+							"</store_areas>";
+			set_my_value_list(storage_xml,storage_filter);
+			
+			$(fields).on("submit",function(event)
+			{
+				event.preventDefault();
+				form94_update_item(fields);
+			});
 		});
 
 		////indexing///
@@ -21500,7 +21515,14 @@ function form201_ini()
 				{
 					var sorted_element=new Object();
 					sorted_element['DRS No']=new_result.drs_num;
-					sorted_element['DRS Date']=get_my_datetime(new_result.drs_time);
+					if(new_result.drs_time!="" && new_result.drs_time!="NULL")
+					{	
+						sorted_element['DRS Date']=get_my_datetime(new_result.drs_time);
+					}
+					else 
+					{
+						sorted_element['DRS Date']="";
+					}	
 					sorted_element['Order Id']=new_result.order_num;
 					sorted_element['AWB No']=new_result.awb_num;
 					sorted_element['Wt']=new_result.weight;
