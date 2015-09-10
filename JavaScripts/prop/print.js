@@ -67,6 +67,7 @@ function print_smaller_product_barcode(barcode,sku,name)
 
 	sku_element.innerHTML=sku;
 	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:30});
+	//$(image_element).JsBarcode(barcode,{format:"EAN",displayValue:true,fontSize:20});
 	//name_element.innerHTML=name;
 	$.print(container);	
 }

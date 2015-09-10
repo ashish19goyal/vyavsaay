@@ -8813,6 +8813,7 @@ function modal132_action(tab_id,func)
  */
 function modal133_action(order_id,sale_channel,order_num,customer,billing_type,order_time)
 {
+	show_loader();
 	var form=document.getElementById("modal133_form");
 	var type_filter=form.elements[0];
 	var cancel_button=form.elements[2];
@@ -8864,6 +8865,8 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
                     "<freight></freight>"+
                     "<total></total>"+
 					"</sale_order_items>";
+	var analyze_item_timer=0;
+								
 	fetch_requested_data('',order_items_xml,function (order_items) 
 	{
 		var channel_sku_string="--";
@@ -8880,6 +8883,8 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 					"</sku_mapping>";
 		fetch_requested_data('',sku_data,function(skus)
 		{
+			analyze_item_timer=order_items.length;
+			
 			order_items.forEach(function (order_item) 
 			{
 				var tr_elem_title=[];
@@ -9002,9 +9007,19 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 						}
 							rowsHTML+="</tr>";
 						$('#modal133_item_table').append(rowsHTML);
+						analyze_item_timer-=1;
 			  	   }
 			     },100);	
 			});
+			
+			var analysis_complete=setInterval(function()
+			{
+				if(analyze_item_timer===0)
+				{
+					clearInterval(analysis_complete);
+					hide_loader();
+				}
+			},100);	
 		});
 	});				
 	
