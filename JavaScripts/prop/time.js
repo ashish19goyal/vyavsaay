@@ -130,7 +130,7 @@ function get_my_date(raw_time)
 
 function get_my_past_date(raw_time)
 {
-	if(raw_time=='')
+	if(raw_time=='' || raw_time=='0' || raw_time=='null' || raw_time=='undefined')
 	{
 		return "";
 	}

@@ -4438,6 +4438,28 @@ function report63_ini()
 				storage_filter.removeAttribute('readonly');
 			});
 
+			var refresh_button=document.getElementById("report63_refresh_location_"+item.id);
+			$(refresh_button).on('click',function ()
+			{
+				var storage_xml="<area_utilization>"+
+								"<name></name>"+
+								"<item_name exact='yes'>"+item.item_name+"</item_name>"+
+								"<batch exact='yes'>"+item.batch+"</batch>"+
+								"</area_utilization>";											
+				get_single_column_data(function (storages) 
+				{										
+					var storage_result_array=[];
+					get_available_storage(item.item_name,item.batch,storages,item.quantity,storage_result_array,function () 
+					{
+						if(storage_result_array.length>0)
+						{
+							storage_filter.value=storage_result_array[0].storage;
+							report63_update(report63_form);
+						}
+					});
+				},storage_xml);
+			});
+
 			$(report63_form).on('submit',function (event) 
 			{
 				event.preventDefault();
@@ -6718,6 +6740,28 @@ function report90_ini()
 								storage_filter.removeAttribute('readonly');
 							});
 			
+							var refresh_button=document.getElementById("report90_refresh_location_"+item.id);
+							$(refresh_button).on('click',function ()
+							{
+								var storage_xml="<area_utilization>"+
+												"<name></name>"+
+												"<item_name exact='yes'>"+item.item_name+"</item_name>"+
+												"<batch exact='yes'>"+item.batch+"</batch>"+
+												"</area_utilization>";											
+								get_single_column_data(function (storages) 
+								{										
+									var storage_result_array=[];
+									get_available_storage(item.item_name,item.batch,storages,item.quantity,storage_result_array,function () 
+									{
+										if(storage_result_array.length>0)
+										{
+											storage_filter.value=storage_result_array[0].storage;
+											report90_update(report90_form);
+										}
+									});
+								},storage_xml);
+							});
+
 							$(report90_form).on('submit',function (event) 
 							{
 								event.preventDefault();

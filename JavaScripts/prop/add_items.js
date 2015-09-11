@@ -5621,7 +5621,7 @@ function form122_add_item()
 							mrp_filter.value=parseFloat(mrps[0].mrp);
 							var expiry_time=parseFloat(mrps[0].expiry);
 							var expiry_period=expiry_time-parseFloat(get_my_time());							
-							if(expiry_period<(86400000*45))
+							if(expiry_period<(86400000*45) && expiry_time!=0 && !isNaN(expiry_time))
 							{
 								qc_filter.value='rejected';
 								qc_comments_filter.value='Expiry is less than 45 days';
@@ -5689,7 +5689,7 @@ function form122_add_item()
 					mrp_filter.value=parseFloat(mrps[0].mrp);
 					var expiry_time=parseFloat(mrps[0].expiry);
 					var expiry_period=expiry_time-parseFloat(get_my_time());							
-					if(expiry_period<(86400000*45))
+					if(expiry_period<(86400000*45) && expiry_time!=0 && !isNaN(expiry_time))
 					{
 						qc_filter.value='rejected';
 						qc_comments_filter.value='Expiry is less than 45 days';
