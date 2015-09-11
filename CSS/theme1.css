@@ -1474,3 +1474,8 @@ table.printing_tables tr>td>div{
 	page-break-after:auto;
 	page-break-before:auto;
 }
+
+@media print {
+   thead {display: table-header-group;}
+   tfoot {display: table-footer-group;}
+}

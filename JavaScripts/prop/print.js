@@ -1016,7 +1016,7 @@ function print_form91(func)
 	/////////////adding new table //////////////////////////////////////////////////////	
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
-	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
+	var table_header="<thead style='border:1px solid #000000;'><tr>"+
 				"<td style='text-align:left;width:30px;'>S.No.</td>"+
 				"<td style='text-align:left;width:60px;'>SKU</td>"+
 				"<td style='text-align:left;width:100px'>Item Name</td>"+
@@ -1027,9 +1027,9 @@ function print_form91(func)
 				"<td style='text-align:left;width:45px'>Amount</td>"+
 				"<td style='text-align:left;width:45px'>Tax%</td>"+
 				"<td style='text-align:left;width:45px'>Freight</td>"+
-				"<td style='text-align:left;width:80px'>Total</td></tr>";
+				"<td style='text-align:left;width:80px'>Total</td></tr></thead>";
 				
-	var table_rows=table_header;
+	var table_rows=table_header+"<tbody style='border: 1px solid #000000;'>";
 	var counter=0;
 	
 	$(table_element).find('form').each(function(index)
@@ -1068,6 +1068,8 @@ function print_form91(func)
 	{
 		table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 	}
+
+	table_rows+="</tbody>";
 	
 	var bill_total=document.getElementById('form91_final_total').innerHTML;
 	var wording_total=number2text(bill_total);
@@ -1083,10 +1085,10 @@ function print_form91(func)
 	var total_text=$(table_foot).find('tr>td:nth-child(2)')[0].innerHTML;
 	var total_amount=$(table_foot).find('tr>td:nth-child(3)')[0].innerHTML;
 	
-	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
+	var table_foot_row="<tfoot style='border: 1px solid #000000;'><tr>"+
 				"<td colspan='6' style='text-align:left;'>"+wording_total+"<br>"+total_quantity+against_c_form+"</td>"+
 				"<td colspan='3' style='text-align:left;'>"+total_text+"</td>"+
-				"<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr>";
+				"<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr></tfoot>";
 		
 	table_rows+=table_foot_row;
 	new_table.innerHTML=table_rows;

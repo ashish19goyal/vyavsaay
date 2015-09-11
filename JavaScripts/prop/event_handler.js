@@ -17,8 +17,6 @@ function default_load()
 	
 	modal_forms_ini();
 	
-	//fix_orientation();
-	
 	if(is_set_session())
 	{
 		add_questionnaires(function()
@@ -69,19 +67,6 @@ function declaring_global_variables()
 	storage_count_tracker=0;
 	total_export_requests=0;	
  	newsletter_element_4_deletion = [];
-}
-
-function fix_orientation()
-{
-	window.addEventListener('orientationchange', function ()
-	{
-		console.log('orientationchanged');
-	    if (window.innerHeight < window.innerWidth)
-	    {
-			console.log('rotated');	
-	        document.getElementsByTagName('body').style.transform = "rotate(90deg)";
-	    }
-	},false);
 }
 
 function show_progress()
