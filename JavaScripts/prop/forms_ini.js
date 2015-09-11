@@ -9900,8 +9900,24 @@ function form108_ini()
 	{	
 		results.forEach(function(result)
 		{
+			var row_color="default_row";
+			
+			switch(result.status) 
+			{
+				case 'dispatched':row_color='grey_row';
+									break;
+				case 'packed':row_color='blue_row';
+								break;
+				case 'picked':row_color='orange_row';
+								break;
+				case 'billed':row_color='yellow_row';
+								break;
+				case 'pending':row_color='red_row';
+								break;
+													
+			}
 			var rowsHTML="";
-			rowsHTML+="<tr>";
+			rowsHTML+="<tr class='"+row_color+"'>";
 				rowsHTML+="<form id='form108_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Order #'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form108_"+result.id+"' value='"+result.order_num+"'>";

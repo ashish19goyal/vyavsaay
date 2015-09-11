@@ -418,7 +418,29 @@ textarea.feed_comments{
 }
 
 /*end feed formatting*/
+tr.default_row{
+	background: #EAF2D3;
+}
 
+tr.red_row{
+	background: #FFB99C;
+}
+
+tr.blue_row{
+	background: #BED0E6;
+}
+
+tr.grey_row{
+	background: #D8D8D8;
+}
+
+tr.orange_row{
+	background: #FDD99A;
+}
+
+tr.yellow_row{
+	background: #FAEC8C;
+}
 
 /* 
 Table formatting for responsive functionality
