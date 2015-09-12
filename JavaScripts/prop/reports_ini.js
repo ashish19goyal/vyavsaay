@@ -6240,7 +6240,7 @@ function report85_ini()
 	var drs_data="<drs>" +
 			"<id></id>" +
 			"<drs_num></drs_num>" +
-			"<drs_time lowerbound='yes'>"+get_raw_time(start_date)+"</drs_time>" +
+			"<drs_time lowerbound='yes'>"+(get_raw_time(start_date)-1)+"</drs_time>" +
 			"<drs_time upperbound='yes'>"+(get_raw_time(end_date)+86399999)+"</drs_time>" +
 			"</drs>";
 	fetch_requested_data('report85',drs_data,function(orders)
