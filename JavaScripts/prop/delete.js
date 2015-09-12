@@ -6635,6 +6635,7 @@ function form200_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<status>received</status>" +
 						"<drs_num></drs_num>"+
+						"<drs_time></drs_time>"+
 						"<drs_id></drs_id>"+
 						"<delivery_person></delivery_person>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
@@ -7195,6 +7196,7 @@ function form219_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<status>received</status>" +
 						"<drs_num></drs_num>"+
+						"<drs_time></drs_time>"+
 						"<drs_id></drs_id>"+
 						"<delivery_person></delivery_person>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
@@ -7252,22 +7254,11 @@ function form220_delete_item(button)
 					"<tablename>projects</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"</data_access>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete);
-				server_delete_simple(other_delete2);
-				server_delete_simple(other_delete3);
-				server_delete_simple(access_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete);
-				local_delete_simple(other_delete2);
-				local_delete_simple(other_delete3);
-				local_delete_simple(access_xml);
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
+			delete_simple(other_delete2);
+			delete_simple(other_delete3);
+			delete_simple(access_xml);
 			$(button).parent().parent().remove();
 		});
 	}

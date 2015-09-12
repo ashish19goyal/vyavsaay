@@ -13788,6 +13788,7 @@ function form200_create_item(form)
 	{
 		var drs_num=document.getElementById('form200_master').elements['drs_num'].value;
 		var drs_id=document.getElementById('form200_master').elements['id'].value;
+		var drs_date=document.getElementById('form200_master').elements['date'].value;
 		var delivery_person=document.getElementById('form200_master').elements['employee'].value;
 		var data_id=form.elements[9].value;
 		var save_button=form.elements[10];
@@ -13813,7 +13814,7 @@ function form200_create_item(form)
 					"<drs_id>"+drs_id+"</drs_id>"+
 					"<delivery_person>"+delivery_person+"</delivery_person>"+
 					"<order_history>"+order_history_string+"</order_history>"+
-					"<drs_time>"+last_updated+"</drs_time>"+
+					"<drs_time>"+get_raw_time(drs_date)+"</drs_time>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
 		update_simple(data_xml);
@@ -14533,6 +14534,7 @@ function form219_create_item(form)
 	{
 		var drs_num=document.getElementById('form219_master').elements['drs_num'].value;
 		var drs_id=document.getElementById('form219_master').elements['id'].value;
+		var drs_date=document.getElementById('form219_master').elements['date'].value;
 		var delivery_person=document.getElementById('form219_master').elements['employee'].value;
 		var data_id=form.elements[10].value;
 		var save_button=form.elements[11];
@@ -14560,7 +14562,7 @@ function form219_create_item(form)
 					"<drs_id>"+drs_id+"</drs_id>"+
 					"<delivery_person>"+delivery_person+"</delivery_person>"+
 					"<order_history>"+order_history_string+"</order_history>"+
-					"<drs_time>"+last_updated+"</drs_time>"+
+					"<drs_time>"+get_raw_time(drs_date)+"</drs_time>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</logistics_orders>";
 		update_simple(data_xml);
