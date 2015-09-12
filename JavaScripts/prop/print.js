@@ -58,16 +58,25 @@ function print_smaller_product_barcode(barcode,sku,name)
 	
 	container.setAttribute('style','width:95%;height:80%;max-height:90%;margin:0px;padding:0px;');
 	sku_element.setAttribute('style','width:95%;height:25px;text-align:center;font-size:12px;margin:0px;margin-top:2px;padding:0px;');
-	image_element.setAttribute('style','width:150px;height:50px;margin:0px;padding:0px;');
-	//name_element.setAttribute('style','width:90%;height:15px;font-size:9px;margin:0px;padding:0px;');
+	image_element.setAttribute('style','width:200px;height:60px;margin:2px;padding:2px;');
+	//name_element.setAttribute('style','width:95%;height:15px;font-size:9px;margin:0px;padding:0px;');
 	
 	container.appendChild(sku_element);
 	container.appendChild(image_element);
 	//container.appendChild(name_element);
 
+/*
+    var bsettings = {
+      bgColor: "#ffffff",
+      color: "#000000",
+      showHRI:true,
+      barWidth: 1,
+      barHeight: 40
+    };
+*/
 	sku_element.innerHTML=sku;
-	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:30});
-	//$(image_element).JsBarcode(barcode,{format:"EAN",displayValue:true,fontSize:20});
+	//$(image_element).barcode(barcode,'ean13',bsettings);
+	$(image_element).JsBarcode(barcode,{displayValue:true,fontSize:20});
 	//name_element.innerHTML=name;
 	$.print(container);	
 }
@@ -349,7 +358,7 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 				}
 				nl_item_link.appendChild(nl_item_pic);				
 			}
-			
+
 			nl_item_link.appendChild(nl_item_detail);
 						
 		});
@@ -358,6 +367,101 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 		clear_div.setAttribute('style','clear:both;');
 		nl_content.appendChild(clear_div);
 		
+		func(container);
+	});
+}
+
+/**
+* This function prepares the printing template for the newsletter
+*/
+function print_flex_newsletter(nl_name,nl_id,print_type,func)
+{
+	var container=document.createElement('div');
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_intro=document.createElement('div');
+	
+	var nl_content=document.createElement('div');
+	
+	var footer=document.createElement('div');
+		var business_contact=document.createElement('div');
+		var powered_by=document.createElement('div');
+	
+////////////setting styles for containers/////////////////////////
+
+	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
+		business_intro.setAttribute('style','width:98%;text-align:center');
+	
+	nl_content.setAttribute('style','display:block;width:98%;min-height:60px');
+
+	footer.setAttribute('style','display:block;width:98%;');
+		business_contact.setAttribute('style','display:block;width:98%;text-align:center');
+		powered_by.setAttribute('style','display:block;width:98%;text-align:center');
+	
+///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var logo_image=get_session_var('logo');
+	var business_intro_text=get_session_var('business_intro');
+	var business_address=get_session_var('address');
+	var business_phone=get_session_var('phone');
+	var business_email=get_session_var('email');
+	var business_website=get_session_var('website');
+	var tandc_text=get_session_var('bill_message');
+	var powered_by_text=get_session_var('powered_by');	
+	var powered_by_link=get_session_var('powered_by_link');
+	
+////////////////filling in the content into the containers/////////////////////////////////////
+
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"'>";
+	business_intro.innerHTML="<hr style='border: 1px solid #000;'>"+business_intro_text+"<hr style='border: 1px solid #000;'>";
+		
+	business_contact.innerHTML="<hr style='border: 1px solid #000;'>"+business_address+" Tel: "+business_phone+" E-Mail: "+business_email+" Website: "+business_website;	
+
+	if(powered_by_text!="")	
+		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='"+powered_by_link+"'>Powered By: "+powered_by_text+"</a>";	
+	
+/////////////placing the containers //////////////////////////////////////////////////////	
+	
+	container.appendChild(header);
+	container.appendChild(nl_content);
+	container.appendChild(footer);
+	
+	header.appendChild(logo);
+	header.appendChild(business_intro);
+	
+	footer.appendChild(business_contact);
+	footer.appendChild(powered_by);
+
+/////////////////populating the content section with newsletter items//////////////////////////
+	var newsletter_data="<newsletter>" +
+			"<id>"+nl_id+"</id>" +
+			"<html_content></html_content>" +
+			"</newsletter>";
+	
+	fetch_requested_data('',newsletter_data,function(results)
+	{
+		var right=false;
+		if(results.length>0)
+		{
+			var updated_content=revert_htmlentities(results[0].html_content);
+			nl_content.innerHTML=updated_content;
+			
+			$(nl_content).find('img').each(function () 
+			{
+				var img_element=$(this)[0];
+				
+				if(print_type=='mail')
+				{
+					img_element.setAttribute('src',"https://vyavsaay.com/"+img_element.getAttribute('data-src'));
+				}
+			});
+		}
+		/*
+		var clear_div=document.createElement('div');
+		clear_div.setAttribute('style','clear:both;');
+		nl_content.appendChild(clear_div);
+		*/
 		func(container);
 	});
 }

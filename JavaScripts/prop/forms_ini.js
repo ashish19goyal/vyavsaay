@@ -24623,12 +24623,11 @@ function form233_ini()
 				var updated_content=revert_htmlentities(newsletters[0].html_content);
 				$('#form233_section').html(updated_content);
 				
-				$(".editable").resizable();
-			   // $(".draggable").draggable();
+				//$(".resizable").resizable();
+			    $(".draggable").draggable();
 
 			    $('.resizable-aspect-ratio').resizable({aspectRatio: true});
     	        $('.draggable-containment').draggable({ containment: "window" });
-
 			}
 			hide_loader();
 		});	
@@ -25017,3 +25016,148 @@ function form236_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form Promotion (flex newsletter)
+ * @formNo 237
+ * @Loading heavy
+ */
+function form237_ini()
+{
+	var master_form=document.getElementById('form237_master');
+	var nl_name=master_form.elements['newsletter'].value;
+	var nl_id=master_form.elements['nl_id'].value;	
+	var sms_content=master_form.elements['sms'].value;	
+	var list=master_form.elements['list'].value;	
+	var list_value=master_form.elements['value'].value;	
+	
+	if(nl_id!="" || nl_name!="" || sms_content!="")
+	{
+		show_loader();
+		var attributes_columns="<attributes>"+
+							"<name></name>"+
+							"<attribute exact='yes'>"+list+"</attribute>"+
+							"<type exact='yes'>customer</type>"+
+							"<value>"+list_value+"</value>"+
+							"</attributes>";
+		
+		fetch_requested_data('',attributes_columns,function(attributes)
+		{
+			var customer_string="--";
+			
+			for(var i in attributes)
+			{
+				customer_string+=attributes[i].name+"--";
+			}
+						
+			var customer_columns="<customers>" +
+					"<id></id>" +
+					"<name></name>" +
+					"<email></email>" +
+					"<phone></phone>"+
+					"<acc_name array='yes'>"+customer_string+"</acc_name>" +
+					"</customers>";
+			fetch_requested_data('',customer_columns,function(results)
+			{
+				print_flex_newsletter(nl_name,nl_id,'mail',function(container)
+				{
+					var business_title=get_session_var('title');
+					var subject=nl_name;
+					
+					var email_id_string="";
+					var email_message=container.innerHTML;
+					var from=get_session_var('email');
+					
+					results.forEach(function (result) 
+					{
+						var to=result.email;
+						var customer_phone=result.phone;
+						var customer_name=result.name;
+						var message=sms_content.replace(/customer_name/g,customer_name);
+						message=message.replace(/business_title/g,business_title);
+							
+						send_sms(customer_phone,message,'transaction');
+						if(to!="")
+						{
+							email_id_string+=customer_name+":"+to+";";
+						}				
+					});
+					
+					var email_to=email_id_string.replace(/;\s*$/, "");
+					console.log(email_to);
+										
+					send_email(email_to,from,business_title,subject,email_message,function()
+					{
+						$("#modal58").dialog("open");
+						hide_loader();			
+					});
+				});		
+			});
+		});
+	}
+}
+
+/**
+ * @form Promotion (flex newsletter)
+ * @formNo 237
+ * @Loading heavy
+ */
+function form237_ini_all()
+{
+	var master_form=document.getElementById('form237_master');
+	var nl_name=master_form.elements['newsletter'].value;
+	var nl_id=master_form.elements['nl_id'].value;	
+	var sms_content=master_form.elements['sms'].value;	
+	var list=master_form.elements['list'].value;	
+	var list_value=master_form.elements['value'].value;	
+	
+	if(nl_id!="" && nl_name!="" || sms_content!="")
+	{
+		show_loader();
+		
+		var customer_columns="<customers>" +
+				"<id></id>" +
+				"<name></name>" +
+				"<email></email>" +
+				"<phone></phone>"+
+				"<acc_name></acc_name>" +
+				"</customers>";
+		
+		fetch_requested_data('',customer_columns,function(results)
+		{
+			print_flex_newsletter(nl_name,nl_id,'mail',function(container)
+			{
+				var business_title=get_session_var('title');
+				var subject=nl_name;
+				
+				var email_id_string="";
+				var email_message=container.innerHTML;
+				var from=get_session_var('email');
+				
+				results.forEach(function (result) 
+				{
+					var to=result.email;
+					var customer_phone=result.phone;
+					var customer_name=result.name;
+					var message=sms_content.replace(/customer_name/g,customer_name);
+					message=message.replace(/business_title/g,business_title);
+						
+					send_sms(customer_phone,message,'transaction');
+				
+					if(to!="")
+					{
+						email_id_string+=customer_name+":"+to+";";
+					}				
+				});
+					
+				var email_to=email_id_string.replace(/;\s*$/, "");		
+				console.log(email_to);
+				send_email(email_to,from,business_title,subject,email_message,function()
+				{
+					$("#modal58").dialog("open");
+					hide_loader();			
+				});
+			});		
+		});
+	}
+}

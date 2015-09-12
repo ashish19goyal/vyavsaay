@@ -10,6 +10,7 @@
 			<li><a id='form44_link' href='#form44' onclick='form44_header_ini(); form44_ini();' data-i18n='form.manage_pamphlets'></a></li>
 			<li><a id='form78_link' href='#form78' onclick='form78_header_ini(); form78_ini();' data-i18n='form.promotions'></a></li>
 			<li><a id='form196_link' href='#form196' onclick='form196_header_ini();' data-i18n='form.promotions'></a></li>
+			<li><a id='form237_link' href='#form237' onclick='form237_header_ini();' data-i18n='form.promotions'></a></li>
 			<li><a id='report78_link' href='#report78' onclick='report78_header_ini();' data-i18n='form.followup_report'></a></li>
 			<li><a id='report81_link' href='#report81' onclick='report81_header_ini();' data-i18n='form.sale_leads_by_staff'></a></li>
 			<li><a id='form116_link' href='#form116' onclick='form116_header_ini(); form116_ini();' data-i18n='form.manage_loyalty_programs'></a></li>
@@ -29,6 +30,7 @@
 			include "forms/form44.php";
 			include "forms/form78.php";
 			include "forms/form196.php";
+			include "forms/form237.php";
 			include "reports/report78.php";
 			include "reports/report81.php";
 			include "forms/form116.php";

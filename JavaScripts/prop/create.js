@@ -15663,7 +15663,28 @@ function form233_create_item()
 		$("[id^='vyavsaay_image_box_']").each(function(index)
 		{
 			var image_elem=$(this)[0];
-			resize_picture(image_elem,image_elem.width);			
+			resize_picture(image_elem,image_elem.width);
+			
+			var data_src=image_elem.getAttribute('data-src');
+			console.log(data_src);
+			if(data_src=="" || data_src=='undefined' || data_src=='null' || data_src==null)
+			{
+				var blob=image_elem.src;
+				var blob_name="client_images/"+get_new_key()+".jpeg";
+				
+				image_elem.setAttribute('data-src',blob_name);			
+				$.ajax(
+				{
+					type: "POST",
+					url: "./ajax/save_image.php",
+					data: 
+					{
+						blob: blob,
+						name:blob_name
+					}
+				});
+				console.log('image saved');
+			}			
 		});
 
 		var html_content=htmlentities(document.getElementById('form233_section').innerHTML);

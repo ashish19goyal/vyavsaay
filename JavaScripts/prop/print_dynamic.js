@@ -37,13 +37,20 @@ function text_button_handler(section_elem)
 
     var new_child = document.createElement("div");
     new_child.setAttribute("id", unique_id);
-    new_child.setAttribute("class", "editable");
-    new_child.setAttribute("contenteditable", "true");
+    new_child.setAttribute("class", "resizable");
+    //new_child.setAttribute("contenteditable", "true");
     new_child.setAttribute("style", "width:200px; height:100px;");
+
+	var new_grand_child = document.createElement("div");
+    new_grand_child.setAttribute("id", "child_"+unique_id);
+    new_grand_child.setAttribute("class", "editable");
+    new_grand_child.setAttribute("contenteditable", "true");
+    new_grand_child.setAttribute("style", "width:200px; height:100px;");
 
     //Append these elemnts id DOM hierarchy under section area
     section_elem.appendChild(new_parent);
     new_parent.appendChild(new_child);
+    new_child.appendChild(new_grand_child);
     	
     /* Fuction to store element value for deletion */
 	document.getElementById('parent_'+unique_id).setAttribute('onclick',"set_html_elem_4_del(this);");	
@@ -64,7 +71,21 @@ function text_button_handler(section_elem)
 	document.getElementById(unique_id).setAttribute('onmousedown',onmousedown_func);
 	document.getElementById(unique_id).setAttribute("onmouseup",onmouseup_func);
 
-	$(".editable").resizable();
+	$(".resizable").resizable(
+	{
+		stop:function(event,ui)
+		{
+			var this_element=$(ui.element)[0];
+			var object_id=this_element.id;
+			console.log(object_id);
+			var editable_element=document.getElementById('child_'+object_id);
+			editable_element.setAttribute('style',this_element.getAttribute('style'));
+			//editable_element.setAttribute('height',this_element.getAttribute('height'));
+			
+			console.log(this_element);
+			console.log(editable_element);
+		}
+	});
 };
 
 /*********************************************************************

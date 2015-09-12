@@ -408,6 +408,7 @@
 	"manage_products_wo_tax":"Manage Products (without tax)",
 	"manage_products_grid":"Manage Products (grid)",
 	"inventory_by_brand":"Inventory (By Brand)",
-	"manage_manifests":"Manage Manifests"
+	"manage_manifests":"Manage Manifests",
+	"promotions_flex_newsletter":"Promotions (flex newsletter)"
 	}
 }

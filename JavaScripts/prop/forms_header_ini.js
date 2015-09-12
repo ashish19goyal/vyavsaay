@@ -8872,3 +8872,84 @@ function form236_header_ini()
 	
 	$(date_filter).datepicker();
 };
+
+/**
+ * @form Promotion (flex newsletter)
+ * @formNo 237
+ */
+function form237_header_ini()
+{
+	var fields=document.getElementById('form237_master');
+	var name_filter=fields.elements['newsletter'];
+	var sms_filter=fields.elements['sms'];
+	var list_filter=fields.elements['list'];
+	var value_filter=fields.elements['value'];
+	var id_filter=fields.elements['nl_id'];
+	var send_button=fields.elements['send'];
+	var send_all_button=fields.elements['send_all'];
+	id_filter.value="";
+	name_filter.value="";
+	list_filter.value="";
+	fields.elements['nl_id'].value="";
+	
+	$(send_button).off('click');
+	$(send_button).on('click',function(event)
+	{
+		event.preventDefault();
+		form237_ini();
+	});
+
+	$(send_all_button).off('click');
+	$(send_all_button).on('click',function(event)
+	{
+		event.preventDefault();
+		form237_ini_all();
+	});
+
+	var list_data="<attributes>"+
+				"<attribute></attribute>"+
+				"<type exact='yes'>customer</type>"+
+				"</attributes>";		
+	set_my_value_list(list_data,list_filter);
+
+	$(list_filter).off('blur');
+	$(list_filter).on('blur',function()
+	{
+		var value_data="<attributes>"+
+				"<value></value>"+
+				"<type exact='yes'>customer</type>"+
+				"<attribute exact='yes'>"+list_filter.value+"</attribute>"+
+				"</attributes>";
+		set_my_value_list(value_data,value_filter);				
+	});
+	
+	sms_filter.value=get_session_var('sms_content');
+	var name_data="<newsletter>" +
+			"<name></name>" +
+			"</newsletter>";
+	set_my_value_list_func(name_data,name_filter,function () 
+	{
+		$(name_filter).focus();
+	});
+	
+	$(name_filter).off('blur');
+	$(name_filter).on('blur',function()
+	{
+		var nl_id_data="<newsletter>" +
+				"<id></id>" +
+				"<name>"+name_filter.value+"</name>" +
+				"</newsletter>";
+		set_my_value(nl_id_data,id_filter);				
+	});
+
+	my_datalist_change(name_filter,function () 
+	{
+		var nl_id_data="<newsletter>" +
+				"<id></id>" +
+				"<name>"+name_filter.value+"</name>" +
+				"</newsletter>";
+		set_my_value(nl_id_data,id_filter);				
+	});
+	
+	$('textarea').autosize();
+}

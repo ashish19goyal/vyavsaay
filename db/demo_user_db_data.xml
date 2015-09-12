@@ -2931,7 +2931,7 @@
 			<type>form</type>
 			<shortcut></shortcut>
 			<sync>checked</sync>
-			<tables>--newsletter--newsletter_items--sms--emails--</tables>
+			<tables>--newsletter--newsletter_items--sms--emails--customers--attributes--</tables>
 			<last_updated>1</last_updated>
 		</row>
 		<row>
@@ -3372,6 +3372,17 @@
 			<shortcut></shortcut>
 			<sync>checked</sync>
 			<tables>--drs--sale_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form237</name>
+			<display_name>promotions_flex_newsletter</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--newsletter--sms--emails--customers--attributes--</tables>
 			<last_updated>1</last_updated>
 		</row>
 	</user_preferences>
@@ -6383,6 +6394,17 @@
 			<username>master</username>
 			<element_id>form236</element_id>
 			<element_name>manage_manifests</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form237</element_id>
+			<element_name>promotions_flex_newsletter</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
