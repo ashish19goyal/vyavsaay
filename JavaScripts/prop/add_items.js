@@ -1195,7 +1195,7 @@ function form24_add_item()
 
 					if(cst_checked)					
 					{
-						tax_rate_filter.value=0;
+						tax_rate_filter.value=get_session_var('cst_rate');
 					}
 					else 
 					{					
@@ -3255,6 +3255,7 @@ function form91_add_item()
 				rowsHTML+="<input type='button' class='delete_icon' form='form91_"+id+"' id='delete_form91_"+id+"' onclick='$(this).parent().parent().remove();form91_get_totals();'>";
 				rowsHTML+="<input type='hidden' form='form91_"+id+"' name='freight_unit'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form91_"+id+"'>";
+				rowsHTML+="<input type='hidden' form='form91_"+id+"' name='unbilled' value='no'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -3296,13 +3297,6 @@ function form91_add_item()
 		{
 			$(name_filter).focus();
 		});
-
-		var storage_data="<store_areas>"+
-						"<name></name>"+
-						//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
-						"<area_type></area_type>"+
-						"</store_areas>";
-		set_my_value_list(storage_data,storage_filter);
 
 		$(name_filter).on('blur',function(event)
 		{
@@ -3371,7 +3365,18 @@ function form91_add_item()
 							"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
 							"<batch exact='yes'>"+batch_filter.value+"</batch>"+
 							"</area_utilization>";
-					set_my_value(its_storage_data,storage_filter);
+					get_single_column_data(function(storage_array)
+					{
+						var result_array=[];
+						get_available_storage(name_filter.value,batch_filter.value,storage_array,1,result_array,function()
+						{
+							if(result_array.length>0)
+							{
+								storage_filter.value=result_array[0].storage;
+							}
+						});
+					},its_storage_data);
+
 				}
 			});
 			
@@ -3388,7 +3393,17 @@ function form91_add_item()
 							"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
 							"<batch exact='yes'>"+batch_filter.value+"</batch>"+
 							"</area_utilization>";
-			set_my_value(its_storage_data,storage_filter);					
+			get_single_column_data(function(storage_array)
+			{
+				var result_array=[];
+				get_available_storage(name_filter.value,batch_filter.value,storage_array,1,result_array,function()
+				{
+					if(result_array.length>0)
+					{
+						storage_filter.value=result_array[0].storage;
+					}
+				});
+			},its_storage_data);
 
 			var mrp_data="<product_instances count='1'>"+
 						"<mrp></mrp>"+
@@ -4140,7 +4155,7 @@ function form112_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form112_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' form='form112_"+id+"' required value=''>";
+				rowsHTML+="<input type='text' form='form112_"+id+"' value=''>";
 				rowsHTML+="<br>SKU: <input type='text' form='form112_"+id+"' required>";
 				rowsHTML+="<br>Name: <input type='text' readonly='readonly' form='form112_"+id+"'>";			
 			rowsHTML+="</td>";
@@ -4212,16 +4227,19 @@ function form112_add_item()
 		
 		$(barcode_filter).on('blur',function()
 		{
-			var item_data="<product_master>"+
-						"<name></name>"+
-						"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
-						"</product_master>";
-			set_my_value(item_data,name_filter,function () 
+			if(barcode_filter.value!="" && barcode_filter.value!=null)
 			{
-				$(name_filter).trigger('blur');
-			});
-			$(batch_filter).focus();
-		});
+				var item_data="<product_master>"+
+							"<name></name>"+
+							"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
+							"</product_master>";
+				set_my_value(item_data,name_filter,function () 
+				{
+					$(name_filter).trigger('blur');
+				});
+				$(batch_filter).focus();
+			}
+		});		
 		
 		$(barcode_filter).on('keydown',function (event) 
 		{
@@ -4267,7 +4285,17 @@ function form112_add_item()
 							"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
 							"<batch exact='yes'>"+batch_filter.value+"</batch>"+
 							"</area_utilization>";
-					set_my_value(its_storage_data,storage_filter);					
+					get_single_column_data(function(storage_array)
+					{
+						var result_array=[];
+						get_available_storage(name_filter.value,batch_filter.value,storage_array,1,result_array,function()
+						{
+							if(result_array.length>0)
+							{
+								storage_filter.value=result_array[0].storage;
+							}
+						});
+					},its_storage_data);
 
 					get_inventory(name_filter.value,batch_filter.value,function(quantity)
 					{
@@ -4308,7 +4336,17 @@ function form112_add_item()
 							"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
 							"<batch exact='yes'>"+batch_filter.value+"</batch>"+
 							"</area_utilization>";
-			set_my_value(its_storage_data,storage_filter);					
+			get_single_column_data(function(storage_array)
+			{
+				var result_array=[];
+				get_available_storage(name_filter.value,batch_filter.value,storage_array,1,result_array,function()
+				{
+					if(result_array.length>0)
+					{
+						storage_filter.value=result_array[0].storage;
+					}
+				});
+			},its_storage_data);
 
 			var mrp_data="<product_instances>"+
 				"<mrp></mrp>"+
@@ -4316,7 +4354,6 @@ function form112_add_item()
 				"<batch exact='yes'>"+batch_filter.value+"</batch>"+
 				"</product_instances>";
 			set_my_value(mrp_data,mrp_filter);
-								
 
 			var sale_price_data="<channel_prices>" +
 							"<sale_price></sale_price>"+

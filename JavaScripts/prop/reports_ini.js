@@ -6241,7 +6241,7 @@ function report85_ini()
 			"<id></id>" +
 			"<drs_num></drs_num>" +
 			"<drs_time lowerbound='yes'>"+get_raw_time(start_date)+"</drs_time>" +
-			"<drs_time upperbound='yes'>"+(get_raw_time(end_date)+86400000)+"</drs_time>" +
+			"<drs_time upperbound='yes'>"+(get_raw_time(end_date)+86399999)+"</drs_time>" +
 			"</drs>";
 	fetch_requested_data('report85',drs_data,function(orders)
 	{

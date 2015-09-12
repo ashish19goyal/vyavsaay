@@ -3812,16 +3812,9 @@ function form122_delete_item(button)
 			var return_xml="<supplier_return_items>" +
 						"<id>"+data_id+"</id>" +
 						"</supplier_return_items>";
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-				server_delete_simple(return_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-				local_delete_simple(return_xml);
-			}	
+			delete_simple(data_xml);
+			delete_simple(return_xml);
+				
 			$(button).parent().parent().remove();
 		});
 	}

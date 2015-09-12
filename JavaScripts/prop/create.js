@@ -1777,12 +1777,13 @@ function form24_get_totals()
 	});
 	
 	var form=document.getElementById("form24_master");
-	if(form.elements['cst'].checked)
+	
+/*	if(form.elements['cst'].checked)
 	{
 		tax+=.02*amount;
 		total+=.02*amount;
 	}
-	
+*/	
 	amount=my_round(amount,2);
 	tax=my_round(tax,2);
 	total=my_round(total,2);
@@ -1856,8 +1857,8 @@ function form24_create_form()
 		if(form.elements['cst'].checked)
 		{
 			cst='yes';
-			tax+=.02*amount;
-			total+=.02*amount;
+			//tax+=.02*amount;
+			//total+=.02*amount;
 		}
 
 		amount=my_round(amount,2);
@@ -5235,6 +5236,7 @@ function form91_create_item(form)
 		var data_id=form.elements[12].value;
 		var save_button=form.elements[13];		
 		var del_button=form.elements[14];
+		var is_unbilled=form.elements[17].value;
 		var last_updated=get_my_time();
 		
 		var tax_type_string="<cst>0</cst>"+
@@ -5243,6 +5245,14 @@ function form91_create_item(form)
 		{
 			tax_type_string="<cst>"+tax+"</cst>"+
 							"<vat>0</vat>";
+		}
+		
+		var picked_status='pending';
+		var packed_status='pending';
+		if(is_unbilled=='yes')
+		{
+			picked_status='picked';
+			packed_status='packed';
 		}
 							
 		var data_xml="<bill_items>" +
@@ -5261,13 +5271,24 @@ function form91_create_item(form)
 		data_xml+="<storage>"+storage+"</storage>" +
 				"<tax_rate>"+tax_rate+"</tax_rate>" +
 				"<bill_id>"+bill_id+"</bill_id>" +
-				"<picked_status>pending</picked_status>"+
-				"<packing_status>pending</packing_status>"+																
+				"<picked_status>"+picked_status+"</picked_status>"+
+				"<packing_status>"+packed_status+"</packing_status>"+																
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</bill_items>";	
 
 		create_simple(data_xml);
 
+		////////////////update status of unbilled item///////////
+		if(is_unbilled=='yes')
+		{
+			var unbilled_xml="<unbilled_sale_items>"+
+							"<id>"+data_id+"</id>"+
+							"<bill_status>completed</bill_status>"+
+							"</unbilled_sale_items>";
+			update_simple(unbilled_xml);							
+		}		
+		
+		
 		for(var i=0;i<12;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -6571,15 +6592,8 @@ function form111_create_form()
 					"<notes>Report "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}
-	
+		create_row(data_xml,activity_xml);
+		
 		$(form).off('submit');
 		$(form).on('submit',function(event)
 		{
@@ -6639,14 +6653,7 @@ function form112_create_item(form)
 					"<sale_date>"+sale_date+"</sale_date>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</unbilled_sale_items>";
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}	
+		create_simple(data_xml);
 		for(var i=0;i<10;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -6723,14 +6730,7 @@ function form114_create_item(form)
 					"<put_away_status>pending</put_away_status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</unbilled_purchase_items>";
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}	
+		create_simple(data_xml);
 		for(var i=0;i<9;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -6759,14 +6759,7 @@ function form114_create_item(form)
 						"<batch>"+batch+"</batch>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +
 						"</area_utilization>";
-				if(is_online())
-				{
-					server_create_simple(storage_xml);
-				}
-				else
-				{
-					local_create_simple(storage_xml);
-				}
+				create_simple(storage_xml);
 			}
 		});		
 		
@@ -6915,14 +6908,8 @@ function form118_create_item(form)
 									"<free_with>"+name+"</free_with>" +
 									"<last_updated>"+last_updated+"</last_updated>" +
 									"</bill_items>";	
-						if(is_online())
-						{
-							server_create_simple(free_xml);
-						}
-						else
-						{
-							local_create_simple(free_xml);
-						}
+						create_simple(free_xml);
+						
 					},free_batch_data);
 				}
 				else

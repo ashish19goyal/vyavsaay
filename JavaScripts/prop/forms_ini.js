@@ -1965,7 +1965,7 @@ function form24_ini()
 				
 					$('#form24_body').append(rowsHTML);
 				});
-				
+
 				var bt=get_session_var('title');
 				$('#form24_share').show();
 				$('#form24_share').click(function()

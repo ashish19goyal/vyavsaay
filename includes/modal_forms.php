@@ -706,6 +706,14 @@
 		<p style='color:#a00'>Scanned item doesn't match the list.</p>
 	</div>
 
+	<div id="modal72" title="Wrong Placement">
+		This item is designated to be placed somewhere else.
+	</div>
+
+	<div id="modal73" title="Import Aborted">
+		This import will be aborted as all the required criteria are not being met.
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>

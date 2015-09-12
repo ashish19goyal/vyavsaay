@@ -2505,6 +2505,7 @@ function form91_header_ini()
 	var order_id=fields.elements['order_id'];
 	var channel=fields.elements['channel'];
 	var share_button=fields.elements['share'];
+	var unbilled_filter=fields.elements['unbilled'];
 	customers_filter.value='';	
 	channel.value="";
 	order_id.value="";
@@ -2513,6 +2514,7 @@ function form91_header_ini()
 	fields.elements['t_id'].value=fields.elements['bill_id'].value;
 	var save_button=fields.elements['save'];
 	var tin_filter=fields.elements['customer_tin'];
+	var unbilled_button=fields.elements['unbilled_button'];
 	
 	$(share_button).hide();
 
@@ -2633,7 +2635,114 @@ function form91_header_ini()
 				"<attribute array='yes'>--VAT#--CST#--</attribute>"+ 
 				"<name exact='yes'>"+customers_filter.value+"</name>" +
 				"</attributes>";
-		set_my_value(tin_data,tin_filter);		
+		set_my_value(tin_data,tin_filter);
+		
+		var unbilled_data="<unbilled_sale_items>" +
+				"<id></id>" +
+				"<bill_status exact='yes'>pending</bill_status>"+
+				"<customer exact='yes'>"+customers_filter.value+"</customer>" +
+				"</unbilled_sale_items>";
+		get_single_column_data(function(unbilleds)
+		{
+			unbilled_filter.value=unbilleds.length;
+			if(unbilleds.length>0)
+				$(unbilled_button).show();
+		},unbilled_data);
+	});
+
+
+	$(unbilled_button).hide();
+	
+	
+	$(unbilled_button).off('click');
+	$(unbilled_button).on('click',function(e)
+	{
+		var unbilled_data="<unbilled_sale_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<item_desc></item_desc>" +
+				"<batch></batch>" +
+				"<quantity></quantity>" +
+				"<customer exact='yes'>"+customers_filter.value+"</customer>" +
+				"<mrp></mrp>"+
+				"<unit_price></unit_price>"+
+				"<amount></amount>"+
+				"<tax></tax>"+
+				"<total></total>"+
+				"<storage></storage>"+
+				"<bill_status exact='yes'>pending</bill_status>"+
+				"</unbilled_sale_items>";
+				
+		fetch_requested_data('form91',unbilled_data,function(ub_items)
+		{
+			ub_items.forEach(function(ub_item)
+			{
+				///////////////////////////////////////////////////////////
+				if(is_create_access('form91'))
+				{
+					var rowsHTML="";
+					var id=ub_item.id;
+					rowsHTML+="<tr>";
+					rowsHTML+="<form id='form91_"+id+"' autocomplete='off'></form>";
+						rowsHTML+="<td data-th='Item'>";
+							rowsHTML+="<input type='text' required value='"+ub_item.item_name+"' readonly='readonly' form='form91_"+id+"'>";
+							rowsHTML+="<br><textarea form='form91_"+id+"' value='"+ub_item.item_desc+"' readonly='readonly' class='dblclick_editable'></textarea>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Batch'>";
+							rowsHTML+="<input type='text' required form='form91_"+id+"' value='"+ub_item.batch+"' readonly='readonly'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity'>";
+							rowsHTML+="<input type='number' min='0' required readonly='readonly' value='"+ub_item.quantity+"' form='form91_"+id+"' step='any'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Rate'>";
+							rowsHTML+="MRP: <input type='number' required readonly='readonly' form='form91_"+id+"' value='"+ub_item.mrp+"' step='any'>";
+							rowsHTML+="<br>Price: <input type='number' required readonly='readonly' form='form91_"+id+"' value='"+ub_item.unit_price+"' step='any'>";
+							rowsHTML+="<br>Freight: <input type='number' step='any' readonly='readonly' form='form91_"+id+"' value='0'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Total'>";
+							rowsHTML+="Amount: <input type='number' required readonly='readonly' form='form91_"+id+"' step='any' value='"+ub_item.amount+"'>";
+							rowsHTML+="<br>Tax: <input type='number' required readonly='readonly' form='form91_"+id+"' step='any' value='"+ub_item.tax+"'>";
+							rowsHTML+="<br>Total: <input type='number' step='any' readonly='readonly' required form='form91_"+id+"' value='"+ub_item.total+"'>";	
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form91_"+id+"' name='storage' value='"+ub_item.storage+"'>";
+							rowsHTML+="<input type='hidden' form='form91_"+id+"' step='.01' name='tax_unit'>";
+							rowsHTML+="<input type='hidden' form='form91_"+id+"' value='"+id+"'>";
+							rowsHTML+="<input type='button' class='submit_hidden' form='form91_"+id+"' id='save_form91_"+id+"' >";
+							rowsHTML+="<input type='button' class='delete_icon' form='form91_"+id+"' id='delete_form91_"+id+"' onclick='$(this).parent().parent().remove();form91_get_totals();'>";
+							rowsHTML+="<input type='hidden' form='form91_"+id+"' name='freight_unit' value='0'>";
+							rowsHTML+="<input type='submit' class='submit_hidden' form='form91_"+id+"'>";
+							rowsHTML+="<input type='hidden' form='form91_"+id+"' name='unbilled' value='yes'>";
+						rowsHTML+="</td>";			
+					rowsHTML+="</tr>";
+				
+					$('#form91_body').prepend(rowsHTML);
+					
+					var fields=document.getElementById("form91_"+id);
+					var save_button=fields.elements[13];
+					
+					$(save_button).on("click", function(event)
+					{
+						event.preventDefault();
+						form91_create_item(fields);
+					});
+			
+					$(fields).on("submit", function(event)
+					{
+						event.preventDefault();
+						form91_add_item();
+					});
+
+					form91_get_totals();					
+				}
+				else
+				{
+					$("#modal2").dialog("open");
+				}
+				/////////////////////////////////////////////////////////////
+			});
+		});
+		$(unbilled_button).hide();
 	});
 
 	$(bill_date).datepicker();
@@ -4147,8 +4256,6 @@ function form122_header_ini()
 				"<batch></batch>" +
 				"<quantity></quantity>" +
 				"<supplier exact='yes'>"+supplier_filter.value+"</supplier>" +
-				"<item_desc></item_desc>"+
-				"<batch></batch>"+
 				"<mrp></mrp>"+
 				"<unit_price></unit_price>"+
 				"<amount></amount>"+

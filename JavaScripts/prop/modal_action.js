@@ -9636,7 +9636,7 @@ function modal140_action(i_func)
 	{
 		var data_array=['order_num','order_date','supplier_name','supplier_email','phone','address',
 						'item_name','supplier_sku','system_sku','item_mrp','item_price',
-						'brand','quantity','order_status','tax_rate','last_updated'];
+						'brand','quantity','order_status','tax_rate','cst','last_updated'];
 		my_array_to_csv(data_array);
 	});
 	
@@ -9663,253 +9663,229 @@ function modal140_action(i_func)
        		var data_xml="<purchase_orders>";
        		var data2_xml="<purchase_order_items>";
 			var data3_xml="<suppliers>";
-			//var data4_xml="<product_master>";
-			//var data5_xml="<product_instances>";
 			
 			var counter=1;
 			var last_updated=get_my_time();
 			var order_array=[];
 			var order_item_array=[];
 			var supplier_array=[];
-			//var product_master_array=[];			
-			//var product_instance_array=[];
 			
+			var import_items_count=data_array.length;
+			var import_items_string="--";
 			data_array.forEach(function (data_row) 
 			{
-				//console.log(data_row.tax_rate);
-                //console.log(data_row.item_price);
-                //console.log(data_row);
-                
-				counter+=1;
-				var supplier=data_row.supplier_name+" ("+data_row.phone+")";
-				var supplier_object=new Object();
-				supplier_object.id=last_updated+counter;
-				supplier_object.name=data_row.supplier_name;
-				supplier_object.acc_name=supplier;
-                supplier_object.email=data_row.supplier_email;
-                supplier_object.phone=data_row.phone;
-                supplier_object.address=data_row.address;
-                
-                var add_supplier=true;
-                
-                for(var i=0;i<supplier_array.length;i++)
-                {
-                	if(supplier_array[i].acc_name==supplier_object.acc_name)
-                	{
-                		add_supplier=false;
-                		break;
-                	}
-                }
-
-            	if(add_supplier)
-            	{
-            		supplier_array.push(supplier_object);
-            	}
-            	
-				//////////////////////////////////
-				/*
-				var product_object=new Object();
-				product_object.id=last_updated+counter;
-				product_object.name=data_row.system_sku;
-				product_object.description=data_row.item_name;
-                product_object.make=data_row.brand;
-                product_object.tax=data_row.tax_rate;
-                
-                var add_product=true;
-                
-                for(var i=0;i<product_master_array.length;i++)
-                {
-                	if(product_master_array[i].name==product_object.name)
-                	{
-                		add_product=false;
-                		break;
-                	}
-                }
-
-            	if(add_product)
-            	{
-            		product_master_array.push(product_object);
-            	}
-
-
-				//////////////////////////////////
-				var instance_object=new Object();
-				instance_object.id=last_updated+counter;
-				instance_object.product_name=data_row.system_sku;
-				instance_object.batch=data_row.batch;
-                instance_object.status='unavailable';
-                instance_object.mrp=data_row.item_mrp;
-                
-                var add_instance=true;
-                
-                for(var i=0;i<product_instance_array.length;i++)
-                {
-                	if(product_instance_array[i].name==instance_object.name)
-                	{
-                		add_instance=false;
-                		break;
-                	}
-                }
-
-            	if(add_instance)
-            	{
-            		product_instance_array.push(instance_object);
-            	}
-				*////////////////////////////////
-
-				var add_order=true;
-				
-				var order_object=new Object();
-				order_object.id=last_updated+counter;
-				order_object.order_num=data_row.order_num;
-                order_object.supplier=supplier;
-                order_object.order_date=data_row.order_date;
-                order_object.tax_rate=data_row.tax_rate;
-                order_object.total_quantity=data_row.quantity;
-                order_object.status=data_row.order_status;
-                order_object.amount=parseFloat(data_row.item_price)*parseFloat(data_row.quantity);
-                order_object.tax=Math.round(parseFloat(order_object.amount)*parseFloat(data_row.tax_rate)/100);
-				order_object.total=parseFloat(order_object.amount)+parseFloat(order_object.tax);
-				data_row.order_system_id=order_object.id;
-				
-				for(var j=0;j<order_array.length;j++)
-                {
-                	if(order_array[j].order_num==order_object.order_num)
-                	{
-                		add_order=false;
-                		order_array[j].amount=parseFloat(order_array[j].amount)+parseFloat(order_object.amount);
-						order_array[j].tax=parseFloat(order_array[j].tax)+parseFloat(order_object.tax);
-						order_array[j].total=parseFloat(order_array[j].total)+parseFloat(order_object.total);
-                		order_array[j].total_quantity=parseFloat(order_array[j].total_quantity)+parseFloat(order_object.total_quantity);
-
-						data_row.order_system_id=order_array[j].id;
-                		break;
-                	}
-                }
-
-                if(add_order)
-                {
-                	order_array.push(order_object);
-                }
-				var order_item_object=new Object();
-				order_item_object.id=last_updated+counter;
-				order_item_object.order_id=data_row.order_system_id;
-                order_item_object.item_name=data_row.system_sku;
-                order_item_object.item_desc=data_row.item_name;
-                order_item_object.supplier_sku=data_row.supplier_sku;
-                order_item_object.quantity=data_row.quantity;
-                order_item_object.make=data_row.brand;
-                order_item_object.mrp=data_row.item_mrp;
-                order_item_object.tax_rate=data_row.tax_rate;
-                order_item_object.price=data_row.item_price;
-                order_item_object.amount=parseFloat(data_row.item_price)*parseFloat(data_row.quantity);
-                order_item_object.tax=Math.round(parseFloat(order_item_object.amount)*parseFloat(data_row.tax_rate)/100);
-                order_item_object.total=parseFloat(order_item_object.amount)+parseFloat(order_item_object.tax);
-               
-                order_item_array.push(order_item_object);
+				import_items_string+=data_row.system_sku+"--";
 			});
-
-			order_array.forEach(function(row)
-			{
-				if((counter%500)===0)
-				{
-					data_xml+="</purchase_orders><separator></separator><purchase_orders>";
-				}
-				counter+=1;
-				data_xml+="<row>" +
-						"<id>"+row.id+"</id>" +
-						"<order_num>"+row.order_num+"</order_num>" +
-						"<supplier>"+row.supplier+"</supplier>"+
-						"<order_date>"+get_raw_time(row.order_date)+"</order_date>"+
-						"<amount>"+row.amount+"</amount>"+
-						"<tax>"+row.tax+"</tax>"+
-						"<total>"+row.total+"</total>"+
-						"<total_quantity>"+row.total_quantity+"</total_quantity>"+
-						"<status>"+row.status+"</status>"+
-						"<last_updated>"+last_updated+"</last_updated>" +
-						"</row>";
-			});
-
-			order_item_array.forEach(function(row)
-			{
-				if((counter%500)===0)
-				{
-					data2_xml+="</purchase_order_items><separator></separator><purchase_order_items>";
-				}
-				counter+=1;
-				
-				data2_xml+="<row>" +
-						"<id>"+row.id+"</id>" +
-						"<order_id>"+row.order_id+"</order_id>"+
-                        "<item_name>"+row.item_name+"</item_name>"+
-                        "<item_desc>"+row.item_desc+"</item_desc>"+
-                        "<supplier_sku>"+row.supplier_sku+"</supplier_sku>"+
-                        "<make>"+row.make+"</make>"+
-                        "<quantity>"+row.quantity+"</quantity>"+
-                        "<mrp>"+row.mrp+"</mrp>"+
-                        "<price>"+row.price+"</price>"+
-                        "<amount>"+row.amount+"</amount>"+
-                        "<tax>"+row.tax+"</tax>"+
-                        "<total>"+row.total+"</total>"+
-						"<tax_rate>"+row.tax_rate+"</tax_rate>"+
-                        "<last_updated>"+last_updated+"</last_updated>" +
-						"</row>";
-				//console.log(data2_xml);		
-			});
-		
-			supplier_array.forEach(function(row)
-			{
-				if((counter%500)===0)
-				{
-					data3_xml+="</suppliers><separator></separator><suppliers>";
-				}
-				counter+=1;
-				
-				data3_xml+="<row>" +
-						"<id>"+row.id+"</id>" +
-						"<name>"+row.name+"</name>"+
-                        "<acc_name unique='yes'>"+row.acc_name+"</acc_name>"+
-                        "<email>"+row.email+"</email>"+
-                        "<phone>"+row.phone+"</phone>"+
-                        "<address>"+row.address+"</address>"+
-                        "<last_updated>"+last_updated+"</last_updated>" +
-						"</row>";		
-			});
-		
-			data_xml+="</purchase_orders>";
-			data2_xml+="</purchase_order_items>";
-			data3_xml+="</suppliers>";
 			
-			//console.log(data2_xml);
-			create_batch(data_xml);
-			create_batch(data2_xml);
-			create_batch(data3_xml);
+			var products_xml="<product_master>"+
+							"<name array='yes'>"+import_items_string+"</name>"+
+							"</product_master>";
 
-           	////////////////////
-        	progress_value=15;
+			fetch_requested_data('',products_xml,function (products) 
+			{
+				if(products.length==import_items_count)
+				{
+					data_array.forEach(function (data_row) 
+					{
+						counter+=1;
+						var supplier=data_row.supplier_name+" ("+data_row.phone+")";
+						var supplier_object=new Object();
+						supplier_object.id=last_updated+counter;
+						supplier_object.name=data_row.supplier_name;
+						supplier_object.acc_name=supplier;
+		                supplier_object.email=data_row.supplier_email;
+		                supplier_object.phone=data_row.phone;
+		                supplier_object.address=data_row.address;
+		                
+		                var add_supplier=true;
+		                
+		                for(var i=0;i<supplier_array.length;i++)
+		                {
+		                	if(supplier_array[i].acc_name==supplier_object.acc_name)
+		                	{
+		                		add_supplier=false;
+		                		break;
+		                	}
+		                }
+		
+		            	if(add_supplier)
+		            	{
+		            		supplier_array.push(supplier_object);
+		            	}            	
+		
+						var add_order=true;
+						
+						var order_object=new Object();
+						order_object.id=last_updated+counter;
+						order_object.order_num=data_row.order_num;
+		                order_object.supplier=supplier;
+		                order_object.order_date=data_row.order_date;
+		                order_object.tax_rate=data_row.tax_rate;
+		                if(data_row.cst=='yes')
+		                {
+		                	order_object.tax_rate=get_session_var('cst_rate');
+		                }
+		                order_object.cst=data_row.cst;
+		                order_object.total_quantity=data_row.quantity;
+		                order_object.status=data_row.order_status;
+		                order_object.amount=parseFloat(data_row.item_price)*parseFloat(data_row.quantity);
+		                order_object.tax=Math.round(parseFloat(order_object.amount)*parseFloat(order_object.tax_rate)/100);
+						order_object.total=parseFloat(order_object.amount)+parseFloat(order_object.tax);
+						data_row.order_system_id=order_object.id;
 
-        	var ajax_complete=setInterval(function()
-        	{
-        		//console.log(number_active_ajax);
-        		if(number_active_ajax===0)
-        		{
-        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
-        		}
-        		else if(localdb_open_requests===0)
-        		{
-        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
-        		}
-        		
-        		if(number_active_ajax===0 && localdb_open_requests===0)
-        		{
-        			hide_progress();
-        			selected_file.value="Upload complete";
+						for(var j=0;j<order_array.length;j++)
+		                {
+		                	if(order_array[j].order_num==order_object.order_num)
+		                	{
+		                		add_order=false;
+		                		order_array[j].amount=parseFloat(order_array[j].amount)+parseFloat(order_object.amount);
+								order_array[j].tax=parseFloat(order_array[j].tax)+parseFloat(order_object.tax);
+								order_array[j].total=parseFloat(order_array[j].total)+parseFloat(order_object.total);
+		                		order_array[j].total_quantity=parseFloat(order_array[j].total_quantity)+parseFloat(order_object.total_quantity);
+		
+								data_row.order_system_id=order_array[j].id;
+		                		break;
+		                	}
+		                }
+		
+		                if(add_order)
+		                {
+		                	order_array.push(order_object);
+		                }
+						var order_item_object=new Object();
+						order_item_object.id=last_updated+counter;
+						order_item_object.order_id=data_row.order_system_id;
+		                order_item_object.item_name=data_row.system_sku;
+		                order_item_object.item_desc=data_row.item_name;
+		                order_item_object.supplier_sku=data_row.supplier_sku;
+		                order_item_object.quantity=data_row.quantity;
+		                order_item_object.make=data_row.brand;
+		                order_item_object.mrp=data_row.item_mrp;
+		                order_item_object.tax_rate=data_row.tax_rate;
+		                if(data_row.cst=='yes')
+		                {
+		                	order_item_object.tax_rate=get_session_var('cst_rate');
+		                }
+		                order_item_object.price=data_row.item_price;
+		                order_item_object.amount=parseFloat(data_row.item_price)*parseFloat(data_row.quantity);
+		                order_item_object.tax=Math.round(parseFloat(order_item_object.amount)*parseFloat(order_item_object.tax_rate)/100);
+		                order_item_object.total=parseFloat(order_item_object.amount)+parseFloat(order_item_object.tax);
+						order_item_array.push(order_item_object);
+						console.log(order_item_object.tax);
+						console.log(order_item_object.amount);
+						console.log(order_item_object.tax_rate);
+					});
+
+					order_array.forEach(function(row)
+					{
+						if((counter%500)===0)
+						{
+							data_xml+="</purchase_orders><separator></separator><purchase_orders>";
+						}
+						counter+=1;
+						data_xml+="<row>" +
+								"<id>"+row.id+"</id>" +
+								"<order_num>"+row.order_num+"</order_num>" +
+								"<supplier>"+row.supplier+"</supplier>"+
+								"<order_date>"+get_raw_time(row.order_date)+"</order_date>"+
+								"<amount>"+row.amount+"</amount>"+
+								"<tax>"+row.tax+"</tax>"+
+								"<total>"+row.total+"</total>"+
+								"<total_quantity>"+row.total_quantity+"</total_quantity>"+
+								"<status>"+row.status+"</status>"+
+								"<cst>"+row.cst+"</cst>"+
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</row>";
+					});
+		
+					order_item_array.forEach(function(row)
+					{
+						if((counter%500)===0)
+						{
+							data2_xml+="</purchase_order_items><separator></separator><purchase_order_items>";
+						}
+						counter+=1;
+		
+						data2_xml+="<row>" +
+								"<id>"+row.id+"</id>" +
+								"<order_id>"+row.order_id+"</order_id>"+
+		                        "<item_name>"+row.item_name+"</item_name>"+
+		                        "<item_desc>"+row.item_desc+"</item_desc>"+
+		                        "<supplier_sku>"+row.supplier_sku+"</supplier_sku>"+
+		                        "<make>"+row.make+"</make>"+
+		                        "<quantity>"+row.quantity+"</quantity>"+
+		                        "<mrp>"+row.mrp+"</mrp>"+
+		                        "<price>"+row.price+"</price>"+
+		                        "<amount>"+row.amount+"</amount>"+
+		                        "<tax>"+row.tax+"</tax>"+
+		                        "<total>"+row.total+"</total>"+
+								"<tax_rate>"+row.tax_rate+"</tax_rate>"+
+		                        "<last_updated>"+last_updated+"</last_updated>" +
+								"</row>";
+					});
+				
+					supplier_array.forEach(function(row)
+					{
+						if((counter%500)===0)
+						{
+							data3_xml+="</suppliers><separator></separator><suppliers>";
+						}
+						counter+=1;
+						
+						data3_xml+="<row>" +
+								"<id>"+row.id+"</id>" +
+								"<name>"+row.name+"</name>"+
+		                        "<acc_name unique='yes'>"+row.acc_name+"</acc_name>"+
+		                        "<email>"+row.email+"</email>"+
+		                        "<phone>"+row.phone+"</phone>"+
+		                        "<address>"+row.address+"</address>"+
+		                        "<last_updated>"+last_updated+"</last_updated>" +
+								"</row>";		
+					});
+				
+					data_xml+="</purchase_orders>";
+					data2_xml+="</purchase_order_items>";
+					data3_xml+="</suppliers>";
+					
+					create_batch(data_xml);
+					create_batch(data2_xml);
+					create_batch(data3_xml);
+		
+		           	////////////////////
+		        	progress_value=15;
+		
+		        	var ajax_complete=setInterval(function()
+		        	{
+		        		//console.log(number_active_ajax);
+		        		if(number_active_ajax===0)
+		        		{
+		        			progress_value=15+(1-(localdb_open_requests/(2*data_array.length)))*85;
+		        		}
+		        		else if(localdb_open_requests===0)
+		        		{
+		        			progress_value=15+(1-((500*(number_active_ajax-1))/(2*data_array.length)))*85;
+		        		}
+		        		
+		        		if(number_active_ajax===0 && localdb_open_requests===0)
+		        		{
+		        			hide_progress();
+		        			selected_file.value="Upload complete";
+		        			$(select_file).val('');
+		        			$("#modal140").dialog("close");
+		        			clearInterval(ajax_complete);
+		        		}
+		        	},1000);
+		        }
+		        else 
+		        {
+	        		hide_progress();
         			$(select_file).val('');
         			$("#modal140").dialog("close");
-        			clearInterval(ajax_complete);
-        		}
-        	},1000);
+        			$("#modal73").dialog("open");
+		        }
+	        });
         }
+
         reader.readAsText(file);    
     });
 	
@@ -11151,7 +11127,7 @@ function modal152_action(rack)
 	{
 		var subform=$(this)[0];
 		var storage=subform.elements[4].value;
-		if(storage==rack)
+		if(storage==rack || storage=="")
 		{
 			var item_name=subform.elements[0].value;
 			var batch=subform.elements[1].value;
@@ -11164,7 +11140,7 @@ function modal152_action(rack)
 			item_row.setAttribute('data-id',row_id);
 			
 			item_row.innerHTML="<td style='margin:2px;word-wrap: break-word;'>"+item_name+"</td><td style='margin:2px;word-wrap: break-word;'>"+batch+"</td><td style='margin:2px;text-align:center;'>"+(quantity-placed_quantity)+"</td>";
-			item_table.appendChild(item_row);				
+			item_table.appendChild(item_row);			
 		}								
 	});	
 	//////////////////////////////
@@ -11183,14 +11159,19 @@ function modal152_action(rack)
 		{
 			//console.log('modal_row_parsed');
 			var record_id=$(this).attr('data-id');
-			
 			var unplaced_quantity=parseFloat($(this).find('td:nth-child(3)').html());
 			
 			var master_form=document.getElementById("row_form165_"+record_id);
 			var to_place_quantity=parseFloat(master_form.elements[2].value);
 			var old_placed_quantity=parseFloat(master_form.elements[3].value);
+			var row_storage=master_form.elements[4].value;
 			var new_placed_quantity=to_place_quantity-unplaced_quantity;
-			
+
+			if(row_storage=="" && old_placed_quantity!=new_placed_quantity)
+			{
+				master_form.elements[4].value=rack;
+			}
+
 			master_form.elements[3].value=new_placed_quantity;
 
 			$(master_form).trigger('submit');
@@ -11224,10 +11205,10 @@ function modal152_action(rack)
 						$(this).find('td:nth-child(3)').html((parseFloat($(this).find('td:nth-child(3)').html())-1));
 					}
 				});
-				
+
 				if(!product_placed)
 				{
-					$("#modal67").dialog("open");
+					$("#modal72").dialog("open");
 				}
 			}
 			else 

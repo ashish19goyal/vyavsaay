@@ -10,11 +10,13 @@
 			<label>Bill Type<br><input type='text' name='bill_type' required></label>
 			<label>Bill Date<br><input type='text' name='date' required></label>
 			<label>Bill #<br><input type='text' name='bill_num' readonly="readonly"></label>
+			<label>Challan Items<br><input readonly='readonly' type='number' name='unbilled'></label>
 			<label>
 				<input type='hidden' name='bill_id'>
 				<input type='hidden' name='order_id'>
 				<input type='hidden' name='t_id'>
 			</label>
+			<label>	<input type='button' value='Select unbilled items' class='generic_icon' name='unbilled_button'></label>
 			<label>	<input type='button' title='Save Bill' name='save' class='save_icon'></label>
 			<label>	<input type='button' title='Print Bill' name='print' class='print_icon' onclick='form91_print_form();'></label>
 			<label>	<input type='button' id='form91_share' name='share' class='share_icon' style='display:none;'></label>
