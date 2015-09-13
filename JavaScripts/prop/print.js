@@ -376,7 +376,8 @@ function print_newsletter(nl_name,nl_id,print_type,func)
 */
 function print_flex_newsletter(nl_name,nl_id,print_type,func)
 {
-	var container=document.createElement('div');
+	var master_container=document.createElement('div');
+	var container=document.createElement('iframe');
 	var header=document.createElement('div');
 		var logo=document.createElement('div');
 		var business_intro=document.createElement('div');
@@ -392,7 +393,7 @@ function print_flex_newsletter(nl_name,nl_id,print_type,func)
 	header.setAttribute('style','width:98%;min-height:100px;text-align:center');
 		business_intro.setAttribute('style','width:98%;text-align:center');
 	
-	nl_content.setAttribute('style','display:block;width:98%;min-height:60px');
+	nl_content.setAttribute('style','display:block;width:98%;height:auto;');
 
 	footer.setAttribute('style','display:block;width:98%;');
 		business_contact.setAttribute('style','display:block;width:98%;text-align:center');
@@ -422,7 +423,7 @@ function print_flex_newsletter(nl_name,nl_id,print_type,func)
 		powered_by.innerHTML="<hr style='border: 1px solid #000;'><a href='"+powered_by_link+"'>Powered By: "+powered_by_text+"</a>";	
 	
 /////////////placing the containers //////////////////////////////////////////////////////	
-	
+	master_container.appendChild(container);
 	container.appendChild(header);
 	container.appendChild(nl_content);
 	container.appendChild(footer);
@@ -451,18 +452,35 @@ function print_flex_newsletter(nl_name,nl_id,print_type,func)
 			{
 				var img_element=$(this)[0];
 				
+				img_element.removeAttribute('onclick');
+				img_element.removeAttribute('onmouseup');
+				img_element.removeAttribute('onmousedown');
+				img_element.removeAttribute('onchange');
+				img_element.removeAttribute('contenteditable');
+				
 				if(print_type=='mail')
 				{
-					img_element.setAttribute('src',"https://vyavsaay.com/"+img_element.getAttribute('data-src'));
+					img_element.setAttribute('src',"https://s3-ap-southeast-1.amazonaws.com/vyavsaay-newsletter/"+img_element.getAttribute('data-src'));
 				}
 			});
+
+			$(nl_content).find('div').each(function () 
+			{
+				var div_element=$(this)[0];
+				div_element.removeAttribute('onclick');
+				div_element.removeAttribute('onmouseup');
+				div_element.removeAttribute('onmousedown');
+				div_element.removeAttribute('onchange');
+				div_element.removeAttribute('contenteditable');
+			});
+			
 		}
 		/*
 		var clear_div=document.createElement('div');
 		clear_div.setAttribute('style','clear:both;');
 		nl_content.appendChild(clear_div);
 		*/
-		func(container);
+		func(master_container);
 	});
 }
 

@@ -260,10 +260,12 @@ function backup_server_db()
 			var response=e.responseText;
 			
 			var type = e.getResponseHeader('Content-Type');
-//			console.log(type);			
+			console.log(type);
+			//console.log(response);
+			
 			var blob = new Blob([response], { type: type });			
 			var URL = window.URL || window.webkitURL;
-         var downloadUrl = URL.createObjectURL(blob);	
+         	var downloadUrl = URL.createObjectURL(blob);	
 			
 			var modal_element=document.getElementById('modal55');
 			//var updated_response=response.replace(/ /g,"+");

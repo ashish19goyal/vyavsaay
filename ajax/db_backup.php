@@ -19,15 +19,16 @@ use RetailingEssentials\file_reader;
 			$dbuser = $fr->attributes["user"];
 			$dbpass = $fr->attributes["password"];
 			
-			$backup_file = $domain.'.gz';
+			$backup_file = $domain;
 			$command = "mysqldump --opt -h $dbhost -u $dbuser -p$dbpass $dbname";
 						
 			$mime = "application/octet-stream";
 			header( "Content-Type: " . $mime );
 			header( 'Content-Disposition: attachment; filename="' . $backup_file . '"' );			
-			
-			passthru($command);
-			exit(0);
+
+			passthru($command);		
+
+			exit(0);		
 		}
 		else
 		{

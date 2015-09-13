@@ -12201,22 +12201,26 @@ function form233_update_item()
 			if(data_src=="" || data_src=='undefined' || data_src=='null' || data_src==null)
 			{
 				var blob=image_elem.src;
-				var blob_name="client_images/"+get_new_key()+".jpeg";
-				
+				var blob_name=get_new_key()+".jpeg";
+
 				image_elem.setAttribute('data-src',blob_name);			
-						
+
 				$.ajax(
 				{
 					type: "POST",
-					url: "./ajax/save_image.php",
+					url: "./ajax/s3_doc.php",
 					data: 
 					{
 						blob: blob,
-						name:blob_name
+						name:blob_name,
+						content_type:'image/jpeg'
+					},
+					success: function(return_data,return_status,e)
+					{
+						console.log(e.responseText);
 					}
 				});
 				console.log('image saved');
-
 			}			
 		});
 
