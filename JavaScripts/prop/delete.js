@@ -1413,6 +1413,7 @@ function form53_delete_item(button)
 			var supplier=form.elements[1].value;
 			var data_id=form.elements[5].value;
 			var transaction_id=form.elements[8].value;
+			var order_id=form.elements[9].value;
 			var last_updated=get_my_time();
 			var bill_xml="<supplier_bills>" +
 						"<id>"+data_id+"</id>" +
@@ -1430,16 +1431,8 @@ function form53_delete_item(button)
 					"<id>"+transaction_id+"</id>" +
 					"</transactions>";
 	
-			if(is_online())
-			{
-				server_delete_row(bill_xml,activity_xml);
-				server_delete_simple(transaction_xml);
-			}
-			else
-			{
-				local_delete_row(bill_xml,activity_xml);
-				local_delete_simple(transaction_xml);
-			}	
+			delete_row(bill_xml,activity_xml);
+			delete_simple(transaction_xml);
 			$(button).parent().parent().remove();
 	
 			var payment_xml="<payments>" +
@@ -1461,32 +1454,86 @@ function form53_delete_item(button)
 							"<transaction_id></transaction_id>" +
 							"</payments>";
 	
-					if(is_online())
-					{
-						server_delete_simple(pay_xml);
-						server_delete_simple(pt_xml);
-					}
-					else
-					{
-						local_delete_simple(pay_xml);
-						local_delete_simple(pt_xml);
-					}
+					delete_simple(pay_xml);
+					delete_simple(pt_xml);
 					break;
 				}
 			});
 	
-			
 			var items_data="<supplier_bill_items>" +
 					"<bill_id>"+data_id+"</bill_id>" +
 					"</supplier_bill_items>";
-			if(is_online())
+			delete_simple(items_data);
+	
+
+			var po_data="<purchase_orders>"+
+						"<id>"+order_id+"</id>" +
+						"<bill_id></bill_id>" +
+						"<total_quantity></total_quantity>"+
+						"<quantity_received></quantity_received>"+
+						"<quantity_accepted></quantity_accepted>"+
+						"</purchase_orders>";
+			fetch_requested_data('',po_data,function (porders) 
 			{
-				server_delete_simple(items_data);
-			}
-			else
-			{
-				local_delete_simple(items_data);
-			}
+				if(porders.length>0)
+				{
+					var id_object_array=[];
+					if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null")
+					{
+						id_object_array=JSON.parse(porders[0].bill_id);
+					}
+					
+					for(var k in id_object_array)
+					{
+						if(id_object_array[k].bill_id==data_id)
+						{
+							id_object_array.splice(k,1);
+							k-=1;
+						}
+					}
+					
+					var quantity_accepted=0;
+					var quantity_received=0;
+					var quantity_qc_pending=0;
+					
+					for(var x in id_object_array)
+					{
+						quantity_received+=parseFloat(id_object_array[x].total_received);
+						quantity_accepted+=parseFloat(id_object_array[x].total_accepted);
+					}
+					
+					if(porders[0].quantity_received=="" || porders[0].quantity_received=='null')
+					{
+						porders[0].quantity_received=0;
+					}
+					
+					if(parseFloat(porders[0].quantity_received)>quantity_received)
+					{
+						quantity_qc_pending=parseFloat(porders[0].quantity_received)-quantity_received;
+						quantity_received=parseFloat(porders[0].quantity_received);
+					}
+					
+					var status='partially received';				
+					if(parseFloat(porders[0].total_quantity)<=quantity_accepted)
+					{
+						status='completely received';
+					}
+
+					var new_bill_id=JSON.stringify(id_object_array);
+					
+					var po_xml="<purchase_orders>" +
+							"<id>"+order_id+"</id>" +
+							"<bill_id>"+new_bill_id+"</bill_id>" +
+							"<quantity_received>"+quantity_received+"</quantity_received>"+
+							"<quantity_accepted>"+quantity_accepted+"</quantity_accepted>"+
+							"<quantity_qc_pending>"+quantity_qc_pending+"</quantity_qc_pending>"+
+							"<status>"+status+"</status>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</purchase_orders>";
+					update_simple(po_xml);
+				}
+			});
+					
 		});
 	}
 	else
@@ -3805,7 +3852,7 @@ function form122_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 			
-			var data_id=form.elements[12].value;
+			var data_id=form.elements[15].value;
 			var data_xml="<supplier_bill_items>" +
 						"<id>"+data_id+"</id>" +
 						"</supplier_bill_items>";

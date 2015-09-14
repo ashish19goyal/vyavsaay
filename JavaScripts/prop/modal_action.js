@@ -9256,19 +9256,16 @@ function modal136_action(type)
  */
 function modal137_action(bill_ids)
 {
-	bill_id_array=bill_ids.split("--");
+	var bill_id_array=JSON.parse(bill_ids);
 
-	var rowsHTML="<tr style='background-color:#2C8A50;'><td>Bill Id</td><td>Link</td></tr>";
+	var rowsHTML="<tr style='background-color:#2C8A50;'><td>Bill Number</td><td>Link</td></tr>";
 	
 	bill_id_array.forEach(function (bill_id) 
 	{
-		if(bill_id!="")
-		{
-			rowsHTML+="<tr>"+
-				"<td>"+bill_id+"</td>"+
-				"<td><a onclick=\"element_display('"+bill_id+"','form122'); $('#modal137').dialog('close');\"><u style='cursor:pointer;'>View</u></a></td>"+
+		rowsHTML+="<tr>"+
+				"<td>"+bill_id.bill_num+"</td>"+
+				"<td><a onclick=\"element_display('"+bill_id.bill_id+"','form122'); $('#modal137').dialog('close');\"><u style='cursor:pointer;'>View</u></a></td>"+
 				"</tr>";
-		}
 	});
 
 	$('#modal137_item_table').html(rowsHTML);		

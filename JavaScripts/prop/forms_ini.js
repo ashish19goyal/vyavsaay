@@ -4071,6 +4071,7 @@ function form53_ini()
 			"<total></total>" +
 			"<notes></notes>" +
 			"<transaction_id></transaction_id>" +
+			"<order_id></order_id>" +
 			"<last_updated></last_updated>" +
 			"<notes></notes>"+
 			"</supplier_bills>";
@@ -4104,6 +4105,7 @@ function form53_ini()
 						rowsHTML+="<input type='button' class='edit_icon' form='form53_"+result.id+"' title='Edit Bill'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form53_"+result.id+"' title='Delete Bill' onclick='form53_delete_item($(this));'>";
 						rowsHTML+="<input type='hidden' form='form53_"+result.id+"' value='"+result.transaction_id+"'>";
+						rowsHTML+="<input type='hidden' form='form53_"+result.id+"' value='"+result.order_id+"'>";
 						if(result.notes=='pending approval')
 							rowsHTML+="<br><input type='button' class='generic_icon' value='approve' form='form53_"+result.id+"' title='Approve Bill' onclick='form53_approve_item($(this))'>";
 					rowsHTML+="</td>";			
@@ -11314,7 +11316,7 @@ function form122_ini()
 	if(bill_id!="")
 	{
 		show_loader();
-		var bill_columns="<supplier_bills>" +
+		var bill_columns="<supplier_bills count='1'>" +
 					"<id>"+bill_id+"</id>" +
 					"<bill_id></bill_id>" +
 					"<order_id></order_id>" +
@@ -11333,46 +11335,47 @@ function form122_ini()
 		////separate fetch function to get bill details like customer name, total etc.
 		fetch_requested_data('',bill_columns,function(bill_results)
 		{
-			for (var i in bill_results)
+			if (bill_results.length>0)
 			{
 				var filter_fields=document.getElementById('form122_master');
-				filter_fields.elements['supplier'].value=bill_results[i].supplier;
-				filter_fields.elements['order_id'].value=bill_results[i].order_id;
-				filter_fields.elements['po_num'].value=bill_results[i].order_num;
-				filter_fields.elements['bill_num'].value=bill_results[i].bill_id;
-				filter_fields.elements['bill_date'].value=get_my_past_date(bill_results[i].bill_date);
-				filter_fields.elements['entry_date'].value=get_my_past_date(bill_results[i].entry_date);
+				filter_fields.elements['supplier'].value=bill_results[0].supplier;
+				filter_fields.elements['order_id'].value=bill_results[0].order_id;
+				filter_fields.elements['po_num'].value=bill_results[0].order_num;
+				filter_fields.elements['bill_num'].value=bill_results[0].bill_id;
+				filter_fields.elements['bill_date'].value=get_my_past_date(bill_results[0].bill_date);
+				filter_fields.elements['entry_date'].value=get_my_past_date(bill_results[0].entry_date);
 				filter_fields.elements['bill_id'].value=bill_id;
-				filter_fields.elements['t_id'].value=bill_results[i].transaction_id;
+				filter_fields.elements['t_id'].value=bill_results[0].transaction_id;
 				var unbilled_button=filter_fields.elements['unbilled_button'];
 				var unbilled=filter_fields.elements['unbilled'];
 				//$(unbilled).parent().hide();
 				//$(unbilled_button).parent().hide();
 				var save_button=filter_fields.elements['save'];
+				var share_button=filter_fields.elements['share'];
 				
 				filter_fields.elements['cst'].checked=false;
-				if(bill_results[i].cst=='yes')
+				if(bill_results[0].cst=='yes')
 				{
 					filter_fields.elements['cst'].checked=true;				
 				}
-				
+
+				var bt=get_session_var('title');
+
+				$(share_button).show();
+				$(share_button).click(function()
+				{
+					modal101_action(bt+' - Purchase bill # '+filter_fields.elements['bill_num'].value,filter_fields.elements['supplier'].value,'supplier',function (func) 
+					{
+						print_form122(func);
+					});
+				});
+								
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form122_update_form();
 				});
-
-				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-								"<td>Amount:<br>Tax: <br>Total: </td>" +
-								"<td>Rs. "+bill_results[i].amount+"<br>" +
-								"Rs. "+bill_results[i].tax+"<br>" +
-								"Rs. "+bill_results[i].total+"</td>" +
-								"<td></td>" +
-								"</tr>";
-				$('#form122_foot').html(total_row);
-
-				break;
 			}
 		});
 		
@@ -11386,6 +11389,9 @@ function form122_ini()
 				"<mrp></mrp>"+
 				"<amount></amount>"+
 				"<tax></tax>"+
+				"<po_price></po_price>"+
+				"<po_amount></po_amount>"+
+				"<po_tax></po_tax>"+
 				"<total></total>"+
 				"<storage></storage>"+
 				"<qc></qc>"+
@@ -11401,22 +11407,24 @@ function form122_ini()
 				var rowsHTML="<tr>";
 				rowsHTML+="<form id='form122_"+id+"' autocomplete='off'></form>";
 					rowsHTML+="<td data-th='Item'>";
-						rowsHTML+="<input type='text' form='form122_"+id+"' readonly='readonly'>";
-						rowsHTML+="<br>SKU: <input type='text' form='form122_"+id+"' value='"+result.product_name+"' required readonly='readonly'>";
-						rowsHTML+="<br>Name: <input type='text' readonly='readonly' form='form122_"+id+"' value='"+result.item_desc+"' readonly='readonly'>";
+						rowsHTML+="<input type='hidden' form='form122_"+id+"'>";
+						rowsHTML+="<b>SKU</b>: <input type='text' form='form122_"+id+"' value='"+result.product_name+"' required readonly='readonly'>";
+						rowsHTML+="<br><b>Name</b>: <input type='text' readonly='readonly' form='form122_"+id+"' value='"+result.item_desc+"' readonly='readonly'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Batch'>";
 						rowsHTML+="<input type='text' form='form122_"+id+"' value='"+result.batch+"' required readonly='readonly'>";
-						rowsHTML+="<br>Quantity: <input type='number' form='form122_"+id+"' value='"+result.quantity+"' required step='any' readonly='readonly'>";
-						rowsHTML+="<br>MRP: <input type='number' form='form122_"+id+"' value='"+result.mrp+"' required step='any' readonly='readonly'>";
+						rowsHTML+="<br><b>Quantity</b>: <input type='number' form='form122_"+id+"' value='"+result.quantity+"' required step='any' readonly='readonly'>";
+						rowsHTML+="<br><b>MRP</b>: <input type='number' form='form122_"+id+"' value='"+result.mrp+"' required step='any' readonly='readonly'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Amount'>";
-						rowsHTML+="Unit Price: Rs. <input type='number' form='form122_"+id+"' value='"+result.unit_price+"' required step='any' readonly='readonly'>";
-						rowsHTML+="<br>Amount: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.amount+"' required step='any' readonly='readonly'>";
-						rowsHTML+="<br>Tax: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.tax+"' required step='any' readonly='readonly'>";
+					rowsHTML+="<td data-th='Bill Price'>";
+						rowsHTML+="<b>Unit Price</b>: Rs. <input type='number' form='form122_"+id+"' value='"+result.unit_price+"' step='any' readonly='readonly'>";
+						rowsHTML+="<br><b>Amount</b>: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.amount+"' step='any' readonly='readonly'>";
+						rowsHTML+="<br><b>Tax</b>: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.tax+"' step='any' readonly='readonly'>";
 					rowsHTML+="</td>";
-					rowsHTML+="<td data-th='Storage'>";
-						rowsHTML+="<input type='text' form='form122_"+id+"' value='"+result.storage+"' readonly='readonly'>";
+					rowsHTML+="<td data-th='PO Price'>";
+						rowsHTML+="<b>Unit Price</b>: Rs. <input type='number' form='form122_"+id+"' value='"+result.po_price+"' step='any' readonly='readonly'>";
+						rowsHTML+="<br><b>Amount</b>: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.po_amount+"' step='any' readonly='readonly'>";
+						rowsHTML+="<br><b>Tax</b>: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' value='"+result.po_tax+"' step='any' readonly='readonly'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Check'>";
 						rowsHTML+="<input type='text' form='form122_"+id+"' value='"+result.qc+"' readonly='readonly'>";
@@ -11424,9 +11432,10 @@ function form122_ini()
 							rowsHTML+=" <img src='./images/green_circle.png' class='green_circle'>";
 						else
 							rowsHTML+=" <img src='./images/red_circle.png' class='red_circle'>";
-						rowsHTML+="<br>Comments: <textarea form='form122_"+id+"' readonly='readonly'>"+result.qc_comments+"</textarea>";
+						rowsHTML+="<br><b>Comments</b>: <textarea form='form122_"+id+"' readonly='readonly'>"+result.qc_comments+"</textarea>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form122_"+id+"' value='"+result.storage+"'>";
 						rowsHTML+="<input type='hidden' form='form122_"+id+"' value='"+id+"'>";
 						rowsHTML+="<input type='button' class='submit_hidden' form='form122_"+id+"' id='save_form122_"+id+"' >";	
 						rowsHTML+="<input type='button' class='delete_icon' form='form122_"+id+"' id='delete_form122_"+id+"' onclick='form122_delete_item($(this));'>";
@@ -11437,6 +11446,7 @@ function form122_ini()
 				$('#form122_body').prepend(rowsHTML);
 				
 			});
+			form122_get_totals();
 			hide_loader();
 		});
 	}
@@ -24602,6 +24612,7 @@ function form233_ini()
 			"<name></name>" +
 			"<description></description>" +
 			"<html_content></html_content>" +
+			"<pic_url></pic_url>"+
 			"</newsletter>";
 		fetch_requested_data('form233',columns,function(newsletters)
 		{
@@ -24611,6 +24622,7 @@ function form233_ini()
 				master_form.elements['name'].value=newsletters[0].name;
 				master_form.elements['description'].value=newsletters[0].description;
 				master_form.elements['id'].value=newsletters[0].id;
+				master_form.elements['pic_url'].value=newsletters[0].pic_url;
 
 				$(master_form).off('submit');
 				$(master_form).on('submit',function (e) 

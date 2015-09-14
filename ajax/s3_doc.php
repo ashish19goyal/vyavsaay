@@ -12,6 +12,7 @@
 		$name=$_POST['name'];	
 		$content_type=$_POST['content_type'];
 
+		//newsletter user
 		$awsAccessKey='AKIAIUMY6WOBUJW3JR4A';
 		$awsSecretKey='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';
     

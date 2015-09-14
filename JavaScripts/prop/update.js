@@ -5733,49 +5733,59 @@ function form122_update_form()
 		var save_button=form.elements['save'];
 		var order_id=form.elements['order_id'].value;
 		var order_num=form.elements['po_num'].value;
+		var share_button=form.elements['share'];
+		
+		var cst='no';
+		if(form.elements['cst'].checked)
+		{
+			cst='yes';
+		}
+
+		var bt=get_session_var('title');
+		$(share_button).show();
+		$(share_button).click(function()
+		{
+			modal101_action(bt+' - Purchase bill # '+bill_id,supplier,'supplier',function (func) 
+			{
+				print_form122(func);
+			});
+		});
 		
 		var total=0;
 		var tax=0;
 		var amount=0;
+		var total_accepted=0;
 		var total_quantity=0;
-		var total_quantity_in_rej=0;
 		
 		$("[id^='save_form122']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			console.log(subform.elements[4].value);			
-			if(subform.elements[10].value=='accepted')
+			if(subform.elements[12].value=='accepted')
 			{
 				if(!isNaN(parseFloat(subform.elements[7].value)))
 					amount+=parseFloat(subform.elements[7].value);
 				if(!isNaN(parseFloat(subform.elements[8].value)))
 					tax+=parseFloat(subform.elements[8].value);
 				if(!isNaN(parseFloat(subform.elements[4].value)))
-					total_quantity+=subform.elements[4].value;			
+					total_accepted+=parseFloat(subform.elements[4].value);			
 			}
 			if(!isNaN(parseFloat(subform.elements[4].value)))
-				total_quantity_in_rej+=subform.elements[4].value;
+				total_quantity+=parseFloat(subform.elements[4].value);
 		});
-		
-		total=amount+tax;
-		
-		var discount=0;
-		var cst='no';
-		if(form.elements['cst'].checked)
-		{
-			tax+=my_round(.02*amount,2);
-			total+=my_round(.02*amount,2);
-			cst='yes';
-		}
 	
-		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-				"<td>Amount:</br>Tax: </br>Total: </td>" +
-				"<td>Rs. "+amount+"</br>" +
-				"Rs. "+tax+"</br>" +
-				"Rs. "+total+"</td>" +
-				"<td></td>" +
-				"</tr>";
+		amount=my_round(amount,2);
+		tax=my_round(tax,2);
+		total=amount+tax;
+			
+		var total_row="<tr><td colspan='3' data-th='Total'>Total Accepted Quantity: "+total_accepted+"<br>Total Rejected Quantity: "+(total_quantity-total_accepted)+"</td>" +
+					"<td>Amount:</br>Tax: </br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. "+tax+"</br>" +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+			
 		$('#form122_foot').html(total_row);
 						
 		var data_xml="<supplier_bills>" +
@@ -5787,7 +5797,7 @@ function form122_update_form()
 					"<bill_date>"+bill_date+"</bill_date>" +
 					"<entry_date>"+entry_date+"</entry_date>" +
 					"<total>"+total+"</total>" +
-					"<discount>"+discount+"</discount>" +
+					"<discount>0</discount>" +
 					"<amount>"+amount+"</amount>" +
 					"<tax>"+tax+"</tax>" +
 					"<cst>"+cst+"</cst>" +
@@ -5811,17 +5821,78 @@ function form122_update_form()
 					"<tax>"+(-tax)+"</tax>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</transactions>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-			server_update_simple(transaction_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-			local_update_simple(transaction_xml);
-		}
+		update_row(data_xml,activity_xml);
+		update_simple(transaction_xml);
 		
+		var po_data="<purchase_orders>"+
+					"<id>"+order_id+"</id>" +
+					"<bill_id></bill_id>" +
+					"<total_quantity></total_quantity>"+
+					"<quantity_received></quantity_received>"+
+					"<quantity_accepted></quantity_accepted>"+
+					"</purchase_orders>";
+		fetch_requested_data('',po_data,function (porders) 
+		{
+			if(porders.length>0)
+			{
+				var id_object_array=[];
+				if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null")
+				{
+					id_object_array=JSON.parse(porders[0].bill_id);
+				}
+				
+				for(var k in id_object_array)
+				{
+					if(id_object_array[k].bill_id==data_id)
+					{
+						id_object_array[k].bill_num=bill_id;
+						id_object_array[k].total_received=total_quantity;
+						id_object_array[k].total_accepted=total_accepted;
+						break;
+					}
+				}
+				
+				var quantity_accepted=0;
+				var quantity_received=0;
+				var quantity_qc_pending=0;
+				
+				for(var x in id_object_array)
+				{
+					quantity_received+=parseFloat(id_object_array[x].total_received);
+					quantity_accepted+=parseFloat(id_object_array[x].total_accepted);
+				}
+				
+				if(porders[0].quantity_received=="" || porders[0].quantity_received=='null')
+				{
+					porders[0].quantity_received=0;
+				}
+				
+				if(parseFloat(porders[0].quantity_received)>quantity_received)
+				{
+					quantity_qc_pending=parseFloat(porders[0].quantity_received)-quantity_received;
+					quantity_received=parseFloat(porders[0].quantity_received);
+				}
+				
+				var status='partially received';				
+				if(parseFloat(porders[0].total_quantity)<=quantity_accepted)
+				{
+					status='completely received';
+				}
+				
+				var new_bill_id=JSON.stringify(id_object_array);
+				
+				var po_xml="<purchase_orders>" +
+						"<id>"+order_id+"</id>" +
+						"<bill_id>"+new_bill_id+"</bill_id>" +
+						"<quantity_received>"+quantity_received+"</quantity_received>"+
+						"<quantity_accepted>"+quantity_accepted+"</quantity_accepted>"+
+						"<quantity_qc_pending>"+quantity_qc_pending+"</quantity_qc_pending>"+
+						"<status>"+status+"</status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</purchase_orders>";
+				update_simple(po_xml);
+			}
+		});
 		
 		var payment_data="<payments>" +
 				"<id></id>" +
@@ -5848,20 +5919,10 @@ function form122_update_form()
 							"<tax>0</tax>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</transactions>";
-				if(is_online())
+				update_simple_func(payment_xml,function()
 				{
-					server_update_simple_func(payment_xml,function()
-					{
-						//modal28_action(payments[y]);
-					});
-				}
-				else
-				{
-					local_update_simple_func(payment_xml,function()
-					{
-						//modal28_action(payments[y]);
-					});
-				}
+					//modal28_action(payments[y]);
+				});
 				break;
 			}
 		},payment_data);
@@ -5905,14 +5966,7 @@ function form123_update_item(form)
 					"<notes>Mandatory attribute "+attribute+" for "+object+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -5968,14 +6022,7 @@ function form125_update_item(form)
 						"<notes>Account for username "+username+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_update_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_update_row(data_xml,activity_xml);
-			}	
+			update_row(data_xml,activity_xml);
 			for(var i=0;i<5;i++)
 			{
 				$(form.elements[i]).attr('readonly','readonly');
@@ -6035,14 +6082,7 @@ function form130_update_form()
 				"<last_updated upperbound='yes'>"+last_updated+"</last_updated>" +
 				"</bill_items>";
 		
-		if(is_online())
-		{
-			server_delete_simple(items_data);
-		}
-		else
-		{
-			local_delete_simple(items_data);
-		}
+		delete_simple(items_data);
 		///////////////////////////////////
 		
 		/////deleting existing free products
@@ -6051,16 +6091,8 @@ function form130_update_form()
 				"<free_with>bill</free_with>" +
 				"<last_updated upperbound='yes'>"+last_updated+"</last_updated>" +
 				"</bill_items>";
-		if(is_online())
-		{
-			server_delete_simple(items_data);
-		}
-		else
-		{
-			local_delete_simple(items_data);
-		}
-		
-		
+		delete_simple(items_data);
+				
 		var offer_data="<offers>" +
 				"<criteria_type>min amount crossed</criteria_type>" +
 				"<criteria_amount upperbound='yes'>"+(amount-discount)+"</criteria_amount>" +
@@ -12195,16 +12227,68 @@ function form233_update_item()
 		{
 			var image_elem=$(this)[0];
 			resize_picture(image_elem,image_elem.width);
+		});
+
+		var data_id=form.elements['id'].value;
+		var name=form.elements['name'].value;
+		var description=form.elements['description'].value;
+		var pic_url=form.elements['pic_url'].value;
+		var form233_section=document.getElementById('form233_section');
+		var html_content=htmlentities(form233_section.innerHTML);
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		
+		var new_div_container=document.createElement('div');
+		new_div_container.innerHTML=html_content;
+		$(new_div_container).width($(form233_section).width());
+		$(new_div_container).height($(form233_section).height());
+		
+		//console.log(form233_section.style('width'));
+		
+		$(new_div_container).find('img').each(function () 
+		{
+			var img_element=$(this)[0];
 			
-			var data_src=image_elem.getAttribute('data-src');
-			console.log(data_src);
-			if(data_src=="" || data_src=='undefined' || data_src=='null' || data_src==null)
-			{
-				var blob=image_elem.src;
-				var blob_name=get_new_key()+".jpeg";
+			img_element.removeAttribute('onclick');
+			img_element.removeAttribute('onmouseup');
+			img_element.removeAttribute('onmousedown');
+			img_element.removeAttribute('onchange');
+			img_element.removeAttribute('contenteditable');			
+		});
 
-				image_elem.setAttribute('data-src',blob_name);			
+		$(new_div_container).find('div').each(function () 
+		{
+			var div_element=$(this)[0];
+			div_element.removeAttribute('onclick');
+			div_element.removeAttribute('onmouseup');
+			div_element.removeAttribute('onmousedown');
+			div_element.removeAttribute('onchange');
+			div_element.removeAttribute('contenteditable');
+		});
 
+		////code to convert new_div_container to image_elem//////////
+
+		var blob="";
+		//console.log(new_div_container);
+		html2canvas(new_div_container,
+		{
+		    onrendered: function (canvas) 
+		    {
+		       blob=canvas.toDataURL("image/jpeg");
+		       console.log(blob);
+		       console.log(canvas);
+		/////////////////////////////////////
+				
+				if(pic_url=="")
+				{
+					var blob_name=get_domain()+"_"+get_new_key()+".jpeg";
+				}
+				else 
+				{
+					var blob_name=pic_url;
+				}
+				
 				$.ajax(
 				{
 					type: "POST",
@@ -12220,33 +12304,26 @@ function form233_update_item()
 						console.log(e.responseText);
 					}
 				});
-				console.log('image saved');
-			}			
-		});
-
-		var data_id=form.elements['id'].value;
-		var name=form.elements['name'].value;
-		var description=form.elements['description'].value;
-		var html_content=htmlentities(document.getElementById('form233_section').innerHTML);
-		var save_button=form.elements['save'];
-		var last_updated=get_my_time();
-		
-		var data_xml="<newsletter>" +
-					"<id>"+data_id+"</id>" +
-					"<name>"+name+"</name>" +
-					"<description>"+description+"</description>" +
-					"<html_content>"+html_content+"</html_content>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</newsletter>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>newsletter</tablename>" +
-					"<link_to>form2</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Newsletter "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		update_row(data_xml,activity_xml);		
+				
+				var data_xml="<newsletter>" +
+							"<id>"+data_id+"</id>" +
+							"<name>"+name+"</name>" +
+							"<description>"+description+"</description>" +
+							"<html_content>"+html_content+"</html_content>" +
+							"<pic_url>"+blob_name+"</pic_url>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</newsletter>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>newsletter</tablename>" +
+							"<link_to>form2</link_to>" +
+							"<title>Updated</title>" +
+							"<notes>Newsletter "+name+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				update_row(data_xml,activity_xml);	
+		    }
+		});	
 	}
 	else
 	{

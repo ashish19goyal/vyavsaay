@@ -7947,13 +7947,17 @@ function form122_create_item(form)
 		var unit_price=form.elements[6].value;
 		var amount=form.elements[7].value;
 		var tax=form.elements[8].value;
+		var po_price=form.elements[9].value;
+		var po_amount=form.elements[10].value;
+		var po_tax=form.elements[11].value;
 		var total=parseFloat(amount)+parseFloat(tax);
-		var storage=form.elements[9].value;
-		var qc=form.elements[10].value;
-		var qc_comments=form.elements[11].value;
-		var data_id=form.elements[12].value;
-		var save_button=form.elements[13];
-		var del_button=form.elements[14];
+		var qc=form.elements[12].value;
+		var qc_comments=form.elements[13].value;
+		var storage=form.elements[14].value;
+		var data_id=form.elements[15].value;
+		var save_button=form.elements[16];
+		var del_button=form.elements[17];
+				
 		var is_unbilled=form.elements['unbilled'].value;
 		
 		var put_away_status='pending';
@@ -7974,6 +7978,9 @@ function form122_create_item(form)
 					"<unit_price>"+unit_price+"</unit_price>"+
 					"<amount>"+amount+"</amount>"+
 					"<tax>"+tax+"</tax>"+
+					"<po_price>"+po_price+"</po_price>"+
+					"<po_amount>"+po_amount+"</po_amount>"+
+					"<po_tax>"+po_tax+"</po_tax>"+
 					"<total>"+total+"</total>"+
 					"<storage>"+storage+"</storage>"+
 					"<qc>"+qc+"</qc>"+
@@ -8024,7 +8031,7 @@ function form122_create_item(form)
 			});
 		}
 				
-		for(var i=0;i<12;i++)
+		for(var i=0;i<15;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
@@ -8075,6 +8082,46 @@ function form122_create_item(form)
 	}
 }
 
+function form122_get_totals()
+{
+	var total=0;
+	var tax=0;
+	var amount=0;
+	var total_accepted=0;
+	var total_quantity=0;
+	
+	$("[id^='save_form122']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		if(subform.elements[12].value=='accepted')
+		{
+			if(!isNaN(parseFloat(subform.elements[7].value)))
+				amount+=parseFloat(subform.elements[7].value);
+			if(!isNaN(parseFloat(subform.elements[8].value)))
+				tax+=parseFloat(subform.elements[8].value);
+			if(!isNaN(parseFloat(subform.elements[4].value)))
+				total_accepted+=parseFloat(subform.elements[4].value);			
+		}
+		if(!isNaN(parseFloat(subform.elements[4].value)))
+			total_quantity+=parseFloat(subform.elements[4].value);
+	});
+
+	amount=my_round(amount,2);
+	tax=my_round(tax,2);
+	total=amount+tax;
+		
+	var total_row="<tr><td colspan='3' data-th='Total'>Total Accepted Quantity: "+total_accepted+"<br>Total Rejected Quantity: "+(total_quantity-total_accepted)+"</td>" +
+				"<td>Amount:</br>Tax: </br>Total: </td>" +
+				"<td>Rs. "+amount+"</br>" +
+				"Rs. "+tax+"</br>" +
+				"Rs. "+total+"</td>" +
+				"<td></td>" +
+				"</tr>";
+						
+	$('#form122_foot').html(total_row);
+}
+
 
 /**
  * @form New supplier Bill
@@ -8094,51 +8141,61 @@ function form122_create_form()
 		var transaction_id=form.elements['t_id'].value;
 		var last_updated=get_my_time();
 		var save_button=form.elements['save'];
+		var share_button=form.elements['share'];
 		var order_id=form.elements['order_id'].value;
 		var order_num=form.elements['po_num'].value;
+		
+		var cst='no';
+		if(form.elements['cst'].checked)
+		{
+			cst='yes';
+		}
+
+		var bt=get_session_var('title');
+		$(share_button).show();
+		$(share_button).click(function()
+		{
+			modal101_action(bt+' - Purchase bill # '+bill_id,supplier,'supplier',function (func) 
+			{
+				print_form122(func);
+			});
+		});
 		
 		var total=0;
 		var tax=0;
 		var amount=0;
+		var total_accepted=0;
 		var total_quantity=0;
-		var total_quantity_in_rej=0;
 		
 		$("[id^='save_form122']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			console.log(subform.elements[4].value);			
-			if(subform.elements[10].value=='accepted')
+			if(subform.elements[12].value=='accepted')
 			{
 				if(!isNaN(parseFloat(subform.elements[7].value)))
 					amount+=parseFloat(subform.elements[7].value);
 				if(!isNaN(parseFloat(subform.elements[8].value)))
 					tax+=parseFloat(subform.elements[8].value);
 				if(!isNaN(parseFloat(subform.elements[4].value)))
-					total_quantity+=subform.elements[4].value;			
+					total_accepted+=parseFloat(subform.elements[4].value);			
 			}
 			if(!isNaN(parseFloat(subform.elements[4].value)))
-				total_quantity_in_rej+=subform.elements[4].value;
+				total_quantity+=parseFloat(subform.elements[4].value);
 		});
-
-
-		total=amount+tax;
-		var discount=0;
-		var cst='no';
-		if(form.elements['cst'].checked)
-		{
-			tax+=my_round(.02*amount,2);
-			total+=my_round(.02*amount,2);
-			cst='yes';
-		}
 	
-		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-				"<td>Amount:</br>Tax: </br>Total: </td>" +
-				"<td>Rs. "+amount+"</br>" +
-				"Rs. "+tax+"</br>" +
-				"Rs. "+total+"</td>" +
-				"<td></td>" +
-				"</tr>";
+		amount=my_round(amount,2);
+		tax=my_round(tax,2);
+		total=amount+tax;
+			
+		var total_row="<tr><td colspan='3' data-th='Total'>Total Accepted Quantity: "+total_accepted+"<br>Total Rejected Quantity: "+(total_quantity-total_accepted)+"</td>" +
+					"<td>Amount:</br>Tax: </br>Total: </td>" +
+					"<td>Rs. "+amount+"</br>" +
+					"Rs. "+tax+"</br>" +
+					"Rs. "+total+"</td>" +
+					"<td></td>" +
+					"</tr>";
+		
 		$('#form122_foot').html(total_row);
 
 
@@ -8151,7 +8208,7 @@ function form122_create_form()
 					"<bill_date>"+bill_date+"</bill_date>" +
 					"<entry_date>"+entry_date+"</entry_date>" +
 					"<total>"+total+"</total>" +
-					"<discount>"+discount+"</discount>" +
+					"<discount>0</discount>" +
 					"<amount>"+amount+"</amount>" +
 					"<tax>"+tax+"</tax>" +
 					"<cst>"+cst+"</cst>"+
@@ -8170,6 +8227,7 @@ function form122_create_form()
 		var po_data="<purchase_orders>"+
 					"<id>"+order_id+"</id>" +
 					"<bill_id></bill_id>" +
+					"<total_quantity></total_quantity>"+
 					"<quantity_received></quantity_received>"+
 					"<quantity_accepted></quantity_accepted>"+
 					"</purchase_orders>";
@@ -8177,16 +8235,56 @@ function form122_create_form()
 		{
 			if(porders.length>0)
 			{
-				var new_bill_id=porders[0].bill_id+"--"+data_id;
-				var quantity_accepted=parseFloat(porders[0].quantity_accepted)+parseFloat(total_quantity);
-				var quantity_qc_pending=parseFloat(porders[0].quantity_received)-parseFloat(porders[0].quantity_accepted)-parseFloat(total_quantity_in_rej);
-				if(quantity_qc_pending<0)
-					quantity_qc_pending=0;
+				var id_object_array=[];
+				if(porders[0].bill_id!="" && porders[0].bill_id!=0 && porders[0].bill_id!="null")
+				{
+					id_object_array=JSON.parse(porders[0].bill_id);
+				}
+				
+				var id_object=new Object();
+				id_object.bill_num=bill_id;
+				id_object.bill_id=data_id;
+				id_object.total_received=total_quantity;
+				id_object.total_accepted=total_accepted;
+				
+				id_object_array.push(id_object);
+
+				var quantity_accepted=0;
+				var quantity_received=0;
+				var quantity_qc_pending=0;
+				
+				for(var x in id_object_array)
+				{
+					quantity_received+=parseFloat(id_object_array[x].total_received);
+					quantity_accepted+=parseFloat(id_object_array[x].total_accepted);
+				}
+				
+				if(porders[0].quantity_received=="" || porders[0].quantity_received=='null')
+				{
+					porders[0].quantity_received=0;
+				}
+				
+				if(parseFloat(porders[0].quantity_received)>quantity_received)
+				{
+					quantity_qc_pending=parseFloat(porders[0].quantity_received)-quantity_received;
+					quantity_received=parseFloat(porders[0].quantity_received);
+				}
+				
+				var status='partially received';				
+				if(parseFloat(porders[0].total_quantity)<=quantity_accepted)
+				{
+					status='completely received';
+				}
+				
+				var new_bill_id=JSON.stringify(id_object_array);
+				console.log(new_bill_id);
 				var po_xml="<purchase_orders>" +
 						"<id>"+order_id+"</id>" +
 						"<bill_id>"+new_bill_id+"</bill_id>" +
+						"<quantity_received>"+quantity_received+"</quantity_received>"+
 						"<quantity_accepted>"+quantity_accepted+"</quantity_accepted>"+
 						"<quantity_qc_pending>"+quantity_qc_pending+"</quantity_qc_pending>"+
+						"<status>"+status+"</status>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</purchase_orders>";
 				update_simple(po_xml);
@@ -8245,8 +8343,7 @@ function form122_create_form()
 			{
 				//modal28_action(pt_tran_id);
 			});
-			create_simple_no_warning(notification_xml);
-			
+			create_simple_no_warning(notification_xml);	
 			
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)

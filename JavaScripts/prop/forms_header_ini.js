@@ -4178,6 +4178,7 @@ function form122_header_ini()
 	var entry_date=fields.elements['entry_date'];
 	var unbilled_button=fields.elements['unbilled_button'];
 	var save_button=fields.elements['save'];
+	var share_button=fields.elements['share'];
 	var cst_filter=fields.elements['cst'];
 	bill_num_filter.value="";
 	order_num_filter.value="";
@@ -4186,6 +4187,8 @@ function form122_header_ini()
 	bill_id_filter.value=get_new_key();
 	t_id_filter.value=bill_id_filter.value;
 	cst_filter.checked=false;
+	
+	$(share_button).off('click');
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -4276,28 +4279,31 @@ function form122_header_ini()
 					var rowsHTML="<tr>";
 					rowsHTML+="<form id='form122_"+id+"' autocomplete='off'></form>";
 						rowsHTML+="<td data-th='Item'>";
-							rowsHTML+="<input type='text' form='form122_"+id+"' readonly='readonly'>";
-							rowsHTML+="<br>SKU: <input type='text' form='form122_"+id+"' value='"+ub_item.item_name+"' required readonly='readonly'>";
-							rowsHTML+="<br>Name: <input type='text' readonly='readonly' form='form122_"+id+"' value='"+ub_item.item_desc+"' readonly='readonly'>";
+							rowsHTML+="<input type='hidden' form='form122_"+id+"'>";
+							rowsHTML+="<b>SKU</b>: <input type='text' form='form122_"+id+"' value='"+ub_item.item_name+"' required readonly='readonly'>";
+							rowsHTML+="<br><b>Name</b>: <input type='text' readonly='readonly' form='form122_"+id+"' value='"+ub_item.item_desc+"' readonly='readonly'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Batch'>";
 							rowsHTML+="<input type='text' form='form122_"+id+"' value='"+ub_item.batch+"' required readonly='readonly'>";
-							rowsHTML+="<br>Quantity: <input type='number' form='form122_"+id+"' value='"+ub_item.quantity+"' required step='any' readonly='readonly'>";
-							rowsHTML+="<br>MRP: <input type='number' form='form122_"+id+"' value='"+ub_item.mrp+"' required step='any' readonly='readonly'>";
+							rowsHTML+="<br><b>Quantity</b>: <input type='number' form='form122_"+id+"' value='"+ub_item.quantity+"' required step='any' readonly='readonly'>";
+							rowsHTML+="<br><b>MRP</b>: <input type='number' form='form122_"+id+"' value='"+ub_item.mrp+"' required step='any' readonly='readonly'>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Amount'>";
+						rowsHTML+="<td data-th='Bill Price'>";
+							rowsHTML+="<b>Unit Price</b>: Rs. <input type='number' form='form122_"+id+"' value='"+ub_item.unit_price+"' required step='any' readonly='readonly'>";
+							rowsHTML+="<br><b>Amount</b>: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' value='"+ub_item.amount+"' required step='any' readonly='readonly'>";
+							rowsHTML+="<br><b>Tax</b>: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' value='"+ub_item.tax+"' required step='any' readonly='readonly'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='PO Price'>";
 							rowsHTML+="Unit Price: Rs. <input type='number' form='form122_"+id+"' value='"+ub_item.unit_price+"' required step='any' readonly='readonly'>";
 							rowsHTML+="<br>Amount: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' value='"+ub_item.amount+"' required step='any' readonly='readonly'>";
 							rowsHTML+="<br>Tax: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' value='"+ub_item.tax+"' required step='any' readonly='readonly'>";
 						rowsHTML+="</td>";
-						rowsHTML+="<td data-th='Storage'>";
-							rowsHTML+="<input type='text' form='form122_"+id+"' value='"+ub_item.storage+"' readonly='readonly'>";
-						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Check'>";
 							rowsHTML+="<input type='text' form='form122_"+id+"' value='accepted' readonly='readonly'> <img src='./images/green_circle.png' class='green_circle'>";
-							rowsHTML+="<br>Comments: <textarea form='form122_"+id+"' readonly='readonly'>From challan</textarea>";
+							rowsHTML+="<br><b>Comments</b>: <textarea form='form122_"+id+"' readonly='readonly'>From challan</textarea>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
+							rowsHTML+="<input type='hidden' form='form122_"+id+"' value='"+ub_item.storage+"'>";
 							rowsHTML+="<input type='hidden' form='form122_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form122_"+id+"' id='save_form122_"+id+"' >";	
 							rowsHTML+="<input type='button' class='delete_icon' form='form122_"+id+"' id='delete_form122_"+id+"' onclick='$(this).parent().parent().remove();'>";
@@ -4311,7 +4317,7 @@ function form122_header_ini()
 					$('#form122_body').prepend(rowsHTML);
 					
 					var fields=document.getElementById("form122_"+id);
-					var save_button=fields.elements[13];
+					var save_button=fields.elements[16];
 					
 					$(save_button).on("click", function(event)
 					{
@@ -8696,7 +8702,8 @@ function form233_header_ini()
 	master_form.elements['name'].value="";
 	master_form.elements['description'].value="";
 	master_form.elements['id'].value=get_new_key();
-
+	master_form.elements['pic_url'].value="";
+	
 	$(master_form).off('submit');
 	$(master_form).on('submit',function (e) 
 	{

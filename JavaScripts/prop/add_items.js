@@ -5414,13 +5414,26 @@ function form122_add_item()
 		var master_form=document.getElementById('form122_master');
 		var supplier_name=master_form.elements['supplier'].value;
 		var order_id=master_form.elements['order_id'].value;
-
+		var bill_id=master_form.elements['bill_id'].value;
+		var total_entries=0;
+		$("[id^='save_form122']").each(function(index)
+		{
+			var subform_id=$(this).attr('form');
+			var subform=document.getElementById(subform_id);
+			total_entries+=1;
+		});
+		if(total_entries>0)
+		{
+			var save_button=master_form.elements['save'];
+			$(save_button).click();
+		}
+		
 		var cst_checked=false;
 		if(master_form.elements['cst'].checked)
 		{
 			cst_checked=true;
 		}
-		
+
 		var accepted_readonly="";
 		var accepted_editable=get_session_var('grn_item_accept_editable');		
 		if(accepted_editable=='no')
@@ -5431,31 +5444,34 @@ function form122_add_item()
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form122_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Item'>";
-				rowsHTML+="<input type='text' form='form122_"+id+"'>";
-				rowsHTML+="<br>SKU: <input type='text' form='form122_"+id+"' required>";
-				rowsHTML+="<br>Name: <input type='text' readonly='readonly' form='form122_"+id+"'>";
+				rowsHTML+="<input type='text' required form='form122_"+id+"'>";
+				rowsHTML+="<br><b>SKU</b>: <input type='text' form='form122_"+id+"' required>";
+				rowsHTML+="<br><b>Name</b>: <input type='text' readonly='readonly' form='form122_"+id+"'>";
 				rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Barcode' id='form122_bracode_image_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' form='form122_"+id+"' required>";
 				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add batch' id='form122_add_batch_"+id+"'>";
-				rowsHTML+="<br>Quantity: <input type='number' form='form122_"+id+"' value='1' required step='any'>";
-				rowsHTML+="<br>MRP: <input type='number' form='form122_"+id+"' step='any'>";
+				rowsHTML+="<br><b>Quantity</b>: <input type='number' form='form122_"+id+"' value='1' required step='any'>";
+				rowsHTML+="<br><b>MRP</b>: <input type='number' form='form122_"+id+"' step='any'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Amount'>";
-				rowsHTML+="Unit Price: Rs. <input type='number' form='form122_"+id+"' required step='any'>";
-				rowsHTML+="<br>Amount: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' required step='any'>";
-				rowsHTML+="<br>Tax: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' required step='any'>";
+			rowsHTML+="<td data-th='Bill Price'>";
+				rowsHTML+="<b>Unit Price</b>: Rs. <input type='number' form='form122_"+id+"' required step='any'>";
+				rowsHTML+="<br><b>Amount</b>: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' required step='any'>";
+				rowsHTML+="<br><b>Tax</b>: Rs. <input type='number' readonly='readonly' form='form122_"+id+"' required step='any'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Storage'>";
-				rowsHTML+="<input type='text' form='form122_"+id+"'>";
+			rowsHTML+="<td data-th='PO Price'>";
+				rowsHTML+="<b>Unit Price</b>: Rs. <input type='number' readonly='readonly' form='form122_"+id+"'>";
+				rowsHTML+="<br><b>Amount</b>: Rs. <input type='number' readonly='readonly' form='form122_"+id+"'>";
+				rowsHTML+="<br><b>Tax</b>: Rs. <input type='number' readonly='readonly' form='form122_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Check'>";
-				rowsHTML+="<input type='text' form='form122_"+id+"' "+accepted_readonly+" value='accepted'>";
+				rowsHTML+="<input type='text' form='form122_"+id+"' "+accepted_readonly+" value='accepted' required>";
 				rowsHTML+=" <img id='form122_check_image_"+id+"' src='./images/green_circle.png' class='green_circle'>";
-				rowsHTML+="<br>Comments: <textarea form='form122_"+id+"'></textarea>";
+				rowsHTML+="<br><b>Comments</b>: <textarea form='form122_"+id+"'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form122_"+id+"' name='storage'>";
 				rowsHTML+="<input type='hidden' form='form122_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form122_"+id+"' id='save_form122_"+id+"' >";	
 				rowsHTML+="<input type='button' class='delete_icon' form='form122_"+id+"' id='delete_form122_"+id+"' onclick='$(this).parent().parent().remove();'>";
@@ -5463,6 +5479,7 @@ function form122_add_item()
 				rowsHTML+="<input type='hidden' form='form122_"+id+"' name='tax_unit'>";
 				rowsHTML+="<input type='hidden' form='form122_"+id+"' name='unbilled' value='no'>";
 				rowsHTML+="<input type='hidden' form='form122_"+id+"' name='supplier_margin'>";
+				rowsHTML+="<input type='hidden' form='form122_"+id+"' name='po_tax_rate'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -5478,12 +5495,16 @@ function form122_add_item()
 		var unit_filter=fields.elements[6];
 		var amount_filter=fields.elements[7];
 		var tax_filter=fields.elements[8];
-		var storage_filter=fields.elements[9];
-		var qc_filter=fields.elements[10];
-		var qc_comments_filter=fields.elements[11];
-		var save_button=fields.elements[13];
-		var tax_unit_filter=fields.elements[16];
-		var margin_filter=fields.elements[18];
+		var po_unit_filter=fields.elements[9];
+		var po_amount_filter=fields.elements[10];
+		var po_tax_filter=fields.elements[11];
+		var qc_filter=fields.elements[12];
+		var qc_comments_filter=fields.elements[13];
+		var storage_filter=fields.elements[14];
+		var save_button=fields.elements[16];
+		var tax_unit_filter=fields.elements[19];
+		var margin_filter=fields.elements[21];
+		var po_tax_rate_filter=fields.elements[22];
 		var qc_image=document.getElementById('form122_check_image_'+id);
 		
 		$(barcode_filter).focus();
@@ -5535,11 +5556,20 @@ function form122_add_item()
 							"<name></name>"+
 							"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
 							"</product_master>";
-				set_my_value(item_data,name_filter,function () 
+				get_single_column_data(function (products) 
 				{
-					$(name_filter).trigger('blur');
-				});
-				$(batch_filter).focus();
+					if(products.length>0)
+					{
+						name_filter.value=products[0];
+						$(name_filter).trigger('blur');
+						$(batch_filter).focus();
+					}
+					else
+					{
+						modal116_action(barcode_filter.value);
+						//$(barcode_filter).focus();
+					}
+				},item_data);
 			}
 		});
 		
@@ -5569,6 +5599,33 @@ function form122_add_item()
 		var smaller_barcodes=get_session_var('brands_small_barcode');
 		$(name_filter).on('blur',function(event)
 		{
+			var po_item_data="<purchase_order_items>"+
+							"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+							"<quantity></quantity>"+
+							"<price></price>"+
+							"<amount></amount>"+
+							"<tax></tax>"+
+							"<tax_rate></tax_rate>"+
+							"<order_id exact='yes'>"+order_id+"</order_id>"+
+							"</purchase_order_items>";
+			fetch_requested_data('',po_item_data,function(po_items)
+			{
+				if(po_items.length>0)
+				{
+					po_unit_filter.value=po_items[0].price;
+					po_amount_filter.value=po_items[0].price;
+					po_tax_rate_filter.value=po_items[0].tax_rate;
+					po_tax_filter.value=parseFloat(po_items[0].tax_rate)*parseFloat(po_items[0].price)/100;					
+				}
+				else 
+				{
+					qc_filter.value='rejected';
+					qc_comments_filter.value=qc_comments_filter.value+'\nThis item was not in purchase order';
+					qc_image.setAttribute('src','./images/red_circle.png');
+					qc_image.setAttribute('class','red_circle');
+				}
+			});			
+			
 			var desc_data="<product_master>" +
 				"<id></id>"+
 				"<description></description>" +
@@ -5585,6 +5642,7 @@ function form122_add_item()
 					if(descriptions[0].bar_code!="" && descriptions[0].bar_code!="null")
 					{
 						var barcode_image=document.getElementById('form122_bracode_image_'+id);
+						$(barcode_image).off('click');						
 						$(barcode_image).on('click',function()
 						{
 							if(smaller_barcodes!=null && smaller_barcodes.indexOf(descriptions[0].make)>-1)
@@ -5596,6 +5654,7 @@ function form122_add_item()
 								print_product_barcode(descriptions[0].bar_code,name_filter.value,desc_filter.value);
 							}
 						});
+						barcode_filter.value=descriptions[0].bar_code;
 					}
 					else
 					{
@@ -5615,7 +5674,7 @@ function form122_add_item()
 			
 			if(cst_checked)
 			{
-				tax_unit_filter.value=0;
+				tax_unit_filter.value=get_session_var('cst_rate');
 			}
 			else 
 			{
@@ -5661,16 +5720,9 @@ function form122_add_item()
 							if(expiry_period<(86400000*45) && expiry_time!=0 && !isNaN(expiry_time))
 							{
 								qc_filter.value='rejected';
-								qc_comments_filter.value='Expiry is less than 45 days';
+								qc_comments_filter.value=qc_comments_filter.value+'\nExpiry is less than 45 days';
 								qc_image.setAttribute('src','./images/red_circle.png');
 								qc_image.setAttribute('class','red_circle');
-							}
-							else
-							{
-								qc_filter.value='accepted';
-								qc_comments_filter.value='';
-								qc_image.setAttribute('src','./images/green_circle.png');
-								qc_image.setAttribute('class','green_circle');
 							}
 						}
 
@@ -5729,16 +5781,9 @@ function form122_add_item()
 					if(expiry_period<(86400000*45) && expiry_time!=0 && !isNaN(expiry_time))
 					{
 						qc_filter.value='rejected';
-						qc_comments_filter.value='Expiry is less than 45 days';
+						qc_comments_filter.value=qc_comments_filter.value+'\nExpiry is less than 45 days';
 						qc_image.setAttribute('src','./images/red_circle.png');
 						qc_image.setAttribute('class','red_circle');
-					}
-					else
-					{
-						qc_filter.value='accepted';
-						qc_comments_filter.value='';
-						qc_image.setAttribute('src','./images/green_circle.png');
-						qc_image.setAttribute('class','green_circle');
 					}
 				}
 
@@ -5773,6 +5818,57 @@ function form122_add_item()
 		{
 			amount_filter.value=my_round((parseFloat(quantity_filter.value)*parseFloat(unit_filter.value)),2);
 			tax_filter.value=my_round((parseFloat(amount_filter.value)*parseFloat(tax_unit_filter.value)/100),2);
+
+			po_amount_filter.value=parseFloat(po_unit_filter.value)*parseFloat(quantity_filter.value);
+			po_tax_filter.value=parseFloat(po_tax_rate_filter.value)*parseFloat(po_amount_filter.value)/100;	
+			
+			var order_data="<purchase_orders>"+
+				"<id>"+order_id+"</id>"+
+				"<status array='yes'>--order placed--partially received--</status>"+
+				"<bill_id></bill_id>"+
+				"</purchase_orders>";
+	
+			fetch_requested_data('',order_data,function(pos)
+			{
+				var bill_id_string='--'+bill_id+"--";
+				for(var i in pos)
+				{
+					bill_id_string+=pos[i].bill_id+"--";
+				}		
+
+				var po_item_data="<purchase_order_items>"+
+								"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
+								"<quantity></quantity>"+
+								"<order_id exact='yes'>"+order_id+"</order_id>"+
+								"</purchase_order_items>";
+				fetch_requested_data('',po_item_data,function(po_items)
+				{
+					var total_order_item_quantity=0;
+					for(var i in po_items)
+					{
+						total_order_item_quantity+=parseFloat(po_items[i].quantity);
+					}
+					
+					var bill_item_data="<supplier_bill_items>"+
+									"<quantity></quantity>"+
+									"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
+									"<qc exact='yes'>accepted</qc>"+
+									"<product_name exact='yes'>"+name_filter.value+"</product_name>"+
+									"</supplier_bill_items>";
+					fetch_requested_data('',bill_item_data,function (bill_items) 
+					{
+						var bill_quantity=0;
+						for(var j in bill_items)
+						{
+							bill_quantity+=parseFloat(bill_items[j].quantity);
+						}
+						if(parseFloat(quantity_filter.value)>(total_order_item_quantity-bill_quantity))
+						{
+							qc_comments_filter.value=qc_comments_filter.value+'\nBill quantity is greater than the ordered quantity';
+						}
+					});									
+				});				
+			});			
 		});
 		
 		$(unit_filter).on('blur',function () 
@@ -5784,7 +5880,7 @@ function form122_add_item()
 			if(new_margin>parseFloat(margin_filter.value))
 			{
 				qc_filter.value='rejected';
-				qc_comments_filter.value='Supplier margin is higher';
+				qc_comments_filter.value=qc_comments_filter.value+'\nSupplier margin is higher';
 				qc_image.setAttribute('src','./images/red_circle.png');
 				qc_image.setAttribute('class','red_circle');
 			}

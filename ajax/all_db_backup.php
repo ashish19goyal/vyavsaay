@@ -48,7 +48,6 @@
 			{
 				echo 'failed for '.$dbname;
 			}
-			
 		}	
 	}
 	else

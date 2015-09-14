@@ -3,12 +3,12 @@
 		<thead>
 			<tr>
 				<form id='form43_header'></form>
-					<th style='width:40px;'>Order #<img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form43_header'></th>
+					<th style='width:60px;'>Order #<img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form43_header'></th>
 					<th>Supplier <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form43_header'></th>
-					<th style='width:60px;'>Order Date</th>
-					<th>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form43_header'></th>
+					<th style='width:80px;'>Order Date</th>
+					<th style='width:150px;'>Status <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form43_header'></th>
 					<th>Quantity</th>
-					<th style='width:150px;'>
+					<th style='width:120px;'>
 						<input type='button' form='form43_header' value='EXPORT' class='export_icon'>
 						<br><input type='button' form='form43_header' value='IMPORT' name='import' class='import_icon'>
 						<input type='submit' form='form43_header' style='visibility: hidden;'>
