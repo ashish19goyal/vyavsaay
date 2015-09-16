@@ -16918,19 +16918,20 @@ function form165_ini()
 	var fbatch=filter_fields.elements['batch'].value;
 	var frack=filter_fields.elements['rack'].value;
 	
+	/*
 	////indexing///
 	var index_element=document.getElementById('form165_index');
 	var prev_element=document.getElementById('form165_prev');
 	var next_element=document.getElementById('form165_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-
+*/
 	$('#form165_body').html("");
 
 	if_data_read_access('store_areas',function(accessible_data)
 	{		
 		//console.log(accessible_data);
-		var columns="<supplier_bill_items count='25' start_index='"+start_index+"'>" +
+		var columns="<supplier_bill_items>" +
 			"<id>"+fid+"</id>" +
 			"<batch>"+fbatch+"</batch>" +
 			"<product_name>"+fproduct+"</product_name>" +
@@ -16943,7 +16944,7 @@ function form165_ini()
 		fetch_requested_data('form165',columns,function(results)
 		{
 			///discarded items
-			var inventory_xml="<inventory_adjust count='25' start_index='"+start_index+"'>" +
+			var inventory_xml="<inventory_adjust>" +
 					"<id>"+fid+"</id>" +
 					"<batch>"+fbatch+"</batch>" +
 					"<product_name>"+fproduct+"</product_name>" +
@@ -17029,7 +17030,7 @@ function form165_ini()
 										rowsHTML+="<br>Placed: <input type='number' readonly='readonly' form='row_form165_"+result.id+"' value='"+result.placed_quantity+"'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Storage'>";
-										rowsHTML+="<input type='text' form='row_form165_"+result.id+"' readonly='readonly' required value='"+result.storage+"'>";
+										rowsHTML+="<input type='text' form='row_form165_"+result.id+"' readonly='readonly' value='"+result.storage+"'>";
 									rowsHTML+="</td>";
 									rowsHTML+="<td data-th='Action'>";
 										rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='form165_edit_location_"+result.id+"'>";
@@ -17071,7 +17072,7 @@ function form165_ini()
 						});
 					}
 				});
-		
+		/*
 				////indexing///
 				var next_index=parseInt(start_index)+25;
 				var prev_index=parseInt(start_index)-25;
@@ -17095,7 +17096,7 @@ function form165_ini()
 					$(prev_element).show();
 				}
 				/////////////
-		
+		*/
 				longPressEditable($('.dblclick_editable'));
 				
 				var export_button=filter_fields.elements[2];
