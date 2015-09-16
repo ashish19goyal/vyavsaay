@@ -1412,7 +1412,8 @@
 				<input type="button" value='Save Placements' name='save' class='modal_submit'>
 			</fieldset>
 		</form>
-		<table id='modal152_table'>
+		<table id='modal152_table' style='display:none;'>
+		<table id='modal152_table2'>
 		</table>		
 	</div>
 

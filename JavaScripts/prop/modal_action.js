@@ -11167,16 +11167,22 @@ function modal151_action(bill_id,order_num)
 
 /**
  * @modalNo 152
- * @modal Scan picked items
+ * @modal Scan putaway items
  */
 function modal152_action(rack)
 {
 	///////table initialization/////////////
 	var item_table=document.getElementById("modal152_table");
+	var item_table2=document.getElementById("modal152_table2");
 	item_table.innerHTML="";
+	item_table2.innerHTML="";
 	var item_head=document.createElement('tr');
 	item_head.innerHTML="<th>Item</th><th>Batch</th><th>Quantity To place</th>";
 	item_table.appendChild(item_head);
+	
+	var item_head2=document.createElement('tr');
+	item_head2.innerHTML="<th>Item</th><th>Batch</th><th>Quantity Placed</th>";
+	item_table2.appendChild(item_head2);
 			
 	$("[id^='row_form165_']").each(function(index)
 	{
@@ -11250,6 +11256,7 @@ function modal152_action(rack)
 				var product_placed=false;				
 				var product_name=products[0];
 
+				
 				$("[id^='modal152_row_']").each(function(index)
 				{
 					var row_elem=$(this);
@@ -11258,6 +11265,11 @@ function modal152_action(rack)
 						//console.log('picked');
 						product_placed=true;
 						$(this).find('td:nth-child(3)').html((parseFloat($(this).find('td:nth-child(3)').html())-1));
+						
+						var batch=$(this).find('td:nth-child(2)').html();
+						var item_row=document.createElement('tr');
+						item_row.innerHTML="<td style='margin:2px;word-wrap: break-word;'>"+product_name+"</td><td style='margin:2px;word-wrap: break-word;'>"+batch+"</td><td style='margin:2px;text-align:center;'>1</td>";
+						item_table2.appendChild(item_row);
 					}
 				});
 
