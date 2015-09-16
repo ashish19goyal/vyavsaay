@@ -7524,73 +7524,153 @@ function modal118_action()
 			"</customers>";
 	set_my_filter(phone_data,phone_filter);
 	
+	var address_data="<customers>" +
+			"<address></address>" +
+			"</customers>";
+	set_my_filter(address_data,address_filter);
+	
 	var name_data="<customers>" +
 			"<name></name>" +
 			"</customers>";
 	set_my_filter(name_data,name_filter);
+	
+	$(address_filter).off('keydown');
+	$(address_filter).on('keydown',function(e)
+	{
+		if(e.keyCode==13)
+		{
+			e.preventDefault();
+		
+			if(address_filter.value!="")
+			{
+				var customers_data="<customers>"+
+								"<id></id>"+
+								"<name></name>"+
+								"<email></email>"+
+								"<acc_name></acc_name>"+
+								"<address exact='yes'>"+address_filter.value+"</address>"+
+								"<phone></phone>"+
+								"</customers>";
+				fetch_requested_data('',customers_data,function(customers)
+				{
+					if(customers.length>0)
+					{
+						var payments_data="<payments>" +
+								"<id></id>" +
+								"<type></type>" +
+								"<total_amount></total_amount>" +
+								"<paid_amount></paid_amount>" +
+								"<status exact='yes'>pending</status>" +
+								"<acc_name exact='yes'>"+customers[0].acc_name+"</acc_name>" +
+								"</payments>";
+						fetch_requested_data('',payments_data,function(payments)
+						{
+							var balance_amount=0;
+							payments.forEach(function(payment)
+							{
+								if(payment.type=='received')
+								{
+									balance_amount+=parseFloat(payment.total_amount);
+									balance_amount-=parseFloat(payment.paid_amount);
+								}
+								else if(payment.type=='paid')
+								{
+									balance_amount-=parseFloat(payment.total_amount);
+									balance_amount+=parseFloat(payment.paid_amount);
+								}
+							});
+							credit_filter.value=balance_amount;
+						});	
+						name_filter.value=customers[0].name;
+						email_filter.value=customers[0].email;
+						phone_filter.value=customers[0].phone;
+						acc_name_filter.value=customers[0].acc_name;
+						new_filter.value='no';
+						id_filter.value=customers[0].id;
+						name_filter.setAttribute('readonly','readonly');
+						$(notes_filter).focus();				
+					}
+					else 
+					{
+						name_filter.value="";
+						email_filter.value="";
+						phone_filter.value="";
+						id_filter.value="";
+						name_filter.removeAttribute('readonly');
+						new_filter.value='yes';
+						credit_filter.value=0;
+						acc_name_filter.value=name_filter.value+" ("+phone_filter.value+")";
+					}
+				});
+			}
+		}
+	});
 		
 	$(phone_filter).off('blur');
 	$(phone_filter).on('blur',function()
 	{
-		var customers_data="<customers>"+
-						"<id></id>"+
-						"<name></name>"+
-						"<email></email>"+
-						"<acc_name></acc_name>"+
-						"<address></address>"+
-						"<phone exact='yes'>"+phone_filter.value+"</phone>"+
-						"</customers>";
-		fetch_requested_data('',customers_data,function(customers)
+		if(phone_filter.value!="")
 		{
-			if(customers.length>0)
+			var customers_data="<customers>"+
+							"<id></id>"+
+							"<name></name>"+
+							"<email></email>"+
+							"<acc_name></acc_name>"+
+							"<address></address>"+
+							"<phone exact='yes'>"+phone_filter.value+"</phone>"+
+							"</customers>";
+			fetch_requested_data('',customers_data,function(customers)
 			{
-				var payments_data="<payments>" +
-						"<id></id>" +
-						"<type></type>" +
-						"<total_amount></total_amount>" +
-						"<paid_amount></paid_amount>" +
-						"<status exact='yes'>pending</status>" +
-						"<acc_name exact='yes'>"+customers[0].acc_name+"</acc_name>" +
-						"</payments>";
-				fetch_requested_data('',payments_data,function(payments)
+				if(customers.length>0)
 				{
-					var balance_amount=0;
-					payments.forEach(function(payment)
+					var payments_data="<payments>" +
+							"<id></id>" +
+							"<type></type>" +
+							"<total_amount></total_amount>" +
+							"<paid_amount></paid_amount>" +
+							"<status exact='yes'>pending</status>" +
+							"<acc_name exact='yes'>"+customers[0].acc_name+"</acc_name>" +
+							"</payments>";
+					fetch_requested_data('',payments_data,function(payments)
 					{
-						if(payment.type=='received')
+						var balance_amount=0;
+						payments.forEach(function(payment)
 						{
-							balance_amount+=parseFloat(payment.total_amount);
-							balance_amount-=parseFloat(payment.paid_amount);
-						}
-						else if(payment.type=='paid')
-						{
-							balance_amount-=parseFloat(payment.total_amount);
-							balance_amount+=parseFloat(payment.paid_amount);
-						}
-					});
-					credit_filter.value=balance_amount;
-				});	
-				name_filter.value=customers[0].name;
-				email_filter.value=customers[0].email;
-				address_filter.value=customers[0].address;
-				acc_name_filter.value=customers[0].acc_name;
-				new_filter.value='no';
-				id_filter.value=customers[0].id;
-				name_filter.setAttribute('readonly','readonly');
-				$(notes_filter).focus();				
-			}
-			else 
-			{
-				name_filter.value="";
-				email_filter.value="";
-				address_filter.value="";
-				id_filter.value="";
-				name_filter.removeAttribute('readonly');
-				new_filter.value='yes';
-				credit_filter.value=0;
-				acc_name_filter.value=name_filter.value+" ("+phone_filter.value+")";
-			}
-		});
+							if(payment.type=='received')
+							{
+								balance_amount+=parseFloat(payment.total_amount);
+								balance_amount-=parseFloat(payment.paid_amount);
+							}
+							else if(payment.type=='paid')
+							{
+								balance_amount-=parseFloat(payment.total_amount);
+								balance_amount+=parseFloat(payment.paid_amount);
+							}
+						});
+						credit_filter.value=balance_amount;
+					});	
+					name_filter.value=customers[0].name;
+					email_filter.value=customers[0].email;
+					address_filter.value=customers[0].address;
+					acc_name_filter.value=customers[0].acc_name;
+					new_filter.value='no';
+					id_filter.value=customers[0].id;
+					name_filter.setAttribute('readonly','readonly');
+					$(notes_filter).focus();				
+				}
+				else 
+				{
+					name_filter.value="";
+					email_filter.value="";
+					address_filter.value="";
+					id_filter.value="";
+					name_filter.removeAttribute('readonly');
+					new_filter.value='yes';
+					credit_filter.value=0;
+					acc_name_filter.value=name_filter.value+" ("+phone_filter.value+")";
+				}
+			});
+		}
 	});
 	
 	$(name_filter).off('blur');
@@ -7636,16 +7716,9 @@ function modal118_action()
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</accounts>";
 			        		
-                if(is_online())
-				{
-					server_create_simple(customer_xml);
-					server_create_simple(account_xml);
-				}
-				else
-				{
-					local_create_simple(customer_xml);
-					local_create_simple(account_xml);
-				} 		
+                create_simple(customer_xml);
+				create_simple(account_xml);
+				 		
 			}
 			else 
 			{
@@ -7654,14 +7727,7 @@ function modal118_action()
 								"<address>"+address+"</address>"+
 								"<last_updated>"+last_updated+"</last_updated>" +
                         		"</customers>";
-                if(is_online())
-				{
-					server_update_simple(customer_xml);
-				}
-				else
-				{
-					local_update_simple(customer_xml);
-				}
+                update_simple(customer_xml);
 			}
 			
 			var order_num_xml="<user_preferences>"+
@@ -7696,17 +7762,9 @@ function modal118_action()
 								"<id>"+order_nums[0].id+"</id>"+
 								"<value>"+(parseFloat(order_nums[0].value)+1)+"</value>"+
 								"<last_updated>"+last_updated+"</last_updated>"+
-								"</user_preferences>";		
-					if(is_online())
-					{
-						server_create_row(data_xml,activity_xml);
-						server_update_simple(order_num_data);
-					}
-					else
-					{
-						local_create_row(data_xml,activity_xml);
-						local_update_simple(order_num_data);
-					}	
+							"</user_preferences>";		
+					create_row(data_xml,activity_xml);
+					update_simple(order_num_data);	
 				}
 			});				
 		}

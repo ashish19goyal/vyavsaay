@@ -965,7 +965,7 @@
 				<label>Phone: <input type='text' name='phone' required></label><br>
 				<label>Name: <input type='text' name='name' required></label><br>
 				<label>Credit: Rs. <input type="number" name='credit' step='any' readonly="readonly"></label><br>
-				<label>Address: <textarea name='address'></textarea></label><br>
+				<label>Address: <input type='text' name='address'></label><br>
 				<label>Notes: <textarea name='notes'></textarea></label><br>
 				<label>Email: <textarea name='email'></textarea></label><br>
 				<input type='hidden' name='new_old'>
