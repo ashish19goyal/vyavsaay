@@ -2,7 +2,10 @@
 
 		<ul>
 			<li><a id='form124_link' href='#form124' onclick='form124_header_ini(); form124_ini();' data-i18n='form.receipts'></a></li>
+			<li><a id='form243_link' href='#form243' onclick='form243_header_ini(); form243_ini();' data-i18n='form.receipts'></a></li>
 			<li><a id='form11_link' href='#form11' onclick='form11_header_ini(); form11_ini();' data-i18n='form.manage_payments'></a></li>
+			<li><a id='form241_link' href='#form241' onclick='form241_header_ini(); form241_ini();' data-i18n='form.manage_receivables'></a></li>
+			<li><a id='form242_link' href='#form242' onclick='form242_header_ini(); form242_ini();' data-i18n='form.manage_payables'></a></li>
 			<li><a id='report4_link' href='#report4' onclick='report4_header_ini();' data-i18n='form.modes_of_payment'></a></li>
 			<li><a id='form56_link' href='#form56' onclick='form56_header_ini(); form56_ini();' data-i18n='form.cash_register'></a></li>
 			<li><a id='report14_link' href='#report14' onclick='report14_header_ini();' data-i18n='form.expenses_by_period'></a></li>
@@ -18,6 +21,8 @@
 	<?php 
 			include "forms/form124.php"; 
 			include "forms/form11.php"; 
+			include "forms/form241.php"; 
+			include "forms/form242.php"; 
 			include "reports/report4.php";
 			include "forms/form56.php";
 			include "reports/report14.php";

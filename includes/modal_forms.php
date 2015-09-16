@@ -1416,4 +1416,16 @@
 		</table>		
 	</div>
 
+	<div id="modal153" title="Close Sale Lead">
+		Are you sure you want to close this lead?
+		<br>
+		<br>
+		<form id='modal153_form' autocomplete="off">
+			<fieldset>
+				<input type="submit" class='modal_submit' name='yes' value='Yes'>
+				<input type="button" class='modal_submit' name='no' value='No'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

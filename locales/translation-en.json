@@ -409,6 +409,13 @@
 	"manage_products_grid":"Manage Products (grid)",
 	"inventory_by_brand":"Inventory (By Brand)",
 	"manage_manifests":"Manage Manifests",
-	"promotions_flex_newsletter":"Promotions (flex newsletter)"
+	"promotions_flex_newsletter":"Promotions (flex newsletter)",
+	"inventory_raw_cps":"Inventory (raw materials)",
+	"manage_material_requirements":"Manage Material Requirements",
+	"assign_material_requirements":"Assign Material Requirements",
+	"manage_receivables":"Manage Receivables",
+	"manage_payables":"Manage Payables",
+	"receipts_cps":"Receipts (CPS)",
+	"inventory_finished":"Inventory (Finished Goods)"
 	}
 }

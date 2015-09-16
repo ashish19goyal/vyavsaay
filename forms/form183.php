@@ -6,7 +6,6 @@
 					<th>Item <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form183_header'></th>
 					<th>Batch <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form183_header'></th>
 					<th>Manufacturing</th>
-					<th>Expiry</th>
 					<th>Quantity</th>
 					<th><input type='button' form='form183_header' value='Add Batch' class='add_icon' onclick='modal22_action(function(){});'>
 						<input type='button' form='form183_header' value='EXPORT' class='export_icon'>

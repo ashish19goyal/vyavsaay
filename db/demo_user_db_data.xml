@@ -3385,6 +3385,72 @@
 			<tables>--newsletter--sms--emails--customers--attributes--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form238</name>
+			<display_name>inventory_raw_cps</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_instances--inventory_adjust--bill_items--supplier_bill_items--customer_returns--customer_return_items--sale_prices--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form239</name>
+			<display_name>manage_material_requirements</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--pre_requisites--manage_pre_requisites--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form240</name>
+			<display_name>assign_material_requirements</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--pre_requisites--manage_pre_requisites--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form241</name>
+			<display_name>manage_receivables</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--payments--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form242</name>
+			<display_name>manage_payables</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--payments--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form243</name>
+			<display_name>receipts_cps</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--payments--transactions--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -6405,6 +6471,72 @@
 			<username>master</username>
 			<element_id>form237</element_id>
 			<element_name>promotions_flex_newsletter</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form238</element_id>
+			<element_name>inventory_raw_cps</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form239</element_id>
+			<element_name>manage_material_requirements</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form240</element_id>
+			<element_name>assign_material_requirements</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form241</element_id>
+			<element_name>manage_receivables</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form242</element_id>
+			<element_name>manage_payables</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form243</element_id>
+			<element_name>receipts_cps</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

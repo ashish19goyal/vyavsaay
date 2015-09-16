@@ -8,7 +8,8 @@
 			<li><a id='form1_link' href='#form1' onclick='form1_header_ini(); form1_ini();' data-i18n='form.update_inventory'></a></li>
 			<li><a id='form155_link' href='#form155' onclick='form155_header_ini(); form155_ini();' data-i18n='form.update_inventory'></a></li>
 			<li><a id='form207_link' href='#form207' onclick='form207_header_ini(); form207_ini();' data-i18n='form.update_inventory'></a></li>
-			<li><a id='form183_link' href='#form183' onclick='form183_header_ini(); form183_ini();' data-i18n='form.update_inventory'></a></li>
+			<li><a id='form183_link' href='#form183' onclick='form183_header_ini(); form183_ini();' data-i18n='form.inventory_finished'></a></li>
+			<li><a id='form238_link' href='#form238' onclick='form238_header_ini(); form238_ini();' data-i18n='form.inventory_raw_cps'></a></li>
 			<li><a id='form227_link' href='#form227' onclick='form227_header_ini(); form227_ini();' data-i18n='form.update_inventory'></a></li>
 			<li><a id='form234_link' href='#form234' onclick='form234_header_ini(); form234_ini();' data-i18n='form.manage_products'></a></li>
 			<li><a id='form228_link' href='#form228' onclick='form228_header_ini(); form228_ini();' data-i18n='form.demo'></a></li>
@@ -16,6 +17,8 @@
 			<li><a id='form230_link' href='#form230' onclick='form230_header_ini(); form230_ini();' data-i18n='form.in_out'></a></li>
 			<li><a id='form146_link' href='#form146' onclick='form146_header_ini(); form146_ini();' data-i18n='form.manufacturing'></a></li>
 			<li><a id='form59_link' href='#form59' onclick='form59_header_ini(); form59_ini();' data-i18n='form.manage_pre_requisites'></a></li>
+			<li><a id='form239_link' href='#form239' onclick='form239_header_ini(); form239_ini();' data-i18n='form.manage_material_requirements'></a></li>
+			<li><a id='form240_link' href='#form240' onclick='form240_header_ini(); form240_ini();' data-i18n='form.assign_material_requirements'></a></li>
 			<li><a id='report29_link' href='#report29' onclick='report29_header_ini();' data-i18n='form.pre_requisites_report'></a></li>
 			<li><a id='form60_link' href='#form60' onclick='form60_header_ini(); form60_ini();' data-i18n='form.attributes'></a></li>
 			<li><a id='form62_link' href='#form62' onclick='form62_header_ini(); form62_ini();' data-i18n='form.reviews'></a></li>
@@ -48,6 +51,7 @@
 			include "forms/form155.php";
 			include "forms/form207.php";
 			include "forms/form183.php";
+			include "forms/form238.php";
 			include "forms/form227.php";
 			include "forms/form234.php";
 			include "forms/form228.php";
@@ -55,6 +59,8 @@
 			include "forms/form230.php";
 			include "forms/form146.php";
 			include "forms/form59.php";
+			include "forms/form239.php";
+			include "forms/form240.php";
 			include "reports/report29.php"; 
 			include "forms/form60.php";
 			include "forms/form62.php";

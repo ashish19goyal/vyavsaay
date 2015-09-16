@@ -15823,3 +15823,115 @@ function form233_create_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * formNo 240
+ * form Assign raw material requirements
+ * @param button
+ */
+function form240_create_item(form)
+{
+	//console.log('form240_create_form');
+	if(is_create_access('form240'))
+	{
+		var item_name=document.getElementById('form240_master').elements['item_name'].value;
+
+		var requisite_name=form.elements[0].value;
+		var quantity=form.elements[1].value;
+		
+		var data_id=form.elements[2].value;
+		var save_button=form.elements[3];
+		var del_button=form.elements[4];
+		
+		var last_updated=get_my_time();
+		var data_xml="<pre_requisites>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+item_name+"</name>" +
+					"<type>product</type>"+
+					"<quantity>"+quantity+"</quantity>"+
+					"<requisite_type>product</requisite_type>"+
+					"<requisite_name>"+requisite_name+"</requisite_name>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</pre_requisites>";
+		create_simple(data_xml);
+		
+		for(var i=0;i<2;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form240_delete_item(del_button);
+		});
+
+		$(save_button).off('click');
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Assign raw material requirements
+ * @param button
+ */
+function form240_create_form(func)
+{
+	if(is_create_access('form240'))
+	{
+		var form=document.getElementById("form240_master");
+		
+		var item_name=form.elements['item_name'].value;
+		var num_materials=form.elements['num'].value;
+		var data_id=get_new_key();
+		
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var data_xml="<manage_pre_requisites>" +
+					"<id>"+data_id+"</id>" +
+					"<name unique='yes'>"+item_name+"</name>"+
+					"<num_materials>"+num_materials+"</num_materials>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</manage_pre_requisites>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>drs</tablename>" +
+					"<link_to>form240</link_to>" +
+					"<title>Assigned</title>" +
+					"<notes>Raw material for "+item_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		
+		create_row(data_xml,activity_xml);
+		
+		$(save_button).off('click');
+		$(save_button).on('click',function(event)
+		{
+			event.preventDefault();
+			form240_update_form();
+		});
+		
+		$("[id^='save_form240_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+function form240_update_serial_numbers()
+{
+	var num_orders=0;
+
+	$('#form240_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+		num_orders+=1;
+	});
+		
+	var form=document.getElementById("form240_master");
+	form.elements['num'].value=num_orders;
+}

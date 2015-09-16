@@ -9774,48 +9774,6 @@ function form181_update_item(form)
 	}
 }
 
-/**
- * @form Update inventory (CPS)
- * @param button
- */
-function form183_update_item(form)
-{
-	if(is_update_access('form183'))
-	{
-		var name=form.elements[0].value;
-		var batch=form.elements[1].value;
-		var manufacturing=get_raw_time(form.elements[2].value);
-		var expiry=get_raw_time(form.elements[3].value);
-		var data_id=form.elements[5].value;
-		var last_updated=get_my_time();
-		var data_xml="<product_instances>" +
-					"<id>"+data_id+"</id>" +
-					"<product_name>"+name+"</product_name>" +
-					"<batch>"+batch+"</batch>" +
-					"<manufacture_date>"+manufacturing+"</manufacture_date>"+
-					"<expiry>"+expiry+"</expiry>" +
-					"<last_updated>"+last_updated+"</last_updated>" +
-					"</product_instances>";
-		var activity_xml="<activity>" +
-					"<data_id>"+data_id+"</data_id>" +
-					"<tablename>product_instances</tablename>" +
-					"<link_to>form183</link_to>" +
-					"<title>Updated</title>" +
-					"<notes>Costing for batch number "+batch+" of "+name+"</notes>" +
-					"<updated_by>"+get_name()+"</updated_by>" +
-					"</activity>";
-		update_row(data_xml,activity_xml);
-		
-		for(var i=0;i<5;i++)
-		{
-			$(form.elements[i]).attr('readonly','readonly');
-		}
-	}
-	else
-	{
-		$("#modal2").dialog("open");
-	}
-}
 
 /**
  * @form Production Steps
@@ -10099,9 +10057,11 @@ function form190_update_item(form)
 	{
 		var customer=form.elements[0].value;
 		var details=form.elements[1].value;
+		var total=form.elements[2].value;
 		var status=form.elements[4].value;
 		var data_id=form.elements[5].value;
 		var last_updated=get_my_time();
+		var order_num=form.elements[9].value;
 		
 		var data_xml="<sale_orders>" +
 					"<id>"+data_id+"</id>" +
@@ -10110,19 +10070,97 @@ function form190_update_item(form)
 					"<status>"+status+"</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_orders>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}	
+		update_simple(data_xml);
 		
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		
+		var sms_notification_status=get_session_var('sms_notification_status');
+		var sms="";
+		var found=sms_notification_status.indexOf(status);
+		if(found>=0)
+		{	
+			var f_id=get_my_time();
+				
+			if(status=='delivered')
+			{
+				var last_updated=get_my_time();
+				var feedback_xml="<feedback>"+
+							"<id>"+f_id+"</id>"+
+							"<order_num unique='yes'>"+order_num+"</order_num>"+
+							"<provider>"+customer+"</provider>"+
+							"<date>"+last_updated+"</date>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</feedback>";
+				create_simple_no_warning(feedback_xml);					
+				sms=get_session_var('delivered_sms_message');
+			}
+			else if(status=='out for delivery')
+			{
+				sms=get_session_var('out_for_delivery_sms_message');				
+			}
+			else if(status=='ready for delivery')
+			{
+				sms=get_session_var('ready_for_delivery_sms_message');
+			}
+			else if(status=='processed')
+			{
+				sms=get_session_var('processed_sms_message');
+			}
+			else if(status=='processing')
+			{
+				sms=get_session_var('processing_sms_message');
+			}
+			else if(status=='picked')
+			{
+				sms=get_session_var('picked_sms_message');
+			}
+			else if(status=='picking')
+			{
+				sms=get_session_var('picking_sms_message');
+			}
+			else if(status=='pending')
+			{
+				sms=get_session_var('pending_sms_message');
+			}
+			else if(status=='cancelled')
+			{
+				var last_updated=get_my_time();
+				var feedback_xml="<feedback>"+
+							"<id>"+f_id+"</id>"+
+							"<order_num unique='yes'>"+order_num+"</order_num>"+
+							"<provider>"+customer_name+"</provider>"+
+							"<date>"+last_updated+"</date>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</feedback>";
+				create_simple_no_warning(feedback_xml);					
+	
+				sms=get_session_var('cancelled_sms_message');
+			}
+	
+			show_loader();
+	
+			var feedback_link="vyavsaay.com/f/v.htm?i="+f_id+"&d=washclub";
+			//console.log(sms);	
+			sms=sms.replace(/bill_total/g,total);
+			sms=sms.replace(/feedback_link/g,feedback_link);
+			var phone_xml="<customers>"+
+						"<phone></phone>"+
+						"<name></name>"+
+						"<acc_name exact='yes'>"+customer+"</acc_name>"+
+						"</customers>";
+			fetch_requested_data('',phone_xml,function(phones)
+			{
+				var to=phones[0].phone;
+				var customer_name=phones[0].name;
+				var sms_content=sms.replace(/customer_name/g,customer_name);		
+				send_sms(to,sms_content,'transaction');
+						
+				hide_loader();			
+			});
+		}			
 	}
 	else
 	{
@@ -12467,6 +12505,100 @@ function form235_update_item(form)
 		create_simple(pic_xml);
 		
 		for(var i=0;i<7;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Receivables
+ * @param button
+ */
+function form241_update_item(form)
+{
+	if(is_update_access('form241'))
+	{
+		var acc_name=form.elements[0].value;
+		var total_amount=form.elements[1].value;
+		var paid_amount=form.elements[2].value;
+		var due_date=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		
+		var last_updated=get_my_time();
+		var data_xml="<payments>" +
+					"<id>"+data_id+"</id>" +
+					"<acc_name>"+acc_name+"</acc_name>" +
+					"<total_amount>"+total_amount+"</total_amount>" +
+					"<paid_amount>"+paid_amount+"</paid_amount>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</payments>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>payments</tablename>" +
+					"<link_to>form241</link_to>" +
+					"<title>Updated</title>"+
+					"<notes>Payment of amount Rs. "+total_amount+" receivable from "+acc_name+"</notes>"+
+					"<updated_by>"+get_name()+"</updated_by>"+
+					"</activity>";
+		
+		update_row(data_xml,activity_xml);
+		
+		for(var i=0;i<5;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Payables
+ * @param button
+ */
+function form242_update_item(form)
+{
+	if(is_update_access('form242'))
+	{
+		var acc_name=form.elements[0].value;
+		var total_amount=form.elements[1].value;
+		var paid_amount=form.elements[2].value;
+		var due_date=get_raw_time(form.elements[3].value);
+		var status=form.elements[4].value;
+		var data_id=form.elements[5].value;
+		
+		var last_updated=get_my_time();
+		var data_xml="<payments>" +
+					"<id>"+data_id+"</id>" +
+					"<acc_name>"+acc_name+"</acc_name>" +
+					"<total_amount>"+total_amount+"</total_amount>" +
+					"<paid_amount>"+paid_amount+"</paid_amount>" +
+					"<due_date>"+due_date+"</due_date>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</payments>";	
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>payments</tablename>" +
+					"<link_to>form242</link_to>" +
+					"<title>Updated</title>"+
+					"<notes>Payment of amount Rs. "+total_amount+" payable to "+acc_name+"</notes>"+
+					"<updated_by>"+get_name()+"</updated_by>"+
+					"</activity>";
+		
+		update_row(data_xml,activity_xml);
+		
+		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}

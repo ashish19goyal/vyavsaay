@@ -6743,16 +6743,19 @@ function form183_header_ini()
 		event.preventDefault();
 		form183_ini();
 	});
-	//setting autocompletes 
-	var products_data="<product_master>" +
-			"<name></name>" +
-			"</product_master>";
 	
+	var item_data="<attributes>" +
+		"<name></name>" +
+		"<type exact='yes'>product</type>"+
+		"<value exact='yes'>yes</value>"+
+		"<attribute exact='yes'>raw material</attribute>"+
+		"</attributes>";
+
 	var batch_data="<product_instances>" +
 			"<batch></batch>" +
 			"</product_instances>";
 
-	set_my_filter(products_data,names_filter);
+	set_my_filter(item_data,names_filter);
 	set_my_filter(batch_data,batches_filter);
 };
 
@@ -8960,3 +8963,191 @@ function form237_header_ini()
 	
 	$('textarea').autosize();
 }
+
+/**
+ * @form Update Inventory (CPS)
+ * @formNo 238
+ */
+function form238_header_ini()
+{
+	var filter_fields=document.getElementById('form238_header');	
+	var names_filter=filter_fields.elements[0];
+	var batches_filter=filter_fields.elements[1];
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form238_ini();
+	});
+
+	var item_data="<attributes>" +
+		"<name></name>" +
+		"<type exact='yes'>product</type>"+
+		"<value exact='yes'>yes</value>"+
+		"<attribute exact='yes'>raw material</attribute>"+
+		"</attributes>";
+	
+	var batch_data="<product_instances>" +
+			"<batch></batch>" +
+			"</product_instances>";
+
+	set_my_filter(item_data,names_filter);
+	set_my_filter(batch_data,batches_filter);
+};
+
+/**
+ * @form Manage Material Requirements
+ * @formNo 239
+ */
+function form239_header_ini()
+{
+	var filter_fields=document.getElementById('form239_header');
+	var item_filter=filter_fields.elements[0];
+		
+	var item_data="<attributes>" +
+		"<name></name>" +
+		"<type exact='yes'>product</type>"+
+		"<value exact='yes'>yes</value>"+
+		"<attribute exact='yes'>manufactured</attribute>"+
+		"</attributes>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form239_ini();
+	});
+
+	set_my_filter(item_data,item_filter);
+};
+
+/**
+ * @form Assign Material Requirements
+ * @formNo 240
+ */
+function form240_header_ini()
+{
+	var fields=document.getElementById('form240_master');
+	
+	var item_filter=fields.elements['item_name'];
+	var save_button=fields.elements['save'];
+	var num_filter=fields.elements['num'];
+	
+	num_filter.value=0;
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form240_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form240_add_item();
+	});
+
+	var item_data="<attributes>" +
+		"<name></name>" +
+		"<type exact='yes'>product</type>"+
+		"<value exact='yes'>yes</value>"+
+		"<attribute exact='yes'>manufactured</attribute>"+
+		"</attributes>";
+	set_my_value_list(item_data,item_filter,function () 
+	{
+		$(item_filter).focus();
+	});
+	item_filter.value='';
+	
+	
+	$('#form240_body').html("");
+}
+
+/**
+ * @form Manage Receivables
+ * @formNo 241
+ */
+function form241_header_ini()
+{
+	var filter_fields=document.getElementById('form241_header');
+	var account_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[1];
+	
+	var accounts_data="<accounts>" +
+			"<acc_name></acc_name>" +
+			"</accounts>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form241_ini();
+	});
+
+	set_my_filter(accounts_data,account_filter);
+	set_static_filter('payments','status',status_filter);
+};
+
+/**
+ * @form Manage Payables
+ * @formNo 242
+ */
+function form242_header_ini()
+{
+	var filter_fields=document.getElementById('form242_header');
+	var account_filter=filter_fields.elements[0];
+	var status_filter=filter_fields.elements[1];
+	
+	var accounts_data="<accounts>" +
+			"<acc_name></acc_name>" +
+			"</accounts>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form242_ini();
+	});
+
+	set_my_filter(accounts_data,account_filter);
+	set_static_filter('payments','status',status_filter);
+};
+
+/**
+ * @form Receipts (CPS)
+ * @formNo 243
+ */
+function form243_header_ini()
+{
+	var filter_fields=document.getElementById('form243_header');
+	var id_filter=filter_fields.elements[0];
+	var account_filter=filter_fields.elements[1];
+	
+	var id_data="<receipts>" +
+			"<receipt_id></receipt_id>" +
+			"</receipts>";
+	var account_data="<accounts>" +
+			"<acc_name></acc_name>" +
+			"</accounts>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form243_ini();
+	});
+
+	set_my_filter(id_data,id_filter);
+	set_my_filter(account_data,account_filter);
+};

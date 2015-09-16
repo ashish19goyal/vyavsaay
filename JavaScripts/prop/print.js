@@ -516,9 +516,9 @@ function print_form10(func)
 	////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:100%;min-height:1in;');
-		business_title.setAttribute('style','width:90%;text-align:center;');
-	invoice_box.setAttribute('style','width:98%;min-height:.5in;background-color:#bbbbbb;border: 1px solid #000000;padding:2px;font-size:10px');
-	info_section.setAttribute('style','width:99%;min-height:.5in;border: 1px solid #000000;font-size:10px');
+		business_title.setAttribute('style','width:100%;text-align:center;font-size:16px;');
+	invoice_box.setAttribute('style','width:99%;min-height:.5in;background-color:#bbbbbb;border: 1px solid #000000;padding:2px;font-size:14px');
+	info_section.setAttribute('style','width:99%;min-height:.5in;border: 1px solid #000000;font-size:14px;padding:2px');
 		customer_info.setAttribute('style','padding:2px;margin:2px;float:left;width:48%;height:.5in;text-align:left;');
 		payment_info.setAttribute('style','padding:2px;margin:2px;float:right;width:48%;height:.5in;text-align:right;');
 	
@@ -540,18 +540,18 @@ function print_form10(func)
 	////////////////filling in the content into the containers//////////////////////////
 
 	business_title.innerHTML="<b>"+bt+"</b><br>"+business_address+"<br>"+business_phone;
-	invoice_box.innerHTML="<div style='float:left;width:50%'>Bill No.: "+invoice_no+"</div><div style='float:right;text-align:right;width:50%'>Bill Date: "+bill_date+"<br>Due Date: "+due_date+"</div>";
+	invoice_box.innerHTML="<div style='float:left;width:50%;font-weight:bold'>Bill No.: "+invoice_no+"</div><div style='float:right;text-align:right;width:50%'>Bill Date: "+bill_date+"<br>Due Date: "+due_date+"</div>";
 	
-	customer_info.innerHTML="<b>Customer</b><br>"+customer_name+"<br>"+customer_address;
+	customer_info.innerHTML=customer_name+"<br>"+customer_address;
 	payment_info.innerHTML=payment_text;
 
 	var table_element=document.getElementById(form_id+'_body');
 	
 	/////////////adding new table //////////////////////////////////////////////////////	
 	var new_table=document.createElement('table');
-	new_table.setAttribute('style','font-size:10px;border:1px solid black;text-align:left;');
-	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'><td style='text-align:left;width:.2in;'>Qty</td>"+
-				"<td style='text-align:left;width:1.5in'>Item</td>"+
+	new_table.setAttribute('style','font-size:13px;border:1px solid black;text-align:left;');
+	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;font-weight:bold'><td style='text-align:left;width:.2in;'>Qty</td>"+
+				"<td style='text-align:left;width:1.3in'>Item</td>"+
 				"<td style='text-align:left;width:.5in'>Remark</td>"+
 				"<td style='text-align:left;width:.3in'>Rate</td>"+
 				"<td style='text-align:left;width:.3in'>Amount</td></tr>";
@@ -571,11 +571,11 @@ function print_form10(func)
 		var amount=form.elements[4].value;		
 
 		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
-				"<td style='text-align:left;width:.2in'>"+quantity+"</td>"+
-				"<td style='text-align:left;width:1.5in'>"+item_name+"</td>"+
-				"<td style='text-align:left;width:.5in'>"+remark+"</td>"+
-				"<td style='text-align:left;width:.3in'>"+rate+"</td>"+
-				"<td style='text-align:left;width:.3in'>"+amount+"</td></tr>";
+				"<td style='text-align:left'>"+quantity+"</td>"+
+				"<td style='text-align:left'>"+item_name+"</td>"+
+				"<td style='text-align:left'>"+remark+"</td>"+
+				"<td style='text-align:left'>"+rate+"</td>"+
+				"<td style='text-align:left'>"+amount+"</td></tr>";
 	});
 	
 	var row_count=$(table_element).find('tbody>tr').length;

@@ -9057,7 +9057,7 @@ function modal134_action(lead_id,customer,lead_details)
 			var details=detail_filter.value;
 			var next_date=get_raw_time(next_date_filter.value);
 			var last_updated=get_my_time();
-			var new_details=lead_details+"\n"+date_filter.value+": "+details;
+			var new_details=lead_details+"\n\n"+date_filter.value+": "+details;
 
 			var follow_xml="<followups>"+
 						"<id>"+id+"</id>"+
@@ -11217,4 +11217,51 @@ function modal152_action(rack)
 	});	
 	///////////////////////////
 	$("#modal152").dialog("open");	
+}
+
+/**
+ * @modalNo 153
+ * @modal Close sale lead
+ */
+function modal153_action(button,lead_id)
+{
+	var form=document.getElementById('modal153_form');
+	var no_button=form.elements['no'];
+	var yes_button=form.elements['yes'];
+
+	$(no_button).off('click');
+	$(no_button).on('click',function()
+	{
+		$("#modal153").dialog("close");
+	});
+	
+	$(form).off("submit");
+	$(form).on("submit",function(event)
+	{
+		event.preventDefault();
+		if(is_update_access('form213'))
+		{
+			var lead_form_id=$(button).attr('form');
+			var lead_form=document.getElementById(lead_form_id);
+			var data_id=lead_form.elements[4].value;
+			var last_updated=get_my_time();
+
+			var lead_xml="<sale_leads>"+
+						"<id>"+data_id+"</id>"+
+		                "<due_date></due_date>"+
+		                "<status>closed</status>"+
+		                "<last_updated>"+last_updated+"</last_updated>"+
+						"</sale_leads>";
+			update_simple(lead_xml);
+			$(button).parent().parent().attr('class','cancelled_row');
+			$(button).hide();
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal153").dialog("close");
+	});
+	
+	$("#modal153").dialog("open");
 }

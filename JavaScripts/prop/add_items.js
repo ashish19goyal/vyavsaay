@@ -14061,3 +14061,69 @@ function form231_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Assign product pre-requisites
+ * @formNo 240
+ */
+function form240_add_item()
+{
+	if(is_create_access('form240'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form240_"+id+"'></form>";
+			rowsHTML+="<td data-th='S.No.'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Raw Material'>";
+				rowsHTML+="<input type='text' required form='form240_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' step='any' required form='form240_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form240_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form240_"+id+"' id='save_form240_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form240_"+id+"' id='delete_form240_"+id+"' onclick='$(this).parent().parent().remove(); form240_update_serial_numbers();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form240_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form240_body').prepend(rowsHTML);
+
+		var item_form=document.getElementById('form240_'+id);
+		var item_filter=item_form.elements[0];
+		var quantity_filter=item_form.elements[1];
+		var save_button=item_form.elements[3];
+		
+		$(save_button).on('click',function (e) 
+		{
+			e.preventDefault();
+			form240_create_item(item_form);
+		});
+
+		$(item_form).on("submit", function(event)
+		{
+			event.preventDefault();
+			form240_add_item();			
+		});
+
+		var item_data="<attributes>" +
+				"<name></name>" +
+				"<type exact='yes'>product</type>"+
+				"<value exact='yes'>yes</value>"+
+				"<attribute exact='yes'>raw material</attribute>"+
+				"</attributes>";
+		set_my_value_list(item_data,item_filter,function () 
+		{
+			$(item_filter).focus();
+		});
+
+		$('textarea').autosize();
+		form240_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

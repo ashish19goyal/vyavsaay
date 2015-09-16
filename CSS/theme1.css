@@ -444,6 +444,10 @@ tr.yellow_row{
 	background: #FAEC8C;
 }
 
+tr.cancelled_row{
+	opacity:0.5;
+}
+
 /* 
 Table formatting for responsive functionality
 */
