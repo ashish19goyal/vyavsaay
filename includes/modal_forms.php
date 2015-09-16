@@ -962,7 +962,7 @@
 	<div id="modal118" title="New order">
 		<form id='modal118_form' autocomplete="off">
 			<fieldset>
-				<label>Phone: <input type='text' name='phone' required></label><br>
+				<label>Phone: <input type='text' name='phone'></label><br>
 				<label>Name: <input type='text' name='name' required></label><br>
 				<label>Credit: Rs. <input type="number" name='credit' step='any' readonly="readonly"></label><br>
 				<label>Address: <input type='text' name='address'></label><br>
