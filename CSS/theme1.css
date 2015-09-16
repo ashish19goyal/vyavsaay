@@ -1118,6 +1118,7 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	text-align: left;
 	padding:1px;
 	font-weight: bold;
+	word-wrap: break-word;
 }
 
 .plain_table td{

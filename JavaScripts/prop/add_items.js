@@ -11079,6 +11079,7 @@ function form193_add_item()
 
 		var smaller_barcodes=get_session_var('brands_small_barcode');
 		
+		$(name_filter).off('blur');
 		$(name_filter).on('blur',function(event)
 		{
 			var desc_data="<product_master>"+
@@ -11149,6 +11150,7 @@ function form193_add_item()
 			});
 		});
 		
+		$(barcode_filter).off('keydown'); 
 		$(barcode_filter).on('keydown',function (event) 
 		{
 			if(event.keyCode == 13 ) 

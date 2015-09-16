@@ -10513,7 +10513,7 @@ function form193_update_form()
 		}
 
 		var body_html="";
-		var head_html="<tr><td>SKU</td><td>Item Name</td><td>Batch</td><td>Quantity</td></tr>";
+		var head_html="<tr><th>SKU</th><th>Item Name</th><th>Batch</th><th>Quantity</th></tr>";
 		
 		items.forEach(function(item)
 		{
@@ -10543,15 +10543,8 @@ function form193_update_form()
 								"<notes>Inventory of "+item.name+" for storage "+storage+"</notes>" +
 								"<updated_by>"+get_name()+"</updated_by>" +
 								"</activity>";
-					if(is_online())
-					{
-						server_create_row(data_xml,activity_xml);
-					}
-					else
-					{
-						local_create_row(data_xml,activity_xml);
-					}
-				
+					create_row(data_xml,activity_xml);
+					
 					///////////adding store placement////////
 					var storage_data="<area_utilization>" +
 							"<id></id>" +
@@ -10570,14 +10563,8 @@ function form193_update_form()
 									"<batch>"+item.batch+"</batch>" +
 									"<last_updated>"+get_my_time()+"</last_updated>" +
 									"</area_utilization>";
-							if(is_online())
-							{
-								server_create_simple(storage_xml);
-							}
-							else
-							{
-								local_create_simple(storage_xml);
-							}
+							create_simple(storage_xml);
+							
 						}
 					});
 					///////////////////////////////////	
@@ -10587,6 +10574,7 @@ function form193_update_form()
 		
 		$('#form193_head').html(head_html);
 		$('#form193_body').html(body_html);
+		$('#form193_head').parent().attr('class','plain_table');
 
 	}
 	else

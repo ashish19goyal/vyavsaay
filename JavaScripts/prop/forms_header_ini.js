@@ -7163,6 +7163,8 @@ function form193_header_ini()
 					"</tr>";
 	$('#form193_head').html(head_html);
 	$('#form193_body').html("");
+	$('#form193_head').parent().attr('class','rwd-table');
+
 }
 
 /**
