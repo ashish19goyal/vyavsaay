@@ -160,16 +160,23 @@ function report90_update(form)
 		var picked=form.elements[4].value;
 		var storage=form.elements[5].value;
 		var data_id=form.elements[6].value;
+		var bill_id=form.elements['bill_id'].value;
 		var table_type=form.elements[7].value;
 		var last_updated=get_my_time();
 		
+		var plus_minus="";		
+		if(table_type=='inventory_adjust')
+		{
+			plus_minus="-";
+		}
+
 		var status="picked";
 		if(parseFloat(picked)!=parseFloat(to_pick))
 			status='pending';		
 		var data_xml="<"+table_type+">";
 			data_xml+="<id>"+data_id+"</id>" +
 				"<picked_status>"+status+"</picked_status>" +
-				"<picked_quantity>"+picked+"</picked_quantity>" +
+				"<picked_quantity>"+plus_minus+picked+"</picked_quantity>" +
 				"<storage>"+storage+"</storage>"+
 				"<last_updated>"+last_updated+"</last_updated>";
 			data_xml+="</"+table_type+">";
@@ -180,6 +187,131 @@ function report90_update(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+		
+		//////////////////////////////
+		var old_storage=form.elements[11].value;
+		var old_picked=form.elements[12].value;
+		
+		if(storage==old_storage)
+		{
+			var status="picked";
+			if(parseFloat(picked)!=parseFloat(to_pick))
+				status='pending';		
+			var data_xml="<"+table_type+">";
+				data_xml+="<id>"+data_id+"</id>" +
+					"<picked_status>"+status+"</picked_status>" +
+					"<picked_quantity>"+plus_minus+picked+"</picked_quantity>" +
+					"<storage>"+old_storage+"</storage>"+
+					"<last_updated>"+last_updated+"</last_updated>";
+				data_xml+="</"+table_type+">";
+			
+			update_simple(data_xml);
+			form.elements[11].value=storage;
+			form.elements[12].value=picked;					
+		}
+		else
+		{
+			if(picked==0)
+			{
+				var status="picked";
+				if(parseFloat(picked)!=parseFloat(to_pick))
+					status='pending';		
+				
+				var data_xml="<"+table_type+">"+
+						"<id>"+data_id+"</id>" +
+						"<picked_status>"+status+"</picked_status>" +
+						"<picked_quantity>"+plus_minus+picked+"</picked_quantity>" +
+						"<storage>"+storage+"</storage>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</"+table_type+">";
+				
+				update_simple(data_xml);
+				form.elements[11].value=storage;
+				form.elements[12].value=picked;
+			}
+			else
+			{
+				var status="picked";				
+				var data_xml="<"+table_type+">"+
+						"<id>"+data_id+"</id>" +
+						"<picked_status>"+status+"</picked_status>" +
+						"<picked_quantity>"+plus_minus+to_pick+"</picked_quantity>" +
+						"<storage>"+old_storage+"</storage>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</"+table_type+">";
+				
+				update_simple(data_xml);
+			
+				if(parseFloat(picked)!=parseFloat(to_pick))
+				{	
+					var old_pending_quantity=parseFloat(to_pick)-parseFloat(old_picked);
+					var new_picked_quantity=parseFloat(picked)-parseFloat(old_picked);
+					var new_key=get_new_key();
+					form.elements[7].value='inventory_adjust';
+					form.elements[6].value=new_key;
+					form.elements[11].value=storage;
+					form.elements[12].value=new_picked_quantity;
+					form.elements[3].value=old_pending_quantity;
+					form.elements[4].value=new_picked_quantity;
+			
+					var adjust1_xml="<inventory_adjust>"+
+						"<id>"+(new_key-1)+"</id>" +
+						"<product_name>"+item+"</product_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<picked_status>picked</picked_status>" +
+						"<quantity>"+old_pending_quantity+"</quantity>" +
+						"<picked_quantity>"+old_pending_quantity+"</picked_quantity>" +
+						"<storage>"+old_storage+"</storage>"+
+						"<source>picking</source>"+
+						"<source_id>"+bill_id+"</source_id>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</inventory_adjust>";
+					create_simple(adjust1_xml);
+					
+					var adjust2_xml="<inventory_adjust>"+
+						"<id>"+new_key+"</id>" +
+						"<product_name>"+item+"</product_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<picked_status>pending</picked_status>" +
+						"<quantity>-"+old_pending_quantity+"</quantity>" +
+						"<picked_quantity>-"+new_picked_quantity+"</picked_quantity>" +
+						"<storage>"+storage+"</storage>"+
+						"<source>picking</source>"+
+						"<source_id>"+bill_id+"</source_id>"+
+						"<last_updated>"+last_updated+"</last_updated>"+
+						"</inventory_adjust>";
+					create_simple(adjust2_xml);
+				}
+			}
+		}
+		
+		for(var i=0;i<6;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		var storage_data="<area_utilization>" +
+				"<id></id>" +
+				"<name exact='yes'>"+storage+"</name>" +
+				"<item_name exact='yes'>"+item+"</item_name>" +
+				"<batch exact='yes'>"+batch+"</batch>" +
+				"</area_utilization>";
+		fetch_requested_data('',storage_data,function(placements)
+		{
+			if(placements.length===0)
+			{
+				var storage_xml="<area_utilization>" +
+						"<id>"+get_new_key()+"</id>" +
+						"<name>"+storage+"</name>" +
+						"<item_name>"+item+"</item_name>" +
+						"<batch>"+batch+"</batch>" +
+						"<last_updated>"+get_my_time()+"</last_updated>" +
+						"</area_utilization>";
+				create_simple(storage_xml);
+			}
+		});
+		
+		//////////////////////////////
 	}
 	else
 	{

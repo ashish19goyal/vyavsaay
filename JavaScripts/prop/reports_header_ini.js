@@ -1370,7 +1370,7 @@ function report66_header_ini()
 		set_my_filter(storage_data,storage_filter);
 		storage_filter.value="";
 	});
-	
+
 	var type_data="<storage_structure>"+
 				"<name></name>"+
 				"</storage_structure>";

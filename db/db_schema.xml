@@ -601,11 +601,13 @@
 			<batch index='yes' type="TEXT"></batch>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<placed_quantity index='no' type="DECIMAL(12,2)"></placed_quantity>
+			<picked_quantity index='no' type="DECIMAL(12,2)"></picked_quantity>
 			<product_name index='yes' type="TEXT"></product_name>
 			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale_return/manual/manufacturing-->
 			<source_id index='yes' type="BIGINT"></source_id>
 			<storage index='yes' type="TEXT"></storage>
 			<put_away_status index='yes' type="VARCHAR(20)"></put_away_status><!--pending/completed-->
+			<picked_status index='yes' type="VARCHAR(20)"></picked_status><!--pending/picked-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</inventory_adjust>

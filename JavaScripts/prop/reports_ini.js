@@ -4359,8 +4359,9 @@ function report63_ini()
 			var data_object_array=[];
 			
 			if(items[i].picked_quantity=='null' || items[i].picked_quantity=='' || isNaN(items[i].picked_quantity))
+			{
 				items[i].picked_quantity=0;
-			
+			}
 			var data_object=new Object();
 			data_object.id=items[i].id;
 			data_object.quantity=items[i].quantity;
@@ -4413,6 +4414,9 @@ function report63_ini()
 				rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.id+"'>";
 				rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.table_type+"'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='row_report63_"+item.id+"'>";
+				rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.storage+"'>";
+				rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.picked_quantity+"'>";									
+				rowsHTML+="<input type='hidden' form='row_report63_"+item.id+"' value='"+item.id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 					
@@ -6666,23 +6670,49 @@ function report90_ini()
 	
 	fetch_requested_data('report90',items_data,function(items)
 	{
-		items.forEach(function(item)
-		{
-			item.table_type='bill_items';
-		});
+		var inventory_xml="<inventory_adjust>" +
+					"<id></id>" +
+					"<batch></batch>" +
+					"<product_name></product_name>" +
+					"<quantity></quantity>"+
+					"<picked_quantity></picked_quantity>"+
+					"<storage></storage>"+
+					"<source_id></source_id>"+
+					"<source exact='yes'>picking</source>"+
+					"<picked_status exact='yes'>pending</picked_status>"+
+					"</inventory_adjust>";
 		
-		var report90_count=0;
-		
-		items.forEach(function(item)
+		fetch_requested_data('report90',inventory_xml,function(adjust_results)
 		{
-			var picked_quantity=item.picked_quantity;
-			if(item.picked_quantity=='null' || item.picked_quantity=='' || isNaN(item.picked_quantity))
+			items.forEach(function(item)
 			{
-				picked_quantity=0;
+				item.table_type='bill_items';
+			});
+		
+			for(var z in adjust_results)
+			{
+				var adjust_item=new Object();
+				adjust_item.item_name=adjust_results[z].product_name;
+				adjust_item.batch=adjust_results[z].batch;
+				adjust_item.quantity=-(parseFloat(adjust_results[z].quantity));
+				adjust_item.storage=adjust_results[z].storage;
+				adjust_item.id=adjust_results[z].id;
+				adjust_item.table_type='inventory_adjust';
+				adjust_item.picked_quantity=adjust_results[z].picked_quantity;
+				adjust_item.bill_id=adjust_results[z].source_id;
+				items.push(adjust_item);
 			}
+	
+			var report90_count=0;
 			
-			if(item.table_type=='bill_items')
+			items.forEach(function(item)
 			{
+				var picked_quantity=item.picked_quantity;
+				if(item.picked_quantity=='null' || item.picked_quantity=='' || isNaN(item.picked_quantity))
+				{
+					picked_quantity=0;
+				}
+				
 				report90_count+=1;
 				
 				var bills_data="<bills count='1'>"+
@@ -6725,7 +6755,10 @@ function report90_ini()
 									rowsHTML+="<input type='submit' class='submit_hidden' form='row_report90_"+item.id+"'>";
 									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='order_num' value='"+bills[0].order_num+"'>";
 									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' name='bill_id' value='"+item.bill_id+"'>";
-								rowsHTML+="</td>";
+									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
+									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+picked_quantity+"'>";									
+									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.id+"'>";
+									rowsHTML+="</td>";
 								rowsHTML+="</tr>";
 
 							$('#report90_body').append(rowsHTML);
@@ -6779,22 +6812,21 @@ function report90_ini()
 							{
 								this.select();
 							});
-							
-						}
+							}
 					}
 				});
-			}
-		});
-		
-		var report90_complete=setInterval(function()
-		{
-	  	   if(report90_count===0)
-	  	   {
-				clearInterval(report90_complete);
-				$('textarea').autosize();
-				hide_loader();   
-	  	   }
-		},1000);		    
+			});
+
+			var report90_complete=setInterval(function()
+			{
+		  	   if(report90_count===0)
+		  	   {
+					clearInterval(report90_complete);
+					$('textarea').autosize();
+					hide_loader();   
+		  	   }
+			},500);
+		});		    
 	});
 
 	var print_button=form.elements['print'];
