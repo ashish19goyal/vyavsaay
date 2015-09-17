@@ -20,9 +20,7 @@
 					<th>Batch </th>
 					<th>Quantity </th>
 					<th>Storage </th>
-					<th>
-						<input type='button' form='form165_header' value='EXPORT' class='export_icon'>
-					</th>
+					<th></th>
 			</tr>
 		</thead>
 		<tbody id='form165_body'>

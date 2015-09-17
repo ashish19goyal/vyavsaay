@@ -11027,7 +11027,7 @@ function form192_add_item()
 }
 
 /**
- * @form Adjust Inventory
+ * @form Update Stock
  * @formNo 193
  */
 function form193_add_item()
@@ -14123,6 +14123,189 @@ function form240_add_item()
 
 		$('textarea').autosize();
 		form240_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Add Stock
+ * @formNo 244
+ */
+function form244_add_item()
+{
+	if(is_create_access('form244'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='244form244_"+id+"' autocomplete='off'></form>";
+			rowsHTML+="<td id='form244_barcode_"+id+"' data-th='Barcode'>";
+				rowsHTML+="<input type='text' form='244form244_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="SKU: <input type='text' required form='244form244_"+id+"'>";
+				rowsHTML+="<br>Name: <textarea form='244form244_"+id+"' readonly='readonly'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Batch'>";
+				rowsHTML+="<input type='text' form='244form244_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="1";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='244form244_"+id+"' id='save_form244_"+id+"' >";
+				rowsHTML+="<input type='button' class='delete_icon' form='244form244_"+id+"' id='delete_form244_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";
+		rowsHTML+="</tr>";
+
+		$('#form244_body').prepend(rowsHTML);
+		
+		var fields=document.getElementById("244form244_"+id);
+		var barcode_filter=fields.elements[0];
+		var name_filter=fields.elements[1];
+		var desc_filter=fields.elements[2];
+		var batch_filter=fields.elements[3];
+		
+		$(fields).on("submit", function(event)
+		{
+			event.preventDefault();
+			form244_add_item();
+		});
+
+		$(barcode_filter).focus();
+		
+		var product_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(product_data,name_filter);
+
+		var smaller_barcodes=get_session_var('brands_small_barcode');
+		
+		$(name_filter).off('blur');
+		$(name_filter).on('blur',function(event)
+		{
+			var desc_data="<product_master>"+
+						"<description></description>"+
+						"<bar_code></bar_code>"+
+						"<make></make>"+
+						"<name exact='yes'>"+name_filter.value+"</name>"+						
+						"</product_master>";
+			fetch_requested_data('',desc_data,function (descs) 
+			{
+				if(descs.length>0)
+				{
+					desc_filter.value=descs[0].description;
+					barcode_filter.value=descs[0].bar_code;
+					
+					if(barcode_filter.value!="")
+					{	
+						var barcode_td=document.getElementById('form244_barcode_'+id);
+						
+						if(smaller_barcodes!=null && smaller_barcodes.indexOf(descs[0].make)>-1)
+						{
+							$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+descs[0].bar_code+"' onclick=\"print_smaller_product_barcode('"+descs[0].bar_code+"','"+name_filter.value+"','"+descs[0].description+"');\">");
+						}
+						else 
+						{
+							$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+descs[0].bar_code+"' onclick=\"print_product_barcode('"+descs[0].bar_code+"','"+name_filter.value+"','"+descs[0].description+"');\">");
+						}						
+						
+					}
+					else 
+					{
+						var string=""+get_my_time();
+						modal116_action(string,name_filter.value);
+						if(smaller_barcodes!=null && smaller_barcodes.indexOf(descs[0].make)>-1)
+						{
+							$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+string+"' onclick=\"print_smaller_product_barcode('"+string+"','"+name_filter.value+"','"+descs[0].description+"');\">");
+						}
+						else 
+						{
+							$(barcode_td).append("<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+string+"' onclick=\"print_product_barcode('"+string+"','"+name_filter.value+"','"+descs[0].description+"');\">");
+						}						
+						
+					}
+				}
+			});
+
+			var batch_data="<product_instances>"+
+						"<batch></batch>"+
+						"<product_name exact='yes'>"+name_filter.value+"</product_name>"+						
+						"</product_instances>";
+			set_my_value_list(batch_data,batch_filter);
+
+			var rows_length=$('#form244_body').find('tr').length;
+			
+			$("[id^='244form244_']").each(function (index)
+			{
+				if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value)
+				{
+					batch_filter.value=this.elements[3].value;
+					if(batch_filter.value=="")
+					{
+						batch_filter.value=name_filter.value;						
+						$(batch_filter).focus();
+						$('#form244_body>tr:first').remove();						
+					}
+					//	return false;
+				}
+			});
+		});
+		
+		$(barcode_filter).off('keydown'); 
+		$(barcode_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();
+				var item_data="<product_master count='1'>"+
+							"<name></name>"+
+							"<description></description>"+
+							"<bar_code exact='yes'>"+barcode_filter.value+"</bar_code>"+
+							"</product_master>";
+				fetch_requested_data('',item_data,function (products) 
+				{
+					if(products.length>0)
+					{
+						desc_filter.value=products[0].description;
+						name_filter.value=products[0].name;	
+		
+						var batch_data="<product_instances>"+
+									"<batch></batch>"+
+									"<product_name exact='yes'>"+name_filter.value+"</product_name>"+						
+									"</product_instances>";
+						set_my_value_list(batch_data,batch_filter);
+						
+						var rows_length=$('#form244_body').find('tr').length;
+						
+						$("[id^='244form244_']").each(function (index)
+						{
+							if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value)
+							{
+								batch_filter.value=this.elements[3].value;
+								//return false;
+							}
+						});
+						if(batch_filter.value=="")
+						{
+							batch_filter.value=name_filter.value;
+							$(batch_filter).focus();									
+						}
+						else
+						{
+							form244_add_item();				
+						}
+					}
+					else
+					{
+						modal116_action(barcode_filter.value);
+						barcode_filter.value="";
+					}
+				});
+			}
+		});
 	}
 	else
 	{

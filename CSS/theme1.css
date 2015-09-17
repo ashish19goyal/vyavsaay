@@ -428,20 +428,40 @@ tr.red_row{
 	background: #FFB99C;
 }
 
+tr.red_row:hover{
+	background:#E67474;
+}
+
 tr.blue_row{
-	background: #BED0E6;
+	background: #B2B2D8;
+}
+
+tr.blue_row:hover{
+	background:#9191C8;
 }
 
 tr.grey_row{
 	background: #D8D8D8;
 }
 
+tr.grey_row:hover{
+	background:#B6B6B6;
+}
+
 tr.orange_row{
 	background: #FDD99A;
 }
 
+tr.orange_row:hover{
+	background:#DBB779;
+}
+
 tr.yellow_row{
 	background: #FAEC8C;
+}
+
+tr.yellow_row:hover{
+	background:#D9CA6A;
 }
 
 tr.cancelled_row{

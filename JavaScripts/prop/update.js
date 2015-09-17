@@ -330,46 +330,49 @@ function report90_update(form)
 				
 				update_simple(data_xml);
 			
+				var new_status='completed';
 				if(parseFloat(picked)!=parseFloat(to_pick))
-				{	
-					var old_pending_quantity=parseFloat(to_pick)-parseFloat(old_picked);
-					var new_picked_quantity=parseFloat(picked)-parseFloat(old_picked);
-					var new_key=get_new_key();
-					form.elements[7].value='inventory_adjust';
-					form.elements[6].value=new_key;
-					form.elements[11].value=storage;
-					form.elements[12].value=new_picked_quantity;
-					form.elements[3].value=old_pending_quantity;
-					form.elements[4].value=new_picked_quantity;
-			
-					var adjust1_xml="<inventory_adjust>"+
-						"<id>"+(new_key-1)+"</id>" +
-						"<product_name>"+item+"</product_name>" +
-						"<batch>"+batch+"</batch>" +
-						"<picked_status>picked</picked_status>" +
-						"<quantity>"+old_pending_quantity+"</quantity>" +
-						"<picked_quantity>"+old_pending_quantity+"</picked_quantity>" +
-						"<storage>"+old_storage+"</storage>"+
-						"<source>picking</source>"+
-						"<source_id>"+bill_id+"</source_id>"+
-						"<last_updated>"+last_updated+"</last_updated>"+
-						"</inventory_adjust>";
-					create_simple(adjust1_xml);
-					
-					var adjust2_xml="<inventory_adjust>"+
-						"<id>"+new_key+"</id>" +
-						"<product_name>"+item+"</product_name>" +
-						"<batch>"+batch+"</batch>" +
-						"<picked_status>pending</picked_status>" +
-						"<quantity>-"+old_pending_quantity+"</quantity>" +
-						"<picked_quantity>-"+new_picked_quantity+"</picked_quantity>" +
-						"<storage>"+storage+"</storage>"+
-						"<source>picking</source>"+
-						"<source_id>"+bill_id+"</source_id>"+
-						"<last_updated>"+last_updated+"</last_updated>"+
-						"</inventory_adjust>";
-					create_simple(adjust2_xml);
-				}
+				{
+					new_status='pending';
+				}	
+				var old_pending_quantity=parseFloat(to_pick)-parseFloat(old_picked);
+				var new_picked_quantity=parseFloat(picked)-parseFloat(old_picked);
+				var new_key=get_new_key();
+				form.elements[7].value='inventory_adjust';
+				form.elements[6].value=new_key;
+				form.elements[11].value=storage;
+				form.elements[12].value=new_picked_quantity;
+				form.elements[3].value=old_pending_quantity;
+				form.elements[4].value=new_picked_quantity;
+		
+				var adjust1_xml="<inventory_adjust>"+
+					"<id>"+(new_key-1)+"</id>" +
+					"<product_name>"+item+"</product_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<picked_status>picked</picked_status>" +
+					"<quantity>"+old_pending_quantity+"</quantity>" +
+					"<picked_quantity>"+old_pending_quantity+"</picked_quantity>" +
+					"<storage>"+old_storage+"</storage>"+
+					"<source>picking</source>"+
+					"<source_id>"+bill_id+"</source_id>"+
+					"<last_updated>"+last_updated+"</last_updated>"+
+					"</inventory_adjust>";
+				create_simple(adjust1_xml);
+				
+				var adjust2_xml="<inventory_adjust>"+
+					"<id>"+new_key+"</id>" +
+					"<product_name>"+item+"</product_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<picked_status>"+new_status+"</picked_status>" +
+					"<quantity>-"+old_pending_quantity+"</quantity>" +
+					"<picked_quantity>-"+new_picked_quantity+"</picked_quantity>" +
+					"<storage>"+storage+"</storage>"+
+					"<source>picking</source>"+
+					"<source_id>"+bill_id+"</source_id>"+
+					"<last_updated>"+last_updated+"</last_updated>"+
+					"</inventory_adjust>";
+				create_simple(adjust2_xml);
+				
 			}
 		}
 		
@@ -9108,45 +9111,46 @@ function form165_update_item(form)
 				
 				update_simple(data_xml);
 			
-			
+				var new_status='completed';
 				if(parseFloat(placed)!=parseFloat(to_place))
 				{	
-					var old_pending_quantity=parseFloat(to_place)-parseFloat(old_placed);
-					var new_placed_quantity=parseFloat(placed)-parseFloat(old_placed);
-					var new_key=get_new_key();
-					form.elements[6].value='inventory_adjust';
-					form.elements[5].value=new_key;
-					form.elements[8].value=storage;
-					form.elements[9].value=new_placed_quantity;
-					form.elements[2].value=old_pending_quantity;
-					form.elements[3].value=new_placed_quantity;
-			
-					var adjust1_xml="<inventory_adjust>"+
-						"<id>"+(new_key-1)+"</id>" +
-						"<product_name>"+item+"</product_name>" +
-						"<batch>"+batch+"</batch>" +
-						"<put_away_status>completed</put_away_status>" +
-						"<quantity>-"+old_pending_quantity+"</quantity>" +
-						"<placed_quantity>-"+old_pending_quantity+"</placed_quantity>" +
-						"<storage>"+old_storage+"</storage>"+
-						"<source>put away</source>"+
-						"<last_updated>"+last_updated+"</last_updated>"+
-						"</inventory_adjust>";
-					create_simple(adjust1_xml);
-					
-					var adjust2_xml="<inventory_adjust>"+
-						"<id>"+new_key+"</id>" +
-						"<product_name>"+item+"</product_name>" +
-						"<batch>"+batch+"</batch>" +
-						"<put_away_status>pending</put_away_status>" +
-						"<quantity>"+old_pending_quantity+"</quantity>" +
-						"<placed_quantity>"+new_placed_quantity+"</placed_quantity>" +
-						"<storage>"+storage+"</storage>"+
-						"<source>put away</source>"+
-						"<last_updated>"+last_updated+"</last_updated>"+
-						"</inventory_adjust>";
-					create_simple(adjust2_xml);
-				}
+					new_status='pending';
+				}	
+				var old_pending_quantity=parseFloat(to_place)-parseFloat(old_placed);
+				var new_placed_quantity=parseFloat(placed)-parseFloat(old_placed);
+				var new_key=get_new_key();
+				form.elements[6].value='inventory_adjust';
+				form.elements[5].value=new_key;
+				form.elements[8].value=storage;
+				form.elements[9].value=new_placed_quantity;
+				form.elements[2].value=old_pending_quantity;
+				form.elements[3].value=new_placed_quantity;
+		
+				var adjust1_xml="<inventory_adjust>"+
+					"<id>"+(new_key-1)+"</id>" +
+					"<product_name>"+item+"</product_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<put_away_status>completed</put_away_status>" +
+					"<quantity>-"+old_pending_quantity+"</quantity>" +
+					"<placed_quantity>-"+old_pending_quantity+"</placed_quantity>" +
+					"<storage>"+old_storage+"</storage>"+
+					"<source>put away</source>"+
+					"<last_updated>"+last_updated+"</last_updated>"+
+					"</inventory_adjust>";
+				create_simple(adjust1_xml);
+				
+				var adjust2_xml="<inventory_adjust>"+
+					"<id>"+new_key+"</id>" +
+					"<product_name>"+item+"</product_name>" +
+					"<batch>"+batch+"</batch>" +
+					"<put_away_status>"+new_status+"</put_away_status>" +
+					"<quantity>"+old_pending_quantity+"</quantity>" +
+					"<placed_quantity>"+new_placed_quantity+"</placed_quantity>" +
+					"<storage>"+storage+"</storage>"+
+					"<source>put away</source>"+
+					"<last_updated>"+last_updated+"</last_updated>"+
+					"</inventory_adjust>";
+				create_simple(adjust2_xml);
 			}
 		}
 		
@@ -10564,7 +10568,7 @@ function form192_update_form()
 }
 
 /**
- * @form Inventory Adjust
+ * @form Update Stock
  * @param button
  */
 function form193_update_form()
@@ -10576,15 +10580,14 @@ function form193_update_form()
 		var items=[];
 
 		$("[id^='193form193_']").each(function () 
-		{
-			
+		{			
 			var item=new Object();
 			item.name=this.elements[1].value;
 			item.desc=this.elements[2].value;			
 			item.batch=this.elements[3].value;
 			item.quantity=1;
 			if(item.name!="")			
-				items.push(item);
+			items.push(item);
 		});
 
 		for(var i=0;i<items.length;i++)
@@ -10603,65 +10606,107 @@ function form193_update_form()
 		var body_html="";
 		var head_html="<tr><th>SKU</th><th>Item Name</th><th>Batch</th><th>Quantity</th></tr>";
 		
-		items.forEach(function(item)
-		{
-			body_html+="<tr><td>"+item.name+"</td><td>"+item.desc+"</td><td>"+item.batch+"</td><td>"+item.quantity+"</td></tr>";
-
-			get_store_inventory(storage,item.name,item.batch,function(sys_quantity)
-			{
-				if(parseFloat(item.quantity)!=parseFloat(sys_quantity))
-				{
-					var quantity=parseFloat(item.quantity)-parseFloat(sys_quantity);
-					var id=get_new_key();
-					var last_updated=get_my_time();
-					var data_xml="<inventory_adjust>" +
-								"<id>"+id+"</id>" +
-								"<batch>"+item.batch+"</batch>" +
-								"<quantity>"+quantity+"</quantity>" +
-								"<product_name>"+item.name+"</product_name>" +
-								"<source>manual</source>" +
-								"<storage>"+storage+"</storage>" +
-								"<last_updated>"+last_updated+"</last_updated>" +
-								"</inventory_adjust>";
-					var activity_xml="<activity>" +
-								"<data_id>"+id+"</data_id>" +
-								"<tablename>inventory_adjust</tablename>" +
-								"<link_to>report66</link_to>" +
-								"<title>Updated</title>" +
-								"<notes>Inventory of "+item.name+" for storage "+storage+"</notes>" +
-								"<updated_by>"+get_name()+"</updated_by>" +
-								"</activity>";
-					create_row(data_xml,activity_xml);
-					
-					///////////adding store placement////////
-					var storage_data="<area_utilization>" +
-							"<id></id>" +
-							"<name exact='yes'>"+storage+"</name>" +
-							"<item_name exact='yes'>"+item.name+"</item_name>" +
-							"<batch exact='yes'>"+item.batch+"</batch>" +
-							"</area_utilization>";
-					fetch_requested_data('',storage_data,function(placements)
-					{
-						if(placements.length===0)
-						{
-							var storage_xml="<area_utilization>" +
-									"<id>"+get_new_key()+"</id>" +
-									"<name>"+storage+"</name>" +
-									"<item_name>"+item.name+"</item_name>" +
-									"<batch>"+item.batch+"</batch>" +
-									"<last_updated>"+get_my_time()+"</last_updated>" +
-									"</area_utilization>";
-							create_simple(storage_xml);
-							
-						}
-					});
-					///////////////////////////////////	
-				}
-			});
-		});
 		
+		var area_util_xml="<area_utilization>"+
+						"<item_name></item_name>"+
+						"<batch></batch>"+
+						"<name exact='yes'>"+storage+"</name>"+
+						"</area_utilization>";
+		fetch_requested_data('',area_util_xml,function (more_items) 
+		{
+			for(var i=0;i<items.length;i++)
+			{
+				for(var l=0;l<more_items.length;l++)
+				{
+					if(items[i].name==more_items[l].item_name && items[i].batch==more_items[l].batch)
+					{
+						more_items.splice(l,1);
+						l-=1;
+					}
+				}
+			}	
+			
+			more_items.forEach(function (more_item) 
+			{
+				var item=new Object();
+				item.name=more_item.item_name;
+				item.desc="";			
+				item.batch=more_item.batch;
+				item.quantity=0;
+				if(item.name!="")			
+				items.push(item);
+			});
+			//console.log(items);	
+			var id=get_new_key();
+			var counter=1;
+			items.forEach(function(item)
+			{
+				body_html+="<tr><td>"+item.name+"</td><td>"+item.desc+"</td><td>"+item.batch+"</td><td>"+item.quantity+"</td></tr>";
+				
+				get_store_inventory(storage,item.name,item.batch,function(sys_quantity)
+				{
+					counter+=1;
+					if(parseFloat(item.quantity)!=parseFloat(sys_quantity))
+					{
+						var quantity=parseFloat(item.quantity)-parseFloat(sys_quantity);
+						//var id=get_new_key();
+						var last_updated=get_my_time();
+						var data_xml="<inventory_adjust>" +
+									"<id>"+(id+counter)+"</id>" +
+									"<batch>"+item.batch+"</batch>" +
+									"<quantity>"+quantity+"</quantity>" +
+									"<product_name>"+item.name+"</product_name>" +
+									"<source>manual</source>" +
+									"<storage>"+storage+"</storage>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</inventory_adjust>";
+						var activity_xml="<activity>" +
+									"<data_id>"+(id+counter)+"</data_id>" +
+									"<tablename>inventory_adjust</tablename>" +
+									"<link_to>report66</link_to>" +
+									"<title>Updated</title>" +
+									"<notes>Inventory of "+item.name+" for storage "+storage+"</notes>" +
+									"<updated_by>"+get_name()+"</updated_by>" +
+									"</activity>";
+						create_row(data_xml,activity_xml);
+						
+						///////////adding store placement////////
+						var storage_data="<area_utilization>" +
+								"<id></id>" +
+								"<name exact='yes'>"+storage+"</name>" +
+								"<item_name exact='yes'>"+item.name+"</item_name>" +
+								"<batch exact='yes'>"+item.batch+"</batch>" +
+								"</area_utilization>";
+						fetch_requested_data('',storage_data,function(placements)
+						{
+							counter+=1;
+							if(placements.length===0 && item.quantity>0)
+							{
+								var storage_xml="<area_utilization>" +
+										"<id>"+(id+counter)+"</id>" +
+										"<name>"+storage+"</name>" +
+										"<item_name>"+item.name+"</item_name>" +
+										"<batch>"+item.batch+"</batch>" +
+										"<last_updated>"+get_my_time()+"</last_updated>" +
+										"</area_utilization>";
+								create_simple(storage_xml);
+							}
+							else if(placements.length>0 && item.quantity==0)
+							{
+								var storage_xml="<area_utilization>" +
+										"<id>"+placements[0].id+"</id>" +
+										"</area_utilization>";
+								delete_simple(storage_xml);
+							}
+						});
+						///////////////////////////////////	
+					}
+				});						
+			});
+			$('#form193_body').html(body_html);
+		});
+			
 		$('#form193_head').html(head_html);
-		$('#form193_body').html(body_html);
 		$('#form193_head').parent().attr('class','plain_table');
 
 	}
@@ -12810,6 +12855,112 @@ function form242_update_item(form)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Add Stock
+ * @param button
+ */
+function form244_update_form()
+{
+	if(is_update_access('form244'))
+	{
+		var form=document.getElementById("form244_master");		
+		var storage=form.elements['storage'].value;
+		var items=[];
+
+		$("[id^='244form244_']").each(function () 
+		{			
+			var item=new Object();
+			item.name=this.elements[1].value;
+			item.desc=this.elements[2].value;			
+			item.batch=this.elements[3].value;
+			item.quantity=1;
+			if(item.name!="")			
+			items.push(item);
+		});
+
+		for(var i=0;i<items.length;i++)
+		{
+			for(var j=i+1;j<items.length;j++)
+			{
+				if(items[i].name==items[j].name && items[i].batch==items[j].batch)
+				{
+					items[i].quantity=items[i].quantity+items[j].quantity;
+					items.splice(j,1);
+					j-=1;
+				}
+			}
+		}
+
+		var body_html="";
+		var head_html="<tr><th>SKU</th><th>Item Name</th><th>Batch</th><th>Quantity</th></tr>";
+		
+		var id=get_new_key();
+		var counter=1;
+		items.forEach(function(item)
+		{
+			body_html+="<tr><td>"+item.name+"</td><td>"+item.desc+"</td><td>"+item.batch+"</td><td>"+item.quantity+"</td></tr>";
+			counter+=1;
+			if(parseFloat(item.quantity)>0)
+			{
+				//var id=get_new_key();
+				var last_updated=get_my_time();
+				var data_xml="<inventory_adjust>" +
+							"<id>"+(id+counter)+"</id>" +
+							"<batch>"+item.batch+"</batch>" +
+							"<quantity>"+item.quantity+"</quantity>" +
+							"<product_name>"+item.name+"</product_name>" +
+							"<source>manual</source>" +
+							"<storage>"+storage+"</storage>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</inventory_adjust>";
+				var activity_xml="<activity>" +
+							"<data_id>"+(id+counter)+"</data_id>" +
+							"<tablename>inventory_adjust</tablename>" +
+							"<link_to>report66</link_to>" +
+							"<title>Updated</title>" +
+							"<notes>Stock of "+item.name+" for storage "+storage+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				create_row(data_xml,activity_xml);
+				
+				///////////adding store placement////////
+				var storage_data="<area_utilization>" +
+						"<id></id>" +
+						"<name exact='yes'>"+storage+"</name>" +
+						"<item_name exact='yes'>"+item.name+"</item_name>" +
+						"<batch exact='yes'>"+item.batch+"</batch>" +
+						"</area_utilization>";
+				fetch_requested_data('',storage_data,function(placements)
+				{
+					counter+=1;
+					if(placements.length===0 && item.quantity>0)
+					{
+						var storage_xml="<area_utilization>" +
+								"<id>"+(id+counter)+"</id>" +
+								"<name>"+storage+"</name>" +
+								"<item_name>"+item.name+"</item_name>" +
+								"<batch>"+item.batch+"</batch>" +
+								"<last_updated>"+get_my_time()+"</last_updated>" +
+								"</area_utilization>";
+						create_simple(storage_xml);
+					}
+				});
+				///////////////////////////////////	
+			}
+								
+		});
+		$('#form244_body').html(body_html);
+			
+		$('#form244_head').html(head_html);
+		$('#form244_head').parent().attr('class','plain_table');
+
 	}
 	else
 	{

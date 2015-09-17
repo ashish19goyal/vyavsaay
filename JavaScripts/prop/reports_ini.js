@@ -4809,20 +4809,23 @@ function report66_ini()
 								var rowsHTML="";									
 								items.forEach(function (item) 
 								{
-									rowsHTML+="<tr>";
-									rowsHTML+="<td data-th='Storage'>";
-										rowsHTML+=item.name;
-									rowsHTML+="</td>";
-									rowsHTML+="<td data-th='Item'>";
-										rowsHTML+=item.item_name;
-									rowsHTML+="</td>";
-									rowsHTML+="<td data-th='Batch'>";
-										rowsHTML+=item.batch;
-									rowsHTML+="</td>";
-									rowsHTML+="<td data-th='Quantity'>";
-										rowsHTML+=item.quantity;
-									rowsHTML+="</td>";
-									rowsHTML+="</tr>";
+									if(item.name!="")
+									{
+										rowsHTML+="<tr>";
+										rowsHTML+="<td data-th='Storage'>";
+											rowsHTML+=item.name;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Item'>";
+											rowsHTML+=item.item_name;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Batch'>";
+											rowsHTML+=item.batch;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Quantity'>";
+											rowsHTML+=item.quantity;
+										rowsHTML+="</td>";
+										rowsHTML+="</tr>";
+									}
 								});	
 								$('#report66_body').html(rowsHTML);
 								hide_loader();
@@ -4834,12 +4837,15 @@ function report66_ini()
 									var new_products=[];
 									items.forEach(function(product)
 									{
-										var new_product=new Object();
-										new_product.Storage=product.name;
-										new_product.Item=product.item_name;
-										new_product.Batch=product.batch;
-										new_product.Quantity=product.quantity;
-										new_products.push(new_product);
+										if(product.name!="")
+										{
+											var new_product=new Object();
+											new_product.Storage=product.name;
+											new_product.Item=product.item_name;
+											new_product.Batch=product.batch;
+											new_product.Quantity=product.quantity;
+											new_products.push(new_product);
+										}
 									});
 									csv_download_report(new_products,'inventory_level_by_store');
 								});
@@ -5711,7 +5717,11 @@ function report79_ini()
 		var po_id_string='--';
 		for(var i in pos)
 		{
-			bill_id_string+=pos[i].bill_id+"--";
+			var bill_id_array=JSON.parse(pos[i].bill_id);
+			for(var x in bill_id_array)
+			{
+				bill_id_string+=bill_id_array[x].bill_id+"--";
+			}
 			po_id_string+=pos[i].id+"--";
 		}		
 
@@ -5731,8 +5741,10 @@ function report79_ini()
 					"</purchase_order_items>";
 		fetch_requested_data('',po_items_xml,function (po_items) 
 		{
+			//console.log(po_items);
 			fetch_requested_data('',bill_items_xml,function (bill_items) 
 			{
+				//console.log(bill_items);
 				for(var j=0;j<po_items.length;j++)
 				{
 					po_items[j].order_quantity=po_items[j].quantity;

@@ -7102,7 +7102,7 @@ function form192_header_ini()
 }
 
 /**
- * @form Adjust Inventory
+ * @form Update stock
  * @formNo 193
  */
 function form193_header_ini()
@@ -7115,13 +7115,6 @@ function form193_header_ini()
 
 	storage_filter.value="";	
 	
-/*	$(barcode_button).off('click');
-	$(barcode_button).on('click',function()
-	{
-		var string=""+get_my_time();
-		print_barcode(string);
-	});
-*/
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
 	{
@@ -7146,7 +7139,6 @@ function form193_header_ini()
 	
 	var storage_data="<store_areas>"+
 					"<name></name>"+
-					//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
 					"<area_type></area_type>"+
 					"</store_areas>";
 	set_my_value_list_func(storage_data,storage_filter,function()
@@ -9153,3 +9145,61 @@ function form243_header_ini()
 	set_my_filter(id_data,id_filter);
 	set_my_filter(account_data,account_filter);
 };
+
+/**
+ * @form Add stock
+ * @formNo 244
+ */
+function form244_header_ini()
+{
+	var fields=document.getElementById('form244_master');
+	
+	var storage_filter=fields.elements['storage'];
+	var save_button=fields.elements['save'];
+	//var barcode_button=fields.elements['barcode'];
+
+	storage_filter.value="";	
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form244_update_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form244_add_item();
+	});
+	
+	var storage_data="<store_areas>"+
+					"<name></name>"+
+					"<area_type></area_type>"+
+					"</store_areas>";
+	set_my_value_list_func(storage_data,storage_filter,function()
+	{
+		$(storage_filter).focus();
+	});
+
+	var head_html="<tr><form id='form244_header'></form>"+
+					"<th>Barcode</th>"+
+					"<th>Item</th>"+
+					"<th>Batch</th>"+					
+					"<th>Quantity</th>"+					
+					"<th><input type='button' form='form244_header' title='Add item' class='add_icon' onclick='form244_add_item();'></th>"+
+					"</tr>";
+	$('#form244_head').html(head_html);
+	$('#form244_body').html("");
+	$('#form244_head').parent().attr('class','rwd-table');
+
+}

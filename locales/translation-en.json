@@ -332,7 +332,7 @@
 	"manage_values_lists":"Manage Values Lists",
 	"pickup_deliveries":"Pickup & Deliveries",
 	"enter_purchases_laundry":"Enter Purchases(laundry)",
-	"adjust_inventory":"Adjust Inventory",
+	"adjust_inventory":"Update Stock",
 	"stock_laundry":"Stock of Laundry",
 	"letterhead":"Letter-Head",
 	"promotions_by_list":"Promotions by list",
@@ -416,6 +416,7 @@
 	"manage_receivables":"Manage Receivables",
 	"manage_payables":"Manage Payables",
 	"receipts_cps":"Receipts (CPS)",
-	"inventory_finished":"Inventory (Finished Goods)"
+	"inventory_finished":"Inventory (Finished Goods)",
+	"add_stock":"Add Stock"
 	}
 }
