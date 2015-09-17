@@ -34,18 +34,9 @@ function form1_delete_item(button)
 						"<batch>"+batch+"</batch>" +
 						"</inventory_adjust>";	
 			
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete);
-				server_delete_simple(other_delete2);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete);
-				local_delete_simple(other_delete2);
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
+			delete_simple(other_delete2);
 			$(button).parent().parent().remove();
 		});
 	}

@@ -714,6 +714,10 @@
 		This import will be aborted as all the required criteria are not being met.
 	</div>
 
+	<div id="modal74" title="Netwrok Error">
+		Operation could not be completed because of network error. Please try again.
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>
