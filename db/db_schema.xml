@@ -42,7 +42,7 @@
                         <test_date index='yes' type='BIGINT'></test_date>
 			<assignee index='yes' type="TEXT"></assignee>
                         <summary index='no' type='TEXT'></summary>
-                        <attachment_links index='no' type='TEXT'></attachment_link>
+                        <attachment_links index='no' type='TEXT'></attachment_links>
                         <details index='no' type='TEXT'></details>
                         <last_updated index='yes' type="BIGINT"></last_updated>
                         <last_sync_time index='yes' type="BIGINT"></last_sync_time>
