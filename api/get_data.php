@@ -191,7 +191,6 @@
 
 			$response_object['rows']=$response_rows;
 			$xmlresponse=json_encode($response_object);
-			
 		}
 		else 
 		{

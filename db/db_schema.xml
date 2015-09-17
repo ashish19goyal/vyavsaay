@@ -9,7 +9,9 @@
                         <status index='yes' type='VARCHAR(45)'></status><!--active/archived-->
                         <promotion_status index='yes' type='VARCHAR(45)'></promotion_status><!--active/suspended-->
                         <notes index='no' type='TEXT'></notes>
-                        <address index='yes' type="TEXT"></address>
+                        <sub_location index='yes' type="TEXT"></sub_location>
+                        <location index='yes' type="TEXT"></location>
+			<address index='yes' type="TEXT"></address>
                         <city index='no' type="TEXT"></city>
                         <pincode index='no' type='VARCHAR(15)'></pincode>
                         <state index='no' type="VARCHAR(45)"></state>
@@ -33,6 +35,26 @@
                         <last_updated index='yes' type="BIGINT"></last_updated>
                         <last_sync_time index='yes' type="BIGINT"></last_sync_time>
         </diagnostic_tests>
+	<diagnostic_results>
+                        <id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
+                        <customer index='yes' type='TEXT'></customer>
+                        <test_name index='yes' type='TEXT'></test_name>
+                        <test_date index='yes' type='BIGINT'></test_date>
+			<assignee index='yes' type="TEXT"></assignee>
+                        <summary index='no' type='TEXT'></summary>
+                        <attachment_links index='no' type='TEXT'></attachment_link>
+                        <details index='no' type='TEXT'></details>
+                        <last_updated index='yes' type="BIGINT"></last_updated>
+                        <last_sync_time index='yes' type="BIGINT"></last_sync_time>
+        </diagnostic_results>
+	<result_attributes>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<result_id index='yes' type="BIGINT"></result_id>
+			<attribute_name index='yes' type="TEXT"></attribute_name>
+			<attribute_value index='no' type='TEXT'></attribute_value>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</result_attributes>
 	<customers>
 			<id index='no' type='BIGINT NOT NULL AUTO_INCREMENT'></id>
 			<name index='yes' type='TEXT'></name>

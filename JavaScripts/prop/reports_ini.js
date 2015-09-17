@@ -5126,19 +5126,22 @@ function report72_ini()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='report72_"+item.id+"' value='"+item.id+"'>";
+				rowsHTML+="<input type='hidden' form='report72_"+item.id+"' value='"+item.customer_name+"'>";
+				rowsHTML+="<input type='hidden' form='report72_"+item.id+"' value='"+item.order_num+"'>";
+				rowsHTML+="<input type='hidden' form='report72_"+item.id+"' value='"+item.total+"'>";
 			if(item.status!='delivered')
 			{
 				rowsHTML+="<input type='button' form='report72_"+item.id+"' class='generic_icon' value='"+button_value+"'>";
 			}
 			rowsHTML+="</td>";
 			rowsHTML+="</tr>";
-					
+
 			$('#report72_body').append(rowsHTML);
 
 			if(item.status!='delivered')
 			{			
 				var report72_form=document.getElementById('report72_'+item.id);				
-				var update_button=report72_form.elements[2];
+				var update_button=report72_form.elements[5];
 				$(update_button).on('click',function(event)
 				{
 					event.preventDefault();

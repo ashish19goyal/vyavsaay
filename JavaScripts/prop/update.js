@@ -92,10 +92,13 @@ function report72_update(form)
 		var status_filter=form.elements[0];
 		var status=form.elements[0].value;
 		var id=form.elements[1].value;
-		var button_filter=form.elements[2];
 		var last_updated=get_my_time();
 		var new_status="";
-
+		var customer=form.elements[2].value;
+		var order_num=form.elements[3].value;
+		var total=form.elements[4].value;
+		var button_filter=form.elements[5];
+		
 		if(status=='pending')
 		{
 			new_status="picking";
@@ -138,6 +141,91 @@ function report72_update(form)
 					"</sale_orders>";
 
 		update_simple(data_xml);
+		
+		/////////////////
+		var sms_notification_status=get_session_var('sms_notification_status');
+		var sms="";
+		var found=sms_notification_status.indexOf(new_status);
+		if(found>=0)
+		{	
+			var f_id=get_my_time();
+				
+			if(new_status=='delivered')
+			{
+				var last_updated=get_my_time();
+				var feedback_xml="<feedback>"+
+							"<id>"+f_id+"</id>"+
+							"<order_num unique='yes'>"+order_num+"</order_num>"+
+							"<provider>"+customer+"</provider>"+
+							"<date>"+last_updated+"</date>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</feedback>";
+				create_simple_no_warning(feedback_xml);					
+				sms=get_session_var('delivered_sms_message');
+			}
+			else if(new_status=='out for delivery')
+			{
+				sms=get_session_var('out_for_delivery_sms_message');				
+			}
+			else if(new_status=='ready for delivery')
+			{
+				sms=get_session_var('ready_for_delivery_sms_message');
+			}
+			else if(new_status=='processed')
+			{
+				sms=get_session_var('processed_sms_message');
+			}
+			else if(new_status=='processing')
+			{
+				sms=get_session_var('processing_sms_message');
+			}
+			else if(new_status=='picked')
+			{
+				sms=get_session_var('picked_sms_message');
+			}
+			else if(new_status=='picking')
+			{
+				sms=get_session_var('picking_sms_message');
+			}
+			else if(new_status=='pending')
+			{
+				sms=get_session_var('pending_sms_message');
+			}
+			else if(new_status=='cancelled')
+			{
+				var last_updated=get_my_time();
+				var feedback_xml="<feedback>"+
+							"<id>"+f_id+"</id>"+
+							"<order_num unique='yes'>"+order_num+"</order_num>"+
+							"<provider>"+customer_name+"</provider>"+
+							"<date>"+last_updated+"</date>"+
+							"<last_updated>"+last_updated+"</last_updated>"+
+							"</feedback>";
+				create_simple_no_warning(feedback_xml);					
+	
+				sms=get_session_var('cancelled_sms_message');
+			}
+	
+			var feedback_link="vyavsaay.com/f/v.htm?i="+f_id+"&d=washclub";
+			//console.log(sms);	
+			sms=sms.replace(/bill_total/g,total);
+			sms=sms.replace(/feedback_link/g,feedback_link);
+			var phone_xml="<customers>"+
+						"<phone></phone>"+
+						"<name></name>"+
+						"<acc_name exact='yes'>"+customer+"</acc_name>"+
+						"</customers>";
+			fetch_requested_data('',phone_xml,function(phones)
+			{
+				var to=phones[0].phone;
+				var customer_name=phones[0].name;
+				var sms_content=sms.replace(/customer_name/g,customer_name);		
+				send_sms(to,sms_content,'transaction');
+			});
+		}			
+
+		
+		/////////////////
 		
 	}
 	else

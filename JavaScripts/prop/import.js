@@ -6811,8 +6811,12 @@ function form203_import(data_array,import_type)
 		var order_history=[];
 		var history_object=new Object();
 		history_object.timeStamp=get_my_time();
-		history_object.details="Order dispatched from merchant";
-		history_object.location=row['Merchant Name'];
+		history_object.details="Order dispatched from Shopclues";
+		history_object.location=row['Pickup Location'];	
+		if(row['Manifest Type']=='RTM Manifest')
+		{
+			history_object.location=row['Return Address2'];	
+		}
 		history_object.status="dispatched";
 		order_history.push(history_object);
 		var order_history_string=JSON.stringify(order_history);

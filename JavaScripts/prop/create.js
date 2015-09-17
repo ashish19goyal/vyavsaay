@@ -216,14 +216,7 @@ function form10_create_item(form)
 					"<bill_id>"+bill_id+"</bill_id>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bill_items>";	
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}		
+		create_simple(data_xml);
 		
 		for(var i=0;i<8;i++)
 		{
@@ -389,58 +382,29 @@ function form10_create_form()
 								"<value>"+(parseInt(bill_num)+1)+"</value>"+
 								"<last_updated>"+last_updated+"</last_updated>"+
 								"</user_preferences>";
-				if(is_online())
-				{
-					server_update_simple(num_xml);
-				}
-				else 
-				{
-					local_update_simple(num_xml);
-				}
+				update_simple(num_xml);
+				
 			}
 		},num_data);
-		if(is_online())
+		create_row(data_xml,activity_xml);
+		create_simple(transaction_xml);
+		update_simple(sale_order_xml);
+		create_simple(pt_xml);
+		create_simple_func(payment_xml,function()
 		{
-			server_create_row(data_xml,activity_xml);
-			server_create_simple(transaction_xml);
-			server_update_simple(sale_order_xml);
-			server_create_simple(pt_xml);
-			server_create_simple_func(payment_xml,function()
+			modal26_action(pt_tran_id,function (mode,paid) 
 			{
-				modal26_action(pt_tran_id,function (mode,paid) 
-				{
-					if(parseFloat(paid)==0)
-						payment_filter.value="Unpaid<br>Balance: Rs. "+total;
-					else if(parseFloat(paid)==parseFloat(total))
-						payment_filter.value="Paid<br>Balance: Rs. 0";	
-					else 
-						payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));	
-					
-					modal127_action();
-				});
+				if(parseFloat(paid)==0)
+					payment_filter.value="Unpaid<br>Balance: Rs. "+total;
+				else if(parseFloat(paid)==parseFloat(total))
+					payment_filter.value="Paid<br>Balance: Rs. 0";	
+				else 
+					payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));	
+				
+				modal127_action();
 			});
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-			local_create_simple(transaction_xml);
-			local_update_simple(sale_order_xml);
-			local_create_simple(pt_xml);
-			local_create_simple_func(payment_xml,function()
-			{
-				modal26_action(pt_tran_id,function (mode,paid) 
-				{
-					if(parseFloat(paid)==0)
-						payment_filter.value="Unpaid<br>Balance: Rs. "+total;
-					else if(parseFloat(paid)==parseFloat(total))
-						payment_filter.value="Paid<br>Balance: Rs. 0";	
-					else 
-						payment_filter.value="Partially paid<br>Balance: Rs. "+(parseFloat(total)-parseFloat(paid));
-					
-					modal127_action();						
-				});
-			});
-		}
+		});
+
 		
 		var total_row="<tr><td colspan='2' data-th='Total'>Total<br>PCS: "+quantity+"</td>" +
 					"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
@@ -452,6 +416,21 @@ function form10_create_form()
 					"</tr>";
 		$('#form10_foot').html(total_row);
 	
+		var sms="We have got your laundry (total "+quantity+" pcs). It will be processed and delivered back to you soon.";
+		var phone_xml="<customers>"+
+					"<phone></phone>"+
+					"<name></name>"+
+					"<acc_name exact='yes'>"+customer+"</acc_name>"+
+					"</customers>";
+		fetch_requested_data('',phone_xml,function(phones)
+		{
+			var to=phones[0].phone;
+			var customer_name=phones[0].name;
+			var sms_content=sms.replace(/customer_name/g,customer_name);		
+			send_sms(to,sms_content,'transaction');
+					
+			//hide_loader();			
+		});
 		
 		$(save_button).off('click');
 		$(save_button).on('click',function(event)
