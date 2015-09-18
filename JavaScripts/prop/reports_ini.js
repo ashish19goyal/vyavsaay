@@ -6809,7 +6809,7 @@ function report90_ini()
 									var storage_result_array=[];
 									get_available_storage(item.item_name,item.batch,storages,item.quantity,storage_result_array,function () 
 									{	
-										console.log(storage_result_array);								
+										//console.log(storage_result_array);								
 										if(storage_result_array.length>0)
 										{
 											storage_result_array.sort(function(a,b)
@@ -6832,7 +6832,7 @@ function report90_ini()
 										}
 										else 
 										{
-											console.log(dup_storages);
+											//console.log(dup_storages);
 											var storage_string="";
 											dup_storages.forEach(function(storage_result)
 											{
@@ -6862,7 +6862,7 @@ function report90_ini()
 							{
 								this.select();
 							});
-							}
+						}
 					}
 				});
 			});

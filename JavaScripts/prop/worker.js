@@ -11,7 +11,7 @@ function worker_update_orders_status()
 		var orders_xml="<sale_orders>"+
 						"<id></id>"+
 						"<bill_id></bill_id>"+
-						"<status array='yes'>--billed--picked--</status>"+
+						"<status array='yes'>--billed--picked--packed--partially billed--partially picked--partially packed--</status>"+
 						"</sale_orders>";
 		fetch_requested_data('',orders_xml,function (orders) 
 		{
@@ -19,7 +19,14 @@ function worker_update_orders_status()
 			for(var i in orders)
 			{
 				bill_id_string+=orders[i].bill_id+"--";
+
+				var bill_id_array=JSON.parse(orders[i].bill_id);
+				for(var x in bill_id_array)
+				{
+					bill_id_string+=bill_id_array[x].bill_id+"--";
+				}
 			}
+
 			var picked_pending_xml="<bill_items>"+
 								"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
 								"<picked_status exact='yes'>pending</picked_status>"+
@@ -38,19 +45,50 @@ function worker_update_orders_status()
 				
 					orders.forEach(function(row)
 					{
-						var picked=pick_items.indexOf(row.bill_id);
-						var packed=pack_items.indexOf(row.bill_id);
+						var bill_id_array=JSON.parse(row.bill_id);
+						var picked=true;
+						var packed=true;
 						
-						if(picked==-1 && packed==-1)
+						var partially="";
+						
+						if(row.status.indexOf('partially')>-1)
+						{
+							partially="partially ";
+						}
+						for(var y in bill_id_array)
+						{
+							for(var x in pick_items)
+							{
+								if(pick_items[x]==bill_id_array[y].bill_id)
+								{
+									picked=false;
+									break;
+								}
+							}
+						}
+						
+						for(var y in bill_id_array)
+						{
+							for(var x in pack_items)
+							{
+								if(pack_items[x]==bill_id_array[y].bill_id)
+								{
+									packed=false;
+									break;
+								}
+							}
+						}
+
+						if(picked && packed)
 						{
 							row.status='packed';
 						}
-						else if(picked==-1)
+						else if(picked)
 						{
 							row.status='picked';
 						}
 
-						if(row.status!='billed')
+						if(row.status!='billed' && row.status!='partially billed')
 						{
 							if((counter%500)===0)
 							{
@@ -60,7 +98,7 @@ function worker_update_orders_status()
 							counter+=1;						
 							data_xml+="<row>" +
 								"<id>"+row.id+"</id>" +
-								"<status>"+row.status+"</status>" +
+								"<status>"+partially+row.status+"</status>" +
 								"<last_updated>"+last_updated+"</last_updated>" +
 								"</row>";
 						}

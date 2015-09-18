@@ -54,7 +54,7 @@ function switch_to_offline()
 		show_loader();
 		create_local_db(domain,function(e)
 		{
-			progress_value=0;
+			progress_value=10;
 			sync_server_to_local(function()
 			{
 				progress_value=50;

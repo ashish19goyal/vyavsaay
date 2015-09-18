@@ -2789,6 +2789,7 @@ function form92_delete_item(button)
 			var bill_num=form.elements[0].value;
 			var customer_name=form.elements[2].value;
 			var data_id=form.elements[5].value;
+			var order_id=form.elements['order_id'].value;
 			var transaction_id=form.elements[8].value;
 			var edit_button=form.elements[6];			
 			var last_updated=get_my_time();
@@ -2809,16 +2810,9 @@ function form92_delete_item(button)
 						"<id>"+transaction_id+"</id>" +
 						"</transactions>";
 		
-			if(is_online())
-			{
-				server_update_row(bill_xml,activity_xml);
-				server_delete_simple(transaction_xml);
-			}
-			else
-			{
-				local_update_row(bill_xml,activity_xml);
-				local_delete_simple(transaction_xml);
-			}
+			update_row(bill_xml,activity_xml);
+			delete_simple(transaction_xml);
+			
 			$(button).parent().parent().attr('style','opacity:0.5');
 			$(button).parent().parent().attr('title','This bill was cancelled');
 			$(button).hide();
@@ -2841,34 +2835,68 @@ function form92_delete_item(button)
 							"<id>"+payments[x].id+"</id>" +
 							"</payments>";
 	
-					if(is_online())
-					{
-						server_delete_simple(pay_xml);
-						server_delete_simple(pt_xml);
-					}
-					else
-					{
-						local_delete_simple(pay_xml);
-						local_delete_simple(pt_xml);
-					}
+					delete_simple(pay_xml);
+					delete_simple(pt_xml);
 					break;
 				}
 			});
 	
-			
 			var items_data="<bill_items>" +
 					"<id></id>" +
 					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"</bill_items>";
-			if(is_online())
+			delete_simple(items_data);
+			
+			//////////////////////////////////////////////
+			var sale_order_xml="<sale_orders>"+
+						"<id>"+order_id+"</id>" +
+						"<bill_id></bill_id>" +
+						"<status></status>"+
+						"<total_quantity></total_quantity>"+
+						"</sale_orders>";
+			fetch_requested_data('',sale_order_xml,function (sorders) 
 			{
-				server_delete_simple(items_data);
-			}
-			else
-			{
-				local_delete_simple(items_data);
-			}
-				
+				if(sorders.length>0)
+				{
+					var id_object_array=[];
+					if(sorders[0].bill_id!="" && sorders[0].bill_id!=0 && sorders[0].bill_id!="null")
+					{
+						id_object_array=JSON.parse(sorders[0].bill_id);
+					}
+					
+					for(var k in id_object_array)
+					{
+						if(id_object_array[k].bill_id==data_id)
+						{
+							id_object_array.splice(k,1);
+							k-=1;
+						}
+					}
+					
+					var master_total_quantity=0;
+					for(var k in id_object_array)
+					{
+						master_total_quantity+=parseFloat(id_object_array[k].quantity);
+					}
+	
+					var status='partially billed';				
+					if(parseFloat(master_total_quantity)==parseFloat(sorders[0].total_quantity))
+					{
+						status='billed';
+					}
+	
+					var new_bill_id=JSON.stringify(id_object_array);
+					var so_xml="<sale_orders>" +
+							"<id>"+order_id+"</id>" +
+							"<bill_id>"+new_bill_id+"</bill_id>" +
+							"<status>"+status+"</status>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</sale_orders>";
+					update_simple(so_xml);
+				}
+			});	
+			/////////////////////////////////////////////		  						
+			
 		});
 	}
 	else
@@ -2912,14 +2940,7 @@ function form93_delete_item(button)
 						"<notes>Loan of amount Rs. "+amount+" "+type+" "+adjective+" "+account+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(loan_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(loan_xml,activity_xml);
-			}	
+			delete_row(loan_xml,activity_xml);
 			$(button).parent().parent().remove();
 	
 			var payment_type="paid";
@@ -2946,17 +2967,9 @@ function form93_delete_item(button)
 								"<id>"+payments[i].id+"</id>" +
 								"<total_amount>"+amount+"</total_amount>" +
 								"</payments>";
-					if(is_online())
-					{
-						server_delete_simple(payment_xml);
-						server_delete_simple(transaction2_xml);
-					}
-					else
-					{
-						local_delete_simple(payment_xml);
-						local_delete_simple(transaction2_xml);
-					}	
-				
+					delete_simple(payment_xml);
+					delete_simple(transaction2_xml);
+					
 					break;
 				}
 			});
@@ -3003,14 +3016,7 @@ function form96_delete_item(button)
 						"<notes>Attribute "+attribute+" for customer "+customer+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3055,14 +3061,7 @@ function form97_delete_item(button)
 						"<notes>Attribute "+attribute+" for supplier "+supplier+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3106,14 +3105,7 @@ function form98_delete_item(button)
 						"<notes>Attribute "+attribute+" for staff "+staff+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3165,22 +3157,11 @@ function form101_delete_item(button)
 					"<tablename>projects</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"</data_access>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete);
-				server_delete_simple(other_delete2);
-				server_delete_simple(other_delete3);
-				server_delete_simple(access_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete);
-				local_delete_simple(other_delete2);
-				local_delete_simple(other_delete3);
-				local_delete_simple(access_xml);
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
+			delete_simple(other_delete2);
+			delete_simple(other_delete3);
+			delete_simple(access_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3213,16 +3194,8 @@ function form102_delete_item(button)
 					"<tablename>project_team</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"</data_access>";
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-				server_delete_simple(access_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-				local_delete_simple(access_xml);
-			}	
+			delete_simple(data_xml);
+			delete_simple(access_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3255,16 +3228,8 @@ function form103_delete_item(button)
 					"<tablename>project_phases</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"</data_access>";
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-				server_delete_simple(access_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-				local_delete_simple(access_xml);
-			}	
+			delete_simple(data_xml);
+			delete_simple(access_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3296,16 +3261,8 @@ function form104_delete_item(button)
 					"<tablename>task_instances</tablename>" +
 					"<record_id>"+data_id+"</record_id>" +
 					"</data_access>";
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-				server_delete_simple(access_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-				local_delete_simple(access_xml);
-			}	
+			delete_simple(data_xml);
+			delete_simple(access_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3332,14 +3289,7 @@ function form105_delete_item(button)
 			var data_xml="<data_access>" +
 						"<id>"+data_id+"</id>" +
 						"</data_access>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}	
+			delete_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -3426,14 +3376,7 @@ function form109_delete_item(button)
 						"<notes>Attribute "+attribute+" for asset "+asset+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-			}	
+			delete_row(data_xml,activity_xml);
 			$(button).parent().parent().remove();
 		});
 	}
@@ -5190,14 +5133,7 @@ function form154_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
 						"</bill_items>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}
+			delete_simple(data_xml);
 					
 			$(button).parent().parent().remove();
 			form154_update_serial_numbers();

@@ -1433,4 +1433,15 @@
 		</form>
 	</div>
 
+	<div id="modal154" title="View Invoices">
+		<br>		
+		<table id='modal154_item_table'>
+		</table>
+		<br>
+		<br>
+		<form id='modal154_form'>
+			<input type="button" class='modal_submit' id='modal154_cancel' value='Cancel' onclick="$('#modal154').dialog('close');">
+		</form>	
+	</div>
+
 </div>

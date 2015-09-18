@@ -2294,7 +2294,8 @@ function form69_add_item()
 
 		$('textarea').autosize();
 		longPressEditable($('.dblclick_editable'));
-		
+
+		form69_get_totals();
 	}
 	else
 	{
@@ -11045,7 +11046,7 @@ function form193_add_item()
 				rowsHTML+="<br>Name: <textarea form='193form193_"+id+"' readonly='readonly'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
-				rowsHTML+="<input type='text' form='193form193_"+id+"'>";
+				rowsHTML+="<input type='text' required form='193form193_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="1";
@@ -14149,7 +14150,7 @@ function form244_add_item()
 				rowsHTML+="<br>Name: <textarea form='244form244_"+id+"' readonly='readonly'></textarea>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
-				rowsHTML+="<input type='text' form='244form244_"+id+"'>";
+				rowsHTML+="<input type='text' required form='244form244_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="1";

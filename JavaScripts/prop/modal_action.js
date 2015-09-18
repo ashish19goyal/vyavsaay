@@ -9441,6 +9441,7 @@ function modal138_action()
                 order_object.item_price=data_row.item_price;
                 order_object.amount=parseFloat(data_row.item_price)*parseFloat(data_row.quantity);
                 order_object.total=parseFloat(order_object.freight)+parseFloat(order_object.amount);
+				order_object.total_quantity=parseFloat(data_row.quantity);
 
 				data_row.order_system_id=order_object.id;
 				for(var j=0;j<order_array.length;j++)
@@ -9451,6 +9452,7 @@ function modal138_action()
                 		order_array[j].freight=parseFloat(order_array[j].freight)+parseFloat(order_object.freight);
 						order_array[j].amount=parseFloat(order_array[j].amount)+parseFloat(order_object.amount);
 						order_array[j].total=parseFloat(order_array[j].total)+parseFloat(order_object.total);
+						order_array[j].total_quantity=parseFloat(order_array[j].total_quantity)+parseFloat(order_object.total_quantity);
 						data_row.order_system_id=order_array[j].id;
                 		break;
                 	}
@@ -9495,6 +9497,7 @@ function modal138_action()
 						"<amount>"+row.amount+"</amount>"+
 						"<tax></tax>"+
 						"<total>"+row.total+"</total>"+
+						"<total_quantity>"+row.total_quantity+"</total_quantity>"+
 						"<status>pending</status>"+
 						"<billing_type>"+row.tax_type+"</billing_type>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
@@ -11338,4 +11341,26 @@ function modal153_action(button,lead_id)
 	});
 	
 	$("#modal153").dialog("open");
+}
+
+/**
+ * @modal View Invoices
+ * @modalNo 154
+ */
+function modal154_action(bill_ids)
+{
+	var bill_id_array=JSON.parse(bill_ids);
+
+	var rowsHTML="<tr style='background-color:#2C8A50;'><td>Invoice</td><td>Link</td></tr>";
+	
+	bill_id_array.forEach(function (bill_id) 
+	{
+		rowsHTML+="<tr>"+
+				"<td>"+bill_id.bill_num+"</td>"+
+				"<td><a onclick=\"element_display('"+bill_id.bill_id+"','form91'); $('#modal154').dialog('close');\"><u style='cursor:pointer;'>View</u></a></td>"+
+				"</tr>";
+	});
+
+	$('#modal154_item_table').html(rowsHTML);		
+	$("#modal154").dialog("open");
 }

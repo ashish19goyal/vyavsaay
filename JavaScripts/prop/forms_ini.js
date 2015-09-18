@@ -5399,16 +5399,6 @@ function form69_ini()
 					form69_update_form();
 				});
 				
-				var total_row="<tr><td colspan='1' data-th='Total'>Total</td>" +
-							"<td>Amount:</br>Tax: <br>Freight: </br>Total: </td>" +
-							"<td>Rs. "+order_results[i].amount+"</br>" +
-							"Rs. "+order_results[i].tax+"</br>" +
-							"Rs. "+order_results[i].freight+"</br>" +
-							"Rs. "+order_results[i].total+"</td>" +
-							"<td></td>" +
-							"</tr>";
-				$('#form69_foot').html(total_row);
-
 				break;
 			}
 		/////////////////////////////////////////////////////////////////////////
@@ -5476,6 +5466,7 @@ function form69_ini()
 					}
 				});
 				$('textarea').autosize();
+				form69_get_totals();
 				hide_loader();
 			});
 		});		
@@ -8130,7 +8121,7 @@ function form92_ini()
 			"<type></type>" +
 			"<transaction_id></transaction_id>" +
 			"<billing_type>"+ftype+"</billing_type>" +
-			"<last_updated></last_updated>" +
+			"<order_id></order_id>"+
 			"<status></status>"+
 			"</bills>";
 
@@ -8171,6 +8162,7 @@ function form92_ini()
 						rowsHTML+="<input type='button' class='delete_icon' form='form92_"+result.id+"' title='Cancel Bill' onclick='form92_delete_item($(this));'>";
 					}					
 						rowsHTML+="<input type='hidden' form='form92_"+result.id+"' value='"+result.transaction_id+"'>";
+						rowsHTML+="<input type='hidden' form='form92_"+result.id+"' value='"+result.order_id+"' name='order_id'>";
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
@@ -9939,47 +9931,45 @@ function form108_ini()
 						rowsHTML+="<input type='button' class='edit_icon' form='form108_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form69');\">";
 						rowsHTML+="<input type='button' class='submit_hidden' form='form108_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form108_"+result.id+"' title='Delete order' onclick='form108_delete_item($(this));'>";
-					if(result.bill_id=='' || result.bill_id=='null' || result.bill_id=='0' || result.bill_id=='undefined')
+					if(result.status!='closed' || result.status!='cancelled')
 					{
-						rowsHTML+="<br><input type='button' class='generic_icon' form='form108_"+result.id+"' value='Create Bill'>";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form108_"+result.id+"' name='create' value='Create Bill'>";
 					}
-					else
+					if(result.status!='pending')
 					{
-						rowsHTML+="<br><input type='button' class='generic_icon' form='form108_"+result.id+"' value='View Bill'>";
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form108_"+result.id+"' name='view' value='View Bill'>";
 					}
 					if(result.status=='return initiated')
 					{
-						rowsHTML+="<br><input type='button' class='generic_icon' name='return' form='form108_"+result.id+"' value='Issue GRN'>";
+						rowsHTML+="<br><input type='button' class='generic_icon' name='return' form='form108_"+result.id+"' name='issue_grn' value='Issue GRN'>";
 					}					
 					else if(result.status=='return received' || result.status=='return closed')
 					{
-						rowsHTML+="<br><input type='button' class='generic_icon' name='return' form='form108_"+result.id+"' value='View Return'>";
+						rowsHTML+="<br><input type='button' class='generic_icon' name='return' form='form108_"+result.id+"' name='view_return' value='View Return'>";
 					}					
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form108_body').append(rowsHTML);
 			var fields=document.getElementById("form108_"+result.id);
-			var bill_button=fields.elements[9];
+			var create_bill_button=fields.elements['create'];
+			var view_bill_button=fields.elements['view'];
 			var status_filter=fields.elements[4];
 			
 			//set_static_value_list('sale_orders','status',status_filter);
-			
-			if(result.bill_id=='' || result.bill_id=='null' || result.bill_id=='0' || result.bill_id=='undefined')
+
+			$(create_bill_button).off('click');
+			$(create_bill_button).on('click',function(event)
 			{
-				$(bill_button).on('click',function(event)
-				{
-					modal133_action(result.id,result.channel,result.order_num,result.customer_name,result.billing_type,result.order_date);
-				});
-			}
-			else
+				modal133_action(result.id,result.channel,result.order_num,result.customer_name,result.billing_type,result.order_date);
+			});
+
+			$(view_bill_button).off('click');
+			$(view_bill_button).on('click',function(event)
 			{
-				$(bill_button).on('click',function() 
-				{
-					element_display(result.bill_id,'form91');
-				});
-			}
-			
+				modal154_action(result.bill_id);
+			});
+	
 			if(result.status=='return initiated')
 			{
 				var return_button=fields.elements['return'];

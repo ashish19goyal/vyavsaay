@@ -3303,14 +3303,7 @@ function form66_update_item(form)
 					"<notes>Cross selling of "+cross_name+" to product "+product+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -3346,7 +3339,8 @@ function form69_update_form()
 		var freight=0;
 		var tax=0;
 		var total=0;
-		
+		var total_quantity=0;
+
 		$("[id^='save_form69']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
@@ -3359,9 +3353,11 @@ function form69_update_form()
 				freight+=parseFloat(subform.elements[9].value);
 			if(!isNaN(parseFloat(subform.elements[10].value)))			
 				total+=parseFloat(subform.elements[10].value);
+			if(!isNaN(parseFloat(subform.elements[4].value)))
+				total_quantity+=parseFloat(subform.elements[4].value);							
 		});
-	
-		var total_row="<tr><td colspan='1' data-th='Total'>Total</td>" +
+
+		var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:</br>Tax: <br>Freight: </br>Total: </td>" +
 							"<td>Rs. "+amount+"</br>" +
 							"Rs. "+tax+"</br>" +
@@ -3382,6 +3378,7 @@ function form69_update_form()
 					"<tax>"+tax+"</tax>" +
 					"<freight>"+freight+"</freight>" +
 					"<total>"+total+"</total>" +
+					"<total_quantity>"+total_quantity+"</total_quantity>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_orders>";
 		var activity_xml="<activity>" +
@@ -3392,14 +3389,7 @@ function form69_update_form()
 					"<notes>Sale order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
+		update_row(data_xml,activity_xml);
 		$("[id^='save_form69_']").click();
 	}
 	else
@@ -4422,6 +4412,55 @@ function form91_update_form()
 		update_row(data_xml,activity_xml);
 		update_simple(transaction_xml);
 
+
+		//////////////////////////////////////////////
+		var sale_order_xml="<sale_orders>"+
+					"<id>"+order_id+"</id>" +
+					"<bill_id></bill_id>" +
+					"<status></status>"+
+					"<total_quantity></total_quantity>"+
+					"</sale_orders>";
+		fetch_requested_data('',sale_order_xml,function (sorders) 
+		{
+			if(sorders.length>0)
+			{
+				var id_object_array=[];
+				if(sorders[0].bill_id!="" && sorders[0].bill_id!=0 && sorders[0].bill_id!="null")
+				{
+					id_object_array=JSON.parse(sorders[0].bill_id);
+				}
+				
+				var master_total_quantity=0;
+				
+				for(var k in id_object_array)
+				{
+					if(id_object_array[k].bill_id==data_id)
+					{
+						id_object_array[k].bill_num=bill_num;
+						id_object_array[k].quantity=total_quantity;
+					}
+					master_total_quantity+=parseFloat(id_object_array[k].quantity);
+				}
+
+				var status='partially billed';				
+				if(parseFloat(master_total_quantity)==parseFloat(sorders[0].total_quantity))
+				{
+					status='billed';
+				}
+
+				var new_bill_id=JSON.stringify(id_object_array);
+				//console.log(new_bill_id);
+				var so_xml="<sale_orders>" +
+						"<id>"+order_id+"</id>" +
+						"<bill_id>"+new_bill_id+"</bill_id>" +
+						"<status>"+status+"</status>" +
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</sale_orders>";
+				update_simple(so_xml);
+			}
+		});	
+		/////////////////////////////////////////////		  						
+		  						
 		var payment_data="<payments>" +
 				"<id></id>" +
 				"<bill_id exact='yes'>"+data_id+"</bill_id>" +
@@ -5137,14 +5176,7 @@ function form108_update_item(form)
 					"<notes>Order no "+data_id+" for customer "+customer_name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
 		for(var i=0;i<4;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -5186,14 +5218,7 @@ function form109_update_item(form)
 					"<notes>Attribute "+attribute+" for asset "+asset+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
 		for(var i=0;i<3;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -5233,15 +5258,8 @@ function form111_update_form()
 					"<notes>Report "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}
-	
+		update_row(data_xml,activity_xml);
+		
 		$("[id^='save_form111_']").click();
 	}
 	else

@@ -419,7 +419,7 @@
 	<sale_orders>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<order_num index='yes' type="VARCHAR(20)"></order_num>
-			<bill_id index='yes' type="BIGINT"></bill_id>
+			<bill_id index='yes' type="TEXT"></bill_id>
 			<return_id index='yes' type="BIGINT"></return_id>
 			<channel index='yes' type="TEXT"></channel>
 			<customer_name index='yes' type="TEXT"></customer_name>
@@ -434,6 +434,7 @@
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<total index='no' type="DECIMAL(12,2)"></total>
+			<total_quantity index='no' type="DECIMAL(12,2)"></total_quantity>
 			<status index='yes' type='VARCHAR(25)'></status><!-- billed/cancelled/pending/picked/packed/dispatched/closed -->
 			<manifest_num index="yes" type="VARCHAR(30)"></manifest_num>
 			<manifest_id index="yes" type="BIGINT"></manifest_id>

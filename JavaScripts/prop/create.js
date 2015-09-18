@@ -2723,14 +2723,7 @@ function form69_create_item(form)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</sale_order_items>";	
 	
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}
+		create_simple(data_xml);
 		
 		for(var i=0;i<11;i++)
 		{
@@ -2749,6 +2742,46 @@ function form69_create_item(form)
 	{
 		$("#modal2").dialog("open");
 	}
+}
+
+function form69_get_totals()
+{
+	var total_quantity=0;
+	var amount=0;
+	var freight=0;
+	var tax=0;
+	var total=0;
+	
+	$("[id^='save_form69']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		if(!isNaN(parseFloat(subform.elements[7].value)))
+			amount+=parseFloat(subform.elements[7].value);
+		if(!isNaN(parseFloat(subform.elements[8].value)))			
+			tax+=parseFloat(subform.elements[8].value);
+		if(!isNaN(parseFloat(subform.elements[9].value)))			
+			freight+=parseFloat(subform.elements[9].value);
+		if(!isNaN(parseFloat(subform.elements[10].value)))			
+			total+=parseFloat(subform.elements[10].value);						
+		if(!isNaN(parseFloat(subform.elements[4].value)))
+			total_quantity+=parseFloat(subform.elements[4].value);	
+	});
+	
+	amount=my_round(amount,2);
+	freight=my_round(freight,2);
+	tax=my_round(tax,2);
+	total=my_round(total,2);
+
+	var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+						"<td>Amount:</br>Tax: <br>Freight: </br>Total: </td>" +
+						"<td>Rs. "+amount+"</br>" +
+						"Rs. "+tax+"</br>" +
+						"Rs. "+freight+"</br>" +
+						"Rs. "+total+"</td>" +
+						"<td></td>" +
+						"</tr>";
+	$('#form69_foot').html(total_row);
 }
 
 /**
@@ -2773,7 +2806,8 @@ function form69_create_form()
 		var freight=0;
 		var tax=0;
 		var total=0;
-		
+		var total_quantity=0;
+
 		$("[id^='save_form69']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
@@ -2785,10 +2819,12 @@ function form69_create_form()
 			if(!isNaN(parseFloat(subform.elements[9].value)))			
 				freight+=parseFloat(subform.elements[9].value);
 			if(!isNaN(parseFloat(subform.elements[10].value)))			
-				total+=parseFloat(subform.elements[10].value);						
+				total+=parseFloat(subform.elements[10].value);
+			if(!isNaN(parseFloat(subform.elements[4].value)))
+				total_quantity+=parseFloat(subform.elements[4].value);							
 		});
 
-		var total_row="<tr><td colspan='1' data-th='Total'>Total</td>" +
+		var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:</br>Tax: <br>Freight: </br>Total: </td>" +
 							"<td>Rs. "+amount+"</br>" +
 							"Rs. "+tax+"</br>" +
@@ -2810,6 +2846,7 @@ function form69_create_form()
 					"<tax>"+tax+"</tax>" +
 					"<freight>"+freight+"</freight>" +
 					"<total>"+total+"</total>" +
+					"<total_quantity>"+total_quantity+"</total_quantity>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</sale_orders>";
 		var activity_xml="<activity>" +
@@ -2820,15 +2857,8 @@ function form69_create_form()
 					"<notes>Sale order # "+order_num+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}
-
+		create_row(data_xml,activity_xml);
+		
 		var num_data="<user_preferences>"+
 						"<id></id>"+						
 						"<name exact='yes'>so_num</name>"+												
@@ -2842,14 +2872,7 @@ function form69_create_form()
 							"<value>"+(parseInt(order_num)+1)+"</value>"+
 							"<last_updated>"+last_updated+"</last_updated>"+
 							"</user_preferences>";
-				if(is_online())
-				{
-					server_update_simple(num_xml);
-				}
-				else 
-				{
-					local_update_simple(num_xml);
-				}
+				update_simple(num_xml);
 			}
 		},num_data);
 
@@ -5354,7 +5377,7 @@ function form91_get_totals()
 
 
 /**
- * @form Create bill(bakery)
+ * @form Create bill(nikki)
  * @formNo 91
  * @param button
  */
@@ -6051,7 +6074,8 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 
 		var actual_order_items=[];
 		var order_items=[];
-
+		var bill_key=get_new_key();								
+								
 		$("#modal133_item_table tr").each(function(index)
 		{
 			var checked=false;
@@ -6077,7 +6101,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 			if(order_items.length>0)
 			{
 				pending_items_count=order_items.length;
-				console.log(order_items);
+				//console.log(order_items);
 				
 				var bill_items_xml_array=[];
 				var order_items_xml_array=[];
@@ -6239,7 +6263,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 																	"<freight>"+bill_item_freight+"</freight>" +
 																	"<tax>"+bill_item_tax+"</tax>" +
 																	"<tax_rate>"+item_tax_rate+"</tax_rate>" +
-																	"<bill_id>"+order_id+"</bill_id>" +
+																	"<bill_id>"+bill_key+"</bill_id>" +
 																	"<storage>"+item_storage+"</storage>"+
 																	"<picked_status>pending</picked_status>"+
 																	"<packing_status>pending</packing_status>"+
@@ -6303,18 +6327,68 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 						{
 							if(bill_num_ids.length>0)
 							{
-								var sale_order_xml="<sale_orders>" +
-										"<id>"+order_id+"</id>" +
-										"<bill_id>"+order_id+"</bill_id>"+
-										"<status>billed</status>" +
-										"</sale_orders>";
+								//////////////////////////////////////////////
+								var sale_order_xml="<sale_orders>"+
+											"<id>"+order_id+"</id>" +
+											"<bill_id></bill_id>" +
+											"<total_quantity></total_quantity>"+
+											"</sale_orders>";
+								fetch_requested_data('',sale_order_xml,function (sorders) 
+								{
+									if(sorders.length>0)
+									{
+										var id_object_array=[];
+										if(sorders[0].bill_id!="" && sorders[0].bill_id!=0 && sorders[0].bill_id!="null")
+										{
+											id_object_array=JSON.parse(sorders[0].bill_id);
+										}
+										
+										var id_object=new Object();
+										id_object.bill_num=bill_num_ids[0].value;
+										id_object.bill_id=bill_key;
+																				
+										id_object.quantity=0;
+										for(var j in order_items)
+										{
+											id_object.quantity+=parseFloat(order_items[j].quantity);											
+										}
+										id_object_array.push(id_object);
+						
+										var master_total_quantity=0;				
+										for(var k in id_object_array)
+										{
+											master_total_quantity+=parseFloat(id_object_array[k].quantity);
+										}
+										
+										var status='partially billed';				
+										if(master_total_quantity==parseFloat(sorders[0].total_quantity))
+										{
+											status='billed';
+										}
+
+										var new_bill_id=JSON.stringify(id_object_array);
+										//console.log(new_bill_id);
+										var so_xml="<sale_orders>" +
+												"<id>"+order_id+"</id>" +
+												"<bill_id>"+new_bill_id+"</bill_id>" +
+												"<status>"+status+"</status>" +
+												"<last_updated>"+get_my_time()+"</last_updated>" +
+												"</sale_orders>";
+										update_simple_func(so_xml,function () 
+										{
+											form108_ini();
+										});					
+									}
+								});	
+								/////////////////////////////////////////////		  						
+		  						
 		  						var num_xml="<user_preferences>"+
 										"<id>"+bill_num_ids[0].id+"</id>"+
 										"<value>"+(parseInt(bill_num_ids[0].value)+1)+"</value>"+
 										"<last_updated>"+get_my_time()+"</last_updated>"+
 										"</user_preferences>";
 								var bill_xml="<bills>" +
-										"<id>"+order_id+"</id>" +
+										"<id>"+bill_key+"</id>" +
 										"<bill_num>"+bill_num_ids[0].value+"</bill_num>"+										
 										"<order_num>"+order_num+"</order_num>"+										
 										"<order_id>"+order_id+"</order_id>"+										
@@ -6334,7 +6408,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 										"<last_updated>"+get_my_time()+"</last_updated>" +
 										"</bills>";			
 								var activity_xml="<activity>" +
-										"<data_id>"+order_id+"</data_id>" +
+										"<data_id>"+bill_key+"</data_id>" +
 										"<tablename>bills</tablename>" +
 										"<link_to>form42</link_to>" +
 										"<title>Saved</title>" +
@@ -6342,7 +6416,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 										"<updated_by>"+get_name()+"</updated_by>" +
 										"</activity>";
 								var transaction_xml="<transactions>" +
-										"<id>"+order_id+"</id>" +
+										"<id>"+bill_key+"</id>" +
 										"<trans_date>"+get_my_time()+"</trans_date>" +
 										"<amount>"+bill_total+"</amount>" +
 										"<receiver>"+customer+"</receiver>" +
@@ -6375,10 +6449,6 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 										"<last_updated>"+get_my_time()+"</last_updated>" +
 										"</transactions>";
 								
-								update_simple_func(sale_order_xml,function () 
-								{
-									form108_ini();
-								});					
 								create_simple(transaction_xml);
 								create_simple(pt_xml);
 								create_simple(payment_xml);
