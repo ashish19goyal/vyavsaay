@@ -6763,7 +6763,7 @@ function report90_ini()
 								rowsHTML+="<td data-th='Storage'>";
 									rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
 									rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='report90_edit_location_"+item.id+"'>";
-									if(item.storage=='')
+									if(item.quantity!=picked_quantity)
 										rowsHTML+="<img src='./images/refresh.png' class='refresh_icon' title='Refresh Location Calculation' id='report90_refresh_location_"+item.id+"'>";
 									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.id+"'>";
 									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.table_type+"'>";
@@ -6791,21 +6791,56 @@ function report90_ini()
 							var refresh_button=document.getElementById("report90_refresh_location_"+item.id);
 							$(refresh_button).on('click',function ()
 							{
+								show_loader();
 								var storage_xml="<area_utilization>"+
 												"<name></name>"+
 												"<item_name exact='yes'>"+item.item_name+"</item_name>"+
 												"<batch exact='yes'>"+item.batch+"</batch>"+
 												"</area_utilization>";											
 								get_single_column_data(function (storages) 
-								{										
+								{
+									var dup_storages=[];
+									for(var i in storages)
+									{
+										var dup_storage=new Object();										
+										dup_storage.storage=storages[i];
+										dup_storages.push(dup_storage);
+									}										
 									var storage_result_array=[];
 									get_available_storage(item.item_name,item.batch,storages,item.quantity,storage_result_array,function () 
-									{
+									{	
+										console.log(storage_result_array);								
 										if(storage_result_array.length>0)
 										{
+											storage_result_array.sort(function(a,b)
+											{
+												if(parseInt(a.quantity)<parseInt(b.quantity))
+												{	return 1;}
+												else 
+												{	return -1;}
+											});
+
 											storage_filter.value=storage_result_array[0].storage;
 											report90_update(report90_form);
+											
+											var storage_string="";
+											storage_result_array.forEach(function(storage_result)
+											{
+												storage_string+=storage_result.storage+"\n";
+											});
+											refresh_button.setAttribute('title',storage_string);
 										}
+										else 
+										{
+											console.log(dup_storages);
+											var storage_string="";
+											dup_storages.forEach(function(storage_result)
+											{
+												storage_string+=storage_result.storage+"\n";
+											});
+											refresh_button.setAttribute('title',storage_string);
+										}
+										hide_loader();
 									});
 								},storage_xml);
 							});
