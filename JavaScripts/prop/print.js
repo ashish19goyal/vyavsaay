@@ -3747,15 +3747,21 @@ function print_modal131(func,order_num,received_quantity,total_quantity,supplier
 		var supplier_info=document.createElement('div');
 		var order_info=document.createElement('div');
 
+	var footer=document.createElement('div');
+		var tandc=document.createElement('div');
+		var signature=document.createElement('div');
 		
 	////////////setting styles for containers/////////////////////////
 
 	header.setAttribute('style','width:100%;min-height:100px;');
-		business_title.setAttribute('style','width:90%;text-align:center;');
-	invoice_box.setAttribute('style','width:98%;min-height:60px;background-color:#bbbbbb;border: 1px solid #000000;padding:2px;');
-	info_section.setAttribute('style','width:99%;min-height:60px;border: 1px solid #000000;');
+		business_title.setAttribute('style','width:99%;text-align:center;');
+	invoice_box.setAttribute('style','width:99%;min-height:60px;background-color:#bbbbbb;border: 1px solid #000000;padding:2px;');
+	info_section.setAttribute('style','width:99%;min-height:60px;padding:2px;border: 1px solid #000000;');
 		supplier_info.setAttribute('style','padding:2px;margin:2px;float:left;width:48%;height:60px;text-align:left;');
 		order_info.setAttribute('style','padding:2px;margin:2px;float:right;width:48%;height:60px;text-align:right;');
+	footer.setAttribute('style','width:100%;min-height:100px');
+		tandc.setAttribute('style','float:left;width:60%;min-height:50px');
+		signature.setAttribute('style','float:right;width:30%;min-height:60px');
 
 	///////////////getting the content////////////////////////////////////////
 
@@ -3764,6 +3770,7 @@ function print_modal131(func,order_num,received_quantity,total_quantity,supplier
 	var business_address=get_session_var('address');
 	var business_phone=get_session_var('phone');
 	var today_date=get_my_date();
+	var signature_text="<br>"+bt+"<br><br><br>Auth. Signatory<br>";
 	
 	////////////////filling in the content into the containers//////////////////////////
 
@@ -3772,17 +3779,26 @@ function print_modal131(func,order_num,received_quantity,total_quantity,supplier
 	
 	supplier_info.innerHTML="<b>Supplier</b><br>"+supplier_name;
 	order_info.innerHTML="Received "+received_quantity+" quantity out of total order of "+total_quantity+" quantity";
-
 	
+	////////////////filling in the content into the containers//////////////////////////
+	
+	tandc.innerHTML="";
+	signature.innerHTML=signature_text;
+
+	///////////////////////////////////////
+
 	container.appendChild(header);
 	container.appendChild(invoice_box);
 	container.appendChild(info_section);
+	container.appendChild(footer);
 
 	header.appendChild(business_title);
 
 	info_section.appendChild(supplier_info);
 	info_section.appendChild(order_info);
 
+	footer.appendChild(tandc);
+	footer.appendChild(signature);
+
 	func(container);
 }
-

@@ -23,11 +23,13 @@ function ajax_with_custom_func(url,kvp,func)
 		type: "POST",
 		url: url,
 		data: kvp,
-		error:function()
+		error:function(xhr, ajaxOptions, thrownError) 
 		{
 			number_active_ajax-=1;
 			hide_loader();
 			$("#modal74").dialog("open");
+	        console.log(xhr.status);
+    	    console.log(thrownError);
 		},
 		success: function(return_data,return_status,e)
 		{

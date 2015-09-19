@@ -8783,7 +8783,7 @@ function modal131_action(order_id,order_num,total_quantity,supplier_name,order_d
 
 	order_num_filter.value=order_num;
 	total_filter.value=total_quantity;
-	received_filter.setAttribute('max',total_quantity);
+	//received_filter.setAttribute('max',total_quantity);
 	//received_filter.value="";
 	$(received_filter).focus();
 
@@ -8810,14 +8810,7 @@ function modal131_action(order_id,order_num,total_quantity,supplier_name,order_d
 		                "<quantity_qc_pending>"+qc_pending+"</quantity_qc_pending>"+
 		                "<last_updated>"+last_updated+"</last_updated>"+
 						"</purchase_orders>";
-			if(is_online())
-			{
-				server_update_simple(orders_xml);
-			}
-			else
-			{
-				local_update_simple(orders_xml);
-			}	
+			update_simple(orders_xml);	
 		}
 		else
 		{
@@ -11037,7 +11030,7 @@ function modal150_action(rack,report_id)
 			var batch=subform.elements[2].value;
 			var quantity=parseFloat(subform.elements[3].value);
 			var picked_quantity=parseFloat(subform.elements[4].value);
-			var row_id=subform.elements[6].value;
+			var row_id=subform.elements[13].value;
 			var item_row=document.createElement('tr');
 			
 			item_row.setAttribute('id','modal150_row_'+row_id);
@@ -11201,8 +11194,8 @@ function modal152_action(rack)
 	{
 		var subform=$(this)[0];
 		var storage=subform.elements[4].value;
-		if(storage==rack || storage=="")
-		{
+		//if(storage==rack || storage=="")
+		//{
 			var item_name=subform.elements[0].value;
 			var batch=subform.elements[1].value;
 			var quantity=parseFloat(subform.elements[2].value);
@@ -11215,7 +11208,7 @@ function modal152_action(rack)
 			
 			item_row.innerHTML="<td style='margin:2px;word-wrap: break-word;'>"+item_name+"</td><td style='margin:2px;word-wrap: break-word;'>"+batch+"</td><td style='margin:2px;text-align:center;'>"+(quantity-placed_quantity)+"</td>";
 			item_table.appendChild(item_row);			
-		}								
+		//}								
 	});	
 	//////////////////////////////
 	
@@ -11241,7 +11234,8 @@ function modal152_action(rack)
 			var row_storage=master_form.elements[4].value;
 			var new_placed_quantity=to_place_quantity-unplaced_quantity;
 
-			if(row_storage=="" && old_placed_quantity!=new_placed_quantity)
+			//if(row_storage=="" && old_placed_quantity!=new_placed_quantity)
+			if(old_placed_quantity!=new_placed_quantity)
 			{
 				master_form.elements[4].value=rack;
 			}

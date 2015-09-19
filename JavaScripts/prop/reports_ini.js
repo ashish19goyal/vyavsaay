@@ -6713,7 +6713,7 @@ function report90_ini()
 				adjust_item.storage=adjust_results[z].storage;
 				adjust_item.id=adjust_results[z].id;
 				adjust_item.table_type='inventory_adjust';
-				adjust_item.picked_quantity=adjust_results[z].picked_quantity;
+				adjust_item.picked_quantity=-(parseFloat(adjust_results[z].picked_quantity));
 				adjust_item.bill_id=adjust_results[z].source_id;
 				items.push(adjust_item);
 			}
@@ -6762,6 +6762,8 @@ function report90_ini()
 								rowsHTML+="</td>";
 								rowsHTML+="<td data-th='Storage'>";
 									rowsHTML+="<input type='text' readonly='readonly' style='width:150px;' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
+								rowsHTML+="</td>";
+								rowsHTML+="<td data-th='Action'>";
 									rowsHTML+="<img src='./images/edit.png' class='edit_icon' title='Edit Location' id='report90_edit_location_"+item.id+"'>";
 									if(item.quantity!=picked_quantity)
 										rowsHTML+="<img src='./images/refresh.png' class='refresh_icon' title='Refresh Location Calculation' id='report90_refresh_location_"+item.id+"'>";
@@ -6773,8 +6775,8 @@ function report90_ini()
 									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.storage+"'>";
 									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+picked_quantity+"'>";									
 									rowsHTML+="<input type='hidden' form='row_report90_"+item.id+"' value='"+item.id+"'>";
-									rowsHTML+="</td>";
-								rowsHTML+="</tr>";
+								rowsHTML+="</td>";
+							rowsHTML+="</tr>";
 
 							$('#report90_body').append(rowsHTML);
 						
@@ -6853,7 +6855,6 @@ function report90_ini()
 			
 							var storage_data="<store_areas>"+
 										"<name></name>"+
-										//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
 										"<area_type></area_type>"+
 										"</store_areas>";
 							set_my_value_list(storage_data,storage_filter);

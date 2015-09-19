@@ -5542,13 +5542,6 @@ function form122_add_item()
 			},name_filter.value);	
 		});
 	
-		var storage_data="<store_areas>"+
-						"<name></name>"+
-						//"<area_type exact='yes'>"+get_session_var('storage_level')+"</area_type>"+
-						"<area_type></area_type>"+
-						"</store_areas>";
-		set_my_value_list(storage_data,storage_filter);
-		
 		$(barcode_filter).on('blur',function()
 		{
 			if(barcode_filter.value!="" && barcode_filter.value!=null)
@@ -5696,7 +5689,7 @@ function form122_add_item()
 				if(data.length>0)
 				{
 					batch_filter.value=data[0].batch;				
-					
+					/*
 					var its_storage_data="<area_utilization>"+
 							"<name></name>"+
 							"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
@@ -5704,7 +5697,7 @@ function form122_add_item()
 							"</area_utilization>";
 								
 					set_my_value(its_storage_data,storage_filter);					
-
+					*/
 					var mrp_data="<product_instances>"+
 						"<mrp></mrp>"+
 						"<expiry></expiry>"+
@@ -5758,13 +5751,14 @@ function form122_add_item()
 		
 		$(batch_filter).on('blur',function(event)
 		{
+			/*
 			var its_storage_data="<area_utilization>"+
 							"<name></name>"+
 							"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
 							"<batch exact='yes'>"+batch_filter.value+"</batch>"+
 							"</area_utilization>";
 			set_my_value(its_storage_data,storage_filter);					
-
+			*/
 			var mrp_data="<product_instances>"+
 				"<mrp></mrp>"+
 				"<expiry></expiry>"+

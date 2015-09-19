@@ -8010,7 +8010,7 @@ function form122_create_item(form)
 		var is_unbilled=form.elements['unbilled'].value;
 		
 		var put_away_status='pending';
-		if(is_unbilled=='yes')
+		if(is_unbilled=='yes' || qc=='rejected')
 		{
 			put_away_status='completed';
 		}
@@ -8220,17 +8220,24 @@ function form122_create_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			if(subform.elements[12].value=='accepted')
+			if(subform.elements[1].value=="")
 			{
-				if(!isNaN(parseFloat(subform.elements[7].value)))
-					amount+=parseFloat(subform.elements[7].value);
-				if(!isNaN(parseFloat(subform.elements[8].value)))
-					tax+=parseFloat(subform.elements[8].value);
+				$(this).parent().parent().remove();
+			}			
+			else
+			{
+				if(subform.elements[12].value=='accepted')
+				{
+					if(!isNaN(parseFloat(subform.elements[7].value)))
+						amount+=parseFloat(subform.elements[7].value);
+					if(!isNaN(parseFloat(subform.elements[8].value)))
+						tax+=parseFloat(subform.elements[8].value);
+					if(!isNaN(parseFloat(subform.elements[4].value)))
+						total_accepted+=parseFloat(subform.elements[4].value);			
+				}
 				if(!isNaN(parseFloat(subform.elements[4].value)))
-					total_accepted+=parseFloat(subform.elements[4].value);			
-			}
-			if(!isNaN(parseFloat(subform.elements[4].value)))
-				total_quantity+=parseFloat(subform.elements[4].value);
+					total_quantity+=parseFloat(subform.elements[4].value);
+			}		
 		});
 	
 		amount=my_round(amount,2);
