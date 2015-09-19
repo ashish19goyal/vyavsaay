@@ -9729,11 +9729,17 @@ function modal140_action(i_func)
 			var supplier_array=[];
 			
 			var import_items_count=data_array.length;
+			//console.log(data_array.length);
+			var unique_items_in_import=[];
+			
 			var import_items_string="--";
 			data_array.forEach(function (data_row) 
 			{
 				import_items_string+=data_row.system_sku+"--";
+				unique_items_in_import.push(data_row.system_sku);
 			});
+			
+			unique_items_in_import=array_unique(unique_items_in_import);
 			
 			var products_xml="<product_master>"+
 							"<name array='yes'>"+import_items_string+"</name>"+
@@ -9741,7 +9747,7 @@ function modal140_action(i_func)
 
 			fetch_requested_data('',products_xml,function (products) 
 			{
-				if(products.length==import_items_count)
+				if(products.length==unique_items_in_import.length)
 				{
 					data_array.forEach(function (data_row) 
 					{

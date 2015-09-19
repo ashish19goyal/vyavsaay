@@ -9,7 +9,7 @@
     "recent_activity":"Recent Activity"
   },
   "function": {
-    "sale_bills": "Sale Bills",
+    "sale_bills": "Sales",
     "purchase": "Purchase",
     "finances": "Finances",
     "products": "Products",
@@ -417,6 +417,7 @@
 	"manage_payables":"Manage Payables",
 	"receipts_cps":"Receipts (CPS)",
 	"inventory_finished":"Inventory (Finished Goods)",
-	"add_stock":"Add Stock"
+	"add_stock":"Add Stock",
+	"pending_sale_order_items":"Pending Sale Order Items"
 	}
 }

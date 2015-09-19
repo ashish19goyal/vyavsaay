@@ -2010,3 +2010,25 @@ function report91_header_ini()
 				"</product_master>";
 	set_my_value_list(brand_data,brand_filter);
 }
+
+/**
+ * @reportNo 92
+ * @report Pending Sale Order items
+ */
+function report92_header_ini()
+{	
+	var form=document.getElementById('report92_header');
+	var order_filter=form.elements[1];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report92_ini();
+	});
+	
+	var order_data="<sale_orders>"+
+				"<order_num></order_num>"+
+				"</sale_orders>";
+	set_my_filter(order_data,order_filter);
+}

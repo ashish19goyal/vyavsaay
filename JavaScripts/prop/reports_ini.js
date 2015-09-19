@@ -4736,7 +4736,7 @@ function report66_ini()
 	var total_calls=0;
 	$('#report66_body').html('');
 		
-	var area_data="<store_areas>" +
+	var area_data="<store_areas count='1'>" +
 			"<id></id>"+
 			"<name exact='yes'>"+storage_filter+"</name>"+
 			"<area_type exact='yes'>"+type_filter+"</area_type>" +
@@ -4759,7 +4759,7 @@ function report66_ini()
 			{
 				if(storage_count_tracker===0)
 				{
-					//console.log(storage_array);
+					console.log(storage_array);
 					clearInterval(areas_complete);
 
 					total_calls-=1;
@@ -4777,7 +4777,7 @@ function report66_ini()
 					total_calls+=1;				
 					fetch_requested_data('',item_data,function(items)
 					{
-						//console.log(items);
+						console.log(items);
 						total_calls-=1;
 						for(var i=0;i<items.length;i++)
 						{
@@ -6959,5 +6959,135 @@ function report91_ini()
 			csv_download_report(new_products,'Brand_wise_inventory');
 		});
 	});
+};
+
+/**
+ * @reportNo 92
+ * @report Pending Sale order items
+ */
+function report92_ini()
+{
+	var form=document.getElementById('report92_header');
+	var order_filter=form.elements[1].value;
 	
+	show_loader();
+	$('#report92_body').html('');	
+	
+	var order_data="<sale_orders>"+
+				"<id></id>"+
+				"<order_num>"+order_filter+"</order_num>"+
+				"<status array='yes'>--pending--partially billed--partially picked--partially packed--</status>"+
+				"<bill_id></bill_id>"+
+				"</sale_orders>";
+
+	fetch_requested_data('report92',order_data,function(pos)
+	{
+		//console.log(pos);
+		var bill_id_string='--';
+		var po_id_string='--';
+		for(var i in pos)
+		{
+			if(pos[i].bill_id!='undefined' && pos[i].bill_id!="" && pos[i].bill_id!='0')
+			{
+				var bill_id_array=JSON.parse(pos[i].bill_id);
+				for(var x in bill_id_array)
+				{
+					bill_id_string+=bill_id_array[x].bill_id+"--";
+				}
+			}
+			po_id_string+=pos[i].id+"--";
+		}		
+
+		var bill_items_xml="<bill_items>"+
+					"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
+					"<item_name></item_name>"+
+					"<item_desc></item_desc>"+
+					"<quantity></quantity>"+
+					"</bill_items>";
+					
+		var po_items_xml="<sale_order_items>"+
+					"<order_id array='yes'>"+po_id_string+"</order_id>"+
+					"<item_name></item_name>"+
+					"<item_desc></item_desc>"+
+					"<quantity></quantity>"+
+					"</sale_order_items>";
+		fetch_requested_data('',po_items_xml,function (po_items) 
+		{
+			//console.log(po_items);
+			fetch_requested_data('',bill_items_xml,function (bill_items) 
+			{
+				//console.log(bill_items);
+				for(var j=0;j<po_items.length;j++)
+				{
+					po_items[j].order_quantity=po_items[j].quantity;
+					for(var x in pos)
+					{
+						if(pos[x].id==po_items[j].order_id)
+						{
+							po_items[j].order_num=pos[x].order_num;
+							break;
+						}
+					}
+				}
+				
+				for(var k=0;k<po_items.length;k++)
+				{
+					for(var l=0;l<bill_items.length;l++)
+					{
+						if(po_items[k].item_name==bill_items[l].item_name)
+						{
+							if(parseFloat(po_items[k].quantity)>parseFloat(bill_items[l].quantity))
+							{
+								po_items[k].quantity=parseFloat(po_items[k].quantity)-parseFloat(bill_items[l].quantity);
+								bill_items.splice(l,1);
+								l--;
+							}
+							else if(parseFloat(po_items[k].quantity)<parseFloat(bill_items[l].quantity))
+							{
+								bill_items[l].quantity=parseFloat(bill_items[l].quantity)-parseFloat(po_items[k].quantity);
+								po_items.splice(k,1);
+								k--;
+								break;
+							}
+							else 
+							{
+								bill_items.splice(l,1);
+								po_items.splice(k,1);
+								k--;
+								break;
+							}
+						}
+					}
+				}
+				
+				var rowsHTML="";
+				po_items.forEach(function(item)
+				{
+					rowsHTML+="<tr>";
+					rowsHTML+="<td data-th='Order #'>";
+						rowsHTML+="<a onclick=\"element_display('"+item.order_id+"','form108');\">"+item.order_num+"<\a>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='SKU'>";
+						rowsHTML+=item.item_name;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Item Name'>";
+						rowsHTML+=item.item_desc;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Order Qty'>";
+						rowsHTML+=item.order_quantity;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Pending Qty'>";
+						rowsHTML+=item.quantity;
+					rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+				});
+				$('#report92_body').html(rowsHTML);
+				
+				hide_loader();
+			});
+		});
+	});
+	
+	var print_button=form.elements[3];
+	print_tabular_report('report92','Pending Sale Order Items',print_button);
 };
