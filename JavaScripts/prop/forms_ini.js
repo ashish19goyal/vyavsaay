@@ -22047,6 +22047,7 @@ function form210_ini()
 	var order_filter=master_form.elements['order'];
 	var print_button=master_form.elements['print'];
 	
+	$('#form210_invoice_line').html('');
 	$('#form210_invoice').html('');
 	$('#form210_image').html('');
 
@@ -22081,7 +22082,7 @@ function form210_ini()
 					"<mrp></mrp>"+
 					"<batch></batch>"+
 					"<picked_status exact='yes'>picked</picked_status>"+
-					"<packing_status exact='yes'>pending</packing_status>"+
+					"<packing_status></packing_status>"+
 					"<storage></storage>"+
 					"<bill_id exact='yes'>"+bills[0].id+"</bill_id>"+		
 					"</bill_items>";
@@ -22092,13 +22093,11 @@ function form210_ini()
 					////////////setting up containers///////////////////////	
 					var container=document.getElementById('form210_invoice');
 											
-					var invoice_line=document.createElement('div');
+					var invoice_line=document.getElementById('form210_invoice_line');
 					var table_container=document.createElement('div');
 					
 					////////////setting styles for containers/////////////////////////
-				
-					invoice_line.setAttribute('style','padding:10px;font-size:1em;width:100%;min-height:50px;background-color:#bbbbbb;font-weight:600;');
-					
+									
 					///////////////getting the content////////////////////////////////////////
 					var date=get_my_past_date(bills[0].bill_date);				
 					var invoice_no=bills[0].bill_num;
@@ -22110,7 +22109,7 @@ function form210_ini()
 					
 					table_copy.setAttribute('width','100%');
 					table_copy.setAttribute('class','plain_table');
-					$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>MRP</th><th>Total</th><th>Quantity</th><th>Action</th></tr>");
+					$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>MRP</th><th>Total</th><th>Quantity</th></tr>");
 	
 					bill_items.forEach(function (item) 
 					{
@@ -22118,10 +22117,15 @@ function form210_ini()
 						{
 							item.packed_quantity=0;
 						}
-						$(table_copy).append("<tr id='form210_row_"+item.id+"' data-id='"+item.id+"'><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_topack_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p></td><td><input type='button' id='form210_reject_"+item.id+"' class='generic_icon' value='Reject' onclick=\"form210_reject_item('"+item.id+"','"+item.item_name+"','"+item.batch+"','"+item.quantity+"','"+item.storage+"')\"></td></tr>");	
+						var row_class="";
+						if(item.packing_status=='packed')
+						{
+							row_class=" class='green_row'";
+						}
+						$(table_copy).append("<tr "+row_class+" id='form210_row_"+item.id+"' data-id='"+item.id+"'><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_topack_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p><br>Rejected: <vyavsaay_p id='form210_packed_"+item.id+"'></td></tr>");	
 					});
-										
-					container.appendChild(invoice_line);
+
+					//container.appendChild(invoice_line);
 					container.appendChild(table_copy);
 					
 					hide_loader();

@@ -7727,6 +7727,7 @@ function form210_header_ini()
 	
 	$('#form210_image').html('');
 	$('#form210_invoice').html('');
+	$('#form210_invoice_line').html('');
 
 	$(bag_filter).focus();
 
@@ -7774,7 +7775,7 @@ function form210_header_ini()
 			set_my_value(order_data,order_filter);
 		}
 	});
-
+/*
 	$(order_filter).off('blur');
 	$(order_filter).on('blur',function () 
 	{
@@ -7787,6 +7788,7 @@ function form210_header_ini()
 			set_my_value(bag_data,bag_filter);
 		}
 	});
+	*/
 }
 
 

@@ -424,6 +424,14 @@ tr.default_row{
 	background: #EAF2D3;
 }
 
+tr.green_row{
+	background: #7DF481;
+}
+
+tr.green_row:hover{
+	background: #48A56A;
+}
+
 tr.red_row{
 	background: #FFB99C;
 }

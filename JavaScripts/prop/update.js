@@ -12592,9 +12592,9 @@ function form233_update_item()
 		    onrendered: function (canvas) 
 		    {
 		       blob=canvas.toDataURL("image/jpeg");
-		       console.log(blob);
-		       console.log(canvas);
-		/////////////////////////////////////
+		       //console.log(blob);
+		       //console.log(canvas);
+				/////////////////////////////////////
 				
 				if(pic_url=="")
 				{

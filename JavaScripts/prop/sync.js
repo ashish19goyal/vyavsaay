@@ -110,6 +110,10 @@ function sync_local_and_server()
 					});
 				});
 			}
+			else 
+			{
+				$("#modal74").dialog("open");
+			}
 		});
 	}
 	else
@@ -309,7 +313,7 @@ function sync_local_to_server(func)
 		get_last_sync_time(function(last_sync_time)
 		{
 			var log_data_array=log_data.split("<separator></separator>");
-			//console.log(log_data_array.length);
+			console.log(log_data_array.length);
 			var log_data_counter=0;
 			log_data_array.forEach(function(log_data_chunk)
 			{
@@ -319,12 +323,12 @@ function sync_local_to_server(func)
 				{
 					run_daemons='yes';
 				}
-				//console.log(log_data_chunk);
+				console.log(log_data_chunk);
 				log_data_chunk="<activities>"+log_data_chunk+"</activities>";
 				//console.log(log_data_chunk);
 				ajax_with_custom_func("./ajax/sync_upload.php",{run_daemons:run_daemons,domain:domain,username:username,cr:cr_access,up:up_access,del:del_access,data:log_data_chunk,last_sync:last_sync_time},function(e)
 				{
-					//console.log(e.responseText);
+					console.log(e.responseText);
 					var response=e.responseXML;
 					set_activities_to_synced(e);
 				});
