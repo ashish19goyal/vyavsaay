@@ -9984,7 +9984,7 @@ function form108_ini()
 			$(create_bill_button).off('click');
 			$(create_bill_button).on('click',function(event)
 			{
-				modal133_action(result.id,result.channel,result.order_num,result.customer_name,result.billing_type,result.order_date);
+				modal133_action(result.id,result.channel,result.order_num,result.customer_name,result.billing_type,result.order_date,result.bill_id);
 			});
 
 			$(view_bill_button).off('click');
@@ -19120,6 +19120,7 @@ function form183_ini()
 					rowsHTML+="<form id='form183_"+result.id+"'></form>";
 						rowsHTML+="<td data-th='Name'>";
 							rowsHTML+="<textarea readonly='readonly' form='form183_"+result.id+"'>"+result.product_name+"</textarea>";
+							rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+result.id+"' onclick=\"print_product_barcode('"+result.id+"','"+result.product_name+"','"+result.batch+"');\">";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Batch'>";
 							rowsHTML+="<input type='text' readonly='readonly' form='form183_"+result.id+"' value='"+result.batch+"'>";
@@ -21246,7 +21247,6 @@ function form200_ini()
 									"<pieces></pieces>" +
 									"<drs_num exact='yes'>"+drs_results[0].drs_num+"</drs_num>" +
 									"<drs_id exact='yes'>"+drs_id+"</drs_id>" +
-									"<tax></tax>" +
 									"</logistics_orders>";
 
 				/////////////////////////////////////////////////////////////////////////
@@ -22750,7 +22750,6 @@ function form219_ini()
 									"<collectable_value></collectable_value>"+
 									"<drs_num exact='yes'>"+drs_results[0].drs_num+"</drs_num>" +
 									"<drs_id exact='yes'>"+drs_id+"</drs_id>" +
-									"<tax></tax>" +
 									"</logistics_orders>";
 
 				/////////////////////////////////////////////////////////////////////////
@@ -25188,6 +25187,7 @@ function form238_ini()
 					rowsHTML+="<form id='form238_"+result.id+"'></form>";
 						rowsHTML+="<td data-th='Name'>";
 							rowsHTML+="<textarea readonly='readonly' form='form238_"+result.id+"'>"+result.product_name+"</textarea>";
+							rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+result.id+"' onclick=\"print_product_barcode('"+result.id+"','"+result.product_name+"','"+result.batch+"');\">";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Batch'>";
 							rowsHTML+="<input type='text' readonly='readonly' form='form238_"+result.id+"' value='"+result.batch+"'>";
@@ -25695,6 +25695,7 @@ function form243_ini()
 			"<receipt_id>"+rid+"</receipt_id>" +
 			"<acc_name>"+faccount+"</acc_name>" +
 			"<amount></amount>" +
+			"<date></date>"+
 			"</receipts>";
 
 	$('#form243_body').html("");
@@ -25719,13 +25720,20 @@ function form243_ini()
 					rowsHTML+="<td data-th='Document'>";
 						rowsHTML+="<br><div id='form243_documents_"+result.id+"'></div>";
 						rowsHTML+="<input type='button' form='form243_"+result.id+"' value='Add document' class='generic_icon'>";
+						rowsHTML+="<input type='button' form='form243_"+result.id+"' value='Print Receipt' class='print_icon'>";
 					rowsHTML+="</td>";				
 			rowsHTML+="</tr>";
 			
 			$('#form243_body').append(rowsHTML);
 			var fields=document.getElementById('form243_'+result.id);
 			var doc_filter=fields.elements[4];
-					
+			var print_button=fields.elements[5];
+
+			$(print_button).on('click',function () 
+			{
+				form243_print(result.receipt_id,result.acc_name,result.amount,result.date);
+			});
+
 			$(doc_filter).on('click',function () 
 			{
 				modal144_action('receipts',result.id,function (url,doc_name) 

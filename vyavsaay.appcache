@@ -208,6 +208,7 @@ JavaScripts/prop/time.js
 JavaScripts/prop/update.js
 JavaScripts/prop/virtual_store.js
 JavaScripts/prop/worker.js
+JavaScripts/prop/get_totals.js
 locales/translation-en.json
 locales/translation-hi.json
 locales/translation-pa.json

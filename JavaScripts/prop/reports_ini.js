@@ -6554,44 +6554,58 @@ function report88_ini()
 	
 	fetch_requested_data('report88',attribute_data,function(attributes)
 	{
-		for (var i=0;i<attributes.length;i++)
+		var item_data="<product_master>" +
+			"<name>"+item+"</name>" +
+			"<description>"+keyword+"</description>"+
+			"</product_master>";
+		fetch_requested_data('report88',item_data,function(items)
 		{
-			attributes[i].attribute_content=attributes[i].attribute+": "+attributes[i].value+"<br>";
-			for(var j=i+1;j<attributes.length;j++)
+			for (var i=0;i<items.length;i++)
 			{
-				if(attributes[i].name==attributes[j].name)
+				items[i].attribute="Details";
+				items[i].value=items[i].description;
+				attributes.push(items[i]);
+			}
+	
+			for (var i=0;i<attributes.length;i++)
+			{
+				attributes[i].attribute_content=attributes[i].attribute+": "+attributes[i].value+"<br>";
+				for(var j=i+1;j<attributes.length;j++)
 				{
-					attributes[i].attribute_content+=attributes[j].attribute+": "+attributes[j].value+"<br>";
-					attributes.splice(j,1);
-					j-=1;
+					if(attributes[i].name==attributes[j].name)
+					{
+						attributes[i].attribute_content+=attributes[j].attribute+": "+attributes[j].value+"<br>";
+						attributes.splice(j,1);
+						j-=1;
+					}
 				}
 			}
-		}
-
-		attributes.forEach(function(result)
-		{
-			var rowsHTML="<tr>";
-				rowsHTML+="<td data-th='Item'>";
-					rowsHTML+=result.name;
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Details'>";
-					rowsHTML+=result.attribute_content;
-				rowsHTML+="</td>";
-				rowsHTML+="<td data-th='Inventory' id='report88_inventory_"+result.id+"'>";
-				rowsHTML+="</td>";
-			rowsHTML+="</tr>";
-
-			$('#report88_body').append(rowsHTML);
-			
-			get_inventory(result.name,'',function(inventory)
+	
+			attributes.forEach(function(result)
 			{
-				document.getElementById('report88_inventory_'+result.id).innerHTML=-parseFloat(inventory);
+				var rowsHTML="<tr>";
+					rowsHTML+="<td data-th='Item'>";
+						rowsHTML+=result.name;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Details'>";
+						rowsHTML+=result.attribute_content;
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Inventory' id='report88_inventory_"+result.id+"'>";
+					rowsHTML+="</td>";
+				rowsHTML+="</tr>";
+	
+				$('#report88_body').append(rowsHTML);
+				
+				get_inventory(result.name,'',function(inventory)
+				{
+					document.getElementById('report88_inventory_'+result.id).innerHTML=-parseFloat(inventory);
+				});
 			});
+			
+			var print_button=form.elements[4];
+			print_tabular_report('report88','Inventory Report',print_button);
+			hide_loader();
 		});
-		
-		var print_button=form.elements[4];
-		print_tabular_report('report88','Inventory Report',print_button);
-		hide_loader();
 	});
 };
 

@@ -7240,11 +7240,9 @@ function form136_add_item()
 		rowsHTML+="<form id='form136_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Product Name'>";
 				rowsHTML+="<input type='text' required form='form136_"+id+"'>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new product' id='form136_add_product_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='form136_"+id+"'></br>";
-				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add new batch' id='form136_add_batch_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="Bought: <input type='number' step='any' required form='form136_"+id+"'>";
@@ -7301,48 +7299,6 @@ function form136_add_item()
 		set_my_value_list_func(product_data,name_filter,function () 
 		{
 			$(name_filter).focus();
-		});
-
-		
-		var add_product=document.getElementById('form136_add_product_'+id);
-		$(add_product).on('click',function()
-		{
-			modal14_action(function()
-			{	
-				var product_data="<product_master>" +
-						"<name></name>" +
-						"</product_master>";
-				set_my_value_list_func(product_data,name_filter,function () 
-				{
-					$(name_filter).focus();
-				});
-			});
-		});
-
-		var add_batch=document.getElementById('form136_add_batch_'+id);
-		$(add_batch).on('click',function()
-		{
-			modal22_action(function()
-			{	
-				var batch_data="<product_instances>" +
-					"<batch></batch>" +
-					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
-					"</product_instances>";
-				set_my_value_list(batch_data,batch_filter);
-			});
-		});
-
-		var add_storage=document.getElementById('form136_add_storage_'+id);
-		$(add_storage).on('click',function()
-		{
-			modal35_action(function()
-			{	
-				var storage_data="<store_areas>" +
-							"<name></name>" +
-							"<area_type exact='yes'>storage</area_type>" +
-							"</store_areas>";
-				set_my_value_list(storage_data,storage_filter);
-			});
 		});
 
 		var storage_data="<store_areas>" +
@@ -11062,7 +11018,8 @@ function form193_add_item()
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
-			form193_add_item();
+			form193_get_totals();
+			form193_add_item();			
 		});
 
 		$(barcode_filter).focus();
@@ -11089,10 +11046,10 @@ function form193_add_item()
 				{
 					desc_filter.value=descs[0].description;
 					barcode_filter.value=descs[0].bar_code;
+					var barcode_td=document.getElementById('form193_barcode_'+id);
 					
 					if(barcode_filter.value!="")
 					{	
-						var barcode_td=document.getElementById('form193_barcode_'+id);
 						
 						if(smaller_barcodes!=null && smaller_barcodes.indexOf(descs[0].make)>-1)
 						{
@@ -11151,6 +11108,7 @@ function form193_add_item()
 			if(event.keyCode == 13 ) 
 			{
 				event.preventDefault();
+							
 				var item_data="<product_master count='1'>"+
 							"<name></name>"+
 							"<description></description>"+
@@ -11186,6 +11144,7 @@ function form193_add_item()
 						}
 						else
 						{
+							form193_get_totals();
 							form193_add_item();				
 						}
 					}
@@ -14166,6 +14125,7 @@ function form244_add_item()
 		$(fields).on("submit", function(event)
 		{
 			event.preventDefault();
+			form244_get_totals();
 			form244_add_item();
 		});
 
@@ -14193,10 +14153,10 @@ function form244_add_item()
 				{
 					desc_filter.value=descs[0].description;
 					barcode_filter.value=descs[0].bar_code;
-					
+					var barcode_td=document.getElementById('form244_barcode_'+id);
+						
 					if(barcode_filter.value!="")
 					{	
-						var barcode_td=document.getElementById('form244_barcode_'+id);
 						
 						if(smaller_barcodes!=null && smaller_barcodes.indexOf(descs[0].make)>-1)
 						{
@@ -14255,6 +14215,7 @@ function form244_add_item()
 			if(event.keyCode == 13 ) 
 			{
 				event.preventDefault();
+							
 				var item_data="<product_master count='1'>"+
 							"<name></name>"+
 							"<description></description>"+
@@ -14290,6 +14251,7 @@ function form244_add_item()
 						}
 						else
 						{
+							form244_get_totals();
 							form244_add_item();				
 						}
 					}

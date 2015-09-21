@@ -7,7 +7,7 @@
 					<th>Batch <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form238_header'></th>
 					<th>Manufacturing</th>
 					<th>Quantity</th>
-					<th><input type='button' form='form238_header' value='Add Batch' class='add_icon' onclick='modal22_action(function(){});'>
+					<th><input type='button' form='form238_header' value='Add Batch' class='add_icon' onclick="modal156_action('raw material');">
 						<input type='button' form='form238_header' value='EXPORT' class='export_icon'>
 						<input type='submit' form='form238_header' style='display:none;visibility: hidden;'>
 					</th>

@@ -1453,9 +1453,19 @@
 				<label>Balance <input type="text" readonly='readonly'></label><br>
 				<input type="hidden" name='type'>
 				<input type="submit" value='Save' class='modal_submit'>
-				<input type="button" value='Print & Save' class='modal_submit'>
 			</fieldset>
 		</form>
 	</div>
 	
+	<div id="modal156" title="Add new batch">
+		<form id='modal156_form' autocomplete="off">
+			<fieldset>
+				<label>Item: <input type="text" required></label><br>
+				<label>Batch: <input type='text' required></label><br>
+				<label>Manufacturing: <input type="text"></label><br>
+				<input type="submit" value='Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

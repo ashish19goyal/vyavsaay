@@ -41,17 +41,19 @@
 			if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['re']==$read_access)
 			{
 				$table=$input->nodeName;
-				
+
 				$columns_to_display="";
 				$values_array=array();
 				foreach($input->childNodes as $col)
 				{
-					$columns_to_display.=$col->nodeName.",";
+					if($col->nodeValue!="")
+					{
+						$columns_to_display.=$col->nodeName . ",";
+					}
 				}
 				$columns_to_display=rtrim($columns_to_display,",");
 							
 				$query="select ".$columns_to_display." from $table where ";
-				
 				$order_by=" ORDER BY last_updated DESC, ";
 				
 				$limit=" limit ?,?";
@@ -68,6 +70,8 @@
 				
 				foreach($input->childNodes as $col)
 				{
+					//$columns_array[]=$col->nodeName;
+					
 					if($col->nodeValue!="")
 					{
 						if($col->hasAttribute('upperbound'))
@@ -119,7 +123,7 @@
 				
 				if(count($values_array)===0)
 				{
-					$query="select ".$columns_to_display." from $table";
+					$query="select * from $table";
 				}
 				$query.=$order_by."id DESC";
 
@@ -137,7 +141,7 @@
 				$stmt=$conn->conn->prepare($query);
 				$stmt->execute($values_array);
 				$struct_res=$stmt->fetchAll(PDO::FETCH_ASSOC);
-				
+/*				
 				for($i=0;$i<count($struct_res);$i++)
 				{
 					$xmlresponse.="<row>";
@@ -151,8 +155,12 @@
 				}
 				
 				$xmlresponse.="</$table>";
-				header ("Content-Type:text/xml");
-				echo $xmlresponse;
+*/
+				$xmlresponse=json_encode($struct_res);	
+				//header ("Content-Type:text/xml");
+				header ("Content-Type:application/json");
+							
+				print_r($xmlresponse);
 			}
 			else
 			{

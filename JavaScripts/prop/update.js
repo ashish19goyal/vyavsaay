@@ -7121,14 +7121,7 @@ function form137_reject_item(button)
 					"<status>"+status+"</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</expenses>";
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}
+		update_simple(data_xml);
 		form137_get_totals();
 		$(button).hide();
 	}

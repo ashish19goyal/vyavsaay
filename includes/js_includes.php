@@ -58,3 +58,4 @@
 <script src='./JavaScripts/prop/time.js'></script>
 <script src='./JavaScripts/prop/virtual_store.js'></script>
 <script src='./JavaScripts/prop/worker.js'></script>
+<script src='./JavaScripts/prop/get_totals.js'></script>

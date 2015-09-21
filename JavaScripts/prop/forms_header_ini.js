@@ -6386,7 +6386,7 @@ function form173_header_ini()
 			"<channel_sku></channel_sku>" +
 			"</sku_mapping>";
 	var business_sku_data="<sku_mapping>" +
-			"<channel_sysmte_sku></channel_sysmte_sku>" +
+			"<channel_system_sku></channel_system_sku>" +
 			"</sku_mapping>";
 	var system_sku_data="<sku_mapping>" +
 			"<system_sku></system_sku>" +
@@ -7110,10 +7110,12 @@ function form193_header_ini()
 	var fields=document.getElementById('form193_master');
 	
 	var storage_filter=fields.elements['storage'];
+	var quantity_filter=fields.elements['q_scanned'];
 	var save_button=fields.elements['save'];
 	//var barcode_button=fields.elements['barcode'];
 
 	storage_filter.value="";	
+	quantity_filter.value=0;
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)
@@ -7303,13 +7305,14 @@ function form198_header_ini()
 
 	awb_filter.value="";	
 
-	var awb_data="<logistics_orders>"+
+/*	var awb_data="<logistics_orders>"+
 				"<awb_num></awb_num>"+
 				"</logistics_orders>";
 	set_my_value_list(awb_data,awb_filter,function () 
 	{
+*/
 		$(awb_filter).focus();
-	});
+//	});
 
 	$(fields).off('submit');
 	$(fields).on('submit',function(event)
@@ -9157,10 +9160,12 @@ function form244_header_ini()
 	var fields=document.getElementById('form244_master');
 	
 	var storage_filter=fields.elements['storage'];
+	var quantity_filter=fields.elements['q_scanned'];
 	var save_button=fields.elements['save'];
 	//var barcode_button=fields.elements['barcode'];
 
 	storage_filter.value="";	
+	quantity_filter.value=0;	
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)

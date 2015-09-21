@@ -1,9 +1,10 @@
 <div id='form193' class='function_detail'>
 	<form id='form193_master' autocomplete="off">
 		<fieldset>
-			<label>Storage:	<input type='text' required name='storage'></label>
+			<label style='background-color:#B93C42;color:#fff;padding:3px;'>Scan Rack<br><input type='text' style='color:#000' required name='storage'></label>
+			<label>Total Quantity Scanned:	<input type='number' step='1' readonly='readonly' name='q_scanned'></label>
 			<label><input type='button' name='save' class='generic_icon' value='Update Stock'></label>
-			<!--<label><input type='button' name='barcode' title='Click to print a randomly generated barcode' class='generic_red_icon' value='Generate Barcode'></label>-->
+			<input type='submit' class='submit_hidden'>
 		</fieldset>
 	</form>
 	<table class='rwd-table'>
