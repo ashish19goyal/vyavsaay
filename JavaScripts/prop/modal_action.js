@@ -11199,12 +11199,44 @@ function modal151_action(bill_id,order_num)
 	var bag_filter=form.elements['bag_num'];
 
 	order_filter.value=order_num;
+	var bill_id_string=""+bill_id;	
+	var bag_num=bill_id_string.slice(-3);
 
+	bag_filter.value=bag_num;
+	
+	if('Notification' in window)
+	{		
+		if(Notification.permission==='granted')
+		{
+			//console.log('permission is granted by default');
+			var notification=new Notification('Vyavsaay',
+			{
+				body: "Place this item in bag # "+bag_num,
+				icon: "./images/favicon.png"
+			});
+		}
+		else
+		{
+			Notification.requestPermission(function(permission)
+			{
+				if(permission==='granted')
+				{
+					console.log('permission granted');
+					var notification=new Notification('Vyavsaay',
+					{
+						body: "Place this item in bag # "+bag_num,
+						icon: "./images/favicon.png"
+					});							 
+				}
+	        });
+		}
+	}
+/*
 	$(form).off('submit');
 	$(form).on('submit',function(event) 
 	{
 		event.preventDefault();
-		
+	
 		var bill_xml="<bills>"+
 					"<id>"+bill_id+"</id>"+
 					"<pick_bag_num>"+bag_filter.value+"</pick_bag_num>"+
@@ -11214,16 +11246,10 @@ function modal151_action(bill_id,order_num)
 
 		$("#modal151").dialog("close");		
 	});	
-
-	var bag_num_xml="<bills>"+
-					"<pick_bag_num></pick_bag_num>"+
-					"<id>"+bill_id+"</id>"+
-					"<order_num exact='yes'>"+order_num+"</order_num>"+
-					"</bills>";
-	set_my_value(bag_num_xml,bag_filter);
 					
 	///////////////////////////
 	$("#modal151").dialog("open");	
+*/
 }
 
 
@@ -11405,8 +11431,12 @@ function modal153_action(button,lead_id)
  */
 function modal154_action(bill_ids)
 {
-	var bill_id_array=JSON.parse(bill_ids);
-
+	
+	var bill_id_array=[];
+	if(bill_ids!="" && bill_ids!="undefined" && bill_ids!=0)
+	{
+		bill_id_array=JSON.parse(bill_ids);
+	}
 	var rowsHTML="<tr style='background-color:#2C8A50;'><td>Invoice</td><td>Link</td></tr>";
 	
 	bill_id_array.forEach(function (bill_id) 

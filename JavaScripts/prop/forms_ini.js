@@ -8051,6 +8051,7 @@ function form91_ini()
 			{
 				results.forEach(function(result)
 				{
+					console.log(result);
 					var rowsHTML="";
 					var id=result.id;
 					rowsHTML+="<tr>";

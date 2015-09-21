@@ -1402,7 +1402,7 @@
 		<form id='modal151_form' autocomplete="off">
 			<fieldset>
 				<label>Order #: <input type="text" name='order_num' readonly='readonly' required></label>
-				<label>Bag #: <input type="text" name='bag_num' required></label>
+				<label>Bag #: <input type="text" name='bag_num' readonly='readonly' required></label>
 				<input type="submit" value='Save' name='save' class='modal_submit'>
 			</fieldset>
 		</form>

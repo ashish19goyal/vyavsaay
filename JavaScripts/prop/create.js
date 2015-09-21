@@ -6233,7 +6233,9 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 									}
 								});	
 								/////////////////////////////////////////////		  						
-		  						
+		  						var bill_key_string=""+bill_key;	
+								var pick_bag_num=bill_key_string.slice(-3);
+
 		  						var num_xml="<user_preferences>"+
 										"<id>"+bill_num_ids[0].id+"</id>"+
 										"<value>"+(parseInt(bill_num_ids[0].value)+1)+"</value>"+
@@ -6257,6 +6259,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 										"<channel_payable>"+bill_channel_payable+"</channel_payable>"+
 										"<tax>"+bill_tax+"</tax>" +
 										"<transaction_id>"+order_id+"</transaction_id>" +
+										"<pick_bag_num>"+pick_bag_num+"</pick_bag_num>"+
 										"<last_updated>"+get_my_time()+"</last_updated>" +
 										"</bills>";			
 								var activity_xml="<activity>" +
