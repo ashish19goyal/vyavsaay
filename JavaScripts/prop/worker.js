@@ -37,7 +37,7 @@ function worker_update_orders_status()
 								"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
 								"<packing_status exact='yes'>pending</packing_status>"+
 								"</bill_items>";
-				get_single_column_data(function (pack_items) 
+				get_single_column_data(function (pack_items)
 				{
 					var data_xml="<sale_orders>";
 					var counter=1;
@@ -112,8 +112,6 @@ function worker_update_orders_status()
 				},packed_pending_xml);				
 			},picked_pending_xml);	
 		});
-		//////////////////////////////////////////////////////
-		
 	}
 	else 
 	{
@@ -234,8 +232,9 @@ function count_sync()
 			"<status exact='yes'>unsynced</status>" +
 			"</activities>";
 
-		fetch_requested_data('',sync_data,function(syncs)
+		get_single_column_data(function(syncs)
 		{
+			//console.log(syncs);
 			var num_res=syncs.length;
 			
 			if(num_res===0)
@@ -248,7 +247,7 @@ function count_sync()
 				$('#count_sync').html(num_res);
 				$('#count_sync').show(); 
 			}
-		});
+		},sync_data);
 	clearInterval(count_sync_timer);
 	count_sync_timer=setTimeout(count_sync,get_worker_repeat());
 }

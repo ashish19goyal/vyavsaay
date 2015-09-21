@@ -1,4 +1,83 @@
 /**
+* @form Activities
+* @formNo 
+*/
+function activities_import(data_array,import_type)
+{
+	data_array.forEach(function(row)
+	{
+		row.last_updated=""+get_raw_time(row.last_updated);		
+	});
+	local_create_activities(data_array);
+	
+	///////////////////////////////////
+	function local_create_activities(rows)
+	{
+		if(typeof static_local_db=='undefined')
+		{
+			open_local_db(function()
+			{
+				local_create_activities(rows);
+			});
+		}
+		else
+		{
+			show_loader();
+			var table="activities";
+			
+			var transaction=static_local_db.transaction([table],"readwrite");
+			var os1=transaction.objectStore(table);
+			
+			var i=0;
+			var success_count=0;
+			
+			function create_records()
+			{
+				if(i<rows.length)
+				{
+					localdb_open_requests+=1;
+					os1.put(rows[i]).onsuccess=function(e)
+					{
+						i+=1;
+						localdb_open_requests-=1;
+						success_count+=1;
+						create_records();
+						console.log(rows[i]);
+					};
+				}
+			};
+			create_records();
+			
+			var local_create_complete=setInterval(function()
+			{
+			   if(localdb_open_requests===0)
+			   {
+			   		var act_row={id:""+(get_new_key()),
+							type:'create',
+							status:'unsynced',
+							title:'Data import',
+							notes:'Added '+success_count+' records to table '+table,
+							data_xml:'',
+							user_display:'yes',
+							data_id:'',
+							tablename:'',
+							link_to:'',
+							updated_by:""+get_session_var('name'),
+							last_updated:""+get_my_time()};
+					var transaction=static_local_db.transaction([table],"readwrite");		
+					var os3=transaction.objectStore('activities');
+					os3.put(act_row).onsuccess=function(e){};
+				   clearInterval(local_create_complete);
+	     		   hide_loader();
+			   }
+	        },2000);
+		}
+	};	
+	///////////////////////////////////
+};
+
+
+/**
 * @form Update Inventory
 * @formNo 1
 */

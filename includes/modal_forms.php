@@ -1444,4 +1444,18 @@
 		</form>	
 	</div>
 
+	<div id="modal155" title="Add Receipt">
+		<form id='modal155_form' autocomplete="off">
+			<fieldset>
+				<label>Receipt Id: <input type='text' readonly="readonly" required></label><br>
+				<label>Account: <input type="text" required></label><br>
+				<label>Receipt Amount: Rs. <input type="number" min='0' step='any' required></label><br>
+				<label>Balance <input type="text" readonly='readonly'></label><br>
+				<input type="hidden" name='type'>
+				<input type="submit" value='Save' class='modal_submit'>
+				<input type="button" value='Print & Save' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+	
 </div>

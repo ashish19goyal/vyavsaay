@@ -11364,3 +11364,316 @@ function modal154_action(bill_ids)
 	$('#modal154_item_table').html(rowsHTML);		
 	$("#modal154").dialog("open");
 }
+
+/**
+ * @modal Add Receipt
+ * @modalNo 155
+ */
+function modal155_action()
+{
+	var form=document.getElementById("modal155_form");
+	var receipt_filter=form.elements[1];
+	var account_filter=form.elements[2];
+	var amount_filter=form.elements[3];
+	var balance_filter=form.elements[4];
+	var type_filter=form.elements[5];
+	var receipt_record_id="";
+	console.log(amount_filter);
+	
+	var receipt_id_xml="<user_preferences count='1'>"+
+					"<id></id>"+
+					"<value></value>"+
+					"<name exact='yes'>receipt_id_series</name>"+
+					"</user_preferences>";
+	set_my_value(receipt_id_xml,receipt_filter);
+	fetch_requested_data('',receipt_id_xml,function (receipts) 
+	{
+		if(receipts.length>0)
+		{
+			receipt_filter.value=receipts[0].value;
+			receipt_record_id=receipts[0].id;
+		}
+	});
+	
+	var accounts_data="<customers>" +
+			"<acc_name></acc_name>" +
+			"</customers>";
+	set_my_value_list(accounts_data,account_filter);
+	set_static_value_list('receipts','type',type_filter);
+	
+	$(account_filter).off('blur');
+	$(account_filter).on('blur',function(e)
+	{
+		var payments_data="<payments>" +
+				"<id></id>" +
+				"<type></type>" +
+				"<total_amount></total_amount>" +
+				"<paid_amount></paid_amount>" +
+				"<status exact='yes'>pending</status>" +
+				"<acc_name exact='yes'>"+account_filter.value+"</acc_name>" +
+				"</payments>";
+
+		fetch_requested_data('',payments_data,function(payments)
+		{
+			var balance_amount=0;
+			payments.forEach(function(payment)
+			{
+				if(payment.type=='received')
+				{
+					balance_amount+=parseFloat(payment.total_amount);
+					balance_amount-=parseFloat(payment.paid_amount);
+				}
+				else if(payment.type=='paid')
+				{
+					balance_amount-=parseFloat(payment.total_amount);
+					balance_amount+=parseFloat(payment.paid_amount);
+				}
+			});
+			
+			if(balance_amount==0)
+			{
+				balance_filter.value="Rs. 0";
+				/*$(form).off('submit');
+				$(form).on('submit',function(event)
+				{
+					event.preventDefault();
+					$("#modal155").dialog("close");
+				});
+				*/
+			}
+			else if(balance_amount>0)
+			{
+				balance_filter.value="Receivable: Rs. "+balance_amount;
+			}
+			else
+			{
+				balance_amount=(-balance_amount);
+				balance_filter.value="Payable: Rs. "+balance_amount;
+			}
+			type_filter.value='received';
+			
+			//amount_filter.setAttribute('max',balance_amount);
+		});
+	});
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		console.log(amount_filter.value);
+		///////////////////////////////////////
+		event.preventDefault();
+		var receipt_id=form.elements[1].value;
+		var receipt_type=type_filter.value;
+		var account_name=account_filter.value;
+		var counter_payment=parseFloat(amount_filter.value);
+
+		if(is_create_access('form124'))
+		{
+			var accounts_data="<payments>" +
+					"<id></id>" +
+					//"<type exact='yes'>"+receipt_type+"</type>" +
+					"<type></type>"+					
+					"<acc_name exact='yes'>"+account_name+"</acc_name>" +
+					"<date></date>" +
+					"<total_amount></total_amount>" +
+					"<paid_amount></paid_amount>" +
+					"<notes></notes>" +
+					"<status>pending</status>" +
+					"</payments>";
+			
+			fetch_requested_data('',accounts_data,function(accounts)
+			{
+				accounts.sort(function(a,b)
+				{
+					if(a.date>b.date)
+					{	return 1;}
+					else 
+					{	return -1;}
+				});
+				
+				var total_amount=0;
+								
+				for(var i=0;i<accounts.length;i++)
+				{
+					if(accounts[i].type=='received')
+					{
+						total_amount+=parseFloat(accounts[i].total_amount);
+						total_amount-=parseFloat(accounts[i].paid_amount);
+					}
+					else if(accounts[i].type=='paid')
+					{
+						total_amount-=parseFloat(accounts[i].total_amount);
+						total_amount+=parseFloat(accounts[i].paid_amount);
+					}
+				}
+				
+				var new_id=get_new_key();
+				var last_updated=get_my_time();
+				accounts.forEach(function(account)
+				{
+					new_id++;
+					if(total_amount==counter_payment)
+					{
+						var notes=account.notes+"\nClosed by receipt # "+receipt_id;
+						var payment_xml="<payments>" +
+								"<id>"+account.id+"</id>" +
+								"<paid_amount>"+account.total_amount+"</paid_amount>" +
+								"<status>closed</status>" +
+								"<notes>"+notes+"</notes>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</payments>";
+						var receipts_xml="<receipts_payment_mapping>" +
+								"<id>"+new_id+"</id>" +
+								"<receipt_id>"+receipt_id+"</receipt_id>" +
+								"<payment_id>"+account.id+"</payment_id>" +
+								"<type>"+account.type+"</type>" +
+								"<amount>"+counter_payment+"</amount>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</receipts_payment_mapping>";
+						
+						update_simple(payment_xml);
+						create_simple(receipts_xml);
+						
+					}
+					else
+					{
+						if(account.type=='paid')
+						{
+							if(total_amount>0)
+							{
+								var payment_xml="<payments>" +
+									"<id>"+account.id+"</id>" +
+									"<paid_amount>"+account.total_amount+"</paid_amount>" +
+									"<status>closed</status>" +
+									"<notes>"+notes+"</notes>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</payments>";
+								var receipts_xml="<receipts_payment_mapping>" +
+									"<id>"+new_id+"</id>" +
+									"<receipt_id>"+receipt_id+"</receipt_id>" +
+									"<payment_id>"+account.id+"</payment_id>" +
+									"<type>"+account.type+"</type>" +
+									"<amount>"+(parseFloat(account.total_amount)-parseFloat(account.paid_amount))+"</amount>" +
+									"<acc_name>"+account_name+"</acc_name>" +
+									"<date>"+last_updated+"</date>" +
+									"<last_updated>"+last_updated+"</last_updated>" +
+									"</receipts_payment_mapping>";
+							
+								update_simple(payment_xml);
+								create_simple(receipts_xml);
+								
+							}
+						}
+						else 
+						{
+							var pending_amount=parseFloat(account.total_amount)-parseFloat(account.paid_amount);
+							if(pending_amount<=counter_payment)
+							{
+								var notes=account.notes+"\nClosed by receipt # "+receipt_id;
+								var payment_xml="<payments>" +
+										"<id>"+account.id+"</id>" +
+										"<paid_amount>"+account.total_amount+"</paid_amount>" +
+										"<status>closed</status>" +
+										"<notes>"+notes+"</notes>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</payments>";
+								var receipts_xml="<receipts_payment_mapping>" +
+										"<id>"+new_id+"</id>" +
+										"<receipt_id>"+receipt_id+"</receipt_id>" +
+										"<payment_id>"+account.id+"</payment_id>" +
+										"<type>"+receipt_type+"</type>" +
+										"<amount>"+pending_amount+"</amount>" +
+										"<acc_name>"+account_name+"</acc_name>" +
+										"<date>"+last_updated+"</date>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</receipts_payment_mapping>";
+				
+								update_simple(payment_xml);
+								create_simple(receipts_xml);
+								
+								counter_payment-=pending_amount;
+							}
+							else
+							{
+								var paid_amount=parseFloat(account.paid_amount)+counter_payment;
+								var notes=account.notes+"\n Rs."+counter_payment+" balanced against receipt # "+receipt_id;
+								var payment_xml="<payments>" +
+										"<id>"+account.id+"</id>" +
+										"<paid_amount>"+paid_amount+"</paid_amount>" +
+										"<status>pending</status>" +
+										"<notes>"+notes+"</notes>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</payments>";
+								var receipts_xml="<receipts_payment_mapping>" +
+										"<id>"+new_id+"</id>" +
+										"<receipt_id>"+receipt_id+"</receipt_id>" +
+										"<payment_id>"+account.id+"</payment_id>" +
+										"<type>"+receipt_type+"</type>" +
+										"<amount>"+counter_payment+"</amount>" +
+										"<acc_name>"+account_name+"</acc_name>" +
+										"<date>"+last_updated+"</date>" +
+										"<last_updated>"+last_updated+"</last_updated>" +
+										"</receipts_payment_mapping>";
+					
+								update_simple(payment_xml);
+								create_simple(receipts_xml);
+								counter_payment=0;
+							}
+						}
+					}
+				});
+					
+				var p_id=get_new_key();				
+				if(counter_payment>0)
+				{
+					var payment_xml="<payments>" +
+								"<id>"+p_id+"</id>" +
+								"<status>pending</status>" +
+								"<type>paid</type>" +
+								"<date>"+get_my_time()+"</date>" +
+								"<total_amount>"+counter_payment+"</total_amount>" +
+								"<paid_amount>0</paid_amount>" +
+								"<acc_name>"+account_name+"</acc_name>" +
+								"<due_date>"+get_credit_period()+"</due_date>" +
+								"<mode>cash</mode>" +
+								"<transaction_id>"+p_id+"</transaction_id>" +
+								"<bill_id>"+receipt_id+"</bill_id>" +
+								"<source_info>receipts</source_info>"+
+								"<notes>Generated for receipt # "+receipt_id+"</notes>" +	
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</payments>";
+					create_simple(payment_xml);
+					
+				}
+				
+				var received_amount=amount_filter.value;
+				var receipt_xml="<receipts>" +
+								"<id>"+p_id+"</id>" +
+								"<receipt_id unique='yes'>"+receipt_id+"</receipt_id>" +
+								"<type>"+receipt_type+"</type>" +
+								"<amount>"+received_amount+"</amount>" +
+								"<acc_name>"+account_name+"</acc_name>" +
+								"<date>"+last_updated+"</date>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</receipts>";
+				console.log(amount_filter.value);
+				console.log(amount_filter.innerHTML);
+				console.log(amount_filter);
+				console.log(receipt_xml);				
+				var receipt_record_xml="<user_preferences>" +
+								"<id>"+receipt_record_id+"</id>" +
+								"<value>"+(parseFloat(receipt_id)+1)+"</value>" +
+								"<last_updated>"+last_updated+"</last_updated>" +
+								"</user_preferences>";
+				create_simple(receipt_xml);
+				update_simple(receipt_record_xml);
+			});
+		}
+		else
+		{
+			$("#modal2").dialog("open");
+		}
+		$("#modal155").dialog("close");
+	});
+	$("#modal155").dialog("open");
+}

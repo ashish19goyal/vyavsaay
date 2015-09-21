@@ -7864,3 +7864,75 @@ function form236_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Manage material requirements
+ * @param button
+ */
+function form239_delete_item(button)
+{
+	if(is_delete_access('form239'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var item_name=form.elements[0].value;
+			var data_id=form.elements[2].value;
+			var data_xml="<manage_pre_requisites>" +
+						"<id>"+data_id+"</id>" +
+						"</manage_pre_requisites>";
+			var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>manage_pre_requisites</tablename>" +
+					"<link_to>form239</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Raw material requirements for "+item_name+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+
+			var pre_requisites_xml="<pre_requisites>"+
+							"<name exact='yes'>"+item_name+"</name>"+
+							"</pre_requisites>";
+			
+			delete_row(data_xml,activity_xml);
+			delete_simple(pre_requisites_xml);
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Assign material requirements
+ * @param button
+ */
+function form240_delete_item(button)
+{
+	if(is_delete_access('form240'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[2].value;
+			
+			var pre_requisites_xml="<pre_requisites>"+
+							"<id>"+data_id+"</id>"+
+							"</pre_requisites>";
+			delete_simple(pre_requisites_xml);
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

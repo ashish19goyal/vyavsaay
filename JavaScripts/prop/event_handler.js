@@ -308,7 +308,7 @@ function modal_forms_ini()
 		});
 	}
 
-	for(var i=101;i<155;i++)
+	for(var i=101;i<156;i++)
 	{
 		var j=i;
 		$("#modal"+i).dialog({
@@ -699,6 +699,8 @@ function import_data(form_name)
 {
 	switch(form_name)
 	{
+		case 'activities':modal23_action(activities_import_template,activities_import);
+		break;
 		case 'form1':modal23_action(form1_import_template,form1_import);
 		break;
 		case 'form2':modal23_action(form2_import_template,form2_import);

@@ -6074,7 +6074,7 @@ function activities_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			var new_columns="<activities count='100' start_index='0'>" +
+			var new_columns="<activities>" +
 			"<title></title>" +
 			"<link_to></link_to>" +
 			"<data_id></data_id>" +
@@ -6086,6 +6086,29 @@ function activities_ini()
 		
 			get_export_data(new_columns,'activities');
 		});
+
+		var unsynced_export_button=document.getElementById('unsynced_activities_button');
+		$(unsynced_export_button).off("click");
+		$(unsynced_export_button).on("click", function(event)
+		{
+			var new_columns="<activities>" +
+				"<title></title>" +
+				"<link_to></link_to>" +
+				"<data_id></data_id>" +
+				"<notes></notes>" +
+				"<tablename></tablename>" +
+				"<type></type>" +
+				"<data_id></data_id>" +
+				"<user_display></user_display>" +
+				"<data_xml></data_xml>" +
+				"<updated_by></updated_by>" +
+				"<status exact='yes'>unsynced</status>" +
+				"<last_updated></last_updated>" +
+				"</activities>";
+		
+			get_export_data(new_columns,'unsynced_data');
+		});
+				
 		hide_loader();
 	}
 	else 
@@ -23766,6 +23789,35 @@ function form227_ini()
 			get_inventory(result.product_name,'',function(inventory)
 			{
 				w_in.value=-parseFloat(inventory);
+				var demo_quantity_xml="<bill_items sum='yes'>" +
+					"<quantity></quantity>"+
+					"<hiring_type exact='yes'>demo</hiring_type>"+
+					"<issue_date lowerbound='yes'>"+get_my_time()+"</issue_date>"+
+					"<item_name exact='yes'>"+result.product_name+"</item_name>" +
+					"</bill_items>";
+	
+				get_single_column_data(function(demos)
+				{
+					if(demos.length>0)
+					{
+						w_in.value=parseFloat(w_in.value)-parseFloat(demos[0]);
+					}
+				},demo_quantity_xml);
+	
+				var hire_quantity_xml="<bill_items sum='yes'>" +
+					"<quantity></quantity>"+
+					"<hiring_type exact='yes'>hire</hiring_type>"+
+					"<issue_date lowerbound='yes'>"+get_my_time()+"</issue_date>"+
+					"<item_name exact='yes'>"+result.product_name+"</item_name>" +
+					"</bill_items>";
+	
+				get_single_column_data(function(hires)
+				{
+					if(hires.length>0)
+					{
+						w_in.value=parseFloat(w_in.value)-parseFloat(hires[0]);
+					}
+				},hire_quantity_xml);
 			});
 			
 			var demo_quantity_xml="<bill_items sum='yes'>" +

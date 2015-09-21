@@ -2,6 +2,16 @@
 * @form Update Inventory
 * @formNo 1
 */
+function activities_import_template()
+{
+	var data_array=['id','type','status','data_xml','user_display','data_id','tablename','link_to','last_updated'];
+	my_array_to_csv(data_array);
+};
+
+/**
+* @form Update Inventory
+* @formNo 1
+*/
 function form1_import_template()
 {
 	var data_array=['id','product_name','batch','expiry','manufacture_date','actual_quantity','mrp'];
