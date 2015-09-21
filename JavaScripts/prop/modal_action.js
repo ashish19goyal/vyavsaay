@@ -11131,7 +11131,11 @@ function modal150_action(rack,report_id)
 			$(master_form).trigger('submit');
 		});
 		
-		$("#modal150").dialog("close");		
+		$("#modal150").dialog("close");	
+		var report_form=document.getElementById(report_id+'_header');
+		var rack_filter=report_form.elements['rack'];
+		rack_filter.value="";
+		$(rack_filter).focus();
 	});
 	
 	$(form).off('submit');
@@ -11203,7 +11207,7 @@ function modal151_action(bill_id,order_num)
 	var bag_num=bill_id_string.slice(-3);
 
 	bag_filter.value=bag_num;
-	
+/*	
 	if('Notification' in window)
 	{		
 		if(Notification.permission==='granted')
@@ -11231,25 +11235,22 @@ function modal151_action(bill_id,order_num)
 	        });
 		}
 	}
-/*
+*/
 	$(form).off('submit');
 	$(form).on('submit',function(event) 
 	{
-		event.preventDefault();
-	
-		var bill_xml="<bills>"+
-					"<id>"+bill_id+"</id>"+
-					"<pick_bag_num>"+bag_filter.value+"</pick_bag_num>"+
-					"<last_updated>"+get_my_time()+"</last_updated>"+
-					"</bills>";
-		update_simple(bill_xml);			
-
+		event.preventDefault();	
 		$("#modal151").dialog("close");		
-	});	
-					
+	});
+
+	var time_complete=setInterval(function()
+    {
+		$("#modal151").dialog("close");
+		clearInterval(time_complete);
+	},2000);
+				
 	///////////////////////////
 	$("#modal151").dialog("open");	
-*/
 }
 
 
@@ -11326,7 +11327,11 @@ function modal152_action(rack)
 
 			$(master_form).trigger('submit');
 		});
-		$("#modal152").dialog("close");		
+		$("#modal152").dialog("close");
+		var report_form=document.getElementById('form165_master');
+		var rack_filter=report_form.elements['rack'];
+		rack_filter.value="";
+		$(rack_filter).focus();
 	});
 
 	$(form).off('submit');
