@@ -1481,4 +1481,17 @@
 		</form>
 	</div>
 
+	<div id="modal158" title="Update Invoice">
+		Are you sure, you want to update the invoice to proceed with the dispatch of packed items?
+		<br>
+		<br>
+		<br>		
+		<form id='modal158_form' autocomplete="off">
+			<fieldset>
+				<input type="button" value='Yes' class='modal_submit'>
+				<input type="button" value='No' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>

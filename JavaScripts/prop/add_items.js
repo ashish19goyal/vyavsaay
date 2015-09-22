@@ -12524,12 +12524,7 @@ function form215_add_item()
 		var channel_filter=item_form.elements[3];
 		var id_filter=item_form.elements[4];
 		var save_button=item_form.elements[5];
-		
-		var bill_data="<bills>"+
-					"<bill_num></bill_num>"+
-					"</bills>";
-		set_my_value_list(bill_data,invoice_filter);
-					
+							
 		$(item_form).on("submit", function(event)
 		{
 			event.preventDefault();
@@ -12606,13 +12601,14 @@ function form215_add_item()
 											"<id>"+bill_id_filter.value+"</id>"+
 											"<bill_num></bill_num>" +
 											"<order_num></order_num>" +
+											"<status></status>"+
 											"<channel></channel>" +
 											"</bills>";
 							//console.log(orders_data);				
 							fetch_requested_data('',orders_data,function (orders) 
 							{
 								//console.log(orders);
-								if(orders.length>0)
+								if(orders.length>0 && orders[0].status!='dispatched')
 								{
 									invoice_filter.value=orders[0].bill_num;
 									channel_filter.value=orders[0].channel;
@@ -12653,7 +12649,7 @@ function form215_add_item()
 						fetch_requested_data('',orders_data,function (orders) 
 						{
 							//console.log(orders);
-							if(orders.length>0)
+							if(orders.length>0 && orders[0].status!='dispatched')
 							{
 								invoice_filter.value=orders[0].bill_num;
 								channel_filter.value=orders[0].channel;

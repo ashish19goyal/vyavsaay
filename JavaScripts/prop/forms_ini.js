@@ -9934,6 +9934,12 @@ function form108_ini()
 								break;
 				case 'pending':row_color='red_row';
 								break;
+				case 'partially packed':row_color='blue_row';
+								break;
+				case 'partially picked':row_color='orange_row';
+								break;
+				case 'partially billed':row_color='yellow_row';
+								break;
 													
 			}
 			var rowsHTML="";
@@ -22108,7 +22114,7 @@ function form210_ini()
 			$(edit_invoice_button).off('click'); 
 			$(edit_invoice_button).on('click',function () 
 			{
-				print_product_barcode(bills[0].id,"Order # "+bills[0].order_num,"Invoice # "+bills[0].bill_num);
+				modal158_action(bills[0].id);
 			});
 			 	
 	      	//////////provide a preview of the invoice//////////////////////

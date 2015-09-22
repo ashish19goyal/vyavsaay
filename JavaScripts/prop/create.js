@@ -14026,6 +14026,7 @@ function form215_create_item(form)
 					"<id>"+data_id+"</id>" +
 					"<manifest_num>"+drs_num+"</manifest_num>"+
 					"<manifest_id>"+drs_id+"</manifest_id>"+
+					"<status>dispatched</status>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</bills>";
 		update_simple(data_xml);

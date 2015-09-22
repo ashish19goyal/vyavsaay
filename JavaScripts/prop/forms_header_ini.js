@@ -7777,8 +7777,50 @@ function form210_header_ini()
 	
 	var bag_data="<bills>"+
 				"<pick_bag_num></pick_bag_num>"+
+				"<status></status>"+				
 				"</bills>";
-	set_my_value_list(bag_data,bag_filter);					
+	fetch_requested_data('',bag_data,function(bags)
+	{
+		if(bags.length>0)
+		{
+			var form=master_form;
+			var filter_element=bag_filter;			
+			var datalist=document.createElement('datalist');
+			bags.forEach(function(d)
+			{
+				if(d.status!='dispatched' && d.status!='cancelled')
+				{
+					var option=document.createElement('option');
+					option.setAttribute('value',d.pick_bag_num);
+					datalist.appendChild(option);
+				}
+			});
+			
+			var list_id=filter_element.getAttribute('list');
+			if(list_id=='' || list_id==null)
+			{
+				list_id="list_"+get_new_key();
+				filter_element.setAttribute("list",list_id);
+			}
+			else
+			{
+				var oldlist=document.getElementById(list_id);
+				form.removeChild(oldlist);
+			}
+			
+			form.appendChild(datalist);
+			datalist.setAttribute('id',list_id);
+	
+			var active_element=document.activeElement;
+					
+			if(active_element==filter_element)
+			{
+				$(filter_element).blur();
+				$(filter_element).focus();
+			}	
+			$(bag_filter).focus();
+		}
+	});
 
 	var order_data="<sale_orders>"+
 				"<order_num></order_num>"+

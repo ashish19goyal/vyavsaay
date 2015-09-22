@@ -11896,3 +11896,99 @@ function modal157_action(func)
 
 	$("#modal157").dialog("open");
 }
+
+/**
+ * @modalNo 158
+ * @modal Update Invoice Confirmation
+ * @param button
+ */
+function modal158_action(bill_id)
+{
+	var form158=document.getElementById('modal158_form');
+	var yes_button=form158.elements[1];
+	var no_button=form158.elements[2];
+	
+	$(yes_button).off('click');
+	$(yes_button).on('click',function()
+	{
+		$("#modal158").dialog("close");
+		show_loader();
+		
+		var bill_items_xml="<bill_items>"+
+					"<id></id>"+
+					"<item_name></item_name>"+
+					"<item_desc></item_desc>"+
+					"<quantity></quantity>"+
+					"<packed_quantity></packed_quantity>"+
+					"<total></total>"+
+					"<mrp></mrp>"+
+					"<batch></batch>"+
+					"<picked_status></picked_status>"+
+					"<packing_status></packing_status>"+
+					"<storage></storage>"+
+					"<bill_id exact='yes'>"+bill_id+"</bill_id>"+		
+					"</bill_items>";
+		fetch_requested_data('',bill_items_xml,function (bill_items) 
+		{
+			var master_form=document.getElementById('form210_master');
+			var accepted_filter=master_form.elements['accepted'];
+			var rejected_filter=master_form.elements['rejected'];
+			
+			$(accepted_filter).off('keydown');
+			$(rejected_filter).off('keydown');
+
+			if(bill_items.length>0)
+			{
+				var data_xml="<bill_items>";
+				var counter=1;
+				var last_updated=get_my_time();
+				bill_items.forEach(function(row)
+				{
+					if((counter%500)===0)
+					{
+						data_xml+="</bill_items><separator></separator><bill_items>";
+					}
+					
+					counter+=1;
+					
+					if(parseFloat(row.packed_quantity)>0)
+					{
+						data_xml+="<row>" +
+							"<id>"+row.id+"</id>" +
+							"<quantity>"+row.packed_quantity+"</quantity>" +
+							"<packed_quantity>"+row.packed_quantity+"</packed_quantity>" +
+							"<picked_quantity>"+row.packed_quantity+"</picked_quantity>" +
+							"<picked_status>picked</picked_status>"+
+							"<packing_status>packed</packing_status>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+					}
+					else 
+					{
+						var data2_xml="<bill_items>" +
+							"<id>"+row.id+"</id>" +
+							"</bill_items>";
+						delete_simple(data2_xml);	
+					}
+				});
+				
+				data_xml+="</bill_items>";
+				update_batch(data_xml);
+				
+				bill_items.forEach(function (bill_item) 
+				{
+					
+				});
+			}
+			hide_loader();
+		});	
+	});
+	
+	$(no_button).off('click');
+	$(no_button).on('click',function()
+	{
+		$("#modal158").dialog("close");
+	});
+
+	$("#modal158").dialog("open");
+}

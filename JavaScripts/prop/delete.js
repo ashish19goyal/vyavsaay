@@ -7099,6 +7099,7 @@ function form215_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<manifest_num></manifest_num>"+
 						"<manifest_id></manifest_id>"+
+						"<status></status>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</bills>";
 			update_simple(data_xml);
