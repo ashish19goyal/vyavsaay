@@ -317,12 +317,13 @@ function my_obj_array_to_csv(data_array,file_name)
 	/////for data rows
 	data_array.forEach(function(data_row)
 	{
+		//console.log(data_row);
 		var data_string="";
 		for(var i=0;i<header_array.length;i++)
 		{
 			if(typeof data_row[header_array[i]]!= 'undefined')
 			{
-				if(data_row[header_array[i]].search(","))
+				if(String(data_row[header_array[i]]).search(","))
 				{
 					data_row[header_array[i]]="\""+data_row[header_array[i]]+"\"";
 				}
