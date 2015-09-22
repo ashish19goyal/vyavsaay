@@ -7726,6 +7726,10 @@ function form210_header_ini()
 	var bag_filter=master_form.elements[1];
 	var order_filter=master_form.elements[2];
 
+	var print_barcode_button=master_form.elements['print'];
+	var print_invoice_button=master_form.elements['print_invoice'];
+	var generate_invoice_button=master_form.elements['edit_invoice'];
+	
 	var accepted_filter=master_form.elements['accepted'];
 	var rejected_filter=master_form.elements['rejected'];
 	
@@ -7778,7 +7782,7 @@ function form210_header_ini()
 
 	var order_data="<sale_orders>"+
 				"<order_num></order_num>"+
-				"<status exact='yes'>picked</status>"+
+				"<status array='yes'>--picked--partially picked--</status>"+
 				"</sale_orders>";
 	set_my_value_list(order_data,order_filter);					
 	
@@ -7794,20 +7798,6 @@ function form210_header_ini()
 			set_my_value(order_data,order_filter);
 		}
 	});
-/*
-	$(order_filter).off('blur');
-	$(order_filter).on('blur',function () 
-	{
-		if(order_filter.value!="")
-		{
-			var order_data="<bills>"+
-				"<pick_bag_num></pick_bag_num>"+
-				"<order_num exact='yes'>"+order_filter.value+"</order_num>"+
-				"</bills>";
-			set_my_value(bag_data,bag_filter);
-		}
-	});
-	*/
 }
 
 

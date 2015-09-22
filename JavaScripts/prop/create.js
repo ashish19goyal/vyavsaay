@@ -14017,6 +14017,12 @@ function form215_create_item(form)
 	{
 		var drs_num=document.getElementById('form215_master').elements['man_num'].value;
 		var drs_id=document.getElementById('form215_master').elements['id'].value;
+		var status=form.elements[3].value;
+		var new_status='dispatched';		
+		if(status.indexOf('partially')>-1)
+		{
+			new_status='partially dispatched';
+		}
 		var data_id=form.elements[4].value;
 		var save_button=form.elements[5];
 		var del_button=form.elements[6];
@@ -14024,7 +14030,7 @@ function form215_create_item(form)
 		var last_updated=get_my_time();
 		var data_xml="<sale_orders>" +
 					"<id>"+data_id+"</id>" +
-					"<status>dispatched</status>" +
+					"<status>"+new_status+"</status>" +
 					"<manifest_num>"+drs_num+"</manifest_num>"+
 					"<manifest_id>"+drs_id+"</manifest_id>"+
 					"<last_updated>"+last_updated+"</last_updated>" +

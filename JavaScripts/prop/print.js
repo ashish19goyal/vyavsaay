@@ -3063,6 +3063,335 @@ function print_form209(func)
 }
 
 /**
+ * @form Pack order
+ * @formNo 210
+ */
+function print_form210(bill_id)
+{
+	var form_id='form210';
+	show_loader();
+	var bill_columns="<bills>" +
+				"<id>"+bill_id+"</id>" +
+				"<bill_num></bill_num>"+
+				"<order_id></order_id>"+
+				"<order_num></order_num>"+
+				"<channel></channel>"+
+				"<customer_name></customer_name>" +
+				"<total></total>" +
+				"<bill_date></bill_date>" +
+				"<amount></amount>" +
+				"<tax></tax>" +
+				"<freight></freight>" +
+				"<billing_type></billing_type>" +
+				"<transaction_id></transaction_id>" +
+				"</bills>";
+	var bill_items_column="<bill_items>" +
+				"<id></id>" +
+				"<item_name></item_name>" +
+				"<item_desc></item_desc>" +
+				"<batch></batch>" +
+				"<unit_price></unit_price>" +
+				"<quantity></quantity>" +
+				"<amount></amount>" +
+				"<tax></tax>" +
+				"<vat></vat>" +
+				"<cst></cst>" +
+				"<mrp></mrp>" +
+				"<tax_rate></tax_rate>" +
+				"<freight></freight>"+
+				"<total></total>" +
+				"<storage></storage>" +
+				"<bill_id exact='yes'>"+bill_id+"</bill_id>" +				
+				"</bill_items>";
+	var form210_print_count=2;
+	var customer_address="";
+	var customer_tin="";
+	var customer_name="";
+	var date="";
+	var channel="";	
+	var bill_type="";
+	var po_num="";
+	var bill_num="";
+	var po_date="";
+
+	fetch_requested_data('',bill_columns,function(bill_results)
+	{
+		if(bill_results.length>0)
+		{
+			form210_print_count+=1;
+			var po_date_data="<sale_orders>"+
+								"<order_date></order_date>"+
+								"<order_num exact='yes'>"+bill_results[0].order_num+"</order_num>"+
+								"</sale_orders>";
+			get_single_column_data(function(pos)
+			{
+				if(pos.length>0)
+				{
+					po_date=get_my_past_date(pos[0]);
+				}
+				form210_print_count-=1;
+			},po_date_data);
+			
+			form210_print_count+=1;
+			var address_data="<customers>" +
+					"<address></address>" +
+					"<city></city>" +
+					"<acc_name exact='yes'>"+bill_results[0].customer_name+"</acc_name>" +
+					"</customers>";
+			fetch_requested_data('',address_data,function(addresses)
+			{
+				if(addresses.length>0)
+				{
+					customer_address="Address<br>"+addresses[0].address+", "+addresses[0].city;					
+				}
+				form210_print_count-=1;
+			});
+			
+			form210_print_count+=1;
+			var tin_data="<attributes count='1'>" +
+					"<value></value>" +
+					"<type exact='yes'>customer</type>"+
+					"<attribute array='yes'>--VAT#--CST#--</attribute>"+ 
+					"<name exact='yes'>"+bill_results[0].customer_name+"</name>" +
+					"</attributes>";
+			get_single_column_data(function(tins)
+			{
+				if(tins.length>0)
+				{
+					customer_tin=tins[0];
+				}
+				form210_print_count-=1;
+			},tin_data);
+		}
+		
+		customer_name=bill_results[0].customer_name;
+		date=get_my_past_date(bill_results[0].bill_date);
+		channel=bill_results[0].channel;	
+		bill_type=bill_results[0].billing_type;
+		po_num=bill_results[0].order_num;
+		bill_num=bill_results[0].bill_num;
+		
+		form210_print_count-=1;
+	});
+	
+		
+	fetch_requested_data('',bill_items_column,function(results)
+	{
+		form210_print_count-=1;
+	
+	
+		var form210_complete=setInterval(function()
+        {
+        	if(form210_print_count===0)
+        	{
+      
+				////////////setting up containers///////////////////////	
+				var container=document.createElement('div');
+				var header=document.createElement('div');
+					var invoice_info=document.createElement('div');
+					var business_title=document.createElement('div');
+					var business_contact=document.createElement('div');
+					
+				var info_section=document.createElement('div');	
+					var customer_info=document.createElement('div');
+					var business_info=document.createElement('div');
+			
+				var table_container=document.createElement('div');
+			
+				var footer=document.createElement('div');
+					var tandc=document.createElement('div');
+					var signature=document.createElement('div');
+			
+			////////////setting styles for containers/////////////////////////
+			
+				header.setAttribute('style','border: 1px solid #000000;width:98%;min-height:100px;text-align:center');
+					invoice_info.setAttribute('style','margin:5px;width:98%;text-align:center');
+					business_title.setAttribute('style','margin:5px;width:100%;text-align:center;font-size:24px;');
+					business_contact.setAttribute('style','width:100%;text-align:center;');
+				info_section.setAttribute('style','width:98%;min-height:100px');
+					customer_info.setAttribute('style','padding:5px;float:left;width:48%;height:100px;border: 1px solid #000;');
+					business_info.setAttribute('style','padding:5px;float:right;width:48%;height:100px;border: 1px solid #000;');
+				footer.setAttribute('style','margin:10px;width:98%;min-height:100px');
+					tandc.setAttribute('style','float:left;width:44%;min-height:60px');
+					signature.setAttribute('style','float:right;width:54%;min-height:60px;text-align:right;');
+			
+			///////////////getting the content////////////////////////////////////////
+			
+				var bt=get_session_var('title');
+				//var font_size=get_session_var('print_size');
+				//var logo_image=get_session_var('logo');
+				var business_address=get_session_var('address');
+				var business_phone=get_session_var('phone');
+				var business_email=get_session_var('email');
+			
+				var tin_no=get_session_var('tin');
+					
+				var tandc_text=get_session_var('bill_message');
+				var signature_text="<br>for "+bt+"<br><br><br>Authorised Signatory<br>";
+				
+				////////////////filling in the content into the containers//////////////////////////
+			
+				if(bill_type=="Tax")	
+				{
+					invoice_info.innerHTML="TAX INVOICE";
+				}
+				else 
+				{
+					invoice_info.innerHTML="RETAIL INVOICE";
+				}
+			
+				business_title.innerHTML=bt;
+				business_contact.innerHTML=business_address+"<br>Tel: "+business_phone+" emial: "+business_email;
+				
+				customer_info.innerHTML=customer_name+"<br>"+customer_address+"<br>TIN #:"+customer_tin;
+				business_info.innerHTML="Invoice #: "+bill_num+"<br>Dated: "+date+"<br>PO #: "+po_num+"<br>PO Date: "+po_date+"<br>TIN: "+tin_no;
+				
+				tandc.innerHTML="<b><u>Terms and Conditions</u></b><br>"+tandc_text;
+				signature.innerHTML=signature_text;
+			
+				var table_element=document.getElementById(form_id+'_body');
+				
+				/////////////adding new table //////////////////////////////////////////////////////	
+				var new_table=document.createElement('table');
+				new_table.setAttribute('style','width:98%;font-size:12px;border:1px solid black;text-align:left;');
+				var table_header="<thead style='border:1px solid #000000;'><tr>"+
+							"<td style='text-align:left;width:30px;'>S.No.</td>"+
+							"<td style='text-align:left;width:60px;'>SKU</td>"+
+							"<td style='text-align:left;width:100px'>Item Name</td>"+
+							"<td style='text-align:left;width:60px'>Batch</td>"+
+							"<td style='text-align:left;width:45px'>Qty</td>"+
+							"<td style='text-align:left;width:45px'>MRP</td>"+
+							"<td style='text-align:left;width:45px'>Price</td>"+
+							"<td style='text-align:left;width:45px'>Amount</td>"+
+							"<td style='text-align:left;width:45px'>Tax%</td>"+
+							"<td style='text-align:left;width:45px'>Freight</td>"+
+							"<td style='text-align:left;width:80px'>Total</td></tr></thead>";
+							
+				var table_rows=table_header+"<tbody style='border: 1px solid #000000;'>";
+				var counter=0;
+				var bill_total=0;
+				var bill_amount=0;
+				var bill_freight=0;
+				var total_quantity=0;
+				var tax_array=[];
+			
+				results.forEach(function(result)
+				{
+					counter+=1;
+					var sku=result.item_name;
+					var item_name=result.item_desc;
+					var batch=result.batch;
+					var quantity=""+result.quantity;
+					var mrp=""+result.mrp;
+					var price=result.unit_price;
+					var tax_rate=result.tax_rate;		
+					var amount=result.amount;		
+					var tax=result.tax;		
+					var total=result.total;
+					var freight=result.freight;
+					var tax_rate=result.tax_rate;		
+					
+					total_quantity+=parseFloat(quantity);
+					bill_total+=parseFloat(total);
+					bill_amount+=parseFloat(amount);
+					bill_freight+=parseFloat(freight);
+					
+					if(typeof tax_array[tax_rate]=='undefined')
+					{
+						tax_array[tax_rate]=0;
+					}
+					tax_array[tax_rate]+=parseFloat(tax);
+					
+					table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
+							"<td style='text-align:left;'>"+counter+"</td>"+
+							"<td style='text-align:left;word-wrap: break-word;'>"+sku+"</td>"+
+							"<td style='text-align:left;word-wrap: break-word;'>"+item_name+"</td>"+
+							"<td style='text-align:left;word-wrap: break-word;'>"+batch+"</td>"+
+							"<td style='text-align:left;'>"+quantity+"</td>"+
+							"<td style='text-align:left;'>"+mrp+"</td>"+
+							"<td style='text-align:left;'>"+price+"</td>"+
+							"<td style='text-align:left;'>"+amount+"</td>"+
+							"<td style='text-align:left;'>"+tax_rate+"</td>"+
+							"<td style='text-align:left;'>"+freight+"</td>"+
+							"<td style='text-align:left;'>"+total+"</td></tr>";
+				});
+				
+				var row_count=$(new_table).find('tbody>tr').length;
+				var rows_to_add=15-row_count;
+				for(var i=0;i<rows_to_add;i++)
+				{
+					table_rows+="<tr style='flex:2;border-right:1px solid black;border-left:1px solid black;height:20px;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+				}
+			
+				table_rows+="</tbody>";
+				
+				var wording_total=number2text(bill_total);
+				
+				var against_c_form="";
+				if(bill_type=='Retail-CST-C')
+				{
+					against_c_form="<br>Against C-Form";
+				}
+			
+				var tax_name="VAT";
+				
+				if(bill_type=='Retail-CST' || bill_type=='Retail-CST-C')
+				{
+					tax_name="CST";
+				}
+			
+				var tax_string="";
+				var bill_tax="";
+				for(var x in tax_array)
+				{
+					tax_array[x]=my_round(tax_array[x],2);
+					tax_string+=tax_name+" @"+x+"%: <br>";		
+					bill_tax+="Rs. "+tax_array[x]+": <br>";
+				}
+				
+				var table_foot=document.getElementById(form_id+'_foot');
+				var total_quantity="Total Quantity: "+total_quantity;
+				var total_text="Amount:</br>"+tax_string+"Freight: </br>Total:";
+				var total_amount="Rs. "+bill_amount+"</br>" +bill_tax+"Rs. "+bill_freight+"</br>Rs. "+bill_total;
+				
+				var table_foot_row="<tfoot style='border: 1px solid #000000;'><tr>"+
+							"<td colspan='6' style='text-align:left;'>"+wording_total+"<br>"+total_quantity+against_c_form+"</td>"+
+							"<td colspan='3' style='text-align:left;'>"+total_text+"</td>"+
+							"<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr></tfoot>";
+					
+				table_rows+=table_foot_row;
+				new_table.innerHTML=table_rows;
+				
+				/////////////placing the containers //////////////////////////////////////////////////////	
+				
+				container.appendChild(header);
+				container.appendChild(info_section);
+				
+				container.appendChild(new_table);
+				container.appendChild(footer);
+				
+				header.appendChild(invoice_info);
+				header.appendChild(business_title);
+				header.appendChild(business_contact);
+				
+				info_section.appendChild(customer_info);
+				info_section.appendChild(business_info);
+				
+				footer.appendChild(tandc);
+				footer.appendChild(signature);
+				
+				$.print(container);
+	  			container.innerHTML="";
+	  			
+	  			hide_loader();
+      			clearInterval(form210_complete);
+        	}
+        },1000);	
+	});
+}
+
+
+/**
  * @form Create COD DRS
  * @formNo 219
  */

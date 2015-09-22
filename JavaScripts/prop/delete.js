@@ -7092,12 +7092,18 @@ function form215_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-
+			var status=form.elements[3].value;
+			var new_status='packed';		
+			if(status.indexOf('partially')>-1)
+			{
+				new_status='partially packed';
+			}
+			
 			var data_id=form.elements[4].value;
 			var last_updated=get_my_time();
 			var data_xml="<sale_orders>" +
 						"<id>"+data_id+"</id>" +
-						"<status>packed</status>" +
+						"<status>"+new_status+"</status>" +
 						"<manifest_num></manifest_num>"+
 						"<manifest_id></manifest_id>"+
 						"<last_updated>"+last_updated+"</last_updated>" +

@@ -17,8 +17,9 @@
 			<tr>
 				<form id='form215_header'></form>
 					<th style='width:50px'>S. No.</th>
+					<th>Bill Id</th>
+					<th>Invoice #</th>
 					<th>Order #</th>
-					<th>Channel</th>
 					<th>Status</th>
 					<th><input type='button' form='form215_header' title='Add item' class='add_icon' onclick='form215_add_item();'></th>
 			</tr>

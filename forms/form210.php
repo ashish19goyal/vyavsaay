@@ -3,8 +3,10 @@
 		<fieldset>
 			<label>Bag #: <input type='text' class='widebox' name='bag'></label>
 			<label>Order #: <input type='text' class='widebox' name='order' required></label>
-			<label><input type='submit' name='refresh' class='generic_icon' value='Refresh'></label>
+			<label><input type='submit' name='refresh' class='generic_icon' value='Refresh'></label><br>
 			<label><input type='button' name='print' class='generic_icon' value='Print Barcode'></label>		
+			<label><input type='button' name='print_invoice' class='generic_icon' value='Print Invoice'></label>		
+			<label><input type='button' name='edit_invoice' class='generic_icon' value='Update Invoice for dispatch'></label>		
 			<br>			
 			<label style='background-color:#027536;color:#fff;padding:3px;'>Scan Item<br><input type='text' placeholder='Scan item to accept' style='color:#000;' name='accepted'></label>
 		</fieldset>

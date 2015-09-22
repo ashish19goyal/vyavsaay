@@ -12495,15 +12495,17 @@ function form215_add_item()
 		rowsHTML+="<form id='form215_"+id+"'></form>";
 			rowsHTML+="<td data-th='S.No.'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Order #'>";
+			rowsHTML+="<td data-th='Order Id'>";
 				rowsHTML+="<input type='text' form='form215_"+id+"' oninvalid=\"setCustomValidity('This Order # is invalid')\">";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Order #'>";
 				rowsHTML+="<br><input type='text' required form='form215_"+id+"' oninvalid=\"setCustomValidity('This Order # is invalid')\">";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Channel'>";
-				rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"'>";
+				rowsHTML+="<input type='text' required readonly='readonly' form='form215_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Status'>";
-				rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"'>";
+				rowsHTML+="<input type='text' required readonly='readonly' form='form215_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form215_"+id+"' value='"+id+"'>";
@@ -12525,7 +12527,7 @@ function form215_add_item()
 		
 		var order_data="<sale_orders>"+
 					"<order_num></order_num>"+
-					"<status exact='yes'>packed</status>"+
+					"<status array='yes'>--packed--partially packed--</status>"+
 					"</sale_orders>";
 		set_my_value_list(order_data,order_filter);
 					
@@ -12539,7 +12541,7 @@ function form215_add_item()
 				var subform_id=$(this).attr('form');
 				var subform=document.getElementById(subform_id);
 				total_entries+=1;
-				if(subform.elements[0].value==order_id_filter.value)	
+				if(subform.elements[0].value==order_id_filter.value && order_id_filter.value!="")	
 					double_entry+=1;
 			});
 
@@ -12591,7 +12593,7 @@ function form215_add_item()
 					
 					total_entries+=1;
 				
-					if(subform.elements[0].value==order_id_filter.value)	
+					if(subform.elements[0].value==order_id_filter.value && order_id_filter.value!="")	
 						double_entry+=1;
 				});
 				
@@ -12604,7 +12606,7 @@ function form215_add_item()
 							var orders_data="<sale_orders count='1'>"+
 											"<id>"+order_id_filter.value+"</id>"+
 											"<order_num></order_num>" +
-											"<status exact='yes'>packed</status>" +
+											"<status array='yes'>--packed--partially packed--</status>" +
 											"<channel></channel>" +
 											"</sale_orders>";
 							//console.log(orders_data);				
@@ -12645,7 +12647,7 @@ function form215_add_item()
 						var orders_data="<sale_orders count='1'>"+
 										"<id>"+order_id_filter.value+"</id>"+
 										"<order_num></order_num>" +
-										"<status exact='yes'>packed</status>" +
+										"<status array='yes'>--packed--partially packed--</status>" +
 										"<channel></channel>" +
 										"</sale_orders>";
 						//console.log(orders_data);				

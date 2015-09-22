@@ -7983,6 +7983,7 @@ function form91_ini()
 				"<tax></tax>" +
 				"<vat></vat>" +
 				"<cst></cst>" +
+				"<mrp></mrp>"+
 				"<tax_rate></tax_rate>" +
 				"<freight></freight>"+
 				"<total></total>" +
@@ -8024,7 +8025,7 @@ function form91_ini()
 					var address_string="";
 					if(addresses.length>0)
 					{
-						address_string+=addresses[i].address+", "+addresses[i].city;
+						address_string+=addresses[0].address+", "+addresses[0].city;
 					}
 					document.getElementById('form91_customer_info').innerHTML="Address<br>"+address_string;
 				});
@@ -8051,7 +8052,7 @@ function form91_ini()
 			{
 				results.forEach(function(result)
 				{
-					console.log(result);
+					//console.log(result);
 					var rowsHTML="";
 					var id=result.id;
 					rowsHTML+="<tr>";
@@ -8417,6 +8418,7 @@ function form94_ini()
 		"<source_link></source_link>" +
 		"<source_id></source_id>" +
 		"<storage></storage>"+
+		"<reason></reason>"+
 		"<status exact='yes'>pending approval</status>"+
 		"<last_updated></last_updated>" +
 		"</discarded>";
@@ -9955,7 +9957,7 @@ function form108_ini()
 						rowsHTML+="<input type='button' class='edit_icon' form='form108_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form69');\">";
 						rowsHTML+="<input type='button' class='submit_hidden' form='form108_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form108_"+result.id+"' title='Delete order' onclick='form108_delete_item($(this));'>";
-					if(result.status!='closed' || result.status!='cancelled')
+					if(result.status!='closed' && result.status!='cancelled' && result.status!='billed' && result.status!='picked' && result.status!='packed' && result.status!='dispatched')
 					{
 						rowsHTML+="<br><input type='button' class='generic_icon' form='form108_"+result.id+"' name='create' value='Create Bill'>";
 					}
@@ -22070,6 +22072,8 @@ function form210_ini()
 	var master_form=document.getElementById('form210_master');
 	var order_filter=master_form.elements['order'];
 	var print_button=master_form.elements['print'];
+	var print_invoice_button=master_form.elements['print_invoice'];
+	var edit_invoice_button=master_form.elements['edit_invoice'];
 	
 	$('#form210_invoice_line').html('');
 	$('#form210_invoice').html('');
@@ -22092,7 +22096,13 @@ function form210_ini()
 	     	$(print_button).off('click'); 
 			$(print_button).on('click',function () 
 			{
-				print_product_barcode(bills[0].order_id,"Order # "+bills[0].order_num,"Invoice # "+bills[0].bill_num);
+				print_product_barcode(bills[0].id,"Order # "+bills[0].order_num,"Invoice # "+bills[0].bill_num);
+			});
+
+	     	$(print_invoice_button).off('click'); 
+			$(print_invoice_button).on('click',function () 
+			{
+				print_form210(bills[0].id);
 			});
 						 	
 	      	//////////provide a preview of the invoice//////////////////////
@@ -22132,7 +22142,7 @@ function form210_ini()
 					var table_copy=document.createElement('table');
 					
 					table_copy.setAttribute('width','100%');
-					table_copy.setAttribute('class','plain_table glowing_plain_table');
+					table_copy.setAttribute('class','plain_table');
 					$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>MRP</th><th>Total</th><th>Quantity</th></tr>");
 	
 					bill_items.forEach(function (item) 
@@ -22146,7 +22156,7 @@ function form210_ini()
 						{
 							row_class=" class='green_row'";
 						}
-						$(table_copy).append("<tr "+row_class+" id='form210_row_"+item.id+"' data-id='"+item.id+"'><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_topack_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p><br>Rejected: <vyavsaay_p id='form210_rejected_"+item.id+"'>0</vyavsaay_p></td></tr>");	
+						$(table_copy).append("<tr "+row_class+" data-itemStorage='"+item.storage+"' id='form210_row_"+item.id+"' data-id='"+item.id+"'><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_topack_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p><br>Rejected: <vyavsaay_p id='form210_rejected_"+item.id+"'>0</vyavsaay_p></td></tr>");	
 					});
 
 					container.appendChild(table_copy);
@@ -22527,8 +22537,10 @@ function form215_ini()
 						rowsHTML+="<form id='form215_"+id+"'></form>";
 							rowsHTML+="<td data-th='S.No.'>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Order #'>";
+							rowsHTML+="<td data-th='Order Id'>";
 								rowsHTML+="<input type='hidden' form='form215_"+id+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Order #'>";
 								rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"' value='"+result.order_num+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Channel'>";

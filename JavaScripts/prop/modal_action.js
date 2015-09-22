@@ -11865,3 +11865,34 @@ function modal156_action(product_type,product_name)
 	
 	$("#modal156").dialog("open");
 }
+
+/**
+ * @modalNo 157
+ * @modal Delete Confirmation
+ * @param button
+ */
+function modal157_action(func)
+{
+	var form157=document.getElementById('modal157_form');
+	var reason_filter=form157.elements['reason'];
+	var yes_button=form157.elements['yes'];
+	var no_button=form157.elements['no'];
+	
+	$(form157).off('submit');
+	$(form157).on('submit',function(event)
+	{
+		var reason_value=reason_filter.value;
+		event.preventDefault();
+		
+		$("#modal157").dialog("close");
+		func(reason_value);
+	});
+	
+	$(no_button).off('click');
+	$(no_button).on('click',function()
+	{
+		$("#modal157").dialog("close");
+	});
+
+	$("#modal157").dialog("open");
+}

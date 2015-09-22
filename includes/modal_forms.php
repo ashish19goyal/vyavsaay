@@ -1468,4 +1468,17 @@
 		</form>
 	</div>
 
+	<div id="modal157" title="Item Rejection">
+		Are you sure, you want to reject this item?
+		<br>
+		<br>
+		<form id='modal157_form' autocomplete="off">
+			<fieldset>
+				<label>Reason for Rejection: <input type="text" name='reason' required></label> 
+				<input type="submit" value='Yes' name='yes' class='modal_submit'>
+				<input type="button" value='No' name='no' class='modal_submit'>
+			</fieldset>
+		</form>
+	</div>
+
 </div>
