@@ -22104,7 +22104,13 @@ function form210_ini()
 			{
 				print_form210(bills[0].id);
 			});
-						 	
+			
+			$(edit_invoice_button).off('click'); 
+			$(edit_invoice_button).on('click',function () 
+			{
+				print_product_barcode(bills[0].id,"Order # "+bills[0].order_num,"Invoice # "+bills[0].bill_num);
+			});
+			 	
 	      	//////////provide a preview of the invoice//////////////////////
 			var bill_items_xml="<bill_items>"+
 					"<id></id>"+
@@ -22516,14 +22522,14 @@ function form215_ini()
 				var save_button=filter_fields.elements['save'];
 				$(save_button).show();
 				
-				var drs_items_column="<sale_orders>" +
+				var drs_items_column="<bills>" +
 									"<id></id>" +
 									"<order_num></order_num>" +
 									"<channel></channel>" +
-									"<status></status>" +
+									"<bill_num></bill_num>" +
 									"<manifest_num exact='yes'>"+drs_results[0].drs_num+"</manifest_num>" +
 									"<manifest_id exact='yes'>"+drs_id+"</manifest_id>" +
-									"</sale_orders>";
+									"</bills>";
 
 				/////////////////////////////////////////////////////////////////////////
 	
@@ -22537,17 +22543,17 @@ function form215_ini()
 						rowsHTML+="<form id='form215_"+id+"'></form>";
 							rowsHTML+="<td data-th='S.No.'>";
 							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Order Id'>";
-								rowsHTML+="<input type='hidden' form='form215_"+id+"'>";
+							rowsHTML+="<td data-th='Bill Id'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"' value='"+id+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Bill #'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"' value='"+result.bill_num+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Order #'>";
 								rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"' value='"+result.order_num+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Channel'>";
 								rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"' value='"+result.channel+"'>";
-							rowsHTML+="</td>";
-							rowsHTML+="<td data-th='Status'>";
-								rowsHTML+="<input type='text' readonly='readonly' form='form215_"+id+"' value='"+result.status+"'>";
 							rowsHTML+="</td>";
 							rowsHTML+="<td data-th='Action'>";
 								rowsHTML+="<input type='hidden' form='form215_"+id+"' value='"+id+"'>";
@@ -22559,7 +22565,7 @@ function form215_ini()
 						$('#form215_body').append(rowsHTML);
 						
 						var item_form=document.getElementById('form215_'+id);
-						var save_button=item_form.elements[4];
+						var save_button=item_form.elements[5];
 						
 						$(save_button).on('click',function (e) 
 						{
@@ -22571,7 +22577,7 @@ function form215_ini()
 					$('#form215_share').show();
 					$('#form215_share').click(function()
 					{
-						modal101_action('Order Manifest','','staff',function (func) 
+						modal101_action('Order Manifest - #'+filter_fields.elements['man_num'].value,'','staff',function (func) 
 						{
 							print_form215(func);
 						});

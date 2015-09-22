@@ -12495,16 +12495,16 @@ function form215_add_item()
 		rowsHTML+="<form id='form215_"+id+"'></form>";
 			rowsHTML+="<td data-th='S.No.'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Order Id'>";
-				rowsHTML+="<input type='text' form='form215_"+id+"' oninvalid=\"setCustomValidity('This Order # is invalid')\">";
+			rowsHTML+="<td data-th='Bill Id'>";
+				rowsHTML+="<input type='text' form='form215_"+id+"' oninvalid=\"setCustomValidity('This Bill id is invalid')\">";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Invoice #'>";
+				rowsHTML+="<br><input type='text' required readonly='readonly' form='form215_"+id+"' oninvalid=\"setCustomValidity('This Invoice # is invalid')\">";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Order #'>";
-				rowsHTML+="<br><input type='text' required form='form215_"+id+"' oninvalid=\"setCustomValidity('This Order # is invalid')\">";
-			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Channel'>";
 				rowsHTML+="<input type='text' required readonly='readonly' form='form215_"+id+"'>";
 			rowsHTML+="</td>";
-			rowsHTML+="<td data-th='Status'>";
+			rowsHTML+="<td data-th='Channel'>";
 				rowsHTML+="<input type='text' required readonly='readonly' form='form215_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
@@ -12518,18 +12518,17 @@ function form215_add_item()
 		$('#form215_body').prepend(rowsHTML);
 
 		var item_form=document.getElementById('form215_'+id);
-		var order_id_filter=item_form.elements[0];
-		var order_filter=item_form.elements[1];
-		var channel_filter=item_form.elements[2];
-		var status_filter=item_form.elements[3];
+		var bill_id_filter=item_form.elements[0];
+		var invoice_filter=item_form.elements[1];
+		var order_filter=item_form.elements[2];
+		var channel_filter=item_form.elements[3];
 		var id_filter=item_form.elements[4];
 		var save_button=item_form.elements[5];
 		
-		var order_data="<sale_orders>"+
-					"<order_num></order_num>"+
-					"<status array='yes'>--packed--partially packed--</status>"+
-					"</sale_orders>";
-		set_my_value_list(order_data,order_filter);
+		var bill_data="<bills>"+
+					"<bill_num></bill_num>"+
+					"</bills>";
+		set_my_value_list(bill_data,invoice_filter);
 					
 		$(item_form).on("submit", function(event)
 		{
@@ -12541,7 +12540,7 @@ function form215_add_item()
 				var subform_id=$(this).attr('form');
 				var subform=document.getElementById(subform_id);
 				total_entries+=1;
-				if(subform.elements[0].value==order_id_filter.value && order_id_filter.value!="")	
+				if(subform.elements[0].value==bill_id_filter.value && bill_id_filter.value!="")	
 					double_entry+=1;
 			});
 
@@ -12556,7 +12555,7 @@ function form215_add_item()
 					}
 					else 
 					{
-						order_id_filter.value="";
+						bill_id_filter.value="";
 						$("#modal65").dialog("open");
 					}
 				});
@@ -12570,15 +12569,15 @@ function form215_add_item()
 				}
 				else 
 				{
-					order_id_filter.value="";
+					bill_id_filter.value="";
 					$("#modal65").dialog("open");
 				}
 			}
 		});
 
-		$(order_id_filter).focus();
+		$(bill_id_filter).focus();
 				
-		$(order_id_filter).on('keydown',function (event) 
+		$(bill_id_filter).on('keydown',function (event) 
 		{
 			if(event.keyCode == 13 ) 
 			{
@@ -12593,7 +12592,7 @@ function form215_add_item()
 					
 					total_entries+=1;
 				
-					if(subform.elements[0].value==order_id_filter.value && order_id_filter.value!="")	
+					if(subform.elements[0].value==bill_id_filter.value && bill_id_filter.value!="")	
 						double_entry+=1;
 				});
 				
@@ -12603,39 +12602,39 @@ function form215_add_item()
 					{
 						if(double_entry<2)
 						{
-							var orders_data="<sale_orders count='1'>"+
-											"<id>"+order_id_filter.value+"</id>"+
+							var orders_data="<bills count='1'>"+
+											"<id>"+bill_id_filter.value+"</id>"+
+											"<bill_num></bill_num>" +
 											"<order_num></order_num>" +
-											"<status array='yes'>--packed--partially packed--</status>" +
 											"<channel></channel>" +
-											"</sale_orders>";
+											"</bills>";
 							//console.log(orders_data);				
 							fetch_requested_data('',orders_data,function (orders) 
 							{
 								//console.log(orders);
 								if(orders.length>0)
 								{
-									order_filter.value=orders[0].order_num;
+									invoice_filter.value=orders[0].bill_num;
 									channel_filter.value=orders[0].channel;
-									status_filter.value=orders[0].status;
+									order_filter.value=orders[0].order_num;
 									id_filter.value=orders[0].id;
 									form215_create_item(item_form);
 									form215_add_item();
 								}
 								else 
 								{
-									order_filter.value="";
+									invoice_filter.value="";
 									channel_filter.value="";
-									status_filter.value="";
+									order_filter.value="";
 									id_filter.value=get_new_key();
-									order_id_filter.value="";
+									bill_id_filter.value="";
 									$("#modal65").dialog("open");
 								}
 							});
 						}
 						else 
 						{
-							order_id_filter.value="";
+							bill_id_filter.value="";
 							$("#modal65").dialog("open");
 						}
 					});
@@ -12644,39 +12643,39 @@ function form215_add_item()
 				{
 					if(double_entry<2)
 					{
-						var orders_data="<sale_orders count='1'>"+
-										"<id>"+order_id_filter.value+"</id>"+
+						var orders_data="<bills count='1'>"+
+										"<id>"+bill_id_filter.value+"</id>"+
+										"<bill_num></bill_num>" +
 										"<order_num></order_num>" +
-										"<status array='yes'>--packed--partially packed--</status>" +
 										"<channel></channel>" +
-										"</sale_orders>";
+										"</bills>";
 						//console.log(orders_data);				
 						fetch_requested_data('',orders_data,function (orders) 
 						{
 							//console.log(orders);
 							if(orders.length>0)
 							{
-								order_filter.value=orders[0].order_num;
+								invoice_filter.value=orders[0].bill_num;
 								channel_filter.value=orders[0].channel;
-								status_filter.value=orders[0].status;
+								order_filter.value=orders[0].order_num;
 								id_filter.value=orders[0].id;
 								form215_create_item(item_form);
 								form215_add_item();
 							}
 							else 
 							{
-								order_filter.value="";
+								invoice_filter.value="";
 								channel_filter.value="";
-								status_filter.value="";
+								order_filter.value="";
 								id_filter.value=get_new_key();
-								order_id_filter.value="";
+								bill_id_filter.value="";
 								$("#modal65").dialog("open");
 							}
 						});
 					}
 					else 
 					{
-						order_id_filter.value="";
+						bill_id_filter.value="";
 						$("#modal65").dialog("open");
 					}
 				}

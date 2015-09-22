@@ -20,7 +20,7 @@
 					<th>Bill Id</th>
 					<th>Invoice #</th>
 					<th>Order #</th>
-					<th>Status</th>
+					<th>Channel</th>
 					<th><input type='button' form='form215_header' title='Add item' class='add_icon' onclick='form215_add_item();'></th>
 			</tr>
 		</thead>

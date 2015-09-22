@@ -3390,6 +3390,142 @@ function print_form210(bill_id)
 	});
 }
 
+/**
+ * @form Create Manifest
+ * @formNo 215
+ */
+function form215_print_form()
+{
+	print_form215(function(container)
+	{
+		$.print(container);
+		container.innerHTML="";	
+	});	
+}
+
+/**
+ * @form Create manifest
+ * @formNo 215
+ */
+function print_form215(func)
+{
+	var form_id='form215';
+	
+	////////////setting up containers///////////////////////	
+	var container=document.createElement('div');
+	
+	var header=document.createElement('div');
+		var logo=document.createElement('div');
+		var business_title=document.createElement('div');
+		var drs_barcode=document.createElement('img');
+	
+	var drs_title=document.createElement('div');
+	
+	var detail_section=document.createElement('div');
+	
+	var table_container=document.createElement('div');
+
+	////////////setting styles for containers/////////////////////////
+
+	container.setAttribute('style','width:98%;height:90%;margin:0px;padding:0px;');
+	header.setAttribute('style','display:block;width:98%;height:70px;margin-top:10px;');
+		logo.setAttribute('style','float:left;width:35%;height:60px;');
+		business_title.setAttribute('style','float:left;width:40%;height:60px;text-align:center;font-weight:bold;');
+		drs_barcode.setAttribute('style','float:right;width:23%;height:60px;padding:left:5px;padding-right:5px;');
+	drs_title.setAttribute('style','display:block;width:98%;height:20px;text-align:center');	
+	detail_section.setAttribute('style','display:block;width:98%;height:30px;text-align:center;');
+	
+	///////////////getting the content////////////////////////////////////////
+
+	var bt=get_session_var('title');
+	var font_size=get_session_var('print_size');
+	var logo_image=get_session_var('logo');
+
+	var master_form=document.getElementById(form_id+'_master');
+	var drs_date=master_form.elements['date'].value;
+	//var print_date=master_form.elements['pdate'].value;
+	var drs_num=master_form.elements['man_num'].value;
+	
+	////////////////filling in the content into the containers//////////////////////////
+	
+	var table_element=document.getElementById(form_id+'_body');
+		
+	var total_items=$(table_element).find('tr').length;
+
+	logo.innerHTML="<img src='https://vyavsaay.com/client_images/"+logo_image+"' style='height:98%;margin-left:10%'>";
+	business_title.innerHTML=bt;
+
+	$(drs_barcode).JsBarcode(drs_num,{displayValue:false});
+		
+	drs_title.innerHTML="Dispatch Manifest";
+
+	employee_text="</td><td>Total Orders: "+total_items+"</td>";
+	drs_text="<td>Manifest #: "+drs_num+"</td><td>Manifest Date: "+drs_date+"</td>";
+	detail_text="<table style='border:none;width:98%;font-size:11px;'><tr>"+employee_text+"</tr><tr>"+drs_text+"</tr></table>";
+	
+	detail_section.innerHTML=detail_text;
+
+	var new_table=document.createElement('table');
+	new_table.setAttribute('style','font-size:10px;border:none;text-align:left;');
+	new_table.setAttribute('class','printing_tables');
+
+	var table_header="<tr style='border-top: 1px solid #000000;'><td style='text-align:left;width:10%'>S.No.</td>"+
+				"<td style='text-align:left;width:35%'>Bill Id</td>"+
+				"<td style='text-align:left;width:18%'>Invoice #</td>"+
+				"<td style='text-align:left;width:18%'>Order #</td>"+
+				"<td style='text-align:left;width:18%'>Channel</td></tr>";
+
+	var table_rows=table_header;
+	var counter=0;
+
+	var td_text="<td style='border:solid 1px #000000'></td>";
+	var tr_text="<tr>"+td_text+td_text+td_text+td_text+td_text+"</tr>";
+	
+	$(table_element).find('form').each(function(index)
+	{
+		counter+=1;
+		var form=$(this)[0];
+		
+		var bill_id=""+form.elements[0].value;
+		var bill_num=""+form.elements[1].value;
+		var order_num=form.elements[2].value;
+		var channel=form.elements[3].value;
+		
+		var cnote_no=document.createElement('div');
+		var barcode_image=document.createElement('img');
+		var barcode_value=document.createElement('div');
+		
+		barcode_image.setAttribute('style','width:150px;height:30px;');
+		barcode_value.setAttribute('style','width:150px;font-size:14px;margin:1px;text-align:center;');
+		
+		barcode_value.innerHTML=bill_id;
+		$(barcode_image).JsBarcode(bill_id,{displayValue:false});
+
+		cnote_no.appendChild(barcode_image);
+		cnote_no.appendChild(barcode_value);
+
+		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div style='text-align:left;>"+counter+"</div></td>"+
+				"<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
+				"<td><div style='text-align:left;'>"+bill_num+"</div></td>"+
+				"<td><div style='text-align:left;>"+order_num+"</div></td>"+
+				"<td><div style='text-align:left;>"+channel+"</div></td></tr>";				
+	});
+	new_table.innerHTML=table_rows;
+	/////////////placing the containers //////////////////////////////////////////////////////	
+
+	container.appendChild(header);
+	container.appendChild(drs_title);
+	container.appendChild(detail_section);
+
+	container.appendChild(new_table);
+	
+	header.appendChild(logo);
+	header.appendChild(business_title);
+	header.appendChild(drs_barcode);
+
+	func(container);
+}
+
 
 /**
  * @form Create COD DRS

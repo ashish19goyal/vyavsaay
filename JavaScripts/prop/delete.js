@@ -7092,22 +7092,15 @@ function form215_delete_item(button)
 		{
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
-			var status=form.elements[3].value;
-			var new_status='packed';		
-			if(status.indexOf('partially')>-1)
-			{
-				new_status='partially packed';
-			}
 			
 			var data_id=form.elements[4].value;
 			var last_updated=get_my_time();
-			var data_xml="<sale_orders>" +
+			var data_xml="<bills>" +
 						"<id>"+data_id+"</id>" +
-						"<status>"+new_status+"</status>" +
 						"<manifest_num></manifest_num>"+
 						"<manifest_id></manifest_id>"+
 						"<last_updated>"+last_updated+"</last_updated>" +
-						"</sale_orders>";
+						"</bills>";
 			update_simple(data_xml);
 			$(button).parent().parent().remove();
 			form215_update_serial_numbers();
@@ -7827,14 +7820,13 @@ function form236_delete_item(button)
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
 			
-			var drs_items_xml="<sale_orders>"+
+			var drs_items_xml="<bills>"+
 							"<id></id>"+
-							"<status exact='yes'>dispatched</status>"+
 							"<manifest_num exact='yes'>"+drs_num+"</manifest_num>"+
-							"</sale_orders>";			
+							"</bills>";			
 			get_single_column_data(function(drs_items)
 			{
-				var data_xml="<sale_orders>";
+				var data_xml="<bills>";
 				var counter=1;
 				var last_updated=get_my_time();
 				
@@ -7842,7 +7834,7 @@ function form236_delete_item(button)
 				{
 					if((counter%500)===0)
 					{
-						data_xml+="</sale_orders><separator></separator><sale_orders>";
+						data_xml+="</bills><separator></separator><bills>";
 					}
 						
 					counter+=1;
@@ -7850,11 +7842,11 @@ function form236_delete_item(button)
 					data_xml+="<row>" +
 							"<id>"+drs_item+"</id>" +
 							"<manifest_num></manifest_num>" +
-							"<status>packed</status>"+
+							"<manifest_id></manifest_id>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</row>";
 				});
-				data_xml+="</sale_orders>";
+				data_xml+="</bills>";
 				//console.log(data_xml);
 				update_batch(data_xml);
 				

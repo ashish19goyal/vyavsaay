@@ -11840,11 +11840,11 @@ function form215_update_item(form)
 		var data_id=form.elements[4].value;
 		var last_updated=get_my_time();
 		
-		var data_xml="<sale_orders>" +
+		var data_xml="<bills>" +
 					"<id>"+data_id+"</id>" +
 					"<manifest_num>"+drs_num+"</manifest_num>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</sale_orders>";
+					"</bills>";
 		update_simple(data_xml);
 	}
 	else

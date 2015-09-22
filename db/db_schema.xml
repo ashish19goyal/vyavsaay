@@ -436,8 +436,6 @@
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<total_quantity index='no' type="DECIMAL(12,2)"></total_quantity>
 			<status index='yes' type='VARCHAR(25)'></status><!-- billed/cancelled/pending/picked/packed/dispatched/closed -->
-			<manifest_num index="yes" type="VARCHAR(30)"></manifest_num>
-			<manifest_id index="yes" type="BIGINT"></manifest_id>
 			<billing_type index='yes' type='TEXT'></billing_type>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
@@ -496,6 +494,8 @@
 			<status index='no' type="VARCHAR(30)"></status><!--cancelled-->
 			<cform index='no' type="VARCHAR(30)"></cform><!--yes/no-->
 			<pick_bag_num index='yes' type="VARCHAR(20)"></pick_bag_num>
+			<manifest_num index="yes" type="VARCHAR(30)"></manifest_num>
+			<manifest_id index="yes" type="BIGINT"></manifest_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</bills>

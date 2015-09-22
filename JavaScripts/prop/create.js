@@ -5906,7 +5906,6 @@ function form105_create_form()
  */
 function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_time)
 {
-	
 	///check following data is adequately updated
 	//a. product batches
 	//b. channel prices
@@ -5974,7 +5973,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 							"</product_instances>";
 					get_single_column_data(function(batches)
 					{
-						console.log(batches);
+						//console.log(batches);
 						var single_batch=batches[0];
 						batches.reverse();
 						var batches_result_array=[];
@@ -6043,7 +6042,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 												"</product_master>";
 										fetch_requested_data('',tax_data,function(taxes)
 										{
-											console.log(taxes);
+											//console.log(taxes);
 		
 											order_item.item_desc=taxes[0].description;
 											if(taxes.length>0)
@@ -6058,7 +6057,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 			
 												var unit_price=item_amount/parseFloat(order_item.quantity);
 												
-												console.log(batches_result_array);
+												//console.log(batches_result_array);
 												if(batches_result_array.length===0)
 												{
 													var single_batch_object=new Object();
@@ -6083,7 +6082,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 														var storage_result_array=[];
 														get_available_storage(order_item.item_name,batch_result.batch,storages,batch_result.quantity,storage_result_array,function () 
 														{
-															console.log(storage_result_array);
+															//console.log(storage_result_array);
 		
 															var item_storage="";
 															if(storage_result_array.length>0)
@@ -6311,7 +6310,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 								create_row(bill_xml,activity_xml);
 								
 								//console.log(bill_items_xml_array);
-								//console.log(order_items_xml_array);
+								//console.log(bill_xml);
 		
 								bill_items_xml_array.forEach(function (bill_item_xml) 
 								{
@@ -6325,7 +6324,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 						});
 						hide_loader();
 					}
-			    },100);		
+			    },200);		
 			}
 			else
 			{
@@ -14017,24 +14016,18 @@ function form215_create_item(form)
 	{
 		var drs_num=document.getElementById('form215_master').elements['man_num'].value;
 		var drs_id=document.getElementById('form215_master').elements['id'].value;
-		var status=form.elements[3].value;
-		var new_status='dispatched';		
-		if(status.indexOf('partially')>-1)
-		{
-			new_status='partially dispatched';
-		}
+		
 		var data_id=form.elements[4].value;
 		var save_button=form.elements[5];
 		var del_button=form.elements[6];
 		
 		var last_updated=get_my_time();
-		var data_xml="<sale_orders>" +
+		var data_xml="<bills>" +
 					"<id>"+data_id+"</id>" +
-					"<status>"+new_status+"</status>" +
 					"<manifest_num>"+drs_num+"</manifest_num>"+
 					"<manifest_id>"+drs_id+"</manifest_id>"+
 					"<last_updated>"+last_updated+"</last_updated>" +
-					"</sale_orders>";
+					"</bills>";
 		update_simple(data_xml);
 		
 		for(var i=0;i<4;i++)
