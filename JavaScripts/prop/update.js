@@ -11480,7 +11480,7 @@ function form209_update_serial_numbers()
  * @formNo 210
  * @param button
  */
-function form210_reject_item(item_id,item_name,item_batch,total_quantity,item_storage)
+function form210_reject_item(bar_code)
 {
 	if(is_update_access('form210'))
 	{
@@ -11551,7 +11551,7 @@ function form210_accept_item(bar_code)
 					var item_name=$(this).find('td:first').html();
 					var packed_quantity=parseFloat(document.getElementById('form210_packed_'+data_id).innerHTML)+1;
 					var total_quantity=parseFloat(document.getElementById('form210_topack_'+data_id).innerHTML);
-					console.log(item_name);
+					//console.log(item_name);
 					
 					if(item_name==products[0].name && packed_quantity<=total_quantity)
 					{
@@ -11563,16 +11563,25 @@ function form210_accept_item(bar_code)
 							status='packed';
 						}
 						
-						document.getElementById('form210_packed_'+data_id).innerHTML=packed_quantity;
-	
+						var packed_quantity_elem=document.getElementById('form210_packed_'+data_id);
+						packed_quantity_elem.innerHTML=packed_quantity;
+						
+						$(packed_quantity_elem).parent().addClass('glowing_td');
+						setTimeout(function () 
+						{
+							$(packed_quantity_elem).parent().removeClass('glowing_td');
+						},1000);
+						
+						//console.log($(packed_quantity_elem).parent());
 						var items_xml="<bill_items>"+
 								"<id>"+data_id+"</id>"+					
 								"<packing_status>"+status+"</packing_status>"+
+								"<packed_quantity>"+packed_quantity+"</packed_quantity>"+
 								"<last_updated>"+get_my_time()+"</last_updated>"+						
 								"</bill_items>";
 						update_simple(items_xml);
 											
-						$("#modal69").dialog("open");
+						//$("#modal69").dialog("open");
 					}
 				}					
 			});	

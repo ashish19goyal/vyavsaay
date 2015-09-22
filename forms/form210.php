@@ -12,9 +12,9 @@
 
 	<br>
 	<div id='form210_body' style='display:block;width:100%'>
-		<div id='form210_invoice_line' style='display:block;width:95%;min-height:40px;font-size:1em;background-color:#bbbbbb;font-weight:600;'></div>
-		<label style='float:right;background-color:#B93C42;color:#fff;padding:3px;'>Scan Item<br><input type='text' placeholder='Scan item to reject' style='color:#000;' name='rejected'></label>
-		<div id='form210_invoice' style='display:block;width:95%;height:auto;'></div>
+		<div id='form210_invoice_line' style='display:block;width:99%;min-height:40px;font-size:1em;background-color:#bbbbbb;font-weight:600;'></div>
+		<div style='display:inline-block;width:99%;'><label style='float:right;background-color:#B93C42;color:#fff;padding:3px;margin:10px;'>Scan Item<br><input type='text' placeholder='Scan item to reject' style='color:#000;' form='form210_master' name='rejected'></label></div>
+		<div id='form210_invoice' style='display:block;width:99%;height:auto;'></div>
 		<br><br>
 		<div id='form210_image' style='display:block;margin:5px;width:95%;height:auto;'></div>
 	</div>

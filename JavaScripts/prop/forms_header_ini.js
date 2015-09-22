@@ -7727,6 +7727,7 @@ function form210_header_ini()
 	var order_filter=master_form.elements[2];
 
 	var accepted_filter=master_form.elements['accepted'];
+	var rejected_filter=master_form.elements['rejected'];
 	
 	$('#form210_image').html('');
 	$('#form210_invoice').html('');
@@ -7751,6 +7752,21 @@ function form210_header_ini()
 	    	{
 		    	form210_accept_item(accepted_filter.value);
 		    	accepted_filter.value="";
+		    }
+	    }
+	});
+	
+	$(rejected_filter).off('keydown');
+	$(rejected_filter).on('keydown',function (event) 
+	{
+		if(event.keyCode == 13) 
+		{
+	    	event.preventDefault();
+	    	if(rejected_filter.value!="")
+	    	{
+		    	form210_reject_item(rejected_filter.value);
+		    	rejected_filter.value="";
+		    	$(accepted_filter).focus();
 		    }
 	    }
 	});

@@ -11243,12 +11243,11 @@ function modal151_action(bill_id,order_num)
 		$("#modal151").dialog("close");		
 	});
 
-	var time_complete=setInterval(function()
+	setTimeout(function()
     {
 		$("#modal151").dialog("close");
-		clearInterval(time_complete);
 	},2000);
-				
+	
 	///////////////////////////
 	$("#modal151").dialog("open");	
 }

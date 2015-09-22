@@ -22132,7 +22132,7 @@ function form210_ini()
 					var table_copy=document.createElement('table');
 					
 					table_copy.setAttribute('width','100%');
-					table_copy.setAttribute('class','plain_table');
+					table_copy.setAttribute('class','plain_table glowing_plain_table');
 					$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>MRP</th><th>Total</th><th>Quantity</th></tr>");
 	
 					bill_items.forEach(function (item) 
@@ -22146,10 +22146,9 @@ function form210_ini()
 						{
 							row_class=" class='green_row'";
 						}
-						$(table_copy).append("<tr "+row_class+" id='form210_row_"+item.id+"' data-id='"+item.id+"'><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_topack_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p><br>Rejected: <vyavsaay_p id='form210_packed_"+item.id+"'></td></tr>");	
+						$(table_copy).append("<tr "+row_class+" id='form210_row_"+item.id+"' data-id='"+item.id+"'><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_topack_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p><br>Rejected: <vyavsaay_p id='form210_rejected_"+item.id+"'>0</vyavsaay_p></td></tr>");	
 					});
 
-					//container.appendChild(invoice_line);
 					container.appendChild(table_copy);
 					
 					hide_loader();
