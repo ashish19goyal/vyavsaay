@@ -198,7 +198,7 @@ function get_export_data_restructured(columns,filename,func)
 	
 	columns.count=0;
 	columns.start_index=0;
-	columns.batch_size=2000;
+	columns.batch_size=5000;
 	
 	read_json_rows('',columns,function(results)
 	{		
@@ -245,7 +245,7 @@ function get_limited_export_data(columns,filename,func)
 	show_loader();
 	columns.count=0;
 	columns.start_index=0;
-	columns.batch_size=2000;
+	columns.batch_size=5000;
 	
 	read_json_rows('',columns,function(results)
 	{
