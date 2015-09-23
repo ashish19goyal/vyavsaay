@@ -13312,6 +13312,7 @@ function form136_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Batch'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form136_"+id+"' value='"+result.batch+"'>";
+						rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+id+"' onclick=\"print_product_barcode('"+id+"','"+result.product_name+"','"+result.batch+"');\">";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Quantity'>";
 						rowsHTML+="Bought: <input type='number' readonly='readonly' form='form136_"+id+"' value='"+result.p_quantity+"' step='any'>";

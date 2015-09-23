@@ -9718,15 +9718,15 @@ function form136_create_item(form)
 				"<storage>"+storage+"</storage>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</supplier_bill_items>";	
-	
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}
+		var batch_xml="<product_instances>" +
+				"<id>"+data_id+"</id>" +
+				"<product_name>"+name+"</product_name>" +
+				"<batch>"+batch+"</batch>" +
+				"<manufacture_date></manufacture_date>" +
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</product_instances>";
+		create_simple(batch_xml);
+		create_simple(data_xml);
 				
 		for(var i=0;i<8;i++)
 		{
@@ -9760,14 +9760,7 @@ function form136_create_item(form)
 						"<batch>"+batch+"</batch>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +
 						"</area_utilization>";
-				if(is_online())
-				{
-					server_create_simple(storage_xml);
-				}
-				else
-				{
-					local_create_simple(storage_xml);
-				}
+				create_simple(storage_xml);
 			}
 		});
 	}

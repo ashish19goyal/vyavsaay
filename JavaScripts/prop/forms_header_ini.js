@@ -4932,7 +4932,7 @@ function form136_header_ini()
 	var bill_date=fields.elements[3];
 	var entry_date=fields.elements[4];
 	fields.elements[5].value="";
-	fields.elements[6].value=get_new_key();
+	fields.elements['id'].value=get_my_time();
 	fields.elements[7].value=fields.elements[6].value;
 	var save_button=fields.elements[8];
 	

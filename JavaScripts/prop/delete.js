@@ -4535,14 +4535,11 @@ function form136_delete_item(button)
 						"<id>"+data_id+"</id>" +
 						"<bill_id>"+bill_id+"</bill_id>" +
 						"</supplier_bill_items>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}
+			var batch_xml="<product_instances>" +
+						"<id>"+data_id+"</id>" +
+						"</product_instances>";	
+			delete_simple(data_xml);
+			delete_simple(batch_xml);
 					
 			$(button).parent().parent().remove();
 		});

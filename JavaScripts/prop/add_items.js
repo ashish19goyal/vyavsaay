@@ -7242,7 +7242,8 @@ function form136_add_item()
 				rowsHTML+="<input type='text' required form='form136_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
-				rowsHTML+="<input type='text' required form='form136_"+id+"'></br>";
+				rowsHTML+="<input type='text' readonly='readonly' required form='form136_"+id+"'></br>";
+				rowsHTML+="<img src='./images/barcode.png' class='barcode_icon' title='Print Barcode - "+id+"' id='form136_barcode_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="Bought: <input type='number' step='any' required form='form136_"+id+"'>";
@@ -7267,7 +7268,9 @@ function form136_add_item()
 		rowsHTML+="</tr>";
 	
 		$('#form136_body').prepend(rowsHTML);
-		
+		var master_fields=document.getElementById('form136_master');
+		var bill_id=fields.elements['id'].value;
+
 		var fields=document.getElementById("form136_"+id);
 		var name_filter=fields.elements[0];
 		var batch_filter=fields.elements[1];
@@ -7280,7 +7283,15 @@ function form136_add_item()
 		var id_filter=fields.elements[8];
 		var save_button=fields.elements[9];
 		var tax_unit_filter=fields.elements[11];
-		
+
+		batch_filter.value=bill_id;
+			
+		var barcode_elem=document.getElementById("form136_barcode_"+id);
+		$(barcode_filter).on('click',function () 
+		{
+			print_product_barcode(id,name_filter.value,batch_filter.value);
+		});
+				
 		$(save_button).on("click", function(event)
 		{
 			event.preventDefault();
@@ -7293,9 +7304,12 @@ function form136_add_item()
 			form136_add_item();
 		});
 		
-		var product_data="<product_master>" +
-				"<name></name>" +
-				"</product_master>";
+		var product_data="<attributes>" +
+					"<name></name>" +
+					"<type exact='yes'>product</type>"+
+					"<value exact='yes'>yes</value>"+
+					"<attribute exact='yes'>raw material</attribute>"+
+					"</attributes>";
 		set_my_value_list_func(product_data,name_filter,function () 
 		{
 			$(name_filter).focus();
@@ -7361,12 +7375,13 @@ function form136_add_item()
 
 		$(name_filter).on('blur',function(event)
 		{
+			/*
 			var batch_data="<product_instances>" +
 					"<batch></batch>" +
 					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
 					"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
-			
+			*/
 			var price_data="<supplier_bill_items count='1'>" +
 					"<unit_price></unit_price>" +
 					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
@@ -7379,7 +7394,7 @@ function form136_add_item()
 						"</product_master>";			
 			set_my_value(tax_data,tax_unit_filter);
 			
-			batch_filter.value="";
+			//batch_filter.value="";
 		});
 		
 		$(pquantity_filter).on('blur',function(event)
@@ -10388,9 +10403,12 @@ function form178_add_item()
 			form178_add_item();
 		});
 		
-		var product_data="<product_master>" +
-				"<name></name>" +
-				"</product_master>";
+		var product_data="<attributes>" +
+					"<name></name>" +
+					"<type exact='yes'>product</type>"+
+					"<value exact='yes'>yes</value>"+
+					"<attribute exact='yes'>raw material</attribute>"+
+					"</attributes>";
 		set_my_value_list_func(product_data,name_filter,function () 
 		{
 			$(name_filter).focus();

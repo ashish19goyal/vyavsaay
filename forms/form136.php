@@ -8,7 +8,7 @@
 			<label>Entry Date<br><input type='text' required></label>
 			<label>Notes<br><textarea row='1'></textarea></label>
 			<label>
-				<input type='hidden' value=''>
+				<input type='hidden' value='' name='id'>
 				<input type='hidden' name='transaction'>
 			</label>
 			<label>	<input type='button' title='Save Bill' class='save_icon'></label>
