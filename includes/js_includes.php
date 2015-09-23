@@ -30,6 +30,7 @@
 
 <script src='./JavaScripts/prop/add_items.js'></script>
 <script src='./JavaScripts/prop/ajax.js'></script>
+<script src='./JavaScripts/prop/ajax_json.js'></script>
 <script src='./JavaScripts/prop/create.js'></script>
 <script src='./JavaScripts/prop/delete.js'></script>
 <script src='./JavaScripts/prop/event_handler.js'></script>
@@ -40,6 +41,7 @@
 <script src='./JavaScripts/prop/import.js'></script>
 <script src='./JavaScripts/prop/local_online.js'></script>
 <script src='./JavaScripts/prop/local_db_handling.js'></script>
+<script src='./JavaScripts/prop/local_db_handling_json.js'></script>
 <script src='./JavaScripts/prop/login_helper.js'></script>
 <script src='./JavaScripts/prop/modal_action.js'></script>
 <script src='./JavaScripts/prop/numeral.js'></script>

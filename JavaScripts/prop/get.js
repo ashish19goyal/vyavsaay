@@ -195,13 +195,13 @@ function get_export_data_extended(columns,filename,func)
 function get_export_data_restructured(columns,filename,func)
 {
 	show_loader();
-	var new_columns=columns.replace(" count='25'","");
-	new_columns=new_columns.replace(" count='100'","");
-	new_columns=new_columns.replace("start_index","dont_use_index");
-	//console.log(new_columns);
 	
-	fetch_requested_data('',new_columns,function(results)
-	{
+	columns.count=0;
+	columns.start_index=0;
+	columns.batch_size=2000;
+	
+	read_json_rows('',columns,function(results)
+	{		
 		var data_id=get_new_key();
 		var last_updated=get_my_time();
 		var export_xml="<export_log>"+
@@ -232,6 +232,56 @@ function get_export_data_restructured(columns,filename,func)
 				//console.log(new_result_array);				
 				hide_loader();
 				my_obj_array_to_csv(new_result_array,filename);
+			}
+		},1000);
+	});
+}
+
+/*
+* Fetches all records for a specified form and exports them to a csv
+*/
+function get_limited_export_data(columns,filename,func)
+{
+	show_loader();
+	columns.count=0;
+	columns.start_index=0;
+	columns.batch_size=2000;
+	
+	read_json_rows('',columns,function(results)
+	{
+		var data_id=get_new_key();
+		var last_updated=get_my_time();
+		var export_xml="<export_log>"+
+					"<id>"+data_id+"</id>"+
+					"<acc_name>"+get_account_name()+"</acc_name>"+
+					"<filename>"+filename+"</filename>"+
+					"<export_time>"+last_updated+"</export_time>"+
+					"<last_updated>"+last_updated+"</last_updated>"+
+					"</export_log>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>export_log</tablename>" +
+					"<link_to></link_to>" +
+					"<title>Exported</title>" +
+					"<notes>"+filename+" report</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+		create_row(export_xml,activity_xml);
+		
+		results.forEach(function(result)
+		{
+			func(result);
+		});
+
+		var export_complete=setInterval(function()
+		{
+			//console.log(total_export_requests);
+			if(total_export_requests===0)
+			{
+				clearInterval(export_complete);
+				//console.log(results);				
+				hide_loader();
+				my_obj_array_to_csv(results,filename);
 			}
 		},1000);
 	});

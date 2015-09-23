@@ -1,8 +1,6 @@
 <?php
 /*	input data format: 
  * 			{
- 				api_key:'',
- 				username:'',
  				data_store:'',
  				count:'',
  				start_index:'',
@@ -11,28 +9,30 @@
  					{
  						index:'column1',
  						value:'value1',
- 						exact:'yes/no'
- 						upperbound:'yes/no',
- 						lowerbound:'yes'/no'
- 						array:'yes/no'
+ 						exact:'value'
+ 						upperbound:'value',
+ 						lowerbound:'value'
+ 						array:'value',
+ 						unequal:'value'
  					},
  					{
  						index:'column2',
  						value:'value2',
- 						exact:'yes/no',
- 						upperbound:'yes/no',
- 						lowerbound:'yes'/no'
- 						array:'yes/no'
+ 						exact:'value',
+ 						upperbound:'value',
+ 						lowerbound:'value'
+ 						array:'value',
+ 						unequal:'value'
  					}
  				]
  			}
 
  *	output data format: 
  *			{
- 				status:'success/error',
  				data_store:'',
- 				length:'',
+ 				count:'',
  				end_index:'',
+ 				status:'',
  				rows:
  				[
  					{
@@ -49,69 +49,82 @@
  			}
 */
 
+	session_start();
 	include_once "../Classes/db.php";
 	use RetailingEssentials\db_connect;
-
+	
 	$input_data=$_POST['data'];
+	$domain=$_POST['domain'];
+	$username=$_POST['username'];
+	$read_access=$_POST['re'];
+	
 	$input_object=json_decode($input_data,true);
 
-	$api_key=$input_object['api_key'];
-	$username=$input_object['username'];
 	$table=$input_object['data_store'];
 	$start_index=$input_object['start_index'];
 	$columns_array=(array)$input_object['indexes'];
 
-	$api_query="select dbname,data_stores from api_key_mapping where api_key=? and username=? and status=?";
-	$master_conn=new db_connect(0);
-	$api_stmt=$master_conn->conn->prepare($api_query);
-	$api_array=array($api_key,$username,'active');
-	$api_stmt->execute($api_array);
-	$api_struct_res=$api_stmt->fetchAll(PDO::FETCH_ASSOC);
-	
-	//echo $api_struct_res[0]['dbname'];
-	$xmlresponse="";
-	if(count($api_struct_res)>0)
+	$response_object=[];
+			
+	if(isset($_SESSION['session']))
 	{
-		$db_name=$api_struct_res[0]['dbname'];
-		$data_stores=$api_struct_res[0]['data_stores'];
-		if(strpos($data_stores,$table)!==false)
+		if($_SESSION['session']=='yes' && $_SESSION['domain']==$domain && $_SESSION['username']==$username && $_SESSION['re']==$read_access)
 		{
-			$query="select * from $table where ";
-			$order_by=" ORDER BY last_updated DESC, ";
-			$limit=" limit ?,?";
+			///setting the number of return results
 			$limit_count=0;
-
 			if(isset($input_object['count']))
 			{
 				$limit_count=$input_object['count'];
 			}
 
+			///setting the starting index
 			$limit_start_index=0;
 			if(isset($start_index))
 			{
 				$limit_start_index=$start_index;
 			}
 
-			///////
+			///seting the indexes to be returned
+			$columns_to_display="";
+			$values_array=array();
+			
+			foreach($columns_array as $col)
+			{
+				$columns_to_display.=$col['index'].",";			
+			}
+			
+			$columns_to_display=rtrim($columns_to_display,",");
+			
+			///formulating the query
+			$query="select ".$columns_to_display." from $table where ";
+			$order_by=" ORDER BY last_updated DESC, ";
+			$limit=" limit ?,?";
+			
+			//parsing the indexes for filtering of results
 			foreach($columns_array as $col)
 			{
 				if(isset($col['upperbound']))
 				{
 					$query.=$col['index']." <= ? and ";
-					$values_array[]=$col['value'];
+					$values_array[]=$col['upperbound'];
 				}
 				
 				if(isset($col['lowerbound']))
 				{
 					$query.=$col['index']." >= ? and ";
-					$values_array[]=$col['value'];
+					$values_array[]=$col['lowerbound'];
+				}
+				
+				if(isset($col['unequal']))
+				{
+					$query.=$col['index']." <> ? and ";
+					$values_array[]=$col['not'];
 				}
 				
 				if(isset($col['array']))
 				{
 					$query.=$col['index']." in (";
-					$string=$col['value'];
-					$exploded_values=explode(",",$string);
+					$exploded_values=$col['array'];
 					foreach($exploded_values as $value)
 					{
 						$query.="?,";
@@ -120,7 +133,8 @@
 					$query=rtrim($query,",");
 					$query.=") and ";
 				}
-				else if(!isset($col['array']) && !isset($col['lowerbound']) && !isset($col['upperbound']) && !isset($col['exact']) && isset($col['value']))
+				
+				if(isset($col['value']))
 				{
 					if($col['value']!="")
 					{
@@ -140,44 +154,41 @@
 				if(isset($col['exact']))
 				{
 					$query.=$col['index']." = ? and ";
-					$values_array[]=$col['value'];
-				}
+					$values_array[]=$col['exact'];
+				}				
 			}
 			
-			////////////////				
 			$query=rtrim($query,"and ");
 			
 			if(count($values_array)===0)
 			{
-				$query="select * from $table";
+				$query="select ".$columns_to_display." from $table";
 			}
 			$query.=$order_by."id DESC";
 
-			//echo $query;
-	
-			if($limit_count!==0)
+			if($limit_count!=0)
 			{
 				$query.=$limit;
 				$values_array[]=$limit_start_index;
 				$values_array[]=$limit_count;
 			}
 			
-			$conn2=new db_connect($db_name);
-			$stmt=$conn2->conn->prepare($query);
+			$db_name="re_user_".$domain;
+			
+			$conn=new db_connect($db_name);
+			$stmt=$conn->conn->prepare($query);
 			$stmt->execute($values_array);
 			$struct_res=$stmt->fetchAll(PDO::FETCH_ASSOC);
 			
-			$response_object=[];
 			$response_object['status']='success';
 			$response_object['data_store']=$table;
-			$response_object['length']=count($struct_res);
+			$response_object['count']=count($struct_res);
 			$response_object['end_index']=$start_index+count($struct_res);
-	
+			
 			$response_rows=[];
 	
 			for($i=0;$i<count($struct_res);$i++)
 			{
-				//echo "new row<br>";
 				$response_rows[$i]=[];
 				foreach($struct_res[$i] as $key => $value)
 				{
@@ -188,25 +199,24 @@
 					else {
 						$response_rows[$i][$key]=$value;
 					}
-					//echo $value."<br>";
 				}
 			}
-
 			$response_object['rows']=$response_rows;
-			$xmlresponse=json_encode($response_object);
 		}
-		else 
+		else
 		{
-			$xmlresponse="{'status':'error'}";
+			$response_object="{'status':'Invalid session'}";
 		}
 	}
-	else 
+	else
 	{
-		$xmlresponse="{'status':'error'}";
-	}	
-
-	//header ("Content-Type:text/plain");
+		$response_object="{'status':'Invalid session'}";
+	}
+	
+	$jsonresponse=json_encode($response_object);		
 	header ("Content-Type:application/json");
-	echo $xmlresponse;
+	//header ("Content-Type:text/xml");
+	//echo $query;			
+	echo $jsonresponse;
 
 ?>

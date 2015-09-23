@@ -180,6 +180,7 @@ JavaScripts/open/shortcuts.min.js
 JavaScripts/prop/access.js
 JavaScripts/prop/add_items.js
 JavaScripts/prop/ajax.js
+JavaScripts/prop/ajax_json.js
 JavaScripts/prop/create.js
 JavaScripts/prop/delete.js
 JavaScripts/prop/event_handler.js
@@ -191,6 +192,7 @@ JavaScripts/prop/import_template.js
 JavaScripts/prop/import.js
 JavaScripts/prop/local_online.js
 JavaScripts/prop/local_db_handling.js
+JavaScripts/prop/local_db_handling_json.js
 JavaScripts/prop/login_helper.js
 JavaScripts/prop/modal_action.js
 JavaScripts/prop/numeral.js

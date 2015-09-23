@@ -21371,10 +21371,10 @@ function form201_ini()
 
 	fetch_requested_data('form201',columns,function(results)
 	{	
-		var drs_num_array="--";
+		var drs_num_array=[];
 		results.forEach(function(result)
 		{
-			drs_num_array+=result.drs_num+"--";
+			drs_num_array.push(result.drs_num);
 			var rowsHTML="";
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form201_"+result.id+"'></form>";
@@ -21437,52 +21437,28 @@ function form201_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			var columns="<logistics_orders>"+
-						"<id></id>"+
-						"<awb_num></awb_num>"+
-                        "<type></type>"+
-                        "<order_num></order_num>"+
-                        "<manifest_id></manifest_id>"+
-                        "<merchant_name></merchant_name>"+
-                        "<ship_to></ship_to>"+
-                        "<address1></address1>"+
-                        "<address2></address2>"+
-                        "<city></city>"+
-                        "<state></state>"+
-                        "<pincode></pincode>"+
-                        "<phone></phone>"+
-                        "<telephone></telephone>"+
-                        "<weight></weight>"+
-                        "<declared_value></declared_value>"+
-                        "<collectable_value></collectable_value>"+
-                        "<vendor_code></vendor_code>"+
-                        "<shipper_name></shipper_name>"+
-                        "<return_address1></return_address1>"+
-                        "<return_address2></return_address2>"+
-                        "<return_address3></return_address3>"+
-                        "<return_pincode></return_pincode>"+
-                        "<len></len>"+
-                        "<breadth></breadth>"+
-                        "<height></height>"+
-                        "<pieces></pieces>"+
-                        "<carrier_account></carrier_account>"+
-                        "<carrier_name></carrier_name>"+
-                        "<manifest_type></manifest_type>"+
-                        "<dispatch_date></dispatch_date>"+
-                        "<import_date></import_date>"+
-                        "<notes></notes>"+
-                        "<pickup_location></pickup_location>"+
-                        "<pickup_by></pickup_by>"+
-                        "<sku></sku>"+
-                        "<product_name></product_name>"+
-                        "<status></status>"+
-                        "<current_location></current_location>"+
-                        "<delivery_person></delivery_person>"+
-                        "<order_history></order_history>"+
-                        "<comments></comments>"+
-                        "<drs_time></drs_time>"+
-                        "<drs_num array='yes'>"+drs_num_array+"</drs_num>"+
-						"</logistics_orders>";
+			var columns=new Object();
+			columns.count=0;
+			columns.start_index=0;
+			columns.data_store='logistics_orders';		
+			
+			columns.indexes=[{index:'id'},
+							{index:'awb_num'},
+							{index:'drs_time'},
+							{index:'order_num'},
+							{index:'weight'},
+							{index:'pieces'},
+							{index:'status'},
+							{index:'delivery_person'},
+							{index:'manifest_type'},
+							{index:'merchant_name'},
+							{index:'phone'},
+							{index:'sku'},
+							{index:'return_address1'},
+							{index:'return_address2'},
+							{index:'return_address3'},
+							{index:'drs_num',array:drs_num_array}];		
+
 			get_export_data_restructured(columns,'drs_details',function(new_results)
 			{
 				var sorted_array=[];
@@ -21549,28 +21525,32 @@ function form203_ini()
 	var next_element=document.getElementById('form203_next');
 	var start_index=index_element.getAttribute('data-index');
 	//////////////
-
-	var awb_string="<awb_num></awb_num>";
+	
+	var awb_object={index:'awb_num'};
 	if(fawb!="")
 	{
-		awb_string="<awb_num exact='yes'>"+fawb+"</awb_num>";
+		awb_object={index:'awb_num',exact:fawb};
 	}
 
-	var columns="<logistics_orders count='25' start_index='"+start_index+"'>" +
-			"<id>"+fid+"</id>" +
-			"<order_num>"+forder+"</order_num>";
-	columns+=awb_string;				
-	columns+="<merchant_name></merchant_name>" +
-			"<ship_to></ship_to>" +
-			"<import_date>"+fdate+"</import_date>" +
-			"<type></type>"+
-			"<manifest_type></manifest_type>"+
-			"<status>"+fstatus+"</status>" +
-			"</logistics_orders>";
+	var new_columns=new Object();
+		new_columns.count=25;
+		new_columns.start_index=start_index;
+		new_columns.data_store='logistics_orders';		
+		
+		new_columns.indexes=[{index:'id',value:fid},
+							{index:'order_num',value:forder},
+							awb_object,
+							{index:'merchant_name'},
+							{index:'ship_to'},
+							{index:'import_date',value:fdate},
+							{index:'type'},
+							{index:'manifest_type'},
+							{index:'status',value:fstatus}];		
 
+	
 	$('#form203_body').html("");
 
-	fetch_requested_data('form203',columns,function(results)
+	read_json_rows('form203',new_columns,function(results)
 	{	
 		results.forEach(function(result)
 		{
@@ -21637,11 +21617,9 @@ function form203_ini()
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
-			get_export_data_extended(columns,'logistics_orders',function(new_result)
+			get_limited_export_data(new_columns,'logistics_orders',function(new_result)
 			{
-				new_result.dispatch_date=get_my_datetime(new_result.dispatch_date);				
 				new_result.import_date=get_my_datetime(new_result.import_date);
-				new_result.last_updated=get_my_datetime(new_result.last_updated);				
 			});
 		});
 		hide_loader();

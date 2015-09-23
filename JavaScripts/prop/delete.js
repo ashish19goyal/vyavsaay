@@ -5544,27 +5544,13 @@ function form169_delete_item(button)
 					"<type>product</type>" +
 					"</reviews>";
 	
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete);
-				server_delete_simple(other_delete2);
-				server_delete_simple(other_delete3);
-				server_delete_simple(other_delete4);
-				server_delete_simple(other_delete5);
-				server_delete_simple(other_delete6);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete);
-				local_delete_simple(other_delete2);
-				local_delete_simple(other_delete3);
-				local_delete_simple(other_delete4);
-				local_delete_simple(other_delete5);
-				local_delete_simple(other_delete6);
-	
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
+			delete_simple(other_delete2);
+			delete_simple(other_delete3);
+			delete_simple(other_delete4);
+			delete_simple(other_delete5);
+			delete_simple(other_delete6);
 			$(button).parent().parent().remove();
 		});
 	}

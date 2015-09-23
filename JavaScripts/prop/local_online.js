@@ -304,3 +304,28 @@ function update_batch(data_xml)
 		local_update_batch(data_xml);
 	}
 }
+
+/**
+ * @param columns
+ * @param callback
+ */
+function read_json_rows(element_id,columns,callback)
+{
+	if(is_read_access(element_id))
+	{
+		var results=new Array();
+		if(is_online())
+		{
+			server_read_json_rows(columns,callback,results);
+		}
+		else
+		{
+			local_read_json_rows(columns,callback,results);
+		}
+	}
+	else
+	{
+		hide_loader();
+		$("#modal2").dialog("open");
+	}
+}
