@@ -7284,7 +7284,7 @@ function form136_add_item()
 		var save_button=fields.elements[9];
 		var tax_unit_filter=fields.elements[11];
 
-		batch_filter.value=bill_id;
+		batch_filter.value=String(bill_id).substr(1,8);
 			
 		var barcode_elem=document.getElementById("form136_barcode_"+id);
 		$(barcode_filter).on('click',function () 
@@ -10687,9 +10687,12 @@ function form186_add_item()
 		rowsHTML+="<tr>";
 		rowsHTML+="<form id='form186_"+id+"' autocomplete='off'></form>";
 			rowsHTML+="<td data-th='Order'>";
-				rowsHTML+="<input type='number' form='form186_"+id+"'>";
+				rowsHTML+="<input style='width:50px;' type='number' form='form186_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Item'>";
+				rowsHTML+="<input type='text' required form='form186_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Brand'>";
 				rowsHTML+="<input type='text' required form='form186_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
@@ -10715,12 +10718,13 @@ function form186_add_item()
 		var fields=document.getElementById("form186_"+id);
 		var order_filter=fields.elements[0];
 		var item_filter=fields.elements[1];
-		var quantity_filter=fields.elements[2];
-		var from_filter=fields.elements[3];
-		var to_filter=fields.elements[4];
-		var status_filter=fields.elements[5];
-		var id_filter=fields.elements[6];
-		var save_button=fields.elements[7];
+		var brand_filter=fields.elements[2];
+		var quantity_filter=fields.elements[3];
+		var from_filter=fields.elements[4];
+		var to_filter=fields.elements[5];
+		var status_filter=fields.elements[6];
+		var id_filter=fields.elements[7];
+		var save_button=fields.elements[8];
 		
 		$(save_button).on("click", function(event)
 		{

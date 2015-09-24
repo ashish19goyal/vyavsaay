@@ -19706,6 +19706,7 @@ function form186_ini()
 					"<item></item>" +
 					"<order_no></order_no>" +
 					"<quantity></quantity>" +
+					"<brand></brand>" +
 					"<status></status>" +
 					"<from_time></from_time>" +
 					"<to_time></to_time>" +
@@ -19722,10 +19723,13 @@ function form186_ini()
 					rowsHTML+="<tr>";
 					rowsHTML+="<form id='form186_"+id+"'></form>";
 						rowsHTML+="<td data-th='Order'>";
-							rowsHTML+="<input type='number' readonly='readonly' form='form186_"+id+"' value='"+result.order_no+"'>";
+							rowsHTML+="<input style='width:50px;' type='number' readonly='readonly' form='form186_"+id+"' value='"+result.order_no+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Item'>";
 							rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' value='"+result.item+"'>";
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Brand'>";
+							rowsHTML+="<input type='text' readonly='readonly' form='form186_"+id+"' value='"+result.brand+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Quantity'>";
 							rowsHTML+="<input type='number' readonly='readonly' class='dblclick_editable' form='form186_"+id+"' value='"+result.quantity+"' step='any'>";
@@ -19751,10 +19755,10 @@ function form186_ini()
 				
 					$('#form186_body').prepend(rowsHTML);
 					var fields=document.getElementById('form186_'+id);
-					var from_filter=fields.elements[3];
-					var to_filter=fields.elements[4];
-					var status_filter=fields.elements[5];
-					var save_button=fields.elements[7];
+					var from_filter=fields.elements[4];
+					var to_filter=fields.elements[5];
+					var status_filter=fields.elements[6];
+					var save_button=fields.elements[8];
 					
 					$(from_filter).datepicker();
 					$(to_filter).datepicker();

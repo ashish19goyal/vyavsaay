@@ -48,14 +48,14 @@
 			</ul>
 		</li>
 		
-		<li id="people_link" onclick="grid_click('people');" style='background-color:#74dfc5'>
-			<a><div style='background-color:#52bda3'><b data-i18n="function.people"></b></div></a>		
+		<li id="people_link" onclick="grid_click('people');" style='background-color:#DFAF4B'>
+			<a><div style='background-color:#BD8D29'><b data-i18n="function.people"></b></div></a>		
 			<ul>
 			</ul>
 		</li>
 
-		<li id="projects_link" onclick="grid_click('projects');" style='background-color:#c27fe6'>
-			<a><div style='background-color:#a05dc4'><b data-i18n="function.projects"></b></div></a>		
+		<li id="projects_link" onclick="grid_click('projects');" style='background-color:#7E6F6C'>
+			<a><div style='background-color:#4B3C39'><b data-i18n="function.projects"></b></div></a>		
 			<ul>
 			</ul>
 		</li>
@@ -78,8 +78,8 @@
 			</ul>
 		</li>
 
-		<li id="manufacturing_link" onclick="grid_click('manufacturing');" style='background-color:#2a78ba'>
-			<a><div style='background-color:#085698'><b data-i18n="function.manufacturing"></b></div></a>		
+		<li id="manufacturing_link" onclick="grid_click('manufacturing');" style='background-color:#B39699'>
+			<a><div style='background-color:#807377'><b data-i18n="function.manufacturing"></b></div></a>		
 			<ul>
 			</ul>
 		</li>

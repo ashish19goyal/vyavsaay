@@ -522,14 +522,7 @@ function like_feed(feed_id,element)
 				"<person exact='yes'>"+get_account_name()+"</person>"+
 				"<last_updated>"+get_my_time()+"</last_updated>"+						
 				"</feed_likes>";
-	if(is_online())
-	{
-		server_create_simple(like_xml);
-	}
-	else
-	{
-		local_create_simple(like_xml);
-	}
+	create_simple(like_xml);
 	$(element).attr('src','../images/thumbs_up.png');
 	$(element).attr('title','Unlike this post');
 	$(element).attr("onclick",'');
@@ -548,14 +541,8 @@ function dislike_feed(feed_id,element)
 				"<feed_id>"+feed_id+"</feed_id>"+
 				"<person>"+get_account_name()+"</person>"+	
 				"</feed_likes>";
-	if(is_online())
-	{
-		server_delete_simple(like_xml);
-	}
-	else
-	{
-		local_delete_simple(like_xml);
-	}
+	delete_simple(like_xml);
+	
 	$(element).attr('src','../images/thumbs_up_line.png');
 	$(element).attr('title','Like this post');
 	$(element).attr("onclick",'');
@@ -580,15 +567,7 @@ function create_feed_comment(feed_id,element)
 				"<comment_text>"+comment_text+"</comment_text>"+
 				"<last_updated>"+get_my_time()+"</last_updated>"+						
 				"</feed_comments>";
-	if(is_online())
-	{
-		server_create_simple(comment_xml);
-	}
-	else
-	{
-		local_create_simple(comment_xml);
-	}
-	
+	create_simple(comment_xml);
 	
 	var comments_content="<label>"+account_name+": "+comment_text;
 	comments_content+=" <a class='small_cross_icon' onclick=\"delete_feed_comment('"+data_id+"',$(this));\" title='Delete comment'>&#10006;</a>";
@@ -612,14 +591,7 @@ function delete_feed_comment(comment_id,element)
 	var comment_xml="<feed_comments>"+
 					"<id>"+comment_id+"</id>"+
 					"</feed_comments>";
-	if(is_online())
-	{
-		server_delete_simple(comment_xml);
-	}
-	else
-	{
-		local_delete_simple(comment_xml);
-	}
+	delete_simple(comment_xml);
 	$(element).parent().remove();
 }
 
@@ -634,18 +606,9 @@ function delete_feed(feed_id,element)
 	var comment_xml="<feed_comments>"+
 					"<feed_id>"+feed_id+"</feed_id>"+
 					"</feed_comments>";
-	if(is_online())
-	{
-		server_delete_simple(feed_xml);
-		server_delete_simple(like_xml);
-		server_delete_simple(comment_xml);
-	}
-	else
-	{
-		local_delete_simple(feed_xml);
-		local_delete_simple(like_xml);
-		local_delete_simple(comment_xml);
-	}
+	delete_simple(feed_xml);
+	delete_simple(like_xml);
+	delete_simple(comment_xml);
 	$(element).parent().parent().remove();
 }
 

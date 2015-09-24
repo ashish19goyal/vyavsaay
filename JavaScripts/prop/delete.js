@@ -1412,9 +1412,13 @@ function form53_delete_item(button)
 			var transaction_xml="<transactions>" +
 					"<id>"+transaction_id+"</id>" +
 					"</transactions>";
-	
+			var return_bill_xml="<supplier_returns>" +
+						"<id>"+data_id+"</id>" +
+						"</supplier_returns>";	
+			
 			delete_row(bill_xml,activity_xml);
 			delete_simple(transaction_xml);
+			delete_simple(return_bill_xml);
 			$(button).parent().parent().remove();
 	
 			var payment_xml="<payments>" +
@@ -1446,6 +1450,11 @@ function form53_delete_item(button)
 					"<bill_id>"+data_id+"</bill_id>" +
 					"</supplier_bill_items>";
 			delete_simple(items_data);
+	
+			var return_items_data="<supplier_return_items>" +
+					"<bill_id>"+data_id+"</bill_id>" +
+					"</supplier_return_items>";
+			delete_simple(return_items_data);
 	
 
 			var po_data="<purchase_orders>"+
@@ -6152,7 +6161,7 @@ function form186_delete_item(button)
 			var form_id=$(button).attr('form');
 			var form=document.getElementById(form_id);
 
-			var data_id=form.elements[6].value;
+			var data_id=form.elements[7].value;
 			var last_updated=get_my_time();
 			var data_xml="<production_plan_items>" +
 						"<id>"+data_id+"</id>" +
@@ -6160,16 +6169,8 @@ function form186_delete_item(button)
 			var task_xml="<task_instances>" +
 						"<source_id exact='yes'>"+data_id+"</source_id>" +
 						"</task_instances>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-				server_delete_simple(task_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-				local_delete_simple(task_xml);
-			}	
+			delete_simple(data_xml);
+			delete_simple(task_xml);
 			$(button).parent().parent().remove();
 		});
 	}

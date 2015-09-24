@@ -16,8 +16,9 @@
 		<thead>
 			<tr>
 				<form id='form186_header'></form>
-					<th>Order </th>
+					<th style='width:60px'>Order </th>
 					<th>Item </th>
+					<th>Brand </th>
 					<th>Quantity </th>
 					<th>Schedule </th>
 					<th>Status </th>

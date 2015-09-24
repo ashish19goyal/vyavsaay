@@ -2287,7 +2287,29 @@ function modal23_action(t_func,i_func)
 		e.preventDefault();
 		$(select_file).trigger('click');
 	});
-				
+
+	dummy_button.setAttribute('class','generic_red_icon');
+	select_file.value="";
+	selected_file.value="";
+	
+	
+	$(select_file).off('change');
+	$(select_file).on('change',function () 
+	{
+		var file_name=select_file.value;
+		if(file_name!="" && (file_name.indexOf('csv')>-1))
+		{
+			dummy_button.setAttribute('class','generic_green_icon');
+			selected_file.value=file_name;
+		}
+		else 
+		{
+			dummy_button.setAttribute('class','generic_red_icon');
+			select_file.value="";
+			selected_file.value="";
+		}
+	});
+		
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
 	{
@@ -9388,6 +9410,27 @@ function modal138_action()
 		$(select_file).trigger('click');
 	});
 
+	dummy_button.setAttribute('class','generic_red_icon');
+	select_file.value="";
+	selected_file.value="";
+	
+	$(select_file).off('change');
+	$(select_file).on('change',function () 
+	{
+		var file_name=select_file.value;
+		if(file_name!="" && (file_name.indexOf('csv')>-1))
+		{
+			dummy_button.setAttribute('class','generic_green_icon');
+			selected_file.value=file_name;
+		}
+		else 
+		{
+			dummy_button.setAttribute('class','generic_red_icon');
+			select_file.value="";
+			selected_file.value="";
+		}
+	});
+
 	var channel_data="<sale_channels>"+
 					"<name></name>"+
 					"</sale_channels>";
@@ -9725,6 +9768,27 @@ function modal140_action(i_func)
 		e.preventDefault();
 		$(select_file).trigger('click');
 	});
+		
+	dummy_button.setAttribute('class','generic_red_icon');
+	select_file.value="";
+	selected_file.value="";
+	
+	$(select_file).off('change');
+	$(select_file).on('change',function () 
+	{
+		var file_name=select_file.value;
+		if(file_name!="" && (file_name.indexOf('csv')>-1))
+		{
+			dummy_button.setAttribute('class','generic_green_icon');
+			selected_file.value=file_name;
+		}
+		else 
+		{
+			dummy_button.setAttribute('class','generic_red_icon');
+			select_file.value="";
+			selected_file.value="";
+		}
+	});
 			
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
@@ -10007,8 +10071,8 @@ function modal141_action(button)
 	var form_id=$(button).attr('form');
 	var form=document.getElementById(form_id);
 	var item=form.elements[1].value;
-	var quantity=form.elements[2].value;
-	var plan_item_id=form.elements[6].value;			
+	var quantity=form.elements[3].value;
+	var plan_item_id=form.elements[7].value;			
 	
 	form141.elements['quantity'].value=quantity;
 	
@@ -10060,24 +10124,33 @@ function modal141_action(button)
 			"</pre_requisites>";
 	fetch_requested_data('',raw_data,function(raws)
 	{
-		raw_label.innerHTML="Please specify the quantities of raw material used<br>";
+		raw_label.innerHTML="<b>Please specify the quantities of raw material used</b><br>";
 		raws.forEach(function(raw)
 		{
 			var attr_label=document.createElement('label');
+			attr_label.setAttribute('data-name',raw.requisite_name);
 			raw.quantity=parseFloat(raw.quantity)*parseFloat(quantity);			
-			attr_label.innerHTML=raw.requisite_name+": <input type='number' step='any' value='"+raw.quantity+"' required name='"+raw.requisite_name+"'>";
+			attr_label.innerHTML=raw.requisite_name+": <input type='text' value='' style='width:60px;' required name='batch_"+raw.requisite_name+"'> <input type='number' style='width:40px;' step='any' value='"+raw.quantity+"' required name='quantity_"+raw.requisite_name+"'>";
 
 			raw_label.appendChild(attr_label);
 			var line_break=document.createElement('br');
 			raw_label.appendChild(line_break);
+			
+			var batch_data="<product_instances>"+
+							"<batch></batch>"+
+							"<product_name exact='yes'>"+raw.requisite_name+"</product_name>"+
+							"</product_instances>";
+			var batch_filter=form141.elements['batch_'+raw.requisite_name];
+			set_my_value_list(batch_data,batch_filter);				
 		});
 	});
 	
 
-	$(save_button).off('click');
-	$(save_button).on('click',function()
+	$(form141).off('submit');
+	$(form141).on('submit',function(e)
 	{
-		form.elements[5].value='completed';
+		e.preventDefault();
+		form.elements[6].value='completed';
 		var last_updated=get_my_time();
 		var batch=batch_filter.value;
 		var price=price_filter.value;
@@ -10145,17 +10218,19 @@ function modal141_action(button)
 		
 		///subtract inventory for raw material		
 		var id=get_new_key();
-		$("#modal141_raw").find('input').each(function()
+		$("#modal141_raw").find('label').each(function()
 		{
 			id++;
-			var item_quantity=$(this).val();
-			var requisite=$(this).attr('name');
+			var batch=$(this).find('input:first-child').val();
+			var item_quantity=$(this).find('input:nth-child(2)').val();
+			console.log(batch+" "+item_quantity);
+			var requisite=$(this).attr('data-name');
 			if(item_quantity!=0)
 			{
 				var item_subtracted_xml="<inventory_adjust>"+
 							"<id>"+id+"</id>"+
 							"<product_name>"+requisite+"</product_name>"+
-							"<batch>"+requisite+"</batch>"+
+							"<batch>"+batch+"</batch>"+
 							"<quantity>-"+item_quantity+"</quantity>"+
 							"<source>manufacturing</source>"+
 							"<source_id>"+plan_item_id+"</source_id>"+
@@ -10165,7 +10240,7 @@ function modal141_action(button)
 				create_simple(item_subtracted_xml);
 			}
 		});
-		
+		$(button).hide();
 		$("#modal141").dialog("close");
 		
 	});
@@ -10742,6 +10817,28 @@ function modal148_action()
 		e.preventDefault();
 		$(select_file).trigger('click');
 	});
+	
+	dummy_button.setAttribute('class','generic_red_icon');
+	select_file.value="";
+	selected_file.value="";	
+	
+	$(select_file).off('change');
+	$(select_file).on('change',function () 
+	{
+		var file_name=select_file.value;
+		if(file_name!="" && (file_name.indexOf('csv')>-1))
+		{
+			dummy_button.setAttribute('class','generic_green_icon');
+			selected_file.value=file_name;
+		}
+		else 
+		{
+			dummy_button.setAttribute('class','generic_red_icon');
+			select_file.value="";
+			selected_file.value="";
+		}
+	});
+
 
 	$(template_button).off("click");
 	$(template_button).on("click",function(event)
@@ -10906,6 +11003,27 @@ function modal149_action()
 	{
 		e.preventDefault();
 		$(select_file).trigger('click');
+	});
+
+	dummy_button.setAttribute('class','generic_red_icon');
+	select_file.value="";
+	selected_file.value="";	
+	
+	$(select_file).off('change');
+	$(select_file).on('change',function () 
+	{
+		var file_name=select_file.value;
+		if(file_name!="" && (file_name.indexOf('csv')>-1))
+		{
+			dummy_button.setAttribute('class','generic_green_icon');
+			selected_file.value=file_name;
+		}
+		else 
+		{
+			dummy_button.setAttribute('class','generic_red_icon');
+			select_file.value="";
+			selected_file.value="";
+		}
 	});
 
 	set_static_value_list('logistics_orders','type',type_filter);

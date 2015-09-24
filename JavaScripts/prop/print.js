@@ -2442,9 +2442,7 @@ function print_form186(func)
 	plan_line.setAttribute('style','width:100%;min-height:60px;background-color:#bbbbbb;');
 	info_section.setAttribute('style','width:100%;min-height:60px;text-align:left;');
 		plan_info.setAttribute('style','padding:5px;margin:5px;float:left;width:100%;height:90px;');
-	footer.setAttribute('style','width:100%;min-height:100px');
-		address.setAttribute('style','width:100%;min-height:50px;text-align:center;');
-
+	
 	///////////////getting the content////////////////////////////////////////
 
 	var bt=get_session_var('title');
@@ -2469,8 +2467,6 @@ function print_form186(func)
 	plan_line.innerHTML="<div style='float:left;width:50%'>From: "+from_date+"</div><div style='float:right;text-align:right;width:50%'>To: "+to_date+"</div>";	
 	plan_info.innerHTML="<hr style='border: 1px solid #000;margin:2px'>Plan Name: </b>"+plan_name+"<br>Plan Status: "+plan_status+"<hr style='border: 1px solid #000;margin:2px'>";
 	
-	address.innerHTML="Address: "+business_address;
-
 	var table_element=document.getElementById(form_id+'_body').parentNode;
 	table_copy=table_element.cloneNode(true);
 	
@@ -2490,10 +2486,11 @@ function print_form186(func)
 	$(table_copy).find('th').attr('style',"border:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_copy).find('td').attr('style',"border-right:2px solid black;border-left:2px solid black;text-align:left;font-size:"+font_size+"em");
 	$(table_copy).find('tfoot').attr('style',"border:2px solid black;text-align:left;");
-	$(table_copy).find("tbody>tr").attr('style','flex:1;height:30px');
+	$(table_copy).find("tbody>tr").attr('style','border:2px solid black;flex:1;height:30px');
+	$(table_copy).find("tbody").attr('style','border:2px solid black;');
 
 	$(table_copy).find("th:first, td:first").css('width','60px');
-	$(table_copy).find("th:nth-child(2), td:nth-child(2)").css('width','300px');
+	$(table_copy).find("th:nth-child(2), td:nth-child(2)").css('width','200px');
 	
 	/////////////placing the containers //////////////////////////////////////////////////////	
 
@@ -2502,14 +2499,11 @@ function print_form186(func)
 	container.appendChild(info_section);
 
 	container.appendChild(table_copy);
-	container.appendChild(footer);
 
 	header.appendChild(logo);
 	header.appendChild(business_title);
 
 	info_section.appendChild(plan_info);
-
-	footer.appendChild(address);
 
 	func(container);
 }

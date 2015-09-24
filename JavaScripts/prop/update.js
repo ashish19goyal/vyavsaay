@@ -10083,17 +10083,19 @@ function form186_update_item(form)
 		
 		var order=form.elements[0].value;
 		var item=form.elements[1].value;
-		var quantity=form.elements[2].value;
-		var from=get_raw_time(form.elements[3].value);
-		var to=get_raw_time(form.elements[4].value);
-		var status=form.elements[5].value;
-		var data_id=form.elements[6].value;
+		var brand=form.elements[2].value;
+		var quantity=form.elements[3].value;
+		var from=get_raw_time(form.elements[4].value);
+		var to=get_raw_time(form.elements[5].value);
+		var status=form.elements[6].value;
+		var data_id=form.elements[7].value;
 		var last_updated=get_my_time();
 			
 		var data_xml="<production_plan_items>" +
 				"<id>"+data_id+"</id>" +
 				"<order_no>"+order+"</order_no>" +
 				"<item>"+item+"</item>" +
+				"<brand>"+brand+"</brand>" +
 				"<quantity>"+quantity+"</quantity>" +
 				"<from_time>"+from+"</from_time>" +
 				"<to_time>"+to+"</to_time>" +
@@ -10102,16 +10104,9 @@ function form186_update_item(form)
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</production_plan_items>";
 	
-		if(is_online())
-		{
-			server_update_simple(data_xml);
-		}
-		else
-		{
-			local_update_simple(data_xml);
-		}
+		update_simple(data_xml);
 				
-		for(var i=0;i<6;i++)
+		for(var i=0;i<7;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
 		}		

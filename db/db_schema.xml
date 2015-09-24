@@ -1497,6 +1497,7 @@
 			<plan_id index='yes' type="BIGINT"></plan_id>
 			<item index='yes' type="TEXT"></item>
 			<batch index='yes' type="TEXT"></batch>
+			<brand index='yes' type="TEXT"></brand>
 			<order_no index='yes' type="INT"></order_no>
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<status index='yes' type='VARCHAR(30)'></status><!--pending/completed/overdue-->
