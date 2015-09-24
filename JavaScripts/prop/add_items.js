@@ -11104,12 +11104,14 @@ function form193_add_item()
 			set_my_value_list(batch_data,batch_filter);
 
 			var rows_length=$('#form193_body').find('tr').length;
-			
+
+			var first_batch_match=false;			
 			$("[id^='193form193_']").each(function (index)
 			{
-				if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value)
+				if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value && !first_batch_match)
 				{
 					batch_filter.value=this.elements[3].value;
+					first_batch_match=true;
 					if(batch_filter.value=="")
 					{
 						batch_filter.value=name_filter.value;						
@@ -11161,14 +11163,17 @@ function form193_add_item()
 						
 						var rows_length=$('#form193_body').find('tr').length;
 						
+						var first_batch_match=false;						
 						$("[id^='193form193_']").each(function (index)
 						{
-							if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value)
+							if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value && !first_batch_match)
 							{
 								batch_filter.value=this.elements[3].value;
+								first_batch_match=true;
 								//return false;
 							}
 						});
+						
 						if(batch_filter.value=="")
 						{
 							batch_filter.value=name_filter.value;
@@ -14223,11 +14228,13 @@ function form244_add_item()
 
 			var rows_length=$('#form244_body').find('tr').length;
 			
+			var first_batch_match=false;			
 			$("[id^='244form244_']").each(function (index)
 			{
-				if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value)
+				if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value && !first_batch_match)
 				{
 					batch_filter.value=this.elements[3].value;
+					first_batch_match=true;
 					if(batch_filter.value=="")
 					{
 						batch_filter.value=name_filter.value;						
@@ -14279,12 +14286,14 @@ function form244_add_item()
 						
 						var rows_length=$('#form244_body').find('tr').length;
 						
+						var first_batch_match=false;			
 						$("[id^='244form244_']").each(function (index)
 						{
-							if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value)
+							if((index!=0 || rows_length==1) && this.elements[1].value==name_filter.value && !first_batch_match)
 							{
 								batch_filter.value=this.elements[3].value;
-								//return false;
+								first_batch_match=true;
+								//	return false;
 							}
 						});
 						if(batch_filter.value=="")
