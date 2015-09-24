@@ -11015,6 +11015,7 @@ function form193_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='193form193_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add batch' id='form193_add_batch_"+id+"'>";			
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="1";
@@ -11118,6 +11119,19 @@ function form193_add_item()
 					//	return false;
 				}
 			});
+		});
+		
+		var add_batch=document.getElementById('form193_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal120_action(function()
+			{	
+				var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			},name_filter.value,'required');	
 		});
 		
 		$(barcode_filter).off('keydown'); 
@@ -14119,6 +14133,7 @@ function form244_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Batch'>";
 				rowsHTML+="<input type='text' required form='244form244_"+id+"'>";
+				rowsHTML+="<img src='./images/add_image.png' class='add_image' title='Add batch' id='form244_add_batch_"+id+"'>";			
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Quantity'>";
 				rowsHTML+="1";
@@ -14222,6 +14237,19 @@ function form244_add_item()
 					//	return false;
 				}
 			});
+		});
+		
+		var add_batch=document.getElementById('form244_add_batch_'+id);
+		$(add_batch).on('click',function()
+		{
+			modal120_action(function()
+			{	
+				var batch_data="<product_instances>" +
+					"<batch></batch>" +
+					"<product_name exact='yes'>"+name_filter.value+"</product_name>" +
+					"</product_instances>";
+				set_my_value_list(batch_data,batch_filter);
+			},name_filter.value,'required');	
 		});
 		
 		$(barcode_filter).off('keydown'); 

@@ -439,7 +439,7 @@ function form178_get_totals()
 
 function form193_get_totals()
 {
-	console.log('getting totals');
+	//console.log('getting totals');
 	var total_quantity=0;
 	
 	$("[id^='save_form193']").each(function(index)

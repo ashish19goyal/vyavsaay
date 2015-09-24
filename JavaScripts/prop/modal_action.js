@@ -7839,7 +7839,7 @@ function modal119_action(data_id,type)
  * @modalNo 120
  * @modal Add new batch
  */
-function modal120_action(func,product_name)
+function modal120_action(func,product_name,required)
 {
 	var form=document.getElementById('modal120_form');
 	
@@ -7847,6 +7847,19 @@ function modal120_action(func,product_name)
 	var fbatch=form.elements[2];
 	var fexpiry=form.elements[3];
 	var fmrp=form.elements[4];
+	
+	if(typeof required!='undefined')
+	{
+		if(required=='required')
+		{
+			fexpiry.setAttribute('required','required');
+			fmrp.setAttribute('required','required');
+		}
+	}
+	
+	fbatch.value="";
+	fexpiry.value="";
+	fmrp.value="";
 	
 	$(fexpiry).datepicker();
 	
@@ -7925,14 +7938,8 @@ function modal120_action(func,product_name)
 						"<notes>New batch "+batch+" for item "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_create_row_func(data_xml,activity_xml,func);
-			}
-			else
-			{
-				local_create_row_func(data_xml,activity_xml,func);
-			}			
+			create_row_func(data_xml,activity_xml,func);
+						
 		$("#modal120").dialog("close");
 	});
 	
