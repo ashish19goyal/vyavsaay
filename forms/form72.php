@@ -5,6 +5,7 @@
 			<input type='text' required name='customer'></label>
 			<label>Bill Date<br><input type='text' name='date' required></label>
 			<label>Bill #<br><input type='text' name='bill_num' readonly="readonly"></label>			
+			<label>Show Sub-totals: <input type='checkbox' checked name='sub_totals'></label>
 			<label>
 				<input type='hidden' name='bill_id'>
 				<input type='hidden' name='t_id'>
