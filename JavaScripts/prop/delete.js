@@ -167,18 +167,9 @@ function form8_delete_item(button)
 						"<type>staff</type>" +
 						"</attributes>";
 						
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(account_xml);
-				server_delete_simple(attribute_xml);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(account_xml);
-				local_delete_simple(attribute_xml);
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(account_xml);
+			delete_simple(attribute_xml);
 			$(button).parent().parent().remove();
 		});
 	}

@@ -49,11 +49,11 @@
 				{
 					if($data->hasAttribute('unique'))
 					{
-						$select_query.=$data->nodeName."= ? and ";
+						$select_query.=$data->nodeName."= ? or ";
 					}
 				}
 			
-				$select_query=rtrim($select_query,"and ");
+				$select_query=rtrim($select_query,"or ");
 				$select_query=rtrim($select_query,"where ");
 					
 				$select_stmt=$conn->conn->prepare($select_query);

@@ -1380,7 +1380,6 @@ function local_create_simple(data_xml)
 				}
 				else
 				{
-					
 					for(var j=0;j<cols.length;j++)
 					{
 						data_row[cols[j].nodeName]=cols[j].innerHTML;

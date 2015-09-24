@@ -551,6 +551,7 @@ function form8_ini()
 			
 			var fields=document.getElementById("form8_"+result.id);
 			var fstatus=fields.elements[4];
+			var delete_button=fields.elements[7];
 			
 			set_static_value_list('staff','status',fstatus);
 			
@@ -560,6 +561,17 @@ function form8_ini()
 				form8_update_item(fields);
 			});
 			
+			var master_data="<accounts count='1'>"+
+							"<acc_name></acc_name>"+
+							"<username exact='yes'>master</username>"+
+							"</accounts>";
+			get_single_column_data(function(accounts)
+			{
+				if(accounts[0]==result.acc_name)
+				{
+					$(delete_button).hide();
+				}
+			},master_data);				
 			var attributes_data="<attributes>"+
 								"<name exact='yes'>"+result.acc_name+"</name>" +
 								"<type exact='yes'>staff</type>" +

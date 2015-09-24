@@ -1304,16 +1304,8 @@ function modal16_action(func)
 						"<status>active</status>"+						
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</accounts>";
-			if(is_online())
-			{
-				server_create_row_func(data_xml,activity_xml,func);
-				server_create_simple(account_xml);
-			}
-			else
-			{
-				local_create_row_func(data_xml,activity_xml,func);
-				local_create_simple(account_xml);
-			}	
+			create_row_func(data_xml,activity_xml,func);
+			create_simple(account_xml);
 			
 			var id=get_new_key();
 			$("#modal16_attributes").find('input, select').each(function()
@@ -2239,14 +2231,7 @@ function modal22_action(func)
 						"<notes>New batch "+batch+" for product "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_create_row_func(data_xml,activity_xml,func);
-			}
-			else
-			{
-				local_create_row_func(data_xml,activity_xml,func);
-			}
+			create_row_func(data_xml,activity_xml,func);
 			
 			var id=get_new_key();
 			
@@ -2264,14 +2249,8 @@ function modal22_action(func)
 						"<billing_type>"+bill_type+"</billing_type>" +
 						"<last_updated>"+last_updated+"</last_updated>" +
 						"</sale_prices>";
-				if(is_online())
-				{
-					server_create_simple(sale_price_xml);
-				}
-				else
-				{
-					local_create_simple(sale_price_xml);
-				}
+				create_simple(sale_price_xml);
+				
 			});
 		}
 		else

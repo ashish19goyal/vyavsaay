@@ -58,11 +58,11 @@
 			{
 				if($data->hasAttribute('unique'))
 				{	
-					$query4.=$data->nodeName."= ? and ";
+					$query4.=$data->nodeName."= ? or ";
 					$unique_column_value[]=$data->nodeValue;
 				}
 			}
-			$query4=rtrim($query4,"and ");
+			$query4=rtrim($query4,"or ");
 			if(count($unique_column_value)>0)
 			{
 				$stmt4=$conn->conn->prepare($query4);
