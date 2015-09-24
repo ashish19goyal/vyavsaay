@@ -5696,10 +5696,12 @@ function modal101_action(doc_type,person,person_type,func)
 	
 			fetch_requested_data('',email_id_xml,function(emails)
 			{
-				form.elements[1].value=person;
-				form.elements[2].value=emails[0].email;
-				form.elements[4].value=emails[0].name;
-	
+				if(emails.length>0)
+				{
+					form.elements[1].value=person;
+					form.elements[2].value=emails[0].email;
+					form.elements[4].value=emails[0].name;
+				}
 				hide_loader();			
 			});
 		}		
