@@ -137,8 +137,10 @@
 									try{
 										$stmt2->execute($data_array);
 									}
+									
 									catch(PDOException $e)
 									{
+										
 									}
 									break;
 								case 'update': 
@@ -178,15 +180,7 @@
 									break;
 							}	
 						}
-						
-						//if($user_display=='yes')
-						//{
-							$ids_for_update.="<id>$id</id>";
-						//}
-						//else
-						//{
-						//	$ids_for_delete.="<id>$id</id>";
-						//}
+						$ids_for_update.="<id>$id</id>";
 					}
 				}
 			}

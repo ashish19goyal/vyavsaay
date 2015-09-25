@@ -5955,7 +5955,7 @@ function form172_import(data_array,import_type)
 				"</row>";
 	});
 	data_xml+="</channel_prices>";
-	console.log(data_xml);
+//	console.log(data_xml);
 	if(import_type=='create_new')
 	{
 		create_batch(data_xml);

@@ -370,6 +370,7 @@ function get_data_from_log_table(func)
 	}
 	else
 	{
+		/*
 		var kv=IDBKeyRange.bound(['checked','0'],['checked','99999999']);
 		var tables="";
 		static_local_db.transaction(['user_preferences'],"readonly").objectStore('user_preferences').index('value').openCursor(kv).onsuccess=function(e)
@@ -386,6 +387,7 @@ function get_data_from_log_table(func)
 			}
 			else
 			{
+		*/
 				var keyValue=IDBKeyRange.bound(['unsynced','0'],['unsynced','99999999']);
 				var counter=0;
 				var log_data="";
@@ -397,8 +399,8 @@ function get_data_from_log_table(func)
 					{
 						var record=result.value;
 						
-						if(tables.search("-"+record.tablename+"-")>-1)
-						{
+						//if(tables.search("-"+record.tablename+"-")>-1)
+						//{
 							if(counter===200)
 							{
 								log_data+="<separator></separator>";
@@ -414,7 +416,7 @@ function get_data_from_log_table(func)
 							}
 							log_data+="</row>";
 							counter+=1;
-						}
+						//}
 						result.continue();
 					}
 					else
@@ -422,8 +424,8 @@ function get_data_from_log_table(func)
 						func(log_data);
 					}
 				};
-			}
-		};
+		//	}
+		//};
 	}
 }
 

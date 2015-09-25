@@ -7372,8 +7372,10 @@ function modal116_action(barcode,sku)
 		$(sku_filter).focus();
 	});
 
-	my_datalist_change(sku_filter,function () 
+	$(sku_filter).off('select');
+	$(sku_filter).on('select',function () 
 	{
+		//console.log('select triggered');
 		var product_data="<product_master count='1'>"+
 						"<id></id>"+
 						"<description></description>"+
@@ -7385,6 +7387,35 @@ function modal116_action(barcode,sku)
 			{
 				name_filter.value=products[0].description;
 				id_filter.value=products[0].id;				
+			}
+			else
+			{
+				name_filter.value="";
+				id_filter.value="";				
+			}
+		});				
+	});
+
+
+	my_datalist_change(sku_filter,function () 
+	{
+		//console.log('change triggered');
+		var product_data="<product_master count='1'>"+
+						"<id></id>"+
+						"<description></description>"+
+						"<name exact='yes'>"+sku_filter.value+"</name>"+
+						"</product_master>";
+		fetch_requested_data('',product_data,function (products) 
+		{
+			if(products.length>0)
+			{
+				name_filter.value=products[0].description;
+				id_filter.value=products[0].id;				
+			}
+			else
+			{
+				name_filter.value="";
+				id_filter.value="";				
 			}
 		});				
 	});
@@ -9052,6 +9083,8 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 						{
 							var total_sale_price=parseFloat(sale_prices[0].sale_price)+parseFloat(sale_prices[0].freight);
 							var order_total_price=parseFloat(order_item.total)/parseFloat(order_item.quantity);
+							console.log(total_sale_price);
+							console.log(order_total_price);
 							if(total_sale_price>(order_total_price+1) || total_sale_price<(order_total_price-1))
 							{
 								tr_elem_title.push('Price Mismatch');
