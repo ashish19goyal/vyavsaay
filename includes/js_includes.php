@@ -9,6 +9,7 @@
 <script src='./JavaScripts/open/leaflet.js'></script>
 <script src='./JavaScripts/open/moment.min.js'></script>
 <script src='./JavaScripts/open/fullcalendar.min.js'></script>
+
 <script src='./JavaScripts/open/jquery.datetimepicker.js'></script>
 <script src='./JavaScripts/open/jquery.easing.min.js'></script>
 <script src='./JavaScripts/open/jquery.autosize.input.min.js'></script>

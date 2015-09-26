@@ -9443,14 +9443,7 @@ function form171_update_item(form)
 					"<notes>Sale channel "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
 		
 		for(var i=0;i<3;i++)
 		{
@@ -9519,14 +9512,7 @@ function form173_update_item(form)
 					"<notes>SKU mapping for "+system_sku+" for channel "+channel+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
 		
 		for(var i=0;i<5;i++)
 		{
@@ -9573,14 +9559,7 @@ function form174_update_item(form)
 					"<notes>Pickup charges for pincode "+pincode+" for channel "+name+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_update_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_update_row(data_xml,activity_xml);
-		}	
+		update_row(data_xml,activity_xml);
 		
 		for(var i=0;i<5;i++)
 		{

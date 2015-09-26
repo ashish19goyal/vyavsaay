@@ -17772,14 +17772,17 @@ function form172_ini()
 			"<gateway_charges></gateway_charges>"+
 			"<storage_charges></storage_charges>"+
 			"<total_charges></total_charges>"+
+			"<pickup_charges></pickup_charges>"+
 			"<service_tax></service_tax>"+
+			"<gateway_charges></gateway_charges>"+
+			"<channel_commission></channel_commission>"+
+			"<channel_commission_percentage></channel_commission_percentage>"+
 			"<total_payable></total_payable>"+
 			"<total_receivable></total_receivable>"+
 			"<profit_mrp></profit_mrp>"+
 			"<profit_sp></profit_sp>"+
 			"<profit></profit>"+
 			"<from_time></from_time>"+
-			//"<latest exact='yes'>yes</latest>"+				
 			"</channel_prices>";
 
 	$('#form172_body').html("");
@@ -17789,145 +17792,41 @@ function form172_ini()
 		results.forEach(function(result)
 		{
 			var rowsHTML="";
-			rowsHTML+="<tr title='Applicable from: "+get_my_datetime(result.from_time)+"'>";
+			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form172_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Channel'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form172_"+result.id+"' value='"+result.channel+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Item'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form172_"+result.id+"' value='"+result.item+"'>";
-						rowsHTML+="<br><input type='text' readonly='readonly' form='form172_"+result.id+"'>";
+						rowsHTML+="<b>SKU</b>: <input type='text' readonly='readonly' form='form172_"+result.id+"' value='"+result.item+"'>";
+						rowsHTML+="<br><b>From</b>: <input type='text' readonly='readonly' form='form172_"+result.id+"' value='"+get_my_datetime(result.from_time)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Price'>";
-						rowsHTML+="MRP: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"'>";
-						rowsHTML+="<br>Disc.: Rs. <input type='number' step='any' form='form172_"+result.id+"' value='"+result.discount_customer+"'>";
-						rowsHTML+="<br>SP: Rs. <input type='number' step='any' form='form172_"+result.id+"' value='"+result.sale_price+"'>";
-						rowsHTML+="<br>Freight: Rs. <input type='number' step='any' form='form172_"+result.id+"' value='"+result.freight+"'>";
-						rowsHTML+="<br>Ch. Comm.: <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"'> %";
-						rowsHTML+="<br>Pickup: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"'>";
-						rowsHTML+="<br>S. Tax: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.service_tax+"'>";
+						rowsHTML+="<b>MRP</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"'>";
+						rowsHTML+="<br><b>Disc.</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.discount_customer+"'>";
+						rowsHTML+="<br><b>SP</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.sale_price+"'>";
+						rowsHTML+="<br><b>Freight</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.freight+"'>";
+						rowsHTML+="<br><b>Ch. Comm.</b>: <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.channel_commission_percentage+"'> %";
+						rowsHTML+="<br><b>Pickup</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.pickup_charges+"'>";
+						rowsHTML+="<br><b>Others</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.gateway_charges+"'>";
+						rowsHTML+="<br><b>S. Tax</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.service_tax+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Profit'>";
-						rowsHTML+="CP: Rs. <input type='number' step='any' form='form172_"+result.id+"'>";
-						rowsHTML+="<br>Profit: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.profit+"'>";
-						rowsHTML+="<br>Profit (MRP): <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.profit_mrp+"'> %";
-						rowsHTML+="<br>Profit (SP): <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.profit_sp+"'> %";
+						rowsHTML+="<b>CP</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.cost_price+"'>";
+						rowsHTML+="<br><b>Profit</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.profit+"'>";
+						rowsHTML+="<br><b>Profit (MRP)</b>: <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.profit_mrp+"'> %";
+						rowsHTML+="<br><b>Profit (SP)</b>: <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.profit_sp+"'> %";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form172_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='submit' class='save_icon' form='form172_"+result.id+"' title='Save'>";
-						rowsHTML+="<input type='hidden' form='form172_"+result.id+"' name='commission_charges'>";
-						rowsHTML+="<input type='hidden' form='form172_"+result.id+"' name='total_charges'>";
-						
-					rowsHTML+="</td>";			
+						rowsHTML+="<input type='button' class='save_icon' form='form172_"+result.id+"' title='Save'>";
+						rowsHTML+="<input type='hidden' form='form172_"+result.id+"' name='commission_charges' value='"+result.channel_commission+"'>";
+						rowsHTML+="<input type='hidden' form='form172_"+result.id+"' name='total_charges' value='"+result.total_charges+"'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form172_"+result.id+"' title='Delete' onclick='form172_delete_item($this)'>";
+					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 		
 			$('#form172_body').append(rowsHTML);
-
-			var fields=document.getElementById("form172_"+result.id);
-			var channel_filter=fields.elements[0];
-			var name_filter=fields.elements[1];
-			var desc_filter=fields.elements[2];
-			var mrp_filter=fields.elements[3];
-			var discount_filter=fields.elements[4];
-			var sp_filter=fields.elements[5];
-			var freight_filter=fields.elements[6];
-			var commission_filter=fields.elements[7];
-			var pickup_filter=fields.elements[8];
-			var tax_filter=fields.elements[9];
-			var cp_filter=fields.elements[10];
-			var profit_filter=fields.elements[11];
-			var profit_mrp_filter=fields.elements[12];
-			var profit_sp_filter=fields.elements[13];
-			var commission_charges_filter=fields.elements[16];
-			var total_charges_filter=fields.elements[17];
-			
-			var desc_data="<product_master>"+
-						"<description></description>"+
-						"<name exact='yes'>"+result.item+"</name>"+
-						"</product_master>";
-			set_my_value(desc_data,desc_filter);
-			
-			var mrp_data="<product_instances>"+
-						"<mrp></mrp>"+
-						"<product_name exact='yes'>"+result.item+"</product_name>"+
-						"</product_instances>";
-			set_my_value(mrp_data,mrp_filter);
-			
-			var cp_data="<supplier_bill_items count='1'>"+
-						"<total></total>"+
-						"<quantity></quantity>"+
-						"<product_name exact='yes'>"+result.item+"</product_name>"+
-						"</supplier_bill_items>";
-			fetch_requested_data('',cp_data,function (cps) 
-			{
-				if(cps.length>0)
-				{
-					cp_filter.value=parseFloat(cps[0].total)/parseFloat(cps[0].quantity);
-				}
-			});
-			
-			var cat_data="<category_sku_mapping>"+
-						"<cat_type></cat_type>"+
-						"<cat_name></cat_name>"+
-						"<channel exact='yes'>"+result.channel+"</channel>"+
-						"<sku exact='yes'>"+result.item+"</sku>"+
-						"</category_sku_mapping>";
-			fetch_requested_data('',cat_data,function (cats) 
-			{
-				var comm_data="<channel_category>"+
-							"<commission></commission>"+
-							"<channel exact='yes'>"+result.channel+"</channel>"+
-							"<type exact='yes'>"+cats[0].cat_type+"</type>"+
-							"<name exact='yes'>"+cats[0].cat_name+"</name>"+
-							"</channel_category>";
-				set_my_value(comm_data,commission_filter,function ()
-				{
-					var pickup_data="<pickup_charges>"+
-									"<min_charges></min_charges>"+
-									"<max_charges></max_charges>"+
-									"<channel exact='yes'>"+result.channel+"</channel>"+
-									"<pincode exact='yes'>all</pincode>"+
-									"</pickup_charges>";
-					fetch_requested_data('',pickup_data,function(pickups)
-					{
-						var average_pickup=(parseFloat(pickups[0].min_charges)+parseFloat(pickups[0].max_charges))/2;
-						pickup_filter.value=Math.max(parseFloat(pickups[0].min_charges),average_pickup);
-						commission_charges_filter.value=my_round((parseFloat(commission_filter.value)*parseFloat(sp_filter.value)/100),2);
-						total_charges_filter.value=parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value);
-						tax_filter.value=my_round((.14*(parseFloat(total_charges_filter.value))),2);						
-					});
-				});							
-			});
-			
-			$(discount_filter).on('change',function()
-			{
-				sp_filter.value=parseFloat(mrp_filter.value)-parseFloat(discount_filter.value);
-				$(sp_filter).trigger('change');
-			});	
-			
-			$(sp_filter).add(freight_filter).add(cp_filter).on('change',function ()
-			{
-				commission_charges_filter.value=my_round((parseFloat(commission_filter.value)*parseFloat(sp_filter.value)/100),2);
-				total_charges_filter.value=parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value);
-				tax_filter.value=my_round((.14*(parseFloat(total_charges_filter.value))),2);						
-				profit_filter.value=my_round((parseFloat(sp_filter.value)+parseFloat(freight_filter.value)-parseFloat(total_charges_filter.value)-parseFloat(tax_filter.value)-parseFloat(cp_filter.value)),2);
-				profit_mrp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(mrp_filter.value)*100),2);
-				profit_sp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(sp_filter.value)*100),2);
-			});			
-			
-			$(profit_filter).on('blur',function()
-			{
-				profit_mrp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(mrp_filter.value)*100),2);
-				profit_sp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(sp_filter.value)*100),2);
-			});
-						
-			$(fields).on("submit",function(event)
-			{
-				event.preventDefault();
-				//form172_update_item(fields);
-				form172_create_item(fields);
-			});
 		});
 
 		////indexing///

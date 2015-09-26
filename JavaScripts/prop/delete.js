@@ -5669,6 +5669,44 @@ function form171_delete_item(button)
 }
 
 /**
+ * @form Channel Pricing
+ * @formNo 172
+ * @param button
+ */
+function form172_delete_item(button)
+{
+	if(is_delete_access('form172'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var channel=form.elements[0].value;
+			var name=form.elements[1].value;
+			var data_id=form.elements[15].value;
+			var data_xml="<channel_prices>" +
+						"<id>"+data_id+"</id>" +
+						"</channel_prices>";
+			var activity_xml="<activity>" +
+						"<data_id>"+data_id+"</data_id>" +
+						"<tablename>channel_prices</tablename>" +
+						"<link_to>form172</link_to>" +
+						"<title>Deleted</title>" +
+						"<notes>Channel pricing for "+name+" for "+channel+"</notes>" +
+						"<updated_by>"+get_name()+"</updated_by>" +
+						"</activity>";
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
  * @form SKU mappings
  * @param button
  */

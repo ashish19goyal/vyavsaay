@@ -6,21 +6,55 @@ function get_raw_time(date)
 	}
 	else
 	{
-		var date_array=date.split(/[\-\/]+/);
-		var day=parseInt(date_array[0]);
-		var month=parseInt(date_array[1])-1;
-		var year=parseInt(date_array[2]);
+		var date_time_array=date.split(/ /);
+		var date_elem=date_time_array[0];
+		
+		var date_array=date_elem.split(/[\-\/]+/);
+		
+		var day=1;
+		var month=0;
+		var year=2015;
+		if(date_array.length==3)
+		{
+			day=parseInt(date_array[0]);
+			month=parseInt(date_array[1])-1;
+			year=parseInt(date_array[2]);
+		}
+		else if(date_array.length==2)
+		{
+			month=parseInt(date_array[0])-1;
+			year=parseInt(date_array[1]);
+		}
+		else if(date_array.length==1)
+		{
+			year=parseInt(date_array[0]);		
+		}		
+
 		var hour=0;
 		var minutes=0;
-		if(date.substr(11,2)!="" && date.substr(11,2)!=null)
-		{
-			hour=parseInt(date.substr(11,2));
-		}
-		if(date.substr(14,2)!="" && date.substr(14,2)!=null)
-		{	
-			minutes=parseInt(date.substr(14,2));
-		}
-		var d=new Date(year,month,day,hour,minutes,0,0);
+		var seconds=0;
+		
+		if(date_time_array.length==2)
+		{		
+			var time_elem=date_time_array[1];
+	 		var time_array=time_elem.split(/:/);
+			if(time_array.length==1)
+			{
+				hour=parseInt(time_array[0]);
+			}
+			else if(time_array.length==2)
+			{
+				hour=parseInt(time_array[0]);
+				minutes=parseInt(time_array[1]);
+			}
+			else if(time_array.length==3)
+			{
+				hour=parseInt(time_array[0]);
+				minutes=parseInt(time_array[1]);
+				seconds=parseInt(time_array[2]);
+			}
+		}	
+		var d=new Date(year,month,day,hour,minutes,seconds,0);
 		return d.getTime();
 	}
 }

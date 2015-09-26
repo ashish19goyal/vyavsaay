@@ -7895,7 +7895,18 @@ function modal120_action(func,product_name,required)
 	fexpiry.value="";
 	fmrp.value="";
 	
-	$(fexpiry).datepicker();
+	$(fexpiry).datepicker(
+	{
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'mm/yy',
+        onClose: function(dateText, inst) { 
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(year, month, 1));
+        }
+    });
 	
 	var name_data="<product_master>" +
 			"<name></name>" +
@@ -11288,6 +11299,7 @@ function modal150_action(rack,report_id)
 						"</product_master>";
 		get_single_column_data(function (products)
 		{
+			console.log(products);
 			if(products.length>0)
 			{
 				var product_picked=false;				
@@ -11298,9 +11310,10 @@ function modal150_action(rack,report_id)
 					//console.log($(this));
 					//console.log($(this).find('td:first').html());
 					//console.log(product_name);
+					//console.log(parseFloat($(this).find('td:nth-child(3)').html()));
 					//console.log('modal_row_parsed');
 					var row_elem=$(this);
-					if($(this).find('td:first').html()==product_name && !product_picked && parseFloat($(this).find('td:nth-child(3)').html())>0)
+					if($(this).find('td:first').html().toUpperCase()==product_name.toUpperCase() && !product_picked && parseFloat($(this).find('td:nth-child(3)').html())>0)
 					{
 						//console.log('picked');
 						product_picked=true;

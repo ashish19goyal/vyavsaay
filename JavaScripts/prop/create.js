@@ -12267,50 +12267,68 @@ function form172_create_item(fields)
 	{
 		var channel=fields.elements[0].value;
 		var sku=fields.elements[1].value;
-		var desc=fields.elements[2].value;
+		var from_time=get_raw_time(fields.elements[2].value);
 		var mrp=fields.elements[3].value;
 		var discount_customer=fields.elements[4].value;
 		var sale_price=fields.elements[5].value;
 		var freight=fields.elements[6].value;
+		var commission_percentage=fields.elements[7].value;
 		var pickup=fields.elements[8].value;
-		var service_tax=fields.elements[9].value;
-		var profit=fields.elements[11].value;
-		var profit_mrp=fields.elements[12].value;
-		var profit_sp=fields.elements[13].value;
-		var commission_charges=fields.elements[16].value;
-		var total_charges=fields.elements[17].value;
-	
+		var others=fields.elements[9].value;
+		var service_tax=fields.elements[10].value;
+		var cp=fields.elements[11].value;
+		var profit=fields.elements[12].value;
+		var profit_mrp=fields.elements[13].value;
+		var profit_sp=fields.elements[14].value;
+		var data_id=fields.elements[15].value;
+		var commission_charges=fields.elements[17].value;
+		var total_charges=fields.elements[18].value;
+		var delete_button=fields.elements[19].value;
+		
 		var last_updated=get_my_time();
 		var data_xml="<channel_prices>" +
-				"<id>"+get_new_key()+"</id>" +
+				"<id>"+data_id+"</id>" +
 				"<channel>"+channel+"</channel>" +
 				"<item>"+sku+"</item>" +
 				"<sale_price>"+sale_price+"</sale_price>"+
+				"<cost_price>"+cp+"</cost_price>"+
 				"<mrp>"+mrp+"</mrp>"+
 				"<freight>"+freight+"</freight>"+
+				"<pickup_charges>"+pickup+"</pickup_charges>"+
 				"<discount_customer>"+discount_customer+"</discount_customer>"+
-				"<gateway_charges>0</gateway_charges>"+
+				"<gateway_charges>"+others+"</gateway_charges>"+
 				"<storage_charges>0</storage_charges>"+
-				"<channel_commission>"+parseFloat(commission_charges)+"</channel_commission>"+
-				"<total_charges>"+(parseFloat(pickup)+parseFloat(commission_charges))+"</total_charges>"+
+				"<channel_commission_percentage>"+commission_percentage+"</channel_commission_percentage>"+
+				"<channel_commission>"+commission_charges+"</channel_commission>"+
+				"<total_charges>"+total_charges+"</total_charges>"+
 				"<service_tax>"+service_tax+"</service_tax>"+
 				"<total_payable>"+(parseFloat(total_charges)+parseFloat(service_tax))+"</total_payable>"+
 				"<total_receivable>"+(parseFloat(sale_price)+parseFloat(freight)-parseFloat(total_charges)-parseFloat(service_tax))+"</total_receivable>"+
 				"<profit_mrp>"+profit_mrp+"</profit_mrp>"+
 				"<profit_sp>"+profit_sp+"</profit_sp>"+
 				"<profit>"+profit+"</profit>"+
-				//"<latest>yes</latest>"+				
-				"<from_time>"+last_updated+"</from_time>" +
-				//"<to_time></to_time>" +
+				"<from_time>"+from_time+"</from_time>" +
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</channel_prices>";
 
 		create_simple(data_xml);
 		
-		for(var i=0;i<14;i++)
+		for(var i=0;i<15;i++)
 		{
 			$(fields.elements[i]).attr('readonly','readonly');
-		}		
+		}
+		
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form172_delete_item(del_button);
+		});
+		
+		$(fields).off('submit');
+		$(fields).on('submit',function(event)
+		{
+			event.preventDefault();
+		});		
 	}
 	else
 	{

@@ -1022,14 +1022,13 @@
 			<pickup_charges index='no' type="DECIMAL(12,2)"></pickup_charges>
 			<gateway_charges index='no' type="DECIMAL(12,2)"></gateway_charges>
 			<storage_charges index='no' type="DECIMAL(12,2)"></storage_charges>
+			<channel_commission_percentage index='no' type="DECIMAL(12,2)"></channel_commission_percentage>
 			<channel_commission index='no' type="DECIMAL(12,2)"></channel_commission>
 			<total_charges index='no' type="DECIMAL(12,2)"></total_charges>
 			<service_tax index='no' type="DECIMAL(12,2)"></service_tax>
 			<total_payable index='no' type="DECIMAL(12,2)"></total_payable>
 			<total_receivable index='no' type="DECIMAL(12,2)"></total_receivable>
-			<latest index='yes' type='VARCHAR(5)'></latest><!--yes/no-->
 			<from_time index='yes' type="BIGINT"></from_time>
-			<to_time index='yes' type="BIGINT"></to_time>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</channel_prices>

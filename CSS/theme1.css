@@ -486,11 +486,12 @@ Table formatting for responsive functionality
 	background: #EAF2D3;
 	overflow: hidden;
 }
-.rwd-table tr {
+.rwd-table tr{
   border-top: 1px solid #98BF21;
   border-bottom: 1px solid #98BF21;
   border-color: #98BF21;
 }
+
 .rwd-table th {
 	display: none;
 	background-color:#2C8A50;
@@ -526,7 +527,7 @@ Table formatting for responsive functionality
 	background: #2C8A50;
 }
 
-.rwd-table td:before{
+.rwd-table>td:before{
 	background-color:#2C8A50;
 	color: #fff;
 }
