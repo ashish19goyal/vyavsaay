@@ -17767,6 +17767,8 @@ function form172_ini()
 			"<channel>"+fname+"</channel>" +
 			"<item>"+fsku+"</item>" +
 			"<sale_price></sale_price>"+
+			"<cost_price></cost_price>"+
+			"<mrp></mrp>"+
 			"<freight></freight>"+
 			"<discount_customer></discount_customer>"+
 			"<gateway_charges></gateway_charges>"+
@@ -17795,34 +17797,36 @@ function form172_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form172_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Channel'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form172_"+result.id+"' value='"+result.channel+"'>";
+						rowsHTML+="<input type='text' style='width:100px;' readonly='readonly' form='form172_"+result.id+"' value='"+result.channel+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Item'>";
 						rowsHTML+="<b>SKU</b>: <input type='text' readonly='readonly' form='form172_"+result.id+"' value='"+result.item+"'>";
 						rowsHTML+="<br><b>From</b>: <input type='text' readonly='readonly' form='form172_"+result.id+"' value='"+get_my_datetime(result.from_time)+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Price'>";
-						rowsHTML+="<b>MRP</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"'>";
+						rowsHTML+="<b>MRP</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.mrp+"'>";
 						rowsHTML+="<br><b>Disc.</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.discount_customer+"'>";
 						rowsHTML+="<br><b>SP</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.sale_price+"'>";
 						rowsHTML+="<br><b>Freight</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.freight+"'>";
-						rowsHTML+="<br><b>Ch. Comm.</b>: <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.channel_commission_percentage+"'> %";
-						rowsHTML+="<br><b>Pickup</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.pickup_charges+"'>";
-						rowsHTML+="<br><b>Others</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.gateway_charges+"'>";
-						rowsHTML+="<br><b>S. Tax</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.service_tax+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Channel Charges'>";
+						rowsHTML+="<b>Comm.</b>: <input type='number' style='width:40px;' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.channel_commission_percentage+"'> %";
+						rowsHTML+="<br><b>Comm.</b>: Rs. <input type='number' style='width:60px;' step='any' form='form172_"+result.id+"' readonly='readonly' value='"+result.channel_commission+"'>";
+						rowsHTML+="<br><b>Pickup</b>: Rs. <input type='number' style='width:60px;' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.pickup_charges+"'>";
+						rowsHTML+="<br><b>Others</b>: Rs. <input type='number' style='width:60px;' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.gateway_charges+"'>";
+						rowsHTML+="<br><b>S. Tax</b>: Rs. <input type='number' style='width:60px;' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.service_tax+"'>";
+						rowsHTML+="<br><b>Total</b>: Rs. <input type='number' style='width:60px;' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.total_charges+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Profit'>";
 						rowsHTML+="<b>CP</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.cost_price+"'>";
 						rowsHTML+="<br><b>Profit</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.profit+"'>";
-						rowsHTML+="<br><b>Profit (MRP)</b>: <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.profit_mrp+"'> %";
-						rowsHTML+="<br><b>Profit (SP)</b>: <input type='number' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.profit_sp+"'> %";
+						rowsHTML+="<br><b>Profit (MRP)</b>: <input type='number' style='width:40px;' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.profit_mrp+"'> %";
+						rowsHTML+="<br><b>Profit (SP)</b>: <input type='number' style='width:40px;' step='any' readonly='readonly' form='form172_"+result.id+"' value='"+result.profit_sp+"'> %";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form172_"+result.id+"' value='"+result.id+"'>";
 						rowsHTML+="<input type='button' class='save_icon' form='form172_"+result.id+"' title='Save'>";
-						rowsHTML+="<input type='hidden' form='form172_"+result.id+"' name='commission_charges' value='"+result.channel_commission+"'>";
-						rowsHTML+="<input type='hidden' form='form172_"+result.id+"' name='total_charges' value='"+result.total_charges+"'>";
-						rowsHTML+="<input type='button' class='delete_icon' form='form172_"+result.id+"' title='Delete' onclick='form172_delete_item($this)'>";
+						rowsHTML+="<input type='button' class='delete_icon' form='form172_"+result.id+"' title='Delete' onclick='form172_delete_item($(this))'>";
 					rowsHTML+="</td>";
 			rowsHTML+="</tr>";
 		

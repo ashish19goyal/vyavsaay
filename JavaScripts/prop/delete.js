@@ -5684,7 +5684,7 @@ function form172_delete_item(button)
 
 			var channel=form.elements[0].value;
 			var name=form.elements[1].value;
-			var data_id=form.elements[15].value;
+			var data_id=form.elements[17].value;
 			var data_xml="<channel_prices>" +
 						"<id>"+data_id+"</id>" +
 						"</channel_prices>";

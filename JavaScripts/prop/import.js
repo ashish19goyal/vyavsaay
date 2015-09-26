@@ -5930,27 +5930,31 @@ function form172_import(data_array,import_type)
 		{
 			row.id=last_updated+counter;
 		}
+		
+		var profit=my_round((parseFloat(row.sale_price)+parseFloat(row.freight)-parseFloat(row.total_charges)-parseFloat(row.cost_price)),2);
+		var profit_mrp=my_round((profit/parseFloat(row.mrp)*100),2);
+		var profit_sp=my_round((profit/parseFloat(row.sale_price)*100),2);
 		data_xml+="<row>" +
 				"<id>"+row.id+"</id>" +
 				"<channel>"+row.channel+"</channel>" +
 				"<item>"+row.item+"</item>" +
+				"<from_time>"+get_raw_time(row.from_time)+"</from_time>" +
 				"<mrp>"+row.mrp+"</mrp>"+
+				"<discount_customer>"+row.discount_customer+"</discount_customer>"+
 				"<sale_price>"+row.sale_price+"</sale_price>"+
 				"<freight>"+row.freight+"</freight>"+
-				"<discount_customer>"+row.discount_customer+"</discount_customer>"+
+				"<channel_commission_percentage>"+row.channel_commission_percentage+"</channel_commission_percentage>"+
 				"<channel_commission>"+row.channel_commission+"</channel_commission>"+
-				"<pickup_charges>"+row.gateway_charges+"</pickup_charges>"+
+				"<pickup_charges>"+row.pickup_charges+"</pickup_charges>"+
 				"<gateway_charges>"+row.gateway_charges+"</gateway_charges>"+
-				"<storage_charges>"+row.storage_charges+"</storage_charges>"+
-				"<total_charges>"+row.total_charges+"</total_charges>"+
 				"<service_tax>"+row.service_tax+"</service_tax>"+
-				"<total_payable>"+row.total_payable+"</total_payable>"+
-				"<total_receivable>"+row.total_receivable+"</total_receivable>"+
+				"<total_charges>"+row.total_charges+"</total_charges>"+
 				"<cost_price>"+row.cost_price+"</cost_price>"+
-				"<profit_mrp>"+row.profit_mrp+"</profit_mrp>"+
-				"<profit_sp>"+row.profit_sp+"</profit_sp>"+
-				"<profit>"+row.profit+"</profit>"+
-				"<from_time>"+get_raw_time(row.from_time)+"</from_time>" +
+				"<total_payable>"+(parseFloat(row.total_charges))+"</total_payable>"+
+				"<total_receivable>"+(parseFloat(row.sale_price)+parseFloat(row.freight)-parseFloat(row.total_charges))+"</total_receivable>"+
+				"<profit_mrp>"+profit_mrp+"</profit_mrp>"+
+				"<profit_sp>"+profit_sp+"</profit_sp>"+
+				"<profit>"+profit+"</profit>"+
 				"<last_updated>"+last_updated+"</last_updated>" +
 				"</row>";
 	});

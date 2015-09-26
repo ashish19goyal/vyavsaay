@@ -12273,17 +12273,17 @@ function form172_create_item(fields)
 		var sale_price=fields.elements[5].value;
 		var freight=fields.elements[6].value;
 		var commission_percentage=fields.elements[7].value;
-		var pickup=fields.elements[8].value;
-		var others=fields.elements[9].value;
-		var service_tax=fields.elements[10].value;
-		var cp=fields.elements[11].value;
-		var profit=fields.elements[12].value;
-		var profit_mrp=fields.elements[13].value;
-		var profit_sp=fields.elements[14].value;
-		var data_id=fields.elements[15].value;
-		var commission_charges=fields.elements[17].value;
-		var total_charges=fields.elements[18].value;
-		var delete_button=fields.elements[19].value;
+		var commission_charges=fields.elements[8].value;
+		var pickup=fields.elements[9].value;
+		var others=fields.elements[10].value;
+		var service_tax=fields.elements[11].value;
+		var total_charges=fields.elements[12].value;
+		var cost_price=fields.elements[13].value;
+		var profit=fields.elements[14].value;
+		var profit_mrp=fields.elements[15].value;
+		var profit_sp=fields.elements[16].value;
+		var data_id=fields.elements[17].value;
+		var del_button=fields.elements[19].value;
 		
 		var last_updated=get_my_time();
 		var data_xml="<channel_prices>" +
@@ -12291,19 +12291,18 @@ function form172_create_item(fields)
 				"<channel>"+channel+"</channel>" +
 				"<item>"+sku+"</item>" +
 				"<sale_price>"+sale_price+"</sale_price>"+
-				"<cost_price>"+cp+"</cost_price>"+
+				"<cost_price>"+cost_price+"</cost_price>"+
 				"<mrp>"+mrp+"</mrp>"+
 				"<freight>"+freight+"</freight>"+
 				"<pickup_charges>"+pickup+"</pickup_charges>"+
 				"<discount_customer>"+discount_customer+"</discount_customer>"+
 				"<gateway_charges>"+others+"</gateway_charges>"+
-				"<storage_charges>0</storage_charges>"+
 				"<channel_commission_percentage>"+commission_percentage+"</channel_commission_percentage>"+
 				"<channel_commission>"+commission_charges+"</channel_commission>"+
 				"<total_charges>"+total_charges+"</total_charges>"+
 				"<service_tax>"+service_tax+"</service_tax>"+
-				"<total_payable>"+(parseFloat(total_charges)+parseFloat(service_tax))+"</total_payable>"+
-				"<total_receivable>"+(parseFloat(sale_price)+parseFloat(freight)-parseFloat(total_charges)-parseFloat(service_tax))+"</total_receivable>"+
+				"<total_payable>"+(parseFloat(total_charges))+"</total_payable>"+
+				"<total_receivable>"+(parseFloat(sale_price)+parseFloat(freight)-parseFloat(total_charges))+"</total_receivable>"+
 				"<profit_mrp>"+profit_mrp+"</profit_mrp>"+
 				"<profit_sp>"+profit_sp+"</profit_sp>"+
 				"<profit>"+profit+"</profit>"+

@@ -9817,7 +9817,7 @@ function form172_add_item()
 		var rowsHTML="<tr>";
 			rowsHTML+="<form id='form172_"+id+"'></form>";
 				rowsHTML+="<td data-th='Channel'>";
-					rowsHTML+="<input type='text' form='form172_"+id+"'>";
+					rowsHTML+="<input type='text' style='width:100px;' form='form172_"+id+"'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Item'>";
 					rowsHTML+="<b>SKU</b>: <input required type='text' form='form172_"+id+"'>";
@@ -9828,22 +9828,24 @@ function form172_add_item()
 					rowsHTML+="<br><b>Disc.</b>: Rs. <input type='number' step='any' form='form172_"+id+"'>";
 					rowsHTML+="<br><b>SP</b>: Rs. <input type='number' required step='any' form='form172_"+id+"'>";
 					rowsHTML+="<br><b>Freight</b>: Rs. <input type='number' required step='any' form='form172_"+id+"' value='0'>";
-					rowsHTML+="<br><b>Ch. Comm.</b>: <input type='number' required step='any' form='form172_"+id+"' value='0'> %";
-					rowsHTML+="<br><b>Pickup</b>: Rs. <input type='number' required step='any' form='form172_"+id+"' value='0'>";
-					rowsHTML+="<br><b>Others</b>: Rs. <input type='number' required step='any' form='form172_"+id+"' value='0'>";
-					rowsHTML+="<br><b>S. Tax</b>: Rs. <input type='number' required step='any' form='form172_"+id+"' value='0'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Channel Charges'>";
+					rowsHTML+="<b>Comm.</b>: <input type='number' style='width:40px;' required step='any' form='form172_"+id+"' value='0'> %";
+					rowsHTML+="<br><b>Comm.</b>: Rs. <input type='number' step='any' readonly='readonly' required form='form172_"+id+"' value='0'>";
+					rowsHTML+="<br><b>Pickup</b>: Rs. <input type='number' style='width:60px;' required step='any' form='form172_"+id+"' value='0'>";
+					rowsHTML+="<br><b>Others</b>: Rs. <input type='number' style='width:60px;' required step='any' form='form172_"+id+"' value='0'>";
+					rowsHTML+="<br><b>S. Tax</b>: Rs. <input type='number' style='width:60px;' readonly='readonly' required step='any' form='form172_"+id+"' value='0'>";
+					rowsHTML+="<br><b>Total</b>: Rs. <input type='number' style='width:60px;' readonly='readonly' required step='any' form='form172_"+id+"' value='0'>";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Profit'>";
 					rowsHTML+="<b>CP</b>: Rs. <input type='number' step='any' form='form172_"+id+"'>";
 					rowsHTML+="<br><b>Profit</b>: Rs. <input type='number' step='any' readonly='readonly' form='form172_"+id+"'>";
-					rowsHTML+="<br><b>Profit (MRP)</b>: <input type='number' step='any' readonly='readonly' form='form172_"+id+"'> %";
-					rowsHTML+="<br><b>Profit (SP)</b>: <input type='number' step='any' readonly='readonly' form='form172_"+id+"'> %";
+					rowsHTML+="<br><b>Profit (MRP)</b>: <input type='number' style='width:40px;' step='any' readonly='readonly' form='form172_"+id+"'> %";
+					rowsHTML+="<br><b>Profit (SP)</b>: <input type='number' style='width:40px;' step='any' readonly='readonly' form='form172_"+id+"'> %";
 				rowsHTML+="</td>";
 				rowsHTML+="<td data-th='Action'>";
 					rowsHTML+="<input type='hidden' form='form172_"+id+"' value='"+id+"'>";
 					rowsHTML+="<input type='submit' class='save_icon' form='form172_"+id+"' title='Save'>";
-					rowsHTML+="<input type='hidden' form='form172_"+id+"' name='commission_charges'>";
-					rowsHTML+="<input type='hidden' form='form172_"+id+"' name='total_charges'>";
 					rowsHTML+="<input type='button' class='delete_icon' form='form172_"+id+"' title='Delete' onclick='$(this).parent().parent().remove();'>";
 				rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
@@ -9859,15 +9861,15 @@ function form172_add_item()
 		var sp_filter=fields.elements[5];
 		var freight_filter=fields.elements[6];
 		var commission_filter=fields.elements[7];
-		var pickup_filter=fields.elements[8];
-		var other_filter=fields.elements[9];
-		var tax_filter=fields.elements[10];
-		var cp_filter=fields.elements[11];
-		var profit_filter=fields.elements[12];
-		var profit_mrp_filter=fields.elements[13];
-		var profit_sp_filter=fields.elements[14];
-		var commission_charges_filter=fields.elements[17];
-		var total_charges_filter=fields.elements[18];
+		var commission_charges_filter=fields.elements[8];
+		var pickup_filter=fields.elements[9];
+		var other_filter=fields.elements[10];
+		var tax_filter=fields.elements[11];
+		var total_charges_filter=fields.elements[12];
+		var cp_filter=fields.elements[13];
+		var profit_filter=fields.elements[14];
+		var profit_mrp_filter=fields.elements[15];
+		var profit_sp_filter=fields.elements[16];
 		
 		var channel_data="<sale_channels>"+
 						"<name></name>"+
@@ -9890,14 +9892,20 @@ function form172_add_item()
 						"<mrp></mrp>"+
 						"<product_name exact='yes'>"+name_filter.value+"</product_name>"+
 						"</product_instances>";
-			set_my_value(mrp_data,mrp_filter);
+			set_my_value(mrp_data,mrp_filter,function()
+			{
+				$(mrp_filter).trigger('change');
+			});
 			
 			var cp_data="<supplier_bill_items count='1'>"+
 						"<unit_price></unit_price>"+
 						"<quantity></quantity>"+
 						"<product_name exact='yes'>"+name_filter.value+"</product_name>"+
 						"</supplier_bill_items>";
-			set_my_value(cp_data,cp_filter);
+			set_my_value(cp_data,cp_filter,function () 
+			{
+				$(cp_filter).trigger('change');				
+			});
 			
 			var cat_data="<category_sku_mapping>"+
 						"<cat_type></cat_type>"+
@@ -9927,9 +9935,8 @@ function form172_add_item()
 						{
 							var average_pickup=(parseFloat(pickups[0].min_charges)+parseFloat(pickups[0].max_charges))/2;
 							pickup_filter.value=Math.max(parseFloat(pickups[0].min_charges),average_pickup);
-							commission_charges_filter.value=my_round((parseFloat(commission_filter.value)*parseFloat(sp_filter.value)/100),2);
-							tax_filter.value=my_round((parseFloat(get_session_var('service_tax_rate'))*(parseFloat(other_filter.value)+parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value))/100),2);						
-							total_charges_filter.value=parseFloat(other_filter.value)+parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value)+parseFloat(tax_filter.value);
+							$(pickup_filter).trigger('change');
+							$(commission_filter).trigger('change');
 						});
 					});
 				}
@@ -9946,14 +9953,26 @@ function form172_add_item()
 					{
 						var average_pickup=(parseFloat(pickups[0].min_charges)+parseFloat(pickups[0].max_charges))/2;
 						pickup_filter.value=Math.max(parseFloat(pickups[0].min_charges),average_pickup);
-						commission_charges_filter.value=my_round((parseFloat(commission_filter.value)*parseFloat(sp_filter.value)/100),2);
-						tax_filter.value=my_round((parseFloat(get_session_var('service_tax_rate'))*(parseFloat(other_filter.value)+parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value))/100),2);						
-						total_charges_filter.value=parseFloat(other_filter.value)+parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value)+parseFloat(tax_filter.value);
+						$(pickup_filter).trigger('change');
+						$(commission_filter).trigger('change');
 					});
 				}
 			});
 		});
-		
+
+		$(commission_filter).add(sp_filter).on('change',function () 
+		{
+			commission_charges_filter.value=my_round((parseFloat(commission_filter.value)*parseFloat(sp_filter.value)/100),2);
+			$(commission_charges_filter).trigger('change');
+		});
+
+		$(commission_charges_filter).add(pickup_filter).add(other_filter).on('change',function () 
+		{
+			tax_filter.value=my_round((parseFloat(get_session_var('service_tax_rate'))*(parseFloat(other_filter.value)+parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value))/100),2);						
+			total_charges_filter.value=parseFloat(other_filter.value)+parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value)+parseFloat(tax_filter.value);
+			$(total_charges_filter).trigger('change');
+		});
+
 		$(discount_filter).on('change',function()
 		{
 			sp_filter.value=parseFloat(mrp_filter.value)-parseFloat(discount_filter.value);
@@ -9962,13 +9981,10 @@ function form172_add_item()
 
 		$(sp_filter).add(freight_filter).add(cp_filter).add(total_charges_filter).on('change',function ()
 		{
-			commission_charges_filter.value=my_round((parseFloat(commission_filter.value)*parseFloat(sp_filter.value)/100),2);
-			tax_filter.value=my_round((parseFloat(get_session_var('service_tax_rate'))*(parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value))/100),2);						
-			total_charges_filter.value=parseFloat(other_filter.value)+parseFloat(commission_charges_filter.value)+parseFloat(pickup_filter.value)+parseFloat(tax_filter.value);					
 			profit_filter.value=my_round((parseFloat(sp_filter.value)+parseFloat(freight_filter.value)-parseFloat(total_charges_filter.value)-parseFloat(cp_filter.value)),2);
 			$(profit_filter).trigger('change');			
 		});			
-		
+				
 		$(profit_filter).add(sp_filter).add(mrp_filter).on('change',function()
 		{
 			profit_mrp_filter.value=my_round((parseFloat(profit_filter.value)/parseFloat(mrp_filter.value)*100),2);

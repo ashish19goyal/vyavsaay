@@ -1021,7 +1021,7 @@ function form171_import_template()
 */
 function form172_import_template()
 {
-	var data_array=['id','channel','item','mrp','sale_price','freight','discount_customer','channel_commission','pickup_charges','gateway_charges','storage_charges','total_charges','service_tax','total_payable','total_receivable','cost_price','profit_mrp','profit_sp','profit','from_time'];
+	var data_array=['id','channel','item','from_time','mrp','discount_customer','sale_price','freight','channel_commission_percentage','channel_commission','pickup_charges','gateway_charges','service_tax','total_charges','cost_price'];
 	my_array_to_csv(data_array);
 };
 
