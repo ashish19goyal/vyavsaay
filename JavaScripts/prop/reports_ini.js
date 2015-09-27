@@ -7046,6 +7046,7 @@ function report91_ini()
 	$('#report91_body').html('');
 
 	var master_data="<product_master>" +
+			"<id></id>" +
 			"<name></name>" +
 			"<description></description>"+
 			"<make exact='yes'>"+brand+"</make>" +
