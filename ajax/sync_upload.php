@@ -40,151 +40,159 @@
 				
 			foreach($xmlresponse->childNodes as $row)
 			{
-				if($row->hasChildNodes())
+				try
 				{
-					$id='';		
-					$table_name='';
-					$type='';
-					$data_id='';
-					$data_xml='';
-					$last_updated='';
-					$link_to='';
-					$user_display='';
-					$title='';
-					$notes='';
-					$updated_by='';
-					
-					foreach($row->childNodes as $field)
+					if($row->hasChildNodes())
 					{
-						switch($field->nodeName)
-						{
-							case 'id': $id=$field->nodeValue;
-										break;
-							case 'tablename':$table_name=$field->nodeValue;
-										break;
-							case 'type':$type=$field->nodeValue;
-										break;
-							case 'data_id':$data_id=$field->nodeValue;
-										break;
-							case 'data_xml':$data_xml=$field;
-										break;
-							case 'last_updated':$last_updated=$field->nodeValue;
-										break;
-							case 'link_to':$link_to=$field->nodeValue;
-										break;
-							case 'user_display':$user_display=$field->nodeValue;
-										break;
-							case 'title':$title=$field->nodeValue;
-										break;
-							case 'notes':$notes=$field->nodeValue;
-										break;
-							case 'updated_by':$updated_by=$field->nodeValue;
-										break;
-						}
-					}
-					try{
-						if($user_display=='yes')
-							$stmt->execute(array($id,$table_name,$type,$data_id,$xmlresponse_xml->saveXML($data_xml),$last_updated,'synced',$link_to,$user_display,$title,$notes,$updated_by,$sync_time));
-					}
-					catch(PDOException $e)
-					{
-					/*	echo $e;
-						echo "activity id=".$id."\n";
-					*/
-					}		
-					if($table_name!="")
-					{		
-						$q_string1="select last_updated from $table_name where id=?;";
-						$stmt1=$conn->conn->prepare($q_string1);
-						$stmt1->execute(array($data_id));
+						$id='';		
+						$table_name='';
+						$type='';
+						$data_id='';
+						$data_xml='';
+						$last_updated='';
+						$link_to='';
+						$user_display='';
+						$title='';
+						$notes='';
+						$updated_by='';
 						
-						$result1=$stmt1->fetch(PDO::FETCH_ASSOC);
-						$server_last_update=$result1['last_updated'];
-						
-						if($server_last_update<$last_updated || !($server_last_update))
+						foreach($row->childNodes as $field)
 						{
-							$q_string2="";
-							$data=$data_xml->childNodes->item(0);
-							
-							switch($type)
+							switch($field->nodeName)
 							{
-								case 'create': 
-									$data_array=array();
-									$q_string2="insert into $table_name (";
-									foreach($data->childNodes as $column)
-									{
-										if($column->nodeName!='#text')
-											$q_string2.=$column->nodeName.",";
-									}
-									//$q_string2=rtrim($q_string2,",");
-									$q_string2.="last_sync_time) values(";
-																		
-									foreach($data->childNodes as $column)
-									{
-										if($column->nodeName!='#text')
-										{
-											$q_string2.="?,";
-											$data_array[]=$column->nodeValue;
-											//echo $column->nodeValue;
-										}
-									}
-									//$q_string2=rtrim($q_string2,",");
-									$q_string2.="?);";
-									$data_array[]=$sync_time;
-									
-									//echo $q_string2;								
-									$stmt2=$conn->conn->prepare($q_string2);
-									try{
-										$stmt2->execute($data_array);
-									}
-									
-									catch(PDOException $e)
-									{
-										
-									}
-									break;
-								case 'update': 
-									$q_string2="update $table_name set ";
-									$data_array=array();
-									foreach($data->childNodes as $column)
-									{
-										if($column->nodeName!='#text')
-										{
-											$q_string2.=$column->nodeName."=?,";
-											$data_array[]=$column->nodeValue;
-										}
-									}
-									//$q_string2=rtrim($q_string2,",");
-									$q_string2.="last_sync_time=? where id=?";
-									$data_array[]=$sync_time;
-									
-									$data_array[]=$data_id;
-									$stmt2=$conn->conn->prepare($q_string2);
-									try{
-										$stmt2->execute($data_array);
-									}
-									catch(PDOException $e)
-									{
-									/*	echo $e;
-										foreach ($data_array as $data_key => $data_array_value)
-										{
-											echo $data_key."=".$data_array_value."\n";
-										}
-										continue;
-									*/
-									}
-									break;
-								case 'delete': $q_string2="delete from $table_name where id=?";
-									$stmt2=$conn->conn->prepare($q_string2);
-									$stmt2->execute(array($data_id));
-									break;
-							}	
+								case 'id': $id=$field->nodeValue;
+											break;
+								case 'tablename':$table_name=$field->nodeValue;
+											break;
+								case 'type':$type=$field->nodeValue;
+											break;
+								case 'data_id':$data_id=$field->nodeValue;
+											break;
+								case 'data_xml':$data_xml=$field;
+											break;
+								case 'last_updated':$last_updated=$field->nodeValue;
+											break;
+								case 'link_to':$link_to=$field->nodeValue;
+											break;
+								case 'user_display':$user_display=$field->nodeValue;
+											break;
+								case 'title':$title=$field->nodeValue;
+											break;
+								case 'notes':$notes=$field->nodeValue;
+											break;
+								case 'updated_by':$updated_by=$field->nodeValue;
+											break;
+							}
 						}
-						$ids_for_update.="<id>$id</id>";
+						try{
+							if($user_display=='yes')
+								$stmt->execute(array($id,$table_name,$type,$data_id,$xmlresponse_xml->saveXML($data_xml),$last_updated,'synced',$link_to,$user_display,$title,$notes,$updated_by,$sync_time));
+						}
+						catch(PDOException $e)
+						{
+						/*	echo $e;
+							echo "activity id=".$id."\n";
+						*/
+						}		
+						if($table_name!="")
+						{		
+							$q_string1="select last_updated from $table_name where id=?;";
+							$stmt1=$conn->conn->prepare($q_string1);
+							$stmt1->execute(array($data_id));
+							
+							$result1=$stmt1->fetch(PDO::FETCH_ASSOC);
+							$server_last_update=$result1['last_updated'];
+							
+							$data=$data_xml->childNodes->item(0);
+							if($data->hasChildNodes()) 
+							{
+								if($server_last_update<$last_updated || !($server_last_update))
+								{
+									$q_string2="";
+									
+									switch($type)
+									{
+										case 'create': 
+											$data_array=array();
+											$q_string2="insert into $table_name (";
+											foreach($data->childNodes as $column)
+											{
+												if($column->nodeName!='#text')
+													$q_string2.=$column->nodeName.",";
+											}
+											//$q_string2=rtrim($q_string2,",");
+											$q_string2.="last_sync_time) values(";
+																				
+											foreach($data->childNodes as $column)
+											{
+												if($column->nodeName!='#text')
+												{
+													$q_string2.="?,";
+													$data_array[]=$column->nodeValue;
+													//echo $column->nodeValue;
+												}
+											}
+											//$q_string2=rtrim($q_string2,",");
+											$q_string2.="?);";
+											$data_array[]=$sync_time;
+											
+											//echo $q_string2;								
+											$stmt2=$conn->conn->prepare($q_string2);
+											
+											try{
+												$stmt2->execute($data_array);
+											}
+											catch(PDOException $e)
+											{
+												
+											}
+											break;
+										case 'update': 
+											$q_string2="update $table_name set ";
+											$data_array=array();
+											foreach($data->childNodes as $column)
+											{
+												if($column->nodeName!='#text')
+												{
+													$q_string2.=$column->nodeName."=?,";
+													$data_array[]=$column->nodeValue;
+												}
+											}
+											//$q_string2=rtrim($q_string2,",");
+											$q_string2.="last_sync_time=? where id=?";
+											$data_array[]=$sync_time;
+											
+											$data_array[]=$data_id;
+											$stmt2=$conn->conn->prepare($q_string2);
+											try{
+												$stmt2->execute($data_array);
+											}
+											catch(PDOException $e)
+											{
+											/*	echo $e;
+												foreach ($data_array as $data_key => $data_array_value)
+												{
+													echo $data_key."=".$data_array_value."\n";
+												}
+												continue;
+											*/
+											}
+											break;
+										case 'delete': $q_string2="delete from $table_name where id=?";
+											$stmt2=$conn->conn->prepare($q_string2);
+											$stmt2->execute(array($data_id));
+											break;
+									}	
+								}
+								$ids_for_update.="<id>$id</id>";
+							}
+						}
 					}
 				}
-			}
-			
+				catch(Exception $x)
+				{
+				}
+			}	
 			if($run_daemons=='yes')
 			{				
 				$sms_instance=new send_sms();

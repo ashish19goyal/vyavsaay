@@ -7723,9 +7723,9 @@ function form209_header_ini()
 function form210_header_ini()
 {	
 	var master_form=document.getElementById('form210_master');
-	var bag_filter=master_form.elements[1];
-	var order_filter=master_form.elements[2];
-	var bill_filter=master_form.elements[3];
+	var bag_filter=master_form.elements['bag'];
+	var order_filter=master_form.elements['order'];
+	var bill_filter=master_form.elements['bill'];
 
 	var print_barcode_button=master_form.elements['print'];
 	var print_invoice_button=master_form.elements['print_invoice'];
