@@ -6,7 +6,7 @@ function get_raw_time(date)
 	}
 	else
 	{
-		var date_time_array=date.split(/ /);
+		var date_time_array=String(date).split(/ /);
 		var date_elem=date_time_array[0];
 		
 		var date_array=date_elem.split(/[\-\/]+/);

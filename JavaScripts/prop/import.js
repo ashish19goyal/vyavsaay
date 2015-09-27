@@ -6,7 +6,8 @@ function activities_import(data_array,import_type)
 {
 	data_array.forEach(function(row)
 	{
-		row.last_updated=""+get_raw_time(row.last_updated);		
+		console.log(row);
+		row.last_updated=""+get_raw_time(row.last_updated);
 	});
 	local_create_activities(data_array);
 	

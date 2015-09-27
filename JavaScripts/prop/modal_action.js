@@ -9892,6 +9892,8 @@ function modal140_action(i_func)
 
 			fetch_requested_data('',products_xml,function (products) 
 			{
+				console.log(products);
+				console.log(unique_items_in_import);
 				if(products.length==unique_items_in_import.length)
 				{
 					data_array.forEach(function (data_row) 
