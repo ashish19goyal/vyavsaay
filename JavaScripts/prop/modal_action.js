@@ -7117,15 +7117,8 @@ function modal114_action(func)
 						"<notes>Product "+name+"</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_create_row_func(data_xml,activity_xml,func);
-			}
-			else
-			{
-				local_create_row_func(data_xml,activity_xml,func);
-			}	
-
+			create_row_func(data_xml,activity_xml,func);
+			
 			var id=get_new_key();
 			$("#modal114_attributes").find('input, select').each(function()
 			{

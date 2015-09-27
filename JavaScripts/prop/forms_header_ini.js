@@ -7725,6 +7725,7 @@ function form210_header_ini()
 	var master_form=document.getElementById('form210_master');
 	var bag_filter=master_form.elements[1];
 	var order_filter=master_form.elements[2];
+	var bill_filter=master_form.elements[3];
 
 	var print_barcode_button=master_form.elements['print'];
 	var print_invoice_button=master_form.elements['print_invoice'];
@@ -7776,6 +7777,7 @@ function form210_header_ini()
 	});
 	
 	var bag_data="<bills>"+
+				"<bill_num></bill_num>"+
 				"<pick_bag_num></pick_bag_num>"+
 				"<status></status>"+				
 				"</bills>";
@@ -7838,6 +7840,12 @@ function form210_header_ini()
 				"<pick_bag_num exact='yes'>"+bag_filter.value+"</pick_bag_num>"+
 				"</bills>";
 			set_my_value(order_data,order_filter);
+			
+			var bill_data="<bills>"+
+				"<bill_num></bill_num>"+
+				"<pick_bag_num exact='yes'>"+bag_filter.value+"</pick_bag_num>"+
+				"</bills>";
+			set_my_value(bill_data,bill_filter);
 		}
 	});
 }

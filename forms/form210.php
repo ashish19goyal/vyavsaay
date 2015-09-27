@@ -2,7 +2,8 @@
 	<form id='form210_master' autocomplete="off">
 		<fieldset>
 			<label>Bag #: <input type='text' class='widebox' name='bag'></label>
-			<label>Order #: <input type='text' class='widebox' name='order' required></label>
+			<label>Order #: <input type='text' class='widebox' name='order'></label>
+			<label>Bill #: <input type='text' class='widebox' name='bill' required></label>
 			<label><input type='submit' name='refresh' class='generic_icon' value='Refresh'></label><br>
 			<label><input type='button' name='print' class='generic_icon' value='Print Barcode'></label>		
 			<label><input type='button' name='print_invoice' class='generic_icon' value='Print Invoice'></label>		

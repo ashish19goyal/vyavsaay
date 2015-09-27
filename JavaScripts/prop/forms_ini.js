@@ -17458,7 +17458,8 @@ function form169_ini()
 				},false);
 				
 				longPressEditable($('.dblclick_editable'));
-				
+				$('textarea').autosize();
+
 			});
 		});
 
@@ -17486,8 +17487,6 @@ function form169_ini()
 		}
 		/////////////
 
-		$('textarea').autosize();
-		
 		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
@@ -21975,6 +21974,7 @@ function form210_ini()
 {
 	var master_form=document.getElementById('form210_master');
 	var order_filter=master_form.elements['order'];
+	var bill_filter=master_form.elements['bill'];
 	var print_button=master_form.elements['print'];
 	var print_invoice_button=master_form.elements['print_invoice'];
 	var edit_invoice_button=master_form.elements['edit_invoice'];
@@ -21988,8 +21988,8 @@ function form210_ini()
 	var bills_xml="<bills count='1'>"+
 			"<id></id>"+
 			"<customer_name></customer_name>"+
-	       	"<bill_num></bill_num>"+
-	   		"<order_num exact='yes'>"+order_filter.value+"</order_num>"+
+	       	"<bill_num exact='yes'>"+bill_filter.value+"</bill_num>"+
+	   		"<order_num></order_num>"+
 	  		"<order_id></order_id>"+
 	       	"<bill_date></bill_date>"+
 	      	"</bills>";
