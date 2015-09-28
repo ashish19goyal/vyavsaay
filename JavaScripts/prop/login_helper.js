@@ -65,13 +65,18 @@ function login_online(username,domain,pass)
 		}
 		else
 		{
-			console.log(e.responseText);
+			//console.log(e.responseText);
+			console.log(session_xml);
+			
 			var session_var=session_xml.getElementsByTagName('session');
+			console.log(session_var);			
 			var session_vars=new Object();
 			var num_svar=session_var[0].childElementCount;
 
 			for(var z=0;z<num_svar;z++)
 			{
+				console.log(session_var[0].childNodes[z].nodeName);
+				console.log(session_var[0].childNodes[z].innerHTML);
 				session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].innerHTML;
 			}
 			ini_session(domain,username);
