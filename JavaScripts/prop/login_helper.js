@@ -51,6 +51,7 @@ function login_action()
 
 function login_online(username,domain,pass)
 {
+	console.log('logging online');
 	ajax_with_custom_func("./ajax/login.php",{domain:domain,user:username,pass:pass},function(e)
 	{
 		login_status=e.responseText;
