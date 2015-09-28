@@ -76,8 +76,8 @@ function login_online(username,domain,pass)
 			for(var z=0;z<num_svar;z++)
 			{
 				console.log(session_var[0].childNodes[z].nodeName);
-				console.log(session_var[0].childNodes[z].innerHTML);
-				session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].innerHTML;
+				console.log(session_var[0].childNodes[z].textContent);
+				session_vars[session_var[0].childNodes[z].nodeName]=session_var[0].childNodes[z].textContent;
 			}
 			ini_session(domain,username);
 			
