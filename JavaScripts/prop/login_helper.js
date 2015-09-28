@@ -76,7 +76,7 @@ function login_online(username,domain,pass)
 			}
 			ini_session(domain,username);
 			
-			//console.log('setting session online');
+			console.log(session_vars);
 			set_session_online(function()
 			{
 				set_session(session_vars);
