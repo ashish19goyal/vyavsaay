@@ -21173,6 +21173,7 @@ function form200_ini()
 									"<phone></phone>" +
 									"<weight></weight>" +
 									"<pieces></pieces>" +
+									"<status></status>" +
 									"<drs_num exact='yes'>"+drs_results[0].drs_num+"</drs_num>" +
 									"<drs_id exact='yes'>"+drs_id+"</drs_id>" +
 									"</logistics_orders>";
@@ -22669,6 +22670,7 @@ function form219_ini()
 									"<phone></phone>" +
 									"<weight></weight>" +
 									"<pieces></pieces>" +
+									"<status></status>" +
 									"<collectable_value></collectable_value>"+
 									"<drs_num exact='yes'>"+drs_results[0].drs_num+"</drs_num>" +
 									"<drs_id exact='yes'>"+drs_id+"</drs_id>" +
