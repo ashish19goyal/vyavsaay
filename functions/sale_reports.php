@@ -20,6 +20,7 @@
 		<li><a id='report66_link' href='#report66' onclick='report66_header_ini();' data-i18n='form.inventory_level_store'></a></li>
 		<li><a id='report77_link' href='#report77' onclick='report77_header_ini();' data-i18n='form.inventory_storage_by_item'></a></li>
 		<li><a id='report91_link' href='#report91' onclick='report91_header_ini();' data-i18n='form.inventory_by_brand'></a></li>
+		<li><a id='report93_link' href='#report93' onclick='report93_header_ini();' data-i18n='form.stock_report'></a></li>
 	</ul>
 
 	<?php
@@ -42,6 +43,7 @@
 			include "reports/report66.php";
 			include "reports/report77.php";			
 			include "reports/report91.php";			
+			include "reports/report93.php";			
 	?>
 	
 </div>

@@ -1,7 +1,6 @@
 <div id='report89' class='function_detail'>
 	<form id='report89_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Delivery Person<br><input type='text' name='person'></label>
 			<label>Start Date<br><input type='text' name='start' required></label>
 			<label>End Date<br><input type='text' name='end' required></label>

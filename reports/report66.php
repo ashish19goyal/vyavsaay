@@ -1,7 +1,6 @@
 <div id='report66' class='function_detail'>
 	<form id='report66_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Storage Type<br><input type='text' required></label>
 			<label>Storage<br><input type='text' required></label>
 			<label>	

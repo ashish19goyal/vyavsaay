@@ -1,7 +1,6 @@
 <div id='report17' class='function_detail'>
 	<form id='report17_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>From date</br><input type='text' required></label>
 			<label>To date</br><input type='text' required></label>
 			<label>Staff Name</br><input type='text' title='If this field is blank, data for all staff would be shown'></label>

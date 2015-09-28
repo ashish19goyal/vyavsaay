@@ -1,7 +1,6 @@
 <div id='report15' class='report_detail'>
 	<form id='report15_header' autocomplete="off">
 		<fieldset>
-		<legend>Select Filters</legend>
 			<label>Start date</br><input type='text' required></label>
 			<label>End date</br><input type='text' required></label>
 			<label>

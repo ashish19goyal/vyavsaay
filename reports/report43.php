@@ -1,7 +1,6 @@
 <div id='report43' class='report_detail'>
 	<form id='report43_header'  autocomplete="off" style='text-align:left;'>
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Customer</br><input type='text' title='If this field is left blank, top 10 customers will be shown'></label>
 			<label>Period 1</br>
 			<label>Start Date</br><input type='text' required></label></br>

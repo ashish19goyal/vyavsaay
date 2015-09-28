@@ -1,7 +1,6 @@
 <div id='report73' class='function_detail'>
 	<form id='report73_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Customer<br><input type='text' name='customer'></label>
 			<label>Item<br><input type='text' name='item_name'></label>
 			<label>Status<br><input type='text' name='status'></label>

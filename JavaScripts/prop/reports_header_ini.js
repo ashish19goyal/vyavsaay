@@ -2032,3 +2032,44 @@ function report92_header_ini()
 				"</sale_orders>";
 	set_my_filter(order_data,order_filter);
 }
+
+/**
+ * @reportNo 93
+ * @report Stock Report
+ */
+function report93_header_ini()
+{	
+	var form=document.getElementById('report93_header');
+	var brand_filter=form.elements['brand'];
+	var sku_filter=form.elements['sku'];
+	var name_filter=form.elements['name'];
+	var batch_filter=form.elements['batch'];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report93_ini();
+	});
+
+	var brand_data="<product_master>"+
+				"<make></make>"+
+				"</product_master>";
+	set_my_value_list(brand_data,brand_filter);
+	
+	var sku_data="<product_master>"+
+				"<name></name>"+
+				"</product_master>";
+	set_my_filter(sku_data,sku_filter);
+
+	var name_data="<product_master>"+
+				"<description></description>"+
+				"</product_master>";
+	set_my_filter(name_data,name_filter);
+
+	var batch_data="<product_instances>"+
+				"<batch></batch>"+
+				"</product_instances>";
+	set_my_filter(batch_data,batch_filter);
+
+}

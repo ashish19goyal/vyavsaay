@@ -1,7 +1,6 @@
 <div id='report51' class='function_detail'>
 	<form id='report51_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Product</br><input type='text' title='If this field is blank, all applicable suppliers will be shown'></label>
 			<label>Date since</br><input type='text' title='Date since the items are dead'></label>
 			<label>

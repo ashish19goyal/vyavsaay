@@ -1,7 +1,6 @@
 <div id='report30' class='report_detail'>
 	<form id='report30_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Period</legend>
 			<label>Start date</br><input type='text' required></label>
 			<label>End date</br><input type='text' required></label>
 			<label>

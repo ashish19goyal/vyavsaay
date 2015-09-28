@@ -1,7 +1,6 @@
 <div id='report58' class='function_detail'>
 	<form id='report58_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Account<br><input type='text' required></label>
 			<label>Start Date<br><input type='text' required></label>
 			<label>End Date<br><input type='text' required></label>

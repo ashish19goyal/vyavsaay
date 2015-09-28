@@ -1,7 +1,6 @@
 <div id='report37' class='report_detail'>
 	<form id='report37_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Due date</br><input type='text' required></label>
 			<label>Supplier</br><input type='text' title='If this field is left blank, top 10 suppliers will be shown'></label>
 			<label>

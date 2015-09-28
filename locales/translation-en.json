@@ -418,6 +418,8 @@
 	"receipts_cps":"Receipts (CPS)",
 	"inventory_finished":"Inventory (Finished Goods)",
 	"add_stock":"Add Stock",
-	"pending_sale_order_items":"Pending Sale Order Items"
+	"pending_sale_order_items":"Pending Sale Order Items",
+	"stock_report_extended":"Stock Report (Extended)",
+	"stock_report":"Stock Report"
 	}
 }

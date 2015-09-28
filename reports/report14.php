@@ -1,7 +1,6 @@
 <div id='report14' class='report_detail'>
 	<form id='report14_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Start date</br><input type='text' required></label>
 			<label>End date</br><input type='text' required></label>
 			<label>Select Account</br><input type='text' title='If this field is left blank, all applicable accounts will be shown'></label>

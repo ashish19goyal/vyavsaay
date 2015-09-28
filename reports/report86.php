@@ -1,7 +1,6 @@
 <div id='report86' class='function_detail'>
 	<form id='report86_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Item<br><input type='text' name='product'></label>
 			<label>Start Date<br><input type='text' name='start' required></label>
 			<label>End Date<br><input type='text' name='end' required></label>

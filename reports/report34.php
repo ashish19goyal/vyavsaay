@@ -1,7 +1,6 @@
 <div id='report34' class='report_detail'>
 	<form id='report34_header' autocomplete="off">
 		<fieldset>
-			<legend>Set parameters</legend>
 			<label>Start date</br><input type='text' required title='Period start date for determination of effective margin'></label>
 			<label>End date</br><input type='text' required title='Period end date for determination of effective margin'></label>
 			<label>Effective Margin</br><input type="text" id="report34_margin" readonly='readonly'></label>

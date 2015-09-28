@@ -1,7 +1,6 @@
 <div id='report46' class='function_detail'>
 	<form id='report46_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Min balance amount </br><input type='number' value='0' required title='Suppliers with balance more than this amount will be shown'></label>
 			<label>Supplier </br><input type='text' title='If this field is blank, all applicable suppliers will be shown'></label>
 			<label>

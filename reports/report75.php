@@ -1,7 +1,6 @@
 <div id='report75' class='function_detail'>
 	<form id='report75_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Supplier<br><input type='text' name='supplier' required></label>
 			<label>
 				<input type='submit' value='Refresh' name='refresh' class='generic_icon'>

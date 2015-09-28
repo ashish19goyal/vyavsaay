@@ -1,7 +1,6 @@
 <div id='report47' class='report_detail'>
 	<form id='report47_header' autocomplete="off">
 		<fieldset>
-			<legend>Select product:</legend>
 			<label>Product</br><input type='text' title='If this field is left blank, top 10 products will be shown'></label>
 			<label>Show total inventory</br><input type='checkbox' title='Tick this to show sum total of all products in inventory'></label>
 			<label>

@@ -1218,6 +1218,17 @@
 			<tables>--sale_orders--sale_order_items--bill_items--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>		
+			<name>report93</name>
+			<display_name>stock_report_extended</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_master--product_instances--</tables>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
@@ -4326,6 +4337,17 @@
 			<username>master</username>
 			<element_id>report92</element_id>
 			<element_name>pending_sale_order_items</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report93</element_id>
+			<element_name>stock_report_extended</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

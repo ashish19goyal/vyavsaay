@@ -1,7 +1,6 @@
 <div id='report6' class='report_detail'>
 	<form id='report6_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Due date</br><input type='text' required></label>
 			<label>Customer</br><input type='text' title='If this field is left blank, top 10 customers will be shown'></label>
 			<label>

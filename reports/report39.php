@@ -1,7 +1,6 @@
 <div id='report39' class='report_detail'>
 	<form id='report39_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Start date</br><input type='text' required></label>
 			<label>End date</br><input type='text' required></label>
 			<label>Select Service</br><input type='text' title='If this field is left blank, top 10 services will be selected'></label>

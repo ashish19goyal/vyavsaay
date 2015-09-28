@@ -1,7 +1,6 @@
 <div id='report71' class='function_detail'>
 	<form id='report71_header' autocomplete="off">
 		<fieldset>
-			<legend>Select Filters</legend>
 			<label>Min balance amount</br><input type='number' value='0' required title='Customers with balance more than this amount will be shown'></label>
 			<label>Customer</br><input type='text' title='If this field is blank, all applicable customers will be shown'></label>
 			<label>

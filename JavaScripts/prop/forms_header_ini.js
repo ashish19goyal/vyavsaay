@@ -7831,7 +7831,9 @@ function form210_header_ini()
 	set_my_value_list(order_data,order_filter);					
 	
 	$(bag_filter).off('blur');
-	$(bag_filter).on('blur',function () 
+	$(bag_filter).off('change');
+	$(bag_filter).off('select');
+	$(bag_filter).on('blur change select',function () 
 	{
 		if(bag_filter.value!="")
 		{
