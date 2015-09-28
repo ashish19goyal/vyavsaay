@@ -4738,8 +4738,8 @@ function report66_ini()
 		
 	var area_data="<store_areas count='1'>" +
 			"<id></id>"+
-			"<name exact='yes'>"+storage_filter+"</name>"+
 			"<area_type exact='yes'>"+type_filter+"</area_type>" +
+			"<name exact='yes'>"+storage_filter+"</name>"+
 			"</store_areas>";
 	total_calls+=1;
 	fetch_requested_data('report66',area_data,function(areas)
@@ -4777,7 +4777,7 @@ function report66_ini()
 					total_calls+=1;				
 					fetch_requested_data('',item_data,function(items)
 					{
-						console.log(items);
+						//console.log(items);
 						total_calls-=1;
 						for(var i=0;i<items.length;i++)
 						{
@@ -4799,6 +4799,20 @@ function report66_ini()
 								item.quantity=parseFloat(quantity);
 								total_calls-=1;
 							});
+							
+							total_calls+=1;
+							var name_data="<product_master count='1'>"+
+										"<description></description>"+
+										"<name exact='yes'>"+item.item_name+"</name>"+
+										"</product_master>";
+							get_single_column_data(function(descriptions)
+							{
+								if(descriptions.length>0)
+								{
+									item.item_desc=descriptions[0];
+								}
+								total_calls-=1;
+							},name_data);			
 						});
 						
 						var inventory_complete=setInterval(function()
@@ -4815,8 +4829,11 @@ function report66_ini()
 										rowsHTML+="<td data-th='Storage'>";
 											rowsHTML+=item.name;
 										rowsHTML+="</td>";
-										rowsHTML+="<td data-th='Item'>";
+										rowsHTML+="<td data-th='SKU'>";
 											rowsHTML+=item.item_name;
+										rowsHTML+="</td>";
+										rowsHTML+="<td data-th='Item Name'>";
+											rowsHTML+=item.item_desc;
 										rowsHTML+="</td>";
 										rowsHTML+="<td data-th='Batch'>";
 											rowsHTML+=item.batch;
@@ -4841,7 +4858,8 @@ function report66_ini()
 										{
 											var new_product=new Object();
 											new_product.Storage=product.name;
-											new_product.Item=product.item_name;
+											new_product.SKU=product.item_name;
+											new_product['Item Name']=product.item_desc;
 											new_product.Batch=product.batch;
 											new_product.Quantity=product.quantity;
 											new_products.push(new_product);

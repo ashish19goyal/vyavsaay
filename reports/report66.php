@@ -15,7 +15,8 @@
 		<thead>
 			<tr>
 				<th>Storage</th>
-				<th>Item</th>
+				<th>SKU</th>
+				<th>Item Name</th>
 				<th>Batch</th>
 				<th>Quantity</th>
 			</tr>
