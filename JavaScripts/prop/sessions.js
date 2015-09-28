@@ -16,6 +16,7 @@ function ini_session(domain,user)
  */
 function set_session(session_data)
 {
+	console.log(session_data);
 	for(var field in session_data)
 	{
 		localStorage.setItem(field,session_data[field]);
