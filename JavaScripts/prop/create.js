@@ -5966,16 +5966,34 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 					var item_channel_charges=0;
 					var item_mrp=0;
 									
-					var batch_data="<product_instances count='1'>" +
+					var batch_data="<product_instances>" +
 							"<batch></batch>" +
+							"<expiry></expiry>" +
 							"<product_name exact='yes'>"+order_item.item_name+"</product_name>" +
-							"<status exact='yes'>available</status>"+
+							//"<status exact='yes'>available</status>"+
 							"</product_instances>";
-					get_single_column_data(function(batches)
+					fetch_requested_data('',batch_data,function(batches_array)
 					{
-						//console.log(batches);
+						//console.log(batches_array);
+						//batches.reverse();
+						
+						batches_array.sort(function(a,b)
+						{
+							if(parseFloat(a.expiry)>parseFloat(b.expiry) || isNaN(a.expiry) || a.expiry=="" || a.expiry==0)
+							{	return 1;}
+							else 
+							{	return -1;}
+						});
+						var batches=[];
+						batches_array.forEach(function (batches_array_elem) 
+						{
+							//console.log(batches_array_elem);
+							batches.push(batches_array_elem.batch);
+						});
+						
+						console.log(batches);
+						
 						var single_batch=batches[0];
-						batches.reverse();
 						var batches_result_array=[];
 						get_available_batch(order_item.item_name,batches,order_item.quantity,batches_result_array,function()
 						{
@@ -5997,7 +6015,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 									"</channel_prices>";
 							fetch_requested_data('',price_data,function(sale_prices)
 							{
-								console.log(sale_prices);
+								//console.log(sale_prices);
 		
 								if(sale_prices.length>0)
 								{
@@ -6159,7 +6177,7 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 							});
 						});
 						
-					},batch_data);
+					});
 				});
 			
 				/////saving bill details
