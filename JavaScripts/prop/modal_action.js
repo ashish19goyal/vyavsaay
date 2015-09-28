@@ -7135,14 +7135,8 @@ function modal114_action(func)
 							"<value>"+value+"</value>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</attributes>";
-					if(is_online())
-					{
-						server_create_simple(attribute_xml);
-					}
-					else
-					{
-						local_create_simple(attribute_xml);
-					}
+					create_simple(attribute_xml);
+					
 				}
 			});
 
@@ -7165,14 +7159,8 @@ function modal114_action(func)
 							"<desired_result>"+checklist.desired_result+"</desired_result>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</checklist_mapping>";
-					if(is_online())
-					{
-						server_create_simple(checklist_xml);
-					}
-					else
-					{
-						local_create_simple(checklist_xml);
-					}
+					create_simple(checklist_xml);
+					
 				});
 			});
 
@@ -7185,14 +7173,8 @@ function modal114_action(func)
 							"<target_id>"+data_id+"</target_id>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</documents>";
-				if(is_online())
-				{
-					server_create_simple(pic_xml);
-				}
-				else
-				{
-					local_create_simple(pic_xml);
-				}	
+				create_simple(pic_xml);
+					
 			}
 			
 			var channel_data="<sale_channels>" +
@@ -7246,7 +7228,7 @@ function modal114_action(func)
 				
 				create_batch(sku_mapping_xml);
 				create_batch(cat_sku_mapping_xml);
-				create_batch(channel_price_xml);
+				//create_batch(channel_price_xml);
 				
 			});
 
