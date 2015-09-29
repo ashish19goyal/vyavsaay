@@ -18889,7 +18889,8 @@ function form181_ini()
 			"<customer_name>"+fname+"</customer_name>" +
 			"<order_date></order_date>" +
 			"<status>"+fstatus+"</status>" +
-			"<last_updated></last_updated>" +
+			"<billing_type></billing_type>"+
+			"<bill_id></bill_id>" +
 			"</sale_orders>";
 
 	$('#form181_body').html("");
@@ -18902,7 +18903,7 @@ function form181_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form181_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Order #'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form181_"+result.id+"' value='"+result.order_num+"'>";
+						rowsHTML+="<input type='text' class='detail_link' readonly='readonly' form='form181_"+result.id+"' onclick=\"element_display('"+result.id+"','form180');\" value='"+result.order_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Customer'>";
 						rowsHTML+="<textarea readonly='readonly' form='form181_"+result.id+"'>"+result.customer_name+"</textarea>";
@@ -18915,39 +18916,43 @@ function form181_ini()
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Action'>";
 						rowsHTML+="<input type='hidden' form='form181_"+result.id+"' value='"+result.id+"'>";
-						rowsHTML+="<input type='button' class='edit_icon' form='form181_"+result.id+"' title='Edit order' onclick=\"element_display('"+result.id+"','form180');\">";
 						rowsHTML+="<input type='submit' class='save_icon' form='form181_"+result.id+"' title='Save order'>";
 						rowsHTML+="<input type='button' class='delete_icon' form='form181_"+result.id+"' title='Delete order' onclick='form181_delete_item($(this));'>";
-						//rowsHTML+="<br><input type='button' class='generic_icon' form='form181_"+result.id+"'>";
+					if(result.status!='closed' && result.status!='cancelled' && result.status!='billed' && result.status!='picked' && result.status!='packed' && result.status!='dispatched')
+					{
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form181_"+result.id+"' name='create' value='Create Bill'>";
+					}
+					if(result.status!='pending')
+					{
+						rowsHTML+="<br><input type='button' class='generic_icon' form='form181_"+result.id+"' name='view' value='View Bill'>";
+					}
 					rowsHTML+="</td>";			
 			rowsHTML+="</tr>";
 			
 			$('#form181_body').append(rowsHTML);
 			var fields=document.getElementById("form181_"+result.id);
-			//var bill_button=fields.elements[8];
 			var status_filter=fields.elements[3];
+			var create_bill_button=fields.elements['create'];
+			var view_bill_button=fields.elements['view'];
 			
 			set_static_value_list('sale_orders','status',status_filter);
-			/*
-			if(result.status=='pending')
-			{
-				$(bill_button).attr('value','Create Bill');
-				$(bill_button).on('click',function(event)
-				{
-					form181_bill(result.id);
-				});
-			}
-			else
-			{
-				$(bill_button).hide();
-			}
-			*/
 			$(fields).on("submit",function(event)
 			{
 				event.preventDefault();
 				form181_update_item(fields);
 			});
 			
+			$(create_bill_button).off('click');
+			$(create_bill_button).on('click',function(event)
+			{
+				modal159_action(result.id,result.order_num,result.customer_name,result.billing_type,result.bill_id);
+			});
+
+			$(view_bill_button).off('click');
+			$(view_bill_button).on('click',function(event)
+			{
+				modal154_action(result.bill_id);
+			});
 		});
 
 		////indexing///

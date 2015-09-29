@@ -453,6 +453,7 @@
 			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
+			<tax_rate index='no' type="DECIMAL(12,2)"></tax_rate>
 			<freight index='no' type="DECIMAL(12,2)"></freight>
 			<total index='no' type="DECIMAL(12,2)"></total>
 			<bill_status index='yes' type='VARCHAR(25)'></bill_status><!-- billed/cancelled/pending -->

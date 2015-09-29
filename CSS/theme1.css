@@ -287,14 +287,14 @@ a div{
 #count_notif,#count_sync{
 	float: right;
 	position:absolute;
-	right: 5px;
+	/*right: 5px;*/
 	border-radius: 2px;
 	font-size: .7em;
 	text-align: left;
 	display:none;
 	background-color:#dddd00;
 	padding:0px 3px;
-	min-width:15px;
+	/*min-width:15px;*/
 }
 
 
@@ -1195,6 +1195,11 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	background: #bdbdbd;
 	font-size: 1.2em;	
 	border: 2px solid #ffffff;
+}
+
+input.detail_link{
+	cursor: pointer;
+	color: #0000ff;
 }
 
 @media screen and (min-width: 550px) {

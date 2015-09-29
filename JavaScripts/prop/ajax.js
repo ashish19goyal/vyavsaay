@@ -155,7 +155,7 @@ function server_read_multiple_column(columns,callback,results)
 				if(row[i].nodeName!="" && row[i].nodeName!="#text")
 				{
 					var data=row[i].childNodes;
-					var row_data=[];
+					var row_data={};
 					for(var j=0;j<data.length;j++)
 					{
 						row_data[data[j].nodeName]=data[j].innerHTML;

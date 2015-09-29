@@ -6031,16 +6031,8 @@ function form181_delete_item(button)
 			var other_delete="<sale_order_items>" +
 					"<order_id>"+data_id+"</order_id>" +
 					"</sale_order_items>";
-			if(is_online())
-			{
-				server_delete_row(data_xml,activity_xml);
-				server_delete_simple(other_delete);
-			}
-			else
-			{
-				local_delete_row(data_xml,activity_xml);
-				local_delete_simple(other_delete);
-			}	
+			delete_row(data_xml,activity_xml);
+			delete_simple(other_delete);
 			$(button).parent().parent().remove();
 		});
 	}

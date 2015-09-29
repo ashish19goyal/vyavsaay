@@ -1494,4 +1494,16 @@
 		</form>
 	</div>
 
+	<div id="modal159" title="Analyze Order">
+		<label id='modal159_order_id'>Order #:</label><br>	
+		<table id='modal159_item_table'>
+		</table>
+		<br>
+		<br>
+		<form id='modal159_form' autocomplete="off">
+			<input type="submit" class='modal_submit' name='bill' value='Bill'>
+			<input type="button" class='modal_submit' name='cancel' value='Cancel'>
+		</form>				
+	</div>
+
 </div>

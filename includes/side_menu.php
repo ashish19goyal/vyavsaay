@@ -6,7 +6,7 @@
 	
 	<div id='notification_icon' class='menu_icon' onclick='show_notifications();'>
 			<div id='count_notif'></div>
-			<img title='Notifications' src='./images/notification.png' class="icon">
+			<img title='Notifications' src='./images/notification.png' class="icon">	
 	</div>
 		
 	<div id='offline_icon' class='menu_icon'>
@@ -14,8 +14,8 @@
 	</div>
 
 	<div id='sync_icon' class='menu_icon'>
-		<div id='count_sync' onclick='sync_local_and_server();'></div>
-		<img title='Sync to server' src='./images/sync.png' class='icon' onclick='sync_local_and_server();'>
+			<div id='count_sync' onclick='sync_local_and_server();'></div>
+			<img title='Sync to server' src='./images/sync.png' class='icon' onclick='sync_local_and_server();'>
 	</div>
 
 	<div id='online_icon' class='menu_icon'>

@@ -12121,3 +12121,180 @@ function modal158_action(bill_id)
 
 	$("#modal158").dialog("open");
 }
+
+/**
+ * @modal Analyze Order (CPS)
+ * @modalNo 159
+ */
+function modal159_action(order_id,order_num,customer,billing_type,bill_id)
+{
+	show_loader();
+	var form=document.getElementById("modal159_form");
+	var cancel_button=form.elements['cancel'];
+
+	document.getElementById('modal159_order_id').innerHTML="Order #: "+order_num;
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		form181_bill(order_id,billing_type,order_num,customer);
+		$("#modal159").dialog("close");
+	});
+
+	$(cancel_button).off('click');
+	$(cancel_button).on('click',function(event)
+	{
+		event.preventDefault();
+		$("#modal159").dialog("close");
+	});
+	
+	var headHTML="<tr style='background-color:#2C8A50;'>"+
+				"<td>Item</td>"+
+				"<td>Quantity</td>"+
+				"<td>Select</td>"+
+				"</tr>";
+	$('#modal159_item_table').html(headHTML);
+		
+	var order_items_xml="<sale_order_items>"+
+					"<id></id>"+
+					"<order_id exact='yes'>"+order_id+"</order_id>"+
+                    "<item_name></item_name>"+
+                    "<quantity></quantity>"+
+                    "<mrp></mrp>"+
+                    "<unit_price></unit_price>"+
+                    "<amount></amount>"+
+                    "<tax></tax>"+
+                    "<tax_rate></tax_rate>"+
+                    "<total></total>"+
+					"</sale_order_items>";
+	var analyze_item_timer=0;
+								
+	fetch_requested_data('',order_items_xml,function (order_items) 
+	{
+		var bill_id_string='--';
+		if(bill_id!='undefined' && bill_id!="" && bill_id!='0')
+		{
+			var bill_id_array=JSON.parse(bill_id);
+			for(var x in bill_id_array)
+			{
+				bill_id_string+=bill_id_array[x].bill_id+"--";
+			}
+		}
+		
+		var bill_items_xml="<bill_items>"+
+					"<bill_id array='yes'>"+bill_id_string+"</bill_id>"+
+					"<item_name></item_name>"+
+					"<quantity></quantity>"+
+					"</bill_items>";
+		fetch_requested_data('',bill_items_xml,function (bill_items) 
+		{
+			//console.log(bill_items);
+			for(var j=0;j<order_items.length;j++)
+			{
+				order_items[j].order_quantity=order_items[j].quantity;
+			}
+			
+			for(var k=0;k<order_items.length;k++)
+			{
+				for(var l=0;l<bill_items.length;l++)
+				{
+					if(order_items[k].item_name==bill_items[l].item_name)
+					{
+						if(parseFloat(order_items[k].quantity)>parseFloat(bill_items[l].quantity))
+						{
+							order_items[k].quantity=parseFloat(order_items[k].quantity)-parseFloat(bill_items[l].quantity);
+							bill_items.splice(l,1);
+							l--;
+						}
+						else if(parseFloat(order_items[k].quantity)<parseFloat(bill_items[l].quantity))
+						{
+							bill_items[l].quantity=parseFloat(bill_items[l].quantity)-parseFloat(order_items[k].quantity);
+							order_items.splice(k,1);
+							k--;
+							break;
+						}
+						else 
+						{
+							bill_items.splice(l,1);
+							order_items.splice(k,1);
+							k--;
+							break;
+						}
+					}
+				}
+			}
+				
+		
+			analyze_item_timer=order_items.length;
+			
+			order_items.forEach(function (order_item) 
+			{
+				var tr_elem_title=[];
+				var tr_elem_selection=[];
+				
+				get_inventory(order_item.item_name,'',function(quantity)
+				{
+					console.log(quantity);
+					console.log(order_item.quantity);
+					if(parseFloat(quantity)<parseFloat(order_item.quantity))
+					{
+						tr_elem_title.push('Insufficient Inventory');
+						tr_elem_selection.push(get_session_var('billing_on_inventory'));
+					}
+				
+			      	var item_checked="checked";
+	  			   	var item_title="";
+	  			   	var hide_checkbox=false;
+	  			   
+					for (var y in tr_elem_title)
+					{
+						item_title+=tr_elem_title[y]+"\n";
+					}
+					
+					for (var z in tr_elem_selection)
+					{
+						if(tr_elem_selection[z]=='maybe')
+						{
+							item_checked="";
+						}
+						else if(tr_elem_selection[z]=='no')
+						{
+							item_checked="";
+							hide_checkbox=true;
+							break;
+						}
+					}				
+	  			   
+	  			   	var order_item_string=JSON.stringify(order_item);
+	  			   	var rowsHTML="<tr title='"+item_title+"' data-object='"+order_item_string+"' id='modal159_item_row_"+order_item.id+"'>"+
+						"<td>"+order_item.item_name+"</td>"+
+						"<td>"+order_item.quantity+"</td>";
+					if(hide_checkbox)
+					{
+						rowsHTML+="<td><input "+item_checked+" style='display:none;' type='checkbox' id='modal159_item_check_"+order_item.id+"'></td>";
+					}
+					else
+					{			
+						rowsHTML+="<td><input "+item_checked+" type='checkbox' id='modal159_item_check_"+order_item.id+"'></td>";
+					}
+						rowsHTML+="</tr>";
+					$('#modal159_item_table').append(rowsHTML);
+					analyze_item_timer-=1;
+		  	   
+			     });	
+			});
+			
+			var analysis_complete=setInterval(function()
+			{
+				if(analyze_item_timer===0)
+				{
+					clearInterval(analysis_complete);
+					hide_loader();
+				}
+			},100);
+		});	
+	});				
+	
+	$("#modal159").dialog("open");
+}
