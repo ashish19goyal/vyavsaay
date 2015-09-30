@@ -4429,6 +4429,14 @@ function form91_update_form()
 				{
 					id_object_array=JSON.parse(sorders[0].bill_id);
 				}
+				else
+				{
+					var id_object=new Object();
+					id_object.bill_num=bill_num;
+					id_object.bill_id=data_id;
+					id_object.quantity=0;
+					id_object_array.push(id_object);	
+				}
 				
 				var master_total_quantity=0;
 				
