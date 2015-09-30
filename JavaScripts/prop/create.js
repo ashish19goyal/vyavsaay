@@ -416,7 +416,7 @@ function form10_create_form()
 					"</tr>";
 		$('#form10_foot').html(total_row);
 	
-		var sms="We have got your laundry (total "+quantity+" pcs). It will be processed and delivered back to you soon.";
+		var sms="We have got your clothes for drycleaning (total "+quantity+" pcs). It will be processed and delivered back to you soon.";
 		var phone_xml="<customers>"+
 					"<phone></phone>"+
 					"<name></name>"+

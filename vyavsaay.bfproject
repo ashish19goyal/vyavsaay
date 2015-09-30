@@ -1,10 +1,12 @@
 c2e.convert_special: 0
 e2c.convert_num: 0
 openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/forms_ini.js:626946:627130:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:398426:392214:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:219167:218911:1:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php:57017:55890:0:
-openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js:10692:10486:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js:11273:10585:1:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/modal_action.js:34087:38453:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/includes/modal_forms.php:6333:5631:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js:11923:11297:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js:118119:117076:0:
+openfiles: /home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import.js:1771:855:0:
 snr_recursion_level: 5
 convertcolumn_horizontally: 0
 adv_open_matchname: 0
@@ -19,7 +21,7 @@ c2e.convert_iso: 0
 opendir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 wrap_text_default: 0
 bookmarks_filename_mode: 0
-ssearch_text: add new batch
+ssearch_text: form10_
 snr_casesens: 0
 view_blocks: 1
 name: vyavsaay
@@ -52,7 +54,6 @@ ssearch_regex: 0
 e2c.convert_iso: 0
 ssearch_casesens: 0
 charmap_block: 1
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report90.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report87.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report89.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/reports/report92.php
@@ -67,7 +68,6 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/header.html
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/footer.html
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/event_handler.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/set.js
-recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/delete.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/create.js
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/sessions.js
@@ -82,6 +82,8 @@ recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/pr
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/includes/side_menu.php
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/CSS/theme1.css
 recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/get.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/update.js
+recent_files: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop/import.js
 snr_replacetype: 0
 savedir: file:///home/ashish/Dropbox/vyavsaay/workspace/Code/JavaScripts/prop
 spell_check_default: 1
@@ -93,21 +95,21 @@ snr_escape_chars: 0
 htmlbar_view: 0
 spell_lang: en
 ssearch_dotmatchall: 0
-searchlist: retail
-searchlist: billing_type
-searchlist: get_session_var
-searchlist: analyze_item_timer
-searchlist: menu_icon
-searchlist: menuicon
-searchlist: menicon
-searchlist: meicon
-searchlist: micon
-searchlist: icon 
-searchlist:  icon
-searchlist: icon{
-searchlist: count_notif
 searchlist: add new product
 searchlist: add new batch
+searchlist: add new customer
+searchlist: add new supplier
+searchlist: add new staff
+searchlist: 16
+searchlist: 92_
+searchlist: f92_
+searchlist: fo92_
+searchlist: for92_
+searchlist: form92_
+searchlist: form9_
+searchlist: form91_
+searchlist: 108_
+searchlist: form10_
 autocomplete: 1
 outputb_show_all_output: 0
 bookmarks_show_mode: 0
