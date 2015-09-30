@@ -565,6 +565,15 @@ function modal11_action(func)
 			var acc_name=name+" ("+phone+")";
 			var email=femail.value;
 			var address=faddress.value;
+			
+			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/â/g,'');
+			name = name.replace(/&/g, "and");
+			
+			address = address.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			address = address.replace(/â/g,'');
+			address = address.replace(/&/g, "and");
+			
 			var pincode=fpincode.value;
 			var city=fcity.value;
 			var state=fstate.value;
@@ -846,7 +855,6 @@ function modal13_action(func)
 		{
 			var name=fname.value;
 			var phone=fphone.value;
-			var acc_name=name+" ("+phone+")";
 			var email=femail.value;
 			var address=faddress.value;
 			var pincode=fpincode.value;
@@ -854,6 +862,20 @@ function modal13_action(func)
 			var state=fstate.value;
 			var country=fcountry.value;
 			var notes=fnotes.value;
+			
+			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/â/g,'');
+			name = name.replace(/&/g, "and");
+			
+			address = address.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			address = address.replace(/â/g,'');
+			address = address.replace(/&/g, "and");
+			
+			notes = notes.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			notes = notes.replace(/â/g,'');
+			notes = notes.replace(/&/g, "and");
+
+			var acc_name=name+" ("+phone+")";			
 			var data_id=get_new_key();
 			var address_id=get_new_key();
 			var last_updated=get_my_time();
@@ -1032,6 +1054,17 @@ function modal14_action(func)
 			var name=form.elements[1].value;
 			var make=form.elements[2].value;
 			var description=form.elements[3].value;
+
+			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/â/g,'');
+			name = name.replace(/&/g, "and");
+			make = make.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			make = make.replace(/â/g,'');
+			make = make.replace(/&/g, "and");
+			description = description.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			description = description.replace(/â/g,'');
+			description = description.replace(/&/g, "and");
+
 			var tax=form.elements[6].value;
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
@@ -1055,15 +1088,8 @@ function modal14_action(func)
 						"<notes>Product "+name+" to inventory</notes>" +
 						"<updated_by>"+get_name()+"</updated_by>" +
 						"</activity>";
-			if(is_online())
-			{
-				server_create_row_func(data_xml,activity_xml,func);
-			}
-			else
-			{
-				local_create_row_func(data_xml,activity_xml,func);
-			}	
-
+			create_row_func(data_xml,activity_xml,func);
+			
 			var id=get_new_key();
 			$("#modal14_attributes").find('input, select').each(function()
 			{
@@ -1080,14 +1106,7 @@ function modal14_action(func)
 							"<value>"+value+"</value>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</attributes>";
-					if(is_online())
-					{
-						server_create_simple(attribute_xml);
-					}
-					else
-					{
-						local_create_simple(attribute_xml);
-					}
+					create_simple(attribute_xml);
 				}
 			});
 
@@ -1100,14 +1119,7 @@ function modal14_action(func)
 							"<target_id>"+data_id+"</target_id>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</documents>";
-				if(is_online())
-				{
-					server_create_simple(pic_xml);
-				}
-				else
-				{
-					local_create_simple(pic_xml);
-				}	
+				create_simple(pic_xml);	
 			}
 		}
 		else
@@ -1176,14 +1188,7 @@ function modal15_action()
 					"<notes>Feedback from "+provider+"</notes>" +
 					"<updated_by>"+get_name()+"</updated_by>" +
 					"</activity>";
-		if(is_online())
-		{
-			server_create_row(data_xml,activity_xml);
-		}
-		else
-		{
-			local_create_row(data_xml,activity_xml);
-		}	
+		create_row(data_xml,activity_xml);
 		
 		$("#modal15").dialog("close");
 	});
@@ -1261,10 +1266,19 @@ function modal16_action(func)
 		{
 			var name=form.elements[1].value;
 			var username=form.elements[2].value;
+			var address=form.elements[5].value;
+			
+			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/â/g,'');
+			name = name.replace(/&/g, "and");
+			
+			address = address.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			address = address.replace(/â/g,'');
+			address = address.replace(/&/g, "and");
+			
 			var phone=form.elements[3].value;
 			var acc_name=name+" ("+phone+")";
 			var email=form.elements[4].value;
-			var address=form.elements[5].value;
 			var pincode=form.elements[6].value;
 			var city=form.elements[7].value;
 			var state=form.elements[8].value;
@@ -1323,14 +1337,8 @@ function modal16_action(func)
 							"<value>"+value+"</value>" +
 							"<last_updated>"+last_updated+"</last_updated>" +
 							"</attributes>";
-					if(is_online())
-					{
-						server_create_simple(attribute_xml);
-					}
-					else
-					{
-						local_create_simple(attribute_xml);
-					}
+					create_simple(attribute_xml);
+					
 				}
 			});
 		}
@@ -2205,6 +2213,11 @@ function modal22_action(func)
 		{
 			var name=fname.value;
 			var batch=fbatch.value;
+			
+			batch = batch.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			batch = batch.replace(/â/g,'');
+			batch = batch.replace(/&/g, "and");
+						
 			var manu_date=get_raw_time(fmanufacture.value);
 			var expiry=get_raw_time(fexpiry.value);
 			var cost=fcost.value;
@@ -6663,6 +6676,17 @@ function modal112_action(func)
 			var name=form.elements[1].value;
 			var make=form.elements[2].value;
 			var description=form.elements[3].value;
+			
+			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/â/g,'');
+			name = name.replace(/&/g, "and");
+			make = make.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			make = make.replace(/â/g,'');
+			make = make.replace(/&/g, "and");
+			description = description.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			description = description.replace(/â/g,'');
+			description = description.replace(/&/g, "and");
+			
 			var tax=form.elements[6].value;
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
@@ -7080,6 +7104,17 @@ function modal114_action(func)
 			var name=form.elements[1].value;
 			var description=form.elements[2].value;
 			var make=form.elements[3].value;
+			
+			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/â/g,'');
+			name = name.replace(/&/g, "and");
+			make = make.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			make = make.replace(/â/g,'');
+			make = make.replace(/&/g, "and");
+			description = description.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			description = description.replace(/â/g,'');
+			description = description.replace(/&/g, "and");
+
 			var tax=form.elements[6].value;
 			var data_id=get_new_key();
 			var pic_id=get_new_key();
@@ -7091,6 +7126,10 @@ function modal114_action(func)
 			var unit=form.elements[11].value;
 			var weight=form.elements[12].value;
 			var packing=form.elements[13].value;
+
+			packing = packing.replace(/[^a-z0-9A-Z<>\s\!\@\$\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			packing = packing.replace(/â/g,'');
+
 			var barcode=form.elements[14].value;
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
@@ -7937,6 +7976,11 @@ function modal120_action(func,product_name,required)
 		event.preventDefault();
 			var name=fname.value;
 			var batch=fbatch.value;
+			
+			batch = batch.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			batch = batch.replace(/â/g,'');
+			batch = batch.replace(/&/g, "and");
+			
 			var expiry=get_raw_time(fexpiry.value);
 			var mrp=fmrp.value;
 			var data_id=get_new_key();
@@ -10346,6 +10390,11 @@ function modal142_action(func)
 		{
 			var name=fname.value;
 			var batch=fbatch.value;
+			
+			batch = batch.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			batch = batch.replace(/â/g,'');
+			batch = batch.replace(/&/g, "and");
+						
 			var expiry=get_raw_time(fexpiry.value);
 			var mrp=fmrp.value;
 			var cp=fcp.value;
@@ -10599,9 +10648,19 @@ function modal145_action(customer_acc_name)
 		if(is_update_access('form30'))
 		{
 			var name=fname.value;
+			
+			name = name.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			name = name.replace(/â/g,'');
+			name = name.replace(/&/g, "and");
+			
 			var phone=fphone.value;
 			var email=femail.value;
 			var address=faddress.value;
+			
+			address = address.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			address = address.replace(/â/g,'');
+			address = address.replace(/&/g, "and");
+			
 			var pincode=fpincode.value;
 			var city=fcity.value;
 			var state=fstate.value;
@@ -11962,6 +12021,11 @@ function modal156_action(product_type,product_name)
 		{
 			var name=fname.value;
 			var batch=fbatch.value;
+
+			batch = batch.replace(/[^a-z0-9A-Z<>\s\!\@\$\&\%\^\*\(\)\_\+\-\=\{\}\[\]\|\\\:\;\"\'\?\/\>\.\<\,]/g,'');
+			batch = batch.replace(/â/g,'');
+			batch = batch.replace(/&/g, "and");
+						
 			var manufactury=get_raw_time(fmanufacture.value);
 			var data_id=get_new_key();
 			var last_updated=get_my_time();
