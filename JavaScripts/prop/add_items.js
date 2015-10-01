@@ -1102,10 +1102,10 @@ function form24_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Make'>";
 				rowsHTML+="Make: <input type='text' form='form24_"+id+"' readonly='readonly'>";
-				rowsHTML+="<br>Supplier SKU: <input type='text' readonly='readonly' form='form24_"+id+"'>";
+				rowsHTML+="<br>Supplier SKU: <input type='text' readonly='readonly' class='dblclick_editable' form='form24_"+id+"'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Price'>";
-				rowsHTML+="MRP: <input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly'>";
+				rowsHTML+="MRP: <input type='number' required form='form24_"+id+"' value='' class='dblclick_editable' step='any' readonly='readonly'>";
 				rowsHTML+="<br>Price: <input type='number' required form='form24_"+id+"' value='' step='any' readonly='readonly' class='dblclick_editable'>";
 				rowsHTML+="<br>Amount: <input type='number' required readonly='readonly' form='form24_"+id+"' step='any'>";
 				rowsHTML+="<br>Tax Rate: <input type='number' readonly='readonly' step='any' form='form24_"+id+"' name='tax_rate'>";		
