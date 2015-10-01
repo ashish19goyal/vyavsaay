@@ -5,6 +5,7 @@
 			<input type='text' required name='customer'></label>
 			<label>Bill Date<br><input type='text' name='date' required></label>
 			<label>Bill #<br><input type='text' name='bill_num' readonly="readonly"></label>			
+			<label>Bill Type<br><input type='text' required name='bill_type'></label>
 			<label>
 				<input type='hidden' name='bill_id'>
 				<input type='hidden' name='t_id'>

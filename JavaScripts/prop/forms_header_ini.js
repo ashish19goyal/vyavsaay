@@ -1860,11 +1860,18 @@ function form69_header_ini()
 		});
 	});
 	
-	var order_num_data="<user_preferences count='1'>"+
-				"<value></value>"+
-				"<name exact='yes'>so_num</name>"+
-				"</user_preferences>";
-	set_my_value(order_num_data,order_num_filter);
+	var order_id=$("#form69_link").attr('data_id');
+	if(order_id==null)
+		order_id="";	
+
+	if(order_id=="")
+	{
+		var order_num_data="<user_preferences count='1'>"+
+					"<value></value>"+
+					"<name exact='yes'>so_num</name>"+
+					"</user_preferences>";
+		set_my_value(order_num_data,order_num_filter);
+	}	
 
 	$(order_date).datepicker();
 	order_date.value=get_my_date();
@@ -6635,6 +6642,7 @@ function form180_header_ini()
 	var order_date=fields.elements['order_date'];
 	var status_filter=fields.elements['status'];
 	var order_num_filter=fields.elements['order_num'];
+	var type_filter=fields.elements['bill_type'];
 	
 	fields.elements['order_id'].value=get_new_key();
 	order_num_filter.value="";
@@ -6648,6 +6656,11 @@ function form180_header_ini()
 		form180_create_form();
 	});
 	
+	var billing_type_data="<bill_types>"+
+						"<name></name>"+
+						"</bill_types>";
+	set_my_value_list(billing_type_data,type_filter);
+						
 	$(document).off('keydown');
 	$(document).on('keydown', function(event) {
 		if( event.keyCode == 83 && event.ctrlKey) {
@@ -8409,16 +8422,48 @@ function form225_header_ini()
 	fields.elements['bill_id'].value=get_new_key();
 	fields.elements['t_id'].value=fields.elements['bill_id'].value;
 	var save_button=fields.elements['save'];
+	var bill_type=fields.elements['bill_type'];
 
+	var type_data="<bill_types>" +
+		"<name></name>" +
+		"<status exact='yes'>active</status>" +
+		"</bill_types>";
+	set_my_value_list(type_data,bill_type);
+	
 	var bill_id=$("#form225_link").attr('data_id');
 	if(bill_id==null || bill_id=='')
 	{	
-		var bill_num_data="<user_preferences count='1'>"+
+		get_single_column_data(function (bill_types) 
+		{
+			if(bill_types.length>0)
+			{
+				bill_type.value=bill_types[0];
+				var bill_num_data="<user_preferences count='1'>"+
+							"<value></value>"+
+							"<name exact='yes'>"+bill_type.value+"_bill_num</name>"+
+							"</user_preferences>";
+				set_my_value(bill_num_data,bill_num);	
+			}
+			else 
+			{
+				var bill_num_data="<user_preferences count='1'>"+
 							"<value></value>"+
 							"<name exact='yes'>bill_num</name>"+
 							"</user_preferences>";
-		set_my_value(bill_num_data,bill_num);		
+				set_my_value(bill_num_data,bill_num);	
+			}
+		},type_data);
 	}
+
+	$(bill_type).off('blur');
+	$(bill_type).on('blur',function (e) 
+	{
+		var bill_num_data="<user_preferences count='1'>"+
+						"<value></value>"+
+						"<name exact='yes'>"+bill_type.value+"_bill_num</name>"+
+						"</user_preferences>";
+		set_my_value(bill_num_data,bill_num);	
+	});	
 	
 	$(save_button).off('click');
 	$(save_button).on("click", function(event)

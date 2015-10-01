@@ -51,7 +51,7 @@ function login_action()
 
 function login_online(username,domain,pass)
 {
-	console.log('logging online');
+	//console.log('logging online');
 	ajax_with_custom_func("./ajax/login.php",{domain:domain,user:username,pass:pass},function(e)
 	{
 		login_status=e.responseText;
@@ -66,10 +66,10 @@ function login_online(username,domain,pass)
 		else
 		{
 			//console.log(e.responseText);
-			console.log(session_xml);
+			//console.log(session_xml);
 			
 			var session_var=session_xml.getElementsByTagName('session');
-			console.log(session_var);			
+			//console.log(session_var);			
 			var session_vars=new Object();
 			var num_svar=session_var[0].childElementCount;
 

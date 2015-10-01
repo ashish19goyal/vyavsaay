@@ -6051,6 +6051,7 @@ function activities_ini()
 	{
 		show_loader();
 		var columns="<activities count='100' start_index='0'>" +
+			"<id></id>"+			
 			"<title></title>" +
 			"<link_to></link_to>" +
 			"<data_id></data_id>" +
@@ -6076,13 +6077,16 @@ function activities_ini()
 							" @ " +
 							get_formatted_time(activities[i].last_updated) +
 							"</div>" +
+							"<div style='float:right;'><a class='small_cross_icon' onclick=\"delete_all_activity('"+activities[i].id+"',$(this));\" title='Delete'>✖</a></div>"+
 							"</div>";
 			}
 			$("#all_activity_lane").html(result_html);
 			hide_loader();
 		});
 		
-		var export_button=document.getElementById('export_activities_button');
+		var activities_form=document.getElementById('all_activities_form');
+		
+		var export_button=activities_form.elements['export'];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{
@@ -6099,11 +6103,12 @@ function activities_ini()
 			get_export_data(new_columns,'activities');
 		});
 
-		var unsynced_export_button=document.getElementById('unsynced_activities_button');
+		var unsynced_export_button=activities_form.elements['export_unsynced'];
 		$(unsynced_export_button).off("click");
 		$(unsynced_export_button).on("click", function(event)
 		{
 			var new_columns="<activities>" +
+				"<id></id>"+
 				"<title></title>" +
 				"<link_to></link_to>" +
 				"<data_id></data_id>" +
@@ -6117,8 +6122,14 @@ function activities_ini()
 				"<status exact='yes'>unsynced</status>" +
 				"<last_updated></last_updated>" +
 				"</activities>";
-		
 			get_export_data(new_columns,'unsynced_data');
+		});
+
+		var import_button=activities_form.elements['import_unsynced'];
+		$(import_button).off("click");
+		$(import_button).on("click", function(event)
+		{
+			modal160_action();
 		});
 				
 		hide_loader();
@@ -8209,7 +8220,7 @@ function form92_ini()
 			$(edit_button).on("click", function(event)
 			{
 				event.preventDefault();
-				element_display(result.id,'form119',['form91','form130','form154']);
+				element_display(result.id,'form119',['form91','form130','form154','form225']);
 			});
 		});
 
@@ -18769,6 +18780,7 @@ function form180_ini()
 				"<amount></amount>"+
 				"<tax></tax>"+
 				"<total></total>"+
+				"<billing_type></billing_type>"+
 				"<status></status>" +
 				"</sale_orders>";
 		var order_items_column="<sale_order_items>" +
@@ -18788,14 +18800,15 @@ function form180_ini()
 		////separate fetch function to get order details like customer name, total etc.
 		fetch_requested_data('',order_columns,function(order_results)
 		{
-			for(var i in order_results)
+			if(order_results.length>0)
 			{
 				var filter_fields=document.getElementById('form180_master');
-				filter_fields.elements['customer'].value=order_results[i].customer_name;
-				filter_fields.elements['order_date'].value=get_my_past_date(order_results[i].order_date);
-				filter_fields.elements['status'].value=order_results[i].status;
+				filter_fields.elements['customer'].value=order_results[0].customer_name;
+				filter_fields.elements['order_date'].value=get_my_past_date(order_results[0].order_date);
+				filter_fields.elements['status'].value=order_results[0].status;
 				filter_fields.elements['order_id'].value=order_id;
-				filter_fields.elements['order_num'].value=order_results[i].order_num;
+				filter_fields.elements['order_num'].value=order_results[0].order_num;
+				filter_fields.elements['bill_type'].value=order_results[0].billing_type;
 				
 				var save_button=filter_fields.elements['save'];
 				
@@ -18805,17 +18818,6 @@ function form180_ini()
 					event.preventDefault();
 					form180_update_form();
 				});
-				
-				var total_row="<tr><td colspan='1' data-th='Total'>Total</td>" +
-							"<td>Amount:</br>Tax: </br>Total: </td>" +
-							"<td>Rs. "+order_results[i].amount+"</br>" +
-							"Rs. "+order_results[i].tax+"</br>" +
-							"Rs. "+order_results[i].total+"</td>" +
-							"<td></td>" +
-							"</tr>";
-				$('#form180_foot').html(total_row);
-
-				break;
 			}
 		/////////////////////////////////////////////////////////////////////////
 		
@@ -18850,8 +18852,10 @@ function form180_ini()
 				
 					$('#form180_body').append(rowsHTML);					
 				});
+				form180_get_totals();
 				$('textarea').autosize();
 				hide_loader();
+				
 			});
 		});		
 	}
@@ -23448,6 +23452,7 @@ function form225_ini()
 				"<amount></amount>" +
 				"<discount></discount>" +
 				"<tax></tax>" +
+				"<billing_type></billing_type>" +
 				"<transaction_id></transaction_id>" +
 				"</bills>";
 		var bill_items_column="<bill_items>" +
@@ -23477,24 +23482,15 @@ function form225_ini()
 				filter_fields.elements['bill_num'].value=bill_results[0].bill_num;
 				filter_fields.elements['bill_id'].value=bill_id;
 				filter_fields.elements['t_id'].value=bill_results[0].transaction_id;
+				filter_fields.elements['bill_type'].value=bill_results[0].billing_type;
 				var save_button=filter_fields.elements['save'];
-				
+
 				$(save_button).off('click');
 				$(save_button).on("click", function(event)
 				{
 					event.preventDefault();
 					form225_update_form();
 				});
-
-				var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
-							"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
-							"<td>Rs. "+bill_results[0].amount+"</br>" +
-							"Rs. "+bill_results[0].discount+"</br>" +
-							"Rs. "+bill_results[0].tax+"</br>" +
-							"Rs. "+bill_results[0].total+"</td>" +
-							"<td></td>" +
-							"</tr>";
-				$('#form225_foot').html(total_row);
 			}
 			
 			fetch_requested_data('',bill_items_column,function(results)
@@ -23542,7 +23538,8 @@ function form225_ini()
 						print_form225(func);
 					});
 				});
-
+				form225_get_totals();
+				$('textarea').autosize();
 				hide_loader();
 			});
 		});

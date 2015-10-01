@@ -466,6 +466,7 @@ function csv_string_to_obj_array(csvString)
 					columns[j]=columns[j].replace(/\"$/, "");	
 				}
 				columns[j]=columns[j].replace(/&/g, "and");
+				columns[j]=columns[j].replace(/^\"+|\"+$/gm,'');
 				col_result[header_cols[j]]=columns[j];
 			}
 			//console.log(col_result);

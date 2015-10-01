@@ -10528,7 +10528,7 @@ function form180_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
 				rowsHTML+="Price: <input type='number' readonly='readonly' class='dblclick_editable' form='form180_"+id+"' step='any'>";
-				rowsHTML+="<br>MRP: <input type='number' readonly='readonly' form='form180_"+id+"' step='any'>";
+				rowsHTML+="<br>MRP: <input type='number' readonly='readonly' class='dblclick_editable' form='form180_"+id+"' step='any'>";
 				rowsHTML+="<br>Amount: <input type='number' readonly='readonly' form='form180_"+id+"' step='any'>";
 				rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form180_"+id+"' step='any'>";
 			rowsHTML+="</td>";
@@ -10536,7 +10536,7 @@ function form180_add_item()
 				rowsHTML+="<input type='hidden' form='form180_"+id+"' name='total'>";
 				rowsHTML+="<input type='hidden' form='form180_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form180_"+id+"' id='save_form180_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form180_"+id+"' id='delete_form180_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form180_"+id+"' id='delete_form180_"+id+"' onclick='$(this).parent().parent().remove(); form180_get_totals();'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form180_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form180_"+id+"' name='tax_rate'>";
 			rowsHTML+="</td>";			
@@ -10544,6 +10544,9 @@ function form180_add_item()
 	
 		$('#form180_body').prepend(rowsHTML);
 		
+		var filter_fields=document.getElementById('form180_master');
+		var bill_type=filter_fields.elements['bill_type'].value;
+	
 		var fields=document.getElementById("form180_"+id);
 		var name_filter=fields.elements[0];
 		var desc_filter=fields.elements[1];
@@ -10577,24 +10580,32 @@ function form180_add_item()
 			$(name_filter).focus();
 		});
 
+
 		$(name_filter).on('blur',function(event)
 		{
 			if(name_filter.value!="")
 			{
-				var desc_data="<product_master>" +
-							"<description></description>" +
-							"<tax></tax>" +
+				var master_data="<product_master>" +
+							"<description></description>"+
 							"<name exact='yes'>"+name_filter.value+"</name>" +
+							"<tax></tax>" +
 							"</product_master>";
-				fetch_requested_data('',desc_data,function(descs)
+				fetch_requested_data('',master_data,function (products) 
 				{
-					if(descs.length>0)
+					if(products.length>0)
 					{
-						desc_filter.value=descs[0].description;
-						tax_unit_filter.value=descs[0].tax;
+						if(bill_type=='Retail-CST')
+						{
+							tax_unit_filter.value=get_session_var('cst_rate');
+						}
+						else
+						{
+							tax_unit_filter.value=products[0].tax;
+						}
+						desc_filter.value=products[0].description;
 					}
 				});
-				
+								
 				var price_data="<product_instances>" +
 							"<mrp></mrp>" +
 							"<sale_price></sale_price>"+
@@ -10623,7 +10634,7 @@ function form180_add_item()
 
 		$('textarea').autosize();
 		longPressEditable($('.dblclick_editable'));
-		
+		form180_get_totals();
 	}
 	else
 	{
@@ -13491,7 +13502,7 @@ function form225_add_item()
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='hidden' form='form225_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form225_"+id+"' id='save_form225_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='form225_"+id+"' id='delete_form225_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form225_"+id+"' id='delete_form225_"+id+"' onclick='$(this).parent().parent().remove(); form225_get_totals();'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form225_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form225_"+id+"' name='tax_rate'>";
 			rowsHTML+="</td>";			
@@ -13499,6 +13510,9 @@ function form225_add_item()
 	
 		$('#form225_body').prepend(rowsHTML);
 		
+		var filter_fields=document.getElementById('form225_master');
+		var bill_type=filter_fields.elements['bill_type'].value;
+	
 		var fields=document.getElementById("form225_"+id);
 		var name_filter=fields.elements[0];
 		var desc_filter=fields.elements[1];
@@ -13541,20 +13555,27 @@ function form225_add_item()
 							"</product_instances>";
 			set_my_value_list(batch_data,batch_filter);
 			
-			var tax_data="<product_master count='1'>" +
-					"<tax></tax>" +
-					"<description></description>" +
-					"<name exact='yes'>"+name_filter.value+"</name>" +
-					"</product_master>";
-			fetch_requested_data('',tax_data,function(taxes)
+			var master_data="<product_master>" +
+						"<description></description>"+
+						"<name exact='yes'>"+name_filter.value+"</name>" +
+						"<tax></tax>" +
+						"</product_master>";
+			fetch_requested_data('',master_data,function (products) 
 			{
-				if(taxes.length>0)
+				if(products.length>0)
 				{
-					tax_rate_filter.value=taxes[0].tax;
-					desc_filter.value=taxes[0].description;
+					if(bill_type=='Retail-CST')
+					{
+						tax_rate_filter.value=get_session_var('cst_rate');
+					}
+					else
+					{
+						tax_rate_filter.value=products[0].tax;
+					}
+					desc_filter.value=products[0].description;
 				}
-			});			
-			
+			});
+						
 			var last_batch_data="<bill_items count='1'>"+
 								"<batch></batch>"+
 								"<item_name exact='yes'>"+name_filter.value+"</item_name>"+
@@ -13608,6 +13629,8 @@ function form225_add_item()
 			tax_filter.value=parseFloat((parseFloat(tax_rate_filter.value)*(parseFloat(amount_filter.value)-parseFloat(discount_filter.value)))/100);
 			total_filter.value=parseFloat(amount_filter.value)+parseFloat(tax_filter.value)-parseFloat(discount_filter.value);
 		});
+		
+		form225_get_totals();
 	}
 	else
 	{

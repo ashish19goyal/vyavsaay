@@ -6,7 +6,7 @@ function activities_import(data_array,import_type)
 {
 	data_array.forEach(function(row)
 	{
-		console.log(row);
+		//console.log(row);
 		row.last_updated=""+get_raw_time(row.last_updated);
 	});
 	local_create_activities(data_array);
@@ -39,11 +39,11 @@ function activities_import(data_array,import_type)
 					localdb_open_requests+=1;
 					os1.put(rows[i]).onsuccess=function(e)
 					{
+						console.log(rows[i]);
 						i+=1;
 						localdb_open_requests-=1;
 						success_count+=1;
-						create_records();
-						console.log(rows[i]);
+						create_records();						
 					};
 				}
 			};

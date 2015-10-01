@@ -3371,7 +3371,6 @@ function form69_update_form()
 					"<id>"+data_id+"</id>" +
 					"<customer_name>"+customer+"</customer_name>" +
 					"<order_date>"+order_date+"</order_date>" +
-					"<order_num>"+order_num+"</order_num>" +
 					"<channel>"+channel+"</channel>" +
 					"<status>"+status+"</status>" +
 					"<amount>"+amount+"</amount>" +
@@ -9879,6 +9878,7 @@ function form180_update_form()
 		var amount=0;
 		var tax=0;
 		var total=0;
+		var total_quantity=0;
 		
 		$("[id^='save_form180']").each(function(index)
 		{
@@ -9891,7 +9891,9 @@ function form180_update_form()
 				tax+=parseFloat(subform.elements[6].value);
 			if(!isNaN(parseFloat(subform.elements[7].value)))			
 				total+=parseFloat(subform.elements[7].value);
-				
+			if(!isNaN(parseFloat(subform.elements[2].value)))			
+				total_quantity+=parseFloat(subform.elements[2].value);		
+						
 			var row_update_xml="<sale_order_items>"+
 							"<id>"+row_id+"</id>"+
 							"<bill_status>"+status+"</bill_status>"+
@@ -9900,13 +9902,14 @@ function form180_update_form()
 			update_simple(row_update_xml);
 		});
 	
-		var total_row="<tr><td colspan='1' data-th='Total'>Total</td>" +
-							"<td>Amount:</br>Tax: </br>Total: </td>" +
-							"<td>Rs. "+amount+"</br>" +
-							"Rs. "+tax+"</br>" +
+		var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+							"<td>Amount:<br>Tax: <br>Total: </td>" +
+							"<td>Rs. "+amount+"<br>" +
+							"Rs. "+tax+"<br> " +
 							"Rs. "+total+"</td>" +
 							"<td></td>" +
 							"</tr>";
+		
 		$('#form180_foot').html(total_row);
 
 		var data_xml="<sale_orders>" +
@@ -12347,6 +12350,7 @@ function form225_update_form()
 		var customer=form.elements['customer'].value;
 		var bill_date=get_raw_time(form.elements['date'].value);
 		var bill_num=form.elements['bill_num'].value;
+		var bill_type=form.elements['bill_type'].value;
 		var data_id=form.elements['bill_id'].value;
 		var transaction_id=form.elements['t_id'].value;
 		
@@ -12365,14 +12369,23 @@ function form225_update_form()
 		var tax=0;
 		var total=0;
 		
+		var total_quantity=0;
+		
 		$("[id^='save_form225']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			amount+=parseFloat(subform.elements[5].value);
-			discount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[7].value);
-			total+=parseFloat(subform.elements[8].value);			
+			if(!isNaN(parseFloat(subform.elements[5].value)))
+				amount+=parseFloat(subform.elements[5].value);
+			if(!isNaN(parseFloat(subform.elements[6].value)))
+				discount+=parseFloat(subform.elements[6].value);
+			if(!isNaN(parseFloat(subform.elements[7].value)))
+				tax+=parseFloat(subform.elements[7].value);
+			if(!isNaN(parseFloat(subform.elements[8].value)))
+				total+=parseFloat(subform.elements[8].value);
+			
+			if(!isNaN(parseFloat(subform.elements[3].value)))
+				total_quantity+=parseFloat(subform.elements[3].value);							
 		});
 
 		var last_updated=get_my_time();
@@ -12408,7 +12421,7 @@ function form225_update_form()
 		update_row(data_xml,activity_xml);
 		update_simple(transaction_xml);
 		
-		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+		var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"Rs. "+discount+"</br>" +

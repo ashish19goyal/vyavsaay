@@ -2,6 +2,31 @@
  * @form Update Inventory
  * @param button
  */
+function delete_all_activity(data_id,div_elem)
+{
+	if(is_delete_access('activities'))
+	{
+		modal115_action(function()
+		{
+			var data_xml="<activities>" +
+						"<id>"+data_id+"</id>" +
+						"</activities>";	
+			
+			delete_simple(data_xml);
+			$(div_elem).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Update Inventory
+ * @param button
+ */
 function form1_delete_item(button)
 {
 	if(is_delete_access('form1'))
@@ -5496,10 +5521,6 @@ function form169_delete_item(button)
 			var last_updated=get_my_time();
 			var data_xml="<product_master>" +
 						"<id>"+data_id+"</id>" +
-						"<make>"+make+"</make>" +
-						"<name>"+name+"</name>" +
-						"<description>"+description+"</description>" +
-						"<tax>"+tax+"</tax>" +
 						"</product_master>";	
 			var activity_xml="<activity>" +
 						"<data_id>"+data_id+"</data_id>" +
@@ -5973,15 +5994,10 @@ function form180_delete_item(button)
 			var data_xml="<sale_order_items>" +
 						"<id>"+data_id+"</id>" +
 						"</sale_order_items>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}	
+			delete_simple(data_xml);
 			$(button).parent().parent().remove();
+			
+			form180_get_totals();
 		});
 	}
 	else
@@ -7404,6 +7420,7 @@ function form225_delete_item(button)
 					"</bill_items>";	
 			delete_simple(data_xml);
 			$(button).parent().parent().remove();
+			form225_get_totals();
 		});
 	}
 	else

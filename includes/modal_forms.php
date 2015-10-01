@@ -722,7 +722,7 @@
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>
 				<label>To: <input type='text' readonly="readonly"></label><br>
-				<label>Email: <textarea required></textarea></label><br>
+				<label>Email: <textarea required title='Separate email IDs with semicolon(;)'></textarea></label><br>
 				<label>Subject: <textarea></textarea></label><br>
 				<input type='hidden'>
 				<input type="submit" value='Send' class='modal_submit'>
@@ -1504,6 +1504,20 @@
 			<input type="submit" class='modal_submit' name='bill' value='Bill'>
 			<input type="button" class='modal_submit' name='cancel' value='Cancel'>
 		</form>				
+	</div>
+
+	<div id="modal160" title="Import Unsynced Data">
+		<form id='modal160_form' autocomplete="off">
+			<fieldset>
+				<br>
+				<br>				
+				<input type="file" value='Select file' accept=".csv" style='display:none'>
+				<input type='button' class='generic_red_icon' value='Select File'>
+				<br>
+				<output name='selected_file'></output><br>
+				<input type="submit" value='Import' class='modal_submit'>
+			</fieldset>
+		</form>
 	</div>
 
 </div>

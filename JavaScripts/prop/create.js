@@ -12861,11 +12861,13 @@ function form180_create_form()
 		var status=form.elements['status'].value;
 		var data_id=form.elements['order_id'].value;
 		var order_num=form.elements['order_num'].value;
+		var bill_type=form.elements['bill_type'].value;
 		var save_button=form.elements['save'];
 		
 		var amount=0;
 		var tax=0;
 		var total=0;
+		var total_quantity=0;
 		
 		$("[id^='save_form180']").each(function(index)
 		{
@@ -12877,12 +12879,14 @@ function form180_create_form()
 				tax+=parseFloat(subform.elements[6].value);
 			if(!isNaN(parseFloat(subform.elements[7].value)))			
 				total+=parseFloat(subform.elements[7].value);						
+			if(!isNaN(parseFloat(subform.elements[2].value)))			
+				total_quantity+=parseFloat(subform.elements[2].value);		
 		});
 
-		var total_row="<tr><td colspan='1' data-th='Total'>Total</td>" +
-							"<td>Amount:</br>Tax: </br>Total: </td>" +
-							"<td>Rs. "+amount+"</br>" +
-							"Rs. "+tax+"</br>" +
+		var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+							"<td>Amount:<br>Tax: <br>Total: </td>" +
+							"<td>Rs. "+amount+"<br>" +
+							"Rs. "+tax+"<br> " +
 							"Rs. "+total+"</td>" +
 							"<td></td>" +
 							"</tr>";
@@ -12896,6 +12900,7 @@ function form180_create_form()
 					"<order_num>"+order_num+"</order_num>" +
 					"<status>"+status+"</status>" +
 					"<amount>"+amount+"</amount>" +
+					"<billing_type>"+bill_type+"</billing_type>" +
 					"<tax>"+tax+"</tax>" +
 					"<total>"+total+"</total>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
@@ -15173,6 +15178,7 @@ function form225_create_form()
 		var customer=form.elements['customer'].value;
 		var bill_date=get_raw_time(form.elements['date'].value);
 		var bill_num=form.elements['bill_num'].value;
+		var bill_type=form.elements['bill_type'].value;
 				
 		var data_id=form.elements['bill_id'].value;
 		var transaction_id=form.elements['t_id'].value;
@@ -15192,15 +15198,23 @@ function form225_create_form()
 		var discount=0;
 		var tax=0;
 		var total=0;
+		var total_quantity=0;
 		
 		$("[id^='save_form225']").each(function(index)
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			amount+=parseFloat(subform.elements[5].value);
-			discount+=parseFloat(subform.elements[6].value);
-			tax+=parseFloat(subform.elements[7].value);
-			total+=parseFloat(subform.elements[8].value);			
+			if(!isNaN(parseFloat(subform.elements[5].value)))
+				amount+=parseFloat(subform.elements[5].value);
+			if(!isNaN(parseFloat(subform.elements[6].value)))
+				discount+=parseFloat(subform.elements[6].value);
+			if(!isNaN(parseFloat(subform.elements[7].value)))
+				tax+=parseFloat(subform.elements[7].value);
+			if(!isNaN(parseFloat(subform.elements[8].value)))
+				total+=parseFloat(subform.elements[8].value);
+			
+			if(!isNaN(parseFloat(subform.elements[3].value)))
+				total_quantity+=parseFloat(subform.elements[3].value);							
 		});
 
 		var last_updated=get_my_time();
@@ -15209,6 +15223,7 @@ function form225_create_form()
 					"<id>"+data_id+"</id>" +
 					"<customer_name>"+customer+"</customer_name>" +
 					"<bill_num>"+bill_num+"</bill_num>"+
+					"<billing_type>"+bill_type+"</billing_type>"+
 					"<bill_date>"+bill_date+"</bill_date>" +
 					"<amount>"+amount+"</amount>" +
 					"<total>"+total+"</total>" +
@@ -15261,7 +15276,7 @@ function form225_create_form()
 					"</transactions>";
 		var num_data="<user_preferences>"+
 					"<id></id>"+						
-					"<name exact='yes'>bill_num</name>"+												
+					"<name exact='yes'>"+bill_type+"_bill_num</name>"+												
 					"</user_preferences>";
 		get_single_column_data(function (bill_num_ids)
 		{
@@ -15285,7 +15300,7 @@ function form225_create_form()
 		});
 		
 		
-		var total_row="<tr><td colspan='3' data-th='Total'>Total</td>" +
+		var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
 				"<td>Rs. "+amount+"</br>" +
 				"Rs. "+discount+"</br>" +

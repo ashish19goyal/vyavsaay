@@ -437,6 +437,47 @@ function form178_get_totals()
 	$('#form178_foot').html(total_row);
 }
 
+function form180_get_totals()
+{
+	var amount=0;
+	var tax=0;
+	var total=0;
+	var total_quantity=0;
+	
+	
+	$("[id^='save_form180']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		
+		if(!isNaN(parseFloat(subform.elements[5].value)))
+		{
+			amount+=parseFloat(subform.elements[5].value);
+			tax+=parseFloat(subform.elements[6].value);
+			total+=parseFloat(subform.elements[7].value);
+		}
+		if(!isNaN(parseFloat(subform.elements[2].value)))			
+			total_quantity+=parseFloat(subform.elements[2].value);		
+	});
+	
+	var form=document.getElementById("form180_master");
+	
+	amount=my_round(amount,2);
+	tax=my_round(tax,2);
+	total=my_round(total,2);
+		
+	var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+							"<td>Amount:<br>Tax: <br>Total: </td>" +
+							"<td>Rs. "+amount+"<br>" +
+							"Rs. "+tax+"<br> " +
+							"Rs. "+total+"</td>" +
+							"<td></td>" +
+							"</tr>";
+					
+	$('#form180_foot').html(total_row);
+}
+
+
 function form193_get_totals()
 {
 	//console.log('getting totals');
@@ -530,6 +571,50 @@ function form222_get_totals()
 							"<td></td>" +
 							"</tr>";
 	$('#form222_foot').html(total_row);
+}
+
+function form225_get_totals()
+{
+	var amount=0;
+	var tax=0;
+	var discount=0;	
+	var total=0;
+	var total_quantity=0;
+	
+	$("[id^='save_form225']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+		if(!isNaN(parseFloat(subform.elements[5].value)))
+			amount+=parseFloat(subform.elements[5].value);
+		if(!isNaN(parseFloat(subform.elements[6].value)))
+			discount+=parseFloat(subform.elements[6].value);
+		if(!isNaN(parseFloat(subform.elements[7].value)))
+			tax+=parseFloat(subform.elements[7].value);
+		if(!isNaN(parseFloat(subform.elements[8].value)))
+			total+=parseFloat(subform.elements[8].value);
+		
+		if(!isNaN(parseFloat(subform.elements[3].value)))
+			total_quantity+=parseFloat(subform.elements[3].value);							
+	});
+
+	var form=document.getElementById("form225_master");
+	
+	amount=my_round(amount,2);
+	tax=my_round(tax,2);
+	discount=my_round(discount,2);	
+	total=my_round(total,2);
+		
+	var total_row="<tr><td colspan='3' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
+				"<td>Amount:</br>Discount: </br>Tax: </br>Total: </td>" +
+				"<td>Rs. "+amount+"</br>" +
+				"Rs. "+discount+"</br>" +
+				"Rs. "+tax+"</br>" +
+				"Rs. "+total+"</td>" +
+				"<td></td>" +
+				"</tr>";
+					
+	$('#form225_foot').html(total_row);
 }
 
 function form244_get_totals()

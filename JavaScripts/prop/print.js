@@ -2297,6 +2297,7 @@ function print_form180(func)
 	var customer_name=master_form.elements['customer'].value;
 	var date=master_form.elements['order_date'].value;	
 	var bill_num=master_form.elements['order_num'].value;
+	var bill_type=master_form.elements['bill_type'].value;
 	var vat_no=get_session_var('vat');
 		
 	var tandc_text=get_session_var('bill_message');
@@ -2310,7 +2311,7 @@ function print_form180(func)
 	
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Sale Order</b></div><hr style='border: 1px solid #00f;'>";
 	
-	customer_info.innerHTML="<b>To</b><br>"+customer_name;
+	customer_info.innerHTML="<b>To</b><br>"+customer_name+"<br>Type: "+bill_type;
 	business_info.innerHTML="VAT #: "+vat_no+"<br>Date: "+date+"<br>Order No: "+bill_num;
 	
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
@@ -2322,13 +2323,13 @@ function print_form180(func)
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
 	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
-				"<td style='text-align:left;width:120px;'>Item</td>"+
-				"<td style='text-align:left;width:170px;'>Description</td>"+
-				"<td style='text-align:left;width:45px'>Qty</td>"+
-				"<td style='text-align:left;width:45px'>Rate</td>"+
-				"<td style='text-align:left;width:45px'>Amount</td>"+
-				"<td style='text-align:left;width:45px'>Tax</td>"+
-				"<td style='text-align:left;width:80px'>Total</td></tr>";
+				"<td style='text-align:left;width:20%;'>Item</td>"+
+				"<td style='text-align:left;width:25%;'>Description</td>"+
+				"<td style='text-align:left;width:10%'>Qty</td>"+
+				"<td style='text-align:left;width:10%'>Rate</td>"+
+				"<td style='text-align:left;width:10%'>Amount</td>"+
+				"<td style='text-align:left;width:10%'>Tax</td>"+
+				"<td style='text-align:left;width:10%'>Total</td></tr>";
 
 	var table_rows=table_header;
 	var counter=0;
@@ -2346,13 +2347,13 @@ function print_form180(func)
 		var total=form.elements[7].value;
 
 		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
-				"<td style='text-align:left;'>"+item_name+"</td>"+
-				"<td style='text-align:left;'>"+item_desc+"</td>"+
-				"<td style='text-align:left;'>"+quantity+"</td>"+
-				"<td style='text-align:left;'>"+price+"</td>"+
-				"<td style='text-align:left;'>"+amount+"</td>"+
-				"<td style='text-align:left;'>"+tax+"</td>"+
-				"<td style='text-align:left;'>"+total+"</td></tr>";
+				"<td style='text-align:left;word-wrap: break-word;'>"+item_name+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word;'>"+item_desc+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word;'>"+quantity+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word;'>"+price+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word;'>"+amount+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word;'>"+tax+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word;'>"+total+"</td></tr>";
 	});
 	
 	var row_count=$(table_element).find('tbody>tr').length;
@@ -2369,8 +2370,8 @@ function print_form180(func)
 	//console.log(total_amount);
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
 				"<td colspan='2' style='text-align:left;'>"+total_text1+"</td>"+
-				"<td colspan='4' style='text-align:left;'>"+total_text2+"</td>"+
-				"<td colspan='1' style='text-align:left;'>"+total_amount+"</td></tr>";
+				"<td colspan='3' style='text-align:left;'>"+total_text2+"</td>"+
+				"<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr>";
 	//console.log(table_foot_row);
 	table_rows+=table_foot_row;
 	new_table.innerHTML=table_rows;
@@ -3901,6 +3902,7 @@ function print_form225(func)
 	var customer_name=master_form.elements['customer'].value;
 	var date=master_form.elements['date'].value;	
 	var bill_num=master_form.elements['bill_num'].value;
+	var bill_type=master_form.elements['bill_type'].value;
 	var vat_no=get_session_var('vat');
 		
 	var tandc_text=get_session_var('bill_message');
@@ -3914,7 +3916,7 @@ function print_form225(func)
 	
 	invoice_line.innerHTML="<hr style='border: 1px solid #00f;'><div style='text-align:center;'><b style='text-size:1.2em'>Invoice</b></div><hr style='border: 1px solid #00f;'>";
 	
-	customer_info.innerHTML="<b>To</b><br>"+customer_name;
+	customer_info.innerHTML="<b>To</b><br>"+customer_name+"<br>Bill Type: "+bill_type;
 	business_info.innerHTML="VAT #: "+vat_no+"<br>Date: "+date+"<br>Invoice No: "+bill_num;
 	
 	tandc.innerHTML="<br><b>Terms and Conditions</b><br>"+tandc_text;
@@ -3926,14 +3928,14 @@ function print_form225(func)
 	var new_table=document.createElement('table');
 	new_table.setAttribute('style','width:100%;font-size:11px;border:1px solid black;text-align:left;');
 	var table_header="<tr style='border-top: 1px solid #000000;border-bottom: 1px solid #000000;'>"+
-				"<td style='text-align:left;width:100px;'>Item</td>"+
-				"<td style='text-align:left;width:150px;'>Description</td>"+
-				"<td style='text-align:left;width:50px;'>Batch</td>"+
-				"<td style='text-align:left;width:45px'>Qty</td>"+
-				"<td style='text-align:left;width:45px'>Rate</td>"+
-				"<td style='text-align:left;width:45px'>Amount</td>"+
-				"<td style='text-align:left;width:45px'>Tax</td>"+
-				"<td style='text-align:left;width:80px'>Total</td></tr>";
+				"<td style='text-align:left;width:13%;'>Item</td>"+
+				"<td style='text-align:left;width:20%;'>Description</td>"+
+				"<td style='text-align:left;width:13%;'>Batch</td>"+
+				"<td style='text-align:left;width:10%'>Qty</td>"+
+				"<td style='text-align:left;width:10%'>Rate</td>"+
+				"<td style='text-align:left;width:10%'>Amount</td>"+
+				"<td style='text-align:left;width:10%'>Tax</td>"+
+				"<td style='text-align:left;width:10%'>Total</td></tr>";
 
 	var table_rows=table_header;
 	var counter=0;
@@ -3952,14 +3954,14 @@ function print_form225(func)
 		var total=form.elements[8].value;
 
 		table_rows+="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;'>"+
-				"<td style='text-align:left;'>"+item_name+"</td>"+
-				"<td style='text-align:left;'>"+item_desc+"</td>"+
-				"<td style='text-align:left;'>"+batch+"</td>"+
-				"<td style='text-align:left;'>"+quantity+"</td>"+
-				"<td style='text-align:left;'>"+price+"</td>"+
-				"<td style='text-align:left;'>"+amount+"</td>"+
-				"<td style='text-align:left;'>"+tax+"</td>"+
-				"<td style='text-align:left;'>"+total+"</td></tr>";
+				"<td style='text-align:left;word-wrap: break-word'>"+item_name+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word'>"+item_desc+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word'>"+batch+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word'>"+quantity+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word'>"+price+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word'>"+amount+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word'>"+tax+"</td>"+
+				"<td style='text-align:left;word-wrap: break-word'>"+total+"</td></tr>";
 	});
 	
 	var row_count=$(table_element).find('tbody>tr').length;
@@ -3976,8 +3978,8 @@ function print_form225(func)
 	//console.log(total_amount);
 	var table_foot_row="<tr style='border-right: 1px solid #000000;border-left: 1px solid #000000;border-top: 1px solid #000000;'>"+
 				"<td colspan='3' style='text-align:left;'>"+total_text1+"</td>"+
-				"<td colspan='4' style='text-align:left;'>"+total_text2+"</td>"+
-				"<td colspan='1' style='text-align:left;'>"+total_amount+"</td></tr>";
+				"<td colspan='3' style='text-align:left;'>"+total_text2+"</td>"+
+				"<td colspan='2' style='text-align:left;'>"+total_amount+"</td></tr>";
 	//console.log(table_foot_row);
 	table_rows+=table_foot_row;
 	new_table.innerHTML=table_rows;
