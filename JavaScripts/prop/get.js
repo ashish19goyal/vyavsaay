@@ -781,25 +781,24 @@ function get_available_storage(item_name,batch,storage_array,min_quantity,result
 		{	
 			if(parseFloat(inventory)>0)
 			{	
-			/*
 				if(parseFloat(inventory)>=parseFloat(min_quantity))
 				{
 					var result_item=new Object();
 					result_item.storage=storage_array[0];
 					result_item.quantity=min_quantity;
 					result_array.push(result_item);
-					//success_func();	
+					success_func();	
 				}
 				else 
 				{
-			*/		var result_item=new Object();
+					var result_item=new Object();
 					result_item.storage=storage_array[0];
 					result_item.quantity=inventory;
 					result_array.push(result_item);
 					min_quantity=parseFloat(min_quantity)-parseFloat(inventory);
 					storage_array.splice(0,1);
 					get_available_storage(item_name,batch,storage_array,min_quantity,result_array,success_func);
-			//	}
+				}
 			}
 			else
 			{

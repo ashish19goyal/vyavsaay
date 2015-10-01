@@ -2825,7 +2825,7 @@ function form92_delete_item(button)
 						"</activity>";
 			var transaction_xml="<transactions>" +
 						"<id>"+transaction_id+"</id>" +
-						"</transactions>";
+						"</transactions>";		
 		
 			update_row(bill_xml,activity_xml);
 			delete_simple(transaction_xml);
@@ -2863,6 +2863,13 @@ function form92_delete_item(button)
 					"<bill_id exact='yes'>"+data_id+"</bill_id>" +
 					"</bill_items>";
 			delete_simple(items_data);
+			
+			var adjust_data="<inventory_adjust>" +
+					"<id></id>" +
+					"<source>picking</source>"+
+					"<source_id exact='yes'>"+data_id+"</source_id>" +
+					"</inventory_adjust>";
+			delete_simple(adjust_data);
 			
 			//////////////////////////////////////////////
 			var sale_order_xml="<sale_orders>"+

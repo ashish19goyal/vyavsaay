@@ -6856,6 +6856,7 @@ function report90_ini()
 					"<id></id>" +
 					"<batch></batch>" +
 					"<product_name></product_name>" +
+					"<item_desc></item_desc>" +
 					"<quantity></quantity>"+
 					"<picked_quantity></picked_quantity>"+
 					"<storage></storage>"+
@@ -6875,6 +6876,7 @@ function report90_ini()
 			{
 				var adjust_item=new Object();
 				adjust_item.item_name=adjust_results[z].product_name;
+				adjust_item.item_desc=adjust_results[z].item_desc;
 				adjust_item.batch=adjust_results[z].batch;
 				adjust_item.quantity=-(parseFloat(adjust_results[z].quantity));
 				adjust_item.storage=adjust_results[z].storage;

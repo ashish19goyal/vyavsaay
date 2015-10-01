@@ -627,6 +627,7 @@
 			<placed_quantity index='no' type="DECIMAL(12,2)"></placed_quantity>
 			<picked_quantity index='no' type="DECIMAL(12,2)"></picked_quantity>
 			<product_name index='yes' type="TEXT"></product_name>
+			<item_desc index='yes' type="TEXT"></item_desc>
 			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale_return/manual/manufacturing-->
 			<source_id index='yes' type="BIGINT"></source_id>
 			<storage index='yes' type="TEXT"></storage>

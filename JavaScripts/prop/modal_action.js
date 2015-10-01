@@ -9115,8 +9115,8 @@ function modal133_action(order_id,sale_channel,order_num,customer,billing_type,o
 						{
 							var total_sale_price=parseFloat(sale_prices[0].sale_price)+parseFloat(sale_prices[0].freight);
 							var order_total_price=parseFloat(order_item.total)/parseFloat(order_item.quantity);
-							console.log(total_sale_price);
-							console.log(order_total_price);
+							//console.log(total_sale_price);
+							//console.log(order_total_price);
 							if(total_sale_price>(order_total_price+1) || total_sale_price<(order_total_price-1))
 							{
 								tr_elem_title.push('Price Mismatch');
@@ -11281,6 +11281,11 @@ function modal150_action(rack,report_id)
 			item_row.setAttribute('id','modal150_row_'+row_id);
 			item_row.setAttribute('data-id',row_id);
 			item_row.setAttribute('data-sku',item_name);
+			
+			if(item_desc=="")
+			{
+				item_desc=item_name;
+			}
 			
 			if(report_id=='report90')
 			{			

@@ -243,6 +243,7 @@ function report90_update(form)
 	if(is_update_access('report90'))
 	{
 		var item=form.elements[0].value;
+		var item_desc=form.elements[1].value;
 		var batch=form.elements[2].value;
 		var to_pick=form.elements[3].value;
 		var picked=form.elements[4].value;
@@ -348,6 +349,7 @@ function report90_update(form)
 				var adjust1_xml="<inventory_adjust>"+
 					"<id>"+(new_key-1)+"</id>" +
 					"<product_name>"+item+"</product_name>" +
+					"<item_desc>"+item_desc+"</item_desc>" +
 					"<batch>"+batch+"</batch>" +
 					"<picked_status>picked</picked_status>" +
 					"<quantity>"+old_pending_quantity+"</quantity>" +
@@ -362,6 +364,7 @@ function report90_update(form)
 				var adjust2_xml="<inventory_adjust>"+
 					"<id>"+new_key+"</id>" +
 					"<product_name>"+item+"</product_name>" +
+					"<item_desc>"+item_desc+"</item_desc>" +
 					"<batch>"+batch+"</batch>" +
 					"<picked_status>"+new_status+"</picked_status>" +
 					"<quantity>-"+old_pending_quantity+"</quantity>" +
