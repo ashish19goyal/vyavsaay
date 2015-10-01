@@ -3484,6 +3484,17 @@
 			<tables>--inventory_adjust--area_utilization--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form245</name>
+			<display_name>sku_components</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_master--pre_requisites--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -6603,6 +6614,17 @@
 			<username>master</username>
 			<element_id>form244</element_id>
 			<element_name>add_stock</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form245</element_id>
+			<element_name>sku_components</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

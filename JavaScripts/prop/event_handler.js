@@ -291,7 +291,7 @@ function modal_forms_ini()
 	   		}
 		});
 	}
-	for(var i=50;i<75;i++)
+	for(var i=50;i<=75;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -978,6 +978,8 @@ function import_data(form_name)
 		case 'form230':modal23_action(form230_import_template,form230_import);
 		break;
 		case 'form234':modal23_action(form234_import_template,form234_import);
+		break;
+		case 'form245':modal23_action(form245_import_template,form245_import);
 		break;
 	}
 }

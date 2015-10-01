@@ -7557,3 +7557,48 @@ function form234_import(data_array,import_type)
 		update_batch(data2_xml);
 	}
 };
+
+/**
+* @form SKU components
+* @formNo 245
+*/
+function form245_import(data_array,import_type)
+{
+	var data_xml="<pre_requisites>";
+	var counter=1;
+	var last_updated=get_my_time();
+	data_array.forEach(function(row)
+	{
+		if((counter%500)===0)
+		{
+			data_xml+="</pre_requisites><separator></separator><pre_requisites>";
+		}
+
+		counter+=1;
+		if(import_type=='create_new')
+		{
+			row.id=last_updated+counter;
+		}
+
+		data_xml+="<row>" +
+				"<id>"+row.id+"</id>" +
+				"<name>"+row.sku+"</name>" +
+				"<type>product</type>"+
+				"<quantity>"+row.quantity+"</quantity>"+
+				"<requisite_type>product</requisite_type>"+
+				"<requisite_name>"+row.component_sku+"</requisite_name>"+
+				"<requisite_desc>"+row.component_name+"</requisite_desc>"+
+				"<last_updated>"+last_updated+"</last_updated>" +
+				"</row>";
+	});
+	
+	data_xml+="</pre_requisites>";
+	if(import_type=='create_new')
+	{
+		create_batch(data_xml);
+	}
+	else
+	{
+		update_batch(data_xml);
+	}
+};

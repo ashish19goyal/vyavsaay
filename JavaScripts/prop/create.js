@@ -15924,3 +15924,79 @@ function form240_update_serial_numbers()
 	var form=document.getElementById("form240_master");
 	form.elements['num'].value=num_orders;
 }
+
+
+/**
+ * formNo 245
+ * form SKU components
+ * @param button
+ */
+function form245_create_item(form)
+{
+	//console.log('form245_create_form');
+	if(is_create_access('form245'))
+	{
+		var item_name=document.getElementById('form245_master').elements['item_name'].value;
+
+		var requisite_name=form.elements[0].value;
+		var requisite_desc=form.elements[1].value;
+		var quantity=form.elements[2].value;
+		
+		var data_id=form.elements[3].value;
+		var save_button=form.elements[4];
+		var del_button=form.elements[5];
+		
+		var last_updated=get_my_time();
+		var data_xml="<pre_requisites>" +
+					"<id>"+data_id+"</id>" +
+					"<name>"+item_name+"</name>" +
+					"<type>product</type>"+
+					"<quantity>"+quantity+"</quantity>"+
+					"<requisite_type>product</requisite_type>"+
+					"<requisite_name>"+requisite_name+"</requisite_name>"+
+					"<requisite_desc>"+requisite_desc+"</requisite_desc>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</pre_requisites>";
+		create_simple(data_xml);
+		
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form245_delete_item(del_button);
+		});
+
+		$(save_button).off('click');
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Assign raw material requirements
+ * @param button
+ */
+function form245_create_form(func)
+{
+	if(is_create_access('form245'))
+	{
+		$("[id^='save_form245_']").click();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+function form245_update_serial_numbers()
+{
+	$('#form245_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});		
+}

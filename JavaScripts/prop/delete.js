@@ -8003,3 +8003,32 @@ function form240_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form SKU components
+ * @param button
+ */
+function form245_delete_item(button)
+{
+	if(is_delete_access('form245'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[3].value;
+			
+			var pre_requisites_xml="<pre_requisites>"+
+							"<id>"+data_id+"</id>"+
+							"</pre_requisites>";
+			delete_simple(pre_requisites_xml);
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

@@ -712,6 +712,7 @@
 			<type index='yes' type="VARCHAR(10)"></type><!-- service/product -->
 			<requisite_type index='yes' type="VARCHAR(10)"></requisite_type><!-- service/product/task/asset -->
 			<requisite_name index='yes' type="TEXT"></requisite_name>
+			<requisite_desc index='yes' type="TEXT"></requisite_desc>
 			<quantity index="no" type="DECIMAL(10,2)"></quantity>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>

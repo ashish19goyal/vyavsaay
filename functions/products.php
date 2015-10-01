@@ -39,6 +39,7 @@
 			<li><a id='report70_link' href='#report70' onclick='report70_header_ini();' data-i18n='form.inventory_shortage'></a></li>
 			<li><a id='report71_link' href='#report71' onclick='report71_header_ini();' data-i18n='form.ordered_inventory'></a></li>		
 			<li><a id='report82_link' href='#report82' onclick='report82_header_ini();' data-i18n='form.inventory_report'></a></li>		
+			<li><a id='form245_link' href='#form245' onclick='form245_header_ini(); form245_ini();' data-i18n='form.sku_components'></a></li>		
 		</ul>
 
 	<?php 
@@ -79,7 +80,8 @@
 			include "forms/form166.php";
 			include "reports/report70.php";	
 			include "reports/report71.php";	
-			include "reports/report82.php";	
+			include "reports/report82.php";
+			include "forms/form245.php";
 		?>
 	
 </div>

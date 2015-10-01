@@ -25725,3 +25725,61 @@ function form243_ini()
 		hide_loader();
 	});
 };
+
+/**
+ * @form SKU components
+ * @formNo 245
+ * @Loading light
+ */
+function form245_ini()
+{
+	show_loader();
+
+	var master_fields=document.getElementById('form245_master');
+	var master_name=master_fields.elements['item_name'].value;
+	
+		
+	var items_column="<pre_requisites>" +
+						"<id></id>" +
+						"<type exact='yes'>product</type>" +
+						"<requisite_type exact='yes'>product</requisite_type>" +
+						"<requisite_name></requisite_name>" +
+						"<requisite_desc></requisite_desc>" +
+						"<quantity></quantity>" +
+						"<name exact='yes'>"+master_name+"</name>" +
+						"</pre_requisites>";
+	
+	fetch_requested_data('form245',items_column,function(results)
+	{
+		console.log(results);
+		results.forEach(function(result)
+		{
+			var id=result.id;
+			var rowsHTML="<tr>";
+			rowsHTML+="<form id='form245_"+id+"'></form>";
+				rowsHTML+="<td data-th='S.No.'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='SKU'>";
+					rowsHTML+="<input type='text' readonly='readonly' form='form245_"+id+"' value='"+result.requisite_name+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Item Name'>";
+					rowsHTML+="<textarea readonly='readonly' form='form245_"+id+"'>"+result.requisite_desc+"</textarea>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Quantity'>";
+					rowsHTML+="<input type='number' step='any' readonly='readonly' form='form245_"+id+"' value='"+result.quantity+"'>";
+				rowsHTML+="</td>";
+				rowsHTML+="<td data-th='Action'>";
+					rowsHTML+="<input type='hidden' form='form245_"+id+"' value='"+id+"'>";
+					rowsHTML+="<input type='button' class='submit_hidden' form='form245_"+id+"' id='save_form245_"+id+"'>";
+					rowsHTML+="<input type='button' class='delete_icon' form='form245_"+id+"' id='delete_form245_"+id+"' onclick='form245_delete_item($(this));'>";
+				rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+
+			$('#form245_body').append(rowsHTML);
+		});
+		
+		form245_update_serial_numbers();
+		$('textarea').autosize();
+		hide_loader();
+	});
+}

@@ -14377,3 +14377,79 @@ function form244_add_item()
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form SKU Components
+ * @formNo 245
+ */
+function form245_add_item()
+{
+	if(is_create_access('form245'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form245_"+id+"'></form>";
+			rowsHTML+="<td data-th='S.No.'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='SKU'>";
+				rowsHTML+="<input type='text' required form='form245_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Item Name'>";
+				rowsHTML+="<textarea readonly='readonly' form='form245_"+id+"'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Quantity'>";
+				rowsHTML+="<input type='number' step='any' required form='form245_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form245_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form245_"+id+"' id='save_form245_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form245_"+id+"' id='delete_form245_"+id+"' onclick='$(this).parent().parent().remove(); form245_update_serial_numbers();'>";
+				rowsHTML+="<input type='submit' class='submit_hidden' form='form245_"+id+"'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form245_body').prepend(rowsHTML);
+
+		var item_form=document.getElementById('form245_'+id);
+		var item_filter=item_form.elements[0];
+		var item_desc=item_form.elements[1];
+		var quantity_filter=item_form.elements[2];
+		var save_button=item_form.elements[4];
+		
+		$(save_button).on('click',function (e) 
+		{
+			e.preventDefault();
+			form245_create_item(item_form);
+		});
+
+		$(item_form).on("submit", function(event)
+		{
+			event.preventDefault();
+			form245_add_item();			
+		});
+
+		var item_data="<product_master>" +
+				"<name></name>" +
+				"</product_master>";
+		set_my_value_list(item_data,item_filter,function () 
+		{
+			$(item_filter).focus();
+		});
+		
+		$(item_filter).on('blur',function () 
+		{
+			var desc_data="<product_master count='1'>" +
+				"<description></description>"+
+				"<name exact='yes'>"+item_filter.value+"</name>" +
+				"</product_master>";
+			set_my_value(desc_data,item_desc);			
+		});
+
+		$('textarea').autosize();
+		form245_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

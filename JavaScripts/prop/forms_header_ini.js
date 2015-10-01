@@ -9321,3 +9321,63 @@ function form244_header_ini()
 	$('#form244_head').parent().attr('class','rwd-table');
 
 }
+
+/**
+ * @form SKU Components
+ * @formNo 245
+ */
+function form245_header_ini()
+{
+	var fields=document.getElementById('form245_master');
+	
+	var item_filter=fields.elements['item_name'];
+	var save_button=fields.elements['save'];
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form245_create_form();
+	});
+
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		form245_ini();
+	});
+
+	var item_data="<product_master>" +
+		"<name></name>" +
+		"</product_master>";
+	set_my_value_list(item_data,item_filter,function () 
+	{
+		$(item_filter).focus();
+	});
+	
+	$(item_filter).off('blur');
+	$(item_filter).on('blur',function()
+	{
+		var inv_data="<product_instances>"+
+					"<product_name exact='yes'>"+item_filter.value+"</product_name>"+
+					"</product_instances>";
+		get_single_column_data(function(invs)
+		{
+			if(invs.length>0)
+			{
+				$("#modal75").dialog("open");
+			}
+		},inv_data);
+	});
+	item_filter.value='';
+	
+	$('#form245_body').html("");
+}
