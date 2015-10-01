@@ -1394,7 +1394,7 @@
 				<input type="button" value='Save Pickings' name='save' class='modal_submit'>
 			</fieldset>
 		</form>
-		<table id='modal150_table'>
+		<table id='modal150_table' class='plain_table'>
 		</table>		
 	</div>
 

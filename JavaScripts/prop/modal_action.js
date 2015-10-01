@@ -11271,6 +11271,7 @@ function modal150_action(rack,report_id)
 		if(storage==rack)
 		{
 			var item_name=subform.elements[0].value;
+			var item_desc=subform.elements[1].value;
 			var batch=subform.elements[2].value;
 			var quantity=parseFloat(subform.elements[3].value);
 			var picked_quantity=parseFloat(subform.elements[4].value);
@@ -11279,6 +11280,7 @@ function modal150_action(rack,report_id)
 			
 			item_row.setAttribute('id','modal150_row_'+row_id);
 			item_row.setAttribute('data-id',row_id);
+			item_row.setAttribute('data-sku',item_name);
 			
 			if(report_id=='report90')
 			{			
@@ -11287,7 +11289,7 @@ function modal150_action(rack,report_id)
 				item_row.setAttribute('data-order-num',order_num);
 				item_row.setAttribute('data-bill-id',bill_id);
 			}
-			item_row.innerHTML="<td style='margin:2px;word-wrap: break-word;'>"+item_name+"</td><td style='margin:2px;word-wrap: break-word;'>"+batch+"</td><td style='margin:2px;text-align:center;'>"+(quantity-picked_quantity)+"</td>";
+			item_row.innerHTML="<td>"+item_desc+"</td><td>"+batch+"</td><td style='text-align:center;'>"+(quantity-picked_quantity)+"</td>";
 			item_table.appendChild(item_row);				
 		}								
 	});	
@@ -11350,8 +11352,10 @@ function modal150_action(rack,report_id)
 					//console.log(product_name);
 					//console.log(parseFloat($(this).find('td:nth-child(3)').html()));
 					//console.log('modal_row_parsed');
-					var row_elem=$(this);
-					if($(this).find('td:first').html().toUpperCase()==product_name.toUpperCase() && !product_picked && parseFloat($(this).find('td:nth-child(3)').html())>0)
+					var row_elem=$(this)[0];
+					var item_name=row_elem.getAttribute('data-sku');
+			
+					if(item_name.toUpperCase()==product_name.toUpperCase() && !product_picked && parseFloat($(this).find('td:nth-child(3)').html())>0)
 					{
 						//console.log('picked');
 						product_picked=true;

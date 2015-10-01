@@ -9913,9 +9913,10 @@ function form108_ini()
 	var filter_fields=document.getElementById('form108_header');
 	
 	//populating form 
-	var fnum=filter_fields.elements[0].value;
-	var fname=filter_fields.elements[1].value;
-	var fstatus=filter_fields.elements[2].value;
+	var fchannel=filter_fields.elements[0].value;
+	var fnum=filter_fields.elements[1].value;
+	var fname=filter_fields.elements[2].value;
+	var fstatus=filter_fields.elements[3].value;
 	
 	////indexing///
 	var index_element=document.getElementById('form108_index');
@@ -9928,7 +9929,7 @@ function form108_ini()
 			"<id>"+fid+"</id>" +
 			"<order_num>"+fnum+"</order_num>"+
 			"<customer_name>"+fname+"</customer_name>" +
-			"<channel></channel>"+			
+			"<channel>"+fchannel+"</channel>"+			
 			"<order_date></order_date>" +
 			"<status>"+fstatus+"</status>" +
 			"<bill_id></bill_id>"+
@@ -9968,9 +9969,11 @@ function form108_ini()
 			var rowsHTML="";
 			rowsHTML+="<tr class='"+row_color+"'>";
 				rowsHTML+="<form id='form108_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Channel'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form108_"+result.id+"' value='"+result.channel+"'>";
+					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Order #'>";
 						rowsHTML+="<input type='text' readonly='readonly' form='form108_"+result.id+"' value='"+result.order_num+"'>";
-						rowsHTML+="<input type='text' readonly='readonly' form='form108_"+result.id+"' value='"+result.channel+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Customer'>";
 						rowsHTML+="<textarea readonly='readonly' form='form108_"+result.id+"'>"+result.customer_name+"</textarea>";
@@ -10075,7 +10078,7 @@ function form108_ini()
 		longPressEditable($('.dblclick_editable'));
 		$('textarea').autosize();
 		
-		var export_button=filter_fields.elements[3];
+		var export_button=filter_fields.elements[4];
 		$(export_button).off("click");
 		$(export_button).on("click", function(event)
 		{

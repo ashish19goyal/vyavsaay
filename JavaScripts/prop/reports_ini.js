@@ -7289,6 +7289,7 @@ function report93_ini()
 	var results=[];
 	fetch_requested_data('report93',master_data,function(products)
 	{
+		//console.log(products);
 		var sku_string="--";
 		for(var i in products)
 		{
@@ -7302,6 +7303,8 @@ function report93_ini()
 								"</product_instances>";
 		fetch_requested_data('report93',product_instances_xml,function(product_instances)
 		{
+			//console.log(product_instances);
+
 			var report93_count=product_instances.length;
 				
 			product_instances.forEach(function(product_instance)
@@ -7310,10 +7313,22 @@ function report93_ini()
 				var area_util_xml="<area_utilization>"+
 							"<name></name>"+
 							"<item_name exact='yes'>"+product_instance.product_name+"</item_name>"+
-							"<batch>"+product_instance.batch+"</batch>"+
+							"<batch exact='yes'>"+product_instance.batch+"</batch>"+
 							"</area_utilization>";
 				fetch_requested_data('report93',area_util_xml,function(areas)
 				{
+					//console.log(areas);
+					for(var l=0;l<areas.length;l++)
+					{
+						for(var m=l+1;m<areas.length;m++)
+						{
+							if(areas[m].name==areas[l].name && areas[m].item_name==areas[l].item_name && areas[m].batch==areas[l].batch)
+							{
+								areas.splice(m,1);
+								m--;
+							}
+						}
+					}
 					areas.forEach(function(area)
 					{
 						var result_object=new Object();

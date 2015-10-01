@@ -3,6 +3,7 @@
 		<thead>
 			<tr>
 				<form id='form108_header'></form>
+					<th>Channel <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form108_header'></th>
 					<th>Order # <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form108_header'></th>
 					<th>Customer <img src='../images/filter.png' class='filter_icon' onclick='show_filter($(this));'><input type='text' class='filter' form='form108_header'></th>
 					<th>Order Date </th>

@@ -3179,9 +3179,10 @@ function form105_header_ini()
 function form108_header_ini()
 {
 	var filter_fields=document.getElementById('form108_header');
-	var order_filter=filter_fields.elements[0];
-	var name_filter=filter_fields.elements[1];
-	var status_filter=filter_fields.elements[2];
+	var channel_filter=filter_fields.elements[0];
+	var order_filter=filter_fields.elements[1];
+	var name_filter=filter_fields.elements[2];
+	var status_filter=filter_fields.elements[3];
 	
 	var update_order_button=filter_fields.elements['update_orders'];
 	$(update_order_button).off('click');	
@@ -3198,12 +3199,21 @@ function form108_header_ini()
 		modal138_action();
 	});
 
+	var channel_data="<sale_channels>" +
+			"<name></name>" +
+			"</sale_channels>";
+	set_my_filter(channel_data,channel_filter);
+
 	var order_data="<sale_orders>" +
 			"<id></id>" +
 			"</sale_orders>";
+	set_my_filter(order_data,order_filter);
+	
 	var cust_data="<customers>" +
 			"<acc_name></acc_name>" +
 			"</customers>";
+	set_my_filter(cust_data,name_filter);
+
 	$(filter_fields).off('submit');
 	$(filter_fields).on('submit',function(event)
 	{
@@ -3211,8 +3221,6 @@ function form108_header_ini()
 		form108_ini();
 	});
 
-	set_my_filter(order_data,order_filter);
-	set_my_filter(cust_data,name_filter);
 	set_static_filter('sale_orders','status',status_filter);
 };
 
