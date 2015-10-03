@@ -2174,7 +2174,11 @@ function form69_add_item()
 {
 	if(is_create_access('form69'))
 	{
-		var channel_name=document.getElementById('form69_master').elements['channel'].value;
+		
+		var master_form=document.getElementById('form69_master');
+		var channel_name=master_form.elements['channel'].value;
+		var bill_type=master_form.elements['bill_type'].value;
+
 		var id=get_new_key();
 		var rowsHTML="<tr>";
 		rowsHTML+="<form id='form69_"+id+"' autocomplete='off'></form>";
@@ -2188,13 +2192,13 @@ function form69_add_item()
 				rowsHTML+="<input type='number' required form='form69_"+id+"' value='' step='any'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Notes'>";
-				rowsHTML+="Price: <input type='number' readonly='readonly' class='dblclick_editable' form='form69_"+id+"' step='any'>";
-				rowsHTML+="<br>MRP: <input type='number' readonly='readonly' form='form69_"+id+"' step='any'>";
-				rowsHTML+="<br>Amount: <input type='number' readonly='readonly' form='form69_"+id+"' step='any'>";
-				rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form69_"+id+"' step='any'>";
+				rowsHTML+="<b>SP</b>: Rs. <input type='number' class='dblclick_editable' form='form69_"+id+"' step='.01'>";
+				rowsHTML+="<br><b>Freight</b>: Rs. <input type='number' class='dblclick_editable' form='form69_"+id+"' step='.01' value='0'>";
+				rowsHTML+="<br><b>MRP</b>: Rs. <input type='number' readonly='readonly' class='dblclick_editable' form='form69_"+id+"' step='.01'>";
+				rowsHTML+="<br><b>Amount</b>: Rs. <input type='number' readonly='readonly' form='form69_"+id+"' step='.01'>";
+				rowsHTML+="<br><b>Tax</b>: Rs. <input type='number' readonly='readonly' form='form69_"+id+"' step='.01'>";
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
-				rowsHTML+="<input type='hidden' form='form69_"+id+"' value='0' name='freight'>";
 				rowsHTML+="<input type='hidden' form='form69_"+id+"' name='total'>";
 				rowsHTML+="<input type='hidden' form='form69_"+id+"' value='"+id+"'>";
 				rowsHTML+="<input type='button' class='submit_hidden' form='form69_"+id+"' id='save_form69_"+id+"' >";
@@ -2202,6 +2206,7 @@ function form69_add_item()
 				rowsHTML+="<input type='submit' class='submit_hidden' form='form69_"+id+"'>";
 				rowsHTML+="<input type='hidden' form='form69_"+id+"' name='tax_rate'>";
 				rowsHTML+="<input type='hidden' form='form69_"+id+"' name='freight_unit'>";
+				rowsHTML+="<input type='hidden' form='form69_"+id+"' name='unit_price'>";
 			rowsHTML+="</td>";			
 		rowsHTML+="</tr>";
 	
@@ -2211,16 +2216,17 @@ function form69_add_item()
 		var name_filter=fields.elements[2];
 		var desc_filter=fields.elements[3];
 		var quantity_filter=fields.elements[4];
-		var price_filter=fields.elements[5];
-		var mrp_filter=fields.elements[6];
-		var amount_filter=fields.elements[7];
-		var tax_filter=fields.elements[8];
-		var freight_filter=fields.elements[9];
+		var sp_filter=fields.elements[5];
+		var freight_filter=fields.elements[6];
+		var mrp_filter=fields.elements[7];
+		var amount_filter=fields.elements[8];
+		var tax_filter=fields.elements[9];
 		var total_filter=fields.elements[10];
 		var id_filter=fields.elements[11];
 		var save_button=fields.elements[12];
 		var tax_unit_filter=fields.elements[15];
 		var freight_unit_filter=fields.elements[16];
+		var unit_price_filter=fields.elements[17];
 				
 		$(save_button).on("click", function(event)
 		{
@@ -2256,32 +2262,47 @@ function form69_add_item()
 					if(descs.length>0)
 					{
 						desc_filter.value=descs[0].description;
-						tax_unit_filter.value=descs[0].tax;
+						if(bill_type=='Retail-CST-C')
+						{
+							tax_unit_filter.value=get_session_var('cst_rate');
+						}
+						else
+						{
+							tax_unit_filter.value=descs[0].tax;
+						}
 					}
-				});
+				
 			
-				var price_data="<channel_prices count='1'>"+
-								"<sale_price></sale_price>"+
-								"<freight></freight>"+
-								"<channel exact='yes'>"+channel_name+"</channel>"+
-								//"<latest exact='yes'>yes</latest>"+
-								"<from_time upperbound='yes'>"+get_my_time()+"</from_time>"+
-								"<item exact='yes'>"+name_filter.value+"</item>"+
-								"</channel_prices>";				
-				fetch_requested_data('',price_data,function (prices) 
-				{
-					if(prices.length>0)
+					var price_data="<channel_prices count='1'>"+
+									"<sale_price></sale_price>"+
+									"<freight></freight>"+
+									"<mrp></mrp>"+
+									"<channel exact='yes'>"+channel_name+"</channel>"+
+									"<from_time upperbound='yes'>"+get_my_time()+"</from_time>"+
+									"<item exact='yes'>"+name_filter.value+"</item>"+
+									"</channel_prices>";				
+					fetch_requested_data('',price_data,function (prices) 
 					{
-						price_filter.value=prices[0].sale_price;
-						freight_filter.value=prices[0].freight;
-					}
-				});	
+						if(prices.length>0)
+						{
+							mrp_filter.value=prices[0].mrp;
+							sp_filter.value=prices[0].sale_price;
+							freight_unit_filter.value=prices[0].freight;
+							unit_price_filter.value=parseFloat(sp_filter.value)/(1+parseFloat(tax_unit_filter.value)/100);
+						}
+					});
+				});
 			}
 		});
-		
-		$(quantity_filter).add(price_filter).on('blur',function(event)
+
+		$(sp_filter).on('change',function(event)
 		{
-			amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(price_filter.value);
+			unit_price_filter.value=parseFloat(sp_filter.value)/(1+parseFloat(tax_unit_filter.value)/100);			
+		});
+		
+		$(quantity_filter).add(unit_price_filter).on('change',function(event)
+		{
+			amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(unit_price_filter.value);
 			freight_filter.value=my_round((parseFloat(freight_unit_filter.value)*parseFloat(quantity_filter.value)),2);			
 						
 			tax_filter.value=my_round(((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)))/100),2);			
@@ -14436,7 +14457,7 @@ function form245_add_item()
 			$(item_filter).focus();
 		});
 		
-		$(item_filter).on('blur',function () 
+		$(item_filter).on('blur',function ()
 		{
 			var desc_data="<product_master count='1'>" +
 				"<description></description>"+

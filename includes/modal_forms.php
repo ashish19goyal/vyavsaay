@@ -1421,7 +1421,7 @@
 			</fieldset>
 		</form>
 		<table id='modal152_table' style='display:none;'>
-		<table id='modal152_table2'>
+		<table id='modal152_table2' class='plain_table'>
 		</table>		
 	</div>
 

@@ -55,12 +55,12 @@ function form69_get_totals()
 	{
 		var subform_id=$(this).attr('form');
 		var subform=document.getElementById(subform_id);
-		if(!isNaN(parseFloat(subform.elements[7].value)))
-			amount+=parseFloat(subform.elements[7].value);
-		if(!isNaN(parseFloat(subform.elements[8].value)))			
-			tax+=parseFloat(subform.elements[8].value);
+		if(!isNaN(parseFloat(subform.elements[8].value)))
+			amount+=parseFloat(subform.elements[8].value);
 		if(!isNaN(parseFloat(subform.elements[9].value)))			
-			freight+=parseFloat(subform.elements[9].value);
+			tax+=parseFloat(subform.elements[9].value);
+		if(!isNaN(parseFloat(subform.elements[6].value)))			
+			freight+=parseFloat(subform.elements[6].value);
 		if(!isNaN(parseFloat(subform.elements[10].value)))			
 			total+=parseFloat(subform.elements[10].value);						
 		if(!isNaN(parseFloat(subform.elements[4].value)))
@@ -112,6 +112,10 @@ function form91_get_totals()
 				tax_array[subform.elements[11].value]=0;
 			}
 			tax_array[subform.elements[11].value]+=parseFloat(subform.elements[8].value);
+		}
+		if(!isNaN(parseFloat(subform.elements[6].value)))
+		{
+			freight+=parseFloat(subform.elements[6].value);
 		}
 		if(!isNaN(parseFloat(subform.elements[9].value)))
 		{

@@ -3348,12 +3348,12 @@ function form69_update_form()
 		{
 			var subform_id=$(this).attr('form');
 			var subform=document.getElementById(subform_id);
-			if(!isNaN(parseFloat(subform.elements[7].value)))
-				amount+=parseFloat(subform.elements[7].value);
-			if(!isNaN(parseFloat(subform.elements[8].value)))			
-				tax+=parseFloat(subform.elements[8].value);
+			if(!isNaN(parseFloat(subform.elements[8].value)))
+				amount+=parseFloat(subform.elements[8].value);
 			if(!isNaN(parseFloat(subform.elements[9].value)))			
-				freight+=parseFloat(subform.elements[9].value);
+				tax+=parseFloat(subform.elements[9].value);
+			if(!isNaN(parseFloat(subform.elements[6].value)))			
+				freight+=parseFloat(subform.elements[6].value);
 			if(!isNaN(parseFloat(subform.elements[10].value)))			
 				total+=parseFloat(subform.elements[10].value);
 			if(!isNaN(parseFloat(subform.elements[4].value)))
@@ -11481,10 +11481,12 @@ function form210_reject_item(bar_code)
 				{
 					if(!first_match)
 					{
-						var data_id=$(this).attr('data-id');
-						var item_storage=$(this).attr('data-itemStorage');
-						var item_name=$(this).find('td:first').html();
-						var item_batch=$(this).find('td:nth-child(3)').html();
+						var item_object=JSON.parse($(this).attr('data-object'));
+						var data_id=item_object.id;
+						var item_storage=item_object.storage;
+						var item_name=item_object.item_name;
+						var item_batch=item_object.batch;
+						var table_type=item_object.table_type;
 						var packed_quantity=parseFloat(document.getElementById('form210_packed_'+data_id).innerHTML);
 						var rejected_quantity=parseFloat(document.getElementById('form210_rejected_'+data_id).innerHTML)+1;
 						var total_quantity=parseFloat(document.getElementById('form210_topack_'+data_id).innerHTML);
@@ -11500,22 +11502,27 @@ function form210_reject_item(bar_code)
 							
 							rejected_quantity_elem.innerHTML=rejected_quantity;
 							
+							var quantity_sign="";
+							if(table_type=='inventory_adjust')
+							{
+								quantity_sign="-";
+							}
 							
 							//console.log($(packed_quantity_elem).parent());
-							var items_xml="<bill_items>"+
+							var items_xml="<"+table_type+">"+
 									"<id>"+data_id+"</id>"+					
 									"<picked_status>pending</picked_status>"+
 									"<packing_status>pending</packing_status>"+
-									"<packed_quantity>"+packed_quantity+"</packed_quantity>"+
-									"<picked_quantity>"+packed_quantity+"</picked_quantity>"+
+									"<packed_quantity>"+quantity_sign+packed_quantity+"</packed_quantity>"+
+									"<picked_quantity>"+quantity_sign+packed_quantity+"</picked_quantity>"+
 									"<last_updated>"+get_my_time()+"</last_updated>"+						
-									"</bill_items>";
+									"</"+table_type+">";
 							update_simple(items_xml);
 				
 							var discarded_xml="<discarded>"+
 									"<id>"+get_new_key()+"</id>"+					
 									"<batch>"+item_batch+"</batch>"+
-					                "<quantity>"+rejected_quantity+"</quantity>"+
+					                "<quantity>1</quantity>"+
 					                "<product_name>"+item_name+"</product_name>"+
 					                "<source>manual</source>"+
 					                "<source_link></source_link>"+
@@ -11565,8 +11572,13 @@ function form210_accept_item(bar_code)
 			{
 				if(!first_match)
 				{
-					var data_id=$(this).attr('data-id');
-					var item_name=$(this).find('td:first').html();
+					var item_object=JSON.parse($(this).attr('data-object'));
+					var data_id=item_object.id;
+					var item_storage=item_object.storage;
+					var item_name=item_object.item_name;
+					var item_batch=item_object.batch;
+					var table_type=item_object.table_type;
+					
 					var packed_quantity=parseFloat(document.getElementById('form210_packed_'+data_id).innerHTML)+1;
 					var rejected_quantity=parseFloat(document.getElementById('form210_rejected_'+data_id).innerHTML);
 					var total_quantity=parseFloat(document.getElementById('form210_topack_'+data_id).innerHTML);
@@ -11592,13 +11604,19 @@ function form210_accept_item(bar_code)
 							$(packed_quantity_elem).parent().removeClass('glowing_td');
 						},1000);
 						
+						var quantity_sign="";
+						if(table_type=='inventory_adjust')
+						{
+							quantity_sign="-";
+						}
+
 						//console.log($(packed_quantity_elem).parent());
-						var items_xml="<bill_items>"+
+						var items_xml="<"+table_type+">"+
 								"<id>"+data_id+"</id>"+					
 								"<packing_status>"+status+"</packing_status>"+
-								"<packed_quantity>"+packed_quantity+"</packed_quantity>"+
+								"<packed_quantity>"+quantity_sign+packed_quantity+"</packed_quantity>"+
 								"<last_updated>"+get_my_time()+"</last_updated>"+						
-								"</bill_items>";
+								"</"+table_type+">";
 						update_simple(items_xml);
 											
 						//$("#modal69").dialog("open");

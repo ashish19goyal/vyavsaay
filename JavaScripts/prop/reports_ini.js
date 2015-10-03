@@ -6832,7 +6832,9 @@ function report89_ini()
 function report90_ini()
 {
 	var form=document.getElementById('report90_header');
+	var channel=form.elements['channel'].value;
 	var order_num=form.elements['order'].value;
+	var invoice_num=form.elements['bill'].value;
 
 	show_loader();
 	
@@ -6901,10 +6903,10 @@ function report90_ini()
 				
 				var bills_data="<bills count='1'>"+
 					"<id>"+item.bill_id+"</id>"+
-					"<bill_num></bill_num>"+
+					"<bill_num>"+invoice_num+"</bill_num>"+
 					"<order_num></order_num>"+
 					"<billing_type></billing_type>"+
-					"<channel></channel>"+
+					"<channel>"+channel+"</channel>"+
 					"</bills>";
 				fetch_requested_data('',bills_data,function(bills)
 				{

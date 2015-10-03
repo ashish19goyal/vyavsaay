@@ -1951,7 +1951,10 @@ function report89_header_ini()
 function report90_header_ini()
 {	
 	var form=document.getElementById('report90_header');
+	var channel_filter=form.elements['channel'];
 	var order_filter=form.elements['order'];
+	var bill_filter=form.elements['bill'];
+	
 	var rack_filter=form.elements['rack'];
 
 	$(form).off('submit');
@@ -1967,11 +1970,21 @@ function report90_header_ini()
 		this.select();
 	});
 
+	var channel_data="<sale_channels>"+
+		"<name></name>"+
+		"</sale_channels>";
+	set_my_filter(channel_data,channel_filter);					
+	
 	var order_data="<sale_orders>"+
 		"<order_num></order_num>"+
-		"<status exact='yes'>billed</status>"+
 		"</sale_orders>";
 	set_my_filter(order_data,order_filter);					
+
+	var bill_data="<bills>"+
+		"<bill_num></bill_num>"+
+		"<status></status>"+
+		"</bills>";
+	set_my_filter(bill_data,bill_filter);					
 	
 	$(rack_filter).off('keydown');
 	$(rack_filter).on('keydown',function (event) 

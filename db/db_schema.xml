@@ -451,6 +451,7 @@
 			<notes index='no' type='TEXT'></notes>
 			<mrp index='no' type="DECIMAL(12,2)"></mrp>
 			<unit_price index='no' type="DECIMAL(12,2)"></unit_price>
+			<selling_price index='no' type="DECIMAL(12,2)"></selling_price>
 			<amount index='no' type="DECIMAL(12,2)"></amount>
 			<tax index='no' type="DECIMAL(12,2)"></tax>
 			<tax_rate index='no' type="DECIMAL(12,2)"></tax_rate>
@@ -541,6 +542,7 @@
 			<packed_quantity index='no' type="DECIMAL(12,2)"></packed_quantity>
 			<picked_status index='yes' type="VARCHAR(25)"></picked_status><!--pending/picked-->
 			<packing_status index='yes' type="VARCHAR(25)"></packing_status><!--pending/packed-->
+			<show_for_packing index='yes' type="VARCHAR(20)"></show_for_packing><!--dummy/yes-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</bill_items>
@@ -626,6 +628,7 @@
 			<quantity index='no' type="DECIMAL(12,2)"></quantity>
 			<placed_quantity index='no' type="DECIMAL(12,2)"></placed_quantity>
 			<picked_quantity index='no' type="DECIMAL(12,2)"></picked_quantity>
+			<packed_quantity index='no' type="DECIMAL(12,2)"></packed_quantity>
 			<product_name index='yes' type="TEXT"></product_name>
 			<item_desc index='yes' type="TEXT"></item_desc>
 			<source index='yes' type='VARCHAR(50)'></source><!--sale/sale_return/manual/manufacturing-->
@@ -633,6 +636,8 @@
 			<storage index='yes' type="TEXT"></storage>
 			<put_away_status index='yes' type="VARCHAR(20)"></put_away_status><!--pending/completed-->
 			<picked_status index='yes' type="VARCHAR(20)"></picked_status><!--pending/picked-->
+			<packing_status index='yes' type="VARCHAR(20)"></packing_status><!--pending/packed-->
+			<show_for_packing index='yes' type="VARCHAR(20)"></show_for_packing><!--yes/no-->
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</inventory_adjust>

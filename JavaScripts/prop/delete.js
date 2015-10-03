@@ -2161,14 +2161,7 @@ function form69_delete_item(button)
 			var data_xml="<sale_order_items>" +
 						"<id>"+data_id+"</id>" +
 						"</sale_order_items>";	
-			if(is_online())
-			{
-				server_delete_simple(data_xml);
-			}
-			else
-			{
-				local_delete_simple(data_xml);
-			}	
+			delete_simple(data_xml);
 			$(button).parent().parent().remove();
 		});
 	}

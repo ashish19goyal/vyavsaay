@@ -4,6 +4,7 @@
 			<label>Customer <img src='./images/add_image.png' class='add_image' title='Add new customer' id='form69_add_customer'><br>
 			<input type='text' required name='customer'></label>
 			<label>Channel<br><input type='text' required name='channel'></label>
+			<label>Bill Type<br><input type='text' required name='bill_type'></label>
 			<label>Order #<br><input type='text' required name='order_num' readonly="readonly"></label>
 			<label>Order Date<br><input type='text' required name='order_date'></label>
 			<label>Status<br><input type='text' required name='status'></label>

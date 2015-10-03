@@ -1808,6 +1808,7 @@ function form69_header_ini()
 	var status_filter=fields.elements['status'];
 	var order_num_filter=fields.elements['order_num'];
 	var channel_filter=fields.elements['channel'];
+	var type_filter=fields.elements['bill_type'];
 
 	fields.elements['order_id'].value=get_new_key();
 	order_num_filter.value="";
@@ -1841,6 +1842,11 @@ function form69_header_ini()
 		"<name></name>" +
 		"</sale_channels>";
 	set_my_value_list(channel_data,channel_filter);
+
+	var type_data="<bill_types>" +
+		"<name></name>" +
+		"</bill_types>";
+	set_my_value_list(type_data,type_filter);
 
 	var customers_data="<customers>" +
 		"<acc_name></acc_name>" +
@@ -7847,7 +7853,6 @@ function form210_header_ini()
 
 	var order_data="<sale_orders>"+
 				"<order_num></order_num>"+
-				"<status array='yes'>--picked--partially picked--</status>"+
 				"</sale_orders>";
 	set_my_value_list(order_data,order_filter);					
 	
@@ -7858,13 +7863,13 @@ function form210_header_ini()
 	{
 		if(bag_filter.value!="")
 		{
-			var order_data="<bills>"+
+			var order_data="<bills count='1'>"+
 				"<order_num></order_num>"+
 				"<pick_bag_num exact='yes'>"+bag_filter.value+"</pick_bag_num>"+
 				"</bills>";
 			set_my_value(order_data,order_filter);
 			
-			var bill_data="<bills>"+
+			var bill_data="<bills count='1'>"+
 				"<bill_num></bill_num>"+
 				"<pick_bag_num exact='yes'>"+bag_filter.value+"</pick_bag_num>"+
 				"</bills>";

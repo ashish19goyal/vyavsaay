@@ -5370,6 +5370,7 @@ function form69_ini()
 				"<tax></tax>"+
 				"<total></total>"+
 				"<freight></freight>"+
+				"<billing_type></billing_type>"+
 				"<status></status>" +
 				"</sale_orders>";
 		var order_items_column="<sale_order_items>" +
@@ -5384,6 +5385,7 @@ function form69_ini()
 				"<tax></tax>"+
 				"<total></total>"+
 				"<unit_price></unit_price>"+
+				"<selling_price></selling_price>"+
 				"<freight></freight>"+
                 "<order_id exact='yes'>"+order_id+"</order_id>" +
 				"<notes></notes>" +
@@ -5401,6 +5403,7 @@ function form69_ini()
 				filter_fields.elements['order_id'].value=order_id;
 				filter_fields.elements['order_num'].value=order_results[i].order_num;
 				filter_fields.elements['channel'].value=order_results[i].channel;
+				filter_fields.elements['bill_type'].value=order_results[i].billing_type;
 				
 				var save_button=filter_fields.elements['save'];
 				
@@ -5413,7 +5416,7 @@ function form69_ini()
 				
 				break;
 			}
-		/////////////////////////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////////////////////////
 		
 			fetch_requested_data('',order_items_column,function(results)
 			{
@@ -5433,13 +5436,13 @@ function form69_ini()
 							rowsHTML+="<input type='number' class='dblclick_editable' readonly='readonly' required form='form69_"+id+"' value='"+result.quantity+"'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Price'>";
-							rowsHTML+="Price: <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.unit_price+"' step='any'>";
-							rowsHTML+="<br>MRP: <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.mrp+"' step='any'>";
-							rowsHTML+="<br>Amount: <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.amount+"' step='any'>";
-							rowsHTML+="<br>Tax: <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.tax+"' step='any'>";
+							rowsHTML+="<b>SP</b>: Rs. <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.selling_price+"' step='any'>";
+							rowsHTML+="<br><b>Freight</b>: Rs. <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.freight+"' step='any'>";
+							rowsHTML+="<br><b>MRP</b>: Rs. <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.mrp+"' step='any'>";
+							rowsHTML+="<br><b>Amount</b>: Rs. <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.amount+"' step='any'>";
+							rowsHTML+="<br><b>Tax</b>: Rs. <input type='number' readonly='readonly' form='form69_"+id+"' value='"+result.tax+"' step='any'>";
 						rowsHTML+="</td>";
 						rowsHTML+="<td data-th='Action'>";
-							rowsHTML+="<input type='hidden' form='form69_"+id+"' value='"+result.freight+"'>";
 							rowsHTML+="<input type='hidden' form='form69_"+id+"' value='"+result.total+"'>";
 							rowsHTML+="<input type='hidden' form='form69_"+id+"' value='"+id+"'>";
 							rowsHTML+="<input type='button' class='submit_hidden' form='form69_"+id+"' id='save_form69_"+id+"'>";
@@ -5456,9 +5459,6 @@ function form69_ini()
 					
 					if(result.item_name=="")
 					{
-						console.log(result.channel_sku);
-						console.log(result.vendor_sku);
-						
 						var sku_data="<sku_mapping count='1'>"+
 									"<item_desc></item_desc>"+
 									"<system_sku></system_sku>"+
@@ -22040,70 +22040,123 @@ function form210_ini()
 					"<batch></batch>"+
 					"<picked_status exact='yes'>picked</picked_status>"+
 					"<packing_status></packing_status>"+
+					"<show_for_packing></show_for_packing>"+
 					"<storage></storage>"+
 					"<bill_id exact='yes'>"+bills[0].id+"</bill_id>"+		
 					"</bill_items>";
 			fetch_requested_data('',bill_items_xml,function (bill_items) 
 			{
-				if(bill_items.length>0)
+				var inventory_adjust_xml="<inventory_adjust>"+
+										"<id></id>"+
+										"<product_name></product_name>"+
+										"<item_desc></item_desc>"+
+										"<quantity></quantity>"+
+										"<packed_quantity></packed_quantity>"+
+										"<batch></batch>"+
+										"<picked_status exact='yes'>picked</picked_status>"+
+										"<packing_status></packing_status>"+
+										"<show_for_packing exact='yes'>yes</show_for_packing>"+
+										"<storage></storage>"+
+										"<source>picking</source>"+
+										"<source_id exact='yes'>"+bills[0].id+"</source_id>"+		
+										"</inventory_adjust>";
+				fetch_requested_data('',inventory_adjust_xml,function (adjust_items) 
 				{
-					////////////setting up containers///////////////////////	
-					var container=document.getElementById('form210_invoice');
+					//console.log(bill_items);
+					for(var c=0;c<bill_items.length;c++)
+					{
+						bill_items[c].table_type='bill_items';
+						if(bill_items[c].show_for_packing=='dummy')
+						{
+							//console.log(bill_items[c]);
+							bill_items.splice(c,1);
+							c--;
+						}
+					}
+						
+					for(var b=0;b<adjust_items.length;b++)
+					{
+						var adjust_item=new Object();
+						adjust_item.id=adjust_items[b].id;
+						adjust_item.item_name=adjust_items[b].product_name;
+						adjust_item.item_desc=adjust_items[b].item_desc;
+						adjust_item.quantity=-(parseFloat(adjust_items[b].quantity));
+						adjust_item.packed_quantity=-(parseFloat(adjust_items[b].packed_quantity));
+						adjust_item.total="";
+						adjust_item.mrp="";
+						adjust_item.batch=adjust_items[b].batch;
+						adjust_item.picked_status=adjust_items[b].picked_status;
+						adjust_item.packing_status=adjust_items[b].packing_status;
+						adjust_item.show_for_packing=adjust_items[b].show_for_packing;
+						adjust_item.storage=adjust_items[b].storage;
+						adjust_item.bill_id=adjust_items[b].source_id;
+						adjust_item.table_type='inventory_adjust';
+						bill_items.push(adjust_item);
+					}
 											
-					var invoice_line=document.getElementById('form210_invoice_line');
-					var table_container=document.createElement('div');
-					
-					////////////setting styles for containers/////////////////////////
-									
-					///////////////getting the content////////////////////////////////////////
-					var date=get_my_past_date(bills[0].bill_date);				
-					var invoice_no=bills[0].bill_num;
-					var order_no=bills[0].order_num;
-					
-					invoice_line.innerHTML="<div style='float:left;width:50%;text-align:left'>Invoice #: "+invoice_no+"<br>Order #: "+order_no+"</div><div style='float:right;text-align:right;width:50%'>Invoice Date: "+date+"</div>";
-											
-					var table_copy=document.createElement('table');
-					
-					table_copy.setAttribute('width','100%');
-					table_copy.setAttribute('class','plain_table');
-					$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>MRP</th><th>Total</th><th>Quantity</th></tr>");
+					if(bill_items.length>0)
+					{
+						////////////setting up containers///////////////////////	
+						var container=document.getElementById('form210_invoice');
+												
+						var invoice_line=document.getElementById('form210_invoice_line');
+						var table_container=document.createElement('div');
+						
+						////////////setting styles for containers/////////////////////////
+										
+						///////////////getting the content////////////////////////////////////////
+						var date=get_my_past_date(bills[0].bill_date);				
+						var invoice_no=bills[0].bill_num;
+						var order_no=bills[0].order_num;
+						
+						invoice_line.innerHTML="<div style='float:left;width:50%;text-align:left'>Invoice #: "+invoice_no+"<br>Order #: "+order_no+"</div><div style='float:right;text-align:right;width:50%'>Invoice Date: "+date+"</div>";
+												
+						var table_copy=document.createElement('table');
+						
+						table_copy.setAttribute('width','100%');
+						table_copy.setAttribute('class','plain_table');
+						$(table_copy).append("<tr><th>SKU</th><th>Item</th><th>Batch</th><th>MRP</th><th>Total</th><th>Quantity</th></tr>");
 	
-					bill_items.forEach(function (item) 
-					{
-						if(isNaN(item.packed_quantity) || item.packed_quantity=='null' || item.packed_quantity=='')
+						bill_items.forEach(function (item) 
 						{
-							item.packed_quantity=0;
-						}
-						var row_class="";
-						if(item.packing_status=='packed')
+							if(isNaN(item.packed_quantity) || item.packed_quantity=='null' || item.packed_quantity=='')
+							{
+								item.packed_quantity=0;
+							}
+							var row_class="";
+							if(item.packing_status=='packed')
+							{
+								row_class=" class='green_row'";
+							}
+							var item_object_string=JSON.stringify(item);
+							$(table_copy).append("<tr "+row_class+" id='form210_row_"+item.id+"' data-object='"+item_object_string+"'><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_topack_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p><br>Rejected: <vyavsaay_p id='form210_rejected_"+item.id+"'>0</vyavsaay_p></td></tr>");	
+						});
+	
+						container.appendChild(table_copy);
+						
+						hide_loader();
+						/////////get images and packing instructions//////////					
+						var bill_item_name_string="--";						
+						bill_items.forEach(function(bill_item)
 						{
-							row_class=" class='green_row'";
-						}
-						$(table_copy).append("<tr "+row_class+" data-itemStorage='"+item.storage+"' id='form210_row_"+item.id+"' data-id='"+item.id+"'><td>"+item.item_name+"</td><td>"+item.item_desc+"</td><td>"+item.batch+"</td></td><td>"+item.mrp+"</td><td>"+item.total+"</td><td>To Pack: <vyavsaay_p id='form210_topack_"+item.id+"'>"+item.quantity+"</vyavsaay_p><br>Packed: <vyavsaay_p id='form210_packed_"+item.id+"'>"+item.packed_quantity+"</vyavsaay_p><br>Rejected: <vyavsaay_p id='form210_rejected_"+item.id+"'>0</vyavsaay_p></td></tr>");	
-					});
-
-					container.appendChild(table_copy);
-					
-					hide_loader();
-					/////////get images and packing instructions//////////					
-					bill_items.forEach(function(bill_item)
-					{
-						var product_columns="<product_master count='1'>" +
+							bill_item_name_string+=bill_item.item_name+"--";
+						});
+						var product_columns="<product_master>" +
 								"<id></id>" +
-								"<name exact='yes'>"+bill_item.item_name+"</name>"+
+								"<name array='yes'>"+bill_item_name_string+"</name>"+
 								"<description></description>"+								
 								"<packing></packing>"+
 								"</product_master>";
 						fetch_requested_data('',product_columns,function (products) 
 						{
-							if(products.length>0)
+							products.forEach(function (product)
 							{
 								/////////get product image////////////
 								var picture_column="<documents>" +
 										"<id></id>" +
 										"<url></url>" +
 										"<doc_type exact='yes'>product_master</doc_type>" +
-										"<target_id exact='yes'>"+products[0].id+"</target_id>" +
+										"<target_id exact='yes'>"+product.id+"</target_id>" +
 										"</documents>";
 								fetch_requested_data('',picture_column,function(pic_results)
 								{
@@ -22115,22 +22168,22 @@ function form210_ini()
 										pic_results_url=pic_results[0].url;
 									}
 									updated_url=pic_results_url.replace(/ /g,"+");
-									var imgHTML="<div style='display:block;width:45%;margin:5px;float:left;'><b>"+products[0].name+"</b>: "+products[0].description+"<br>Packing Instructions: "+products[0].packing+"<br><img style='width:98%;height:auto;' src='"+updated_url+"'></div>";
+									var imgHTML="<div style='display:block;width:45%;margin:5px;float:left;'><b>"+product.name+"</b>: "+product.description+"<br>Packing Instructions: "+product.packing+"<br><img style='width:98%;height:auto;' src='"+updated_url+"'></div>";
 									
 									$('#form210_image').append(imgHTML);	
 									$('#form210_form').show();			
 									//hide_loader();
 								});
-							}
+							});
 						});											
-					});
-				}
-				else 
-				{
-					var container=document.getElementById('form210_invoice');
-					container.innerHTML='<b>No items are pending for packing for this Order.<b>';	
-					hide_loader();
-				}
+					}
+					else 
+					{
+						var container=document.getElementById('form210_invoice');
+						container.innerHTML='<b>No items are pending for packing for this Order.<b>';	
+						hide_loader();
+					}
+				});
 			});
 			////////////////////////////////////////////////////////////////
 		}
