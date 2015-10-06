@@ -13008,6 +13008,7 @@ function form219_add_item()
 											"<merchant_name></merchant_name>" +
 											"<ship_to></ship_to>" +
 											"<phone></phone>" +
+											"<collectable_value></collectable_value>"+
 											"<weight></weight>" +
 											"<pieces></pieces>" +
 											"<drs_num></drs_num>" +
@@ -13078,6 +13079,7 @@ function form219_add_item()
 										"<merchant_name></merchant_name>" +
 										"<ship_to></ship_to>" +
 										"<phone></phone>" +
+										"<collectable_value></collectable_value>"+
 										"<weight></weight>" +
 										"<pieces></pieces>" +
 										"<drs_num></drs_num>" +
