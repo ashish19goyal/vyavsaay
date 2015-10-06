@@ -2086,3 +2086,64 @@ function report93_header_ini()
 	set_my_filter(batch_data,batch_filter);
 
 }
+
+/**
+ * @reportNo 94
+ * @report Combo inventory
+ */
+function report94_header_ini()
+{	
+	var form=document.getElementById('report94_header');
+	var sku_filter=form.elements['sku'];
+	var name_filter=form.elements['item_name'];
+	
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report94_ini();
+	});
+
+	var sku_data="<product_master>"+
+				"<name></name>"+
+				"</product_master>";
+	set_my_value_list(sku_data,sku_filter);
+
+	var name_data="<product_master>"+
+				"<description></description>"+
+				"</product_master>";
+	set_my_value_list(name_data,name_filter);
+	
+	$(name_filter).off('blur');
+	$(name_filter).off('change');
+	$(name_filter).off('select');
+	$(name_filter).on('blur change select',function ()
+	{
+		var sku_data="<product_master>"+
+					"<name></name>"+
+					"<description exact='yes'>"+name_filter.value+"</description>"+
+					"</product_master>";
+		set_my_value(sku_data,sku_filter);			
+	}); 		
+}
+
+/**
+ * @reportNo 95
+ * @report Order sorting
+ */
+function report95_header_ini()
+{	
+	var form=document.getElementById('report95_header');
+	var awb_filter=form.elements['awb'];
+	
+	$('#report95_body').html('');
+
+	$(form).off('submit');
+	$(form).on('submit',function(event)
+	{
+		event.preventDefault();
+		report95_ini();
+	});
+
+	$(awb_filter).focus(); 		
+}

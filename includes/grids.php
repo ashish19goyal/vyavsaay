@@ -48,6 +48,24 @@
 			</ul>
 		</li>
 		
+		<li id="orders_link" onclick="grid_click('orders');" style='background-color:#3F898C'>
+			<a><div style='background-color:#1D676A'><b data-i18n="function.orders"></b></div></a>
+			<ul>
+			</ul>
+		</li>
+		
+		<li id="drs_link" onclick="grid_click('drs');" style='background-color:#F3655F'>
+			<a><div style='background-color:#F1433F'><b data-i18n="function.drs"></b></div></a>
+			<ul>
+			</ul>
+		</li>
+		
+		<li id="transit_link" onclick="grid_click('transit');" style='background-color:#6DC8BF'>
+			<a><div style='background-color:#4BA69D'><b data-i18n="function.transit"></b></div></a>
+			<ul>
+			</ul>
+		</li>
+		
 		<li id="people_link" onclick="grid_click('people');" style='background-color:#DFAF4B'>
 			<a><div style='background-color:#BD8D29'><b data-i18n="function.people"></b></div></a>		
 			<ul>

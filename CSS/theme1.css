@@ -1197,11 +1197,6 @@ ul.form_grid_item input[type='text'], ul.form_grid_item input[type='number'], ul
 	border: 2px solid #ffffff;
 }
 
-input.detail_link{
-	cursor: pointer;
-	color: #0000ff;
-}
-
 @media screen and (min-width: 550px) {
 	#side_menu{
 		background-color: #A2A2A2;	

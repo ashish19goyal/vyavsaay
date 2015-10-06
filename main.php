@@ -25,6 +25,9 @@
 		//display for each of the grids
 		include "functions/sale_bills.php";
 		include "functions/logistics.php";
+		include "functions/orders.php";
+		include "functions/drs.php";
+		include "functions/transit.php";
 		include "functions/products.php";
 		include "functions/services.php";
 		include "functions/purchase.php";

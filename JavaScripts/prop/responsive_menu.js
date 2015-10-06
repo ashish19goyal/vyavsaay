@@ -29,7 +29,7 @@ function responsive_tabs()
 
 function setup_grid_display_tabs()
 {
-	var functions_array=['sale_bills','logistics','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin'];
+	var functions_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin'];
 	functions_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main").find('ul').find('li').length;
@@ -43,7 +43,7 @@ function setup_grid_display_tabs()
 
 function setup_grid_display_accordion()
 {
-	var functions_array=['sale_bills','logistics','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin'];
+	var functions_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin'];
 	functions_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main").find('h3').length;
@@ -111,7 +111,7 @@ function accordionsToTabs()
 
 function init_functions_tabs()
 {
-	var functions_array=['sale_bills','logistics','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin','settings'];
+	var functions_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin','settings'];
 	functions_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main");
@@ -173,7 +173,7 @@ function init_functions_tabs()
 
 function init_functions_accordion()
 {
-	var functions_array=['sale_bills','logistics','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin','settings'];
+	var functions_array=['sale_bills','logistics','orders','drs','transit','purchase','finances','products','services','customer_service','treatment','projects','people','store','ecommerce','offers','manufacturing','maps','sale_reports','admin','settings'];
 	functions_array.forEach(function(func)
 	{
 		var function_main=$("#"+func+"_main");

@@ -21,6 +21,8 @@
 		<li><a id='report77_link' href='#report77' onclick='report77_header_ini();' data-i18n='form.inventory_storage_by_item'></a></li>
 		<li><a id='report91_link' href='#report91' onclick='report91_header_ini();' data-i18n='form.inventory_by_brand'></a></li>
 		<li><a id='report93_link' href='#report93' onclick='report93_header_ini();' data-i18n='form.stock_report'></a></li>
+		<li><a id='report94_link' href='#report94' onclick='report94_header_ini();' data-i18n='form.combo_inventory'></a></li>
+		<li><a id='report95_link' href='#report95' onclick='report95_header_ini();' data-i18n='form.order_sorting'></a></li>
 	</ul>
 
 	<?php
@@ -44,6 +46,8 @@
 			include "reports/report77.php";			
 			include "reports/report91.php";			
 			include "reports/report93.php";			
+			include "reports/report94.php";			
+			include "reports/report95.php";			
 	?>
 	
 </div>

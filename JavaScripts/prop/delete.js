@@ -8025,3 +8025,203 @@ function form245_delete_item(button)
 		$("#modal2").dialog("open");
 	}
 }
+
+/**
+ * @form Transfer Zones
+ * @param button
+ */
+function form246_delete_item(button)
+{
+	if(is_delete_access('form246'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var zone=form.elements[0].value;
+			var data_id=form.elements[2].value;
+			
+			var zone_xml="<transfer_zones>"+
+						"<id>"+data_id+"</id>"+
+						"</transfer_zones>";
+			var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>transfer_zones</tablename>" +
+					"<link_to>form246</link_to>" +
+					"<title>Deleted</title>" +
+					"<notes>Transfer zone "+zone+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+
+			delete_row(zone_xml,activity_xml);
+
+			var pincodes_xml="<pincodes>"+
+							"<id></id>"+
+							"<zone exact='yes'>"+zone+"</zone>"+
+							"</pincodes>";			
+			get_single_column_data(function(pin_ids)
+			{
+				var data_xml="<pincodes>";
+				var counter=1;
+				var last_updated=get_my_time();
+				pin_ids.forEach(function(id_object)
+				{
+					if((counter%500)===0)
+					{
+						data_xml+="</pincodes><separator></separator><pincodes>";
+					}
+					data_xml+="<row>" +
+							"<id>"+id_object+"</id>" +
+							"<zone></zone>" +
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+				});
+			
+				data_xml+="</pincodes>";
+		
+				update_batch(data_xml);
+
+			},pincodes_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage pincodes
+ * @param button
+ */
+function form247_delete_item(button)
+{
+	if(is_delete_access('form247'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[3].value;
+			
+			var data_xml="<pincodes>"+
+						"<id>"+data_id+"</id>"+
+						"</pincodes>";
+			delete_simple(data_xml);
+			
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 248
+ * form Create Transit Bags
+ * @param button
+ */
+function form248_delete_item(button)
+{
+	if(is_delete_access('form248'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var data_id=form.elements[4].value;
+			var last_updated=get_my_time();
+			var data_xml="<logistics_orders>" +
+						"<id>"+data_id+"</id>" +
+						"<status>received</status>" +
+						"<bag_num></bag_num>"+
+						"<bag_id></bag_id>"+
+						"<last_updated>"+last_updated+"</last_updated>" +
+						"</logistics_orders>";
+			update_simple(data_xml);
+			$(button).parent().parent().remove();
+			form248_update_serial_numbers();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Transit Bags
+ * @param button
+ */
+function form249_delete_item(button)
+{
+	if(is_delete_access('form249'))
+	{
+		modal115_action(function()
+		{
+			var form_id=$(button).attr('form');
+			var form=document.getElementById(form_id);
+
+			var bag_num=form.elements[0].value;
+			var data_id=form.elements[4].value;
+			var data_xml="<transit_bags>" +
+						"<id>"+data_id+"</id>" +
+						"</transit_bags>";	
+			var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>transit_bags</tablename>" +
+					"<link_to>form249</link_to>" +
+					"<title>Delete</title>" +
+					"<notes>Bag # "+bag_num+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+			
+			var bag_items_xml="<logistics_orders>"+
+							"<id></id>"+
+							"<status exact='yes'>in-transit</status>"+
+							"<bag_num exact='yes'>"+bag_num+"</bag_num>"+
+							"</logistics_orders>";			
+			get_single_column_data(function(bag_items)
+			{
+				var data_xml="<logistics_orders>";
+				var counter=1;
+				var last_updated=get_my_time();
+				
+				bag_items.forEach(function(bag_item)
+				{
+					if((counter%500)===0)
+					{
+						data_xml+="</logistics_orders><separator></separator><logistics_orders>";
+					}
+						
+					counter+=1;
+				
+					data_xml+="<row>" +
+							"<id>"+bag_item+"</id>" +
+							"<bag_num></bag_num>" +
+							"<bag_id></bag_id>" +
+							"<status>received</status>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</row>";
+				});
+				data_xml+="</logistics_orders>";
+				//console.log(data_xml);
+				update_batch(data_xml);
+				
+			},bag_items_xml);
+			
+			delete_row(data_xml,activity_xml);
+			$(button).parent().parent().remove();
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}

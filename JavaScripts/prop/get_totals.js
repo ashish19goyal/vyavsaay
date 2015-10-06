@@ -502,6 +502,31 @@ function form193_get_totals()
 	fields.elements['q_scanned'].value=total_quantity;
 }
 
+
+function form200_update_serial_numbers()
+{
+	$('#form200_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+	
+	var num_orders=0;
+	$("[id^='save_form200']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+
+		if(subform.elements[0].value!="")
+		{
+			num_orders+=1;			
+		}
+	});
+	
+	var form=document.getElementById("form200_master");
+	form.elements['num_orders'].value=num_orders;
+}
+
+
 function form211_get_totals()
 {
 	var out_for_delivery=0;
@@ -638,4 +663,27 @@ function form244_get_totals()
 
 	var fields=document.getElementById('form244_master');
 	fields.elements['q_scanned'].value=total_quantity;
+}
+
+function form248_update_serial_numbers()
+{
+	$('#form248_body').find('tr').each(function(index)
+	{
+		$(this).find('td:nth-child(2)').html(index+1);
+	});
+	
+	var num_orders=0;
+	$("[id^='save_form248']").each(function(index)
+	{
+		var subform_id=$(this).attr('form');
+		var subform=document.getElementById(subform_id);
+
+		if(subform.elements[0].value!="")
+		{
+			num_orders+=1;			
+		}
+	});
+	
+	var form=document.getElementById("form248_master");
+	form.elements['num_orders'].value=num_orders;
 }

@@ -3360,6 +3360,11 @@ function form69_update_form()
 				total_quantity+=parseFloat(subform.elements[4].value);							
 		});
 
+		amount=my_round(amount,2);
+		tax=my_round(tax,2);
+		total=my_round(total,2);
+		freight=my_round(freight,2);
+
 		var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:</br>Tax: <br>Freight: </br>Total: </td>" +
 							"<td>Rs. "+amount+"</br>" +
@@ -10580,6 +10585,8 @@ function form193_update_form()
 		var storage=form.elements['storage'].value;
 		var items=[];
 
+		form193_get_totals();
+		
 		$("[id^='193form193_']").each(function () 
 		{			
 			var item=new Object();
@@ -10957,29 +10964,6 @@ function form200_update_item(form)
 	}
 }
 
-
-function form200_update_serial_numbers()
-{
-	$('#form200_body').find('tr').each(function(index)
-	{
-		$(this).find('td:nth-child(2)').html(index+1);
-	});
-	
-	var num_orders=0;
-	$("[id^='save_form200']").each(function(index)
-	{
-		var subform_id=$(this).attr('form');
-		var subform=document.getElementById(subform_id);
-
-		if(subform.elements[0].value!="")
-		{
-			num_orders+=1;			
-		}
-	});
-	
-	var form=document.getElementById("form200_master");
-	form.elements['num_orders'].value=num_orders;
-}
 
 /**
  * @form Create DRS
@@ -12949,6 +12933,8 @@ function form244_update_form()
 		var storage=form.elements['storage'].value;
 		var items=[];
 
+		form244_get_totals();
+		
 		$("[id^='244form244_']").each(function () 
 		{			
 			var item=new Object();
@@ -13036,6 +13022,158 @@ function form244_update_form()
 		$('#form244_head').html(head_html);
 		$('#form244_head').parent().attr('class','plain_table');
 
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Transfer Zones
+ * @param button
+ */
+function form246_update_item(form)
+{
+	if(is_update_access('form246'))
+	{
+		var zone=form.elements[0].value;
+		var description=form.elements[1].value;
+		var data_id=form.elements[2].value;
+		
+		var last_updated=get_my_time();
+		var data_xml="<transfer_zones>" +
+					"<id>"+data_id+"</id>" +
+					"<description>"+description+"</description>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transfer_zones>";	
+		update_simple(data_xml);
+		
+		for(var i=0;i<2;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Manage Pincodes
+ * @param button
+ */
+function form247_update_item(form)
+{
+	if(is_update_access('form247'))
+	{
+		var zone=form.elements[1].value;
+		var status=form.elements[2].value;
+		var data_id=form.elements[3].value;
+		
+		var last_updated=get_my_time();
+		var data_xml="<pincodes>" +
+					"<id>"+data_id+"</id>" +
+					"<zone>"+zone+"</zone>" +
+					"<status>"+status+"</status>" +
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</pincodes>";	
+		update_simple(data_xml);
+		
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 248
+ * form Create Transit Bag
+ * @param button
+ */
+function form248_update_item(form)
+{
+	if(is_update_access('form248'))
+	{
+		var bag_num=document.getElementById('form248_master').elements['bag_num'].value;
+		var data_id=form.elements[4].value;
+		var last_updated=get_my_time();
+		
+		var data_xml="<logistics_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<bag_num>"+bag_num+"</bag_num>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		update_simple(data_xml);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+
+/**
+ * @form Manage Transit bags
+ * @param button
+ */
+function form248_update_form()
+{
+	if(is_create_access('form248'))
+	{
+		var form=document.getElementById("form248_master");
+		
+		var bag_num=form.elements['bag_num'].value;
+		var lbh=form.elements['lbh'].value;
+		var weight=form.elements['weight'].value;
+		var num_orders=form.elements['num_orders'].value;
+		var date=get_raw_time(form.elements['date'].value);
+		var data_id=form.elements['id'].value;
+		
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var bag_columns="<transit_bags count='2'>" +
+					"<id></id>"+
+					"<bag_num exact='yes'>"+bag_num+"</bag_num>"+
+					"</transit_bags>";		
+		fetch_requested_data('',bag_columns,function(bags)
+		{
+			if(bags.length==0 || (bags.length==1 && bags[0].id==data_id))
+			{
+				var data_xml="<transit_bags>" +
+							"<id>"+data_id+"</id>" +
+							"<bag_num>"+bag_num+"</bag_num>"+
+							"<lbh>"+lbh+"</lbh>"+
+							"<weight>"+weight+"</weight>"+
+							"<num_orders>"+num_orders+"</num_orders>"+
+							"<date>"+date+"</date>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</transit_bags>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>transit_bags</tablename>" +
+							"<link_to>form249</link_to>" +
+							"<title>Updated</title>" +
+							"<notes>Bag # "+bag_num+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				update_row(data_xml,activity_xml);
+				
+		
+				$("[id^='save_form248_']").click();
+			}
+			else 
+			{
+				$("#modal77").dialog("open");
+			}
+		});
 	}
 	else
 	{

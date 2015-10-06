@@ -2288,7 +2288,7 @@ function form69_add_item()
 							mrp_filter.value=prices[0].mrp;
 							sp_filter.value=prices[0].sale_price;
 							freight_unit_filter.value=prices[0].freight;
-							unit_price_filter.value=parseFloat(sp_filter.value)/(1+parseFloat(tax_unit_filter.value)/100);
+							unit_price_filter.value=my_round(parseFloat(sp_filter.value)/(1+parseFloat(tax_unit_filter.value)/100),2);
 						}
 					});
 				});
@@ -2297,12 +2297,12 @@ function form69_add_item()
 
 		$(sp_filter).on('change',function(event)
 		{
-			unit_price_filter.value=parseFloat(sp_filter.value)/(1+parseFloat(tax_unit_filter.value)/100);			
+			unit_price_filter.value=my_round(parseFloat(sp_filter.value)/(1+parseFloat(tax_unit_filter.value)/100),2);			
 		});
 		
 		$(quantity_filter).add(unit_price_filter).on('change',function(event)
 		{
-			amount_filter.value=parseFloat(quantity_filter.value)*parseFloat(unit_price_filter.value);
+			amount_filter.value=my_round(parseFloat(quantity_filter.value)*parseFloat(unit_price_filter.value),2);
 			freight_filter.value=my_round((parseFloat(freight_unit_filter.value)*parseFloat(quantity_filter.value)),2);			
 						
 			tax_filter.value=my_round(((parseFloat(tax_unit_filter.value)*(parseFloat(amount_filter.value)))/100),2);			
@@ -7290,7 +7290,7 @@ function form136_add_item()
 	
 		$('#form136_body').prepend(rowsHTML);
 		var master_fields=document.getElementById('form136_master');
-		var bill_id=fields.elements['id'].value;
+		var bill_id=master_fields.elements['id'].value;
 
 		var fields=document.getElementById("form136_"+id);
 		var name_filter=fields.elements[0];
@@ -7307,7 +7307,7 @@ function form136_add_item()
 
 		batch_filter.value=String(bill_id).substr(1,8);
 			
-		var barcode_elem=document.getElementById("form136_barcode_"+id);
+		var barcode_filter=document.getElementById("form136_barcode_"+id);
 		$(barcode_filter).on('click',function () 
 		{
 			print_product_barcode(id,name_filter.value,batch_filter.value);
@@ -11087,7 +11087,7 @@ function form193_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='193form193_"+id+"' id='save_form193_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='193form193_"+id+"' id='delete_form193_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='193form193_"+id+"' id='delete_form193_"+id+"' onclick='$(this).parent().parent().remove();form193_get_totals();'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 
@@ -14222,7 +14222,7 @@ function form244_add_item()
 			rowsHTML+="</td>";
 			rowsHTML+="<td data-th='Action'>";
 				rowsHTML+="<input type='submit' class='submit_hidden' form='244form244_"+id+"' id='save_form244_"+id+"' >";
-				rowsHTML+="<input type='button' class='delete_icon' form='244form244_"+id+"' id='delete_form244_"+id+"' onclick='$(this).parent().parent().remove();'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='244form244_"+id+"' id='delete_form244_"+id+"' onclick='$(this).parent().parent().remove();form244_get_totals();'>";
 			rowsHTML+="</td>";
 		rowsHTML+="</tr>";
 
@@ -14468,6 +14468,341 @@ function form245_add_item()
 
 		$('textarea').autosize();
 		form245_update_serial_numbers();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Assign product pre-requisites
+ * @formNo 246
+ */
+function form246_add_item()
+{
+	if(is_create_access('form246'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form246_"+id+"'></form>";
+			rowsHTML+="<td data-th='Zone'>";
+				rowsHTML+="<input type='text' required form='form246_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Description'>";
+				rowsHTML+="<textarea form='form246_"+id+"' class='dblclick_editable'></textarea>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form246_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form246_"+id+"' id='save_form246_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form246_"+id+"' id='delete_form246_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form246_body').prepend(rowsHTML);
+
+		var item_form=document.getElementById('form246_'+id);
+		var zone_filter=item_form.elements[0];
+		
+		$(item_form).on("submit", function(event)
+		{
+			event.preventDefault();
+			form246_create_item(item_form);
+		});
+
+		$(zone_filter).focus();
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form manage pincodes
+ * @formNo 247
+ */
+function form247_add_item()
+{
+	if(is_create_access('form247'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form247_"+id+"'></form>";
+			rowsHTML+="<td data-th='Pincode'>";
+				rowsHTML+="<input type='text' required form='form247_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Zone'>";
+				rowsHTML+="<input type='text' class='dblclick_editable' form='form247_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' form='form247_"+id+"' class='dblclick_editable' required value='active'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form247_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='submit' class='save_icon' form='form247_"+id+"' id='save_form247_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form247_"+id+"' id='delete_form247_"+id+"' onclick='$(this).parent().parent().remove();'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form247_body').prepend(rowsHTML);
+
+		var item_form=document.getElementById('form247_'+id);
+		var code_filter=item_form.elements[0];
+		var zone_filter=item_form.elements[1];
+		var status_filter=item_form.elements[2];
+		
+		$(item_form).on("submit", function(event)
+		{
+			event.preventDefault();
+			form247_create_item(item_form);
+		});
+
+		$(code_filter).focus();
+		
+		var zone_data="<transfer_zones>"+
+					"<name></name>"+
+					"</transfer_zones>";
+		set_my_value_list(zone_data,zone_filter);
+		
+		set_static_value_list('pincodes','status',status_filter);
+		
+		$('textarea').autosize();
+		longPressEditable($('.dblclick_editable'));
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create Transit bag
+ * @formNo 248
+ */
+function form248_add_item()
+{
+	if(is_create_access('form248'))
+	{
+		var id=get_new_key();
+		var rowsHTML="<tr>";
+		rowsHTML+="<form id='form248_"+id+"'></form>";
+			rowsHTML+="<td data-th='S.No.'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='AWB #'>";
+				rowsHTML+="<input type='text' required form='form248_"+id+"' oninvalid=\"setCustomValidity('This AWB # is invalid')\">";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Address'>";
+				rowsHTML+="<textarea readonly='readonly' form='form248_"+id+"'></textarea>";
+				rowsHTML+="<br>Phone: <input type='text' readonly='readonly' form='form248_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Status'>";
+				rowsHTML+="<input type='text' readonly='readonly' form='form248_"+id+"'>";
+			rowsHTML+="</td>";
+			rowsHTML+="<td data-th='Action'>";
+				rowsHTML+="<input type='hidden' form='form248_"+id+"' value='"+id+"'>";
+				rowsHTML+="<input type='button' class='submit_hidden' form='form248_"+id+"' id='save_form248_"+id+"'>";
+				rowsHTML+="<input type='button' class='delete_icon' form='form248_"+id+"' id='delete_form248_"+id+"' onclick='$(this).parent().parent().remove(); form248_update_serial_numbers();'>";
+				rowsHTML+="<input type='hidden' form='form248_"+id+"' value='' name='order_history'>";
+			rowsHTML+="</td>";			
+		rowsHTML+="</tr>";
+
+		$('#form248_body').prepend(rowsHTML);
+
+		var item_form=document.getElementById('form248_'+id);
+		var awb_filter=item_form.elements[0];
+		var address_filter=item_form.elements[1];
+		var phone_filter=item_form.elements[2];
+		var status_filter=item_form.elements[3];
+		var id_filter=item_form.elements[4];
+		var save_button=item_form.elements[5];
+		var history_filter=item_form.elements[7];
+		
+		$(item_form).on("submit", function(event)
+		{
+			event.preventDefault();
+			var total_entries=0;
+			var double_entry=0;
+			$("[id^='save_form248']").each(function(index)
+			{
+				var subform_id=$(this).attr('form');
+				var subform=document.getElementById(subform_id);
+				total_entries+=1;
+				if(subform.elements[0].value==awb_filter.value)	
+					double_entry+=1;
+			});
+
+			if(total_entries==1)
+			{
+				form248_create_form(function()
+				{
+					if(double_entry<2)
+					{
+						form248_create_item(item_form);
+						form248_add_item();
+					}
+					else 
+					{
+						awb_filter.value="";
+						$("#modal65").dialog("open");
+					}
+				});
+			}
+			else 
+			{
+				if(double_entry<2)
+				{
+					form248_create_item(item_form);
+					form248_add_item();
+				}
+				else 
+				{
+					awb_filter.value="";
+					$("#modal65").dialog("open");
+				}
+			}
+		});
+
+		$(awb_filter).focus();
+				
+		$(awb_filter).on('keydown',function (event) 
+		{
+			if(event.keyCode == 13 ) 
+			{
+				event.preventDefault();
+				
+				var total_entries=0;
+				var double_entry=0;
+				$("[id^='save_form248']").each(function(index)
+				{
+					var subform_id=$(this).attr('form');
+					var subform=document.getElementById(subform_id);
+					
+					total_entries+=1;
+				
+					if(subform.elements[0].value==awb_filter.value)	
+						double_entry+=1;
+				});
+				
+				if(total_entries==1)
+				{
+					form248_create_form(function () 
+					{
+						if(double_entry<2)
+						{
+							var orders_data="<logistics_orders count='1'>"+
+											"<id></id>"+
+											"<address1></address1>"+
+											"<address2></address2>"+
+											"<city></city>"+
+											"<pincode></pincode>"+
+											"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
+											"<manifest_type></manifest_type>" +
+											"<order_num></order_num>" +
+											"<merchant_name></merchant_name>" +
+											"<ship_to></ship_to>" +
+											"<phone></phone>" +
+											"<weight></weight>" +
+											"<pieces></pieces>" +
+											"<drs_num></drs_num>" +
+											"<status array='yes'>--received--undelivered--pending--</status>"+
+											"<order_history></order_history>"+
+											"</logistics_orders>";
+							//console.log(orders_data);				
+							fetch_requested_data('',orders_data,function (orders) 
+							{
+								//console.log(orders);
+								if(orders.length>0)
+								{
+									address_filter.value=orders[0].ship_to+"\n"+orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
+									phone_filter.value=orders[0].phone;
+									status_filter.value=orders[0].status;
+									id_filter.value=orders[0].id;
+									history_filter.value=orders[0].order_history;
+									form248_create_item(item_form);
+									form248_add_item();
+								}
+								else 
+								{
+									address_filter.value="";
+									phone_filter.value="";
+									status_filter.value="";
+									id_filter.value="";
+									history_filter.value="";
+									awb_filter.value="";
+									$("#modal65").dialog("open");
+								}
+							});
+						}
+						else 
+						{
+							awb_filter.value="";
+							$("#modal65").dialog("open");
+						}
+					});
+				}
+				else 
+				{
+					if(double_entry<2)
+					{
+						var orders_data="<logistics_orders count='1'>"+
+										"<id></id>"+
+										"<address1></address1>"+
+										"<address2></address2>"+
+										"<city></city>"+
+										"<pincode></pincode>"+
+										"<awb_num exact='yes'>"+awb_filter.value+"</awb_num>" +
+										"<manifest_type></manifest_type>" +
+										"<order_num></order_num>" +
+										"<merchant_name></merchant_name>" +
+										"<ship_to></ship_to>" +
+										"<phone></phone>" +
+										"<weight></weight>" +
+										"<pieces></pieces>" +
+										"<drs_num></drs_num>" +
+										"<status array='yes'>--received--undelivered--pending--</status>"+
+										"<order_history></order_history>"+
+										"</logistics_orders>";
+						//console.log(orders_data);				
+						fetch_requested_data('',orders_data,function (orders) 
+						{
+							//console.log(orders);
+							if(orders.length>0)
+							{
+								address_filter.value=orders[0].ship_to+"\n"+orders[0].address1+", "+orders[0].address2+", "+orders[0].city+"-"+orders[0].pincode;
+								phone_filter.value=orders[0].phone;
+								status_filter.value=orders[0].status;
+								id_filter.value=orders[0].id;
+								history_filter.value=orders[0].order_history;	
+								form248_create_item(item_form);
+								form248_add_item();
+							}
+							else 
+							{
+								address_filter.value="";
+								phone_filter.value="";
+								status_filter.value="";
+								id_filter.value="";
+								awb_filter.value="";
+								history_filter.value="";
+								$("#modal65").dialog("open");
+							}
+						});
+					}
+					else 
+					{
+						awb_filter.value="";
+						$("#modal65").dialog("open");
+					}
+				}
+			}
+		});
+
+		$('textarea').autosize();
+		form248_update_serial_numbers();
 	}
 	else
 	{

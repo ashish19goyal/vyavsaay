@@ -16,8 +16,8 @@
 		<li><a id='form109_link' href='#form109' onclick='form109_header_ini(); form109_ini();' data-i18n='form.asset_attributes'></a></li>
 		<li><a id='report45_link' href='#report45' onclick='report45_header_ini();' data-i18n='form.virtual_store'></a></li>
 		<li><a id='report1_link' href='#report1' onclick='report1_header_ini();' data-i18n='form.signage_changes'></a></li>
-		<li><a id='form202_link' href='#form202' onclick='form202_header_ini();' data-i18n='form.exchanges'></a></li>
-		<li><a id='form212_link' href='#form212' onclick='form212_header_ini();' data-i18n='form.update_orders'></a></li>
+		<li><a id='form246_link' href='#form246' onclick='form246_header_ini(); form246_ini();' data-i18n='form.transfer_zones'></a></li>
+		<li><a id='form247_link' href='#form247' onclick='form247_header_ini(); form247_ini();' data-i18n='form.manage_pincodes'></a></li>
 	</ul>
 
 	<?php
@@ -37,7 +37,7 @@
 			include "forms/form109.php";
 			include "reports/report45.php";
 			include "reports/report1.php";
-			include "forms/form202.php";
-			include "forms/form212.php";
+			include "forms/form246.php";
+			include "forms/form247.php";	
 	?>
 </div>

@@ -2746,6 +2746,11 @@ function form69_create_form()
 				total_quantity+=parseFloat(subform.elements[4].value);							
 		});
 
+		amount=my_round(amount,2);
+		tax=my_round(tax,2);
+		total=my_round(total,2);
+		freight=my_round(freight,2);
+		
 		var total_row="<tr><td colspan='1' data-th='Total'>Total Quantity: "+total_quantity+"</td>" +
 							"<td>Amount:</br>Tax: <br>Freight: </br>Total: </td>" +
 							"<td>Rs. "+amount+"</br>" +
@@ -3587,14 +3592,7 @@ function form80_create_item(form)
 					"<status>pending</status>" +
 					"<last_updated>"+last_updated+"</last_updated>" +
 					"</de_duplication>";
-		if(is_online())
-		{
-			server_create_simple(data_xml);
-		}
-		else
-		{
-			local_create_simple(data_xml);
-		}	
+		create_simple(data_xml);
 		for(var i=0;i<5;i++)
 		{
 			$(form.elements[i]).attr('readonly','readonly');
@@ -6197,12 +6195,34 @@ function form108_bill(order_id,bill_type,order_num,sale_channel,customer,order_t
 
 													var item_storage="";
 													var bill_item_id=get_new_key();
+													var adjust_count=1;	
 													
 													if(storage_result_array.length>0)
 													{
 														item_storage=storage_result_array[0].storage;
 													}
-													var adjust_count=1;	
+													else 
+													{
+														adjust_count+=1;
+														var adjust_data_xml="<inventory_adjust>"+
+															"<id>"+(bill_item_id+adjust_count)+"</id>" +
+															"<product_name>"+component.requisite_name+"</product_name>" +
+															"<item_desc>"+component.requisite_desc+"</item_desc>" +
+															"<batch>"+batch_result.batch+"</batch>" +
+															"<picked_status>pending</picked_status>" +
+															"<packing_status>pending</packing_status>" +
+															"<quantity>-"+batch_result.quantity+"</quantity>" +
+															"<picked_quantity>0</picked_quantity>" +
+															"<packed_quantity>0</packed_quantity>" +
+															"<storage></storage>"+
+															"<source>picking</source>"+
+															"<source_id>"+bill_key+"</source_id>"+
+															"<show_for_packing>yes</show_for_packing>"+
+															"<last_updated>"+get_my_time+"</last_updated>"+
+															"</inventory_adjust>";
+														inventory_adjust_array.push(adjust_data_xml);																			
+
+													}
 													storage_result_array.forEach(function(storage_result)
 													{
 														adjust_count+=1;
@@ -16788,4 +16808,270 @@ function form245_update_serial_numbers()
 	{
 		$(this).find('td:nth-child(2)').html(index+1);
 	});		
+}
+
+/**
+ * formNo 246
+ * form Transfer Zones
+ * @param button
+ */
+function form246_create_item(form)
+{
+	//console.log('form246_create_form');
+	if(is_create_access('form246'))
+	{
+		var zone=form.elements[0].value;
+		var description=form.elements[1].value;		
+		var data_id=form.elements[2].value;
+		var save_button=form.elements[3];
+		var del_button=form.elements[4];
+		
+		var last_updated=get_my_time();
+		var data_xml="<transfer_zones>" +
+					"<id>"+data_id+"</id>" +
+					"<name unique='yes'>"+zone+"</name>" +
+					"<description>"+description+"</description>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</transfer_zones>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>transfer_zones</tablename>" +
+					"<link_to>form246</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Transfer Zone "+zone+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+					
+		create_row(data_xml,activity_xml);
+		
+		for(var i=0;i<2;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form246_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function (e) 
+		{
+			e.preventDefault();
+			form246_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 247
+ * form Manage Pincodes
+ * @param button
+ */
+function form247_create_item(form)
+{
+	if(is_create_access('form247'))
+	{
+		var pincode=form.elements[0].value;
+		var zone=form.elements[1].value;
+		var status=form.elements[2].value;		
+		var data_id=form.elements[3].value;
+		var save_button=form.elements[4];
+		var del_button=form.elements[5];
+		
+		var last_updated=get_my_time();
+		var data_xml="<pincodes>" +
+					"<id>"+data_id+"</id>" +
+					"<pincode unique='yes'>"+pincode+"</pincode>" +
+					"<zone>"+zone+"</zone>"+
+					"<status>"+status+"</status>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</pincodes>";
+		var activity_xml="<activity>" +
+					"<data_id>"+data_id+"</data_id>" +
+					"<tablename>pincodes</tablename>" +
+					"<link_to>form247</link_to>" +
+					"<title>Added</title>" +
+					"<notes>Pincode "+zone+"</notes>" +
+					"<updated_by>"+get_name()+"</updated_by>" +
+					"</activity>";
+					
+		create_row(data_xml,activity_xml);
+		
+		for(var i=0;i<3;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form247_delete_item(del_button);
+		});
+
+		$(form).off('submit');
+		$(form).on('submit',function (e) 
+		{
+			e.preventDefault();
+			form247_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * formNo 248
+ * form Create Transit Bag
+ * @param button
+ */
+function form248_create_item(form)
+{
+	//console.log('form248_create_form');
+	if(is_create_access('form248'))
+	{
+		var bag_num=document.getElementById('form248_master').elements['bag_num'].value;
+		var bag_id=document.getElementById('form248_master').elements['id'].value;
+		var bag_date=document.getElementById('form248_master').elements['date'].value;
+		var lbh=document.getElementById('form248_master').elements['lbh'].value;
+		var weight=document.getElementById('form248_master').elements['weight'].value;
+		var num_orders=document.getElementById('form248_master').elements['num_orders'].value;
+		var data_id=form.elements[4].value;
+		var save_button=form.elements[5];
+		var del_button=form.elements[6];
+		
+		var old_order_history=form.elements[7].value;
+
+		var order_history=[];
+		if(old_order_history!="")
+			order_history=JSON.parse(old_order_history);
+		var history_object=new Object();
+		history_object.timeStamp=get_my_time();
+		history_object.details="Order in-transit";
+		history_object.location=get_session_var('address');
+		history_object.status="in-transit";
+		order_history.push(history_object);
+		var order_history_string=JSON.stringify(order_history);		
+		
+		var last_updated=get_my_time();
+		var data_xml="<logistics_orders>" +
+					"<id>"+data_id+"</id>" +
+					"<status>in-transit</status>" +
+					"<bag_num>"+bag_num+"</bag_num>"+
+					"<bag_id>"+bag_id+"</bag_id>"+
+					"<order_history>"+order_history_string+"</order_history>"+
+					"<last_updated>"+last_updated+"</last_updated>" +
+					"</logistics_orders>";
+		update_simple(data_xml);
+		
+		for(var i=0;i<4;i++)
+		{
+			$(form.elements[i]).attr('readonly','readonly');
+		}
+		del_button.removeAttribute("onclick");
+		$(del_button).on('click',function(event)
+		{
+			form248_delete_item(del_button);
+		});
+
+		$(save_button).off('click');
+		$(save_button).on('click',function(event)
+		{
+			event.preventDefault();
+			form248_update_item(form);
+		});
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
+}
+
+/**
+ * @form Create bag
+ * @param button
+ */
+function form248_create_form(func)
+{
+	if(is_create_access('form248'))
+	{
+		var form=document.getElementById("form248_master");
+		
+		var bag_num=form.elements['bag_num'].value;
+		var lbh=form.elements['lbh'].value;
+		var weight=form.elements['weight'].value;
+		var date=get_raw_time(form.elements['date'].value);
+		var data_id=form.elements['id'].value;
+		var num_orders=form.elements['num_orders'].value;
+		
+		var save_button=form.elements['save'];
+		var last_updated=get_my_time();
+		
+		var bag_columns="<transit_bags count='1'>" +
+					"<bag_num exact='yes'>"+bag_num+"</bag_num>"+
+					"</transit_bags>";		
+		get_single_column_data(function(bags)
+		{
+			if(bags.length==0)
+			{	
+				var data_xml="<transit_bags>" +
+							"<id>"+data_id+"</id>" +
+							"<bag_num>"+bag_num+"</bag_num>"+
+							"<lbh>"+lbh+"</lbh>"+
+							"<date>"+date+"</date>"+
+							"<weight>"+weight+"</weight>"+
+							"<num_orders>"+num_orders+"</num_orders>"+
+							"<status>pending</status>"+
+							"<last_updated>"+last_updated+"</last_updated>" +
+							"</transit_bags>";
+				var activity_xml="<activity>" +
+							"<data_id>"+data_id+"</data_id>" +
+							"<tablename>transit_bags</tablename>" +
+							"<link_to>form249</link_to>" +
+							"<title>Create</title>" +
+							"<notes>Bag # "+bag_num+"</notes>" +
+							"<updated_by>"+get_name()+"</updated_by>" +
+							"</activity>";
+				var num_data="<user_preferences>"+
+							"<id></id>"+						
+							"<name exact='yes'>bag_num</name>"+												
+							"</user_preferences>";
+				get_single_column_data(function (bag_num_ids)
+				{
+					if(bag_num_ids.length>0)
+					{
+						var num_xml="<user_preferences>"+
+										"<id>"+bag_num_ids[0]+"</id>"+
+										"<value>"+(parseInt(bag_num)+1)+"</value>"+
+										"<last_updated>"+last_updated+"</last_updated>"+
+										"</user_preferences>";
+						update_simple(num_xml);
+					}
+				},num_data);
+		
+				create_row(data_xml,activity_xml);
+				
+				$(save_button).show();
+				
+				if(typeof func!='undefined')
+				{
+					func();
+				}
+			}
+			else 
+			{
+				$("#modal77").dialog("open");
+			}
+		},bag_columns);
+	}
+	else
+	{
+		$("#modal2").dialog("open");
+	}
 }

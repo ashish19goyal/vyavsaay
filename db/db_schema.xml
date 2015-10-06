@@ -1584,6 +1584,8 @@
 			<drs_id index='yes' type="BIGINT"></drs_id>
 			<drs_time index='no' type="BIGINT"></drs_time>
 			<received_by index='no' type="TEXT"></received_by>
+			<bag_num index='yes' type="VARCHAR(20)"></bag_num>
+			<bag_id index='yes' type="BIGINT"></bag_id>
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</logistics_orders>
@@ -1592,7 +1594,7 @@
 			<drs_num index='yes' type="VARCHAR(20)"></drs_num>
 			<employee index='yes' type="TEXT"></employee>
 			<drs_time index='yes' type="BIGINT"></drs_time>
-			<status index='yes' type="VARCHAR(20)"></status><!--out for delivery/delivered/pending/undelivered-->
+			<status index='yes' type="VARCHAR(20)"></status><!--/in-transit/out for delivery/delivered/pending/undelivered-->
 			<type index='yes' type="VARCHAR(20)"></type><!--COD/Non-COD-->
 			<num_orders index='no' type="INT"></num_orders>
 			<collectable_amount index='yes' type="DECIMAL(12,2)"></collectable_amount>
@@ -1600,6 +1602,46 @@
 			<last_updated index='yes' type="BIGINT"></last_updated>
 			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
 	</drs>
+	<transit_bags>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<bag_num index='yes' type="VARCHAR(20)"></bag_num>
+			<mts index='yes' type="VARCHAR(20)"></mts>
+			<lbh index='yes' type="TEXT"></lbh>
+			<date index='yes' type="BIGINT"></date>
+			<status index='yes' type="VARCHAR(20)"></status><!--in-transit/pending/received-->
+			<weight index='no' type="DECIMAL(12,2)"></weight>
+			<num_orders index='no' type="INT"></num_orders>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</transit_bags>
+	<mts>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<mts_num index='yes' type="VARCHAR(20)"></mts_num>
+			<lbh index='yes' type="TEXT"></lbh>
+			<date index='yes' type="BIGINT"></date>
+			<status index='yes' type="VARCHAR(20)"></status><!--in-transit/received/pending-->
+			<weight index='no' type="DECIMAL(12,2)"></weight>
+			<num_orders index='no' type="INT"></num_orders>
+			<num_bags index='no' type="INT"></num_bags>
+			<branch index='yes' type="TEXT"></branch>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</mts>
+	<transfer_zones>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<name index='yes' type="TEXT"></name>
+			<description index='yes' type="TEXT"></description>
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</transfer_zones>
+	<pincodes>
+			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
+			<pincode index='yes' type="TEXT"></pincode>
+			<zone index='yes' type="TEXT"></zone>
+			<status index='yes' type="VARCHAR(20)"></status><!--active/inactive-->
+			<last_updated index='yes' type="BIGINT"></last_updated>
+			<last_sync_time index='yes' type="BIGINT"></last_sync_time>
+	</pincodes>
 	<treatment_plans>
 			<id index='no' type="BIGINT NOT NULL AUTO_INCREMENT"></id>
 			<plan_num index='yes' type="TEXT"></plan_num>

@@ -2144,7 +2144,11 @@ function form80_header_ini()
 		modal51_action(object_filter.value);
 	});
 
-	$(object_filter).on('blur',function(event)
+	$(object_filter).off('blur');
+	$(object_filter).off('change');
+	$(object_filter).off('select');
+
+	$(object_filter).on('change blur select',function(event)
 	{		
 		var table_data="<de_duplication_ref>" +
 				"<references_id></references_id>" +
@@ -2161,6 +2165,14 @@ function form80_header_ini()
 				column_filter.value=tables[0].keycolumn;
 				refs_filter.value=tables[0].references_value;
 				ref_ids_filter.value=tables[0].references_id;
+			}
+			else
+			{
+				table_filter.value="";
+				column_filter.value="";
+				refs_filter.value="";
+				ref_ids_filter.value="";
+				object_filter.value="";
 			}
 		});
 	});
@@ -9386,3 +9398,240 @@ function form245_header_ini()
 	
 	$('#form245_body').html("");
 }
+
+/**
+ * @form Transfer Zones
+ * @formNo 246
+ */
+function form246_header_ini()
+{
+	var filter_fields=document.getElementById('form246_header');
+	var zone_filter=filter_fields.elements[0];
+	
+	var zone_data="<transfer_zones>" +
+			"<name></name>" +
+			"</transfer_zones>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form246_ini();
+	});
+
+	set_my_filter(zone_data,zone_filter);
+};
+
+/**
+ * @form Manage pincodes
+ * @formNo 247
+ */
+function form247_header_ini()
+{
+	var filter_fields=document.getElementById('form247_header');
+	var code_filter=filter_fields.elements[0];
+	var zone_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+	
+	var code_data="<pincodes>" +
+			"<pincode></pincode>" +
+			"</pincodes>";
+	var zone_data="<transfer_zones>" +
+			"<name></name>" +
+			"</transfer_zones>";
+	
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form247_ini();
+	});
+
+	set_my_filter(code_data,code_filter);
+	set_my_filter(zone_data,zone_filter);
+	
+	set_static_filter('pincodes','status',status_filter);
+};
+
+/**
+ * @form Create Transit bag
+ * @formNo 248
+ */
+function form248_header_ini()
+{
+	var fields=document.getElementById('form248_master');
+
+	var bag_filter=fields.elements['bag_num'];
+	var lbh=fields.elements['lbh'];
+	var date=fields.elements['date'];
+	var weight=fields.elements['weight'];
+
+	fields.elements['id'].value=get_new_key();
+
+	var save_button=fields.elements['save'];
+	bag_filter.value="";
+	lbh.value="";
+	weight.value="";
+
+	var bag_id=$("#form248_link").attr('data_id');
+	if(bag_id==null)
+		bag_id="";	
+
+	if(bag_id=="")
+	{
+		var bag_num_data="<user_preferences count='1'>"+
+						"<value></value>"+
+						"<name exact='yes'>bag_num</name>"+
+						"</user_preferences>";
+		set_my_value(bag_num_data,bag_filter);	
+	}
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form248_update_form();
+	});
+
+	$(save_button).hide();
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		//modal129_action();
+		form248_add_item();
+	});
+
+	$(date).datepicker();
+	date.value=get_my_date();
+	$('#form248_share').hide();
+}
+
+/**
+ * @form Manage Transit bag
+ * @formNo 249
+ */
+function form249_header_ini()
+{
+	var filter_fields=document.getElementById('form249_header');
+	var bag_filter=filter_fields.elements[0];
+	var date_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+		
+	var bag_data="<transit_bags>" +
+			"<bag_num></bag_num>" +
+			"</transit_bags>";
+			
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form249_ini();
+	});
+
+	set_my_filter(bag_data,bag_filter);
+	$(date_filter).datepicker();
+		
+	set_static_filter('transit_bags','status',status_filter);
+};
+
+/**
+ * @form Create MTS
+ * @formNo 250
+ */
+function form250_header_ini()
+{
+	var fields=document.getElementById('form250_master');
+
+	var mts_filter=fields.elements['mts_num'];
+	var lbh=fields.elements['lbh'];
+	var date=fields.elements['date'];
+	var weight=fields.elements['weight'];
+	var branch=fields.elements['branch'];
+
+	fields.elements['id'].value=get_new_key();
+
+	var save_button=fields.elements['save'];
+	bag_filter.value="";
+	lbh.value="";
+	weight.value="";
+
+	var bag_id=$("#form250_link").attr('data_id');
+	if(bag_id==null)
+		bag_id="";	
+
+	if(bag_id=="")
+	{
+		var bag_num_data="<user_preferences count='1'>"+
+						"<value></value>"+
+						"<name exact='yes'>bag_num</name>"+
+						"</user_preferences>";
+		set_my_value(bag_num_data,bag_filter);	
+	}
+	
+	$(save_button).off('click');
+	$(save_button).on("click", function(event)
+	{
+		event.preventDefault();
+		form250_update_form();
+	});
+
+	$(save_button).hide();
+	
+	$(document).off('keydown');
+	$(document).on('keydown', function(event) {
+		if( event.keyCode == 83 && event.ctrlKey) {
+	    	event.preventDefault();
+	    	$(save_button).trigger('click');
+	    }
+	});
+
+	$(fields).off('submit');
+	$(fields).on("submit", function(event)
+	{
+		event.preventDefault();
+		//modal129_action();
+		form250_add_item();
+	});
+
+	$(date).datepicker();
+	date.value=get_my_date();
+	$('#form250_share').hide();
+}
+
+/**
+ * @form Manage MTS
+ * @formNo 251
+ */
+function form251_header_ini()
+{
+	var filter_fields=document.getElementById('form251_header');
+	var bag_filter=filter_fields.elements[0];
+	var date_filter=filter_fields.elements[1];
+	var status_filter=filter_fields.elements[2];
+		
+	var bag_data="<transit_bags>" +
+			"<bag_num></bag_num>" +
+			"</transit_bags>";
+			
+	$(filter_fields).off('submit');
+	$(filter_fields).on('submit',function(event)
+	{
+		event.preventDefault();
+		form251_ini();
+	});
+
+	set_my_filter(bag_data,bag_filter);
+	$(date_filter).datepicker();
+		
+	set_static_filter('transit_bags','status',status_filter);
+};

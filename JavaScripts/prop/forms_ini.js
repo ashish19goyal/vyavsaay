@@ -18910,7 +18910,7 @@ function form181_ini()
 			rowsHTML+="<tr>";
 				rowsHTML+="<form id='form181_"+result.id+"'></form>";
 					rowsHTML+="<td data-th='Order #'>";
-						rowsHTML+="<input type='text' class='detail_link' readonly='readonly' form='form181_"+result.id+"' onclick=\"element_display('"+result.id+"','form180');\" value='"+result.order_num+"'>";
+						rowsHTML+="<input type='text' class='input_link' readonly='readonly' form='form181_"+result.id+"' onclick=\"element_display('"+result.id+"','form180');\" value='"+result.order_num+"'>";
 					rowsHTML+="</td>";
 					rowsHTML+="<td data-th='Customer'>";
 						rowsHTML+="<textarea readonly='readonly' form='form181_"+result.id+"'>"+result.customer_name+"</textarea>";
@@ -25836,3 +25836,437 @@ function form245_ini()
 		hide_loader();
 	});
 }
+
+/**
+ * @form Transfer zones
+ * @formNo 246
+ * @Loading light
+ */
+function form246_ini()
+{
+	show_loader();
+	var fid=$("#form246_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form246_header');
+	
+	var fzone=filter_fields.elements[0].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form246_index');
+	var prev_element=document.getElementById('form246_prev');
+	var next_element=document.getElementById('form246_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<transfer_zones count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<name>"+fzone+"</name>" +
+			"<description></description>"+
+			"</transfer_zones>";
+
+	$('#form246_body').html("");
+
+	fetch_requested_data('form246',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form246_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Zone'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form246_"+result.id+"' value='"+result.name+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Description'>";
+						rowsHTML+="<textarea readonly='readonly' class='dblclick_editable' form='form246_"+result.id+"'>"+result.description+"</textarea>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form246_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' form='form246_"+result.id+"' title='Save' class='save_icon'>";
+						rowsHTML+="<input type='button' form='form246_"+result.id+"' title='Delete' class='delete_icon' onclick='form246_delete_item($(this));'>";
+					rowsHTML+="</td>";				
+			rowsHTML+="</tr>";
+			
+			$('#form246_body').append(rowsHTML);
+			var fields=document.getElementById('form246_'+result.id);
+			var save_button=fields.elements[3];
+			
+			$(fields).on('submit',function (e) 
+			{
+				e.preventDefault();
+				form246_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+				
+		
+		var export_button=filter_fields.elements[2];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'transfer zones');
+		});
+		hide_loader();
+	});
+};
+
+/**
+ * @form Manage Pincodes
+ * @formNo 247
+ * @Loading light
+ */
+function form247_ini()
+{
+	show_loader();
+	var fid=$("#form247_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form247_header');
+	
+	var fpincode=filter_fields.elements[0].value;
+	var fzone=filter_fields.elements[1].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form247_index');
+	var prev_element=document.getElementById('form247_prev');
+	var next_element=document.getElementById('form247_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<pincodes count='25' start_index='"+start_index+"'>" +
+			"<id>"+fid+"</id>" +
+			"<zone>"+fzone+"</zone>" +
+			"<status></status>"+
+			"<pincode>"+fpincode+"</pincode>"+
+			"</pincodes>";
+
+	$('#form247_body').html("");
+
+	fetch_requested_data('form247',columns,function(results)
+	{
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form247_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Pincode'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form247_"+result.id+"' value='"+result.pincode+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Zone'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form247_"+result.id+"' value='"+result.zone+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' class='dblclick_editable' form='form247_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form247_"+result.id+"' value='"+result.id+"'>";
+						rowsHTML+="<input type='submit' form='form247_"+result.id+"' title='Save' class='save_icon'>";
+						rowsHTML+="<input type='button' form='form247_"+result.id+"' title='Delete' class='delete_icon' onclick='form247_delete_item($(this));'>";
+					rowsHTML+="</td>";				
+			rowsHTML+="</tr>";
+			
+			$('#form247_body').append(rowsHTML);
+			var fields=document.getElementById('form247_'+result.id);
+			var zone_filter=fields.elements[1];
+			var status_filter=fields.elements[2];
+			var save_button=fields.elements[4];
+			
+			var zone_data="<transfer_zones>"+
+						"<name></name>"+
+						"</transfer_zones>";
+			set_my_value_list(zone_data,zone_filter);
+						
+			set_static_value_list('pincodes','status',status_filter);
+			
+			$(fields).on('submit',function (e) 
+			{
+				e.preventDefault();
+				form247_update_item(fields);
+			});
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[4];
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Pincodes');
+		});
+		hide_loader();
+	});
+};
+
+
+/**
+ * @form Create Transit bag
+ * @formNo 248
+ * @Loading light
+ */
+function form248_ini()
+{
+	var bag_id=$("#form248_link").attr('data_id');
+	if(bag_id==null)
+		bag_id="";	
+	$('#form248_body').html("");
+	$('#form248_foot').html("");
+	
+	if(bag_id!="")
+	{
+		show_loader();
+		var bag_columns="<transit_bags>" +
+				"<id>"+drs_id+"</id>" +
+				"<bag_num></bag_num>"+
+				"<lbh></lbh>"+
+				"<weight></weight>"+
+				"<date></date>"+
+				"<num_orders></num_orders>"+
+				"</transit_bags>";
+	
+		////separate fetch function to get bill details like customer name, total etc.
+		fetch_requested_data('',bag_columns,function(bag_results)
+		{
+			var filter_fields=document.getElementById('form248_master');
+			if(bag_results.length>0)
+			{
+				filter_fields.elements['bag_num'].value=bag_results[0].bag_num;
+				filter_fields.elements['lbh'].value=bag_results[0].lbh;
+				filter_fields.elements['weight'].value=bag_results[0].weight;
+				filter_fields.elements['date'].value=get_my_past_date(bag_results[0].bag_time);
+				filter_fields.elements['id'].value=bag_results[0].id;
+				filter_fields.elements['num_orders'].value=bag_results[0].num_orders;
+				
+				var save_button=filter_fields.elements['save'];
+				$(save_button).show();
+				
+				var bag_items_column="<logistics_orders>" +
+									"<id></id>" +
+									"<awb_num></awb_num>" +
+									"<manifest_type></manifest_type>" +
+									"<order_num></order_num>" +
+									"<merchant_name></merchant_name>" +
+									"<ship_to></ship_to>" +
+									"<address1></address1>" +
+									"<address2></address2>" +
+									"<city></city>" +
+									"<pincode></pincode>" +
+									"<phone></phone>" +
+									"<weight></weight>" +
+									"<pieces></pieces>" +
+									"<status></status>" +
+									"<bag_num exact='yes'>"+bag_results[0].bag_num+"</bag_num>" +
+									"<bag_id exact='yes'>"+bag_id+"</bag_id>" +
+									"</logistics_orders>";
+
+				/////////////////////////////////////////////////////////////////////////
+	
+				fetch_requested_data('',bag_items_column,function(results)
+				{
+					results.forEach(function(result)
+					{
+						var id=result.id;
+						var rowsHTML="<tr>";
+
+						var address=result.ship_to+"\n"+result.address1+", "+result.address2+", "+result.city+"-"+result.pincode;
+						if(result.address2=="--" || result.address2==result.address1)
+						{
+							var address=result.ship_to+"\n"+result.address1+", "+result.city+"-"+result.pincode;
+						}						
+						rowsHTML+="<form id='form248_"+id+"'></form>";
+							rowsHTML+="<td data-th='S.No.'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='AWB #'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form248_"+id+"' value='"+result.awb_num+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Address'>";
+								rowsHTML+="<textarea readonly='readonly' form='form248_"+id+"'>"+address+"</textarea>";
+								rowsHTML+="<br>Phone: <input type='text' readonly='readonly' value='"+result.phone+"' form='form248_"+id+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Status'>";
+								rowsHTML+="<input type='text' readonly='readonly' form='form248_"+id+"' value='"+result.status+"'>";
+							rowsHTML+="</td>";
+							rowsHTML+="<td data-th='Action'>";
+								rowsHTML+="<input type='hidden' form='form248_"+id+"' value='"+id+"'>";
+								rowsHTML+="<input type='button' class='submit_hidden' form='form248_"+id+"' id='save_form248_"+id+"'>";
+								rowsHTML+="<input type='button' class='delete_icon' form='form248_"+id+"' id='delete_form248_"+id+"' onclick='form248_delete_item($(this));'>";
+							rowsHTML+="</td>";			
+						rowsHTML+="</tr>";
+	
+						$('#form248_body').append(rowsHTML);
+						
+						var item_form=document.getElementById('form248_'+id);
+						var save_button=item_form.elements[5];
+						
+						$(save_button).on('click',function (e) 
+						{
+							e.preventDefault();
+							form248_update_item(item_form);
+						});
+					});
+					
+					form248_update_serial_numbers();
+					$('textarea').autosize();
+					hide_loader();
+				});
+			}
+		});
+	}
+}
+
+/**
+ * @form Manage Transit bag
+ * @formNo 249
+ * @Loading light
+ */
+function form249_ini()
+{
+	show_loader();
+	var fid=$("#form249_link").attr('data_id');
+	if(fid==null)
+		fid="";	
+	
+	var filter_fields=document.getElementById('form249_header');
+
+	//populating form 
+	var fbag=filter_fields.elements[0].value;
+	var fdate=get_raw_time(filter_fields.elements[1].value);
+	var fstatus=filter_fields.elements[2].value;
+	
+	////indexing///
+	var index_element=document.getElementById('form249_index');
+	var prev_element=document.getElementById('form249_prev');
+	var next_element=document.getElementById('form249_next');
+	var start_index=index_element.getAttribute('data-index');
+	//////////////
+
+	var columns="<transit_bags count='25' start_index='"+start_index+"'>" +
+				"<id>"+fid+"</id>" +
+				"<bag_num>"+fbag+"</bag_num>"+
+				"<lbh></lbh>"+
+				"<weight></weight>"+
+				"<date>"+fdate+"</date>"+
+				"<num_orders></num_orders>"+
+				"<status>"+fstatus+"</status>"+
+				"<mts></mts>"+
+				"</transit_bags>";
+	
+	$('#form249_body').html("");
+
+	fetch_requested_data('form249',columns,function(results)
+	{	
+		results.forEach(function(result)
+		{
+			var rowsHTML="";
+			rowsHTML+="<tr>";
+				rowsHTML+="<form id='form249_"+result.id+"'></form>";
+					rowsHTML+="<td data-th='Bag #'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+result.bag_num+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Date'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+get_my_past_date(result.date)+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Status'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' value='"+result.status+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='MTS'>";
+						rowsHTML+="<input type='text' readonly='readonly' form='form249_"+result.id+"' title='Non-COD' value='"+result.mts+"'>";
+					rowsHTML+="</td>";
+					rowsHTML+="<td data-th='Action'>";
+						rowsHTML+="<input type='hidden' form='form249_"+result.id+"' value='"+result.id+"' name='id'>";
+						rowsHTML+="<input type='button' form='form249_"+result.id+"' class='edit_icon' title='View bag' name='edit' onclick=\"element_display('"+result.id+"','form248');\">";
+						rowsHTML+="<input type='button' class='delete_icon' form='form249_"+result.id+"' title='Delete' onclick='form249_delete_item($(this));'>";
+					rowsHTML+="</td>";			
+			rowsHTML+="</tr>";
+			
+			$('#form249_body').append(rowsHTML);
+		});
+
+		////indexing///
+		var next_index=parseInt(start_index)+25;
+		var prev_index=parseInt(start_index)-25;
+		next_element.setAttribute('data-index',next_index);
+		prev_element.setAttribute('data-index',prev_index);
+		index_element.setAttribute('data-index','0');
+		if(results.length<25)
+		{
+			$(next_element).hide();
+		}
+		else
+		{
+			$(next_element).show();
+		}
+		if(prev_index<0)
+		{
+			$(prev_element).hide();
+		}
+		else
+		{
+			$(prev_element).show();
+		}
+		/////////////
+
+		longPressEditable($('.dblclick_editable'));
+		$('textarea').autosize();
+		
+		var export_button=filter_fields.elements[3];
+		
+		$(export_button).off("click");
+		$(export_button).on("click", function(event)
+		{
+			get_export_data(columns,'Transit bags');
+		});
+		hide_loader();
+	});
+};

@@ -31,7 +31,10 @@
     "manufacturing":"Manufacturing",
     "logistics":"Logistics",
     "treatment":"Treatment Planning",
-    "reports":"Reports"
+    "reports":"Reports",
+    "orders":"Orders",
+    "drs":"DRS",
+    "transit":"Transit"
   },
   "general":{
   	"hello": "Hello"
@@ -421,6 +424,14 @@
 	"pending_sale_order_items":"Pending Sale Order Items",
 	"stock_report_extended":"Stock Report (Extended)",
 	"stock_report":"Stock Report",
-	"sku_components":"SKU Components"
+	"sku_components":"SKU Components",
+	"transfer_zones":"Transfer Zones",
+	"manage_pincodes":"Manage Pincodes",
+	"create_transit_bag":"Create Transit Bag",
+	"manage_transit_bags":"Manage Transit Bags",
+	"create_mts":"Create MTS",
+	"manage_mts":"Manage MTS",
+	"combo_inventory":"Combo Inventory",
+	"order_sorting":"Order Sorting"
 	}
 }

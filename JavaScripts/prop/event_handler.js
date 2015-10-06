@@ -291,7 +291,7 @@ function modal_forms_ini()
 	   		}
 		});
 	}
-	for(var i=50;i<=75;i++)
+	for(var i=50;i<=77;i++)
 	{
 		var dialog=$("#modal"+i).dialog({
 	   		autoOpen: false,
@@ -346,7 +346,7 @@ function hide_unreadable_elements()
 {
 	var forms_array=[];
 	var reports_array=[];
-	for (var i=1;i<250;i++)
+	for (var i=1;i<300;i++)
 	{
 		forms_array.push("form"+i);
 		reports_array.push("report"+i);
@@ -431,6 +431,9 @@ function hide_all()
 	//hide all functions
 	$("#sale_bills_main").hide();
 	$("#logistics_main").hide();
+	$("#orders_main").hide();
+	$("#drs_main").hide();
+	$("#transit_main").hide();
 	$("#products_main").hide();
 	$("#purchase_main").hide();
 	$("#services_main").hide();
@@ -980,6 +983,10 @@ function import_data(form_name)
 		case 'form234':modal23_action(form234_import_template,form234_import);
 		break;
 		case 'form245':modal23_action(form245_import_template,form245_import);
+		break;
+		case 'form246':modal23_action(form246_import_template,form246_import);
+		break;
+		case 'form247':modal23_action(form247_import_template,form247_import);
 		break;
 	}
 }

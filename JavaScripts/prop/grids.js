@@ -750,5 +750,21 @@ function set_grid_item_41()
 			total_credits+=result.sms_credit;
 		});
 		document.getElementById('grid_item_41').innerHTML=total_credits;
+	});
+};
+
+/**
+ * @item # DRS (today)
+ * @itemNo 42
+ */
+function set_grid_item_42()
+{
+	var columns="<drs>" +
+		"<id></id>" +
+		"<drs_time lowerbound='yes'>"+(get_raw_time(get_my_date())-1000)+"</drs_time>"+
+		"</drs>";
+	get_single_column_data(function(results)
+	{
+		document.getElementById('grid_item_42').innerHTML=results.length;
 	},columns);
 };

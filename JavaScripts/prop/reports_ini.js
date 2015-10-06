@@ -7413,3 +7413,151 @@ function report93_ini()
 		});
 	});
 };
+
+/**
+ * @reportNo 94
+ * @report Combo inventory
+ */
+function report94_ini()
+{
+	show_loader();
+	var form=document.getElementById('report94_header');
+	var sku=form.elements['sku'].value;
+	
+	$('#report94_body').html('');
+
+	var master_data="<pre_requisites>" +
+			"<id></id>" +
+			"<name exact='yes'>"+sku+"</name>" +
+			"<type>product</type>" +
+			"<requisite_name></requisite_name>"+
+			"<requisite_desc></requisite_desc>"+
+			"<quantity></quantity>"+
+			"</pre_requisites>";
+	var results=[];
+	fetch_requested_data('report94',master_data,function(products)
+	{
+		//console.log(products);
+		var report94_count=products.length;
+			
+		products.forEach(function(product)
+		{
+			var result_object=new Object();
+			result_object['SKU']=product.requisite_name;
+			result_object['Item Name']=product.requisite_desc;
+			result_object['Quantity (in combo)']=product.quantity;
+			
+			report94_count+=1;
+			get_inventory(product.requisite_name,"",function(inventory)
+			{
+				result_object['Inventory']=inventory;
+				result_object['Max Inventory combo']=my_round(parseFloat(inventory)/parseFloat(result_object['Quantity (in combo)']),0);
+				report94_count-=1;
+				results.push(result_object);
+			});
+			report94_count-=1;				
+		});
+		
+		var report94_complete=setInterval(function()
+		{
+			if(report94_count===0)
+			{
+				var maximum_combo_inventory="";
+				
+				results.forEach(function(result)
+				{
+					var rowsHTML="<tr>";
+						rowsHTML+="<td data-th='SKU'>";
+							rowsHTML+=result['SKU'];
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Item Name'>";
+							rowsHTML+=result['Item Name'];
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Quantity (in combo)'>";
+							rowsHTML+=result['Quantity (in combo)'];
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Inventory'>";
+							rowsHTML+=result['Inventory'];
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+		
+					$('#report94_body').append(rowsHTML);
+					
+					if(result['Max Inventory combo']<maximum_combo_inventory || maximum_combo_inventory=="")
+					{
+						maximum_combo_inventory=result['Max Inventory combo'];
+					}
+				});
+				
+				var footHTML="<tr><td colspan='3'>Maximum Combos in Inventory: </td><td>"+maximum_combo_inventory+"</td></tr>";
+				$('#report94_foot').html(footHTML);
+				
+				var print_button=form.elements['print'];
+				print_tabular_report('report94','Combo Inventory',print_button);
+			
+				clearInterval(report94_complete);
+				
+				hide_loader();	  		   
+			}
+		},500);
+	});
+};
+
+/**
+ * @reportNo 95
+ * @report Order sorting
+ */
+function report95_ini()
+{
+	show_loader();
+	var form=document.getElementById('report95_header');
+	var awb_filter=form.elements['awb'];
+	var awb=awb_filter.value;
+
+	var master_data="<logistics_orders count='1'>" +
+			"<pincode></pincode>"+
+			"<awb_num exact='yes'>"+awb+"</awb_num>" +
+			"</logistics_orders>";
+	get_single_column_data(function(awbs)
+	{
+		if(awbs.length>0)
+		{
+			var zone_data="<pincodes>"+
+					"<zone></zone>"+
+					"<status exact='yes'>active</status>"+
+					"<pincode exact='yes'>"+awbs[0]+"</pincode>"+
+					"</pincodes>";
+			get_single_column_data(function(pincodes)
+			{				
+				if(pincodes.length>0)
+				{
+					var rowsHTML="<tr>";
+						rowsHTML+="<td data-th='AWB #'>";
+							rowsHTML+=awb;
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Pincode'>";
+							rowsHTML+=awbs[0];
+						rowsHTML+="</td>";
+						rowsHTML+="<td data-th='Zone'>";
+							rowsHTML+=pincodes[0];
+						rowsHTML+="</td>";
+					rowsHTML+="</tr>";
+		
+					$('#report95_body').prepend(rowsHTML);
+				}
+				else
+				{
+					$("#modal76").dialog("open");
+				}
+				awb_filter.value="";
+				hide_loader();
+			},zone_data);	
+		}
+		else 
+		{
+			$("#modal71").dialog("open");
+			awb_filter.value="";
+			hide_loader();
+		}	  		   
+	},master_data);
+};

@@ -1229,6 +1229,28 @@
 			<tables>--product_master--product_instances--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>		
+			<name>report94</name>
+			<display_name>combo_inventory</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--product_master--pre_requisites--product_instances--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>		
+			<name>report95</name>
+			<display_name>order_sorting</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>report</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--logistics_orders--pincodes--</tables>
+			<last_updated>1</last_updated>
+		</row>
 		<row>
 			<name>form1</name>
 			<display_name>update_inventory</display_name>
@@ -3495,6 +3517,72 @@
 			<tables>--product_master--pre_requisites--</tables>
 			<last_updated>1</last_updated>
 		</row>
+		<row>
+			<name>form246</name>
+			<display_name>transfer_zones</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--transfer_zones--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form247</name>
+			<display_name>manage_pincodes</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--pincodes--transfer_zones--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form248</name>
+			<display_name>create_transit_bags</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--transit_bags--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form249</name>
+			<display_name>manage_transit_bags</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--transit_bags--logistics_orders--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form250</name>
+			<display_name>create_mts</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--mts--transit_bags--</tables>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<name>form251</name>
+			<display_name>manage_mts</display_name>
+			<status>active</status>
+			<value>unchecked</value>
+			<type>form</type>
+			<shortcut></shortcut>
+			<sync>checked</sync>
+			<tables>--mts--transit_bags--</tables>
+			<last_updated>1</last_updated>
+		</row>
 	</user_preferences>
 	<access_control>
 		<row>
@@ -4359,6 +4447,28 @@
 			<username>master</username>
 			<element_id>report93</element_id>
 			<element_name>stock_report_extended</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report94</element_id>
+			<element_name>combo_inventory</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>report95</element_id>
+			<element_name>order_sorting</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>
@@ -6625,6 +6735,72 @@
 			<username>master</username>
 			<element_id>form245</element_id>
 			<element_name>sku_components</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form246</element_id>
+			<element_name>transfer_zones</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form247</element_id>
+			<element_name>manage_pincodes</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form248</element_id>
+			<element_name>create_transit_bag</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>				
+		<row>
+			<username>master</username>
+			<element_id>form249</element_id>
+			<element_name>manage_transit_bags</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form250</element_id>
+			<element_name>create_mts</element_name>
+			<status>active</status>
+			<re>checked</re>
+			<cr>checked</cr>
+			<up>checked</up>
+			<del>checked</del>
+			<last_updated>1</last_updated>
+		</row>
+		<row>
+			<username>master</username>
+			<element_id>form251</element_id>
+			<element_name>manage_mts</element_name>
 			<status>active</status>
 			<re>checked</re>
 			<cr>checked</cr>

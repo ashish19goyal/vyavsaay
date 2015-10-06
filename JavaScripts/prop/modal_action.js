@@ -5402,14 +5402,7 @@ function modal51_action(object)
 							"<id>"+result.slave_id+"</id>" +
 							"</"+result.tablename+">";
 					
-					if(is_online())
-					{
-						server_delete_simple(slave_xml);
-					}
-					else
-					{
-						local_delete_simple(slave_xml);
-					}
+					delete_simple(slave_xml);
 					
 					//////replacing slave values with master values
 					var refs_array=result.references_value.split(";");
@@ -5427,14 +5420,7 @@ function modal51_action(object)
 								var refs_data="<"+tablename+">" +
 										"<"+column+" exact='yes'>"+result.slave_value+"</"+column+">" +
 										"</"+tablename+">";
-								if(is_online())
-								{
-									server_delete_simple(refs_data);
-								}
-								else
-								{
-									local_delete_simple(refs_data);
-								}
+								delete_simple(refs_data);
 							}
 							else
 							{
@@ -5444,22 +5430,26 @@ function modal51_action(object)
 										"</"+tablename+">";
 								fetch_requested_data('',refs_data,function(ref_results)
 								{
+									var data_xml="<"+tablename+">";
+									var counter=1;
+									var last_updated=get_my_time();
 									ref_results.forEach(function(ref_result)
 									{
-										var refs_xml="<"+tablename+">" +
+										if((counter%500)===0)
+										{
+											data_xml+="</"+tablename+"><separator></separator><"+tablename+">";
+										}
+										
+										counter+=1;
+										data_xml+="<row>" +
 												"<id>"+ref_result.id+"</id>" +
 												"<"+column+">"+result.master_value+"</"+column+">" +
-												"<last_updated>"+get_my_time()+"</last_updated>" +
-												"</"+tablename+">";
-										if(is_online())
-										{
-											server_update_simple(refs_xml);
-										}
-										else
-										{
-											local_update_simple(refs_xml);
-										}
+												"<last_updated>"+last_updated+"</last_updated>" +
+												"</row>";
 									});
+									data_xml+="</"+tablename+">";
+									//console.log(data_xml);
+									update_batch(data_xml);	
 								});								
 							}
 						}
@@ -5481,22 +5471,26 @@ function modal51_action(object)
 									"</"+tablename+">";
 							fetch_requested_data('',ref_ids_data,function(ref_id_results)
 							{
+								var data_xml="<"+tablename+">";
+								var counter=1;
+								var last_updated=get_my_time();
 								ref_id_results.forEach(function(ref_id_result)
 								{
-									var ref_ids_xml="<"+tablename+">" +
+									if((counter%500)===0)
+									{
+										data_xml+="</"+tablename+"><separator></separator><"+tablename+">";
+									}
+									
+									counter+=1;
+									data_xml+="<row>" +
 											"<id>"+ref_id_result.id+"</id>" +
 											"<"+column+">"+result.master_id+"</"+column+">" +
-											"<last_updated>"+get_my_time()+"</last_updated>" +
-											"</"+tablename+">";
-									if(is_online())
-									{
-										server_update_simple(ref_ids_xml);
-									}
-									else
-									{
-										local_update_simple(ref_ids_xml);
-									}
+											"<last_updated>"+last_updated+"</last_updated>" +
+											"</row>";
 								});
+								data_xml+="</"+tablename+">";
+								update_batch(data_xml);
+								
 							});
 						}
 					});
@@ -5509,14 +5503,7 @@ function modal51_action(object)
 						"<status>closed</status>" +
 						"<last_updated>"+get_my_time()+"</last_updated>" +
 						"</de_duplication>";
-				if(is_online())
-				{
-					server_update_simple(de_duplication_xml);
-				}
-				else
-				{
-					local_update_simple(de_duplication_xml);
-				}
+				update_simple(de_duplication_xml);
 			});
 		});
 	}

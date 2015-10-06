@@ -722,6 +722,14 @@
 		Inventory is listed against this SKU. Are you sure, you want to list this as a combo pack?
 	</div>
 
+	<div id="modal76" title="Pincode not serviced">
+		<p style='color:#a00'>The pincode for this order is not being serviced</p>
+	</div>
+
+	<div id="modal77" title="Change Bag Number">
+		This bag number is already taken. Please use another number.
+	</div>
+
 	<div id="modal101" title="Email Document">
 		<form id='modal101_form' autocomplete="off">
 			<fieldset>
