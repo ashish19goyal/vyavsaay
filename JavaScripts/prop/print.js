@@ -3600,8 +3600,8 @@ function print_form219(func)
 				"<td style='text-align:left;width:11%'>Address</td>"+
 				"<td style='text-align:left;width:5%'>Wt.</td>"+
 				"<td style='text-align:left;width:5%'>P</td>"+
-				"<td style='text-align:left;width:5%'>Time</td>"+
-				"<td style='text-align:left;width:30%'>Receiver/Comp Seal</td>"+
+				"<td style='text-align:left;width:10%'>Amount</td>"+
+				"<td style='text-align:left;width:25%'>Receiver/Comp Seal</td>"+
 				"<td style='text-align:left;width:4%'>RC</td>"+
 				"<td style='text-align:left;width:15%'>Sign</td></tr>";
 				
@@ -3645,7 +3645,7 @@ function print_form219(func)
 		cnote_no.appendChild(type_value);
 		cnote_no.appendChild(merchant_value);
 
-		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;><td><div>"+counter+"</div></td>"+
+		table_rows+="<tr style='border-top: 1px solid #000000;height:60px;'><td><div>"+counter+"</div></td>"+
 				"<td><div style='text-align:left;'>"+cnote_no.innerHTML+"</div></td>"+
 				"<td><div style='text-align:left;'>"+form.elements[1].value+"</div></td>"+
 				"<td><div>"+form.elements[4].value+"</div></td>"+
