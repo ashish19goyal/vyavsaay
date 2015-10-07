@@ -10622,6 +10622,20 @@ function form193_update_form()
 						"</area_utilization>";
 		fetch_requested_data('',area_util_xml,function (more_items) 
 		{
+			
+			for(var i=0;i<more_items.length;i++)
+			{
+				for(var l=i+1;l<more_items.length;l++)
+				{
+					if(more_items[i].name==more_items[l].item_name && more_items[i].batch==more_items[l].batch)
+					{
+						more_items.splice(l,1);
+						l-=1;
+					}
+				}
+			}	
+			
+			
 			for(var i=0;i<items.length;i++)
 			{
 				for(var l=0;l<more_items.length;l++)
@@ -10677,7 +10691,7 @@ function form193_update_form()
 									"<updated_by>"+get_name()+"</updated_by>" +
 									"</activity>";
 						create_row(data_xml,activity_xml);
-						
+						console.log(data_xml);
 						///////////adding store placement////////
 						var storage_data="<area_utilization>" +
 								"<id></id>" +

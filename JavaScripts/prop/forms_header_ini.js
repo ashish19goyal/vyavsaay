@@ -3223,7 +3223,7 @@ function form108_header_ini()
 	set_my_filter(channel_data,channel_filter);
 
 	var order_data="<sale_orders>" +
-			"<id></id>" +
+			"<order_num></order_num>" +
 			"</sale_orders>";
 	set_my_filter(order_data,order_filter);
 	

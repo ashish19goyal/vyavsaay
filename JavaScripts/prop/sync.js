@@ -157,17 +157,20 @@ function sync_server_to_local(func)
 		
 		var max_localdb_open_requests=0;
 		var progress_dummy=progress_value+5;
+		var online_counter=1;
 		var sync_download_complete=setInterval(function()
 		{
+			online_counter+=1;
 	  	   if(number_active_ajax===0)
 	  	   {
+	  	   		var progress_dummy1=progress_dummy+20;
 	  		   if(max_localdb_open_requests===0)
 	  		   {
 	  			  max_localdb_open_requests=localdb_open_requests;
 	  		   }
 	  		   else
 	  		   {
-	  			   progress_value=progress_dummy+(1-(localdb_open_requests/max_localdb_open_requests))*45;
+	  			   progress_value=progress_dummy1+(1-(localdb_open_requests/max_localdb_open_requests))*25;
 	  		   }
 	  		   if(localdb_open_requests===0)
 	  		   {
@@ -178,6 +181,10 @@ function sync_server_to_local(func)
 						func();
 				   });
 	  		   }
+	  	   }
+	  	   else
+	  	   {
+	  	   		progress_value=progress_dummy+(1-(online_counter/50))*20;
 	  	   }
 	     },1000);	
 	 }

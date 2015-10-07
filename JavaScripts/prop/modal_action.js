@@ -9530,6 +9530,7 @@ function modal138_action()
 			var import_items_string="--";
 			data_array.forEach(function (data_row) 
 			{
+				console.log(data_row);
 				import_items_string+=data_row.system_sku+"--";
 				unique_items_in_import.push(data_row.system_sku);
 			});
